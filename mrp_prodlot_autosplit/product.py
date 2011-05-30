@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
-#    
-#    OpenERP, Open Source Management Solution
-#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+#
+#    MRP prodlot auto-split module for OpenERP
+#    Copyright (C) 2008 Raphaël Valyi
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -15,21 +15,18 @@
 #    GNU Affero General Public License for more details.
 #
 #    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.     
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 
 from osv import fields, osv
-import tools
-import ir
-import pooler
-
 
 class product_product(osv.osv):
     _inherit = "product.product"
-    
+
     _columns = {
-        'unique_production_number': fields.boolean('Unique Production Number'),
+        'unique_production_number': fields.boolean('Unique Production Number', help="Activate if you want to have the auto-split of move lines on pickings for this particular product."),
     }
-    
+
 product_product()
+
