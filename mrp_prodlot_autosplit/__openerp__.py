@@ -35,15 +35,6 @@
     of a new production number/code to create and associate to the move (it also checks it
     doesn't exist yet)
 
-    Important Note 1: serial numbers are more easily encoded using an editable tree grid, including a special field with new serial to be created.
-    However, there is currently a limitation in the OpenObject framework preventing from easily changing non editable trees to editable trees
-    by simple extension. Rather than overwriting all views, we prefer give only one example: the active customized view for easy serial encoding
-    is available using Stock Management > Incoming Products. Looking at that view definition, the same thing is easily achieved in
-    other picking lists, like Outgoing products for instance. However it's not "on" by default, you would need to work it out for your case.
-    Meanwhile, we hope Tiny add a third "merge_attributes" view extension point to the 3 existing ones: "before", "after" and "replace".
-    It would basically simply merge the attributes given (redefined) in the original view XML and let inner content unchanged.
-    Blueprint is registred here: https://blueprints.launchpad.net/openobject-server/+spec/merge-attributes-view-extension-point
-
     We would also like to extend this module to split automatic production orders (from MRP engine) into several individual production orders in order
     to make it easy to encode the serial numbers in the production. Let us know if you would like that simple extension to be made.
     """,
