@@ -2,7 +2,8 @@
 ##############################################################################
 #
 #    MRP prodlot auto-split module for OpenERP
-#    Copyright (C) 2008 Raphaël Valyi
+#    Copyright (C) 2010-2011 Anevia. All Rights Reserved
+#    (written by Sebastien Beau <sebastien.beau@akretion.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,9 +20,20 @@
 #
 ##############################################################################
 
-import product
-import stock
-import company
-import mrp
-import prodlot_wizard
+from osv import osv, fields
+
+class company(osv.osv):
+    _inherit = 'res.company'
+
+    _columns = {
+        'autosplit_is_active': fields.boolean('Active auto split', help="Active the automatic split of move lines on the pickings."),
+        'is_group_invoice_line': fields.boolean('Group invoice lines', help="If active, OpenERP will group the identical invoice lines. If inactive, each move line will generate one invoice line."),
+    }
+
+    _defaults = {
+        'autosplit_is_active': lambda *a: True,
+        'is_group_invoice_line': lambda *a: True,
+    }
+
+company()
 
