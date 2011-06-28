@@ -15,9 +15,8 @@
         </field>
     </record>
 
-
     <record id="view_picking_out_form_editable_move_lines" model="ir.ui.view">
-        <field name="name">view.picking.in.form.editable_move_lines</field>
+        <field name="name">view.picking.out.form.editable_move_lines</field>
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.view_picking_out_form" />
         <field name="type">form</field>
@@ -28,7 +27,45 @@
         </field>
     </record>
 
+    <!-- In the form view of Incoming products, add the "new_prodlot_code" fields -->
+    <record id="view_picking_in_form_new_prodlot_code" model="ir.ui.view">
+        <field name="name">view.picking.in.form.new_prodlot_code</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_in_form" />
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="/form/notebook/page/field/tree/field[@name='prodlot_id']" position="before">
+                <field name="new_prodlot_code" />
+            </xpath>
+        </field>
+    </record>
 
+    <!-- We should have both source stock + dest location in the form view of Incoming/Outgoing products -->
+    <record id="view_picking_in_form_source_stock_location" model="ir.ui.view">
+        <field name="name">view.picking.in.form.source_stock_location</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_in_form" />
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="/form/notebook/page/field/tree/field[@name='location_dest_id']" position="before">
+                <field name="location_id" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_picking_out_form_dest_stock_location" model="ir.ui.view">
+        <field name="name">view.picking.out.form.dest_stock_location</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_out_form" />
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="/form/notebook/page/field/tree/field[@name='location_id']" position="after">
+                <field name="location_dest_id" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Add "last_location_id" on prod lot view -->
      <record id="view_production_lot_form_unique_production_number" model="ir.ui.view">
          <field name="name">view_production_lot_form_unique_production_number</field>
          <field name="model">stock.production.lot</field>
