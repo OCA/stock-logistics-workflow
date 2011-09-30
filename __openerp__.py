@@ -37,7 +37,7 @@
     ],
     'init_xml': [],
     'update_xml': [
-        #'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
         'stock_scanner_view.xml',
         #'wizard/wizard.xml',
     ],

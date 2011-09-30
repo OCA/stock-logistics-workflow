@@ -1,1 +1,8 @@
-"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"id","name","model_id/id","group_id/id","perm_read","perm_write","perm_create","perm_unlink"
+"scanner_scenario_user","scanner_scenario_user","stock_scanner.model_scanner_scenario","stock.group_stock_user",1,,,
+"scanner_scenario_manager","scanner_scenario_manager","stock_scanner.model_scanner_scenario","stock.group_stock_manager",1,1,1,1
+"scanner_scenario_step_user","scanner_scenario_step_user","stock_scanner.model_scanner_scenario_step","stock.group_stock_user",1,,,
+"scanner_scenario_step_manager","scanner_scenario_step_manager","stock_scanner.model_scanner_scenario_step","stock.group_stock_manager",1,1,1,1
+"scanner_scenario_transition_user","scanner_scenario_transition_user","stock_scanner.model_scanner_scenario_transition","stock.group_stock_user",1,,,
+"scanner_scenario_transition_manager","scanner_scenario_transition_manager","stock_scanner.model_scanner_scenario_transition","stock.group_stock_manager",1,1,1,1
+"scanner_scenario_custom_user","scanner_scenario_custom_user","stock_scanner.model_scanner_scenario_custom","stock.group_stock_user",1,1,1,1
