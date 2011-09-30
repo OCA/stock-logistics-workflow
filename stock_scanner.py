@@ -1,0 +1,578 @@
+# -*- coding: utf-8 -*-
+##############################################################################
+#
+#    stock_scanner module for OpenERP, Allows managing barcode readers with simple scenarios
+#    Copyright (C) 2011 SYLEAM Info Services (<http://www.Syleam.fr/>)
+#              Sylvain Garancher <sylvain.garancher@syleam.fr>
+#
+#    This file is a part of stock_scanner
+#
+#    stock_scanner is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    stock_scanner is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
+
+from osv import osv
+from osv import fields
+from tools.translate import _
+from threading import Semaphore
+import logging
+import uuid
+import netsvc
+
+logger = logging.getLogger('stock_scanner')
+
+
+class scanner_scenario(osv.osv):
+    _name = 'scanner.scenario'
+    _description = 'Scenario for scanner'
+
+    _columns = {
+        'name': fields.char('Name', size=64, help='Appear on barcode reader screen'),
+        'sequence': fields.integer('Sequence', help='Sequence order'),
+        'active': fields.boolean('Active', help='If check, this object is always available'),
+        'model_id': fields.many2one('ir.model', 'Model', required=True, help='Model used for this scenario'),
+        'step_ids': fields.one2many('scanner.scenario.step', 'scenario_id', 'Scenario', help='Step of the current running scenario'),
+        'warehouse_ids': fields.many2many('stock.warehouse', 'scanner_scenario_warehouse_rel', 'scenario_id', 'warehouse_id', 'Warehouses', help='Warehouses for this scenario'),
+        'title': fields.char('Title', size=256, help='Title for this scenario'),
+        'notes': fields.text('Notes', help='Store different notes, date and title for modification, etc...'),
+        'reference_res_id': fields.char('Rerefence ID', size=64, readonly=True, help='Used by export/import scenario'),
+        'shared_custom': fields.boolean('Shared Custom', help='Allows to share the custom values with a shared scanner in the same warehouse'),
+    }
+
+    _order = 'sequence'
+
+    _defaults = {
+        'title': False,
+    }
+
+    _sql_constraints = [
+        ('reference_res_id_uniq', 'unique (reference_res_id)', 'The reference ID of the scenario must be unique !'),
+    ]
+
+    # Dict to save the semaphores
+    # Format : {scenario: {warehouse: {reference_document: instance of semaphore}}}
+    _semaphores = {}
+
+    def create(self, cr, uid, values, context=None):
+        """
+        If the reference ID is not in values, we create it with uuid1
+        """
+        if not 'reference_res_id' in values:
+            values['reference_res_id'] = uuid.uuid1()
+
+        id = super(scanner_scenario, self).create(cr, uid, values, context=context)
+        return id
+
+    def _semaphore_acquire(self, cr, uid, id, warehouse_id, reference_document, context=None):
+        """
+        Make an acquire on a semaphore to take a token
+        The semaphore is use like a mutex one on one
+        """
+        sem = self._semaphore.get(id, {}).get(warehouse_id, {}).get(reference_document, None)
+
+        if sem is None:
+            sem = Semaphore()
+
+            if not self._semaphore.get(id, False):
+                self._semaphore[id] = {}
+
+            if not self._semaphore[id].get(warehouse_id, False):
+                self._semaphore[id][warehouse_id] = {}
+
+            self._semaphore[id][warehouse_id][reference_document] = sem
+
+        sem.acquire()
+
+    def _semaphore_release(self, cr, uid, id, warehouse_id, reference_document, context=None):
+        """
+        Make a release on a semaphore to free a token
+        The semaphore is use like a mutex one on one
+        """
+        self._semaphore[id][warehouse_id][reference_document].release()
+
+scanner_scenario()
+
+
+class scanner_scenario_step(osv.osv):
+    _name = 'scanner.scenario.step'
+    _description = 'Step for scenario'
+
+    _columns = {
+        'name': fields.char('Name', size=64, help='Name of the step'),
+        'scenario_id': fields.many2one('scanner.scenario', 'Scenario', required=True, help='Scenario for this step'),
+        'step_start': fields.boolean('Step start', help='Check this if this is the first step of the scenario'),
+        'step_stop': fields.boolean('Step stop', help='Check this if this is the  last step of the scenario'),
+        'out_transition_ids': fields.one2many('scanner.scenario.transition', 'from_id', 'Outgoing transitons', help='Transitions which goes to this step'),
+        'in_transition_ids': fields.one2many('scanner.scenario.transition', 'to_id', 'Incoming transitions', help='Transitions which goes to the next step'),
+        'python_code': fields.text('Python code', help='Python code to execute'),
+        'reference_res_id': fields.char('Reference ID', size=64, readonly=True, help='Used by export/import scenario/step'),
+    }
+
+    _defaults = {
+        'step_start': False,
+        'step_stop': False,
+        'python_code': '# Use message to retrieve the data transmitted by the scanner.\n# res contains the result.',
+    }
+
+    _sql_constraints = [
+        ('reference_res_id_uniq', 'unique (reference_res_id)', 'The reference ID of the step must be unique'),
+    ]
+
+    def create(self, cr, uid, values, context=None):
+        """
+        If the reference ID is not in values, we create it with uuid1
+        """
+        if not 'reference_res_id' in values:
+            values['reference_res_id'] = uuid.uuid1()
+
+        id = super(scanner_scenario_step, self).create(cr, uid, values, context=context)
+        return id
+
+scanner_scenario_step()
+
+
+class scanner_scenario_transition(osv.osv):
+    _name = 'scanner.scenario.transition'
+    _description = 'Transition for senario'
+
+    _columns = {
+        'name': fields.char('Name', size=64, required=True, help='Name of the transition'),
+        'sequence': fields.integer('Sequence', help='Sequence order'),
+        'from_id': fields.many2one('scanner.scenario.step', 'From', required=True, help='Step which launches this transition'),
+        'to_id': fields.many2one('scanner.scenario.step', 'To', required=True, help='Step which is reached by this transition'),
+        'condition': fields.char('Condition', size=256, required=True, help='The transition is followed only if this condition is evaluated as True'),
+        'transition_type': fields.selection([('scan', 'Scan'), ('key', 'Keyboard')], 'Transition Type', help='Type of transition'),
+        'tracer': fields.char('Tracer', size=12, help='Used to determine fron which transition we arrive to the destination step'),
+        'reference_res_id': fields.char('Reference ID', size=64, readonly=True, help='Used by export/import scenario/transition'),
+    }
+
+    _order = 'sequence'
+
+    _defaults = {
+        'condition': 'True',
+        'transition_type': 'scan',
+        'tracer': False,
+    }
+
+    _sql_constraints = [
+        ('reference_res_id_uniq', 'unique (reference_res_id)', 'The reference ID of the transition must be unique'),
+    ]
+
+    def create(self, cr, uid, values, context=None):
+        """
+        If the reference ID is not in values, we create it with uuid1
+        """
+        if not 'reference_res_id' in values:
+            values['reference_res_id'] = uuid.uuid1()
+
+        id = super(scanner_scenario_transition, self).create(cr, uid, values, context=context)
+        return id
+
+scanner_scenario_transition()
+
+
+class scanner_hardware(osv.osv):
+    _name = 'scanner.hardware'
+    _description = 'Scanner Hardware'
+
+    _columns = {
+        'name': fields.char('Name', size=128, required=True, help='Name of the hardware'),
+        'code': fields.char('Code', size=12, required=True, help='Code of this hardware'),
+        'warehouse_id': fields.many2one('stock.warehouse', 'Warehouse', required=True, help='Warehouse where is located this hardware'),
+        'scenario_id': fields.many2one('scanner.scenario', 'Scenario', help='Scenario used for this hardware'),
+        'step_id': fields.many2one('scanner.scenario.step', 'Current Step', help='Current step for this hardware'),
+        'reference_document': fields.integer('Reference', help='ID of the reference document'),
+        'tmp_val1': fields.char('Temp value 1', size=128, help='Temporary value'),
+        'tmp_val2': fields.char('Temp value 2', size=128, help='Temporary value'),
+        'tmp_val3': fields.char('Temp value 3', size=128, help='Temporary value'),
+        'tmp_val4': fields.char('Temp value 4', size=128, help='Temporary value'),
+        'tmp_val5': fields.char('Temp value 5', size=128, help='Temporary value'),
+    }
+
+    _defaults = {
+        'scenario_id': False,
+        'step_id': False,
+        'reference_document': False,
+    }
+
+    def scanner_check(self, cr, uid, terminal_number, context=None):
+        """
+        Check the step for this scanner
+        """
+        if context is None:
+            context = self.pool.get('res.users').context_get(cr, uid, context=context)
+
+        # Retrieve the terminal id from its number
+        terminal_ids = self.search(cr, uid, [('code', '=', terminal_number)], context=context)
+
+        # No terminal for the requested number : Error
+        if not terminal_ids:
+            logger.warning('Terminal %s not found !' % terminal_number)
+            raise osv.except_osv(_('Error'), _('Terminal not found !'))
+
+        # Retrieve scenario id from terminal
+        terminal_data = self.read(cr, uid, terminal_ids[0], ['scenario_id'], context=context)
+
+        # Return True if the terminal has a scenario
+        return terminal_data.get('scenario_id', None) is not None
+
+    def scanner_call(self, cr, uid, terminal_number, action, message='', transition_type='key', context=None):
+        """
+        This method is called by the barcode reader,
+        """
+        if context is None:
+            context = self.pool.get('res.users').context_get(cr, uid, context=context)
+
+        logger.debug('SCANNER_CALL')
+
+        # Retrieve the terminal id
+        terminal_ids = self.search(cr, uid, [('code','=',terminal_number)], context=context)
+        if not terminal_ids:
+            raise osv.except_osv(_('Error'), _('This terminal is not declared !'))
+
+        scanner_scenario_obj = self.pool.get('scanner.scenario')
+
+        # Retrieve the terminal
+        terminal = self.browse(cr, uid, terminal_ids[0], context=context)
+
+        # Attach the terminal to the related action
+        if action == 'action':
+            # The terminal is attached to a scenario
+            if terminal.scenario_id:
+                return self._scenario_save(cr, uid, terminal.id, message, transition_type, terminal.scenario_id.id, terminal.step_id.id, terminal.reference_document, context=context)
+            # We asked for a scan transition type, but no action is running, forbidden
+            elif transition_type == 'scan':
+                return ('U', ['Forbidden', 'action'], 0)
+            # No action to do
+            else:
+                logger.info('[%s] Action : %s (no current scenario)' % (terminal_number, message))
+                return self._scenario_save(cr, uid, terminal.id, message, transition_type, context=context)
+
+        # If the terminal is not attached to a scenario, send the menu
+        if not terminal.scenario_id:
+            logger.info('[%s] No scenario' % terminal_number)
+            return self._scenario_list(cr, uid, terminal.warehouse_id.id, context=context)
+
+        # Nothing matched, return an error
+        return ('R', ['Unknown', 'action'], 0)
+
+    def empty_scanner_values(self, cr, uid, ids, context=None):
+        """
+        This method empty all temporary values, scenario, step and reference_document
+        Because if we want reset term when error we must use sql query, it is bad in production
+        """
+        scenario_custom_obj = self.pool.get('scanner.scenario.custom')
+
+        # Remove values in all scenarios used by "ids" scanners
+        for scanner in self.browse(cr, uid, ids, context=context):
+            if scanner.scenario_id and scanner.scenario_id.id:
+                scenario_custom_obj._remove_values(cr, uid, scanner.scenario_id, scanner, context=context)
+
+        # Write empty values in all fields
+        self.write(cr, uid, ids, {'scenario_id': False, 'step_id': False, 'reference_document': 0, 'tmp_val1': '', 'tmp_val2': '', 'tmp_val3': '', 'tmp_val4': '', 'tmp_val5': ''}, context=context)
+
+        return True
+
+    def scanner_end(self, cr, uid, terminal_number, context=None):
+        """
+        When the end barcode is read, we execute this step
+        """
+        if context is None:
+            context = self.pool.get('res.users').context_get(cr, uid, context=context)
+
+        terminal_ids = self.search(cr, uid, [('code','=',terminal_number)], context=context)
+
+        if not terminal_ids:
+            logger.warning('Terminal %s not found' % terminal_number)
+            raise osv.except_osv(_('Error'), _('Terminal not found !'))
+
+        logger.info('End scenario request for %s terminal' % terminal_number)
+        self.empty_scanner_values(cr, uid, terminal_ids, context=context)
+
+        return ('F', ['This scenario', 'is finished'], '')
+
+    def _memorize(self, cr, uid, terminal_id, scenario_id, step_id, object=None, context=None):
+        """
+        After affect a scenario to a scanner, we must memorize it
+        If object is specify, save it as well (ex: res.partner,12)
+        """
+        if context is None:
+            context = self.pool.get('res.users').context_get(cr, uid, context=context)
+
+        args = {'scenario_id': scenario_id, 'step_id': step_id}
+        if object is not None and isinstance(object, int):
+            args['reference_document'] = object
+
+        self.write(cr, uid, [terminal_id], args, context=context)
+
+    def _scenario_save(self, cr, uid, terminal_id, message, transition_type, scenario_id=None, step_id=None, current_object='', context=None):
+        """
+        Save the scenario on this terminal and execute the current step
+        Return the action to the terminal
+        """
+        if context is None:
+            context = self.pool.get('res.users').context_get(cr, uid, context=context)
+
+        scanner_scenario_obj = self.pool.get('scanner.scenario')
+        scanner_step_obj = self.pool.get('scanner.scenario.step')
+
+        old_step_id = False
+        tracer = False
+
+        # No scenario in arguments, start a new one
+        if not scenario_id:
+            # Retrieve the terminal's warehouse
+            terminal_warehouse_ids = self.read(cr, uid, terminal_id, ['warehouse_id'], context=context).get('warehouse_id', False)
+            # Retrieve the warehouse's scenarios
+            scenario_ids = terminal_warehouse_ids and scanner_scenario_obj.search(cr, uid, [('name', '=', message), ('warehouse_ids', 'in', [terminal_warehouse_ids[0]])], context=context) or []
+
+            # If at least one scenario was found, pick the start step of the first
+            if scenario_ids:
+                step_ids = scanner_step_obj.search(cr, uid, [('scenario_id', '=', scenario_ids[0]), ('step_start', '=', True)], context=context)
+
+                # No start step found on the scenario, return an error
+                if not step_ids:
+                    return ('U', ['Please contact', 'your', 'administrator', 'A001'], 0)
+
+                step_id = step_ids[0]
+
+            else:
+                return ('U', ['Forbidden', 'action'], 0)
+        else:
+            # Store the old step id
+            old_step_id = step_id
+
+            # Retrieve outgoing transitions from the current step
+            scanner_transition_obj = self.pool.get('scanner.scenario.transition')
+            transition_ids = scanner_transition_obj.search(cr, uid, [('from_id', '=', step_id)], context=context)
+
+            # Evaluate the condition for each transition
+            for transition in scanner_transition_obj.browse(cr, uid, transition_ids, context=context):
+                step_id = False
+                tracer = ''
+                ctx = {
+                    'context': context,
+                    'model': self.pool.get(transition.from_id.scenario_id.model_id.model),
+                    'cr': cr,
+                    'pool': self.pool,
+                    'uid': uid,
+                    'message': message,
+                    't': self.browse(cr, uid, terminal_id, context=context),
+                }
+                expr = eval(str(transition.condition), ctx)
+
+                # Invalid condition, evaluate next transition
+                if not expr:
+                    continue
+
+                # Condition passed, go to this step
+                step_id = transition.to_id.id
+                tracer = transition.tracer
+                break
+
+            # No step found, return an error
+            if not step_id:
+                return ('U', ['Please contact', 'your', 'adminstrator'], 0)
+
+        # Memoize the current step
+        self._memorize(cr, uid, terminal_id, scenario_id, step_id, current_object, context=context)
+
+        # MUTEX Acquire
+        terminal = self.browse(cr, uid, terminal_id, context=context)
+        scanner_scenario._semaphore_acquire(cr, uid, terminal.scenario_id.id, terminal.warehouse_id.id, terminal.reference_document, context=context)
+
+        # Execute the step
+        step = scanner_step_obj.browse(cr, uid, step_id, context=context)
+        logger.info('Model : %s' % step.scenario_id.model_id.model)
+
+        ld = {
+            'cr': cr,
+            'uid': uid,
+            'pool': self.pool,
+            'model': self.pool.get(step.scenario_idmodel_id.model),
+            'custom': self.pool.get('scanner.scenario.custom'),
+            'term': self,
+            'context': context,
+            'm': message,
+            't': terminal,
+            'tracer': tracer,
+            'wkf': netsvc.LocalService('workflow'),
+            'scenario': scanner_scenario_obj.browse(cr, uid, scenario_id, context=context),
+        }
+
+        try:
+            exec step.pthon_code in ld
+            if step.step_stop:
+                self.empty_scanner_values(cr, uid, [terminal_id], context=context)
+        except osv.except_osv, e:
+            logger.warning('OSV Exception: %s' % str(e))
+            ld.update({'act': 'U', 'res': ['Please contact', 'your', 'administrator'], 'val': 0})
+        except Exception, e:
+            logger.warning('Exception: %s' % str(e))
+            ld.update({'act': 'U', 'res': ['Please contact', 'your', 'administrator'], 'val': 0})
+        finally:
+            scanner_scenario._semaphore_release(cr, uid, terminal.scenario_id.id, terminal.warehouse_id.id, terminal.reference_document, context=context)
+
+        return (ld.get('act', 'M'), ld.get('res', ['nothing']), ld.get('val', 0))
+
+    def _scenario_list(self, cr, uid, warehouse_id, context=None):
+        """
+        Retrieve the scenario list for this warehouse
+        """
+        if context is None:
+            context = self.pool.get('res.users').context_get(cr, uid, context=context)
+
+        scanner_scenario_obj = self.pool.get('scanner.scenario')
+        scanner_scenario_ids = scanner_scenario_obj.search(cr, uid, ['warehouse_ids', 'in', [warehouse_id]], context=context)
+        scanner_scenario_data = scanner_scenario_obj.read(cr, uid, scanner_scenario_ids, ['name'], context=context)
+
+        return_value = [data['name'] for data in scanner_scenario_data if data.get('name', False)]
+        return ('M', return_value, 0)
+
+scanner_hardware()
+
+
+class scanner_scenario_custom(osv.osv):
+    _name = 'scanner.scenario.custom'
+    _description = 'Temporary value for scenario'
+
+    _columns = {
+        # Link data to scenario
+        'scenario_id': fields.many2one('scanner.scenario', 'Scenario', help='Values used for this scenario'),
+        'scanner_id': fields.many2one('scanner.hardware', 'Scanner', help='Values used for this scanner'),
+        'model': fields.char('Model', size=255, required=True, help='Model used for these data'),
+        'res_id': fields.integer('Values id', required=True, help='ID of the model source'),
+        # Temporary fields
+        'char_val1': fields.char('Char Value 1', size=255, help='Temporary char value'),
+        'char_val2': fields.char('Char Value 2', size=255, help='Temporary char value'),
+        'char_val3': fields.char('Char Value 3', size=255, help='Temporary char value'),
+        'char_val4': fields.char('Char Value 4', size=255, help='Temporary char value'),
+        'char_val5': fields.char('Char Value 5', size=255, help='Temporary char value'),
+        'int_val1': fields.integer('Int Value 1', help='Temporary int value'),
+        'int_val2': fields.integer('Int Value 2', help='Temporary int value'),
+        'int_val3': fields.integer('Int Value 3', help='Temporary int value'),
+        'int_val4': fields.integer('Int Value 4', help='Temporary int value'),
+        'int_val5': fields.integer('Int Value 5', help='Temporary int value'),
+        'float_val1': fields.float('Float Value 1', help='Temporary float value'),
+        'float_val2': fields.float('Float Value 2', help='Temporary float value'),
+        'float_val3': fields.float('Float Value 3', help='Temporary float value'),
+        'float_val4': fields.float('Float Value 4', help='Temporary float value'),
+        'float_val5': fields.float('Float Value 5', help='Temporary float value'),
+        'text_val': fields.text('Text', help='Temporary text value'),
+    }
+
+    _defaults = {
+        'char_val1': '',
+        'char_val2': '',
+        'char_val3': '',
+        'char_val4': '',
+        'char_val5': '',
+        'int_val1': 0,
+        'int_val2': 0,
+        'int_val3': 0,
+        'int_val4': 0,
+        'int_val5': 0,
+        'float_val1': 0.,
+        'float_val2': 0.,
+        'float_val3': 0.,
+        'float_val4': 0.,
+        'float_val5': 0.,
+        'text_val': '',
+    }
+
+    def _get_domain(self, cr, uid, scenario, scanner, context=None):
+        """
+        Create a domain to find custom values.
+        Use the fields shared_custom of scenario and scanner
+        """
+        # Domain if custom values are shared
+        if scenario.shared_custom == True:
+            return [('scenario_id', '=', scenario.id), ('scanner_id.reference_document', '=', scanner.reference_document), ('scanner_id.warehouse_id', '=', scanner.warehouse_id.id)]
+
+        # Default domain
+        return [('scenario_id', '=', scenario.id), ('scanner_id', '=', scanner.id)]
+
+    def _get_values(self, cr, uid, scenario, scanner, model='', res_id=None, domain=None, context=None):
+        """
+        Returns read customs line
+        @param domain : list of tuple for search method
+        """
+        # Get the default search domain
+        search_domain = self._get_domain(cr, uid, scenario, scanner, context=context)
+
+        # Add custom values in search domain
+        if domain is not None:
+            search_domain.extend(domain)
+
+        # Add model in search domain, if any
+        if model:
+            search_domain.append(('model', '=', model))
+
+        # Add res_id in search domain, if any
+        if res_id:
+            search_domain.append(('res_id', '=', res_id))
+
+        # Search for values
+        ids = self.search(cr, uid, search_domain, context=context)
+
+        # If ids were found, return data from these ids
+        if ids:
+            return self.read(cr, uid, ids, [], context=context)
+
+        # No id found, return an empty list
+        return []
+
+    def _set_values(self, cr, uid, values, context=None):
+        """
+        values is a dict, from a 'read' function
+        Get id in values and delete some fields
+        """
+        # Copy values to let original dict unchanged
+        vals = values.copy()
+
+        # Get id from values, in a list
+        ids = [values.get('id', None)]
+
+        # Remove unwanted fields from vals
+        for key in ['id', 'scenario_id', 'scanner_id', 'model', 'res_id']:
+            if key in vals:
+                del vals[key]
+
+        # Write new values
+        return self.write(cr, uid, ids, vals, context=context)
+
+    def _remove_values(self, cr, uid, scenario, scanner, context=None):
+        """
+        Unlink all the line links from current scenario
+        """
+        scanner_hardware_obj = self.pool.get('scanner.hardware')
+        scanner_ids = []
+
+        # If custom values are shared, search for other hardware using the same
+        if scenario.shared_custom == True:
+            scanner_ids = scanner_hardware_obj.search(cr, uid, [('scenario_id', '=', scenario.id), ('warehouse_id', '=', scanner.warehouse_id.id), ('reference_document', '=', scanner.reference_document), ('id', '!=', scanner.id)], context=context)
+
+        # Search for values attached to the current scenario
+        ids = self.search(cr, uid, domain=[('scenario_id', '=', scenario.id), ('scanner_id', '=', scanner.id)], context=context)
+
+        # If other scanners are on the current scenario, attach the first
+        if scanner_ids:
+            return self.write(cr, uid, ids, {'scanner_id': scanner_ids[0]}, context=context)
+
+        # Else, delete the current custom values
+        return self.unlink(cr, uid, ids, context=context)
+
+scanner_scenario_custom()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

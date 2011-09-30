@@ -1,0 +1,171 @@
+# -*- coding: utf-8 -*-
+##############################################################################
+#
+#    wms_scanner module for OpenERP, Module for manage barcode reader
+#    Copyright (C) 2011 SYLEAM (<http://www.syleam.fr/>)
+#              Christophe CHAUVET <christophe.chauvet@syleam.fr>
+#              Jean-Sébastien SUZANNE <jean-sebastien.suzanne@syleam.fr>
+#
+#    This file is a part of wms_scanner
+#
+#    wms_scanner is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    wms_scanner is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
+
+from oobjlib.connection import Connection
+from oobjlib.component import Object
+from oobjlib.common import GetParser
+from optparse import OptionGroup
+from lxml.etree import parse
+from StringIO import StringIO
+
+import logging
+import sys
+
+parser = GetParser('Export scenario', '0.1')
+group = OptionGroup(parser, "Object arguments",
+        "Application Options")
+group.add_option('-v', '--verbose', dest='verbose',
+                 action='store_true',
+                 default=False,
+                 help='Add verbose mode')
+parser.add_option_group(group)
+opts, args = parser.parse_args()
+
+logger = logging.getLogger("import_scenario")
+ch = logging.StreamHandler()
+if opts.verbose:
+    logger.setLevel(logging.DEBUG)
+    ch.setLevel(logging.DEBUG)
+else:
+    logger.setLevel(logging.INFO)
+    ch.setLevel(logging.INFO)
+
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+ch.setFormatter(formatter)
+logger.addHandler(ch)
+
+try:
+    logger.info('Open connection to "%s:%s" on "%s" with user "%s" ' % (opts.server, opts.port, opts.dbname, opts.user))
+    cnx = Connection(
+        server=opts.server,
+        dbname=opts.dbname,
+        login=opts.user,
+        password=opts.passwd,
+        port=opts.port)
+except Exception, e:
+    logger.error('Fail to connect to the server')
+    logger.error('%s' % str(e))
+    sys.exit(1)
+
+
+resid = {}
+
+# extract scenario
+scenario_obj = Object(cnx, 'scanner.scenario')
+model_obj = Object(cnx, 'ir.model')
+warehouse_obj = Object(cnx, 'stock.warehouse')
+step_obj = Object(cnx, 'scanner.scenario.step')
+trans_obj = Object(cnx, 'scanner.scenario.transition')
+xml_file = open('scenario.xml', 'r')
+logger.info('Scenario file found, process reading!')
+scenario_xml = xml_file.read()
+xml_file.close()
+xml_doc = StringIO(scenario_xml)
+root = parse(xml_doc).getroot()
+
+step = []
+transition = []
+scen_vals = {}
+
+# parse of the scenario
+for node in root.getchildren():
+    #the node of the Step and Transition are put in other list
+    if node.tag == 'Step':
+        logger.info('Step found')
+        step.append(node)
+    elif node.tag == 'Transition':
+        logger.info('Transition found')
+        transition.append(node)
+    elif node.tag == 'warehouse_ids':
+        if not 'warehouse_ids' in scen_vals:
+            scen_vals['warehouse_ids'] = []
+        warehouse_ids = warehouse_obj.search([('name', '=', node.text)], 0, None, None, {'active_test': False})
+        if warehouse_ids:
+            scen_vals['warehouse_ids'].append((4, warehouse_ids[0]))
+    elif node.tag == 'shared_custom':
+        scen_vals[node.tag] = eval(node.text) or False
+    else:
+        scen_vals[node.tag] = node.text or False
+
+logger.info('Search model: %s' % scen_vals['model_id'])
+scen_vals['model_id'] = model_obj.search([('model', '=', scen_vals['model_id'])], 0, None, None, {'active_test': False}) or False
+if scen_vals['model_id']:
+    logger.info('Model found')
+    scen_vals['model_id'] = scen_vals['model_id'][0]
+
+# create or update
+scenario_ids = scenario_obj.search([('resid', '=', scen_vals['resid'])], 0, None, None, {'active_test': False})
+if scenario_ids:
+    logger.info('Scenario exists, update it')
+    del scen_vals['resid']
+    scenario_obj.write(scenario_ids, scen_vals)
+    scenario_id = scenario_ids[0]
+else:
+    logger.info('Scenario not exists, create it')
+    scenario_id = scenario_obj.create(scen_vals)
+
+#parse step
+logger.info('Update steps')
+resid = {}
+for node in step:
+    step_vals = {}
+    for key, item in node.items():
+        if item == 'False':
+            item = False
+        step_vals[key] = item
+    # get scenario id
+    step_vals['scenario_id'] = scenario_id
+    # get python src
+    python_code = open('%s.py' % step_vals['resid'], 'r')
+    step_vals['python_code'] = python_code.read()
+    python_code.close()
+    # create or update
+    step_ids = step_obj.search([('resid', '=', step_vals['resid'])], 0, None, None, {'active_test': False})
+    if step_ids:
+        resid[step_vals['resid']] = step_ids[0]
+        del step_vals['resid']
+        step_obj.write(step_ids, step_vals)
+    else:
+        resid[step_vals['resid']] = step_obj.create(step_vals)
+
+#parse transition
+logger.info('Update transitions')
+for node in transition:
+    trans_vals = {}
+    for key, item in node.items():
+        if key in ['to_id', 'from_id']:
+            item = resid[item]
+        trans_vals[key] = item
+    # create or update
+    trans_ids = trans_obj.search([('resid', '=', trans_vals['resid'])], 0, None, None, {'active_test': False})
+    if trans_ids:
+        del trans_vals['resid']
+        trans_obj.write(trans_ids, trans_vals)
+    else:
+        trans_obj.create(trans_vals)
+
+logger.info('Import scenario done!')
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
