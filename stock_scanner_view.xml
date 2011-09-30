@@ -27,7 +27,7 @@
         #
         # Root Scanner menu
         #
-        <menuitem id="menu_scanner_configuration" parent="stock.menu_stock_configuration" sequence="20" name="Scanner Configuration"/>
+        <menuitem id="menu_scanner_configuration" parent="stock.menu_stock_configuration" sequence="50" name="Scanner Configuration"/>
 
         #
         # Scanner Hardware
@@ -91,7 +91,7 @@
             <field name="view_mode">tree</field>
             <field name="view_id" ref="view_scanner_hardware_tree"/>
         </record>
-        <menuitem id="menu_scanner_hardware" parent="menu_scanner_configuration" sequence="20" action="act_open_scanner_hardware_view"/>
+        <menuitem id="menu_scanner_hardware" parent="menu_scanner_configuration" sequence="10" action="act_open_scanner_hardware_view"/>
 
         #
         # Scanner Scenario
@@ -278,10 +278,7 @@
             <field name="view_mode">tree</field>
             <field name="view_id" ref="view_scanner_scenario_step_tree"/>
         </record>
-        <menuitem id="menu_scanner_scenario_step"
-            parent="menu_scanner_configuration"
-            sequence="20"
-            action="act_open_scanner_scenario_step_view"/>
+        <menuitem id="menu_scanner_scenario_step" parent="menu_scanner_configuration" sequence="30" action="act_open_scanner_scenario_step_view"/>
 
         #
         # Scanner Scenario Transition
@@ -340,7 +337,7 @@
             <field name="view_mode">tree</field>
             <field name="view_id" ref="view_scanner_scenario_transition_tree"/>
         </record>
-        <menuitem id="menu_scanner_scenario_transition" parent="menu_scanner_configuration" sequence="20" action="act_open_scanner_scenario_transition_view"/>
+        <menuitem id="menu_scanner_scenario_transition" parent="menu_scanner_configuration" sequence="40" action="act_open_scanner_scenario_transition_view"/>
 
         #
         # Scanner Scenario Custom
@@ -420,7 +417,7 @@
             <field name="view_mode">tree</field>
             <field name="view_id" ref="view_scanner_scenario_custom_tree"/>
         </record>
-        <menuitem id="menu_scanner_scenario_custom" parent="menu_scanner_configuration" sequence="20" action="act_open_scanner_scenario_custom_view"/>
+        <menuitem id="menu_scanner_scenario_custom" parent="menu_scanner_configuration" sequence="50" action="act_open_scanner_scenario_custom_view"/>
 
     </data>
 </openerp>
