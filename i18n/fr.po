@@ -1,0 +1,655 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+# 	* stock_scanner
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.0.2\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2011-09-30 10:26+0000\n"
+"PO-Revision-Date: 2011-09-30 14:24+0100\n"
+"Last-Translator: Sylvain Garancher <sylvain.garancher@syleam.fr>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: stock_scanner
+#: help:scanner.scenario.transition,reference_res_id:0
+msgid "Used by export/import scenario/transition"
+msgstr "Utilisé par export/import scenario/transition"
+
+#. module: stock_scanner
+#: field:scanner.scenario,title:0
+msgid "Title"
+msgstr "Titre"
+
+#. module: stock_scanner
+#: field:scanner.scenario.step,step_start:0
+msgid "Step start"
+msgstr "Étape de départ"
+
+#. module: stock_scanner
+#: help:scanner.scenario.step,reference_res_id:0
+msgid "Used by export/import scenario/step"
+msgstr "Utilisé par export/import scenario/step"
+
+#. module: stock_scanner
+#: help:scanner.scenario,model_id:0
+msgid "Model used for this scenario"
+msgstr "Modèle utilisé par ce scénario"
+
+#. module: stock_scanner
+#: field:scanner.scenario.transition,transition_type:0
+msgid "Transition Type"
+msgstr "Type de transition"
+
+#. module: stock_scanner
+#: sql_constraint:scanner.scenario.step:0
+msgid "The reference ID of the step must be unique"
+msgstr "L'ID de référence de l'étape doit être unique"
+
+#. module: stock_scanner
+#: view:scanner.scenario:0
+msgid "Step"
+msgstr "Étape"
+
+#. module: stock_scanner
+#: field:scanner.scenario.custom,int_val5:0
+msgid "Int Value 5"
+msgstr "Valeur entière 5"
+
+#. module: stock_scanner
+#: help:scanner.scenario.step,in_transition_ids:0
+msgid "Transitions which goes to the next step"
+msgstr "Transition vers l'étape suivante"
+
+#. module: stock_scanner
+#: help:scanner.scenario,reference_res_id:0
+msgid "Used by export/import scenario"
+msgstr "Utilisé par export/import scenario"
+
+#. module: stock_scanner
+#: model:ir.model,name:stock_scanner.model_scanner_scenario
+msgid "Scenario for scanner"
+msgstr "Scénario pour scanner"
+
+#. module: stock_scanner
+#: code:addons/stock_scanner/stock_scanner.py:222
+#: code:addons/stock_scanner/stock_scanner.py:298
+#, python-format
+msgid "Terminal not found !"
+msgstr "Terminal introuvable !"
+
+#. module: stock_scanner
+#: help:scanner.hardware,step_id:0
+msgid "Current step for this hardware"
+msgstr "Étape courante pour ce matériel"
+
+#. module: stock_scanner
+#: help:scanner.scenario.custom,text_val:0
+msgid "Temporary text value"
+msgstr "Valeur text temporaire"
+
+#. module: stock_scanner
+#: field:scanner.hardware,scenario_id:0
+#: field:scanner.scenario,step_ids:0
+#: field:scanner.scenario.custom,scenario_id:0
+#: field:scanner.scenario.step,scenario_id:0
+msgid "Scenario"
+msgstr "Scénario"
+
+#. module: stock_scanner
+#: help:scanner.scenario.custom,float_val1:0
+#: help:scanner.scenario.custom,float_val2:0
+#: help:scanner.scenario.custom,float_val3:0
+#: help:scanner.scenario.custom,float_val4:0
+#: help:scanner.scenario.custom,float_val5:0
+msgid "Temporary float value"
+msgstr "Valeur flottante temporaire"
+
+#. module: stock_scanner
+#: field:scanner.scenario,notes:0
+msgid "Notes"
+msgstr "Notes"
+
+#. module: stock_scanner
+#: help:scanner.scenario.transition,condition:0
+msgid "The transition is followed only if this condition is evaluated as True"
+msgstr "La transition est suivie uniquement si la condition est évaluée à True"
+
+#. module: stock_scanner
+#: model:ir.actions.act_window,name:stock_scanner.act_open_scanner_hardware_view
+#: model:ir.model,name:stock_scanner.model_scanner_hardware
+#: model:ir.ui.menu,name:stock_scanner.menu_scanner_hardware
+#: view:scanner.hardware:0
+msgid "Scanner Hardware"
+msgstr "Matériel"
+
+#. module: stock_scanner
+#: view:scanner.scenario:0
+msgid "Steps"
+msgstr "Étapes"
+
+#. module: stock_scanner
+#: model:ir.model,name:stock_scanner.model_scanner_scenario_step
+msgid "Step for scenario"
+msgstr "Étape pour scénario"
+
+#. module: stock_scanner
+#: field:scanner.scenario.custom,int_val3:0
+msgid "Int Value 3"
+msgstr "Valeur entière 3"
+
+#. module: stock_scanner
+#: field:scanner.scenario.custom,int_val2:0
+msgid "Int Value 2"
+msgstr "Valeur entière 2"
+
+#. module: stock_scanner
+#: field:scanner.scenario.custom,int_val1:0
+msgid "Int Value 1"
+msgstr "Valeur entière 1"
+
+#. module: stock_scanner
+#: view:scanner.scenario:0
+#: view:scanner.scenario.step:0
+msgid "Outgoing transitions"
+msgstr "Transitions sortantes"
+
+#. module: stock_scanner
+#: field:scanner.scenario.custom,int_val4:0
+msgid "Int Value 4"
+msgstr "Valeur entière 4"
+
+#. module: stock_scanner
+#: field:scanner.scenario.custom,scanner_id:0
+msgid "Scanner"
+msgstr "Scanner"
+
+#. module: stock_scanner
+#: field:scanner.hardware,reference_document:0
+msgid "Reference"
+msgstr "Référence"
+
+#. module: stock_scanner
+#: help:scanner.scenario.custom,res_id:0
+msgid "ID of the model source"
+msgstr "ID du modèle source"
+
+#. module: stock_scanner
+#: help:scanner.hardware,warehouse_id:0
+msgid "Warehouse where is located this hardware"
+msgstr "Entrepôt dans lequel est situé ce matériel"
+
+#. module: stock_scanner
+#: help:scanner.hardware,tmp_val1:0
+#: help:scanner.hardware,tmp_val2:0
+#: help:scanner.hardware,tmp_val3:0
+#: help:scanner.hardware,tmp_val4:0
+#: help:scanner.hardware,tmp_val5:0
+msgid "Temporary value"
+msgstr "Valeur temporaire"
+
+#. module: stock_scanner
+#: help:scanner.scenario,title:0
+msgid "Title for this scenario"
+msgstr "Titre de ce scénario"
+
+#. module: stock_scanner
+#: selection:scanner.scenario.transition,transition_type:0
+msgid "Keyboard"
+msgstr "Clavier"
+
+#. module: stock_scanner
+#: help:scanner.hardware,reference_document:0
+msgid "ID of the reference document"
+msgstr "ID du document de référence"
+
+#. module: stock_scanner
+#: field:scanner.scenario.transition,from_id:0
+msgid "From"
+msgstr "De"
+
+#. module: stock_scanner
+#: view:scanner.scenario:0
+msgid "Add note, modification date, etc."
+msgstr "Ajouter une note, une date de modification, etc."
+
+#. module: stock_scanner
+#: field:scanner.hardware,warehouse_id:0
+msgid "Warehouse"
+msgstr "Entrepôt"
+
+#. module: stock_scanner
+#: help:scanner.scenario.step,python_code:0
+msgid "Python code to execute"
+msgstr "Code python à exécuter"
+
+#. module: stock_scanner
+#: model:ir.actions.act_window,name:stock_scanner.act_open_scanner_scenario_step_view
+#: model:ir.ui.menu,name:stock_scanner.menu_scanner_scenario_step
+#: view:scanner.scenario.step:0
+msgid "Scenario Step"
+msgstr "Étape"
+
+#. module: stock_scanner
+#: help:scanner.scenario.custom,model:0
+msgid "Model used for these data"
+msgstr "Modèle utilisé pour ces données"
+
+#. module: stock_scanner
+#: view:scanner.scenario:0
+#: view:scanner.scenario.step:0
+#: field:scanner.scenario.step,in_transition_ids:0
+msgid "Incoming transitions"
+msgstr "Transitions entraintes"
+
+#. module: stock_scanner
+#: field:scanner.scenario.step,step_stop:0
+msgid "Step stop"
+msgstr "Étape de fin"
+
+#. module: stock_scanner
+#: help:scanner.scenario.transition,tracer:0
+msgid "Used to determine fron which transition we arrive to the destination step"
+msgstr "Utilisé pour déterminer de quelle transition nous venons pour l'étape destination"
+
+#. module: stock_scanner
+#: help:scanner.hardware,name:0
+msgid "Name of the hardware"
+msgstr "Nom du matériel"
+
+#. module: stock_scanner
+#: model:ir.model,name:stock_scanner.model_scanner_scenario_custom
+msgid "Temporary value for scenario"
+msgstr "Valeur temporaire pour scénario"
+
+#. module: stock_scanner
+#: help:scanner.scenario,step_ids:0
+msgid "Step of the current running scenario"
+msgstr "Étape du scénario courant"
+
+#. module: stock_scanner
+#: help:scanner.scenario.custom,int_val1:0
+#: help:scanner.scenario.custom,int_val2:0
+#: help:scanner.scenario.custom,int_val3:0
+#: help:scanner.scenario.custom,int_val4:0
+#: help:scanner.scenario.custom,int_val5:0
+msgid "Temporary int value"
+msgstr "Valeur entière temporaire"
+
+#. module: stock_scanner
+#: field:scanner.scenario,sequence:0
+#: field:scanner.scenario.transition,sequence:0
+msgid "Sequence"
+msgstr "Séquence"
+
+#. module: stock_scanner
+#: field:scanner.hardware,tmp_val5:0
+msgid "Temp value 5"
+msgstr "Valeur temporaire 5"
+
+#. module: stock_scanner
+#: field:scanner.hardware,tmp_val4:0
+msgid "Temp value 4"
+msgstr "Valeur temporaire 4"
+
+#. module: stock_scanner
+#: field:scanner.hardware,tmp_val1:0
+msgid "Temp value 1"
+msgstr "Valeur temporaire 1"
+
+#. module: stock_scanner
+#: field:scanner.hardware,tmp_val3:0
+msgid "Temp value 3"
+msgstr "Valeur temporaire 3"
+
+#. module: stock_scanner
+#: field:scanner.hardware,tmp_val2:0
+msgid "Temp value 2"
+msgstr "Valeur temporaire 2"
+
+#. module: stock_scanner
+#: selection:scanner.scenario.transition,transition_type:0
+msgid "Scan"
+msgstr "Scanner"
+
+#. module: stock_scanner
+#: field:scanner.scenario.custom,char_val3:0
+msgid "Char Value 3"
+msgstr "Valeur char 3"
+
+#. module: stock_scanner
+#: field:scanner.scenario.custom,char_val2:0
+msgid "Char Value 2"
+msgstr "Valeur char 2"
+
+#. module: stock_scanner
+#: field:scanner.scenario.custom,char_val1:0
+msgid "Char Value 1"
+msgstr "Valeur char 1"
+
+#. module: stock_scanner
+#: field:scanner.scenario.custom,char_val5:0
+msgid "Char Value 5"
+msgstr "Valeur char 5"
+
+#. module: stock_scanner
+#: field:scanner.scenario.custom,char_val4:0
+msgid "Char Value 4"
+msgstr "Valeur char 4"
+
+#. module: stock_scanner
+#: view:scanner.scenario.custom:0
+msgid "Char"
+msgstr "Char"
+
+#. module: stock_scanner
+#: help:scanner.hardware,scenario_id:0
+msgid "Scenario used for this hardware"
+msgstr "Scenario utilisé pour ce matériel"
+
+#. module: stock_scanner
+#: help:scanner.scenario,shared_custom:0
+msgid "Allows to share the custom values with a shared scanner in the same warehouse"
+msgstr "Permet de partager les valeurs personnalisées avec un autre scanner dans le même entrepôt"
+
+#. module: stock_scanner
+#: help:scanner.scenario.transition,transition_type:0
+msgid "Type of transition"
+msgstr "Type de transition"
+
+#. module: stock_scanner
+#: view:scanner.scenario:0
+msgid "Note"
+msgstr "Note"
+
+#. module: stock_scanner
+#: field:scanner.scenario,reference_res_id:0
+msgid "Rerefence ID"
+msgstr "ID de référence"
+
+#. module: stock_scanner
+#: field:scanner.hardware,step_id:0
+msgid "Current Step"
+msgstr "Étape courante"
+
+#. module: stock_scanner
+#: field:scanner.scenario.step,out_transition_ids:0
+msgid "Outgoing transitons"
+msgstr "Transitions sortantes"
+
+#. module: stock_scanner
+#: model:ir.model,name:stock_scanner.model_scanner_scenario_transition
+msgid "Transition for senario"
+msgstr "Transition de scénario"
+
+#. module: stock_scanner
+#: model:ir.actions.act_window,name:stock_scanner.act_open_scanner_scenario_view
+#: model:ir.ui.menu,name:stock_scanner.menu_scanner_scenario
+#: view:scanner.scenario:0
+msgid "Scanner Scenario"
+msgstr "Scénario"
+
+#. module: stock_scanner
+#: field:scanner.scenario,shared_custom:0
+msgid "Shared Custom"
+msgstr "Partager les valeurs personnalisées"
+
+#. module: stock_scanner
+#: help:scanner.scenario.custom,scenario_id:0
+msgid "Values used for this scenario"
+msgstr "Valeurs utilisées pour ce scénario"
+
+#. module: stock_scanner
+#: view:scanner.hardware:0
+msgid "Scanner Status"
+msgstr "Statut du scanner"
+
+#. module: stock_scanner
+#: help:scanner.scenario.step,out_transition_ids:0
+msgid "Transitions which goes to this step"
+msgstr "Transition menant vers cette étape"
+
+#. module: stock_scanner
+#: view:scanner.scenario:0
+#: view:scanner.scenario.step:0
+msgid "Enter the python code here"
+msgstr "Entrer le code python ici"
+
+#. module: stock_scanner
+#: field:scanner.scenario,active:0
+msgid "Active"
+msgstr "Actif"
+
+#. module: stock_scanner
+#: view:scanner.scenario.custom:0
+msgid "Integer"
+msgstr "Entier"
+
+#. module: stock_scanner
+#: help:scanner.scenario,name:0
+msgid "Appear on barcode reader screen"
+msgstr "Apparaît sur l'écran du lecteur de codes barres"
+
+#. module: stock_scanner
+#: help:scanner.hardware,code:0
+msgid "Code of this hardware"
+msgstr "Code pour ce matériel"
+
+#. module: stock_scanner
+#: field:scanner.scenario.transition,condition:0
+msgid "Condition"
+msgstr "Condition"
+
+#. module: stock_scanner
+#: view:scanner.hardware:0
+msgid "Reset Scenario"
+msgstr "Réinitialiser le scénario"
+
+#. module: stock_scanner
+#: help:scanner.scenario.transition,from_id:0
+msgid "Step which launches this transition"
+msgstr "Étape qui mène à cette transition"
+
+#. module: stock_scanner
+#: model:ir.actions.act_window,name:stock_scanner.act_open_scanner_scenario_transition_view
+#: model:ir.ui.menu,name:stock_scanner.menu_scanner_scenario_transition
+#: view:scanner.scenario:0
+#: view:scanner.scenario.step:0
+#: view:scanner.scenario.transition:0
+msgid "Transition"
+msgstr "Transition"
+
+#. module: stock_scanner
+#: field:scanner.scenario.custom,float_val1:0
+msgid "Float Value 1"
+msgstr "Valeur flottante 1"
+
+#. module: stock_scanner
+#: field:scanner.scenario.custom,float_val2:0
+msgid "Float Value 2"
+msgstr "Valeur florrante 2"
+
+#. module: stock_scanner
+#: field:scanner.scenario.custom,float_val3:0
+msgid "Float Value 3"
+msgstr "Valeur florrante 3"
+
+#. module: stock_scanner
+#: field:scanner.scenario.custom,float_val4:0
+msgid "Float Value 4"
+msgstr "Valeur florrante 4"
+
+#. module: stock_scanner
+#: field:scanner.scenario.custom,float_val5:0
+msgid "Float Value 5"
+msgstr "Valeur florrante 5"
+
+#. module: stock_scanner
+#: code:addons/stock_scanner/stock_scanner.py:222
+#: code:addons/stock_scanner/stock_scanner.py:242
+#: code:addons/stock_scanner/stock_scanner.py:298
+#, python-format
+msgid "Error"
+msgstr "Erreur"
+
+#. module: stock_scanner
+#: help:scanner.scenario.custom,char_val1:0
+#: help:scanner.scenario.custom,char_val2:0
+#: help:scanner.scenario.custom,char_val3:0
+#: help:scanner.scenario.custom,char_val4:0
+#: help:scanner.scenario.custom,char_val5:0
+msgid "Temporary char value"
+msgstr "Valeur char temporaire"
+
+#. module: stock_scanner
+#: field:scanner.scenario.step,reference_res_id:0
+#: field:scanner.scenario.transition,reference_res_id:0
+msgid "Reference ID"
+msgstr "ID de référence"
+
+#. module: stock_scanner
+#: field:scanner.hardware,code:0
+#: view:scanner.scenario:0
+#: view:scanner.scenario.step:0
+msgid "Code"
+msgstr "Code"
+
+#. module: stock_scanner
+#: help:scanner.scenario.step,step_stop:0
+msgid "Check this if this is the  last step of the scenario"
+msgstr "Cocher si cette étape est la dernière du scénario"
+
+#. module: stock_scanner
+#: field:scanner.scenario.transition,to_id:0
+msgid "To"
+msgstr "Vers"
+
+#. module: stock_scanner
+#: view:scanner.scenario.custom:0
+#: field:scanner.scenario.custom,text_val:0
+msgid "Text"
+msgstr "Texte"
+
+#. module: stock_scanner
+#: help:scanner.scenario.step,scenario_id:0
+msgid "Scenario for this step"
+msgstr "Scénario de cette étape"
+
+#. module: stock_scanner
+#: field:scanner.scenario.custom,res_id:0
+msgid "Values id"
+msgstr "ID de la valeur"
+
+#. module: stock_scanner
+#: model:ir.ui.menu,name:stock_scanner.menu_scanner_configuration
+msgid "Scanner Configuration"
+msgstr "Configuration des scanners"
+
+#. module: stock_scanner
+#: help:scanner.scenario,warehouse_ids:0
+msgid "Warehouses for this scenario"
+msgstr "Entrepôts de ce scénario"
+
+#. module: stock_scanner
+#: view:scanner.scenario:0
+#: field:scanner.scenario,warehouse_ids:0
+msgid "Warehouses"
+msgstr "Entrepôts"
+
+#. module: stock_scanner
+#: model:ir.actions.act_window,name:stock_scanner.act_open_scanner_scenario_custom_view
+#: model:ir.ui.menu,name:stock_scanner.menu_scanner_scenario_custom
+#: view:scanner.scenario.custom:0
+msgid "Scenario Custom Values"
+msgstr "Valeurs personnalisées de scénario"
+
+#. module: stock_scanner
+#: code:addons/stock_scanner/stock_scanner.py:242
+#, python-format
+msgid "This terminal is not declared !"
+msgstr "Ce terminal n'est pas déclaré !"
+
+#. module: stock_scanner
+#: help:scanner.scenario,sequence:0
+#: help:scanner.scenario.transition,sequence:0
+msgid "Sequence order"
+msgstr "Séquence"
+
+#. module: stock_scanner
+#: sql_constraint:scanner.scenario.transition:0
+msgid "The reference ID of the transition must be unique"
+msgstr "L'ID de référence de la transition doit être unique !"
+
+#. module: stock_scanner
+#: help:scanner.scenario.transition,to_id:0
+msgid "Step which is reached by this transition"
+msgstr "Étape atteinte par cette transition"
+
+#. module: stock_scanner
+#: help:scanner.scenario.custom,scanner_id:0
+msgid "Values used for this scanner"
+msgstr "Valeurs utilisées pour ce scanner"
+
+#. module: stock_scanner
+#: help:scanner.scenario.step,step_start:0
+msgid "Check this if this is the first step of the scenario"
+msgstr "Cocher si cette étape est la première du scénario"
+
+#. module: stock_scanner
+#: help:scanner.scenario,notes:0
+msgid "Store different notes, date and title for modification, etc..."
+msgstr "Stocke différentes notes, dates et titres pour les modifications, etc."
+
+#. module: stock_scanner
+#: field:scanner.hardware,name:0
+#: field:scanner.scenario,name:0
+#: field:scanner.scenario.step,name:0
+#: field:scanner.scenario.transition,name:0
+msgid "Name"
+msgstr "Nom"
+
+#. module: stock_scanner
+#: field:scanner.scenario.step,python_code:0
+msgid "Python code"
+msgstr "Code python"
+
+#. module: stock_scanner
+#: sql_constraint:scanner.scenario:0
+msgid "The reference ID of the scenario must be unique !"
+msgstr "L'ID de référence du scénario doit être unique !"
+
+#. module: stock_scanner
+#: field:scanner.scenario,model_id:0
+#: field:scanner.scenario.custom,model:0
+msgid "Model"
+msgstr "Modèle"
+
+#. module: stock_scanner
+#: field:scanner.scenario.transition,tracer:0
+msgid "Tracer"
+msgstr "Traceur"
+
+#. module: stock_scanner
+#: help:scanner.scenario.transition,name:0
+msgid "Name of the transition"
+msgstr "Nom de la transition"
+
+#. module: stock_scanner
+#: help:scanner.scenario,active:0
+msgid "If check, this object is always available"
+msgstr "Si coché, cet objet est toujours disponible"
+
+#. module: stock_scanner
+#: view:scanner.scenario.custom:0
+msgid "Float"
+msgstr "Flottant"
+
+#. module: stock_scanner
+#: help:scanner.scenario.step,name:0
+msgid "Name of the step"
+msgstr "Nom de l'étape"
+
