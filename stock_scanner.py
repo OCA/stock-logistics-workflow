@@ -434,7 +434,7 @@ class scanner_hardware(osv.osv):
             context = self.pool.get('res.users').context_get(cr, uid, context=context)
 
         scanner_scenario_obj = self.pool.get('scanner.scenario')
-        scanner_scenario_ids = scanner_scenario_obj.search(cr, uid, ['warehouse_ids', 'in', [warehouse_id]], context=context)
+        scanner_scenario_ids = scanner_scenario_obj.search(cr, uid, [('warehouse_ids', 'in', [warehouse_id])], context=context)
         scanner_scenario_data = scanner_scenario_obj.read(cr, uid, scanner_scenario_ids, ['name'], context=context)
 
         return_value = [data['name'] for data in scanner_scenario_data if data.get('name', False)]
