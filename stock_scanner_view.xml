@@ -57,15 +57,19 @@
                     <field name="code" select="1"/>
                     <field name="name" select="1"/>
                     <field name="warehouse_id" select="1"/>
-                    <newline/>
-                    <separator string="Scanner Status" colspan="4"/>
-                    <field name="scenario_id"/>
-                    <field name="step_id"/>
-                    <field name="reference_document" colspan="4"/>
+                    <field name="log_enabled"/>
                     <newline/>
                     <group colspan="4">
-                        <button string="Reset Scenario" type="object" name="empty_scanner_values"/>
-                        <newline/>
+                        <separator string="Screen size" colspan="4"/>
+                        <field name="screen_width"/>
+                        <field name="screen_height"/>
+                    </group>
+                    <group colspan="4">
+                        <separator string="Scanner status" colspan="4"/>
+                        <field name="scenario_id"/>
+                        <field name="step_id"/>
+                        <field name="reference_document" colspan="4"/>
+                        <button string="Reset Scenario" colspan="4" type="object" name="empty_scanner_values"/>
                     </group>
                 </form>
             </field>
@@ -106,7 +110,6 @@
                     <field name="sequence"/>
                     <field name="name"/>
                     <field name="model_id"/>
-                    <field name="title"/>
                     <field name="shared_custom"/>
                 </tree>
             </field>
@@ -122,7 +125,6 @@
                     <field name="active"/>
                     <field name="sequence"/>
                     <field name="model_id"/>
-                    <field name="title"/>
                     <field name="shared_custom"/>
                     <notebook colspan="4">
                         <page string="Steps">
