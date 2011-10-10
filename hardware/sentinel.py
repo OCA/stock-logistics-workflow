@@ -167,43 +167,48 @@ class Sentinel:
         while True:
             # No active scenario, select one
             if not self.scenario_id:
-                self.scenario_id = self._select_scenario()
-                (code, result, value) = self.oerp_call('action')
+                (code, result, value) = self._select_scenario()
+                self.scenario_id = result
             else:
-                # Quantity selection
                 if code == 'Q':
+                    # Quantity selection
                     quantity = self._select_quantity('\n'.join(result), value)
                     (code, result, value) = self.oerp_call('action', quantity)
-                # Confirmation query
                 elif code == 'C':
+                    # Confirmation query
                     confirm = self._confirm('\n'.join(result))
                     (code, result, value) = self.oerp_call('action', confirm)
-                # Text input
                 elif code == 'T':
+                    # Text input
                     text = self._input_text('\n'.join(result))
                     (code, result, value) = self.oerp_call('action', text)
-                # Error
                 elif code == 'R':
+                    # Error
                     self.scenario_id = False
                     self._display_error('\n'.join(result))
-                # Unknown action
                 elif code == 'U':
+                    # Unknown action
                     self._display('\n'.join(result), clear=True)
                     self.getkey()
+                    (code, result, value) = self.oerp_call('back')
                 elif code == 'M':
+                    # Simple message
                     code = False
                     self._display('\n'.join(result), clear=True)
                     self.getkey()
                 elif code == 'L':
+                    # Choose a value in a list
                     # Select a value in the list
                     choice = self._menu_choice(result)
                     # Send the result to OpenERP
                     (code, result, value) = self.oerp_call('action', result[choice])
                 elif code == 'F':
+                    # End of scenario
                     self.scenario_id = False
                     self._display('\n'.join(result), clear=True)
                     self.getkey()
                 else:
+                    # Default call
                     (code, result, value) = self.oerp_call('action')
 
     def _display_error(self, error_message):
@@ -235,9 +240,7 @@ class Sentinel:
         choice = self._menu_choice(values)
 
         # Send the result to OpenERP
-        (code, scenario_id, value) = self.oerp_call('action', values[choice])
-
-        return scenario_id
+        return self.oerp_call('action', values[choice])
 
     def _confirm(self, message):
         """

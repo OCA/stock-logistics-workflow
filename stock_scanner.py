@@ -263,7 +263,7 @@ class scanner_hardware(osv.osv):
         elif action == 'action':
             # The terminal is attached to a scenario
             if terminal.scenario_id:
-                return self._scenario_save(cr, uid, terminal.id, message, transition_type, terminal.scenario_id.id, terminal.step_id.id, terminal.reference_document, context=context)
+                return self._scenario_save(cr, uid, terminal.id, message, transition_type, scenario_id=terminal.scenario_id.id, step_id=terminal.step_id.id, current_object=terminal.reference_document, context=context)
             # We asked for a scan transition type, but no action is running, forbidden
             elif transition_type == 'scanner':
                 return self._unknown_action(cr, uid, [terminal.id], ['Forbidden', 'action'], context=context)
@@ -271,6 +271,12 @@ class scanner_hardware(osv.osv):
             else:
                 logger.info('[%s] Action : %s (no current scenario)' % (terminal_number, message))
                 return self._scenario_save(cr, uid, terminal.id, message, transition_type, context=context)
+
+        # Reload current step
+        elif action == 'back':
+            # The terminal is attached to a scenario
+            if terminal.scenario_id:
+                return self._scenario_save(cr, uid, terminal.id, message, 'none', scenario_id=terminal.scenario_id.id, step_id=terminal.step_id.id, current_object=terminal.reference_document, context=context)
 
         # End required
         elif action == 'end':
@@ -361,13 +367,13 @@ class scanner_hardware(osv.osv):
 
                 # No start step found on the scenario, return an error
                 if not step_ids:
-                    return self._unknown_action(cr, uid, [terminal_id], ['Please contact', 'your', 'administrator', 'A001'], context=context)
+                    return self._send_error(cr, uid, [terminal_id], ['Please contact', 'your', 'administrator', 'A001'], context=context)
 
                 step_id = step_ids[0]
 
             else:
-                return self._unknown_action(cr, uid, [terminal_id], ['Forbidden', 'action'], context=context)
-        else:
+                return self._send_error(cr, uid, [terminal_id], ['Scenario', 'not found'], context=context)
+        elif transition_type != 'none':
             # Store the old step id
             old_step_id = step_id
 
