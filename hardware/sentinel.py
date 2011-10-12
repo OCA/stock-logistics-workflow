@@ -26,9 +26,18 @@
 import os
 import sys
 import math
+import ConfigParser
 import curses.ascii
 from oobjlib.connection import Connection
 from oobjlib.component import Object
+
+# Default configuration
+DEFAULT_CONFIG = {
+    'host' :'localhost',
+    'user': 'admin',
+    'password': 'admin',
+    'port': '8069',
+}
 
 # Names of the ncurses colors
 COLOR_NAMES = {
@@ -60,19 +69,26 @@ class Sentinel:
         """
         Initialize the sentinel program
         """
+        # Read user configuration
+        config = ConfigParser.SafeConfigParser(DEFAULT_CONFIG)
+        config.read('.oerp_sentinelrc')
+
+        # No configfile found, exit
+        if not 'openerp' in config.sections():
+            raise Exception('Config Error', 'Config file not found !')
+
         # Connection to the OpenERP Server
-        # TODO : Configuration
         self.connection = Connection(
-            server='localhost',
-            dbname='scanner_110928',
-            login='admin',
-            password='admin',
-            port=8069,
+            server=config.get('openerp', 'host'),
+            dbname=config.get('openerp', 'database'),
+            login=config.get('openerp', 'user'),
+            password=config.get('openerp', 'password'),
+            port=config.get('openerp', 'port'),
         )
 
         # Initialize hardware
         self.hardware_obj = Object(self.connection, 'scanner.hardware')
-        # TODO : Manage code in oerp
+        # TODO : Manage code in oerp ?
         self.hardware_code = 'CODE'
         # Get the informations for this code from server
         self.scenario_id = self.hardware_obj.scanner_check(self.hardware_code)
