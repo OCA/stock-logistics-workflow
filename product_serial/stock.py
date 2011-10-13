@@ -113,7 +113,7 @@ class stock_move(osv.osv):
         print "--> 4"
         result = super(stock_move, self).action_done(cr, uid, ids, context)
         for move in self.browse(cr, uid, ids):
-            if move.product_id.unique_production_number and move.move_dest_id and move.move_dest_id.id:
+            if move.product_id.lot_split_type and move.move_dest_id and move.move_dest_id.id:
                 cr.execute("select stock_move.id from stock_move_history_ids left join stock_move on stock_move.id = stock_move_history_ids.child_id where parent_id=%s and stock_move.product_qty=1", (move.id,))
                 unitary_out_moves = cr.fetchall()
                 if unitary_out_moves and len(unitary_out_moves) > 1:
