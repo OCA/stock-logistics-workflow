@@ -32,21 +32,18 @@ class stock_move(osv.osv):
     _inherit = "stock.move"
 
     def copy(self, cr, uid, id, default=None, context=None):
-        print "--> 1"
         if not default:
             default = {}
         default['new_prodlot_code'] = False
         return super(stock_move, self).copy(cr, uid, id, default, context=context)
 
     def _get_prodlot_code(self, cr, uid, ids, field_name, arg, context=None):
-        print "--> 2"
         res = {}
         for move in self.browse(cr, uid, ids):
             res[move.id] = move.prodlot_id and move.prodlot_id.name or False
         return res
 
     def _set_prodlot_code(self, cr, uid, ids, name, value, arg, context=None):
-        print "--> 3"
         if not value: return False
 
         if isinstance(ids, (int, long)):
@@ -65,14 +62,12 @@ class stock_move(osv.osv):
                 move.write({'prodlot_id' : prodlot_id})
 
     def _get_tracking_code(self, cr, uid, ids, field_name, arg, context=None):
-        print "--> 2"
         res = {}
         for move in self.browse(cr, uid, ids):
             res[move.id] = move.tracking_id and move.tracking_id.name or False
         return res
 
     def _set_tracking_code(self, cr, uid, ids, name, value, arg, context=None):
-        print "--> 3"
         if not value: return False
 
         if isinstance(ids, (int, long)):
@@ -110,7 +105,6 @@ class stock_move(osv.osv):
         and: b->, b->e, b->f
         The following code will detect this situation and reconnect properly the moves into only: b->a, c->e and d->f
         """
-        print "--> 4"
         result = super(stock_move, self).action_done(cr, uid, ids, context)
         for move in self.browse(cr, uid, ids):
             if move.product_id.lot_split_type and move.move_dest_id and move.move_dest_id.id:
@@ -141,7 +135,6 @@ class stock_move(osv.osv):
 
 
     def split_move_in_single(self, cr, uid, ids, context=None):
-        print "--> 5.1"
         all_ids = ids[:]
         for move_id in ids:
             move = self.browse(cr, uid, move_id)
@@ -155,7 +148,6 @@ class stock_move(osv.osv):
 	# To split move lines depending on logistical units defined for the product
 	# TO IMPROVE with 1 (or more) algo which will take into account all LU for the product
     def split_move_in_lu(self, cr, uid, ids, context=None):
-        print "--> 5.2"
         all_ids = ids[:]
         for move_id in ids:
             move = self.browse(cr, uid, move_id)
@@ -179,7 +171,6 @@ class stock_picking(osv.osv):
     _inherit = "stock.picking"
 
     def action_assign_wkf(self, cr, uid, ids):
-        print "--> 6"
         result = super(stock_picking, self).action_assign_wkf(cr, uid, ids)
 
         for picking in self.browse(cr, uid, ids):
@@ -193,7 +184,6 @@ class stock_picking(osv.osv):
                         (move.product_id.track_incoming and move.location_id.usage == 'supplier') or \
                         (move.product_id.track_outgoing and move.location_dest_id.usage == 'customer')):
                             self.pool.get('stock.move').split_move_in_single(cr, uid, [move.id])
-                            print "--> 6.1" 
                     # SPLIT with logistical units
                     elif move.product_id.lot_split_type=="lu" and \
                        move.product_qty > 1 and move.product_id.packaging and \
@@ -201,8 +191,7 @@ class stock_picking(osv.osv):
                         (move.product_id.track_production and move.location_dest_id.usage == 'production') or \
                         (move.product_id.track_incoming and move.location_id.usage == 'supplier') or \
                         (move.product_id.track_outgoing and move.location_dest_id.usage == 'customer')):
-                            self.pool.get('stock.move').split_move_in_lu(cr, uid, [move.id])
-                            print "--> 6.2"                       
+                            self.pool.get('stock.move').split_move_in_lu(cr, uid, [move.id])                      
 
         return result
 
@@ -219,7 +208,6 @@ class stock_picking(osv.osv):
     # subtotal.
     def action_invoice_create(self, cursor, user, ids, journal_id=False,
         group=False, type='out_invoice', context=None):
-        print "--> 7"
         invoice_dict = super(stock_picking, self).action_invoice_create(cursor, user,
             ids, journal_id, group, type, context=context)
 
@@ -294,7 +282,6 @@ class stock_production_lot(osv.osv):
         Instead of using dates we assume the product is in the location having the
         highest number of products with the given serial (should be 1 if no mistake). This
         is better than using move dates because moves can easily be encoded at with wrong dates."""
-        print "--> 8"
         res = {}
 
         for prodlot_id in ids:
