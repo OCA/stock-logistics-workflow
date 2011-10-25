@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    MRP prodlot auto-split module for OpenERP
+#    Product serial module for OpenERP
 #    Copyright (C) 2010-2011 Anevia. All Rights Reserved
 #    (written by Sebastien Beau <sebastien.beau@akretion.com>)
 #

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    MRP prodlot auto-split module for OpenERP
+#    Product serial module for OpenERP
 #    Copyright (C) 2010 NaN Projectes de Programari Lliure, S.L.
 #                       http://www.NaN-tic.com
 #
