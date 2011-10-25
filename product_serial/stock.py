@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    MRP prodlot auto-split module for OpenERP
+#    Product serial module for OpenERP
 #    Copyright (C) 2008 Raphaël Valyi
 #    Copyright (C) 2011 Anevia S.A. - Ability to group invoice lines
 #              written by Alexis Demeaulte <alexis.demeaulte@anevia.com>

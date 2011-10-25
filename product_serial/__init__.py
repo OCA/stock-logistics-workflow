@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    MRP prodlot auto-split module for OpenERP
+#    Product serial module for OpenERP
 #    Copyright (C) 2008 Raphaël Valyi
 #
 #    This program is free software: you can redistribute it and/or modify
