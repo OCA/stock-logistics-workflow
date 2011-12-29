@@ -71,6 +71,10 @@ class scanner_scenario(osv.osv):
         id = super(scanner_scenario, self).create(cr, uid, values, context=context)
         return id
 
+    def copy_data(self, cr, uid, id, data, context=None):
+        data['reference_res_id'] = uuid.uuid1()
+        return super(scanner_scenario, self).copy_data(cr, uid, id, data, context=context)
+
     def _semaphore_acquire(self, cr, uid, id, warehouse_id, reference_document, context=None):
         """
         Make an acquire on a semaphore to take a token
@@ -142,6 +146,10 @@ class scanner_scenario_step(osv.osv):
         id = super(scanner_scenario_step, self).create(cr, uid, values, context=context)
         return id
 
+    def copy_data(self, cr, uid, id, data, context=None):
+        data['reference_res_id'] = uuid.uuid1()
+        return super(scanner_scenario_step, self).copy_data(cr, uid, id, data, context=context)
+
 scanner_scenario_step()
 
 
@@ -181,6 +189,10 @@ class scanner_scenario_transition(osv.osv):
 
         id = super(scanner_scenario_transition, self).create(cr, uid, values, context=context)
         return id
+
+    def copy_data(self, cr, uid, id, data, context=None):
+        data['reference_res_id'] = uuid.uuid1()
+        return super(scanner_scenario_transition, self).copy_data(cr, uid, id, data, context=context)
 
 scanner_scenario_transition()
 
