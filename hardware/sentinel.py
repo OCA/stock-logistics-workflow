@@ -278,11 +278,11 @@ class Sentinel:
 
             # Compute Yes/No positions
             yes_start = 0
-            yes_padding = math.floor(self.window_width / 2)
-            yes_text = 'Yes'.ljust(math.floor(yes_padding / 2) + 2).rjust(yes_padding)
+            yes_padding = int(math.floor(self.window_width / 2))
+            yes_text = 'Yes'.ljust(int(math.floor(yes_padding / 2)) + 2).rjust(yes_padding)
             no_start = yes_padding
             no_padding = self.window_width - no_start - 1
-            no_text = 'No'.ljust(math.floor(no_padding / 2) + 1).rjust(no_padding)
+            no_text = 'No'.ljust(int(math.floor(no_padding / 2)) + 1).rjust(no_padding)
 
             if confirm:
                 # Yes selected
