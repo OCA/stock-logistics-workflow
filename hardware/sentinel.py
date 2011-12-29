@@ -155,7 +155,7 @@ class Sentinel:
 
         return value
 
-    def _display(self, text, x=0, y=0, clear=False, color='base', modifier=curses.A_NORMAL):
+    def _display(self, text, x=0, y=0, clear=False, color='base', bgcolor=False, modifier=curses.A_NORMAL):
         """
         Display a line of text
         """
@@ -169,6 +169,9 @@ class Sentinel:
 
         # Compute the display modifiers
         color = self._get_color(color) | modifier
+        # Set background to 'error' colors
+        if bgcolor:
+            self.screen.bkgd(0, color)
 
         # Display the text
         # self.screen.addstr(y, x, unicode(text).encode('utf-8', 'replace'), color)
@@ -235,9 +238,7 @@ class Sentinel:
         """
         # Reset scenario_id
         self.scenario_id = False
-        # Set background to 'error' colors
-        self.screen.bkgd(0, self._get_color('error'))
-        self._display(error_message, color='error', clear=True)
+        self._display(error_message, color='error', bgcolor=True, clear=True)
         self.getkey()
         # Restore normal background colors
         self.screen.bkgd(0, self._get_color('base'))
