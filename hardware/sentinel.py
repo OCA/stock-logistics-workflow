@@ -210,6 +210,13 @@ class Sentinel:
                     self._display('\n'.join(result), clear=True)
                     self.getkey()
                     (code, result, value) = self.oerp_call('back')
+                elif code == 'E':
+                    # Simple message
+                    code = False
+                    self._display('\n'.join(result), color='error', bgcolor=True, clear=True)
+                    self.getkey()
+                    # Restore normal background colors
+                    self.screen.bkgd(0, self._get_color('base'))
                 elif code == 'M':
                     # Simple message
                     code = False
