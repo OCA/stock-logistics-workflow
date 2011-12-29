@@ -203,7 +203,7 @@ class Sentinel:
                     self.scenario_id = False
                     self._display_error('\n'.join(result))
                 elif code == 'U':
-                    # Unknown action
+                    # Unknown action : message with return back to the last state
                     self._display('\n'.join(result), clear=True)
                     self.getkey()
                     (code, result, value) = self.oerp_call('back')
@@ -213,7 +213,9 @@ class Sentinel:
                     self._display('\n'.join(result), clear=True)
                     self.getkey()
                 elif code == 'L':
-                    # Choose a value in a list
+                    if not isinstance(result, list) or not result:
+                        return ('E', ['No value available !'], 0)
+
                     # Select a value in the list
                     choice = self._menu_choice(result)
                     # Send the result to OpenERP
@@ -252,6 +254,11 @@ class Sentinel:
         """
         # Get the scenarios list from server
         values = self.oerp_call('menu')[1]
+
+        # If no scenario available : return an error
+        if not values:
+            return ('R', ['No scenario available !'], 0)
+
         # Select a scenario in the list
         choice = self._menu_choice(values)
 
