@@ -33,7 +33,7 @@ from oobjlib.component import Object
 
 # Default configuration
 DEFAULT_CONFIG = {
-    'host' :'localhost',
+    'host': 'localhost',
     'user': 'admin',
     'password': 'admin',
     'port': '8069',

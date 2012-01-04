@@ -75,7 +75,6 @@ class Hardware:
         self.log.info('-     port: %s' % str(connection.port))
         self.log.info('- database: %s' % connection.dbname)
 
-
         self.log.info('INIT of hardware')
         self.device = device or '/dev/ttyUSB0'
         self.log.info('Open %s serial port' % self.device)
