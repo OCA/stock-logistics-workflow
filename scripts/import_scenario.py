@@ -116,10 +116,10 @@ if scen_vals['model_id']:
     scen_vals['model_id'] = scen_vals['model_id'][0]
 
 # create or update
-scenario_ids = scenario_obj.search([('resid', '=', scen_vals['resid'])], 0, None, None, {'active_test': False})
+scenario_ids = scenario_obj.search([('reference_res_id', '=', scen_vals['reference_res_id'])], 0, None, None, {'active_test': False})
 if scenario_ids:
     logger.info('Scenario exists, update it')
-    del scen_vals['resid']
+    del scen_vals['reference_res_id']
     scenario_obj.write(scenario_ids, scen_vals)
     scenario_id = scenario_ids[0]
 else:
@@ -138,17 +138,17 @@ for node in step:
     # get scenario id
     step_vals['scenario_id'] = scenario_id
     # get python src
-    python_code = open('%s.py' % step_vals['resid'], 'r')
+    python_code = open('%s.py' % step_vals['reference_res_id'], 'r')
     step_vals['python_code'] = python_code.read()
     python_code.close()
     # create or update
-    step_ids = step_obj.search([('resid', '=', step_vals['resid'])], 0, None, None, {'active_test': False})
+    step_ids = step_obj.search([('reference_res_id', '=', step_vals['reference_res_id'])], 0, None, None, {'active_test': False})
     if step_ids:
-        resid[step_vals['resid']] = step_ids[0]
-        del step_vals['resid']
+        resid[step_vals['reference_res_id']] = step_ids[0]
+        del step_vals['reference_res_id']
         step_obj.write(step_ids, step_vals)
     else:
-        resid[step_vals['resid']] = step_obj.create(step_vals)
+        resid[step_vals['reference_res_id']] = step_obj.create(step_vals)
 
 #parse transition
 logger.info('Update transitions')
@@ -159,7 +159,7 @@ for node in transition:
             item = resid[item]
         trans_vals[key] = item
     # create or update
-    trans_ids = trans_obj.search([('resid', '=', trans_vals['resid'])], 0, None, None, {'active_test': False})
+    trans_ids = trans_obj.search([('reference_res_id', '=', trans_vals['reference_res_id'])], 0, None, None, {'active_test': False})
     if trans_ids:
         del trans_vals['resid']
         trans_obj.write(trans_ids, trans_vals)
