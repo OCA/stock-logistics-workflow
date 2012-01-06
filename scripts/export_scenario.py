@@ -119,7 +119,6 @@ for field in scen_read:
 step_obj = Object(cnx, 'scanner.scenario.step')
 step_ids = step_obj.search([('scenario_id', '=', int(opts.scenario_id))])
 for step in step_obj.read(step_ids, []):
-    print 'step: ', step
     # delete unuse key
     del step['in_transition_ids']
     del step['out_transition_ids']
@@ -147,9 +146,9 @@ for transition in transition_obj.read(transition_ids, []):
     transition_id = transition['id']
     del transition['id']
     # get res id
-    if not transition['resid']:
-        transition['resid'] = unicode(uuid.uuid1())
-        transition_obj.write([transition_id], {'resid': transition['resid']})
+    if not transition['reference_res_id']:
+        transition['reference_res_id'] = unicode(uuid.uuid1())
+        transition_obj.write([transition_id], {'reference_res_id': transition['reference_res_id']})
     # not write False in attribute tracer
     if not transition['tracer']:
         transition['tracer'] = ''

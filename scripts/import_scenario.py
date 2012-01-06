@@ -161,7 +161,7 @@ for node in transition:
     # create or update
     trans_ids = trans_obj.search([('reference_res_id', '=', trans_vals['reference_res_id'])], 0, None, None, {'active_test': False})
     if trans_ids:
-        del trans_vals['resid']
+        del trans_vals['reference_res_id']
         trans_obj.write(trans_ids, trans_vals)
     else:
         trans_obj.create(trans_vals)
