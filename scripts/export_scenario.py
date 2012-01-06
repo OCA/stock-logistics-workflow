@@ -119,19 +119,20 @@ for field in scen_read:
 step_obj = Object(cnx, 'scanner.scenario.step')
 step_ids = step_obj.search([('scenario_id', '=', int(opts.scenario_id))])
 for step in step_obj.read(step_ids, []):
+    print 'step: ', step
     # delete unuse key
-    del step['in_trans_ids']
-    del step['out_trans_ids']
+    del step['in_transition_ids']
+    del step['out_transition_ids']
     step_id = step['id']
     del step['id']
     del step['scenario_id']
     # get res_id
-    if not step['resid']:
-        step['resid'] = unicode(uuid.uuid1())
-        step_obj.write([step_id], {'resid': step['resid']})
-    resid[step_id] = unicode(step['resid'])
+    if not step['reference_res_id']:
+        step['reference_res_id'] = unicode(uuid.uuid1())
+        step_obj.write([step_id], {'reference_res_id': step['reference_res_id']})
+    resid[step_id] = unicode(step['reference_res_id'])
     # save code
-    src_file = open('%s.py' % step['resid'], 'w')
+    src_file = open('%s.py' % step['reference_res_id'], 'w')
     src_file.write(step['python_code'].encode('utf-8'))
     src_file.close()
     del step['python_code']
