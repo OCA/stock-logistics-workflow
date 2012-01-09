@@ -24,7 +24,6 @@
 ##############################################################################
 
 import os
-import sys
 import math
 import ConfigParser
 import curses.ascii
@@ -88,21 +87,29 @@ class Sentinel:
 
         # Initialize hardware
         self.hardware_obj = Object(self.connection, 'scanner.hardware')
-        # TODO : Manage code in oerp ?
-        self.hardware_code = 'CODE'
-        # Get the informations for this code from server
-        self.scenario_id = self.hardware_obj.scanner_check(self.hardware_code)
 
-        # Initialize attributes
+        # Initialize window
         self.screen = stdscr
-        self._resize()
+        self._set_screen_size()
 
         # Initialize curses colors
         for name, (id, front_color, back_color) in COLOR_PAIRS.items():
             curses.init_pair(id, COLOR_NAMES[front_color], COLOR_NAMES[back_color])
-
-        # Initialize window
         self.screen.bkgd(0, self._get_color('base'))
+
+        # Get the informations for this material from server (identified by IP)
+        self.hardware_code = ''
+        self.scenario_id = False
+        try:
+            ssh_data = os.environ['SSH_CONNECTION'].split(' ')
+            self.hardware_code = ssh_data[0]
+            self.scenario_id = self.hardware_obj.scanner_check(self.hardware_code)
+        except:
+            self.hardware_code = self._input_text('Autoconfiguration\nfailed !\nPlease enter\nterminal code')
+            self.scenario_id = self.hardware_obj.scanner_check(self.hardware_code)
+
+        # Resize window to terminal screen size
+        self._resize()
 
         # Load the sentinel
         self.main_loop()
@@ -113,7 +120,9 @@ class Sentinel:
         """
         # Asks for the hardware screen size
         (code, (width, height), value) = self.oerp_call('screen_size')
+        self._set_screen_size(width, height)
 
+    def _set_screen_size(self, width=17, height=6):
         self.window_width = width
         self.window_height = height
         self.screen.resize(height, width)
@@ -135,7 +144,7 @@ class Sentinel:
             # If Ctrl+C, exit
             exit(0)
 
-    def _read_input(self, echo=True):
+    def _read_input(self, echo=True, line=1):
         """
         Read a line of text from the keyboard
         """
@@ -145,7 +154,7 @@ class Sentinel:
 
         # Get the string from stdin
         try:
-            value = self.screen.getstr(1, 0)
+            value = self.screen.getstr(line, 0)
         except KeyboardInterrupt, e:
             # If Ctrl+C, exit
             exit(0)
@@ -322,11 +331,8 @@ class Sentinel:
         # Display the menu
         self._display(message, clear=True)
 
-        # Move the cursor to the lase line
-        self.screen.move(self.window_height - 1, 0)
-
         # Input text from user
-        return self._read_input()
+        return self._read_input(line=self.window_height - 1)
 
     def _select_quantity(self, message, quantity):
         """
