@@ -111,6 +111,9 @@ class Sentinel:
         # Resize window to terminal screen size
         self._resize()
 
+        # Initialize mouse events capture
+        curses.mousemask(curses.BUTTON1_CLICKED | curses.BUTTON1_DOUBLE_CLICKED)
+
         # Load the sentinel
         self.main_loop()
 
@@ -397,6 +400,25 @@ class Sentinel:
             elif key == 'KEY_UP' or key == 'KEY_LEFT':
                 # Up key : Go up in the list
                 highlighted = highlighted - 1
+            elif key == 'KEY_MOUSE':
+                # First line to be displayed
+                first_line = 0
+                nb_lines = self.window_height - 1
+                middle = int(math.floor((nb_lines - 1) / 2))
+
+                # Change the first line if there is too much lines for the screen
+                if len(entries) > nb_lines and highlighted >= middle:
+                    first_line = min(highlighted - middle, len(entries) - nb_lines)
+
+                # Retrieve mouse event information
+                mouse_info = curses.getmouse()
+
+                # Set the selected entry
+                highlighted = first_line + mouse_info[2]
+
+                # If we double clicked, auto-validate
+                if mouse_info[4] & curses.BUTTON1_DOUBLE_CLICKED:
+                    return highlighted
 
             # Avoid going out of the list
             highlighted = min(max(0, highlighted), len(entries) - 1)
