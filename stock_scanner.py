@@ -26,6 +26,7 @@ from osv import osv
 from osv import fields
 from tools.translate import _
 from tools.misc import ustr
+from tools.misc import logged
 from threading import Semaphore
 import logging
 import uuid
@@ -129,7 +130,10 @@ class scanner_scenario_step(osv.osv):
     _defaults = {
         'step_start': False,
         'step_stop': False,
-        'python_code': '# Use message to retrieve the data transmitted by the scanner.\n# Put the returned action code in action, as a single character.\n# Put the returned result or message in result, as a list of strings.\n# Put the returned value in value, as an integer',
+        'python_code': '# Use message to retrieve the data transmitted by the scanner.\n' \
+                       '# Put the returned <act> code in action, as a single character.\n' \
+                       '# Put the returned <res> or message in result, as a list of strings.\n' \
+                       '# Put the returned <val> in value, as an integer',
     }
 
     _sql_constraints = [
@@ -226,6 +230,30 @@ class scanner_hardware(osv.osv):
         'reference_document': False,
     }
 
+    def search_scanner_id(self, cr, uid, numterm=False, context=None):
+        if context is None:
+            context = self.pool.get('res.users').context_get(cr, uid)
+
+        term_id = self.search(cr, uid, [('code', '=', numterm)])
+        if not term_id:
+            logger.warn('Terminal %s not exists!' % numterm)
+            raise osv.except_osv(_('Error'), _('This terminal not exists!'))
+
+        return term_id[0]
+
+    @logged
+    def scanner_size(self, cr, uid, terminal_number, context=None):
+        """
+        Retrieve the size of the screen defined for this scanner
+
+        :return: Return width and height of the screen
+        :rtype: tuple
+        """
+        term_id = self.search_scanner_id(cr, uid, terminal_number, context=context)
+        terminal = self.browse(cr, uid, term_id, context=context)
+        return (terminal.screen_width, terminal.screen_height)
+
+    @logged
     def scanner_check(self, cr, uid, terminal_number, context=None):
         """
         Check the step for this scanner
@@ -247,6 +275,7 @@ class scanner_hardware(osv.osv):
         # Return the scenadio id if the terminal has a scenario or False
         return terminal_data.get('scenario_id', False)
 
+    @logged
     def scanner_call(self, cr, uid, terminal_number, action, message='', transition_type='keyboard', context=None):
         """
         This method is called by the barcode reader,
@@ -254,7 +283,7 @@ class scanner_hardware(osv.osv):
         if context is None:
             context = self.pool.get('res.users').context_get(cr, uid, context=context)
 
-        logger.debug('SCANNER_CALL')
+        #logger.debug('SCANNER_CALL')
 
         # Retrieve the terminal id
         terminal_ids = self.search(cr, uid, [('code', '=', terminal_number)], context=context)
@@ -268,6 +297,7 @@ class scanner_hardware(osv.osv):
 
         # Retrieve the terminal screen size
         if action == 'screen_size':
+            logger.debug('Retrieve size screen')
             screen_size = self._screen_size(cr, uid, terminal.id, context=context)
             return ('M', screen_size, 0)
 
@@ -275,6 +305,7 @@ class scanner_hardware(osv.osv):
         elif action == 'action':
             # The terminal is attached to a scenario
             if terminal.scenario_id:
+                logger.warning('No scenario')
                 return self._scenario_save(cr, uid, terminal.id, message, transition_type, scenario_id=terminal.scenario_id.id, step_id=terminal.step_id.id, current_object=terminal.reference_document, context=context)
             # We asked for a scan transition type, but no action is running, forbidden
             elif transition_type == 'scanner':
@@ -296,7 +327,7 @@ class scanner_hardware(osv.osv):
             logger.info('[%s] End scenario request' % terminal_number)
             self.empty_scanner_values(cr, uid, terminal_ids, context=context)
 
-            return ('F', ['This scenario', 'is finished'], '')
+            return ('F', [_('This scenario'), _('is finished')], '')
 
         # If the terminal is not attached to a scenario, send the menu (scenario list)
         if not terminal.scenario_id:
@@ -337,6 +368,20 @@ class scanner_hardware(osv.osv):
 
         return True
 
+    def scanner_end(self, cr, uid, numterm=None, context=None):
+        """
+        End the end barcode is read, we execute this step
+        """
+        if context is None:
+            context = self.pool.get('res.users').context_get(cr, uid)
+
+        term_id = self.search_scanner_id(cr, uid, numterm, context=context)
+        self.scanner_call(cr, uid, terminal_number=numterm, action='action', message='END')
+        logger.info('End scenario request for %s terminal' % numterm)
+        self.empty_scanner_values(cr, uid, [term_id], context=context)
+
+        return ('F', [_('This scenario'), _('is finished')], '')
+
     def _memorize(self, cr, uid, terminal_id, scenario_id, step_id, object=None, context=None):
         """
         After affect a scenario to a scanner, we must memorize it
@@ -351,6 +396,7 @@ class scanner_hardware(osv.osv):
 
         self.write(cr, uid, [terminal_id], args, context=context)
 
+    @logged
     def _scenario_save(self, cr, uid, terminal_id, message, transition_type, scenario_id=None, step_id=None, current_object='', context=None):
         """
         Save the scenario on this terminal and execute the current step
@@ -379,12 +425,12 @@ class scanner_hardware(osv.osv):
 
                 # No start step found on the scenario, return an error
                 if not step_ids:
-                    return self._send_error(cr, uid, [terminal_id], ['Please contact', 'your', 'administrator', 'A001'], context=context)
+                    return self._send_error(cr, uid, [terminal_id], [_('Please contact'), _('your'), _('administrator'), _('A001')], context=context)
 
                 step_id = step_ids[0]
 
             else:
-                return self._send_error(cr, uid, [terminal_id], ['Scenario', 'not found'], context=context)
+                return self._send_error(cr, uid, [terminal_id], [_('Scenario'), _('not found')], context=context)
         elif transition_type != 'none':
             # Store the old step id
             old_step_id = step_id
@@ -404,7 +450,7 @@ class scanner_hardware(osv.osv):
                     'pool': self.pool,
                     'uid': uid,
                     'message': message,
-                    'terminal': self.browse(cr, uid, terminal_id, context=context),
+                    't': self.browse(cr, uid, terminal_id, context=context),
                 }
                 expr = eval(str(transition.condition), ctx)
 
@@ -419,7 +465,7 @@ class scanner_hardware(osv.osv):
 
             # No step found, return an error
             if not step_id:
-                return self._unknown_action(cr, uid, [terminal_id], ['Please contact', 'your', 'adminstrator'], context=context)
+                return self._unknown_action(cr, uid, [terminal_id], [_('Please contact'), _('your'), _('adminstrator')], context=context)
 
         # Memorize the current step
         self._memorize(cr, uid, terminal_id, scenario_id, step_id, current_object, context=context)
@@ -439,10 +485,10 @@ class scanner_hardware(osv.osv):
             'custom': self.pool.get('scanner.scenario.custom'),
             'term': self,
             'context': context,
-            'message': message,
-            'terminal': terminal,
+            'm': message,
+            't': terminal,
             'tracer': tracer,
-            'workflow': netsvc.LocalService('workflow'),
+            'wkf': netsvc.LocalService('workflow'),
             'scenario': scanner_scenario_obj.browse(cr, uid, scenario_id, context=context),
         }
 
@@ -451,17 +497,17 @@ class scanner_hardware(osv.osv):
             if step.step_stop:
                 self.empty_scanner_values(cr, uid, [terminal_id], context=context)
         except osv.except_osv, e:
-            ld = {'action': 'R', 'result': ['Please contact', 'your', 'administrator'], 'value': 0}
+            ld = {'act': 'R', 'res': [_('Please contact'), _('your'), _('administrator')], 'val': 0}
             self.empty_scanner_values(cr, uid, [terminal_id], context=context)
             logger.warning('OSV Exception: %s' % str(e))
         except Exception, e:
-            ld = {'action': 'R', 'result': ['Please contact', 'your', 'administrator'], 'value': 0}
+            ld = {'act': 'R', 'res': ['Please contact', 'your', 'administrator'], 'val': 0}
             self.empty_scanner_values(cr, uid, [terminal_id], context=context)
             logger.warning('Exception: %s' % str(e))
         finally:
             scanner_scenario_obj._semaphore_release(cr, uid, terminal.scenario_id.id, terminal.warehouse_id.id, terminal.reference_document, context=context)
 
-        return (ld.get('action', 'M'), ld.get('result', ['nothing']), ld.get('value', 0))
+        return (ld.get('act', 'M'), ld.get('res', ['nothing']), ld.get('val', 0))
 
     def _scenario_list(self, cr, uid, warehouse_id, context=None):
         """
