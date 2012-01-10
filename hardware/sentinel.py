@@ -326,6 +326,18 @@ class Sentinel:
             elif key == 'KEY_DOWN' or key == 'KEY_LEFT' or key == 'KEY_UP' or key == 'KEY_RIGHT':
                 # Arrow key : change value
                 confirm = not confirm
+            elif key == 'KEY_MOUSE':
+                nb_lines = self.window_height - 1
+
+                # Retrieve mouse event information
+                mouse_info = curses.getmouse()
+
+                # Set the selected entry
+                confirm = mouse_info[1] < len(yes_text)
+
+                # If we double clicked, auto-validate
+                if mouse_info[4] & curses.BUTTON1_DOUBLE_CLICKED:
+                    return confirm
 
     def _input_text(self, message):
         """
