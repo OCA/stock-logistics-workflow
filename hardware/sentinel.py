@@ -262,7 +262,7 @@ class Sentinel:
         # Restore normal background colors
         self.screen.bkgd(0, self._get_color('base'))
 
-    def oerp_call(self, action, message=''):
+    def oerp_call(self, action, message=False):
         """
         Calls a method from OpenERP Server
         """
