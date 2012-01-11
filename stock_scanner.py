@@ -305,7 +305,6 @@ class scanner_hardware(osv.osv):
         elif action == 'action':
             # The terminal is attached to a scenario
             if terminal.scenario_id:
-                logger.warning('No scenario')
                 return self._scenario_save(cr, uid, terminal.id, message, transition_type, scenario_id=terminal.scenario_id.id, step_id=terminal.step_id.id, current_object=terminal.reference_document, context=context)
             # We asked for a scan transition type, but no action is running, forbidden
             elif transition_type == 'scanner':
@@ -493,6 +492,13 @@ class scanner_hardware(osv.osv):
         }
 
         try:
+            terminal.log('Executing step %d : %s' % (step_id, step.name))
+            if old_step_id:
+                terminal.log('Comming from step %d' % old_step_id)
+            terminal.log('Message : %s' % repr(message))
+            if tracer:
+                terminal.log('Tracer : %s' % repr(tracer))
+
             exec step.python_code in ld
             if step.step_stop:
                 self.empty_scanner_values(cr, uid, [terminal_id], context=context)
@@ -507,7 +513,10 @@ class scanner_hardware(osv.osv):
         finally:
             scanner_scenario_obj._semaphore_release(cr, uid, terminal.scenario_id.id, terminal.warehouse_id.id, terminal.reference_document, context=context)
 
-        return (ld.get('act', 'M'), ld.get('res', ['nothing']), ld.get('val', 0))
+        ret = (ld.get('act', 'M'), ld.get('res', ['nothing']), ld.get('val', 0))
+        terminal.log('Return value : %s' % repr(ret))
+
+        return ret
 
     def _scenario_list(self, cr, uid, warehouse_id, context=None):
         """
