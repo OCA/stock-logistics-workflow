@@ -202,12 +202,30 @@
                 </form>
             </field>
         </record>
+        <record id="view_scanner_scenario_diagram" model="ir.ui.view">
+            <field name="name">scanner.scenario.diagram</field>
+            <field name="model">scanner.scenario</field>
+            <field name="type">diagram</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <diagram string="Scenario Editor">
+                    <node object="scanner.scenario.step" bgcolor="gray:step_start==True;grey:step_stop==True">
+                        <field name="name"/>
+                    </node>
+                    <arrow object="scanner.scenario.transition" source="from_id" destination="to_id" label="['condition','tracer']">
+                        <field name="name"/>
+                        <field name="from_id"/>
+                        <field name="to_id"/>
+                    </arrow>
+                </diagram>
+            </field>
+        </record>
         <record model="ir.actions.act_window" id="act_open_scanner_scenario_view">
             <field name="name">Scanner Scenario</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">scanner.scenario</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,diagram</field>
             <field name="domain">[]</field>
             <field name="context">{}</field>
         </record>
