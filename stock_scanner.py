@@ -402,7 +402,6 @@ class scanner_hardware(osv.osv):
             context = self.pool.get('res.users').context_get(cr, uid, context=context)
 
         args = {'scenario_id': scenario_id, 'step_id': step_id, 'previous_steps_id': previous_steps_id}
-        print args
         if object is not None and isinstance(object, int):
             args['reference_document'] = object
 
@@ -414,7 +413,6 @@ class scanner_hardware(osv.osv):
         Save the scenario on this terminal and execute the current step
         Return the action to the terminal
         """
-        print 'scenario_id : ', scenario_id, ' ; step_id : ', step_id
         if context is None:
             context = self.pool.get('res.users').context_get(cr, uid, context=context)
 
