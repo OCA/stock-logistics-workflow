@@ -140,12 +140,12 @@ class Sentinel:
         """
         Get a user input and avoid Ctrl+C
         """
-        try:
-            # Get the pushed character
-            return self.screen.getkey()
-        except KeyboardInterrupt, e:
-            # If Ctrl+C, exit
-            exit(0)
+        # Get the pushed character
+        key = self.screen.getkey()
+        if key == '':
+            # Escape key : Return back to the previous step
+            raise Exception('Back')
+        return key
 
     def _read_input(self, echo=True, line=1):
         """
@@ -196,60 +196,66 @@ class Sentinel:
         code = False
 
         while True:
-            # No active scenario, select one
-            if not self.scenario_id:
-                (code, result, value) = self._select_scenario()
-                self.scenario_id = result
-            else:
-                if code == 'Q':
-                    # Quantity selection
-                    quantity = self._select_quantity('\n'.join(result), value)
-                    (code, result, value) = self.oerp_call('action', quantity)
-                elif code == 'C':
-                    # Confirmation query
-                    confirm = self._confirm('\n'.join(result))
-                    (code, result, value) = self.oerp_call('action', confirm)
-                elif code == 'T':
-                    # Text input
-                    text = self._input_text('\n'.join(result))
-                    (code, result, value) = self.oerp_call('action', text)
-                elif code == 'R':
-                    # Error
-                    self.scenario_id = False
-                    self._display_error('\n'.join(result))
-                elif code == 'U':
-                    # Unknown action : message with return back to the last state
-                    self._display('\n'.join(result), clear=True)
-                    self.getkey()
-                    (code, result, value) = self.oerp_call('back')
-                elif code == 'E':
-                    # Simple message
-                    code = False
-                    self._display('\n'.join(result), color='error', bgcolor=True, clear=True)
-                    self.getkey()
-                    # Restore normal background colors
-                    self.screen.bkgd(0, self._get_color('base'))
-                elif code == 'M':
-                    # Simple message
-                    code = False
-                    self._display('\n'.join(result), clear=True)
-                    self.getkey()
-                elif code == 'L':
-                    if not isinstance(result, list) or not result:
-                        return ('E', ['No value available !'], 0)
-
-                    # Select a value in the list
-                    choice = self._menu_choice(result)
-                    # Send the result to OpenERP
-                    (code, result, value) = self.oerp_call('action', result[choice])
-                elif code == 'F':
-                    # End of scenario
-                    self.scenario_id = False
-                    self._display('\n'.join(result), clear=True)
-                    self.getkey()
+            try:
+                # No active scenario, select one
+                if not self.scenario_id:
+                    (code, result, value) = self._select_scenario()
+                    self.scenario_id = result
                 else:
-                    # Default call
-                    (code, result, value) = self.oerp_call('action')
+                    if code == 'Q':
+                        # Quantity selection
+                        quantity = self._select_quantity('\n'.join(result), value)
+                        (code, result, value) = self.oerp_call('action', quantity)
+                    elif code == 'C':
+                        # Confirmation query
+                        confirm = self._confirm('\n'.join(result))
+                        (code, result, value) = self.oerp_call('action', confirm)
+                    elif code == 'T':
+                        # Text input
+                        text = self._input_text('\n'.join(result))
+                        (code, result, value) = self.oerp_call('action', text)
+                    elif code == 'R':
+                        # Error
+                        self.scenario_id = False
+                        self._display_error('\n'.join(result))
+                    elif code == 'U':
+                        # Unknown action : message with return back to the last state
+                        self._display('\n'.join(result), clear=True)
+                        self.getkey()
+                        (code, result, value) = self.oerp_call('back')
+                    elif code == 'E':
+                        # Simple message
+                        self._display('\n'.join(result), color='error', bgcolor=True, clear=True)
+                        self.getkey()
+                        (code, result, value) = self.oerp_call('back')
+                        # Restore normal background colors
+                        self.screen.bkgd(0, self._get_color('base'))
+                    elif code == 'M':
+                        # Simple message
+                        self._display('\n'.join(result), clear=True)
+                        self.getkey()
+                        (code, result, value) = self.oerp_call('back')
+                    elif code == 'L':
+                        if not isinstance(result, list) or not result:
+                            return ('E', ['No value available !'], 0)
+
+                        # Select a value in the list
+                        choice = self._menu_choice(result)
+                        # Send the result to OpenERP
+                        (code, result, value) = self.oerp_call('action', result[choice])
+                    elif code == 'F':
+                        # End of scenario
+                        self.scenario_id = False
+                        self._display('\n'.join(result), clear=True)
+                        self.getkey()
+                    else:
+                        # Default call
+                        (code, result, value) = self.oerp_call('action')
+            except KeyboardInterrupt, e:
+                # If Ctrl+C, exit
+                exit(0)
+            except:
+                (code, result, value) = self.oerp_call('back')
 
     def _display_error(self, error_message):
         """

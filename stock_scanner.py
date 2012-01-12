@@ -43,15 +43,21 @@ class scanner_scenario(osv.osv):
         'name': fields.char('Name', size=64, required=True, help='Appear on barcode reader screen'),
         'sequence': fields.integer('Sequence', help='Sequence order'),
         'active': fields.boolean('Active', help='If check, this object is always available'),
-        'model_id': fields.many2one('ir.model', 'Model', required=True, help='Model used for this scenario'),
+        'model_id': fields.many2one('ir.model', 'Model', help='Model used for this scenario'),
         'step_ids': fields.one2many('scanner.scenario.step', 'scenario_id', 'Scenario', help='Step of the current running scenario'),
         'warehouse_ids': fields.many2many('stock.warehouse', 'scanner_scenario_warehouse_rel', 'scenario_id', 'warehouse_id', 'Warehouses', help='Warehouses for this scenario'),
         'notes': fields.text('Notes', help='Store different notes, date and title for modification, etc...'),
         'reference_res_id': fields.char('Rerefence ID', size=64, readonly=True, help='Used by export/import scenario'),
         'shared_custom': fields.boolean('Shared Custom', help='Allows to share the custom values with a shared scanner in the same warehouse'),
+        'parent_id': fields.many2one('scanner.scenario', 'Parent', help='Parent scenario, used to create menus'),
+        'type': fields.selection([('scenario', 'Scenario'), ('menu', 'Menu')], 'Type', required=True, help='Defines if this scenario is a menu or an executable scenario'),
     }
 
-    _order = 'sequence'
+    _order = 'parent_id, sequence'
+
+    _defaults = {
+        'type': 'scenario',
+    }
 
     _sql_constraints = [
         ('reference_res_id_uniq', 'unique (reference_res_id)', 'The reference ID of the scenario must be unique !'),
@@ -214,6 +220,7 @@ class scanner_hardware(osv.osv):
         'warehouse_id': fields.many2one('stock.warehouse', 'Warehouse', required=True, help='Warehouse where is located this hardware'),
         'scenario_id': fields.many2one('scanner.scenario', 'Scenario', help='Scenario used for this hardware'),
         'step_id': fields.many2one('scanner.scenario.step', 'Current Step', help='Current step for this hardware'),
+        'previous_steps_id': fields.char('Previous Step', size=256, help='Previous step for this hardware'),
         'reference_document': fields.integer('Reference', help='ID of the reference document'),
         'tmp_val1': fields.char('Temp value 1', size=128, help='Temporary value'),
         'tmp_val2': fields.char('Temp value 2', size=128, help='Temporary value'),
@@ -283,8 +290,6 @@ class scanner_hardware(osv.osv):
         if context is None:
             context = self.pool.get('res.users').context_get(cr, uid, context=context)
 
-        #logger.debug('SCANNER_CALL')
-
         # Retrieve the terminal id
         terminal_ids = self.search(cr, uid, [('code', '=', terminal_number)], context=context)
         if not terminal_ids:
@@ -312,13 +317,20 @@ class scanner_hardware(osv.osv):
             # No action to do
             else:
                 logger.info('[%s] Action : %s (no current scenario)' % (terminal_number, message))
+                scenario_ids = scanner_scenario_obj.search(cr, uid, [('name', '=', message), ('type', '=', 'menu'), ('warehouse_ids', 'in', [terminal.warehouse_id.id])], context=context)
+                if message == -1:
+                    scenario_ids = [False]
+                if scenario_ids:
+                    scenarios = self._scenario_list(cr, uid, terminal.warehouse_id.id, parent_id=scenario_ids[0], context=context)
+                    if scenarios:
+                        return ('L', scenarios, 0)
                 return self._scenario_save(cr, uid, terminal.id, message, transition_type, context=context)
 
         # Reload current step
         elif action == 'back':
             # The terminal is attached to a scenario
             if terminal.scenario_id:
-                return self._scenario_save(cr, uid, terminal.id, message, 'none', scenario_id=terminal.scenario_id.id, step_id=terminal.step_id.id, current_object=terminal.reference_document, context=context)
+                return self._scenario_save(cr, uid, terminal.id, message, 'none', scenario_id=terminal.scenario_id.id, current_object=terminal.reference_document, context=context)
 
         # End required
         elif action == 'end':
@@ -331,7 +343,7 @@ class scanner_hardware(osv.osv):
         # If the terminal is not attached to a scenario, send the menu (scenario list)
         if not terminal.scenario_id:
             logger.info('[%s] No scenario' % terminal_number)
-            scenarios = self._scenario_list(cr, uid, terminal.warehouse_id.id, context=context)
+            scenarios = self._scenario_list(cr, uid, terminal.warehouse_id.id, message, context=context)
             return ('L', scenarios, 0)
 
         # Nothing matched, return an error
@@ -363,7 +375,7 @@ class scanner_hardware(osv.osv):
                 scenario_custom_obj._remove_values(cr, uid, scanner.scenario_id, scanner, context=context)
 
         # Write empty values in all fields
-        self.write(cr, uid, ids, {'scenario_id': False, 'step_id': False, 'reference_document': 0, 'tmp_val1': '', 'tmp_val2': '', 'tmp_val3': '', 'tmp_val4': '', 'tmp_val5': ''}, context=context)
+        self.write(cr, uid, ids, {'scenario_id': False, 'step_id': False, 'previous_steps_id': False, 'reference_document': 0, 'tmp_val1': '', 'tmp_val2': '', 'tmp_val3': '', 'tmp_val4': '', 'tmp_val5': ''}, context=context)
 
         return True
 
@@ -381,7 +393,7 @@ class scanner_hardware(osv.osv):
 
         return ('F', [_('This scenario'), _('is finished')], '')
 
-    def _memorize(self, cr, uid, terminal_id, scenario_id, step_id, object=None, context=None):
+    def _memorize(self, cr, uid, terminal_id, scenario_id, step_id, previous_steps_id=False, object=None, context=None):
         """
         After affect a scenario to a scanner, we must memorize it
         If object is specify, save it as well (ex: res.partner,12)
@@ -389,7 +401,8 @@ class scanner_hardware(osv.osv):
         if context is None:
             context = self.pool.get('res.users').context_get(cr, uid, context=context)
 
-        args = {'scenario_id': scenario_id, 'step_id': step_id}
+        args = {'scenario_id': scenario_id, 'step_id': step_id, 'previous_steps_id': previous_steps_id}
+        print args
         if object is not None and isinstance(object, int):
             args['reference_document'] = object
 
@@ -401,14 +414,23 @@ class scanner_hardware(osv.osv):
         Save the scenario on this terminal and execute the current step
         Return the action to the terminal
         """
+        print 'scenario_id : ', scenario_id, ' ; step_id : ', step_id
         if context is None:
             context = self.pool.get('res.users').context_get(cr, uid, context=context)
 
         scanner_scenario_obj = self.pool.get('scanner.scenario')
         scanner_step_obj = self.pool.get('scanner.scenario.step')
+        terminal = self.browse(cr, uid, terminal_id, context=context)
 
-        old_step_id = False
         tracer = False
+
+        if scenario_id and step_id is None:
+            if terminal.previous_steps_id:
+                previous_steps = terminal.previous_steps_id.split(',')
+                step_id = int(previous_steps.pop())
+                terminal.previous_steps_id = ','.join(previous_steps)
+            else:
+                return self.scanner_end(cr, uid, numterm=terminal.code, context=context)
 
         # No scenario in arguments, start a new one
         if not scenario_id:
@@ -432,7 +454,8 @@ class scanner_hardware(osv.osv):
                 return self._send_error(cr, uid, [terminal_id], [_('Scenario'), _('not found')], context=context)
         elif transition_type != 'none':
             # Store the old step id
-            old_step_id = step_id
+            if step_id:
+                terminal.previous_steps_id = terminal.previous_steps_id and '%s,%d' % (terminal.previous_steps_id, step_id) or str(step_id)
 
             # Retrieve outgoing transitions from the current step
             scanner_transition_obj = self.pool.get('scanner.scenario.transition')
@@ -467,10 +490,9 @@ class scanner_hardware(osv.osv):
                 return self._unknown_action(cr, uid, [terminal_id], [_('Please contact'), _('your'), _('adminstrator')], context=context)
 
         # Memorize the current step
-        self._memorize(cr, uid, terminal_id, scenario_id, step_id, current_object, context=context)
+        self._memorize(cr, uid, terminal_id, scenario_id, step_id, previous_steps_id=terminal.previous_steps_id, object=current_object, context=context)
 
         # MUTEX Acquire
-        terminal = self.browse(cr, uid, terminal_id, context=context)
         scanner_scenario_obj._semaphore_acquire(cr, uid, terminal.scenario_id.id, terminal.warehouse_id.id, terminal.reference_document, context=context)
 
         # Execute the step
@@ -493,8 +515,6 @@ class scanner_hardware(osv.osv):
 
         try:
             terminal.log('Executing step %d : %s' % (step_id, step.name))
-            if old_step_id:
-                terminal.log('Comming from step %d' % old_step_id)
             terminal.log('Message : %s' % repr(message))
             if tracer:
                 terminal.log('Tracer : %s' % repr(tracer))
@@ -518,7 +538,7 @@ class scanner_hardware(osv.osv):
 
         return ret
 
-    def _scenario_list(self, cr, uid, warehouse_id, context=None):
+    def _scenario_list(self, cr, uid, warehouse_id, parent_id=False, context=None):
         """
         Retrieve the scenario list for this warehouse
         """
@@ -526,7 +546,7 @@ class scanner_hardware(osv.osv):
             context = self.pool.get('res.users').context_get(cr, uid, context=context)
 
         scanner_scenario_obj = self.pool.get('scanner.scenario')
-        scanner_scenario_ids = scanner_scenario_obj.search(cr, uid, [('warehouse_ids', 'in', [warehouse_id])], context=context)
+        scanner_scenario_ids = scanner_scenario_obj.search(cr, uid, [('warehouse_ids', 'in', [warehouse_id]), ('parent_id', '=', parent_id)], context=context)
         scanner_scenario_data = scanner_scenario_obj.read(cr, uid, scanner_scenario_ids, ['name'], context=context)
 
         return_value = [data['name'] for data in scanner_scenario_data if data.get('name', False)]

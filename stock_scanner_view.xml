@@ -71,6 +71,14 @@
                         <field name="reference_document" colspan="4"/>
                         <button string="Reset Scenario" colspan="4" type="object" name="empty_scanner_values"/>
                     </group>
+                    <group colspan="4">
+                        <separator string="Temporary values" colspan="4"/>
+                        <field name="tmp_val1" readonly="1"/>
+                        <field name="tmp_val2" readonly="1"/>
+                        <field name="tmp_val3" readonly="1"/>
+                        <field name="tmp_val4" readonly="1"/>
+                        <field name="tmp_val5" readonly="1"/>
+                    </group>
                 </form>
             </field>
         </record>
@@ -111,6 +119,8 @@
                     <field name="name"/>
                     <field name="model_id"/>
                     <field name="shared_custom"/>
+                    <field name="type"/>
+                    <field name="parent_id"/>
                 </tree>
             </field>
         </record>
@@ -123,11 +133,13 @@
                 <form string="Scanner Scenario">
                     <field name="name" select="1"/>
                     <field name="active"/>
+                    <field name="type"/>
                     <field name="sequence"/>
-                    <field name="model_id"/>
-                    <field name="shared_custom"/>
+                    <field name="parent_id"/>
+                    <field name="model_id" attrs="{'invisible': [('type','=', 'menu')], 'required': [('type', '=', 'scenario')]}"/>
+                    <field name="shared_custom" attrs="{'invisible': [('type','=', 'menu')]}"/>
                     <notebook colspan="4">
-                        <page string="Steps">
+                        <page string="Steps" attrs="{'invisible': [('type','=', 'menu')]}">
                             <field name="step_ids" nolabel="1" mode="tree,form">
                                 <tree string="Step">
                                     <field name="name"/>
