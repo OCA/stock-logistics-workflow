@@ -156,11 +156,7 @@ class Sentinel:
             curses.echo()
 
         # Get the string from stdin
-        try:
-            value = self.screen.getstr(line, 0)
-        except KeyboardInterrupt, e:
-            # If Ctrl+C, exit
-            exit(0)
+        value = self.screen.getstr(line, 0)
 
         # Disable characters echoing
         curses.noecho()
@@ -227,14 +223,16 @@ class Sentinel:
                         # Simple message
                         self._display('\n'.join(result), color='error', bgcolor=True, clear=True)
                         self.getkey()
-                        (code, result, value) = self.oerp_call('back')
                         # Restore normal background colors
                         self.screen.bkgd(0, self._get_color('base'))
+                        # Execute transition
+                        (code, result, value) = self.oerp_call('action')
                     elif code == 'M':
                         # Simple message
                         self._display('\n'.join(result), clear=True)
                         self.getkey()
-                        (code, result, value) = self.oerp_call('back')
+                        # Execute transition
+                        (code, result, value) = self.oerp_call('action')
                     elif code == 'L':
                         if not isinstance(result, list) or not result:
                             return ('E', ['No value available !'], 0)
@@ -250,7 +248,7 @@ class Sentinel:
                         self.getkey()
                     else:
                         # Default call
-                        (code, result, value) = self.oerp_call('action')
+                        (code, result, value) = self.oerp_call('restart')
             except KeyboardInterrupt, e:
                 # If Ctrl+C, exit
                 exit(0)

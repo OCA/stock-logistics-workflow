@@ -79,6 +79,11 @@
                         <field name="tmp_val4" readonly="1"/>
                         <field name="tmp_val5" readonly="1"/>
                     </group>
+                    <group colspan="4">
+                        <separator string="Current Steps History" colspan="4"/>
+                        <field name="previous_steps_id" readonly="1" colspan="4" nolabel="1"/>
+                        <field name="previous_steps_message" readonly="1" colspan="4" nolabel="1"/>
+                    </group>
                 </form>
             </field>
         </record>

@@ -221,6 +221,7 @@ class scanner_hardware(osv.osv):
         'scenario_id': fields.many2one('scanner.scenario', 'Scenario', help='Scenario used for this hardware'),
         'step_id': fields.many2one('scanner.scenario.step', 'Current Step', help='Current step for this hardware'),
         'previous_steps_id': fields.char('Previous Step', size=256, help='Previous step for this hardware'),
+        'previous_steps_message': fields.text('Previous Message', help='Previous message for this hardware'),
         'reference_document': fields.integer('Reference', help='ID of the reference document'),
         'tmp_val1': fields.char('Temp value 1', size=128, help='Temporary value'),
         'tmp_val2': fields.char('Temp value 2', size=128, help='Temporary value'),
@@ -283,7 +284,7 @@ class scanner_hardware(osv.osv):
         return terminal_data.get('scenario_id', False)
 
     @logged
-    def scanner_call(self, cr, uid, terminal_number, action, message='', transition_type='keyboard', context=None):
+    def scanner_call(self, cr, uid, terminal_number, action, message=False, transition_type='keyboard', context=None):
         """
         This method is called by the barcode reader,
         """
@@ -327,6 +328,12 @@ class scanner_hardware(osv.osv):
                 return self._scenario_save(cr, uid, terminal.id, message, transition_type, context=context)
 
         # Reload current step
+        elif action == 'restart':
+            # The terminal is attached to a scenario
+            if terminal.scenario_id:
+                return self._scenario_save(cr, uid, terminal.id, message, 'restart', scenario_id=terminal.scenario_id.id, current_object=terminal.reference_document, context=context)
+
+        # Reload previous step
         elif action == 'back':
             # The terminal is attached to a scenario
             if terminal.scenario_id:
@@ -375,7 +382,18 @@ class scanner_hardware(osv.osv):
                 scenario_custom_obj._remove_values(cr, uid, scanner.scenario_id, scanner, context=context)
 
         # Write empty values in all fields
-        self.write(cr, uid, ids, {'scenario_id': False, 'step_id': False, 'previous_steps_id': False, 'reference_document': 0, 'tmp_val1': '', 'tmp_val2': '', 'tmp_val3': '', 'tmp_val4': '', 'tmp_val5': ''}, context=context)
+        self.write(cr, uid, ids, {
+            'scenario_id': False,
+            'step_id': False,
+            'previous_steps_id': False,
+            'previous_steps_message': False,
+            'reference_document': 0,
+            'tmp_val1': '',
+            'tmp_val2': '',
+            'tmp_val3': '',
+            'tmp_val4': '',
+            'tmp_val5': '',
+        }, context=context)
 
         return True
 
@@ -393,7 +411,7 @@ class scanner_hardware(osv.osv):
 
         return ('F', [_('This scenario'), _('is finished')], '')
 
-    def _memorize(self, cr, uid, terminal_id, scenario_id, step_id, previous_steps_id=False, object=None, context=None):
+    def _memorize(self, cr, uid, terminal_id, scenario_id, step_id, previous_steps_id=False, previous_steps_message=False, object=None, context=None):
         """
         After affect a scenario to a scanner, we must memorize it
         If object is specify, save it as well (ex: res.partner,12)
@@ -401,7 +419,12 @@ class scanner_hardware(osv.osv):
         if context is None:
             context = self.pool.get('res.users').context_get(cr, uid, context=context)
 
-        args = {'scenario_id': scenario_id, 'step_id': step_id, 'previous_steps_id': previous_steps_id}
+        args = {
+            'scenario_id': scenario_id,
+            'step_id': step_id,
+            'previous_steps_id': previous_steps_id,
+            'previous_steps_message': previous_steps_message,
+        }
         if object is not None and isinstance(object, int):
             args['reference_document'] = object
 
@@ -422,11 +445,18 @@ class scanner_hardware(osv.osv):
 
         tracer = False
 
-        if scenario_id and step_id is None:
+        if transition_type == 'restart' or scenario_id and step_id is None:
+            terminal.log('New connection, loading current step')
             if terminal.previous_steps_id:
-                previous_steps = terminal.previous_steps_id.split(',')
-                step_id = int(previous_steps.pop())
-                terminal.previous_steps_id = ','.join(previous_steps)
+                # Retrieve previous step id
+                previous_steps_id = terminal.previous_steps_id.split(',')
+                step_id = int(previous_steps_id.pop())
+                terminal.previous_steps_id = ','.join(previous_steps_id)
+
+                # Retrieve previous step message
+                previous_steps_message = terminal.previous_steps_message.split('\n')
+                message = previous_steps_message.pop()
+                terminal.previous_steps_message = ','.join(previous_steps_message)
             else:
                 return self.scanner_end(cr, uid, numterm=terminal.code, context=context)
 
@@ -453,6 +483,7 @@ class scanner_hardware(osv.osv):
         elif transition_type != 'none':
             # Store the old step id
             if step_id:
+                terminal.previous_steps_message = terminal.previous_steps_id and '%s\n%s' % (terminal.previous_steps_message, message) or message
                 terminal.previous_steps_id = terminal.previous_steps_id and '%s,%d' % (terminal.previous_steps_id, step_id) or str(step_id)
 
             # Retrieve outgoing transitions from the current step
@@ -488,7 +519,7 @@ class scanner_hardware(osv.osv):
                 return self._unknown_action(cr, uid, [terminal_id], [_('Please contact'), _('your'), _('adminstrator')], context=context)
 
         # Memorize the current step
-        self._memorize(cr, uid, terminal_id, scenario_id, step_id, previous_steps_id=terminal.previous_steps_id, object=current_object, context=context)
+        self._memorize(cr, uid, terminal_id, scenario_id, step_id, previous_steps_id=terminal.previous_steps_id, previous_steps_message=terminal.previous_steps_message, object=current_object, context=context)
 
         # MUTEX Acquire
         scanner_scenario_obj._semaphore_acquire(cr, uid, terminal.scenario_id.id, terminal.warehouse_id.id, terminal.reference_document, context=context)
