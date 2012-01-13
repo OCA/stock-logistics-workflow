@@ -50,7 +50,7 @@ class scanner_scenario(osv.osv):
         'reference_res_id': fields.char('Rerefence ID', size=64, readonly=True, help='Used by export/import scenario'),
         'shared_custom': fields.boolean('Shared Custom', help='Allows to share the custom values with a shared scanner in the same warehouse'),
         'parent_id': fields.many2one('scanner.scenario', 'Parent', help='Parent scenario, used to create menus'),
-        'type': fields.selection([('scenario', 'Scenario'), ('menu', 'Menu')], 'Type', required=True, help='Defines if this scenario is a menu or an executable scenario'),
+        'type': fields.selection([('scenario', 'Scenario'), ('menu', 'Menu'), ('shortcut', 'Shortcut')], 'Type', required=True, help='Defines if this scenario is a menu or an executable scenario'),
     }
 
     _order = 'parent_id, sequence'
@@ -472,7 +472,7 @@ class scanner_hardware(osv.osv):
             # Retrieve the terminal's warehouse
             terminal_warehouse_ids = self.read(cr, uid, terminal_id, ['warehouse_id'], context=context).get('warehouse_id', False)
             # Retrieve the warehouse's scenarios
-            scenario_ids = terminal_warehouse_ids and scanner_scenario_obj.search(cr, uid, [('name', '=', message), ('warehouse_ids', 'in', [terminal_warehouse_ids[0]])], context=context) or []
+            scenario_ids = terminal_warehouse_ids and scanner_scenario_obj.search(cr, uid, [('name', '=', message), ('type', '=', 'scenario'), ('warehouse_ids', 'in', [terminal_warehouse_ids[0]])], context=context) or []
 
             # If at least one scenario was found, pick the start step of the first
             if scenario_ids:
