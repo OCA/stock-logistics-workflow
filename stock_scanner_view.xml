@@ -164,6 +164,7 @@
                                                 <tree string="Transition">
                                                     <field name="name"/>
                                                     <field name="to_id"/>
+                                                    <field name="condition"/>
                                                     <field name="transition_type"/>
                                                     <field name="tracer"/>
                                                 </tree>
@@ -182,6 +183,7 @@
                                                 <tree string="Transition">
                                                     <field name="name"/>
                                                     <field name="from_id"/>
+                                                    <field name="condition"/>
                                                     <field name="transition_type"/>
                                                     <field name="tracer"/>
                                                 </tree>
@@ -321,6 +323,7 @@
                                 <tree string="Transition">
                                     <field name="name"/>
                                     <field name="to_id"/>
+                                    <field name="condition"/>
                                     <field name="transition_type"/>
                                     <field name="tracer"/>
                                 </tree>
@@ -335,7 +338,24 @@
                                 </form>
                             </field>
                             <separator string="Incoming transitions" colspan="4"/>
-                            <field name="in_transition_ids" colspan="4" nolabel="1"/>
+                            <field name="in_transition_ids" colspan="4" nolabel="1">
+                                <tree string="Transition">
+                                    <field name="name"/>
+                                    <field name="from_id"/>
+                                    <field name="condition"/>
+                                    <field name="transition_type"/>
+                                    <field name="tracer"/>
+                                </tree>
+                                <form string="Transition">
+                                    <field name="name" colspan="4"/>
+                                    <field name="from_id" domain="[('scenario_id','=', parent.scenario_id)]"/>
+                                    <field name="condition" colspan="4"/>
+                                    <field name="transition_type"/>
+                                    <field name="tracer"/>
+                                    <field name="reference_res_id"/>
+                                    <newline/>
+                                </form>
+                            </field>
                         </page>
                     </notebook>
                     <field name="reference_res_id"/>
