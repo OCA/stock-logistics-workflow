@@ -337,7 +337,7 @@ class scanner_hardware(osv.osv):
         elif action == 'back':
             # The terminal is attached to a scenario
             if terminal.scenario_id:
-                return self._scenario_save(cr, uid, terminal.id, message, 'none', scenario_id=terminal.scenario_id.id, current_object=terminal.reference_document, context=context)
+                return self._scenario_save(cr, uid, terminal.id, message, 'back', scenario_id=terminal.scenario_id.id, current_object=terminal.reference_document, context=context)
 
         # End required
         elif action == 'end':
@@ -446,17 +446,24 @@ class scanner_hardware(osv.osv):
         tracer = False
 
         if transition_type == 'restart' or scenario_id and step_id is None:
-            terminal.log('New connection, loading current step')
             if terminal.previous_steps_id:
-                # Retrieve previous step id
+                # Retrieve previous step id and message
                 previous_steps_id = terminal.previous_steps_id.split(',')
+                previous_steps_message = terminal.previous_steps_message.split('\n')
+                if transition_type != 'restart':
+                    previous_steps_id.pop()
+                    previous_steps_message.pop()
+
+                if not previous_steps_id:
+                    return self.scanner_end(cr, uid, numterm=terminal.code, context=context)
+
+                # Retrieve step id
                 step_id = int(previous_steps_id.pop())
                 terminal.previous_steps_id = ','.join(previous_steps_id)
 
-                # Retrieve previous step message
-                previous_steps_message = terminal.previous_steps_message.split('\n')
-                message = previous_steps_message.pop()
-                terminal.previous_steps_message = ','.join(previous_steps_message)
+                # Retrieve message
+                message = eval(previous_steps_message.pop())
+                terminal.previous_steps_message = '\n'.join(previous_steps_message)
             else:
                 return self.scanner_end(cr, uid, numterm=terminal.code, context=context)
 
@@ -483,7 +490,7 @@ class scanner_hardware(osv.osv):
         elif transition_type != 'none':
             # Store the old step id
             if step_id:
-                terminal.previous_steps_message = terminal.previous_steps_id and '%s\n%s' % (terminal.previous_steps_message, message) or message
+                terminal.previous_steps_message = terminal.previous_steps_id and '%s\n%s' % (terminal.previous_steps_message, repr(message)) or repr(message)
                 terminal.previous_steps_id = terminal.previous_steps_id and '%s,%d' % (terminal.previous_steps_id, step_id) or str(step_id)
 
             # Retrieve outgoing transitions from the current step
