@@ -214,6 +214,25 @@
                 </form>
             </field>
         </record>
+        <record id="view_scanner_scenario_search" model="ir.ui.view">
+            <field name="name">scanner.scenario.search</field>
+            <field name="model">scanner.scenario</field>
+            <field name="type">search</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <search string="Scanner Scenario">
+                    <filter icon="gtk-indent" string="Menu" separator="1" domain="[('type','=','menu')]" help="Can contain scenarios or submenus"/>
+                    <filter icon="gtk-media-play" string="Scenario" separator="1" domain="[('type','=','scenario')]" help="Directly launch a scenario"/>
+                    <field name="name"/>
+                    <field name="parent_id"/>
+                    <field name="model_id"/>
+                    <newline/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Parent" icon="gtk-open" domain="[]" help="Parent" context="{'group_by':'parent_id'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
         <record id="view_scanner_scenario_diagram" model="ir.ui.view">
             <field name="name">scanner.scenario.diagram</field>
             <field name="model">scanner.scenario</field>
