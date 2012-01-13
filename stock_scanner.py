@@ -44,7 +44,7 @@ class scanner_scenario(osv.osv):
         'sequence': fields.integer('Sequence', help='Sequence order'),
         'active': fields.boolean('Active', help='If check, this object is always available'),
         'model_id': fields.many2one('ir.model', 'Model', help='Model used for this scenario'),
-        'step_ids': fields.one2many('scanner.scenario.step', 'scenario_id', 'Scenario', help='Step of the current running scenario'),
+        'step_ids': fields.one2many('scanner.scenario.step', 'scenario_id', 'Scenario', ondelete='cascade', help='Step of the current running scenario'),
         'warehouse_ids': fields.many2many('stock.warehouse', 'scanner_scenario_warehouse_rel', 'scenario_id', 'warehouse_id', 'Warehouses', help='Warehouses for this scenario'),
         'notes': fields.text('Notes', help='Store different notes, date and title for modification, etc...'),
         'reference_res_id': fields.char('Rerefence ID', size=64, readonly=True, help='Used by export/import scenario'),
@@ -124,11 +124,11 @@ class scanner_scenario_step(osv.osv):
 
     _columns = {
         'name': fields.char('Name', size=64, help='Name of the step'),
-        'scenario_id': fields.many2one('scanner.scenario', 'Scenario', required=True, help='Scenario for this step'),
+        'scenario_id': fields.many2one('scanner.scenario', 'Scenario', ondelete='cascade', required=True, help='Scenario for this step'),
         'step_start': fields.boolean('Step start', help='Check this if this is the first step of the scenario'),
         'step_stop': fields.boolean('Step stop', help='Check this if this is the  last step of the scenario'),
-        'out_transition_ids': fields.one2many('scanner.scenario.transition', 'from_id', 'Outgoing transitons', help='Transitions which goes to this step'),
-        'in_transition_ids': fields.one2many('scanner.scenario.transition', 'to_id', 'Incoming transitions', help='Transitions which goes to the next step'),
+        'out_transition_ids': fields.one2many('scanner.scenario.transition', 'from_id', 'Outgoing transitons', ondelete='cascade', help='Transitions which goes to this step'),
+        'in_transition_ids': fields.one2many('scanner.scenario.transition', 'to_id', 'Incoming transitions', ondelete='cascade', help='Transitions which goes to the next step'),
         'python_code': fields.text('Python code', help='Python code to execute'),
         'reference_res_id': fields.char('Reference ID', size=64, readonly=True, help='Used by export/import scenario/step'),
     }
@@ -170,8 +170,8 @@ class scanner_scenario_transition(osv.osv):
     _columns = {
         'name': fields.char('Name', size=64, required=True, help='Name of the transition'),
         'sequence': fields.integer('Sequence', help='Sequence order'),
-        'from_id': fields.many2one('scanner.scenario.step', 'From', required=True, help='Step which launches this transition'),
-        'to_id': fields.many2one('scanner.scenario.step', 'To', required=True, help='Step which is reached by this transition'),
+        'from_id': fields.many2one('scanner.scenario.step', 'From', required=True, ondelete='cascade', help='Step which launches this transition'),
+        'to_id': fields.many2one('scanner.scenario.step', 'To', required=True, ondelete='cascade', help='Step which is reached by this transition'),
         'condition': fields.char('Condition', size=256, required=True, help='The transition is followed only if this condition is evaluated as True'),
         'transition_type': fields.selection([('scanner', 'Scanner'), ('keyboard', 'Keyboard')], 'Transition Type', help='Type of transition'),
         'tracer': fields.char('Tracer', size=12, help='Used to determine fron which transition we arrive to the destination step'),
@@ -578,8 +578,8 @@ class scanner_scenario_custom(osv.osv):
 
     _columns = {
         # Link data to scenario
-        'scenario_id': fields.many2one('scanner.scenario', 'Scenario', help='Values used for this scenario'),
-        'scanner_id': fields.many2one('scanner.hardware', 'Scanner', help='Values used for this scanner'),
+        'scenario_id': fields.many2one('scanner.scenario', 'Scenario', ondelete='cascade', help='Values used for this scenario'),
+        'scanner_id': fields.many2one('scanner.hardware', 'Scanner', ondelete='cascade', help='Values used for this scanner'),
         'model': fields.char('Model', size=255, required=True, help='Model used for these data'),
         'res_id': fields.integer('Values id', required=True, help='ID of the model source'),
         # Temporary fields
