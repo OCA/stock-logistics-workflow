@@ -220,7 +220,7 @@ class Sentinel:
                         self.getkey()
                         (code, result, value) = self.oerp_call('back')
                     elif code == 'E':
-                        # Simple message
+                        # Error message
                         self._display('\n'.join(result), color='error', bgcolor=True, clear=True)
                         self.getkey()
                         # Restore normal background colors
@@ -254,6 +254,7 @@ class Sentinel:
                 exit(0)
             except:
                 (code, result, value) = self.oerp_call('back')
+                self.screen.bkgd(0, self._get_color('base'))
 
     def _display_error(self, error_message):
         """
