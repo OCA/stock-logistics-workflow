@@ -141,10 +141,10 @@
                     <field name="type"/>
                     <field name="sequence"/>
                     <field name="parent_id"/>
-                    <field name="model_id" attrs="{'invisible': [('type','=', 'menu')], 'required': [('type', '=', 'scenario')]}"/>
-                    <field name="shared_custom" attrs="{'invisible': [('type','=', 'menu')]}"/>
+                    <field name="model_id" attrs="{'invisible': [('type','!=', 'scenario')], 'required': [('type', '=', 'scenario')]}"/>
+                    <field name="shared_custom" attrs="{'invisible': [('type','!=', 'scenario')]}"/>
                     <notebook colspan="4">
-                        <page string="Steps" attrs="{'invisible': [('type','=', 'menu')]}">
+                        <page string="Steps" attrs="{'invisible': [('type','!=', 'scenario')]}">
                             <field name="step_ids" nolabel="1" mode="tree,form">
                                 <tree string="Step">
                                     <field name="name"/>
