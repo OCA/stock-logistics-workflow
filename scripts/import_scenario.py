@@ -120,7 +120,7 @@ if scen_vals['model_id']:
         logger.error('Model not found')
         sys.exit(1)
 
-if scen_vals['parent_id']:
+if 'parent_id' in scen_vals and scen_vals['parent_id']:
     logger.info('Search parent: %s' % scen_vals['parent_id'])
     scen_vals['parent_id'] = scenario_obj.search([('reference_res_id', '=', scen_vals['parent_id'])], 0, None, None, {'active_test': False}) or False
     if scen_vals['parent_id']:
