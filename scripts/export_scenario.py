@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
@@ -89,6 +90,9 @@ scenario_obj = Object(cnx, 'scanner.scenario')
 model_obj = Object(cnx, 'ir.model')
 warehouse_obj = Object(cnx, 'stock.warehouse')
 scen_read = scenario_obj.read(int(opts.scenario_id), [], {'active_test': False})
+if not scen_read:
+    logger.error('Scenario ID %s not found' % opts.scenario_id)
+    sys.exit(1)
 del scen_read['step_ids']
 del scen_read['id']
 # create node and attributs
@@ -96,8 +100,12 @@ root = Element('scenario')
 for field in scen_read:
     node = SubElement(root, field)
     if field == 'model_id':
-        node.text = model_obj.read(scen_read.get('model_id', [0])[0], ['model']).get('model')
-    elif field in ['name', 'note', 'title']:
+        if scen_read[field]:
+            node.text = model_obj.read(scen_read.get('model_id', [0])[0], ['model']).get('model')
+    elif field == 'parent_id':
+        if scen_read[field]:
+            node.text = scenario_obj.read(scen_read.get('parent_id', [0])[0], ['reference_res_id']).get('reference_res_id')
+    elif field in ['name', 'notes', 'title']:
         if scen_read[field]:
             node.text = unicode(scen_read[field])
     elif field == 'resid':

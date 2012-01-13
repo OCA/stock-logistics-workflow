@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
@@ -109,11 +110,25 @@ for node in root.getchildren():
     else:
         scen_vals[node.tag] = node.text or False
 
-logger.info('Search model: %s' % scen_vals['model_id'])
-scen_vals['model_id'] = model_obj.search([('model', '=', scen_vals['model_id'])], 0, None, None, {'active_test': False}) or False
 if scen_vals['model_id']:
-    logger.info('Model found')
-    scen_vals['model_id'] = scen_vals['model_id'][0]
+    logger.info('Search model: %s' % scen_vals['model_id'])
+    scen_vals['model_id'] = model_obj.search([('model', '=', scen_vals['model_id'])], 0, None, None, {'active_test': False}) or False
+    if scen_vals['model_id']:
+        logger.info('Model found')
+        scen_vals['model_id'] = scen_vals['model_id'][0]
+    else:
+        logger.error('Model not found')
+        sys.exit(1)
+
+if scen_vals['parent_id']:
+    logger.info('Search parent: %s' % scen_vals['parent_id'])
+    scen_vals['parent_id'] = scenario_obj.search([('reference_res_id', '=', scen_vals['parent_id'])], 0, None, None, {'active_test': False}) or False
+    if scen_vals['parent_id']:
+        logger.info('Parent found')
+        scen_vals['parent_id'] = scen_vals['parent_id'][0]
+    else:
+        logger.error('Parent not found')
+        sys.exit(1)
 
 # create or update
 scenario_ids = scenario_obj.search([('reference_res_id', '=', scen_vals['reference_res_id'])], 0, None, None, {'active_test': False})
