@@ -105,7 +105,7 @@ class Sentinel:
             self.hardware_code = ssh_data[0]
             self.scenario_id = self.hardware_obj.scanner_check(self.hardware_code)
         except:
-            self.hardware_code = self._input_text('Autoconfiguration\nfailed !\nPlease enter\nterminal code')
+            self.hardware_code = self._input_text('Autoconfigurationfailed !\nPlease enter\nterminal code')
             self.scenario_id = self.hardware_obj.scanner_check(self.hardware_code)
 
         # Resize window to terminal screen size
