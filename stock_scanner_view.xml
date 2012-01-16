@@ -154,8 +154,8 @@
                                 <form string="Step">
                                     <group colspan="4" col="8">
                                         <field name="name" colspan="4"/>
-                                        <field name="step_start" attrs="{'readonly': [('step_stop','=', True)]}"/>
-                                        <field name="step_stop" attrs="{'readonly': [('step_start','=', True)]}"/>
+                                        <field name="step_start"/>
+                                        <field name="step_stop"/>
                                     </group>
                                     <notebook colspan="4">
                                         <page string="Transition">
