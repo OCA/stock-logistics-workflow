@@ -431,7 +431,7 @@ class Sentinel:
                 mouse_info = curses.getmouse()
 
                 # Set the selected entry
-                highlighted = first_line + mouse_info[2]
+                highlighted = min(max(0, first_line + mouse_info[2]), len(entries) - 1)
 
                 # If we double clicked, auto-validate
                 if mouse_info[4] & curses.BUTTON1_DOUBLE_CLICKED:
