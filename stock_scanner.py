@@ -53,7 +53,7 @@ class scanner_scenario(osv.osv):
         'type': fields.selection([('scenario', 'Scenario'), ('menu', 'Menu'), ('shortcut', 'Shortcut')], 'Type', required=True, help='Defines if this scenario is a menu or an executable scenario'),
     }
 
-    _order = 'parent_id, sequence'
+    _order = 'sequence'
 
     _defaults = {
         'type': 'scenario',
