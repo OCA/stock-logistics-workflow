@@ -234,9 +234,6 @@ class Sentinel:
                         # Execute transition
                         (code, result, value) = self.oerp_call('action')
                     elif code == 'L':
-                        if not isinstance(result, list) or not result:
-                            return ('E', ['No value available !'], 0)
-
                         # Select a value in the list
                         choice = self._menu_choice(result)
                         # Send the result to OpenERP
@@ -391,9 +388,11 @@ class Sentinel:
         """
         # Highlighted entry
         highlighted = 0
+        first_column = 0
+        max_length = max([len(value) for value in entries])
 
         # Add line numbers before text
-        display = ['%2d: %s' % (entries.index(value), value) for value in entries]
+        display = ['%2d: %s' % (entries.index(value), value[:self.window_width - 5]) for value in entries]
 
         while True:
             # Display the menu
@@ -411,12 +410,20 @@ class Sentinel:
             elif key == 'KEY_BACKSPACE' or key == 'KEY_DC':
                 # Backspace : Remove last digit from index
                 highlighted = int(math.floor(highlighted / 10))
-            elif key == 'KEY_DOWN' or key == 'KEY_RIGHT':
+            elif key == 'KEY_DOWN':
                 # Down key : Go down in the list
                 highlighted = highlighted + 1
-            elif key == 'KEY_UP' or key == 'KEY_LEFT':
+            elif key == 'KEY_RIGHT':
+                # Move display
+                first_column = min(first_column + 1, max_length - self.window_width + 5)
+                display = ['%2d: %s' % (entries.index(value), value[first_column:self.window_width - 5 + first_column]) for value in entries]
+            elif key == 'KEY_UP':
                 # Up key : Go up in the list
                 highlighted = highlighted - 1
+            elif key == 'KEY_LEFT':
+                # Move display
+                first_column = max(0, first_column - 1)
+                display = ['%2d: %s' % (entries.index(value), value[first_column:self.window_width - 5 + first_column]) for value in entries]
             elif key == 'KEY_MOUSE':
                 # First line to be displayed
                 first_line = 0
