@@ -125,12 +125,12 @@ for field in scen_read:
         node.text = unicode(scen_read[field])
 # add step
 step_obj = Object(cnx, 'scanner.scenario.step')
-step_ids = step_obj.search([('scenario_id', '=', int(opts.scenario_id))])
-for step in step_obj.read(step_ids, []):
+step_ids = step_obj.search([('scenario_id', '=', int(opts.scenario_id))], 0, None, 'reference_res_id')
+for step_id in step_ids:
+    step = step_obj.read(step_id, [])
     # delete unuse key
     del step['in_transition_ids']
     del step['out_transition_ids']
-    step_id = step['id']
     del step['id']
     del step['scenario_id']
     # get res_id
@@ -149,9 +149,9 @@ for step in step_obj.read(step_ids, []):
     node = SubElement(root, 'Step', attrib=step)
 # add transition
 transition_obj = Object(cnx, 'scanner.scenario.transition')
-transition_ids = transition_obj.search([('from_id.scenario_id', '=', int(opts.scenario_id))])
-for transition in transition_obj.read(transition_ids, []):
-    transition_id = transition['id']
+transition_ids = transition_obj.search([('from_id.scenario_id', '=', int(opts.scenario_id))], 0, None, 'reference_res_id')
+for transition_id in transition_ids:
+    transition = transition_obj.read(transition_id, [])
     del transition['id']
     # get res id
     if not transition['reference_res_id']:
