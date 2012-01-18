@@ -27,6 +27,7 @@ import os
 import math
 import ConfigParser
 import curses.ascii
+import unicodedata
 from oobjlib.connection import Connection
 from oobjlib.component import Object
 
@@ -182,8 +183,7 @@ class Sentinel:
             self.screen.bkgd(0, color)
 
         # Display the text
-        # self.screen.addstr(y, x, unicode(text).encode('utf-8', 'replace'), color)
-        self.screen.addstr(y, x, text.encode('ascii', 'replace'), color)
+        self.screen.addstr(y, x, unicodedata.normalize('NFKD', unicode(text)).encode('ascii', 'ignore'), color)
 
     def main_loop(self):
         """
