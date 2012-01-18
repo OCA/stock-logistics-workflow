@@ -200,7 +200,7 @@ class Sentinel:
                 else:
                     if code == 'Q':
                         # Quantity selection
-                        quantity = self._select_quantity('\n'.join(result), value)
+                        quantity = self._select_quantity('\n'.join(result), str(value))
                         (code, result, value) = self.oerp_call('action', quantity)
                     elif code == 'C':
                         # Confirmation query
@@ -351,7 +351,7 @@ class Sentinel:
         # Input text from user
         return self._read_input(line=self.window_height - 1)
 
-    def _select_quantity(self, message, quantity):
+    def _select_quantity(self, message, quantity='0'):
         """
         Allows the user to select  quantity
         """
@@ -359,7 +359,7 @@ class Sentinel:
             # Display the menu
             self._display(message, clear=True)
             # Diplays the selected quantity
-            self._display('Selected : %5d' % quantity, y=self.window_height - 1, color='info', modifier=curses.A_BOLD)
+            self._display('Selected : %s' % quantity, y=self.window_height - 1, color='info', modifier=curses.A_BOLD)
 
             # Get the pushed key
             key = self.getkey()
@@ -368,19 +368,26 @@ class Sentinel:
                 # Return key : Validate the choice
                 return quantity
             elif key.isdigit():
-                # Digit : Add at end of index
-                quantity = quantity * 10 + int(key)
+                # Digit : Add at end
+                if quantity == '0':
+                    quantity = key
+                else:
+                    quantity += key
+            elif not '.' in quantity and key == '.' or key == ',':
+                # Decimal point
+                quantity += '.'
             elif key == 'KEY_BACKSPACE' or key == 'KEY_DC':
-                # Backspace : Remove last digit from index
-                quantity = int(math.floor(quantity / 10))
+                # Backspace : Remove last digit
+                quantity = quantity[:-1]
             elif key == 'KEY_DOWN' or key == 'KEY_LEFT':
-                # Down key : Go down in the list
-                quantity = quantity - 1
+                # Down key : Decrease
+                quantity = str(float(quantity) - 1)
             elif key == 'KEY_UP' or key == 'KEY_RIGHT':
-                # Up key : Go up in the list
-                quantity = quantity + 1
+                # Up key : Increase
+                quantity = str(float(quantity) + 1)
 
-            quantity = max(0, quantity)
+            if not quantity:
+                quantity = '0'
 
     def _menu_choice(self, entries):
         """
