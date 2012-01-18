@@ -31,6 +31,8 @@ from threading import Semaphore
 import logging
 import uuid
 import netsvc
+import traceback
+import sys
 
 logger = logging.getLogger('stock_scanner')
 
@@ -565,7 +567,7 @@ class scanner_hardware(osv.osv):
         except Exception, e:
             ld = {'act': 'R', 'res': ['Please contact', 'your', 'administrator'], 'val': 0}
             self.empty_scanner_values(cr, uid, [terminal_id], context=context)
-            logger.warning('Exception: %s' % str(e))
+            logger.error('Exception: %s' % '\n'.join(traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback)))
         finally:
             scanner_scenario_obj._semaphore_release(cr, uid, terminal.scenario_id.id, terminal.warehouse_id.id, terminal.reference_document, context=context)
 
