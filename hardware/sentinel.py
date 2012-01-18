@@ -399,7 +399,11 @@ class Sentinel:
         max_length = max([len(value) for value in entries])
 
         # Add line numbers before text
-        display = ['%2d: %s' % (entries.index(value), value[:self.window_width - 5]) for value in entries]
+        display = []
+        index = 0
+        for value in entries:
+            display.append('%2d: %s' % (index, value[:self.window_width - 5]))
+            index += 1
 
         while True:
             # Display the menu
@@ -423,14 +427,22 @@ class Sentinel:
             elif key == 'KEY_RIGHT':
                 # Move display
                 first_column = min(first_column + 1, max_length - self.window_width + 5)
-                display = ['%2d: %s' % (entries.index(value), value[first_column:self.window_width - 5 + first_column]) for value in entries]
+                display = []
+                index = 0
+                for value in entries:
+                    display.append('%2d: %s' % (index, value[first_column:self.window_width - 5 + first_column]))
+                    index += 1
             elif key == 'KEY_UP':
                 # Up key : Go up in the list
                 highlighted = highlighted - 1
             elif key == 'KEY_LEFT':
                 # Move display
                 first_column = max(0, first_column - 1)
-                display = ['%2d: %s' % (entries.index(value), value[first_column:self.window_width - 5 + first_column]) for value in entries]
+                display = []
+                index = 0
+                for value in entries:
+                    display.append('%2d: %s' % (index, value[first_column:self.window_width - 5 + first_column]))
+                    index += 1
             elif key == 'KEY_MOUSE':
                 # First line to be displayed
                 first_line = 0
