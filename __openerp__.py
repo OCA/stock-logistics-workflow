@@ -24,7 +24,7 @@
 
 {
     'name': 'Stock Scanner',
-    'version': '0.1',
+    'version': '1.0',
     'category': 'Generic Modules/Inventory Control',
     'description': """Allows managing barcode readers with simple scenarios""",
     'author': 'SYLEAM Info Services',
