@@ -244,7 +244,7 @@ msgstr "Modèle utilisé pour ces données"
 #: view:scanner.scenario.step:0
 #: field:scanner.scenario.step,in_transition_ids:0
 msgid "Incoming transitions"
-msgstr "Transitions entraintes"
+msgstr "Transitions entrantes"
 
 #. module: stock_scanner
 #: field:scanner.scenario.step,step_stop:0
