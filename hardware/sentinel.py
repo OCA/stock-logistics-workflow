@@ -237,7 +237,7 @@ class Sentinel:
                         # Select a value in the list
                         choice = self._menu_choice(result)
                         # Send the result to OpenERP
-                        (code, result, value) = self.oerp_call('action', result[choice])
+                        (code, result, value) = self.oerp_call('action', choice)
                     elif code == 'F':
                         # End of scenario
                         self.scenario_id = False
@@ -285,7 +285,7 @@ class Sentinel:
         choice = self._menu_choice(values)
 
         # Send the result to OpenERP
-        return self.oerp_call('action', values[choice])
+        return self.oerp_call('action', choice)
 
     def _confirm(self, message):
         """
@@ -393,6 +393,12 @@ class Sentinel:
         """
         Allows the user to choose a value in a list
         """
+        # If a dict is passed, keep the keys
+        keys = entries
+        if isinstance(entries, dict):
+            keys = entries.keys()
+            entries = entries.values()
+
         # Highlighted entry
         highlighted = 0
         first_column = 0
@@ -414,7 +420,7 @@ class Sentinel:
 
             if key == '\n':
                 # Return key : Validate the choice
-                return highlighted
+                return keys[highlighted]
             elif key.isdigit():
                 # Digit : Add at end of index
                 highlighted = highlighted * 10 + int(key)
@@ -461,7 +467,7 @@ class Sentinel:
 
                 # If we double clicked, auto-validate
                 if mouse_info[4] & curses.BUTTON1_DOUBLE_CLICKED:
-                    return highlighted
+                    return keys[highlighted]
 
             # Avoid going out of the list
             highlighted = min(max(0, highlighted), len(entries) - 1)
