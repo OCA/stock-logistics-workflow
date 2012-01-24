@@ -198,9 +198,9 @@ class Sentinel:
                     (code, result, value) = self._select_scenario()
                     self.scenario_id = result
                 else:
-                    if code == 'Q':
+                    if code == 'Q' or code == 'N':
                         # Quantity selection
-                        quantity = self._select_quantity('\n'.join(result), str(value))
+                        quantity = self._select_quantity('\n'.join(result), str(value), integer=(code == 'N'))
                         (code, result, value) = self.oerp_call('action', quantity)
                     elif code == 'C':
                         # Confirmation query
@@ -351,7 +351,7 @@ class Sentinel:
         # Input text from user
         return self._read_input(line=self.window_height - 1)
 
-    def _select_quantity(self, message, quantity='0'):
+    def _select_quantity(self, message, quantity='0', integer=False):
         """
         Allows the user to select  quantity
         """
@@ -373,7 +373,7 @@ class Sentinel:
                     quantity = key
                 else:
                     quantity += key
-            elif not '.' in quantity and key == '.' or key == ',':
+            elif not integer and not '.' in quantity and key == '.' or key == ',':
                 # Decimal point
                 quantity += '.'
             elif key == 'KEY_BACKSPACE' or key == 'KEY_DC':
@@ -381,10 +381,16 @@ class Sentinel:
                 quantity = quantity[:-1]
             elif key == 'KEY_DOWN' or key == 'KEY_LEFT':
                 # Down key : Decrease
-                quantity = str(float(quantity) - 1)
+                if integer:
+                    quantity = str(int(quantity) - 1)
+                else:
+                    quantity = str(float(quantity) - 1)
             elif key == 'KEY_UP' or key == 'KEY_RIGHT':
                 # Up key : Increase
-                quantity = str(float(quantity) + 1)
+                if integer:
+                    quantity = str(int(quantity) + 1)
+                else:
+                    quantity = str(float(quantity) + 1)
 
             if not quantity:
                 quantity = '0'
