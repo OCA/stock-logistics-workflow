@@ -91,13 +91,15 @@ transition = []
 scen_vals = {}
 
 # parse of the scenario
+steps_number = 0
+transitions_number = 0
 for node in root.getchildren():
     #the node of the Step and Transition are put in other list
     if node.tag == 'Step':
-        logger.info('Step found')
+        steps_number += 1
         step.append(node)
     elif node.tag == 'Transition':
-        logger.info('Transition found')
+        transitions_number += 1
         transition.append(node)
     elif node.tag == 'warehouse_ids':
         if not 'warehouse_ids' in scen_vals:
@@ -109,6 +111,8 @@ for node in root.getchildren():
         scen_vals[node.tag] = eval(node.text) or False
     else:
         scen_vals[node.tag] = node.text or False
+logger.info('%d steps found' % steps_number)
+logger.info('%d transitions found' % transitions_number)
 
 if scen_vals['model_id']:
     logger.info('Search model: %s' % scen_vals['model_id'])
