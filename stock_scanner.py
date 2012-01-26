@@ -351,7 +351,7 @@ class scanner_hardware(osv.osv):
 
         # If the terminal is not attached to a scenario, send the menu (scenario list)
         if not terminal.scenario_id:
-            logger.info('[%s] No scenario' % terminal_number)
+            logger.info('[%s] No running scenario' % terminal_number)
             scenarios = self._scenario_list(cr, uid, terminal.warehouse_id.id, message, context=context)
             return ('L', scenarios, 0)
 
