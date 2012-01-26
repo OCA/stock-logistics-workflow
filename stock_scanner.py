@@ -215,7 +215,7 @@ class scanner_hardware(osv.osv):
 
     _columns = {
         'name': fields.char('Name', size=128, required=True, help='Name of the hardware'),
-        'code': fields.char('Code', size=12, required=True, help='Code of this hardware'),
+        'code': fields.char('Code', size=128, required=True, help='Code of this hardware'),
         'log_enabled': fields.boolean('Log enabled', help='Enable logging messages from scenarios'),
         'screen_width': fields.integer('Screen Width', help='Width of the terminal\'s screen'),
         'screen_height': fields.integer('Screen Height', help='Height of the terminal\'s screen'),
