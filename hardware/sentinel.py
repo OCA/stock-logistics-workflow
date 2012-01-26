@@ -152,15 +152,28 @@ class Sentinel:
         """
         Read a line of text from the keyboard
         """
-        # Echo typed characters if needed
-        if echo:
-            curses.echo()
+        # Initialize variables
+        value = ''
+        self.screen.move(line, 0)
+        key = self.getkey()
 
-        # Get the string from stdin
-        value = self.screen.getstr(line, 0)
+        # While we do not validate, store characters
+        while key != '\n':
+            # Printable character : store in value
+            if len(key) == 1 and curses.ascii.isprint(key):
+                value += key
+            # Backspace or del, remove the last character
+            elif key == 'KEY_BACKSPACE' or key == 'KEY_DC':
+                value = value[:-1]
 
-        # Disable characters echoing
-        curses.noecho()
+            # Display the current value if echoing is needed
+            if echo:
+                self._display(' ' * (self.window_width - 1), 0, line)
+                self._display(value, 0, line)
+
+            # Move cursor at end of the displayed value
+            self.screen.move(line, len(value))
+            key = self.getkey()
 
         return value
 
