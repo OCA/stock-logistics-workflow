@@ -145,7 +145,7 @@ class Sentinel:
         key = self.screen.getkey()
         if key == '':
             # Escape key : Return back to the previous step
-            raise Exception('Back')
+            raise SentinelBackException('Back')
         return key
 
     def _read_input(self, echo=True, line=1):
@@ -262,7 +262,8 @@ class Sentinel:
             except KeyboardInterrupt, e:
                 # If Ctrl+C, exit
                 exit(0)
-            except:
+            except SentinelBackException, e:
+                # Back to the previous step required
                 (code, result, value) = self.oerp_call('back')
                 self.screen.bkgd(0, self._get_color('base'))
 
@@ -520,6 +521,12 @@ class Sentinel:
 
         # Set the cursor position
         self.screen.move(highlighted - first_line, self.window_width - 1)
+
+class SentinelException (Exception):
+    pass
+
+class SentinelBackException (SentinelException):
+    pass
 
 if __name__ == '__main__':
     try:
