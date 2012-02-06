@@ -129,6 +129,7 @@ class scanner_scenario_step(osv.osv):
         'scenario_id': fields.many2one('scanner.scenario', 'Scenario', ondelete='cascade', required=True, help='Scenario for this step'),
         'step_start': fields.boolean('Step start', help='Check this if this is the first step of the scenario'),
         'step_stop': fields.boolean('Step stop', help='Check this if this is the  last step of the scenario'),
+        'step_back': fields.boolean('Step back', help='Check this to stop at this step when returning back'),
         'out_transition_ids': fields.one2many('scanner.scenario.transition', 'from_id', 'Outgoing transitons', ondelete='cascade', help='Transitions which goes to this step'),
         'in_transition_ids': fields.one2many('scanner.scenario.transition', 'to_id', 'Incoming transitions', ondelete='cascade', help='Transitions which goes to the next step'),
         'python_code': fields.text('Python code', help='Python code to execute'),
@@ -490,11 +491,6 @@ class scanner_hardware(osv.osv):
             else:
                 return self._send_error(cr, uid, [terminal_id], [_('Scenario'), _('not found')], context=context)
         elif transition_type != 'none':
-            # Store the old step id
-            if step_id:
-                terminal.previous_steps_message = terminal.previous_steps_id and '%s\n%s' % (terminal.previous_steps_message, repr(message)) or repr(message)
-                terminal.previous_steps_id = terminal.previous_steps_id and '%s,%d' % (terminal.previous_steps_id, step_id) or str(step_id)
-
             # Retrieve outgoing transitions from the current step
             scanner_transition_obj = self.pool.get('scanner.scenario.transition')
             transition_ids = scanner_transition_obj.search(cr, uid, [('from_id', '=', step_id)], context=context)
@@ -521,6 +517,13 @@ class scanner_hardware(osv.osv):
                 # Condition passed, go to this step
                 step_id = transition.to_id.id
                 tracer = transition.tracer
+
+                # Store the old step id if we are on a back step
+                if transition.to_id.step_back and terminal.previous_steps_id.split(',')[-1] != str(transition.from_id.id):
+                    terminal.previous_steps_message = terminal.previous_steps_id and '%s\n%s' % (terminal.previous_steps_message, repr(message)) or repr(message)
+                    terminal.previous_steps_id = terminal.previous_steps_id and '%s,%d' % (terminal.previous_steps_id, transition.from_id.id) or str(transition.from_id.id)
+
+                # Valid transition found, stop searching
                 break
 
             # No step found, return an error

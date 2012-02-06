@@ -150,12 +150,14 @@
                                     <field name="name"/>
                                     <field name="step_start"/>
                                     <field name="step_stop"/>
+                                    <field name="step_back"/>
                                 </tree>
                                 <form string="Step">
-                                    <group colspan="4" col="8">
-                                        <field name="name" colspan="4"/>
+                                    <group colspan="4" col="6">
+                                        <field name="name" colspan="6"/>
                                         <field name="step_start"/>
                                         <field name="step_stop"/>
+                                        <field name="step_back"/>
                                     </group>
                                     <notebook colspan="4">
                                         <page string="Transition">
@@ -251,7 +253,7 @@
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
                 <diagram string="Scenario Editor">
-                    <node object="scanner.scenario.step" bgcolor="gray:step_start==True;grey:step_stop==True">
+                    <node object="scanner.scenario.step" shape="rectangle:step_back==True" bgcolor="gray:step_start==True;grey:step_stop==True">
                         <field name="name"/>
                     </node>
                     <arrow object="scanner.scenario.transition" source="from_id" destination="to_id" label="['condition','tracer']">
@@ -299,6 +301,7 @@
                     <field name="name"/>
                     <field name="step_start"/>
                     <field name="step_stop"/>
+                    <field name="step_back"/>
                 </tree>
             </field>
         </record>
@@ -309,11 +312,12 @@
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
                 <form string="Scenario Step">
-                    <group colspan="4">
-                        <field name="name" select="1" colspan="4"/>
+                    <group colspan="4" col="6">
+                        <field name="name" colspan="4"/>
+                        <field name="scenario_id"/>
                         <field name="step_start"/>
                         <field name="step_stop"/>
-                        <field name="scenario_id" select="1"/>
+                        <field name="step_back"/>
                         <newline/>
                     </group>
                     <notebook colspan="4">
