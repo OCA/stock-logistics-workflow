@@ -223,8 +223,8 @@ class scanner_hardware(osv.osv):
         'warehouse_id': fields.many2one('stock.warehouse', 'Warehouse', required=True, help='Warehouse where is located this hardware'),
         'scenario_id': fields.many2one('scanner.scenario', 'Scenario', help='Scenario used for this hardware'),
         'step_id': fields.many2one('scanner.scenario.step', 'Current Step', help='Current step for this hardware'),
-        'previous_steps_id': fields.char('Previous Step', size=256, help='Previous step for this hardware'),
-        'previous_steps_message': fields.text('Previous Message', help='Previous message for this hardware'),
+        'previous_steps_id': fields.char('Previous Step', size=256, required=True, help='Previous step for this hardware'),
+        'previous_steps_message': fields.text('Previous Message', required=True, help='Previous message for this hardware'),
         'reference_document': fields.integer('Reference', help='ID of the reference document'),
         'tmp_val1': fields.char('Temp value 1', size=128, help='Temporary value'),
         'tmp_val2': fields.char('Temp value 2', size=128, help='Temporary value'),
@@ -239,6 +239,8 @@ class scanner_hardware(osv.osv):
         'scenario_id': False,
         'step_id': False,
         'reference_document': False,
+        'previous_steps_id': '',
+        'previous_steps_message': '',
     }
 
     def search_scanner_id(self, cr, uid, numterm=False, context=None):
@@ -388,8 +390,8 @@ class scanner_hardware(osv.osv):
         self.write(cr, uid, ids, {
             'scenario_id': False,
             'step_id': False,
-            'previous_steps_id': False,
-            'previous_steps_message': False,
+            'previous_steps_id': '',
+            'previous_steps_message': '',
             'reference_document': 0,
             'tmp_val1': '',
             'tmp_val2': '',
