@@ -216,7 +216,7 @@ class Sentinel:
                 else:
                     if code == 'Q' or code == 'N':
                         # Quantity selection
-                        quantity = self._select_quantity('\n'.join(result), str(value), integer=(code == 'N'))
+                        quantity = self._select_quantity('\n'.join(result), '%g' % value, integer=(code == 'N'))
                         (code, result, value) = self.oerp_call('action', quantity)
                     elif code == 'C':
                         # Confirmation query
@@ -416,16 +416,10 @@ class Sentinel:
                 quantity = quantity[:-1]
             elif key == 'KEY_DOWN' or key == 'KEY_LEFT':
                 # Down key : Decrease
-                if integer:
-                    quantity = str(int(quantity) - 1)
-                else:
-                    quantity = str(float(quantity) - 1)
+                quantity = '%g' % (float(quantity) - 1)
             elif key == 'KEY_UP' or key == 'KEY_RIGHT':
                 # Up key : Increase
-                if integer:
-                    quantity = str(int(quantity) + 1)
-                else:
-                    quantity = str(float(quantity) + 1)
+                quantity = '%g' % (float(quantity) + 1)
 
             if not quantity:
                 quantity = '0'
