@@ -170,11 +170,13 @@ class Sentinel:
 
             # Display the current value if echoing is needed
             if echo:
+                display_start = max(0, len(value) - self.window_width + 1)
+                display_value = value[display_start:]
                 self._display(' ' * (self.window_width - 1), 0, line)
-                self._display(value, 0, line)
+                self._display(display_value, 0, line)
 
             # Move cursor at end of the displayed value
-            self.screen.move(line, len(value))
+            self.screen.move(line, min(len(value), self.window_width - 1))
             key = self.getkey()
 
         return value
