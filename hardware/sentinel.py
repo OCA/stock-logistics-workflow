@@ -24,7 +24,9 @@
 ##############################################################################
 
 import os
+import sys
 import math
+import traceback
 import ConfigParser
 import curses.ascii
 import unicodedata
@@ -209,7 +211,6 @@ class Sentinel:
                 # No active scenario, select one
                 if not self.scenario_id:
                     (code, result, value) = self._select_scenario()
-                    self.scenario_id = result
                 else:
                     if code == 'Q' or code == 'N':
                         # Quantity selection
@@ -266,6 +267,23 @@ class Sentinel:
                 # Back to the previous step required
                 (code, result, value) = self.oerp_call('back')
                 self.screen.bkgd(0, self._get_color('base'))
+            except Exception, e:
+                # Generates log contents
+                log_contents = '%s\n# Hardware code : %s\n# Current scenario : %s\n# Current values :\n#\tcode : %s\n#\tresult : %s\n#\tvalue : %s\n%s\n%s\n' % (
+                    '#' * 79,
+                    self.hardware_code,
+                    str(self.scenario_id),
+                    code,
+                    repr(result),
+                    repr(value),
+                    '#' * 79,
+                    reduce(lambda x, y: x+y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback))
+                )
+
+                # Writes traceback in log file
+                logfile = open('oerp_sentinel.log', 'a')
+                logfile.write(log_contents)
+                logfile.close()
 
     def _display_error(self, error_message):
         """
@@ -297,6 +315,7 @@ class Sentinel:
 
         # Select a scenario in the list
         choice = self._menu_choice(values)
+        self.scenario_id = choice
 
         # Send the result to OpenERP
         return self.oerp_call('action', choice)
