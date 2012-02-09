@@ -530,6 +530,7 @@ class scanner_hardware(osv.osv):
 
             # No step found, return an error
             if not step_id:
+                terminal.log('No valid transition found !')
                 return self._unknown_action(cr, uid, [terminal_id], [_('Please contact'), _('your'), _('adminstrator')], context=context)
 
         # Memorize the current step
