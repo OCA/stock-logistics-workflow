@@ -250,10 +250,14 @@ class Sentinel:
                         # Execute transition
                         (code, result, value) = self.oerp_call('action')
                     elif code == 'L':
-                        # Select a value in the list
-                        choice = self._menu_choice(result)
-                        # Send the result to OpenERP
-                        (code, result, value) = self.oerp_call('action', choice)
+                        if result:
+                            # Select a value in the list
+                            choice = self._menu_choice(result)
+                            # Send the result to OpenERP
+                            (code, result, value) = self.oerp_call('action', choice)
+                        else:
+                            # Empty list supplied, display an error
+                            (code, result, value) = ('E', ['No value available'], False)
                     elif code == 'F':
                         # End of scenario
                         self.scenario_id = False
