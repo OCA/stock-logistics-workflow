@@ -291,6 +291,9 @@ class Sentinel:
                 logfile.write(log_contents)
                 logfile.close()
 
+                # Display error message
+                (code, result, value) = ('E', ['An error occured', '', 'Please contact your', 'administrator'], False)
+
     def _display_error(self, error_message):
         """
         Displays an error messge, changing the background to red
