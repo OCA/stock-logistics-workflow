@@ -283,7 +283,7 @@ class Sentinel:
                     repr(result),
                     repr(value),
                     '#' * 79,
-                    reduce(lambda x, y: x+y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback))
+                    reduce(lambda x, y: x + y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback))
                 )
 
                 # Writes traceback in log file
@@ -544,8 +544,10 @@ class Sentinel:
         # Set the cursor position
         self.screen.move(highlighted - first_line, self.window_width - 1)
 
+
 class SentinelException (Exception):
     pass
+
 
 class SentinelBackException (SentinelException):
     pass
