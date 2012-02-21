@@ -62,7 +62,7 @@ COLOR_PAIRS = {
 }
 
 
-class Sentinel:
+class Sentinel(object):
     """
     Sentinel class
     Manages scanner terminals
