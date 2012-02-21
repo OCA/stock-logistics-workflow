@@ -151,14 +151,14 @@ class Sentinel:
             raise SentinelBackException('Back')
         return key
 
-    def _read_input(self, echo=True, line=1):
+    def _read_input(self, echo=True, line=1, default='', size=None):
         """
         Read a line of text from the keyboard
         """
         # Initialize variables
-        value = ''
+        value = default
         self.screen.move(line, 0)
-        key = self.getkey()
+        key = ''
 
         # While we do not validate, store characters
         while key != '\n':
@@ -177,8 +177,11 @@ class Sentinel:
                 self._display(display_value, 0, line)
 
             # Move cursor at end of the displayed value
-            self.screen.move(line, min(len(value), self.window_width - 1))
-            key = self.getkey()
+            if size is not None and len(value) >= size:
+                key = '\n'
+            else:
+                self.screen.move(line, min(len(value), self.window_width - 1))
+                key = self.getkey()
 
         return value
 
@@ -224,8 +227,17 @@ class Sentinel:
                         confirm = self._confirm('\n'.join(result))
                         (code, result, value) = self.oerp_call('action', confirm)
                     elif code == 'T':
+                        # Select arguments from value
+                        default = ''
+                        size = None
+                        if isinstance(value, dict):
+                            default = value.get('default', '')
+                            size = value.get('size', None)
+                        elif isinstance(value, str):
+                            default = value
+
                         # Text input
-                        text = self._input_text('\n'.join(result))
+                        text = self._input_text('\n'.join(result), default=default, size=size)
                         (code, result, value) = self.oerp_call('action', text)
                     elif code == 'R':
                         # Error
@@ -385,7 +397,7 @@ class Sentinel:
                 if mouse_info[4] & curses.BUTTON1_DOUBLE_CLICKED:
                     return confirm
 
-    def _input_text(self, message):
+    def _input_text(self, message, default='', size=None):
         """
         Allows the user to input random text
         """
@@ -393,7 +405,7 @@ class Sentinel:
         self._display(message, clear=True)
 
         # Input text from user
-        return self._read_input(line=self.window_height - 1)
+        return self._read_input(line=self.window_height - 1, default=default, size=size)
 
     def _select_quantity(self, message, quantity='0', integer=False):
         """
