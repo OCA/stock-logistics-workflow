@@ -476,6 +476,7 @@ class Sentinel(object):
 
             # Get the pushed key
             key = self.getkey()
+            digit_key = False
 
             if key == '\n':
                 # Return key : Validate the choice
@@ -483,6 +484,7 @@ class Sentinel(object):
             elif key.isdigit():
                 # Digit : Add at end of index
                 highlighted = highlighted * 10 + int(key)
+                digit_key = True
             elif key == 'KEY_BACKSPACE' or key == 'KEY_DC':
                 # Backspace : Remove last digit from index
                 highlighted = int(math.floor(highlighted / 10))
@@ -532,8 +534,8 @@ class Sentinel(object):
             highlighted = min(max(0, highlighted), len(entries) - 1)
 
             # Auto validate if max number is reached
-            current_nb_char = int(math.floor(math.log10(highlighted)) + 1)
-            if current_nb_char >= nb_char:
+            current_nb_char = int(math.floor(math.log10(max(1, highlighted))) + 1)
+            if highlighted and digit_key and current_nb_char >= nb_char:
                 return keys[highlighted]
 
     def _menu_display(self, entries, highlighted):
