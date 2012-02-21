@@ -211,6 +211,8 @@ class Sentinel:
         Loops until the user asks for ending
         """
         code = False
+        result = None
+        value = None
 
         while True:
             try:
@@ -463,8 +465,9 @@ class Sentinel:
         # Add line numbers before text
         display = []
         index = 0
+        nb_char = int(math.floor(math.log10(len(entries))) + 1)
         for value in entries:
-            display.append('%2d: %s' % (index, value[:self.window_width - 5]))
+            display.append('%s: %s' % (str(index).rjust(nb_char), value[:self.window_width - 5]))
             index += 1
 
         while True:
@@ -527,6 +530,11 @@ class Sentinel:
 
             # Avoid going out of the list
             highlighted = min(max(0, highlighted), len(entries) - 1)
+
+            # Auto validate if max number is reached
+            current_nb_char = int(math.floor(math.log10(highlighted)) + 1)
+            if current_nb_char >= nb_char:
+                return keys[highlighted]
 
     def _menu_display(self, entries, highlighted):
         """
