@@ -263,7 +263,7 @@ class Sentinel(object):
                         self._display('\n'.join(result), clear=True)
                         self.getkey()
                         # Execute transition
-                        (code, result, value) = self.oerp_call('action')
+                        (code, result, value) = self.oerp_call('action', value)
                     elif code == 'L':
                         if result:
                             # Select a value in the list
