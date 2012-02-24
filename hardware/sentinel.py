@@ -466,8 +466,9 @@ class Sentinel(object):
         display = []
         index = 0
         nb_char = int(math.floor(math.log10(len(entries))) + 1)
+        decal = nb_char + 3
         for value in entries:
-            display.append('%s: %s' % (str(index).rjust(nb_char), value[:self.window_width - 5]))
+            display.append('%s: %s' % (str(index).rjust(nb_char), value[:self.window_width - decal]))
             index += 1
 
         while True:
@@ -493,11 +494,11 @@ class Sentinel(object):
                 highlighted = highlighted + 1
             elif key == 'KEY_RIGHT':
                 # Move display
-                first_column = min(first_column + 1, max_length - self.window_width + 5)
+                first_column = max(0, min(first_column + 1, max_length - self.window_width + decal))
                 display = []
                 index = 0
                 for value in entries:
-                    display.append('%2d: %s' % (index, value[first_column:self.window_width - 5 + first_column]))
+                    display.append('%s: %s' % (str(index).rjust(nb_char), value[first_column:self.window_width - decal + first_column]))
                     index += 1
             elif key == 'KEY_UP':
                 # Up key : Go up in the list
@@ -508,7 +509,7 @@ class Sentinel(object):
                 display = []
                 index = 0
                 for value in entries:
-                    display.append('%2d: %s' % (index, value[first_column:self.window_width - 5 + first_column]))
+                    display.append('%s: %s' % (str(index).rjust(nb_char), value[first_column:self.window_width - decal + first_column]))
                     index += 1
             elif key == 'KEY_MOUSE':
                 # First line to be displayed
