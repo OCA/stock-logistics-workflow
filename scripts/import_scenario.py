@@ -37,6 +37,9 @@ import sys
 parser = GetParser('Export scenario', '0.1')
 group = OptionGroup(parser, "Object arguments",
         "Application Options")
+group.add_option('', '--directory', dest='directory',
+                 default='.',
+                 help='directory where the script will search for the scenario files')
 group.add_option('-v', '--verbose', dest='verbose',
                  action='store_true',
                  default=False,
@@ -79,7 +82,7 @@ model_obj = Object(cnx, 'ir.model')
 warehouse_obj = Object(cnx, 'stock.warehouse')
 step_obj = Object(cnx, 'scanner.scenario.step')
 trans_obj = Object(cnx, 'scanner.scenario.transition')
-xml_file = open('scenario.xml', 'r')
+xml_file = open('%s/scenario.xml' % opts.directory, 'r')
 logger.info('Scenario file found, process reading!')
 scenario_xml = xml_file.read()
 xml_file.close()
@@ -157,7 +160,7 @@ for node in step:
     # get scenario id
     step_vals['scenario_id'] = scenario_id
     # get python src
-    python_code = open('%s.py' % step_vals['reference_res_id'], 'r')
+    python_code = open('%s/%s.py' % (opts.directory, step_vals['reference_res_id']), 'r')
     step_vals['python_code'] = python_code.read()
     python_code.close()
     # create or update

@@ -53,6 +53,9 @@ group.add_option('', '--indent', dest='indent',
 group.add_option('', '--id', dest='scenario_id',
                  default=False,
                  help='id of the scenario to extract')
+group.add_option('', '--directory', dest='directory',
+                 default='.',
+                 help='directory where the script will write the scenario files')
 parser.add_option_group(group)
 opts, args = parser.parse_args()
 
@@ -139,7 +142,7 @@ for step_id in step_ids:
         step_obj.write([step_id], {'reference_res_id': step['reference_res_id']})
     resid[step_id] = unicode(step['reference_res_id'])
     # save code
-    src_file = open('%s.py' % step['reference_res_id'], 'w')
+    src_file = open('%s/%s.py' % (opts.directory, step['reference_res_id']), 'w')
     src_file.write(step['python_code'].encode('utf-8'))
     src_file.close()
     del step['python_code']
@@ -168,7 +171,7 @@ for transition_id in transition_ids:
         transition[key] = unicode(item)
     node = SubElement(root, 'Transition', attrib=transition)
 
-xml_file = open('scenario.xml', 'w')
+xml_file = open('%s/scenario.xml' % opts.directory, 'w')
 scenario_xml = tostring(root, encoding='UTF-8', xml_declaration=opts.header, pretty_print=opts.indent)
 xml_file.write(scenario_xml)
 xml_file.close()
