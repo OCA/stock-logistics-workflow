@@ -32,6 +32,8 @@ from lxml.etree import parse
 from StringIO import StringIO
 
 from glob import glob
+import traceback
+import compiler
 import logging
 import sys
 import os
@@ -178,7 +180,13 @@ for directory in directories:
         # get scenario id
         step_vals['scenario_id'] = scenario_id
         # get python src
-        python_code = open('%s/%s.py' % (directory, step_vals['reference_res_id']), 'r')
+        filename = '%s/%s.py' % (directory, step_vals['reference_res_id'])
+        try:
+            compiler.compileFile(filename)
+        except Exception, e:
+            print 'Compile error in file %s :' % filename
+            print ''.join(traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback))
+        python_code = open(filename, 'r')
         step_vals['python_code'] = python_code.read()
         python_code.close()
         # create or update
