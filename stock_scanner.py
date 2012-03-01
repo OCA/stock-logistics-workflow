@@ -62,11 +62,11 @@ class scanner_scenario(osv.osv):
     }
 
     _sql_constraints = [
-        ('reference_res_id_uniq', 'unique (reference_res_id)', 'The reference ID of the scenario must be unique !'),
+        ('reference_res_id_uniq', 'unique (reference_res_id)', _('The reference ID of the scenario must be unique !')),
     ]
 
     _constraints = [
-        (lambda self, cr, uid, ids, context=None: self._check_recursion(cr, uid, ids, context=context), 'Error ! You can not create recursive scenarios.', ['parent_id'])
+        (lambda self, cr, uid, ids, context=None: self._check_recursion(cr, uid, ids, context=context), _('Error ! You can not create recursive scenarios.'), ['parent_id'])
     ]
 
     # Dict to save the semaphores
@@ -150,7 +150,7 @@ class scanner_scenario_step(osv.osv):
     }
 
     _sql_constraints = [
-        ('reference_res_id_uniq', 'unique (reference_res_id)', 'The reference ID of the step must be unique'),
+        ('reference_res_id_uniq', 'unique (reference_res_id)', _('The reference ID of the step must be unique')),
     ]
 
     def create(self, cr, uid, values, context=None):
@@ -193,8 +193,22 @@ class scanner_scenario_transition(osv.osv):
         'tracer': False,
     }
 
+    def _check_scenario(self, cr, uid, ids, context=None):
+        """
+        Check if the steps and the transition are on the same scenario
+        """
+        for transition in self.browse(cr, uid, ids, context=context):
+            if transition.from_id.scenario_id.id != transition.to_id.scenario_id.id:
+                return False
+
+        return True
+
+    _constraints = [
+        (_check_scenario, _('Error : The transition must link steps of the same scenario !'), ['from_id', 'to_id']),
+    ]
+
     _sql_constraints = [
-        ('reference_res_id_uniq', 'unique (reference_res_id)', 'The reference ID of the transition must be unique'),
+        ('reference_res_id_uniq', 'unique (reference_res_id)', _('The reference ID of the transition must be unique')),
     ]
 
     def create(self, cr, uid, values, context=None):
