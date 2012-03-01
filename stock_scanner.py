@@ -65,6 +65,10 @@ class scanner_scenario(osv.osv):
         ('reference_res_id_uniq', 'unique (reference_res_id)', 'The reference ID of the scenario must be unique !'),
     ]
 
+    _constraints = [
+        (lambda self, cr, uid, ids, context=None: self._check_recursion(cr, uid, ids, context=context), 'Error ! You can not create recursive scenarios.', ['parent_id'])
+    ]
+
     # Dict to save the semaphores
     # Format : {scenario: {warehouse: {reference_document: instance of semaphore}}}
     _semaphores = {}
