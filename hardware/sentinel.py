@@ -414,6 +414,9 @@ class Sentinel(object):
         """
         Allows the user to select  quantity
         """
+        # Erase the selected quantity on the first digit key press
+        digit_key_pressed = False
+
         while True:
             # Display the menu
             self._display(message, clear=True)
@@ -427,6 +430,10 @@ class Sentinel(object):
                 # Return key : Validate the choice
                 return quantity
             elif key.isdigit():
+                if not digit_key_pressed:
+                    quantity = '0'
+                    digit_key_pressed = True
+
                 # Digit : Add at end
                 if quantity == '0':
                     quantity = key
@@ -438,6 +445,7 @@ class Sentinel(object):
             elif key == 'KEY_BACKSPACE' or key == 'KEY_DC':
                 # Backspace : Remove last digit
                 quantity = quantity[:-1]
+                digit_key_pressed = True
             elif key == 'KEY_DOWN' or key == 'KEY_LEFT':
                 # Down key : Decrease
                 quantity = '%g' % (float(quantity) - 1)
