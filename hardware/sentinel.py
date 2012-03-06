@@ -216,99 +216,100 @@ class Sentinel(object):
 
         while True:
             try:
-                # No active scenario, select one
-                if not self.scenario_id:
-                    (code, result, value) = self._select_scenario()
-                else:
-                    if code == 'Q' or code == 'N':
-                        # Quantity selection
-                        quantity = self._select_quantity('\n'.join(result), '%g' % value, integer=(code == 'N'))
-                        (code, result, value) = self.oerp_call('action', quantity)
-                    elif code == 'C':
-                        # Confirmation query
-                        confirm = self._confirm('\n'.join(result))
-                        (code, result, value) = self.oerp_call('action', confirm)
-                    elif code == 'T':
-                        # Select arguments from value
-                        default = ''
-                        size = None
-                        if isinstance(value, dict):
-                            default = value.get('default', '')
-                            size = value.get('size', None)
-                        elif isinstance(value, str):
-                            default = value
-
-                        # Text input
-                        text = self._input_text('\n'.join(result), default=default, size=size)
-                        (code, result, value) = self.oerp_call('action', text)
-                    elif code == 'R':
-                        # Error
-                        self.scenario_id = False
-                        self._display_error('\n'.join(result))
-                    elif code == 'U':
-                        # Unknown action : message with return back to the last state
-                        self._display('\n'.join(result), clear=True)
-                        self.getkey()
-                        (code, result, value) = self.oerp_call('back')
-                    elif code == 'E':
-                        # Error message
-                        self._display('\n'.join(result), color='error', bgcolor=True, clear=True)
-                        self.getkey()
-                        # Restore normal background colors
-                        self.screen.bkgd(0, self._get_color('base'))
-                        # Execute transition
-                        (code, result, value) = self.oerp_call('action')
-                    elif code == 'M':
-                        # Simple message
-                        self._display('\n'.join(result), clear=True)
-                        self.getkey()
-                        # Execute transition
-                        (code, result, value) = self.oerp_call('action', value)
-                    elif code == 'L':
-                        if result:
-                            # Select a value in the list
-                            choice = self._menu_choice(result)
-                            # Send the result to OpenERP
-                            (code, result, value) = self.oerp_call('action', choice)
-                        else:
-                            # Empty list supplied, display an error
-                            (code, result, value) = ('E', ['No value available'], False)
-                    elif code == 'F':
-                        # End of scenario
-                        self.scenario_id = False
-                        self._display('\n'.join(result), clear=True)
-                        self.getkey()
+                try:
+                    # No active scenario, select one
+                    if not self.scenario_id:
+                        (code, result, value) = self._select_scenario()
                     else:
-                        # Default call
-                        (code, result, value) = self.oerp_call('restart')
+                        if code == 'Q' or code == 'N':
+                            # Quantity selection
+                            quantity = self._select_quantity('\n'.join(result), '%g' % value, integer=(code == 'N'))
+                            (code, result, value) = self.oerp_call('action', quantity)
+                        elif code == 'C':
+                            # Confirmation query
+                            confirm = self._confirm('\n'.join(result))
+                            (code, result, value) = self.oerp_call('action', confirm)
+                        elif code == 'T':
+                            # Select arguments from value
+                            default = ''
+                            size = None
+                            if isinstance(value, dict):
+                                default = value.get('default', '')
+                                size = value.get('size', None)
+                            elif isinstance(value, str):
+                                default = value
+
+                            # Text input
+                            text = self._input_text('\n'.join(result), default=default, size=size)
+                            (code, result, value) = self.oerp_call('action', text)
+                        elif code == 'R':
+                            # Error
+                            self.scenario_id = False
+                            self._display_error('\n'.join(result))
+                        elif code == 'U':
+                            # Unknown action : message with return back to the last state
+                            self._display('\n'.join(result), clear=True)
+                            self.getkey()
+                            (code, result, value) = self.oerp_call('back')
+                        elif code == 'E':
+                            # Error message
+                            self._display('\n'.join(result), color='error', bgcolor=True, clear=True)
+                            self.getkey()
+                            # Restore normal background colors
+                            self.screen.bkgd(0, self._get_color('base'))
+                            # Execute transition
+                            (code, result, value) = self.oerp_call('action')
+                        elif code == 'M':
+                            # Simple message
+                            self._display('\n'.join(result), clear=True)
+                            self.getkey()
+                            # Execute transition
+                            (code, result, value) = self.oerp_call('action', value)
+                        elif code == 'L':
+                            if result:
+                                # Select a value in the list
+                                choice = self._menu_choice(result)
+                                # Send the result to OpenERP
+                                (code, result, value) = self.oerp_call('action', choice)
+                            else:
+                                # Empty list supplied, display an error
+                                (code, result, value) = ('E', ['No value available'], False)
+                        elif code == 'F':
+                            # End of scenario
+                            self.scenario_id = False
+                            self._display('\n'.join(result), clear=True)
+                            self.getkey()
+                        else:
+                            # Default call
+                            (code, result, value) = self.oerp_call('restart')
+                except SentinelBackException, e:
+                    # Back to the previous step required
+                    (code, result, value) = self.oerp_call('back')
+                    self.screen.bkgd(0, self._get_color('base'))
+                except Exception, e:
+                    # Generates log contents
+                    log_contents = '%s\n# %s\n# Hardware code : %s\n# Current scenario : %s\n# Current values :\n#\tcode : %s\n#\tresult : %s\n#\tvalue : %s\n%s\n%s\n' % (
+                        '#' * 79,
+                        datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                        self.hardware_code,
+                        str(self.scenario_id),
+                        code,
+                        repr(result),
+                        repr(value),
+                        '#' * 79,
+                        reduce(lambda x, y: x + y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback))
+                    )
+
+                    # Writes traceback in log file
+                    logfile = open('oerp_sentinel.log', 'a')
+                    logfile.write(log_contents)
+                    logfile.close()
+
+                    # Display error message
+                    (code, result, value) = ('E', ['An error occured', '', 'Please contact your', 'administrator'], False)
             except KeyboardInterrupt, e:
                 # If Ctrl+C, exit
-                exit(0)
-            except SentinelBackException, e:
-                # Back to the previous step required
-                (code, result, value) = self.oerp_call('back')
-                self.screen.bkgd(0, self._get_color('base'))
-            except Exception, e:
-                # Generates log contents
-                log_contents = '%s\n# %s\n# Hardware code : %s\n# Current scenario : %s\n# Current values :\n#\tcode : %s\n#\tresult : %s\n#\tvalue : %s\n%s\n%s\n' % (
-                    '#' * 79,
-                    datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-                    self.hardware_code,
-                    str(self.scenario_id),
-                    code,
-                    repr(result),
-                    repr(value),
-                    '#' * 79,
-                    reduce(lambda x, y: x + y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback))
-                )
-
-                # Writes traceback in log file
-                logfile = open('oerp_sentinel.log', 'a')
-                logfile.write(log_contents)
-                logfile.close()
-
-                # Display error message
-                (code, result, value) = ('E', ['An error occured', '', 'Please contact your', 'administrator'], False)
+                (code, result, value) = self.oerp_call('end')
 
     def _display_error(self, error_message):
         """
@@ -578,9 +579,6 @@ class SentinelBackException (SentinelException):
     pass
 
 if __name__ == '__main__':
-    try:
-        curses.wrapper(Sentinel)
-    except KeyboardInterrupt, e:
-        exit(0)
+    curses.wrapper(Sentinel)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
