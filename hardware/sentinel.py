@@ -431,7 +431,7 @@ class Sentinel(object):
                     quantity = key
                 else:
                     quantity += key
-            elif not integer and not '.' in quantity and key == '.' or key == ',':
+            elif not integer and not '.' in quantity and key == '.' or key == ',' or key == '*':
                 # Decimal point
                 quantity += '.'
             elif key == 'KEY_BACKSPACE' or key == 'KEY_DC':
