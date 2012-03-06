@@ -291,6 +291,9 @@ class Sentinel(object):
                 except SentinelBackException, e:
                     # Back to the previous step required
                     (code, result, value) = self.oerp_call('back')
+                    # Do not display the termination message
+                    if code == 'F':
+                        self.ungetch(ord('\n'))
                     self.screen.bkgd(0, self._get_color('base'))
                 except Exception, e:
                     # Generates log contents
