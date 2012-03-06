@@ -244,11 +244,11 @@ class scanner_hardware(osv.osv):
         'previous_steps_id': fields.char('Previous Step', size=256, help='Previous step for this hardware'),
         'previous_steps_message': fields.text('Previous Message', help='Previous message for this hardware'),
         'reference_document': fields.integer('Reference', help='ID of the reference document'),
-        'tmp_val1': fields.char('Temp value 1', size=128, help='Temporary value'),
-        'tmp_val2': fields.char('Temp value 2', size=128, help='Temporary value'),
-        'tmp_val3': fields.char('Temp value 3', size=128, help='Temporary value'),
-        'tmp_val4': fields.char('Temp value 4', size=128, help='Temporary value'),
-        'tmp_val5': fields.char('Temp value 5', size=128, help='Temporary value'),
+        'tmp_val1': fields.char('Temp value 1', size=256, help='Temporary value'),
+        'tmp_val2': fields.char('Temp value 2', size=256, help='Temporary value'),
+        'tmp_val3': fields.char('Temp value 3', size=256, help='Temporary value'),
+        'tmp_val4': fields.char('Temp value 4', size=256, help='Temporary value'),
+        'tmp_val5': fields.char('Temp value 5', size=256, help='Temporary value'),
     }
 
     _defaults = {
