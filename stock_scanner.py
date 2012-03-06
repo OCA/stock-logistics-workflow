@@ -428,11 +428,7 @@ class scanner_hardware(osv.osv):
             context = self.pool.get('res.users').context_get(cr, uid)
 
         term_id = self.search_scanner_id(cr, uid, numterm, context=context)
-        self.scanner_call(cr, uid, terminal_number=numterm, action='action', message='END')
-        logger.info('End scenario request for %s terminal' % numterm)
-        self.empty_scanner_values(cr, uid, [term_id], context=context)
-
-        return ('F', [_('This scenario'), _('is finished')], '')
+        return self.scanner_call(cr, uid, terminal_number=numterm, action='end')
 
     def _memorize(self, cr, uid, terminal_id, scenario_id, step_id, previous_steps_id=False, previous_steps_message=False, object=None, context=None):
         """
