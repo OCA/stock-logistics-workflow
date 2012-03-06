@@ -140,6 +140,12 @@ class Sentinel(object):
         """
         return curses.color_pair(COLOR_PAIRS[name][0])
 
+    def ungetch(self, value):
+        """
+        Put a value in the keyboard buffer
+        """
+        curses.ungetch(value)
+
     def getkey(self):
         """
         Get a user input and avoid Ctrl+C
