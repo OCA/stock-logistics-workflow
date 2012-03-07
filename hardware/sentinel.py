@@ -26,6 +26,7 @@
 import os
 import sys
 import math
+import textwrap
 import traceback
 import ConfigParser
 import curses.ascii
@@ -109,7 +110,7 @@ class Sentinel(object):
             self.hardware_code = ssh_data[0]
             self.scenario_id = self.hardware_obj.scanner_check(self.hardware_code)
         except:
-            self.hardware_code = self._input_text('Autoconfigurationfailed !\nPlease enter\nterminal code')
+            self.hardware_code = self._input_text('Autoconfiguration failed !\nPlease enter terminal code')
             self.scenario_id = self.hardware_obj.scanner_check(self.hardware_code)
 
         # Resize window to terminal screen size
@@ -129,7 +130,7 @@ class Sentinel(object):
         (code, (width, height), value) = self.oerp_call('screen_size')
         self._set_screen_size(width, height)
 
-    def _set_screen_size(self, width=17, height=6):
+    def _set_screen_size(self, width=18, height=6):
         self.window_width = width
         self.window_height = height
         self.screen.resize(height, width)
@@ -157,41 +158,7 @@ class Sentinel(object):
             raise SentinelBackException('Back')
         return key
 
-    def _read_input(self, echo=True, line=1, default='', size=None):
-        """
-        Read a line of text from the keyboard
-        """
-        # Initialize variables
-        value = default
-        self.screen.move(line, 0)
-        key = ''
-
-        # While we do not validate, store characters
-        while key != '\n':
-            # Printable character : store in value
-            if len(key) == 1 and curses.ascii.isprint(key):
-                value += key
-            # Backspace or del, remove the last character
-            elif key == 'KEY_BACKSPACE' or key == 'KEY_DC':
-                value = value[:-1]
-
-            # Display the current value if echoing is needed
-            if echo:
-                display_start = max(0, len(value) - self.window_width + 1)
-                display_value = value[display_start:]
-                self._display(' ' * (self.window_width - 1), 0, line)
-                self._display(display_value, 0, line)
-
-            # Move cursor at end of the displayed value
-            if size is not None and len(value) >= size:
-                key = '\n'
-            else:
-                self.screen.move(line, min(len(value), self.window_width - 1))
-                key = self.getkey()
-
-        return value
-
-    def _display(self, text, x=0, y=0, clear=False, color='base', bgcolor=False, modifier=curses.A_NORMAL):
+    def _display(self, text='', x=0, y=0, clear=False, color='base', bgcolor=False, modifier=curses.A_NORMAL, cursor=None, height=None, scroll=False):
         """
         Display a line of text
         """
@@ -199,18 +166,67 @@ class Sentinel(object):
         if clear:
             self.screen.clear()
 
-        # No text to display, return
-        if not text:
-            return
-
         # Compute the display modifiers
         color = self._get_color(color) | modifier
         # Set background to 'error' colors
         if bgcolor:
             self.screen.bkgd(0, color)
 
+        # Normalize the text, because ncurses doesn't know UTF-8 with python 2.x
+        text = unicodedata.normalize('NFKD', unicode(text)).encode('ascii', 'ignore')
+
         # Display the text
-        self.screen.addstr(y, x, unicodedata.normalize('NFKD', unicode(text)).encode('ascii', 'ignore'), color)
+        if not scroll:
+            self.screen.addstr(y, x, text, color)
+        else:
+            # Wrap the text to avoid splitting words
+            text_lines = []
+            for line in text.splitlines():
+                text_lines.extend(textwrap.wrap(line, self.window_width - x) or [''])
+
+            # Initialize variables
+            first_line = 0
+            if height is None:
+                height = self.window_height
+
+            (cursor_y, cursor_x) = cursor or (self.window_height - 1, self.window_width - 1)
+
+            while True:
+                # Display the menu
+                self.screen.addstr(height - 1, x, (self.window_width - x - 1) * ' ', color)
+                self.screen.addstr(y, x, '\n'.join(text_lines[first_line:first_line + height]), color)
+
+                # Display arrows
+                if first_line > 0:
+                    self.screen.addch(y, self.window_width - 1, curses.ACS_UARROW)
+                if first_line + height < len(text_lines):
+                    self.screen.addch(min(height + y - 1, self.window_height - 2), self.window_width - 1, curses.ACS_DARROW)
+                else:
+                    self.screen.addch(min(height + y - 1, self.window_height - 2), self.window_width - 1, ' ')
+
+                # Set the cursor position
+                if height < len(text_lines):
+                    scroll_height = len(text_lines) - height + 1
+                    position_percent = float(first_line) / scroll_height
+                    position = y + min(int(round((height - 1) * position_percent)), self.window_height - 2)
+                    self._display(' ', x=self.window_width - 1, y=position, color='info', modifier=curses.A_REVERSE)
+                self.screen.move(cursor_y, cursor_x)
+
+                # Get the pushed key
+                key = self.getkey()
+
+                if key == 'KEY_DOWN':
+                    # Down key : Go down in the list
+                    first_line += 1
+                elif key == 'KEY_UP':
+                    # Up key : Go up in the list
+                    first_line -= 1
+                else:
+                    # Return the pressed key value
+                    return key
+
+                # Avoid going out of the list
+                first_line = min(max(0, first_line), max(0, len(text_lines) - height))
 
     def main_loop(self):
         """
@@ -249,26 +265,21 @@ class Sentinel(object):
                             text = self._input_text('\n'.join(result), default=default, size=size)
                             (code, result, value) = self.oerp_call('action', text)
                         elif code == 'R':
-                            # Error
+                            # Critical error
                             self.scenario_id = False
                             self._display_error('\n'.join(result))
                         elif code == 'U':
                             # Unknown action : message with return back to the last state
-                            self._display('\n'.join(result), clear=True)
-                            self.getkey()
+                            self._display('\n'.join(result), clear=True, scroll=True)
                             (code, result, value) = self.oerp_call('back')
                         elif code == 'E':
                             # Error message
-                            self._display('\n'.join(result), color='error', bgcolor=True, clear=True)
-                            self.getkey()
-                            # Restore normal background colors
-                            self.screen.bkgd(0, self._get_color('base'))
+                            self._display_error('\n'.join(result))
                             # Execute transition
                             (code, result, value) = self.oerp_call('action')
                         elif code == 'M':
                             # Simple message
-                            self._display('\n'.join(result), clear=True)
-                            self.getkey()
+                            self._display('\n'.join(result), clear=True, scroll=True)
                             # Execute transition
                             (code, result, value) = self.oerp_call('action', value)
                         elif code == 'L':
@@ -283,8 +294,7 @@ class Sentinel(object):
                         elif code == 'F':
                             # End of scenario
                             self.scenario_id = False
-                            self._display('\n'.join(result), clear=True)
-                            self.getkey()
+                            self._display('\n'.join(result), clear=True, scroll=True)
                         else:
                             # Default call
                             (code, result, value) = self.oerp_call('restart')
@@ -319,15 +329,15 @@ class Sentinel(object):
             except KeyboardInterrupt, e:
                 # If Ctrl+C, exit
                 (code, result, value) = self.oerp_call('end')
+                # Restore normal background colors
+                self.screen.bkgd(0, self._get_color('base'))
 
     def _display_error(self, error_message):
         """
         Displays an error messge, changing the background to red
         """
-        # Reset scenario_id
-        self.scenario_id = False
-        self._display(error_message, color='error', bgcolor=True, clear=True)
-        self.getkey()
+        # Display error message
+        self._display(error_message, color='error', bgcolor=True, clear=True, scroll=True)
         # Restore normal background colors
         self.screen.bkgd(0, self._get_color('base'))
 
@@ -362,8 +372,8 @@ class Sentinel(object):
         confirm = False
 
         while True:
-            # Display the confirmation message
-            self._display(message, clear=True)
+            # Clear the screen
+            self._display(clear=True)
 
             # Compute Yes/No positions
             yes_start = 0
@@ -387,8 +397,8 @@ class Sentinel(object):
             # Display No
             self._display(no_text, x=no_start, y=self.window_height - 1, color='info', modifier=no_modifier)
 
-            # Get the pushed key
-            key = self.getkey()
+            # Display the confirmation message
+            key = self._display(message, scroll=True, height=self.window_height - 1)
 
             if key == '\n':
                 # Return key : Validate the choice
@@ -413,11 +423,34 @@ class Sentinel(object):
         """
         Allows the user to input random text
         """
-        # Display the menu
-        self._display(message, clear=True)
+        # Initialize variables
+        value = default
+        line = self.window_height - 1
+        self.screen.move(line, 0)
+        key = ''
 
-        # Input text from user
-        return self._read_input(line=self.window_height - 1, default=default, size=size)
+        # While we do not validate, store characters
+        while True:
+            # Clear the screen
+            self._display(clear=True)
+
+            # Printable character : store in value
+            if len(key) == 1 and curses.ascii.isprint(key):
+                value += key
+            # Backspace or del, remove the last character
+            elif key == 'KEY_BACKSPACE' or key == 'KEY_DC':
+                value = value[:-1]
+
+            # Display the current value if echoing is needed
+            display_start = max(0, len(value) - self.window_width + 1)
+            display_value = value[display_start:]
+            self._display(' ' * (self.window_width - 1), 0, line)
+            self._display(display_value, 0, line, color='info', modifier=curses.A_BOLD)
+            key = self._display(message, scroll=True, height=self.window_height - 1, cursor=(line, min(len(value), self.window_width - 1)))
+
+            # Move cursor at end of the displayed value
+            if key == '\n' or (size is not None and len(value) >= size):
+                return value
 
     def _select_quantity(self, message, quantity='0', integer=False):
         """
@@ -427,13 +460,13 @@ class Sentinel(object):
         digit_key_pressed = False
 
         while True:
-            # Display the menu
-            self._display(message, clear=True)
+            # Clear the screen
+            self._display(clear=True)
             # Diplays the selected quantity
             self._display('Selected : %s' % quantity, y=self.window_height - 1, color='info', modifier=curses.A_BOLD)
 
-            # Get the pushed key
-            key = self.getkey()
+            # Display the message and get the key
+            key = self._display(message, scroll=True, height=self.window_height - 1)
 
             if key == '\n':
                 # Return key : Validate the choice
@@ -448,7 +481,7 @@ class Sentinel(object):
                     quantity = key
                 else:
                     quantity += key
-            elif not integer and not '.' in quantity and key == '.' or key == ',' or key == '*':
+            elif not integer and not '.' in quantity and (key == '.' or key == ',' or key == '*'):
                 # Decimal point
                 quantity += '.'
             elif key == 'KEY_BACKSPACE' or key == 'KEY_DC':
@@ -585,7 +618,11 @@ class Sentinel(object):
         self._display('Selected : %d' % highlighted, y=nb_lines, color='info', modifier=curses.A_BOLD)
 
         # Set the cursor position
-        self.screen.move(highlighted - first_line, self.window_width - 1)
+        if nb_lines < len(entries):
+            position_percent = float(highlighted) / len(entries)
+            position = int(round(nb_lines * position_percent))
+            self._display(' ', x=self.window_width - 1, y=position, color='info', modifier=curses.A_REVERSE)
+        self.screen.move(nb_lines, self.window_width - 1)
 
 
 class SentinelException (Exception):
