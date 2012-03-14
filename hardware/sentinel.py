@@ -276,7 +276,11 @@ class Sentinel(object):
                             # Error message
                             self._display_error('\n'.join(result))
                             # Execute transition
-                            (code, result, value) = self.oerp_call('action')
+                            if not value:
+                                (code, result, value) = self.oerp_call('action')
+                            else:
+                                # Back to the previous step required
+                                (code, result, value) = self.oerp_call('restart')
                         elif code == 'M':
                             # Simple message
                             self._display('\n'.join(result), clear=True, scroll=True)
