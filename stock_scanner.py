@@ -581,9 +581,9 @@ class scanner_hardware(osv.osv):
             if step.step_stop:
                 self.empty_scanner_values(cr, uid, [terminal_id], context=context)
         except osv.except_osv, e:
+            # OSV exception, display the error message and require the "go back" action
             cr.rollback()
-            ld = {'act': 'R', 'res': [_('Please contact'), _('your'), _('administrator')], 'val': 0}
-            self.empty_scanner_values(cr, uid, [terminal_id], context=context)
+            ld = {'act': 'E', 'res': [e.name, u'', e.value], 'val': True}
             logger.warning('OSV Exception: %s' % reduce(lambda x, y: x + y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback)))
         except Exception, e:
             cr.rollback()
