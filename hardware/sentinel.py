@@ -182,7 +182,7 @@ class Sentinel(object):
             # Wrap the text to avoid splitting words
             text_lines = []
             for line in text.splitlines():
-                text_lines.extend(textwrap.wrap(line, self.window_width - x) or [''])
+                text_lines.extend(textwrap.wrap(line, self.window_width - x - 1) or [''])
 
             # Initialize variables
             first_line = 0
