@@ -431,19 +431,11 @@ class Sentinel(object):
         value = default
         line = self.window_height - 1
         self.screen.move(line, 0)
-        key = ''
 
         # While we do not validate, store characters
         while True:
             # Clear the screen
             self._display(clear=True)
-
-            # Printable character : store in value
-            if len(key) == 1 and curses.ascii.isprint(key):
-                value += key
-            # Backspace or del, remove the last character
-            elif key == 'KEY_BACKSPACE' or key == 'KEY_DC':
-                value = value[:-1]
 
             # Display the current value if echoing is needed
             display_start = max(0, len(value) - self.window_width + 1)
@@ -451,6 +443,13 @@ class Sentinel(object):
             self._display(' ' * (self.window_width - 1), 0, line)
             self._display(display_value, 0, line, color='info', modifier=curses.A_BOLD)
             key = self._display(message, scroll=True, height=self.window_height - 1, cursor=(line, min(len(value), self.window_width - 1)))
+
+            # Printable character : store in value
+            if len(key) == 1 and curses.ascii.isprint(key):
+                value += key
+            # Backspace or del, remove the last character
+            elif key == 'KEY_BACKSPACE' or key == 'KEY_DC':
+                value = value[:-1]
 
             # Move cursor at end of the displayed value
             if key == '\n' or (size is not None and len(value) >= size):
