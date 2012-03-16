@@ -484,7 +484,8 @@ class scanner_hardware(osv.osv):
                 message = eval(previous_steps_message.pop())
                 terminal.previous_steps_message = '\n'.join(previous_steps_message)
             else:
-                return self.scanner_end(cr, uid, numterm=terminal.code, context=context)
+                scenario_id = False
+                message = terminal.scenario_id.name
 
         # No scenario in arguments, start a new one
         if not scenario_id:
