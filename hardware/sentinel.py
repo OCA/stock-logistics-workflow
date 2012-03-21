@@ -206,7 +206,7 @@ class Sentinel(object):
 
                 # Set the cursor position
                 if height < len(text_lines):
-                    scroll_height = len(text_lines) - height + 1
+                    scroll_height = len(text_lines) - height
                     position_percent = float(first_line) / scroll_height
                     position = y + min(int(round((height - 1) * position_percent)), self.window_height - 2)
                     self._display(' ', x=self.window_width - 1, y=position, color='info', modifier=curses.A_REVERSE)
