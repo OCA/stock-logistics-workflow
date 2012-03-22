@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.2\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2012-03-01 14:12+0000\n"
-"PO-Revision-Date: 2012-03-01 15:19+0100\n"
+"POT-Creation-Date: 2012-03-22 13:59+0000\n"
+"PO-Revision-Date: 2012-03-22 15:02+0100\n"
 "Last-Translator: Sylvain Garancher <sylvain.garancher@syleam.fr>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -15,6 +15,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
+
+#. module: stock_scanner
+#: code:addons/stock_scanner/stock_scanner.py:41
+#: selection:scanner.hardware,base_bg_color:0
+#: selection:scanner.hardware,base_fg_color:0
+#: selection:scanner.hardware,error_bg_color:0
+#: selection:scanner.hardware,error_fg_color:0
+#: selection:scanner.hardware,info_bg_color:0
+#: selection:scanner.hardware,info_fg_color:0
+#, python-format
+msgid "Blue"
+msgstr "Bleu"
 
 #. module: stock_scanner
 #: help:scanner.scenario.transition,reference_res_id:0
@@ -32,6 +44,11 @@ msgid "Step start"
 msgstr "Étape de départ"
 
 #. module: stock_scanner
+#: field:scanner.hardware,base_fg_color:0
+msgid "Base - Text Color"
+msgstr "Base - Couleur du texte"
+
+#. module: stock_scanner
 #: view:scanner.scenario:0
 msgid "Group By..."
 msgstr "Regrouper par..."
@@ -45,6 +62,18 @@ msgstr "Utilisé par export/import scenario/step"
 #: help:scanner.scenario,model_id:0
 msgid "Model used for this scenario"
 msgstr "Modèle utilisé par ce scénario"
+
+#. module: stock_scanner
+#: code:addons/stock_scanner/stock_scanner.py:46
+#: selection:scanner.hardware,base_bg_color:0
+#: selection:scanner.hardware,base_fg_color:0
+#: selection:scanner.hardware,error_bg_color:0
+#: selection:scanner.hardware,error_fg_color:0
+#: selection:scanner.hardware,info_bg_color:0
+#: selection:scanner.hardware,info_fg_color:0
+#, python-format
+msgid "White"
+msgstr "Blanc"
 
 #. module: stock_scanner
 #: field:scanner.scenario.custom,int_val1:0
@@ -63,7 +92,7 @@ msgid "Parent"
 msgstr "Parent"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/stock_scanner.py:153
+#: code:addons/stock_scanner/stock_scanner.py:164
 #: sql_constraint:scanner.scenario.step:0
 #, python-format
 msgid "The reference ID of the step must be unique"
@@ -75,7 +104,7 @@ msgid "Log enabled"
 msgstr "Journalisation activée"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/stock_scanner.py:69
+#: code:addons/stock_scanner/stock_scanner.py:80
 #: constraint:scanner.scenario:0
 #, python-format
 msgid "Error ! You can not create recursive scenarios."
@@ -102,8 +131,7 @@ msgid "Used by export/import scenario"
 msgstr "Utilisé par export/import scenario"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/stock_scanner.py:371
-#: code:addons/stock_scanner/stock_scanner.py:435
+#: code:addons/stock_scanner/stock_scanner.py:406
 #, python-format
 msgid "is finished"
 msgstr "est terminé"
@@ -114,12 +142,18 @@ msgid "Scenario Editor"
 msgstr "Éditeur de scénarios"
 
 #. module: stock_scanner
-#: model:ir.model,name:stock_scanner.model_scanner_scenario
-msgid "Scenario for scanner"
-msgstr "Scénario pour scanner"
+#: code:addons/stock_scanner/stock_scanner.py:544
+#, python-format
+msgid "not found"
+msgstr "introuvable"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/stock_scanner.py:301
+#: help:scanner.scenario,parent_id:0
+msgid "Parent scenario, used to create menus"
+msgstr "Scénario parent, utilisé pour créer des menus"
+
+#. module: stock_scanner
+#: code:addons/stock_scanner/stock_scanner.py:326
 #, python-format
 msgid "Terminal not found !"
 msgstr "Terminal introuvable !"
@@ -135,7 +169,7 @@ msgid "Temporary text value"
 msgstr "Valeur text temporaire"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/stock_scanner.py:512
+#: code:addons/stock_scanner/stock_scanner.py:544
 #: field:scanner.hardware,scenario_id:0
 #: view:scanner.scenario:0
 #: field:scanner.scenario,step_ids:0
@@ -250,9 +284,26 @@ msgid "Keyboard"
 msgstr "Clavier"
 
 #. module: stock_scanner
+#: code:addons/stock_scanner/stock_scanner.py:44
+#: selection:scanner.hardware,base_bg_color:0
+#: selection:scanner.hardware,base_fg_color:0
+#: selection:scanner.hardware,error_bg_color:0
+#: selection:scanner.hardware,error_fg_color:0
+#: selection:scanner.hardware,info_bg_color:0
+#: selection:scanner.hardware,info_fg_color:0
+#, python-format
+msgid "Magenta"
+msgstr "Mangenta"
+
+#. module: stock_scanner
 #: help:scanner.hardware,reference_document:0
 msgid "ID of the reference document"
 msgstr "ID du document de référence"
+
+#. module: stock_scanner
+#: view:scanner.hardware:0
+msgid "Screen colors"
+msgstr "Couleurs d'affichage"
 
 #. module: stock_scanner
 #: help:scanner.scenario.step,step_back:0
@@ -275,10 +326,16 @@ msgid "Add note, modification date, etc."
 msgstr "Ajouter une note, une date de modification, etc."
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/stock_scanner.py:512
+#: code:addons/stock_scanner/stock_scanner.py:47
+#: selection:scanner.hardware,base_bg_color:0
+#: selection:scanner.hardware,base_fg_color:0
+#: selection:scanner.hardware,error_bg_color:0
+#: selection:scanner.hardware,error_fg_color:0
+#: selection:scanner.hardware,info_bg_color:0
+#: selection:scanner.hardware,info_fg_color:0
 #, python-format
-msgid "not found"
-msgstr "introuvable"
+msgid "Yellow"
+msgstr "Jaune"
 
 #. module: stock_scanner
 #: field:scanner.hardware,warehouse_id:0
@@ -299,6 +356,18 @@ msgstr "Code python à exécuter"
 #: field:scanner.scenario,type:0
 msgid "Type"
 msgstr "Type"
+
+#. module: stock_scanner
+#: code:addons/stock_scanner/stock_scanner.py:45
+#: selection:scanner.hardware,base_bg_color:0
+#: selection:scanner.hardware,base_fg_color:0
+#: selection:scanner.hardware,error_bg_color:0
+#: selection:scanner.hardware,error_fg_color:0
+#: selection:scanner.hardware,info_bg_color:0
+#: selection:scanner.hardware,info_fg_color:0
+#, python-format
+msgid "Red"
+msgstr "Rouge"
 
 #. module: stock_scanner
 #: help:scanner.hardware,previous_steps_id:0
@@ -340,6 +409,18 @@ msgid "Name of the hardware"
 msgstr "Nom du matériel"
 
 #. module: stock_scanner
+#: code:addons/stock_scanner/stock_scanner.py:42
+#: selection:scanner.hardware,base_bg_color:0
+#: selection:scanner.hardware,base_fg_color:0
+#: selection:scanner.hardware,error_bg_color:0
+#: selection:scanner.hardware,error_fg_color:0
+#: selection:scanner.hardware,info_bg_color:0
+#: selection:scanner.hardware,info_fg_color:0
+#, python-format
+msgid "Cyan"
+msgstr "Cyan"
+
+#. module: stock_scanner
 #: help:scanner.hardware,log_enabled:0
 msgid "Enable logging messages from scenarios"
 msgstr "Active la journalisation des messages depuis les scénarios"
@@ -350,7 +431,7 @@ msgid "Temporary value for scenario"
 msgstr "Valeur temporaire pour scénario"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/stock_scanner.py:271
+#: code:addons/stock_scanner/stock_scanner.py:296
 #, python-format
 msgid "This terminal not exists!"
 msgstr "Ce terminal n'existe pas !"
@@ -361,11 +442,15 @@ msgid "Scanner status"
 msgstr "Statut du scanner"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/stock_scanner.py:371
-#: code:addons/stock_scanner/stock_scanner.py:435
+#: code:addons/stock_scanner/stock_scanner.py:406
 #, python-format
 msgid "This scenario"
 msgstr "Ce scénario"
+
+#. module: stock_scanner
+#: field:scanner.hardware,error_fg_color:0
+msgid "Error - Text Color"
+msgstr "Erreur - Couleur du texte"
 
 #. module: stock_scanner
 #: help:scanner.scenario,step_ids:0
@@ -382,11 +467,16 @@ msgid "Temporary int value"
 msgstr "Valeur entière temporaire"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/stock_scanner.py:207
-#: constraint:scanner.scenario.transition:0
+#: code:addons/stock_scanner/stock_scanner.py:43
+#: selection:scanner.hardware,base_bg_color:0
+#: selection:scanner.hardware,base_fg_color:0
+#: selection:scanner.hardware,error_bg_color:0
+#: selection:scanner.hardware,error_fg_color:0
+#: selection:scanner.hardware,info_bg_color:0
+#: selection:scanner.hardware,info_fg_color:0
 #, python-format
-msgid "Error : The transition must link steps of the same scenario !"
-msgstr "Erreur : La transition doit lier des étapes du même scénario !"
+msgid "Green"
+msgstr "Vert"
 
 #. module: stock_scanner
 #: field:scanner.scenario,sequence:0
@@ -425,9 +515,8 @@ msgid "Code of this hardware"
 msgstr "Code pour ce matériel"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/stock_scanner.py:507
-#: code:addons/stock_scanner/stock_scanner.py:552
-#: code:addons/stock_scanner/stock_scanner.py:589
+#: code:addons/stock_scanner/stock_scanner.py:539
+#: code:addons/stock_scanner/stock_scanner.py:584
 #, python-format
 msgid "your"
 msgstr "votre"
@@ -458,9 +547,16 @@ msgid "Char Value 4"
 msgstr "Valeur char 4"
 
 #. module: stock_scanner
-#: view:scanner.scenario.custom:0
-msgid "Char"
-msgstr "Char"
+#: help:scanner.hardware,error_fg_color:0
+msgid "Color for the error text"
+msgstr "Couleur du texte des messages d'erreur"
+
+#. module: stock_scanner
+#: code:addons/stock_scanner/stock_scanner.py:218
+#: constraint:scanner.scenario.transition:0
+#, python-format
+msgid "Error : The transition must link steps of the same scenario !"
+msgstr "Erreur : La transition doit lier des étapes du même scénario !"
 
 #. module: stock_scanner
 #: help:scanner.hardware,scenario_id:0
@@ -491,6 +587,18 @@ msgstr "ID de référence"
 #: field:scanner.hardware,step_id:0
 msgid "Current Step"
 msgstr "Étape courante"
+
+#. module: stock_scanner
+#: code:addons/stock_scanner/stock_scanner.py:40
+#: selection:scanner.hardware,base_bg_color:0
+#: selection:scanner.hardware,base_fg_color:0
+#: selection:scanner.hardware,error_bg_color:0
+#: selection:scanner.hardware,error_fg_color:0
+#: selection:scanner.hardware,info_bg_color:0
+#: selection:scanner.hardware,info_fg_color:0
+#, python-format
+msgid "Black"
+msgstr "Noir"
 
 #. module: stock_scanner
 #: field:scanner.scenario.step,step_back:0
@@ -544,6 +652,11 @@ msgstr "Étape"
 #: view:scanner.scenario.step:0
 msgid "Enter the python code here"
 msgstr "Entrer le code python ici"
+
+#. module: stock_scanner
+#: field:scanner.hardware,info_fg_color:0
+msgid "Info - Text Color"
+msgstr "Info - Couleur du texte"
 
 #. module: stock_scanner
 #: field:scanner.hardware,screen_width:0
@@ -605,9 +718,9 @@ msgid "Float Value 2"
 msgstr "Valeur florrante 2"
 
 #. module: stock_scanner
-#: field:scanner.scenario.custom,float_val3:0
-msgid "Float Value 3"
-msgstr "Valeur florrante 3"
+#: help:scanner.hardware,info_fg_color:0
+msgid "Color for the info text"
+msgstr "Couleur du texte des zones d'information"
 
 #. module: stock_scanner
 #: field:scanner.scenario.custom,float_val4:0
@@ -615,14 +728,14 @@ msgid "Float Value 4"
 msgstr "Valeur florrante 4"
 
 #. module: stock_scanner
-#: field:scanner.scenario.custom,float_val5:0
-msgid "Float Value 5"
-msgstr "Valeur florrante 5"
+#: help:scanner.hardware,previous_steps_message:0
+msgid "Previous message for this hardware"
+msgstr "Message précédent pour ce matériel"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/stock_scanner.py:271
-#: code:addons/stock_scanner/stock_scanner.py:301
-#: code:addons/stock_scanner/stock_scanner.py:320
+#: code:addons/stock_scanner/stock_scanner.py:296
+#: code:addons/stock_scanner/stock_scanner.py:326
+#: code:addons/stock_scanner/stock_scanner.py:345
 #, python-format
 msgid "Error"
 msgstr "Erreur"
@@ -665,9 +778,8 @@ msgid "To"
 msgstr "Vers"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/stock_scanner.py:507
-#: code:addons/stock_scanner/stock_scanner.py:552
-#: code:addons/stock_scanner/stock_scanner.py:589
+#: code:addons/stock_scanner/stock_scanner.py:539
+#: code:addons/stock_scanner/stock_scanner.py:584
 #, python-format
 msgid "Please contact"
 msgstr "Merci de contacter"
@@ -694,6 +806,11 @@ msgid "Defines if this scenario is a menu or an executable scenario"
 msgstr "Définit si ce scénario est un menu, ou un scénario exécutable"
 
 #. module: stock_scanner
+#: field:scanner.hardware,base_bg_color:0
+msgid "Base - Background Color"
+msgstr "Base - Couleur de fond"
+
+#. module: stock_scanner
 #: model:ir.ui.menu,name:stock_scanner.menu_scanner_configuration
 msgid "Scanner Configuration"
 msgstr "Configuration des scanners"
@@ -704,9 +821,9 @@ msgid "Current Steps History"
 msgstr "Historique des étapes courantes"
 
 #. module: stock_scanner
-#: help:scanner.scenario,parent_id:0
-msgid "Parent scenario, used to create menus"
-msgstr "Scénario parent, utilisé pour créer des menus"
+#: model:ir.model,name:stock_scanner.model_scanner_scenario
+msgid "Scenario for scanner"
+msgstr "Scénario pour scanner"
 
 #. module: stock_scanner
 #: view:scanner.scenario:0
@@ -728,7 +845,7 @@ msgid "Scenario Custom Values"
 msgstr "Valeurs personnalisées de scénario"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/stock_scanner.py:320
+#: code:addons/stock_scanner/stock_scanner.py:345
 #, python-format
 msgid "This terminal is not declared !"
 msgstr "Ce terminal n'est pas déclaré !"
@@ -740,13 +857,28 @@ msgid "Sequence order"
 msgstr "Séquence"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/stock_scanner.py:552
+#: view:scanner.scenario.custom:0
+msgid "Char"
+msgstr "Char"
+
+#. module: stock_scanner
+#: code:addons/stock_scanner/stock_scanner.py:584
 #, python-format
 msgid "adminstrator"
 msgstr "administrateur"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/stock_scanner.py:211
+#: field:scanner.hardware,error_bg_color:0
+msgid "Error - Background Color"
+msgstr "Erreur - Couleur de fond"
+
+#. module: stock_scanner
+#: help:scanner.hardware,base_fg_color:0
+msgid "Default color for the text"
+msgstr "Couleur par défaut du texte"
+
+#. module: stock_scanner
+#: code:addons/stock_scanner/stock_scanner.py:222
 #: sql_constraint:scanner.scenario.transition:0
 #, python-format
 msgid "The reference ID of the transition must be unique"
@@ -763,6 +895,11 @@ msgid "Values used for this scanner"
 msgstr "Valeurs utilisées pour ce scanner"
 
 #. module: stock_scanner
+#: help:scanner.hardware,base_bg_color:0
+msgid "Default color for the background"
+msgstr "Couleur par défaut du fond"
+
+#. module: stock_scanner
 #: help:scanner.scenario.step,step_start:0
 msgid "Check this if this is the first step of the scenario"
 msgstr "Cocher si cette étape est la première du scénario"
@@ -773,8 +910,7 @@ msgid "Store different notes, date and title for modification, etc..."
 msgstr "Stocke différentes notes, dates et titres pour les modifications, etc."
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/stock_scanner.py:507
-#: code:addons/stock_scanner/stock_scanner.py:589
+#: code:addons/stock_scanner/stock_scanner.py:539
 #, python-format
 msgid "administrator"
 msgstr "administrateur"
@@ -793,13 +929,18 @@ msgid "Python code"
 msgstr "Code python"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/stock_scanner.py:507
+#: code:addons/stock_scanner/stock_scanner.py:539
 #, python-format
 msgid "A001"
 msgstr "A001"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/stock_scanner.py:65
+#: help:scanner.hardware,info_bg_color:0
+msgid "Color for the info background"
+msgstr "Couleur de fond des zones d'information"
+
+#. module: stock_scanner
+#: code:addons/stock_scanner/stock_scanner.py:76
 #: sql_constraint:scanner.scenario:0
 #, python-format
 msgid "The reference ID of the scenario must be unique !"
@@ -822,6 +963,11 @@ msgid "Name of the transition"
 msgstr "Nom de la transition"
 
 #. module: stock_scanner
+#: field:scanner.hardware,info_bg_color:0
+msgid "Info - Background Color"
+msgstr "Info - Couleur de fond"
+
+#. module: stock_scanner
 #: help:scanner.scenario,active:0
 msgid "If check, this object is always available"
 msgstr "Si coché, cet objet est toujours disponible"
@@ -832,14 +978,24 @@ msgid "Float"
 msgstr "Flottant"
 
 #. module: stock_scanner
+#: field:scanner.scenario.custom,float_val3:0
+msgid "Float Value 3"
+msgstr "Valeur florrante 3"
+
+#. module: stock_scanner
 #: help:scanner.scenario.step,name:0
 msgid "Name of the step"
 msgstr "Nom de l'étape"
 
 #. module: stock_scanner
-#: help:scanner.hardware,previous_steps_message:0
-msgid "Previous message for this hardware"
-msgstr "Message précédent pour ce matériel"
+#: help:scanner.hardware,error_bg_color:0
+msgid "Color for the error background"
+msgstr "Couleur de fond des messages d'erreur"
+
+#. module: stock_scanner
+#: field:scanner.scenario.custom,float_val5:0
+msgid "Float Value 5"
+msgstr "Valeur florrante 5"
 
 #~ msgid "Title"
 #~ msgstr "Titre"

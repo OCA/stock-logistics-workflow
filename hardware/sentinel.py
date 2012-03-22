@@ -97,10 +97,7 @@ class Sentinel(object):
         self.screen = stdscr
         self._set_screen_size()
 
-        # Initialize curses colors
-        for name, (id, front_color, back_color) in COLOR_PAIRS.items():
-            curses.init_pair(id, COLOR_NAMES[front_color], COLOR_NAMES[back_color])
-        self.screen.bkgd(0, self._get_color('base'))
+        self._init_colors()
 
         # Get the informations for this material from server (identified by IP)
         self.hardware_code = ''
@@ -116,6 +113,9 @@ class Sentinel(object):
         # Resize window to terminal screen size
         self._resize()
 
+        # Reinit colors with values configured in OpenERP
+        self._reinit_colors()
+
         # Initialize mouse events capture
         curses.mousemask(curses.BUTTON1_CLICKED | curses.BUTTON1_DOUBLE_CLICKED)
 
@@ -129,6 +129,28 @@ class Sentinel(object):
         # Asks for the hardware screen size
         (code, (width, height), value) = self.oerp_call('screen_size')
         self._set_screen_size(width, height)
+
+    def _init_colors(self):
+        """
+        Initialize curses colors
+        """
+        # Declare all configured color pairs for curses
+        for name, (id, front_color, back_color) in COLOR_PAIRS.items():
+            curses.init_pair(id, COLOR_NAMES[front_color], COLOR_NAMES[back_color])
+
+        # Set the default background color
+        self.screen.bkgd(0, self._get_color('base'))
+
+    def _reinit_colors(self):
+        """
+        Initializes the colors from OpenERP configuration
+        """
+        # Asks for the hardware screen size
+        (code, colors, value) = self.oerp_call('screen_colors')
+        COLOR_PAIRS['base'] = (1, colors['base'][0], colors['base'][1])
+        COLOR_PAIRS['info'] = (2, colors['info'][0], colors['info'][1])
+        COLOR_PAIRS['error'] = (3, colors['error'][0], colors['error'][1])
+        self._init_colors()
 
     def _set_screen_size(self, width=18, height=6):
         self.window_width = width

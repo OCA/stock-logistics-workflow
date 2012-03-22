@@ -64,6 +64,15 @@
                         <field name="screen_width"/>
                         <field name="screen_height"/>
                     </group>
+                    <group colspan="4" col="6">
+                        <separator string="Screen colors" colspan="6"/>
+                        <field name="base_fg_color"/>
+                        <field name="info_fg_color"/>
+                        <field name="error_fg_color"/>
+                        <field name="base_bg_color"/>
+                        <field name="info_bg_color"/>
+                        <field name="error_bg_color"/>
+                    </group>
                     <group colspan="4">
                         <separator string="Scanner status" colspan="4"/>
                         <field name="scenario_id"/>

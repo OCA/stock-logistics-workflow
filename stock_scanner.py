@@ -36,6 +36,17 @@ import sys
 
 logger = logging.getLogger('stock_scanner')
 
+_CURSES_COLORS = [
+    ('black', _('Black')),
+    ('blue', _('Blue')),
+    ('cyan', _('Cyan')),
+    ('green', _('Green')),
+    ('magenta', _('Magenta')),
+    ('red', _('Red')),
+    ('white', _('White')),
+    ('yellow', _('Yellow')),
+]
+
 
 class scanner_scenario(osv.osv):
     _name = 'scanner.scenario'
@@ -249,6 +260,13 @@ class scanner_hardware(osv.osv):
         'tmp_val3': fields.char('Temp value 3', size=256, help='Temporary value'),
         'tmp_val4': fields.char('Temp value 4', size=256, help='Temporary value'),
         'tmp_val5': fields.char('Temp value 5', size=256, help='Temporary value'),
+        # Define colors used on the terminal
+        'base_fg_color': fields.selection(_CURSES_COLORS, 'Base - Text Color', required=True, help='Default color for the text'),
+        'base_bg_color': fields.selection(_CURSES_COLORS, 'Base - Background Color', required=True, help='Default color for the background'),
+        'info_fg_color': fields.selection(_CURSES_COLORS, 'Info - Text Color', required=True, help='Color for the info text'),
+        'info_bg_color': fields.selection(_CURSES_COLORS, 'Info - Background Color', required=True, help='Color for the info background'),
+        'error_fg_color': fields.selection(_CURSES_COLORS, 'Error - Text Color', required=True, help='Color for the error text'),
+        'error_bg_color': fields.selection(_CURSES_COLORS, 'Error - Background Color', required=True, help='Color for the error background'),
     }
 
     _defaults = {
@@ -259,6 +277,13 @@ class scanner_hardware(osv.osv):
         'reference_document': False,
         'previous_steps_id': '',
         'previous_steps_message': '',
+        # Default colors
+        'base_fg_color': 'white',
+        'base_bg_color': 'blue',
+        'info_fg_color': 'yellow',
+        'info_bg_color': 'blue',
+        'error_fg_color': 'yellow',
+        'error_bg_color': 'red',
     }
 
     def search_scanner_id(self, cr, uid, numterm=False, context=None):
@@ -326,9 +351,19 @@ class scanner_hardware(osv.osv):
 
         # Retrieve the terminal screen size
         if action == 'screen_size':
-            logger.debug('Retrieve size screen')
+            logger.debug('Retrieve screen size')
             screen_size = self._screen_size(cr, uid, terminal.id, context=context)
             return ('M', screen_size, 0)
+
+        # Retrieve the terminal screen colors
+        if action == 'screen_colors':
+            logger.debug('Retrieve screen colors')
+            screen_colors = {
+                'base': (terminal.base_fg_color, terminal.base_bg_color),
+                'info': (terminal.info_fg_color, terminal.info_bg_color),
+                'error': (terminal.error_fg_color, terminal.error_bg_color),
+            }
+            return ('M', screen_colors, 0)
 
         # Execute the action
         elif action == 'action':
