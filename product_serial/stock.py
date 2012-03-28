@@ -289,7 +289,7 @@ class stock_production_lot(osv.osv):
                 "select location_dest_id " \
                 "from stock_move inner join stock_report_prodlots on stock_report_prodlots.location_id = location_dest_id and stock_report_prodlots.prodlot_id = %s " \
                 "where stock_move.prodlot_id = %s and stock_move.state=%s "\
-                "order by stock_report_prodlots.name DESC ",
+                "order by stock_report_prodlots.qty DESC ",
                 (prodlot_id, prodlot_id, 'done'))
             results = cr.fetchone()
 
