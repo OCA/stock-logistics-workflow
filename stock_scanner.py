@@ -22,6 +22,7 @@
 #
 ##############################################################################
 
+from osv import orm
 from osv import osv
 from osv import fields
 from tools.translate import _
@@ -616,6 +617,11 @@ class scanner_hardware(osv.osv):
             exec step.python_code in ld
             if step.step_stop:
                 self.empty_scanner_values(cr, uid, [terminal_id], context=context)
+        except orm.except_orm, e:
+            # ORM exception, display the error message and require the "go back" action
+            cr.rollback()
+            ld = {'act': 'E', 'res': [e.name, u'', e.value], 'val': True}
+            logger.warning('OSV Exception: %s' % reduce(lambda x, y: x + y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback)))
         except osv.except_osv, e:
             # OSV exception, display the error message and require the "go back" action
             cr.rollback()
