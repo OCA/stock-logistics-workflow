@@ -1,0 +1,45 @@
+# French translations for sentinel package.
+# Copyright (C) 2012 THE sentinel'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the sentinel package.
+# Sylvain Garancher <sylvain.garancher@syleam.fr>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: sentinel 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-04-23 11:47+0200\n"
+"PO-Revision-Date: 2012-04-23 11:52+0100\n"
+"Last-Translator: Sylvain Garancher <sylvain.garancher@syleam.fr>\n"
+"Language-Team: French\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: ../sentinel.py:126
+msgid ""
+"Autoconfiguration failed !\n"
+"Please enter terminal code"
+msgstr ""
+"Echec d'autoconfiguration !\n"
+"Saisir le code du terminal"
+
+#: ../sentinel.py:335
+msgid "No value available"
+msgstr "Pas de valeur disponible"
+
+#: ../sentinel.py:370
+msgid ""
+"An error occured\n"
+"\n"
+"Please contact your administrator"
+msgstr ""
+"Une erreur est survenue\n"
+"\n"
+"Merci de contacter votre administrateur"
+
+#: ../sentinel.py:401
+msgid "No scenario available !"
+msgstr "Pas de scénario disponible !"
+
