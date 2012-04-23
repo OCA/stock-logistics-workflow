@@ -26,6 +26,7 @@
 import os
 import sys
 import math
+import gettext
 import textwrap
 import traceback
 import ConfigParser
@@ -34,6 +35,11 @@ import unicodedata
 from datetime import datetime
 from oobjlib.connection import Connection
 from oobjlib.component import Object
+
+# Translation configuration
+I18N_DIR = '%s/i18n/' % os.path.dirname(os.path.realpath(__file__))
+I18N_DOMAIN = 'sentinel'
+I18N_DEFAULT = 'en_US'
 
 # Default configuration
 DEFAULT_CONFIG = {
@@ -90,6 +96,16 @@ class Sentinel(object):
             port=config.get('openerp', 'port'),
         )
 
+        # Initialize translations
+        context = Object(self.connection, 'res.users').context_get()
+        lang = context.get('lang', I18N_DEFAULT)
+        gettext.install(I18N_DOMAIN)
+        try:
+            language = gettext.translation(I18N_DOMAIN, I18N_DIR, languages=[lang])
+        except:
+            language = gettext.translation(I18N_DOMAIN, I18N_DIR, languages=[I18N_DEFAULT])
+        language.install()
+
         # Initialize hardware
         self.hardware_obj = Object(self.connection, 'scanner.hardware')
 
@@ -107,7 +123,7 @@ class Sentinel(object):
             self.hardware_code = ssh_data[0]
             self.scenario_id = self.hardware_obj.scanner_check(self.hardware_code)
         except:
-            self.hardware_code = self._input_text('Autoconfiguration failed !\nPlease enter terminal code')
+            self.hardware_code = self._input_text(_('Autoconfiguration failed !\nPlease enter terminal code'))
             self.scenario_id = self.hardware_obj.scanner_check(self.hardware_code)
 
         # Resize window to terminal screen size
@@ -316,7 +332,7 @@ class Sentinel(object):
                                 (code, result, value) = self.oerp_call('action', choice)
                             else:
                                 # Empty list supplied, display an error
-                                (code, result, value) = ('E', ['No value available'], False)
+                                (code, result, value) = ('E', [_('No value available')], False)
                         elif code == 'F':
                             # End of scenario
                             self.scenario_id = False
@@ -324,14 +340,14 @@ class Sentinel(object):
                         else:
                             # Default call
                             (code, result, value) = self.oerp_call('restart')
-                except SentinelBackException, e:
+                except SentinelBackException:
                     # Back to the previous step required
                     (code, result, value) = self.oerp_call('back')
                     # Do not display the termination message
                     if code == 'F':
                         self.ungetch(ord('\n'))
                     self.screen.bkgd(0, self._get_color('base'))
-                except Exception, e:
+                except Exception:
                     # Generates log contents
                     log_contents = '%s\n# %s\n# Hardware code : %s\n# Current scenario : %s\n# Current values :\n#\tcode : %s\n#\tresult : %s\n#\tvalue : %s\n%s\n%s\n' % (
                         '#' * 79,
@@ -351,8 +367,8 @@ class Sentinel(object):
                     logfile.close()
 
                     # Display error message
-                    (code, result, value) = ('E', ['An error occured', '', 'Please contact your', 'administrator'], False)
-            except KeyboardInterrupt, e:
+                    (code, result, value) = ('E', [_('An error occured\n\nPlease contact your administrator')], False)
+            except KeyboardInterrupt:
                 # If Ctrl+C, exit
                 (code, result, value) = self.oerp_call('end')
                 # Restore normal background colors
@@ -382,7 +398,7 @@ class Sentinel(object):
 
         # If no scenario available : return an error
         if not values:
-            return ('R', ['No scenario available !'], 0)
+            return ('R', [_('No scenario available !')], 0)
 
         # Select a scenario in the list
         choice = self._menu_choice(values)
@@ -433,8 +449,6 @@ class Sentinel(object):
                 # Arrow key : change value
                 confirm = not confirm
             elif key == 'KEY_MOUSE':
-                nb_lines = self.window_height - 1
-
                 # Retrieve mouse event information
                 mouse_info = curses.getmouse()
 

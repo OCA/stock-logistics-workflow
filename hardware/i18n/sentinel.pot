@@ -1,0 +1,39 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: sentinel 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-04-23 11:47+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../sentinel.py:126
+msgid ""
+"Autoconfiguration failed !\n"
+"Please enter terminal code"
+msgstr ""
+
+#: ../sentinel.py:335
+msgid "No value available"
+msgstr ""
+
+#: ../sentinel.py:370
+msgid ""
+"An error occured\n"
+"\n"
+"Please contact your administrator"
+msgstr ""
+
+#: ../sentinel.py:401
+msgid "No scenario available !"
+msgstr ""
