@@ -502,7 +502,7 @@ class Sentinel(object):
             # Clear the screen
             self._display(clear=True)
             # Diplays the selected quantity
-            self._display('Selected : %s' % quantity, y=self.window_height - 1, color='info', modifier=curses.A_BOLD)
+            self._display(_('Selected : %s') % quantity, y=self.window_height - 1, color='info', modifier=curses.A_BOLD)
 
             # Display the message and get the key
             key = self._display(message, scroll=True, height=self.window_height - 1)
@@ -654,7 +654,7 @@ class Sentinel(object):
             self.screen.addch(nb_lines - 1, self.window_width - 1, curses.ACS_DARROW)
 
         # Diplays number of the selected entry
-        self._display('Selected : %d' % highlighted, y=nb_lines, color='info', modifier=curses.A_BOLD)
+        self._display(_('Selected : %d') % highlighted, y=nb_lines, color='info', modifier=curses.A_BOLD)
 
         # Set the cursor position
         if nb_lines < len(entries):
