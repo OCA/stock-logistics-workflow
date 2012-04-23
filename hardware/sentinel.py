@@ -211,7 +211,9 @@ class Sentinel(object):
             self.screen.bkgd(0, color)
 
         # Normalize the text, because ncurses doesn't know UTF-8 with python 2.x
-        text = unicodedata.normalize('NFKD', unicode(text.decode('utf-8'))).encode('ascii', 'ignore')
+        if type(text) is str:
+            text = text.decode('utf-8')
+        text = unicodedata.normalize('NFKD', unicode(text)).encode('ascii', 'ignore')
 
         # Display the text
         if not scroll:
