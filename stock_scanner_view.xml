@@ -78,7 +78,7 @@
                         <field name="scenario_id"/>
                         <field name="step_id"/>
                         <field name="reference_document" colspan="4"/>
-                        <button string="Reset Scenario" colspan="4" type="object" name="empty_scanner_values"/>
+                        <button string="Reset Scenario" colspan="4" type="object" icon="gtk-apply" name="empty_scanner_values"/>
                     </group>
                     <group colspan="4">
                         <separator string="Temporary values" colspan="4"/>
