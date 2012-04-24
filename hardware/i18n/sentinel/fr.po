@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sentinel 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-23 12:14+0200\n"
-"PO-Revision-Date: 2012-04-23 12:21+0100\n"
+"POT-Creation-Date: 2012-04-24 10:14+0200\n"
+"PO-Revision-Date: 2012-04-24 10:15+0100\n"
 "Last-Translator: Sylvain Garancher <sylvain.garancher@syleam.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -25,11 +25,11 @@ msgstr ""
 "Echec d'autoconfiguration !\n"
 "Saisir le code du terminal"
 
-#: ../sentinel.py:335
+#: ../sentinel.py:337
 msgid "No value available"
 msgstr "Pas de valeur disponible"
 
-#: ../sentinel.py:370
+#: ../sentinel.py:372
 msgid ""
 "An error occured\n"
 "\n"
@@ -39,16 +39,24 @@ msgstr ""
 "\n"
 "Merci de contacter votre administrateur"
 
-#: ../sentinel.py:401
+#: ../sentinel.py:403
 msgid "No scenario available !"
 msgstr "Pas de scénario disponible !"
 
-#: ../sentinel.py:505
+#: ../sentinel.py:425
+msgid "Yes"
+msgstr "Oui"
+
+#: ../sentinel.py:428
+msgid "No"
+msgstr "Non"
+
+#: ../sentinel.py:507
 #, python-format
 msgid "Selected : %s"
 msgstr "Sélection : %s"
 
-#: ../sentinel.py:657
+#: ../sentinel.py:659
 #, python-format
 msgid "Selected : %d"
 msgstr "Sélection : %d"

@@ -15,7 +15,8 @@ fi
 case $1 in
 extract)
     # Extract translatable strings from python files
-    xgettext --language=Python --keyword=_ --output=sentinel.pot --from-code=UTF-8 --package-name=sentinel --package-version=1.0 ../sentinel.py
+    mkdir -p sentinel
+    xgettext --language=Python --keyword=_ --output=sentinel/sentinel.pot --from-code=UTF-8 --package-name=sentinel --package-version=1.0 ../sentinel.py
     ;;
 init)
     if [ $# -lt 2 ]; then
