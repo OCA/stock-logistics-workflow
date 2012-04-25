@@ -114,8 +114,10 @@
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.view_picking_in_form" />
         <field name="type">form</field>
+        <field name="priority">24</field> <!-- inherit after product_hardware_revision -->
         <field name="arch" type="xml">
             <xpath expr="/form/notebook/page/field/form/group/button[@string='Split']" position="after">
+                <label string="" colspan="3" />
                 <button name="split_move" string="Manual split"
                     groups="base.group_extended"
                     states="draft,waiting,confirmed,assigned"
@@ -136,8 +138,10 @@
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.view_picking_out_form" />
         <field name="type">form</field>
+        <field name="priority">24</field> <!-- inherit after product_hardware_revision -->
         <field name="arch" type="xml">
             <xpath expr="/form/notebook/page/field/form/group/button[@string='Split']" position="after">
+                <label string="" colspan="3" />
                 <button name="split_move" string="Manual split"
                     groups="base.group_extended"
                     states="draft,waiting,confirmed,assigned"
