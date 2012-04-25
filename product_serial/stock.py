@@ -137,7 +137,7 @@ class stock_move(osv.osv):
         return result
 
     def split_move(self, cr, uid, ids, context=None):
-        all_ids = list(ds)
+        all_ids = list(ids)
         for move in self.browse(cr, uid, ids, context=context):
             qty = move.product_qty
             lu_qty = False
