@@ -624,7 +624,7 @@ class Sentinel(object):
                     return keys[highlighted]
 
             # Avoid going out of the list
-            highlighted = min(max(0, highlighted), len(entries) - 1)
+            highlighted %= len(entries)
 
             # Auto validate if max number is reached
             current_nb_char = int(math.floor(math.log10(max(1, highlighted))) + 1)
