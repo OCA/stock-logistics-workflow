@@ -30,6 +30,9 @@ from tools.translate import _
 
 class stock_move(osv.osv):
     _inherit = "stock.move"
+    # We order by product name because otherwise, after the split,
+    # the products are "mixed" and not grouped by product name any more
+    _order = "picking_id, name, id"
 
     def copy(self, cr, uid, id, default=None, context=None):
         if not default:
@@ -133,37 +136,30 @@ class stock_move(osv.osv):
 
         return result
 
-
-    def split_move_in_single(self, cr, uid, ids, context=None):
-        all_ids = ids[:]
-        for move_id in ids:
-            move = self.browse(cr, uid, move_id)
+    def split_move(self, cr, uid, ids, context=None):
+        all_ids = list(ds)
+        for move in self.browse(cr, uid, ids, context=context):
             qty = move.product_qty
-            self.write(cr, uid, move.id, {'product_qty': 1, 'product_uos_qty': move.product_id.uos_coeff})
-            while qty > 1:
-                all_ids.append( self.copy(cr, uid, move.id, {'state': move.state, 'prodlot_id': None}) )
-                qty -= 1;
+            lu_qty = False
+            if move.product_id.lot_split_type == 'lu':
+                if not move.product_id.packaging:
+                    raise osv.except_osv(_('Error :'), _("Product '%s' has 'Lot split type' = 'Logistical Unit' but is missing packaging information.") % (move.product_id.name))
+                lu_qty = move.product_id.packaging[0].qty
+            elif move.product_id.lot_split_type == 'single':
+                lu_qty = 1
+            if lu_qty and qty > 1:
+                # Set existing move to LU quantity
+                self.write(cr, uid, move.id, {'product_qty': lu_qty, 'product_uos_qty': move.product_id.uos_coeff})
+                qty -= lu_qty
+                # While still enough qty to create a new move, create it
+                while qty >= lu_qty:
+                    all_ids.append( self.copy(cr, uid, move.id, {'state': move.state, 'prodlot_id': None}) )
+                    qty -= lu_qty
+                # Create a last move for the remainder qty
+                if qty > 0:
+                    all_ids.append( self.copy(cr, uid, move.id, {'state': move.state, 'prodlot_id': None, 'product_qty': qty}) )
         return all_ids
 
-	# To split move lines depending on logistical units defined for the product
-	# TO IMPROVE with 1 (or more) algo which will take into account all LU for the product
-    def split_move_in_lu(self, cr, uid, ids, context=None):
-        all_ids = ids[:]
-        for move_id in ids:
-            move = self.browse(cr, uid, move_id)
-            qty = move.product_qty
-            lu_qty = move.product_id.packaging[0].qty
-            # Set existing move to LU quantity
-            self.write(cr, uid, move.id, {'product_qty': lu_qty, 'product_uos_qty': move.product_id.uos_coeff})
-            qty -= lu_qty
-            # While still enough qty to create a new move, create it
-            while qty >= lu_qty:
-                all_ids.append( self.copy(cr, uid, move.id, {'state': move.state, 'prodlot_id': None}) )
-                qty -= lu_qty;
-            # Create a last move for the remainder qty
-            all_ids.append( self.copy(cr, uid, move.id, {'state': move.state, 'prodlot_id': None, 'product_qty':qty}) )            
-        return all_ids
-        
 stock_move()
 
 
@@ -176,22 +172,12 @@ class stock_picking(osv.osv):
         for picking in self.browse(cr, uid, ids):
             if picking.company_id.autosplit_is_active:
                 for move in picking.move_lines:
-                    # SPLIT in single line
-                    if move.product_id.lot_split_type=="single" and \
-                       move.product_qty > 1 and \
-                       ((move.product_id.track_production and move.location_id.usage == 'production') or \
+                    # Auto split
+                    if ((move.product_id.track_production and move.location_id.usage == 'production') or \
                         (move.product_id.track_production and move.location_dest_id.usage == 'production') or \
                         (move.product_id.track_incoming and move.location_id.usage == 'supplier') or \
                         (move.product_id.track_outgoing and move.location_dest_id.usage == 'customer')):
-                            self.pool.get('stock.move').split_move_in_single(cr, uid, [move.id])
-                    # SPLIT with logistical units
-                    elif move.product_id.lot_split_type=="lu" and \
-                       move.product_qty > 1 and move.product_id.packaging and \
-                       ((move.product_id.track_production and move.location_id.usage == 'production') or \
-                        (move.product_id.track_production and move.location_dest_id.usage == 'production') or \
-                        (move.product_id.track_incoming and move.location_id.usage == 'supplier') or \
-                        (move.product_id.track_outgoing and move.location_dest_id.usage == 'customer')):
-                            self.pool.get('stock.move').split_move_in_lu(cr, uid, [move.id])                      
+                        self.pool.get('stock.move').split_move(cr, uid, [move.id])
 
         return result
 
@@ -235,9 +221,9 @@ class stock_picking(osv.osv):
                     key = key + unicode(tax) + ";"
 
                 # Add the sale order line part but check if the field exist because
-                # it's install by a specific no-trunk-community-addons
-                if self.pool.get('ir.model.fields').search(cursor, user, [('name', '=', 
-                        'sale_order_lines'), ('model', '=', 'account.invoice.line')], context=context) != []:
+                # it's install by a specific module (not from addons)
+                if self.pool.get('ir.model.fields').search(cursor, user,
+                        [('name', '=', 'sale_order_lines'), ('model', '=', 'account.invoice.line')], context=context) != []:
                     order_line_tab = []
                     for order_line in line.sale_order_lines:
                         order_line_tab.append(order_line.id)
@@ -249,14 +235,16 @@ class stock_picking(osv.osv):
                 # Get the hash of the key
                 hash_key = hashlib.sha224(key.encode('utf8')).hexdigest()
 
-                # Check if the key already exist
+                # if the key doesn't already exist, we keep the invoice line
+                # and we add the key to new_line_list
                 if not new_line_list.has_key(hash_key):
                     new_line_list[hash_key] = {
                         'id': line.id,
                         'quantity': line.quantity,
                         'price_subtotal': line.price_subtotal,
                     }
-
+                # if the key already exist, we update new_line_list and 
+                # we delete the invoice line
                 else:
                     new_line_list[hash_key]['quantity'] = new_line_list[hash_key]['quantity'] + line.quantity
                     new_line_list[hash_key]['price_subtotal'] = new_line_list[hash_key]['price_subtotal'] \
