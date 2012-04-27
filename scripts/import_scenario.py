@@ -130,7 +130,7 @@ for directory in directories:
             warehouse_ids = warehouse_obj.search([('name', '=', node.text)], 0, None, None, {'active_test': False})
             if warehouse_ids:
                 scen_vals['warehouse_ids'].append((4, warehouse_ids[0]))
-        elif node.tag == 'shared_custom':
+        elif node.tag in ('active', 'shared_custom'):
             scen_vals[node.tag] = eval(node.text) or False
         else:
             scen_vals[node.tag] = node.text or False
