@@ -558,8 +558,10 @@ class scanner_hardware(osv.osv):
                     'cr': cr,
                     'pool': self.pool,
                     'uid': uid,
+                    'm': message,
                     'message': message,
                     't': self.browse(cr, uid, terminal_id, context=context),
+                    'terminal': self.browse(cr, uid, terminal_id, context=context),
                 }
                 expr = eval(str(transition.condition), ctx)
 
@@ -602,9 +604,12 @@ class scanner_hardware(osv.osv):
             'term': self,
             'context': context,
             'm': message,
+            'message': message,
             't': terminal,
+            'terminal': terminal,
             'tracer': tracer,
             'wkf': netsvc.LocalService('workflow'),
+            'workflow': netsvc.LocalService('workflow'),
             'scenario': scanner_scenario_obj.browse(cr, uid, scenario_id, context=context),
         }
 
