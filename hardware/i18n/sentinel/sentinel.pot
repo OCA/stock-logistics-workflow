@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sentinel 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-24 10:14+0200\n"
+"POT-Creation-Date: 2012-05-15 18:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,6 +38,10 @@ msgstr ""
 msgid "No scenario available !"
 msgstr ""
 
+#: ../sentinel.py:406
+msgid "|Scenarios"
+msgstr ""
+
 #: ../sentinel.py:425
 msgid "Yes"
 msgstr ""
@@ -51,7 +55,7 @@ msgstr ""
 msgid "Selected : %s"
 msgstr ""
 
-#: ../sentinel.py:659
+#: ../sentinel.py:671
 #, python-format
 msgid "Selected : %d"
 msgstr ""

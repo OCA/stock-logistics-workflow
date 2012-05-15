@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sentinel 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-24 10:14+0200\n"
-"PO-Revision-Date: 2012-04-24 10:15+0100\n"
+"POT-Creation-Date: 2012-05-15 18:02+0200\n"
+"PO-Revision-Date: 2012-05-15 18:03+0100\n"
 "Last-Translator: Sylvain Garancher <sylvain.garancher@syleam.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -43,6 +43,10 @@ msgstr ""
 msgid "No scenario available !"
 msgstr "Pas de scénario disponible !"
 
+#: ../sentinel.py:406
+msgid "|Scenarios"
+msgstr "|Scénarios"
+
 #: ../sentinel.py:425
 msgid "Yes"
 msgstr "Oui"
@@ -56,7 +60,7 @@ msgstr "Non"
 msgid "Selected : %s"
 msgstr "Sélection : %s"
 
-#: ../sentinel.py:659
+#: ../sentinel.py:671
 #, python-format
 msgid "Selected : %d"
 msgstr "Sélection : %d"
