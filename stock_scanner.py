@@ -383,7 +383,8 @@ class scanner_hardware(osv.osv):
                 if scenario_ids:
                     scenarios = self._scenario_list(cr, uid, terminal.warehouse_id.id, parent_id=scenario_ids[0], context=context)
                     if scenarios:
-                        return ('L', scenarios, 0)
+                        menu_name = scanner_scenario_obj.browse(cr, uid, scenario_ids[0], context=context).name
+                        return ('L', ['|%s' % menu_name] + scenarios, 0)
                 return self._scenario_save(cr, uid, terminal.id, message, transition_type, context=context)
 
         # Reload current step

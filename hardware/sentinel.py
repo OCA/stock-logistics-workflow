@@ -403,7 +403,7 @@ class Sentinel(object):
             return ('R', [_('No scenario available !')], 0)
 
         # Select a scenario in the list
-        choice = self._menu_choice(values)
+        choice = self._menu_choice([_('|Scenarios')] + values)
         self.scenario_id = choice
 
         # Send the result to OpenERP
@@ -545,9 +545,16 @@ class Sentinel(object):
         """
         # If a dict is passed, keep the keys
         keys = entries
+        title_key = '|'
+        title = None
         if isinstance(entries, dict):
+            if entries.get('title', None):
+                title = entries[title_key]
+                del entries[title_key]
             keys = entries.keys()
             entries = entries.values()
+        elif entries[0].startswith(title_key):
+            title = entries.pop(0)[len(title_key):]
 
         # Highlighted entry
         highlighted = 0
@@ -565,7 +572,7 @@ class Sentinel(object):
 
         while True:
             # Display the menu
-            self._menu_display(display, highlighted)
+            self._menu_display(display, highlighted, title=title)
 
             # Get the pushed key
             key = self.getkey()
@@ -631,13 +638,14 @@ class Sentinel(object):
             if highlighted and digit_key and current_nb_char >= nb_char:
                 return keys[highlighted]
 
-    def _menu_display(self, entries, highlighted):
+    def _menu_display(self, entries, highlighted, title=None):
         """
         Display a menu, highlighting the selected entry
         """
         # First line to be displayed
         first_line = 0
-        nb_lines = self.window_height - 1
+        offset = (title is not None) and 1 or 0
+        nb_lines = self.window_height - offset - 1
         middle = int(math.floor((nb_lines - 1) / 2))
 
         # Change the first line if there is too much lines for the screen
@@ -645,24 +653,28 @@ class Sentinel(object):
             first_line = min(highlighted - middle, len(entries) - nb_lines)
 
         # Display all entries, normal display
-        self._display('\n'.join(entries[first_line:first_line + nb_lines]), clear=True)
+        self._display('\n'.join(entries[first_line:first_line + nb_lines]), y=offset, clear=True)
         # Highlight selected entry
-        self._display(entries[highlighted].ljust(self.window_width - 1), y=highlighted - first_line, modifier=curses.A_REVERSE | curses.A_BOLD)
+        self._display(entries[highlighted].ljust(self.window_width - 1), y=highlighted - first_line + offset, modifier=curses.A_REVERSE | curses.A_BOLD)
+        # Display title, if any
+        if title is not None:
+            title = title.ljust(int(self.window_width / 2) + int(len(title) / 2)).rjust(self.window_width)
+            self._display(title, color='info', modifier=curses.A_REVERSE | curses.A_BOLD)
 
         # Display arrows
         if first_line > 0:
-            self.screen.addch(0, self.window_width - 1, curses.ACS_UARROW)
+            self.screen.addch(offset, self.window_width - 1, curses.ACS_UARROW)
         if first_line + nb_lines < len(entries):
-            self.screen.addch(nb_lines - 1, self.window_width - 1, curses.ACS_DARROW)
+            self.screen.addch(nb_lines + offset - 1, self.window_width - 1, curses.ACS_DARROW)
 
         # Diplays number of the selected entry
-        self._display(_('Selected : %d') % highlighted, y=nb_lines, color='info', modifier=curses.A_BOLD)
+        self._display(_('Selected : %d') % highlighted, y=nb_lines + offset, color='info', modifier=curses.A_BOLD)
 
         # Set the cursor position
         if nb_lines < len(entries):
             position_percent = float(highlighted) / len(entries)
             position = int(round(nb_lines * position_percent))
-            self._display(' ', x=self.window_width - 1, y=position, color='info', modifier=curses.A_REVERSE)
+            self._display(' ', x=self.window_width - 1, y=position + offset, color='info', modifier=curses.A_REVERSE)
         self.screen.move(nb_lines, self.window_width - 1)
 
 
