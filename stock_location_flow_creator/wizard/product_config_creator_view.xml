@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="product_config_creator_view" model="ir.ui.view">
+            <field name="name">stock.warehouse.orderpoint.creator</field>
+            <field name="model">stock.warehouse.orderpoint.creator</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="stock_orderpoint_creator.orderpoint_creator_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='orderpoint_template_id']" position="after">
+                    <field name="push_flow_template_id"/>
+                    <field name="pull_flow_template_id"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
