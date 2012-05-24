@@ -19,24 +19,24 @@
 #
 ##############################################################################
 
-""" Overload of orderpoint creator Wizard to add location flow configurations 
+""" Overload of orderpoint creator Wizard to add location flow configurations
 for selected products. Those configs are generated using templates """
 
-from osv import osv, fields
+from openerp.osv.orm import TransientModel, fields
 
 _template_register = ['push_flow_template_id', 'pull_flow_template_id']
 
-class ProductConfigCreator(osv.osv_memory):
+class ProductConfigCreator(TransientModel):
     _inherit = 'stock.warehouse.orderpoint.creator'
     _description = 'Orderpoint Creator'
 
     _columns = {
-            'push_flow_template_id': fields.many2one(
-                'stock.location.path.template',
-                "Pushed Flows"),
-            'pull_flow_template_id': fields.many2one(
-                'product.pulled.flow.template',
-                "Pulled Flows")
+            'push_flow_template_id': fields.many2many('stock.location.path.template',
+                                                      rel='path_creator_rel',
+                                                      string='Pushed Flows'),
+            'pull_flow_template_id': fields.many2many('product.pulled.flow.template',
+                                                      rel='flow_creator_rel',
+                                                      string="Pulled Flows")
     }
 
     def _get_template_register(self):
@@ -46,6 +46,4 @@ class ProductConfigCreator(osv.osv_memory):
         parent_reg = super(ProductConfigCreator, self)._get_template_register()
         template_reg.extend(parent_reg)
         template_reg.extend(_template_register)
-        return template_reg
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+        return list(set(template_reg))

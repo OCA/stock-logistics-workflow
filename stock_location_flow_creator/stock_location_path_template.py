@@ -21,30 +21,20 @@
 
 """ Template of stock location path object """
 
-from osv import osv
-
+from openerp.osv.orm import Model
 from openerp.addons.stock_orderpoint_creator.base_product_config_template import BaseProductConfigTemplate
 
-class StockLocationPath(BaseProductConfigTemplate, osv.osv_memory):
+class StockLocationPath(BaseProductConfigTemplate, Model):
     _name = 'stock.location.path.template'
 
     _inherit = 'stock.location.path'
     _table =  'stock_location_path_template'
+    _clean_mode = 'unlink'
 
-
-    def _get_ids_2_clean(
-            self, cursor, uid, template_id, product_ids, context=None):
-        """ hook to select model specific objects to clean 
-        return must return a list of id"""
+    def _get_ids_2_clean(self, cursor, uid, template_br, product_ids, context=None):
+        """ hook to select model specific objects to clean
+            return must return a list of id"""
         model_obj = self._get_model()
-        # TODO
-        #(warehouse_id, warehouse_name) = self.read(
-        #        cursor, uid, template_id, ['warehouse_id'])['warehouse_id']
-        #search_args = [('warehouse_id', '=', warehouse_id),
-        #               ('product_id', 'in', product_ids)]
-
-        #ids2clean = model_obj.search(cursor, uid, search_args, context=context)
-        #return ids2clean
-        return []
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+        ids_to_del = model_obj.search(cursor, uid,
+                                      [('product_id', 'in', product_ids)])
+        return ids_to_del

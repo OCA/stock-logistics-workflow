@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_pulled_flow_template,stock.warehouse.manage,model_product_pulled_flow_template,stock.group_stock_manager,1,1,1,1
+access_stock_location_path_template,stock.warehouse.manage,model_stock_location_path_template,stock.group_stock_manager,1,1,1,1
