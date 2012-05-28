@@ -21,7 +21,7 @@
 
 """ Template of product pulled flow object """
 
-from openerp.osv.orm import Model, fields
+from openerp.osv.orm import Model
 
 from openerp.addons.stock_orderpoint_creator.base_product_config_template import BaseProductConfigTemplate
 
