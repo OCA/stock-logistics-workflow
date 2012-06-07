@@ -450,6 +450,12 @@ class Sentinel(object):
             elif key == 'KEY_DOWN' or key == 'KEY_LEFT' or key == 'KEY_UP' or key == 'KEY_RIGHT':
                 # Arrow key : change value
                 confirm = not confirm
+            elif key.upper() == 'O' or key.upper() == 'Y':
+                # O (oui) or Y (yes)
+                confirm = True
+            elif key.upper() == 'N':
+                # N (No)
+                confirm = False
             elif key == 'KEY_MOUSE':
                 # Retrieve mouse event information
                 mouse_info = curses.getmouse()
