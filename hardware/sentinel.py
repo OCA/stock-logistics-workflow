@@ -554,7 +554,7 @@ class Sentinel(object):
         title_key = '|'
         title = None
         if isinstance(entries, dict):
-            if entries.get('title', None):
+            if entries.get(title_key, None):
                 title = entries[title_key]
                 del entries[title_key]
             keys = entries.keys()
