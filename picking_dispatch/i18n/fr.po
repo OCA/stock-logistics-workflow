@@ -1,36 +1,25 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-# 	* picking_dispatch
+#	* picking_dispatch
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-20 12:43+0000\n"
-"PO-Revision-Date: 2012-07-20 15:06+0200\n"
+"POT-Creation-Date: 2012-07-03 08:35+0000\n"
+"PO-Revision-Date: 2012-07-03 10:55+0200\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
 #. module: picking_dispatch
-#: view:picking.dispatch:0 selection:picking.dispatch,state:0
+#: view:picking.dispatch:0
+#: selection:picking.dispatch,state:0
 msgid "In Progress"
 msgstr "En cours"
-
-#. module: picking_dispatch
-#: model:ir.model,name:picking_dispatch.model_picking_dispatch
-msgid "configuration of pull rules for warehouse outgoing locations"
-msgstr "configuration of pull rules for warehouse outgoing locations"
-
-#. module: picking_dispatch
-#: report:addons/picking_dispatch/report/dispatch.html.mako:25
-#, fuzzy
-msgid "Dispatch Order"
-msgstr "Mes bons de préparation"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,state:0
@@ -83,21 +72,20 @@ msgstr "Bon de livraison"
 msgid "Back Order of"
 msgstr "Relicat de"
 
-# Marchandise cassée
-#. module: picking_dispatch
-#: report:addons/picking_dispatch/report/dispatch.html.mako:51
-msgid "breakage"
-msgstr "marchandise cassée"
-
 #. module: picking_dispatch
 #: help:picking.dispatch,picker_id:0
 msgid "the user to which the pickings are assigned"
 msgstr "utilisateur en charge de la préparation"
 
 #. module: picking_dispatch
-#: report:addons/picking_dispatch/report/dispatch.html.mako:39
+#: report:addons/picking_dispatch/report/dispatch.html.mako:31
 msgid "Product Code"
 msgstr "Code Produit"
+
+#. module: picking_dispatch
+#: view:picking.dispatch.creator:0
+msgid "_Create"
+msgstr "_Create"
 
 #. module: picking_dispatch
 #: sql_constraint:product.product:0
@@ -105,9 +93,9 @@ msgid "Default code should be uniq"
 msgstr "La référence doit être unique"
 
 #. module: picking_dispatch
-#: view:product.product:0 field:product.product,description_warehouse:0
-msgid "Warehouse Description"
-msgstr "Description pour l'entrepôt"
+#: view:picking.dispatch:0
+msgid "Start"
+msgstr "Début"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,related_picking_ids:0
@@ -121,9 +109,10 @@ msgid "Picking Dispatch Creator"
 msgstr "Créateur du Bon de Préparation"
 
 #. module: picking_dispatch
-#: report:addons/picking_dispatch/report/dispatch.html.mako:43
-msgid "Explanation"
-msgstr "Explication"
+#: view:product.product:0
+#: field:product.product,description_warehouse:0
+msgid "Warehouse Description"
+msgstr "Description pour l'entrepôt"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
@@ -131,9 +120,14 @@ msgid "picker_id"
 msgstr "Préparateur"
 
 #. module: picking_dispatch
-#: report:addons/picking_dispatch/report/dispatch.html.mako:42
+#: report:addons/picking_dispatch/report/dispatch.html.mako:34
 msgid "QTY"
-msgstr "Nombre de colis"
+msgstr "Qté"
+
+#. module: picking_dispatch
+#: view:picking.dispatch:0
+msgid "Dispatch Picking Order"
+msgstr "Dispatch Picking Order"
 
 #. module: picking_dispatch
 #: help:picking.dispatch.creator,date:0
@@ -153,7 +147,8 @@ msgstr "Ce bon de préparation ne doit pas être traité avant %s"
 
 #. module: picking_dispatch
 #: report:addons/picking_dispatch/report/dispatch.html.mako:15
-#: field:picking.dispatch,date:0 field:picking.dispatch.creator,date:0
+#: field:picking.dispatch,date:0
+#: field:picking.dispatch.creator,date:0
 msgid "Date"
 msgstr "Date"
 
@@ -168,15 +163,13 @@ msgid "Ready to Process"
 msgstr "Prêt"
 
 #. module: picking_dispatch
-#: report:addons/picking_dispatch/report/dispatch.html.mako:51
-msgid "stock error"
-msgstr "écart de stock"
+#: help:picking.dispatch,move_ids:0
+msgid "the list of moves to be processed"
+msgstr "La liste des mouvements à effectuer"
 
 #. module: picking_dispatch
 #: help:picking.dispatch,backorder_id:0
-msgid ""
-"if this dispatch was split, this links to the dispatch order containing the "
-"other part which was processed"
+msgid "if this dispatch was split, this links to the dispatch order containing the other part which was processed"
 msgstr ""
 "Si le bon de préparation a été découpé, ce champ est un lien vers la\n"
 "partie du bon de préparation original qui a été traitée"
@@ -195,9 +188,7 @@ msgstr "Bon de Préparation"
 
 #. module: picking_dispatch
 #: help:picking.dispatch,state:0
-msgid ""
-"the state of the picking. Workflow is draft -> assigned -> progress -> done "
-"or cancel"
+msgid "the state of the picking. Workflow is draft -> assigned -> progress -> done or cancel"
 msgstr ""
 "L'état du bon de préparation. Les états sont Brouillon -> Assigné ->\n"
 "En cours -> Fait ou Annulé"
@@ -213,22 +204,14 @@ msgid "Name"
 msgstr "Nom"
 
 #. module: picking_dispatch
-#: report:addons/picking_dispatch/report/dispatch.html.mako:28
+#: report:addons/picking_dispatch/report/dispatch.html.mako:23
 msgid "Visa"
 msgstr "Visa"
 
 #. module: picking_dispatch
-#: help:picking.dispatch,move_ids:0
-msgid "the list of moves to be processed"
-msgstr "La liste des mouvements à effectuer"
-
-#. module: picking_dispatch
 #: code:addons/picking_dispatch/wizard/create_dispatch.py:60
 #, python-format
-msgid ""
-"No valide stock moves found to create the dispatch ! (Only move that are not "
-"part of a disptach order and in confirm, waiting or assigned state can be "
-"used)"
+msgid "No valide stock moves found to create the dispatch ! (Only move that are not part of a disptach order and in confirm, waiting or assigned state can be used)"
 msgstr ""
 "Pas de mouvements de stock valides trouvé pour créer le Bon de\n"
 "Préparation. Seuls les mouvements qui ne sont pas déjà dans un bon de\n"
@@ -240,14 +223,9 @@ msgstr ""
 msgid "Order Date"
 msgstr "Date"
 
-#. module: picking_dispatch
-#: help:picking.dispatch,date:0
-#, fuzzy
-msgid "date on which the picking dispatched is to be processed"
-msgstr "Date à laquelle le bon de préparation doit être traité"
 
 #. module: picking_dispatch
-#: report:addons/picking_dispatch/report/dispatch.html.mako:41
+#: report:addons/picking_dispatch/report/dispatch.html.mako:33
 msgid "Carrier"
 msgstr "Transporteur"
 
@@ -273,9 +251,9 @@ msgid "Back Orders"
 msgstr "Relicats"
 
 #. module: picking_dispatch
-#: view:picking.dispatch:0
-msgid "Start"
-msgstr "Début"
+#: report:addons/picking_dispatch/report/dispatch.html.mako:28
+msgid "Products summary"
+msgstr "Synthèse des produits"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
@@ -293,14 +271,9 @@ msgstr "Le bon de préparation auquel le mouvement de stock est lié"
 msgid "Picker"
 msgstr "Préparateur"
 
-#. module: picking_dispatch
-#: code:addons/picking_dispatch/wizard/create_dispatch.py:85
-#, python-format
-msgid "Historical Margins"
-msgstr "Historical Margins"
 
 #. module: picking_dispatch
-#: report:addons/picking_dispatch/report/dispatch.html.mako:28
+#: report:addons/picking_dispatch/report/dispatch.html.mako:23
 msgid "Picked by"
 msgstr "Préparateur"
 
@@ -319,11 +292,6 @@ msgstr "Bons de préparations traités"
 msgid "Stock Move"
 msgstr "Mouvement de stock"
 
-#. module: picking_dispatch
-#: sql_constraint:product.product:0
-#, fuzzy
-msgid "The Magento SKU should be uniq!"
-msgstr "La référence doit être unique"
 
 #. module: picking_dispatch
 #: field:stock.move,dispatch_id:0
@@ -331,7 +299,7 @@ msgid "Dispatch"
 msgstr "Bon de Préparation"
 
 #. module: picking_dispatch
-#: report:addons/picking_dispatch/report/dispatch.html.mako:40
+#: report:addons/picking_dispatch/report/dispatch.html.mako:32
 #: model:ir.model,name:picking_dispatch.model_product_product
 msgid "Product"
 msgstr "Produit"
@@ -341,16 +309,14 @@ msgstr "Produit"
 msgid "Assigned"
 msgstr "Assigné"
 
+
+
 #. module: picking_dispatch
-#: view:picking.dispatch:0 selection:picking.dispatch,state:0
+#: view:picking.dispatch:0
+#: selection:picking.dispatch,state:0
 msgid "Done"
 msgstr "Fait"
 
-#. module: picking_dispatch
-#: view:picking.dispatch.creator:0
-#, fuzzy
-msgid "_Cancel"
-msgstr "Annulé"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
@@ -387,5 +353,3 @@ msgstr "Informations complémentaires."
 msgid "Stock Moves"
 msgstr "Mouvements"
 
-#~ msgid "Products summary"
-#~ msgstr "Synthèse des produits"
