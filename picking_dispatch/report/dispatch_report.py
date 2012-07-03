@@ -26,6 +26,9 @@
 import operator
 from report import report_sxw
 import pooler
+import logging
+
+_logger = logging.getLogger(__name__)
 
 class NullMove(object):
     """helper class to generate empty lines in the delivery report"""
@@ -83,8 +86,7 @@ class DispatchAgregation(object):
         products = {}
         product_qty = {}
         carrier = {}
-        print "DEBUG_-------------------"
-        print self.move_ids
+        _logger.debug('move ids %s',  self.move_ids)
         for move in self.move_ids:
             p_code = move.product_id.default_code
             products[p_code] = move.product_id
@@ -120,7 +122,7 @@ class PrintDispatch(report_sxw.rml_parse):
                     picker_dct[key] = dispatch.picker_id
         objects = []
         for agr in agreg:
-            print agr
+            _logger.debug('agreg %s', agr)
             objects.append(DispatchAgregation(agr[0], agr[1], agreg[agr], picker_dct.get(agr,False)))
         return super(PrintDispatch, self).set_context(objects, data, ids, report_type=report_type)
 
