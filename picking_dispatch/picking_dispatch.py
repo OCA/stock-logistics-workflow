@@ -263,6 +263,6 @@ class Product(Model):
 
     _columns = {
         'description_warehouse': fields.text('Warehouse Description', translate=True),
-                }
+        }
 
 
