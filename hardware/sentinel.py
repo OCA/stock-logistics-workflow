@@ -422,10 +422,10 @@ class Sentinel(object):
             # Compute Yes/No positions
             yes_start = 0
             yes_padding = int(math.floor(self.window_width / 2))
-            yes_text = _('Yes').ljust(int(math.floor(yes_padding / 2)) + 2).rjust(yes_padding)
+            yes_text = _('Yes').center(yes_padding)
             no_start = yes_padding
             no_padding = self.window_width - no_start - 1
-            no_text = _('No').ljust(int(math.floor(no_padding / 2)) + 1).rjust(no_padding)
+            no_text = _('No').center(no_padding)
 
             if confirm:
                 # Yes selected
@@ -664,7 +664,7 @@ class Sentinel(object):
         self._display(entries[highlighted].ljust(self.window_width - 1), y=highlighted - first_line + offset, modifier=curses.A_REVERSE | curses.A_BOLD)
         # Display title, if any
         if title is not None:
-            title = title.ljust(int(self.window_width / 2) + int(len(title) / 2)).rjust(self.window_width)
+            title = title.center(self.window_width)
             self._display(title, color='info', modifier=curses.A_REVERSE | curses.A_BOLD)
 
         # Display arrows
