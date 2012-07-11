@@ -683,7 +683,7 @@ class Sentinel(object):
             position_percent = float(highlighted) / len(entries)
             position = int(round(nb_lines * position_percent))
             self._display(' ', x=self.window_width - 1, y=position + offset, color='info', modifier=curses.A_REVERSE)
-        self.screen.move(nb_lines, self.window_width - 1)
+        self.screen.move(self.window_height - 1, self.window_width - 1)
 
 
 class SentinelException (Exception):
