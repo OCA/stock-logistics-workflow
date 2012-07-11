@@ -559,6 +559,8 @@ class Sentinel(object):
                 del entries[title_key]
             keys = entries.keys()
             entries = entries.values()
+        elif isinstance(entries[0], (tuple, list)):
+            keys, entries = zip(*entries)[:2]
         elif entries[0].startswith(title_key):
             title = entries.pop(0)[len(title_key):]
 
