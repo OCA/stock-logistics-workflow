@@ -560,7 +560,10 @@ class Sentinel(object):
             keys = entries.keys()
             entries = entries.values()
         elif isinstance(entries[0], (tuple, list)):
-            keys, entries = zip(*entries)[:2]
+            keys, entries = map(list, zip(*entries))[:2]
+            if keys[0] == title_key:
+                title = entries.pop(0)
+                keys.pop(0)
         elif entries[0].startswith(title_key):
             title = entries.pop(0)[len(title_key):]
 
