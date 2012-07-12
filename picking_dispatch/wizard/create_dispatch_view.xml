@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_create_picking_dispatch" model="ir.ui.view">
+            <field name="name">picking_dispatch_create_form</field>
+            <field name="model">picking.dispatch.creator</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Picking Dispatch properties">
+                    <group colspan="4">
+                        <field name="date" />
+                        <field name="picker_id"/>
+                    </group>
+                    <separator string="" colspan="4"/>
+                    <group colspan="4" col="6">
+                        <button special="cancel" string="_Cancel" icon="gtk-cancel" />
+                        <button icon="terp-gtk-go-back-rtl" string="_Create" name="action_create_dispatch" type="object"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <act_window name="Create Picking Dispatch"
+                    res_model="picking.dispatch.creator"
+                    src_model="stock.picking"
+                    view_mode="form"
+                    target="new"
+                    key2="client_action_multi"
+                    id="picking_dispatch_create_act_window"/>
+                    
+        <!-- <act_window name="Create Dispatch Order"
+            res_model="picking.dispatch"
+            src_model="stock.picking"
+            key2="client_action_multi"
+            multi="True"
+            view_mode="form"
+            view_type="form"
+            target="new"
+            id="action_create_dispatch"/> -->
+
+    </data>
+</openerp>

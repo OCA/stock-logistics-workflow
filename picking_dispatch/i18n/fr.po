@@ -1,0 +1,355 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* picking_dispatch
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-07-03 08:35+0000\n"
+"PO-Revision-Date: 2012-07-03 10:55+0200\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: picking_dispatch
+#: view:picking.dispatch:0
+#: selection:picking.dispatch,state:0
+msgid "In Progress"
+msgstr "En cours"
+
+#. module: picking_dispatch
+#: field:picking.dispatch,state:0
+msgid "Dispatch State"
+msgstr "État"
+
+#. module: picking_dispatch
+#: view:picking.dispatch:0
+msgid "Assigned and Valid Dispatch order"
+msgstr "Bons de Préparation assignés et validés"
+
+#. module: picking_dispatch
+#: view:stock.picking:0
+msgid "Related Dispatch"
+msgstr "Bon de préparation"
+
+#. module: picking_dispatch
+#: code:addons/picking_dispatch/wizard/create_dispatch.py:60
+#, python-format
+msgid "Warning !"
+msgstr "Attention !"
+
+#. module: picking_dispatch
+#: view:picking.dispatch:0
+msgid "Group By..."
+msgstr "Grouper par..."
+
+#. module: picking_dispatch
+#: view:picking.dispatch:0
+msgid "State"
+msgstr "État"
+
+#. module: picking_dispatch
+#: view:picking.dispatch.creator:0
+msgid "Picking Dispatch properties"
+msgstr "Propriétés du Bon de Préparation"
+
+#. module: picking_dispatch
+#: selection:picking.dispatch,state:0
+msgid "Draft"
+msgstr "Brouillon"
+
+#. module: picking_dispatch
+#: model:ir.model,name:picking_dispatch.model_stock_picking
+msgid "Picking List"
+msgstr "Bon de livraison"
+
+#. module: picking_dispatch
+#: field:picking.dispatch,backorder_id:0
+msgid "Back Order of"
+msgstr "Relicat de"
+
+#. module: picking_dispatch
+#: help:picking.dispatch,picker_id:0
+msgid "the user to which the pickings are assigned"
+msgstr "utilisateur en charge de la préparation"
+
+#. module: picking_dispatch
+#: report:addons/picking_dispatch/report/dispatch.html.mako:31
+msgid "Product Code"
+msgstr "Code Produit"
+
+#. module: picking_dispatch
+#: view:picking.dispatch.creator:0
+msgid "_Create"
+msgstr "_Create"
+
+#. module: picking_dispatch
+#: sql_constraint:product.product:0
+msgid "Default code should be uniq"
+msgstr "La référence doit être unique"
+
+#. module: picking_dispatch
+#: view:picking.dispatch:0
+msgid "Start"
+msgstr "Début"
+
+#. module: picking_dispatch
+#: field:picking.dispatch,related_picking_ids:0
+#: field:stock.picking,related_dispatch_ids:0
+msgid "Related Dispatch Picking"
+msgstr "Bons de Livraisons liés"
+
+#. module: picking_dispatch
+#: model:ir.model,name:picking_dispatch.model_picking_dispatch_creator
+msgid "Picking Dispatch Creator"
+msgstr "Créateur du Bon de Préparation"
+
+#. module: picking_dispatch
+#: view:product.product:0
+#: field:product.product,description_warehouse:0
+msgid "Warehouse Description"
+msgstr "Description pour l'entrepôt"
+
+#. module: picking_dispatch
+#: view:picking.dispatch:0
+msgid "picker_id"
+msgstr "Préparateur"
+
+#. module: picking_dispatch
+#: report:addons/picking_dispatch/report/dispatch.html.mako:34
+msgid "QTY"
+msgstr "Qté"
+
+#. module: picking_dispatch
+#: view:picking.dispatch:0
+msgid "Dispatch Picking Order"
+msgstr "Dispatch Picking Order"
+
+#. module: picking_dispatch
+#: help:picking.dispatch.creator,date:0
+msgid "Date on which the picking dispatched is to be processed"
+msgstr "Date à laquelle le bon de préparation doit être traité"
+
+#. module: picking_dispatch
+#: report:addons/picking_dispatch/report/dispatch.html.mako:16
+msgid "Printed by"
+msgstr "Imprimé par"
+
+#. module: picking_dispatch
+#: code:addons/picking_dispatch/picking_dispatch.py:133
+#, python-format
+msgid "This dispatch cannot be processed until %s"
+msgstr "Ce bon de préparation ne doit pas être traité avant %s"
+
+#. module: picking_dispatch
+#: report:addons/picking_dispatch/report/dispatch.html.mako:15
+#: field:picking.dispatch,date:0
+#: field:picking.dispatch.creator,date:0
+msgid "Date"
+msgstr "Date"
+
+#. module: picking_dispatch
+#: model:ir.actions.report.xml,name:picking_dispatch.webkit_dispatch_order
+msgid "Dispatch To Process"
+msgstr "Bon de préparation à traiter"
+
+#. module: picking_dispatch
+#: view:picking.dispatch:0
+msgid "Ready to Process"
+msgstr "Prêt"
+
+#. module: picking_dispatch
+#: help:picking.dispatch,move_ids:0
+msgid "the list of moves to be processed"
+msgstr "La liste des mouvements à effectuer"
+
+#. module: picking_dispatch
+#: help:picking.dispatch,backorder_id:0
+msgid "if this dispatch was split, this links to the dispatch order containing the other part which was processed"
+msgstr ""
+"Si le bon de préparation a été découpé, ce champ est un lien vers la\n"
+"partie du bon de préparation original qui a été traitée"
+
+#. module: picking_dispatch
+#: help:picking.dispatch.creator,picker_id:0
+msgid "The user to which the pickings are assigned"
+msgstr "L'utilisateur en charge du traitement du bon de préparation"
+
+#. module: picking_dispatch
+#: model:ir.actions.act_window,name:picking_dispatch.action_picking_dispatch_tree
+#: model:ir.ui.menu,name:picking_dispatch.menu_action_picking_dispatch
+#: view:picking.dispatch:0
+msgid "Picking Dispatch"
+msgstr "Bon de Préparation"
+
+#. module: picking_dispatch
+#: help:picking.dispatch,state:0
+msgid "the state of the picking. Workflow is draft -> assigned -> progress -> done or cancel"
+msgstr ""
+"L'état du bon de préparation. Les états sont Brouillon -> Assigné ->\n"
+"En cours -> Fait ou Annulé"
+
+#. module: picking_dispatch
+#: view:picking.dispatch:0
+msgid "Related Picking"
+msgstr "Picking lié"
+
+#. module: picking_dispatch
+#: field:picking.dispatch,name:0
+msgid "Name"
+msgstr "Nom"
+
+#. module: picking_dispatch
+#: report:addons/picking_dispatch/report/dispatch.html.mako:23
+msgid "Visa"
+msgstr "Visa"
+
+#. module: picking_dispatch
+#: code:addons/picking_dispatch/wizard/create_dispatch.py:60
+#, python-format
+msgid "No valide stock moves found to create the dispatch ! (Only move that are not part of a disptach order and in confirm, waiting or assigned state can be used)"
+msgstr ""
+"Pas de mouvements de stock valides trouvé pour créer le Bon de\n"
+"Préparation. Seuls les mouvements qui ne sont pas déjà dans un bon de\n"
+"préparation et qui sont dans l'état Confirmé, Disponible ou en Attente\n"
+"peuvent être utilisés."
+
+#. module: picking_dispatch
+#: view:picking.dispatch:0
+msgid "Order Date"
+msgstr "Date"
+
+
+#. module: picking_dispatch
+#: report:addons/picking_dispatch/report/dispatch.html.mako:33
+msgid "Carrier"
+msgstr "Transporteur"
+
+#. module: picking_dispatch
+#: code:addons/picking_dispatch/picking_dispatch.py:132
+#, python-format
+msgid "Error"
+msgstr "Erreur"
+
+#. module: picking_dispatch
+#: selection:picking.dispatch,state:0
+msgid "Cancelled"
+msgstr "Annulé"
+
+#. module: picking_dispatch
+#: model:ir.actions.act_window,name:picking_dispatch.picking_dispatch_create_act_window
+msgid "Create Picking Dispatch"
+msgstr "Créer un Bon de Préparation"
+
+#. module: picking_dispatch
+#: view:picking.dispatch:0
+msgid "Back Orders"
+msgstr "Relicats"
+
+#. module: picking_dispatch
+#: report:addons/picking_dispatch/report/dispatch.html.mako:28
+msgid "Products summary"
+msgstr "Synthèse des produits"
+
+#. module: picking_dispatch
+#: view:picking.dispatch:0
+msgid "Assign"
+msgstr "Assigné"
+
+#. module: picking_dispatch
+#: help:stock.move,dispatch_id:0
+msgid "who this move is dispatched to"
+msgstr "Le bon de préparation auquel le mouvement de stock est lié"
+
+#. module: picking_dispatch
+#: field:picking.dispatch,picker_id:0
+#: field:picking.dispatch.creator,picker_id:0
+msgid "Picker"
+msgstr "Préparateur"
+
+
+#. module: picking_dispatch
+#: report:addons/picking_dispatch/report/dispatch.html.mako:23
+msgid "Picked by"
+msgstr "Préparateur"
+
+#. module: picking_dispatch
+#: view:picking.dispatch:0
+msgid "My Dispatch Order"
+msgstr "Mes bons de préparation"
+
+#. module: picking_dispatch
+#: view:picking.dispatch:0
+msgid "Dispatch order already processed"
+msgstr "Bons de préparations traités"
+
+#. module: picking_dispatch
+#: model:ir.model,name:picking_dispatch.model_stock_move
+msgid "Stock Move"
+msgstr "Mouvement de stock"
+
+
+#. module: picking_dispatch
+#: field:stock.move,dispatch_id:0
+msgid "Dispatch"
+msgstr "Bon de Préparation"
+
+#. module: picking_dispatch
+#: report:addons/picking_dispatch/report/dispatch.html.mako:32
+#: model:ir.model,name:picking_dispatch.model_product_product
+msgid "Product"
+msgstr "Produit"
+
+#. module: picking_dispatch
+#: selection:picking.dispatch,state:0
+msgid "Assigned"
+msgstr "Assigné"
+
+
+
+#. module: picking_dispatch
+#: view:picking.dispatch:0
+#: selection:picking.dispatch,state:0
+msgid "Done"
+msgstr "Fait"
+
+
+#. module: picking_dispatch
+#: view:picking.dispatch:0
+msgid "Cancel"
+msgstr "Annulé"
+
+#. module: picking_dispatch
+#: view:picking.dispatch:0
+msgid "Is a Back Order"
+msgstr "Est un reliquat"
+
+#. module: picking_dispatch
+#: view:picking.dispatch:0
+msgid "Dispatch order In Progress"
+msgstr "En cours"
+
+#. module: picking_dispatch
+#: field:picking.dispatch,move_ids:0
+msgid "Moves"
+msgstr "Mouvements"
+
+#. module: picking_dispatch
+#: help:picking.dispatch,name:0
+msgid "Name of the picking dispatch"
+msgstr "Nom du bon de préparation"
+
+#. module: picking_dispatch
+#: view:stock.picking:0
+msgid "Additional Info"
+msgstr "Informations complémentaires."
+
+#. module: picking_dispatch
+#: view:picking.dispatch:0
+msgid "Stock Moves"
+msgstr "Mouvements"
+

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+    <report id="webkit_dispatch_order"
+            name="webkit.dispatch_order"
+            auto="False"
+            model="picking.dispatch"
+            file="picking_dispatch/report/dispatch.html.mako"
+            string="Dispatch To Process"
+            report_type="webkit"
+            header="False"
+            webkit_header="base_headers_webkit.base_minimum_reports_portrait_header" />
+
+  </data>
+</openerp>

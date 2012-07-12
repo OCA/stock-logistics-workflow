@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_picking_withcarrier_partner_out_form" model="ir.ui.view">
+            <field name="name">stock_sale_filters.stock.picking_withcarrier_partner.out.form.view</field>
+            <field name="type">form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="delivery.view_picking_withcarrier_out_form"/>
+            <field name="arch" type="xml">
+                <field name="carrier_id" position="after">
+                    <field name="carrier_partner_id"/>
+                </field>
+            </field>
+        </record>
+        <record id="view_order_withcarrier_partner_form" model="ir.ui.view">
+            <field name="name">stock_sale_filters.sale.order_withcarrier_partner.form.view</field>
+            <field name="type">form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="delivery.view_order_withcarrier_form"/>
+            <field name="arch" type="xml">
+                <field name="carrier_id" position="after">
+                    <field name="carrier_partner_id" context="{'order_id':active_id or False}"/>
+                </field>
+            </field>
+        </record>
+
+
+    </data>
+</openerp>
