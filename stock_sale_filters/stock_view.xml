@@ -1,96 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-  <data>
-    <record id="view_picking_withcarrier_partner_out_form" model="ir.ui.view">
-      <field name="name">stock_sale_filters.stock.picking_withcarrier_partner.out.form.view</field>
-      <field name="type">form</field>
-      <field name="model">stock.picking</field>
-      <field name="inherit_id" ref="delivery.view_picking_withcarrier_out_form"/>
-      <field name="arch" type="xml">
-        <field name="carrier_id" position="after">
-          <field name="carrier_partner_id"/>
-        </field>
-      </field>
-    </record>
-    <!-- Picking tree views: add carrier partner name -->
-    <record id="view_picking_withcarrier_partner_out_tree" model="ir.ui.view">
-      <field name="name">stock_sale_filters.stock.picking_withcarrier_partner.out.tree.view</field>
-      <field name="type">tree</field>
-      <field name="model">stock.picking</field>
-      <field name="inherit_id" ref="stock.view_picking_out_tree"/>
-      <field name="arch" type="xml">
-        <field name="state" position="before">
-          <field name="carrier_partner_id"/>
-        </field>
-      </field>
-    </record>
-    <record id="view_picking_withcarrier_partner_in_tree" model="ir.ui.view">
-      <field name="name">stock_sale_filters.stock.picking_withcarrier_partner.in.tree.view</field>
-      <field name="type">tree</field>
-      <field name="model">stock.picking</field>
-      <field name="inherit_id" ref="stock.view_picking_in_tree"/>
-      <field name="arch" type="xml">
-        <field name="state" position="before">
-          <field name="carrier_partner_id"/>
-        </field>
-      </field>
-    </record>
-    <record id="view_picking_withcarrier_partner_internal_tree" model="ir.ui.view">
-      <field name="name">stock_sale_filters.stock.picking_withcarrier_partner.internal.tree.view</field>
-      <field name="model">stock.picking</field>
-      <field name="type">tree</field>
-      <field name="inherit_id" ref="stock.vpicktree" />
-      <field name="arch" type="xml">
-        <field name="state" position="before">
-          <field name="carrier_partner_id"/>
-        </field>
-      </field>
-    </record>
-    <!-- picking search views: add partner name filter -->
-    <record model="ir.ui.view" id="view_stock_picking_filter">
-      <field name="name">stock_sale_filters.select</field>
-      <field name="model">stock.picking</field>
-      <field name="type">search</field>
-      <field name="inherit_id" ref="stock.view_stock_picking_filter" />
-      <field name="arch" type="xml">
-        <field name="stock_journal_id" position="before">
-          <field name="carrier_partner_id"  />
-        </field>
-      </field>
-    </record>
-    <record model="ir.ui.view" id="view_stock_picking_int_filter">
-      <field name="name">stock_sale_filters_int.select</field>
-      <field name="model">stock.picking</field>
-      <field name="type">search</field>
-      <field name="inherit_id" ref="stock.view_picking_internal_search" />
-      <field name="arch" type="xml">
-        <field name="stock_journal_id" position="before">
-          <field name="carrier_partner_id"  />
-        </field>
-      </field>
-    </record>
-    <record model="ir.ui.view" id="view_stock_picking_out_filter">
-      <field name="name">stock_sale_filters_out.select</field>
-      <field name="model">stock.picking</field>
-      <field name="type">search</field>
-      <field name="inherit_id" ref="stock.view_picking_out_search" />
-      <field name="arch" type="xml">
-        <field name="stock_journal_id" position="before">
-          <field name="carrier_partner_id"  />
-        </field>
-      </field>
-    </record>
-    <!-- add carrier to sale order form -->
-    <record id="view_order_withcarrier_partner_form" model="ir.ui.view">
-      <field name="name">stock_sale_filters.sale.order_withcarrier_partner.form.view</field>
-      <field name="type">form</field>
-      <field name="model">sale.order</field>
-      <field name="inherit_id" ref="delivery.view_order_withcarrier_form"/>
-      <field name="arch" type="xml">
-        <field name="carrier_id" position="after">
-          <field name="carrier_partner_id" context="{'order_id':active_id or False}"/>
-        </field>
-      </field>
-    </record>
-  </data>
+    <data>
+        <record id="view_picking_withcarrier_partner_out_form" model="ir.ui.view">
+            <field name="name">stock_sale_filters.stock.picking_withcarrier_partner.out.form.view</field>
+            <field name="type">form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="delivery.view_picking_withcarrier_out_form"/>
+            <field name="arch" type="xml">
+                <field name="carrier_id" position="after">
+                    <field name="carrier_partner_id"/>
+                </field>
+            </field>
+        </record>
+        <record id="view_order_withcarrier_partner_form" model="ir.ui.view">
+            <field name="name">stock_sale_filters.sale.order_withcarrier_partner.form.view</field>
+            <field name="type">form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="delivery.view_order_withcarrier_form"/>
+            <field name="arch" type="xml">
+                <field name="carrier_id" position="after">
+                    <field name="carrier_partner_id" context="{'order_id':active_id or False}"/>
+                </field>
+            </field>
+        </record>
+
+
+    </data>
 </openerp>
