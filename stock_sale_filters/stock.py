@@ -39,6 +39,7 @@ class stock_picking(Model):
                                        help='The shop from which the sale order for the picking was issued')
         }
 
+
 class sale_order(Model):
     _inherit = 'sale.order'
     _columns = {

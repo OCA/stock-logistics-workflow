@@ -22,8 +22,8 @@
 
 {
 	"name" : "SO related filters on stock.picking and sale.order",
-	"version" : "1.1",
-	"depends" : ["sale", "stock", 'delivery'],
+	"version" : "1.2",
+	"depends" : ["delivery"],
 	"author" : "Camptocamp",
         "license": "AGPL-3",
 	"description": """add filters on stock.picking views
