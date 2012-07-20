@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #   Copyright (c) 2011 Camptocamp SA (http://www.camptocamp.com)
-#   @author Nicolas Bessi, Joel Grand-Guillaume
+#   @author Nicolas Bessi, Joel Grand-Guillaume, Alexandre Fayolle
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -27,6 +27,7 @@ import operator
 from report import report_sxw
 import pooler
 import logging
+from os.path import commonprefix
 
 _logger = logging.getLogger(__name__)
 
@@ -44,50 +45,46 @@ class NullObj(object):
 
 
 class DispatchAgregation(object):
+    """group moves from a single dispatch by source and dest locations"""
+    def __init__(self, dispatch, moves_by_loc):
+        self.dispatch_id = dispatch
+        self.moves_by_loc = moves_by_loc
 
-    def __init__(self, src_stock, dest_stock, move_ids, picker):
-        self.src_stock = src_stock
-        self.dest_stock = dest_stock
-        self.move_ids = move_ids
-        self.picker_id = picker
+    @property
+    def picker_id(self):
+        return self.dispatch_id.picker_id
+
+    @property
+    def dispatch_name(self):
+        return self.dispatch_id.name
+
 
     def exists(self):
         return False
 
     def __hash__(self):
-        return hash((self.src_stock.id, self.dest_stock.id))
+        return hash(self.dispatch_id.id)
 
     def __eq__(self, other):
-        return (self.src_stock.id, self.dest_stock.id) == (other.src_stock.id, other.dest_stock.id)
+        return (self.dispatch_id.id == other.dispatch_id.id)
 
-    def moves_by_product(self):
-        """iterate over moves sorted by product default_code"""
-        return sorted(self.move_ids, key=operator.attrgetter('product_id.default_code'))
+    def iter_locations(self):
+        for locations in self.moves_by_loc:
+            offset = len(commonprefix(locations))
+            display_locations = tuple(loc[offset:] for loc in locations)
+            yield display_locations, self._product_quantity(locations)
+    def _product_quantity(self, locations):
+        """iterate over the different products concerned by the moves for the specified locations
+        with their total quantity, sorted by product default_code
 
-    def moves_by_picking(self):
-        """iterate over moves sorted by picking name
-
-        a NullMove is inserted for each new picking so that
-        the report displays an empty line
+        locations: a tuple (source_location, dest_location)
         """
-        name = None
-        for move in sorted(self.move_ids, key=operator.attrgetter('picking_id.name')):
-            if name is None:
-                name = move.picking_id.name
-            else:
-                if move.picking_id.origin != name:
-                    yield NullMove()
-                    name = move.picking_id.name
-            yield move
-
-    def product_quantity(self):
-        """iterate over the different products concerned by the moves
-        with their total quantity, sorted by product default_code"""
         products = {}
         product_qty = {}
         carrier = {}
-        _logger.debug('move ids %s',  self.move_ids)
-        for move in self.move_ids:
+        moves = self.moves_by_loc[locations]
+        _logger.debug('move ids %s',  moves)
+        for move in moves:
             p_code = move.product_id.default_code
             products[p_code] = move.product_id
             carrier[p_code] = move.picking_id.carrier_id and move.picking_id.carrier_id.partner_id.name or ''
@@ -104,6 +101,7 @@ class PrintDispatch(report_sxw.rml_parse):
         super(PrintDispatch, self).__init__(cursor, uid, name, context=context)
         self.pool = pooler.get_pool(self.cr.dbname)
         self.cursor = self.cr
+        self.uid = uid
         self.numeration_type = False
         self.localcontext.update({})
 
@@ -112,19 +110,20 @@ class PrintDispatch(report_sxw.rml_parse):
 
     def set_context(self, objects, data, ids, report_type=None):
         #!! data form is manually set in wizard
-        agreg = {}
-        picker_dct = {}
+        new_objects = []
+        location_obj = self.pool.get('stock.location')
         for dispatch in objects:
+            moves_by_loc = {}
             for move in dispatch.move_ids:
                 if move.state == 'assigned':
-                    key = (move.location_id, move.location_dest_id)
-                    agreg.setdefault(key, []).append(move)
-                    picker_dct[key] = dispatch.picker_id
-        objects = []
-        for agr in agreg:
-            _logger.debug('agreg %s', agr)
-            objects.append(DispatchAgregation(agr[0], agr[1], agreg[agr], picker_dct.get(agr,False)))
-        return super(PrintDispatch, self).set_context(objects, data, ids, report_type=report_type)
+                    key = location_obj.name_get(self.cursor, self.uid,
+                                                [move.location_id.id,
+                                                 move.location_dest_id.id])
+                    key = tuple(name for _id, name in key)
+                    moves_by_loc.setdefault(key, []).append(move)
+            _logger.debug('agreg %s ', moves_by_loc)
+            new_objects.append(DispatchAgregation(dispatch, moves_by_loc))
+        return super(PrintDispatch, self).set_context(new_objects, data, ids, report_type=report_type)
 
 report_sxw.report_sxw('report.webkit.dispatch_order',
                       'picking.dispatch',
