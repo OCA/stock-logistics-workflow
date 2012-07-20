@@ -1,23 +1,23 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* picking_dispatch
+# 	* picking_dispatch
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-03 08:34+0000\n"
+"POT-Creation-Date: 2012-07-20 12:43+0000\n"
 "PO-Revision-Date: 2012-07-03 10:34+0200\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
 #. module: picking_dispatch
-#: view:picking.dispatch:0
-#: selection:picking.dispatch,state:0
+#: view:picking.dispatch:0 selection:picking.dispatch,state:0
 msgid "In Progress"
 msgstr "In Progress"
 
@@ -25,6 +25,12 @@ msgstr "In Progress"
 #: model:ir.model,name:picking_dispatch.model_picking_dispatch
 msgid "configuration of pull rules for warehouse outgoing locations"
 msgstr "configuration of pull rules for warehouse outgoing locations"
+
+#. module: picking_dispatch
+#: report:addons/picking_dispatch/report/dispatch.html.mako:25
+#, fuzzy
+msgid "Dispatch Order"
+msgstr "My Dispatch Order"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,state:0
@@ -78,12 +84,17 @@ msgid "Back Order of"
 msgstr "Back Order of"
 
 #. module: picking_dispatch
+#: report:addons/picking_dispatch/report/dispatch.html.mako:51
+msgid "breakage"
+msgstr "breakage"
+
+#. module: picking_dispatch
 #: help:picking.dispatch,picker_id:0
 msgid "the user to which the pickings are assigned"
 msgstr "the user to which the pickings are assigned"
 
 #. module: picking_dispatch
-#: report:addons/picking_dispatch/report/dispatch.html.mako:31
+#: report:addons/picking_dispatch/report/dispatch.html.mako:39
 msgid "Product Code"
 msgstr "Product Code"
 
@@ -98,9 +109,9 @@ msgid "Default code should be uniq"
 msgstr "Default code should be uniq"
 
 #. module: picking_dispatch
-#: view:picking.dispatch:0
-msgid "Start"
-msgstr "Start"
+#: view:product.product:0 field:product.product,description_warehouse:0
+msgid "Warehouse Description"
+msgstr "Warehouse Description"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,related_picking_ids:0
@@ -114,10 +125,9 @@ msgid "Picking Dispatch Creator"
 msgstr "Picking Dispatch Creator"
 
 #. module: picking_dispatch
-#: view:product.product:0
-#: field:product.product,description_warehouse:0
-msgid "Warehouse Description"
-msgstr "Warehouse Description"
+#: report:addons/picking_dispatch/report/dispatch.html.mako:43
+msgid "Explanation"
+msgstr "Explanation"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
@@ -125,7 +135,7 @@ msgid "picker_id"
 msgstr "picker_id"
 
 #. module: picking_dispatch
-#: report:addons/picking_dispatch/report/dispatch.html.mako:34
+#: report:addons/picking_dispatch/report/dispatch.html.mako:42
 msgid "QTY"
 msgstr "QTY"
 
@@ -152,8 +162,7 @@ msgstr "This dispatch cannot be processed until %s"
 
 #. module: picking_dispatch
 #: report:addons/picking_dispatch/report/dispatch.html.mako:15
-#: field:picking.dispatch,date:0
-#: field:picking.dispatch.creator,date:0
+#: field:picking.dispatch,date:0 field:picking.dispatch.creator,date:0
 msgid "Date"
 msgstr "Date"
 
@@ -168,14 +177,18 @@ msgid "Ready to Process"
 msgstr "Ready to Process"
 
 #. module: picking_dispatch
-#: help:picking.dispatch,move_ids:0
-msgid "the list of moves to be processed"
-msgstr "the list of moves to be processed"
+#: report:addons/picking_dispatch/report/dispatch.html.mako:51
+msgid "stock error"
+msgstr "stock error"
 
 #. module: picking_dispatch
 #: help:picking.dispatch,backorder_id:0
-msgid "if this dispatch was split, this links to the dispatch order containing the other part which was processed"
-msgstr "if this dispatch was split, this links to the dispatch order containing the other part which was processed"
+msgid ""
+"if this dispatch was split, this links to the dispatch order containing the "
+"other part which was processed"
+msgstr ""
+"if this dispatch was split, this links to the dispatch order containing the "
+"other part which was processed"
 
 #. module: picking_dispatch
 #: help:picking.dispatch.creator,picker_id:0
@@ -191,8 +204,12 @@ msgstr "Picking Dispatch"
 
 #. module: picking_dispatch
 #: help:picking.dispatch,state:0
-msgid "the state of the picking. Workflow is draft -> assigned -> progress -> done or cancel"
-msgstr "the state of the picking. Workflow is draft -> assigned -> progress -> done or cancel"
+msgid ""
+"the state of the picking. Workflow is draft -> assigned -> progress -> done "
+"or cancel"
+msgstr ""
+"the state of the picking. Workflow is draft -> assigned -> progress -> done "
+"or cancel"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
@@ -205,15 +222,26 @@ msgid "Name"
 msgstr "Name"
 
 #. module: picking_dispatch
-#: report:addons/picking_dispatch/report/dispatch.html.mako:23
+#: report:addons/picking_dispatch/report/dispatch.html.mako:28
 msgid "Visa"
 msgstr "Visa"
 
 #. module: picking_dispatch
+#: help:picking.dispatch,move_ids:0
+msgid "the list of moves to be processed"
+msgstr "the list of moves to be processed"
+
+#. module: picking_dispatch
 #: code:addons/picking_dispatch/wizard/create_dispatch.py:60
 #, python-format
-msgid "No valide stock moves found to create the dispatch ! (Only move that are not part of a disptach order and in confirm, waiting or assigned state can be used)"
-msgstr "No valide stock moves found to create the dispatch ! (Only move that are not part of a disptach order and in confirm, waiting or assigned state can be used)"
+msgid ""
+"No valide stock moves found to create the dispatch ! (Only move that are not "
+"part of a disptach order and in confirm, waiting or assigned state can be "
+"used)"
+msgstr ""
+"No valide stock moves found to create the dispatch ! (Only move that are not "
+"part of a disptach order and in confirm, waiting or assigned state can be "
+"used)"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
@@ -231,7 +259,7 @@ msgid "date on which the picking dispatched is to be processed"
 msgstr "date on which the picking dispatched is to be processed"
 
 #. module: picking_dispatch
-#: report:addons/picking_dispatch/report/dispatch.html.mako:33
+#: report:addons/picking_dispatch/report/dispatch.html.mako:41
 msgid "Carrier"
 msgstr "Carrier"
 
@@ -262,9 +290,9 @@ msgid "Back Orders"
 msgstr "Back Orders"
 
 #. module: picking_dispatch
-#: report:addons/picking_dispatch/report/dispatch.html.mako:28
-msgid "Products summary"
-msgstr "Products summary"
+#: view:picking.dispatch:0
+msgid "Start"
+msgstr "Start"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
@@ -283,13 +311,13 @@ msgid "Picker"
 msgstr "Picker"
 
 #. module: picking_dispatch
-#: code:addons/picking_dispatch/wizard/create_dispatch.py:84
+#: code:addons/picking_dispatch/wizard/create_dispatch.py:85
 #, python-format
 msgid "Historical Margins"
 msgstr "Historical Margins"
 
 #. module: picking_dispatch
-#: report:addons/picking_dispatch/report/dispatch.html.mako:23
+#: report:addons/picking_dispatch/report/dispatch.html.mako:28
 msgid "Picked by"
 msgstr "Picked by"
 
@@ -319,7 +347,7 @@ msgid "Dispatch"
 msgstr "Dispatch"
 
 #. module: picking_dispatch
-#: report:addons/picking_dispatch/report/dispatch.html.mako:32
+#: report:addons/picking_dispatch/report/dispatch.html.mako:40
 #: model:ir.model,name:picking_dispatch.model_product_product
 msgid "Product"
 msgstr "Product"
@@ -340,8 +368,7 @@ msgid "Error: Invalid ean code"
 msgstr "Error: Invalid ean code"
 
 #. module: picking_dispatch
-#: view:picking.dispatch:0
-#: selection:picking.dispatch,state:0
+#: view:picking.dispatch:0 selection:picking.dispatch,state:0
 msgid "Done"
 msgstr "Done"
 
@@ -390,3 +417,5 @@ msgstr "Additional Info"
 msgid "Stock Moves"
 msgstr "Stock Moves"
 
+#~ msgid "Products summary"
+#~ msgstr "Products summary"
