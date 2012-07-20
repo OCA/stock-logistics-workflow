@@ -70,8 +70,8 @@ class DispatchAgregation(object):
 
     def iter_locations(self):
         for locations in self.moves_by_loc:
-            offset = len(commonprefix(locations))
-            display_locations = tuple(loc[offset:] for loc in locations)
+            offset = commonprefix(locations).rfind('/') + 1
+            display_locations = tuple(loc[offset:].strip() for loc in locations)
             yield display_locations, self._product_quantity(locations)
     def _product_quantity(self, locations):
         """iterate over the different products concerned by the moves for the specified locations
