@@ -110,9 +110,23 @@ class PickingDispatch(Model):
         return True
 
     def action_done(self, cr, uid, ids, context=None):
+        if not ids:
+            return True
         move_obj = self.pool.get('stock.move')
         move_ids = move_obj.search(cr, uid, [('dispatch_id', 'in', ids)], context=context)
         return move_obj.action_partial_move(cr, uid, move_ids, context)
+
+    def check_finished(self, cr, uid, ids, context):
+        """set the dispatch to finished if all the moves are finished"""
+        if not ids:
+            return True
+        finished = []
+        for dispatch in self.browse(cr, uid, ids, context=context):
+            if all(move.state in ('cancel', 'done') for move in dispatch.move_ids):
+                finished.append(dispatch.id)
+        _logger.debug('set state to done for picking.dispatch %s', finished)
+        self.write(cr, uid, finished, {'state': 'done'}, context)
+        return finished
 
     def action_cancel(self, cr, uid, ids, context=None):
         move_obj = self.pool.get('stock.move')
@@ -128,7 +142,7 @@ class PickingDispatch(Model):
         now = datetime.now().date()
         for obj in self.browse(cr, uid, ids, context):
             date = datetime.strptime(obj.date, '%Y-%m-%d').date()
-            if date < now:
+            if now < date:
                 raise except_osv(_('Error'),
                                  _('This dispatch cannot be processed until %s') % obj.date)
 
@@ -158,13 +172,14 @@ class StockMove(Model):
         # so the difference between the original set of moves and the complete_moves is the
         # set of unprocessed moves
         unprocessed_move_ids = set(ids) - set(complete_move_ids)
+        _logger.debug('partial stock.moves: complete_move_ids %s, unprocessed_move_ids %s', complete_move_ids, unprocessed_move_ids)
         # unprocessed moves are still linked to the dispatch : this dispatch must not be marked as Done
         unfinished_dispatch_ids = {}
         for move in move_obj.browse(cr, uid, list(unprocessed_move_ids), context=context):
             if not move.dispatch_id:
                 continue
             unfinished_dispatch_ids[move.dispatch_id.id] = None # value will be set later to a new dispatch
-        finished_dispatches = {}
+        maybe_finished_dispatches = {}
         for move in move_obj.browse(cr, uid, complete_move_ids, context=context):
             if not move.dispatch_id:
                 continue
@@ -180,12 +195,10 @@ class StockMove(Model):
                                                       })
                     unfinished_dispatch_ids[dispatch_id] = new_dispatch_id
                 dispatch_id = unfinished_dispatch_ids[dispatch_id]
-            finished_dispatches.setdefault(dispatch_id, []).append(move.id)
-        for dispatch_id, move_ids in finished_dispatches.iteritems():
+            maybe_finished_dispatches.setdefault(dispatch_id, []).append(move.id)
+        for dispatch_id, move_ids in maybe_finished_dispatches.iteritems():
             move_obj.write(cr, uid, move_ids, {'dispatch_id': dispatch_id})
-        if finished_dispatches:
-            _logger.debug('set state to done for picking.dispatch %s', list(finished_dispatches))
-            dispatch_obj.write(cr, uid, list(finished_dispatches),  {'state': 'done'}, context)
+        dispatch_obj.check_finished(cr, uid, list(maybe_finished_dispatches), context)
         return complete_move_ids
 
 
@@ -226,12 +239,7 @@ class StockMove(Model):
         for move in self.browse(cr, uid, ids, context=context):
             if move.dispatch_id:
                 dispatches.add(move.dispatch_id.id)
-        for dispatch in dispatch_obj.browse(cr, uid, list(dispatches), context=context):
-            if any(move.state not in ('cancel', 'done') for move in dispatch.move_ids):
-                dispatches.remove(dispatch.id)
-        if dispatches:
-            _logger.debug('set state to done for picking.dispatch %s', list(dispatches))
-            dispatch_obj.write(cr, uid, list(dispatches), {'state': 'done'}, context)
+        dispatch_obj.check_finished(cr, uid, list(dispatches), context)
         return status
 
 

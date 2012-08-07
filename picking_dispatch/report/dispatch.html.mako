@@ -20,31 +20,44 @@ ${css}
 <br/>
 
 %for aggr in objects:
-<b>${_('Picked by')}: ${aggr.picker_id.name} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ${_('Visa')}:_________________ <b>
+<table style="border:solid 0px" width="100%">
+  <tr> 
+    <td colspan="2" align="center"><h1>${_('Dispatch Order')} ${aggr.dispatch_name}</h1></td>
+  </tr>
+  <tr>
+     <td> <br /><b>${_('Picked by')}: ${aggr.picker_id.name} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ${_('Visa')}:_________________ <b></td>
+   </tr>
+</table>
 <br/>
 <br/>
 <br/>
+%for locations, product_quantities in aggr.iter_locations():
 <table style="border:solid 1px" width="100%">
-  <caption><b><u>${_('Products summary')}</u></b></caption>
+  <caption><b><u>${locations[0]} &#x21E8; ${locations[1]}</u></b></caption>
   <tr></tr>
   <tr align="left">
     <th>${_('Product Code')}</th>
     <th>${_('Product')}</th>
     <th>${_('Carrier')}</th>
     <th>${_('QTY')}</th>
+    <th>${_('Explanation')}</th>
   </tr>  
-  %for product, qty, carrier in aggr.product_quantity():
+  %for product, qty, carrier in product_quantities:
       <tr align="left">
         <td>${product.default_code}</td>
         <td>${product.name}</td>
         <td>${carrier}</td>
         <td>${qty}</td>
+        <td>${_('stock error')}<br/>${_('breakage')}</td>
       </tr>
       <tr align="left">
         <td colspan="4"><pre class="description ">${product.description_warehouse and product.description_warehouse or ''}</pre></td>
       </tr>
   %endfor
 </table>
+%endfor
+        <p style="page-break-after:always"/>
+        <br/>
 %endfor
 <br/>
 </body>

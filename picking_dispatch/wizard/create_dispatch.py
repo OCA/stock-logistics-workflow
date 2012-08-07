@@ -33,7 +33,7 @@ class picking_dispatch_creator(TransientModel):
     _columns = {
         'date': fields.date('Date', required=True, select=True,
                             help='Date on which the picking dispatched is to be processed'),
-        'picker_id': fields.many2one('res.users', 'Picker', required=True,
+        'picker_id': fields.many2one('res.users', 'Picker',
                                      help='The user to which the pickings are assigned'),
         }
 
@@ -61,8 +61,9 @@ class picking_dispatch_creator(TransientModel):
                 "(Only move that are not part of a disptach order and in confirm, waiting or assigned state can be "
                 "used)"))
         data = {'date': wiz.get('date'),
-                'picker_id': wiz.get('picker_id')[0],
                 }
+        if wiz.get('picker_id'):
+            data['picker_id'] = wiz.get('picker_id')[0]
         dispatch_id = dispatch_obj.create(cr, uid, data, context=context)
         # for move_id in move_ids:
         move_obj.write(cr, uid, move_ids, {'dispatch_id': dispatch_id}, context=context)
