@@ -9,6 +9,7 @@
       <field name="arch" type="xml">
         <field name="carrier_id" position="after">
           <field name="carrier_partner_id"/>
+          <field name="sale_shop_id"  />
         </field>
       </field>
     </record>
@@ -21,6 +22,7 @@
       <field name="arch" type="xml">
         <field name="state" position="before">
           <field name="carrier_partner_id"/>
+          <field name="sale_shop_id"  />
         </field>
       </field>
     </record>
@@ -32,6 +34,7 @@
       <field name="arch" type="xml">
         <field name="state" position="before">
           <field name="carrier_partner_id"/>
+          <field name="sale_shop_id"  />
         </field>
       </field>
     </record>
@@ -43,6 +46,7 @@
       <field name="arch" type="xml">
         <field name="state" position="before">
           <field name="carrier_partner_id"/>
+          <field name="sale_shop_id"  />
         </field>
       </field>
     </record>
@@ -55,6 +59,7 @@
       <field name="arch" type="xml">
         <field name="stock_journal_id" position="before">
           <field name="carrier_partner_id"  />
+          <field name="sale_shop_id"  />
         </field>
       </field>
     </record>
@@ -66,6 +71,7 @@
       <field name="arch" type="xml">
         <field name="stock_journal_id" position="before">
           <field name="carrier_partner_id"  />
+          <field name="sale_shop_id"  />
         </field>
       </field>
     </record>
@@ -77,6 +83,7 @@
       <field name="arch" type="xml">
         <field name="stock_journal_id" position="before">
           <field name="carrier_partner_id"  />
+          <field name="sale_shop_id"  />
         </field>
       </field>
     </record>

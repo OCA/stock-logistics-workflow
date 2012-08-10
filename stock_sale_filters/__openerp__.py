@@ -22,7 +22,7 @@
 
 {
 	"name" : "SO related filters on stock.picking and sale.order",
-	"version" : "1.2",
+	"version" : "1.3",
 	"depends" : ["delivery"],
 	"author" : "Camptocamp",
         "license": "AGPL-3",
