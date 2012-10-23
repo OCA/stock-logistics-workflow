@@ -475,6 +475,8 @@ class Sentinel(object):
         value = default
         line = self.window_height - 1
         self.screen.move(line, 0)
+        # Flush the input
+        curses.flushinp()
 
         # While we do not validate, store characters
         while True:
@@ -497,6 +499,8 @@ class Sentinel(object):
 
             # Move cursor at end of the displayed value
             if key == '\n' or (size is not None and len(value) >= size):
+                # Flush the input
+                curses.flushinp()
                 return value
 
     def _select_quantity(self, message, quantity='0', integer=False):
