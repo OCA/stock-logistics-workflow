@@ -1,25 +1,25 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    wms_scanner module for OpenERP, Module for manage barcode reader
-#    Copyright (C) 2010 NEOLOG (<http://syleam.fr/>)
+#    stock_scanner module for OpenERP, Allows managing barcode readers with simple scenarios
+#    Copyright (C) 2010 NEOLOG (<http://neolog.pro/>)
 #              Gabriel Colbeau <gabriel.colbeau@neolog.pro>
 #    Copyright (C) 2010 SYLEAM (<http://syleam.fr/>)
 #              Christophe Chauvet <christophe.chauvet@syleam.fr>
 #
-#    This file is a part of wms_scanner
+#    This file is a part of stock_scanner
 #
-#    wms_scanner is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
+#    stock_scanner is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
-#    wms_scanner is distributed in the hope that it will be useful,
+#    stock_scanner is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
+#    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
