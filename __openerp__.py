@@ -26,8 +26,11 @@
     'name': 'Stock Scanner',
     'version': '1.0',
     'category': 'Generic Modules/Inventory Control',
-    'description': """Allows managing barcode readers with simple scenarios""",
-    'author': 'SYLEAM Info Services',
+    'description': """Allows managing barcode readers with simple scenarios
+- You can define a workfow for each object (stock picking, inventory, sale, etc)
+- Works with all scanner hardware model (just SSH client required)
+""",
+    'author': 'SYLEAM',
     'website': 'http://www.Syleam.fr/',
     'depends': [
         'base',
@@ -39,7 +42,6 @@
     'update_xml': [
         'security/ir.model.access.csv',
         'stock_scanner_view.xml',
-        #'wizard/wizard.xml',
     ],
     'demo_xml': [],
     'installable': True,
