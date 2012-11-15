@@ -85,6 +85,7 @@ except Exception, e:
 resid = {}
 
 directories = []
+opts.directory = os.path.expanduser(opts.directory)
 if glob(opts.directory + '/scenario.xml'):
     directories.append(opts.directory)
 if opts.recursive:

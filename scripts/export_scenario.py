@@ -31,6 +31,7 @@ from optparse import OptionGroup
 from lxml.etree import Element, SubElement
 from lxml.etree import tostring
 import uuid
+import os
 
 import logging
 import sys
@@ -87,6 +88,7 @@ except Exception, e:
 
 
 resid = {}
+opts.directory = os.path.expanduser(opts.directory)
 
 # extract scenario
 scenario_obj = Object(cnx, 'scanner.scenario')
