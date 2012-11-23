@@ -253,6 +253,7 @@ class scanner_hardware(osv.osv):
         'screen_width': fields.integer('Screen Width', help='Width of the terminal\'s screen'),
         'screen_height': fields.integer('Screen Height', help='Height of the terminal\'s screen'),
         'warehouse_id': fields.many2one('stock.warehouse', 'Warehouse', required=True, help='Warehouse where is located this hardware'),
+        'user_id': fields.many2one('res.users', 'User', help='Allow to define an other user for execute all scenarios with that scanner instead of default user'),
         'scenario_id': fields.many2one('scanner.scenario', 'Scenario', help='Scenario used for this hardware'),
         'step_id': fields.many2one('scanner.scenario.step', 'Current Step', help='Current step for this hardware'),
         'previous_steps_id': fields.text('Previous Step', help='Previous step for this hardware'),
@@ -351,6 +352,9 @@ class scanner_hardware(osv.osv):
 
         # Retrieve the terminal
         terminal = self.browse(cr, uid, terminal_ids[0], context=context)
+
+        # Change uid if defined on the stock scanner
+        uid = terminal.user_id and terminal.user_id.id or uid
 
         # Retrieve the terminal screen size
         if action == 'screen_size':
