@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<scenario>
+  <reference_res_id>c53aa73a-3992-11e2-a0eb-74de2b37388c</reference_res_id>
+  <model_id>scanner.hardware</model_id>
+  <name>Step types</name>
+  <notes/>
+  <sequence>10</sequence>
+  <parent_id>9c85e020-3992-11e2-9e8f-74de2b37388c</parent_id>
+  <shared_custom>False</shared_custom>
+  <warehouse_ids>Syleam</warehouse_ids>
+  <active>True</active>
+  <type>scenario</type>
+  <Step reference_res_id="0a18e150-3993-11e2-a5a7-74de2b37388c" name="C : Confirm" step_back="True" step_stop="False" step_start="False"/>
+  <Step reference_res_id="10f18784-3993-11e2-9d45-74de2b37388c" name="E : Error" step_back="False" step_stop="False" step_start="False"/>
+  <Step reference_res_id="1e4f0d52-3993-11e2-82db-74de2b37388c" name="L : List" step_back="True" step_stop="False" step_start="False"/>
+  <Step reference_res_id="2b66d5d8-3993-11e2-a318-74de2b37388c" name="Q : Quantity (float)" step_back="False" step_stop="False" step_start="False"/>
+  <Step reference_res_id="35663bc8-3993-11e2-84e8-74de2b37388c" name="N : Number (integer)" step_back="False" step_stop="False" step_start="False"/>
+  <Step reference_res_id="427088dc-3993-11e2-a609-74de2b37388c" name="T : Text input" step_back="False" step_stop="False" step_start="False"/>
+  <Step reference_res_id="527109be-3993-11e2-ae26-74de2b37388c" name="F : Final" step_back="False" step_stop="True" step_start="False"/>
+  <Step reference_res_id="e20faafe-3992-11e2-a73e-74de2b37388c" name="Introduction" step_back="True" step_stop="False" step_start="True"/>
+  <Step reference_res_id="ede349e4-3992-11e2-9044-74de2b37388c" name="M : Message" step_back="True" step_stop="False" step_start="False"/>
+  <Transition reference_res_id="07119906-3994-11e2-8ccf-74de2b37388c" name="L &gt; E" sequence="0" tracer="" to_id="10f18784-3993-11e2-9d45-74de2b37388c" transition_type="keyboard" condition="message == 'error'" from_id="1e4f0d52-3993-11e2-82db-74de2b37388c"/>
+  <Transition reference_res_id="26fc88e8-3994-11e2-b440-74de2b37388c" name="Q &gt; T" sequence="0" tracer="" to_id="427088dc-3993-11e2-a609-74de2b37388c" transition_type="keyboard" condition="True" from_id="2b66d5d8-3993-11e2-a318-74de2b37388c"/>
+  <Transition reference_res_id="416fabce-3994-11e2-bf3b-74de2b37388c" name="T &gt; F" sequence="0" tracer="" to_id="527109be-3993-11e2-ae26-74de2b37388c" transition_type="keyboard" condition="True" from_id="427088dc-3993-11e2-a609-74de2b37388c"/>
+  <Transition reference_res_id="979acdc2-3993-11e2-a719-74de2b37388c" name="Intro &gt; M" sequence="0" tracer="" to_id="ede349e4-3992-11e2-9044-74de2b37388c" transition_type="keyboard" condition="True" from_id="e20faafe-3992-11e2-a73e-74de2b37388c"/>
+  <Transition reference_res_id="a8c95532-3993-11e2-8afd-74de2b37388c" name="M &gt; L" sequence="0" tracer="" to_id="1e4f0d52-3993-11e2-82db-74de2b37388c" transition_type="keyboard" condition="True" from_id="ede349e4-3992-11e2-9044-74de2b37388c"/>
+  <Transition reference_res_id="b828262a-3993-11e2-8c1c-74de2b37388c" name="C &gt; N" sequence="0" tracer="" to_id="35663bc8-3993-11e2-84e8-74de2b37388c" transition_type="keyboard" condition="True" from_id="0a18e150-3993-11e2-a5a7-74de2b37388c"/>
+  <Transition reference_res_id="cf5bcb1c-3993-11e2-bbbf-74de2b37388c" name="L &gt; N" sequence="0" tracer="" to_id="0a18e150-3993-11e2-a5a7-74de2b37388c" transition_type="keyboard" condition="message == 'continue'" from_id="1e4f0d52-3993-11e2-82db-74de2b37388c"/>
+  <Transition reference_res_id="d418c4ca-3993-11e2-bf50-74de2b37388c" name="N &gt; Q" sequence="0" tracer="" to_id="2b66d5d8-3993-11e2-a318-74de2b37388c" transition_type="keyboard" condition="True" from_id="35663bc8-3993-11e2-84e8-74de2b37388c"/>
+</scenario>

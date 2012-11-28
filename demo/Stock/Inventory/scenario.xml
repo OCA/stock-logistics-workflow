@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<scenario>
+  <reference_res_id>d336aad0-39a3-11e2-bb0e-74de2b37388c</reference_res_id>
+  <model_id>product.product</model_id>
+  <name>Inventory</name>
+  <notes/>
+  <sequence>120</sequence>
+  <parent_id>bcc2e81e-399d-11e2-ae24-74de2b37388c</parent_id>
+  <shared_custom>False</shared_custom>
+  <warehouse_ids>OpenERP S.A.</warehouse_ids>
+  <warehouse_ids>Shop 1</warehouse_ids>
+  <warehouse_ids>Shop 2</warehouse_ids>
+  <active>True</active>
+  <type>scenario</type>
+  <Step reference_res_id="1c631928-39a4-11e2-89c4-74de2b37388c" name="Product quantity" step_back="False" step_stop="False" step_start="False"/>
+  <Step reference_res_id="39a9bd08-39a8-11e2-b743-74de2b37388c" name="Location selection" step_back="False" step_stop="False" step_start="False"/>
+  <Step reference_res_id="6c806574-39a8-11e2-8b70-74de2b37388c" name="Unknown location" step_back="False" step_stop="False" step_start="False"/>
+  <Step reference_res_id="6e04ac6a-39a4-11e2-afd1-74de2b37388c" name="End confirm" step_back="False" step_stop="False" step_start="False"/>
+  <Step reference_res_id="7c6fa2a0-39a4-11e2-b2b2-74de2b37388c" name="Done" step_back="False" step_stop="True" step_start="False"/>
+  <Step reference_res_id="bfe080ea-39a4-11e2-8b6b-74de2b37388c" name="Unknown product" step_back="False" step_stop="False" step_start="False"/>
+  <Step reference_res_id="f9ac9ad0-39a3-11e2-ac36-74de2b37388c" name="Product code" step_back="True" step_stop="False" step_start="True"/>
+  <Transition reference_res_id="10097522-39a5-11e2-b3da-74de2b37388c" name="Return" sequence="0" tracer="" to_id="f9ac9ad0-39a3-11e2-ac36-74de2b37388c" transition_type="keyboard" condition="not message" from_id="6e04ac6a-39a4-11e2-afd1-74de2b37388c"/>
+  <Transition reference_res_id="100a6f90-39a5-11e2-b3da-74de2b37388c" name="End" sequence="0" tracer="" to_id="7c6fa2a0-39a4-11e2-b2b2-74de2b37388c" transition_type="keyboard" condition="message" from_id="6e04ac6a-39a4-11e2-afd1-74de2b37388c"/>
+  <Transition reference_res_id="5b87cfbe-39a8-11e2-8155-74de2b37388c" name="Location selection OK" sequence="0" tracer="location" to_id="f9ac9ad0-39a3-11e2-ac36-74de2b37388c" transition_type="keyboard" condition="pool.get('stock.location').name_search(cr, uid, message, operator='=', context=context)" from_id="39a9bd08-39a8-11e2-b743-74de2b37388c"/>
+  <Transition reference_res_id="7a32e908-39a8-11e2-b71f-74de2b37388c" name="Location selection NOK" sequence="10" tracer="" to_id="6c806574-39a8-11e2-8b70-74de2b37388c" transition_type="keyboard" condition="not pool.get('stock.location').name_search(cr, uid, message, operator='=', context=context)" from_id="39a9bd08-39a8-11e2-b743-74de2b37388c"/>
+  <Transition reference_res_id="a5a7169e-39a4-11e2-9416-74de2b37388c" name="Product selection OK" sequence="10" tracer="" to_id="1c631928-39a4-11e2-89c4-74de2b37388c" transition_type="keyboard" condition="model.search(cr, uid, [('default_code', '=', message)], context=context)" from_id="f9ac9ad0-39a3-11e2-ac36-74de2b37388c"/>
+  <Transition reference_res_id="cb897cee-39a4-11e2-b18b-74de2b37388c" name="Product selection NOK" sequence="20" tracer="" to_id="bfe080ea-39a4-11e2-8b6b-74de2b37388c" transition_type="keyboard" condition="not model.search(cr, uid, [('default_code', '=', message)], context=context)" from_id="f9ac9ad0-39a3-11e2-ac36-74de2b37388c"/>
+  <Transition reference_res_id="db099ae6-39a4-11e2-af1b-74de2b37388c" name="Next product" sequence="0" tracer="" to_id="39a9bd08-39a8-11e2-b743-74de2b37388c" transition_type="keyboard" condition="True" from_id="1c631928-39a4-11e2-89c4-74de2b37388c"/>
+  <Transition reference_res_id="edcf3348-39a4-11e2-8924-74de2b37388c" name="Go end" sequence="0" tracer="" to_id="6e04ac6a-39a4-11e2-afd1-74de2b37388c" transition_type="keyboard" condition="message == ''" from_id="f9ac9ad0-39a3-11e2-ac36-74de2b37388c"/>
+</scenario>
