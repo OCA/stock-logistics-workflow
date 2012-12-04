@@ -7,7 +7,9 @@
   <sequence>100</sequence>
   <parent_id/>
   <shared_custom>False</shared_custom>
-  <warehouse_ids>Syleam</warehouse_ids>
+  <warehouse_ids>OpenERP S.A.</warehouse_ids>
+  <warehouse_ids>Shop 1</warehouse_ids>
+  <warehouse_ids>Shop 2</warehouse_ids>
   <active>True</active>
   <type>menu</type>
 </scenario>
