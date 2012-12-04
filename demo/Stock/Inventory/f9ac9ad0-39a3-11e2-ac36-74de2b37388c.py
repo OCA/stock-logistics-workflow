@@ -13,7 +13,7 @@ if not terminal.tmp_val1:
         'name': '%s : %s' % (terminal.code, datetime.today().strftime('%Y-%m-%d %H:%M:%S')),
     }, context=context)
     terminal.write({'tmp_val1': stock_inventory_id}, context=context)
-elif tracer == 'location':
+elif tracer == 'location' and terminal.tmp_val2:
     stock_location_obj = pool.get('stock.location')
     stock_inventory_line_obj = pool.get('stock.inventory.line')
 
@@ -32,6 +32,8 @@ elif tracer == 'location':
         'product_qty': quantity,
         'location_id': location_id,
     }, context=context)
+
+    terminal.write({'tmp_val2': '', 'tmp_val3': ''}, context=context)
 
 act = 'T'
 res = [
