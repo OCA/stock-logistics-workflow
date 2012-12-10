@@ -45,7 +45,7 @@ class PickingDispatch(Model):
             return result
         for dispatch_id in ids:
             result[dispatch_id] = []
-        sql = ("SELECT sm.dispatch_id, sm.picking_id FROM stock_move sm "
+        sql = ("SELECT DISTINCT sm.dispatch_id, sm.picking_id FROM stock_move sm "
               "WHERE sm.dispatch_id in %s AND sm.picking_id is NOT NULL")
         cr.execute(sql, (tuple(ids),))
         res = cr.fetchall()
@@ -54,19 +54,23 @@ class PickingDispatch(Model):
         return result
 
     _columns  = {
-        'name': fields.char('Name', size=64, required=True, select=True,
+        'name': fields.char('Name', size=96, required=True, select=True,
                             states={'draft': [('readonly', False)]}, unique=True,
                             help='Name of the picking dispatch'),
         'date': fields.date('Date', required=True, readonly=True, select=True,
-                            states={'draft': [('readonly', False)]},
+                            states={'draft': [('readonly', False)],
+                                    'assigned': [('readonly', False)]},
                             help='date on which the picking dispatched is to be processed'),
         'picker_id': fields.many2one('res.users', 'Picker', readonly=True, required=True,
-                            states={'draft': [('readonly', False)]}, select=True,
-                            help='the user to which the pickings are assigned'),
+                                     states={'draft': [('readonly', False)],
+                                             'assigned': [('readonly', False)]},
+                                     select=True,
+                                     help='the user to which the pickings are assigned'),
         'move_ids': fields.one2many('stock.move', 'dispatch_id', 'Moves',
                                     states={'draft': [('readonly', False)]},
                                     readonly=True,
                                     help='the list of moves to be processed'),
+        'notes': fields.text('Notes', help='free form remarks'),
         'backorder_id': fields.many2one('picking.dispatch', 'Back Order of',
                                         help='if this dispatch was split, this links to the dispatch order containing the other part which was processed',
                                         select=True),
@@ -199,6 +203,7 @@ class StockMove(Model):
         for dispatch_id, move_ids in maybe_finished_dispatches.iteritems():
             move_obj.write(cr, uid, move_ids, {'dispatch_id': dispatch_id})
         dispatch_obj.check_finished(cr, uid, list(maybe_finished_dispatches), context)
+        dispatch_obj.write(cr, uid, list(unfinished_dispatch_ids), {'state': 'assigned'})
         return complete_move_ids
 
 
@@ -227,7 +232,7 @@ class StockMove(Model):
 
     def action_done(self, cr, uid, ids, context=None):
         """
-        in addition to the parent method does, set the dispatch done if all moves are done or cancelled
+        in addition to the parent method does, set the dispatch done if all moves are done or canceled
         """
         _logger.debug('done stock.moves %s', ids)
         status = super(StockMove, self).action_done(cr, uid, ids, context)
@@ -274,3 +279,12 @@ class Product(Model):
         }
 
 
+
+class res_company(Model):
+    _name = 'res.company'
+    _inherit = 'res.company'
+    _columns = {
+        'default_picker_id': fields.many2one('res.users', 'Default Picker',
+                                          help='the user to which the pickings are assigned by default',
+                                          select=True),
+        }

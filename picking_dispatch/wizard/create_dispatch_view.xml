@@ -8,8 +8,10 @@
             <field name="arch" type="xml">
                 <form string="Picking Dispatch properties">
                     <group colspan="4">
+                        <field name="name" colspan='4'/>
                         <field name="date" />
                         <field name="picker_id"/>
+                        <field name="notes" colspan='4'/>
                     </group>
                     <separator string="" colspan="4"/>
                     <group colspan="4" col="6">

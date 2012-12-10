@@ -57,7 +57,10 @@ class DispatchAgregation(object):
     @property
     def dispatch_name(self):
         return self.dispatch_id.name
-
+    
+    @property
+    def dispatch_notes(self):
+        return self.dispatch_id.notes or u''
 
     def exists(self):
         return False
@@ -116,10 +119,11 @@ class PrintDispatch(report_sxw.rml_parse):
             moves_by_loc = {}
             for move in dispatch.move_ids:
                 if move.state == 'assigned':
-                    key = location_obj.name_get(self.cursor, self.uid,
-                                                [move.location_id.id,
-                                                 move.location_dest_id.id])
-                    key = tuple(name for _id, name in key)
+                    id1, id2 = move.location_id.id, move.location_dest_id.id
+                    key_dict = dict(location_obj.name_get(self.cursor, self.uid,
+                                                          [id1, id2]))
+                    
+                    key = key_dict[id1], key_dict[id2]
                     moves_by_loc.setdefault(key, []).append(move)
             _logger.debug('agreg %s ', moves_by_loc)
             new_objects.append(DispatchAgregation(dispatch, moves_by_loc))

@@ -30,6 +30,7 @@ ${css}
 </table>
 <br/>
 <br/>
+<p>${aggr.dispatch_notes}</p>
 <br/>
 %for locations, product_quantities in aggr.iter_locations():
 <table style="border:solid 1px" width="100%">
@@ -56,9 +57,7 @@ ${css}
   %endfor
 </table>
 %endfor
-        <p style="page-break-after:always"/>
-        <br/>
+        <p style="page-break-after:always">&nbsp</>
 %endfor
-<br/>
 </body>
 </html>
