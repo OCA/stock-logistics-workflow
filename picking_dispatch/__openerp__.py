@@ -19,7 +19,7 @@
 #
 ##############################################################################
 {'name' : 'Picking dispatch',
- 'version' : '0.3',
+ 'version' : '0.4',
  'author' : 'Camptocamp',
  'maintainer': 'Camptocamp',
  'category': 'Products',
