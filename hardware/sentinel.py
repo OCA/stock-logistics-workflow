@@ -215,6 +215,7 @@ class Sentinel(object):
         if type(text) is str:
             text = text.decode('utf-8')
         text = unicodedata.normalize('NFKD', unicode(text)).encode('ascii', 'ignore')
+        text = ''.join([char not in ('\r', '\n') and curses.ascii.unctrl(char) or char for char in text])
 
         # Display the text
         if not scroll:
@@ -485,14 +486,15 @@ class Sentinel(object):
             self._display(clear=True)
 
             # Display the current value if echoing is needed
-            display_start = max(0, len(value) - self.window_width + 1)
-            display_value = value[display_start:]
+            display_value = ''.join([curses.ascii.unctrl(char) for char in value])
+            display_start = max(0, len(display_value) - self.window_width + 1)
+            display_value = display_value[display_start:]
             self._display(' ' * (self.window_width - 1), 0, line)
             self._display(display_value, 0, line, color='info', modifier=curses.A_BOLD)
             key = self._display(message, scroll=True, height=self.window_height - 1, cursor=(line, min(len(value), self.window_width - 1)))
 
             # Printable character : store in value
-            if len(key) == 1 and curses.ascii.isprint(key):
+            if len(key) == 1 and (curses.ascii.isprint(key) or ord(key) < 32):
                 value += key
             # Backspace or del, remove the last character
             elif key == 'KEY_BACKSPACE' or key == 'KEY_DC':
@@ -502,7 +504,7 @@ class Sentinel(object):
             if key == '\n' or (size is not None and len(value) >= size):
                 # Flush the input
                 curses.flushinp()
-                return value
+                return value.strip()
 
     def _select_quantity(self, message, quantity='0', integer=False):
         """
