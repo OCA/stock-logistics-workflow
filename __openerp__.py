@@ -24,7 +24,7 @@
 
 {
     'name': 'Stock Scanner',
-    'version': '1.0',
+    'version': '1.1',
     'category': 'Generic Modules/Inventory Control',
     'description': """Allows managing barcode readers with simple scenarios
 - You can define a workfow for each object (stock picking, inventory, sale, etc)
