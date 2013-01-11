@@ -168,6 +168,7 @@
                                         <field name="step_start"/>
                                         <field name="step_stop"/>
                                         <field name="step_back"/>
+                                        <field name="scenario_id" invisible="True" />
                                     </group>
                                     <notebook colspan="4">
                                         <page string="Transition">
