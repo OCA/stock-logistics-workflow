@@ -197,6 +197,7 @@ class scanner_scenario_transition(osv.osv):
         'transition_type': fields.selection([('scanner', 'Scanner'), ('keyboard', 'Keyboard')], 'Transition Type', help='Type of transition'),
         'tracer': fields.char('Tracer', size=12, help='Used to determine fron which transition we arrive to the destination step'),
         'reference_res_id': fields.char('Reference ID', size=64, readonly=True, help='Used by export/import scenario/transition'),
+        'scenario_id': fields.related('from_id', 'scenario_id', type="many2one", relation="scanner.scenario", string="Scenario", store=True),
     }
 
     _order = 'sequence'
