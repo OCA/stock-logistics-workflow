@@ -197,6 +197,7 @@ class scanner_scenario_transition(osv.osv):
         'transition_type': fields.selection([('scanner', 'Scanner'), ('keyboard', 'Keyboard')], 'Transition Type', help='Type of transition'),
         'tracer': fields.char('Tracer', size=12, help='Used to determine fron which transition we arrive to the destination step'),
         'reference_res_id': fields.char('Reference ID', size=64, readonly=True, help='Used by export/import scenario/transition'),
+        'scenario_id': fields.related('from_id', 'scenario_id', type="many2one", relation="scanner.scenario", string="Scenario", store=True),
     }
 
     _order = 'sequence'
@@ -342,7 +343,6 @@ class scanner_hardware(osv.osv):
         """
         if context is None:
             context = self.pool.get('res.users').context_get(cr, uid, context=context)
-
         # Retrieve the terminal id
         terminal_ids = self.search(cr, uid, [('code', '=', terminal_number)], context=context)
         if not terminal_ids:
@@ -376,34 +376,67 @@ class scanner_hardware(osv.osv):
         elif action == 'action':
             # The terminal is attached to a scenario
             if terminal.scenario_id:
-                return self._scenario_save(cr, uid, terminal.id, message, transition_type, scenario_id=terminal.scenario_id.id, step_id=terminal.step_id.id, current_object=terminal.reference_document, context=context)
+                return self._scenario_save(cr, uid, terminal.id,
+                                           message,
+                                           transition_type,
+                                           scenario_id=terminal.scenario_id.id,
+                                           step_id=terminal.step_id.id,
+                                           current_object=terminal.reference_document,
+                                           context=context)
             # We asked for a scan transition type, but no action is running, forbidden
             elif transition_type == 'scanner':
-                return self._unknown_action(cr, uid, [terminal.id], ['Forbidden', 'action'], context=context)
+                return self._unknown_action(cr, uid, [terminal.id],
+                                            ['Forbidden', 'action'],
+                                            context=context)
             # No action to do
             else:
-                logger.info('[%s] Action : %s (no current scenario)' % (terminal_number, message))
-                scenario_ids = scanner_scenario_obj.search(cr, uid, [('name', '=', message), ('type', '=', 'menu'), ('warehouse_ids', 'in', [terminal.warehouse_id.id])], context=context)
+                logger.info('[%s] Action : %s (no current scenario)',
+                            terminal_number, message)
+                scenario_ids = scanner_scenario_obj.search(cr, uid,
+                                                           [('name', '=', message),
+                                                            ('type', '=', 'menu'),
+                                                            ('warehouse_ids', 'in', [terminal.warehouse_id.id])],
+                                                           context=context)
                 if message == -1:
                     scenario_ids = [False]
                 if scenario_ids:
-                    scenarios = self._scenario_list(cr, uid, terminal.warehouse_id.id, parent_id=scenario_ids[0], context=context)
+                    scenarios = self._scenario_list(cr, uid,
+                                                    terminal.warehouse_id.id,
+                                                    parent_id=scenario_ids[0],
+                                                    context=context)
                     if scenarios:
-                        menu_name = scanner_scenario_obj.browse(cr, uid, scenario_ids[0], context=context).name
+                        menu_name = scanner_scenario_obj.browse(cr, uid,
+                                                                scenario_ids[0],
+                                                                context=context).name
                         return ('L', ['|%s' % menu_name] + scenarios, 0)
-                return self._scenario_save(cr, uid, terminal.id, message, transition_type, context=context)
+                return self._scenario_save(cr, uid, terminal.id,
+                                           message,
+                                           transition_type,
+                                           context=context)
 
         # Reload current step
         elif action == 'restart':
             # The terminal is attached to a scenario
             if terminal.scenario_id:
-                return self._scenario_save(cr, uid, terminal.id, message, 'restart', scenario_id=terminal.scenario_id.id, current_object=terminal.reference_document, context=context)
+                return self._scenario_save(cr, uid,
+                                           terminal.id,
+                                           message,
+                                           'restart',
+                                           scenario_id=terminal.scenario_id.id,
+                                           current_object=terminal.reference_document,
+                                           context=context)
 
         # Reload previous step
         elif action == 'back':
             # The terminal is attached to a scenario
             if terminal.scenario_id:
-                return self._scenario_save(cr, uid, terminal.id, message, 'back', scenario_id=terminal.scenario_id.id, current_object=terminal.reference_document, context=context)
+                return self._scenario_save(cr, uid,
+                                           terminal.id,
+                                           message,
+                                           'back',
+                                           scenario_id=terminal.scenario_id.id,
+                                           current_object=terminal.reference_document,
+                                           context=context)
 
         # End required
         elif action == 'end':

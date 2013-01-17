@@ -301,6 +301,21 @@
         #
         # Scanner Scenario Step
         #
+        <record id="view_scanner_scenario_step_search" model="ir.ui.view">
+            <field name="name">scanner.scenario.step.search</field>
+            <field name="model">scanner.scenario.step</field>
+            <field name="type">search</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <search string="Scenario Step">
+                    <field name="name"/>
+                    <field name="scenario_id"/>
+                    <field name="step_start"/>
+                    <field name="step_stop"/>
+                    <field name="step_back"/>
+                </search>
+            </field>
+        </record>
         <record id="view_scanner_scenario_step_tree" model="ir.ui.view">
             <field name="name">scanner.scenario.step.tree</field>
             <field name="model">scanner.scenario.step</field>
@@ -412,6 +427,19 @@
         #
         # Scanner Scenario Transition
         #
+        <record id="view_scanner_scenario_transition_search" model="ir.ui.view">
+            <field name="name">scanner.scenario.transition.search</field>
+            <field name="model">scanner.scenario.transition</field>
+            <field name="type">search</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <search string="Scenario Step">
+                    <field name="name"/>
+                    <field name="scenario_id"/>
+                    <field name="transition_type"/>
+                </search>
+            </field>
+        </record>
         <record id="view_scanner_scenario_transition_tree" model="ir.ui.view">
             <field name="name">scanner.scenario.transition.tree</field>
             <field name="model">scanner.scenario.transition</field>
@@ -419,6 +447,7 @@
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
                 <tree string="Transition">
+                    <field name="scenario_id"/>
                     <field name="sequence"/>
                     <field name="name"/>
                     <field name="from_id"/>
