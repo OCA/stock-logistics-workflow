@@ -33,5 +33,5 @@
 	"demo_xml" : [],
 	"update_xml" : ["stock_view.xml", ],
 	"active": False,
-	"installable": True
+	"installable": False
 }

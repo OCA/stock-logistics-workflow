@@ -40,7 +40,7 @@
                     'stock_workflow.xml',
     ],
     'test': [],
-    'installable': True,
+    'installable': False,
     'active': False,
     'certificate': '',
 }
