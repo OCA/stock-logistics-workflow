@@ -92,7 +92,7 @@
         </field>
     </record>
 
-    <!-- We should have both source stock + dest location in the form view of Incoming/Outgoing products -->
+    <!-- We should have both source stock + dest location in the form view of Incoming/Outgoing products/Internal moves -->
     <record id="view_picking_in_form_source_stock_location" model="ir.ui.view">
         <field name="name">view.picking.in.form.source_stock_location</field>
         <field name="model">stock.picking</field>
@@ -116,6 +116,19 @@
             </xpath>
         </field>
     </record>
+
+    <record id="view_picking_form_source_stock_location" model="ir.ui.view">
+        <field name="name">view.picking.form.source_stock_location</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="/form/notebook/page/field/tree/field[@name='location_dest_id']" position="before">
+                <field name="location_id" domain="[('usage','&lt;&gt;','view')]" />
+            </xpath>
+        </field>
+    </record>
+
 
     <record id="view_picking_in_form_manual_split" model="ir.ui.view">
         <field name="name">view.picking.in.form.manual_split</field>
@@ -165,6 +178,30 @@
         </field>
     </record>
 
+
+    <!-- Internal moves -->
+    <record id="view_picking_form_manual_split" model="ir.ui.view">
+        <field name="name">view.picking.form.manual_split</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="/form/notebook/page/field/form/group/button[@string='Split']" position="after">
+                <label string="" colspan="3" />
+                <button name="split_move" string="Manual split"
+                    groups="base.group_extended"
+                    states="draft,waiting,confirmed,assigned"
+                    type="object" icon="terp-stock_effects-object-colorize"
+                    colspan="1" />
+            </xpath>
+            <xpath expr="/form/notebook/page/field/tree/button[@string='Split in production lots']" position="replace">
+                <button name="split_move" string="Manual split"
+                    groups="base.group_extended"
+                    states="draft,waiting,confirmed,assigned"
+                    type="object" icon="terp-stock_effects-object-colorize"/>
+            </xpath>
+        </field>
+    </record>
 
 
     <!-- Add "last_location_id" on prod lot view -->
