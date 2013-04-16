@@ -19,14 +19,14 @@
 #
 ##############################################################################
 {'name' : 'Picking dispatch',
- 'version' : '0.4',
+ 'version' : '1.0',
  'author' : 'Camptocamp',
  'maintainer': 'Camptocamp',
  'category': 'Products',
  'complexity': "normal",  # easy, normal, expert
  'depends' : ['stock',
               'base',
-              'report_webkit', 
+              'report_webkit',
               'base_headers_webkit',
               ],
  'description': """Dispatch pickings to employees working in warehouses
@@ -42,7 +42,7 @@
                 ],
  'demo_xml': [],
  'tests': [],
- 'installable': False,
+ 'installable': True,
  'auto_install': False,
  'license': 'AGPL-3',
  'application': False
