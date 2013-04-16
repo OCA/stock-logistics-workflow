@@ -6,36 +6,43 @@
       <field name="type">form</field>
       <field name="model">picking.dispatch</field>
       <field name="arch" type="xml">
-        <form string="Picking Dispatch">
-          <field name="name" />
-          <field name="picker_id"/>
-          <field name="date"/>
-          <field name="backorder_id"/>
-          <notebook colspan="4">
-            <page string="Stock Moves">
-              <field name="move_ids" nolabel="1" colspan='4' widget="many2many"
-                     domain="[('dispatch_id','=',False), ('state','in',('confirmed','waiting','assigned'))]" />
-            </page>
-            <page string="Related Picking">
-              <field name="related_picking_ids" colspan="4" nolabel="1"/>
-            </page>
-            <page string='Notes'>
-              <field name='notes' colspan='4' nolabel='1'/>
-            </page>
-          </notebook>
-          <separator colspan="4"/>
-
-          <field name="state"  widget="statusbar" statusbar_visible="draft,assigned,progress,done"/>
-          <group col="4" colspan="2">
+        <form string="Picking Dispatch" version="7.0">
+          <header>
             <button name="action_assign" states="draft" string="Assign"
-                    type="object" icon="gtk-apply"/>
+                    class="oe_highlight" type="object"/>
             <button name="action_progress" states="assigned" string="Start"
-                    type="object" icon="gtk-apply"/>
+                    class="oe_highlight" type="object"/>
             <button name="action_done" states="progress" string="Done"
-                    type="object" icon="gtk-jump-to"/>
+                    class="oe_highlight" type="object"/>
             <button name="action_cancel" states="draft,assigned,progress" string="Cancel"
-                    type="object" icon="gtk-cancel"/>
-          </group>
+                    type="object"/>
+            <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
+          </header>
+          <sheet>
+            <div class="oe_title">
+              <div class="oe_edit_only">
+                <label for="name" string="Picking Dispatch Name"/>
+              </div>
+              <h1>
+                <field name="name"/>
+              </h1>
+            </div>
+            <field name="picker_id"/>
+            <field name="date"/>
+            <field name="backorder_id"/>
+            <notebook colspan="4">
+              <page string="Stock Moves">
+                <field name="move_ids" nolabel="1" colspan='4' widget="many2many"
+                       domain="[('dispatch_id','=',False), ('state','in',('confirmed','waiting','assigned'))]" />
+              </page>
+              <page string="Related Picking">
+                <field name="related_picking_ids" colspan="4" nolabel="1"/>
+              </page>
+              <page string='Notes'>
+                <field name='notes' colspan='4' nolabel='1'/>
+              </page>
+            </notebook>
+          </sheet>
         </form>
       </field>
     </record>
