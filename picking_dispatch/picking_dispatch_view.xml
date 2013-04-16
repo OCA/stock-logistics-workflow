@@ -116,11 +116,11 @@
       <field name="inherit_id" ref="stock.view_picking_out_form"/>
       <field name="type">form</field>
       <field name="arch" type="xml">
-        <xpath expr="/form/notebook/page[@string='Additional info']" position="after">
+        <page string="Additional Info" position="after">
           <page string="Related Dispatch">
             <field name="related_dispatch_ids" nolabel="1" colspan="4"/>
           </page>
-        </xpath>
+        </page>
       </field>
     </record>
 
@@ -131,11 +131,11 @@
       <field name="inherit_id" ref="stock.view_picking_form"/>
       <field name="type">form</field>
       <field name="arch" type="xml">
-        <xpath expr="/form/notebook/page[@string='Additional info']" position="after">
+        <page string="Additional Info" position="after">
           <page string="Related Dispatch">
             <field name="related_dispatch_ids" nolabel="1" colspan="4"/>
           </page>
-        </xpath>
+        </page>
       </field>
     </record>
 
@@ -161,11 +161,11 @@
       <field name="type">form</field>
       <field name="inherit_id" ref="product.product_normal_form_view"/>
       <field name="arch" type="xml">
-        <xpath expr="/form/notebook/page[@string='Descriptions']/field[@name='description_purchase']"
+        <field name="description_purchase"
                position="after">
           <separator string="Warehouse Description"/>
           <field colspan="4" name="description_warehouse" nolabel="1"/>
-        </xpath>
+        </field>
       </field>
     </record>
 
@@ -181,6 +181,7 @@
         </field>
       </field>
     </record>
+
     <record id="view_move_form" model="ir.ui.view">
       <field name="name">stock.move.form</field>
       <field name="model">stock.move</field>
@@ -192,6 +193,7 @@
         </field>
       </field>
     </record>
+
     <record id="view_move_search" model="ir.ui.view">
       <field name="name">stock.move.search</field>
       <field name="model">stock.move</field>
@@ -203,6 +205,7 @@
         </field>
       </field>
     </record>
+
     <record id="view_move_search_reception_outcoming_picking" model="ir.ui.view">
       <field name="name">stock.move.outgoing.search2</field>
       <field name="model">stock.move</field>
@@ -214,6 +217,7 @@
         </field>
       </field>
     </record>
+
     <record id="view_move_search_reception_incoming_picking" model="ir.ui.view">
       <field name="name">stock.move.incoming.search2</field>
       <field name="model">stock.move</field>
