@@ -69,8 +69,7 @@
                     domain="[('state','=','done')]" help="Dispatch order already processed"/>
             <separator orientation="vertical" />
             <filter icon="terp-accessories-archiver-minus" string="Back Orders"
-                    domain="[('backorder_id', '!=', False)]" help="Is a Back Order"
-                    groups="base.group_extended"/>
+                    domain="[('backorder_id', '!=', False)]" help="Is a Back Order"/>
             <separator orientation="vertical"/>
             <field name="name"/>
             <field name="picker_id">
@@ -79,7 +78,7 @@
             </field>
             <field name="state"/>
             <field name="date"/>
-            <field name="backorder_id" groups="base.group_extended" widget="selection"/>
+            <field name="backorder_id" widget="selection"/>
           </group>
           <newline/>
           <group expand="0" string="Group By...">
@@ -108,8 +107,7 @@
     <menuitem action='action_picking_dispatch_tree'
               parent='stock.menu_stock_warehouse_mgmt'
               id='menu_action_picking_dispatch'
-              sequence='10'
-              groups="base.group_extended" />
+              sequence='10'/>
 
     <!-- Stock Out picking : add dispatch infos -->
     <record id="view_picking_form" model="ir.ui.view">
