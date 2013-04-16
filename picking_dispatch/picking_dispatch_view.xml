@@ -206,30 +206,6 @@
       </field>
     </record>
 
-    <record id="view_move_search_reception_outcoming_picking" model="ir.ui.view">
-      <field name="name">stock.move.outgoing.search2</field>
-      <field name="model">stock.move</field>
-      <field name="type">search</field>
-      <field name="inherit_id" ref="stock.view_move_search_reception_outcoming_picking"/>
-      <field name="arch" type="xml">
-        <field name="prodlot_id" position="after">
-          <field name="dispatch_id" widget="selection"/>
-        </field>
-      </field>
-    </record>
-
-    <record id="view_move_search_reception_incoming_picking" model="ir.ui.view">
-      <field name="name">stock.move.incoming.search2</field>
-      <field name="model">stock.move</field>
-      <field name="type">search</field>
-      <field name="inherit_id" ref="stock.view_move_search_reception_incoming_picking"/>
-      <field name="arch" type="xml">
-        <field name="prodlot_id" position="after">
-          <field name="dispatch_id" widget="selection" />
-        </field>
-      </field>
-    </record>
-
       <record model="ir.ui.view" id="view_company_form_inherit">
         <field name="name">res.company.form.inherit</field>
         <field name="model">res.company</field>
