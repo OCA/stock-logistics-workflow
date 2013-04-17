@@ -43,7 +43,7 @@ class picking_dispatch_creator(TransientModel):
         user_obj = self.pool.get('res.users')
         company = user_obj.browse(cr, uid, uid).company_id
         return company.default_picker_id.id if company.default_picker_id else False
-    
+
     _defaults = {
         'name': lambda obj, cr, uid, ctxt: obj.pool.get('ir.sequence').get(cr, uid, 'picking.dispatch'),
         'date': fields.date.context_today,
@@ -79,7 +79,7 @@ class picking_dispatch_creator(TransientModel):
                           "confirm, waiting or assigned state can be used)")]
             for dispatch_name, mvs in already_dispatched_ids.iteritems():
                 mvs.sort()
-                
+
                 problems.append(_('Dispatch %s already covers moves %s') % \
                                 (dispatch_name,
                                  u', '.join(['%s [%s]' % (mv, pck) for mv, pck in mvs]))
