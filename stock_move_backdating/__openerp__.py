@@ -22,9 +22,9 @@
 {
     "name": "Allows back-dating of stock moves",
     "version": "1.0",
-    'author' : 'Marco Dieckhoff, BREMSKERL', 'Agile Business Group',
+    'author' : 'Marco Dieckhoff, BREMSKERL - Agile Business Group',
     "category": "Stock Logistics",
-    'website' : 'www.bremskerl.com', 'www.agilebg.com',
+    'website' : 'www.bremskerl.com - www.agilebg.com',
     "depends": ["stock"],
     "description": "Allows back-dating of stock moves",
     'data': ["view/stock_view.xml"],
