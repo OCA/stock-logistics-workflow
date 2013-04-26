@@ -6,30 +6,35 @@
             <field name="model">picking.dispatch.creator</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Picking Dispatch properties">
-                    <group colspan="4">
-                        <field name="name" colspan='4'/>
+                <form string="Picking Dispatch properties" version="7.0">
+                    <separator string="Picking Dispatch"/>
+                    <label string="Assign picking operations to an employee."/> <br/>
+                    <br/>
+                    <label for="name"/>
+                    <field name="name"/>
+                    <group>
                         <field name="date" />
                         <field name="picker_id"/>
-                        <field name="notes" colspan='4'/>
                     </group>
-                    <separator string="" colspan="4"/>
-                    <group colspan="4" col="6">
-                        <button special="cancel" string="_Cancel" icon="gtk-cancel" />
-                        <button icon="terp-gtk-go-back-rtl" string="_Create" name="action_create_dispatch" type="object"/>
-                    </group>
+                    <label for="notes"/>
+                    <field name="notes"/>
+                    <footer>
+                        <button name="action_create_dispatch" string="_Create" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
                 </form>
             </field>
         </record>
 
         <act_window name="Create Picking Dispatch"
                     res_model="picking.dispatch.creator"
-                    src_model="stock.picking"
+                    src_model="stock.picking.in"
                     view_mode="form"
                     target="new"
                     key2="client_action_multi"
                     id="picking_dispatch_create_act_window"/>
-                    
+
         <!-- <act_window name="Create Dispatch Order"
             res_model="picking.dispatch"
             src_model="stock.picking"

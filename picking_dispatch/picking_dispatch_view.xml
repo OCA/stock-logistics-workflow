@@ -6,36 +6,43 @@
       <field name="type">form</field>
       <field name="model">picking.dispatch</field>
       <field name="arch" type="xml">
-        <form string="Picking Dispatch">
-          <field name="name" />
-          <field name="picker_id"/>
-          <field name="date"/>
-          <field name="backorder_id"/>
-          <notebook colspan="4">
-            <page string="Stock Moves">
-              <field name="move_ids" nolabel="1" colspan='4' widget="many2many"
-                     domain="[('dispatch_id','=',False), ('state','in',('confirmed','waiting','assigned'))]" />
-            </page>
-            <page string="Related Picking">
-              <field name="related_picking_ids" colspan="4" nolabel="1"/>
-            </page>
-            <page string='Notes'>
-              <field name='notes' colspan='4' nolabel='1'/>
-            </page>
-          </notebook>
-          <separator colspan="4"/>
-
-          <field name="state"  widget="statusbar" statusbar_visible="draft,assigned,progress,done"/>
-          <group col="4" colspan="2">
+        <form string="Picking Dispatch" version="7.0">
+          <header>
             <button name="action_assign" states="draft" string="Assign"
-                    type="object" icon="gtk-apply"/>
+                    class="oe_highlight" type="object"/>
             <button name="action_progress" states="assigned" string="Start"
-                    type="object" icon="gtk-apply"/>
+                    class="oe_highlight" type="object"/>
             <button name="action_done" states="progress" string="Done"
-                    type="object" icon="gtk-jump-to"/>
+                    class="oe_highlight" type="object"/>
             <button name="action_cancel" states="draft,assigned,progress" string="Cancel"
-                    type="object" icon="gtk-cancel"/>
-          </group>
+                    type="object"/>
+            <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
+          </header>
+          <sheet>
+            <div class="oe_title">
+              <div class="oe_edit_only">
+                <label for="name" string="Picking Dispatch Name"/>
+              </div>
+              <h1>
+                <field name="name"/>
+              </h1>
+            </div>
+            <field name="picker_id"/>
+            <field name="date"/>
+            <field name="backorder_id"/>
+            <notebook colspan="4">
+              <page string="Stock Moves">
+                <field name="move_ids" nolabel="1" colspan='4' widget="many2many"
+                       domain="[('dispatch_id','=',False), ('state','in',('confirmed','waiting','assigned'))]" />
+              </page>
+              <page string="Related Picking">
+                <field name="related_picking_ids" colspan="4" nolabel="1"/>
+              </page>
+              <page string='Notes'>
+                <field name='notes' colspan='4' nolabel='1'/>
+              </page>
+            </notebook>
+          </sheet>
         </form>
       </field>
     </record>
@@ -69,8 +76,7 @@
                     domain="[('state','=','done')]" help="Dispatch order already processed"/>
             <separator orientation="vertical" />
             <filter icon="terp-accessories-archiver-minus" string="Back Orders"
-                    domain="[('backorder_id', '!=', False)]" help="Is a Back Order"
-                    groups="base.group_extended"/>
+                    domain="[('backorder_id', '!=', False)]" help="Is a Back Order"/>
             <separator orientation="vertical"/>
             <field name="name"/>
             <field name="picker_id">
@@ -79,7 +85,7 @@
             </field>
             <field name="state"/>
             <field name="date"/>
-            <field name="backorder_id" groups="base.group_extended" widget="selection"/>
+            <field name="backorder_id" widget="selection"/>
           </group>
           <newline/>
           <group expand="0" string="Group By...">
@@ -108,8 +114,7 @@
     <menuitem action='action_picking_dispatch_tree'
               parent='stock.menu_stock_warehouse_mgmt'
               id='menu_action_picking_dispatch'
-              sequence='10'
-              groups="base.group_extended" />
+              sequence='10'/>
 
     <!-- Stock Out picking : add dispatch infos -->
     <record id="view_picking_form" model="ir.ui.view">
@@ -118,11 +123,11 @@
       <field name="inherit_id" ref="stock.view_picking_out_form"/>
       <field name="type">form</field>
       <field name="arch" type="xml">
-        <xpath expr="/form/notebook/page[@string='Additional info']" position="after">
+        <page string="Additional Info" position="after">
           <page string="Related Dispatch">
             <field name="related_dispatch_ids" nolabel="1" colspan="4"/>
           </page>
-        </xpath>
+        </page>
       </field>
     </record>
 
@@ -133,11 +138,11 @@
       <field name="inherit_id" ref="stock.view_picking_form"/>
       <field name="type">form</field>
       <field name="arch" type="xml">
-        <xpath expr="/form/notebook/page[@string='Additional info']" position="after">
+        <page string="Additional Info" position="after">
           <page string="Related Dispatch">
             <field name="related_dispatch_ids" nolabel="1" colspan="4"/>
           </page>
-        </xpath>
+        </page>
       </field>
     </record>
 
@@ -163,11 +168,11 @@
       <field name="type">form</field>
       <field name="inherit_id" ref="product.product_normal_form_view"/>
       <field name="arch" type="xml">
-        <xpath expr="/form/notebook/page[@string='Descriptions']/field[@name='description_purchase']"
+        <field name="description_purchase"
                position="after">
           <separator string="Warehouse Description"/>
           <field colspan="4" name="description_warehouse" nolabel="1"/>
-        </xpath>
+        </field>
       </field>
     </record>
 
@@ -183,6 +188,7 @@
         </field>
       </field>
     </record>
+
     <record id="view_move_form" model="ir.ui.view">
       <field name="name">stock.move.form</field>
       <field name="model">stock.move</field>
@@ -194,6 +200,7 @@
         </field>
       </field>
     </record>
+
     <record id="view_move_search" model="ir.ui.view">
       <field name="name">stock.move.search</field>
       <field name="model">stock.move</field>
@@ -205,42 +212,20 @@
         </field>
       </field>
     </record>
-    <record id="view_move_search_reception_outcoming_picking" model="ir.ui.view">
-      <field name="name">stock.move.outgoing.search2</field>
-      <field name="model">stock.move</field>
-      <field name="type">search</field>
-      <field name="inherit_id" ref="stock.view_move_search_reception_outcoming_picking"/>
-      <field name="arch" type="xml">
-        <field name="prodlot_id" position="after">
-          <field name="dispatch_id" widget="selection"/>
-        </field>
-      </field>
-    </record>
-    <record id="view_move_search_reception_incoming_picking" model="ir.ui.view">
-      <field name="name">stock.move.incoming.search2</field>
-      <field name="model">stock.move</field>
-      <field name="type">search</field>
-      <field name="inherit_id" ref="stock.view_move_search_reception_incoming_picking"/>
-      <field name="arch" type="xml">
-        <field name="prodlot_id" position="after">
-          <field name="dispatch_id" widget="selection" />
-        </field>
-      </field>
-    </record>
 
-      <record model="ir.ui.view" id="view_company_form_inherit">
-        <field name="name">res.company.form.inherit</field>
-        <field name="model">res.company</field>
-        <field name="type">form</field>
-        <field name="inherit_id" ref="base.view_company_form" />
-        <field name="arch" type="xml">
-          <notebook position="inside">
-            <page string="Pickings" position="inside">
-              <field name="default_picker_id" colspan ="4"  />
-            </page>
-          </notebook>
-        </field>
-      </record>
+    <record model="ir.ui.view" id="view_company_form_inherit">
+      <field name="name">res.company.form.inherit</field>
+      <field name="model">res.company</field>
+      <field name="type">form</field>
+      <field name="inherit_id" ref="base.view_company_form"/>
+      <field name="arch" type="xml">
+        <notebook position="inside">
+          <page string="Pickings" position="inside">
+            <field name="default_picker_id" colspan ="4"/>
+          </page>
+        </notebook>
+      </field>
+    </record>
 
   </data>
 </openerp>
