@@ -28,16 +28,15 @@ from osv import fields,orm
 from tools.translate import _
 import decimal_precision as dp
 
-
 class product_product(orm.Model):
     _inherit = "product.product"
 
-    def _get_product_available_func(states, what):
-        def _product_available(self, cr, uid, ids, name, arg, context=None):
-            return {}.fromkeys(ids, 0.0)
-        return _product_available
-    
-    _product_qty_available = _get_product_available_func(('done',), ('in', 'out'))
+#    def _get_product_available_func(states, what):
+#        def _product_available(self, cr, uid, ids, name, arg, context=None):
+#            return {}.fromkeys(ids, 0.0)
+#        return _product_available
+#    
+#    _product_qty_available = _get_product_available_func(('done',), ('in', 'out'))
 #    _product_virtual_available = _get_product_available_func(('confirmed','waiting','assigned','done'), ('in', 'out'))
 
     def _product_available(self, cr, uid, ids, field_names=None, arg=False, context=None):
@@ -63,5 +62,19 @@ class product_product(orm.Model):
         return [('id','in',tuple(prod_ids))]
 
     _columns = {
-        'qty_available': fields.function(_product_available, fnct_search=_qty_available_search, method=True, type='float', string='Quantity On Hand', multi='qty_available', digits_compute=dp.get_precision('Product UoM')),
+        'qty_available': fields.function(_product_available, fnct_search=_qty_available_search, method=True, 
+            multi='qty_available',
+            type='float',  digits_compute=dp.get_precision('Product Unit of Measure'),
+            string='Quantity On Hand',
+            help="Current quantity of products.\n"
+                 "In a context with a single Stock Location, this includes "
+                 "goods stored at this Location, or any of its children.\n"
+                 "In a context with a single Warehouse, this includes "
+                 "goods stored in the Stock Location of this Warehouse, or any "
+                 "of its children.\n"
+                 "In a context with a single Shop, this includes goods "
+                 "stored in the Stock Location of the Warehouse of this Shop, "
+                 "or any of its children.\n"
+                 "Otherwise, this includes goods stored in any Stock Location "
+                 "with 'internal' type."),
     }

@@ -4,7 +4,6 @@
         <record id="product_search_form_view_zero_stock" model="ir.ui.view">
             <field name="name">product.search.form</field>
             <field name="model">product.product</field>
-            <field name="type">search</field>
             <field name="priority">17</field>
             <field name="inherit_id" ref="product.product_search_form_view"/>
             <field name="arch" type="xml">

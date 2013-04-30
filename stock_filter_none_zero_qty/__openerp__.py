@@ -31,7 +31,8 @@
        · By default, only products with stock are shown (i.e.
          button is enabled)
     
-    This is an improvement of the module "zero_stock_filter" developed by OPENTIA, but this is filtering on real quantity
+    This is an improvement of the module "zero_stock_filter" developed by OPENTIA, but this is filtering on real quantity for version 6.1
+    It has been migrated to the 7.0 version (2013-04-30)
     ''',
     'version' : '1.0',
     'depends' : [
@@ -41,11 +42,10 @@
     'category': 'Warehouse',
     'author' : 'OPENTIA,Julius Network Solutions',
     'website': 'http://www.opentia.com/,http://www.julius.fr/',
-    'data': [],
-    'update_xml': [
+    'demo': [],
+    'data': [
         'product_view.xml',
     ],
-    'init_xml': [],
     'installable' : True,
     'active' : False,
 }
