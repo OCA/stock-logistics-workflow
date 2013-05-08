@@ -1,31 +1,30 @@
-# Spanish translation for openobject-addons
-# Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
-# This file is distributed under the same license as the openobject-addons package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* mrp_prodlot_autosplit
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: openobject-addons\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"Project-Id-Version: OpenERP Server 5.0.14\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2009-11-26 10:28+0000\n"
 "PO-Revision-Date: 2011-02-15 15:14+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Spanish <es@li.org>\n"
+"Last-Translator: Olivier Dony (OpenERP) <Unknown>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-08-13 05:38+0000\n"
-"X-Generator: Launchpad (build 13674)\n"
+"X-Launchpad-Export-Date: 2011-07-08 05:57+0000\n"
+"X-Generator: Launchpad (build 13168)\n"
 
 #. module: mrp_prodlot_autosplit
 #: field:product.product,unique_production_number:0
 msgid "Unique Production Number"
-msgstr "Número de lote de producción único (número de serie)"
+msgstr ""
 
 #. module: mrp_prodlot_autosplit
 #: constraint:ir.ui.view:0
 msgid "Invalid XML for View Architecture!"
-msgstr "¡﻿XML no válido para la definición de la vista!"
+msgstr ""
 
 #. module: mrp_prodlot_autosplit
 #: model:ir.module.module,description:mrp_prodlot_autosplit.module_meta_information
@@ -75,66 +74,23 @@ msgid ""
 "know if you would like that simple extension to be made.\n"
 "    "
 msgstr ""
-"Convierte los números de lote en uno único por producto (número de serie)\n"
-"    Más aún,\n"
-"    1) Añade una nueva casilla de verificación en el formulario de producto "
-"para activar o desactivar esta funcionalidad(debería también activar lotes "
-"en entrada/salida\n"
-"    2) Prohibe realizar un movimiento si el movimiento requiere más de una "
-"instancia de producto\n"
-"    3) Automágicamente desglosa la línea de movimientos para varios "
-"productos en un único movimiento por cada producto\n"
-"    4) Convierte los albaranes de entrada en una tabla editable donde puede "
-"directamente escribir el número de serie de un nuevo número de serie para "
-"crearlo y asociarlo al movimiento (también verifica que no exista antes)\n"
-"\n"
-"    Importante Nota 1: Los número de serie se codifican mejor utilizando una "
-"tabla editable, que incluye un campo especial con el nuevo número de serie "
-"para ser creado. En cualquier caso hay actualmente una limitación en el "
-"framework de OpenObject que previene de cambiar fácilmente grids no "
-"editables a editables por una simple extensión. En vez de sobreescribir "
-"todas las vistas, preferimos dar un único ejemplo: La vista activa "
-"modificada para facilitar la codificación de números de serie está "
-"disponible utilizando Fabricación / productos entrantes. Buscando esta "
-"definción de la vista, esto mismo es fácilmente trasladable a otros "
-"albaranes, como por ejemplo los de salida. De todas formas no está activo "
-"por defecto, necesitaría trabajar con ello para su caso específico.\n"
-"Mientras tanto, esperamos que Tiny añada una tercera vista "
-"\"merge_attributes\" a los 3 existentes: \"antes\", \"despues\" y "
-"\"reemplazar\". Básicamente permitiría combinar los atributos dados "
-"(redefinidos) en la vista origial XML y dejar el contenido sin cambiar.\n"
-"La solicitud de mejora está registrada aquí:  "
-"https://blueprints.launchpad.net/openobject-server/+spec/merge-attributes-"
-"view-extension-point\n"
-"\n"
-"Importante Nota 2: Este módulo no desglos la lista de materiales en MRP ya "
-"que no usa albaranes.\n"
-"Una buena aproximación al generar órdenes de fabricación manualmente una por "
-"una es definir varias líneas de productos individuales en nomenclaturas y "
-"producir uno a uno ( si es posible) para hacer más fácil la codificación de "
-"un único número de serie también en las órdenes de producción.\n"
-"También queremos extender este módulo para desglosar automáticamente órdenes "
-"de producción (desde el motor MRP) en varias órdenes individuales para "
-"faciliar la codificación de los números de serie en producción. Haznos saber "
-"si te gustaría que abordásemos el desarrollo de esta extensión.\n"
-"    "
 
 #. module: mrp_prodlot_autosplit
 #: field:stock.production.lot,last_location_id:0
 msgid "Last Location"
-msgstr "Última ubicación"
+msgstr ""
 
 #. module: mrp_prodlot_autosplit
 #: model:ir.module.module,shortdesc:mrp_prodlot_autosplit.module_meta_information
 msgid "Unique serial number management"
-msgstr "Gestión de número de serie único"
+msgstr "Unique serial number management"
 
 #. module: mrp_prodlot_autosplit
 #: field:stock.move,new_prodlot_code:0
 msgid "Production Tracking Code To Create"
-msgstr "Número de tracking de producción para crear"
+msgstr ""
 
 #. module: mrp_prodlot_autosplit
 #: view:stock.picking:0
 msgid "Stock Moves"
-msgstr "Movimientos de stock"
+msgstr ""
