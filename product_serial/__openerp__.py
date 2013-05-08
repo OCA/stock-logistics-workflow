@@ -21,7 +21,7 @@
 {
     "name" : "Unique serial number management",
     "version" : "1.0.0",
-    "author" : "Akretion, NaN",
+    "author" : "Akretion, NaN·tic",
     "website" : "http://www.akretion.com",
     "depends" : ['stock'],
     "category" : "Generic Modules/Inventory Control",
