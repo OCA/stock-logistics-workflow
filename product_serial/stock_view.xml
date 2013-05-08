@@ -40,6 +40,19 @@
         </field>
     </record>
 
+    <!-- In the form view of Incoming products, add the "new_tracking_code" fields -->
+    <record id="view_picking_in_form_new_tracking_code" model="ir.ui.view">
+        <field name="name">view.picking.in.form.new_tracking_code</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_in_form" />
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="/form/notebook/page/field/tree/field[@name='tracking_id']" position="before">
+                <field name="new_tracking_code" />
+            </xpath>
+        </field>
+    </record>
+    
     <!-- We should have both source stock + dest location in the form view of Incoming/Outgoing products -->
     <record id="view_picking_in_form_source_stock_location" model="ir.ui.view">
         <field name="name">view.picking.in.form.source_stock_location</field>

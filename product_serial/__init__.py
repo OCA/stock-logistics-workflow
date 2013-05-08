@@ -19,14 +19,8 @@
 #
 ##############################################################################
 
-from osv import fields, osv
-
-class product_product(osv.osv):
-    _inherit = "product.product"
-
-    _columns = {
-        'unique_production_number': fields.boolean('Unique Production Number', help="Activate if you want to have the auto-split of move lines on pickings for this particular product."),
-    }
-
-product_product()
+import product
+import stock
+import company
+import prodlot_wizard
 
