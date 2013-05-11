@@ -5,7 +5,7 @@
 #    Copyright (C) 2008 Raphaël Valyi
 #    Copyright (C) 2011 Anevia S.A. - Ability to group invoice lines
 #              written by Alexis Demeaulte <alexis.demeaulte@anevia.com>
-#    Copyright (C) 2011 Akretion - Ability to split lines on logistical units
+#    Copyright (C) 2011-2013 Akretion - Ability to split lines on logistical units
 #              written by Emmanuel Samyn
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -90,11 +90,11 @@ class stock_move(osv.osv):
     _columns = {
         'new_prodlot_code': fields.function(_get_prodlot_code, fnct_inv=_set_prodlot_code,
                                             method=True, type='char', size=64,
-                                            string='Prodlot fast input', select=1
+                                            string='Create Serial Number', select=1
                                            ),
         'new_tracking_code': fields.function(_get_tracking_code, fnct_inv=_set_tracking_code,
                                             method=True, type='char', size=64,
-                                            string='Tracking fast input', select=1
+                                            string='Create Tracking', select=1
                                            ),
     }
 
@@ -166,8 +166,8 @@ stock_move()
 class stock_picking(osv.osv):
     _inherit = "stock.picking"
 
-    def action_assign_wkf(self, cr, uid, ids):
-        result = super(stock_picking, self).action_assign_wkf(cr, uid, ids)
+    def action_assign_wkf(self, cr, uid, ids, context=None):
+        result = super(stock_picking, self).action_assign_wkf(cr, uid, ids, context=context)
 
         for picking in self.browse(cr, uid, ids):
             if picking.company_id.autosplit_is_active:

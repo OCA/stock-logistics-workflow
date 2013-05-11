@@ -74,7 +74,7 @@ class stock_picking_prodlot_selection_wizard(osv.osv_memory):
             prefix = first[:position-1]
         else:
             prefix = ''
-        
+
         number_fill = len(first_number)
         first_number = int(first_number)
         last_number = int(last_number)
@@ -96,13 +96,13 @@ class stock_picking_prodlot_selection_wizard(osv.osv_memory):
             ctx = context.copy()
             ctx['location_id'] = move.location_id.id
             prodlot = self.pool.get('stock.production.lot').browse(cr, uid, lot_ids[0], ctx)
-            
+
             if prodlot.product_id != record.product_id:
                 raise osv.except_osv(_('Invalid lot numbers'), _('Production lot %s exists but not for product %s.') % (current_lot, record.product_id.name))
 
             if prodlot.stock_available < move.product_qty:
                 raise osv.except_osv(_('Invalid lot numbers'), _('Not enough stock available of production lot %s.') % current_lot)
-            
+
             self.pool.get('stock.move').write(cr, uid, [move.id], {
                 'prodlot_id': lot_ids[0],
             }, context)
@@ -112,8 +112,6 @@ class stock_picking_prodlot_selection_wizard(osv.osv_memory):
                 break
 
         return {}
-
-        
 
 stock_picking_prodlot_selection_wizard()
 

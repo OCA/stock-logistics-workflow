@@ -2,6 +2,7 @@
 ##############################################################################
 #
 #    Copyright (C) 2008 Raphaël Valyi
+#    Copyright (C) 2013 Akretion (http://www.akretion.com/)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -39,7 +40,7 @@
     to make it easy to encode the serial numbers in the production. Let us know if you would like that simple extension to be made.
     """,
     "init_xml" : [],
-    "demo_xml" : [],
+    "demo_xml" : ['product_demo.xml'],
     "update_xml" : ["product_view.xml", "company_view.xml", "stock_view.xml"],
     "active": False,
     "installable": True

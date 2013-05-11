@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  Product serial module for OpenERP
+  Copyright (C) 2013 Akretion (http://www.akretion.com/)
+  @author: Alexis de Lattre <alexis.delattre@akretion.com>
+  The licence is in the file __openerp__.py
+-->
+
+<openerp>
+<data noupdate="1">
+
+<!-- Laptop E5023  -->
+<record id="product.product_product_25" model="product.product">
+    <field name="lot_split_type">single</field>
+    <field name="track_production">True</field>
+    <field name="track_incoming">True</field>
+    <field name="track_outgoing">True</field>
+</record>
+
+</data>
+</openerp>

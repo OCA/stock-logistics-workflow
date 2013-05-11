@@ -3,7 +3,9 @@
 #
 #    Product serial module for OpenERP
 #    Copyright (C) 2010-2011 Anevia. All Rights Reserved
-#    (written by Sebastien Beau <sebastien.beau@akretion.com>)
+#    Copyright (C) 2013 Akretion
+#    @author: Sebastien Beau <sebastien.beau@akretion.com>
+#    @author: Alexis de Lattre <alexis.delattre@akretion.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -31,9 +33,8 @@ class company(osv.osv):
     }
 
     _defaults = {
-        'autosplit_is_active': lambda *a: True,
-        'is_group_invoice_line': lambda *a: True,
+        'autosplit_is_active': True,
+        'is_group_invoice_line': True,
     }
 
-company()
 
