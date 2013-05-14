@@ -265,7 +265,7 @@ stock_picking()
 class stock_production_lot(osv.osv):
     _inherit = "stock.production.lot"
 
-    def _last_location_id(self, cr, uid, ids, field_name, arg, context={}):
+    def _last_location_id(self, cr, uid, ids, field_name, arg, context=None):
         """Retrieves the last location where the product with given serial is.
         Instead of using dates we assume the product is in the location having the
         highest number of products with the given serial (should be 1 if no mistake). This

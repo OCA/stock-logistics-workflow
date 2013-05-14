@@ -27,10 +27,12 @@ class product_product(osv.osv):
     
     _inherit = "product.product"
 
-    def _product_available(self, cr, uid, ids, field_names=None, arg=False, context={}):
+    def _product_available(self, cr, uid, ids, field_names=None, arg=False, context=None):
         if not field_names:
             field_names = []
         res = {}
+        if context is None:
+            context = {}
         for id in ids:
             res[id] = {}.fromkeys(field_names, 0.0)
         for f in field_names:
