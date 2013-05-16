@@ -23,12 +23,12 @@
 #
 ##############################################################################
 
-from osv import fields, osv
+from openerp.osv import fields, orm
 import hashlib
 from tools.translate import _
 
 
-class stock_move(osv.osv):
+class stock_move(orm.Model):
     _inherit = "stock.move"
     # We order by product name because otherwise, after the split,
     # the products are "mixed" and not grouped by product name any more
@@ -143,7 +143,7 @@ class stock_move(osv.osv):
             lu_qty = False
             if move.product_id.lot_split_type == 'lu':
                 if not move.product_id.packaging:
-                    raise osv.except_osv(_('Error :'), _("Product '%s' has 'Lot split type' = 'Logistical Unit' but is missing packaging information.") % (move.product_id.name))
+                    raise orm.except_orm(_('Error :'), _("Product '%s' has 'Lot split type' = 'Logistical Unit' but is missing packaging information.") % (move.product_id.name))
                 lu_qty = move.product_id.packaging[0].qty
             elif move.product_id.lot_split_type == 'single':
                 lu_qty = 1
@@ -160,10 +160,8 @@ class stock_move(osv.osv):
                     all_ids.append( self.copy(cr, uid, move.id, {'state': move.state, 'prodlot_id': None, 'product_qty': qty}) )
         return all_ids
 
-stock_move()
 
-
-class stock_picking(osv.osv):
+class stock_picking(orm.Model):
     _inherit = "stock.picking"
 
     def action_assign_wkf(self, cr, uid, ids, context=None):
@@ -259,13 +257,11 @@ class stock_picking(osv.osv):
 
         return invoice_dict
 
-stock_picking()
 
-
-class stock_production_lot(osv.osv):
+class stock_production_lot(orm.Model):
     _inherit = "stock.production.lot"
 
-    def _last_location_id(self, cr, uid, ids, field_name, arg, context={}):
+    def _last_location_id(self, cr, uid, ids, field_name, arg, context=None):
         """Retrieves the last location where the product with given serial is.
         Instead of using dates we assume the product is in the location having the
         highest number of products with the given serial (should be 1 if no mistake). This
@@ -281,17 +277,14 @@ class stock_production_lot(osv.osv):
                 (prodlot_id, prodlot_id, 'done'))
             results = cr.fetchone()
 
-            #TODO return tuple to avoid name_get being requested by the GTK client
             res[prodlot_id] = results and results[0] or False
 
         return res
 
     _columns = {
-        'last_location_id': fields.function(_last_location_id, method=True,
-                                            type="many2one", relation="stock.location",
-                                            string="Last location",
-                                            help="Display the current stock location of this production lot"),
+        'last_location_id': fields.function(_last_location_id,
+                                    type="many2one", relation="stock.location",
+                                    string="Last location",
+                                    help="Display the current stock location of this production lot"),
     }
-
-stock_production_lot()
 

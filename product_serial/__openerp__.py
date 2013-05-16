@@ -20,28 +20,25 @@
 ##############################################################################
 
 {
-    "name" : "Unique serial number management",
-    "version" : "1.0.0",
+    "name" : "Product Serial",
+    "summary": "Enhance Serial Number management",
+    "version" : "1.0",
     "author" : "Akretion, NaN·tic",
     "website" : "http://www.akretion.com",
-    "depends" : ['stock'],
+    "depends" : ["stock"],
     "category" : "Generic Modules/Inventory Control",
     "license": "AGPL-3",
-    "description":"""Turns production lot tracking numbers into unique per product instance code (serial number).
-    Moreover, it
-    1) adds a new selection field on the product form to enable or disable this behavior and with split type choice (you should also enable in/out tracking)
-    2) then forbids to perform a move if a move involves more than one product instance
-    3) automagically splits up picking list movements into one movement per product instance or logistical unit packing qty (in that case, only the first LU is taken into account at the present time. Improvement to take them all to be done !!!)
-    4) turns incoming pickings into an editable grid where you can directly type the codes
-    of a new production and tracking number/code to create and associate to the move (it also checks it
-    doesn't exist yet)
+    "description":"""Enhance the management of Production Lots (Serial Numbers) in OpenERP.
 
-    We would also like to extend this module to split automatic production orders (from MRP engine) into several individual production orders in order
-    to make it easy to encode the serial numbers in the production. Let us know if you would like that simple extension to be made.
+    Here are the additionnal features proposed by this module:
+    1) Add a new selection field 'Lot split type' on the product form under the 'Inventory' tab to specify how the Production Lots should be split on the Pickings (you should also enable 'Track Incoming/Outgoing Lots').
+    2) If the option 'Active auto split' is active for the Company, OpenERP will automagically splits up picking list movements into one movement per product instance or logistical unit packing quantity (in that case, only the first logistical unit is taken into account at the present time. Improvement to take them all to be done !).
+    3) Turns Incoming Pickings into an editable grid where you can directly type the codes of a new production lot and/or tracking number to create and associate to the move (it also checks it doesn't exist yet).
+    4) If the option 'Group invoice lines' is active for the Company, OpenERP will group the invoice lines to make it look like the Sale/Purchase Order when generating an Invoice from a Picking.
+
     """,
-    "init_xml" : [],
-    "demo_xml" : ['product_demo.xml'],
-    "update_xml" : ["product_view.xml", "company_view.xml", "stock_view.xml"],
+    "demo" : ["product_demo.xml"],
+    "data" : ["product_view.xml", "company_view.xml", "stock_view.xml"],
     "active": False,
     "installable": True
 }

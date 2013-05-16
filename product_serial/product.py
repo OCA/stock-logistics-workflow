@@ -20,9 +20,9 @@
 #
 ##############################################################################
 
-from osv import fields, osv
+from openerp.osv import fields, orm
 
-class product_product(osv.osv):
+class product_product(orm.Model):
     _inherit = "product.product"
 
     _columns = {
@@ -37,6 +37,4 @@ class product_product(osv.osv):
     _defaults = {
         'lot_split_type': 'none',
     }
-
-product_product()
 
