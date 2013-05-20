@@ -29,6 +29,7 @@
         <xpath expr="//field[@name='location_id']" position="replace">
         </xpath>
         <xpath expr="//field[@name='location_dest_id']" position="before">
+            <field name="product_packaging" groups="product.group_stock_packaging" domain="[('product_id','=',product_id)]" invisible="context.get('picking_type') != 'out' or False"/>
             <field name="location_id" groups="stock.group_locations"/>
         </xpath>
         <xpath expr="//button[@name='%(stock.track_line)d']" position="replace">
