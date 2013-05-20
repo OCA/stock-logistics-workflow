@@ -21,7 +21,7 @@
 ##############################################################################
 
 from openerp.osv import orm, fields
-from tools.translate import _
+from openerp.tools.translate import _
 
 def is_integer(value):
     try:
