@@ -1,2 +1,3 @@
 import stock
+import wizard
 
