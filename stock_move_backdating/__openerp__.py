@@ -27,7 +27,10 @@
     'website' : 'www.bremskerl.com',
     "depends": ["stock"],
     "description": "Allows back-dating of stock moves",
-    'data': ["view/stock_view.xml"],
+    'data': [
+        "view/stock_view.xml",
+        "wizard/stock_partial_picking_view.xml",
+    ],
     'demo': [],
     'installable': True,
 }
