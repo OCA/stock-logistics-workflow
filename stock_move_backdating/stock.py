@@ -1,9 +1,30 @@
 # -*- coding: utf-8 -*-
-from osv import fields, osv
+##############################################################################
+#
+#    Copyright (C) 2012 BREMSKERL-REIBBELAGWERKE EMMERLING GmbH & Co. KG
+#    Author Marco Dieckhoff
+#    Copyright (C) 2013 Agile Business Group sagl (<http://www.agilebg.com>)
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
+
+from openerp.osv import fields, orm
 from datetime import datetime
 from tools.translate import _
 
-class stock_move(osv.osv):
+class stock_move(orm.Model):
     _name = "stock.move"
     _inherit = _name
         
@@ -52,4 +73,15 @@ class stock_move(osv.osv):
         # otherwise, ok
         return {}
     
-stock_move()
+    def _create_account_move_line(self, cr, uid, move, src_account_id,
+        dest_account_id, reference_amount, reference_currency_id, context=None):
+        if context is None:
+            context= {}
+        res=super(stock_move,self)._create_account_move_line(cr, uid, move,
+            src_account_id, dest_account_id, reference_amount,
+            reference_currency_id, context=context)
+        for o2m_tuple in res:
+            o2m_tuple[2]['date'] = move.date[:10]
+            if 'move_date' not in context:
+                context['move_date'] = move.date[:10]
+        return res
