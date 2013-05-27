@@ -75,9 +75,13 @@ class stock_move(orm.Model):
     
     def _create_account_move_line(self, cr, uid, move, src_account_id,
         dest_account_id, reference_amount, reference_currency_id, context=None):
+        if context is None:
+            context= {}
         res=super(stock_move,self)._create_account_move_line(cr, uid, move,
             src_account_id, dest_account_id, reference_amount,
             reference_currency_id, context=context)
         for o2m_tuple in res:
             o2m_tuple[2]['date'] = move.date[:10]
+            if 'move_date' not in context:
+                context['move_date'] = move.date[:10]
         return res
