@@ -8,7 +8,7 @@
             <field name="type">form</field>
             <field name="inherit_id" ref="stock.stock_partial_picking_form" />
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='move_ids']/tree//field[@name='prodlot_id']" position="after">
+                <xpath expr="//field[@name='move_ids']/tree//field[@name='product_uom']" position="after">
                     <field name="date_backdating"/>
                 </xpath>
             </field>
