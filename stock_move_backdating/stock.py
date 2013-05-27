@@ -20,11 +20,11 @@
 #
 ##############################################################################
 
-from osv import fields, osv
+from openerp.osv import fields, orm
 from datetime import datetime
 from tools.translate import _
 
-class stock_move(osv.osv):
+class stock_move(orm.Model):
     _name = "stock.move"
     _inherit = _name
         
