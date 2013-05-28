@@ -9,7 +9,7 @@
             <field name="inherit_id" ref="stock.stock_partial_picking_form" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='move_ids']/tree//field[@name='product_uom']" position="after">
-                    <field name="date_backdating"/>
+                    <field name="date_backdating" on_change="on_change_date_backdating(date_backdating)"/>
                 </xpath>
             </field>
         </record>
