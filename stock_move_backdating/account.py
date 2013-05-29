@@ -32,4 +32,4 @@ class account_move(orm.Model):
             if period_ids:
                 vals['period_id'] = period_ids[0]
                 vals['date'] = context['move_date']
-        res = super(account_move,self).create(cr, uid, vals, context=context)
+        return super(account_move,self).create(cr, uid, vals, context=context)
