@@ -24,7 +24,6 @@ class stock_partial_picking(osv.osv_memory):
         return partial_move
 
     def do_partial(self, cr, uid, ids, context=None):
-        import pdb; pdb.set_trace()
         partial = self.browse(cr, uid, ids[0], context=context)
         for wizard_line in partial.move_ids:
             date_backdating = wizard_line.date_backdating
