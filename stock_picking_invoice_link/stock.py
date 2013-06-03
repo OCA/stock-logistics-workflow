@@ -18,4 +18,31 @@
 #
 ##############################################################################
 
-import stock
+from openerp.osv import fields, orm
+from openerp.tools.translate import _
+
+class stock_picking(orm.Model):
+    _inherit = "stock.picking"
+    
+    _columns = {
+        'invoice_id': fields.many2one('account.invoice', 'Invoice', readonly=True),
+        }
+        
+    def _invoice_hook(self, cr, uid, picking, invoice_id):
+        res = super(stock_picking,self)._invoice_hook(cr, uid, picking, invoice_id)
+        picking.write({'invoice_id': invoice_id})
+        return res
+
+class stock_picking_out(orm.Model):
+    _inherit = "stock.picking.out"
+    
+    _columns = {
+        'invoice_id': fields.many2one('account.invoice', 'Invoice', readonly=True),
+        }
+
+class stock_picking_in(orm.Model):
+    _inherit = "stock.picking.in"
+    
+    _columns = {
+        'invoice_id': fields.many2one('account.invoice', 'Invoice', readonly=True),
+        }
