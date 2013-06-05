@@ -25,11 +25,11 @@
 ##############################################################################
 
 
-from osv import osv, fields
+from openerp.osv import fields, orm
+from openerp.tools.translate import _
 import netsvc
-from tools.translate import _
 
-class stock_picking(osv.osv):
+class stock_picking(orm.Model):
     _inherit = 'stock.picking'
     
     def has_valuation_moves(self, cr, uid, move):
@@ -43,7 +43,7 @@ class stock_picking(osv.osv):
         for picking in self.browse(cr, uid, ids, context):
             for line in picking.move_lines:
                 if self.has_valuation_moves(cr, uid, line):
-                    raise osv.except_osv(_('Error'),
+                    raise orm.except_orm(_('Error'),
                         _('Line %s has valuation moves (%s). Remove them first')
                         % (line.name, line.picking_id.name))
                 line.write({'state': 'draft'})
@@ -59,13 +59,13 @@ class stock_picking(osv.osv):
             self.log(cr, uid, id, message)
         return True
 
-class stock_picking_out(osv.osv):
+class stock_picking_out(orm.Model):
     _inherit = 'stock.picking.out'
     def action_revert_done(self, cr, uid, ids, context=None):
         #override in order to redirect to stock.picking object
         return self.pool.get('stock.picking').action_revert_done(cr, uid, ids, context=context)
 
-class stock_picking_in(osv.osv):
+class stock_picking_in(orm.Model):
     _inherit = 'stock.picking.in'
     def action_revert_done(self, cr, uid, ids, context=None):
         #override in order to redirect to stock.picking object
