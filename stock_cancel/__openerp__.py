@@ -29,8 +29,8 @@
 	""",
 	'author': 'www.andreacometa.it',
 	'website': 'http://www.andreacometa.it',
-	'depends': ['stock'],
-	'update_xml': [
+	'depends': ['stock_picking_invoice_link'],
+	'data': [
 		'stock_view.xml',
 		],
 	'installable': True,

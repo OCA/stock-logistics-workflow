@@ -5,6 +5,7 @@
 #    Copyright (c) 2012 Andrea Cometa All Rights Reserved.
 #                       www.andreacometa.it
 #                       openerp@andreacometa.it
+#    Copyright (C) 2013 Agile Business Group sagl (<http://www.agilebg.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -29,24 +30,43 @@ import netsvc
 from tools.translate import _
 
 class stock_picking(osv.osv):
-	_inherit = 'stock.picking'
+    _inherit = 'stock.picking'
+    
+    def has_valuation_moves(self, cr, uid, move):
+        return self.pool.get('account.move').search(cr, uid, [
+            ('ref','=', move.picking_id.name),
+            ])
 
-		
-	def action_revert_done(self, cr, uid, ids, *args):
-		if not len(ids):
-			return False
-		cr.execute('select id from stock_move where picking_id IN %s and state=%s', (tuple(ids), 'done'))
-		line_ids = map(lambda x: x[0], cr.fetchall())
-		self.write(cr, uid, ids, {'state': 'draft'})
-		self.pool.get('stock.move').write(cr, uid, line_ids, { 'state': 'draft'})
-		wf_service = netsvc.LocalService("workflow")
-		for inv_id in ids:
-			# Deleting the existing instance of workflow for SO
-			wf_service.trg_delete(uid, 'stock.picking', inv_id, cr)
-			wf_service.trg_create(uid, 'stock.picking', inv_id, cr)
-		for (id,name) in self.name_get(cr, uid, ids):
-			message = _("The stock picking '%s' has been set in draft state.") %(name,)
-			self.log(cr, uid, id, message)
-		return True
+    def action_revert_done(self, cr, uid, ids, context=None):
+        if not len(ids):
+            return False
+        for picking in self.browse(cr, uid, ids, context):
+            for line in picking.move_lines:
+                if self.has_valuation_moves(cr, uid, line):
+                    raise osv.except_osv(_('Error'),
+                        _('Line %s has valuation moves (%s). Remove them first')
+                        % (line.name, line.picking_id.name))
+                line.write({'state': 'draft'})
+            self.write(cr, uid, [picking.id], {'state': 'draft'})
+            if picking.invoice_state == 'invoiced' and not picking.invoice_id:
+                self.write(cr, uid, [picking.id], {'invoice_state': '2binvoiced'})
+            wf_service = netsvc.LocalService("workflow")
+            # Deleting the existing instance of workflow
+            wf_service.trg_delete(uid, 'stock.picking', picking.id, cr)
+            wf_service.trg_create(uid, 'stock.picking', picking.id, cr)
+        for (id,name) in self.name_get(cr, uid, ids):
+            message = _("The stock picking '%s' has been set in draft state.") %(name,)
+            self.log(cr, uid, id, message)
+        return True
 
-stock_picking()
+class stock_picking_out(osv.osv):
+    _inherit = 'stock.picking.out'
+    def action_revert_done(self, cr, uid, ids, context=None):
+        #override in order to redirect to stock.picking object
+        return self.pool.get('stock.picking').action_revert_done(cr, uid, ids, context=context)
+
+class stock_picking_in(osv.osv):
+    _inherit = 'stock.picking.in'
+    def action_revert_done(self, cr, uid, ids, context=None):
+        #override in order to redirect to stock.picking object
+        return self.pool.get('stock.picking').action_revert_done(cr, uid, ids, context=context)
