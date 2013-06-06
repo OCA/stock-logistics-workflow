@@ -19,7 +19,7 @@ msgstr ""
 #: code:addons/stock_filter_none_zero_qty/product.py:55
 #, python-format
 msgid "Operator %s not suported in searches for qty_available (product.product)."
-msgstr "Operator %s not suported in searches for qty_available (product.product)."
+msgstr "L'opérateur %s n'est pas supporté dans les recherches sur 'qty_available' (product.product)."
 
 #. module: stock_filter_none_zero_qty
 #: model:ir.model,name:stock_filter_none_zero_qty.model_product_product
