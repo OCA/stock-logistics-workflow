@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_transport_mode_form">
+            <field name="name">Transport Mode</field>
+            <field name="model">transport.mode</field>
+            <field name="arch" type="xml">
+                <data>
+                    <field name="name"/>
+                </data>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_transport_mode_tree">
+            <field name="name">Transport Modes</field>
+            <field name="model">transport.mode</field>
+            <field name="arch" type="xml">
+                <tree string="Transport Modes">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_transport_mode">
+            <field name="name">Transport Modes</field>
+            <field name="res_model">transport.mode</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="menu_transport_mode" parent="purchase.menu_purchase_config_purchase" name="Transport Modes" action="action_transport_mode" sequence="150"/>
+    </data>
+</openerp>

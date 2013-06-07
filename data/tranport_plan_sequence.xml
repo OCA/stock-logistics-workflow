@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="seq_type_logistic_request" model="ir.sequence.type">
+            <field name="name">Transport Plan</field>
+            <field name="code">transport.plan</field>
+        </record>
+        <record id="seq_logistic_request" model="ir.sequence">
+            <field name="name">Transport Plan</field>
+            <field name="code">transport.plan</field>
+            <field name="prefix">TP</field>
+            <field name="padding">5</field>
+        </record>
+    </data>
+</openerp>
