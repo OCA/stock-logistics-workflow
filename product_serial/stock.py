@@ -164,6 +164,24 @@ class stock_move(orm.Model):
 class stock_picking(orm.Model):
     _inherit = "stock.picking"
 
+    def _check_split(self, move):
+        track_production = move.product_id.track_production
+        track_incoming = move.product_id.track_incoming
+        track_outgoing = move.product_id.track_outgoing
+        track_internal = move.product_id.track_internal
+        from_loc_usage = move.location_id.usage
+        dest_loc_usage = move.location_dest_id.usage
+        if track_production and (from_loc_usage == 'production' or \
+                                 dest_loc_usage == 'production'):
+            return True
+        if track_incoming and from_loc_usage == 'supplier':
+            return True
+        if track_outgoing and dest_loc_usage == 'customer':
+            return True
+        if track_internal and dest_loc_usage == 'internal':
+            return True
+        return False
+
     def action_assign_wkf(self, cr, uid, ids, context=None):
         result = super(stock_picking, self).action_assign_wkf(cr, uid, ids, context=context)
 
@@ -171,10 +189,7 @@ class stock_picking(orm.Model):
             if picking.company_id.autosplit_is_active:
                 for move in picking.move_lines:
                     # Auto split
-                    if ((move.product_id.track_production and move.location_id.usage == 'production') or \
-                        (move.product_id.track_production and move.location_dest_id.usage == 'production') or \
-                        (move.product_id.track_incoming and move.location_id.usage == 'supplier') or \
-                        (move.product_id.track_outgoing and move.location_dest_id.usage == 'customer')):
+                    if self._check_split(move):
                         self.pool.get('stock.move').split_move(cr, uid, [move.id])
 
         return result
