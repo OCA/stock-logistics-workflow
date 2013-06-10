@@ -44,8 +44,10 @@ class transport_plan(orm.Model):
             digits_compute=dp.get_precision('Account'),
         ),
         'po_reference': fields.char('PO / RFQ / Tender Reference'),
-        'transport_mode_id': fields.many2one(
-            'transport.mode',
+        'type': fields.selection(
+            [('land', 'Land'),
+             ('sea', 'Sea'),
+             ('air', 'Air')],
             string='Transport by',
         ),
         'note': fields.text('Remarks/Description'),

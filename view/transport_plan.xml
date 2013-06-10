@@ -5,7 +5,7 @@
         <menuitem name="Order Management"
             id="menu_order"
             sequence="25"/>
-        <menuitem id="menu_transport_plan_base" name="Transport Plan" parent="menu_order" sequence="4"/>
+        <menuitem id="menu_transport_plan_base" name="Transport Plan" parent="menu_order" sequence="2"/>
 
         <record model="ir.ui.view" id="view_transport_plan_form">
             <field name="name">transport.plan.form</field>
@@ -24,7 +24,7 @@
                         </div>
                         <group>
                             <group>
-                                <field name="transport_mode_id" widget="selection"/>
+                                <field name="type"/>
                                 <field name="date_eta"/>
                                 <field name="date_etd"/>
                                 <field name="from_address_id"/>
