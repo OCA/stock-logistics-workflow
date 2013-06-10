@@ -19,7 +19,6 @@
 ##############################################################################
 
 from osv import fields, osv
-from datetime import datetime
 
 class stock_partial_picking_line(osv.TransientModel):
     _inherit = 'stock.partial.picking.line'
@@ -33,7 +32,7 @@ class stock_partial_picking_line(osv.TransientModel):
          return move_obj.on_change_date_backdating(cr, uid, ids, date_backdating, context=context)
 
 
-class stock_partial_picking(osv.osv_memory):
+class stock_partial_picking(osv.TransientModel):
     _inherit = 'stock.partial.picking'
     name = 'stock.partial.picking'
 
