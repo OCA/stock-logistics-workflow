@@ -5,7 +5,6 @@
         <record id="stock_partial_picking_form" model="ir.ui.view">
             <field name="name">stock.partial.picking.form</field>
             <field name="model">stock.partial.picking</field>
-            <field name="type">form</field>
             <field name="inherit_id" ref="stock.stock_partial_picking_form" />
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='move_ids']/tree//field[@name='product_uom']" position="after">
