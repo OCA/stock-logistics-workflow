@@ -2,27 +2,24 @@
 <openerp>
     <data noupdate="1">
         <record id="transport_mode1" model="transport.mode">
-            <field name="name">AIR</field>
-        </record>
-        <record id="transport_mode2" model="transport.mode">
             <field name="name">SEA</field>
         </record>
-        <record id="transport_mode3" model="transport.mode">
+        <record id="transport_mode2" model="transport.mode">
             <field name="name">ROAD</field>
         </record>
-        <record id="transport_mode4" model="transport.mode">
+        <record id="transport_mode3" model="transport.mode">
             <field name="name">RAILWAY</field>
         </record>
-        <record id="transport_mode5" model="transport.mode">
+        <record id="transport_mode4" model="transport.mode">
             <field name="name">EXPRESS COURRIER</field>
         </record>
-        <record id="transport_mode6" model="transport.mode">
+        <record id="transport_mode5" model="transport.mode">
             <field name="name">ON ANIMAL</field>
         </record>
-        <record id="transport_mode7" model="transport.mode">
+        <record id="transport_mode6" model="transport.mode">
             <field name="name">SEAROAD</field>
         </record>
-        <record id="transport_mode8" model="transport.mode">
+        <record id="transport_mode7" model="transport.mode">
             <field name="name">NOT APPLICABLE</field>
         </record>
     </data>
