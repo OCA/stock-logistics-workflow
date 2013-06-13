@@ -2,6 +2,9 @@
 <openerp>
     <data noupdate="1">
         <record id="transport_mode1" model="transport.mode">
+            <field name="name">AIR</field>
+        </record>
+        <record id="transport_mode1" model="transport.mode">
             <field name="name">SEA</field>
         </record>
         <record id="transport_mode2" model="transport.mode">
