@@ -666,17 +666,17 @@ class scanner_hardware(osv.osv):
             # ORM exception, display the error message and require the "go back" action
             cr.rollback()
             ld = {'act': 'E', 'res': [e.name, u'', e.value], 'val': True}
-            logger.warning('OSV Exception: %s' % reduce(lambda x, y: x + y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback)))
+            logger.warning('OSV Exception: %s' % reduce(lambda x, y: x + y, traceback.format_exception(*sys.exc_info())))
         except osv.except_osv, e:
             # OSV exception, display the error message and require the "go back" action
             cr.rollback()
             ld = {'act': 'E', 'res': [e.name, u'', e.value], 'val': True}
-            logger.warning('OSV Exception: %s' % reduce(lambda x, y: x + y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback)))
+            logger.warning('OSV Exception: %s' % reduce(lambda x, y: x + y, traceback.format_exception(*sys.exc_info())))
         except Exception, e:
             cr.rollback()
             ld = {'act': 'R', 'res': ['Please contact', 'your', 'administrator'], 'val': 0}
             self.empty_scanner_values(cr, uid, [terminal_id], context=context)
-            logger.error('Exception: %s' % reduce(lambda x, y: x + y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback)))
+            logger.error('Exception: %s' % reduce(lambda x, y: x + y, traceback.format_exception(*sys.exc_info())))
         finally:
             scanner_scenario_obj._semaphore_release(cr, uid, terminal.scenario_id.id, terminal.warehouse_id.id, terminal.reference_document, context=context)
 
