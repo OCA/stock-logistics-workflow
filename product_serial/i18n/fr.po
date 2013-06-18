@@ -149,7 +149,7 @@ msgstr "onchange_product_id(product_id,location_id,location_dest_id, False)"
 msgid "None: no split ; single: 1 line/product unit ; Logistical Unit: split using the first Logistical Unit quantity of the product form packaging tab (to be improved to take into account all LU)"
 msgstr ""
 "Aucun: pas de découpe ; Unique : une ligne par unité de produit ;\n"
-"Unité logistique : découp en utilisant la première quantité\n"
+"Unité logistique : découpe en utilisant la première quantité\n"
 "appartenant à une unité logistique depuis l'onglet packaging (doit\n"
 "encore être amélioré)"
 

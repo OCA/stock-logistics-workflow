@@ -30,7 +30,7 @@
     "license": "AGPL-3",
     "description":"""Enhance the management of Production Lots (Serial Numbers) in OpenERP.
 
-Here are the additionnal features proposed by this module:
+Here are the additional features proposed by this module:
 
 1. Add a new selection field 'Lot split type' on the product form
    under the 'Inventory' tab to specify how the Production Lots should be
