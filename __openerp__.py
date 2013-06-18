@@ -39,6 +39,7 @@ A transport plan represent a kind of "contract" with your carrier.
               ],
  "demo": [],
  "data": ["data/tranport_plan_sequence.xml",
+          "data/tranport_mode_data.xml",
           "view/transport_plan.xml",
           "view/transport_mode.xml",
           "security/ir.model.access.csv",
