@@ -34,8 +34,9 @@ class stock_move(orm.Model):
         'date_backdating': fields.datetime(
             "Actual Movement Date", readonly=False,
             states={'done': [('readonly', True)], 'cancel': [('readonly', True)]},
-            help='''Date when the move action was committed.
-            Will set the move date to this date instead of current date when processing to done.'''
+            help="Date when the move action was committed. "
+            "Will set the move date to this date instead "
+                 "of current date when processing to done."
         ),
     }
 
@@ -43,17 +44,17 @@ class stock_move(orm.Model):
         # look at previous state and find date_backdating
         backdating_dates = {}
 
-        for m in self.browse(cr, uid, ids, context=context):
+        for move in self.browse(cr, uid, ids, context=context):
             # if not already in done and date is given
-            if (m.state != 'done') and (m.date_backdating):
-                backdating_dates[m.id] = m.date_backdating
+            if (move.state != 'done') and (move.date_backdating):
+                backdating_dates[move.id] = move.date_backdating
 
         # do actual processing
         result = super(stock_move, self).action_done(cr, uid, ids, context)
 
         # overwrite date field where applicable
-        for m in self.browse(cr, uid, backdating_dates.keys(), context=context):
-            self.write(cr, uid, [m.id], {'date': backdating_dates[m.id]}, context=context)
+        for move in self.browse(cr, uid, backdating_dates.keys(), context=context):
+            self.write(cr, uid, [move.id], {'date': backdating_dates[move.id]}, context=context)
 
         return result
 
