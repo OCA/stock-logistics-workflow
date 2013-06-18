@@ -24,7 +24,7 @@
                         </div>
                         <group>
                             <group>
-                                <field name="type"/>
+                                <field name="transport_mode_id" widget="selection"/>
                                 <field name="date_eta"/>
                                 <field name="date_etd"/>
                                 <field name="from_address_id"/>
