@@ -85,7 +85,12 @@ class stock_move(orm.Model):
             reference_currency_id, context=context
         )
         for o2m_tuple in res:
-            o2m_tuple[2]['date'] = move.date_backdating[:10]
+            date = False
+            if move.date_backdating:
+                date = move.date_backdating[:10]
+            elif move.date:
+                date = move.date[:10]
+            o2m_tuple[2]['date'] = date
             if 'move_date' not in context:
-                context['move_date'] = move.date_backdating[:10]
+                context['move_date'] = date
         return res
