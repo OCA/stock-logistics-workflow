@@ -35,6 +35,9 @@ import uuid
 import netsvc
 import traceback
 import sys
+from psycopg2 import OperationalError, errorcodes
+import random
+import time
 
 logger = logging.getLogger('stock_scanner')
 
@@ -48,6 +51,9 @@ _CURSES_COLORS = [
     ('white', _('White')),
     ('yellow', _('Yellow')),
 ]
+
+PG_CONCURRENCY_ERRORS_TO_RETRY = (errorcodes.LOCK_NOT_AVAILABLE, errorcodes.SERIALIZATION_FAILURE, errorcodes.DEADLOCK_DETECTED)
+MAX_TRIES_ON_CONCURRENCY_FAILURE = 5
 
 
 class scanner_scenario(osv.osv):
@@ -653,32 +659,45 @@ class scanner_hardware(osv.osv):
             'scenario': scanner_scenario_obj.browse(cr, uid, scenario_id, context=context),
         }
 
-        try:
-            terminal.log('Executing step %d : %s' % (step_id, step.name))
-            terminal.log('Message : %s' % repr(message))
-            if tracer:
-                terminal.log('Tracer : %s' % repr(tracer))
+        tries = 0
+        while True:
+            try:
+                terminal.log('Executing step %d : %s' % (step_id, step.name))
+                terminal.log('Message : %s' % repr(message))
+                if tracer:
+                    terminal.log('Tracer : %s' % repr(tracer))
 
-            exec step.python_code in ld
-            if step.step_stop:
+                exec step.python_code in ld
+                if step.step_stop:
+                    self.empty_scanner_values(cr, uid, [terminal_id], context=context)
+            except OperationalError, e:
+                # Automatically retry the typical transaction serialization errors
+                if e.pgcode not in PG_CONCURRENCY_ERRORS_TO_RETRY:
+                    raise
+                if tries >= MAX_TRIES_ON_CONCURRENCY_FAILURE:
+                    logger.warning("Concurrent transaction - OperationalError %s, maximum number of tries reached" % e.pgcode)
+                    raise
+                wait_time = random.uniform(0.0, 2 ** tries)
+                tries += 1
+                logger.info("Concurrent transaction detected (%s), retrying %d/%d in %.04f sec..." % (e.pgcode, tries, MAX_TRIES_ON_CONCURRENCY_FAILURE, wait_time))
+                time.sleep(wait_time)
+            except orm.except_orm, e:
+                # ORM exception, display the error message and require the "go back" action
+                cr.rollback()
+                ld = {'act': 'E', 'res': [e.name, u'', e.value], 'val': True}
+                logger.warning('OSV Exception: %s' % reduce(lambda x, y: x + y, traceback.format_exception(*sys.exc_info())))
+            except osv.except_osv, e:
+                # OSV exception, display the error message and require the "go back" action
+                cr.rollback()
+                ld = {'act': 'E', 'res': [e.name, u'', e.value], 'val': True}
+                logger.warning('OSV Exception: %s' % reduce(lambda x, y: x + y, traceback.format_exception(*sys.exc_info())))
+            except Exception, e:
+                cr.rollback()
+                ld = {'act': 'R', 'res': ['Please contact', 'your', 'administrator'], 'val': 0}
                 self.empty_scanner_values(cr, uid, [terminal_id], context=context)
-        except orm.except_orm, e:
-            # ORM exception, display the error message and require the "go back" action
-            cr.rollback()
-            ld = {'act': 'E', 'res': [e.name, u'', e.value], 'val': True}
-            logger.warning('OSV Exception: %s' % reduce(lambda x, y: x + y, traceback.format_exception(*sys.exc_info())))
-        except osv.except_osv, e:
-            # OSV exception, display the error message and require the "go back" action
-            cr.rollback()
-            ld = {'act': 'E', 'res': [e.name, u'', e.value], 'val': True}
-            logger.warning('OSV Exception: %s' % reduce(lambda x, y: x + y, traceback.format_exception(*sys.exc_info())))
-        except Exception, e:
-            cr.rollback()
-            ld = {'act': 'R', 'res': ['Please contact', 'your', 'administrator'], 'val': 0}
-            self.empty_scanner_values(cr, uid, [terminal_id], context=context)
-            logger.error('Exception: %s' % reduce(lambda x, y: x + y, traceback.format_exception(*sys.exc_info())))
-        finally:
-            scanner_scenario_obj._semaphore_release(cr, uid, terminal.scenario_id.id, terminal.warehouse_id.id, terminal.reference_document, context=context)
+                logger.error('Exception: %s' % reduce(lambda x, y: x + y, traceback.format_exception(*sys.exc_info())))
+            finally:
+                scanner_scenario_obj._semaphore_release(cr, uid, terminal.scenario_id.id, terminal.warehouse_id.id, terminal.reference_document, context=context)
 
         ret = (ld.get('act', 'M'), ld.get('res', ['nothing']), ld.get('val', 0))
         terminal.log('Return value : %s' % repr(ret))
