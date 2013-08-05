@@ -660,7 +660,8 @@ class scanner_hardware(osv.osv):
         }
 
         tries = 0
-        while True:
+        loop_test = True
+        while loop_test:
             try:
                 terminal.log('Executing step %d : %s' % (step_id, step.name))
                 terminal.log('Message : %s' % repr(message))
@@ -670,13 +671,16 @@ class scanner_hardware(osv.osv):
                 exec step.python_code in ld
                 if step.step_stop:
                     self.empty_scanner_values(cr, uid, [terminal_id], context=context)
+                loop_test = False
             except OperationalError, e:
                 # Automatically retry the typical transaction serialization errors
                 if e.pgcode not in PG_CONCURRENCY_ERRORS_TO_RETRY:
-                    raise
+                    ld = {'act': 'R', 'res': ['Please contact', 'your', 'administrator'], 'val': 0}
+                    loop_test = False
                 if tries >= MAX_TRIES_ON_CONCURRENCY_FAILURE:
                     logger.warning("Concurrent transaction - OperationalError %s, maximum number of tries reached" % e.pgcode)
-                    raise
+                    ld = {'act': 'E', 'res': [u'Concurrent transaction - OperationalError %s, maximum number of tries reached' % (e.pgcode)], 'val': True}
+                    loop_test = False
                 wait_time = random.uniform(0.0, 2 ** tries)
                 tries += 1
                 logger.info("Concurrent transaction detected (%s), retrying %d/%d in %.04f sec..." % (e.pgcode, tries, MAX_TRIES_ON_CONCURRENCY_FAILURE, wait_time))
@@ -686,16 +690,19 @@ class scanner_hardware(osv.osv):
                 cr.rollback()
                 ld = {'act': 'E', 'res': [e.name, u'', e.value], 'val': True}
                 logger.warning('OSV Exception: %s' % reduce(lambda x, y: x + y, traceback.format_exception(*sys.exc_info())))
+                loop_test = False
             except osv.except_osv, e:
                 # OSV exception, display the error message and require the "go back" action
                 cr.rollback()
                 ld = {'act': 'E', 'res': [e.name, u'', e.value], 'val': True}
                 logger.warning('OSV Exception: %s' % reduce(lambda x, y: x + y, traceback.format_exception(*sys.exc_info())))
+                loop_test = False
             except Exception, e:
                 cr.rollback()
                 ld = {'act': 'R', 'res': ['Please contact', 'your', 'administrator'], 'val': 0}
                 self.empty_scanner_values(cr, uid, [terminal_id], context=context)
                 logger.error('Exception: %s' % reduce(lambda x, y: x + y, traceback.format_exception(*sys.exc_info())))
+                loop_test = False
             finally:
                 scanner_scenario_obj._semaphore_release(cr, uid, terminal.scenario_id.id, terminal.warehouse_id.id, terminal.reference_document, context=context)
 
