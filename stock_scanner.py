@@ -38,6 +38,7 @@ import sys
 from psycopg2 import OperationalError, errorcodes
 import random
 import time
+import pooler
 
 logger = logging.getLogger('stock_scanner')
 
@@ -537,131 +538,130 @@ class scanner_hardware(osv.osv):
         Save the scenario on this terminal and execute the current step
         Return the action to the terminal
         """
-        if context is None:
-            context = self.pool.get('res.users').context_get(cr, uid, context=context)
-
-        scanner_scenario_obj = self.pool.get('scanner.scenario')
-        scanner_step_obj = self.pool.get('scanner.scenario.step')
-        terminal = self.browse(cr, uid, terminal_id, context=context)
-
-        tracer = False
-
-        if transition_type == 'restart' or scenario_id and step_id is None:
-            if terminal.previous_steps_id:
-                # Retrieve previous step id and message
-                previous_steps_id = terminal.previous_steps_id.split(',')
-                previous_steps_message = terminal.previous_steps_message.split('\n')
-                if transition_type != 'restart':
-                    previous_steps_id.pop()
-                    previous_steps_message.pop()
-
-                if not previous_steps_id:
-                    return self.scanner_end(cr, uid, numterm=terminal.code, context=context)
-
-                # Retrieve step id
-                step_id = int(previous_steps_id.pop())
-                terminal.previous_steps_id = ','.join(previous_steps_id)
-
-                # Retrieve message
-                message = eval(previous_steps_message.pop())
-                terminal.previous_steps_message = '\n'.join(previous_steps_message)
-            else:
-                scenario_id = False
-                message = terminal.scenario_id.name
-
-        # No scenario in arguments, start a new one
-        if not scenario_id:
-            # Retrieve the terminal's warehouse
-            terminal_warehouse_ids = self.read(cr, uid, terminal_id, ['warehouse_id'], context=context).get('warehouse_id', False)
-            # Retrieve the warehouse's scenarios
-            scenario_ids = terminal_warehouse_ids and scanner_scenario_obj.search(cr, uid, [('name', '=', message), ('type', '=', 'scenario'), ('warehouse_ids', 'in', [terminal_warehouse_ids[0]])], context=context) or []
-
-            # If at least one scenario was found, pick the start step of the first
-            if scenario_ids:
-                scenario_id = scenario_ids[0]
-                step_ids = scanner_step_obj.search(cr, uid, [('scenario_id', '=', scenario_id), ('step_start', '=', True)], context=context)
-
-                # No start step found on the scenario, return an error
-                if not step_ids:
-                    return self._send_error(cr, uid, [terminal_id], [_('Please contact'), _('your'), _('administrator'), _('A001')], context=context)
-
-                step_id = step_ids[0]
-
-            else:
-                return self._send_error(cr, uid, [terminal_id], [_('Scenario'), _('not found')], context=context)
-        elif transition_type != 'none':
-            # Retrieve outgoing transitions from the current step
-            scanner_transition_obj = self.pool.get('scanner.scenario.transition')
-            transition_ids = scanner_transition_obj.search(cr, uid, [('from_id', '=', step_id)], context=context)
-
-            # Evaluate the condition for each transition
-            for transition in scanner_transition_obj.browse(cr, uid, transition_ids, context=context):
-                step_id = False
-                tracer = ''
-                ctx = {
-                    'context': context,
-                    'model': self.pool.get(transition.from_id.scenario_id.model_id.model),
-                    'cr': cr,
-                    'pool': self.pool,
-                    'uid': uid,
-                    'm': message,
-                    'message': message,
-                    't': self.browse(cr, uid, terminal_id, context=context),
-                    'terminal': self.browse(cr, uid, terminal_id, context=context),
-                }
-                expr = eval(str(transition.condition), ctx)
-
-                # Invalid condition, evaluate next transition
-                if not expr:
-                    continue
-
-                # Condition passed, go to this step
-                step_id = transition.to_id.id
-                tracer = transition.tracer
-
-                # Store the old step id if we are on a back step
-                if transition.to_id.step_back and terminal.previous_steps_id.split(',')[-1] != str(transition.from_id.id):
-                    terminal.previous_steps_message = terminal.previous_steps_id and '%s\n%s' % (terminal.previous_steps_message, repr(message)) or repr(message)
-                    terminal.previous_steps_id = terminal.previous_steps_id and '%s,%d' % (terminal.previous_steps_id, transition.from_id.id) or str(transition.from_id.id)
-
-                # Valid transition found, stop searching
-                break
-
-            # No step found, return an error
-            if not step_id:
-                terminal.log('No valid transition found !')
-                return self._unknown_action(cr, uid, [terminal_id], [_('Please contact'), _('your'), _('adminstrator')], context=context)
-
-        # Memorize the current step
-        self._memorize(cr, uid, terminal_id, scenario_id, step_id, previous_steps_id=terminal.previous_steps_id, previous_steps_message=terminal.previous_steps_message, object=current_object, context=context)
-
-        # MUTEX Acquire
-        scanner_scenario_obj._semaphore_acquire(cr, uid, terminal.scenario_id.id, terminal.warehouse_id.id, terminal.reference_document, context=context)
-
-        # Execute the step
-        step = scanner_step_obj.browse(cr, uid, step_id, context=context)
-
-        ld = {
-            'cr': cr,
-            'uid': uid,
-            'pool': self.pool,
-            'model': self.pool.get(step.scenario_id.model_id.model),
-            'custom': self.pool.get('scanner.scenario.custom'),
-            'term': self,
-            'context': context,
-            'm': message,
-            'message': message,
-            't': terminal,
-            'terminal': terminal,
-            'tracer': tracer,
-            'wkf': netsvc.LocalService('workflow'),
-            'workflow': netsvc.LocalService('workflow'),
-            'scenario': scanner_scenario_obj.browse(cr, uid, scenario_id, context=context),
-        }
-
         tries = 0
-        loop_test = True
-        while loop_test:
+        while True:
+            if context is None:
+                context = self.pool.get('res.users').context_get(cr, uid, context=context)
+
+            scanner_scenario_obj = self.pool.get('scanner.scenario')
+            scanner_step_obj = self.pool.get('scanner.scenario.step')
+            terminal = self.browse(cr, uid, terminal_id, context=context)
+
+            tracer = False
+
+            if transition_type == 'restart' or scenario_id and step_id is None:
+                if terminal.previous_steps_id:
+                    # Retrieve previous step id and message
+                    previous_steps_id = terminal.previous_steps_id.split(',')
+                    previous_steps_message = terminal.previous_steps_message.split('\n')
+                    if transition_type != 'restart':
+                        previous_steps_id.pop()
+                        previous_steps_message.pop()
+
+                    if not previous_steps_id:
+                        return self.scanner_end(cr, uid, numterm=terminal.code, context=context)
+
+                    # Retrieve step id
+                    step_id = int(previous_steps_id.pop())
+                    terminal.previous_steps_id = ','.join(previous_steps_id)
+
+                    # Retrieve message
+                    message = eval(previous_steps_message.pop())
+                    terminal.previous_steps_message = '\n'.join(previous_steps_message)
+                else:
+                    scenario_id = False
+                    message = terminal.scenario_id.name
+
+            # No scenario in arguments, start a new one
+            if not scenario_id:
+                # Retrieve the terminal's warehouse
+                terminal_warehouse_ids = self.read(cr, uid, terminal_id, ['warehouse_id'], context=context).get('warehouse_id', False)
+                # Retrieve the warehouse's scenarios
+                scenario_ids = terminal_warehouse_ids and scanner_scenario_obj.search(cr, uid, [('name', '=', message), ('type', '=', 'scenario'), ('warehouse_ids', 'in', [terminal_warehouse_ids[0]])], context=context) or []
+
+                # If at least one scenario was found, pick the start step of the first
+                if scenario_ids:
+                    scenario_id = scenario_ids[0]
+                    step_ids = scanner_step_obj.search(cr, uid, [('scenario_id', '=', scenario_id), ('step_start', '=', True)], context=context)
+
+                    # No start step found on the scenario, return an error
+                    if not step_ids:
+                        return self._send_error(cr, uid, [terminal_id], [_('Please contact'), _('your'), _('administrator'), _('A001')], context=context)
+
+                    step_id = step_ids[0]
+
+                else:
+                    return self._send_error(cr, uid, [terminal_id], [_('Scenario'), _('not found')], context=context)
+            elif transition_type != 'none':
+                # Retrieve outgoing transitions from the current step
+                scanner_transition_obj = self.pool.get('scanner.scenario.transition')
+                transition_ids = scanner_transition_obj.search(cr, uid, [('from_id', '=', step_id)], context=context)
+
+                # Evaluate the condition for each transition
+                for transition in scanner_transition_obj.browse(cr, uid, transition_ids, context=context):
+                    step_id = False
+                    tracer = ''
+                    ctx = {
+                        'context': context,
+                        'model': self.pool.get(transition.from_id.scenario_id.model_id.model),
+                        'cr': cr,
+                        'pool': self.pool,
+                        'uid': uid,
+                        'm': message,
+                        'message': message,
+                        't': self.browse(cr, uid, terminal_id, context=context),
+                        'terminal': self.browse(cr, uid, terminal_id, context=context),
+                    }
+                    expr = eval(str(transition.condition), ctx)
+
+                    # Invalid condition, evaluate next transition
+                    if not expr:
+                        continue
+
+                    # Condition passed, go to this step
+                    step_id = transition.to_id.id
+                    tracer = transition.tracer
+
+                    # Store the old step id if we are on a back step
+                    if transition.to_id.step_back and terminal.previous_steps_id.split(',')[-1] != str(transition.from_id.id):
+                        terminal.previous_steps_message = terminal.previous_steps_id and '%s\n%s' % (terminal.previous_steps_message, repr(message)) or repr(message)
+                        terminal.previous_steps_id = terminal.previous_steps_id and '%s,%d' % (terminal.previous_steps_id, transition.from_id.id) or str(transition.from_id.id)
+
+                    # Valid transition found, stop searching
+                    break
+
+                # No step found, return an error
+                if not step_id:
+                    terminal.log('No valid transition found !')
+                    return self._unknown_action(cr, uid, [terminal_id], [_('Please contact'), _('your'), _('adminstrator')], context=context)
+
+            # Memorize the current step
+            self._memorize(cr, uid, terminal_id, scenario_id, step_id, previous_steps_id=terminal.previous_steps_id, previous_steps_message=terminal.previous_steps_message, object=current_object, context=context)
+
+            # MUTEX Acquire
+            scanner_scenario_obj._semaphore_acquire(cr, uid, terminal.scenario_id.id, terminal.warehouse_id.id, terminal.reference_document, context=context)
+
+            # Execute the step
+            step = scanner_step_obj.browse(cr, uid, step_id, context=context)
+
+            ld = {
+                'cr': cr,
+                'uid': uid,
+                'pool': self.pool,
+                'model': self.pool.get(step.scenario_id.model_id.model),
+                'custom': self.pool.get('scanner.scenario.custom'),
+                'term': self,
+                'context': context,
+                'm': message,
+                'message': message,
+                't': terminal,
+                'terminal': terminal,
+                'tracer': tracer,
+                'wkf': netsvc.LocalService('workflow'),
+                'workflow': netsvc.LocalService('workflow'),
+                'scenario': scanner_scenario_obj.browse(cr, uid, scenario_id, context=context),
+            }
+
             try:
                 terminal.log('Executing step %d : %s' % (step_id, step.name))
                 terminal.log('Message : %s' % repr(message))
@@ -671,16 +671,17 @@ class scanner_hardware(osv.osv):
                 exec step.python_code in ld
                 if step.step_stop:
                     self.empty_scanner_values(cr, uid, [terminal_id], context=context)
-                loop_test = False
+                break
             except OperationalError, e:
                 # Automatically retry the typical transaction serialization errors
+                cr.rollback()
                 if e.pgcode not in PG_CONCURRENCY_ERRORS_TO_RETRY:
                     ld = {'act': 'R', 'res': ['Please contact', 'your', 'administrator'], 'val': 0}
-                    loop_test = False
+                    break
                 if tries >= MAX_TRIES_ON_CONCURRENCY_FAILURE:
                     logger.warning("Concurrent transaction - OperationalError %s, maximum number of tries reached" % e.pgcode)
                     ld = {'act': 'E', 'res': [u'Concurrent transaction - OperationalError %s, maximum number of tries reached' % (e.pgcode)], 'val': True}
-                    loop_test = False
+                    break
                 wait_time = random.uniform(0.0, 2 ** tries)
                 tries += 1
                 logger.info("Concurrent transaction detected (%s), retrying %d/%d in %.04f sec..." % (e.pgcode, tries, MAX_TRIES_ON_CONCURRENCY_FAILURE, wait_time))
@@ -690,19 +691,19 @@ class scanner_hardware(osv.osv):
                 cr.rollback()
                 ld = {'act': 'E', 'res': [e.name, u'', e.value], 'val': True}
                 logger.warning('OSV Exception: %s' % reduce(lambda x, y: x + y, traceback.format_exception(*sys.exc_info())))
-                loop_test = False
+                break
             except osv.except_osv, e:
                 # OSV exception, display the error message and require the "go back" action
                 cr.rollback()
                 ld = {'act': 'E', 'res': [e.name, u'', e.value], 'val': True}
                 logger.warning('OSV Exception: %s' % reduce(lambda x, y: x + y, traceback.format_exception(*sys.exc_info())))
-                loop_test = False
+                break
             except Exception, e:
                 cr.rollback()
                 ld = {'act': 'R', 'res': ['Please contact', 'your', 'administrator'], 'val': 0}
                 self.empty_scanner_values(cr, uid, [terminal_id], context=context)
                 logger.error('Exception: %s' % reduce(lambda x, y: x + y, traceback.format_exception(*sys.exc_info())))
-                loop_test = False
+                break
             finally:
                 scanner_scenario_obj._semaphore_release(cr, uid, terminal.scenario_id.id, terminal.warehouse_id.id, terminal.reference_document, context=context)
 
