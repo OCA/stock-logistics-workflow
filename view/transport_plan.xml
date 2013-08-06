@@ -5,6 +5,12 @@
         <menuitem name="Order Management"
             id="menu_order"
             sequence="25"/>
+
+        <menuitem name="Configuration"
+            id="menu_order_configuration"
+            parent="menu_order"
+            sequence="100"/>
+
         <menuitem id="menu_transport_plan_base" name="Transport Plan" parent="menu_order" sequence="4"/>
 
         <record model="ir.ui.view" id="view_transport_plan_form">
