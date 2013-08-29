@@ -71,6 +71,8 @@ class stock_picking(orm.Model):
                           delivery moves with product_id, product_qty, uom
         @return: Dictionary of values
         """
+        if context is None:
+            context = {}
         if context.get('partial_no_confirm'):
             return self.do_partial_no_confirm(
                 cr, uid, ids, partial_datas, context=context)
