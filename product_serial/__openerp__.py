@@ -38,7 +38,12 @@
 
     """,
     "demo" : ["product_demo.xml"],
-    "data" : ["product_view.xml", "company_view.xml", "stock_view.xml"],
+    "data" : [
+        "product_view.xml",
+        "company_view.xml",
+        "stock_view.xml",
+        "wizard/prodlot_wizard_view.xml",
+        ],
     "active": False,
     "installable": True
 }

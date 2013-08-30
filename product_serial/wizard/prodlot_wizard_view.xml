@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+
+<record id="view_stock_picking_prodlot_selection" model="ir.ui.view">
+    <field name="name">stock.picking.prodlot.selection</field>
+    <field name="model">stock.picking.prodlot.selection</field>
+    <field name="arch" type="xml">
+        <form string="Select Production Lots" version="7.0">
+            <group>
+                <field name="product_id" />
+                <field name="prefix"/>
+                <field name="first_number"/>
+                <field name="last_number"/>
+                <field name="suffix"/>
+                <field name="create_prodlots"/>
+            </group>
+            <footer>
+                <button type="object" name="select_or_create_prodlots" string="Validate" class="oe_highlight"/>
+                <button string="Cancel" special="cancel" class="oe_link"/>
+            </footer>
+        </form>
+    </field>
+</record>
+
+
+<record id="action_prodlot_selection" model="ir.actions.act_window">
+    <field name="name">Select Production Lots</field>
+    <field name="res_model">stock.picking.prodlot.selection</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+</record>
+
+
+<record id="view_picking_form" model="ir.ui.view">
+    <field name="name">stock.picking.form.prodlot.selection</field>
+    <field name="model">stock.picking</field>
+    <field name="inherit_id" ref="stock.view_picking_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='origin']/.." position="after">
+            <group name="prodlot_wizard">
+                <button type="action" name="%(action_prodlot_selection)d" string="Spread Production Lots" states="draft,confirmed,assigned"/>
+            </group>
+        </xpath>
+    </field>
+</record>
+
+
+<record id="view_picking_in_form" model="ir.ui.view">
+    <field name="name">stock.picking.in.form.prodlot.selection</field>
+    <field name="model">stock.picking.in</field>
+    <field name="inherit_id" ref="stock.view_picking_in_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='origin']/.." position="after">
+            <group name="prodlot_wizard">
+                <button type="action" name="%(action_prodlot_selection)d" string="Spread Production Lots" states="draft,confirmed,assigned"/>
+            </group>
+        </xpath>
+    </field>
+</record>
+
+
+<record id="view_picking_out_form" model="ir.ui.view">
+    <field name="name">stock.picking.out.form</field>
+    <field name="model">stock.picking.out</field>
+    <field name="inherit_id" ref="stock.view_picking_out_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='origin']/.." position="after">
+            <group name="prodlot_wizard">
+                <button type="action" name="%(action_prodlot_selection)d" string="Spread Production Lots" states="draft,confirmed,assigned"/>
+            </group>
+        </xpath>
+    </field>
+</record>
+
+
+</data>
+</openerp>
