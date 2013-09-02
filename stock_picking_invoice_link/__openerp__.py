@@ -22,7 +22,7 @@
     'name': "Picking Invoice Link",
     'version': '0.1',
     'category': 'Warehouse Management',
-    'summary': 'Adds link between pickings and generated invoices'
+    'summary': 'Adds link between pickings and generated invoices',
     'description': """
 This module adds a link between pickings and generated invoices. So that user can easly reach the invoice related to the picking.
 
