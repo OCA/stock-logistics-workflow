@@ -7,8 +7,8 @@
 #                       openerp@andreacometa.it
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
+#    it under the terms of the GNU Affero General Public License as published
+#    by the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
@@ -22,19 +22,18 @@
 ##############################################################################
 
 {
-	'name': 'Stock Cancel',
-	'version': '1.2',
-	'category': 'Stock',
-	'description': """ENG: This module allows you to bring back a completed stock picking to draft state\nITA: Questo modulo consente di riaprire uno stock.picking completato
-	""",
-	'author': 'www.andreacometa.it',
-	'website': 'http://www.andreacometa.it',
-	'depends': ['stock_picking_invoice_link'],
-	'data': [
-		'stock_view.xml',
-		],
-	'installable': True,
-	'active': False,
-	'images' : ['images/stock_picking.jpg'],
+    'name': 'Stock Cancel',
+    'version': '1.2',
+    'category': 'Stock',
+    'description': """This module allows you to bring back a completed stock
+picking to draft state""",
+    'author': 'www.andreacometa.it',
+    'website': 'http://www.andreacometa.it',
+    'depends': ['stock_picking_invoice_link'],
+    'data': [
+        'stock_view.xml',
+        ],
+    'installable': True,
+    'active': False,
+    'images': ['images/stock_picking.jpg'],
 }
-
