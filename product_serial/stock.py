@@ -23,9 +23,9 @@
 #
 ##############################################################################
 
-from osv import fields, osv
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
 import hashlib
-from tools.translate import _
 
 
 class stock_move(osv.osv):
