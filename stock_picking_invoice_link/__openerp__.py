@@ -22,8 +22,9 @@
     'name': "Picking Invoice Link",
     'version': '0.1',
     'category': 'Warehouse Management',
+    'summary': 'Adds link between pickings and generated invoices'
     'description': """
-Add link between pickings and generated invoices.
+This module adds a link between pickings and generated invoices. So that user can easly reach the invoice related to the picking.
 
 Probably to be modified according to bug 1169998 (when solution will come)
 https://bugs.launchpad.net/openobject-addons/+bug/1169998
