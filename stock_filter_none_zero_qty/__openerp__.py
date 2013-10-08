@@ -30,6 +30,8 @@
          stockable products with and without stock availability
        · By default, only products with stock are shown (i.e.
          button is enabled)
+       . This filter is applied on products view located in Warehouse menu.
+       . Adds this filter from a location on button "More>Products" (via action window)
     
     This is an improvement of the module "zero_stock_filter" developed by OPENTIA, but this is filtering on real quantity for version 6.1
     It has been migrated to the 7.0 version (2013-04-30)
