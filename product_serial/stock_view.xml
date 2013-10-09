@@ -75,6 +75,20 @@
     </field>
 </record>
 
+<act_window
+    domain="[('last_location_id', '=', active_id)]"
+    id="act_prodlot_location_open"
+    name="Prodlots"
+    res_model="stock.production.lot"
+    src_model="stock.location"/>
+
+<record id="ir_act_prodlot_location_open" model="ir.values">
+    <field name="key2">tree_but_open</field>
+    <field name="model">stock.location</field>
+    <field name="name">Prodlots</field>
+    <field eval="'ir.actions.act_window,%d'%act_prodlot_location_open" name="value"/>
+</record>
+
 	<!-- Wizard to help users input production lots in batch -->
 <!-- TODO Nan-TIc : port to v6
 	<record id="view_stock_picking_prodlot_selection" model="ir.ui.view">
