@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
-###############################################################################~!!~~!!!
+##########################################################################
 #
-# Copyright (c) 2010-2012, OPENTIA Group (<http://opentia.com>)
-# The word "OPENTIA" is an European Community Trademark property of the Opentia Group
+#    Copyright (c) 2010-2012, OPENTIA Group (<http://opentia.com>)
+#    The word "OPENTIA" is an European Community Trademark property
+#    of the Opentia Group
 #
-# @author: Opentia "Happy Hacking" Team
-# @e-mail: consultoria@opentia·es
+#    @author: Opentia "Happy Hacking" Team
+#    @e-mail: consultoria@opentia·es
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,6 +20,5 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-###############################################################################~!!~~!!!
-
-import product
+#############################################################################
+from . import product
