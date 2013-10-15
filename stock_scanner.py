@@ -156,10 +156,10 @@ class scanner_scenario_step(osv.osv):
     _defaults = {
         'step_start': False,
         'step_stop': False,
-        'python_code': '# Use <m> or <message> to retrieve the data transmitted by the scanner.\n' \
-                       '# Use <t> or <terminal> to retrieve the running terminal browse record.\n' \
-                       '# Put the returned action code in <act>, as a single character.\n' \
-                       '# Put the returned result or message in <res>, as a list of strings.\n' \
+        'python_code': '# Use <m> or <message> to retrieve the data transmitted by the scanner.\n'
+                       '# Use <t> or <terminal> to retrieve the running terminal browse record.\n'
+                       '# Put the returned action code in <act>, as a single character.\n'
+                       '# Put the returned result or message in <res>, as a list of strings.\n'
                        '# Put the returned value in <val>, as an integer',
     }
 

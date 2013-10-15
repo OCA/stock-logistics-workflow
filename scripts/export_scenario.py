@@ -38,19 +38,19 @@ import sys
 
 parser = GetParser('Export scenario', '0.1')
 group = OptionGroup(parser, "Object arguments",
-        "Application Options")
+                    "Application Options")
 group.add_option('-v', '--verbose', dest='verbose',
                  action='store_true',
                  default=False,
                  help='Add verbose mode')
 group.add_option('', '--header', dest='header',
-                action='store_true',
-                default=False,
-                help='Add XML and OpenObkect Header')
+                 action='store_true',
+                 default=False,
+                 help='Add XML and OpenObkect Header')
 group.add_option('', '--indent', dest='indent',
-                action='store_true',
-                default=False,
-                help='Indent the XML output')
+                 action='store_true',
+                 default=False,
+                 help='Indent the XML output')
 group.add_option('', '--id', dest='scenario_id',
                  default=False,
                  help='id of the scenario to extract')

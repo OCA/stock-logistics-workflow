@@ -40,7 +40,7 @@ import os
 
 parser = GetParser('Export scenario', '0.1')
 group = OptionGroup(parser, "Object arguments",
-        "Application Options")
+                    "Application Options")
 group.add_option('', '--directory', dest='directory',
                  default='.',
                  help='directory where the script will search for the scenario files (default \'.\')')
@@ -118,7 +118,7 @@ for directory in directories:
     steps_number = 0
     transitions_number = 0
     for node in root.getchildren():
-        #the node of the Step and Transition are put in other list
+        # the node of the Step and Transition are put in other list
         if node.tag == 'Step':
             steps_number += 1
             step.append(node)
@@ -169,7 +169,7 @@ for directory in directories:
         logger.info('Scenario not exists, create it')
         scenario_id = scenario_obj.create(scen_vals)
 
-    #parse step
+    # parse step
     logger.info('Update steps')
     resid = {}
     for node in step:
@@ -199,7 +199,7 @@ for directory in directories:
         else:
             resid[step_vals['reference_res_id']] = step_obj.create(step_vals)
 
-    #parse transition
+    # parse transition
     logger.info('Update transitions')
     for node in transition:
         trans_vals = {}
