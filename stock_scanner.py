@@ -34,6 +34,10 @@ import uuid
 import netsvc
 import traceback
 import sys
+from psycopg2 import OperationalError, errorcodes
+import random
+import time
+import pooler
 
 logger = logging.getLogger('stock_scanner')
 
@@ -47,6 +51,9 @@ _CURSES_COLORS = [
     ('white', _('White')),
     ('yellow', _('Yellow')),
 ]
+
+PG_CONCURRENCY_ERRORS_TO_RETRY = (errorcodes.LOCK_NOT_AVAILABLE, errorcodes.SERIALIZATION_FAILURE, errorcodes.DEADLOCK_DETECTED)
+MAX_TRIES_ON_CONCURRENCY_FAILURE = 5
 
 
 class scanner_scenario(osv.Model):
@@ -518,8 +525,7 @@ class scanner_hardware(osv.Model):
 
         self.write(cr, uid, [terminal_id], args, context=context)
 
-    @logged
-    def _scenario_save(self, cr, uid, terminal_id, message, transition_type, scenario_id=None, step_id=None, current_object='', context=None):
+    def _do_scenario_save(self, cr, uid, terminal_id, message, transition_type, scenario_id=None, step_id=None, current_object='', context=None):
         """
         Save the scenario on this terminal and execute the current step
         Return the action to the terminal
@@ -622,31 +628,31 @@ class scanner_hardware(osv.Model):
         # Memorize the current step
         self._memorize(cr, uid, terminal_id, scenario_id, step_id, previous_steps_id=terminal.previous_steps_id, previous_steps_message=terminal.previous_steps_message, object=current_object, context=context)
 
-        # MUTEX Acquire
-        scanner_scenario_obj._semaphore_acquire(cr, uid, terminal.scenario_id.id, terminal.warehouse_id.id, terminal.reference_document, context=context)
-
-        # Execute the step
-        step = scanner_step_obj.browse(cr, uid, step_id, context=context)
-
-        ld = {
-            'cr': cr,
-            'uid': uid,
-            'pool': self.pool,
-            'model': self.pool.get(step.scenario_id.model_id.model),
-            'custom': self.pool.get('scanner.scenario.custom'),
-            'term': self,
-            'context': context,
-            'm': message,
-            'message': message,
-            't': terminal,
-            'terminal': terminal,
-            'tracer': tracer,
-            'wkf': netsvc.LocalService('workflow'),
-            'workflow': netsvc.LocalService('workflow'),
-            'scenario': scanner_scenario_obj.browse(cr, uid, scenario_id, context=context),
-        }
-
         try:
+            # MUTEX Acquire
+            scanner_scenario_obj._semaphore_acquire(cr, uid, terminal.scenario_id.id, terminal.warehouse_id.id, terminal.reference_document, context=context)
+
+            # Execute the step
+            step = scanner_step_obj.browse(cr, uid, step_id, context=context)
+
+            ld = {
+                'cr': cr,
+                'uid': uid,
+                'pool': self.pool,
+                'model': self.pool.get(step.scenario_id.model_id.model),
+                'custom': self.pool.get('scanner.scenario.custom'),
+                'term': self,
+                'context': context,
+                'm': message,
+                'message': message,
+                't': terminal,
+                'terminal': terminal,
+                'tracer': tracer,
+                'wkf': netsvc.LocalService('workflow'),
+                'workflow': netsvc.LocalService('workflow'),
+                'scenario': scanner_scenario_obj.browse(cr, uid, scenario_id, context=context),
+            }
+
             terminal.log('Executing step %d : %s' % (step_id, step.name))
             terminal.log('Message : %s' % repr(message))
             if tracer:
@@ -655,28 +661,58 @@ class scanner_hardware(osv.Model):
             exec step.python_code in ld
             if step.step_stop:
                 self.empty_scanner_values(cr, uid, [terminal_id], context=context)
-        except orm.except_orm, e:
-            # ORM exception, display the error message and require the "go back" action
-            cr.rollback()
-            ld = {'act': 'E', 'res': [e.name, u'', e.value], 'val': True}
-            logger.warning('OSV Exception: %s' % reduce(lambda x, y: x + y, traceback.format_exception(*sys.exc_info())))
-        except osv.except_osv, e:
-            # OSV exception, display the error message and require the "go back" action
-            cr.rollback()
-            ld = {'act': 'E', 'res': [e.name, u'', e.value], 'val': True}
-            logger.warning('OSV Exception: %s' % reduce(lambda x, y: x + y, traceback.format_exception(*sys.exc_info())))
-        except Exception, e:
-            cr.rollback()
-            ld = {'act': 'R', 'res': ['Please contact', 'your', 'administrator'], 'val': 0}
-            self.empty_scanner_values(cr, uid, [terminal_id], context=context)
-            logger.error('Exception: %s' % reduce(lambda x, y: x + y, traceback.format_exception(*sys.exc_info())))
         finally:
             scanner_scenario_obj._semaphore_release(cr, uid, terminal.scenario_id.id, terminal.warehouse_id.id, terminal.reference_document, context=context)
 
-        ret = (ld.get('act', 'M'), ld.get('res', ['nothing']), ld.get('val', 0))
-        terminal.log('Return value : %s' % repr(ret))
+        return (ld.get('act', 'M'), ld.get('res', ['nothing']), ld.get('val', 0))
 
-        return ret
+    @logged
+    def _scenario_save(self, cr, uid, terminal_id, message, transition_type, scenario_id=None, step_id=None, current_object='', context=None):
+        """
+        Save the scenario on this terminal, handling transient errors by retrying the same step 
+        Return the action to the terminal
+        """
+        if context is None:
+            context = {}
+        # avoid side-effects when retrying
+        context = dict(context)
+
+        terminal = self.browse(cr, uid, terminal_id, context=context)
+        tries = 0
+        while True:
+            try:
+                result = self._do_scenario_save(cr, uid, terminal_id, message, transition_type, scenario_id=scenario_id, step_id=step_id,
+                                                current_object=current_object, context=context)
+                break
+            except OperationalError, e:
+                # Automatically retry the typical transaction serialization errors
+                cr.rollback()
+                if e.pgcode not in PG_CONCURRENCY_ERRORS_TO_RETRY:
+                    logger.warning("[%s] OperationalError", terminal.code, exc_info=True)
+                    result = ('R', ['Please contact', 'your', 'administrator'], 0)
+                    break
+                if tries >= MAX_TRIES_ON_CONCURRENCY_FAILURE:
+                    logger.warning("[%s] Concurrent transaction - OperationalError %s, maximum number of tries reached", terminal.code, e.pgcode)
+                    result = ('E', [u'Concurrent transaction - OperationalError %s, maximum number of tries reached' % (e.pgcode)], True)
+                    break
+                wait_time = random.uniform(0.0, 2 ** tries)
+                tries += 1
+                logger.info("[%s] Concurrent transaction detected (%s), retrying %d/%d in %.04f sec...", terminal.code, e.pgcode, tries, MAX_TRIES_ON_CONCURRENCY_FAILURE, wait_time)
+                time.sleep(wait_time)
+            except (orm.except_orm, osv.except_osv), e:
+                # ORM exception, display the error message and require the "go back" action
+                cr.rollback()
+                logger.warning('[%s] OSV Exception:', terminal.code, exc_info=True)
+                result = ('E', [e.name, u'', e.value], True)
+                break
+            except Exception, e:
+                cr.rollback()
+                logger.error('[%s] Exception: ', terminal.code, exc_info=True)
+                result = ('R', ['Please contact', 'your', 'administrator'], 0)
+                self.empty_scanner_values(cr, uid, [terminal_id], context=context)
+                break
+        terminal.log('Return value : %r' % (result,))
+        return result
 
     def _scenario_list(self, cr, uid, warehouse_id, parent_id=False, context=None):
         """
