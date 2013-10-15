@@ -35,29 +35,27 @@
         <record id="view_scanner_hardware_tree" model="ir.ui.view">
             <field name="name">scanner.hardware.tree</field>
             <field name="model">scanner.hardware</field>
-            <field name="type">tree</field>
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
                 <tree string="Scanner Hardware">
                     <field name="warehouse_id"/>
                     <field name="code"/>
                     <field name="name"/>
-                    <field name="scenario_id" readonly="1"/>
-                    <field name="step_id" readonly="1"/>
+                    <field name="scenario_id"/>
+                    <field name="step_id"/>
                 </tree>
             </field>
         </record>
         <record id="view_scanner_hardware_form" model="ir.ui.view">
             <field name="name">scanner.hardware.form</field>
             <field name="model">scanner.hardware</field>
-            <field name="type">form</field>
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
                 <form string="Scanner Hardware">
-                    <field name="code" select="1"/>
-                    <field name="name" select="1"/>
-                    <field name="warehouse_id" select="1"/>
-                    <field name="user_id" select="1"/>
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="warehouse_id"/>
+                    <field name="user_id"/>
                     <field name="log_enabled"/>
                     <newline/>
                     <group colspan="4">
@@ -78,21 +76,21 @@
                         <separator string="Scanner status" colspan="4"/>
                         <field name="scenario_id"/>
                         <field name="step_id"/>
-                        <field name="reference_document" colspan="4"/>
+                        <field name="reference_document"/>
                         <button string="Reset Scenario" colspan="4" type="object" icon="gtk-apply" name="empty_scanner_values"/>
                     </group>
                     <group colspan="4">
                         <separator string="Temporary values" colspan="4"/>
-                        <field name="tmp_val1" readonly="1"/>
-                        <field name="tmp_val2" readonly="1"/>
-                        <field name="tmp_val3" readonly="1"/>
-                        <field name="tmp_val4" readonly="1"/>
-                        <field name="tmp_val5" readonly="1"/>
+                        <field name="tmp_val1"/>
+                        <field name="tmp_val2"/>
+                        <field name="tmp_val3"/>
+                        <field name="tmp_val4"/>
+                        <field name="tmp_val5"/>
                     </group>
                     <group colspan="4">
                         <separator string="Current Steps History" colspan="4"/>
-                        <field name="previous_steps_id" readonly="1" colspan="4" nolabel="1"/>
-                        <field name="previous_steps_message" readonly="1" colspan="4" nolabel="1"/>
+                        <field name="previous_steps_id" colspan="4" nolabel="1"/>
+                        <field name="previous_steps_message" colspan="4" nolabel="1"/>
                     </group>
                 </form>
             </field>
@@ -126,7 +124,6 @@
         <record id="view_scanner_scenario_tree" model="ir.ui.view">
             <field name="name">scanner.scenario.tree</field>
             <field name="model">scanner.scenario</field>
-            <field name="type">tree</field>
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
                 <tree string="Scanner Scenario">
@@ -142,11 +139,10 @@
         <record id="view_scanner_scenario_form" model="ir.ui.view">
             <field name="name">scanner.scenario.form</field>
             <field name="model">scanner.scenario</field>
-            <field name="type">form</field>
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
                 <form string="Scanner Scenario">
-                    <field name="name" select="1"/>
+                    <field name="name"/>
                     <field name="active"/>
                     <field name="type"/>
                     <field name="sequence"/>
@@ -155,7 +151,7 @@
                     <field name="shared_custom" attrs="{'invisible': [('type','!=', 'scenario')]}"/>
                     <notebook colspan="4">
                         <page string="Steps" attrs="{'invisible': [('type','!=', 'scenario')]}">
-                            <field name="step_ids" nolabel="1" mode="tree,form">
+                            <field name="step_ids" nolabel="1">
                                 <tree string="Step">
                                     <field name="name"/>
                                     <field name="step_start"/>
@@ -241,7 +237,6 @@
         <record id="view_scanner_scenario_search" model="ir.ui.view">
             <field name="name">scanner.scenario.search</field>
             <field name="model">scanner.scenario</field>
-            <field name="type">search</field>
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
                 <search string="Scanner Scenario">
@@ -304,7 +299,6 @@
         <record id="view_scanner_scenario_step_search" model="ir.ui.view">
             <field name="name">scanner.scenario.step.search</field>
             <field name="model">scanner.scenario.step</field>
-            <field name="type">search</field>
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
                 <search string="Scenario Step">
@@ -319,7 +313,6 @@
         <record id="view_scanner_scenario_step_tree" model="ir.ui.view">
             <field name="name">scanner.scenario.step.tree</field>
             <field name="model">scanner.scenario.step</field>
-            <field name="type">tree</field>
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
                 <tree string="Scenario Step">
@@ -334,7 +327,6 @@
         <record id="view_scanner_scenario_step_form" model="ir.ui.view">
             <field name="name">scanner.scenario.step.form</field>
             <field name="model">scanner.scenario.step</field>
-            <field name="type">form</field>
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
                 <form string="Scenario Step">
@@ -430,7 +422,6 @@
         <record id="view_scanner_scenario_transition_search" model="ir.ui.view">
             <field name="name">scanner.scenario.transition.search</field>
             <field name="model">scanner.scenario.transition</field>
-            <field name="type">search</field>
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
                 <search string="Scenario Step">
@@ -443,7 +434,6 @@
         <record id="view_scanner_scenario_transition_tree" model="ir.ui.view">
             <field name="name">scanner.scenario.transition.tree</field>
             <field name="model">scanner.scenario.transition</field>
-            <field name="type">tree</field>
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
                 <tree string="Transition">
@@ -460,11 +450,10 @@
         <record id="view_scanner_scenario_transition_form" model="ir.ui.view">
             <field name="name">scanner.scenario.transition.form</field>
             <field name="model">scanner.scenario.transition</field>
-            <field name="type">form</field>
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
                 <form string="Transition">
-                    <field name="name" colspan="2" select="1"/>
+                    <field name="name" colspan="2"/>
                     <field name="sequence"/>
                     <field name="from_id"/>
                     <field name="to_id"/>
@@ -505,7 +494,6 @@
         <record id="view_scanner_scenario_custom_tree" model="ir.ui.view">
             <field name="name">scanner.scenario.custom.tree</field>
             <field name="model">scanner.scenario.custom</field>
-            <field name="type">tree</field>
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
                 <tree string="Scenario Custom Values">
@@ -519,7 +507,6 @@
         <record id="view_scanner_scenario_custom_form" model="ir.ui.view">
             <field name="name">scanner.scenario.custom.form</field>
             <field name="model">scanner.scenario.custom</field>
-            <field name="type">form</field>
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
                 <form string="Scenario Custom Values">

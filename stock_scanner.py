@@ -22,10 +22,9 @@
 #
 ##############################################################################
 
-
-from osv import orm
-from osv import osv
-from osv import fields
+from openerp.osv import orm
+from openerp.osv import osv
+from openerp.osv import fields
 from tools.translate import _
 from tools.misc import ustr
 from tools.misc import logged
@@ -50,7 +49,7 @@ _CURSES_COLORS = [
 ]
 
 
-class scanner_scenario(osv.osv):
+class scanner_scenario(osv.Model):
     _name = 'scanner.scenario'
     _description = 'Scenario for scanner'
 
@@ -79,7 +78,7 @@ class scanner_scenario(osv.osv):
     ]
 
     _constraints = [
-        (lambda self, cr, uid, ids, context=None: self._check_recursion(cr, uid, ids, context=context), _('Error ! You can not create recursive scenarios.'), ['parent_id'])
+        (osv.osv._check_recursion, _('Error ! You can not create recursive scenarios.'), ['parent_id'])
     ]
 
     # Dict to save the semaphores
@@ -134,10 +133,8 @@ class scanner_scenario(osv.osv):
         """
         self._semaphores[id][warehouse_id][reference_document].release()
 
-scanner_scenario()
 
-
-class scanner_scenario_step(osv.osv):
+class scanner_scenario_step(osv.Model):
     _name = 'scanner.scenario.step'
     _description = 'Step for scenario'
 
@@ -181,10 +178,8 @@ class scanner_scenario_step(osv.osv):
         data['reference_res_id'] = uuid.uuid1()
         return super(scanner_scenario_step, self).copy_data(cr, uid, id, data, context=context)
 
-scanner_scenario_step()
 
-
-class scanner_scenario_transition(osv.osv):
+class scanner_scenario_transition(osv.Model):
     _name = 'scanner.scenario.transition'
     _description = 'Transition for senario'
 
@@ -240,10 +235,8 @@ class scanner_scenario_transition(osv.osv):
         data['reference_res_id'] = uuid.uuid1()
         return super(scanner_scenario_transition, self).copy_data(cr, uid, id, data, context=context)
 
-scanner_scenario_transition()
 
-
-class scanner_hardware(osv.osv):
+class scanner_hardware(osv.Model):
     _name = 'scanner.hardware'
     _description = 'Scanner Hardware'
 
@@ -255,16 +248,16 @@ class scanner_hardware(osv.osv):
         'screen_height': fields.integer('Screen Height', help='Height of the terminal\'s screen'),
         'warehouse_id': fields.many2one('stock.warehouse', 'Warehouse', required=True, help='Warehouse where is located this hardware'),
         'user_id': fields.many2one('res.users', 'User', help='Allow to define an other user for execute all scenarios with that scanner instead of default user'),
-        'scenario_id': fields.many2one('scanner.scenario', 'Scenario', help='Scenario used for this hardware'),
-        'step_id': fields.many2one('scanner.scenario.step', 'Current Step', help='Current step for this hardware'),
-        'previous_steps_id': fields.text('Previous Step', help='Previous step for this hardware'),
-        'previous_steps_message': fields.text('Previous Message', help='Previous message for this hardware'),
-        'reference_document': fields.integer('Reference', help='ID of the reference document'),
-        'tmp_val1': fields.char('Temp value 1', size=256, help='Temporary value'),
-        'tmp_val2': fields.char('Temp value 2', size=256, help='Temporary value'),
-        'tmp_val3': fields.char('Temp value 3', size=256, help='Temporary value'),
-        'tmp_val4': fields.char('Temp value 4', size=256, help='Temporary value'),
-        'tmp_val5': fields.char('Temp value 5', size=256, help='Temporary value'),
+        'scenario_id': fields.many2one('scanner.scenario', 'Scenario', readonly=True, help='Scenario used for this hardware'),
+        'step_id': fields.many2one('scanner.scenario.step', 'Current Step', readonly=True, help='Current step for this hardware'),
+        'previous_steps_id': fields.text('Previous Step', readonly=True, help='Previous step for this hardware'),
+        'previous_steps_message': fields.text('Previous Message', readonly=True, help='Previous message for this hardware'),
+        'reference_document': fields.integer('Reference', readonly=True, help='ID of the reference document'),
+        'tmp_val1': fields.char('Temp value 1', size=256, readonly=True, help='Temporary value'),
+        'tmp_val2': fields.char('Temp value 2', size=256, readonly=True, help='Temporary value'),
+        'tmp_val3': fields.char('Temp value 3', size=256, readonly=True, help='Temporary value'),
+        'tmp_val4': fields.char('Temp value 4', size=256, readonly=True, help='Temporary value'),
+        'tmp_val5': fields.char('Temp value 5', size=256, readonly=True, help='Temporary value'),
         # Define colors used on the terminal
         'base_fg_color': fields.selection(_CURSES_COLORS, 'Base - Text Color', required=True, help='Default color for the text'),
         'base_bg_color': fields.selection(_CURSES_COLORS, 'Base - Background Color', required=True, help='Default color for the background'),
@@ -320,7 +313,7 @@ class scanner_hardware(osv.osv):
         Check the step for this scanner
         """
         if context is None:
-            context = self.pool.get('res.users').context_get(cr, uid, context=context)
+            context = self.pool.get('res.users').context_get(cr, uid)
 
         # Retrieve the terminal id from its number
         terminal_ids = self.search(cr, uid, [('code', '=', terminal_number)], context=context)
@@ -342,7 +335,7 @@ class scanner_hardware(osv.osv):
         This method is called by the barcode reader,
         """
         if context is None:
-            context = self.pool.get('res.users').context_get(cr, uid, context=context)
+            context = self.pool.get('res.users').context_get(cr, uid)
         # Retrieve the terminal id
         terminal_ids = self.search(cr, uid, [('code', '=', terminal_number)], context=context)
         if not terminal_ids:
@@ -503,7 +496,7 @@ class scanner_hardware(osv.osv):
         if context is None:
             context = self.pool.get('res.users').context_get(cr, uid)
 
-        term_id = self.search_scanner_id(cr, uid, numterm, context=context)
+        self.search_scanner_id(cr, uid, numterm, context=context)
         return self.scanner_call(cr, uid, terminal_number=numterm, action='end')
 
     def _memorize(self, cr, uid, terminal_id, scenario_id, step_id, previous_steps_id=False, previous_steps_message=False, object=None, context=None):
@@ -512,7 +505,7 @@ class scanner_hardware(osv.osv):
         If object is specify, save it as well (ex: res.partner,12)
         """
         if context is None:
-            context = self.pool.get('res.users').context_get(cr, uid, context=context)
+            context = self.pool.get('res.users').context_get(cr, uid)
 
         args = {
             'scenario_id': scenario_id,
@@ -532,7 +525,7 @@ class scanner_hardware(osv.osv):
         Return the action to the terminal
         """
         if context is None:
-            context = self.pool.get('res.users').context_get(cr, uid, context=context)
+            context = self.pool.get('res.users').context_get(cr, uid)
 
         scanner_scenario_obj = self.pool.get('scanner.scenario')
         scanner_step_obj = self.pool.get('scanner.scenario.step')
@@ -690,7 +683,7 @@ class scanner_hardware(osv.osv):
         Retrieve the scenario list for this warehouse
         """
         if context is None:
-            context = self.pool.get('res.users').context_get(cr, uid, context=context)
+            context = self.pool.get('res.users').context_get(cr, uid)
 
         scanner_scenario_obj = self.pool.get('scanner.scenario')
         scanner_scenario_ids = scanner_scenario_obj.search(cr, uid, [('warehouse_ids', 'in', [warehouse_id]), ('parent_id', '=', parent_id)], context=context)
@@ -704,7 +697,7 @@ class scanner_hardware(osv.osv):
         Retrieve the screen size for this terminal
         """
         if context is None:
-            context = self.pool.get('res.users').context_get(cr, uid, context=context)
+            context = self.pool.get('res.users').context_get(cr, uid)
 
         data = self.read(cr, uid, terminal_id, ['screen_width', 'screen_height'], context=context)
 
@@ -718,10 +711,8 @@ class scanner_hardware(osv.osv):
             if terminal.log_enabled:
                 logger.info('[%s] %s' % (terminal.code, ustr(log_message)))
 
-scanner_hardware()
 
-
-class scanner_scenario_custom(osv.osv):
+class scanner_scenario_custom(osv.Model):
     _name = 'scanner.scenario.custom'
     _description = 'Temporary value for scenario'
 
@@ -850,7 +841,5 @@ class scanner_scenario_custom(osv.osv):
 
         # Else, delete the current custom values
         return self.unlink(cr, uid, ids, context=context)
-
-scanner_scenario_custom()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
