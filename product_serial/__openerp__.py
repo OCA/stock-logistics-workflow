@@ -30,12 +30,27 @@
     "license": "AGPL-3",
     "description":"""Enhance the management of Production Lots (Serial Numbers) in OpenERP.
 
-    Here are the additionnal features proposed by this module:
-    1) Add a new selection field 'Lot split type' on the product form under the 'Inventory' tab to specify how the Production Lots should be split on the Pickings (you should also enable 'Track Incoming/Outgoing Lots').
-    2) If the option 'Active auto split' is active for the Company, OpenERP will automagically splits up picking list movements into one movement per product instance or logistical unit packing quantity (in that case, only the first logistical unit is taken into account at the present time. Improvement to take them all to be done !).
-    3) Turns Incoming Pickings into an editable grid where you can directly type the codes of a new production lot and/or tracking number to create and associate to the move (it also checks it doesn't exist yet).
-    4) If the option 'Group invoice lines' is active for the Company, OpenERP will group the invoice lines to make it look like the Sale/Purchase Order when generating an Invoice from a Picking.
+Here are the additional features proposed by this module:
 
+1. Add a new selection field 'Lot split type' on the product form
+   under the 'Inventory' tab to specify how the Production Lots should be
+   split on the Pickings (you should also enable 'Track Incoming/Outgoing
+   Lots', and the new 'Track internal lots' field).
+
+2. If the option 'Active auto split' is active for the Company,
+   OpenERP will automagically split up picking list movements into one
+   movement per product instance or logistical unit packing quantity (in
+   that case, only the first logistical unit is taken into account at the
+   present time. Improvement to take them all to be done!).
+
+3. Turn Incoming Pickings into an editable grid where you can
+   directly type the codes of a new production lot and/or tracking number
+   to create and associate to the move (it also checks it doesn't exist
+   yet).
+
+4. If the option 'Group invoice lines' is active for the Company,
+   OpenERP will group the invoice lines to make it look like the
+   Sale/Purchase Order when generating an Invoice from a Picking.
     """,
     "demo" : ["product_demo.xml"],
     "data" : [

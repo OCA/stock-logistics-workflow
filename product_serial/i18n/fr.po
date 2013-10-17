@@ -1,0 +1,182 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* product_serial
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-06-08 19:56+0000\n"
+"PO-Revision-Date: 2013-06-08 23:23+0200\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: product_serial
+#: model:ir.model,name:product_serial.model_stock_picking_prodlot_selection
+msgid "stock.picking.prodlot.selection"
+msgstr "stock.picking.prodlot.selection"
+
+#. module: product_serial
+#: selection:product.product,lot_split_type:0
+msgid "Single"
+msgstr "Unité"
+
+#. module: product_serial
+#: help:stock.production.lot,last_location_id:0
+msgid "Display the current stock location of this production lot"
+msgstr "Affiche l'emplacement actuel de ce lot"
+
+#. module: product_serial
+#: selection:product.product,lot_split_type:0
+msgid "None"
+msgstr "Aucun"
+
+#. module: product_serial
+#: field:stock.production.lot,last_location_id:0
+msgid "Last location"
+msgstr "Dernier emplacement"
+
+#. module: product_serial
+#: view:stock.move:0
+msgid "[('product_id','=?',product_id)]"
+msgstr "[('product_id','=?',product_id)]"
+
+#. module: product_serial
+#: view:stock.move:0
+msgid "Manual Split"
+msgstr "Découpage manuel"
+
+#. module: product_serial
+#: field:product.product,track_internal:0
+msgid "Track Lots internally"
+msgstr "Suivre les lots en interne"
+
+#. module: product_serial
+#: model:ir.model,name:product_serial.model_stock_picking
+msgid "Picking List"
+msgstr "Opération de manutention"
+
+#. module: product_serial
+#: field:stock.move,new_tracking_code:0
+msgid "Create Tracking"
+msgstr "Créer un suivi"
+
+#. module: product_serial
+#: help:product.product,track_internal:0
+msgid "Forces to specify a Serial Number for all internal moves"
+msgstr "Forcer à donner un numéro de série sur les mouvements internes"
+
+#. module: product_serial
+#: model:ir.model,name:product_serial.model_product_product
+#: field:stock.picking.prodlot.selection,product_id:0
+msgid "Product"
+msgstr "Article"
+
+#. module: product_serial
+#: view:stock.move:0
+msgid "bottom"
+msgstr "bottom"
+
+#. module: product_serial
+#: model:ir.model,name:product_serial.model_stock_production_lot
+msgid "Serial Number"
+msgstr "Numéro de série"
+
+#. module: product_serial
+#: field:stock.move,new_prodlot_code:0
+msgid "Create Serial Number"
+msgstr "Créer numéro de série"
+
+#. module: product_serial
+#: field:res.company,autosplit_is_active:0
+msgid "Active auto split"
+msgstr "Activer l'auto découpe"
+
+#. module: product_serial
+#: field:res.company,is_group_invoice_line:0
+msgid "Group invoice lines"
+msgstr "Grouper les lignes de facture"
+
+#. module: product_serial
+#: field:stock.picking.prodlot.selection,first_lot:0
+msgid "First Lot Number"
+msgstr "Premier numéro de lot"
+
+#. module: product_serial
+#: selection:product.product,lot_split_type:0
+msgid "Logistical Unit"
+msgstr "Unité logistique"
+
+#. module: product_serial
+#: model:ir.model,name:product_serial.model_res_company
+msgid "Companies"
+msgstr "Sociétés"
+
+#. module: product_serial
+#: field:product.product,lot_split_type:0
+msgid "Lot split type"
+msgstr "Type de découpage de lot"
+
+#. module: product_serial
+#: help:res.company,is_group_invoice_line:0
+msgid "If active, OpenERP will group the identical invoice lines when generating an invoice from a picking. If inactive, each move line will generate one invoice line."
+msgstr ""
+"Si actif, OpenERP groupera les lignes de factures identiques lors de\n"
+"la génération d'une facture depuis une livraison. Sinon, chaque\n"
+"mouvement de stock génèrera une ligne de facture."
+
+#. module: product_serial
+#: view:stock.move:0
+msgid "{'location_id':location_id, 'product_id':product_id}"
+msgstr "{'location_id':location_id, 'product_id':product_id}"
+
+#. module: product_serial
+#: view:stock.move:0
+msgid "onchange_lot_id(prodlot_id, product_qty, location_id, product_id, product_uom)"
+msgstr "onchange_lot_id(prodlot_id, product_qty, location_id, product_id, product_uom)"
+
+#. module: product_serial
+#: view:stock.move:0
+msgid "onchange_product_id(product_id,location_id,location_dest_id, False)"
+msgstr "onchange_product_id(product_id,location_id,location_dest_id, False)"
+
+#. module: product_serial
+#: help:product.product,lot_split_type:0
+msgid "None: no split ; single: 1 line/product unit ; Logistical Unit: split using the first Logistical Unit quantity of the product form packaging tab (to be improved to take into account all LU)"
+msgstr ""
+"Aucun: pas de découpe ; Unique : une ligne par unité de produit ;\n"
+"Unité logistique : découpe en utilisant la première quantité\n"
+"appartenant à une unité logistique depuis l'onglet packaging (doit\n"
+"encore être amélioré)"
+
+#. module: product_serial
+#: view:res.company:0
+msgid "Product serial"
+msgstr "Numéro de série"
+
+#. module: product_serial
+#: model:ir.model,name:product_serial.model_stock_move
+msgid "Stock Move"
+msgstr "Mouvement de stock"
+
+#. module: product_serial
+#: view:stock.move:0
+msgid "Manual split"
+msgstr "Découpe manuelle"
+
+#. module: product_serial
+#: help:res.company,autosplit_is_active:0
+msgid "Active the automatic split of move lines on the pickings."
+msgstr ""
+"Active la découpe automatique des mouvements de stock de l'opération\n"
+"de manutention."
+
+#. module: product_serial
+#: field:stock.picking.prodlot.selection,last_lot:0
+msgid "Last Lot Number"
+msgstr "Dernier numéro de lot"
+
