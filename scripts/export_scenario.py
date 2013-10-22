@@ -158,6 +158,7 @@ transition_ids = transition_obj.search([('from_id.scenario_id', '=', int(opts.sc
 for transition_id in transition_ids:
     transition = transition_obj.read(transition_id, [])
     del transition['id']
+    del transition['scenario_id']
     # get res id
     if not transition['reference_res_id']:
         transition['reference_res_id'] = unicode(uuid.uuid1())
