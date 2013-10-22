@@ -691,7 +691,7 @@ class Sentinel(object):
         # Set the cursor position
         if nb_lines < len(entries):
             position_percent = float(highlighted) / len(entries)
-            position = int(round(nb_lines * position_percent))
+            position = int(round((nb_lines - 1) * position_percent))
             self._display(' ', x=self.window_width - 1, y=position + offset, color='info', modifier=curses.A_REVERSE)
         self.screen.move(self.window_height - 1, self.window_width - 1)
 
