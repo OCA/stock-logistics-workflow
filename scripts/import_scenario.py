@@ -169,6 +169,12 @@ for directory in directories:
         logger.info('Scenario not exists, create it')
         scenario_id = scenario_obj.create(scen_vals)
 
+    # List scenario steps and transitions, to be able to remove deleted data
+    scenario_data = scenario_obj.read(scenario_id, ['step_ids'])
+    all_step_ids = set(scenario_data['step_ids'])
+    step_data = step_obj.read(list(all_step_ids), ['in_transition_ids', 'out_transition_ids'])
+    all_transition_ids = set(sum([data['in_transition_ids'] + data['out_transition_ids'] for data in step_data], []))
+
     # parse step
     logger.info('Update steps')
     resid = {}
@@ -194,6 +200,7 @@ for directory in directories:
         step_ids = step_obj.search([('reference_res_id', '=', step_vals['reference_res_id'])], 0, None, None, {'active_test': False})
         if step_ids:
             resid[step_vals['reference_res_id']] = step_ids[0]
+            all_step_ids -= set(step_ids)
             del step_vals['reference_res_id']
             step_obj.write(step_ids, step_vals)
         else:
@@ -210,10 +217,16 @@ for directory in directories:
         # create or update
         trans_ids = trans_obj.search([('reference_res_id', '=', trans_vals['reference_res_id'])], 0, None, None, {'active_test': False})
         if trans_ids:
+            all_transition_ids -= set(trans_ids)
             del trans_vals['reference_res_id']
             trans_obj.write(trans_ids, trans_vals)
         else:
             trans_obj.create(trans_vals)
+
+    # Remove deleted steps and transitions
+    logger.info('Delete old steps and transitions')
+    step_obj.unlink(list(all_step_ids))
+    trans_obj.unlink(list(all_transition_ids))
 
 logger.info('Import scenario done!')
 
