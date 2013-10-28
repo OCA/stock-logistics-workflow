@@ -36,10 +36,10 @@ https://bugs.launchpad.net/openobject-addons/+bug/1169998
     "depends": ['stock'],
     "data": [
         "stock_view.xml",
+        "account_invoice_view.xml",
     ],
     "demo": [],
-    'test': [
-    ],
+    'test': [],
     "active": False,
     "installable": True
 }
