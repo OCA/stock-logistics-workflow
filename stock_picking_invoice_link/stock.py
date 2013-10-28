@@ -77,3 +77,14 @@ class account_invoice(orm.Model):
             'stock.picking', 'invoice_id', 'Related Pickings', readonly=True,
             help="Related pickings (only when the invoice has been generated from the picking)."),
     }
+
+
+class account_invoice_line(orm.Model):
+    _inherit = "account.invoice.line"
+
+    _columns = {
+        'move_line_ids': fields.one2many(
+            'stock.move', 'invoice_line_id', 'Related Stock Moves',
+            readonly=True,
+            help="Related stock moves (only when the invoice has been generated from the picking)."),
+        }
