@@ -3,7 +3,6 @@
 #
 #    Author: Nicolas Bessi, Guewen Baconnier
 #    Copyright 2013 Camptocamp SA
-#    Donors: donors
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
