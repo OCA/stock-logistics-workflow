@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+        <record id="view_picking_out_form" model="ir.ui.view">
+            <field name="name">stock.picking.out.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_out_form"></field>
+            <field name="arch" type="xml">
+                <field name="invoice_state" position="after">
+                    <field name="invoice_id" string="Invoice" groups="account.group_account_invoice" attrs="{'invisible':[('invoice_state', '=', 'none')]}"/>
+                </field>
+            </field>
+        </record>
+        <record id="view_picking_in_form" model="ir.ui.view">
+            <field name="name">stock.picking.in.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_in_form"></field>
+            <field name="arch" type="xml">
+                <field name="invoice_state" position="after">
+                    <field name="invoice_id" string="Invoice" groups="account.group_account_invoice" attrs="{'invisible':[('invoice_state', '=', 'none')]}"/>
+                </field>
+            </field>
+        </record>
+</data>
+</openerp>
