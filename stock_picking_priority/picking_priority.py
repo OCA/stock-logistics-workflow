@@ -18,10 +18,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #############################################################################
+import logging
 
-
-from openerp.osv import orm, fields
+from openerp.osv import orm, osv, fields
+from openerp.tools.translate import _
 from openerp import netsvc
+_logger = logging.getLogger(__name__)
 
 class StockPicking(orm.Model):
     _inherit = "stock.picking"
@@ -42,8 +44,23 @@ class StockPicking(orm.Model):
         if ids:
             domain += [('ids', 'in', ids)]
         picking_ids = self.search(cr, uid, domain, order='priority desc, min_date', context=context)
+        _logger.info('cancelling pickings')
         cancelled_ids = self.cancel_assign(cr, uid, picking_ids, context)
-        assigned_ids = self.action_assign(cr, uid, picking_ids, context)
+        assigned_ids = []
+        errors = []
+        _logger.info('reassigning pickings')
+        for picking_id in picking_ids:
+            try:
+                assigned_id = self.action_assign(cr, uid, [picking_id], context)
+                assigned_ids.append(assigned_id)
+            except osv.except_osv, exc:
+                name = self.read(cr, uid, picking_id, ['name'], context=context)['name']
+                errors.append(u'%s: %s' % (name, exc.args[-1]))
+                _logger.info('error in action_assign for picking %s: %s' % (name, exc))
+        if errors:
+            message = '\n'.join(errors)
+            raise orm.except_orm(_(u'Warning'),
+                                 _(u'The following errors were encountered:\n%s') % message)
         return cancelled_ids, assigned_ids
 
 class StockPickingOut(orm.Model):
