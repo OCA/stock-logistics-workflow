@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <record model="ir.ui.view" id="stock_picking_form">
+      <field name="name">stock.picking.form priority</field>
+      <field name="model">stock.picking</field>
+      <field name="inherit_id" ref="stock.view_picking_form"/>
+      <field name="arch" type="xml">
+        <field name="date_done" position="after">
+          <field name="priority"/>
+        </field>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="stock_picking_out_form">
+      <field name="name">stock.picking.out.form priority</field>
+      <field name="model">stock.picking.out</field>
+      <field name="inherit_id" ref="stock.view_picking_form"/>
+      <field name="arch" type="xml">
+        <field name="date_done" position="after">
+          <field name="priority"/>
+        </field>
+      </field>
+    </record>
+
+    <act_window id="action_retry_assign"
+                name="Retry picking assignment"
+                res_model="stock.picking.retry.availability"
+                view_type="form"
+                view_mode="form"
+                target="new"
+                />
+
+    <menuitem id="menu_retry_availability"
+              name="Recompute picking availability"
+              parent="procurement.menu_stock_sched"
+              sequence="40"
+              action="action_retry_assign"
+              groups="stock.group_stock_user,stock.group_stock_manager"
+              />
+
+    <record model="ir.ui.view" id="picking_retry_availability_form">
+      <field name="name">stock.picking.retry.availability form</field>
+      <field name="model">stock.picking.retry.availability</field>
+      <field name="arch" type="xml">
+        <form string="Recompute picking availability" version="7.0">
+          <sheet>
+            <p class="oe_grey">
+              This action will recompute the picking availability based on their
+              priority. Before running it, make sure that you have changed the
+              priority of at least one picking.
+            </p>
+          </sheet>
+          <footer>
+            <button name="action_retry_assign" string="Recompute availability" type="object"
+                    class="oe_highlight"/>
+            or
+            <button string="Cancel" class="oe_link" special="cancel" />
+          </footer>
+        </form>
+      </field>
+    </record>
+
+  </data>
+</openerp>
