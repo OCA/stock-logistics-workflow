@@ -19,7 +19,6 @@
 ##############################################################################
 
 from openerp.osv import fields, orm
-from openerp.tools.translate import _
 
 
 class stock_move(orm.Model):
@@ -68,3 +67,24 @@ class stock_picking_in(orm.Model):
         'invoice_id': fields.many2one(
             'account.invoice', 'Invoice', readonly=True),
     }
+
+
+class account_invoice(orm.Model):
+    _inherit = "account.invoice"
+
+    _columns = {
+        'picking_ids': fields.one2many(
+            'stock.picking', 'invoice_id', 'Related Pickings', readonly=True,
+            help="Related pickings (only when the invoice has been generated from the picking)."),
+    }
+
+
+class account_invoice_line(orm.Model):
+    _inherit = "account.invoice.line"
+
+    _columns = {
+        'move_line_ids': fields.one2many(
+            'stock.move', 'invoice_line_id', 'Related Stock Moves',
+            readonly=True,
+            help="Related stock moves (only when the invoice has been generated from the picking)."),
+        }
