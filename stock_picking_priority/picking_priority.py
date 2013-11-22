@@ -40,6 +40,7 @@ class StockPicking(orm.Model):
         }
     def retry_assign_all(self, cr, uid, ids, context=None):
         domain = [('type', '!=', 'in'),
+                  ('move_lines', '!=', []),
                   ('state', 'in', ('confirmed', 'assigned'))]
         if ids:
             domain += [('ids', 'in', ids)]
