@@ -60,7 +60,7 @@ class StockPicking(orm.Model):
         if errors:
             message = '\n'.join(errors)
             raise orm.except_orm(_(u'Warning'),
-                                 _(u'The following errors were encountered:\n%s') % message)
+                                 _(u'No operations validated due to the following errors:\n%s') % message)
         return cancelled_ids, assigned_ids
 
 class StockPickingOut(orm.Model):
