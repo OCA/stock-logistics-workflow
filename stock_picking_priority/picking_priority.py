@@ -22,8 +22,8 @@ import logging
 
 from openerp.osv import orm, osv, fields
 from openerp.tools.translate import _
-from openerp import netsvc
 _logger = logging.getLogger(__name__)
+
 
 class StockPicking(orm.Model):
     _inherit = "stock.picking"
@@ -38,13 +38,16 @@ class StockPicking(orm.Model):
     _defaults = {
         'priority': '0',
         }
+
     def retry_assign_all(self, cr, uid, ids, context=None):
         domain = [('type', '!=', 'in'),
                   ('move_lines', '!=', []),
                   ('state', 'in', ('confirmed', 'assigned'))]
         if ids:
             domain += [('ids', 'in', ids)]
-        picking_ids = self.search(cr, uid, domain, order='priority desc, min_date', context=context)
+        picking_ids = self.search(cr, uid, domain,
+                                  order='priority desc, min_date',
+                                  context=context)
         _logger.info('cancelling pickings')
         cancelled_ids = self.cancel_assign(cr, uid, picking_ids, context)
         assigned_ids = []
@@ -52,17 +55,22 @@ class StockPicking(orm.Model):
         _logger.info('reassigning pickings')
         for picking_id in picking_ids:
             try:
-                assigned_id = self.action_assign(cr, uid, [picking_id], context)
+                assigned_id = self.action_assign(cr, uid, [picking_id],
+                                                 context)
                 assigned_ids.append(assigned_id)
             except osv.except_osv, exc:
-                name = self.read(cr, uid, picking_id, ['name'], context=context)['name']
+                name = self.read(cr, uid, picking_id, ['name'],
+                                 context=context)['name']
                 errors.append(u'%s: %s' % (name, exc.args[-1]))
-                _logger.info('error in action_assign for picking %s: %s' % (name, exc))
+                _logger.info('error in action_assign for picking %s: %s'
+                             % (name, exc))
         if errors:
             message = '\n'.join(errors)
             raise orm.except_orm(_(u'Warning'),
-                                 _(u'No operations validated due to the following errors:\n%s') % message)
+                                 _(u'No operations validated due '
+                                   'to the following errors:\n%s') % message)
         return cancelled_ids, assigned_ids
+
 
 class StockPickingOut(orm.Model):
     _inherit = 'stock.picking.out'
@@ -79,7 +87,9 @@ class StockPickingOut(orm.Model):
         }
 
     def retry_assign_all(self, cr, uid, ids, context=None):
-        return self.pool.get('stock.picking').retry_assign_all(cr, uid, ids, context=context)
+        return self.pool.get('stock.picking').retry_assign_all(cr, uid, ids,
+                                                               context=context)
+
 
 class StockPickingIn(orm.Model):
     _inherit = 'stock.picking.in'
@@ -96,9 +106,8 @@ class StockPickingIn(orm.Model):
         }
 
     def retry_assign_all(self, cr, uid, ids, context=None):
-        return self.pool.get('stock.picking').retry_assign_all(cr, uid, ids, context=context)
-
-
+        return self.pool.get('stock.picking').retry_assign_all(cr, uid, ids,
+                                                               context=context)
 
 
 class StockPickingRetryAvailability(orm.TransientModel):
