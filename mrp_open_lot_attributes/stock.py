@@ -20,6 +20,7 @@
 ###############################################################################
 
 from osv import osv
+from tools.translate import _
 
 
 class stock_move(osv.osv):
@@ -32,20 +33,16 @@ class stock_move(osv.osv):
         dynamic view
 
         """
-        mod_obj = self.pool.get('ir.model.data')
-        act_obj = self.pool.get('ir.actions.act_window')
 
         if context is None:
             context = {}
         for move in self.browse(cr, uid, ids, context=context):
             if move.prodlot_id:
-                action_id = mod_obj.get_object_reference(
-                    cr, uid, 'stock', 'action_production_lot_form')[1]
-                action = act_obj.read(cr, uid, [action_id], context=context)[0]
+                ctx = {}
+                domain = []
 
                 if move.prodlot_id.attribute_set_id:
-
-                    action['context'] = (
+                    ctx = (
                         "{'open_lot_by_attribute_set': True, "
                         "'attribute_group_ids': %s}"
                         % [
@@ -53,13 +50,19 @@ class stock_move(osv.osv):
                             for group in move.prodlot_id.attribute_set_id.attribute_group_ids
                         ]
                     )
-                    action['domain'] = (
+                    domain = (
                         "[('attribute_set_id', '=', %s)]"
                         % move.prodlot_id.attribute_set_id.id
                     )
 
-                # I want the form, not the tree view
-                action['view_mode'] = 'form'
-                del action['views']
-                action['res_id'] = move.prodlot_id.id
-                return action
+                return {
+                    'context':ctx,
+                    'domain': domain,
+                    'res_id': move.prodlot_id.id,
+                    'name': _('Production Lots'),
+                    'view_type': 'form',
+                    'view_mode': 'form',
+                    'res_model': 'stock.production.lot',
+                    'type': 'ir.actions.act_window',
+                    'target': 'new',
+                }
