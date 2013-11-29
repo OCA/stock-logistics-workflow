@@ -296,8 +296,28 @@ class stock_production_lot(orm.Model):
 
         return res
 
+    def _last_location_id_search(self, cr, uid, obj, name, args, context=None):
+        ops = ['=', ]
+        prodlot_ids = ()
+        if not len(args):
+            return []
+        prodlot_ids = []
+        for a in args:
+            operator = a[1]
+            value = a[2]
+            if not operator in ops:
+                raise osv.except_osv(_('Error !'), _('Operator %s not supported in searches for last_location_id (product.product).' % operator))
+            if operator == '=':
+                cr.execute(
+                    "select distinct prodlot_id "\
+                    "from stock_report_prodlots "\
+                    "where location_id = %s and qty > 0 ",
+                    (value, ))
+                prodlot_ids = filter(None, map(lambda x:x[0], cr.fetchall()))
+        return [('id','in',tuple(prodlot_ids))]
+
     _columns = {
-        'last_location_id': fields.function(_last_location_id,
+        'last_location_id': fields.function(_last_location_id, fnct_search=_last_location_id_search,
                                     type="many2one", relation="stock.location",
                                     string="Last location",
                                     help="Display the current stock location of this production lot"),
