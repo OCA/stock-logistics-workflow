@@ -106,7 +106,7 @@ class stock_production_lot(osv.osv):
 
     def fields_view_get(self, cr, uid, view_id=None, view_type='form',
                         context=None, toolbar=False, submenu=False):
-        """Dinamically adds Save and close, Cancel buttons to the form view
+        """Dynamically adds Save and close, Cancel buttons to the form view
 
         """
 
