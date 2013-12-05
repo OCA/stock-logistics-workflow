@@ -19,12 +19,12 @@
 #                                                                             #
 ###############################################################################
 
-from osv import osv
+from openerp.osv import orm
 from tools.translate import _
 from lxml import etree
 
 
-class stock_move(osv.osv):
+class stock_move(orm.Model):
     _inherit = 'stock.move'
 
     def open_lot(self, cr, uid, ids, context=None):
@@ -86,7 +86,7 @@ class stock_move(osv.osv):
                 }
 
 
-class stock_production_lot(osv.osv):
+class stock_production_lot(orm.Model):
     _inherit = 'stock.production.lot'
 
     def save_lot(self, cr, uid, ids, context=None):
