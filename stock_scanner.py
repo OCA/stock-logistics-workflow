@@ -103,9 +103,11 @@ class scanner_scenario(osv.Model):
         id = super(scanner_scenario, self).create(cr, uid, values, context=context)
         return id
 
-    def copy_data(self, cr, uid, id, data, context=None):
-        data['reference_res_id'] = uuid.uuid1()
-        return super(scanner_scenario, self).copy_data(cr, uid, id, data, context=context)
+    def copy_data(self, cr, uid, id, default=None, context=None):
+        if default is None:
+            default = {}
+        default['reference_res_id'] = uuid.uuid1()
+        return super(scanner_scenario, self).copy_data(cr, uid, id, default=default, context=context)
 
     def _semaphore_acquire(self, cr, uid, id, warehouse_id, reference_document, context=None):
         """
@@ -181,9 +183,11 @@ class scanner_scenario_step(osv.Model):
         id = super(scanner_scenario_step, self).create(cr, uid, values, context=context)
         return id
 
-    def copy_data(self, cr, uid, id, data, context=None):
-        data['reference_res_id'] = uuid.uuid1()
-        return super(scanner_scenario_step, self).copy_data(cr, uid, id, data, context=context)
+    def copy_data(self, cr, uid, id, default=None, context=None):
+        if default is None:
+            default = {}
+        default['reference_res_id'] = uuid.uuid1()
+        return super(scanner_scenario_step, self).copy_data(cr, uid, id, default=default, context=context)
 
 
 class scanner_scenario_transition(osv.Model):
@@ -238,9 +242,11 @@ class scanner_scenario_transition(osv.Model):
         id = super(scanner_scenario_transition, self).create(cr, uid, values, context=context)
         return id
 
-    def copy_data(self, cr, uid, id, data, context=None):
-        data['reference_res_id'] = uuid.uuid1()
-        return super(scanner_scenario_transition, self).copy_data(cr, uid, id, data, context=context)
+    def copy_data(self, cr, uid, id, default=None, context=None):
+        if default is None:
+            default = {}
+        default['reference_res_id'] = uuid.uuid1()
+        return super(scanner_scenario_transition, self).copy_data(cr, uid, id, default=default, context=context)
 
 
 class scanner_hardware(osv.Model):
