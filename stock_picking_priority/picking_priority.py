@@ -112,8 +112,6 @@ class StockPickingIn(orm.Model):
 
 class StockPickingRetryAvailability(orm.TransientModel):
     _name = "stock.picking.retry.availability"
-    _columns = {
-        }
 
     def action_retry_assign(self, cr, uid, ids, context=None):
         pick_obj = self.pool['stock.picking']
