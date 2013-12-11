@@ -21,22 +21,22 @@
 
 
 {
-    "name" : "Picking priority",
-    "version" : "0.1",
-    "depends" : ['stock'],
-    "author" : "Camptocamp",
+    "name": "Picking priority",
+    "version": "0.1",
+    "depends": ['stock'],
+    "author": "Camptocamp",
     'license': 'AGPL-3',
     "description": """Add a priority attribute to pickings.
 
     This priority can be changed after the picking is confirmed and a
     wizard can be run to recompute the availability of pickings
     depending on the new priorities.""",
-    "website" : "http://www.camptocamp.com",
-    "category" : "Warehouse management",
-    "demo" : [
+    "website": "http://www.camptocamp.com",
+    "category": "Warehouse management",
+    "demo": [
         'picking_priority_demo.yml',
         ],
-    "data" : ['picking_priority_view.xml',
+    "data": ['picking_priority_view.xml',
               ],
     "test": ['tests/test_picking_priority.yml',
              ],
