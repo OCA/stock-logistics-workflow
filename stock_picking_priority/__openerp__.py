@@ -37,7 +37,7 @@
         'picking_priority_demo.yml',
         ],
     "data": ['picking_priority_view.xml',
-              ],
+             ],
     "test": ['tests/test_picking_priority.yml',
              ],
     "installable": True,
