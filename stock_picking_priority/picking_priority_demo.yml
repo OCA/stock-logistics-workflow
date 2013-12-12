@@ -1,0 +1,81 @@
+-
+ Create 3 pickings and procurements for 3 M-Opt on shelf 1 due Dec 10, 1st and 20
+ M-Opt (product.product_product_10)
+ initial stock is 8 units in shelf 1 (stock.stock_location_components)
+-
+ !record {model: stock.picking.out, id: ship_mopt_1}:
+   name: mopt1_1
+   move_lines:
+     - product_id: product.product_product_10
+       product_qty: 3
+       product_uom: product.product_uom_unit
+       location_id: stock.stock_location_components
+       location_dest_id: stock.stock_location_output
+       date: 2013-12-10
+       date_expected: 2013-12-10
+       procurements:
+         - name: mopt1_1
+           origin: test
+           date_planned: 2013-12-10
+           product_id: product.product_product_10
+           product_qty: 3
+           product_uom: product.product_uom_unit
+           location_id: stock.stock_location_components
+           procure_method: make_to_stock
+-
+ !record {model: stock.picking.out, id: ship_mopt_2}:
+   name: mopt1_2
+   move_lines:
+     - product_id: product.product_product_10
+       product_qty: 3
+       product_uom: product.product_uom_unit
+       location_id: stock.stock_location_components
+       location_dest_id: stock.stock_location_output
+       date: 2013-12-01
+       date_expected: 2013-12-01
+       procurements:
+         - name: mopt1_2
+           origin: test
+           date_planned: 2013-12-01
+           product_id: product.product_product_10
+           product_qty: 3
+           product_uom: product.product_uom_unit
+           location_id: stock.stock_location_components
+           procure_method: make_to_stock
+-
+ !record {model: stock.picking.out, id: ship_mopt_3}:
+   name: mopt1_3
+   move_lines:
+     - product_id: product.product_product_10
+       product_qty: 3
+       product_uom: product.product_uom_unit
+       location_id: stock.stock_location_components
+       location_dest_id: stock.stock_location_output
+       date: 2013-12-20
+       date_expected: 2013-12-20
+       procurements:
+         - name: mopt1_3
+           origin: test
+           date_planned: 2013-12-20
+           product_id: product.product_product_10
+           product_qty: 3
+           product_uom: product.product_uom_unit
+           location_id: stock.stock_location_components
+           procure_method: make_to_stock
+-
+ Confirm the 3 pickings
+-
+  !workflow {model: stock.picking, action: button_confirm, ref: ship_mopt_1}
+-
+  !workflow {model: stock.picking, action: button_confirm, ref: ship_mopt_2}
+-
+  !workflow {model: stock.picking, action: button_confirm, ref: ship_mopt_3}
+-
+ Confirm the procurements
+-
+ !python {model: procurement.order}: |
+   procurement_ids = self.search(cr, uid, [('name', 'in', ('mopt1_1', 'mopt1_2', 'mopt1_3'))], context=context)
+   from openerp import netsvc
+   wf_service = netsvc.LocalService("workflow")
+   for id in procurement_ids:
+     wf_service.trg_validate(uid, 'procurement.order', id, 'button_confirm', cr)
