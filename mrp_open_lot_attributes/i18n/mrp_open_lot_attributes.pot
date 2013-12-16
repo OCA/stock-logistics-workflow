@@ -1,0 +1,70 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* mrp_open_lot_attributes
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-12-16 14:56+0000\n"
+"PO-Revision-Date: 2013-12-16 14:56+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: mrp_open_lot_attributes
+#: model:ir.model,name:mrp_open_lot_attributes.model_stock_production_lot
+msgid "Production lot"
+msgstr ""
+
+#. module: mrp_open_lot_attributes
+#: view:mrp.production:0
+msgid "Open Lot"
+msgstr ""
+
+#. module: mrp_open_lot_attributes
+#: model:ir.model,name:mrp_open_lot_attributes.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: mrp_open_lot_attributes
+#: constraint:stock.move:0
+msgid "You try to assign a lot which is not from the same product"
+msgstr ""
+
+#. module: mrp_open_lot_attributes
+#: constraint:stock.move:0
+msgid "You can not move products from or to a location of the type view."
+msgstr ""
+
+#. module: mrp_open_lot_attributes
+#: constraint:stock.move:0
+msgid "You must assign a production lot for this product"
+msgstr ""
+
+#. module: mrp_open_lot_attributes
+#: code:addons/mrp_open_lot_attributes/stock.py:63
+#: code:addons/mrp_open_lot_attributes/stock.py:80
+#, python-format
+msgid "Production Lots"
+msgstr ""
+
+#. module: mrp_open_lot_attributes
+#: code:addons/mrp_open_lot_attributes/stock.py:135
+#, python-format
+msgid "Save and Close"
+msgstr ""
+
+#. module: mrp_open_lot_attributes
+#: code:addons/mrp_open_lot_attributes/stock.py:127
+#, python-format
+msgid "Cancel"
+msgstr ""
+
+#. module: mrp_open_lot_attributes
+#: sql_constraint:stock.production.lot:0
+msgid "The combination of serial number and internal reference must be unique !"
+msgstr ""
