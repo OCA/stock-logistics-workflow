@@ -57,7 +57,7 @@ class stock_move(orm.Model):
                     )
 
                 return {
-                    'context':ctx,
+                    'context': ctx,
                     'domain': domain,
                     'res_id': move.prodlot_id.id,
                     'name': _('Production Lots'),
