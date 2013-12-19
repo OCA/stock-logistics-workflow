@@ -19,7 +19,7 @@
 #
 ##############################################################################
 {
-    "name" : "Product Customer code on sale",
+    "name" : "Product Customer code for stock picking",
     "version" : "1.0",
     "author" : "Nicola Malcontenti - AgileBG",
     "website" : "http://www.agilebg.com",
