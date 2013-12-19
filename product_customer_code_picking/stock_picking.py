@@ -29,10 +29,10 @@ class stock_move(orm.Model):
             context = {}
         res = {}
         product_customer_code_obj = self.pool.get('product.customer.code')
-        for line in self.browse(cr, uid, ids, context=context):
-            res[line.id] = ''
-            partner = line.order_id.partner_id
-            product = line.product_id
+        for move in self.browse(cr, uid, ids, context=context):
+            res[move.id] = ''
+            partner = move.partner_id
+            product = move.product_id
             if product and partner:
                 code_ids = product_customer_code_obj.search(cr, uid, [
                     ('product_id', '=', product.id),
@@ -41,7 +41,7 @@ class stock_move(orm.Model):
                 if code_ids:
                     code = product_customer_code_obj.browse(cr, uid,
                         code_ids[0], context=context).code or ''
-                    res[line.id] = code
+                    res[move.id] = code
         return res
     
     _columns = {
