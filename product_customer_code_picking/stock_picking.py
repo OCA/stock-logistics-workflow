@@ -20,8 +20,8 @@
 ##############################################################################
 from openerp.osv import fields, orm
 
-class stock_picking(orm.Model):
-    _inherit = 'stock.picking'
+class stock_move(orm.Model):
+    _inherit = 'stock.move'
     
     def _get_product_customer_code(self, cr, uid, ids,
                                   name, args, context=None):
