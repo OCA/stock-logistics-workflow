@@ -40,7 +40,7 @@ class stock_move(orm.Model):
                     ], limit=1, context=context)
                 if code_ids:
                     code = product_customer_code_obj.browse(cr, uid,
-                        code_ids[0], context=context).code or ''
+                        code_ids[0], context=context).product_code or ''
                     res[move.id] = code
         return res
     
