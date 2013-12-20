@@ -8,16 +8,25 @@
 <openerp>
     <data>
 
-        <record id="view_picking_form" model="ir.ui.view">
-            <field name="name">stock.picking.product.code.form</field>
-            <field name="model">stock.picking</field>
-            <field name="inherit_id" ref="stock.view_picking_form"/>
+        <record id="view_move_picking_tree" model="ir.ui.view">
+            <field name="name">stock.move.product.code.tree</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_picking_tree"/>
             <field eval="16" name="priority"/>
             <field name="arch" type="xml">
-                <!--<xpath expr="//field[@name='move_lines']/form/field[@name='product_id']" position="after">
+                <xpath expr="//field[@name='product_id']" position="after">
                     <field name="product_customer_code" />
-                </xpath>-->
-                <xpath expr="//field[@name='move_lines']/tree/field[@name='product_id']" position="after">
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_move_picking_form" model="ir.ui.view">
+            <field name="name">stock.move.product.code.form</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_picking_form"/>
+            <field eval="16" name="priority"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_id']" position="after">
                     <field name="product_customer_code" />
                 </xpath>
             </field>
