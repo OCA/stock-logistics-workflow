@@ -107,6 +107,9 @@ for field in scen_read:
     if field == 'model_id':
         if scen_read[field]:
             node.text = model_obj.read(scen_read.get('model_id', [0])[0], ['model']).get('model')
+    elif field == 'company_id':
+        if scen_read[field]:
+            node.text = scen_read.get('company_id', [0])[1]
     elif field == 'parent_id':
         if scen_read[field]:
             node.text = scenario_obj.read(scen_read.get('parent_id', [0])[0], ['reference_res_id']).get('reference_res_id')

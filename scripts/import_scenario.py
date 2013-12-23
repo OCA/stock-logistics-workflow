@@ -100,6 +100,7 @@ for directory in directories:
     # extract scenario
     scenario_obj = Object(cnx, 'scanner.scenario')
     model_obj = Object(cnx, 'ir.model')
+    company_obj = Object(cnx, 'res.company')
     warehouse_obj = Object(cnx, 'stock.warehouse')
     step_obj = Object(cnx, 'scanner.scenario.step')
     trans_obj = Object(cnx, 'scanner.scenario.transition')
@@ -146,6 +147,16 @@ for directory in directories:
             scen_vals['model_id'] = scen_vals['model_id'][0]
         else:
             logger.error('Model not found')
+            sys.exit(1)
+
+    if scen_vals.get('company_id'):
+        logger.info('Search company: %s' % scen_vals['company_id'])
+        scen_vals['company_id'] = company_obj.search([('name', '=', scen_vals['company_id'])], 0, None, None, {'active_test': False}) or False
+        if scen_vals['company_id']:
+            logger.info('Company found')
+            scen_vals['company_id'] = scen_vals['company_id'][0]
+        else:
+            logger.error('Company not found')
             sys.exit(1)
 
     if 'parent_id' in scen_vals and scen_vals['parent_id']:

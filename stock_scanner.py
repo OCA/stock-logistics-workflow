@@ -72,12 +72,14 @@ class scanner_scenario(osv.Model):
         'shared_custom': fields.boolean('Shared Custom', help='Allows to share the custom values with a shared scanner in the same warehouse'),
         'parent_id': fields.many2one('scanner.scenario', 'Parent', help='Parent scenario, used to create menus'),
         'type': fields.selection([('scenario', 'Scenario'), ('menu', 'Menu'), ('shortcut', 'Shortcut')], 'Type', required=True, help='Defines if this scenario is a menu or an executable scenario'),
+        'company_id': fields.many2one('res.company', 'Company', required=True, help='Company to be used on this scenario'),
     }
 
     _order = 'sequence'
 
     _defaults = {
         'type': 'scenario',
+        'company_id': lambda self, cr, uid, ids, context=None: self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id.id,
     }
 
     _sql_constraints = [
