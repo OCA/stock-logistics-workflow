@@ -21,7 +21,7 @@
 {
     "name" : "Product Customer code for stock picking",
     "version" : "1.0",
-    "author" : "Nicola Malcontenti - AgileBG",
+    "author" : "Agile Business Group",
     "website" : "http://www.agilebg.com",
     "category" : "Stock",
     "depends" : [
@@ -30,7 +30,11 @@
         'stock',
         'product_customer_code'
     ],
-    "description": "",
+    "description": """
+    Based on product_customer_code,
+    this module loads in every stock picking
+    the customer code defined in the product,
+    """,
     "demo" : [],
     "data" : [
         'stock_picking_view.xml',
