@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="mrp_production_form_lot_attribute_view" model="ir.ui.view">
+            <field name="name">mrp.production.lot.attribute.form</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <xpath expr="/form/notebook/page[@string='Finished Products']/field[@name='move_created_ids']/tree/button[@string='Scrap Products']" position="after">
+                    <field name="prodlot_id"/>
+                    <button name="open_lot" string="Open Lot" type="object" icon="gtk-justify-fill"/>
+                </xpath>
+                <xpath expr="/form/notebook/page[@string='Finished Products']/field[@name='move_created_ids2']/tree/button[@string='Scrap Products']" position="after">
+                    <button name="open_lot" string="Open Lot" type="object" icon="gtk-justify-fill"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
