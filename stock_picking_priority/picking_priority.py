@@ -20,7 +20,7 @@
 #############################################################################
 import logging
 
-from openerp.osv import orm, osv, fields
+from openerp.osv import orm, fields
 from openerp.tools.translate import _
 _logger = logging.getLogger(__name__)
 
@@ -58,7 +58,7 @@ class StockPicking(orm.Model):
                 assigned_id = self.action_assign(cr, uid, [picking_id],
                                                  context)
                 assigned_ids.append(assigned_id)
-            except osv.except_osv, exc:
+            except orm.except_orm, exc:
                 name = self.read(cr, uid, picking_id, ['name'],
                                  context=context)['name']
                 errors.append(u'%s: %s' % (name, exc.args[-1]))
