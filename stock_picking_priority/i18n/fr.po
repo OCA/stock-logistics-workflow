@@ -1,0 +1,113 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* stock_picking_priority
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-02-02 18:32+0000\n"
+"PO-Revision-Date: 2014-02-02 18:32+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_priority
+#: selection:stock.picking,priority:0
+#: selection:stock.picking.in,priority:0
+#: selection:stock.picking.out,priority:0
+msgid "Very Urgent"
+msgstr "Très urgent"
+
+#. module: stock_picking_priority
+#: model:ir.actions.act_window,name:stock_picking_priority.action_retry_assign
+#: model:ir.ui.menu,name:stock_picking_priority.menu_retry_availability
+#: view:stock.picking.retry.availability:0
+msgid "Recompute Picking Availability"
+msgstr "Recalcule la disponibilité"
+
+#. module: stock_picking_priority
+#: selection:stock.picking,priority:0
+#: selection:stock.picking.in,priority:0
+#: selection:stock.picking.out,priority:0
+msgid "Normal"
+msgstr "Normale"
+
+#. module: stock_picking_priority
+#: model:ir.model,name:stock_picking_priority.model_stock_picking_retry_availability
+msgid "stock.picking.retry.availability"
+msgstr "stock.picking.retry.availability"
+
+#. module: stock_picking_priority
+#: view:stock.picking.retry.availability:0
+msgid "Recompute Availability"
+msgstr "Recalcule la disponibilité"
+
+#. module: stock_picking_priority
+#: model:ir.model,name:stock_picking_priority.model_stock_picking_in
+msgid "Incoming Shipments"
+msgstr "Bons de réception"
+
+#. module: stock_picking_priority
+#: field:stock.picking,priority:0
+#: field:stock.picking.in,priority:0
+#: field:stock.picking.out,priority:0
+msgid "Priority"
+msgstr "Priorité"
+
+#. module: stock_picking_priority
+#: help:stock.picking,priority:0
+#: help:stock.picking.in,priority:0
+#: help:stock.picking.out,priority:0
+msgid "The priority of the picking"
+msgstr "La priorité de la livraison"
+
+#. module: stock_picking_priority
+#: code:addons/stock_picking_priority/picking_priority.py:69
+#, python-format
+msgid "Warning"
+msgstr "Avertissement"
+
+#. module: stock_picking_priority
+#: view:stock.picking.retry.availability:0
+msgid "This action will recompute the availability of the pickings based on their priority. Before running it, make sure that you have changed the priority of at least one picking."
+msgstr "Cette action va recalculer la disponibilité des livraisons en se basant sur leur priorité. Avant de la lancer, vous devez avoir changé la priorité d'au moins une livraison."
+
+#. module: stock_picking_priority
+#: model:ir.model,name:stock_picking_priority.model_stock_picking
+msgid "Picking List"
+msgstr "Opération de manutention"
+
+#. module: stock_picking_priority
+#: view:stock.picking.retry.availability:0
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: stock_picking_priority
+#: selection:stock.picking,priority:0
+#: selection:stock.picking.in,priority:0
+#: selection:stock.picking.out,priority:0
+msgid "Urgent"
+msgstr "Urgent"
+
+#. module: stock_picking_priority
+#: model:ir.model,name:stock_picking_priority.model_stock_picking_out
+msgid "Delivery Orders"
+msgstr "Bons de livraisons"
+
+#. module: stock_picking_priority
+#: view:stock.picking.retry.availability:0
+msgid "or"
+msgstr "ou"
+
+#. module: stock_picking_priority
+#: code:addons/stock_picking_priority/picking_priority.py:70
+#, python-format
+msgid "No operations validated due to the following errors:\n"
+"%s"
+msgstr "Aucune opération effectée à cause des erreurs suivantes :\n"
+"%s"
+
