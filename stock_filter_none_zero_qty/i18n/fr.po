@@ -6,20 +6,24 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-07 13:13+0000\n"
-"PO-Revision-Date: 2013-05-07 15:25+0100\n"
-"Last-Translator: Yvan <yvan@julius.fr>\n"
+"POT-Creation-Date: 2013-10-13 18:27+0000\n"
+"PO-Revision-Date: 2014-02-03 10:03+0000\n"
+"Last-Translator: Yvan Patry <yvan@julius.fr>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
+"X-Launchpad-Export-Date: 2014-02-04 06:49+0000\n"
+"X-Generator: Launchpad (build 16916)\n"
 
 #. module: stock_filter_none_zero_qty
 #: code:addons/stock_filter_none_zero_qty/product.py:55
 #, python-format
-msgid "Operator %s not suported in searches for qty_available (product.product)."
-msgstr "L'opérateur %s n'est pas supporté dans les recherches sur 'qty_available' (product.product)."
+msgid ""
+"Operator %s not suported in searches for qty_available (product.product)."
+msgstr ""
+"L'opérateur %s n'est pas supporté dans les recherches sur 'qty_available' "
+"(product.product)."
 
 #. module: stock_filter_none_zero_qty
 #: model:ir.model,name:stock_filter_none_zero_qty.model_product_product
@@ -36,4 +40,3 @@ msgstr "Erreur !"
 #: view:product.product:0
 msgid "Real Stock"
 msgstr "Stock Réel"
-
