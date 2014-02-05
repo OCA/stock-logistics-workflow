@@ -10,7 +10,7 @@
             <field name="inherit_id" ref="stock.view_picking_out_form"></field>
             <field name="arch" type="xml">
                 <field name="invoice_state" position="after">
-                    <field name="invoice_id" string="Invoice" groups="account.group_account_invoice" attrs="{'invisible':[('invoice_state', '=', 'none')]}"/>
+                    <field name="invoice_id" string="Invoice" groups="account.group_account_invoice" attrs="{'invisible':[('invoice_state', '=', 'none')]}" context="{'form_view_ref': 'account.invoice_form'}"/>
                 </field>
             </field>
         </record>
@@ -20,7 +20,7 @@
             <field name="inherit_id" ref="stock.view_picking_in_form"></field>
             <field name="arch" type="xml">
                 <field name="invoice_state" position="after">
-                    <field name="invoice_id" string="Invoice" groups="account.group_account_invoice" attrs="{'invisible':[('invoice_state', '=', 'none')]}"/>
+                    <field name="invoice_id" string="Invoice" groups="account.group_account_invoice" attrs="{'invisible':[('invoice_state', '=', 'none')]}" context="{'form_view_ref': 'account.invoice_supplier_form'}"/>
                 </field>
             </field>
         </record>
