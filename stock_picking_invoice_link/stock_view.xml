@@ -1,36 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
 <data>
-    
+
         <!-- stock.picking -->
-        
+
         <record id="view_picking_out_form" model="ir.ui.view">
             <field name="name">stock.picking.out.form</field>
             <field name="model">stock.picking.out</field>
-            <field name="inherit_id" ref="stock.view_picking_out_form"></field>
+            <field name="inherit_id" ref="stock.view_picking_out_form"/>
             <field name="arch" type="xml">
                 <field name="invoice_state" position="after">
-                    <field name="invoice_id" string="Invoice" groups="account.group_account_invoice" attrs="{'invisible':[('invoice_state', '=', 'none')]}" context="{'form_view_ref': 'account.invoice_form'}"/>
+                    <field name="invoice_id" string="Invoice" groups="account.group_account_invoice" attrs="{'invisible':[('invoice_state', '=', 'none')]}" context="{'form_view_ref': invoice_view_xmlid}"/>
+                    <field name="invoice_view_xmlid" invisible="1"/>
                 </field>
             </field>
         </record>
         <record id="view_picking_in_form" model="ir.ui.view">
             <field name="name">stock.picking.in.form</field>
             <field name="model">stock.picking.in</field>
-            <field name="inherit_id" ref="stock.view_picking_in_form"></field>
+            <field name="inherit_id" ref="stock.view_picking_in_form"/>
             <field name="arch" type="xml">
                 <field name="invoice_state" position="after">
-                    <field name="invoice_id" string="Invoice" groups="account.group_account_invoice" attrs="{'invisible':[('invoice_state', '=', 'none')]}" context="{'form_view_ref': 'account.invoice_supplier_form'}"/>
+                    <field name="invoice_id" string="Invoice" groups="account.group_account_invoice" attrs="{'invisible':[('invoice_state', '=', 'none')]}" context="{'form_view_ref': invoice_view_xmlid}"/>
+                    <field name="invoice_view_xmlid" invisible="1"/>
                 </field>
             </field>
         </record>
-        
+
         <!-- stock.move -->
-        
+
         <record id="view_move_form" model="ir.ui.view">
             <field name="name">stock.move.form</field>
             <field name="model">stock.move</field>
-            <field name="inherit_id" ref="stock.view_move_form"></field>
+            <field name="inherit_id" ref="stock.view_move_form"/>
             <field name="arch" type="xml">
                 <group string="Traceability" position="inside">
                     <label for="invoice_line_id" groups="account.group_account_invoice"/>
@@ -40,11 +42,11 @@
                 </group>
             </field>
         </record>
-        
+
         <record id="view_move_picking_form" model="ir.ui.view">
             <field name="name">stock.move.form</field>
             <field name="model">stock.move</field>
-            <field name="inherit_id" ref="stock.view_move_picking_form"></field>
+            <field name="inherit_id" ref="stock.view_move_picking_form"/>
             <field name="arch" type="xml">
                 <group string="Traceability" position="inside">
                     <label for="invoice_line_id" groups="account.group_account_invoice"/>
@@ -54,6 +56,6 @@
                 </group>
             </field>
         </record>
-        
+
 </data>
 </openerp>

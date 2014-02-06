@@ -33,9 +33,24 @@ class stock_move(orm.Model):
 class stock_picking(orm.Model):
     _inherit = "stock.picking"
 
+    def _get_invoice_view_xmlid(self, cr, uid, ids, name, arg, context=None):
+        res = {}
+        for pick in self.browse(cr, uid, ids, context=context):
+            if pick.invoice_id:
+                if pick.invoice_id.type in ('in_invoice', 'in_refund'):
+                    res[pick.id] = 'account.invoice_supplier_form'
+                else:
+                    res[pick.id] = 'account.invoice_form'
+            else:
+                res[pick.id] = False
+        return res
+
     _columns = {
         'invoice_id': fields.many2one(
             'account.invoice', 'Invoice', readonly=True),
+        'invoice_view_xmlid': fields.function(
+            _get_invoice_view_xmlid, type='char', string="Invoice View XMLID",
+            readonly=True),
     }
 
     def _invoice_hook(self, cr, uid, picking, invoice_id):
@@ -54,18 +69,34 @@ class stock_picking(orm.Model):
 class stock_picking_out(orm.Model):
     _inherit = "stock.picking.out"
 
+    def _out_get_invoice_view_xmlid(
+            self, cr, uid, ids, name, arg, context=None):
+        return self.pool['stock.picking']._get_invoice_view_xmlid(
+            cr, uid, ids, name, arg, context=context)
+
     _columns = {
         'invoice_id': fields.many2one(
             'account.invoice', 'Invoice', readonly=True),
+        'invoice_view_xmlid': fields.function(
+            _out_get_invoice_view_xmlid, type='char',
+            string="Invoice View XMLID", readonly=True),
     }
 
 
 class stock_picking_in(orm.Model):
     _inherit = "stock.picking.in"
 
+    def _in_get_invoice_view_xmlid(
+            self, cr, uid, ids, name, arg, context=None):
+        return self.pool['stock.picking']._get_invoice_view_xmlid(
+            cr, uid, ids, name, arg, context=context)
+
     _columns = {
         'invoice_id': fields.many2one(
             'account.invoice', 'Invoice', readonly=True),
+        'invoice_view_xmlid': fields.function(
+            _in_get_invoice_view_xmlid, type='char',
+            string="Invoice View XMLID", readonly=True),
     }
 
 
