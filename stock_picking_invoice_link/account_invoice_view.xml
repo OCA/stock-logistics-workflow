@@ -16,7 +16,7 @@
     <field name="arch" type="xml">
         <notebook position="inside">
             <page string="Delivery Orders" name="pickings">
-                <field name="picking_ids"/>
+                <field name="picking_ids" nolabel="1"/>
             </page>
         </notebook>
     </field>
@@ -29,7 +29,7 @@
     <field name="arch" type="xml">
         <notebook position="inside">
             <page string="Incoming Shipments" name="pickings">
-                <field name="picking_ids"/>
+                <field name="picking_ids" nolabel="1"/>
             </page>
         </notebook>
     </field>
