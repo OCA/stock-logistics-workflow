@@ -110,6 +110,7 @@ class Sentinel(object):
 
         # Initialize hardware
         self.hardware_obj = Object(self.connection, 'scanner.hardware')
+        self.scenario_obj = Object(self.connection, 'scanner.scenario')
 
         # Initialize window
         self.screen = stdscr
@@ -120,13 +121,14 @@ class Sentinel(object):
         # Get the informations for this material from server (identified by IP)
         self.hardware_code = ''
         self.scenario_id = False
+        self.scenario_name = False
         try:
             ssh_data = os.environ['SSH_CONNECTION'].split(' ')
             self.hardware_code = ssh_data[0]
-            self.scenario_id = self.hardware_obj.scanner_check(self.hardware_code)
+            self.scanner_check()
         except:
             self.hardware_code = self._input_text(_('Autoconfiguration failed !\nPlease enter terminal code'))
-            self.scenario_id = self.hardware_obj.scanner_check(self.hardware_code)
+            self.scanner_check()
 
         # Resize window to terminal screen size
         self._resize()
@@ -139,6 +141,11 @@ class Sentinel(object):
 
         # Load the sentinel
         self.main_loop()
+
+    def scanner_check(self):
+        self.scenario_id = self.hardware_obj.scanner_check(self.hardware_code)
+        if isinstance(self.scenario_id, list):
+            self.scenario_id, self.scenario_name = self.scenario_id
 
     def _resize(self):
         """
@@ -426,10 +433,15 @@ class Sentinel(object):
 
         # Select a scenario in the list
         choice = self._menu_choice(values, title='Scenarios')
-        self.scenario_id = choice
+        ret = self.oerp_call('action', choice)
+
+        # Store the scenario id and name
+        self.scanner_check()
+        if not self.scenario_id:
+            self.scenario_id = True
 
         # Send the result to OpenERP
-        return self.oerp_call('action', choice)
+        return ret
 
     def _confirm(self, message, title=None):
         """
