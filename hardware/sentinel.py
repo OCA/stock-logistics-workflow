@@ -384,11 +384,12 @@ class Sentinel(object):
                     self.screen.bkgd(0, self._get_color('base'))
                 except Exception:
                     # Generates log contents
-                    log_contents = '%s\n# %s\n# Hardware code : %s\n# Current scenario : %s\n# Current values :\n#\tcode : %s\n#\tresult : %s\n#\tvalue : %s\n%s\n%s\n' % (
+                    log_contents = '%s\n# %s\n# Hardware code : %s\n# Current scenario : %s (%s)\n# Current values :\n#\tcode : %s\n#\tresult : %s\n#\tvalue : %s\n%s\n%s\n' % (
                         '#' * 79,
                         datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                         self.hardware_code,
                         str(self.scenario_id),
+                        self.scenario_name,
                         code,
                         repr(result),
                         repr(value),
