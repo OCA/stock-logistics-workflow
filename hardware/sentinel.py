@@ -312,6 +312,10 @@ class Sentinel(object):
                         elif isinstance(result[0], basestring) and result[0].startswith(title_key):
                             title = result.pop(0)[len(title_key):]
 
+                        if title is None and self.scenario_name:
+                            # If no title is defined, display the scenario name
+                            title = self.scenario_name
+
                         if code == 'Q' or code == 'N':
                             # Quantity selection
                             quantity = self._select_quantity('\n'.join(result), '%g' % value, integer=(code == 'N'), title=title)
