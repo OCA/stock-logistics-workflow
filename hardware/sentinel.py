@@ -27,6 +27,7 @@
 import os
 import sys
 import math
+import types
 import gettext
 import textwrap
 import traceback
@@ -197,13 +198,19 @@ class Sentinel(object):
             raise SentinelBackException('Back')
         return key
 
-    def _display(self, text='', x=0, y=0, clear=False, color='base', bgcolor=False, modifier=curses.A_NORMAL, cursor=None, height=None, scroll=False):
+    def _display(self, text='', x=0, y=0, clear=False, color='base', bgcolor=False, modifier=curses.A_NORMAL, cursor=None, height=None, scroll=False, title=None):
         """
         Display a line of text
         """
         # Clear the sceen if needed
         if clear:
             self.screen.clear()
+
+        # Display the title, if any
+        if title is not None:
+            y += 1
+            title = title.center(self.window_width)
+            self._display(title, color='info', modifier=curses.A_REVERSE | curses.A_BOLD)
 
         # Compute the display modifiers
         color = self._get_color(color) | modifier
@@ -285,13 +292,26 @@ class Sentinel(object):
                     if not self.scenario_id:
                         (code, result, value) = self._select_scenario()
                     else:
+                        # Search for a step title
+                        title = None
+                        title_key = '|'
+                        if isinstance(result, (types.NoneType, bool)):
+                            pass
+                        elif isinstance(result, dict) and result.get(title_key, None):
+                            title = result[title_key]
+                            del result[title_key]
+                        elif isinstance(result[0], (tuple, list)) and result[0][0] == title_key:
+                            title = result.pop(0)[1]
+                        elif isinstance(result[0], basestring) and result[0].startswith(title_key):
+                            title = result.pop(0)[len(title_key):]
+
                         if code == 'Q' or code == 'N':
                             # Quantity selection
-                            quantity = self._select_quantity('\n'.join(result), '%g' % value, integer=(code == 'N'))
+                            quantity = self._select_quantity('\n'.join(result), '%g' % value, integer=(code == 'N'), title=title)
                             (code, result, value) = self.oerp_call('action', quantity)
                         elif code == 'C':
                             # Confirmation query
-                            confirm = self._confirm('\n'.join(result))
+                            confirm = self._confirm('\n'.join(result), title=title)
                             (code, result, value) = self.oerp_call('action', confirm)
                         elif code == 'T':
                             # Select arguments from value
@@ -304,19 +324,19 @@ class Sentinel(object):
                                 default = value
 
                             # Text input
-                            text = self._input_text('\n'.join(result), default=default, size=size)
+                            text = self._input_text('\n'.join(result), default=default, size=size, title=title)
                             (code, result, value) = self.oerp_call('action', text)
                         elif code == 'R':
                             # Critical error
                             self.scenario_id = False
-                            self._display_error('\n'.join(result))
+                            self._display_error('\n'.join(result), title=title)
                         elif code == 'U':
                             # Unknown action : message with return back to the last state
-                            self._display('\n'.join(result), clear=True, scroll=True)
+                            self._display('\n'.join(result), clear=True, scroll=True, title=title)
                             (code, result, value) = self.oerp_call('back')
                         elif code == 'E':
                             # Error message
-                            self._display_error('\n'.join(result))
+                            self._display_error('\n'.join(result), title=title)
                             # Execute transition
                             if not value:
                                 (code, result, value) = self.oerp_call('action')
@@ -325,13 +345,13 @@ class Sentinel(object):
                                 (code, result, value) = self.oerp_call('restart')
                         elif code == 'M':
                             # Simple message
-                            self._display('\n'.join(result), clear=True, scroll=True)
+                            self._display('\n'.join(result), clear=True, scroll=True, title=title)
                             # Execute transition
                             (code, result, value) = self.oerp_call('action', value)
                         elif code == 'L':
                             if result:
                                 # Select a value in the list
-                                choice = self._menu_choice(result)
+                                choice = self._menu_choice(result, title=title)
                                 # Send the result to OpenERP
                                 (code, result, value) = self.oerp_call('action', choice)
                             else:
@@ -340,7 +360,7 @@ class Sentinel(object):
                         elif code == 'F':
                             # End of scenario
                             self.scenario_id = False
-                            self._display('\n'.join(result), clear=True, scroll=True)
+                            self._display('\n'.join(result), clear=True, scroll=True, title=title)
                         else:
                             # Default call
                             (code, result, value) = self.oerp_call('restart')
@@ -378,12 +398,12 @@ class Sentinel(object):
                 # Restore normal background colors
                 self.screen.bkgd(0, self._get_color('base'))
 
-    def _display_error(self, error_message):
+    def _display_error(self, error_message, title=None):
         """
         Displays an error messge, changing the background to red
         """
         # Display error message
-        self._display(error_message, color='error', bgcolor=True, clear=True, scroll=True)
+        self._display(error_message, color='error', bgcolor=True, clear=True, scroll=True, title=title)
         # Restore normal background colors
         self.screen.bkgd(0, self._get_color('base'))
 
@@ -405,13 +425,13 @@ class Sentinel(object):
             return ('R', [_('No scenario available !')], 0)
 
         # Select a scenario in the list
-        choice = self._menu_choice([_('|Scenarios')] + values)
+        choice = self._menu_choice(values, title='Scenarios')
         self.scenario_id = choice
 
         # Send the result to OpenERP
         return self.oerp_call('action', choice)
 
-    def _confirm(self, message):
+    def _confirm(self, message, title=None):
         """
         Allows the user to select  quantity
         """
@@ -444,7 +464,7 @@ class Sentinel(object):
             self._display(no_text, x=no_start, y=self.window_height - 1, color='info', modifier=no_modifier)
 
             # Display the confirmation message
-            key = self._display(message, scroll=True, height=self.window_height - 1)
+            key = self._display(message, scroll=True, height=self.window_height - 1, title=title)
 
             if key == '\n':
                 # Return key : Validate the choice
@@ -469,7 +489,7 @@ class Sentinel(object):
                 if mouse_info[4] & curses.BUTTON1_DOUBLE_CLICKED:
                     return confirm
 
-    def _input_text(self, message, default='', size=None):
+    def _input_text(self, message, default='', size=None, title=None):
         """
         Allows the user to input random text
         """
@@ -491,7 +511,7 @@ class Sentinel(object):
             display_value = display_value[display_start:]
             self._display(' ' * (self.window_width - 1), 0, line)
             self._display(display_value, 0, line, color='info', modifier=curses.A_BOLD)
-            key = self._display(message, scroll=True, height=self.window_height - 1, cursor=(line, min(len(value), self.window_width - 1)))
+            key = self._display(message, scroll=True, height=self.window_height - 1, cursor=(line, min(len(value), self.window_width - 1)), title=title)
 
             # Printable character : store in value
             if len(key) == 1 and (curses.ascii.isprint(key) or ord(key) < 32):
@@ -506,7 +526,7 @@ class Sentinel(object):
                 curses.flushinp()
                 return value.strip()
 
-    def _select_quantity(self, message, quantity='0', integer=False):
+    def _select_quantity(self, message, quantity='0', integer=False, title=None):
         """
         Allows the user to select  quantity
         """
@@ -520,7 +540,7 @@ class Sentinel(object):
             self._display(_('Selected : %s') % quantity, y=self.window_height - 1, color='info', modifier=curses.A_BOLD)
 
             # Display the message and get the key
-            key = self._display(message, scroll=True, height=self.window_height - 1)
+            key = self._display(message, scroll=True, height=self.window_height - 1, title=title)
 
             if key == '\n':
                 # Return key : Validate the choice
@@ -552,27 +572,16 @@ class Sentinel(object):
             if not quantity:
                 quantity = '0'
 
-    def _menu_choice(self, entries):
+    def _menu_choice(self, entries, title=None):
         """
         Allows the user to choose a value in a list
         """
         # If a dict is passed, keep the keys
         keys = entries
-        title_key = '|'
-        title = None
         if isinstance(entries, dict):
-            if entries.get(title_key, None):
-                title = entries[title_key]
-                del entries[title_key]
-            keys = entries.keys()
-            entries = entries.values()
+            keys, entries = entries.items()
         elif isinstance(entries[0], (tuple, list)):
             keys, entries = map(list, zip(*entries))[:2]
-            if keys[0] == title_key:
-                title = entries.pop(0)
-                keys.pop(0)
-        elif entries[0].startswith(title_key):
-            title = entries.pop(0)[len(title_key):]
 
         # Highlighted entry
         highlighted = 0
@@ -662,8 +671,7 @@ class Sentinel(object):
         """
         # First line to be displayed
         first_line = 0
-        offset = (title is not None) and 1 or 0
-        nb_lines = self.window_height - offset - 1
+        nb_lines = self.window_height - 1
         middle = int(math.floor((nb_lines - 1) / 2))
 
         # Change the first line if there is too much lines for the screen
@@ -671,28 +679,24 @@ class Sentinel(object):
             first_line = min(highlighted - middle, len(entries) - nb_lines)
 
         # Display all entries, normal display
-        self._display('\n'.join(entries[first_line:first_line + nb_lines]), y=offset, clear=True)
+        self._display('\n'.join(entries[first_line:first_line + nb_lines]), clear=True, title=title)
         # Highlight selected entry
-        self._display(entries[highlighted].ljust(self.window_width - 1), y=highlighted - first_line + offset, modifier=curses.A_REVERSE | curses.A_BOLD)
-        # Display title, if any
-        if title is not None:
-            title = title.center(self.window_width)
-            self._display(title, color='info', modifier=curses.A_REVERSE | curses.A_BOLD)
+        self._display(entries[highlighted].ljust(self.window_width - 1), y=highlighted - first_line, modifier=curses.A_REVERSE | curses.A_BOLD, title=title)
 
         # Display arrows
         if first_line > 0:
-            self.screen.addch(offset, self.window_width - 1, curses.ACS_UARROW)
+            self.screen.addch(0, self.window_width - 1, curses.ACS_UARROW)
         if first_line + nb_lines < len(entries):
-            self.screen.addch(nb_lines + offset - 1, self.window_width - 1, curses.ACS_DARROW)
+            self.screen.addch(nb_lines - 1, self.window_width - 1, curses.ACS_DARROW)
 
         # Diplays number of the selected entry
-        self._display(_('Selected : %d') % highlighted, y=nb_lines + offset, color='info', modifier=curses.A_BOLD)
+        self._display(_('Selected : %d') % highlighted, y=nb_lines, color='info', modifier=curses.A_BOLD)
 
         # Set the cursor position
         if nb_lines < len(entries):
             position_percent = float(highlighted) / len(entries)
             position = int(round((nb_lines - 1) * position_percent))
-            self._display(' ', x=self.window_width - 1, y=position + offset, color='info', modifier=curses.A_REVERSE)
+            self._display(' ', x=self.window_width - 1, y=position, color='info', modifier=curses.A_REVERSE)
         self.screen.move(self.window_height - 1, self.window_width - 1)
 
 
