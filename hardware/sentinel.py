@@ -340,6 +340,7 @@ class Sentinel(object):
                         elif code == 'R':
                             # Critical error
                             self.scenario_id = False
+                            self.scenario_name = False
                             self._display_error('\n'.join(result), title=title)
                         elif code == 'U':
                             # Unknown action : message with return back to the last state
@@ -368,9 +369,16 @@ class Sentinel(object):
                             else:
                                 # Empty list supplied, display an error
                                 (code, result, value) = ('E', [_('No value available')], False)
+
+                            # Check if we are in a scenario (to retrieve the scenario name from a submenu)
+                            self.scanner_check()
+                            if not self.scenario_id:
+                                self.scenario_id = True
+                                self.scenario_name = False
                         elif code == 'F':
                             # End of scenario
                             self.scenario_id = False
+                            self.scenario_name = False
                             self._display('\n'.join(result), clear=True, scroll=True, title=title)
                         else:
                             # Default call
@@ -444,6 +452,7 @@ class Sentinel(object):
         self.scanner_check()
         if not self.scenario_id:
             self.scenario_id = True
+            self.scenario_name = False
 
         # Send the result to OpenERP
         return ret
