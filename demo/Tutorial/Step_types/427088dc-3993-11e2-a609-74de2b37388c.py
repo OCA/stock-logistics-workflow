@@ -6,7 +6,7 @@
 
 act = 'T'
 res = [
-    'Text input step',
+    '|Text input step',
     '',
     'This step allows the user to enter custom text.',
     '',

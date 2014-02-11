@@ -6,7 +6,7 @@
 
 act = 'N'
 res = [
-    'Number (integer) step',
+    '|Number (integer) step',
     '',
     'This step allows the user to send integer numbers.',
 ]

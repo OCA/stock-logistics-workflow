@@ -6,7 +6,7 @@
 
 act = 'M'
 res = [
-    'Message step',
+    '|Message step',
     '',
     'A step designed to display some information, without waiting for any user input.',
 ]

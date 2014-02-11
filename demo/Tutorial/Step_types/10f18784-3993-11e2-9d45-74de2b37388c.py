@@ -6,7 +6,7 @@
 
 act = 'E'
 res = [
-    'Error step',
+    '|Error step',
     '',
     'This step shows an error message, using the error colors defined in the hardware configuration.',
     '',

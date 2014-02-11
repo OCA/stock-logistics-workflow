@@ -6,7 +6,7 @@
 
 act = 'M'
 res = [
-    'Introduction',
+    '|Introduction',
     '',
     'Welcome on the stock_scanner module.',
     '',
