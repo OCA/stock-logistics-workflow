@@ -27,9 +27,11 @@
                 <field name="name"/>
               </h1>
             </div>
-            <field name="picker_id"/>
-            <field name="date"/>
-            <field name="backorder_id"/>
+            <group>
+              <field name="picker_id"/>
+              <field name="date"/>
+              <field name="backorder_id"/>
+            </group>
             <notebook colspan="4">
               <page string="Stock Moves">
                 <field name="move_ids" nolabel="1" colspan='4' widget="many2many"
