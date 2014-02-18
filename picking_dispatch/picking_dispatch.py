@@ -157,6 +157,14 @@ class StockMove(Model):
                                                help='who this move is dispatched to'),
                 }
 
+    def copy_data(self, cr, uid, id, default=None, context=None):
+        if default is None:
+            default = {}
+        default = default.copy()
+        default['dispatch_id'] = False
+        return super(StockMove, self).\
+            copy_data(cr, uid, id, default=default, context=context)
+
     def do_partial(self, cr, uid, ids, partial_datas, context=None):
         """
         in addition to what the original method does, create backorder
