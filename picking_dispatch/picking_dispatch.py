@@ -61,9 +61,10 @@ class PickingDispatch(Model):
                             states={'draft': [('readonly', False)],
                                     'assigned': [('readonly', False)]},
                             help='date on which the picking dispatched is to be processed'),
-        'picker_id': fields.many2one('res.users', 'Picker', readonly=True, required=True,
+        'picker_id': fields.many2one('res.users', 'Picker', readonly=True,
                                      states={'draft': [('readonly', False)],
-                                             'assigned': [('readonly', False)]},
+                                             'assigned': [('readonly', False),
+                                                          ('required', True)]},
                                      select=True,
                                      help='the user to which the pickings are assigned'),
         'move_ids': fields.one2many('stock.move', 'dispatch_id', 'Moves',
@@ -90,6 +91,17 @@ class PickingDispatch(Model):
         'date': fields.date.context_today,
         'state': 'draft'
         }
+
+    def _check_picker_assigned(self, cr, uid, ids, context=None):
+        for dispatch in self.browse(cr, uid, ids, context=context):
+            if (dispatch.state in ('assigned', 'progress', 'done') and
+                    not dispatch.picker_id):
+                return False
+        return True
+
+    _constraints = [
+        (_check_picker_assigned, 'Please select a picker.', ['picker_id'])
+    ]
 
     def copy(self, cr, uid, id, default=None, context=None):
         if default is None:
