@@ -15,7 +15,7 @@
     <field name="inherit_id" ref="account.invoice_form"/>
     <field name="arch" type="xml">
         <notebook position="inside">
-            <page string="Delivery Orders" name="pickings">
+            <page string="Pickings" name="pickings">
                 <field name="picking_ids"/>
             </page>
         </notebook>
@@ -28,7 +28,7 @@
     <field name="inherit_id" ref="account.invoice_supplier_form"/>
     <field name="arch" type="xml">
         <notebook position="inside">
-            <page string="Incoming Shipments" name="pickings">
+            <page string="Pickings" name="pickings">
                 <field name="picking_ids"/>
             </page>
         </notebook>

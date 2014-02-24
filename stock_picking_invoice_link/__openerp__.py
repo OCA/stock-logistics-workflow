@@ -20,7 +20,7 @@
 
 {
     'name': "Picking Invoice Link",
-    'version': '0.1',
+    'version': '0.2',
     'category': 'Warehouse Management',
     'summary': 'Adds link between pickings and generated invoices',
     'description': """
