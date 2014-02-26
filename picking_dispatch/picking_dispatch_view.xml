@@ -16,6 +16,8 @@
                     class="oe_highlight" type="object"/>
             <button name="action_cancel" states="draft,assigned,progress" string="Cancel"
                     type="object"/>
+            <button name="action_assign_moves" string="Check Availability"
+                    states="draft,assigned,progress" type="object"/>
             <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
           </header>
           <sheet>
