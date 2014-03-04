@@ -162,6 +162,14 @@ class PickingDispatch(Model):
                 raise except_osv(_('Error'),
                                  _('This dispatch cannot be processed until %s') % obj.date)
 
+    def action_assign_moves(self, cr, uid, ids, context=None):
+        move_obj = self.pool['stock.move']
+        move_ids = move_obj.search(cr, uid,
+                                   [('dispatch_id', 'in', ids)],
+                                   context=context)
+        move_obj.action_assign(cr, uid, move_ids)
+        return True
+
 
 class StockMove(Model):
     _inherit = 'stock.move'
