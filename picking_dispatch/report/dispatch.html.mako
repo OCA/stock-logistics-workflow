@@ -39,6 +39,7 @@ ${css}
   <tr align="left">
     <th>${_('Product Code')}</th>
     <th>${_('Product')}</th>
+    <th>${_('Variant')}</th>
     <th>${_('Carrier')}</th>
     <th>${_('QTY')}</th>
     <th>${_('Explanation')}</th>
@@ -47,6 +48,13 @@ ${css}
       <tr align="left">
         <td>${product.default_code}</td>
         <td>${product.name}</td>
+        <td>
+            %if product.variants:
+              ${product.variants}
+            %else:
+              ${'-'}
+            %endif
+        </td>
         <td>${carrier}</td>
         <td>${qty}</td>
         <td>${_('stock error')}<br/>${_('breakage')}</td>
