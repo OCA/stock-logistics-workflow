@@ -89,6 +89,9 @@ class StockPickingOut(orm.Model):
     _inherit = 'stock.picking.out'
 
     def __selection_priority(self, cr, uid, context=None):
+        """ Do not touch me. Extend `get_selection_priority` in `stock.picking`
+        to modify the selection
+        """
         picking_obj = self.pool['stock.picking']
         return picking_obj.get_selection_priority(cr, uid, context=context)
 
@@ -111,6 +114,9 @@ class StockPickingIn(orm.Model):
     _inherit = 'stock.picking.in'
 
     def __selection_priority(self, cr, uid, context=None):
+        """ Do not touch me. Extend `get_selection_priority` in `stock.picking`
+        to modify the selection
+        """
         picking_obj = self.pool['stock.picking']
         return picking_obj.get_selection_priority(cr, uid, context=context)
 
