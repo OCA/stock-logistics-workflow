@@ -32,6 +32,19 @@ ${css}
 <br/>
 <p>${aggr.dispatch_notes}</p>
 <br/>
+
+<%
+    # check if column 'Variant' must be displayed
+    display_variants = False
+    for locations, product_quantities in aggr.iter_locations():
+        for product, qty, carrier in product_quantities:
+            if product.variants:
+                display_variants = True
+                break
+        else:
+            continue
+        break
+%>
 %for locations, product_quantities in aggr.iter_locations():
 <table style="border:solid 1px" width="100%">
   <caption><b><u>${locations[0]} &#x21E8; ${locations[1]}</u></b></caption>
@@ -39,7 +52,9 @@ ${css}
   <tr align="left">
     <th>${_('Product Code')}</th>
     <th>${_('Product')}</th>
-    <th>${_('Variant')}</th>
+    %if display_variants:
+        <th>${_('Variant')}</th>
+    %endif
     <th>${_('Carrier')}</th>
     <th>${_('QTY')}</th>
     <th>${_('Explanation')}</th>
@@ -48,13 +63,15 @@ ${css}
       <tr align="left">
         <td>${product.default_code}</td>
         <td>${product.name}</td>
-        <td>
-            %if product.variants:
-              ${product.variants}
-            %else:
-              ${'-'}
-            %endif
-        </td>
+        %if display_variants:
+            <td>
+                %if product.variants:
+                  ${product.variants}
+                %else:
+                  ${'-'}
+                %endif
+            </td>
+        %endif
         <td>${carrier}</td>
         <td>${qty}</td>
         <td>${_('stock error')}<br/>${_('breakage')}</td>
