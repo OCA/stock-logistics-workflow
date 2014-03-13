@@ -57,7 +57,7 @@ ${css}
   %endfor
 </table>
 %endfor
-        <p style="page-break-after:always">&nbsp</>
+<p style="page-break-after:always">&nbsp;</p>
 %endfor
 </body>
 </html>
