@@ -299,6 +299,31 @@ class StockPicking(Model):
     }
 
 
+class StockPickingIn(Model):
+    _inherit = "stock.picking.in"
+
+    def _get_related_dispatch(self, cr, uid, ids, field_names, arg=None, context=None):
+        return super(StockPickingIn, self)._get_related_dispatch(cr, uid, ids, field_names, arg=arg, context=context)
+
+    _columns = {
+        'related_dispatch_ids': fields.function(_get_related_dispatch, method=True, type='one2many',
+            relation='picking.dispatch', string='Related Dispatch Picking'),
+    }
+
+
+class StockPickingOut(Model):
+    _inherit = "stock.picking.out"
+
+    def _get_related_dispatch(self, cr, uid, ids, field_names, arg=None, context=None):
+        return super(StockPickingOut, self)._get_related_dispatch(cr, uid, ids, field_names, arg=arg, context=context)
+
+    _columns = {
+        'related_dispatch_ids': fields.function(_get_related_dispatch, method=True, type='one2many',
+            relation='picking.dispatch', string='Related Dispatch Picking'),
+    }
+
+
+
 class Product(Model):
     _inherit = "product.product"
 

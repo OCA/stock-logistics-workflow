@@ -123,7 +123,7 @@
     <!-- Stock Out picking : add dispatch infos -->
     <record id="view_picking_form" model="ir.ui.view">
       <field name="name">stock.picking.form.dispatch.out</field>
-      <field name="model">stock.picking</field>
+      <field name="model">stock.picking.out</field>
       <field name="inherit_id" ref="stock.view_picking_out_form"/>
       <field name="type">form</field>
       <field name="arch" type="xml">
@@ -153,7 +153,7 @@
     <!-- Stock In picking : add dispatch infos -->
     <record id="view_picking_form_in" model="ir.ui.view">
       <field name="name">stock.picking.form.dispatch.in</field>
-      <field name="model">stock.picking</field>
+      <field name="model">stock.picking.in</field>
       <field name="inherit_id" ref="stock.view_picking_in_form"/>
       <field name="type">form</field>
       <field name="arch" type="xml">
