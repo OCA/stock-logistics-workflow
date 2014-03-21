@@ -20,23 +20,21 @@
 
 {
     'name': "Picking Invoice Link",
-    'version': '0.1',
+    'version': '0.2',
     'category': 'Warehouse Management',
     'description': """
-This module adds a link between pickings and generated invoices. So that user can easly reach the invoice related to the picking.
+This module adds a link between pickings and generated invoices, so that user can easly reach the invoice related to the picking. It also adds a link between stock moves and invoice lines.
 
 """,
     'author': 'Agile Business Group',
     'website': 'http://www.agilebg.com',
     'license': 'AGPL-3',
     "depends": ['stock'],
-    "init_xml": [],
-    "update_xml": [
+    "data": [
         "stock_view.xml",
+        "account_invoice_view.xml",
     ],
-    "demo_xml": [],
-    'tests': [
-    ],
+    'tests': [],
     "installable": True,
     "auto_install": False,
     "application": False,
