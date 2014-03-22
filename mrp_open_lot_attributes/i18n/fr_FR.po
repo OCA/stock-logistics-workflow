@@ -6,14 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-16 15:40+0000\n"
-"PO-Revision-Date: 2013-12-16 15:40+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2013-12-16 14:56+0000\n"
+"PO-Revision-Date: 2014-03-21 17:57+0000\n"
+"Last-Translator: Alexis de Lattre <alexis@via.ecp.fr>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-03-22 07:02+0000\n"
+"X-Generator: Launchpad (build 16967)\n"
 
 #. module: mrp_open_lot_attributes
 #: model:ir.model,name:mrp_open_lot_attributes.model_stock_production_lot
@@ -66,6 +67,8 @@ msgstr "Cancel"
 
 #. module: mrp_open_lot_attributes
 #: sql_constraint:stock.production.lot:0
-msgid "The combination of serial number and internal reference must be unique !"
-msgstr "La combinaison du numéro de série et de la référence interne doit être unique !"
-
+msgid ""
+"The combination of serial number and internal reference must be unique !"
+msgstr ""
+"La combinaison du numéro de série et de la référence interne doit être "
+"unique !"
