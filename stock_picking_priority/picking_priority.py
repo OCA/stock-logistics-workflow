@@ -57,7 +57,7 @@ class StockPicking(orm.Model):
                   ('move_lines', '!=', []),
                   ('state', 'in', ('confirmed', 'assigned'))]
         if ids:
-            domain += [('ids', 'in', ids)]
+            domain += [('id', 'in', ids)]
         picking_ids = self.search(cr, uid, domain,
                                   order='priority desc, min_date',
                                   context=context)
