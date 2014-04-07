@@ -34,16 +34,17 @@ class StockPickingDispatchWave(orm.TransientModel):
         # get n order sales that have an assigned picking
         sql = """ SELECT so.id FROM sale_order AS so
         LEFT JOIN stock_picking AS pick ON pick.sale_id = so.id
-        WHERE pick.state = 'assigned'
+        WHERE pick.state = 'assigned' and pick.type = 'out'
         ORDER BY so.date_order ASC
         LIMIT %d
         """
         cr.execute(sql % nb_sales)
-        older_sales = cr.fetchall()
+        oldest_sales = cr.fetchall()
         # get pickings from oldest sales
         picking_obj = self.pool['stock.picking']
         picking_ids = picking_obj.search(cr, uid,
-                                         [('sale_id', 'in', older_sales)],
+                                         [('sale_id', 'in', oldest_sales),
+                                          ('type', '=', 'out')],
                                          context=context)
         if picking_ids:
             # get moves from pickings
