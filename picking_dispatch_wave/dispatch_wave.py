@@ -34,7 +34,9 @@ class StockPickingDispatchWave(orm.TransientModel):
         # get n order sales that have an assigned picking
         sql = """ SELECT so.id FROM sale_order AS so
         LEFT JOIN stock_picking AS pick ON pick.sale_id = so.id
+        LEFT JOIN stock_move AS move ON move.picking_id = pick.id
         WHERE pick.state = 'assigned' and pick.type = 'out'
+        AND move.dispatch_id IS NULL
         ORDER BY so.date_order ASC
         LIMIT %d
         """
