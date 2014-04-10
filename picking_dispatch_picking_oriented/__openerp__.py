@@ -29,10 +29,12 @@
     "description": """
     The picking_dispatch addon is stock move-oriented.
     This addon changes it for a picking-oriented use.
+
     On "Done" button, a wizard is displayed (same as picking_dispatch), but:
-    - moves are not passed to "done" state, but splitted between picked quantity and remains.
+    - moves are not passed to "done" state, but split between picked quantity and remains.
     - unpicked moves are moved in a new backorder.
-    Then, when the picking dispatch state is done :
+
+    Then, when the picking dispatch state is done:
     - the picking dispatch hides the "Stock Moves" tab, to deliver, the user uses "Related Picking" tab
     - the "Transfer Products" wizard ("Deliver" button) displays only moves linked to a done picking dispatch.
     """,
