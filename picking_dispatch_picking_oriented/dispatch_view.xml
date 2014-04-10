@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+    <!-- picking dispatch : hides stock moves tab if dispatch is done -->
+    <record id="view_dispatch_picking_oriented_form" model="ir.ui.view">
+      <field name="name">picking.dispatch.form.picking.oriented</field>
+      <field name="model">picking.dispatch</field>
+      <field name="inherit_id" ref="picking_dispatch.picking_dispatch_form"/>
+      <field name="arch" type="xml">
+        <page string="Stock Moves" position="attributes">
+          <attribute name="attrs">{'invisible':[('state','=','done')]}</attribute>
+        </page>
+      </field>
+    </record>
+
+    <!-- stock picking : up dispatch infos -->
+    <record id="view_picking_form_dispatch_picking_oriented" model="ir.ui.view">
+      <field name="name">stock.picking.form.dispatch.int.picking.oriented</field>
+      <field name="model">stock.picking</field>
+      <field name="inherit_id" ref="picking_dispatch.view_picking_form_int"/>
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+        <xpath expr="//form/sheet/group" position="after">
+          <field name="related_dispatch_ids"/>
+        </xpath>
+        <page string="Related Dispatch" position="replace">
+        </page>
+      </field>
+    </record>
+
+    <!-- stock move : add dispatch state on tree view -->
+    <record id="view_move_picking_tree_dispatch_picking_oriented" model="ir.ui.view">
+      <field name="name">stock.move.picking.tree.picking.oriented</field>
+      <field name="model">stock.move</field>
+      <field name="inherit_id" ref="stock.view_move_picking_tree"/>
+      <field name="arch" type="xml">
+        <field name="product_qty" position="after">
+          <field name="dispatch_state"/>
+        </field>
+      </field>
+    </record>
+
+  </data>
+</openerp>
