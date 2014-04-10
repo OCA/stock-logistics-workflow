@@ -58,21 +58,24 @@ class StockPickingDispatchWave(orm.TransientModel):
 
     _columns = {
         'nb_sales': fields.integer('How many sales?'),
+        'picker_id': fields.many2one('res.users', 'Picker', required=True,
+                                     help='the user to which the pickings are assigned'),
         }
     _defaults = {
         'nb_sales': 0,
+        'picker_id': lambda self, cr, uid, ctx: uid,
         }
 
     def action_create_picking_dispatch(self, cr, uid, ids, context=None):
         context = context or {}
-        nb_sales = self.browse(cr, uid, ids, context=context)[0]['nb_sales']
-        if nb_sales:
-            move_ids = self._get_moves_from_oldest_sales(cr, uid, nb_sales,
+        wave = self.browse(cr, uid, ids, context=context)[0]
+        if wave.nb_sales:
+            move_ids = self._get_moves_from_oldest_sales(cr, uid, wave.nb_sales,
                                                          context=context)
             if move_ids:
                 # create picking_dispatch
                 dispatch_obj = self.pool['picking.dispatch']
-                dispatch_id = dispatch_obj.create(cr, uid, {}, context=context)
+                dispatch_id = dispatch_obj.create(cr, uid, {'picker_id': wave.picker_id.id}, context=context)
                 # affect move_ids on the new dispatch
                 self.pool['stock.move'].write(cr, uid, move_ids,
                                               {'dispatch_id': dispatch_id},
