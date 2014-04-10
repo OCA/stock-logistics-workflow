@@ -80,6 +80,7 @@ class StockPickingDispatchWave(orm.TransientModel):
                 self.pool['stock.move'].write(cr, uid, move_ids,
                                               {'dispatch_id': dispatch_id},
                                               context=context)
+                context['active_id'] = dispatch_id
                 return {
                     'domain': str([('id', '=', dispatch_id)]),
                     'view_type': 'form',
