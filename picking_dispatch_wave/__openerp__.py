@@ -23,19 +23,22 @@
 {
     "name": "Picking Dispatch Wave",
     "version": "0.1",
-    "depends": ['picking_dispatch'],
+    "depends": ['picking_dispatch', 'sale_stock'],
     "author": "Camptocamp",
     'license': 'AGPL-3',
-    "description": """Allows to set a 'sale order wave' to pick
-    according the number of sales that you set.
-    1.The picker sets a number n of sale orders.
-    2.The wizard will select moves from n oldest sales
-    that are linked to ready pickings.
-    3.A picking dispatch is created with found moves""",
+    "description": """Allows to set a 'sale order wave'
+to pick according the number of sales that you set:
+
+* The picker sets a number n of sale orders.
+
+* The wizard will select moves from n oldest sales
+  that are linked to ready pickings.
+
+* A picking dispatch is created with found moves""",
     "website": "http://www.camptocamp.com",
     "category": "Warehouse Management",
     "demo": [],
     "data": ['dispatch_wave_view.xml'],
-    "test": [],
+    "test": ['test/test_dispatch_wave.yml'],
     "installable": True,
 }

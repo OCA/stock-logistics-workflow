@@ -38,9 +38,9 @@ class StockPickingDispatchWave(orm.TransientModel):
         WHERE pick.state = 'assigned' and pick.type = 'out'
         AND move.dispatch_id IS NULL
         ORDER BY so.date_order ASC
-        LIMIT %d
+        LIMIT %s
         """
-        cr.execute(sql % nb_sales)
+        cr.execute(sql, (nb_sales, ))
         oldest_sales = cr.fetchall()
         # get pickings from oldest sales
         picking_obj = self.pool['stock.picking']
