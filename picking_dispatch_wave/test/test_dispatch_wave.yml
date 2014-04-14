@@ -1,6 +1,6 @@
 -
   In order to test stock picking wave
-  I have to ensure when a picking dispatch wave is set, I check that a picking dispatch is well created.
+  I have to ensure when a picking dispatch wave is set, a picking dispatch is well created.
 -
   I create a product
 -
@@ -23,16 +23,16 @@
 -
   !workflow {model: sale.order, action: order_confirm, ref: so_wave}
 -
-  Then I check if picking is ready to deliver
+  Then (for test needs) I force the picking as ready to deliver
 -
   !python {model: stock.picking}: |
     picking = self.search(cr, uid, [('sale_id', '=', ref("so_wave"))])
     self.force_assign(cr, uid, picking)
 -
-  Then I ask a picking dispatch wave with 1 sale.
+  Then I ask a picking dispatch wave with 1 unit.
 -
   !record {model: stock.picking.dispatch.wave, id: wiz_wave}:
-    nb_sales: 1
+    nb: 1
     picker_id: base.user_demo
 -
   Then I confirm the demand

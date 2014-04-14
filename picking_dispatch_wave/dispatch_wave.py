@@ -28,52 +28,62 @@ _logger = logging.getLogger(__name__)
 class StockPickingDispatchWave(orm.TransientModel):
     _name = "stock.picking.dispatch.wave"
 
-    def _get_moves_from_oldest_sales(self, cr, uid, nb_sales, context=None):
+    def _get_pickings_to_done(self, cr, uid, nb, context=None):
         context = context or {}
+        move_obj = self.pool['stock.move']
         move_ids = []
-        # get n order sales that have an assigned picking
-        sql = """ SELECT so.id FROM sale_order AS so
-        LEFT JOIN stock_picking AS pick ON pick.sale_id = so.id
-        LEFT JOIN stock_move AS move ON move.picking_id = pick.id
-        WHERE pick.state = 'assigned' and pick.type = 'out'
-        AND move.dispatch_id IS NULL
-        ORDER BY so.date_order ASC
-        LIMIT %s
-        """
-        cr.execute(sql, (nb_sales, ))
-        oldest_sales = cr.fetchall()
-        # get pickings from oldest sales
-        picking_obj = self.pool['stock.picking']
-        picking_ids = picking_obj.search(cr, uid,
-                                         [('sale_id', 'in', oldest_sales),
-                                          ('type', '=', 'out')],
-                                         context=context)
-        if picking_ids:
-            # get moves from pickings
-            move_obj = self.pool['stock.move']
-            move_ids = move_obj.search(cr, uid,
-                                       [('picking_id', 'in', picking_ids)],
-                                       context=context)
+        picking_ids = []
+        move_ids = move_obj.search(cr, uid,
+                                   [('dispatch_id', '=', False),
+                                    ('state', '=', 'assigned'),
+                                    ('type', '=', 'out')],
+                                   order='date_expected DESC',
+                                   context=context)
+        for move in move_obj.browse(cr, uid, move_ids, context=context):
+            if len(picking_ids) == nb:
+                break
+            if move.picking_id.id not in picking_ids:
+                picking_ids.append(move.picking_id.id)
+        return picking_ids
+
+    def _get_moves_from_picking_list(self, cr, uid, picking_ids, context=None):
+        context = context or {}
+        move_obj = self.pool['stock.move']
+        move_ids = move_obj.search(cr, uid,
+                                   [('picking_id', 'in', picking_ids)],
+                                   context=context)
         return move_ids
 
+    def _get_moves_from_pickings_to_done(self, cr, uid, nb, context=None):
+        context = context or {}
+        move_ids = []
+        picking_ids = self._get_pickings_to_done(cr, uid, nb, context=context)
+        if picking_ids:
+            move_ids = self._get_moves_from_picking_list(cr, uid, picking_ids,
+                                                         context=context)
+        return move_ids
+
+
     _columns = {
-        'nb_sales': fields.integer('How many sales?'),
+        'nb': fields.integer('How many sales?'),
         'picker_id': fields.many2one('res.users', 'Picker', required=True,
                                      help='the user to which the pickings '
                                      'are assigned'),
         }
     _defaults = {
-        'nb_sales': 0,
+        'nb': 0,
         'picker_id': lambda self, cr, uid, ctx: uid,
         }
 
     def action_create_picking_dispatch(self, cr, uid, ids, context=None):
         context = context or {}
         wave = self.browse(cr, uid, ids, context=context)[0]
-        if wave.nb_sales:
-            move_ids = self._get_moves_from_oldest_sales(cr, uid,
-                                                         wave.nb_sales,
-                                                         context=context)
+        if wave.nb:
+            # we base search on pickings instead of sales:
+            # in most cases, it provides a very similar result
+            move_ids = self._get_moves_from_pickings_to_done(cr, uid,
+                                                             wave.nb,
+                                                             context=context)
             if move_ids:
                 # create picking_dispatch
                 dispatch_obj = self.pool['picking.dispatch']
@@ -102,4 +112,4 @@ class StockPickingDispatchWave(orm.TransientModel):
                                      _('No ready pickings to deliver!'))
         else:
             raise orm.except_orm(_('Error'),
-                                 _('You need to set at least one sale order.'))
+                                 _('You need to set at least one unit to do.'))

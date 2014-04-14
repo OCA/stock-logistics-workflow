@@ -29,7 +29,7 @@
             </p>
           </group>
           <group>
-           <field name="nb_sales"/>
+           <field name="nb"/>
            <field name="picker_id"/>
           </group>
           <footer>

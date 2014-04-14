@@ -24,7 +24,7 @@ msgstr "Annuler"
 #: model:ir.model.fields,field_description:picking_dispatch_wave.field_stock_picking_dispatch_wave_nb_sales
 #: field:stock.picking.dispatch.wave,nb_sales:0
 msgid "How many sales?"
-msgstr "Combien de commandes de vente?"
+msgstr "Nombre de commandes de vente?"
 
 #. module: picking_dispatch_wave
 #: model:ir.actions.act_window,name:picking_dispatch_wave.action_prepare_picking_dispatch
