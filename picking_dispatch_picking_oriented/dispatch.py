@@ -20,6 +20,7 @@
 #############################################################################
 import logging
 import time
+from openerp import netsvc
 from openerp.tools.misc import DEFAULT_SERVER_DATETIME_FORMAT
 from openerp.osv import orm, fields
 from openerp.tools.translate import _
@@ -107,6 +108,186 @@ class PickingDispatch(orm.Model):
         move_ids = move_obj.search(cr, uid, [('dispatch_id', 'in', ids)], context=ctx)
         return move_obj.action_partial_move(cr, uid, move_ids, context=ctx)
 
+class StockPicking(orm.Model):
+    _inherit = 'stock.picking' 
+
+    def do_partial(self, cr, uid, ids, partial_datas, context=None):
+        """ Makes partial picking and moves done.
+        @param partial_datas : Dictionary containing details of partial picking
+                          like partner_id, partner_id, delivery_date,
+                          delivery moves with product_id, product_qty, uom
+        @return: Dictionary of values
+        """
+        if context is None:
+            context = {}
+        else:
+            context = dict(context)
+        res = {}
+        move_obj = self.pool.get('stock.move')
+        product_obj = self.pool.get('product.product')
+        currency_obj = self.pool.get('res.currency')
+        uom_obj = self.pool.get('product.uom')
+        pricetype_obj = self.pool.get('product.price.type')
+        sequence_obj = self.pool.get('ir.sequence')
+        wf_service = netsvc.LocalService("workflow")
+        for pick in self.browse(cr, uid, ids, context=context):
+            new_picking = None
+            complete, too_many, too_few = [], [], []
+            move_product_qty, prodlot_ids, product_avail, partial_qty, product_uoms = {}, {}, {}, {}, {}
+            for move in pick.move_lines:
+                if move.state in ('done', 'cancel'):
+                    continue
+                partial_data = partial_datas.get('move%s'%(move.id), {})
+                product_qty = partial_data.get('product_qty',0.0)
+                move_product_qty[move.id] = product_qty
+                product_uom = partial_data.get('product_uom',False)
+                product_price = partial_data.get('product_price',0.0)
+                product_currency = partial_data.get('product_currency',False)
+                prodlot_id = partial_data.get('prodlot_id')
+                prodlot_ids[move.id] = prodlot_id
+                product_uoms[move.id] = product_uom
+                partial_qty[move.id] = uom_obj._compute_qty(cr, uid, product_uoms[move.id], product_qty, move.product_uom.id)
+                if move.product_qty == partial_qty[move.id]:
+                    complete.append(move)
+                elif move.product_qty > partial_qty[move.id]:
+                    too_few.append(move)
+                else:
+                    too_many.append(move)
+
+                # Average price computation
+                if (pick.type == 'in') and (move.product_id.cost_method == 'average'):
+                    product = product_obj.browse(cr, uid, move.product_id.id)
+                    move_currency_id = move.company_id.currency_id.id
+                    context['currency_id'] = move_currency_id
+                    qty = uom_obj._compute_qty(cr, uid, product_uom, product_qty, product.uom_id.id)
+                    price_type_id = pricetype_obj.search(cr, uid,
+                                                         [('field', '=', 'standard_price')],
+                                                         context=context)[0]
+                    price_type = pricetype_obj.browse(cr, uid, price_type_id, context=context)
+                    price_type_currency_id = price_type.currency_id.id
+
+                    if product.id not in product_avail:
+                        # keep track of stock on hand including processed lines not yet marked as done
+                        product_avail[product.id] = product.qty_available
+
+                    if qty > 0:
+                        # New price in company currency
+                        new_price = currency_obj.compute(cr, uid, product_currency,
+                                move_currency_id, product_price, round=False)
+                        new_price = uom_obj._compute_price(cr, uid, product_uom, new_price,
+                                product.uom_id.id)
+                        if product_avail[product.id] <= 0:
+                            product_avail[product.id] = 0
+                            new_std_price = new_price
+                        else:
+                            # Get the standard price
+                            amount_unit = product.price_get('standard_price', context=context)[product.id]
+                            # Here we must convert the new price computed in the currency of the price_type
+                            # of the product (e.g. company currency: EUR, price_type: USD)
+                            # The current value is still in company currency at this stage
+                            new_std_price = ((amount_unit * product_avail[product.id])\
+                                + (new_price * qty))/(product_avail[product.id] + qty)
+                        # Convert the price in price_type currency
+                        new_std_price = currency_obj.compute(
+                                cr, uid, move_currency_id,
+                                price_type_currency_id, new_std_price)
+                        # Write the field according to price type field
+                        product_obj.write(cr, uid, [product.id], {'standard_price': new_std_price})
+
+                        # Record the values that were chosen in the wizard, so they can be
+                        # used for inventory valuation if real-time valuation is enabled.
+                        move_obj.write(cr, uid, [move.id],
+                                {'price_unit': product_price,
+                                 'price_currency_id': product_currency})
+
+                        product_avail[product.id] += qty
+
+
+
+            for move in too_few:
+                product_qty = move_product_qty[move.id]
+                if not new_picking:
+                    new_picking_name = pick.name
+                    self.write(cr, uid, [pick.id], 
+                               {'name': sequence_obj.get(cr, uid,
+                                            'stock.picking.%s'%(pick.type)),
+                               })
+                    new_picking = self.copy(cr, uid, pick.id,
+                            {
+                                'name': new_picking_name,
+                                'move_lines' : [],
+                                'state':'draft',
+                            })
+                if product_qty != 0:
+                    defaults = {
+                            'product_qty' : product_qty,
+                            'product_uos_qty': product_qty, #TODO: put correct uos_qty
+                            'picking_id' : new_picking,
+                            'state': 'assigned',
+                            'move_dest_id': move.move_dest_id.id,
+                            'price_unit': move.price_unit,
+                            'product_uom': product_uoms[move.id],
+                            'dispatch_id': move.dispatch_id and move.dispatch_id.id
+                    }
+                    prodlot_id = prodlot_ids[move.id]
+                    if prodlot_id:
+                        defaults.update(prodlot_id=prodlot_id)
+                    new_move_id = move_obj.copy(cr, uid, move.id, defaults)
+                move_vals = {
+                    'product_qty': move.product_qty - partial_qty[move.id],
+                    'product_uos_qty': move.product_qty - partial_qty[move.id], #TODO: put correct uos_qty
+                    'prodlot_id': False,
+                    'tracking_id': False,
+                }
+                if move.dispatch_id:
+                    dispatch_obj = self.pool['picking.dispatch']
+                    new_dispatch_id = dispatch_obj.search(cr, uid, [('backorder_id', '=', move.dispatch_id.id),
+                                                                    ('state', '=', 'draft')], context=context)
+                    if new_dispatch_id:
+                        move_vals['dispatch_id'] = new_dispatch_id[0]
+                move_obj.write(cr, uid, [move.id], move_vals)
+
+            if new_picking:
+                move_obj.write(cr, uid, [c.id for c in complete], {'picking_id': new_picking})
+            for move in complete:
+                defaults = {'product_uom': product_uoms[move.id], 'product_qty': move_product_qty[move.id]}
+                if prodlot_ids.get(move.id):
+                    defaults.update({'prodlot_id': prodlot_ids[move.id]})
+                move_obj.write(cr, uid, [move.id], defaults)
+            for move in too_many:
+                product_qty = move_product_qty[move.id]
+                defaults = {
+                    'product_qty' : product_qty,
+                    'product_uos_qty': product_qty, #TODO: put correct uos_qty
+                    'product_uom': product_uoms[move.id]
+                }
+                prodlot_id = prodlot_ids.get(move.id)
+                if prodlot_ids.get(move.id):
+                    defaults.update(prodlot_id=prodlot_id)
+                if new_picking:
+                    defaults.update(picking_id=new_picking)
+                move_obj.write(cr, uid, [move.id], defaults)
+
+            # At first we confirm the new picking (if necessary)
+            if new_picking:
+                wf_service.trg_validate(uid, 'stock.picking', new_picking, 'button_confirm', cr)
+                # Then we finish the good picking
+                self.write(cr, uid, [pick.id], {'backorder_id': new_picking})
+                self.action_move(cr, uid, [new_picking], context=context)
+                wf_service.trg_validate(uid, 'stock.picking', new_picking, 'button_done', cr)
+                wf_service.trg_write(uid, 'stock.picking', pick.id, cr)
+                delivered_pack_id = pick.id
+                back_order_name = self.browse(cr, uid, delivered_pack_id, context=context).name
+                self.message_post(cr, uid, new_picking, body=_("Back order <em>%s</em> has been <b>created</b>.") % (back_order_name), context=context)
+            else:
+                self.action_move(cr, uid, [pick.id], context=context)
+                wf_service.trg_validate(uid, 'stock.picking', pick.id, 'button_done', cr)
+                delivered_pack_id = pick.id
+
+            delivered_pack = self.browse(cr, uid, delivered_pack_id, context=context)
+            res[pick.id] = {'delivered_picking': delivered_pack.id or False}
+
+        return res 
 
 class StockMove(orm.Model):
     _inherit = 'stock.move'
@@ -118,6 +299,19 @@ class StockMove(orm.Model):
                                          string='Dispatch State',
                                          readonly=True),
     }
+
+    def copy_data(self, cr, uid, id, default=None, context=None):
+        if default is None:
+            default = {}
+        dispatch_id = False
+        if 'dispatch_id' in default and default['dispatch_id']:
+            dispatch_id = default['dispatch_id']
+        default = default.copy()
+        res = super(StockMove, self).\
+            copy_data(cr, uid, id, default=default, context=context)
+        if dispatch_id:
+            res.update({'dispatch_id': dispatch_id})
+        return res
 
     def do_partial(self, cr, uid, ids, partial_datas, context=None):
         """ Makes partial picking and moves done.
