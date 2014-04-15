@@ -42,5 +42,19 @@
       </field>
     </record>
 
+    <!-- stock partial picking : add carrier_id on stock partial picking wizard -->
+    <record id="add_carrier_id_on_stock_partial_picking_form" model="ir.ui.view">
+      <field name="name">add.carrier.id.on.stock.partial.picking.form</field>
+      <field name="model">stock.partial.picking</field>
+      <field name="inherit_id" ref="stock.stock_partial_picking_form"/>
+      <field name="arch" type="xml">
+        <field name="move_ids" position="before">
+         <group>
+          <field name="carrier_id"/>
+         </group>
+        </field>
+      </field>
+    </record>
+
   </data>
 </openerp>

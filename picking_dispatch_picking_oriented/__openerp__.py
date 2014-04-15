@@ -23,7 +23,7 @@
 {
     "name": "Picking Dispatch picking-oriented",
     "version": "0.1",
-    "depends": ['picking_dispatch'],
+    "depends": ['picking_dispatch','delivery'],
     "author": "Camptocamp",
     "license": "AGPL-3",
     "description": """The picking_dispatch addon is stock move-oriented.
