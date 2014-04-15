@@ -232,6 +232,7 @@ class StockPicking(orm.Model):
                     prodlot_id = prodlot_ids[move.id]
                     if prodlot_id:
                         defaults.update(prodlot_id=prodlot_id)
+                    # the copy will be a done move, it has to attached to the current dispatch
                     new_move_id = move_obj.copy(cr, uid, move.id, defaults)
                 move_vals = {
                     'product_qty': move.product_qty - partial_qty[move.id],
@@ -239,12 +240,17 @@ class StockPicking(orm.Model):
                     'prodlot_id': False,
                     'tracking_id': False,
                 }
+                # 2 cases of shortage context:
                 if move.dispatch_id:
                     dispatch_obj = self.pool['picking.dispatch']
                     new_dispatch_id = dispatch_obj.search(cr, uid, [('backorder_id', '=', move.dispatch_id.id),
                                                                     ('state', '=', 'draft')], context=context)
+                    # we have anticipated the shortage, a backorder dispatch exists, we can attach the move on it
                     if new_dispatch_id:
                         move_vals['dispatch_id'] = new_dispatch_id[0]
+                    # we have not anticipated (broken products,...), the move will be not attached to a dispatch
+                    else:
+                        move_vals['dispatch_id'] = False
                 move_obj.write(cr, uid, [move.id], move_vals)
 
             if new_picking:
