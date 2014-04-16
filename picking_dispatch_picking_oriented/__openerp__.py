@@ -26,8 +26,9 @@
     "depends": ['picking_dispatch','delivery'],
     "author": "Camptocamp",
     "license": "AGPL-3",
-    "description": """The picking_dispatch addon is stock move-oriented.
+    "description": """picking_dispatch addon is stock move-oriented.
 This addon changes it for a picking-oriented use.
+
 On "Done" button, a wizard is displayed (same as picking_dispatch), but:
 
 * moves are not passed to "done" state, but split between picked quantity and remains.
@@ -36,9 +37,11 @@ On "Done" button, a wizard is displayed (same as picking_dispatch), but:
 
 Then, when the picking dispatch state is done:
 
-* the picking dispatch hides the "Stock Moves" tab, to deliver, the user uses "Related Picking" tab
+* the picking dispatch hides the "Stock Moves" tab, the user uses "Related Picking" tab to deliver pickings one after the other.
 
 * the "Transfer Products" wizard ("Deliver" button) displays only moves linked to a done picking dispatch.
+
+* on "Transfer Products" wizard, a carrier field is displayed to give possility to check and change it if it's necessary.
     """,
     "website": "http://www.camptocamp.com",
     "category": "Warehouse Management",

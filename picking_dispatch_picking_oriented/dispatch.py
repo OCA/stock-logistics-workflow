@@ -36,6 +36,9 @@ class stock_partial_picking(orm.TransientModel):
     }
 
     def default_get(self, cr, uid, fields, context=None):
+        """override to:
+            - add filter on showed moves
+            - fill carrier_id"""
         if context is None:
             context = {}
         res = super(stock_partial_picking, self).default_get(cr, uid, fields,
@@ -66,6 +69,7 @@ class stock_partial_picking(orm.TransientModel):
         return res
 
     def do_partial(self, cr, uid, ids, context=None):
+        """override to just add carrier_id in partial_data"""
         assert len(ids) == 1, 'Partial picking processing may only be done one at a time.'
         stock_picking = self.pool.get('stock.picking')
         stock_move = self.pool.get('stock.move')
@@ -131,6 +135,7 @@ class stock_partial_move(orm.TransientModel):
     _inherit = 'stock.partial.move'
 
     def do_partial(self, cr, uid, ids, context=None):
+        """override to don't close window if the context is 'partial_via_dispatch'"""
         # no call to super!
         assert len(ids) == 1, 'Partial move processing may only be done one form at a time.'
         partial = self.browse(cr, uid, ids[0], context=context)
@@ -164,7 +169,7 @@ class PickingDispatch(orm.Model):
     _inherit = 'picking.dispatch'
 
     def action_done(self, cr, uid, ids, context=None):
-        """Open the partial picking wizard"""
+        """Override to indicate 'partial_via_dispatch' context"""
         if not ids:
             return True
         if context is None:
@@ -182,11 +187,13 @@ class StockPicking(orm.Model):
     _inherit = 'stock.picking' 
 
     def do_partial(self, cr, uid, ids, partial_datas, context=None):
-        """ Makes partial picking and moves done.
-        @param partial_datas : Dictionary containing details of partial picking
-                          like partner_id, partner_id, delivery_date,
-                          delivery moves with product_id, product_qty, uom
-        @return: Dictionary of values
+        """ Override to:
+            - pass carrier_id information on done picking
+            - in case of shortage : 
+                - copies are the done moves, we need to pass them the current dispatch id
+                - undone moves are the original moves:
+                    - we need to pass them the id of dispatch backorder if it exists,
+                    - we need to pass False if there is no dispatch backorder
         """
         if context is None:
             context = {}
@@ -381,6 +388,8 @@ class StockMove(orm.Model):
     }
 
     def copy_data(self, cr, uid, id, default=None, context=None):
+        """Override because in shortage context done moves are created from copies of undone moves
+           We need dispatch_id information on done move"""
         if default is None:
             default = {}
         dispatch_id = False
@@ -394,9 +403,7 @@ class StockMove(orm.Model):
         return res
 
     def do_partial(self, cr, uid, ids, partial_datas, context=None):
-        """ Makes partial picking and moves done.
-
-        Inherited to allow the use of do_partial_via_dispatch()
+        """ Inherited to allow the use of do_partial_via_dispatch()
         instead of do_partial(), switch is done with
         a 'partial_via_dispatch' key in the context.
 
