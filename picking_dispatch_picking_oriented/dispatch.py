@@ -23,7 +23,7 @@ import time
 from openerp import netsvc
 from openerp.tools.misc import DEFAULT_SERVER_DATETIME_FORMAT
 from openerp.tools.float_utils import float_compare
-from openerp.osv import orm, fields
+from openerp.osv import orm, fields, osv
 from openerp.tools.translate import _
 _logger = logging.getLogger(__name__)
 
@@ -32,7 +32,7 @@ class stock_partial_picking(orm.TransientModel):
     _inherit = "stock.partial.picking"
 
     _columns = {
-        'carrier_id': fields.many2one('delivery.carrier','Carrier'),
+        'carrier_id': fields.many2one('delivery.carrier', 'Carrier'),
     }
 
     def default_get(self, cr, uid, fields, context=None):
@@ -45,6 +45,7 @@ class stock_partial_picking(orm.TransientModel):
                                                              context=context)
         picking_ids = context.get('active_ids', [])
         active_model = context.get('active_model')
+        picking_obj = self.pool.get('stock.picking')
 
         if not picking_ids or len(picking_ids) != 1:
             """ Partial Picking Processing may only be done
@@ -55,16 +56,17 @@ class stock_partial_picking(orm.TransientModel):
         if 'picking_id' in fields:
             res.update(picking_id=picking_id)
         if 'move_ids' in fields:
-            picking = self.pool.get('stock.picking').browse(cr, uid, picking_id, context=context)
+            picking = picking_obj.browse(cr, uid, picking_id, context=context)
             moves = [self._partial_move_for(cr, uid, m)
                      for m in picking.move_lines
                      if (m.state not in ('done', 'cancel')
-                         and not (m.dispatch_id and m.dispatch_id.state != 'done'))]
+                         and not (m.dispatch_id and
+                                  m.dispatch_id.state != 'done'))]
             res.update(move_ids=moves)
         if 'date' in fields:
             res.update(date=time.strftime(DEFAULT_SERVER_DATETIME_FORMAT))
         if 'carrier_id' in fields:
-            picking = self.pool.get('stock.picking').browse(cr, uid, picking_id, context=context)
+            picking = picking_obj.browse(cr, uid, picking_id, context=context)
             res.update(carrier_id=picking.carrier_id.id)
         return res
 
@@ -76,7 +78,7 @@ class stock_partial_picking(orm.TransientModel):
         uom_obj = self.pool.get('product.uom')
         partial = self.browse(cr, uid, ids[0], context=context)
         partial_data = {
-            'delivery_date' : partial.date,
+            'delivery_date': partial.date,
             'carrier_id': partial.carrier_id and partial.carrier_id.id or False
         }
         picking_type = partial.picking_id.type
@@ -85,14 +87,14 @@ class stock_partial_picking(orm.TransientModel):
             line_uom = wizard_line.product_uom
             move_id = wizard_line.move_id.id
 
-            #Quantiny must be Positive
+            #Quantity must be Positive
             if wizard_line.quantity < 0:
                 raise osv.except_osv(_('Warning!'), _('Please provide proper Quantity.'))
 
             #Compute the quantity for respective wizard_line in the line uom (this jsut do the rounding if necessary)
             qty_in_line_uom = uom_obj._compute_qty(cr, uid, line_uom.id, wizard_line.quantity, line_uom.id)
 
-            if line_uom.factor and line_uom.factor <> 0:
+            if line_uom.factor and line_uom.factor != 0:
                 if float_compare(qty_in_line_uom, wizard_line.quantity, precision_rounding=line_uom.rounding) != 0:
                     raise osv.except_osv(_('Warning!'), _('The unit of measure rounding does not allow you to ship "%s %s", only rounding of "%s %s" is accepted by the Unit of Measure.') % (wizard_line.quantity, line_uom.name, line_uom.rounding, line_uom.name))
             if move_id:
@@ -107,16 +109,16 @@ class stock_partial_picking(orm.TransientModel):
                 if float_compare(qty_in_initial_uom, without_rounding_qty, precision_rounding=initial_uom.rounding) != 0:
                     raise osv.except_osv(_('Warning!'), _('The rounding of the initial uom does not allow you to ship "%s %s", as it would let a quantity of "%s %s" to ship and only rounding of "%s %s" is accepted by the uom.') % (wizard_line.quantity, line_uom.name, wizard_line.move_id.product_qty - without_rounding_qty, initial_uom.name, initial_uom.rounding, initial_uom.name))
             else:
-                seq_obj_name =  'stock.picking.' + picking_type
-                move_id = stock_move.create(cr,uid,{'name' : self.pool.get('ir.sequence').get(cr, uid, seq_obj_name),
-                                                    'product_id': wizard_line.product_id.id,
-                                                    'product_qty': wizard_line.quantity,
-                                                    'product_uom': wizard_line.product_uom.id,
-                                                    'prodlot_id': wizard_line.prodlot_id.id,
-                                                    'location_id' : wizard_line.location_id.id,
-                                                    'location_dest_id' : wizard_line.location_dest_id.id,
-                                                    'picking_id': partial.picking_id.id
-                                                    },context=context)
+                seq_obj_name = 'stock.picking.' + picking_type
+                move_id = stock_move.create(cr, uid, {'name': self.pool.get('ir.sequence').get(cr, uid, seq_obj_name),
+                                                      'product_id': wizard_line.product_id.id,
+                                                      'product_qty': wizard_line.quantity,
+                                                      'product_uom': wizard_line.product_uom.id,
+                                                      'prodlot_id': wizard_line.prodlot_id.id,
+                                                      'location_id': wizard_line.location_id.id,
+                                                      'location_dest_id': wizard_line.location_dest_id.id,
+                                                      'picking_id': partial.picking_id.id
+                                                      }, context=context)
                 stock_move.action_confirm(cr, uid, [move_id], context)
             partial_data['move%s' % (move_id)] = {
                 'product_id': wizard_line.product_id.id,
@@ -126,7 +128,7 @@ class stock_partial_picking(orm.TransientModel):
             }
             if (picking_type == 'in') and (wizard_line.product_id.cost_method == 'average'):
                 partial_data['move%s' % (wizard_line.move_id.id)].update(product_price=wizard_line.cost,
-                                                                  product_currency=wizard_line.currency.id)
+                                                                         product_currency=wizard_line.currency.id)
         stock_picking.do_partial(cr, uid, [partial.picking_id.id], partial_data, context=context)
         return {'type': 'ir.actions.act_window_close'}
 
@@ -184,13 +186,13 @@ class PickingDispatch(orm.Model):
 
 
 class StockPicking(orm.Model):
-    _inherit = 'stock.picking' 
+    _inherit = 'stock.picking'
 
     def do_partial(self, cr, uid, ids, partial_datas, context=None):
         """ Override to:
             - pass carrier_id information on done picking
-            - in case of shortage : 
-                - copies are the done moves, we need to pass them the current dispatch id
+            - in case of shortage :
+                - copies are the moves in state 'done', we need to pass them the current dispatch id
                 - undone moves are the original moves:
                     - we need to pass them the id of dispatch backorder if it exists,
                     - we need to pass False if there is no dispatch backorder
@@ -214,12 +216,12 @@ class StockPicking(orm.Model):
             for move in pick.move_lines:
                 if move.state in ('done', 'cancel'):
                     continue
-                partial_data = partial_datas.get('move%s'%(move.id), {})
-                product_qty = partial_data.get('product_qty',0.0)
+                partial_data = partial_datas.get('move%s' % (move.id), {})
+                product_qty = partial_data.get('product_qty', 0.0)
                 move_product_qty[move.id] = product_qty
-                product_uom = partial_data.get('product_uom',False)
-                product_price = partial_data.get('product_price',0.0)
-                product_currency = partial_data.get('product_currency',False)
+                product_uom = partial_data.get('product_uom', False)
+                product_price = partial_data.get('product_price', 0.0)
+                product_currency = partial_data.get('product_currency', False)
                 prodlot_id = partial_data.get('prodlot_id')
                 prodlot_ids[move.id] = prodlot_id
                 product_uoms[move.id] = product_uom
@@ -250,9 +252,9 @@ class StockPicking(orm.Model):
                     if qty > 0:
                         # New price in company currency
                         new_price = currency_obj.compute(cr, uid, product_currency,
-                                move_currency_id, product_price, round=False)
+                                                         move_currency_id, product_price, round=False)
                         new_price = uom_obj._compute_price(cr, uid, product_uom, new_price,
-                                product.uom_id.id)
+                                                           product.uom_id.id)
                         if product_avail[product.id] <= 0:
                             product_avail[product.id] = 0
                             new_std_price = new_price
@@ -262,59 +264,55 @@ class StockPicking(orm.Model):
                             # Here we must convert the new price computed in the currency of the price_type
                             # of the product (e.g. company currency: EUR, price_type: USD)
                             # The current value is still in company currency at this stage
-                            new_std_price = ((amount_unit * product_avail[product.id])\
-                                + (new_price * qty))/(product_avail[product.id] + qty)
+                            new_std_price = ((amount_unit * product_avail[product.id])
+                                             + (new_price * qty))/(product_avail[product.id] + qty)
                         # Convert the price in price_type currency
                         new_std_price = currency_obj.compute(
-                                cr, uid, move_currency_id,
-                                price_type_currency_id, new_std_price)
+                            cr, uid, move_currency_id,
+                            price_type_currency_id, new_std_price)
                         # Write the field according to price type field
                         product_obj.write(cr, uid, [product.id], {'standard_price': new_std_price})
 
                         # Record the values that were chosen in the wizard, so they can be
                         # used for inventory valuation if real-time valuation is enabled.
-                        move_obj.write(cr, uid, [move.id],
-                                {'price_unit': product_price,
-                                 'price_currency_id': product_currency})
-
+                        move_obj.write(cr, uid, [move.id], {
+                            'price_unit': product_price,
+                            'price_currency_id': product_currency
+                        })
                         product_avail[product.id] += qty
-
-
 
             for move in too_few:
                 product_qty = move_product_qty[move.id]
                 if not new_picking:
                     new_picking_name = pick.name
-                    self.write(cr, uid, [pick.id], 
-                               {'name': sequence_obj.get(cr, uid,
-                                            'stock.picking.%s'%(pick.type)),
-                               })
-                    new_picking = self.copy(cr, uid, pick.id,
-                            {
-                                'name': new_picking_name,
-                                'move_lines' : [],
-                                'state':'draft',
-                                'carrier_id': 'carrier_id' in partial_datas and partial_datas['carrier_id'],
-                            })
+                    self.write(cr, uid, [pick.id], {
+                        'name': sequence_obj.get(cr, uid, 'stock.picking.%s' % (pick.type)),
+                    })
+                    new_picking = self.copy(cr, uid, pick.id, {
+                        'name': new_picking_name,
+                        'move_lines': [],
+                        'state': 'draft',
+                        'carrier_id': 'carrier_id' in partial_datas and partial_datas['carrier_id'],
+                    })
                 if product_qty != 0:
                     defaults = {
-                            'product_qty' : product_qty,
-                            'product_uos_qty': product_qty, #TODO: put correct uos_qty
-                            'picking_id' : new_picking,
-                            'state': 'assigned',
-                            'move_dest_id': move.move_dest_id.id,
-                            'price_unit': move.price_unit,
-                            'product_uom': product_uoms[move.id],
-                            'dispatch_id': move.dispatch_id and move.dispatch_id.id
+                        'product_qty': product_qty,
+                        'product_uos_qty': product_qty,  # TODO: put correct uos_qty
+                        'picking_id': new_picking,
+                        'state': 'assigned',
+                        'move_dest_id': move.move_dest_id.id,
+                        'price_unit': move.price_unit,
+                        'product_uom': product_uoms[move.id],
+                        'dispatch_id': move.dispatch_id and move.dispatch_id.id
                     }
                     prodlot_id = prodlot_ids[move.id]
                     if prodlot_id:
                         defaults.update(prodlot_id=prodlot_id)
                     # the copy will be a done move, it has to attached to the current dispatch
-                    new_move_id = move_obj.copy(cr, uid, move.id, defaults)
+                    move_obj.copy(cr, uid, move.id, defaults)
                 move_vals = {
                     'product_qty': move.product_qty - partial_qty[move.id],
-                    'product_uos_qty': move.product_qty - partial_qty[move.id], #TODO: put correct uos_qty
+                    'product_uos_qty': move.product_qty - partial_qty[move.id],  # TODO: put correct uos_qty
                     'prodlot_id': False,
                     'tracking_id': False,
                 }
@@ -341,8 +339,8 @@ class StockPicking(orm.Model):
             for move in too_many:
                 product_qty = move_product_qty[move.id]
                 defaults = {
-                    'product_qty' : product_qty,
-                    'product_uos_qty': product_qty, #TODO: put correct uos_qty
+                    'product_qty': product_qty,
+                    'product_uos_qty': product_qty,  # TODO: put correct uos_qty
                     'product_uom': product_uoms[move.id]
                 }
                 prodlot_id = prodlot_ids.get(move.id)
@@ -373,7 +371,7 @@ class StockPicking(orm.Model):
             delivered_pack = self.browse(cr, uid, delivered_pack_id, context=context)
             res[pick.id] = {'delivered_picking': delivered_pack.id or False}
 
-        return res 
+        return res
 
 
 class StockMove(orm.Model):
