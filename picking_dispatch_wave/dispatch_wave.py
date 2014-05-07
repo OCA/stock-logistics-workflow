@@ -63,13 +63,13 @@ class StockPickingDispatchWave(orm.TransientModel):
                                                          context=context)
         return move_ids
 
-
     _columns = {
         'nb': fields.integer('How many sales?'),
         'picker_id': fields.many2one('res.users', 'Picker', required=True,
                                      help='the user to which the pickings '
                                      'are assigned'),
         }
+
     _defaults = {
         'nb': 0,
         'picker_id': lambda self, cr, uid, ctx: uid,
