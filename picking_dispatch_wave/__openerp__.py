@@ -26,14 +26,17 @@
     "depends": ['picking_dispatch', 'sale_stock'],
     "author": "Camptocamp",
     'license': 'AGPL-3',
-    "description": """Allows to set a wave to pick
-according the number of sales/pickings that you set:
+    "description": """Allows to set a picking dispatch
+including the number of pickings that you want to pick:
 
-* The picker sets a number n of pickings to done.
+* The picker sets a number n of pickings to do.
 
 * The wizard will select moves from n pickings with oldest min_date.
 
-* A picking dispatch is created with found moves""",
+* A picking dispatch is created with found moves
+
+It's sort of basic wave picking.
+""",
     "website": "http://www.camptocamp.com",
     "category": "Warehouse Management",
     "demo": [],

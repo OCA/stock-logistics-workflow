@@ -3,7 +3,7 @@
   <data>
 
     <act_window id="action_prepare_picking_dispatch"
-                name="Prepare Picking Dispatch"
+                name="Picking Wave"
                 res_model="stock.picking.dispatch.wave"
                 view_type="form"
                 view_mode="form"
@@ -21,11 +21,11 @@
       <field name="name">stock.picking.dispatch.wave form</field>
       <field name="model">stock.picking.dispatch.wave</field>
       <field name="arch" type="xml">
-        <form string="Prepare Picking Dispatch Wave" version="7.0">
+        <form string="Picking Wave" version="7.0">
           <group>
             <p class="oe_grey">
               This action will prepare you a picking dispatch
-              according the number of sale orders that you set.
+              according the number of pickings that you set.
             </p>
           </group>
           <group>
@@ -33,7 +33,7 @@
            <field name="picker_id"/>
           </group>
           <footer>
-            <button name="action_create_picking_dispatch" string="Prepare Picking Dispatch" type="object"
+            <button name="action_create_picking_dispatch" string="Create Picking Dispatch" type="object"
                     class="oe_highlight"/>
             or
             <button string="Cancel" class="oe_link" special="cancel" />

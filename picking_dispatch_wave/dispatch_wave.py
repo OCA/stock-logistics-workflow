@@ -28,7 +28,7 @@ _logger = logging.getLogger(__name__)
 class StockPickingDispatchWave(orm.TransientModel):
     _name = "stock.picking.dispatch.wave"
 
-    def _get_pickings_to_done(self, cr, uid, nb, context=None):
+    def _get_pickings_to_do(self, cr, uid, nb, context=None):
         context = context or {}
         move_obj = self.pool['stock.move']
         move_ids = []
@@ -54,18 +54,18 @@ class StockPickingDispatchWave(orm.TransientModel):
                                    context=context)
         return move_ids
 
-    def _get_moves_from_pickings_to_done(self, cr, uid, nb, context=None):
+    def _get_moves_from_pickings_to_do(self, cr, uid, nb, context=None):
         context = context or {}
         move_ids = []
-        picking_ids = self._get_pickings_to_done(cr, uid, nb, context=context)
+        picking_ids = self._get_pickings_to_do(cr, uid, nb, context=context)
         if picking_ids:
             move_ids = self._get_moves_from_picking_list(cr, uid, picking_ids,
                                                          context=context)
         return move_ids
 
     _columns = {
-        'nb': fields.integer('How many sales?'),
-        'picker_id': fields.many2one('res.users', 'Picker', required=True,
+        'nb': fields.integer('Number of pickings to prepare'),
+        'picker_id': fields.many2one('res.users', 'User', required=True,
                                      help='the user to which the pickings '
                                      'are assigned'),
         }
@@ -81,7 +81,7 @@ class StockPickingDispatchWave(orm.TransientModel):
         if wave.nb:
             # we base search on pickings instead of sales:
             # in most cases, it provides a very similar result
-            move_ids = self._get_moves_from_pickings_to_done(cr, uid,
+            move_ids = self._get_moves_from_pickings_to_do(cr, uid,
                                                              wave.nb,
                                                              context=context)
             if move_ids:
