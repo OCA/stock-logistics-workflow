@@ -74,13 +74,13 @@ class stock_partial_picking(orm.TransientModel):
 
     def do_partial(self, cr, uid, ids, context=None):
         """override from stock/wizard/stock_partial_picking.py (no call to super):
-            - to just add carrier_id in partial_data"""
+            - to just add carrier_id in partial_data (1) """
         assert len(ids) == 1, 'Partial picking processing may only be done one at a time.'
         stock_picking = self.pool.get('stock.picking')
         stock_move = self.pool.get('stock.move')
         uom_obj = self.pool.get('product.uom')
         partial = self.browse(cr, uid, ids[0], context=context)
-        # add carrier_id in partial_data dict
+        # (1) add carrier_id in partial_data dict
         partial_data = {
             'delivery_date': partial.date,
             'carrier_id': partial.carrier_id and partial.carrier_id.id or False
@@ -100,7 +100,10 @@ class stock_partial_picking(orm.TransientModel):
 
             if line_uom.factor and line_uom.factor != 0:
                 if float_compare(qty_in_line_uom, wizard_line.quantity, precision_rounding=line_uom.rounding) != 0:
-                    raise osv.except_osv(_('Warning!'), _('The unit of measure rounding does not allow you to ship "%s %s", only rounding of "%s %s" is accepted by the Unit of Measure.') % (wizard_line.quantity, line_uom.name, line_uom.rounding, line_uom.name))
+                    raise osv.except_osv(_('Warning!'),
+                                         _('The unit of measure rounding does not allow you to ship "%s %s", '
+                                           'only rounding of "%s %s" is accepted by the Unit of Measure.')
+                                         % (wizard_line.quantity, line_uom.name, line_uom.rounding, line_uom.name))
             if move_id:
                 #Check rounding Quantity.ex.
                 #picking: 1kg, uom kg rounding = 0.01 (rounding to 10g),
@@ -111,7 +114,11 @@ class stock_partial_picking(orm.TransientModel):
                 qty_in_initial_uom = uom_obj._compute_qty(cr, uid, line_uom.id, wizard_line.quantity, initial_uom.id)
                 without_rounding_qty = (wizard_line.quantity / line_uom.factor) * initial_uom.factor
                 if float_compare(qty_in_initial_uom, without_rounding_qty, precision_rounding=initial_uom.rounding) != 0:
-                    raise osv.except_osv(_('Warning!'), _('The rounding of the initial uom does not allow you to ship "%s %s", as it would let a quantity of "%s %s" to ship and only rounding of "%s %s" is accepted by the uom.') % (wizard_line.quantity, line_uom.name, wizard_line.move_id.product_qty - without_rounding_qty, initial_uom.name, initial_uom.rounding, initial_uom.name))
+                    raise osv.except_osv(_('Warning!'),
+                                         _('The rounding of the initial uom does not allow you to ship "%s %s", '
+                                           'as it would let a quantity of "%s %s" to ship and only rounding of "%s %s" is accepted by the uom.')
+                                         % (wizard_line.quantity, line_uom.name, wizard_line.move_id.product_qty - without_rounding_qty,
+                                            initial_uom.name, initial_uom.rounding, initial_uom.name))
             else:
                 seq_obj_name = 'stock.picking.' + picking_type
                 move_id = stock_move.create(cr, uid, {'name': self.pool.get('ir.sequence').get(cr, uid, seq_obj_name),
@@ -182,9 +189,7 @@ class PickingDispatch(orm.Model):
         if context is None:
             context = {}
         ctx = context.copy()
-        ctx.update({
-            'partial_via_dispatch': True,
-        })
+        ctx['partial_via_dispatch'] = True
         move_obj = self.pool['stock.move']
         move_ids = move_obj.search(cr, uid, [('dispatch_id', 'in', ids)], context=ctx)
         return move_obj.action_partial_move(cr, uid, move_ids, context=ctx)
@@ -427,7 +432,9 @@ class StockMove(orm.Model):
                 cr, uid, ids, partial_datas, context=context)
 
     def do_partial_via_dispatch(self, cr, uid, ids, partial_datas, context=None):
-        """ Makes picking dispatch done, split moves between ok and other in backorders.
+        """ Copy of do_partial on stock.move in stock/stock.py (no call to super)
+        the behaviour changes from interaction with dispatch (l.552)
+        Makes picking dispatch done, split moves between ok and other in backorders.
         @param partial_datas: Dictionary containing details of partial picking
                           like partner_id, delivery_date, delivery
                           moves with product_id, product_qty, uom
@@ -515,7 +522,7 @@ class StockMove(orm.Model):
                     }
                 prodlot_id = prodlot_ids[move.id]
                 if prodlot_id:
-                    defaults.update(prodlot_id=prodlot_id)
+                    defaults['prodlot_id'] = prodlot_id
                 new_move = self.copy(cr, uid, move.id, defaults)
                 complete.append(self.browse(cr, uid, new_move))
             self.write(cr, uid, [move.id],
@@ -542,9 +549,9 @@ class StockMove(orm.Model):
                to the same dispatch as the original move
            so the difference between the original set of moves
            and the complete_moves is the set of unprocessed moves'''
-        dispatch_id = context['active_id']
+        dispatch_id = 'active_id' in context and context['active_id']
         ids = self.search(cr, uid,
-                          [('dispatch_id', '=', context['active_id'])],
+                          [('dispatch_id', '=', dispatch_id)],
                           context=context)
         complete_move_ids = [x.id for x in complete]
         unprocessed_move_ids = set(ids) - set(complete_move_ids)

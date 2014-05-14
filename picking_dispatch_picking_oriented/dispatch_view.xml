@@ -19,7 +19,6 @@
       <field name="name">stock.picking.form.dispatch.int.picking.oriented</field>
       <field name="model">stock.picking</field>
       <field name="inherit_id" ref="picking_dispatch.view_picking_form_int"/>
-      <field name="type">form</field>
       <field name="arch" type="xml">
         <xpath expr="//form/sheet/group" position="after">
           <field name="related_dispatch_ids"/>
