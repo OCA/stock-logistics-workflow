@@ -36,9 +36,9 @@ class stock_partial_picking(orm.TransientModel):
     }
 
     def default_get(self, cr, uid, fields, context=None):
-        """override to:
-            - add filter on showed moves
-            - fill carrier_id"""
+        """override from stock/wizard/stock_partial_picking.py (no call to super):
+            - to update filter on showed moves
+            - to fill carrier_id"""
         if context is None:
             context = {}
         res = super(stock_partial_picking, self).default_get(cr, uid, fields,
@@ -55,6 +55,7 @@ class stock_partial_picking(orm.TransientModel):
         picking_id, = picking_ids
         if 'picking_id' in fields:
             res.update(picking_id=picking_id)
+        # add one condition on move_ids filling : only not linked to a not finished dispatch moves are showed
         if 'move_ids' in fields:
             picking = picking_obj.browse(cr, uid, picking_id, context=context)
             moves = [self._partial_move_for(cr, uid, m)
@@ -65,18 +66,21 @@ class stock_partial_picking(orm.TransientModel):
             res.update(move_ids=moves)
         if 'date' in fields:
             res.update(date=time.strftime(DEFAULT_SERVER_DATETIME_FORMAT))
+        # fill carrier_id info
         if 'carrier_id' in fields:
             picking = picking_obj.browse(cr, uid, picking_id, context=context)
             res.update(carrier_id=picking.carrier_id.id)
         return res
 
     def do_partial(self, cr, uid, ids, context=None):
-        """override to just add carrier_id in partial_data"""
+        """override from stock/wizard/stock_partial_picking.py (no call to super):
+            - to just add carrier_id in partial_data"""
         assert len(ids) == 1, 'Partial picking processing may only be done one at a time.'
         stock_picking = self.pool.get('stock.picking')
         stock_move = self.pool.get('stock.move')
         uom_obj = self.pool.get('product.uom')
         partial = self.browse(cr, uid, ids[0], context=context)
+        # add carrier_id in partial_data dict
         partial_data = {
             'delivery_date': partial.date,
             'carrier_id': partial.carrier_id and partial.carrier_id.id or False
@@ -137,8 +141,8 @@ class stock_partial_move(orm.TransientModel):
     _inherit = 'stock.partial.move'
 
     def do_partial(self, cr, uid, ids, context=None):
-        """override to don't close window if the context is 'partial_via_dispatch'"""
-        # no call to super!
+        """override from stock/wizard/stock_partial_move.py (no call to super):
+            - to do not close window if the action is launched from a picking dispatch """
         assert len(ids) == 1, 'Partial move processing may only be done one form at a time.'
         partial = self.browse(cr, uid, ids[0], context=context)
         partial_data = {
@@ -171,7 +175,8 @@ class PickingDispatch(orm.Model):
     _inherit = 'picking.dispatch'
 
     def action_done(self, cr, uid, ids, context=None):
-        """Override to indicate 'partial_via_dispatch' context"""
+        """Override from picking_dispatch/picking_dispatch.py (no call to super):
+            - to indicate 'partial_via_dispatch' context"""
         if not ids:
             return True
         if context is None:
@@ -189,13 +194,12 @@ class StockPicking(orm.Model):
     _inherit = 'stock.picking'
 
     def do_partial(self, cr, uid, ids, partial_datas, context=None):
-        """ Override to:
-            - pass carrier_id information on done picking
+        """ Override from stock/stock.py (no call to super) to:
+            - (###1) pass carrier_id information on done picking
             - in case of shortage :
-                - copies are the moves in state 'done', we need to pass them the current dispatch id
-                - undone moves are the original moves:
-                    - we need to pass them the id of dispatch backorder if it exists,
-                    - we need to pass False if there is no dispatch backorder
+                - (###2) copies are the moves in state 'done', we need to pass them the current dispatch id
+                - (###3) manage dispatch backorder link (reminder : undone moves are the original moves)
+
         """
         if context is None:
             context = {}
@@ -288,6 +292,7 @@ class StockPicking(orm.Model):
                     self.write(cr, uid, [pick.id], {
                         'name': sequence_obj.get(cr, uid, 'stock.picking.%s' % (pick.type)),
                     })
+                    # (###1) pass carrier_id information on done picking
                     new_picking = self.copy(cr, uid, pick.id, {
                         'name': new_picking_name,
                         'move_lines': [],
@@ -295,6 +300,7 @@ class StockPicking(orm.Model):
                         'carrier_id': 'carrier_id' in partial_datas and partial_datas['carrier_id'],
                     })
                 if product_qty != 0:
+                    # (###2) copies are the moves in state 'done', we need to pass them the current dispatch id
                     defaults = {
                         'product_qty': product_qty,
                         'product_uos_qty': product_qty,  # TODO: put correct uos_qty
@@ -308,7 +314,7 @@ class StockPicking(orm.Model):
                     prodlot_id = prodlot_ids[move.id]
                     if prodlot_id:
                         defaults.update(prodlot_id=prodlot_id)
-                    # the copy will be a done move, it has to attached to the current dispatch
+                    # (###2) the copy will be a done move, it has to attached to the current dispatch
                     move_obj.copy(cr, uid, move.id, defaults)
                 move_vals = {
                     'product_qty': move.product_qty - partial_qty[move.id],
@@ -316,15 +322,15 @@ class StockPicking(orm.Model):
                     'prodlot_id': False,
                     'tracking_id': False,
                 }
-                # 2 cases of shortage context:
+                # (###3) manage dispatch backorder link (2 cases)
                 if move.dispatch_id:
                     dispatch_obj = self.pool['picking.dispatch']
                     new_dispatch_id = dispatch_obj.search(cr, uid, [('backorder_id', '=', move.dispatch_id.id),
                                                                     ('state', '=', 'draft')], context=context)
-                    # we have anticipated the shortage, a backorder dispatch exists, we can attach the move on it
+                    # 1. we have anticipated the shortage, a backorder dispatch exists, we can attach the move on it
                     if new_dispatch_id:
                         move_vals['dispatch_id'] = new_dispatch_id[0]
-                    # we have not anticipated (broken products,...), the move will be not attached to a dispatch
+                    # 2. we have not anticipated (broken products,...), the move will be not attached to a dispatch
                     else:
                         move_vals['dispatch_id'] = False
                 move_obj.write(cr, uid, [move.id], move_vals)
@@ -362,6 +368,7 @@ class StockPicking(orm.Model):
                 back_order_name = self.browse(cr, uid, delivered_pack_id, context=context).name
                 self.message_post(cr, uid, new_picking, body=_("Back order <em>%s</em> has been <b>created</b>.") % (back_order_name), context=context)
             else:
+                # (###1) pass carrier_id information on done picking
                 if 'carrier_id' in partial_datas and partial_datas['carrier_id']:
                     self.write(cr, uid, [pick.id], {'carrier_id': partial_datas['carrier_id']}, context=context)
                 self.action_move(cr, uid, [pick.id], context=context)
@@ -454,6 +461,7 @@ class StockMove(orm.Model):
                 too_few.append(move)
             else:
                 too_many.append(move)
+
             # Average price computation
             if (move.picking_id.type == 'in') and (move.product_id.cost_method == 'average'):
                 product = product_obj.browse(cr, uid, move.product_id.id)
@@ -528,18 +536,19 @@ class StockMove(orm.Model):
             if prodlot_ids.get(move.id):
                 self.write(cr, uid, [move.id], {'prodlot_id': prodlot_ids.get(move.id)})
 
-        # in complete_move_ids, we have:
-        # * moves that were fully processed
-        # * newly created moves belonging
-        #   to the same dispatch as the original move
-        # so the difference between the original set of moves
-        # and the complete_moves is the set of unprocessed moves
+        '''in complete_move_ids, we have:
+             * moves that were fully processed
+             * newly created moves belonging
+               to the same dispatch as the original move
+           so the difference between the original set of moves
+           and the complete_moves is the set of unprocessed moves'''
         dispatch_id = context['active_id']
         ids = self.search(cr, uid,
                           [('dispatch_id', '=', context['active_id'])],
                           context=context)
         complete_move_ids = [x.id for x in complete]
         unprocessed_move_ids = set(ids) - set(complete_move_ids)
+        # if there are still unprocessed_moves, we need to create a dispatch backorder.
         if unprocessed_move_ids:
             new_dispatch_id = dispatch_obj.copy(cr, uid, dispatch_id,
                                                 {'backorder_id': dispatch_id})
@@ -549,6 +558,7 @@ class StockMove(orm.Model):
                        {'dispatch_id': new_dispatch_id})
             dispatch_obj.write(cr, uid, [dispatch_id], {'state': 'done'},
                                context=context)
+            # to display the correct dispatch, we need to focus explicitly on (cause switch ids)
             return {
                 'domain': str([('id', '=', dispatch_id)]),
                 'view_type': 'form',
