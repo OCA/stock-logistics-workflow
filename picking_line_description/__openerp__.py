@@ -34,13 +34,16 @@ Settings --> Configuration --> Warehouse --> Products
     'author': 'Agile Business Group',
     'website': 'http://www.agilebg.com',
     'license': 'AGPL-3',
-    "depends": [
+    'depends': [
         'stock',
     ],
-    "data": [
+    'data': [
         'security/stock_security.xml',
         'res_config_view.xml',
         'stock_view.xml',
     ],
-    "installable": True
+    'test': [
+        'test/picking_line_description.yml',
+    ],
+    'installable': True
 }
