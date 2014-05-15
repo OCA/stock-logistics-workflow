@@ -1,0 +1,20 @@
+-
+    In order to test picking_line_description,
+    I set the description field on the product 'USB Adapter'
+-
+    !record {model: product.product, id: product.product_product_48}:
+        description: 'Wi-Fi Adapter'
+-
+    Now i create an outgoing picking order that uses my product
+-
+    !record {model: stock.picking, id: stock_picking_out0}:
+        partner_id: base.res_partner_2
+        move_lines:
+            - product_id: product.product_product_48
+              product_qty: 10
+-
+    I verify that the onchange of product on move line was correctly triggered
+-
+    !assert {model: stock.picking, id: stock_picking_out0, string: The onchange function of product was not correctly triggered}:
+        - move_lines[0].name == move_lines[0].product_id.description
+        - move_lines[0].name == u'Wi-Fi Adapter'
