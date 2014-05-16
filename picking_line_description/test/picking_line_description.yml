@@ -1,5 +1,11 @@
 -
     In order to test picking_line_description,
+    I assign group_use_product_description_per_picking_line group to the admin user
+-
+    !record {model: res.users, id: base.user_root}:
+        groups_id:
+        - picking_line_description.group_use_product_description_per_picking_line
+-
     I set the description field on the product 'USB Adapter'
 -
     !record {model: product.product, id: product.product_product_48}:
