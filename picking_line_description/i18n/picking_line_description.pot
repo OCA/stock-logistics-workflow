@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-13 16:12+0000\n"
-"PO-Revision-Date: 2014-05-13 16:12+0000\n"
+"POT-Creation-Date: 2014-05-19 12:11+0000\n"
+"PO-Revision-Date: 2014-05-19 12:11+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,13 +16,13 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: picking_line_description
-#: help:stock.config.settings,group_use_product_description_per_picking_line:0
-msgid "Allows you to use only product description on the picking order lines."
+#: field:stock.config.settings,group_use_product_description_per_picking_line:0
+msgid "Allow using only the product description on the picking lines"
 msgstr ""
 
 #. module: picking_line_description
-#: model:res.groups,name:picking_line_description.group_use_product_description_per_picking_line
-msgid "Use only product description on picking lines"
+#: help:stock.config.settings,group_use_product_description_per_picking_line:0
+msgid "Allows you to use only product description on the picking lines."
 msgstr ""
 
 #. module: picking_line_description
@@ -31,8 +31,8 @@ msgid "stock.config.settings"
 msgstr ""
 
 #. module: picking_line_description
-#: field:stock.config.settings,group_use_product_description_per_picking_line:0
-msgid "Allow using only the product description on the picking order lines"
+#: model:res.groups,name:picking_line_description.group_use_product_description_per_picking_line
+msgid "Use only product description on picking lines"
 msgstr ""
 
 #. module: picking_line_description
