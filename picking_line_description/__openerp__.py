@@ -24,8 +24,8 @@
     'version': '0.1',
     'category': 'Warehouse Management',
     'description': """
-This module allows to use only the product description on the picking
-order lines. To do so, the user has to belong to
+This module allows to use only the product description on the picking lines.
+To do so, the user has to belong to
 group_use_product_description_per_picking_line.
 This is possible by selecting the related option in the following menu:
 
