@@ -40,6 +40,12 @@ class stock_move(orm.Model):
         )
         if prod_id:
             user = self.pool.get('res.users').browse(cr, uid, uid)
+            lang = user and user.lang or False
+            if partner_id:
+                addr_rec = self.pool.get('res.partner').browse(cr, uid, partner_id)
+                if addr_rec:
+                    lang = addr_rec and addr_rec.lang or False
+            ctx = {'lang': lang}
             user_groups = [g.id for g in user.groups_id]
             ref = self.pool.get('ir.model.data').get_object_reference(
                 cr, uid, 'picking_line_description',
@@ -49,7 +55,7 @@ class stock_move(orm.Model):
                 group_id = ref[1]
                 if group_id in user_groups:
                     product_obj = self.pool.get('product.product')
-                    product = product_obj.browse(cr, uid, prod_id)
+                    product = product_obj.browse(cr, uid, prod_id, context=ctx)
                     if (
                         product
                         and product.description
