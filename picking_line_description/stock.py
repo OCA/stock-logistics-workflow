@@ -42,7 +42,8 @@ class stock_move(orm.Model):
             user = self.pool.get('res.users').browse(cr, uid, uid)
             lang = user and user.lang or False
             if partner_id:
-                addr_rec = self.pool.get('res.partner').browse(cr, uid, partner_id)
+                addr_rec = self.pool.get('res.partner').browse(
+                    cr, uid, partner_id)
                 if addr_rec:
                     lang = addr_rec and addr_rec.lang or False
             ctx = {'lang': lang}
