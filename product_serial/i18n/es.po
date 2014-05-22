@@ -8,64 +8,64 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-10-09 09:30+0000\n"
-"PO-Revision-Date: 2014-02-03 21:31+0000\n"
-"Last-Translator: Alexis de Lattre <alexis@via.ecp.fr>\n"
+"PO-Revision-Date: 2014-05-20 11:18+0000\n"
+"Last-Translator: Angel Moya - Domatix <Unknown>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-05-17 07:11+0000\n"
-"X-Generator: Launchpad (build 17007)\n"
+"X-Launchpad-Export-Date: 2014-05-22 06:45+0000\n"
+"X-Generator: Launchpad (build 17017)\n"
 
 #. module: product_serial
 #: field:stock.picking.prodlot.selection,last_number:0
 msgid "Last Number"
-msgstr ""
+msgstr "Último número"
 
 #. module: product_serial
 #: selection:product.product,lot_split_type:0
 msgid "Single"
-msgstr ""
+msgstr "Único"
 
 #. module: product_serial
 #: help:stock.production.lot,last_location_id:0
 msgid "Display the current stock location of this production lot"
-msgstr ""
+msgstr "Muestra la ubicación de stock actual para este número de serie"
 
 #. module: product_serial
 #: selection:product.product,lot_split_type:0
 msgid "None"
-msgstr ""
+msgstr "Ninguno"
 
 #. module: product_serial
 #: model:ir.model,name:product_serial.model_stock_picking_prodlot_selection
 msgid "stock.picking.prodlot.selection"
-msgstr ""
+msgstr "stock.picking.prodlot.selection"
 
 #. module: product_serial
 #: field:stock.production.lot,last_location_id:0
 msgid "Last location"
-msgstr ""
+msgstr "Última ubicación"
 
 #. module: product_serial
 #: view:stock.move:0
 msgid "[('product_id','=?',product_id)]"
-msgstr ""
+msgstr "[('product_id','=?',product_id)]"
 
 #. module: product_serial
 #: view:stock.move:0
 msgid "Manual Split"
-msgstr ""
+msgstr "División manual"
 
 #. module: product_serial
 #: model:ir.model,name:product_serial.model_stock_production_lot
 msgid "Serial Number"
-msgstr ""
+msgstr "Número de serie"
 
 #. module: product_serial
 #: model:ir.model,name:product_serial.model_stock_picking
 msgid "Picking List"
-msgstr ""
+msgstr "Albarán"
 
 #. module: product_serial
 #: field:stock.move,new_tracking_code:0
