@@ -76,3 +76,26 @@ A scenario is exported as a set of files, containing :
     - scenario.xml : Global description of the scenario (name, warehouses, steps, transitions, etc.)
     - A .py file per step : The name of the file is the uuid of the step
 
+Using a test file
+-----------------
+
+When developing scenarios, you will often have the same steps to run.
+The sentinel.py client allows you to supply a file, which contains the keys pressed during the scenario.
+
+You can define the file to use in the configuration file, on the "test_file" key.
+This file will be read instead of calling the curses methods when the scenario is waiting for a user input (including line feed characters).
+When the file has been fully read, the client exits.
+
+A sample test file can be found in the "Step Types" demo scenario.
+
+*Special keys* :
+For special keys (arrows, delete, etc.), you must write a line containing ':', followed by the curses key code.
+
+Valid key codes are :
+    - KEY_DOWN : Down arrow
+    - KEY_UP : Up arrow
+    - KEY_LEFT : Left arrow
+    - KEY_RIGHT : Right arrow
+    - KEY_BACKSPACE : Backspace
+    - KEY_DC : Delete
+

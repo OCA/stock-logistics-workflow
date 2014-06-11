@@ -49,6 +49,7 @@ DEFAULT_CONFIG = {
     'user': 'admin',
     'password': 'admin',
     'port': '8069',
+    'test_file': None,
 }
 
 # Names of the ncurses colors
@@ -97,6 +98,12 @@ class Sentinel(object):
             password=config.get('openerp', 'password'),
             port=config.get('openerp', 'port'),
         )
+
+        # Open the test file, if any
+        test_file_name = config.get('openerp', 'test_file')
+        self.test_file = None
+        if test_file_name:
+            self.test_file = open(test_file_name, 'r')
 
         # Initialize translations
         context = Object(self.connection, 'res.users').context_get()
@@ -188,6 +195,22 @@ class Sentinel(object):
         """
         return curses.color_pair(COLOR_PAIRS[name][0])
 
+    def _read_from_file(self):
+        """
+        Emulates the getkey method of curses, reading from the supplied test file
+        """
+        key = self.test_file.read(1)
+        if key == ':':
+            # Truncate the trailing "new line" character
+            key = self.test_file.readline()[:-1]
+
+        # End of file reached, terminate the sentinel
+        if not key:
+            self.test_file.close()
+            exit(0)
+
+        return key
+
     def ungetch(self, value):
         """
         Put a value in the keyboard buffer
@@ -198,8 +221,12 @@ class Sentinel(object):
         """
         Get a user input and avoid Ctrl+C
         """
-        # Get the pushed character
-        key = self.screen.getkey()
+        if self.test_file:
+            # Test file supplied, read from it
+            key = self._read_from_file()
+        else:
+            # Get the pushed character
+            key = self.screen.getkey()
         if key == '':
             # Escape key : Return back to the previous step
             raise SentinelBackException('Back')
