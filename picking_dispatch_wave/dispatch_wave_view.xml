@@ -29,7 +29,7 @@
             </p>
           </group>
           <group>
-           <field name="nb"/>
+           <field name="max_pickings_to_do"/>
            <field name="picker_id"/>
           </group>
           <footer>

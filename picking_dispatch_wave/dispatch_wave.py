@@ -28,11 +28,11 @@ _logger = logging.getLogger(__name__)
 class StockPickingDispatchWave(orm.TransientModel):
     _name = "stock.picking.dispatch.wave"
 
-    def _get_pickings_to_do(self, cr, uid, nb, context=None):
+    def _get_pickings_to_do(self, cr, uid, max_nb, context=None):
         context = context or {}
         move_obj = self.pool['stock.move']
         move_ids = []
-        picking_ids = []
+        picking_ids = set()
         move_ids = move_obj.search(cr, uid,
                                    [('dispatch_id', '=', False),
                                     ('state', '=', 'assigned'),
@@ -40,10 +40,11 @@ class StockPickingDispatchWave(orm.TransientModel):
                                    order='date_expected DESC',
                                    context=context)
         for move in move_obj.browse(cr, uid, move_ids, context=context):
-            if len(picking_ids) == nb:
+            if len(picking_ids) == max_nb:
                 break
-            if move.picking_id.id not in picking_ids:
-                picking_ids.append(move.picking_id.id)
+            if move.picking_id.state == 'assigned' and \
+                    move.picking_id.id not in picking_ids:
+                picking_ids.add(move.picking_id.id)
         return picking_ids
 
     def _get_moves_from_picking_list(self, cr, uid, picking_ids, context=None):
@@ -54,36 +55,39 @@ class StockPickingDispatchWave(orm.TransientModel):
                                    context=context)
         return move_ids
 
-    def _get_moves_from_pickings_to_do(self, cr, uid, nb, context=None):
+    def _get_moves_from_pickings_to_do(self, cr, uid, max_nb, context=None):
         context = context or {}
         move_ids = []
-        picking_ids = self._get_pickings_to_do(cr, uid, nb, context=context)
+        picking_ids = self.\
+            _get_pickings_to_do(cr, uid, max_nb, context=context)
         if picking_ids:
             move_ids = self._get_moves_from_picking_list(cr, uid, picking_ids,
                                                          context=context)
         return move_ids
 
     _columns = {
-        'nb': fields.integer('Number of pickings to prepare'),
+        'max_pickings_to_do': fields.integer('Number maximum of pickings '
+                                             'to prepare',
+                                             help='number maximum of pickings '
+                                             'that we want to prepare'),
         'picker_id': fields.many2one('res.users', 'User', required=True,
                                      help='the user to which the pickings '
                                      'are assigned'),
-        }
+    }
 
     _defaults = {
-        'nb': 0,
+        'max_pickings_to_do': 0,
         'picker_id': lambda self, cr, uid, ctx: uid,
-        }
+    }
 
     def action_create_picking_dispatch(self, cr, uid, ids, context=None):
         context = context or {}
         wave = self.browse(cr, uid, ids, context=context)[0]
-        if wave.nb:
-            # we base search on pickings instead of sales:
-            # in most cases, it provides a very similar result
-            move_ids = self._get_moves_from_pickings_to_do(cr, uid,
-                                                             wave.nb,
-                                                             context=context)
+        if wave.max_pickings_to_do:
+            move_ids = self.\
+                _get_moves_from_pickings_to_do(cr, uid,
+                                               wave.max_pickings_to_do,
+                                               context=context)
             if move_ids:
                 # create picking_dispatch
                 dispatch_obj = self.pool['picking.dispatch']

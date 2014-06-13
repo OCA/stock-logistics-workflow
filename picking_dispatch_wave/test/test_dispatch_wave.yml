@@ -32,7 +32,7 @@
   Then I ask a picking dispatch wave with 1 unit.
 -
   !record {model: stock.picking.dispatch.wave, id: wiz_wave}:
-    nb: 1
+    max_pickings_to_do: 1
     picker_id: base.user_demo
 -
   Then I confirm the demand

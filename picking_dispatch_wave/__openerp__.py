@@ -27,7 +27,7 @@
     "author": "Camptocamp",
     'license': 'AGPL-3',
     "description": """Allows to set a picking dispatch
-including the number of pickings that you want to pick:
+including the number maximum of pickings that you want to pick:
 
 * The picker sets a number n of pickings to do.
 

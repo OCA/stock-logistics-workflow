@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#       * picking_dispatch_wave
+#	* picking_dispatch_wave
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-12 14:49+0000\n"
-"PO-Revision-Date: 2014-05-12 14:49+0000\n"
+"POT-Creation-Date: 2014-06-13 15:12+0000\n"
+"PO-Revision-Date: 2014-06-13 15:12+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,20 +22,20 @@ msgid "This action will prepare you a picking dispatch\n"
 msgstr ""
 
 #. module: picking_dispatch_wave
-#: view:stock.picking.dispatch.wave:0
-msgid "Create Picking Dispatch"
-msgstr ""
-
-#. module: picking_dispatch_wave
-#: field:stock.picking.dispatch.wave,nb:0
-msgid "Number of pickings to prepare"
-msgstr ""
-
-#. module: picking_dispatch_wave
 #: model:ir.actions.act_window,name:picking_dispatch_wave.action_prepare_picking_dispatch
 #: model:ir.ui.menu,name:picking_dispatch_wave.menu_prepare_picking_dispatch
 #: view:stock.picking.dispatch.wave:0
 msgid "Picking Wave"
+msgstr ""
+
+#. module: picking_dispatch_wave
+#: help:stock.picking.dispatch.wave,max_pickings_to_do:0
+msgid "number maximum of pickings that we want to prepare"
+msgstr ""
+
+#. module: picking_dispatch_wave
+#: field:stock.picking.dispatch.wave,max_pickings_to_do:0
+msgid "Number maximum of pickings to prepare"
 msgstr ""
 
 #. module: picking_dispatch_wave
@@ -46,6 +46,11 @@ msgstr ""
 #. module: picking_dispatch_wave
 #: view:stock.picking.dispatch.wave:0
 msgid "Cancel"
+msgstr ""
+
+#. module: picking_dispatch_wave
+#: view:stock.picking.dispatch.wave:0
+msgid "Create Picking Dispatch"
 msgstr ""
 
 #. module: picking_dispatch_wave
@@ -63,14 +68,3 @@ msgstr ""
 msgid "stock.picking.dispatch.wave"
 msgstr ""
 
-#. module: picking_dispatch_wave
-#: code:addons/picking_dispatch_wave/dispatch_wave.py:115
-#, python-format
-msgid "You need to set at least one unit to do."
-msgstr ""
-
-#. module: picking_dispatch_wave
-#: code:addons/picking_dispatch_wave/dispatch_wave.py:112
-#, python-format
-msgid "No ready pickings to deliver!"
-msgstr ""
