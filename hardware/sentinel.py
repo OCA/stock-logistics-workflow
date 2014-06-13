@@ -146,6 +146,10 @@ class Sentinel(object):
         # Initialize mouse events capture
         curses.mousemask(curses.BUTTON1_CLICKED | curses.BUTTON1_DOUBLE_CLICKED)
 
+        # Reinitialize to the main menu when using a test file (useful when the last run has crashed before end)
+        if test_file_name:
+            (code, result, value) = self.oerp_call('end')
+
         # Load the sentinel
         self.main_loop()
 
