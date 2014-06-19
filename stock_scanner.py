@@ -152,6 +152,7 @@ class scanner_scenario_step(osv.Model):
         'step_start': fields.boolean('Step start', help='Check this if this is the first step of the scenario'),
         'step_stop': fields.boolean('Step stop', help='Check this if this is the  last step of the scenario'),
         'step_back': fields.boolean('Step back', help='Check this to stop at this step when returning back'),
+        'no_back': fields.boolean('No back', help='Check this to prevent returning back this step'),
         'out_transition_ids': fields.one2many('scanner.scenario.transition', 'from_id', 'Outgoing transitons', ondelete='cascade', help='Transitions which goes to this step'),
         'in_transition_ids': fields.one2many('scanner.scenario.transition', 'to_id', 'Incoming transitions', ondelete='cascade', help='Transitions which goes to the next step'),
         'python_code': fields.text('Python code', help='Python code to execute'),
@@ -549,7 +550,7 @@ class scanner_hardware(osv.Model):
                 # Retrieve previous step id and message
                 previous_steps_id = terminal.previous_steps_id.split(',')
                 previous_steps_message = terminal.previous_steps_message.split('\n')
-                if transition_type != 'restart':
+                if transition_type != 'restart' and not terminal.step_id.no_back:
                     previous_steps_id.pop()
                     previous_steps_message.pop()
 
