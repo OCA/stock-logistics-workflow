@@ -28,7 +28,7 @@ class stock_move(orm.Model):
             self, cr, uid, ids,
             name, args, context=None):
         res = {}
-        product_customer_code_obj = self.pool.get('product.customer.code')
+        product_customer_code_obj = self.pool['product.customer.code']
         for move in self.browse(cr, uid, ids, context=context):
             res[move.id] = ''
             partner = move.picking_id.partner_id
