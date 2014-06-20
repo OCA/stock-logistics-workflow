@@ -27,8 +27,6 @@ class stock_move(orm.Model):
     def _get_product_customer_code(
             self, cr, uid, ids,
             name, args, context=None):
-        if context is None:
-            context = {}
         res = {}
         product_customer_code_obj = self.pool.get('product.customer.code')
         for move in self.browse(cr, uid, ids, context=context):
