@@ -39,10 +39,15 @@ class stock_move(orm.Model):
                     ('partner_id', '=', partner.id),
                     ], limit=1, context=context)
                 if code_ids:
-                    code = product_customer_code_obj.browse(
-                        cr, uid,
-                        code_ids[0], context=context).product_code or ''
-                    res[move.id] = code
+                    data = product_customer_code_obj.read(
+                        cr, uid, code_ids[0],
+                        ['product_code'], context=context
+                    )
+                    res[move.id] = (
+                        'product_code' in data
+                        and data['product_code']
+                        or ''
+                    )
         return res
 
     _columns = {
