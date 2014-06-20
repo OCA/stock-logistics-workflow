@@ -23,6 +23,7 @@
     "version" : "1.0",
     "author" : "Agile Business Group",
     "website" : "http://www.agilebg.com",
+    'license': 'AGPL-3',
     "category" : "Stock",
     "depends" : [
         'base',
@@ -40,5 +41,4 @@
         'stock_picking_view.xml',
     ],
     'installable' : True,
-    'active' : False,
 }
