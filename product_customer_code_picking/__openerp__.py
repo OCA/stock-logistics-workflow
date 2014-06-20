@@ -23,7 +23,7 @@
     "version": "1.0",
     "author": "Agile Business Group",
     "website": "http://www.agilebg.com",
-    'license': 'AGPL-3',
+    "license": 'AGPL-3',
     "category": "Stock",
     "depends": [
         'base',
@@ -32,13 +32,17 @@
         'product_customer_code'
     ],
     "description": """
-    Based on product_customer_code,
-    this module loads in every stock picking
-    the customer code defined in the product,
-    """,
+Based on product_customer_code, this module loads in every stock picking
+the customer code defined in the product.
+
+Contributors
+------------
+* Nicola Malcontenti <nicola.malcontenti@agilebg.com> 
+* Alex Comba <alex.comba@agilebg.com>
+""",
     "demo": [],
     "data": [
         'stock_picking_view.xml',
     ],
-    'installable': True,
+    "installable": True,
 }
