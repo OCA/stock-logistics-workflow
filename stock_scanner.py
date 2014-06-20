@@ -545,12 +545,28 @@ class scanner_hardware(osv.Model):
 
         tracer = False
 
-        if transition_type == 'restart' or scenario_id and step_id is None:
+        if transition_type == 'back' and scenario_id:
+            if terminal.step_id.no_back:
+                step_id = terminal.step_id.id
+            elif terminal.previous_steps_id:
+                previous_steps_id = terminal.previous_steps_id.split(',')
+                previous_steps_message = terminal.previous_steps_message.split('\n')
+                if not previous_steps_id:
+                    return self.scanner_end(cr, uid, numterm=terminal.code, context=context)
+                step_id = int(previous_steps_id.pop())
+                terminal.previous_steps_id = ','.join(previous_steps_id)
+                message = eval(previous_steps_message.pop())
+                terminal.previous_steps_message = '\n'.join(previous_steps_message)
+            else:
+                scenario_id = False
+                message = terminal.scenario_id.name
+
+        elif transition_type == 'restart' or scenario_id and step_id is None:
             if terminal.previous_steps_id:
                 # Retrieve previous step id and message
                 previous_steps_id = terminal.previous_steps_id.split(',')
                 previous_steps_message = terminal.previous_steps_message.split('\n')
-                if transition_type != 'restart' and not terminal.step_id.no_back:
+                if transition_type != 'restart':
                     previous_steps_id.pop()
                     previous_steps_message.pop()
 
@@ -588,7 +604,7 @@ class scanner_hardware(osv.Model):
 
             else:
                 return self._send_error(cr, uid, [terminal_id], [_('Scenario'), _('not found')], context=context)
-        elif transition_type != 'none':
+        elif transition_type not in ('back', 'none'):
             # Retrieve outgoing transitions from the current step
             scanner_transition_obj = self.pool.get('scanner.scenario.transition')
             transition_ids = scanner_transition_obj.search(cr, uid, [('from_id', '=', step_id)], context=context)
