@@ -545,31 +545,12 @@ class scanner_hardware(osv.Model):
 
         tracer = False
 
-        if transition_type == 'back' and scenario_id:
+        if transition_type == 'restart' or transition_type == 'back' and scenario_id:
             if terminal.step_id.no_back:
                 step_id = terminal.step_id.id
             elif terminal.previous_steps_id:
                 previous_steps_id = terminal.previous_steps_id.split(',')
                 previous_steps_message = terminal.previous_steps_message.split('\n')
-                if not previous_steps_id:
-                    return self.scanner_end(cr, uid, numterm=terminal.code, context=context)
-                step_id = int(previous_steps_id.pop())
-                terminal.previous_steps_id = ','.join(previous_steps_id)
-                message = eval(previous_steps_message.pop())
-                terminal.previous_steps_message = '\n'.join(previous_steps_message)
-            else:
-                scenario_id = False
-                message = terminal.scenario_id.name
-
-        elif transition_type == 'restart' or scenario_id and step_id is None:
-            if terminal.previous_steps_id:
-                # Retrieve previous step id and message
-                previous_steps_id = terminal.previous_steps_id.split(',')
-                previous_steps_message = terminal.previous_steps_message.split('\n')
-                if transition_type != 'restart':
-                    previous_steps_id.pop()
-                    previous_steps_message.pop()
-
                 if not previous_steps_id:
                     return self.scanner_end(cr, uid, numterm=terminal.code, context=context)
 
@@ -604,7 +585,7 @@ class scanner_hardware(osv.Model):
 
             else:
                 return self._send_error(cr, uid, [terminal_id], [_('Scenario'), _('not found')], context=context)
-        elif transition_type not in ('back', 'none'):
+        elif transition_type not in ('back', 'none', 'restart'):
             # Retrieve outgoing transitions from the current step
             scanner_transition_obj = self.pool.get('scanner.scenario.transition')
             transition_ids = scanner_transition_obj.search(cr, uid, [('from_id', '=', step_id)], context=context)
@@ -635,7 +616,7 @@ class scanner_hardware(osv.Model):
                 tracer = transition.tracer
 
                 # Store the old step id if we are on a back step
-                if transition.to_id.step_back and terminal.previous_steps_id.split(',')[-1] != str(transition.from_id.id):
+                if transition.from_id.step_back and terminal.previous_steps_id.split(',')[-1] != str(transition.from_id.id):
                     terminal.previous_steps_message = terminal.previous_steps_id and '%s\n%s' % (terminal.previous_steps_message, repr(message)) or repr(message)
                     terminal.previous_steps_id = terminal.previous_steps_id and '%s,%d' % (terminal.previous_steps_id, transition.from_id.id) or str(transition.from_id.id)
 
