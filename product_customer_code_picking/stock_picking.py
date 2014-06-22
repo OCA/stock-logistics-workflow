@@ -25,13 +25,15 @@ class stock_move(orm.Model):
     _inherit = 'stock.move'
 
     def _get_product_customer_code(
-            self, cr, uid, ids,
-            name, args, context=None):
+            self, cr, uid, ids, name, args, context=None
+    ):
         res = {}
         product_customer_code_obj = self.pool['product.customer.code']
         for move in self.browse(cr, uid, ids, context=context):
             res[move.id] = ''
             partner = move.picking_id.partner_id
+            if move.picking_id.partner_id.parent_id:
+                partner = move.picking_id.partner_id.parent_id
             product = move.product_id
             if product and partner:
                 code_ids = product_customer_code_obj.search(cr, uid, [
