@@ -720,6 +720,11 @@ class scanner_hardware(osv.Model):
                 self.empty_scanner_values(cr, uid, [terminal_id], context=context)
                 break
         terminal.log('Return value : %r' % (result,))
+
+        # Manage automatic steps
+        if result[0] == 'A':
+            return self.scanner_call(cr, uid, terminal.code, 'action', message=result[2], context=context)
+
         return result
 
     def _scenario_list(self, cr, uid, warehouse_id, parent_id=False, context=None):
