@@ -67,6 +67,28 @@ As stated previously, the step must always return :
 - A message to display on the hardware screen, in the `res` variable
 - Optionally, a default value, in the `val` variable
 
+Step types
+~~~~~~~~~~
+
+The step types are mostly managed by the client.
+
+The standard step types are :
+
+- M : Simple message
+- F : Final step, like M, but ends the scenario
+- T : Text input
+- N : Number input (integer)
+- Q : Quantity input (float)
+- L : List
+- E : Error message, like M, but displayed with different colors
+- C : Confirm input
+- A : Automatic step. This type is used to automatically execute the next step
+
+.. note::
+
+   The automatic step often needs to define a value in `val`, corresponding to the value the user must send.
+   This step type is generally used as replacement of another type, at the end of the step code, by redefining the `act` variable in some cases, for example when a single value is available for a list step.
+
 Import and export
 -----------------
 
