@@ -1,0 +1,47 @@
+-
+  In order to test stock picking wave
+  I have to ensure when a picking dispatch wave is set, a picking dispatch is well created.
+-
+  I create a product
+-
+  !record {model: product.product, id: prod_wave}:
+    name: product_wave
+    procure_method: make_to_stock
+    supply_method: buy
+-
+  I create a SO
+-
+  !record {model: sale.order, id: so_wave}:
+    partner_id: base.res_partner_2
+    order_policy: 'manual'
+    picking_policy: 'direct'
+    order_line:
+      - product_id: prod_wave
+        product_uom_qty: 3
+-
+  Then I confirm the order
+-
+  !workflow {model: sale.order, action: order_confirm, ref: so_wave}
+-
+  Then (for test needs) I force the picking as ready to deliver
+-
+  !python {model: stock.picking}: |
+    picking = self.search(cr, uid, [('sale_id', '=', ref("so_wave"))])
+    self.force_assign(cr, uid, picking)
+-
+  Then I ask a picking dispatch wave with 1 unit.
+-
+  !record {model: stock.picking.dispatch.wave, id: wiz_wave}:
+    max_pickings_to_do: 1
+    picker_id: base.user_demo
+-
+  Then I confirm the demand
+-
+  !python {model: stock.picking.dispatch.wave}:
+    self.action_create_picking_dispatch(cr, uid, [ref("wiz_wave")], context=context)
+-
+  Then I check if the picking dispatch is created
+-
+  !python {model: picking.dispatch}: |
+    dispatchs = self.search(cr, uid, [('state','=','draft'),('picker_id','=',ref("base.user_demo"))])
+    assert len(dispatchs) == 1, "The dispatch is ready"

@@ -1,0 +1,82 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* picking_dispatch_wave
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-06-13 15:12+0000\n"
+"PO-Revision-Date: 2014-06-13 15:12+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: picking_dispatch_wave
+#: view:stock.picking.dispatch.wave:0
+msgid "This action will prepare you a picking dispatch\n"
+"              according the number of pickings that you set."
+msgstr "Cette action va vous préparer un bon de préparation\n"
+"              selon le nombre de livraisons défini."
+
+#. module: picking_dispatch_wave
+#: model:ir.actions.act_window,name:picking_dispatch_wave.action_prepare_picking_dispatch
+#: model:ir.ui.menu,name:picking_dispatch_wave.menu_prepare_picking_dispatch
+#: view:stock.picking.dispatch.wave:0
+msgid "Picking Wave"
+msgstr "Préparer n livraisons"
+
+#. module: picking_dispatch_wave
+#: help:stock.picking.dispatch.wave,max_pickings_to_do:0
+msgid "number maximum of pickings that we want to prepare"
+msgstr "Nombre maximum de livraisons que vous voulez préparez"
+
+#. module: picking_dispatch_wave
+#: field:stock.picking.dispatch.wave,max_pickings_to_do:0
+msgid "Number maximum of pickings to prepare"
+msgstr "Nombre maximum de livraisons à préparer"
+
+#. module: picking_dispatch_wave
+#: field:stock.picking.dispatch.wave,picker_id:0
+msgid "User"
+msgstr "Utilisateur"
+
+#. module: picking_dispatch_wave
+#: view:stock.picking.dispatch.wave:0
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: picking_dispatch_wave
+#: view:stock.picking.dispatch.wave:0
+msgid "Create Picking Dispatch"
+msgstr "Créer un bon de préparation"
+
+#. module: picking_dispatch_wave
+#: view:stock.picking.dispatch.wave:0
+msgid "or"
+msgstr "ou"
+
+#. module: picking_dispatch_wave
+#: help:stock.picking.dispatch.wave,picker_id:0
+msgid "the user to which the pickings are assigned"
+msgstr "l'utilisateur à qui les livraisons sont attribuées"
+
+#. module: picking_dispatch_wave
+#: model:ir.model,name:picking_dispatch_wave.model_stock_picking_dispatch_wave
+msgid "stock.picking.dispatch.wave"
+msgstr "stock.picking.dispatch.wave"
+
+#. module: picking_dispatch_wave
+#: code:addons/picking_dispatch_wave/dispatch_wave.py:116
+#, python-format
+msgid "You need to set at least one unit to do."
+msgstr "Sélectionner au moins une livraison à préparer"
+
+#. module: picking_dispatch_wave
+#: code:addons/picking_dispatch_wave/dispatch_wave.py:113
+#, python-format
+msgid "No ready pickings to deliver!"
+msgstr "Aucune livraison à préparer !" 
