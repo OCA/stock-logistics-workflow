@@ -32,12 +32,9 @@ from threading import Semaphore
 import logging
 import uuid
 import netsvc
-import traceback
-import sys
 from psycopg2 import OperationalError, errorcodes
 import random
 import time
-import pooler
 
 logger = logging.getLogger('stock_scanner')
 
@@ -677,7 +674,7 @@ class scanner_hardware(osv.Model):
     @logged
     def _scenario_save(self, cr, uid, terminal_id, message, transition_type, scenario_id=None, step_id=None, current_object='', context=None):
         """
-        Save the scenario on this terminal, handling transient errors by retrying the same step 
+        Save the scenario on this terminal, handling transient errors by retrying the same step
         Return the action to the terminal
         """
         if context is None:
@@ -815,7 +812,7 @@ class scanner_scenario_custom(osv.Model):
         Use the fields shared_custom of scenario and scanner
         """
         # Domain if custom values are shared
-        if scenario.shared_custom == True:
+        if scenario.shared_custom is True:
             return [('scenario_id', '=', scenario.id), ('scanner_id.reference_document', '=', scanner.reference_document), ('scanner_id.warehouse_id', '=', scanner.warehouse_id.id)]
 
         # Default domain
@@ -878,7 +875,7 @@ class scanner_scenario_custom(osv.Model):
         scanner_ids = []
 
         # If custom values are shared, search for other hardware using the same
-        if scenario.shared_custom == True:
+        if scenario.shared_custom is True:
             scanner_ids = scanner_hardware_obj.search(cr, uid, [('scenario_id', '=', scenario.id), ('warehouse_id', '=', scanner.warehouse_id.id), ('reference_document', '=', scanner.reference_document), ('id', '!=', scanner.id)], context=context)
 
         # Search for values attached to the current scenario
