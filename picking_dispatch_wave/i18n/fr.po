@@ -7,19 +7,23 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-13 15:12+0000\n"
-"PO-Revision-Date: 2014-06-13 15:12+0000\n"
-"Last-Translator: <>\n"
+"PO-Revision-Date: 2014-06-26 11:28+0000\n"
+"Last-Translator: Romain Deheele - Camptocamp "
+"<romain.deheele@camptocamp.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-06-27 07:11+0000\n"
+"X-Generator: Launchpad (build 17077)\n"
 
 #. module: picking_dispatch_wave
 #: view:stock.picking.dispatch.wave:0
-msgid "This action will prepare you a picking dispatch\n"
+msgid ""
+"This action will prepare you a picking dispatch\n"
 "              according the number of pickings that you set."
-msgstr "Cette action va vous préparer un bon de préparation\n"
+msgstr ""
+"Cette action va vous préparer un bon de préparation\n"
 "              selon le nombre de livraisons défini."
 
 #. module: picking_dispatch_wave
@@ -68,15 +72,3 @@ msgstr "l'utilisateur à qui les livraisons sont attribuées"
 #: model:ir.model,name:picking_dispatch_wave.model_stock_picking_dispatch_wave
 msgid "stock.picking.dispatch.wave"
 msgstr "stock.picking.dispatch.wave"
-
-#. module: picking_dispatch_wave
-#: code:addons/picking_dispatch_wave/dispatch_wave.py:116
-#, python-format
-msgid "You need to set at least one unit to do."
-msgstr "Sélectionner au moins une livraison à préparer"
-
-#. module: picking_dispatch_wave
-#: code:addons/picking_dispatch_wave/dispatch_wave.py:113
-#, python-format
-msgid "No ready pickings to deliver!"
-msgstr "Aucune livraison à préparer !" 
