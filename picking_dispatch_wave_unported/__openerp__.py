@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright (C) 2012+ BREMSKERL-REIBBELAGWERKE EMMERLING GmbH & Co. KG
-#    Author Marco Dieckhoff
-#    Copyright (C) 2013 Agile Business Group sagl (<http://www.agilebg.com>)
+#    Author: Alexandre Fayolle, Romain Deheele
+#    Copyright 2014 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,20 +18,29 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
+
 {
-    "name": "Stock Move Backdating",
-    "version": "1.0",
-    'author' : ['Marco Dieckhoff, BREMSKERL', 'Agile Business Group'],
-    "category": "Stock Logistics",
-    'website' : 'www.bremskerl.com',
-    "depends": ["stock"],
-    "summary": "Allows back-dating of stock moves",
-    "description": """This module allows to register old stock moves (with date != now).
-On stock moves, user can specify the "Actual Movement Date", that will be used as movement date""",
-    'data': [
-        "view/stock_view.xml",
-        "wizard/stock_partial_picking_view.xml",
-    ],
-    'demo': [],
-    'installable': True,
+    "name": "Picking Dispatch Wave",
+    "version": "0.1",
+    "depends": ['picking_dispatch', 'sale_stock'],
+    "author": "Camptocamp",
+    'license': 'AGPL-3',
+    "description": """Allows to set a picking dispatch
+including the number maximum of pickings that you want to pick:
+
+* The picker sets a number n of pickings to do.
+
+* The wizard will select moves from n pickings with oldest min_date.
+
+* A picking dispatch is created with found moves
+
+It's sort of basic wave picking.
+""",
+    "website": "http://www.camptocamp.com",
+    "category": "Warehouse Management",
+    "demo": [],
+    "data": ['dispatch_wave_view.xml'],
+    "test": ['test/test_dispatch_wave.yml'],
+    'installable': False,
 }

@@ -41,5 +41,5 @@ https://bugs.launchpad.net/openobject-addons/+bug/1169998
     "demo": [],
     'test': [],
     "active": False,
-    "installable": True
+    'installable': False
 }

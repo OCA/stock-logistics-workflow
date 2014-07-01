@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Alexandre Fayolle, Romain Deheele
-#    Copyright 2014 Camptocamp SA
+#    Author: Nicolas Bessi, Guewen Baconnier
+#    Copyright 2013 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,29 +18,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+{'name': 'Stock picking no confirm split',
+ 'version': 'version',
+ 'author': 'Camptocamp',
+ 'maintainer': 'Camptocamp',
+ 'category': 'stock',
+ 'complexity': "normal",  # easy, normal, expert
+ 'depends': ['stock'],
+ 'description': """
+Split picking without delivery
+------------------------------
 
+This addon adds a "Split" button on the out picking form header.
 
-{
-    "name": "Picking Dispatch Wave",
-    "version": "0.1",
-    "depends": ['picking_dispatch', 'sale_stock'],
-    "author": "Camptocamp",
-    'license': 'AGPL-3',
-    "description": """Allows to set a picking dispatch
-including the number maximum of pickings that you want to pick:
-
-* The picker sets a number n of pickings to do.
-
-* The wizard will select moves from n pickings with oldest min_date.
-
-* A picking dispatch is created with found moves
-
-It's sort of basic wave picking.
+It works like the classical picking split (when you deliver) but does not pass the backorder
+and backorder lines to state "done".
 """,
-    "website": "http://www.camptocamp.com",
-    "category": "Warehouse Management",
-    "demo": [],
-    "data": ['dispatch_wave_view.xml'],
-    "test": ['test/test_dispatch_wave.yml'],
-    "installable": True,
-}
+ 'website': 'http://www.camptocamp.com',
+ 'data': ['view/stock_partial_picking.xml'],
+ 'demo': [],
+ 'test': ['test/test_picking_split.yml'],
+ 'installable': False,
+ 'auto_install': False,
+ 'license': 'AGPL-3',
+ 'application': False,
+ }

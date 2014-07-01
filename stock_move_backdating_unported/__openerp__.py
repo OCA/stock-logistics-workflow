@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Nicolas Bessi, Guewen Baconnier
-#    Copyright 2013 Camptocamp SA
+#    Copyright (C) 2012+ BREMSKERL-REIBBELAGWERKE EMMERLING GmbH & Co. KG
+#    Author Marco Dieckhoff
+#    Copyright (C) 2013 Agile Business Group sagl (<http://www.agilebg.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,28 +19,20 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{'name': 'Stock picking no confirm split',
- 'version': 'version',
- 'author': 'Camptocamp',
- 'maintainer': 'Camptocamp',
- 'category': 'stock',
- 'complexity': "normal",  # easy, normal, expert
- 'depends': ['stock'],
- 'description': """
-Split picking without delivery
-------------------------------
-
-This addon adds a "Split" button on the out picking form header.
-
-It works like the classical picking split (when you deliver) but does not pass the backorder
-and backorder lines to state "done".
-""",
- 'website': 'http://www.camptocamp.com',
- 'data': ['view/stock_partial_picking.xml'],
- 'demo': [],
- 'test': ['test/test_picking_split.yml'],
- 'installable': True,
- 'auto_install': False,
- 'license': 'AGPL-3',
- 'application': False,
- }
+{
+    "name": "Stock Move Backdating",
+    "version": "1.0",
+    'author' : ['Marco Dieckhoff, BREMSKERL', 'Agile Business Group'],
+    "category": "Stock Logistics",
+    'website' : 'www.bremskerl.com',
+    "depends": ["stock"],
+    "summary": "Allows back-dating of stock moves",
+    "description": """This module allows to register old stock moves (with date != now).
+On stock moves, user can specify the "Actual Movement Date", that will be used as movement date""",
+    'data': [
+        "view/stock_view.xml",
+        "wizard/stock_partial_picking_view.xml",
+    ],
+    'demo': [],
+    'installable': False,
+}

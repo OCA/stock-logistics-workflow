@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Author: Alexandre Fayolle
-#    Copyright 2012 Camptocamp SA
+#    Copyright 2013 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,32 +18,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{'name' : 'Picking dispatch',
- 'version' : '1.2.2',
- 'author' : 'Camptocamp',
- 'maintainer': 'Camptocamp',
- 'category': 'Products',
- 'complexity': "normal",  # easy, normal, expert
- 'depends' : ['stock',
-              'base',
-              'report_webkit',
-              'base_headers_webkit',
-              ],
- 'description': """Dispatch pickings to employees working in warehouses
- """,
- 'website': 'http://www.camptocamp.com/',
- 'init_xml': [],
- 'update_xml': ['picking_dispatch_view.xml',
-                'picking_dispatch_sequence.xml',
-                'wizard/create_dispatch_view.xml',
-                'report.xml',
-                'security/ir.model.access.csv',
-                #'picking_dispatch_workflow.xml',
-                ],
- 'demo_xml': [],
- 'tests': [],
- 'installable': True,
- 'auto_install': False,
- 'license': 'AGPL-3',
- 'application': False
- }
+
+
+{
+    "name": "Picking Priority",
+    "version": "0.2",
+    "depends": ['stock'],
+    "author": "Camptocamp",
+    'license': 'AGPL-3',
+    "description": """Add a priority attribute to pickings.
+
+    This priority can be changed after the picking is confirmed and a
+    wizard can be run to recompute the availability of pickings
+    depending on the new priorities.""",
+    "website": "http://www.camptocamp.com",
+    "category": "Warehouse Management",
+    "demo": [
+        'picking_priority_demo.yml',
+        ],
+    "data": ['picking_priority_view.xml',
+             ],
+    "test": ['tests/test_picking_priority.yml',
+             ],
+    'installable': False,
+}
