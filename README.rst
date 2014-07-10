@@ -17,6 +17,11 @@ Installation
 
 If you plan to use the specific "sentinel.py", you will need the "openobject-library" Python module.
 
+.. note::
+
+   You must use openobject-library earlier than 2.0 with OpenERP v7.
+   The version 2.0 of openobject-library only implements the Net-RPC protocol, which was removed from v7.
+
 To test the module, some demo scenarii are available in the `demo` directory of the module.
 
 Configuration
