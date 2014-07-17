@@ -36,7 +36,9 @@ class stock_picking(orm.Model):
         if ids is None:
             domain = [('type', '=', 'out'),
                       ('state', '=', 'confirmed')]
-            ids = self.search(cr, uid, domain, context=context)
+            ids = self.search(cr, uid, domain,
+                              order='min_date',
+                              context=context)
 
         for picking_id in ids:
             try:

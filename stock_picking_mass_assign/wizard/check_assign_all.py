@@ -41,6 +41,8 @@ class check_assign_all(orm.TransientModel):
         domain = [('type', '=', 'out'),
                   ('state', '=', 'confirmed'),
                   ('id', 'in', picking_ids)]
-        picking_ids = picking_obj.search(cr, uid, domain, context=context)
+        picking_ids = picking_obj.search(cr, uid, domain,
+                                         order='min_date',
+                                         context=context)
         picking_obj.check_assign_all(cr, uid, picking_ids, context=context)
         return {'type': 'ir.actions.act_window_close'}
