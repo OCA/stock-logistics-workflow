@@ -96,7 +96,7 @@ class scanner_scenario(osv.Model):
         If the reference ID is not in values, we create it with uuid1
         """
         # Generate a uuid if there is none
-        if not 'reference_res_id' in values:
+        if 'reference_res_id' not in values:
             values['reference_res_id'] = uuid.uuid1()
 
         id = super(scanner_scenario, self).create(cr, uid, values, context=context)
@@ -176,7 +176,7 @@ class scanner_scenario_step(osv.Model):
         """
         If the reference ID is not in values, we create it with uuid1
         """
-        if not 'reference_res_id' in values:
+        if 'reference_res_id' not in values:
             values['reference_res_id'] = uuid.uuid1()
 
         id = super(scanner_scenario_step, self).create(cr, uid, values, context=context)
@@ -235,7 +235,7 @@ class scanner_scenario_transition(osv.Model):
         """
         If the reference ID is not in values, we create it with uuid1
         """
-        if not 'reference_res_id' in values:
+        if 'reference_res_id' not in values:
             values['reference_res_id'] = uuid.uuid1()
 
         id = super(scanner_scenario_transition, self).create(cr, uid, values, context=context)
