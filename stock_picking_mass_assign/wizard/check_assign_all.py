@@ -25,6 +25,7 @@ from openerp.tools.translate import _
 
 class check_assign_all(orm.TransientModel):
     _name = 'stock.picking.check.assign.all'
+    _description = 'Delivery Orders Check Availability'
 
     def check(self, cr, uid, ids, context=None):
         if context is None:
