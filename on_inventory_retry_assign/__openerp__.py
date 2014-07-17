@@ -22,6 +22,7 @@
 {'name': 'Check Availability on Inventories',
  'version': '1.0',
  'depends': ['stock',
+             'procurement',
              ],
  'author': "Camptocamp",
  'description': """
@@ -40,5 +41,7 @@ checked again.
  'website': 'http://www.camptocamp.com',
  'category': 'Warehouse Management',
  'data': [],
+ 'test': ['test/test_inventory_done.yml',
+          ],
  'installable': True,
  }

@@ -1,0 +1,134 @@
+-
+ Create 3 pickings and procurements for 10 M-Las on shelf 1 due Dec 10, 1st and 20
+ M-Las (product.product_product_11)
+ initial stock is 26 units in shelf 1 (stock.stock_location_components)
+-
+ !record {model: stock.picking.out, id: ship_mlas_1}:
+   name: mlas1_1
+   move_lines:
+     - product_id: product.product_product_11
+       product_qty: 10
+       product_uom: product.product_uom_unit
+       location_id: stock.stock_location_components
+       location_dest_id: stock.stock_location_output
+       date: 2013-12-20
+       date_expected: 2013-12-20
+       procurements:
+         - name: mlas1_1
+           origin: test
+           date_planned: 2013-12-20
+           product_id: product.product_product_11
+           product_qty: 10
+           product_uom: product.product_uom_unit
+           location_id: stock.stock_location_components
+           procure_method: make_to_stock
+-
+ !record {model: stock.picking.out, id: ship_mlas_2}:
+   name: mlas1_2
+   move_lines:
+     - product_id: product.product_product_11
+       product_qty: 10
+       product_uom: product.product_uom_unit
+       location_id: stock.stock_location_components
+       location_dest_id: stock.stock_location_output
+       date: 2013-12-01
+       date_expected: 2013-12-01
+       procurements:
+         - name: mlas1_2
+           origin: test
+           date_planned: 2013-12-01
+           product_id: product.product_product_11
+           product_qty: 10
+           product_uom: product.product_uom_unit
+           location_id: stock.stock_location_components
+           procure_method: make_to_stock
+-
+ !record {model: stock.picking.out, id: ship_mlas_3}:
+   name: mlas1_3
+   move_lines:
+     - product_id: product.product_product_11
+       product_qty: 10
+       product_uom: product.product_uom_unit
+       location_id: stock.stock_location_components
+       location_dest_id: stock.stock_location_output
+       date: 2013-12-10
+       date_expected: 2013-12-10
+       procurements:
+         - name: mlas1_3
+           origin: test
+           date_planned: 2013-12-10
+           product_id: product.product_product_11
+           product_qty: 10
+           product_uom: product.product_uom_unit
+           location_id: stock.stock_location_components
+           procure_method: make_to_stock
+-
+ Confirm the 3 pickings
+-
+  !workflow {model: stock.picking, action: button_confirm, ref: ship_mlas_1}
+-
+  !workflow {model: stock.picking, action: button_confirm, ref: ship_mlas_2}
+-
+  !workflow {model: stock.picking, action: button_confirm, ref: ship_mlas_3}
+-
+ Confirm the procurements
+-
+ !python {model: procurement.order}: |
+   procurement_ids = self.search(cr, uid, [('name', 'in', ('mlas1_1', 'mlas1_2', 'mlas1_3'))], context=context)
+   from openerp import netsvc
+   wf_service = netsvc.LocalService("workflow")
+   for id in procurement_ids:
+     wf_service.trg_validate(uid, 'procurement.order', id, 'button_confirm', cr)
+-
+  I run the scheduler.
+-
+  !python {model: procurement.order}: |
+    self.run_scheduler(cr, uid)
+-
+ Check the procurement states
+-
+ !python {model: procurement.order}: |
+   procurement_ids = self.search(cr, uid, [('name', 'in', ('mlas1_1', 'mlas1_2', 'mlas1_3'))], context=context)
+   states = {}
+   for proc in self.browse(cr, uid, procurement_ids, context=context):
+       states[proc.name] = proc.state
+   expected = {'mlas1_1': 'exception', 'mlas1_2': 'ready', 'mlas1_3': 'ready'}
+   assert states == expected, 'wrong procurement states: %s (expected %s)' % (states, expected)
+-
+ Check the picking states
+-
+ !python {model: stock.picking}: |
+   picking_ids = [ref("ship_mlas_1"), ref("ship_mlas_2"), ref("ship_mlas_3")]
+   states = {}
+   for pick in self.browse(cr, uid, picking_ids, context=context):
+       states[pick.id] = pick.state
+   expected = {ref("ship_mlas_1"): 'confirmed', ref("ship_mlas_2"): 'assigned', ref("ship_mlas_3"): 'assigned'}
+   assert states == expected, 'wrong picking states %s (expected: %s)' % (states, expected)
+-
+ Create an inventory, reduce the quantity of products to 12
+-
+ !record {model: stock.inventory, id: inv_mlas1}:
+   name: 'INV: mlas'
+   inventory_line_id:
+     - product_qty: 12
+       product_id: product.product_product_11
+       product_uom: product.product_uom_unit
+       location_id: stock.stock_location_components
+-
+ Confirm the inventory
+-
+  !python {model: stock.inventory}: |
+    self.action_confirm(cr, uid, [ref('inv_mlas1')], context=context)
+    self.action_done(cr, uid, [ref('inv_mlas1')], context=context)
+-
+ Check the picking states
+-
+ !python {model: stock.picking}: |
+   picking_ids = [ref("ship_mlas_1"), ref("ship_mlas_2"), ref("ship_mlas_3")]
+   states = {}
+   for pick in self.browse(cr, uid, picking_ids, context=context):
+       states[pick.id] = pick.state
+   expected = {ref("ship_mlas_1"): 'confirmed',
+               ref("ship_mlas_2"): 'assigned',
+               ref("ship_mlas_3"): 'confirmed'}
+   assert states == expected, 'wrong picking states %s (expected: %s)' % (states, expected)

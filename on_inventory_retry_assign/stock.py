@@ -68,6 +68,7 @@ class stock_inventory(orm.Model):
         # in the correct order
         picking_ids = picking_obj.search(cr, uid,
                                          [('id', 'in', list(picking_ids))],
+                                         order='min_date',
                                          context=context)
         picking_obj.retry_assign(cr, uid, picking_ids, context=context)
 
