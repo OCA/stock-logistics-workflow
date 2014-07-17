@@ -6,26 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-16 14:22+0000\n"
-"PO-Revision-Date: 2014-07-16 14:22+0000\n"
+"POT-Creation-Date: 2014-07-17 10:02+0000\n"
+"PO-Revision-Date: 2014-07-17 10:02+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: on_inventory_retry_assign
-#: view:stock.picking.retry.availability:0
-msgid "Cancel"
-msgstr "Annuler"
-
-#. module: on_inventory_retry_assign
-#: code:_description:0
-#: model:ir.model,name:on_inventory_retry_assign.model_stock_change_product_qty
-#, python-format
-msgid "Change Product Quantity"
-msgstr "Changer la quantité d'articles"
 
 #. module: on_inventory_retry_assign
 #: code:_description:0
@@ -35,15 +23,9 @@ msgid "Inventory"
 msgstr "Inventaire"
 
 #. module: on_inventory_retry_assign
-#: code:addons/on_inventory_retry_assign/stock.py:95
+#: code:_description:0
+#: model:ir.model,name:on_inventory_retry_assign.model_stock_picking
 #, python-format
-msgid "No operations validated due to the following errors:\n"
-"%s"
-msgstr "Pas d'opération validée à cause des erreurs suivantes :\n"
-"%s"
+msgid "Picking List"
+msgstr "Opération de manutention"
 
-#. module: on_inventory_retry_assign
-#: code:addons/on_inventory_retry_assign/stock.py:94
-#, python-format
-msgid "Warning"
-msgstr "Attention"
