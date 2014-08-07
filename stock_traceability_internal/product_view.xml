@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_product_track_internal"
+            model="ir.ui.view">
+            <field name="name">Track lots on internal moves</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="stock.view_normal_procurement_locations_form"/>
+            <field name="arch" type="xml">
+                <group name="lot" position="inside">
+                    <field name="track_internal"/>
+                </group>
+            </field>
+        </record>
+    </data>
+</openerp>

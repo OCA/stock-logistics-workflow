@@ -1,0 +1,32 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* stock_traceability_internal
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-08-07 12:57+0000\n"
+"PO-Revision-Date: 2014-08-07 12:57+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stocktraceability_internal
+#: field:product.product,track_internal:0
+msgid "Track Lots internally"
+msgstr "Suivre les lots en interne"
+
+#. module: stock_traceability_internal
+#: help:product.product,track_internal:0
+msgid "Forces to specify a Serial Number for all internal moves containing this product."
+msgstr "Oblige à indiquer un numéro de série pour tous les mouvements internes contenant cet article."
+
+#. module: stock_traceability_internal
+#: constraint:stock.move:0
+msgid "You must assign a serial number for this product."
+msgstr "Vous devez attribuer un numéro de série à cet article."
+
