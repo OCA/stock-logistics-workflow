@@ -45,7 +45,7 @@ class StockPickingDispatchWave(orm.TransientModel):
             if move.picking_id.state == 'assigned' and \
                     move.picking_id.id not in picking_ids:
                 picking_ids.add(move.picking_id.id)
-        return picking_ids
+        return list(picking_ids)
 
     def _get_moves_from_picking_list(self, cr, uid, picking_ids, context=None):
         context = context or {}
