@@ -18,7 +18,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import operator
 from report import report_sxw
 import pooler
 import logging
@@ -39,7 +38,8 @@ class NullMove(object):
 
 class NullObj(object):
 
-    """the null obj has any attribute you want with an empty string as the value"""
+    """the null obj has any attribute you want with an empty string as the
+    value"""
 
     def __getattr__(self, attr):
         return ''
@@ -82,8 +82,9 @@ class DispatchAgregation(object):
             yield display_locations, self._product_quantity(locations)
 
     def _product_quantity(self, locations):
-        """iterate over the different products concerned by the moves for the specified locations
-        with their total quantity, sorted by product default_code
+        """iterate over the different products concerned by the moves for the
+        specified locations with their total quantity, sorted by product
+        default_code
 
         locations: a tuple (source_location, dest_location)
         """
@@ -95,8 +96,10 @@ class DispatchAgregation(object):
         for move in moves:
             p_code = move.product_id.default_code
             products[p_code] = move.product_id
-            carrier[
-                p_code] = move.picking_id.carrier_id and move.picking_id.carrier_id.partner_id.name or ''
+            carrier[p_code] = (
+                move.picking_id.carrier_id and
+                move.picking_id.carrier_id.partner_id.name or ''
+            )
             if p_code not in product_qty:
                 product_qty[p_code] = move.product_qty
             else:
@@ -119,7 +122,7 @@ class PrintDispatch(report_sxw.rml_parse):
         return data.get('form', {}).get(param, default) or default
 
     def set_context(self, objects, data, ids, report_type=None):
-        #!! data form is manually set in wizard
+        # !! data form is manually set in wizard
         new_objects = []
         location_obj = self.pool.get('stock.location')
         for dispatch in objects:
@@ -127,14 +130,18 @@ class PrintDispatch(report_sxw.rml_parse):
             for move in dispatch.move_ids:
                 if move.state == 'assigned':
                     id1, id2 = move.location_id.id, move.location_dest_id.id
-                    key_dict = dict(location_obj.name_get(self.cursor, self.uid,
-                                                          [id1, id2]))
+                    key_dict = dict(
+                        location_obj.name_get(
+                            self.cursor, self.uid, [id1, id2]
+                        )
+                    )
 
                     key = key_dict[id1], key_dict[id2]
                     moves_by_loc.setdefault(key, []).append(move)
             _logger.debug('agreg %s ', moves_by_loc)
             new_objects.append(DispatchAgregation(dispatch, moves_by_loc))
-        return super(PrintDispatch, self).set_context(new_objects, data, ids, report_type=report_type)
+        return super(PrintDispatch, self).set_context(new_objects, data, ids,
+                                                      report_type=report_type)
 
 report_sxw.report_sxw('report.webkit.dispatch_order',
                       'picking.dispatch',

@@ -32,8 +32,13 @@ class product_product(orm.Model):
             ('single', 'Single'),
             ('lu', 'Logistical Unit')
         ], 'Lot split type', required=True,
-            help="None: no split ; single: 1 line/product unit ; Logistical Unit: split using the first Logistical Unit quantity of the product form packaging tab (to be improved to take into account all LU)"),
-        'track_internal': fields.boolean('Track Lots internally', help="Forces to specify a Serial Number for all internal moves"),
+            help="None: no split ; single: 1 line/product unit ; "
+            "Logistical Unit: split using the first Logistical Unit quantity "
+            "of the product form packaging tab "
+            "(to be improved to take into account all LU)"),
+        'track_internal': fields.boolean(
+            'Track Lots internally',
+            help="Forces to specify a Serial Number for all internal moves"),
     }
 
     _defaults = {

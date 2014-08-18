@@ -28,9 +28,11 @@ class stock_partial_picking_line(osv.TransientModel):
         'date_backdating': fields.datetime("Actual Movement Date"),
     }
 
-    def on_change_date_backdating(self, cr, uid, ids, date_backdating, context=None):
+    def on_change_date_backdating(self, cr, uid, ids, date_backdating,
+                                  context=None):
         move_obj = self.pool.get('stock.move')
-        return move_obj.on_change_date_backdating(cr, uid, ids, date_backdating, context=context)
+        return move_obj.on_change_date_backdating(
+            cr, uid, ids, date_backdating, context=context)
 
 
 class stock_partial_picking(osv.TransientModel):
@@ -48,4 +50,5 @@ class stock_partial_picking(osv.TransientModel):
         for wizard_line in partial.move_ids:
             date_backdating = wizard_line.date_backdating
             wizard_line.move_id.write({'date_backdating': date_backdating, })
-        return super(stock_partial_picking, self).do_partial(cr, uid, ids, context=context)
+        return super(stock_partial_picking, self).do_partial(cr, uid, ids,
+                                                             context=context)

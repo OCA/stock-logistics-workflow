@@ -38,7 +38,7 @@
                 'wizard/create_dispatch_view.xml',
                 'report.xml',
                 'security/ir.model.access.csv',
-                #'picking_dispatch_workflow.xml',
+                # 'picking_dispatch_workflow.xml',
                 ],
  'demo_xml': [],
  'tests': [],

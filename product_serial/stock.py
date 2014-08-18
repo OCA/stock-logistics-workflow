@@ -1,25 +1,25 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Product serial module for OpenERP
-#    Copyright (C) 2008 Raphaël Valyi
-#    Copyright (C) 2011 Anevia S.A. - Ability to group invoice lines
-#              written by Alexis Demeaulte <alexis.demeaulte@anevia.com>
-#    Copyright (C) 2011-2013 Akretion - Ability to split lines on logistical units
-#              written by Emmanuel Samyn
+# Product serial module for OpenERP
+# Copyright (C) 2008 Raphaël Valyi
+# Copyright (C) 2011 Anevia S.A. - Ability to group invoice lines
+#           written by Alexis Demeaulte <alexis.demeaulte@anevia.com>
+# Copyright (C) 2011-2013 Akretion - Ability to split lines on logistical units
+#           written by Emmanuel Samyn
 #
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
 #
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 
@@ -38,7 +38,8 @@ class stock_move(orm.Model):
         if not default:
             default = {}
         default['new_prodlot_code'] = False
-        return super(stock_move, self).copy(cr, uid, id, default, context=context)
+        return super(stock_move, self).copy(cr, uid, id, default,
+                                            context=context)
 
     def _get_prodlot_code(self, cr, uid, ids, field_name, arg, context=None):
         res = {}
@@ -60,7 +61,8 @@ class stock_move(orm.Model):
                 self.pool.get('stock.production.lot').write(
                     cr, uid, existing_prodlot.id, {'name': value})
             else:
-                prodlot_id = self.pool.get('stock.production.lot').create(cr, uid, {
+                lot_obj = self.pool['stock.production.lot']
+                prodlot_id = lot_obj.create(cr, uid, {
                     'name': value,
                     'product_id': product_id,
                 })
@@ -80,7 +82,6 @@ class stock_move(orm.Model):
             ids = [ids]
 
         for move in self.browse(cr, uid, ids, context=context):
-            product_id = move.product_id.id
             existing_tracking = move.tracking_id
             if existing_tracking:  # avoid creating a tracking twice
                 self.pool.get('stock.tracking').write(
@@ -92,40 +93,65 @@ class stock_move(orm.Model):
                 move.write({'tracking_id': tracking_id})
 
     _columns = {
-        'new_prodlot_code': fields.function(_get_prodlot_code, fnct_inv=_set_prodlot_code,
-                                            method=True, type='char', size=64,
-                                            string='Create Serial Number', select=1
-                                            ),
-        'new_tracking_code': fields.function(_get_tracking_code, fnct_inv=_set_tracking_code,
-                                             method=True, type='char', size=64,
-                                             string='Create Tracking', select=1
-                                             ),
+        'new_prodlot_code': fields.function(
+            _get_prodlot_code,
+            fnct_inv=_set_prodlot_code,
+            method=True, type='char', size=64,
+            string='Create Serial Number', select=1
+        ),
+        'new_tracking_code': fields.function(
+            _get_tracking_code, fnct_inv=_set_tracking_code,
+            method=True, type='char', size=64,
+            string='Create Tracking', select=1
+        ),
     }
 
     def action_done(self, cr, uid, ids, context=None):
         """
-        If we autosplit moves without reconnecting them 1 by 1, at least when some move which has descendants is split
-        The following situation would happen (alphabetical order is order of creation, initially b and a pre-exists, then a is split, so a might get assigned and then split too):
+        If we autosplit moves without reconnecting them 1 by 1, at least when
+        some move which has descendants is split.
+
+        The following situation would happen (alphabetical order is order of
+        creation, initially b and a pre-exists, then a is split, so a might get
+        assigned and then split too):
+
         Incoming moves b, c, d
         Outgoing moves a, e, f
+
         Then we have those links: b->a, c->a, d->a
         and: b->, b->e, b->f
-        The following code will detect this situation and reconnect properly the moves into only: b->a, c->e and d->f
+
+        The following code will detect this situation and reconnect properly
+        the moves into only: b->a, c->e and d->f.
         """
         result = super(stock_move, self).action_done(cr, uid, ids, context)
         for move in self.browse(cr, uid, ids):
-            if move.product_id.lot_split_type and move.move_dest_id and move.move_dest_id.id:
+            if (
+                move.product_id.lot_split_type and
+                move.move_dest_id and
+                move.move_dest_id.id
+            ):
                 cr.execute(
-                    "select stock_move.id from stock_move_history_ids left join stock_move on stock_move.id = stock_move_history_ids.child_id where parent_id=%s and stock_move.product_qty=1", (move.id,))
+                    "select stock_move.id from stock_move_history_ids "
+                    "left join stock_move "
+                    "on stock_move.id = stock_move_history_ids.child_id "
+                    "where parent_id=%s and stock_move.product_qty=1",
+                    (move.id,))
                 unitary_out_moves = cr.fetchall()
                 if unitary_out_moves and len(unitary_out_moves) > 1:
                     unitary_in_moves = []
                     out_node = False
                     counter = 0
-                    while len(unitary_in_moves) != len(unitary_out_moves) and counter < len(unitary_out_moves):
+                    while (len(unitary_in_moves) != len(unitary_out_moves) and
+                           counter < len(unitary_out_moves)):
                         out_node = unitary_out_moves[counter][0]
                         cr.execute(
-                            "select stock_move.id from stock_move_history_ids left join stock_move on stock_move.id = stock_move_history_ids.parent_id where child_id=%s and stock_move.product_qty=1", (out_node,))
+                            "select stock_move.id from stock_move_history_ids "
+                            "left join stock_move "
+                            "on stock_move.id = "
+                            "stock_move_history_ids.parent_id "
+                            "where child_id=%s and stock_move.product_qty=1",
+                            (out_node,))
                         unitary_in_moves = cr.fetchall()
                         counter += 1
 
@@ -136,10 +162,17 @@ class stock_move(orm.Model):
                         unitary_in_moves.pop()
                         counter = 0
                         for unitary_in_move in unitary_in_moves:
-                            cr.execute("delete from stock_move_history_ids where parent_id=%s and child_id=%s", (
-                                unitary_in_moves[counter][0], out_node))
-                            cr.execute("update stock_move_history_ids set parent_id=%s where parent_id=%s and child_id=%s", (unitary_in_moves[
-                                       counter][0], move.id, unitary_out_moves[counter][0]))
+                            cr.execute(
+                                "delete from stock_move_history_ids "
+                                "where parent_id=%s and child_id=%s", (
+                                    unitary_in_moves[counter][0], out_node))
+                            cr.execute(
+                                "update stock_move_history_ids "
+                                "set parent_id=%s where parent_id=%s and "
+                                "child_id=%s", (
+                                    unitary_in_moves[counter][0],
+                                    move.id,
+                                    unitary_out_moves[counter][0]))
                             counter += 1
 
         return result
@@ -152,24 +185,34 @@ class stock_move(orm.Model):
             if move.product_id.lot_split_type == 'lu':
                 if not move.product_id.packaging:
                     raise orm.except_orm(_('Error :'), _(
-                        "Product '%s' has 'Lot split type' = 'Logistical Unit' but is missing packaging information.") % (move.product_id.name))
+                        "Product '%s' has 'Lot split type' = "
+                        "'Logistical Unit' but is missing packaging "
+                        "information.") % (move.product_id.name))
                 lu_qty = move.product_id.packaging[0].qty
             elif move.product_id.lot_split_type == 'single':
                 lu_qty = 1
             if lu_qty and qty > 1:
                 # Set existing move to LU quantity
                 self.write(cr, uid, move.id, {
-                           'product_qty': lu_qty, 'product_uos_qty': move.product_id.uos_coeff})
+                    'product_qty': lu_qty,
+                    'product_uos_qty': move.product_id.uos_coeff
+                })
                 qty -= lu_qty
                 # While still enough qty to create a new move, create it
                 while qty >= lu_qty:
                     all_ids.append(
-                        self.copy(cr, uid, move.id, {'state': move.state, 'prodlot_id': None}))
+                        self.copy(cr, uid, move.id, {
+                            'state': move.state, 'prodlot_id': None
+                        }))
                     qty -= lu_qty
                 # Create a last move for the remainder qty
                 if qty > 0:
                     all_ids.append(self.copy(
-                        cr, uid, move.id, {'state': move.state, 'prodlot_id': None, 'product_qty': qty}))
+                        cr, uid, move.id, {
+                            'state': move.state,
+                            'prodlot_id': None,
+                            'product_qty': qty
+                        }))
         return all_ids
 
 
@@ -209,7 +252,8 @@ class stock_picking(orm.Model):
         return result
 
     # Because stock move line can be splitted by the module, we merge
-    # invoice lines (if option 'is_group_invoice_line' is activated for the company)
+    # invoice lines (if option 'is_group_invoice_line' is activated for the
+    # company)
     # at the following conditions :
     #   - the product is the same and
     #   - the discount is the same and
@@ -221,8 +265,9 @@ class stock_picking(orm.Model):
     # subtotal.
     def action_invoice_create(self, cursor, user, ids, journal_id=False,
                               group=False, type='out_invoice', context=None):
-        invoice_dict = super(stock_picking, self).action_invoice_create(cursor, user,
-                                                                        ids, journal_id, group, type, context=context)
+        invoice_dict = super(stock_picking, self).action_invoice_create(
+            cursor, user,
+            ids, journal_id, group, type, context=context)
 
         for picking_key in invoice_dict:
             invoice = self.pool.get('account.invoice').browse(
@@ -248,10 +293,12 @@ class stock_picking(orm.Model):
                 for tax in tax_tab:
                     key = key + unicode(tax) + ";"
 
-                # Add the sale order line part but check if the field exist because
-                # it's install by a specific module (not from addons)
-                if self.pool.get('ir.model.fields').search(cursor, user,
-                                                           [('name', '=', 'sale_order_lines'), ('model', '=', 'account.invoice.line')], context=context) != []:
+                # Add the sale order line part but check if the field exist
+                # because it's install by a specific module (not from addons)
+                if self.pool.get('ir.model.fields').search(cursor, user, [
+                    ('name', '=', 'sale_order_lines'),
+                    ('model', '=', 'account.invoice.line')
+                ], context=context) != []:
                     order_line_tab = []
                     for order_line in line.sale_order_lines:
                         order_line_tab.append(order_line.id)
@@ -264,7 +311,7 @@ class stock_picking(orm.Model):
 
                 # if the key doesn't already exist, we keep the invoice line
                 # and we add the key to new_line_list
-                if not new_line_list.has_key(hash_key):
+                if hash_key not in new_line_list:
                     new_line_list[hash_key] = {
                         'id': line.id,
                         'quantity': line.quantity,
@@ -285,7 +332,8 @@ class stock_picking(orm.Model):
                 line_id = new_line_list[hash_key]['id']
                 del new_line_list[hash_key]['id']
                 self.pool.get('account.invoice.line').write(
-                    cursor, user, line_id, new_line_list[hash_key], context=context)
+                    cursor, user, line_id, new_line_list[hash_key],
+                    context=context)
 
         return invoice_dict
 
@@ -295,15 +343,19 @@ class stock_production_lot(orm.Model):
 
     def _last_location_id(self, cr, uid, ids, field_name, arg, context=None):
         """Retrieves the last location where the product with given serial is.
-        Instead of using dates we assume the product is in the location having the
-        highest number of products with the given serial (should be 1 if no mistake). This
-        is better than using move dates because moves can easily be encoded at with wrong dates."""
+        Instead of using dates we assume the product is in the location having
+        the highest number of products with the given serial (should be 1 if no
+        mistake). This is better than using move dates because moves can easily
+        be encoded at with wrong dates."""
         res = {}
 
         for prodlot_id in ids:
             cr.execute(
                 "select location_dest_id "
-                "from stock_move inner join stock_report_prodlots on stock_report_prodlots.location_id = location_dest_id and stock_report_prodlots.prodlot_id = %s "
+                "from stock_move inner "
+                "join stock_report_prodlots "
+                "on stock_report_prodlots.location_id = location_dest_id "
+                "and stock_report_prodlots.prodlot_id = %s "
                 "where stock_move.prodlot_id = %s and stock_move.state=%s "
                 "order by stock_report_prodlots.qty DESC ",
                 (prodlot_id, prodlot_id, 'done'))
@@ -322,9 +374,11 @@ class stock_production_lot(orm.Model):
         for a in args:
             operator = a[1]
             value = a[2]
-            if not operator in ops:
-                raise osv.except_osv(_('Error !'), _(
-                    'Operator %s not supported in searches for last_location_id (product.product).' % operator))
+            if operator not in ops:
+                raise orm.except_orm(
+                    _('Error !'),
+                    _('Operator %s not supported in searches for '
+                      'last_location_id (product.product).' % operator))
             if operator == '=':
                 cr.execute(
                     "select distinct prodlot_id "
@@ -335,8 +389,10 @@ class stock_production_lot(orm.Model):
         return [('id', 'in', tuple(prodlot_ids))]
 
     _columns = {
-        'last_location_id': fields.function(_last_location_id, fnct_search=_last_location_id_search,
-                                            type="many2one", relation="stock.location",
-                                            string="Last location",
-                                            help="Display the current stock location of this production lot"),
+        'last_location_id': fields.function(
+            _last_location_id,
+            fnct_search=_last_location_id_search,
+            type="many2one", relation="stock.location",
+            string="Last location",
+            help="Display the current stock location of this production lot"),
     }

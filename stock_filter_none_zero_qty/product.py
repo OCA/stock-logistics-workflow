@@ -36,10 +36,11 @@ class product_product(orm.Model):
 
     def _product_available(self, cr, uid, ids, field_names=None, arg=False,
                            context=None):
-        return super(product_product, self)._product_available(cr, uid, ids,
-                                                               field_names=field_names,
-                                                               arg=arg,
-                                                               context=context)
+        return super(product_product, self)._product_available(
+            cr, uid, ids,
+            field_names=field_names,
+            arg=arg,
+            context=context)
 
     def _qty_available_search(self, cr, uid, obj, name, args, context=None):
         ops = ['>', ]
@@ -49,8 +50,8 @@ class product_product(orm.Model):
         prod_ids = []
         for a in args:
             operator = a[1]
-            if not operator in ops:
-                raise osv.except_osv(_('Error !'),
+            if operator not in ops:
+                raise orm.except_orm(_('Error !'),
                                      _('Operator %s not suported in '
                                        'searches for qty_available '
                                        '(product.product).' % operator))
@@ -64,32 +65,29 @@ class product_product(orm.Model):
         return [('id', 'in', tuple(prod_ids))]
 
     _columns = {
-        'qty_available': fields.function(_product_available,
-                                         fnct_search=_qty_available_search,
-                                         method=True,
-                                         multi='qty_available',
-                                         type='float',
-                                         digits_compute=dp.get_precision('Product '
-                                                                         'Unit of Measure'),
-                                         string='Quantity On Hand',
-                                         help="""Current quantity of
-                                         products.\n
-                                         In a context with a "
-                                         "single Stock Location, "
-                                         "this includes goods "
-                                         "stored at this Location, "
-                                         "or any of its children.\n
-                                         In a context with a single "
-                                         "Warehouse, this includes "
-                                         "goods stored in the Stock Location "
-                                         "of this Warehouse, "
-                                         "or any of its children.\n
-                                         In a context with a single Shop, "
-                                         "this includes goods "
-                                         "stored in the Stock Location "
-                                         "of the Warehouse of this Shop, "
-                                         "or any of its children.\n
-                                         Otherwise, this includes goods "
-                                         "stored in any Stock Location "
-                                         "with 'internal' type."""),
+        'qty_available': fields.function(
+            _product_available,
+            fnct_search=_qty_available_search,
+            method=True,
+            multi='qty_available',
+            type='float',
+            digits_compute=dp.get_precision('Product '
+                                            'Unit of Measure'),
+            string='Quantity On Hand',
+            help="""Current quantity of products.
+
+            In a context with a
+            single Stock Location, this includes goods stored at this
+            Location, or any of its children.
+
+            In a context with a single Warehouse, this includes goods stored in
+            the Stock Location of this Warehouse, or any of its children.
+
+            In a context with a single Shop, this includes goods stored in the
+            Stock Location of the Warehouse of this Shop, or any of its
+            children.
+
+            Otherwise, this includes goods stored in any Stock
+            Location with 'internal' type."""
+        ),
     }
