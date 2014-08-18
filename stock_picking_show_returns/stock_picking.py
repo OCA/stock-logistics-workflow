@@ -3,7 +3,7 @@
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (c) 2013 Serv. Tecnol. Avanzados (http://www.serviciosbaeza.com)
-#                       Pedro M. Baeza <pedro.baeza@serviciosbaeza.com> 
+#                       Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -20,6 +20,7 @@
 #
 ##############################################################################
 from openerp.osv import fields, orm
+
 
 class stock_picking(orm.Model):
     _inherit = 'stock.picking'
@@ -44,6 +45,7 @@ class stock_picking(orm.Model):
                                       type='many2many'),
     }
 
+
 class stock_picking_out(orm.Model):
     _inherit = 'stock.picking.out'
 
@@ -58,6 +60,7 @@ class stock_picking_out(orm.Model):
                                       string="Return pickings",
                                       type='many2many'),
     }
+
 
 class stock_picking_in(orm.Model):
     _inherit = 'stock.picking.in'

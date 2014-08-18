@@ -47,10 +47,10 @@ class StockPicking(orm.Model):
                                      'Priority',
                                      required=True,
                                      help='The priority of the picking'),
-        }
+    }
     _defaults = {
         'priority': '0',
-        }
+    }
 
     def retry_assign_all(self, cr, uid, ids, context=None):
         domain = [('type', '!=', 'in'),
@@ -100,10 +100,10 @@ class StockPickingOut(orm.Model):
                                      'Priority',
                                      required=True,
                                      help='The priority of the picking'),
-        }
+    }
     _defaults = {
         'priority': '0',
-        }
+    }
 
     def retry_assign_all(self, cr, uid, ids, context=None):
         return self.pool.get('stock.picking').retry_assign_all(cr, uid, ids,
@@ -125,10 +125,10 @@ class StockPickingIn(orm.Model):
                                      'Priority',
                                      required=True,
                                      help='The priority of the picking'),
-        }
+    }
     _defaults = {
         'priority': '0',
-        }
+    }
 
     def retry_assign_all(self, cr, uid, ids, context=None):
         return self.pool.get('stock.picking').retry_assign_all(cr, uid, ids,

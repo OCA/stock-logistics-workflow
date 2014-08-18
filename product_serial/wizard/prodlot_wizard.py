@@ -40,8 +40,7 @@ class stock_picking_prodlot_selection_wizard(orm.TransientModel):
 
     _defaults = {
         'create_prodlots': False,
-        }
-
+    }
 
     def select_or_create_prodlots(self, cr, uid, ids, context=None):
         if context is None:
@@ -58,52 +57,63 @@ class stock_picking_prodlot_selection_wizard(orm.TransientModel):
         try:
             first_number = int(record.first_number)
         except:
-            raise orm.except_orm(_('Invalid First Number'), _("The field 'First Number' should only contain digits."))
+            raise orm.except_orm(_('Invalid First Number'), _(
+                "The field 'First Number' should only contain digits."))
 
         try:
             last_number = int(record.last_number)
         except:
-            raise orm.except_orm(_('Invalid Last Number'), _("The field 'Last Number' should only contain digits."))
+            raise orm.except_orm(_('Invalid Last Number'), _(
+                "The field 'Last Number' should only contain digits."))
 
         if last_number < first_number:
-            raise orm.except_orm(_('Invalid Numbers'), _('The First Number must be lower than the Last Number.'))
+            raise orm.except_orm(_('Invalid Numbers'), _(
+                'The First Number must be lower than the Last Number.'))
 
         if len(record.first_number) != len(record.last_number):
-            raise orm.except_orm(_('Invalid Lot Numbers'), _('First and Last Numbers must have the same length.'))
+            raise orm.except_orm(_('Invalid Lot Numbers'), _(
+                'First and Last Numbers must have the same length.'))
 
         number_length = len(record.first_number)
 
         picking_id = context['active_id']
         current_number = first_number
-        picking = self.pool['stock.picking'].browse(cr, uid, picking_id, context=context)
+        picking = self.pool['stock.picking'].browse(
+            cr, uid, picking_id, context=context)
         company_id = picking.company_id.id
         for move in picking.move_lines:
             if move.prodlot_id or move.product_id != record.product_id:
                 continue
 
-            current_lot = '%%s%%0%dd%%s' % number_length % (prefix, current_number, suffix)
+            current_lot = '%%s%%0%dd%%s' % number_length % (
+                prefix, current_number, suffix)
             if record.create_prodlots:
                 # Create new prodlot
                 lot_id_on_move = prodlot_obj.create(cr, uid, {
                     'product_id': record.product_id.id,
                     'name': current_lot,
                     'company_id': company_id,
-                        }, context=context)
+                }, context=context)
             else:
                 # Search existing prodlots
-                lot_ids = prodlot_obj.search(cr, uid, [('name','=',current_lot)], limit=1, context=context)
+                lot_ids = prodlot_obj.search(
+                    cr, uid, [('name', '=', current_lot)], limit=1, context=context)
                 if not lot_ids:
-                    raise orm.except_orm(_('Invalid lot numbers'), _('Production lot %s not found.') % current_lot)
+                    raise orm.except_orm(
+                        _('Invalid lot numbers'), _('Production lot %s not found.') % current_lot)
 
                 ctx = context.copy()
                 ctx['location_id'] = move.location_id.id
-                prodlot = self.pool.get('stock.production.lot').browse(cr, uid, lot_ids[0], ctx)
+                prodlot = self.pool.get('stock.production.lot').browse(
+                    cr, uid, lot_ids[0], ctx)
 
                 if prodlot.product_id != record.product_id:
-                    raise orm.except_orm(_('Invalid lot numbers'), _('Production lot %s exists but not for product %s.') % (current_lot, record.product_id.name))
+                    raise orm.except_orm(_('Invalid lot numbers'), _(
+                        'Production lot %s exists but not for product %s.') % (current_lot, record.product_id.name))
 
                 if prodlot.stock_available < move.product_qty:
-                    raise orm.except_orm(_('Invalid lot numbers'), _('Not enough stock available of production lot %s.') % current_lot)
+                    raise orm.except_orm(_('Invalid lot numbers'), _(
+                        'Not enough stock available of production lot %s.') % current_lot)
                 lot_id_on_move = lot_ids[0]
 
             self.pool.get('stock.move').write(cr, uid, [move.id], {
@@ -115,4 +125,3 @@ class stock_picking_prodlot_selection_wizard(orm.TransientModel):
                 break
 
         return True
-

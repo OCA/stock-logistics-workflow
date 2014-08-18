@@ -53,6 +53,7 @@ class stock_picking_out(orm.Model):
 
 
 class stock_picking(orm.Model):
+
     """Adds picking split without done state.
     Long piece of code has to be copied from OpenERP
     as there is no hook..."""
@@ -102,7 +103,8 @@ class stock_picking(orm.Model):
         for pick in self.browse(cr, uid, ids, context=context):
             new_picking = None
             complete, too_many, too_few = [], [], []
-            move_product_qty, prodlot_ids, product_avail, partial_qty, product_uoms = {}, {}, {}, {}, {}
+            move_product_qty, prodlot_ids, product_avail, partial_qty, product_uoms = {
+            }, {}, {}, {}, {}
             for move in pick.move_lines:
                 if move.state in ('done', 'cancel'):
                     continue
@@ -124,7 +126,7 @@ class stock_picking(orm.Model):
                 else:
                     too_many.append(move)
             # We remove section of code that manage incoming picking
-            # please refere to original code if needed                                                                                                                                            
+            # please refere to original code if needed
             for move in too_few:
                 product_qty = move_product_qty[move.id]
                 if not new_picking:
@@ -132,37 +134,40 @@ class stock_picking(orm.Model):
                     self.write(cr, uid, [pick.id],
                                {'name': sequence_obj.get(cr, uid,
                                                          'stock.picking.%s' % pick.type),
-                               })
+                                })
                     new_picking = self.copy(cr, uid, pick.id,
-                            {
-                                'name': new_picking_name,
-                                'move_lines': [],
-                                'state': 'draft',
-                            })
+                                            {
+                                                'name': new_picking_name,
+                                                'move_lines': [],
+                                                'state': 'draft',
+                                            })
                 if product_qty != 0:
                     defaults = {
-                            'product_qty': product_qty,
-                            'product_uos_qty': product_qty,  # TODO: put correct uos_qty
-                            'picking_id': new_picking,
-                            'state': 'assigned',
-                            'move_dest_id': False,
-                            'price_unit': move.price_unit,
-                            'product_uom': product_uoms[move.id]
+                        'product_qty': product_qty,
+                        # TODO: put correct uos_qty
+                        'product_uos_qty': product_qty,
+                        'picking_id': new_picking,
+                        'state': 'assigned',
+                        'move_dest_id': False,
+                        'price_unit': move.price_unit,
+                        'product_uom': product_uoms[move.id]
                     }
                     prodlot_id = prodlot_ids[move.id]
                     if prodlot_id:
                         defaults.update(prodlot_id=prodlot_id)
                     move_obj.copy(cr, uid, move.id, defaults)
                 move_obj.write(cr, uid, [move.id],
-                        {
-                            'product_qty': move.product_qty - partial_qty[move.id],
-                            'product_uos_qty': move.product_qty - partial_qty[move.id], # TODO: put correct uos_qty
-                            'prodlot_id': False,
-                            'tracking_id': False,
-                        })
+                               {
+                    'product_qty': move.product_qty - partial_qty[move.id],
+                    # TODO: put correct uos_qty
+                    'product_uos_qty': move.product_qty - partial_qty[move.id],
+                    'prodlot_id': False,
+                    'tracking_id': False,
+                })
 
             if new_picking:
-                move_obj.write(cr, uid, [c.id for c in complete], {'picking_id': new_picking})
+                move_obj.write(
+                    cr, uid, [c.id for c in complete], {'picking_id': new_picking})
             for move in complete:
                 defaults = {'product_uom': product_uoms[move.id],
                             'product_qty': move_product_qty[move.id]}
@@ -173,7 +178,8 @@ class stock_picking(orm.Model):
                 product_qty = move_product_qty[move.id]
                 defaults = {
                     'product_qty': product_qty,
-                    'product_uos_qty': product_qty,  # TODO: put correct uos_qty
+                    # TODO: put correct uos_qty
+                    'product_uos_qty': product_qty,
                     'product_uom': product_uoms[move.id]
                 }
                 prodlot_id = prodlot_ids.get(move.id)
@@ -186,13 +192,15 @@ class stock_picking(orm.Model):
             # At first we confirm the new picking (if necessary)
             # We have removed here confirmation workflow calls
             if new_picking:
-                wf_service.trg_validate(uid, 'stock.picking', new_picking, 'button_confirm', cr)
+                wf_service.trg_validate(
+                    uid, 'stock.picking', new_picking, 'button_confirm', cr)
                 self.write(cr, uid, [pick.id], {'backorder_id': new_picking})
                 delivered_pack_id = new_picking
             else:
                 delivered_pack_id = pick.id
 
-            delivered_pack = self.browse(cr, uid, delivered_pack_id, context=context)
+            delivered_pack = self.browse(
+                cr, uid, delivered_pack_id, context=context)
             res[pick.id] = {'delivered_picking': delivered_pack.id or False}
 
         return res

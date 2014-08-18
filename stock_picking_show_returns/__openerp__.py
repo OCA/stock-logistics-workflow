@@ -3,7 +3,7 @@
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (c) 2013 Serv. Tecnol. Avanzados (http://www.serviciosbaeza.com)
-#                       Pedro M. Baeza <pedro.baeza@serviciosbaeza.com> 
+#                       Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -22,22 +22,22 @@
 ##############################################################################
 
 {
-    "name" : "Show returns on stock pickings",
-    "version" : "1.0",
-    "author" : "Serv. Tecnol. Avanzados - Pedro M. Baeza",
-    "category" : "Warehouse Management",
+    "name": "Show returns on stock pickings",
+    "version": "1.0",
+    "author": "Serv. Tecnol. Avanzados - Pedro M. Baeza",
+    "category": "Warehouse Management",
     "description" : """
     Show in pickings one tab that contains returns made for that picking.
     """,
-    "website" : "www.serviciosbaeza.com",
-    "license" : "AGPL-3",
-    "depends" : [
+    "website": "www.serviciosbaeza.com",
+    "license": "AGPL-3",
+    "depends": [
         "stock",
     ],
-    "demo" : [],
-    "data" : [
+    "demo": [],
+    "data": [
         'stock_picking_view.xml',
     ],
-    "installable" : True,
-    "active" : False,
+    "installable": True,
+    "active": False,
 }

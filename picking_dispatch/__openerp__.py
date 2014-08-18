@@ -18,17 +18,17 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{'name' : 'Picking dispatch',
- 'version' : '1.2.2',
- 'author' : 'Camptocamp',
+{'name': 'Picking dispatch',
+ 'version': '1.2.2',
+ 'author': 'Camptocamp',
  'maintainer': 'Camptocamp',
  'category': 'Products',
  'complexity': "normal",  # easy, normal, expert
- 'depends' : ['stock',
-              'base',
-              'report_webkit',
-              'base_headers_webkit',
-              ],
+ 'depends': ['stock',
+             'base',
+             'report_webkit',
+             'base_headers_webkit',
+             ],
  'description': """Dispatch pickings to employees working in warehouses
  """,
  'website': 'http://www.camptocamp.com/',

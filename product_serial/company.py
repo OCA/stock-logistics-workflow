@@ -24,6 +24,7 @@
 
 from openerp.osv import orm, fields
 
+
 class company(orm.Model):
     _inherit = 'res.company'
 
@@ -36,4 +37,3 @@ class company(orm.Model):
         'autosplit_is_active': True,
         'is_group_invoice_line': True,
     }
-

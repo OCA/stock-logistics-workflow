@@ -118,4 +118,4 @@ class account_invoice_line(orm.Model):
             'stock.move', 'invoice_line_id', 'Related Stock Moves',
             readonly=True,
             help="Related stock moves (only when the invoice has been generated from the picking)."),
-        }
+    }

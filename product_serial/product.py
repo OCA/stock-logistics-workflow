@@ -22,15 +22,16 @@
 
 from openerp.osv import fields, orm
 
+
 class product_product(orm.Model):
     _inherit = "product.product"
 
     _columns = {
         'lot_split_type': fields.selection([
-            ('none','None'),
-            ('single','Single'),
-            ('lu','Logistical Unit')
-            ], 'Lot split type', required=True,
+            ('none', 'None'),
+            ('single', 'Single'),
+            ('lu', 'Logistical Unit')
+        ], 'Lot split type', required=True,
             help="None: no split ; single: 1 line/product unit ; Logistical Unit: split using the first Logistical Unit quantity of the product form packaging tab (to be improved to take into account all LU)"),
         'track_internal': fields.boolean('Track Lots internally', help="Forces to specify a Serial Number for all internal moves"),
     }
@@ -38,4 +39,3 @@ class product_product(orm.Model):
     _defaults = {
         'lot_split_type': 'none',
     }
-

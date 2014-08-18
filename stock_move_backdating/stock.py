@@ -33,7 +33,8 @@ class stock_move(orm.Model):
     _columns = {
         'date_backdating': fields.datetime(
             "Actual Movement Date", readonly=False,
-            states={'done': [('readonly', True)], 'cancel': [('readonly', True)]},
+            states={
+                'done': [('readonly', True)], 'cancel': [('readonly', True)]},
             help="Date when the move action was committed. "
             "Will set the move date to this date instead "
                  "of current date when processing to done."
@@ -54,7 +55,8 @@ class stock_move(orm.Model):
 
         # overwrite date field where applicable
         for move in self.browse(cr, uid, backdating_dates.keys(), context=context):
-            self.write(cr, uid, [move.id], {'date': backdating_dates[move.id]}, context=context)
+            self.write(
+                cr, uid, [move.id], {'date': backdating_dates[move.id]}, context=context)
 
         return result
 
@@ -70,8 +72,10 @@ class stock_move(orm.Model):
         NOW = datetime.now()
 
         if (dt > NOW):
-            warning = {'title': _('Error!'), 'message': _('You can not process an actual movement date in the future.')}
-            values = {'date_backdating': NOW.strftime(DEFAULT_SERVER_DATETIME_FORMAT)}
+            warning = {'title': _('Error!'), 'message': _(
+                'You can not process an actual movement date in the future.')}
+            values = {
+                'date_backdating': NOW.strftime(DEFAULT_SERVER_DATETIME_FORMAT)}
             return {'warning': warning, 'value': values}
 
         # otherwise, ok

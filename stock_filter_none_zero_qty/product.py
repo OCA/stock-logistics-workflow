@@ -37,8 +37,7 @@ class product_product(orm.Model):
     def _product_available(self, cr, uid, ids, field_names=None, arg=False,
                            context=None):
         return super(product_product, self)._product_available(cr, uid, ids,
-                                                               field_names=
-                                                               field_names,
+                                                               field_names=field_names,
                                                                arg=arg,
                                                                context=context)
 
@@ -70,9 +69,8 @@ class product_product(orm.Model):
                                          method=True,
                                          multi='qty_available',
                                          type='float',
-                                         digits_compute=
-                                         dp.get_precision('Product '
-                                                          'Unit of Measure'),
+                                         digits_compute=dp.get_precision('Product '
+                                                                         'Unit of Measure'),
                                          string='Quantity On Hand',
                                          help="""Current quantity of
                                          products.\n

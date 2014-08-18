@@ -27,7 +27,9 @@ from tools.translate import _
 
 _logger = logging.getLogger(__name__)
 
+
 class PickingDispatch(Model):
+
     """New object that contain stock moves selected from stock.picking by the warehouse
     manager so that the warehouseman can go and bring the product where they're asked for.
     The purpose is to know who will look for what in the warehouse. We don't use the
@@ -46,14 +48,14 @@ class PickingDispatch(Model):
         for dispatch_id in ids:
             result[dispatch_id] = []
         sql = ("SELECT DISTINCT sm.dispatch_id, sm.picking_id FROM stock_move sm "
-              "WHERE sm.dispatch_id in %s AND sm.picking_id is NOT NULL")
+               "WHERE sm.dispatch_id in %s AND sm.picking_id is NOT NULL")
         cr.execute(sql, (tuple(ids),))
         res = cr.fetchall()
         for line in res:
             result[line[0]].append(line[1])
         return result
 
-    _columns  = {
+    _columns = {
         'name': fields.char('Name', size=96, required=True, select=True,
                             states={'draft': [('readonly', False)]}, unique=True,
                             help='Name of the picking dispatch'),
@@ -83,14 +85,14 @@ class PickingDispatch(Model):
                                    ], 'Dispatch State', readonly=True, select=True,
                                   help='the state of the picking. Workflow is draft -> assigned -> progress -> done or cancel'),
         'related_picking_ids': fields.function(_get_related_picking, method=True, type='one2many',
-             relation='stock.picking', string='Related Dispatch Picking'),
-        }
+                                               relation='stock.picking', string='Related Dispatch Picking'),
+    }
 
     _defaults = {
         'name': lambda obj, cr, uid, ctxt: obj.pool.get('ir.sequence').get(cr, uid, 'picking.dispatch'),
         'date': fields.date.context_today,
         'state': 'draft'
-        }
+    }
 
     def _check_picker_assigned(self, cr, uid, ids, context=None):
         for dispatch in self.browse(cr, uid, ids, context=context):
@@ -108,9 +110,10 @@ class PickingDispatch(Model):
             default = {}
         default = default.copy()
         if 'name' not in default:
-            default['name'] = self.pool.get('ir.sequence').get(cr, uid, 'picking.dispatch')
-        default['move_ids'] =  []
-        default['related_picking_ids'] =  []
+            default['name'] = self.pool.get(
+                'ir.sequence').get(cr, uid, 'picking.dispatch')
+        default['move_ids'] = []
+        default['related_picking_ids'] = []
         res = super(PickingDispatch, self).copy(cr, uid, id, default, context)
         return res
 
@@ -129,7 +132,8 @@ class PickingDispatch(Model):
         if not ids:
             return True
         move_obj = self.pool.get('stock.move')
-        move_ids = move_obj.search(cr, uid, [('dispatch_id', 'in', ids)], context=context)
+        move_ids = move_obj.search(
+            cr, uid, [('dispatch_id', 'in', ids)], context=context)
         return move_obj.action_partial_move(cr, uid, move_ids, context)
 
     def check_finished(self, cr, uid, ids, context):
@@ -146,7 +150,8 @@ class PickingDispatch(Model):
 
     def action_cancel(self, cr, uid, ids, context=None):
         move_obj = self.pool.get('stock.move')
-        move_ids = move_obj.search(cr, uid, [('dispatch_id', 'in', ids)], context=context)
+        move_ids = move_obj.search(
+            cr, uid, [('dispatch_id', 'in', ids)], context=context)
         res = move_obj.action_cancel(cr, uid, move_ids, context)
         # If dispatch is empty, we still need to cancel it !
         if not move_ids:
@@ -204,13 +209,16 @@ class StockMove(Model):
         # so the difference between the original set of moves and the complete_moves is the
         # set of unprocessed moves
         unprocessed_move_ids = set(ids) - set(complete_move_ids)
-        _logger.debug('partial stock.moves: complete_move_ids %s, unprocessed_move_ids %s', complete_move_ids, unprocessed_move_ids)
-        # unprocessed moves are still linked to the dispatch : this dispatch must not be marked as Done
+        _logger.debug('partial stock.moves: complete_move_ids %s, unprocessed_move_ids %s',
+                      complete_move_ids, unprocessed_move_ids)
+        # unprocessed moves are still linked to the dispatch : this dispatch
+        # must not be marked as Done
         unfinished_dispatch_ids = {}
         for move in move_obj.browse(cr, uid, list(unprocessed_move_ids), context=context):
             if not move.dispatch_id:
                 continue
-            unfinished_dispatch_ids[move.dispatch_id.id] = None # value will be set later to a new dispatch
+            # value will be set later to a new dispatch
+            unfinished_dispatch_ids[move.dispatch_id.id] = None
         maybe_finished_dispatches = {}
         for move in move_obj.browse(cr, uid, complete_move_ids, context=context):
             if not move.dispatch_id:
@@ -221,19 +229,22 @@ class StockMove(Model):
                 # a new dispatch containing only fully processed moves
                 if unfinished_dispatch_ids[dispatch_id] is None:
                     # create a new dispatch, and record its id
-                    _logger.debug('create backorder picking.dispatch of %s', dispatch_id)
+                    _logger.debug(
+                        'create backorder picking.dispatch of %s', dispatch_id)
                     new_dispatch_id = dispatch_obj.copy(cr, uid, dispatch_id,
-                                                     {'backorder_id': dispatch_id,
-                                                      })
+                                                        {'backorder_id': dispatch_id,
+                                                         })
                     unfinished_dispatch_ids[dispatch_id] = new_dispatch_id
                 dispatch_id = unfinished_dispatch_ids[dispatch_id]
-            maybe_finished_dispatches.setdefault(dispatch_id, []).append(move.id)
+            maybe_finished_dispatches.setdefault(
+                dispatch_id, []).append(move.id)
         for dispatch_id, move_ids in maybe_finished_dispatches.iteritems():
             move_obj.write(cr, uid, move_ids, {'dispatch_id': dispatch_id})
-        dispatch_obj.check_finished(cr, uid, list(maybe_finished_dispatches), context)
-        dispatch_obj.write(cr, uid, list(unfinished_dispatch_ids), {'state': 'assigned'})
+        dispatch_obj.check_finished(
+            cr, uid, list(maybe_finished_dispatches), context)
+        dispatch_obj.write(
+            cr, uid, list(unfinished_dispatch_ids), {'state': 'assigned'})
         return complete_move_ids
-
 
     def action_cancel(self, cr, uid, ids, context=None):
         """
@@ -251,11 +262,13 @@ class StockMove(Model):
             if move.dispatch_id:
                 dispatches.add(move.dispatch_id.id)
         for dispatch in dispatch_obj.browse(cr, uid, list(dispatches), context=context):
-            if any(move.state!='cancel' for move in dispatch.move_ids):
+            if any(move.state != 'cancel' for move in dispatch.move_ids):
                 dispatches.remove(dispatch.id)
         if dispatches:
-            _logger.debug('set state to cancel for picking.dispatch %s', list(dispatches))
-            dispatch_obj.write(cr, uid, list(dispatches), {'state': 'cancel'}, context)
+            _logger.debug(
+                'set state to cancel for picking.dispatch %s', list(dispatches))
+            dispatch_obj.write(
+                cr, uid, list(dispatches), {'state': 'cancel'}, context)
         return status
 
     def action_done(self, cr, uid, ids, context=None):
@@ -286,7 +299,7 @@ class StockPicking(Model):
         for pick_id in ids:
             result[pick_id] = []
         sql = ("SELECT DISTINCT sm.picking_id, sm.dispatch_id FROM stock_move sm "
-              "WHERE sm.picking_id in %s AND sm.dispatch_id is NOT NULL")
+               "WHERE sm.picking_id in %s AND sm.dispatch_id is NOT NULL")
         cr.execute(sql, (tuple(ids),))
         res = cr.fetchall()
         for picking_id, dispatch_id in res:
@@ -295,7 +308,7 @@ class StockPicking(Model):
 
     _columns = {
         'related_dispatch_ids': fields.function(_get_related_dispatch, method=True, type='one2many',
-            relation='picking.dispatch', string='Related Dispatch Picking'),
+                                                relation='picking.dispatch', string='Related Dispatch Picking'),
     }
 
 
@@ -307,7 +320,7 @@ class StockPickingIn(Model):
 
     _columns = {
         'related_dispatch_ids': fields.function(_get_related_dispatch, method=True, type='one2many',
-            relation='picking.dispatch', string='Related Dispatch Picking'),
+                                                relation='picking.dispatch', string='Related Dispatch Picking'),
     }
 
 
@@ -319,9 +332,8 @@ class StockPickingOut(Model):
 
     _columns = {
         'related_dispatch_ids': fields.function(_get_related_dispatch, method=True, type='one2many',
-            relation='picking.dispatch', string='Related Dispatch Picking'),
+                                                relation='picking.dispatch', string='Related Dispatch Picking'),
     }
-
 
 
 class Product(Model):
@@ -329,8 +341,7 @@ class Product(Model):
 
     _columns = {
         'description_warehouse': fields.text('Warehouse Description', translate=True),
-        }
-
+    }
 
 
 class res_company(Model):
@@ -338,6 +349,6 @@ class res_company(Model):
     _inherit = 'res.company'
     _columns = {
         'default_picker_id': fields.many2one('res.users', 'Default Picker',
-                                          help='the user to which the pickings are assigned by default',
-                                          select=True),
-        }
+                                             help='the user to which the pickings are assigned by default',
+                                             select=True),
+    }
