@@ -22,13 +22,15 @@
 {
     "name": "Stock Move Backdating",
     "version": "1.0",
-    'author' : ['Marco Dieckhoff, BREMSKERL', 'Agile Business Group'],
+    'author': ['Marco Dieckhoff, BREMSKERL', 'Agile Business Group'],
     "category": "Stock Logistics",
-    'website' : 'www.bremskerl.com',
+    'website': 'www.bremskerl.com',
     "depends": ["stock"],
     "summary": "Allows back-dating of stock moves",
-    "description": """This module allows to register old stock moves (with date != now).
-On stock moves, user can specify the "Actual Movement Date", that will be used as movement date""",
+    "description": """This module allows to register old stock moves
+    (with date != now).
+    On stock moves, user can specify the "Actual Movement Date", that will be
+    used as movement date""",
     'data': [
         "view/stock_view.xml",
         "wizard/stock_partial_picking_view.xml",
