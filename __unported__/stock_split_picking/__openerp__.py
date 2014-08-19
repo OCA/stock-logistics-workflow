@@ -31,8 +31,8 @@ Split picking without delivery
 
 This addon adds a "Split" button on the out picking form header.
 
-It works like the classical picking split (when you deliver) but does not pass the backorder
-and backorder lines to state "done".
+It works like the classical picking split (when you deliver) but does not pass
+ the backorder and backorder lines to state "done".
 """,
  'website': 'http://www.camptocamp.com',
  'data': ['view/stock_partial_picking.xml'],

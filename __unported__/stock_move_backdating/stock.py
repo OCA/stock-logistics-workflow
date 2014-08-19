@@ -33,7 +33,8 @@ class stock_move(orm.Model):
     _columns = {
         'date_backdating': fields.datetime(
             "Actual Movement Date", readonly=False,
-            states={'done': [('readonly', True)], 'cancel': [('readonly', True)]},
+            states={
+                'done': [('readonly', True)], 'cancel': [('readonly', True)]},
             help="Date when the move action was committed. "
             "Will set the move date to this date instead "
                  "of current date when processing to done."
@@ -53,12 +54,20 @@ class stock_move(orm.Model):
         result = super(stock_move, self).action_done(cr, uid, ids, context)
 
         # overwrite date field where applicable
-        for move in self.browse(cr, uid, backdating_dates.keys(), context=context):
-            self.write(cr, uid, [move.id], {'date': backdating_dates[move.id]}, context=context)
+        for move in self.browse(cr, uid, backdating_dates.keys(),
+                                context=context):
+            self.write(
+                cr,
+                uid,
+                [move.id],
+                {'date': backdating_dates[move.id]},
+                context=context
+            )
 
         return result
 
-    def on_change_date_backdating(self, cr, uid, ids, date_backdating, context=None):
+    def on_change_date_backdating(self, cr, uid, ids, date_backdating,
+                                  context=None):
         """ Test if date is in the past
         @param date_backdating: date
         """
@@ -70,14 +79,19 @@ class stock_move(orm.Model):
         NOW = datetime.now()
 
         if (dt > NOW):
-            warning = {'title': _('Error!'), 'message': _('You can not process an actual movement date in the future.')}
-            values = {'date_backdating': NOW.strftime(DEFAULT_SERVER_DATETIME_FORMAT)}
+            warning = {'title': _('Error!'), 'message': _(
+                'You can not process an actual movement date in the future.')}
+            values = {
+                'date_backdating': NOW.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
+            }
             return {'warning': warning, 'value': values}
 
         # otherwise, ok
         return {}
 
-    def _create_account_move_line(self, cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=None):
+    def _create_account_move_line(self, cr, uid, move, src_account_id,
+                                  dest_account_id, reference_amount,
+                                  reference_currency_id, context=None):
         if context is None:
             context = {}
         res = super(stock_move, self)._create_account_move_line(

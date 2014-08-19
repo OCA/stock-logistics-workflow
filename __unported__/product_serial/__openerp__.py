@@ -20,15 +20,15 @@
 ##############################################################################
 
 {
-    "name" : "Product Serial",
+    "name": "Product Serial",
     "summary": "Enhance Serial Number management",
-    "version" : "1.0",
-    "author" : "Akretion, NaN·tic",
-    "website" : "http://www.akretion.com",
-    "depends" : ["stock"],
-    "category" : "Generic Modules/Inventory Control",
+    "version": "1.0",
+    "author": "Akretion, NaN·tic",
+    "website": "http://www.akretion.com",
+    "depends": ["stock"],
+    "category": "Generic Modules/Inventory Control",
     "license": "AGPL-3",
-    "description":"""Enhance the management of Production Lots (Serial Numbers) in OpenERP.
+    "description": """Enhance the management of Production Lots (Serial Numbers) in OpenERP.
 
 Here are the additional features proposed by this module:
 
@@ -52,14 +52,13 @@ Here are the additional features proposed by this module:
    OpenERP will group the invoice lines to make it look like the
    Sale/Purchase Order when generating an Invoice from a Picking.
     """,
-    "demo" : ["product_demo.xml"],
-    "data" : [
+    "demo": ["product_demo.xml"],
+    "data": [
         "product_view.xml",
         "company_view.xml",
         "stock_view.xml",
         "wizard/prodlot_wizard_view.xml",
-        ],
+    ],
     "active": False,
     'installable': False
 }
-

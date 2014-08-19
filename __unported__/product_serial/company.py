@@ -24,16 +24,22 @@
 
 from openerp.osv import orm, fields
 
+
 class company(orm.Model):
     _inherit = 'res.company'
 
     _columns = {
-        'autosplit_is_active': fields.boolean('Active auto split', help="Active the automatic split of move lines on the pickings."),
-        'is_group_invoice_line': fields.boolean('Group invoice lines', help="If active, OpenERP will group the identical invoice lines when generating an invoice from a picking. If inactive, each move line will generate one invoice line."),
+        'autosplit_is_active': fields.boolean(
+            'Active auto split',
+            help="Active the automatic split of move lines on the pickings."),
+        'is_group_invoice_line': fields.boolean(
+            'Group invoice lines',
+            help="If active, OpenERP will group the identical invoice lines "
+            "when generating an invoice from a picking. If inactive, each "
+            "move line will generate one invoice line."),
     }
 
     _defaults = {
         'autosplit_is_active': True,
         'is_group_invoice_line': True,
     }
-
