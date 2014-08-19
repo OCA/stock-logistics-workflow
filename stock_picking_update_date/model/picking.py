@@ -28,9 +28,9 @@ class Picking(orm.Model):
     _inherit = 'stock.picking'
 
     def _move_trigger(self, cr, uid, ids, context=None):
-        # as usual for triggers, self is stock.move
+        move_obj = self.pool['stock.move']
         picking_ids = set()
-        for move in self.browse(cr, uid, ids, context=context):
+        for move in move_obj.browse(cr, uid, ids, context=context):
             picking_ids.add(move.picking_id.id)
 
         return list(picking_ids)
@@ -62,6 +62,66 @@ class Picking(orm.Model):
             })
 
         return result
+
+    _columns = {
+        'date_expected': fields.function(
+            _get_date_expected,
+            fnct_inv=_set_date_expected,
+            type='datetime',
+            string='Scheduled Time',
+            multi="min_max_date",
+            help="Scheduled time for the shipment to be processed",
+            store={
+                'stock.move': (
+                    _move_trigger, ['date_expected'], 10
+                )
+            }),
+    }
+
+
+class PickingIn(orm.Model):
+
+    _name = 'stock.picking.in'
+    _inherit = 'stock.picking.in'
+
+    def _move_trigger(self, *args, **kwargs):
+        return self.pool['stock.picking']._move_trigger(*args, **kwargs)
+
+    def _set_date_expected(self, *args, **kwargs):
+        return self.pool['stock.picking']._set_date_expected(*args, **kwargs)
+
+    def _get_date_expected(self, *args, **kwargs):
+        return self.pool['stock.picking']._get_date_expected(*args, **kwargs)
+
+    _columns = {
+        'date_expected': fields.function(
+            _get_date_expected,
+            fnct_inv=_set_date_expected,
+            type='datetime',
+            string='Scheduled Time',
+            multi="min_max_date",
+            help="Scheduled time for the shipment to be processed",
+            store={
+                'stock.move': (
+                    _move_trigger, ['date_expected'], 10
+                )
+            }),
+    }
+
+
+class PickingOut(orm.Model):
+
+    _name = 'stock.picking.out'
+    _inherit = 'stock.picking.out'
+
+    def _move_trigger(self, *args, **kwargs):
+        return self.pool['stock.picking']._move_trigger(*args, **kwargs)
+
+    def _set_date_expected(self, *args, **kwargs):
+        return self.pool['stock.picking']._set_date_expected(*args, **kwargs)
+
+    def _get_date_expected(self, *args, **kwargs):
+        return self.pool['stock.picking']._get_date_expected(*args, **kwargs)
 
     _columns = {
         'date_expected': fields.function(

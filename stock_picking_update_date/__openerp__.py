@@ -37,7 +37,9 @@ Features:
  "data": ['view/picking.xml'],
  "test": [
      'test/setup_user.yml',
-     'test/test_update_date.yml',
+     'test/test_picking_internal.yml',
+     'test/test_picking_in.yml',
+     'test/test_picking_out.yml',
  ],
  "installable": True,
  }
