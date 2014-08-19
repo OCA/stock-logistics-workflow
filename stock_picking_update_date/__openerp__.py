@@ -27,10 +27,17 @@
 Stock Picking Update Date
 =========================
 
-Features:
+This module modifies the Picking object so that the "Scheduled Time" field is
+replaced by a similar one that can be modified. If that is done, the scheduled
+dates of the Moves in the Picking will be updated to get the same value.
 
-*
+As for the original field, if the moves have different scheduled dates, the
+oldest one is taken.
 
+The same modification is done in incoming, internal and outcoming pickings.
+
+Two existing fields min_date and max_date are left unchanged, because they are
+used in the core stock module when a picking is moved on the calendar view.
     """,
  "complexity": "normal",
  "depends": ["stock"],
