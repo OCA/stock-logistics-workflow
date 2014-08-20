@@ -35,6 +35,12 @@ class StockPicking(orm.Model):
         return list(picking_ids)
 
     def _set_date_expected(self, cr, uid, ids, name, value, arg, context=None):
+        """Update all lines to have the same date.
+
+        This is different from the existing min_date field. We leave min_date
+        alone because it is used when moving pickings in the calendar view.
+        """
+
         if not value:
             return False
         if isinstance(ids, (int, long)):
@@ -52,6 +58,8 @@ class StockPicking(orm.Model):
         return True
 
     def _get_date_expected(self, cr, uid, ids, field_names, arg, context=None):
+        """When read, this field behaves like the existing min_date field"""
+
         result = super(StockPicking, self).get_min_max_date(
             cr, uid, ids, field_names, arg, context)
 
@@ -69,7 +77,8 @@ class StockPicking(orm.Model):
             type='datetime',
             string='Scheduled Time',
             multi="min_max_date",
-            help="Scheduled time for the shipment to be processed",
+            help="Scheduled time for the shipment to be processed. Changing "
+            "this field will update all the lines in the picking.",
             store={
                 'stock.move': (
                     _move_trigger, ['date_expected'], 10
@@ -79,7 +88,12 @@ class StockPicking(orm.Model):
 
 
 class StockPickingIn(orm.Model):
+    """Manually bring here what is done above in the stock.picking.
 
+    This is common workaround. For example, it is done that way in the core
+    delivery module.
+
+    """
     _inherit = 'stock.picking.in'
 
     def _move_trigger(self, *args, **kwargs):
@@ -108,6 +122,7 @@ class StockPickingIn(orm.Model):
 
 
 class StockPickingOut(orm.Model):
+    """Manually bring here what is done above in the stock.picking."""
 
     _inherit = 'stock.picking.out'
 
