@@ -1,0 +1,8 @@
+-
+  I create a user to run the tests in this module
+-
+  !record {model: res.users, id: res_users_emma}:
+    name: Emma
+    login: Emma
+    groups_id:
+      - stock.group_stock_manager
