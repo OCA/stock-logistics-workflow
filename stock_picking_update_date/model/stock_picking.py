@@ -22,9 +22,8 @@
 from openerp.osv import orm, fields
 
 
-class Picking(orm.Model):
+class StockPicking(orm.Model):
 
-    _name = 'stock.picking'
     _inherit = 'stock.picking'
 
     def _move_trigger(self, cr, uid, ids, context=None):
@@ -53,7 +52,7 @@ class Picking(orm.Model):
         return True
 
     def _get_date_expected(self, cr, uid, ids, field_names, arg, context=None):
-        result = super(Picking, self).get_min_max_date(
+        result = super(StockPicking, self).get_min_max_date(
             cr, uid, ids, field_names, arg, context)
 
         for key in result:
@@ -79,9 +78,8 @@ class Picking(orm.Model):
     }
 
 
-class PickingIn(orm.Model):
+class StockPickingIn(orm.Model):
 
-    _name = 'stock.picking.in'
     _inherit = 'stock.picking.in'
 
     def _move_trigger(self, *args, **kwargs):
@@ -109,9 +107,8 @@ class PickingIn(orm.Model):
     }
 
 
-class PickingOut(orm.Model):
+class StockPickingOut(orm.Model):
 
-    _name = 'stock.picking.out'
     _inherit = 'stock.picking.out'
 
     def _move_trigger(self, *args, **kwargs):
