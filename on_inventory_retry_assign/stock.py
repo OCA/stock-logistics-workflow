@@ -26,12 +26,12 @@ from openerp.tools.translate import _
 _logger = logging.getLogger(__name__)
 
 
-class stock_inventory(orm.Model):
+class StockInventory(orm.Model):
 
     _inherit = "stock.inventory"
 
     def action_done(self, cr, uid, ids, context=None):
-        res = super(stock_inventory, self).action_done(
+        res = super(StockInventory, self).action_done(
             cr, uid, ids, context=context)
         self._retry_assign_pickings(cr, uid, ids, context=context)
         return res
