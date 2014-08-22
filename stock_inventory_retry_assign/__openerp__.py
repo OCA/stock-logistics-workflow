@@ -19,15 +19,15 @@
 #
 ##############################################################################
 
-{'name': 'Check Availability on Inventories',
+{'name': 'Check Availability after Inventories',
  'version': '1.0',
  'depends': ['stock',
              'procurement',
              ],
  'author': "Camptocamp",
  'description': """
-Check again availability of delivery orders on inventories
-==========================================================
+Check again availability of delivery orders after inventories
+=============================================================
 
 When an inventory is done, available delivery orders stay available even if
 after inventory the quantities are insufficient.
