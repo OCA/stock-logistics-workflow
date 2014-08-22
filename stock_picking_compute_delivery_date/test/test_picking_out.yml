@@ -22,44 +22,50 @@
   orders here, except for the origin field.
 -
   !record {model: stock.picking.in, id: picking_in_1}:
-    move_lines:
-      - origin: PO1
-        product_qty: 10
-        product_uom: product.product_uom_unit
-        name: line1
-        product_id: product.product_product_48
 -
-  !python {model: stock.picking.in}: |
+  !record {model: stock.move, id: move_in_1}:
+    picking_id: picking_in_1
+    origin: PO1
+    product_qty: 10
+    product_uom: product.product_uom_unit
+    name: line1
+    product_id: product.product_product_48
+-
+  !python {model: stock.move}: |
     import datetime
-    self.write(cr, uid, ref('picking_in_1'), {
+    self.write(cr, uid, ref('move_in_1'), {
         'date_expected': '{0}-12-10'.format(datetime.date.today().year + 1)
     })
 -
   !record {model: stock.picking.in, id: picking_in_2}:
-    move_lines:
-      - origin: PO2
-        product_qty: 30
-        product_uom: product.product_uom_unit
-        name: line2
-        product_id: product.product_product_48
 -
-  !python {model: stock.picking.in}: |
+  !record {model: stock.move, id: move_in_2}:
+    picking_id: picking_in_2
+    origin: PO2
+    product_qty: 30
+    product_uom: product.product_uom_unit
+    name: line2
+    product_id: product.product_product_48
+-
+  !python {model: stock.move}: |
     import datetime
-    self.write(cr, uid, ref('picking_in_2'), {
+    self.write(cr, uid, ref('move_in_2'), {
         'date_expected': '{0}-12-20'.format(datetime.date.today().year + 1)
     })
 -
   !record {model: stock.picking.in, id: picking_in_3}:
-    move_lines:
-      - origin: PO3
-        product_qty: 30
-        product_uom: product.product_uom_unit
-        name: line3
-        product_id: product.product_product_48
 -
-  !python {model: stock.picking.in}: |
+  !record {model: stock.move, id: move_in_3}:
+    picking_id: picking_in_3
+    origin: PO3
+    product_qty: 30
+    product_uom: product.product_uom_unit
+    name: line3
+    product_id: product.product_product_48
+-
+  !python {model: stock.move}: |
     import datetime
-    self.write(cr, uid, ref('picking_in_3'), {
+    self.write(cr, uid, ref('move_in_3'), {
         'date_expected': '{0}-12-29'.format(datetime.date.today().year + 1)
     })
 -
@@ -74,44 +80,50 @@
   orders here, except for the origin field.
 -
   !record {model: stock.picking.out, id: picking_out_1}:
-    move_lines:
-      - origin: SO1
-        product_qty: 15
-        product_uom: product.product_uom_unit
-        name: line1
-        product_id: product.product_product_48
 -
-  !python {model: stock.picking.out}: |
+  !record {model: stock.move, id: move_out_1}:
+    picking_id: picking_out_1
+    origin: SO1
+    product_qty: 15
+    product_uom: product.product_uom_unit
+    name: line1
+    product_id: product.product_product_48
+-
+  !python {model: stock.move}: |
     import datetime
-    self.write(cr, uid, ref('picking_out_1'), {
+    self.write(cr, uid, ref('move_out_1'), {
         'date_expected': '{0}-12-03'.format(datetime.date.today().year + 1)
     })
 -
   !record {model: stock.picking.out, id: picking_out_2}:
-    move_lines:
-      - origin: SO2
-        product_qty: 10
-        product_uom: product.product_uom_unit
-        name: line2
-        product_id: product.product_product_48
 -
-  !python {model: stock.picking.out}: |
+  !record {model: stock.move, id: move_out_2}:
+    picking_id: picking_out_2
+    origin: SO2
+    product_qty: 10
+    product_uom: product.product_uom_unit
+    name: line2
+    product_id: product.product_product_48
+-
+  !python {model: stock.move}: |
     import datetime
-    self.write(cr, uid, ref('picking_out_2'), {
+    self.write(cr, uid, ref('move_out_2'), {
         'date_expected': '{0}-12-01'.format(datetime.date.today().year + 1)
     })
 -
   !record {model: stock.picking.out, id: picking_out_3}:
-    move_lines:
-      - origin: SO3
-        product_qty: 50
-        product_uom: product.product_uom_unit
-        name: line3
-        product_id: product.product_product_48
 -
-  !python {model: stock.picking.out}: |
+  !record {model: stock.move, id: move_out_3}:
+    picking_id: picking_out_3
+    origin: SO3
+    product_qty: 50
+    product_uom: product.product_uom_unit
+    name: line3
+    product_id: product.product_product_48
+-
+  !python {model: stock.move}: |
     import datetime
-    self.write(cr, uid, ref('picking_out_3'), {
+    self.write(cr, uid, ref('move_out_3'), {
         'date_expected': '{0}-12-05'.format(datetime.date.today().year + 1)
     })
 -
@@ -124,7 +136,6 @@
   !python {model: stock.picking.out}: |
     import datetime as dt
     security_days = dt.timedelta(days=2)
-
     picking_1 = self.browse(cr, uid, ref('picking_out_1'), context)
     picking_1_date = picking_1.move_lines[0].date_expected
     assert picking_1_date == dt.datetime.today() + security_days, (
