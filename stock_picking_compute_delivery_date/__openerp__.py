@@ -33,7 +33,10 @@ Features:
 
     """,
  "complexity": "normal",
- "depends": ["stock"],
+ "depends": [
+     "sale_stock",
+     "stock",
+ ],
  "data": [],
  "test": [
      'test/setup_user.yml',
