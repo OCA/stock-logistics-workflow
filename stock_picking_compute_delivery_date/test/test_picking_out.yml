@@ -133,6 +133,11 @@
 -
   !workflow {model: stock.picking, action: button_confirm, ref: picking_out_3}
 -
+ I compute the delivery dates
+-
+ !python {model: stock.picking.out}: |
+   self.compute_all_mts_delivery_dates(cr, uid, context=context)
+-
   !python {model: stock.picking.out}: |
     import datetime as dt
     security_days = dt.timedelta(days=2)
