@@ -19,54 +19,102 @@
 #
 ##############################################################################
 
+import logging
+import datetime as dt
+
 from openerp.osv import orm
+from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT as DT_FORMAT
+
+_logger = logging.getLogger(__name__)
+
+
+class PlanFinished(Exception):
+    """The available future stock is insufficient to handle all deliveries.
+
+    After that is raised, we could stop processing the remaining deliveries,
+    or consider that a failure of the whole process.
+
+    Especially in the first case, you could argue this is an exception for
+    control flow, and should then be factored out.
+
+    """
+    pass
 
 
 class StockPickingOut(orm.Model):
 
     _inherit = 'stock.picking.out'
 
-    def compute_mts_delivery_dates(self, cr, uid, product_id, context=None):
-        # TODO: use only mts moves /products
-        move_obj = self.pool['stock.move']
-        product_obj = self.pool['product.product']
+    def _availability_plan(self, cr, uid, product, context=None):
         user_obj = self.pool['res.users']
+        move_obj = self.pool['stock.move']
 
-        remaining_stock = product.qty_available
-        product = product_obj.browse(cr, uid, product_id, context=context)
+        stock_now = product.qty_available
         security_days = user_obj.browse(
             cr, uid, uid, context=context
         ).company_id.security_lead
+        security_delta = dt.timedelta(days=security_days)
+        today = dt.datetime.today()
+
+        plan = [{'date': today + security_delta, 'quantity': stock_now}]
+
+        move_in_ids = move_obj.search(cr, uid, [
+            ('product_id', '=', product.id),
+            ('picking_id.type', '=', 'in'),
+            ('state', 'in', ('confirmed', 'assigned', 'pending')),
+        ], order='date_expected', context=context)
+
+        for move_in in move_obj.browse(cr, uid, move_in_ids, context=context):
+            plan.append({
+                'date': dt.datetime.strptime(move_in.date_expected, DT_FORMAT),
+                'quantity': move_in.product_qty
+            })
+        return iter(plan)
+
+    def compute_mts_delivery_dates(self, cr, uid, product_id, context=None):
+        # TODO: use only mts moves /products
+        product_obj = self.pool['product.product']
+        move_obj = self.pool['stock.move']
+
+        product = product_obj.browse(cr, uid, product_id, context=context)
+
+        plan = self._availability_plan(cr, uid, product, context=context)
 
         move_out_ids = move_obj.search(cr, uid, [
             ('product_id', '=', product_id),
-            ('picking_id.type', '=', 'in'),
+            ('picking_id.type', '=', 'out'),
             ('state', 'in', ('confirmed', 'assigned', 'pending')),
         ], order='date_expected', context=context)
 
-        move_in_ids = move_obj.search(cr, uid, [
-            ('product_id', '=', product_id),
-            ('picking_id.type', '=', 'in'),
-            ('state', 'in', ('confirmed', 'assigned', 'pending')),
-        ], order='date_expected', context=context)
-        moves_in_iter = iter(move_obj.browse(cr, uid, move_in_ids, 
-                                             context=context))
+        current_plan = plan.next()
 
-        for move_out in move_obj.browse(cr, uid, move_out_ids, 
-                                        context=context):
-            import pdb; pdb.set_trace()  # XXX BREAKPOINT
-            if remaining_stock:
-                if remaining_stock >= move_out.product_qty:
-                   remaining_stock -= move_out.product_qty
-                   move_obj.write(cr, uid, move_out.id, {
-                       'date_expected': today + security_days,
-                   }, context=context)
-                else:
-                    remaining_stock = 0.0
+        try:
+            for move_out in move_obj.browse(cr, uid, move_out_ids,
+                                            context=context):
+                remaining_out_qty = move_out.product_qty
 
-
+                while remaining_out_qty > 0.0:
+                    if current_plan['quantity'] >= remaining_out_qty:
+                        current_plan['quantity'] -= remaining_out_qty
+                        new_date_str = dt.datetime.strftime(
+                            current_plan['date'], DT_FORMAT
+                        )
+                        move_obj.write(cr, uid, move_out.id, {
+                            'date_expected': new_date_str,
+                        }, context=context)
+                        remaining_out_qty = 0.0
+                    else:
+                        remaining_out_qty -= current_plan['quantity']
+                        try:
+                            current_plan = plan.next()
+                        except StopIteration:
+                            raise PlanFinished
+        except PlanFinished:
+            _logger.info(
+                u'There is not enough planned stock to set dates for all '
+                u'outgoing moves. Remaining ones are left untouched.'
+            )
         return True
-
 
     def compute_all_mts_delivery_dates(self, cr, uid, context=None):
         # TODO: use only mts moves /products
