@@ -145,7 +145,7 @@
 
     move_out_1 = model.browse(cr, uid, ref('move_out_1'), context)
     actual_date = move_out_1.date_expected[:10]
-    wanted_date = '{0}-12-10'.format(dt.date.today().year + 1)
+    wanted_date = '{0}-12-12'.format(dt.date.today().year + 1)
     assert actual_date == wanted_date, (
         'move_out_1 should be delivered on {0}, not on {1}'.format(
             wanted_date,
@@ -165,7 +165,7 @@
 
     move_out_3 = model.browse(cr, uid, ref('move_out_3'), context)
     actual_date = move_out_3.date_expected[:10]
-    wanted_date = '{0}-12-29'.format(dt.date.today().year + 1)
+    wanted_date = '{0}-12-31'.format(dt.date.today().year + 1)
     assert actual_date == wanted_date, (
         'move_out_3 should be delivered on {0}, not on {1}'.format(
             wanted_date,

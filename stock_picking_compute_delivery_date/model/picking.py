@@ -66,7 +66,8 @@ class StockPickingOut(orm.Model):
 
         for move_in in move_obj.browse(cr, uid, move_in_ids, context=context):
             plan.append({
-                'date': dt.datetime.strptime(move_in.date_expected, DT_FORMAT),
+                'date': dt.datetime.strptime(move_in.date_expected, DT_FORMAT)
+                + security_delta,
                 'quantity': move_in.product_qty
             })
         return iter(plan)
