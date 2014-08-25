@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* on_inventory_retry_assign
+#	* stock_inventory_retry_assign
 #
 msgid ""
 msgstr ""
@@ -15,16 +15,16 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: on_inventory_retry_assign
+#. module: stock_inventory_retry_assign
 #: code:_description:0
-#: model:ir.model,name:on_inventory_retry_assign.model_stock_inventory
+#: model:ir.model,name:stock_inventory_retry_assign.model_stock_inventory
 #, python-format
 msgid "Inventory"
 msgstr ""
 
-#. module: on_inventory_retry_assign
+#. module: stock_inventory_retry_assign
 #: code:_description:0
-#: model:ir.model,name:on_inventory_retry_assign.model_stock_picking
+#: model:ir.model,name:stock_inventory_retry_assign.model_stock_picking
 #, python-format
 msgid "Picking List"
 msgstr ""
