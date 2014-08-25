@@ -41,6 +41,7 @@ Features:
  "test": [
      'test/setup_user.yml',
      'test/test_case_1.yml',
+     'test/test_case_2.yml',
  ],
  "installable": True,
  }
