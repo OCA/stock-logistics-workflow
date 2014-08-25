@@ -40,7 +40,7 @@ Features:
  "data": [],
  "test": [
      'test/setup_user.yml',
-     'test/test_picking_out.yml',
+     'test/test_case_1.yml',
  ],
  "installable": True,
  }
