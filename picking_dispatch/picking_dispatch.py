@@ -165,14 +165,10 @@ class PickingDispatch(Model):
 
     def action_cancel(self, cr, uid, ids, context=None):
         move_obj = self.pool.get('stock.move')
-        move_ids = move_obj.search(
-            cr, uid, [('dispatch_id', 'in', ids)], context=context)
-        res = move_obj.action_cancel(cr, uid, move_ids, context)
-        # If dispatch is empty, we still need to cancel it !
-        if not move_ids:
-            _logger.debug('set state to cancel for picking.dispatch %s', ids)
-            self.write(cr, uid, ids, {'state': 'cancel'}, context)
-        return res
+        move_ids = move_obj.search(cr, uid, [('dispatch_id', 'in', ids)], context=context)
+        move_obj.write(cr, uid, move_ids, {'dispatch_id': False}, context=context)
+        _logger.debug('set state to cancel for picking.dispatch %s', ids)
+        return self.write(cr, uid, ids, {'state': 'cancel'}, context)
 
     def assert_start_ok(self, cr, uid, ids, context=None):
         now = datetime.now().date()
