@@ -87,7 +87,7 @@ class Sentinel(object):
         config.read('.oerp_sentinelrc')
 
         # No configfile found, exit
-        if not 'openerp' in config.sections():
+        if 'openerp' not in config.sections():
             raise Exception('Config Error', 'Config file not found !')
 
         # Connection to the OpenERP Server
@@ -612,7 +612,7 @@ class Sentinel(object):
                     quantity = key
                 else:
                     quantity += key
-            elif not integer and not '.' in quantity and (key == '.' or key == ',' or key == '*'):
+            elif not integer and '.' not in quantity and (key == '.' or key == ',' or key == '*'):
                 # Decimal point
                 quantity += '.'
             elif key == 'KEY_BACKSPACE' or key == 'KEY_DC':

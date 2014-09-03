@@ -127,7 +127,7 @@ for directory in directories:
             transitions_number += 1
             transition.append(node)
         elif node.tag == 'warehouse_ids':
-            if not 'warehouse_ids' in scen_vals:
+            if 'warehouse_ids' not in scen_vals:
                 scen_vals['warehouse_ids'] = []
             warehouse_ids = warehouse_obj.search([('name', '=', node.text)], 0, None, None, {'active_test': False})
             if warehouse_ids:
