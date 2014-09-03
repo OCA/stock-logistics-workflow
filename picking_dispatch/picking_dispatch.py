@@ -165,8 +165,10 @@ class PickingDispatch(Model):
 
     def action_cancel(self, cr, uid, ids, context=None):
         move_obj = self.pool.get('stock.move')
-        move_ids = move_obj.search(cr, uid, [('dispatch_id', 'in', ids)], context=context)
-        move_obj.write(cr, uid, move_ids, {'dispatch_id': False}, context=context)
+        move_ids = move_obj.search(cr, uid, [('dispatch_id', 'in', ids)],
+                                   context=context)
+        move_obj.write(cr, uid, move_ids, {'dispatch_id': False},
+                       context=context)
         _logger.debug('set state to cancel for picking.dispatch %s', ids)
         return self.write(cr, uid, ids, {'state': 'cancel'}, context)
 
