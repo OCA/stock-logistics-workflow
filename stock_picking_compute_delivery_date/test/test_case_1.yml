@@ -136,7 +136,7 @@
  I compute the delivery dates
 -
  !python {model: stock.picking.out}: |
-   self.compute_all_mts_delivery_dates(cr, uid, context=context)
+   self.compute_all_delivery_dates(cr, uid, context=context)
 -
   !python {model: stock.move}: |
     import datetime as dt

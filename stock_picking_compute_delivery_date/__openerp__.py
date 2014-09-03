@@ -37,7 +37,9 @@ Features:
      "sale_stock",
      "stock",
  ],
- "data": [],
+ "data": [
+     'wizard/by_product.xml'
+ ],
  "test": [
      'test/setup_user.yml',
      'test/test_case_1.yml',

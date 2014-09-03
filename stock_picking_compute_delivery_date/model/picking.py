@@ -72,17 +72,22 @@ class StockPickingOut(orm.Model):
             })
         return iter(plan)
 
-    def compute_mts_delivery_dates(self, cr, uid, product_id, context=None):
-        # TODO: use only mts moves /products
-        product_obj = self.pool['product.product']
-        move_obj = self.pool['stock.move']
+    def compute_delivery_dates(self, cr, uid, product, context=None):
+        if product.procure_method == 'make_to_stock':
+            return self.compute_mts_delivery_dates(cr, uid, product, context)
+        else:
+            raise orm.except_orm(
+                u'Not implemented',
+                u'Computing delivery dates for Make To Order products is not '
+                u'implemented yet.')
 
-        product = product_obj.browse(cr, uid, product_id, context=context)
+    def compute_mts_delivery_dates(self, cr, uid, product, context=None):
+        move_obj = self.pool['stock.move']
 
         plan = self._availability_plan(cr, uid, product, context=context)
 
         move_out_ids = move_obj.search(cr, uid, [
-            ('product_id', '=', product_id),
+            ('product_id', '=', product.id),
             ('picking_id.type', '=', 'out'),
             ('state', 'in', ('confirmed', 'assigned', 'pending')),
         ], order='date_expected', context=context)
@@ -117,9 +122,9 @@ class StockPickingOut(orm.Model):
             )
         return True
 
-    def compute_all_mts_delivery_dates(self, cr, uid, context=None):
-        # TODO: use only mts moves /products
+    def compute_all_delivery_dates(self, cr, uid, context=None):
         move_obj = self.pool['stock.move']
+        prod_obj = self.pool['product.product']
 
         moves_out_grouped = move_obj.read_group(
             cr,
@@ -135,8 +140,7 @@ class StockPickingOut(orm.Model):
 
         product_ids = [g['product_id'][0] for g in moves_out_grouped]
 
-        for product_id in product_ids:
-            self.compute_mts_delivery_dates(cr, uid, product_id,
-                                            context=context)
+        for product in prod_obj.browse(cr, uid, product_ids, context=context):
+            self.compute_delivery_dates(cr, uid, product, context=context)
 
         return True
