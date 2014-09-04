@@ -31,4 +31,3 @@ class ComputeAllDeliveryDatesWizard(orm.TransientModel):
         pick_obj.compute_all_delivery_dates(cr, uid, context=context)
 
         return True
-
