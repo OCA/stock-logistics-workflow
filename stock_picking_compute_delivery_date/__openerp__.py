@@ -42,8 +42,8 @@ Features:
  ],
  "test": [
      'test/setup_user.yml',
-     'test/test_case_1.yml',
-     'test/test_case_2.yml',
+     'test/test_mts_1.yml',
+     'test/test_mts_2.yml',
      'test/test_mto.yml',
  ],
  "installable": True,
