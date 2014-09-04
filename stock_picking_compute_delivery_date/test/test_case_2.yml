@@ -133,10 +133,10 @@
 -
   !workflow {model: stock.picking, action: button_confirm, ref: picking_out_6}
 -
- I compute the delivery dates
+  I compute the delivery dates
 -
- !python {model: stock.picking.out}: |
-   self.compute_all_delivery_dates(cr, uid, context=context)
+  !python {model: stock.picking.out}: |
+    self.compute_all_delivery_dates(cr, uid, context=context)
 -
   !python {model: stock.move}: |
     import datetime as dt
