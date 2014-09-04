@@ -45,17 +45,19 @@ class StockPickingOut(orm.Model):
 
     _inherit = 'stock.picking.out'
 
-    def _availability_plan(self, cr, uid, product, context=None):
+    def _security_delta(self, cr, uid, context=None):
         user_obj = self.pool['res.users']
-        move_obj = self.pool['stock.move']
-
-        stock_now = product.qty_available
         security_days = user_obj.browse(
             cr, uid, uid, context=context
         ).company_id.security_lead
-        security_delta = dt.timedelta(days=security_days)
-        today = dt.datetime.today()
+        return dt.timedelta(days=security_days)
 
+    def _availability_plan(self, cr, uid, product, context=None):
+        move_obj = self.pool['stock.move']
+
+        stock_now = product.qty_available
+        today = dt.datetime.today()
+        security_delta = self._security_delta(cr, uid, context)
         plan = [{'date': today + security_delta, 'quantity': stock_now}]
 
         move_in_ids = move_obj.search(cr, uid, [
@@ -76,10 +78,35 @@ class StockPickingOut(orm.Model):
         if product.procure_method == 'make_to_stock':
             return self.compute_mts_delivery_dates(cr, uid, product, context)
         else:
-            raise orm.except_orm(
-                u'Not implemented',
-                u'Computing delivery dates for Make To Order products is not '
-                u'implemented yet.')
+            return self.compute_mto_delivery_dates(cr, uid, product, context)
+
+    def compute_mto_delivery_dates(self, cr, uid, product, context=None):
+        move_obj = self.pool['stock.move']
+        security_delta = self._security_delta(cr, uid, context)
+
+        move_out_ids = move_obj.search(cr, uid, [
+            ('product_id', '=', product.id),
+            ('picking_id.type', '=', 'out'),
+            ('state', 'in', ('confirmed', 'assigned', 'pending')),
+        ], context=context)
+
+        for move_out_id in move_out_ids:
+            move_in_ids = move_obj.search(cr, uid, [
+                ('move_dest_id', '=', move_out_id)
+            ], order="date_expected desc", context=context)
+            if move_in_ids:
+                move_in = move_obj.browse(cr, uid, move_in_ids[0],
+                                          context=context)
+
+                move_in_date = dt.datetime.strptime(
+                    move_in.date_expected, DT_FORMAT
+                )
+                new_date_str = dt.datetime.strftime(
+                    move_in_date + security_delta, DT_FORMAT
+                )
+                move_obj.write(cr, uid, move_out_id, {
+                    'date_expected': new_date_str
+                }, context=context)
 
     def compute_mts_delivery_dates(self, cr, uid, product, context=None):
         move_obj = self.pool['stock.move']
