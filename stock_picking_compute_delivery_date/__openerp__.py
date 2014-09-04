@@ -64,11 +64,20 @@ deliveries of the same product.
 If incoming Moves run out, we stop processing the product and leave any
 remaining outgoing Moves untouched. We may decide to change that logic later.
 
+User Interface
+==============
+The process can be run in three ways:
+
+* Select a few lines from the Products tree view, and from "More" click
+  "Compute delivery dates for all products".
+* Click Warehouse / Products / Compute all delivery dates.
+* A Scheduled action is provided, initially disabled.
+
 Possible future improvements
 ============================
-* Behave differently when incoming Moves run out Use the Priority field to
-* decide which outgoing Moves to process first
-(now only the expected date is used)
+* Behave differently when incoming Moves run out
+* Use the Priority field to decide which outgoing Moves to process first (now
+  only the expected date is used)
 
     """,
  "complexity": "normal",
