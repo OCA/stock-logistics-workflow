@@ -38,7 +38,8 @@ Features:
      "stock",
  ],
  "data": [
-     'wizard/by_product.xml'
+     'wizard/by_product.xml',
+     'data/cron.xml',
  ],
  "test": [
      'test/setup_user.yml',
