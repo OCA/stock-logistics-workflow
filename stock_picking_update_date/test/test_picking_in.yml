@@ -35,3 +35,8 @@
 -
   !assert {model: stock.move, id: picking_2_line_2}:
     - date_expected == '2013-10-07 00:00:00'
+-
+  I check that the expected date of the picking has changed
+-
+  !assert {model: stock.picking.in, id: picking_2}:
+    - date_expected == '2013-10-07 00:00:00'
