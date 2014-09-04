@@ -22,6 +22,7 @@
       key2="client_action_multi"
       view_mode="form"
       target="new"
+      groups="base.group_no_one"
       id="product_compute_all_delivery_dates_action"/>
 
     <menuitem name="Compute all delivery dates"
