@@ -45,19 +45,15 @@ class StockPickingOut(orm.Model):
 
     _inherit = 'stock.picking.out'
 
-    def _security_delta(self, cr, uid, context=None):
-        user_obj = self.pool['res.users']
-        security_days = user_obj.browse(
-            cr, uid, uid, context=context
-        ).company_id.security_lead
-        return dt.timedelta(days=security_days)
+    def _security_delta(self, cr, uid, product, context=None):
+        return dt.timedelta(days=product.company_id.security_lead)
 
     def _availability_plan(self, cr, uid, product, context=None):
         move_obj = self.pool['stock.move']
 
         stock_now = product.qty_available
         today = dt.datetime.today()
-        security_delta = self._security_delta(cr, uid, context)
+        security_delta = self._security_delta(cr, uid, product, context)
         plan = [{'date': today + security_delta, 'quantity': stock_now}]
 
         move_in_ids = move_obj.search(cr, uid, [
@@ -82,7 +78,7 @@ class StockPickingOut(orm.Model):
 
     def compute_mto_delivery_dates(self, cr, uid, product, context=None):
         move_obj = self.pool['stock.move']
-        security_delta = self._security_delta(cr, uid, context)
+        security_delta = self._security_delta(cr, uid, product, context)
 
         move_out_ids = move_obj.search(cr, uid, [
             ('product_id', '=', product.id),
