@@ -1,0 +1,75 @@
+<openerp>
+    <data>
+        <!-- blue: deprecated, red: may be must be deprecated -->
+        <record model="ir.ui.view" id="product_product_obsolet_tree_view">
+            <field name="name">product.product.tree</field>
+            <field name="model">product.product</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Products obsolescence" editable="bottom" colors="red:outgoing_qty_till_12m==0.0;blue:depreciation in ['full']">
+                    <field name="default_code"/>
+                    <field name="name"/>
+                    <field name="variants"/>
+                    <field name="qty_available"/>
+                    <field name="virtual_available"/>
+                    <field name="list_price"/>
+                    <field name="standard_price"/>
+                    <field name="depreciation"/>
+                    <field name="outgoing_qty_till_12m" />
+                    <field name="outgoing_qty_till_24m" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="product_product_obsolet_form_view">
+            <field name="name">product.normal.inherit.stock_obsolete.form</field>
+            <field name="model">product.product</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <field name="uos_coeff" position="after">
+                    <field name="depreciation"/>
+                    <field name="outgoing_qty_till_12m" />
+                    <field name="outgoing_qty_till_24m" />
+                </field>
+            </field>
+        </record>
+
+        <record id="wizard_product_obsolescence_form_view" model="ir.ui.view">
+            <field name="name">wizard.product.obsolescence.form</field>
+            <field name="model">wizard.product.obsolescence</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Product obsolescence computation">
+                    <group colspan="4" col="2" string="Options">
+                        <field name="to_date" />
+                        <field name="location" />
+                    </group>
+                    <button name="button_open"
+                            string="Open View"
+                            colspan="1"
+                            type="object" icon="gtk-execute"/>
+                    <button name="button_report"
+                            string="Open Report"
+                            colspan="1"
+                            type="object" icon="gtk-execute"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="wizard_product_obsolescence_action" model="ir.actions.act_window">
+            <field name="name">Product obsolescence</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wizard.product.obsolescence</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_product_obsolescence_form_view"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem name="Products/Obsolescence Control" parent="base.menu_product"
+            action="wizard_product_obsolescence_action" id="wizard_list_inv_so_menu"/>
+
+
+    </data>
+</openerp>

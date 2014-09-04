@@ -1,0 +1,13 @@
+<openerp>
+    <data>
+        <report id="product.obsolete"
+            string="Product obsolescence"
+            model="product.product"
+            name="product.obsolete"
+            rml="stock_obsolete/report/product_obsolete.rml"
+            auto="False"
+            menu="False"
+            header="False"
+            />
+    </data>
+</openerp>
