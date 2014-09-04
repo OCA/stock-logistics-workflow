@@ -19,5 +19,16 @@
 #
 ##############################################################################
 
-from . import by_product
-from . import all_products
+from openerp.osv import orm
+
+
+class ComputeAllDeliveryDatesWizard(orm.TransientModel):
+
+    _name = 'compute.all.delivery.dates.wizard'
+
+    def do_compute(self, cr, uid, ids, context=None):
+        pick_obj = self.pool['stock.picking.out']
+        pick_obj.compute_all_delivery_dates(cr, uid, context=context)
+
+        return True
+

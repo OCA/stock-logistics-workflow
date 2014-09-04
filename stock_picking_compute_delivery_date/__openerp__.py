@@ -78,6 +78,7 @@ Possible future improvements
  ],
  "data": [
      'wizard/by_product.xml',
+     'wizard/all_products.xml',
      'data/cron.xml',
  ],
  "test": [
