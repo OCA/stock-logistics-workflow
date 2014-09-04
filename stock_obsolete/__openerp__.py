@@ -26,23 +26,28 @@
 ##############################################################################
 
 {
-    "name" : "Stock obsolete",
-    "version" : "1.0",
-    "author" : "Camptocamp",
-    "category" : "Generic Modules/Stock",
+    "name": "Stock obsolete",
+    "version": "1.0",
+    "author": "Camptocamp",
+    "category": "Generic Modules/Stock",
     "module":
-"""
-    Add a special view and wizard on product to check the validity of each stock product, with an amount of depreciation. Your finance can now
-    take in charge a factor for each product, based on the depreciation value for each product. You can set the depreciation value
-    based on the out of stock amount for each product for last 12/24 month.
-""",
+    """
+        Add a special view and wizard on product to check the validity of each
+        stock product, with an amount of depreciation. Your finance can now
+        take in charge a factor for each product, based on the depreciation
+        value for each product. You can set the depreciation value based on the
+        out of stock amount for each product for the last 12/24 months.
+    """,
     "website": "http://camptocamp.com",
-    "depends" : ["stock","product"],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
+    "depends": ["stock", "product"],
+    "init_xml": [],
+    "demo_xml": [],
+    "update_xml": [
         "stock_obsolete_view.xml",
         "stock_obsolete_report.xml",
+    ],
+    'test': [
+        'test/stock_obsolete.yml',
     ],
     "active": False,
     "installable": True

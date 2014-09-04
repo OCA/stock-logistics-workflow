@@ -30,34 +30,38 @@ from dateutil.relativedelta import relativedelta
 from osv import fields, orm
 
 
-#----------------------------------------------------------
+# ----------------------------------------------------------
 # Stock Location
-#----------------------------------------------------------
+# ----------------------------------------------------------
 class StockLocation(orm.Model):
     _inherit = "stock.location"
 
     def _product_get_multi_location_for_period(self, cr, uid, ids, period,
-                                               product_ids=False, context={},
-                                               states=['done'],
+                                               product_ids=False, context=None,
+                                               states=None,
                                                what=('in', 'out')):
+        if context is None:
+            context = {}
+        if states is None:
+            states = ['done']
         # Compute date from context and period
         # wich determine reference date for out stock computing
         if context.get('ref_date', False):
             date_ref = context['ref_date']
             past_date_ref = (datetime.strptime(context['ref_date'], '%Y-%m-%d')
-                           + relativedelta(months=-int(period),
-                                       day=1,
-                                       days=-1)).strftime('%Y-%m-%d')
+                             + relativedelta(months=-int(period),
+                                             day=1,
+                                             days=-1)).strftime('%Y-%m-%d')
         # if no date take today
         else:
             date_ref = datetime.now()
             past_date_ref = (datetime.now()
-                           + relativedelta(months=-int(period),
-                                       day=1,
-                                       days=-1)).strftime('%Y-%m-%d')
+                             + relativedelta(months=-int(period),
+                                             day=1,
+                                             days=-1)).strftime('%Y-%m-%d')
         # Construct sql clause
         sql_clause = "and date_expected between '%s' and '%s' " \
-                                            % (past_date_ref, date_ref)
+            % (past_date_ref, date_ref)
         product_obj = self.pool.get('product.product')
         states_str = ','.join(map(lambda s: "'%s'" % s, states))
         if not product_ids:
@@ -79,36 +83,41 @@ class StockLocation(orm.Model):
         results2 = []
         if 'in' in what:
             # all moves from a location out of the set to a location in the set
-            cr.execute(
-              """select sum(product_qty), product_id, product_uom
-                 from stock_move
-                 where location_id not in (""" + location_ids_str + """)
-                 and location_dest_id in (""" + location_ids_str + """)
-                 and product_id in (""" + prod_ids_str + """)
-                 and state in (""" + states_str + """) """
-               + sql_clause + """group by product_id,product_uom"""
-            )
+            cr.execute("""select sum(product_qty), product_id, product_uom
+                          from stock_move
+                          where location_id not in (
+                       """ + location_ids_str
+                           + """) and location_dest_id in ("""
+                           + location_ids_str
+                           + """) and product_id in ("""
+                           + prod_ids_str + """) and state in ("""
+                           + states_str + """)"""
+                           + sql_clause
+                           + """group by product_id,product_uom""")
             results = cr.fetchall()
         if 'out' in what:
             # all moves from a location in the set to a location out of the set
-            cr.execute(
-              """select sum(product_qty), product_id, product_uom
-                 from stock_move
-                 where location_id in (""" + location_ids_str + """)
-                 and location_dest_id not in (""" + location_ids_str + """)
-                 and product_id in (""" + prod_ids_str + """)
-                 and state in (""" + states_str + """) """
-               + sql_clause + """group by product_id,product_uom"""
-            )
+            cr.execute("""select sum(product_qty), product_id, product_uom
+                          from stock_move
+                          where location_id in (
+                       """ + location_ids_str
+                           + """) and location_dest_id not in ("""
+                           + location_ids_str + """) and product_id in ("""
+                           + prod_ids_str + """) and state in ("""
+                           + states_str + """) """
+                           + sql_clause
+                           + """group by product_id,product_uom""")
             results2 = cr.fetchall()
         uom_obj = self.pool.get('product.uom')
         for amount, prod_id, prod_uom in results:
             amount = uom_obj._compute_qty(cr, uid, prod_uom, amount,
-                    context.get('uom', False) or product2uom[prod_id])
+                                          context.get('uom', False)
+                                          or product2uom[prod_id])
             res[prod_id] += amount
         for amount, prod_id, prod_uom in results2:
             amount = uom_obj._compute_qty(cr, uid, prod_uom, amount,
-                    context.get('uom', False) or product2uom[prod_id])
+                                          context.get('uom', False)
+                                          or product2uom[prod_id])
             res[prod_id] -= amount
         return res
 
@@ -118,14 +127,16 @@ class ProductProduct(orm.Model):
     _inherit = "product.product"
 
     def _get_product_obsolescence_func(states, what, period):
-        def _product_obs(self, cr, uid, ids, name, arg, context={}):
+        def _product_obs(self, cr, uid, ids, name, arg, context=None):
+            if context is None:
+                context = {}
             loc_obj = self.pool.get('stock.location')
 
             if context.get('shop', False):
                 cr.execute("""select warehouse_id
                               from sale_shop
                               where id=%s""",
-                              (context['shop'],))
+                           (context['shop'],))
                 res2 = cr.fetchone()
                 if res2:
                     context['warehouse'] = res2[0]
@@ -134,7 +145,7 @@ class ProductProduct(orm.Model):
                 cr.execute("""select lot_stock_id
                               from stock_warehouse
                               where id=%s""",
-                              (context['warehouse'],))
+                           (context['warehouse'],))
                 res2 = cr.fetchone()
                 if res2:
                     context['location'] = res2[0]
@@ -156,14 +167,9 @@ class ProductProduct(orm.Model):
                                             'child_of',
                                             location_ids)],
                                           context=context)
-            res = loc_obj._product_get_multi_location_for_period(cr,
-                                                                 uid,
-                                                                 location_ids,
-                                                                 int(period),
-                                                                 ids,
-                                                                 context,
-                                                                 states,
-                                                                 what)
+            res = loc_obj._product_get_multi_location_for_period(
+                cr, uid, location_ids, int(period), ids, context, states, what
+            )
             for id in ids:
                 res.setdefault(id, 0.0)
             return res
@@ -172,24 +178,22 @@ class ProductProduct(orm.Model):
 
     # Considering all state for obsolescence
     # May be only done...
-    _product_out_qty_till_12m = _get_product_obsolescence_func(('confirmed',
-                                                                'waiting',
-                                                                'assigned',
-                                                                'done'),
-                                                               ('out',), 12)
-    _product_out_qty_till_24m = _get_product_obsolescence_func(('confirmed',
-                                                                'waiting',
-                                                                'assigned',
-                                                                'done'),
-                                                               ('out',), 24)
+    _product_out_qty_till_12m = _get_product_obsolescence_func(
+        ('confirmed', 'waiting', 'assigned', 'done'), ('out',), 12
+    )
+    _product_out_qty_till_24m = _get_product_obsolescence_func(
+        ('confirmed', 'waiting', 'assigned', 'done'), ('out',), 24
+    )
 
     _columns = {
-        'outgoing_qty_till_12m': fields.function(_product_out_qty_till_12m,
-                                                 method=True, type='float',
-                                                 string='Outgoing last 12 month'),
-        'outgoing_qty_till_24m': fields.function(_product_out_qty_till_24m,
-                                                 method=True, type='float',
-                                                 string='Outgoing last 24 month'),
+        'outgoing_qty_till_12m':
+        fields.function(_product_out_qty_till_12m,
+                        method=True, type='float',
+                        string='Outgoing last 12 month'),
+        'outgoing_qty_till_24m':
+        fields.function(_product_out_qty_till_24m,
+                        method=True, type='float',
+                        string='Outgoing last 24 month'),
 
         'depreciation': fields.selection([('no', 'No'),
                                           ('half', 'Half'),
@@ -198,5 +202,5 @@ class ProductProduct(orm.Model):
     }
 
     _defaults = {
-        'depreciation': lambda *a: 'no',
+        'depreciation': 'no',
     }

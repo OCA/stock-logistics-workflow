@@ -1,23 +1,42 @@
-#!/usr/bin/env python2.3
+# -*- coding: utf-8 -*-
+##############################################################################
 #
-#  print_invoice_list.py
-#  PEG
+# Copyright (c) Camptocamp SA - Joel Grand-Guillaume
 #
-#  Created by Nicolas Bessi on 13.10.08.
-#  Copyright (c) 2008 CamptoCamp. All rights reserved.
+# WARNING: This program as such is intended to be used by professional
+# programmers who take the whole responsability of assessing all potential
+# consequences resulting from its eventual inadequacies and bugs
+# End users who are looking for a ready-to-use solution with commercial
+# garantees and support are strongly adviced to contract a Free Software
+# Service Company
 #
+# This program is Free Software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#
+##############################################################################
 
 import time
-from report import report_sxw
 import re
+from report import report_sxw
+from openerp.tools.translate import _
 
 
-class Product_obsolete(report_sxw.rml_parse):
+class ProductObsolete(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
-        super(Product_obsolete, self).__init__(cr, uid, name, context)
+        super(ProductObsolete, self).__init__(cr, uid, name, context)
         self.localcontext.update({
             'time': time,
-            # 'lines': self.lines,
             'comma_me': self.comma_me,
             'get_name_of': self.get_depreciation_name,
         })
@@ -37,11 +56,11 @@ class Product_obsolete(report_sxw.rml_parse):
 
     def get_depreciation_name(self, value):
         if value == 'no':
-            return 'No'
+            return _('No')
         elif value == 'half':
-            return 'Half'
+            return _('Half')
         elif value == 'full':
-            return 'Full'
+            return _('Full')
         else:
             return False
 
@@ -73,4 +92,4 @@ class Product_obsolete(report_sxw.rml_parse):
 report_sxw.report_sxw('report.product.obsolete',
                       'product.product',
                       'addons/stock_obsolete/report/product_obsolete.rml',
-                      parser=Product_obsolete, header=False)
+                      parser=ProductObsolete, header=False)

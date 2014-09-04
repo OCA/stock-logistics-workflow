@@ -42,8 +42,8 @@ class wizard_product_obsolescence(orm.TransientModel):
         mod_obj = self.pool.get('ir.model.data')
         result = mod_obj._get_id(cr, uid, 'stock', 'stock_location_company')
         stock_location_id = mod_obj.read(cr, uid,
-                                        [result],
-                                        ['res_id'])[0]['res_id']
+                                         [result],
+                                         ['res_id'])[0]['res_id']
         return stock_location_id
 
     _columns = {
@@ -56,7 +56,7 @@ class wizard_product_obsolescence(orm.TransientModel):
 
     _defaults = {
         'location': lambda self, cr, uid, context:
-                    self._location_default_get(cr, uid, context=context),
+        self._location_default_get(cr, uid, context=context),
         'to_date': lambda *a: fields.datetime.now(),
     }
 
@@ -79,8 +79,8 @@ class wizard_product_obsolescence(orm.TransientModel):
             'view_id': [tree_view_id],
             'type': 'ir.actions.act_window',
             'limit': 4000,
-            'context': "{'ref_date':'%s','location':%s}" % (wizard['to_date'],
-                                                            wizard['location'].id)
+            'context': "{'ref_date':'%s','location':%s}"
+            % (wizard['to_date'], wizard['location'].id)
         }
         return value
 
