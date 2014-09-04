@@ -42,10 +42,12 @@
         'date_expected': '{0}-06-10'.format(dt.date.today().year + 1)
     })
 -
-  I compute the delivery dates
+  I compute the delivery dates with the global wizard
 -
-  !python {model: stock.picking.out}: |
-    self.compute_all_delivery_dates(cr, uid, context=context)
+  !record {model: compute.all.delivery.dates.wizard, id: global_wizard_1}:
+-
+  !python {model: compute.all.delivery.dates.wizard}: |
+    self.do_compute(cr, uid, [ref('global_wizard_1')])
 -
   I check that the date of the outgoing move was updated as expected
 -
