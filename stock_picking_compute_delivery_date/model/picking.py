@@ -130,7 +130,7 @@ class StockPickingOut(orm.Model):
             cr,
             uid,
             domain=[
-                ('picking_id.type', '=', 'in'),
+                ('picking_id.type', '=', 'out'),
                 ('state', 'in', ('confirmed', 'assigned', 'pending'))
             ],
             fields=['product_id'],
