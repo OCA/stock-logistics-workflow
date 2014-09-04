@@ -81,7 +81,7 @@ class StockPicking(orm.Model):
             "this field will update all the lines in the picking.",
             store={
                 'stock.move': (
-                    _move_trigger, ['date_expected'], 10
+                    _move_trigger, ['date_expected'], 40
                 )
             }),
     }
@@ -115,7 +115,7 @@ class StockPickingIn(orm.Model):
             help="Scheduled time for the shipment to be processed",
             store={
                 'stock.move': (
-                    _move_trigger, ['date_expected'], 10
+                    _move_trigger, ['date_expected'], 40
                 )
             }),
     }
@@ -145,7 +145,7 @@ class StockPickingOut(orm.Model):
             help="Scheduled time for the shipment to be processed",
             store={
                 'stock.move': (
-                    _move_trigger, ['date_expected'], 10
+                    _move_trigger, ['date_expected'], 40
                 )
             }),
     }
