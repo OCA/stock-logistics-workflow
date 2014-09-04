@@ -2,11 +2,25 @@
 <openerp>
   <data>
 
-    <record id="compute_date_form" model="ir.ui.view">
-      <field name="model">compute.date.wizard</field>
+    <record id="compute_delivery_date_by_product_form" model="ir.ui.view">
+      <field name="model">compute.delivery.date.by.product.wizard</field>
       <field name="arch" type="xml">
         <form string="Compute Delivery Dates" version="7.0">
-          <label string="This will recompute the delivery dates of all outgoing moves. For Make To Stock products, the computation is based on the available stock and the expected dates of all moves of the same product. For Make To Order products, it is based on the date of the corresponding incoming move."/>
+          <label string="This will recompute the delivery dates of all outgoing moves for the selected product. For Make To Stock products, the computation is based on the available stock and the expected dates of all moves of the same product. For Make To Order products, it is based on the date of the corresponding incoming move."/>
+          <footer>
+            <button name="do_compute" string="Compute" type="object" icon="gtk-apply" class="oe_highlight"/>
+            or
+            <button string="Cancel" class="oe_link" special="cancel" />
+          </footer>
+        </form>
+      </field>
+    </record>
+
+    <record id="compute_all_delivery_dates_form" model="ir.ui.view">
+      <field name="model">compute.all.delivery.dates.wizard</field>
+      <field name="arch" type="xml">
+        <form string="Compute All Delivery Dates" version="7.0">
+          <label string="This will recompute the delivery dates of all outgoing moves for all products. For Make To Stock products, the computation is based on the available stock and the expected dates of all moves of the same product. For Make To Order products, it is based on the date of the corresponding incoming move."/>
           <footer>
             <button name="do_compute" string="Compute" type="object" icon="gtk-apply" class="oe_highlight"/>
             or
@@ -17,14 +31,27 @@
     </record>
 
     <act_window name="Compute delivery dates for product"
-      res_model="compute.date.wizard"
+      res_model="compute.delivery.date.by.product.wizard"
       src_model="product.product"
       key2="client_action_multi"
       multi="True"
       view_mode="form"
       view_type="form"
       target="new"
-      id="product_compute_date_wizard_action"/>
+      id="product_compute_delivery_date_wizard_action"/>
+
+    <act_window name="Compute delivery dates for all products"
+      res_model="compute.all.delivery.dates.wizard"
+      src_model="product.product"
+      key2="client_action_multi"
+      view_mode="form"
+      target="new"
+      id="product_compute_all_delivery_dates_action"/>
+
+    <menuitem name="Compute all delivery dates"
+      parent="stock.menu_stock_product"
+      id="product_compute_all_delivery_dates_menu"
+      action="product_compute_all_delivery_dates_action"/>
 
   </data>
 </openerp>
