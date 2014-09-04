@@ -116,7 +116,7 @@ class StockPickingOut(orm.Model):
                         except StopIteration:
                             raise PlanFinished
         except PlanFinished:
-            _logger.info(
+            _logger.debug(
                 u'There is not enough planned stock to set dates for all '
                 u'outgoing moves. Remaining ones are left untouched.'
             )
