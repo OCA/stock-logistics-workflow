@@ -11,6 +11,14 @@
         <page string="Stock Moves" position="attributes">
           <attribute name="attrs">{'invisible':[('state','=','done')]}</attribute>
         </page>
+        <button name="action_assign_moves" position="after">
+         <button name="%(stock.action_picking_tree)d"
+                 string="Deliver Pickings"
+                 type="action"
+                 states="done"
+                 class="oe_highlight"
+                 context="{'search_default_related_dispatch_ids': [active_id], 'default_related_dispatch_ids': active_id}"/>
+         </button>
       </field>
     </record>
 

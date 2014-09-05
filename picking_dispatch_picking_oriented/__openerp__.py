@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+###############################################################################
 #
 #    Author: Alexandre Fayolle, Romain Deheele
 #    Copyright 2014 Camptocamp SA
@@ -17,13 +17,13 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
+###############################################################################
 
 
 {
     "name": "Picking Dispatch picking-oriented",
     "version": "0.1",
-    "depends": ['picking_dispatch','delivery'],
+    "depends": ['picking_dispatch', 'delivery'],
     "author": "Camptocamp",
     "license": "AGPL-3",
     "description": """picking_dispatch addon is stock move-oriented.
@@ -31,17 +31,23 @@ This addon changes it for a picking-oriented use.
 
 On "Done" button, a wizard is displayed (same as picking_dispatch), but:
 
-* moves are not passed to "done" state, but split between picked quantity and remains.
+* moves are not passed to "done" state,
+  but split between picked quantity and remains.
 
 * unpicked moves are moved in a new backorder.
 
 Then, when the picking dispatch state is done:
 
-* the picking dispatch hides the "Stock Moves" tab, the user uses "Related Picking" tab to deliver pickings one after the other.
+* the picking dispatch hides the "Stock Moves" tab,
+  the user uses "Related Picking" tab to deliver pickings one after the other
+  or the button "Deliver Pickings".
 
-* the "Transfer Products" wizard ("Deliver" button) displays only moves linked to a done picking dispatch.
+* the "Transfer Products" wizard ("Deliver" button) displays only moves linked
+  to a done picking dispatch.
 
-* on "Transfer Products" wizard, a carrier field is displayed to give possility to check and change it if it's necessary.
+* on "Transfer Products" wizard,
+  a carrier field is displayed to give possility to check
+  and change it if it's necessary.
     """,
     "website": "http://www.camptocamp.com",
     "category": "Warehouse Management",
