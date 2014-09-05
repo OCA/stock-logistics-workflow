@@ -40,8 +40,8 @@
   !python {model: stock.picking.dispatch.wave}:
     self.action_create_picking_dispatch(cr, uid, [ref("wiz_wave")], context=context)
 -
-  Then I check if the picking dispatch is created
+  Then I check if the picking dispatch is assigned to the right picker
 -
   !python {model: picking.dispatch}: |
-    dispatchs = self.search(cr, uid, [('state','=','draft'),('picker_id','=',ref("base.user_demo"))])
-    assert len(dispatchs) == 1, "The dispatch is ready"
+    dispatchs = self.search(cr, uid, [('state','=','assigned'),('picker_id','=',ref("base.user_demo"))])
+    assert len(dispatchs) == 1, "The dispatch is assigned to the right picker"
