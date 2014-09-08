@@ -40,6 +40,7 @@
                 'wizard/dispatch_start_view.xml',
                 'wizard/check_assign_all_view.xml',
                 'report.xml',
+                'cron_data.xml',
                 'security/ir.model.access.csv',
                 'security/security.xml',
                 # 'picking_dispatch_workflow.xml',
