@@ -36,6 +36,7 @@
  'update_xml': ['picking_dispatch_view.xml',
                 'picking_dispatch_sequence.xml',
                 'wizard/create_dispatch_view.xml',
+                'wizard/dispatch_assign_picker_view.xml',
                 'report.xml',
                 'security/ir.model.access.csv',
                 # 'picking_dispatch_workflow.xml',
