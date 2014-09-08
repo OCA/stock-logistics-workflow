@@ -37,7 +37,7 @@ the customer code defined in the product.
 
 Contributors
 ------------
-* Nicola Malcontenti <nicola.malcontenti@agilebg.com> 
+* Nicola Malcontenti <nicola.malcontenti@agilebg.com>
 * Alex Comba <alex.comba@agilebg.com>
 """,
     "demo": [],
