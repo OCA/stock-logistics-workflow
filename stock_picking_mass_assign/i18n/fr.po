@@ -1,0 +1,52 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* stock_picking_mass_assign
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-07-17 09:00+0000\n"
+"PO-Revision-Date: 2014-07-17 09:00+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_mass_assign
+#: view:stock.picking.check.assign.all:0
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: stock_picking_mass_assign
+#: model:ir.actions.act_window,name:stock_picking_mass_assign.action_check_assign_all
+#: view:stock.picking.check.assign.all:0
+msgid "Check Availability"
+msgstr "Vérifier la disponibilité"
+
+#. module: stock_picking_mass_assign
+#: view:stock.picking.check.assign.all:0
+msgid "Check the availability of the selected delivery orders"
+msgstr "Vérifier la disponibilité des bons de livraisons sélectionnés"
+
+#. module: stock_picking_mass_assign
+#: code:_description:0
+#: model:ir.model,name:stock_picking_mass_assign.model_stock_picking
+#, python-format
+msgid "Picking List"
+msgstr "Opération de manutention"
+
+#. module: stock_picking_mass_assign
+#: view:stock.picking.check.assign.all:0
+msgid "or"
+msgstr "ou"
+
+#. module: stock_picking_mass_assign
+#: code:_description:0
+#: model:ir.model,name:stock_picking_mass_assign.model_stock_picking_check_assign_all
+#, python-format
+msgid "Delivery Orders Check Availability"
+msgstr "Vérification de la disponibilité des bons de livraisons"
+
