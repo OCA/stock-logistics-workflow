@@ -37,6 +37,7 @@
                 'picking_dispatch_sequence.xml',
                 'wizard/create_dispatch_view.xml',
                 'wizard/dispatch_assign_picker_view.xml',
+                'wizard/dispatch_start_view.xml',
                 'report.xml',
                 'security/ir.model.access.csv',
                 'security/security.xml',
