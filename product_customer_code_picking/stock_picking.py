@@ -29,16 +29,18 @@ class stock_move(orm.Model):
     ):
         res = {}
         product_customer_code_obj = self.pool['product.customer.code']
+        partner_obj = self.pool['res.partner']
         for move in self.browse(cr, uid, ids, context=context):
             res[move.id] = ''
-            partner = move.picking_id.partner_id
-            if move.picking_id.partner_id.parent_id:
-                partner = move.picking_id.partner_id.parent_id
+            partner_id = move.picking_id.partner_id.id
+            main_partner = partner_obj._commercial_partner_compute(
+                cr, uid, [partner_id], False, False, context=context)
+            main_partner_id = main_partner[partner_id]
             product = move.product_id
-            if product and partner:
+            if product and main_partner_id:
                 code_ids = product_customer_code_obj.search(cr, uid, [
                     ('product_id', '=', product.id),
-                    ('partner_id', '=', partner.id),
+                    ('partner_id', '=', main_partner_id),
                     ], limit=1, context=context)
                 if code_ids:
                     data = product_customer_code_obj.read(
