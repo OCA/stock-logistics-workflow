@@ -200,7 +200,7 @@ class PickingDispatch(Model):
         move_obj.action_assign(cr, uid, move_ids)
         return True
 
-    def check_assign_all(self, cr, uid, ids=None, context=None):
+    def check_assign_all(self, cr, uid, ids=None, domain=None, context=None):
         """ Try to assign moves of a selection of dispatches
 
         Called from a cron
@@ -208,7 +208,8 @@ class PickingDispatch(Model):
         if isinstance(ids, (int, long)):
             ids = [ids]
         if ids is None:
-            domain = [('state', 'in', ('draft', 'assigned', 'progress'))]
+            if domain is None:
+                domain = [('state', 'in', ('draft', 'assigned'))]
             ids = self.search(cr, uid, domain, context=context)
         self.action_assign_moves(cr, uid, ids, context=context)
         return True
