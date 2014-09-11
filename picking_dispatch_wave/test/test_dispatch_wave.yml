@@ -2,32 +2,18 @@
   In order to test stock picking wave
   I have to ensure when a picking dispatch wave is set, a picking dispatch is well created.
 -
-  I create a product
+  I create a picking OUT
 -
-  !record {model: product.product, id: prod_wave}:
-    name: product_wave
-    procure_method: make_to_stock
-    supply_method: buy
--
-  I create a SO
--
-  !record {model: sale.order, id: so_wave}:
+  !record {model: stock.picking.out, id: picking_wave}:
     partner_id: base.res_partner_2
-    order_policy: 'manual'
-    picking_policy: 'direct'
-    order_line:
-      - product_id: prod_wave
-        product_uom_qty: 3
+    move_lines:
+      - product_id: product.product_product_24
+        product_qty: 3
 -
-  Then I confirm the order
--
-  !workflow {model: sale.order, action: order_confirm, ref: so_wave}
--
-  Then (for test needs) I force the picking as ready to deliver
+  Then I confirm the picking
 -
   !python {model: stock.picking}: |
-    picking = self.search(cr, uid, [('sale_id', '=', ref("so_wave"))])
-    self.force_assign(cr, uid, picking)
+    self.action_assign(cr, uid, [ref("picking_wave")])
 -
   Then I ask a picking dispatch wave with 1 unit.
 -
