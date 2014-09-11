@@ -366,20 +366,8 @@ class StockPickingIn(Model):
 
     def _search_dispatch_pickings(self, cr, uid, obj, name, args,
                                   context=None):
-        dispatch_ids = []
-        picking_ids = []
-        for arg in args:
-            if isinstance(arg, tuple):
-                dispatch_ids = arg[2]
-        if dispatch_ids:
-            move_obj = self.pool['stock.move']
-            move_ids = move_obj.search(cr, uid,
-                                       [('dispatch_id', 'in', dispatch_ids)],
-                                       context=context)
-            for move in move_obj.browse(cr, uid, move_ids, context=context):
-                if move.picking_id.id not in picking_ids:
-                    picking_ids.append(move.picking_id.id)
-        return [('id', 'in', picking_ids)]
+        return super(StockPickingIn, self)._search_dispatch_pickings(
+            cr, uid, obj, name, args=args, context=context)
 
     _columns = {
         'related_dispatch_ids': fields.function(
@@ -399,20 +387,8 @@ class StockPickingOut(Model):
 
     def _search_dispatch_pickings(self, cr, uid, obj, name, args,
                                   context=None):
-        dispatch_ids = []
-        picking_ids = []
-        for arg in args:
-            if isinstance(arg, tuple):
-                dispatch_ids = arg[2]
-        if dispatch_ids:
-            move_obj = self.pool['stock.move']
-            move_ids = move_obj.search(cr, uid,
-                                       [('dispatch_id', 'in', dispatch_ids)],
-                                       context=context)
-            for move in move_obj.browse(cr, uid, move_ids, context=context):
-                if move.picking_id.id not in picking_ids:
-                    picking_ids.append(move.picking_id.id)
-        return [('id', 'in', picking_ids)]
+        return super(StockPickingOut, self)._search_dispatch_pickings(
+            cr, uid, obj, name, args=args, context=context)
 
     _columns = {
         'related_dispatch_ids': fields.function(
