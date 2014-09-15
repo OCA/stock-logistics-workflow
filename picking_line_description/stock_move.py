@@ -56,9 +56,9 @@ class stock_move(orm.Model):
                 product_obj = self.pool.get('product.product')
                 product = product_obj.browse(cr, uid, prod_id, context=ctx)
                 if (
-                    product
-                    and product.description
-                    and 'value' in res
+                        product
+                        and product.description
+                        and 'value' in res
                 ):
                     res['value']['name'] = product.description
         return res
