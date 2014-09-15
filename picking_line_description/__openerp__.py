@@ -21,7 +21,7 @@
 ##############################################################################
 {
     'name': "Picking line description",
-    'version': '0.1',
+    'version': '1.0',
     'category': 'Warehouse Management',
     'description': """
 This module allows to use only the product description on the picking lines.
