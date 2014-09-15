@@ -48,19 +48,17 @@ class stock_move(orm.Model):
                     lang = addr_rec and addr_rec.lang or False
             ctx = {'lang': lang}
             user_groups = [g.id for g in user.groups_id]
-            ref = self.pool.get('ir.model.data').get_object_reference(
+            group_ref = self.pool.get('ir.model.data').get_object_reference(
                 cr, uid, 'picking_line_description',
                 'group_use_product_description_per_picking_line'
             )
-            if ref and len(ref) > 1 and ref[1]:
-                group_id = ref[1]
-                if group_id in user_groups:
-                    product_obj = self.pool.get('product.product')
-                    product = product_obj.browse(cr, uid, prod_id, context=ctx)
-                    if (
-                        product
-                        and product.description
-                        and 'value' in res
-                    ):
-                        res['value']['name'] = product.description
+            if group_ref and group_ref[1] in user_groups:
+                product_obj = self.pool.get('product.product')
+                product = product_obj.browse(cr, uid, prod_id, context=ctx)
+                if (
+                    product
+                    and product.description
+                    and 'value' in res
+                ):
+                    res['value']['name'] = product.description
         return res
