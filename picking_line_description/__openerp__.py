@@ -39,8 +39,8 @@ Settings --> Configuration --> Warehouse --> Products
     ],
     'data': [
         'security/stock_security.xml',
-        'res_config_view.xml',
-        'stock_view.xml',
+        'stock_config_settings_view.xml',
+        'stock_move_view.xml',
     ],
     'test': [
         'test/picking_line_description.yml',
