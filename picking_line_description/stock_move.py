@@ -32,21 +32,24 @@ class stock_move(orm.Model):
 
     def onchange_product_id(
             self, cr, uid, ids, prod_id=False, loc_id=False,
-            loc_dest_id=False, partner_id=False
+            loc_dest_id=False, partner_id=False, context=None
     ):
+        if context is None:
+            context = {}
         res = super(stock_move, self).onchange_product_id(
             cr, uid, ids,  prod_id=prod_id, loc_id=loc_id,
             loc_dest_id=loc_dest_id, partner_id=partner_id
         )
         if prod_id:
-            user = self.pool.get('res.users').browse(cr, uid, uid)
+            user = self.pool.get('res.users').browse(
+                cr, uid, uid, context=context)
             lang = user and user.lang or False
             if partner_id:
                 addr_rec = self.pool.get('res.partner').browse(
-                    cr, uid, partner_id)
+                    cr, uid, partner_id, context=context)
                 if addr_rec:
                     lang = addr_rec and addr_rec.lang or False
-            ctx = {'lang': lang}
+            context['lang'] = lang
             user_groups = [g.id for g in user.groups_id]
             group_ref = self.pool.get('ir.model.data').get_object_reference(
                 cr, uid, 'picking_line_description',
@@ -54,7 +57,8 @@ class stock_move(orm.Model):
             )
             if group_ref and group_ref[1] in user_groups:
                 product_obj = self.pool.get('product.product')
-                product = product_obj.browse(cr, uid, prod_id, context=ctx)
+                product = product_obj.browse(
+                    cr, uid, prod_id, context=context)
                 if (
                         product
                         and product.description
