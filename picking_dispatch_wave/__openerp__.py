@@ -23,7 +23,7 @@
 {
     "name": "Picking Dispatch Wave",
     "version": "0.1",
-    "depends": ['picking_dispatch', 'sale_stock'],
+    "depends": ['picking_dispatch'],
     "author": "Camptocamp",
     'license': 'AGPL-3',
     "description": """Allows to set a picking dispatch
