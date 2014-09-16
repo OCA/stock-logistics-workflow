@@ -331,9 +331,27 @@ class StockPicking(Model):
             result[picking_id].append(dispatch_id)
         return result
 
+    def _search_dispatch_pickings(self, cr, uid, obj, name, args,
+                                  context=None):
+        dispatch_ids = []
+        picking_ids = []
+        for arg in args:
+            if isinstance(arg, tuple):
+                dispatch_ids = arg[2]
+        if dispatch_ids:
+            move_obj = self.pool['stock.move']
+            move_ids = move_obj.search(cr, uid,
+                                       [('dispatch_id', 'in', dispatch_ids)],
+                                       context=context)
+            for move in move_obj.browse(cr, uid, move_ids, context=context):
+                if move.picking_id.id not in picking_ids:
+                    picking_ids.append(move.picking_id.id)
+        return [('id', 'in', picking_ids)]
+
     _columns = {
         'related_dispatch_ids': fields.function(
-            _get_related_dispatch, method=True, type='one2many',
+            _get_related_dispatch, method=True,
+            fnct_search=_search_dispatch_pickings, type='one2many',
             relation='picking.dispatch', string='Related Dispatch Picking'),
     }
 
@@ -346,9 +364,15 @@ class StockPickingIn(Model):
         return super(StockPickingIn, self)._get_related_dispatch(
             cr, uid, ids, field_names, arg=arg, context=context)
 
+    def _search_dispatch_pickings(self, cr, uid, obj, name, args,
+                                  context=None):
+        return super(StockPickingIn, self)._search_dispatch_pickings(
+            cr, uid, obj, name, args=args, context=context)
+
     _columns = {
         'related_dispatch_ids': fields.function(
-            _get_related_dispatch, method=True, type='one2many',
+            _get_related_dispatch, method=True,
+            fnct_search=_search_dispatch_pickings, type='one2many',
             relation='picking.dispatch', string='Related Dispatch Picking'),
     }
 
@@ -361,9 +385,15 @@ class StockPickingOut(Model):
         return super(StockPickingOut, self)._get_related_dispatch(
             cr, uid, ids, field_names, arg=arg, context=context)
 
+    def _search_dispatch_pickings(self, cr, uid, obj, name, args,
+                                  context=None):
+        return super(StockPickingOut, self)._search_dispatch_pickings(
+            cr, uid, obj, name, args=args, context=context)
+
     _columns = {
         'related_dispatch_ids': fields.function(
-            _get_related_dispatch, method=True, type='one2many',
+            _get_related_dispatch, method=True,
+            fnct_search=_search_dispatch_pickings, type='one2many',
             relation='picking.dispatch', string='Related Dispatch Picking'),
     }
 
