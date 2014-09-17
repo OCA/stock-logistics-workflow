@@ -335,14 +335,8 @@ class StockPicking(Model):
                                   context=None):
         if not len(args):
             return []
-        ops = ['ilike', 'not ilike', '=', '!=']
         picking_ids = set()
         for field, symbol, value in args:
-            if symbol not in ops:
-                raise except_osv(
-                    _('Error'),
-                    _('Operator %s not supported in '
-                      'searches for Pickings' % symbol))
             move_obj = self.pool['stock.move']
             move_ids = move_obj.search(cr, uid,
                                        [('dispatch_id', symbol, value)],
