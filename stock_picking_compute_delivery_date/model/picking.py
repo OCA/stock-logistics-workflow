@@ -46,7 +46,7 @@ class StockPickingOut(orm.Model):
     _inherit = 'stock.picking.out'
 
     def _security_delta(self, cr, uid, product, context=None):
-        return dt.timedelta(days=product.company_id.security_lead)
+        return dt.timedelta(days=product.company_id.security_lead or 0.0)
 
     def _availability_plan(self, cr, uid, product, context=None):
         move_obj = self.pool['stock.move']
