@@ -63,3 +63,25 @@
             actual_date,
         )
     )
+-
+  I compute the delivery dates with the global wizard a second time
+-
+  !record {model: compute.all.delivery.dates.wizard, id: global_wizard_1a}:
+-
+  !python {model: compute.all.delivery.dates.wizard}: |
+    self.do_compute(cr, uid, [ref('global_wizard_1a')])
+-
+  I check that nothing changed (the operation should be idempotent)
+-
+  !python {model: stock.move}: |
+    import datetime as dt
+    move_out_mto = model.browse(cr, uid, ref('move_out_mto'), context)
+    actual_date = move_out_mto.date_expected[:10]
+    wanted_date = '{0}-06-12'.format(dt.date.today().year + 1)
+
+    assert actual_date == wanted_date, (
+        'move_out_mto should be delivered on {0}, not on {1}'.format(
+            wanted_date,
+            actual_date,
+        )
+    )

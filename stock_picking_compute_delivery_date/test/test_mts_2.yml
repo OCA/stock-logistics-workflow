@@ -174,3 +174,45 @@
             actual_date,
         )
     )
+-
+  I compute the delivery dates again. Nothing should change.
+-
+  !record {model: compute.delivery.date.by.product.wizard, id: product_wizard_1z}:
+-
+  !python {model: compute.delivery.date.by.product.wizard}: |
+    self.do_compute(cr, uid, [ref('product_wizard_1z')], {'active_ids': [ref('product.product_product_38')]})
+-
+  !python {model: stock.move}: |
+    import datetime as dt
+    from openerp.tools import DEFAULT_SERVER_DATE_FORMAT as DATE_FORMAT
+    security_days = dt.timedelta(days=2)
+
+    move_out_4 = model.browse(cr, uid, ref('move_out_4'), context)
+    actual_date = move_out_4.date_expected[:10]
+    wanted_date = '{0}-12-31'.format(dt.date.today().year + 1)
+    assert actual_date == wanted_date, (
+        'move_out_4 should be delivered on {0}, not on {1}'.format(
+            wanted_date,
+            actual_date,
+        )
+    )
+
+    move_out_5 = model.browse(cr, uid, ref('move_out_5'), context)
+    actual_date = move_out_5.date_expected[:10]
+    wanted_date = '{0}-12-31'.format(dt.date.today().year + 1)
+    assert actual_date == wanted_date, (
+        'move_out_5 should be delivered on {0}, not on {1}'.format(
+            wanted_date,
+            actual_date,
+        )
+    )
+
+    move_out_6 = model.browse(cr, uid, ref('move_out_6'), context)
+    actual_date = move_out_6.date_expected[:10]
+    wanted_date = '{0}-12-22'.format(dt.date.today().year + 1)
+    assert actual_date == wanted_date, (
+        'move_out_6 should be delivered on {0}, not on {1}'.format(
+            wanted_date,
+            actual_date,
+        )
+    )
