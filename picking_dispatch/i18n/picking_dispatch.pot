@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-08 14:49+0000\n"
-"PO-Revision-Date: 2014-09-08 14:49+0000\n"
+"POT-Creation-Date: 2014-09-08 14:45+0000\n"
+"PO-Revision-Date: 2014-09-08 14:45+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -20,109 +20,109 @@ msgstr ""
 #: view:stock.picking.in:0
 #: view:stock.picking.out:0
 msgid "Additional Info"
-msgstr "Informations complémentaires."
+msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
 msgid "Assign"
-msgstr "Assigné"
+msgstr ""
 
 #. module: picking_dispatch
 #: model:ir.actions.act_window,name:picking_dispatch.action_picking_dispatch_assign_picker
 msgid "Assign Picker"
-msgstr "Assigner un préparateur"
+msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch.assign.picker:0
 msgid "Assign a picker on dispatches"
-msgstr "Assigner un préparateur sur les bons de préparation"
+msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch.creator:0
 msgid "Assign picking operations to an employee."
-msgstr "Assign picking operations to an employee."
+msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch.assign.picker:0
 msgid "Assign the picker"
-msgstr "Assigner le préparateur"
+msgstr ""
 
 #. module: picking_dispatch
 #: selection:picking.dispatch,state:0
 msgid "Assigned"
-msgstr "Assigné"
+msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
 msgid "Assigned and Valid Dispatch order"
-msgstr "Bons de Préparation assignés et validés"
+msgstr ""
 
 #. module: picking_dispatch
 #: field:picking.dispatch,backorder_id:0
 msgid "Back Order of"
-msgstr "Relicat de"
+msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
 msgid "Back Orders"
-msgstr "Relicats"
+msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
 #: view:picking.dispatch.assign.picker:0
 #: view:picking.dispatch.creator:0
 msgid "Cancel"
-msgstr "Annulé"
+msgstr ""
 
 #. module: picking_dispatch
 #: selection:picking.dispatch,state:0
 msgid "Cancelled"
-msgstr "Annulé"
+msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
 msgid "Check Availability"
-msgstr "Check Availability"
+msgstr ""
 
 #. module: picking_dispatch
 #: code:_description:0
 #: model:ir.model,name:picking_dispatch.model_res_company
 #, python-format
 msgid "Companies"
-msgstr "Sociétés"
+msgstr ""
 
 #. module: picking_dispatch
 #: model:ir.actions.act_window,name:picking_dispatch.picking_dispatch_create_act_window
 msgid "Create Picking Dispatch"
-msgstr "Créer un Bon de Préparation"
+msgstr ""
 
 #. module: picking_dispatch
 #: field:picking.dispatch,date:0
 #: field:picking.dispatch.creator,date:0
 msgid "Date"
-msgstr "Date"
+msgstr ""
 
 #. module: picking_dispatch
 #: help:picking.dispatch.creator,date:0
 msgid "Date on which the picking dispatched is to be processed"
-msgstr "Date à laquelle le bon de préparation doit être traité"
+msgstr ""
 
 #. module: picking_dispatch
 #: field:res.company,default_picker_id:0
 msgid "Default Picker"
-msgstr "Default Picker"
+msgstr ""
 
 #. module: picking_dispatch
 #: code:_description:0
 #: model:ir.model,name:picking_dispatch.model_stock_picking_out
 #, python-format
 msgid "Delivery Orders"
-msgstr "Bons de livraisons"
+msgstr ""
 
 #. module: picking_dispatch
 #: field:stock.move,dispatch_id:0
 msgid "Dispatch"
-msgstr "Bon de Préparation"
+msgstr ""
 
 #. module: picking_dispatch
 #: code:_description:0
@@ -130,102 +130,102 @@ msgstr "Bon de Préparation"
 #: view:picking.dispatch:0
 #, python-format
 msgid "Dispatch Picking Order"
-msgstr "Dispatch Picking Order"
+msgstr ""
 
 #. module: picking_dispatch
 #: field:picking.dispatch,state:0
 msgid "Dispatch State"
-msgstr "État"
+msgstr ""
 
 #. module: picking_dispatch
 #: model:ir.actions.report.xml,name:picking_dispatch.webkit_dispatch_order
 msgid "Dispatch To Process"
-msgstr "Bon de préparation à traiter"
+msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
 msgid "Dispatch order In Progress"
-msgstr "En cours"
+msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
 msgid "Dispatch order already processed"
-msgstr "Bons de préparations traités"
+msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
 #: selection:picking.dispatch,state:0
 msgid "Done"
-msgstr "Fait"
+msgstr ""
 
 #. module: picking_dispatch
 #: selection:picking.dispatch,state:0
 msgid "Draft"
-msgstr "Brouillon"
+msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
 msgid "Group By..."
-msgstr "Grouper par..."
+msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
 #: selection:picking.dispatch,state:0
 msgid "In Progress"
-msgstr "En cours"
+msgstr ""
 
 #. module: picking_dispatch
 #: code:_description:0
 #: model:ir.model,name:picking_dispatch.model_stock_picking_in
 #, python-format
 msgid "Incoming Shipments"
-msgstr "Bons de réception"
+msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
 msgid "Is a Back Order"
-msgstr "Est un reliquat"
+msgstr ""
 
 #. module: picking_dispatch
 #: field:picking.dispatch,move_ids:0
 msgid "Moves"
-msgstr "Mouvements"
+msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
 msgid "My Dispatch Order"
-msgstr "Mes bons de préparation"
+msgstr ""
 
 #. module: picking_dispatch
 #: field:picking.dispatch,name:0
 #: field:picking.dispatch.creator,name:0
 msgid "Name"
-msgstr "Nom"
+msgstr ""
 
 #. module: picking_dispatch
 #: help:picking.dispatch,name:0
 #: help:picking.dispatch.creator,name:0
 msgid "Name of the picking dispatch"
-msgstr "Nom du bon de préparation"
+msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
 #: field:picking.dispatch,notes:0
 #: field:picking.dispatch.creator,notes:0
 msgid "Notes"
-msgstr "Notes"
+msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
 msgid "Order Date"
-msgstr "Date"
+msgstr ""
 
 #. module: picking_dispatch
 #: field:picking.dispatch,picker_id:0
 #: field:picking.dispatch.assign.picker,picker_id:0
 #: field:picking.dispatch.creator,picker_id:0
 msgid "Picker"
-msgstr "Préparateur"
+msgstr ""
 
 #. module: picking_dispatch
 #: model:ir.actions.act_window,name:picking_dispatch.action_picking_dispatch_tree
@@ -233,67 +233,67 @@ msgstr "Préparateur"
 #: view:picking.dispatch:0
 #: view:picking.dispatch.creator:0
 msgid "Picking Dispatch"
-msgstr "Bon de Préparation"
+msgstr ""
 
 #. module: picking_dispatch
 #: code:_description:0
 #: model:ir.model,name:picking_dispatch.model_picking_dispatch_assign_picker
 #, python-format
 msgid "Picking Dispatch Assign Picker"
-msgstr "Assigner un préparateur sur les bons de préparation"
+msgstr ""
 
 #. module: picking_dispatch
 #: code:_description:0
 #: model:ir.model,name:picking_dispatch.model_picking_dispatch_creator
 #, python-format
 msgid "Picking Dispatch Creator"
-msgstr "Créateur du Bon de Préparation"
+msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
 msgid "Picking Dispatch Name"
-msgstr "Picking Dispatch Name"
+msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch.creator:0
 msgid "Picking Dispatch properties"
-msgstr "Propriétés du Bon de Préparation"
+msgstr ""
 
 #. module: picking_dispatch
 #: code:_description:0
 #: model:ir.model,name:picking_dispatch.model_stock_picking
 #, python-format
 msgid "Picking List"
-msgstr "Bon de livraison"
+msgstr ""
 
 #. module: picking_dispatch
 #: view:res.company:0
 msgid "Pickings"
-msgstr "Pickings"
+msgstr ""
 
 #. module: picking_dispatch
 #: constraint:picking.dispatch:0
 msgid "Please select a picker."
-msgstr "Please select a picker."
+msgstr ""
 
 #. module: picking_dispatch
 #: code:_description:0
 #: model:ir.model,name:picking_dispatch.model_product_product
 #, python-format
 msgid "Product"
-msgstr "Produit"
+msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
 msgid "Ready to Process"
-msgstr "Prêt"
+msgstr ""
 
 #. module: picking_dispatch
 #: view:stock.picking:0
 #: view:stock.picking.in:0
 #: view:stock.picking.out:0
 msgid "Related Dispatch"
-msgstr "Bon de préparation"
+msgstr ""
 
 #. module: picking_dispatch
 #: field:picking.dispatch,related_picking_ids:0
@@ -301,102 +301,100 @@ msgstr "Bon de préparation"
 #: field:stock.picking.in,related_dispatch_ids:0
 #: field:stock.picking.out,related_dispatch_ids:0
 msgid "Related Dispatch Picking"
-msgstr "Bons de Livraisons liés"
+msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
 msgid "Related Picking"
-msgstr "Picking lié"
+msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
 msgid "Start"
-msgstr "Début"
+msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
 msgid "State"
-msgstr "État"
+msgstr ""
 
 #. module: picking_dispatch
 #: code:_description:0
 #: model:ir.model,name:picking_dispatch.model_stock_move
 #, python-format
 msgid "Stock Move"
-msgstr "Mouvement de stock"
+msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
 msgid "Stock Moves"
-msgstr "Mouvements"
+msgstr ""
 
 #. module: picking_dispatch
 #: help:picking.dispatch.creator,picker_id:0
 msgid "The user to which the pickings are assigned"
-msgstr "L'utilisateur en charge du traitement du bon de préparation"
+msgstr ""
 
 #. module: picking_dispatch
 #: view:product.product:0
 #: field:product.product,description_warehouse:0
 msgid "Warehouse Description"
-msgstr "Description pour l'entrepôt"
+msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch.creator:0
 msgid "_Create"
-msgstr "_Create"
+msgstr ""
 
 #. module: picking_dispatch
 #: help:picking.dispatch,date:0
 msgid "date on which the picking dispatched is to be processed"
-msgstr "date on which the picking dispatched is to be processed"
+msgstr ""
 
 #. module: picking_dispatch
 #: help:picking.dispatch,notes:0
 #: help:picking.dispatch.creator,notes:0
 msgid "free form remarks"
-msgstr "free form remarks"
+msgstr ""
 
 #. module: picking_dispatch
 #: help:picking.dispatch,backorder_id:0
 msgid "if this dispatch was split, this links to the dispatch order containing the other part which was processed"
-msgstr "Si le bon de préparation a été découpé, ce champ est un lien vers la\n"
-"partie du bon de préparation original qui a été traitée"
+msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch.assign.picker:0
 #: view:picking.dispatch.creator:0
 msgid "or"
-msgstr "ou"
+msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
 msgid "picker_id"
-msgstr "Préparateur"
+msgstr ""
 
 #. module: picking_dispatch
 #: help:picking.dispatch,move_ids:0
 msgid "the list of moves to be processed"
-msgstr "La liste des mouvements à effectuer"
+msgstr ""
 
 #. module: picking_dispatch
 #: help:picking.dispatch,state:0
 msgid "the state of the picking. Workflow is draft -> assigned -> progress -> done or cancel"
-msgstr "L'état du bon de préparation. Les états sont Brouillon -> Assigné ->\n"
-"En cours -> Fait ou Annulé"
+msgstr ""
 
 #. module: picking_dispatch
 #: help:picking.dispatch,picker_id:0
 msgid "the user to which the pickings are assigned"
-msgstr "utilisateur en charge de la préparation"
+msgstr ""
 
 #. module: picking_dispatch
 #: help:res.company,default_picker_id:0
 msgid "the user to which the pickings are assigned by default"
-msgstr "the user to which the pickings are assigned by default"
+msgstr ""
 
 #. module: picking_dispatch
 #: help:stock.move,dispatch_id:0
 msgid "who this move is dispatched to"
-msgstr "Le bon de préparation auquel le mouvement de stock est lié"
+msgstr ""
 
