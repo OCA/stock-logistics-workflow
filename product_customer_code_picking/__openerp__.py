@@ -32,8 +32,8 @@
         'product_customer_code'
     ],
     "description": """
-Based on product_customer_code, this module loads in every stock picking
-the customer code defined in the product.
+This module makes the product customer code visible in the stock moves
+of a picking.
 
 Contributors
 ------------
