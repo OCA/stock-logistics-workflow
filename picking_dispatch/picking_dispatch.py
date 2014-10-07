@@ -333,26 +333,23 @@ class StockPicking(Model):
 
     def _search_dispatch_pickings(self, cr, uid, obj, name, args,
                                   context=None):
-        dispatch_ids = []
-        picking_ids = []
-        for arg in args:
-            if isinstance(arg, tuple):
-                dispatch_ids = arg[2]
-        if dispatch_ids:
+        if not len(args):
+            return []
+        picking_ids = set()
+        for field, symbol, value in args:
             move_obj = self.pool['stock.move']
             move_ids = move_obj.search(cr, uid,
-                                       [('dispatch_id', 'in', dispatch_ids)],
+                                       [('dispatch_id', symbol, value)],
                                        context=context)
             for move in move_obj.browse(cr, uid, move_ids, context=context):
-                if move.picking_id.id not in picking_ids:
-                    picking_ids.append(move.picking_id.id)
-        return [('id', 'in', picking_ids)]
+                picking_ids.add(move.picking_id.id)
+        return [('id', 'in', list(picking_ids))]
 
     _columns = {
         'related_dispatch_ids': fields.function(
-            _get_related_dispatch, method=True,
-            fnct_search=_search_dispatch_pickings, type='one2many',
-            relation='picking.dispatch', string='Related Dispatch Picking'),
+            _get_related_dispatch, fnct_search=_search_dispatch_pickings,
+            type='one2many', relation='picking.dispatch',
+            string='Related Dispatch Picking'),
     }
 
 
@@ -371,9 +368,9 @@ class StockPickingIn(Model):
 
     _columns = {
         'related_dispatch_ids': fields.function(
-            _get_related_dispatch, method=True,
-            fnct_search=_search_dispatch_pickings, type='one2many',
-            relation='picking.dispatch', string='Related Dispatch Picking'),
+            _get_related_dispatch, fnct_search=_search_dispatch_pickings,
+            type='one2many', relation='picking.dispatch',
+            string='Related Dispatch Picking'),
     }
 
 
@@ -392,9 +389,9 @@ class StockPickingOut(Model):
 
     _columns = {
         'related_dispatch_ids': fields.function(
-            _get_related_dispatch, method=True,
-            fnct_search=_search_dispatch_pickings, type='one2many',
-            relation='picking.dispatch', string='Related Dispatch Picking'),
+            _get_related_dispatch, fnct_search=_search_dispatch_pickings,
+            type='one2many', relation='picking.dispatch',
+            string='Related Dispatch Picking'),
     }
 
 
