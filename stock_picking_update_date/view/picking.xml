@@ -6,7 +6,10 @@
       <field name="inherit_id" ref="stock.view_picking_form"/>
       <field name="model">stock.picking</field>
       <field name="arch" type="xml">
-        <field name="min_date" position="replace">
+        <field name="min_date" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </field>
+        <field name="min_date" position="after">
           <field name="date_expected"/>
         </field>
       </field>
@@ -16,7 +19,10 @@
       <field name="inherit_id" ref="stock.view_picking_in_form"/>
       <field name="model">stock.picking.in</field>
       <field name="arch" type="xml">
-        <field name="min_date" position="replace">
+        <field name="min_date" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </field>
+        <field name="min_date" position="after">
           <field name="date_expected"/>
         </field>
       </field>
@@ -26,7 +32,10 @@
       <field name="inherit_id" ref="stock.view_picking_out_form"/>
       <field name="model">stock.picking.out</field>
       <field name="arch" type="xml">
-        <field name="min_date" position="replace">
+        <field name="min_date" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </field>
+        <field name="min_date" position="after">
           <field name="date_expected"/>
         </field>
       </field>
