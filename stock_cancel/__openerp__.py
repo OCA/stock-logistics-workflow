@@ -32,7 +32,7 @@ picking to draft state""",
     'depends': ['stock_picking_invoice_link'],
     'data': [
         'stock_view.xml',
-        ],
+    ],
     'installable': True,
     'active': False,
     'images': ['images/stock_picking.jpg'],

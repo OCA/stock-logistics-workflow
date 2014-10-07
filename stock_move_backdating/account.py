@@ -18,18 +18,20 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, orm
+from openerp.osv import orm
+
 
 class account_move(orm.Model):
     _inherit = "account.move"
-    
+
     def create(self, cr, uid, vals, context=None):
         if context is None:
             context = {}
         period_obj = self.pool.get('account.period')
         if context.get('move_date'):
-            period_ids = period_obj.find(cr, uid, dt=context['move_date'], context=context)
+            period_ids = period_obj.find(
+                cr, uid, dt=context['move_date'], context=context)
             if period_ids:
                 vals['period_id'] = period_ids[0]
                 vals['date'] = context['move_date']
-        return super(account_move,self).create(cr, uid, vals, context=context)
+        return super(account_move, self).create(cr, uid, vals, context=context)

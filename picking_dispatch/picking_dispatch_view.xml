@@ -16,6 +16,8 @@
                     class="oe_highlight" type="object"/>
             <button name="action_cancel" states="draft,assigned,progress" string="Cancel"
                     type="object"/>
+            <button name="action_assign_moves" string="Check Availability"
+                    states="draft,assigned,progress" type="object"/>
             <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
           </header>
           <sheet>
@@ -27,9 +29,11 @@
                 <field name="name"/>
               </h1>
             </div>
-            <field name="picker_id"/>
-            <field name="date"/>
-            <field name="backorder_id"/>
+            <group>
+              <field name="picker_id"/>
+              <field name="date"/>
+              <field name="backorder_id"/>
+            </group>
             <notebook colspan="4">
               <page string="Stock Moves">
                 <field name="move_ids" nolabel="1" colspan='4' widget="many2many"
@@ -119,7 +123,7 @@
     <!-- Stock Out picking : add dispatch infos -->
     <record id="view_picking_form" model="ir.ui.view">
       <field name="name">stock.picking.form.dispatch.out</field>
-      <field name="model">stock.picking</field>
+      <field name="model">stock.picking.out</field>
       <field name="inherit_id" ref="stock.view_picking_out_form"/>
       <field name="type">form</field>
       <field name="arch" type="xml">
@@ -128,6 +132,18 @@
             <field name="related_dispatch_ids" nolabel="1" colspan="4"/>
           </page>
         </page>
+      </field>
+    </record>
+
+    <!-- Stock Out picking : add dispatch search -->
+    <record id="view_picking_out_search" model="ir.ui.view">
+        <field name="name">stock.picking.out.search.related_dispatch_ids</field>
+        <field name="model">stock.picking.out</field>
+        <field name="inherit_id" ref="stock.view_picking_out_search"/>
+        <field name="arch" type="xml">
+          <field name="name" position="after">
+            <field name="related_dispatch_ids"/>
+          </field>
       </field>
     </record>
 
@@ -149,7 +165,7 @@
     <!-- Stock In picking : add dispatch infos -->
     <record id="view_picking_form_in" model="ir.ui.view">
       <field name="name">stock.picking.form.dispatch.in</field>
-      <field name="model">stock.picking</field>
+      <field name="model">stock.picking.in</field>
       <field name="inherit_id" ref="stock.view_picking_in_form"/>
       <field name="type">form</field>
       <field name="arch" type="xml">

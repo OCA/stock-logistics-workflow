@@ -33,7 +33,7 @@ class stock_picking(orm.Model):
     def has_valuation_moves(self, cr, uid, move):
         return self.pool.get('account.move').search(cr, uid, [
             ('ref', '=', move.picking_id.name),
-            ])
+        ])
 
     def action_revert_done(self, cr, uid, ids, context=None):
         if not len(ids):
@@ -58,7 +58,7 @@ class stock_picking(orm.Model):
         for (id, name) in self.name_get(cr, uid, ids):
             message = _(
                 "The stock picking '%s' has been set in draft state."
-                ) % (name,)
+            ) % (name,)
             self.log(cr, uid, id, message)
         return True
 
@@ -67,7 +67,7 @@ class stock_picking_out(orm.Model):
     _inherit = 'stock.picking.out'
 
     def action_revert_done(self, cr, uid, ids, context=None):
-        #override in order to redirect to stock.picking object
+        # override in order to redirect to stock.picking object
         return self.pool.get('stock.picking').action_revert_done(
             cr, uid, ids, context=context)
 
@@ -76,6 +76,6 @@ class stock_picking_in(orm.Model):
     _inherit = 'stock.picking.in'
 
     def action_revert_done(self, cr, uid, ids, context=None):
-        #override in order to redirect to stock.picking object
+        # override in order to redirect to stock.picking object
         return self.pool.get('stock.picking').action_revert_done(
             cr, uid, ids, context=context)

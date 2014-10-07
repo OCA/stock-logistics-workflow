@@ -1,0 +1,33 @@
+-
+  In order to test stock picking wave
+  I have to ensure when a picking dispatch wave is set, a picking dispatch is well created.
+-
+  I create a picking OUT
+-
+  !record {model: stock.picking.out, id: picking_wave}:
+    partner_id: base.res_partner_2
+    move_lines:
+      - product_id: product.product_product_24
+        product_qty: 3
+-
+  Then I confirm the picking
+-
+  !python {model: stock.picking}: |
+    self.action_assign(cr, uid, [ref("picking_wave")])
+-
+  Then I ask a picking dispatch wave with 1 unit.
+-
+  !record {model: stock.picking.dispatch.wave, id: wiz_wave}:
+    max_pickings_to_do: 1
+    picker_id: base.user_demo
+-
+  Then I confirm the demand
+-
+  !python {model: stock.picking.dispatch.wave}:
+    self.action_create_picking_dispatch(cr, uid, [ref("wiz_wave")], context=context)
+-
+  Then I check if the picking dispatch is assigned to the right picker
+-
+  !python {model: picking.dispatch}: |
+    dispatchs = self.search(cr, uid, [('state','=','assigned'),('picker_id','=',ref("base.user_demo"))])
+    assert len(dispatchs) == 1, "The dispatch is assigned to the right picker"

@@ -20,31 +20,44 @@
 #############################################################################
 import logging
 
-from openerp.osv import orm, osv, fields
+from openerp.osv import orm, fields
 from openerp.tools.translate import _
 _logger = logging.getLogger(__name__)
 
 
 class StockPicking(orm.Model):
     _inherit = "stock.picking"
+
+    def get_selection_priority(self, cr, uid, context=None):
+        """ Inherit to extend the selection.
+
+        The field in `_columns` does not need to be duplicated in the
+        inheriting class.
+        """
+        return [('0', 'Normal'), ('1', 'Urgent'), ('2', 'Very Urgent')]
+
+    def __selection_priority(self, cr, uid, context=None):
+        """ Do not touch me. Extend `get_selection_priority` to modify
+        the selection
+        """
+        return self.get_selection_priority(cr, uid, context=context)
+
     _columns = {
-        'priority': fields.selection([('0', 'Normal'),
-                                      ('1', 'Urgent'),
-                                      ('2', 'Very Urgent')],
+        'priority': fields.selection(__selection_priority,
                                      'Priority',
                                      required=True,
                                      help='The priority of the picking'),
-        }
+    }
     _defaults = {
         'priority': '0',
-        }
+    }
 
     def retry_assign_all(self, cr, uid, ids, context=None):
         domain = [('type', '!=', 'in'),
                   ('move_lines', '!=', []),
                   ('state', 'in', ('confirmed', 'assigned'))]
         if ids:
-            domain += [('ids', 'in', ids)]
+            domain += [('id', 'in', ids)]
         picking_ids = self.search(cr, uid, domain,
                                   order='priority desc, min_date',
                                   context=context)
@@ -58,7 +71,7 @@ class StockPicking(orm.Model):
                 assigned_id = self.action_assign(cr, uid, [picking_id],
                                                  context)
                 assigned_ids.append(assigned_id)
-            except osv.except_osv, exc:
+            except orm.except_orm, exc:
                 name = self.read(cr, uid, picking_id, ['name'],
                                  context=context)['name']
                 errors.append(u'%s: %s' % (name, exc.args[-1]))
@@ -74,17 +87,23 @@ class StockPicking(orm.Model):
 
 class StockPickingOut(orm.Model):
     _inherit = 'stock.picking.out'
+
+    def __selection_priority(self, cr, uid, context=None):
+        """ Do not touch me. Extend `get_selection_priority` in `stock.picking`
+        to modify the selection
+        """
+        picking_obj = self.pool['stock.picking']
+        return picking_obj.get_selection_priority(cr, uid, context=context)
+
     _columns = {
-        'priority': fields.selection([('0', 'Normal'),
-                                      ('1', 'Urgent'),
-                                      ('2', 'Very Urgent')],
+        'priority': fields.selection(__selection_priority,
                                      'Priority',
                                      required=True,
                                      help='The priority of the picking'),
-        }
+    }
     _defaults = {
         'priority': '0',
-        }
+    }
 
     def retry_assign_all(self, cr, uid, ids, context=None):
         return self.pool.get('stock.picking').retry_assign_all(cr, uid, ids,
@@ -93,17 +112,23 @@ class StockPickingOut(orm.Model):
 
 class StockPickingIn(orm.Model):
     _inherit = 'stock.picking.in'
+
+    def __selection_priority(self, cr, uid, context=None):
+        """ Do not touch me. Extend `get_selection_priority` in `stock.picking`
+        to modify the selection
+        """
+        picking_obj = self.pool['stock.picking']
+        return picking_obj.get_selection_priority(cr, uid, context=context)
+
     _columns = {
-        'priority': fields.selection([('0', 'Normal'),
-                                      ('1', 'Urgent'),
-                                      ('2', 'Very Urgent')],
+        'priority': fields.selection(__selection_priority,
                                      'Priority',
                                      required=True,
                                      help='The priority of the picking'),
-        }
+    }
     _defaults = {
         'priority': '0',
-        }
+    }
 
     def retry_assign_all(self, cr, uid, ids, context=None):
         return self.pool.get('stock.picking').retry_assign_all(cr, uid, ids,

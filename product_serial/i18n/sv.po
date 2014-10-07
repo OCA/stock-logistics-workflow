@@ -6,91 +6,209 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.14\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-11-26 10:28+0000\n"
-"PO-Revision-Date: 2011-02-15 15:14+0000\n"
-"Last-Translator: Olivier Dony (OpenERP) <Unknown>\n"
+"POT-Creation-Date: 2013-10-09 09:30+0000\n"
+"PO-Revision-Date: 2014-02-03 21:32+0000\n"
+"Last-Translator: Alexis de Lattre <alexis@via.ecp.fr>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-07-08 05:57+0000\n"
-"X-Generator: Launchpad (build 13168)\n"
+"X-Launchpad-Export-Date: 2014-06-25 06:09+0000\n"
+"X-Generator: Launchpad (build 17065)\n"
 
-#. module: mrp_prodlot_autosplit
-#: field:product.product,unique_production_number:0
-msgid "Unique Production Number"
+#. module: product_serial
+#: field:stock.picking.prodlot.selection,last_number:0
+msgid "Last Number"
 msgstr ""
 
-#. module: mrp_prodlot_autosplit
-#: constraint:ir.ui.view:0
-msgid "Invalid XML for View Architecture!"
+#. module: product_serial
+#: selection:product.product,lot_split_type:0
+msgid "Single"
 msgstr ""
 
-#. module: mrp_prodlot_autosplit
-#: model:ir.module.module,description:mrp_prodlot_autosplit.module_meta_information
-msgid ""
-"Turns production lot tracking numbers into unique per product instance code "
-"(serial number).\n"
-"    Moreover, it\n"
-"    1) adds a new checkbox on the product form to enable or disable this "
-"behavior (you should also enable in/out tracking)\n"
-"    2) then forbids to perform a move if a move involves more than one "
-"product instance\n"
-"    3) automagically splits up picking list movements into one movement per "
-"product instance\n"
-"    4) turns incoming pickings into an editable grid where you can directly "
-"type the code\n"
-"    of a new production number/code to create and associate to the move (it "
-"also checks it\n"
-"    doesn't exist yet)\n"
-"    \n"
-"    Important Note 1: serial numbers are more easily encode using an "
-"editable tree grid, including a special field with new serial to be "
-"created.\n"
-"    However, there is currently a limitation in the OpenObject framework "
-"preventing from easily changing non editable trees to editable trees\n"
-"    by simple extension. Rather than overwriting all views, we prefer give "
-"only one example: the active customied view for easy serial encoding\n"
-"    is available using Stock Management > Incoming Products. Looking  that "
-"that view definition, the same thing is easily achieved in\n"
-"    other picking list, like out going products for instance. However it's "
-"not \"on\" by default, you would need to work it out for your case.\n"
-"    Meanwhile, we hope Tiny add a third \"merge_attributes\" view extension "
-"point to the 3 existing ones: \"before\", \"after\" and \"replace\".\n"
-"    It would basically simply merge the attributes given (redefined) in the "
-"original view XML and let inner content unchanged.\n"
-"    Blueprint is registred here: https://blueprints.launchpad.net/openobject-"
-"server/+spec/merge-attributes-view-extension-point\n"
-"    \n"
-"    Important Note 2: this module doesn't split product bill of materials in "
-"MRP since they don't use pickings\n"
-"    A good workaround when generating production orders manually one by one "
-"is too define several lines of individual products in nomemclatures\n"
-"    and produce 1 by 1 (if possible) to make it easier to encode unique "
-"prodlot in production orders too.\n"
-"    We would also like to extend this module to split automatic production "
-"orders (from MRP engine) into several individual production orders in order\n"
-"    to make it easy to encode the serial numbers in the production. Let us "
-"know if you would like that simple extension to be made.\n"
-"    "
+#. module: product_serial
+#: help:stock.production.lot,last_location_id:0
+msgid "Display the current stock location of this production lot"
 msgstr ""
 
-#. module: mrp_prodlot_autosplit
+#. module: product_serial
+#: selection:product.product,lot_split_type:0
+msgid "None"
+msgstr ""
+
+#. module: product_serial
+#: model:ir.model,name:product_serial.model_stock_picking_prodlot_selection
+msgid "stock.picking.prodlot.selection"
+msgstr ""
+
+#. module: product_serial
 #: field:stock.production.lot,last_location_id:0
-msgid "Last Location"
+msgid "Last location"
 msgstr ""
 
-#. module: mrp_prodlot_autosplit
-#: model:ir.module.module,shortdesc:mrp_prodlot_autosplit.module_meta_information
-msgid "Unique serial number management"
-msgstr "Unique serial number management"
+#. module: product_serial
+#: view:stock.move:0
+msgid "[('product_id','=?',product_id)]"
+msgstr ""
 
-#. module: mrp_prodlot_autosplit
+#. module: product_serial
+#: view:stock.move:0
+msgid "Manual Split"
+msgstr ""
+
+#. module: product_serial
+#: model:ir.model,name:product_serial.model_stock_production_lot
+msgid "Serial Number"
+msgstr ""
+
+#. module: product_serial
+#: model:ir.model,name:product_serial.model_stock_picking
+msgid "Picking List"
+msgstr ""
+
+#. module: product_serial
+#: field:stock.move,new_tracking_code:0
+msgid "Create Tracking"
+msgstr ""
+
+#. module: product_serial
+#: field:stock.picking.prodlot.selection,create_prodlots:0
+msgid "Create New Serial Numbers"
+msgstr ""
+
+#. module: product_serial
+#: field:stock.picking.prodlot.selection,first_number:0
+msgid "First Number"
+msgstr ""
+
+#. module: product_serial
+#: model:ir.model,name:product_serial.model_product_product
+#: field:stock.picking.prodlot.selection,product_id:0
+msgid "Product"
+msgstr ""
+
+#. module: product_serial
+#: view:stock.move:0
+msgid "bottom"
+msgstr ""
+
+#. module: product_serial
+#: field:stock.picking.prodlot.selection,prefix:0
+msgid "Prefix"
+msgstr ""
+
+#. module: product_serial
 #: field:stock.move,new_prodlot_code:0
-msgid "Production Tracking Code To Create"
+msgid "Create Serial Number"
 msgstr ""
 
-#. module: mrp_prodlot_autosplit
+#. module: product_serial
+#: field:res.company,autosplit_is_active:0
+msgid "Active auto split"
+msgstr ""
+
+#. module: product_serial
+#: field:res.company,is_group_invoice_line:0
+msgid "Group invoice lines"
+msgstr ""
+
+#. module: product_serial
+#: model:ir.actions.act_window,name:product_serial.action_prodlot_selection
+#: view:stock.picking.prodlot.selection:0
+msgid "Select Production Lots"
+msgstr ""
+
+#. module: product_serial
+#: view:stock.picking.prodlot.selection:0
+msgid "Validate"
+msgstr ""
+
+#. module: product_serial
+#: view:stock.move:0
+msgid ""
+"onchange_lot_id(prodlot_id, product_qty, location_id, product_id, "
+"product_uom)"
+msgstr ""
+
+#. module: product_serial
+#: selection:product.product,lot_split_type:0
+msgid "Logistical Unit"
+msgstr ""
+
+#. module: product_serial
+#: model:ir.model,name:product_serial.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: product_serial
+#: field:product.product,lot_split_type:0
+msgid "Lot split type"
+msgstr ""
+
+#. module: product_serial
+#: help:res.company,is_group_invoice_line:0
+msgid ""
+"If active, OpenERP will group the identical invoice lines when generating an "
+"invoice from a picking. If inactive, each move line will generate one "
+"invoice line."
+msgstr ""
+
+#. module: product_serial
+#: view:stock.move:0
+msgid "{'location_id':location_id, 'product_id':product_id}"
+msgstr ""
+
+#. module: product_serial
 #: view:stock.picking:0
-msgid "Stock Moves"
+#: view:stock.picking.in:0
+#: view:stock.picking.out:0
+msgid "Spread Production Lots"
+msgstr ""
+
+#. module: product_serial
+#: field:stock.picking.prodlot.selection,suffix:0
+msgid "Suffix"
+msgstr ""
+
+#. module: product_serial
+#: view:stock.move:0
+msgid "onchange_product_id(product_id,location_id,location_dest_id, False)"
+msgstr ""
+
+#. module: product_serial
+#: help:product.product,lot_split_type:0
+msgid ""
+"None: no split ; single: 1 line/product unit ; Logistical Unit: split using "
+"the first Logistical Unit quantity of the product form packaging tab (to be "
+"improved to take into account all LU)"
+msgstr ""
+
+#. module: product_serial
+#: view:res.company:0
+msgid "Product serial"
+msgstr ""
+
+#. module: product_serial
+#: model:ir.model,name:product_serial.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: product_serial
+#: view:stock.move:0
+msgid "Manual split"
+msgstr ""
+
+#. module: product_serial
+#: help:res.company,autosplit_is_active:0
+msgid "Active the automatic split of move lines on the pickings."
+msgstr ""
+
+#. module: product_serial
+#: view:stock.picking.prodlot.selection:0
+msgid "Cancel"
+msgstr ""
+
+#. module: product_serial
+#: model:ir.actions.act_window,name:product_serial.act_prodlot_location_open
+msgid "Prodlots"
 msgstr ""

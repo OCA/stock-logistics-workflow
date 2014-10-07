@@ -23,4 +23,3 @@ import product
 import stock
 import company
 import wizard
-

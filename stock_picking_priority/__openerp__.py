@@ -21,8 +21,8 @@
 
 
 {
-    "name": "Picking priority",
-    "version": "0.1",
+    "name": "Picking Priority",
+    "version": "0.2",
     "depends": ['stock'],
     "author": "Camptocamp",
     'license': 'AGPL-3',
@@ -32,10 +32,10 @@
     wizard can be run to recompute the availability of pickings
     depending on the new priorities.""",
     "website": "http://www.camptocamp.com",
-    "category": "Warehouse management",
+    "category": "Warehouse Management",
     "demo": [
         'picking_priority_demo.yml',
-        ],
+    ],
     "data": ['picking_priority_view.xml',
              ],
     "test": ['tests/test_picking_priority.yml',
