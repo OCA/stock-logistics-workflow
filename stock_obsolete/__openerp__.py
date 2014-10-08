@@ -30,7 +30,7 @@
     "version": "1.0",
     "author": "Camptocamp",
     "category": "Generic Modules/Stock",
-    "module":
+    "description":
     """
         Add a special view and wizard on product to check the validity of each
         stock product, with an amount of depreciation. Your finance can now
@@ -40,9 +40,8 @@
     """,
     "website": "http://camptocamp.com",
     "depends": ["stock", "product"],
-    "init_xml": [],
-    "demo_xml": [],
-    "update_xml": [
+    "demo": [],
+    "data": [
         "stock_obsolete_view.xml",
         "stock_obsolete_report.xml",
     ],
