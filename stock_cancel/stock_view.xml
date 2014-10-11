@@ -35,5 +35,22 @@
 			</field>
 		</record>
 
+        <record id="view_move_form" model="ir.ui.view">
+            <field name="name">stock.move.cancel.form</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_form"/>
+            <field name="arch" type="xml">
+                <button name="action_confirm" position="after">
+					<button
+                        name="action_revert_done"
+                        string="Reopen"
+                        states="done,cancel"
+                        type="object"
+                        icon="gtk-cancel"
+                        confirm="Are you sure you want to reopen this stock move?"/>
+                </button>
+            </field>
+        </record>
+
     </data>
 </openerp>

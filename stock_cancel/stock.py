@@ -27,6 +27,30 @@ from openerp.tools.translate import _
 import netsvc
 
 
+class stock_move(orm.Model):
+    _inherit = 'stock.move'
+
+    def action_revert_done(self, cr, uid, ids, context=None):
+        picking_obj = self.pool['stock.picking']
+        for move in self.browse(cr, uid, ids, context):
+            if picking_obj.has_valuation_moves(cr, uid, move):
+                raise orm.except_orm(
+                    _('Error'),
+                    _('Line %s has valuation moves. \
+                        Remove them first') % (move.name))
+            move.write({'state': 'draft'})
+            if move.picking_id:
+                picking_obj._reopen_picking(
+                    cr, uid, move.picking_id, context=context)
+
+        for (id, name) in self.name_get(cr, uid, ids):
+            message = _(
+                "The stock move '%s' has been set in draft state."
+            ) % (name,)
+            self.log(cr, uid, id, message)
+        return True
+
+
 class stock_picking(orm.Model):
     _inherit = 'stock.picking'
 
@@ -34,6 +58,17 @@ class stock_picking(orm.Model):
         return self.pool.get('account.move').search(cr, uid, [
             ('ref', '=', move.picking_id.name),
         ])
+
+    def _reopen_picking(self, cr, uid, picking, context=None):
+        self.write(cr, uid, [picking.id], {'state': 'draft'})
+        if picking.invoice_state == 'invoiced' and not picking.invoice_id:
+            self.write(cr, uid, [picking.id],
+                       {'invoice_state': '2binvoiced'})
+        wf_service = netsvc.LocalService("workflow")
+        # Deleting the existing instance of workflow
+        wf_service.trg_delete(uid, 'stock.picking', picking.id, cr)
+        wf_service.trg_create(uid, 'stock.picking', picking.id, cr)
+        return True
 
     def action_revert_done(self, cr, uid, ids, context=None):
         if not len(ids):
@@ -47,14 +82,8 @@ class stock_picking(orm.Model):
                             Remove them first') % (line.name,
                                                    line.picking_id.name))
                 line.write({'state': 'draft'})
-            self.write(cr, uid, [picking.id], {'state': 'draft'})
-            if picking.invoice_state == 'invoiced' and not picking.invoice_id:
-                self.write(cr, uid, [picking.id],
-                           {'invoice_state': '2binvoiced'})
-            wf_service = netsvc.LocalService("workflow")
-            # Deleting the existing instance of workflow
-            wf_service.trg_delete(uid, 'stock.picking', picking.id, cr)
-            wf_service.trg_create(uid, 'stock.picking', picking.id, cr)
+            self._reopen_picking(cr, uid, picking, context=context)
+
         for (id, name) in self.name_get(cr, uid, ids):
             message = _(
                 "The stock picking '%s' has been set in draft state."
