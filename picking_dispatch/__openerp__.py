@@ -39,6 +39,7 @@
                 'wizard/dispatch_assign_picker_view.xml',
                 'report.xml',
                 'security/ir.model.access.csv',
+                'security/security.xml',
                 # 'picking_dispatch_workflow.xml',
                 ],
  'demo_xml': [],

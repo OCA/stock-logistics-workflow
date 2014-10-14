@@ -98,13 +98,22 @@ class PickingDispatch(Model):
         'related_picking_ids': fields.function(
             _get_related_picking, method=True, type='one2many',
             relation='stock.picking', string='Related Dispatch Picking'),
+        'company_id': fields.many2one('res.company', 'Company',
+                                      required=True),
     }
+
+    def _default_company(self, cr, uid, context=None):
+        company_obj = self.pool.get('res.company')
+        return company_obj._company_default_get(cr, uid,
+                                                'picking.dispatch',
+                                                context=context)
 
     _defaults = {
         'name': lambda obj, cr, uid, ctxt: obj.pool.get('ir.sequence').get(
             cr, uid, 'picking.dispatch'),
         'date': fields.date.context_today,
-        'state': 'draft'
+        'state': 'draft',
+        'company_id': _default_company,
     }
 
     def _check_picker_assigned(self, cr, uid, ids, context=None):
