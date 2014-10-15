@@ -36,7 +36,8 @@ class StockPickingDispatchWave(orm.TransientModel):
         move_ids = move_obj.search(cr, uid,
                                    [('dispatch_id', '=', False),
                                     ('state', '=', 'assigned'),
-                                    ('type', '=', 'out')],
+                                    ('type', '=', 'out'),
+                                    ('location_id.usage', '=', 'internal')],
                                    order='date_expected DESC',
                                    context=context)
         for move in move_obj.browse(cr, uid, move_ids, context=context):
