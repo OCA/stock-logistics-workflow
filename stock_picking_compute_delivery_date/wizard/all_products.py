@@ -27,7 +27,20 @@ class ComputeAllDeliveryDatesWizard(orm.TransientModel):
     _name = 'compute.all.delivery.dates.wizard'
 
     def do_compute(self, cr, uid, ids, context=None):
+        """Delegate the picking to compute delivery dates for all products.
+
+        If use_new_cursor is in the context, pass it as a parameter.
+
+        """
+        if context is None:
+            context = {}
         pick_obj = self.pool['stock.picking.out']
-        pick_obj.compute_all_delivery_dates(cr, uid, context=context)
+
+        if 'use_new_cursor' in context:
+            pick_obj.compute_all_delivery_dates(
+                cr, uid, use_new_cursor=context['use_new_cursor'],
+                context=context)
+        else:
+            pick_obj.compute_all_delivery_dates(cr, uid, context=context)
 
         return True

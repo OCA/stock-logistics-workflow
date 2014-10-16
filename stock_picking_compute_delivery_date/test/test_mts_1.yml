@@ -133,10 +133,13 @@
 -
   !workflow {model: stock.picking, action: button_confirm, ref: picking_out_3}
 -
- I compute the delivery dates
+  I compute the delivery dates with the existing cursor, because a new cursor
+  would isolate us from test data created in the main transaction, like the
+  user itself.
 -
  !python {model: stock.picking.out}: |
-   self.compute_all_delivery_dates(cr, uid, context=context)
+   self.compute_all_delivery_dates(cr, uid, use_new_cursor=False,
+                                   context=context)
 -
   !python {model: stock.move}: |
     import datetime as dt
@@ -176,7 +179,8 @@
  I compute the delivery dates again. Nothing should change.
 -
  !python {model: stock.picking.out}: |
-   self.compute_all_delivery_dates(cr, uid, context=context)
+   self.compute_all_delivery_dates(cr, uid, use_new_cursor=False,
+                                   context=context)
 -
   !python {model: stock.move}: |
     import datetime as dt

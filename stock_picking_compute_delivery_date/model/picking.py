@@ -24,6 +24,7 @@ import datetime as dt
 
 from openerp.osv import orm
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT as DT_FORMAT
+from openerp import pooler
 
 _logger = logging.getLogger(__name__)
 
@@ -145,9 +146,23 @@ class StockPickingOut(orm.Model):
             )
         return True
 
-    def compute_all_delivery_dates(self, cr, uid, context=None):
+    def compute_all_delivery_dates(self, cr, uid, use_new_cursor=True,
+                                   context=None):
+        """Loop on all products that have moves, and process them one by one.
+
+        This can take a few seconds per product, so the transaction can be
+        very long-lived and easily interrupted. To avoid that, we create a new
+        cursor that is committed for every product.
+
+        The use_new_cursor can be used in cases where multiple transactions are
+        harmful, like for automated testing.
+
+        """
         move_obj = self.pool['stock.move']
         prod_obj = self.pool['product.product']
+
+        if use_new_cursor:
+            cr = pooler.get_db(cr.dbname).cursor()
 
         moves_out_grouped = move_obj.read_group(
             cr,
@@ -162,8 +177,26 @@ class StockPickingOut(orm.Model):
         )
 
         product_ids = [g['product_id'][0] for g in moves_out_grouped]
+        _logger.info('Computing delivery dates for %s products',
+                     len(product_ids))
 
         for product in prod_obj.browse(cr, uid, product_ids, context=context):
-            self.compute_delivery_dates(cr, uid, product, context=context)
+
+            _logger.info('Computing delivery dates for product %s',
+                         product.name)
+            try:
+                self.compute_delivery_dates(cr, uid, product,
+                                            context=context)
+                if use_new_cursor:
+                    cr.commit()
+            except:
+                if use_new_cursor:
+                    cr.rollback()
+                _logger.exception(
+                    'Could not update delivery date for product %s',
+                    product.name)
+
+        if use_new_cursor:
+            cr.close()
 
         return True
