@@ -19,7 +19,7 @@
 #
 ##############################################################################
 {'name': 'Picking dispatch',
- 'version': '1.2.2',
+ 'version': '1.2.3',
  'author': 'Camptocamp',
  'maintainer': 'Camptocamp',
  'category': 'Products',
@@ -39,6 +39,7 @@
                 'wizard/dispatch_assign_picker_view.xml',
                 'report.xml',
                 'security/ir.model.access.csv',
+                'security/security.xml',
                 # 'picking_dispatch_workflow.xml',
                 ],
  'demo_xml': [],
