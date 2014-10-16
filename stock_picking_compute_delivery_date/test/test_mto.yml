@@ -21,7 +21,7 @@
 -
   I create an incoming move chained to the outgoing one. That is the situation
   we have when the move is automatically created by a Purchase Order created
-  by  the scheduler.
+  by the scheduler.
 -
   !record {model: stock.picking.in, id: picking_in_mto}:
 -
