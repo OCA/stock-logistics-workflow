@@ -53,8 +53,8 @@ Make to Stock
 =============
 For Make To Stock products, the logic is more complex.
 
-First, for each product, the system takes the list of outgoing Moves, and the
-list of incoming Moves, each ordered by current expected date.
+First, for each product, the system takes the list of outgoing Moves ordered
+by creation date, and the list of incoming Moves ordered by expected date.
 
 It then loops over the outgoing Moves, and for each one, it tries to find at
 what time we will have enough stock to make the delivery. That information is

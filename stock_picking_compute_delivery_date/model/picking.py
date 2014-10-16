@@ -110,11 +110,14 @@ class StockPickingOut(orm.Model):
 
         plan = self._availability_plan(cr, uid, product, context=context)
 
+        # outgoing moves are sorted by date (the creation date) and not by
+        # expected date to avoid circular situation where a finished plan could
+        # lead to moves changing order, and the result to not converge.
         move_out_ids = move_obj.search(cr, uid, [
             ('product_id', '=', product.id),
             ('picking_id.type', '=', 'out'),
             ('state', 'in', ('confirmed', 'assigned', 'pending')),
-        ], order='date_expected', context=context)
+        ], order='date', context=context)
 
         current_plan = plan.next()
 

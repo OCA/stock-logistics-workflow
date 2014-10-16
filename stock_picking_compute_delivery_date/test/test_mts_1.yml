@@ -92,7 +92,7 @@
   !python {model: stock.move}: |
     import datetime
     self.write(cr, uid, ref('move_out_1'), {
-        'date_expected': '{0}-12-03'.format(datetime.date.today().year + 1)
+        'date': '{0}-12-03'.format(datetime.date.today().year + 1)
     })
 -
   !record {model: stock.picking.out, id: picking_out_2}:
@@ -108,7 +108,7 @@
   !python {model: stock.move}: |
     import datetime
     self.write(cr, uid, ref('move_out_2'), {
-        'date_expected': '{0}-12-01'.format(datetime.date.today().year + 1)
+        'date': '{0}-12-01'.format(datetime.date.today().year + 1)
     })
 -
   !record {model: stock.picking.out, id: picking_out_3}:
@@ -124,7 +124,7 @@
   !python {model: stock.move}: |
     import datetime
     self.write(cr, uid, ref('move_out_3'), {
-        'date_expected': '{0}-12-05'.format(datetime.date.today().year + 1)
+        'date': '{0}-12-05'.format(datetime.date.today().year + 1)
     })
 -
   !workflow {model: stock.picking, action: button_confirm, ref: picking_out_1}
