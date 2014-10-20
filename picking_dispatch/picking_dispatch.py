@@ -23,7 +23,7 @@ from datetime import datetime
 from openerp.osv.orm import Model
 from openerp.osv import fields
 from openerp.osv.osv import except_osv
-from tools.translate import _
+from openerp.tools.translate import _
 
 _logger = logging.getLogger(__name__)
 

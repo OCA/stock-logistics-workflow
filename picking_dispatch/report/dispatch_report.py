@@ -18,10 +18,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from report import report_sxw
-import pooler
 import logging
 from os.path import commonprefix
+from openerp.report import report_sxw
+from openerp import pooler
 
 _logger = logging.getLogger(__name__)
 
