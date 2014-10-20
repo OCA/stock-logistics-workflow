@@ -37,7 +37,7 @@ class stock_move(orm.Model):
         if context is None:
             context = {}
         res = super(stock_move, self).onchange_product_id(
-            cr, uid, ids,  prod_id=prod_id, loc_id=loc_id,
+            cr, uid, ids, prod_id=prod_id, loc_id=loc_id,
             loc_dest_id=loc_dest_id, partner_id=partner_id
         )
         if prod_id:
