@@ -58,6 +58,12 @@ From there, you can perform various operation :
  * Make partial delivery
  * Print a report to pick the proper goods at once
 
+Contributors
+------------
+
+* Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
+* Guewen Baconnier <guewen.baconnier@camptocamp.com>
+* Yannick Vaucher <yannick.vaucher@camptocamp.com>
 
  """,
  'website': 'http://www.camptocamp.com/',
