@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Alexandre Fayolle, Romain Deheele
+#    Author: Leonardo Pistone
 #    Copyright 2014 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,28 +19,20 @@
 #
 ##############################################################################
 
+from openerp.osv import orm
 
-{
-    "name": "Picking Dispatch Wave",
-    "version": "0.1",
-    "depends": ['picking_dispatch'],
-    "author": "Camptocamp",
-    'license': 'AGPL-3',
-    "description": """Allows to set a picking dispatch
-including the number maximum of pickings that you want to pick:
 
-* The picker sets a number n of pickings to do.
+class ComputeDeliveryDateByProductWizard(orm.TransientModel):
 
-* The wizard will select moves from n pickings with oldest min_date.
+    _name = 'compute.delivery.date.by.product.wizard'
 
-* A picking dispatch is created with found moves
+    def do_compute(self, cr, uid, ids, context=None):
+        pick_obj = self.pool['stock.picking.out']
+        product_obj = self.pool['product.product']
 
-It's sort of basic wave picking.
-""",
-    "website": "http://www.camptocamp.com",
-    "category": "Warehouse Management",
-    "demo": [],
-    "data": ['dispatch_wave_view.xml'],
-    "test": ['test/test_dispatch_wave.yml'],
-    'installable': False,
-}
+        product_ids = context['active_ids']
+        for product in product_obj.browse(cr, uid, product_ids,
+                                          context=context):
+            pick_obj.compute_delivery_dates(cr, uid, product, context=context)
+
+        return True

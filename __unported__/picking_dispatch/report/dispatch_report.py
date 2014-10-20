@@ -92,7 +92,7 @@ class DispatchAgregation(object):
         product_qty = {}
         carrier = {}
         moves = self.moves_by_loc[locations]
-        _logger.debug('move ids %s',  moves)
+        _logger.debug('move ids %s', moves)
         for move in moves:
             p_code = move.product_id.default_code
             products[p_code] = move.product_id

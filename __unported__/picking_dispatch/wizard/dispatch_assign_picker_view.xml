@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data noupdate="0">
+    <record id="view_picking_dispatch_assign_picker" model="ir.ui.view">
+      <field name="name">picking.dispatch.assign.picker.form</field>
+      <field name="model">picking.dispatch.assign.picker</field>
+      <field name="arch" type="xml">
+        <form string="Assign a picker on dispatches" version="7.0">
+          <group>
+            <field name="picker_id"/>
+          </group>
+          <footer>
+            <button name="assign_picker" string="Assign the picker" type="object" class="oe_highlight"/>
+            or
+            <button string="Cancel" class="oe_link" special="cancel"/>
+          </footer>
+        </form>
+      </field>
+    </record>
+
+    <record id="action_picking_dispatch_assign_picker" model="ir.actions.act_window">
+      <field name="name">Assign Picker</field>
+      <field name="res_model">picking.dispatch.assign.picker</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="view_picking_dispatch_assign_picker"/>
+      <field name="target">new</field>
+    </record>
+
+    <record id="action_picking_dispatch_assign_picker_values" model="ir.values">
+      <field name="model_id" ref="model_picking_dispatch" />
+      <field name="name">Assign Picker</field>
+      <field name="key2">client_action_multi</field>
+      <field name="value" eval="'ir.actions.act_window,' + str(ref('action_picking_dispatch_assign_picker'))"/>
+      <field name="key">action</field>
+      <field name="model">picking.dispatch</field>
+    </record>
+  </data>
+</openerp>

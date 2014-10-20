@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Alexandre Fayolle, Romain Deheele
+#    Author: Leonardo Pistone
 #    Copyright 2014 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,28 +19,28 @@
 #
 ##############################################################################
 
+from openerp.osv import orm
 
-{
-    "name": "Picking Dispatch Wave",
-    "version": "0.1",
-    "depends": ['picking_dispatch'],
-    "author": "Camptocamp",
-    'license': 'AGPL-3',
-    "description": """Allows to set a picking dispatch
-including the number maximum of pickings that you want to pick:
 
-* The picker sets a number n of pickings to do.
+class ComputeAllDeliveryDatesWizard(orm.TransientModel):
 
-* The wizard will select moves from n pickings with oldest min_date.
+    _name = 'compute.all.delivery.dates.wizard'
 
-* A picking dispatch is created with found moves
+    def do_compute(self, cr, uid, ids, context=None):
+        """Delegate the picking to compute delivery dates for all products.
 
-It's sort of basic wave picking.
-""",
-    "website": "http://www.camptocamp.com",
-    "category": "Warehouse Management",
-    "demo": [],
-    "data": ['dispatch_wave_view.xml'],
-    "test": ['test/test_dispatch_wave.yml'],
-    'installable': False,
-}
+        If use_new_cursor is in the context, pass it as a parameter.
+
+        """
+        if context is None:
+            context = {}
+        pick_obj = self.pool['stock.picking.out']
+
+        if 'use_new_cursor' in context:
+            pick_obj.compute_all_delivery_dates(
+                cr, uid, use_new_cursor=context['use_new_cursor'],
+                context=context)
+        else:
+            pick_obj.compute_all_delivery_dates(cr, uid, context=context)
+
+        return True

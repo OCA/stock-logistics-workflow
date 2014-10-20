@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Alexandre Fayolle, Romain Deheele
+#    Author: Guewen Baconnier
 #    Copyright 2014 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,28 +19,34 @@
 #
 ##############################################################################
 
+{'name': 'Delivery Orders Mass Assign',
+ 'version': '0.1',
+ 'author': 'Camptocamp',
+ 'license': 'AGPL-3',
+ 'category': 'Warehouse Management',
+ 'depends': ['stock',
+             ],
+ 'description': """
+Delivery Orders Mass Assign
+===========================
 
-{
-    "name": "Picking Dispatch Wave",
-    "version": "0.1",
-    "depends": ['picking_dispatch'],
-    "author": "Camptocamp",
-    'license': 'AGPL-3',
-    "description": """Allows to set a picking dispatch
-including the number maximum of pickings that you want to pick:
+Facilities to check the availability of delivery orders:
 
-* The picker sets a number n of pickings to do.
+* A wizard which allows to check availability on multiple delivery
+  orders at a time.
+* A scheduled action to check availability of all the delivery orders.
+  It is not active by default.
 
-* The wizard will select moves from n pickings with oldest min_date.
+This may be necessary for those who want to check the availability
+more often than running the procurement scheduler.
 
-* A picking dispatch is created with found moves
-
-It's sort of basic wave picking.
-""",
-    "website": "http://www.camptocamp.com",
-    "category": "Warehouse Management",
-    "demo": [],
-    "data": ['dispatch_wave_view.xml'],
-    "test": ['test/test_dispatch_wave.yml'],
-    'installable': False,
-}
+ """,
+ 'website': 'http://www.camptocamp.com',
+ 'data': ['wizard/check_assign_all_view.xml',
+          'cron_data.xml',
+          ],
+ "test": ['test/test_check_assign_all.yml',
+          ],
+ 'installable': False,
+ 'auto_install': False,
+ }
