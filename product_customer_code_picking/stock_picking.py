@@ -35,9 +35,10 @@ class stock_move(orm.Model):
                 move.picking_id.partner_id.commercial_partner_id.id)
             product = move.product_id
             if product and main_partner_id:
-                code_ids = product_customer_code_obj.search(cr, uid, [
-                    ('product_id', '=', product.id),
-                    ('partner_id', '=', main_partner_id),
+                code_ids = product_customer_code_obj.search(
+                    cr, uid, [
+                        ('product_id', '=', product.id),
+                        ('partner_id', '=', main_partner_id),
                     ], limit=1, context=context)
                 if code_ids:
                     data = product_customer_code_obj.read(
