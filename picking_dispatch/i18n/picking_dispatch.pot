@@ -71,6 +71,7 @@ msgstr ""
 #: view:picking.dispatch:0
 #: view:picking.dispatch.assign.picker:0
 #: view:picking.dispatch.creator:0
+#: view:picking.dispatch.start:0
 msgid "Cancel"
 msgstr ""
 
@@ -310,6 +311,7 @@ msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
+#: view:picking.dispatch.start:0
 msgid "Start"
 msgstr ""
 
@@ -365,6 +367,7 @@ msgstr ""
 #. module: picking_dispatch
 #: view:picking.dispatch.assign.picker:0
 #: view:picking.dispatch.creator:0
+#: view:picking.dispatch.start:0
 msgid "or"
 msgstr ""
 
@@ -398,3 +401,21 @@ msgstr ""
 msgid "who this move is dispatched to"
 msgstr ""
 
+#. module: picking_dispatch
+#: code:addons/picking_dispatch/wizard/dispatch_start.py:48
+#, python-format
+msgid "All the picking dispatches must be assigned to be started."
+msgstr ""
+
+#. module: picking_dispatch
+#: model:ir.actions.act_window,name:picking_dispatch.action_picking_dispatch_start
+#: view:picking.dispatch.start:0
+msgid "Start Dispatches"
+msgstr ""
+
+#. module: picking_dispatch
+#: code:_description:0
+#: model:ir.model,name:picking_dispatch.model_picking_dispatch_start
+#, python-format
+msgid "Picking Dispatch Start"
+msgstr ""
