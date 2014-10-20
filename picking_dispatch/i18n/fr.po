@@ -71,6 +71,7 @@ msgstr "Relicats"
 #: view:picking.dispatch:0
 #: view:picking.dispatch.assign.picker:0
 #: view:picking.dispatch.creator:0
+#: view:picking.dispatch.start:0
 msgid "Cancel"
 msgstr "Annulé"
 
@@ -310,6 +311,7 @@ msgstr "Picking lié"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
+#: view:picking.dispatch.start:0
 msgid "Start"
 msgstr "Début"
 
@@ -366,6 +368,7 @@ msgstr "Si le bon de préparation a été découpé, ce champ est un lien vers l
 #. module: picking_dispatch
 #: view:picking.dispatch.assign.picker:0
 #: view:picking.dispatch.creator:0
+#: view:picking.dispatch.start:0
 msgid "or"
 msgstr "ou"
 
@@ -400,3 +403,21 @@ msgstr "the user to which the pickings are assigned by default"
 msgid "who this move is dispatched to"
 msgstr "Le bon de préparation auquel le mouvement de stock est lié"
 
+#. module: picking_dispatch
+#: code:addons/picking_dispatch/wizard/dispatch_start.py:48
+#, python-format
+msgid "All the picking dispatches must be assigned to be started."
+msgstr "Tous les bons de préparation doivent être assignés pour être débutés."
+
+#. module: picking_dispatch
+#: model:ir.actions.act_window,name:picking_dispatch.action_picking_dispatch_start
+#: view:picking.dispatch.start:0
+msgid "Start Dispatches"
+msgstr "Débuter des bons de préparation"
+
+#. module: picking_dispatch
+#: code:_description:0
+#: model:ir.model,name:picking_dispatch.model_picking_dispatch_start
+#, python-format
+msgid "Picking Dispatch Start"
+msgstr "Débuter les bons de préparation"
