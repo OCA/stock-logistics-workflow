@@ -36,8 +36,9 @@ class StockPickingDispatchWave(orm.TransientModel):
         move_ids = move_obj.search(cr, uid,
                                    [('dispatch_id', '=', False),
                                     ('state', '=', 'assigned'),
-                                    ('type', '=', 'out')],
-                                   order='date_expected DESC',
+                                    ('type', '=', 'out'),
+                                    ('location_id.usage', '=', 'internal')],
+                                   order='date_expected ASC',
                                    context=context)
         for move in move_obj.browse(cr, uid, move_ids, context=context):
             if len(picking_ids) == max_nb:
@@ -101,6 +102,9 @@ class StockPickingDispatchWave(orm.TransientModel):
                 self.pool['stock.move'].write(cr, uid, move_ids,
                                               {'dispatch_id': dispatch_id},
                                               context=context)
+                # picking dispatch can be directly assigned
+                dispatch_obj.action_assign(cr, uid, [dispatch_id],
+                                           context=context)
                 context['active_id'] = dispatch_id
                 return {
                     'domain': str([('id', '=', dispatch_id)]),

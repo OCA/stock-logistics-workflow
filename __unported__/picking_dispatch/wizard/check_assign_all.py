@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Alexandre Fayolle, Romain Deheele
+#    Author: Guewen Baconnier
 #    Copyright 2014 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,28 +19,24 @@
 #
 ##############################################################################
 
+from openerp.osv import orm
+from openerp.tools.translate import _
 
-{
-    "name": "Picking Dispatch Wave",
-    "version": "0.1",
-    "depends": ['picking_dispatch'],
-    "author": "Camptocamp",
-    'license': 'AGPL-3',
-    "description": """Allows to set a picking dispatch
-including the number maximum of pickings that you want to pick:
 
-* The picker sets a number n of pickings to do.
+class check_assign_all(orm.TransientModel):
+    _name = 'picking.dispatch.check.assign.all'
+    _description = 'Picking Dispatch Check Availability'
 
-* The wizard will select moves from n pickings with oldest min_date.
+    def check(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
 
-* A picking dispatch is created with found moves
+        dispatch_ids = context.get('active_ids')
+        if not dispatch_ids:
+            raise orm.except_orm(
+                _('Error'),
+                _('No selected dispatch'))
 
-It's sort of basic wave picking.
-""",
-    "website": "http://www.camptocamp.com",
-    "category": "Warehouse Management",
-    "demo": [],
-    "data": ['dispatch_wave_view.xml'],
-    "test": ['test/test_dispatch_wave.yml'],
-    'installable': False,
-}
+        dispatch_obj = self.pool['picking.dispatch']
+        dispatch_obj.check_assign_all(cr, uid, dispatch_ids, context=context)
+        return {'type': 'ir.actions.act_window_close'}

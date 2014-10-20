@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+    <record id="compute_delivery_date_by_product_form" model="ir.ui.view">
+      <field name="model">compute.delivery.date.by.product.wizard</field>
+      <field name="arch" type="xml">
+        <form string="Compute Delivery Dates" version="7.0">
+          <label string="This will recompute the delivery dates of all outgoing moves for the selected product. For Make To Stock products, the computation is based on the available stock and the expected dates of all moves of the same product. For Make To Order products, it is based on the date of the corresponding incoming move."/>
+          <footer>
+            <button name="do_compute" string="Compute" type="object" icon="gtk-apply" class="oe_highlight"/>
+            or
+            <button string="Cancel" class="oe_link" special="cancel" />
+          </footer>
+        </form>
+      </field>
+    </record>
+
+    <act_window name="Compute delivery dates for product"
+      res_model="compute.delivery.date.by.product.wizard"
+      src_model="product.product"
+      key2="client_action_multi"
+      multi="True"
+      view_mode="form"
+      view_type="form"
+      target="new"
+      id="product_compute_delivery_date_wizard_action"/>
+
+  </data>
+</openerp>

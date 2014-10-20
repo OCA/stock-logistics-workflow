@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Alexandre Fayolle, Romain Deheele
+#    Author: Guewen Baconnier
 #    Copyright 2014 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,28 +19,4 @@
 #
 ##############################################################################
 
-
-{
-    "name": "Picking Dispatch Wave",
-    "version": "0.1",
-    "depends": ['picking_dispatch'],
-    "author": "Camptocamp",
-    'license': 'AGPL-3',
-    "description": """Allows to set a picking dispatch
-including the number maximum of pickings that you want to pick:
-
-* The picker sets a number n of pickings to do.
-
-* The wizard will select moves from n pickings with oldest min_date.
-
-* A picking dispatch is created with found moves
-
-It's sort of basic wave picking.
-""",
-    "website": "http://www.camptocamp.com",
-    "category": "Warehouse Management",
-    "demo": [],
-    "data": ['dispatch_wave_view.xml'],
-    "test": ['test/test_dispatch_wave.yml'],
-    'installable': False,
-}
+from . import check_assign_all

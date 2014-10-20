@@ -135,6 +135,18 @@
       </field>
     </record>
 
+    <!-- Stock Out picking : add dispatch search -->
+    <record id="view_picking_out_search" model="ir.ui.view">
+        <field name="name">stock.picking.out.search.related_dispatch_ids</field>
+        <field name="model">stock.picking.out</field>
+        <field name="inherit_id" ref="stock.view_picking_out_search"/>
+        <field name="arch" type="xml">
+          <field name="name" position="after">
+            <field name="related_dispatch_ids"/>
+          </field>
+      </field>
+    </record>
+
     <!-- Stock Internal picking : add dispatch infos -->
     <record id="view_picking_form_int" model="ir.ui.view">
       <field name="name">stock.picking.form.dispatch.int</field>

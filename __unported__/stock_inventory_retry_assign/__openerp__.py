@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Alexandre Fayolle, Romain Deheele
-#    Copyright 2014 Camptocamp SA
+#    Author: Guewen Baconnier
+#    Copyright 2011-2014 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,28 +19,29 @@
 #
 ##############################################################################
 
+{'name': 'Check Availability after Inventories',
+ 'version': '1.0',
+ 'depends': ['stock',
+             'procurement',
+             ],
+ 'author': "Camptocamp",
+ 'description': """
+Check again availability of delivery orders after inventories
+=============================================================
 
-{
-    "name": "Picking Dispatch Wave",
-    "version": "0.1",
-    "depends": ['picking_dispatch'],
-    "author": "Camptocamp",
-    'license': 'AGPL-3',
-    "description": """Allows to set a picking dispatch
-including the number maximum of pickings that you want to pick:
+When an inventory is done, available delivery orders stay available even if
+after inventory the quantities are insufficient.
 
-* The picker sets a number n of pickings to do.
+With this module, when an inventory is done, all the delivery orders
+that are currently available with products in the inventory will be
+checked again.
 
-* The wizard will select moves from n pickings with oldest min_date.
-
-* A picking dispatch is created with found moves
-
-It's sort of basic wave picking.
-""",
-    "website": "http://www.camptocamp.com",
-    "category": "Warehouse Management",
-    "demo": [],
-    "data": ['dispatch_wave_view.xml'],
-    "test": ['test/test_dispatch_wave.yml'],
-    'installable': False,
-}
+ """,
+ 'license': 'AGPL-3',
+ 'website': 'http://www.camptocamp.com',
+ 'category': 'Warehouse Management',
+ 'data': [],
+ 'test': ['test/test_inventory_done.yml',
+          ],
+ 'installable': False,
+ }
