@@ -200,6 +200,20 @@ class PickingDispatch(Model):
         move_obj.action_assign(cr, uid, move_ids)
         return True
 
+    def check_assign_all(self, cr, uid, ids=None, domain=None, context=None):
+        """ Try to assign moves of a selection of dispatches
+
+        Called from a cron
+        """
+        if isinstance(ids, (int, long)):
+            ids = [ids]
+        if ids is None:
+            if domain is None:
+                domain = [('state', 'in', ('draft', 'assigned'))]
+            ids = self.search(cr, uid, domain, context=context)
+        self.action_assign_moves(cr, uid, ids, context=context)
+        return True
+
 
 class StockMove(Model):
     _inherit = 'stock.move'

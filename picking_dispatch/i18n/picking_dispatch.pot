@@ -70,6 +70,7 @@ msgstr ""
 #. module: picking_dispatch
 #: view:picking.dispatch:0
 #: view:picking.dispatch.assign.picker:0
+#: view:picking.dispatch.check.assign.all:0
 #: view:picking.dispatch.creator:0
 #: view:picking.dispatch.start:0
 msgid "Cancel"
@@ -82,6 +83,7 @@ msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch:0
+#: view:picking.dispatch.check.assign.all:0
 msgid "Check Availability"
 msgstr ""
 
@@ -366,6 +368,7 @@ msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch.assign.picker:0
+#: view:picking.dispatch.check.assign.all:0
 #: view:picking.dispatch.creator:0
 #: view:picking.dispatch.start:0
 msgid "or"
@@ -418,4 +421,22 @@ msgstr ""
 #: model:ir.model,name:picking_dispatch.model_picking_dispatch_start
 #, python-format
 msgid "Picking Dispatch Start"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:picking.dispatch.check.assign.all:0
+msgid "Check the availability of the selected dispatches"
+msgstr ""
+
+#. module: picking_dispatch
+#: code:_description:0
+#: model:ir.model,name:picking_dispatch.model_picking_dispatch_check_assign_all
+#, python-format
+msgid "Picking Dispatch Check Availability"
+msgstr ""
+
+#. module: picking_dispatch
+#: code:addons/picking_dispatch/wizard/check_assign_all.py:38
+#, python-format
+msgid "No selected dispatch"
 msgstr ""
