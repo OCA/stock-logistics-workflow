@@ -376,48 +376,6 @@ class StockPicking(Model):
     }
 
 
-class StockPickingIn(Model):
-    _inherit = "stock.picking.in"
-
-    def _get_related_dispatch(self, cr, uid, ids, field_names, arg=None,
-                              context=None):
-        return super(StockPickingIn, self)._get_related_dispatch(
-            cr, uid, ids, field_names, arg=arg, context=context)
-
-    def _search_dispatch_pickings(self, cr, uid, obj, name, args,
-                                  context=None):
-        return super(StockPickingIn, self)._search_dispatch_pickings(
-            cr, uid, obj, name, args=args, context=context)
-
-    _columns = {
-        'related_dispatch_ids': fields.function(
-            _get_related_dispatch, fnct_search=_search_dispatch_pickings,
-            type='one2many', relation='picking.dispatch',
-            string='Related Dispatch Picking'),
-    }
-
-
-class StockPickingOut(Model):
-    _inherit = "stock.picking.out"
-
-    def _get_related_dispatch(self, cr, uid, ids, field_names, arg=None,
-                              context=None):
-        return super(StockPickingOut, self)._get_related_dispatch(
-            cr, uid, ids, field_names, arg=arg, context=context)
-
-    def _search_dispatch_pickings(self, cr, uid, obj, name, args,
-                                  context=None):
-        return super(StockPickingOut, self)._search_dispatch_pickings(
-            cr, uid, obj, name, args=args, context=context)
-
-    _columns = {
-        'related_dispatch_ids': fields.function(
-            _get_related_dispatch, fnct_search=_search_dispatch_pickings,
-            type='one2many', relation='picking.dispatch',
-            string='Related Dispatch Picking'),
-    }
-
-
 class Product(Model):
     _inherit = "product.product"
 
