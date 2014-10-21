@@ -19,9 +19,10 @@
 #
 ##############################################################################
 import logging
+import time
 from os.path import commonprefix
 from openerp.report import report_sxw
-from openerp import pooler
+from openerp import pooler, models
 
 _logger = logging.getLogger(__name__)
 
@@ -116,7 +117,27 @@ class PrintDispatch(report_sxw.rml_parse):
         self.cursor = self.cr
         self.uid = uid
         self.numeration_type = False
-        self.localcontext.update({})
+        self.localcontext.update({
+            'time': time,
+            'has_variants': self._has_variants,
+            'get_location_datas': self._get_location_datas,
+        })
+
+    def _has_variants(self, aggr):
+        has_variants = False
+        for locations, product_quantities in aggr.iter_locations():
+            for product, qty, carrier in product_quantities:
+                if product.product_variant_count > 1:
+                    has_variants = True
+                    break
+            else:
+                continue
+            break
+        return has_variants
+
+    def _get_location_datas(self, aggr):
+        for loc in aggr.iter_locations():
+            yield loc
 
     def _get_form_param(self, param, data, default=False):
         return data.get('form', {}).get(param, default) or default
@@ -143,7 +164,9 @@ class PrintDispatch(report_sxw.rml_parse):
         return super(PrintDispatch, self).set_context(new_objects, data, ids,
                                                       report_type=report_type)
 
-report_sxw.report_sxw('report.webkit.dispatch_order',
-                      'picking.dispatch',
-                      'addons/picking_dispatch/report/dispatch.html.mako',
-                      parser=PrintDispatch)
+
+class ReportPrintDispatch(models.AbstractModel):
+    _name = 'report.picking_dispatch.report_picking_dispatch'
+    _inherit = 'report.abstract_report'
+    _template = 'picking_dispatch.report_picking_dispatch'
+    _wrapped_report_class = PrintDispatch

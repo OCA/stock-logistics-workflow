@@ -25,9 +25,6 @@
  'category': 'Products',
  'complexity': "normal",  # easy, normal, expert
  'depends': ['stock',
-             'base',
-             'report_webkit',
-             'base_headers_webkit',
              ],
  'description': """
 Picking dispatch
@@ -73,7 +70,8 @@ Contributors
           'wizard/dispatch_assign_picker_view.xml',
           'wizard/dispatch_start_view.xml',
           'wizard/check_assign_all_view.xml',
-          'report.xml',
+          'views/report_picking_dispatch.xml',
+          'picking_dispatch_report.xml',
           'cron_data.xml',
           'security/ir.model.access.csv',
           'security/security.xml',
