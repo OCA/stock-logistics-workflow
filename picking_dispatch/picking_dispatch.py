@@ -147,7 +147,7 @@ class PickingDispatch(models.Model):
     def action_done(self):
         domain = [('dispatch_id', 'in', self.ids)]
         moves = self.env['stock.move'].search(domain)
-        return moves.action_partial_move()
+        return moves.action_done()
 
     @api.multi
     def check_finished(self):
