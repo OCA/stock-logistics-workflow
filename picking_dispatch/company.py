@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Author: Alexandre Fayolle
-#    Copyright 2012 Camptocamp SA
+#    Copyright 2012-2014 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,9 +18,15 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from . import picking_dispatch
-from . import stock
-from . import product
-from . import company
-import wizard
-import report
+from openerp.osv import orm, fields
+
+
+class res_company(orm.Model):
+    _name = 'res.company'
+    _inherit = 'res.company'
+    _columns = {
+        'default_picker_id': fields.many2one(
+            'res.users', 'Default Picker',
+            help='the user to which the pickings are assigned by default',
+            select=True),
+    }

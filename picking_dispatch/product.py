@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Author: Alexandre Fayolle
-#    Copyright 2012 Camptocamp SA
+#    Copyright 2012-2014 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,9 +18,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from . import picking_dispatch
-from . import stock
-from . import product
-from . import company
-import wizard
-import report
+from openerp.osv import orm, fields
+
+
+class Product(orm.Model):
+    _inherit = "product.product"
+
+    _columns = {
+        'description_warehouse': fields.text('Warehouse Description',
+                                             translate=True),
+    }
