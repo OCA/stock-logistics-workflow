@@ -19,24 +19,22 @@
 #
 ##############################################################################
 
-from openerp.osv import orm
+from openerp import models, api
+from openerp.exceptions import except_orm
 from openerp.tools.translate import _
 
 
-class check_assign_all(orm.TransientModel):
+class CheckAssignAll(models.TransientModel):
     _name = 'picking.dispatch.check.assign.all'
     _description = 'Picking Dispatch Check Availability'
 
-    def check(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
+    @api.multi
+    def check(self):
 
-        dispatch_ids = context.get('active_ids')
+        dispatch_ids = self.env.context.get('active_ids')
         if not dispatch_ids:
-            raise orm.except_orm(
-                _('Error'),
-                _('No selected dispatch'))
+            raise except_orm(_('Error'), _('No selected dispatch'))
 
-        dispatch_obj = self.pool['picking.dispatch']
-        dispatch_obj.check_assign_all(cr, uid, dispatch_ids, context=context)
+        dispatchs = self.env['picking.dispatch'].browse(dispatch_ids)
+        dispatchs.check_assign_all()
         return {'type': 'ir.actions.act_window_close'}
