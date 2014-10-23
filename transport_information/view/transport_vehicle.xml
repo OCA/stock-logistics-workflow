@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+    <record model="ir.ui.view" id="view_transport_vehicle_form">
+      <field name="name">view_transport_vehicle_form</field>
+      <field name="model">transport.vehicle</field>
+      <field name="arch" type="xml">
+        <form>
+          <group string="Vehicles">
+            <field name="name"/>
+          </group>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_transport_vehicle_tree">
+      <field name="name">view_transport_vehicle_tree</field>
+      <field name="model">transport.vehicle</field>
+      <field name="arch" type="xml">
+        <tree string="Transport Vehicles">
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_transport_vehicle">
+      <field name="name">Vehicles</field>
+      <field name="res_model">transport.vehicle</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+      name="Vehicles"
+      parent="purchase.menu_purchase_config_purchase"
+      action="action_transport_vehicle"
+      id="menu_transport_vehicle"/>
+
+  </data>
+</openerp>
+
