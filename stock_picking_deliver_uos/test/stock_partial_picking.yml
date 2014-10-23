@@ -29,6 +29,7 @@
     wizard = self.browse(cr, uid, wizard_id)
     picking = self.pool.get('stock.picking.out').browse(cr, uid, ref('partial_picking_out'))
     wiz_line_obj = self.pool.get('stock.partial.picking.line')
+    assert len(wizard.move_ids) == 2, "Wrong line's quantity"
     for wiz_line in wizard.move_ids:
       assert wiz_line.move_id.product_uos_qty == wiz_line.product_uos_qty, "Default Product UOS QTY not correspond"
       assert wiz_line.move_id.product_uos.id == wiz_line.product_uos.id, "Default Product UOS not correspond"
@@ -41,8 +42,9 @@
 -
   !python {model: stock.picking.out}: |
     picking = self.browse(cr, uid, ref("partial_picking_out"))
+    assert len(picking.move_lines) == 2, "Wrong line's quantity"
     for line in picking.move_lines:
-      if line.product_id.id == "20":
-        assert line.product_qty == "2", "Wrong Value on line"
-      if line.product_id.id == "24":
-        assert line.product_qty == "5", "Wrong Value on line"
+      if line.product_id.id == 20:
+        assert line.product_qty == 2, "Wrong Value on line"
+      if line.product_id.id == 24:
+        assert line.product_qty == 5, "Wrong Value on line"
