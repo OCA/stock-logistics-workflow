@@ -29,7 +29,7 @@ class StockPartialPickingLine(orm.TransientModel):
             self, cr, uid, ids,
             product_uos_qty, move_id, context=None):
         result = {}
-        move_obj = self.pool[('stock.move')].browse(
+        move_obj = self.pool['stock.move'].browse(
             cr, uid, move_id, context=context)
         result['value'] = {'quantity': move_obj.product_qty*(
             product_uos_qty/move_obj.product_uos_qty)}
