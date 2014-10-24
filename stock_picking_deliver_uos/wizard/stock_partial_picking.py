@@ -18,20 +18,18 @@
 #
 ##############################################################################
 
-from osv import fields, osv
+from osv import fields, orm
 import openerp.addons.decimal_precision as dp
-from openerp.tools.translate import _
 
 
-class stock_partial_picking_line(osv.TransientModel):
+class Stock_Partial_Picking_Line(orm.TransientModel):
     _inherit = 'stock.partial.picking.line'
-    _name = "stock.partial.picking.line"
 
     def on_change_product_uos_qty(
             self, cr, uid, ids,
             product_uos_qty, move_id, context=None):
         result = {}
-        move_obj = self.pool.get('stock.move').browse(
+        move_obj = self.pool[('stock.move')].browse(
             cr, uid, move_id, context=context)
         result['value'] = {'quantity': move_obj.product_qty*(
             product_uos_qty/move_obj.product_uos_qty)}
@@ -45,11 +43,10 @@ class stock_partial_picking_line(osv.TransientModel):
     }
 
 
-class stock_partial_picking(osv.TransientModel):
+class stock_partial_picking(orm.TransientModel):
     _inherit = 'stock.partial.picking'
-    _name = "stock.partial.picking"
 
-    def _partial_move_for(self, cr, uid, move):
+    def _partial_move_for(self, cr, uid, move, context=None):
         partial_move = super(
             stock_partial_picking,
             self)._partial_move_for(cr, uid, move)
