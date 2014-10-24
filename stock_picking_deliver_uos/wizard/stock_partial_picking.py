@@ -22,7 +22,7 @@ from osv import fields, orm
 import openerp.addons.decimal_precision as dp
 
 
-class Stock_Partial_Picking_Line(orm.TransientModel):
+class StockPartialPickingLine(orm.TransientModel):
     _inherit = 'stock.partial.picking.line'
 
     def on_change_product_uos_qty(
@@ -43,12 +43,12 @@ class Stock_Partial_Picking_Line(orm.TransientModel):
     }
 
 
-class stock_partial_picking(orm.TransientModel):
+class StockPartialPicking(orm.TransientModel):
     _inherit = 'stock.partial.picking'
 
     def _partial_move_for(self, cr, uid, move, context=None):
         partial_move = super(
-            stock_partial_picking,
+            StockPartialPicking,
             self)._partial_move_for(cr, uid, move)
         partial_move.update({
             'product_uos': move.product_uos.id,

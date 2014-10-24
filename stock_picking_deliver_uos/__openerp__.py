@@ -31,7 +31,7 @@
     For example if i have to deliver 3 tables (uos qty=3 uos=pz)
     each one of 1,5 m² (uom=m², line uom qty=4,5),
     I can make a partial delivery specifying 2 pieces
-    (the system computes the internal uom qty:  3 m²)"""
+    (the system computes the internal uom qty:  3 m²)""",
     'data': [
         "wizard/stock_partial_picking_view.xml",
     ],
