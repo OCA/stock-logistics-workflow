@@ -24,4 +24,4 @@ from openerp import models, fields
 class TransportVehicle(models.Model):
     _name = "transport.vehicle"
 
-    name = fields.Char('Name', required=True)
+    name = fields.Char('Name', required=True, translate=True)
