@@ -26,10 +26,6 @@
  "category": "Purchase Management",
  "license": "AGPL-3",
  'complexity': "easy",
- "description": """
-Transport Information
-=====================
-""",
  "depends": ["purchase",
              ],
  "data": ["view/transport_mode.xml",
