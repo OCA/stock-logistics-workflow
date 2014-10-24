@@ -5,11 +5,11 @@
     partner_id: base.res_partner_2
     move_lines:
       - product_id: product.product_product_24
-        product_qty: 10
-        product_uos_qty: 8
+        product_qty: 4
+        product_uos_qty: 5
       - product_id: product.product_product_20
         product_qty: 4
-        product_uos_qty: 6
+        product_uos_qty: 5
 -
   Then I confirm the picking
 -
@@ -44,7 +44,7 @@
     picking = self.browse(cr, uid, ref("partial_picking_out"))
     assert len(picking.move_lines) == 2, "Wrong line's quantity"
     for line in picking.move_lines:
-      if line.product_id.id == 20:
-        assert line.product_qty == 2, "Wrong Value on line"
-      if line.product_id.id == 24:
-        assert line.product_qty == 5, "Wrong Value on line"
+      if line.product_id.id == ref('product.product_product_20'):
+        assert line.product_qty == 2.0, "Wrong Value on line on product_20"
+      elif line.product_id.id == ref('product.product_product_24'):
+        assert line.product_qty == 2.0, "Wrong Value on line on product_24"
