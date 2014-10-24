@@ -36,7 +36,10 @@ class StockPartialPickingLine(orm.TransientModel):
         return result
 
     _columns = {
-        'product_uos': fields.many2one('product.uom', 'Product UOS'),
+        'product_uos': fields.related(
+            'move_id', 'product_uos',
+            type="many2one", relation="product.uom", string='Product UOS',
+            readonly=True),
         'product_uos_qty': fields.float(
             'Quantity (UOS)',
             digits_compute=dp.get_precision('Product Unit of Measure')),
