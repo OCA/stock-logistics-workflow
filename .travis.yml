@@ -15,9 +15,9 @@ install:
   - export PATH=$HOME/maintainer-quality-tools/travis:$PATH
   - travis_install_nightly
   - pip install coveralls flake8
-  - git clone https://github.com/OCA/product-attribute -b 8.0 $HOME/product-attribute
-  - git clone https://github.com/OCA/webkit-tools -b 8.0 $HOME/webkit-tools
-  - git clone https://github.com/OCA/stock-logistics-warehouse -b 8.0 $HOME/stock-logistics-warehouse
+  - git clone https://github.com/OCA/product-attribute -b ${VERSION} $HOME/product-attribute
+  - git clone https://github.com/OCA/webkit-tools -b ${VERSION} $HOME/webkit-tools
+  - git clone https://github.com/OCA/stock-logistics-warehouse -b ${VERSION} $HOME/stock-logistics-warehouse
 
 script:
   - travis_run_tests
