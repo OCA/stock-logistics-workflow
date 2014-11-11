@@ -1,0 +1,30 @@
+-
+  I create a warehouse with default values
+-
+  !record {model: stock.warehouse, id: wh1}: 
+    name: wh1
+    code: WH1
+-
+  check transit locations
+-
+  !assert {model: stock.warehouse, id: wh1}:
+    - wh_transit_in_loc_id.active == False
+    - wh_transit_out_loc_id.name == 'Outgoing Transit'
+    - transit_in_type_id.active == False
+    - transit_out_type_id.active == False
+-
+  I create a warehouse with transit config
+-
+  !record {model: stock.warehouse, id: wh2}: 
+    name: wh2
+    code: WH2
+    reception_steps: transit_two_steps
+    delivery_steps: pick_ship_transit
+-
+  check transit locations
+-
+  !assert {model: stock.warehouse, id: wh2}:
+    - wh_transit_in_loc_id.active == True
+    - wh_transit_out_loc_id.name == 'Outgoing Transit'
+    - transit_in_type_id.active == True
+    - transit_out_type_id.active == True

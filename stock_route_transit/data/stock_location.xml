@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <record model='stock.location' id='transit_outgoing'>
+      <field name='name'>Outgoing Transit</field>
+      <field name='usage'>transit</field>
+    </record>
+  </data> 
+</openerp>
