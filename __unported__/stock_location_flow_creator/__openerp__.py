@@ -24,7 +24,7 @@
  'author': 'Camptocamp',
  'maintainer': 'Camptocamp',
  'category': 'Warehouse',
- 'complexity': 'easy', #easy, normal, expert
+ 'complexity': 'easy',  # easy, normal, expert
  'depends': ['stock_location',
              'stock_orderpoint_creator'],
  'description': """
@@ -41,6 +41,6 @@ stock location flows for multiple product""",
  'auto_install': True,
  'license': 'AGPL-3',
  'active': False,
-}
+ }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

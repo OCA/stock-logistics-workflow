@@ -88,6 +88,7 @@ class StockPicking(orm.Model):
 
 
 class StockPickingIn(orm.Model):
+
     """Manually bring here what is done above in the stock.picking.
 
     This is common workaround. For example, it is done that way in the core
@@ -122,6 +123,7 @@ class StockPickingIn(orm.Model):
 
 
 class StockPickingOut(orm.Model):
+
     """Manually bring here what is done above in the stock.picking."""
 
     _inherit = 'stock.picking.out'

@@ -30,6 +30,7 @@ _logger = logging.getLogger(__name__)
 
 
 class PlanFinished(Exception):
+
     """The available future stock is insufficient to handle all deliveries.
 
     After that is raised, we could stop processing the remaining deliveries,
@@ -39,7 +40,6 @@ class PlanFinished(Exception):
     control flow, and should then be factored out.
 
     """
-    pass
 
 
 class StockPickingOut(orm.Model):

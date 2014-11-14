@@ -22,6 +22,7 @@
 from openerp.osv.orm import Model
 from openerp.osv import fields
 
+
 class stock_picking(Model):
     _inherit = 'stock.picking'
     _columns = {
@@ -37,7 +38,7 @@ class stock_picking(Model):
                                        string='Shop',
                                        readonly=True,
                                        help='The shop from which the sale order for the picking was issued')
-        }
+    }
 
 
 class sale_order(Model):
@@ -49,4 +50,4 @@ class sale_order(Model):
                                              string='Carrier Name',
                                              readonly=True,
                                              help="Name of the carrier partner")
-        }
+    }
