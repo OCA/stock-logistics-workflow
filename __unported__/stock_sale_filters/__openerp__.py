@@ -21,17 +21,17 @@
 
 
 {
-	"name" : "SO related filters on stock.picking and sale.order",
-	"version" : "1.3",
-	"depends" : ["delivery"],
-	"author" : "Camptocamp",
-        "license": "AGPL-3",
-	"description": """add filters on stock.picking views
+    "name": "SO related filters on stock.picking and sale.order",
+    "version": "1.3",
+    "depends": ["delivery"],
+    "author": "Camptocamp",
+    "license": "AGPL-3",
+    "description": """add filters on stock.picking views
         """,
-	"category" : "Generic Modules/Stock",
-	"init_xml" : [],
-	"demo_xml" : [],
-	"update_xml" : ["stock_view.xml", ],
-	"active": False,
-	"installable": False
+    "category": "Generic Modules/Stock",
+    "init_xml": [],
+    "demo_xml": [],
+    "update_xml": ["stock_view.xml", ],
+    "active": False,
+    "installable": False
 }

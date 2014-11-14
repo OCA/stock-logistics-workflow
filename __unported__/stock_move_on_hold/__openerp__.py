@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#################################################################################
+##########################################################################
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2011 Julius Network Solutions SARL <contact@julius.fr>
@@ -17,27 +17,27 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-#################################################################################
+##########################################################################
 
 {
-    "name" : "Stock On Hold Status",
-    "version" : "1.0",
-    "author" : "Julius Network Solutions",
+    "name": "Stock On Hold Status",
+    "version": "1.0",
+    "author": "Julius Network Solutions",
     "description" : """ This Module allows to hold pickings.
     It's adding a button which holding the picking and workflow.
     You should use the sale_prepayment module to be automated with sale orders and invoices.
     """,
-    "website" : "http://www.julius.fr",
-    "depends" : [
-                 "stock",
-                 ],
-    "category" : "Stock",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-                    'wizard/stock_invoice_onshipping_view.xml',
-                    'stock_view.xml',
-                    'stock_workflow.xml',
+    "website": "http://www.julius.fr",
+    "depends": [
+        "stock",
+    ],
+    "category": "Stock",
+    "init_xml": [],
+    "demo_xml": [],
+    "update_xml": [
+        'wizard/stock_invoice_onshipping_view.xml',
+        'stock_view.xml',
+        'stock_workflow.xml',
     ],
     'test': [],
     'installable': False,

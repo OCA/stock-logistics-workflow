@@ -26,17 +26,18 @@ from openerp.osv.orm import TransientModel, fields
 
 _template_register = ['push_flow_template_id', 'pull_flow_template_id']
 
+
 class ProductConfigCreator(TransientModel):
     _inherit = 'stock.warehouse.orderpoint.creator'
     _description = 'Orderpoint Creator'
 
     _columns = {
-            'push_flow_template_id': fields.many2many('stock.location.path.template',
-                                                      rel='path_creator_rel',
-                                                      string='Pushed Flows'),
-            'pull_flow_template_id': fields.many2many('product.pulled.flow.template',
-                                                      rel='flow_creator_rel',
-                                                      string="Pulled Flows")
+        'push_flow_template_id': fields.many2many('stock.location.path.template',
+                                                  rel='path_creator_rel',
+                                                  string='Pushed Flows'),
+        'pull_flow_template_id': fields.many2many('product.pulled.flow.template',
+                                                  rel='flow_creator_rel',
+                                                  string="Pulled Flows")
     }
 
     def _get_template_register(self):

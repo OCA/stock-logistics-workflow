@@ -24,11 +24,12 @@
 from openerp.osv.orm import Model
 from openerp.addons.stock_orderpoint_creator.base_product_config_template import BaseProductConfigTemplate
 
+
 class StockLocationPath(BaseProductConfigTemplate, Model):
     _name = 'stock.location.path.template'
 
     _inherit = 'stock.location.path'
-    _table =  'stock_location_path_template'
+    _table = 'stock_location_path_template'
     _clean_mode = 'unlink'
 
     def _get_ids_2_clean(self, cursor, uid, template_br, product_ids, context=None):
