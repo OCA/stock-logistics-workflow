@@ -20,26 +20,29 @@
 
 {
     'name': "Picking Invoice Link",
-    'version': '0.1',
+    'version': '0.2',
     'category': 'Warehouse Management',
     'summary': 'Adds link between pickings and generated invoices',
     'description': """
 This module adds a link between pickings and generated invoices.
-So that user can easly reach the invoice related to the picking.
+So that user can easly reach the invoice related to the picking
+and see the pickings related to the invoice. This only applies
+on the invoices generated from pickings.
 
-Probably to be modified according to bug 1169998 (when solution will come)
-https://bugs.launchpad.net/openobject-addons/+bug/1169998
+Authors
+=======
+* Lorenzo Battistini <lorenzo.battistini@agilebg.com>
+* Alexis de Lattre <alexis.delattre@akretion.com>
 """,
     'author': 'Agile Business Group',
     'website': 'http://www.agilebg.com',
     'license': 'AGPL-3',
-    "depends": ['stock'],
+    "depends": ['stock_account'],
     "data": [
         "stock_view.xml",
         "account_invoice_view.xml",
     ],
     "demo": [],
     'test': [],
-    "active": False,
-    "installable": True
+    'installable': True,
 }
