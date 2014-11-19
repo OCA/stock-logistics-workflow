@@ -28,6 +28,11 @@ This module adds a link between pickings and generated invoices.
 So that user can easly reach the invoice related to the picking
 and see the pickings related to the invoice. This only applies
 on the invoices generated from pickings.
+
+Authors
+=======
+* Lorenzo Battistini <lorenzo.battistini@agilebg.com>
+* Alexis de Lattre <alexis.delattre@akretion.com>
 """,
     'author': 'Agile Business Group',
     'website': 'http://www.agilebg.com',
