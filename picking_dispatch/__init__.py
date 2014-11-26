@@ -19,5 +19,8 @@
 #
 ##############################################################################
 from . import picking_dispatch
+from . import stock
+from . import product
+from . import company
 import wizard
 import report

@@ -3,7 +3,6 @@
   <data>
     <record model="ir.ui.view" id="picking_dispatch_form">
       <field name="name">picking.dispatch.form</field>
-      <field name="type">form</field>
       <field name="model">picking.dispatch</field>
       <field name="arch" type="xml">
         <form string="Picking Dispatch" version="7.0">
@@ -53,7 +52,6 @@
 
     <record model="ir.ui.view" id="picking_dispatch_tree">
       <field name="name">picking.dispatch.tree</field>
-      <field name="type">tree</field>
       <field name="model">picking.dispatch</field>
       <field name="arch" type="xml">
         <tree string="Picking Dispatch">
@@ -68,7 +66,6 @@
     <record id="picking_dispatch_search" model="ir.ui.view">
       <field name="name">picking.dispatch.search</field>
       <field name="model">picking.dispatch</field>
-      <field name="type">search</field>
       <field name="arch" type="xml">
         <search string="Dispatch Picking Order">
           <group>
@@ -120,12 +117,11 @@
               id='menu_action_picking_dispatch'
               sequence='10'/>
 
-    <!-- Stock Out picking : add dispatch infos -->
+    <!-- Stock picking : add dispatch infos -->
     <record id="view_picking_form" model="ir.ui.view">
-      <field name="name">stock.picking.form.dispatch.out</field>
-      <field name="model">stock.picking.out</field>
-      <field name="inherit_id" ref="stock.view_picking_out_form"/>
-      <field name="type">form</field>
+      <field name="name">stock.picking.form.dispatch</field>
+      <field name="model">stock.picking</field>
+      <field name="inherit_id" ref="stock.view_picking_form"/>
       <field name="arch" type="xml">
         <page string="Additional Info" position="after">
           <page string="Related Dispatch">
@@ -135,11 +131,11 @@
       </field>
     </record>
 
-    <!-- Stock Out picking : add dispatch search -->
-    <record id="view_picking_out_search" model="ir.ui.view">
-        <field name="name">stock.picking.out.search.related_dispatch_ids</field>
-        <field name="model">stock.picking.out</field>
-        <field name="inherit_id" ref="stock.view_picking_out_search"/>
+    <!-- Stock picking : add dispatch search -->
+    <record id="view_picking_internal_search" model="ir.ui.view">
+        <field name="name">stock.picking.search.related_dispatch_ids</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search"/>
         <field name="arch" type="xml">
           <field name="name" position="after">
             <field name="related_dispatch_ids"/>
@@ -147,41 +143,10 @@
       </field>
     </record>
 
-    <!-- Stock Internal picking : add dispatch infos -->
-    <record id="view_picking_form_int" model="ir.ui.view">
-      <field name="name">stock.picking.form.dispatch.int</field>
-      <field name="model">stock.picking</field>
-      <field name="inherit_id" ref="stock.view_picking_form"/>
-      <field name="type">form</field>
-      <field name="arch" type="xml">
-        <page string="Additional Info" position="after">
-          <page string="Related Dispatch">
-            <field name="related_dispatch_ids" nolabel="1" colspan="4"/>
-          </page>
-        </page>
-      </field>
-    </record>
-
-    <!-- Stock In picking : add dispatch infos -->
-    <record id="view_picking_form_in" model="ir.ui.view">
-      <field name="name">stock.picking.form.dispatch.in</field>
-      <field name="model">stock.picking.in</field>
-      <field name="inherit_id" ref="stock.view_picking_in_form"/>
-      <field name="type">form</field>
-      <field name="arch" type="xml">
-        <page string="Additional Info" position="after">
-          <page string="Related Dispatch">
-            <field name="related_dispatch_ids" nolabel="1" colspan="4"/>
-          </page>
-        </page>
-      </field>
-    </record>
-
     <!-- Product View: add description_warehouse -->
     <record id="product_normal_form_view" model="ir.ui.view">
       <field name="name">product.normal.form</field>
       <field name="model">product.product</field>
-      <field name="type">form</field>
       <field name="inherit_id" ref="product.product_normal_form_view"/>
       <field name="arch" type="xml">
         <field name="description_purchase"
@@ -193,11 +158,10 @@
     </record>
 
     <!-- stock.move : display picking.dispatch and allow filtering -->
-    <record id="view_move_tree_reception_picking" model="ir.ui.view">
+    <record id="view_move_tree_receipt_picking" model="ir.ui.view">
       <field name="name">stock.move.tree2</field>
       <field name="model">stock.move</field>
-      <field name="type">tree</field>
-      <field name="inherit_id" ref="stock.view_move_tree_reception_picking"/>
+      <field name="inherit_id" ref="stock.view_move_tree_receipt_picking"/>
       <field name="arch" type="xml">
         <field name="date" position="after">
           <field name="dispatch_id" />
@@ -208,7 +172,6 @@
     <record id="view_move_form" model="ir.ui.view">
       <field name="name">stock.move.form</field>
       <field name="model">stock.move</field>
-      <field name="type">form</field>
       <field name="inherit_id" ref="stock.view_move_form"/>
       <field name="arch" type="xml">
         <field name="picking_id" position="after">
@@ -220,10 +183,9 @@
     <record id="view_move_search" model="ir.ui.view">
       <field name="name">stock.move.search</field>
       <field name="model">stock.move</field>
-      <field name="type">search</field>
       <field name="inherit_id" ref="stock.view_move_search"/>
       <field name="arch" type="xml">
-        <field name="prodlot_id" position="after">
+        <field name="partner_id" position="after">
           <field name="dispatch_id" widget="selection"/>
         </field>
       </field>
@@ -232,7 +194,6 @@
     <record model="ir.ui.view" id="view_company_form_inherit">
       <field name="name">res.company.form.inherit</field>
       <field name="model">res.company</field>
-      <field name="type">form</field>
       <field name="inherit_id" ref="base.view_company_form"/>
       <field name="arch" type="xml">
         <notebook position="inside">

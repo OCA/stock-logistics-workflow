@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Guewen Baconnier
-#    Copyright 2014 Camptocamp SA
+#    Author: Alexandre Fayolle
+#    Copyright 2012-2014 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,25 +18,15 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-from openerp.osv import orm
-from openerp.tools.translate import _
+from openerp.osv import orm, fields
 
 
-class check_assign_all(orm.TransientModel):
-    _name = 'picking.dispatch.check.assign.all'
-    _description = 'Picking Dispatch Check Availability'
-
-    def check(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
-
-        dispatch_ids = context.get('active_ids')
-        if not dispatch_ids:
-            raise orm.except_orm(
-                _('Error'),
-                _('No selected dispatch'))
-
-        dispatch_obj = self.pool['picking.dispatch']
-        dispatch_obj.check_assign_all(cr, uid, dispatch_ids, context=context)
-        return {'type': 'ir.actions.act_window_close'}
+class res_company(orm.Model):
+    _name = 'res.company'
+    _inherit = 'res.company'
+    _columns = {
+        'default_picker_id': fields.many2one(
+            'res.users', 'Default Picker',
+            help='the user to which the pickings are assigned by default',
+            select=True),
+    }
