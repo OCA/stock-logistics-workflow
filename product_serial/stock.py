@@ -383,7 +383,7 @@ class stock_production_lot(orm.Model):
                     _loc_ids.append(_leaf[-1])
                 else:
                     _locs = _loc_pool.name_search(cr, uid, _leaf[-1],
-                        context=context)
+                                                  context=context)
                     _locs = tuple([x[0] for x in _locs])
                     _loc_ids.extend(_locs)
 
