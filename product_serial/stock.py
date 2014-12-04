@@ -366,26 +366,44 @@ class stock_production_lot(orm.Model):
         return res
 
     def _last_location_id_search(self, cr, uid, obj, name, args, context=None):
-        ops = ['=', ]
-        prodlot_ids = ()
-        if not len(args):
-            return []
-        prodlot_ids = []
-        for a in args:
-            operator = a[1]
-            value = a[2]
-            if operator not in ops:
-                raise orm.except_orm(
-                    _('Error !'),
-                    _('Operator %s not supported in searches for '
-                      'last_location_id (product.product).' % operator))
-            if operator == '=':
-                cr.execute(
-                    "select distinct prodlot_id "
-                    "from stock_report_prodlots "
-                    "where location_id = %s and qty > 0 ",
-                    (value, ))
-                prodlot_ids = filter(None, map(lambda x: x[0], cr.fetchall()))
+        _not = False
+        _loc_pool = self.pool.get('stock.location')
+        _loc_ids = []
+        _is_null = False
+        for _leaf in args:
+            if _leaf[0] == 'last_location_id':
+                if isinstance(_leaf[-1], (int, long)):
+                    _val_id = _leaf[-1]
+                else: 
+                    _val = _leaf[-1]
+
+                _op = _leaf[1].strip()
+                _not = (('not' in _op) or ('!' in _op) or ('<' in _op) or
+                        ('>' in _op))
+                if isinstance(_leaf[-1], (bool)):
+                    if _leaf[1] == '=':
+                        _is_null = True
+                    else:
+                        _loc_ids.append(0)
+                elif isinstance(_leaf[-1], (int, long)):
+                    _loc_ids.append(_leaf[-1])
+                else: 
+                    _locs = _loc_pool.name_search(cr, uid, _leaf[-1], context=context)
+                    _locs = tuple([x[0] for x in _locs])
+                    _loc_ids.extend(_locs)
+
+        if _is_null:
+            cr.execute(
+                "SELECT DISTINCT prodlot_id "
+                "FROM stock_report_prodlots "
+                "WHERE location_id IS NULL AND qty > 0")
+        else:
+            cr.execute(
+                "SELECT DISTINCT prodlot_id "
+                "FROM stock_report_prodlots "
+                "WHERE location_id %s IN %%s AND qty > 0 " % (_not and 'NOT' or ''),
+                (tuple(_loc_ids), ))
+        prodlot_ids = filter(None, map(lambda x: x[0], cr.fetchall()))
         return [('id', 'in', tuple(prodlot_ids))]
 
     _columns = {
