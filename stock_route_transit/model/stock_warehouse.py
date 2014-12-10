@@ -134,11 +134,12 @@ class StockWarehouse(orm.Model):
         if not (warehouse.wh_transit_out_loc_id
                 and warehouse.wh_transit_in_loc_id):
             # this can happen for warehouses created before this module was installed
-            self._create_transit_locations(self, cr, uid,
-                                           warehouse.company_id,
-                                           warehouse.reception_steps,
-                                           warehouse.delivery_steps,
-                                           context)
+            in_id, out_id = self._create_transit_locations(cr, uid,
+                                                           warehouse.company_id.id,
+                                                           warehouse.reception_steps,
+                                                           warehouse.delivery_steps,
+                                                           context)
+            warehouse.write({'wh_transit_in_loc_id': in_id, 'wh_transit_out_loc_id': out_id})
         new_routes = {
             'transit_one_step': (_('Receipt in 1 step from Transit'),
                                  [(warehouse.wh_transit_in_loc_id,
