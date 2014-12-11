@@ -111,10 +111,6 @@ class StockPickingOut(orm.Model):
                 }, context=context)
                 message = _("Scheduled date update to %s from %s") \
                     % (new_date_str, move_in.picking_id.name)
-                # Post message on product
-                self.pool['product.product'].message_post(
-                    cr, uid, product.id, body=message, context=context
-                )
                 # Post message on stock picking
                 self.message_post(cr, uid, move_out.picking_id.id,
                                   body=message, context=context)
@@ -151,10 +147,6 @@ class StockPickingOut(orm.Model):
                         }, context=context)
                         message = _("Scheduled date update to %s from %s") \
                             % (new_date_str, current_plan['pick_in_name'])
-                        # Post message on product
-                        self.pool['product.product'].message_post(
-                            cr, uid, product.id, body=message, context=context
-                        )
                         # Post message on stock picking
                         self.message_post(cr, uid, move_out.picking_id.id,
                                           body=message, context=context)
