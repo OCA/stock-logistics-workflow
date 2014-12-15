@@ -30,6 +30,7 @@
     "installable": True,
     "data": ["view/stock_warehouse.xml",
              "data/stock_location.xml",
+             "security/groups.xml",
              ],
     "test": ["test/create_warehouse.yml",
              ],
