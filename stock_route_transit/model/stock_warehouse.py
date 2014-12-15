@@ -226,6 +226,15 @@ class StockWarehouse(orm.Model):
 
     def switch_location(self, cr, uid, ids, warehouse, new_reception_step=False, new_delivery_step=False, context=None):
         """set unused locations to active=False"""
+        if not (warehouse.wh_transit_out_loc_id
+                and warehouse.wh_transit_in_loc_id):
+            # this can happen for warehouses created before this module was installed
+            in_id, out_id = self._create_transit_locations(cr, uid,
+                                                           warehouse.company_id.id,
+                                                           warehouse.reception_steps,
+                                                           warehouse.delivery_steps,
+                                                           context)
+            warehouse.write({'wh_transit_in_loc_id': in_id, 'wh_transit_out_loc_id': out_id})
         # incoming transit
         other_wh_ids = self.search(cr, uid,
                                    [('id', '!=', warehouse.id),
@@ -233,8 +242,7 @@ class StockWarehouse(orm.Model):
                                    ],
                                    context=context)
         other_wh = self.browse(cr, uid, other_wh_ids, context=context)
-        transit_receptions = ['transit' in new_reception_step] + ['transit' in other.reception_steps for other in other_wh]
-        print transit_receptions
+        transit_receptions = ['transit' in (new_reception_step or '')] + ['transit' in other.reception_steps for other in other_wh]
         warehouse.wh_transit_in_loc_id.active = any(transit_receptions)
         # outgoing transit
         other_wh_ids = self.search(cr, uid,
@@ -243,7 +251,7 @@ class StockWarehouse(orm.Model):
                                    ],
                                    context=context)
         other_wh = self.browse(cr, uid, other_wh_ids, context=context)
-        transit_deliveries = ['transit' in new_delivery_step] + ['transit' in other.delivery_steps for other in other_wh]
+        transit_deliveries = ['transit' in (new_delivery_step or '')] + ['transit' in other.delivery_steps for other in other_wh]
         print transit_deliveries
         warehouse.wh_transit_in_loc_id.active = any(transit_deliveries)
         return super(StockWarehouse, self).switch_location(cr, uid, ids, warehouse, new_reception_step, new_delivery_step, context)
