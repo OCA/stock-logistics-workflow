@@ -224,15 +224,82 @@ class StockWarehouse(orm.Model):
         return routes_dict
 
 
-#    def switch_location(self, cr, uid, ids, warehouse, new_reception_step=False, new_delivery_step=False, context=None):
-#        """set unused locations to active=False"""
+    def switch_location(self, cr, uid, ids, warehouse, new_reception_step=False, new_delivery_step=False, context=None):
+        """set unused locations to active=False"""
+        # incoming transit
+        other_wh_ids = self.search(cr, uid,
+                                   [('id', '!=', warehouse.id),
+                                    ('wh_transit_in_loc_id', '=', warehouse.wh_transit_in_loc_id.id)
+                                   ],
+                                   context=context)
+        other_wh = self.browse(cr, uid, other_wh_ids, context=context)
+        transit_receptions = ['transit' in new_reception_step] + ['transit' in other.reception_steps for other in other_wh]
+        print transit_receptions
+        warehouse.wh_transit_in_loc_id.active = any(transit_receptions)
+        # outgoing transit
+        other_wh_ids = self.search(cr, uid,
+                                   [('id', '!=', warehouse.id),
+                                    ('wh_transit_in_loc_id', '=', warehouse.wh_transit_out_loc_id.id)
+                                   ],
+                                   context=context)
+        other_wh = self.browse(cr, uid, other_wh_ids, context=context)
+        transit_deliveries = ['transit' in new_delivery_step] + ['transit' in other.delivery_steps for other in other_wh]
+        print transit_deliveries
+        warehouse.wh_transit_in_loc_id.active = any(transit_deliveries)
+        return super(StockWarehouse, self).switch_location(cr, uid, ids, warehouse, new_reception_step, new_delivery_step, context)
 
-#    def change_route(self, cr, uid, ids, warehouse, new_reception_step=False, new_delivery_step=False, context=None):
-#        """change input_loc, output_loc
-#        update active fiels on picking_types
-#        update lication_dest (resp. src) of in (resp. out) picking type
-#        remove all routes of the WH and recreate them
-#        """ 
+    def change_route(self, cr, uid, ids, warehouse, new_reception_step=False, new_delivery_step=False, context=None):
+        """change input_loc, output_loc
+        update active fiels on picking_types
+
+                update location_dest (resp. src) of in (resp. out) picking type
+        remove all routes of the WH and recreate them
+        """
+        super(StockWarehouse, self).change_route(cr, uid, ids, warehouse, new_reception_step, new_delivery_step, context)
+        if 'transit' not in new_delivery_step and 'transit' not in new_reception_step:
+            return True
+        # due to poor design in base class, we need to redo everything... :-(
+        # and add our stuff
+        picking_type_obj = self.pool.get('stock.picking.type')
+        pull_obj = self.pool.get('procurement.rule')
+        push_obj = self.pool.get('stock.location.path')
+        route_obj = self.pool.get('stock.location.route')
+        new_reception_step = new_reception_step or warehouse.reception_steps
+        new_delivery_step = new_delivery_step or warehouse.delivery_steps
+        if new_reception_step in ('transit_one_step', 'one_step'):
+            input_loc = warehouse.lot_stock_id
+        else:
+            input_loc = warehouse.wh_input_stock_loc_id
+        if new_delivery_step in ('ship_transit', 'ship_only'):
+            output_loc = warehouse.lot_stock_id
+        else:
+            output_loc = warehouse.wh_output_stock_loc_id
+
+        wh = warehouse
+        picking_type_writes = [
+            (wh.in_type_id.id, {'default_location_dest_id': input_loc.id}),
+            (wh.out_type_id.id, {'default_location_src_id': output_loc.id}),
+            (wh.pick_type_id.id,
+             {'active': new_delivery_step in ('ship_only', 'ship_transit')}),
+            (wh.pack_type_id.id,
+             {'active': new_delivery_step.startswith('pick_pack_ship')}),
+            (wh.transit_in_type_id.id,
+             {'active': 'transit' in new_reception_step}),
+            (wh.transit_out_type_id.id,
+             {'active': 'transit' in new_reception_step}),
+            ]
+        for pick_type_id, vals in picking_type_writes:
+            picking_type_obj.write(cr, uid, pick_type_id, vals, context=context)
+
+
+        # fix active field of the crossdock route
+        route_obj.write(cr, uid,
+                        warehouse.crossdock_route_id.id,
+                        {'active': not new_reception_step.endswith('one_step') and new_delivery_step not in ('ship_transit', 'ship_only')},
+                        context=context)
+        
+
+        return True
 
     def create_sequences_and_picking_types(self, cr, uid, warehouse, context=None):
         _super = super(StockWarehouse, self)

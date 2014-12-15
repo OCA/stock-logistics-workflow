@@ -1,7 +1,7 @@
 -
   I create a warehouse with default values
 -
-  !record {model: stock.warehouse, id: wh1}: 
+  !record {model: stock.warehouse, id: wh1}:
     name: wh1
     code: WH1
 -
@@ -15,11 +15,11 @@
 -
   I create a warehouse with transit config
 -
-  !record {model: stock.warehouse, id: wh2}: 
+  !record {model: stock.warehouse, id: wh2}:
     name: wh2
     code: WH2
-    reception_steps: transit_two_steps
-    delivery_steps: pick_ship_transit
+    reception_steps: transit_one_step
+    delivery_steps: ship_transit
 -
   check transit locations
 -
@@ -28,3 +28,62 @@
     - wh_transit_out_loc_id.name == 'Outgoing Transit'
     - transit_in_type_id.active == True
     - transit_out_type_id.active == True
+-
+  check procurement rule on stock location
+-
+  !python {model: stock.warehouse, id: wh2}: |
+     proc_rules = self.env['procurement.rule'].search([('warehouse_id', '=', self.id), ('location_src_id', '=', self.lot_stock_id.id)])
+     assert len(proc_rules) == 2, 'found %d rules' % len(proc_rules)
+     found_mto = False
+     for rule in proc_rules:
+       if rule.route_id.name == 'Make To Order':
+         found_mto = True
+       else:
+         assert rule.picking_type_id.id and rule.picking_type_id.id == self.out_type_id.id, 'wrong picking type %s' % rule.picking_type_id.name
+         assert rule.action == 'move'
+         assert rule.location_id == self.wh_transit_out_loc_id
+-
+  check procurement rule on transit location
+-
+  !python {model: stock.warehouse, id: wh2}: |
+     proc_rule = self.env['procurement.rule'].search([('warehouse_id', '=', self.id), ('location_src_id', '=', self.wh_transit_out_loc_id.id)])
+     assert len(proc_rule) == 1, 'found %d rules' % len(proc_rule)
+     assert proc_rule.picking_type_id.id and proc_rule.picking_type_id.id == self.transit_out_type_id.id, 'wrong picking type %s' % proc_rule.picking_type_id.name
+     assert proc_rule.action == 'move'
+     assert proc_rule.location_id.usage == 'customer'
+-
+  I edit the 1st warehouse to set a transit config
+-
+  !python {model: stock.warehouse, id: wh1}: |
+    self.write({'reception_steps': 'transit_one_step', 'delivery_steps': 'ship_transit'})
+-
+  check transit locations
+-
+  !assert {model: stock.warehouse, id: wh1}:
+    - wh_transit_in_loc_id.active == True
+    - wh_transit_out_loc_id.name == 'Outgoing Transit'
+    - transit_in_type_id.active == True
+    - transit_out_type_id.active == True
+-
+  check procurement rule on stock location
+-
+  !python {model: stock.warehouse, id: wh1}: |
+     proc_rules = self.env['procurement.rule'].search([('warehouse_id', '=', self.id), ('location_src_id', '=', self.lot_stock_id.id)])
+     assert len(proc_rules) == 2, 'found %d rules' % len(proc_rules)
+     found_mto = False
+     for rule in proc_rules:
+       if rule.route_id.name == 'Make To Order':
+         found_mto = True
+       else:
+         assert rule.picking_type_id.id and rule.picking_type_id.id == self.out_type_id.id, 'wrong picking type %s' % rule.picking_type_id.name
+         assert rule.action == 'move', 'wront rule action %s' % rule.action
+         assert rule.location_id == self.wh_transit_out_loc_id, 'wrong location' % rule.location_id.name
+-
+  check procurement rule on transit location
+-
+  !python {model: stock.warehouse, id: wh1}: |
+     proc_rule = self.env['procurement.rule'].search([('warehouse_id', '=', self.id), ('location_src_id', '=', self.wh_transit_out_loc_id.id)])
+     assert len(proc_rule) == 1, 'found %d rules' % len(proc_rule)
+     assert proc_rule.picking_type_id.id and proc_rule.picking_type_id.id == self.transit_out_type_id.id, 'wrong picking type %s' % proc_rule.picking_type_id.name
+     assert proc_rule.action == 'move'
+     assert proc_rule.location_id.usage == 'customer'
