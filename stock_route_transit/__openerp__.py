@@ -21,10 +21,10 @@
 
 
 {
-    "name" : "stock routes transit ",
-    "version" : "0.1",
-    "depends" : ["stock"],
-    "author" : "Camptocamp",
+    "name": "stock routes transit ",
+    "version": "0.1",
+    "depends": ["stock"],
+    "author": "Camptocamp",
     "license": "AGPL-3",
     "category" : "Generic Modules/Stock",
     "installable": True,
