@@ -425,7 +425,7 @@ class StockWarehouse(orm.Model):
                                             context=context)
         customer_loc, supplier_loc = self._get_partner_locations(
             cr, uid, warehouse.id, context=context)
-        pick_type_val = {'name': _('In Transit'),
+        pick_type_val = {'name': _('Supplier shipping'),
                          'warehouse_id': warehouse.id,
                          'code': 'incoming',
                          'sequence_id': in_transit_seq_id,
@@ -437,7 +437,7 @@ class StockWarehouse(orm.Model):
         in_transit_type = picking_type_obj.create(cr, uid,
                                                   pick_type_val,
                                                   context=context)
-        pick_type_val = {'name': _('Out Transit'),
+        pick_type_val = {'name': _('Customer reception'),
                          'warehouse_id': warehouse.id,
                          'code': 'outgoing',
                          'sequence_id': out_transit_seq_id,
