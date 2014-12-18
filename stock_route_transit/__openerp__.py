@@ -32,6 +32,7 @@
              "data/stock_location.xml",
              "security/groups.xml",
              ],
-    "test": ["test/create_warehouse.yml",
+    "test": ["test/stock_users.yml",
+             "test/create_warehouse.yml",
              ],
 }

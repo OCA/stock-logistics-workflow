@@ -2,7 +2,7 @@
    Ensure that everything in there can be done by Warehouse / Manager
 -
   !context
-    uid: 'stock.res_users_stock_manager'
+    uid: res_users_stock_manager
 -
   I create a warehouse with default values
 -
