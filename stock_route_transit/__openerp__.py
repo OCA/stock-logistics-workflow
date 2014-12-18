@@ -26,7 +26,7 @@
     "depends": ["stock"],
     "author": "Camptocamp",
     "license": "AGPL-3",
-    "category" : "Generic Modules/Stock",
+    "category": "Generic Modules/Stock",
     "installable": True,
     "data": ["view/stock_warehouse.xml",
              "data/stock_location.xml",
