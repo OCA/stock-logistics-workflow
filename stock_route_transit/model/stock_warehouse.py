@@ -367,7 +367,8 @@ class StockWarehouse(orm.Model):
             (wh.in_type_id.id, {'default_location_dest_id': input_loc.id}),
             (wh.out_type_id.id, {'default_location_src_id': output_loc.id}),
             (wh.pick_type_id.id,
-             {'active': new_delivery_step not in ('ship_only', 'ship_transit')}),
+             {'active': new_delivery_step
+              not in ('ship_only', 'ship_transit')}),
             (wh.pack_type_id.id,
              {'active': new_delivery_step.startswith('pick_pack_ship')}),
             (wh.transit_in_type_id.id,
