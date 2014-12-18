@@ -21,7 +21,7 @@
 
 
 {
-    "name": "stock routes transit ",
+    "name": "Stock Routes Transit",
     "version": "0.1",
     "depends": ["stock"],
     "author": "Camptocamp",
