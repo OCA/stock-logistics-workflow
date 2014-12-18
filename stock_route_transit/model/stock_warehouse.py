@@ -115,6 +115,7 @@ class StockWarehouse(orm.Model):
             out_id = data_obj.get_object_reference(
                 cr, uid, 'stock_route_transit', 'transit_outgoing')[1]
         except:
+            _logger.warning('missing data stock_route_transit.transit_outgoing')
             out_id = location_obj.create(
                 cr, uid,
                 {'name': _('Outgoing Transit'),
@@ -250,13 +251,34 @@ class StockWarehouse(orm.Model):
                 warehouse.write(
                     {'wh_transit_in_loc_id': in_id,
                      'wh_transit_out_loc_id': out_id})
-        
+
     def switch_location(self, cr, uid, ids,
                         warehouse,
                         new_reception_step=False,
                         new_delivery_step=False,
                         context=None):
         """set unused locations to active=False"""
+        super(StockWarehouse, self).switch_location(cr, uid, ids,
+                                                    warehouse,
+                                                    new_reception_step,
+                                                    new_delivery_step,
+                                                    context)
+        # we need to duplicate the code in stock because of hard coded
+        # constants
+        location_obj = self.pool.get('stock.location')
+        new_reception_step = new_reception_step or warehouse.reception_steps
+        new_delivery_step = new_delivery_step or warehouse.delivery_steps
+        if warehouse.reception_steps != new_reception_step:
+            if new_reception_step == 'transit_one_step':
+                location_obj.write(cr, uid, warehouse.wh_input_stock_loc_id.id, {'active': False}, context=context)
+            if new_reception_step == 'transit_three_steps':
+                location_obj.write(cr, uid, warehouse.wh_qc_stock_loc_id.id, {'active': True}, context=context)
+
+        if warehouse.delivery_steps != new_delivery_step:
+            if new_delivery_step == 'ship_transit':
+                location_obj.write(cr, uid, warehouse.wh_output_stock_loc_id.id, {'active': True}, context=context)
+            if new_delivery_step == 'pick_pack_ship_transit':
+                location_obj.write(cr, uid, warehouse.wh_pack_stock_loc_id.id, {'active': True}, context=context)
         warehouse._ensure_transit_loc()
         # incoming transit
         other_wh_ids = self.search(cr, uid,
@@ -269,11 +291,12 @@ class StockWarehouse(orm.Model):
         transit_receptions = ['transit' in (new_reception_step or '')] + \
                              ['transit' in other.reception_steps
                               for other in other_wh]
-        warehouse.wh_transit_in_loc_id.active = any(transit_receptions)
+        transit_in_active = any(transit_receptions)
+        warehouse.wh_transit_in_loc_id.write({'active': transit_in_active})
         # outgoing transit
         other_wh_ids = self.search(cr, uid,
                                    [('id', '!=', warehouse.id),
-                                    ('wh_transit_in_loc_id', '=',
+                                    ('wh_transit_out_loc_id', '=',
                                      warehouse.wh_transit_out_loc_id.id)
                                     ],
                                    context=context)
@@ -281,13 +304,9 @@ class StockWarehouse(orm.Model):
         transit_deliveries = ['transit' in (new_delivery_step or '')] + \
                              ['transit' in other.delivery_steps
                               for other in other_wh]
-        print transit_deliveries
-        warehouse.wh_transit_in_loc_id.active = any(transit_deliveries)
-        return super(StockWarehouse, self).switch_location(cr, uid, ids,
-                                                           warehouse,
-                                                           new_reception_step,
-                                                           new_delivery_step,
-                                                           context)
+        transit_out_active = any(transit_deliveries)
+        warehouse.wh_transit_out_loc_id.write({'active': transit_out_active})
+        return True
 
     def change_route(self, cr, uid, ids,
                      warehouse,
@@ -305,14 +324,11 @@ class StockWarehouse(orm.Model):
                                                  new_reception_step,
                                                  new_delivery_step,
                                                  context)
-        if 'transit' not in new_delivery_step and \
-          'transit' not in new_reception_step:
-            return True
         # due to poor design in base class, we need to redo everything... :-(
         # and add our stuff
         picking_type_obj = self.pool.get('stock.picking.type')
-        pull_obj = self.pool.get('procurement.rule')
-        push_obj = self.pool.get('stock.location.path')
+        #pull_obj = self.pool.get('procurement.rule')
+        #push_obj = self.pool.get('stock.location.path')
         route_obj = self.pool.get('stock.location.route')
         new_reception_step = new_reception_step or warehouse.reception_steps
         new_delivery_step = new_delivery_step or warehouse.delivery_steps
