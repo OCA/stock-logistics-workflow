@@ -426,7 +426,7 @@ class StockWarehouse(orm.Model):
         pick_type_val = {'name': _('Out Transit'),
                          'warehouse_id': warehouse.id,
                          'code': 'outgoing',
-                         'sequence_id': in_transit_seq_id,
+                         'sequence_id': out_transit_seq_id,
                          'default_location_src_id':
                              warehouse.wh_output_stock_loc_id.id,
                          'default_location_dest_id': customer_loc.id,
