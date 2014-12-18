@@ -42,6 +42,7 @@
          assert rule.picking_type_id.id and rule.picking_type_id.id == self.out_type_id.id, 'wrong picking type %s' % rule.picking_type_id.name
          assert rule.action == 'move'
          assert rule.location_id == self.wh_transit_out_loc_id
+     assert found_mto, 'missiong Make To Order rule'
 -
   check procurement rule on transit location
 -
@@ -154,6 +155,7 @@
          assert rule.picking_type_id.id and rule.picking_type_id.id == self.out_type_id.id, 'wrong picking type %s' % rule.picking_type_id.name
          assert rule.action == 'move', 'wront rule action %s' % rule.action
          assert rule.location_id == self.wh_transit_out_loc_id, 'wrong location %s' % rule.location_id.name
+     assert found_mto, 'missiong Make To Order rule'
 -
   check procurement rule on transit location
 -
