@@ -238,6 +238,7 @@ class StockWarehouse(orm.Model):
 
     def _ensure_transit_loc(self, cr, uid, ids, context=None):
         """make sure there are output and input transit location set
+        and the picking types too
 
         they can be missing e.g. for warehouses created before the installation
         of the addon
@@ -256,6 +257,11 @@ class StockWarehouse(orm.Model):
                 warehouse.write(
                     {'wh_transit_in_loc_id': in_id,
                      'wh_transit_out_loc_id': out_id})
+            if not (warehouse.transit_in_type_id
+                    and warehouse.transit_out_type_id):
+                self._create_transit_sequences_and_picking_types(cr, uid,
+                                                                 warehouse,
+                                                                 context)
 
     def switch_location(self, cr, uid, ids,
                         warehouse,
@@ -392,6 +398,14 @@ class StockWarehouse(orm.Model):
                                            context=None):
         _super = super(StockWarehouse, self)
         _super.create_sequences_and_picking_types(cr, uid, warehouse, context)
+        self._create_transit_sequences_and_picking_types(cr, uid,
+                                                         warehouse,
+                                                         context)
+        return True
+
+    def _create_transit_sequences_and_picking_types(self, cr, uid,
+                                                    warehouse,
+                                                    context=None):
         seq_obj = self.pool.get('ir.sequence')
         picking_type_obj = self.pool.get('stock.picking.type')
         # create new sequences
