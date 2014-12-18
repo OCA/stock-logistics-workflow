@@ -52,6 +52,80 @@
      assert proc_rule.action == 'move'
      assert proc_rule.location_id.usage == 'customer'
 -
+  I edit the 1st warehouse to set a receive 2 step + pick/pack/ship config
+-
+  !python {model: stock.warehouse, id: wh1}: |
+    self.write({'reception_steps': 'two_steps', 'delivery_steps': 'pick_pack_ship'})
+-
+  check transit locations
+-
+  !assert {model: stock.warehouse, id: wh1}:
+    - wh_transit_in_loc_id.active == False
+    - wh_transit_out_loc_id.name == 'Outgoing Transit'
+    - wh_transit_out_loc_id.active == True
+    - transit_in_type_id.active == False
+    - transit_out_type_id.active == False
+-
+  check procurement rule on input location
+-
+  !python {model: stock.warehouse, id: wh1}: |
+     proc_rules = self.env['procurement.rule'].search([('warehouse_id', '=', self.id), ('location_src_id', '=', self.wh_input_stock_loc_id.id)])
+     assert len(proc_rules) == 2, 'found %d rules' % len(proc_rules)
+     found_cross_dock = False
+     for rule in proc_rules:
+       if rule.route_id.name.endswith('Cross-Dock'):
+         found_cross_dock = True
+       else:
+         assert rule.picking_type_id.id and rule.picking_type_id.id == self.int_type_id.id, 'wrong picking type %s' % rule.picking_type_id.name
+         assert rule.action == 'move', 'wrong rule action %s' % rule.action
+         assert rule.location_id == self.lot_stock_id, 'wrong location %s' % rule.location_id.name
+     assert found_cross_dock, 'missiong Cross Dock rule'
+-
+  check procurement rule on stock location
+-
+  !python {model: stock.warehouse, id: wh1}: |
+     proc_rules = self.env['procurement.rule'].search([('warehouse_id', '=', self.id), ('location_src_id', '=', self.lot_stock_id.id)])
+     assert len(proc_rules) == 2, 'found %d rules' % len(proc_rules)
+     found_mto = False
+     for rule in proc_rules:
+       if rule.route_id.name == 'Make To Order':
+         found_mto = True
+       else:
+         assert rule.picking_type_id.id and rule.picking_type_id.id == self.pick_type_id.id, 'wrong picking type %s' % rule.picking_type_id.name
+         assert rule.action == 'move', 'wrong rule action %s' % rule.action
+         assert rule.location_id == self.wh_pack_stock_loc_id, 'wrong location %s' % rule.location_id.name
+     assert found_mto, 'missiong Make To Order rule'
+-
+  check procurement rule on pack location
+-
+  !python {model: stock.warehouse, id: wh1}: |
+     proc_rule = self.env['procurement.rule'].search([('warehouse_id', '=', self.id), ('location_src_id', '=', self.wh_pack_stock_loc_id.id)])
+     assert len(proc_rule) == 1, 'found %d rules' % len(proc_rule)
+     assert proc_rule.picking_type_id.id and proc_rule.picking_type_id.id == self.pack_type_id.id, 'wrong picking type %s' % proc_rule.picking_type_id.name
+     assert proc_rule.action == 'move', 'wrong action'
+     assert proc_rule.location_id.name == 'Output', 'wrong location'
+-
+  check procurement rule on output location
+-
+  !python {model: stock.warehouse, id: wh1}: |
+     proc_rules = self.env['procurement.rule'].search([('warehouse_id', '=', self.id), ('location_src_id', '=', self.wh_output_stock_loc_id.id)])
+     assert len(proc_rules) == 2, 'found %d rules' % len(proc_rules)
+     found_cross_dock = False
+     for rule in proc_rules:
+       print rule.route_id.name
+       if rule.route_id.name.endswith('Cross-Dock'):
+         found_cross_dock = True
+       else:
+         assert rule.picking_type_id.id and rule.picking_type_id.id == self.out_type_id.id, 'wrong picking type %s' % rule.picking_type_id.name
+         assert rule.action == 'move', 'wrong action'
+         assert rule.location_id.name == 'Customers', 'wrong location'
+     assert found_cross_dock, 'missing Cross Dock rule'
+-
+ check the drop shipping routes
+-
+  !python {model: stock.warehouse}: |
+     print 'todo'
+-
   I edit the 1st warehouse to set a transit config
 -
   !python {model: stock.warehouse, id: wh1}: |
@@ -77,7 +151,7 @@
        else:
          assert rule.picking_type_id.id and rule.picking_type_id.id == self.out_type_id.id, 'wrong picking type %s' % rule.picking_type_id.name
          assert rule.action == 'move', 'wront rule action %s' % rule.action
-         assert rule.location_id == self.wh_transit_out_loc_id, 'wrong location' % rule.location_id.name
+         assert rule.location_id == self.wh_transit_out_loc_id, 'wrong location %s' % rule.location_id.name
 -
   check procurement rule on transit location
 -
@@ -87,3 +161,8 @@
      assert proc_rule.picking_type_id.id and proc_rule.picking_type_id.id == self.transit_out_type_id.id, 'wrong picking type %s' % proc_rule.picking_type_id.name
      assert proc_rule.action == 'move'
      assert proc_rule.location_id.usage == 'customer'
+-
+ check the drop shipping routes
+-
+  !python {model: stock.warehouse}: |
+     print 'todo'
