@@ -146,20 +146,7 @@ class StockWarehouse(orm.Model):
         routes_dict = _super.get_routes_dict(cr, uid, ids, warehouse, context)
         customer_loc, supplier_loc = self._get_partner_locations(
             cr, uid, ids, context=context)
-        if not (warehouse.wh_transit_out_loc_id
-                and warehouse.wh_transit_in_loc_id):
-            # this can happen for warehouses created before this module was
-            # installed
-            in_id, out_id = self._create_transit_locations(
-                cr, uid,
-                warehouse.company_id.id,
-                warehouse.reception_steps,
-                warehouse.delivery_steps,
-                context)
-            warehouse.write(
-                {'wh_transit_in_loc_id': in_id,
-                 'wh_transit_out_loc_id': out_id}
-                )
+        warehouse._ensure_transit_loc()
         new_routes = {
             'transit_one_step': (_('Receipt in 1 step from Transit'),
                                  [(warehouse.wh_transit_in_loc_id,
@@ -243,25 +230,34 @@ class StockWarehouse(orm.Model):
         routes_dict.update(new_routes)
         return routes_dict
 
+    def _ensure_transit_loc(self, cr, uid, ids, context=None):
+        """make sure there are output and input transit location set
+
+        they can be missing e.g. for warehouses created before the installation
+        of the addon
+        """
+        for warehouse in self.browse(cr, uid, ids, context=context):
+            if not (warehouse.wh_transit_out_loc_id
+                    and warehouse.wh_transit_in_loc_id):
+                # this can happen for warehouses created before this module was
+                # installed
+                in_id, out_id = self._create_transit_locations(
+                    cr, uid,
+                    warehouse.company_id.id,
+                    warehouse.reception_steps,
+                    warehouse.delivery_steps,
+                    context)
+                warehouse.write(
+                    {'wh_transit_in_loc_id': in_id,
+                     'wh_transit_out_loc_id': out_id})
+        
     def switch_location(self, cr, uid, ids,
                         warehouse,
                         new_reception_step=False,
                         new_delivery_step=False,
                         context=None):
         """set unused locations to active=False"""
-        if not (warehouse.wh_transit_out_loc_id
-                and warehouse.wh_transit_in_loc_id):
-            # this can happen for warehouses created before this module was
-            # installed
-            in_id, out_id = self._create_transit_locations(
-                cr, uid,
-                warehouse.company_id.id,
-                warehouse.reception_steps,
-                warehouse.delivery_steps,
-                context)
-            warehouse.write(
-                {'wh_transit_in_loc_id': in_id,
-                 'wh_transit_out_loc_id': out_id})
+        warehouse._ensure_transit_loc()
         # incoming transit
         other_wh_ids = self.search(cr, uid,
                                    [('id', '!=', warehouse.id),
