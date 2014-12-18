@@ -373,7 +373,7 @@ class StockWarehouse(orm.Model):
             (wh.transit_in_type_id.id,
              {'active': 'transit' in new_reception_step}),
             (wh.transit_out_type_id.id,
-             {'active': 'transit' in new_reception_step}),
+             {'active': 'transit' in new_delivery_step}),
         ]
         for pick_type_id, vals in picking_type_writes:
             picking_type_obj.write(
