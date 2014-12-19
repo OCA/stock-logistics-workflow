@@ -23,7 +23,7 @@
 {
     "name": "Stock Routes Transit",
     "version": "0.1",
-    "depends": ["stock"],
+    "depends": ["stock_dropshipping"],
     "author": "Camptocamp",
     "license": "AGPL-3",
     "category": "Generic Modules/Stock",

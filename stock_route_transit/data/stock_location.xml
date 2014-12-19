@@ -5,5 +5,23 @@
       <field name='name'>Outgoing Transit</field>
       <field name='usage'>transit</field>
     </record>
-  </data> 
+
+    <!-- update stock_dropshipping config -->
+    <record id="stock_dropshipping.procurement_rule_drop_shipping"
+            model="procurement.rule">
+      <field name="name">Supplier → Transit</field>
+      <field name="location_id" ref="transit_outgoing"/>
+    </record>
+
+    <record id="procurement_rule_drop_shipping_reception" model="procurement.rule">
+      <field name="name">Transit → Customer</field>
+      <field name="action">move</field>
+      <field name="location_id" ref="stock.stock_location_customers"/>
+      <field name="location_src_id" ref="transit_outgoing"/>
+      <field name="procure_method">make_to_order</field>
+      <field name="route_id" ref="stock_dropshipping.route_drop_shipping"/>
+      <field name="picking_type_id" ref="stock_dropshipping.picking_type_dropship"/>
+    </record>
+
+  </data>
 </openerp>
