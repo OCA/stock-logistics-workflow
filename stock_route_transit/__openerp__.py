@@ -22,6 +22,7 @@
 
 {
     "name": "Stock Routes Transit",
+    # description is in README.rst
     "version": "0.1",
     "depends": ["stock_dropshipping"],
     "author": "Camptocamp",
