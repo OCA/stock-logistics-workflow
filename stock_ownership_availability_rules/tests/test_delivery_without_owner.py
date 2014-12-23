@@ -49,8 +49,8 @@ class TestDeliveryWithoutOwner(TransactionCase):
         self.picking.action_assign()
         self.assertEqual('partially_available', self.picking.state)
 
-    def test_it_reserves_stock_with_company_owner(self):
-        pass
-
     def test_it_doesn_not_reserve_stock_with_different_owner(self):
-        pass
+        self.quant.owner_id = self.env.ref('base.res_partner_1')
+        self.move.product_uom_qty = 80
+        self.picking.action_assign()
+        self.assertEqual('confirmed', self.picking.state)
