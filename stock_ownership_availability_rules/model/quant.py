@@ -13,7 +13,7 @@ class Quant(models.Model):
             domain = []
 
         my_partner = location.company_id.partner_id
-        if restrict_partner_id == my_partner.id and not restrict_partner_id:
+        if restrict_partner_id == my_partner.id or not restrict_partner_id:
             domain += [
                 '|',
                 ('owner_id', '=', my_partner.id),
@@ -25,5 +25,5 @@ class Quant(models.Model):
             ]
 
         return super(Quant, self).quants_get_prefered_domain(
-            location, product, qty, domain, restrict_lot_id,
-            restrict_partner_id)
+            location, product, qty, domain, prefered_domain_list,
+            restrict_lot_id, restrict_partner_id)
