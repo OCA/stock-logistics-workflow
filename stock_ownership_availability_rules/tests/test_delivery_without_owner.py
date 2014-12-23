@@ -26,23 +26,28 @@ class TestDeliveryWithoutOwner(TransactionCase):
             'location_id': self.env.ref('stock.stock_location_stock').id,
             'product_id': self.product.id,
         })
-
-    def test_it_fully_reserves_stock_with_no_owner(self):
-        picking = self.env['stock.picking'].create({
+        self.picking = self.env['stock.picking'].create({
             'picking_type_id': self.env.ref('stock.picking_type_out').id,
         })
-        self.env['stock.move'].create({
+        self.move = self.env['stock.move'].create({
             'name': '/',
-            'picking_id': picking.id,
+            'picking_id': self.picking.id,
             'product_uom': self.product.uom_id.id,
-            'product_uom_qty': 80,
             'location_id': self.env.ref('stock.stock_location_stock').id,
             'location_dest_id':
             self.env.ref('stock.stock_location_customers').id,
             'product_id': self.product.id,
         })
-        picking.action_assign()
-        self.assertEqual('assigned', picking.state)
+
+    def test_it_fully_reserves_stock_with_no_owner(self):
+        self.move.product_uom_qty = 80
+        self.picking.action_assign()
+        self.assertEqual('assigned', self.picking.state)
+
+    def test_it_partially_reserves_stock_with_no_owner(self):
+        self.move.product_uom_qty = 150
+        self.picking.action_assign()
+        self.assertEqual('partially_available', self.picking.state)
 
     def test_it_reserves_stock_with_company_owner(self):
         pass
