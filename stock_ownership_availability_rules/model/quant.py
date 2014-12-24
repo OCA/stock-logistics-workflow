@@ -19,6 +19,7 @@ class Quant(models.Model):
                 ('owner_id', '=', my_partner.id),
                 ('owner_id', '=', False)
             ]
+            restrict_partner_id = False
         else:
             domain += [
                 ('owner_id', '=', restrict_partner_id),
