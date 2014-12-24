@@ -46,6 +46,12 @@ class TestDeliveryWithOwner(TransactionCase):
         self.picking.action_assign()
         self.assertEqual('confirmed', self.picking.state)
 
+    def test_it_does_not_reserve_my_stock(self):
+        self.quant.owner_id = self.env.user.company_id.partner_id
+        self.move.product_uom_qty = 80
+        self.picking.action_assign()
+        self.assertEqual('confirmed', self.picking.state)
+
     def test_it_doesn_not_reserve_stock_with_different_owner(self):
         self.quant.owner_id = self.env.ref('base.res_partner_1')
         self.move.product_uom_qty = 80
