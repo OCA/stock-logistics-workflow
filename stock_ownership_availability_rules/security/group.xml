@@ -1,0 +1,9 @@
+<openerp>
+  <data>
+
+    <record id="base.group_user" model="res.groups">
+      <field name="implied_ids" eval="[(4, ref('stock.group_tracking_owner'))]"/>
+    </record>
+
+  </data>
+</openerp>

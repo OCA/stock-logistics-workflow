@@ -24,7 +24,9 @@
  'depends': ['stock',
              ],
  'demo': [],
- 'data': [],
+ 'data': [
+     'security/group.xml'
+ ],
  "pre_init_hook": 'fill_quant_owner',
  'auto_install': False,
  'installable': True,
