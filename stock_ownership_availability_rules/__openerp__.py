@@ -25,6 +25,7 @@
              ],
  'demo': [],
  'data': [
+     'view/quant.xml',
      'security/group.xml'
  ],
  "pre_init_hook": 'fill_quant_owner',

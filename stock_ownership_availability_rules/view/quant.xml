@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+    <!-- reorder Owner and Location to have Location then owner -->
+    <!-- and add a name on Owner group by to be able to use it as default group by -->
+    <record id="quant_search_view" model="ir.ui.view">
+      <field name="name">quant_search_view</field>
+      <field name="model">stock.quant</field>
+      <field name="inherit_id" ref="stock.quant_search_view"/>
+      <field name="arch" type="xml">
+        <filter string='Owner' position="replace"/>
+        <filter name="locationgroup" position="after">
+           <filter name="ownergroup" string='Owner' context="{'group_by' : 'owner_id'}" groups="stock.group_tracking_owner"/>
+        </filter>
+      </field>
+    </record>
+
+  </data>
+</openerp>
+
