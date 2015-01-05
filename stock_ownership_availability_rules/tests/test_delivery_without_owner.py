@@ -39,18 +39,12 @@ class TestDeliveryWithoutOwner(TransactionCase):
             'product_id': self.product.id,
         })
 
-    def test_it_fully_reserves_stock_with_no_owner(self):
-        self.move.product_uom_qty = 80
-        self.picking.action_assign()
-        self.assertEqual('assigned', self.picking.state)
-
     def test_it_fully_reserves_my_stock(self):
-        self.quant.owner_id = self.env.user.company_id.partner_id
         self.move.product_uom_qty = 80
         self.picking.action_assign()
         self.assertEqual('assigned', self.picking.state)
 
-    def test_it_partially_reserves_stock_with_no_owner(self):
+    def test_it_partially_reserves_my_stock(self):
         self.move.product_uom_qty = 150
         self.picking.action_assign()
         self.assertEqual('partially_available', self.picking.state)
