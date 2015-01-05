@@ -33,11 +33,13 @@ class Quant(models.Model):
 
     @api.model
     def quants_get_prefered_domain(self, location, product, qty, domain=None,
-                                   prefered_domain_list=[],
+                                   prefered_domain_list=None,
                                    restrict_lot_id=False,
                                    restrict_partner_id=False):
         if domain is None:
             domain = []
+        if prefered_domain_list is None:
+            prefered_domain_list = []
 
         my_partner = location.company_id.partner_id
         if restrict_partner_id == my_partner.id or not restrict_partner_id:
