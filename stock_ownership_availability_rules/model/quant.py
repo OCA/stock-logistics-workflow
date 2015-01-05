@@ -11,7 +11,7 @@ class Quant(models.Model):
         This is not a method because we need to know the location.
 
         """
-        if 'owner_id' not in vals:
+        if not vals.get('owner_id'):
             Company = self.env['res.company']
             location = self.env['stock.location'].browse(vals['location_id'])
 
