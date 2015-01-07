@@ -36,23 +36,28 @@ class Quant(models.Model):
                                    prefered_domain_list=None,
                                    restrict_lot_id=False,
                                    restrict_partner_id=False):
+        """Enforce the requested owner on quant reservation.
+
+        If no restriction is imposed, enforce the location partner (or the
+        company partner) as owner.
+
+        On the other hand, the core stock module uses the requested owner as
+        first choice, but then reserves anything else. Also, no restriction
+        means we can reserve anything, while we want to reserve only own stock.
+
+        """
         if domain is None:
             domain = []
         if prefered_domain_list is None:
             prefered_domain_list = []
 
-        my_partner = location.company_id.partner_id
-        if restrict_partner_id == my_partner.id or not restrict_partner_id:
-            domain += [
-                '|',
-                ('owner_id', '=', my_partner.id),
-                ('owner_id', '=', False)
-            ]
-            restrict_partner_id = False
-        else:
-            domain += [
-                ('owner_id', '=', restrict_partner_id),
-            ]
+        if not restrict_partner_id:
+            restrict_partner_id = (location.partner_id.id
+                                   or location.company_id.partner_id.id)
+
+        domain += [
+            ('owner_id', '=', restrict_partner_id),
+        ]
 
         return super(Quant, self).quants_get_prefered_domain(
             location, product, qty, domain, prefered_domain_list,
