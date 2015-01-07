@@ -8,7 +8,7 @@ class Quant(models.Model):
     def create(self, vals):
         """Set the owner based on the location.
 
-        This is not a method because we need to know the location.
+        This is not a default method because we need to know the location.
 
         """
         if not vals.get('owner_id'):
