@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright (C) 2014 Akretion (http://www.akretion.com/)
+    @author Alexis de Lattre <alexis.delattre@akretion.com>
+    The licence is in the file __openerp__.py
+-->
+
+<openerp>
+<data>
+
+
+<record id="view_stock_enter_transfer_details" model="ir.ui.view">
+    <field name="name">stock_transfer_split_multi.split_multi</field>
+    <field name="model">stock.transfer_details</field>
+    <field name="inherit_id" ref="stock.view_stock_enter_transfer_details" />
+    <field name="arch" type="xml">
+        <button name="split_quantities" type="object" position="after">
+            <button name="%(stock_transfer_split_multi_action)d" type="action"
+                string="Split Multi" icon="STOCK_CUT"/>
+        </button>
+    </field>
+</record>
+
+
+</data>
+</openerp>

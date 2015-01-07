@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright (C) 2014 Akretion (http://www.akretion.com/)
+    @author Alexis de Lattre <alexis.delattre@akretion.com>
+    The licence is in the file __openerp__.py
+-->
+
+<openerp>
+<data>
+
+
+<record id="stock_transfer_split_multi_form" model="ir.ui.view">
+    <field name="name">stock_transfer_split_multi.wizard_form</field>
+    <field name="model">stock.transfer.split.multi</field>
+    <field name="arch" type="xml">
+        <form string="Split Line">
+            <group name="main">
+                <field name="split_qty"/>
+            </group>
+            <footer>
+                <button name="split_multi_quantities" type="object"
+                    string="Split Line" class="oe_highlight"/>
+                <button special="cancel" string="Cancel" class="oe_link"/>
+            </footer>
+        </form>
+    </field>
+</record>
+
+<record id="stock_transfer_split_multi_action" model="ir.actions.act_window">
+    <field name="name">Split Configurable Quantity</field>
+    <field name="res_model">stock.transfer.split.multi</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+</record>
+
+</data>
+</openerp>
