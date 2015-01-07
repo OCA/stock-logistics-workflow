@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (c) 2012 Andrea Cometa All Rights Reserved.
+#    Copyright (c) 2014 Andrea Cometa All Rights Reserved.
 #                       www.andreacometa.it
 #                       openerp@andreacometa.it
 #
@@ -21,4 +21,19 @@
 #
 ##############################################################################
 
-import stock
+{
+    'name': 'Stock Cancel',
+    'version': '1.2',
+    'category': 'Stock',
+    'description': """This module allows you to bring back a completed stock
+picking to draft state""",
+    'author': 'www.andreacometa.it',
+    'website': 'http://www.andreacometa.it',
+    'depends': ['stock_picking_invoice_link'],
+    'data': [
+        'stock_view.xml',
+        ],
+    'installable': True,
+    'active': False,
+    'images': ['images/stock_picking.jpg'],
+}
