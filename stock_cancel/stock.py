@@ -6,6 +6,7 @@
 #                       www.andreacometa.it
 #                       openerp@andreacometa.it
 #    Copyright (C) 2013 Agile Business Group sagl (<http://www.agilebg.com>)
+#    Ported to new API by Alexis de Lattre <alexis.delattre@akretion.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -22,40 +23,39 @@
 #
 ##############################################################################
 
-from openerp import models, _, netsvc, exceptions
+from openerp import models, api, _, workflow, exceptions
 
 
 class stock_picking(models.Model):
     _inherit = 'stock.picking'
 
-    def has_valuation_moves(self, cr, uid, move):
-        return self.pool['account.move'].search(cr, uid, [
-            ('ref', '=', move.picking_id.name),
-        ])
-
-    def action_revert_done(self, cr, uid, ids, context=None):
-        if not len(ids):
+    @api.model
+    def has_valuation_moves(self, move):
+        account_moves = self.env['account.move'].search(
+            [('ref', '=', move.picking_id.name)])
+        if account_moves:
+            return True
+        else:
             return False
-        for picking in self.browse(cr, uid, ids, context):
+
+    @api.multi
+    def action_revert_done(self):
+        for picking in self:
             for line in picking.move_lines:
-                if self.has_valuation_moves(cr, uid, line):
+                if self.has_valuation_moves(line):
                     raise exceptions.Warning(
-                        _('Error'),
-                        _('Line %s has valuation moves (%s). \
-                            Remove them first') % (line.name,
-                                                   line.picking_id.name))
-                line.write({'state': 'draft'})
-            self.write(cr, uid, [picking.id], {'state': 'draft'})
+                        _('Stock move line %s has valuation moves (%s): '
+                            'remove them first.')
+                        % (line.name, line.picking_id.name))
+                line.state = 'draft'
+            picking.state = 'draft'
             if picking.invoice_state == 'invoiced' and not picking.invoice_id:
-                self.write(cr, uid, [picking.id],
-                           {'invoice_state': '2binvoiced'})
-            wf_service = netsvc.LocalService("workflow")
+                picking.invoice_state = '2binvoiced'
             # Deleting the existing instance of workflow
-            wf_service.trg_delete(uid, 'stock.picking', picking.id, cr)
-            wf_service.trg_create(uid, 'stock.picking', picking.id, cr)
-        for (id, name) in self.name_get(cr, uid, ids):
-            message = _(
-                "The stock picking '%s' has been set in draft state."
-            ) % (name,)
-            self.log(cr, uid, id, message)
-        return True
+            workflow.trg_delete(
+                self._uid, 'stock.picking', picking.id, self._cr)
+            workflow.trg_create(
+                self._uid, 'stock.picking', picking.id, self._cr)
+            picking.log(
+                _("The picking %s has been set to draft state") % picking.name)
+        return

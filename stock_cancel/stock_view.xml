@@ -8,7 +8,9 @@
             <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
                 <field name="state" position="before">
-                    <button name="action_revert_done" string="Reopen" states="done,cancel" type="object" icon="gtk-cancel" confirm="Are you sure you want to reopen this stock picking?"/>
+                    <button name="action_revert_done" string="Reopen"
+                        states="done,cancel" type="object" icon="gtk-cancel"
+                        confirm="Are you sure you want to reopen this picking?"/>
                 </field>
             </field>
         </record>

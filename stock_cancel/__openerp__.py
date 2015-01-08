@@ -34,6 +34,5 @@ picking to draft state""",
         'stock_view.xml',
         ],
     'installable': True,
-    'active': False,
     'images': ['images/stock_picking.jpg'],
 }
