@@ -31,7 +31,7 @@ Contributors
 
 * Andrea Cometa (<http://www.andreacometa.it>)
 * Agile Business Group sagl (<http://www.agilebg.com>)
-
+* Alexis de Lattre (<alexis@via.ecp.fr>)
 
 Maintainer
 ----------
