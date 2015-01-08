@@ -52,3 +52,14 @@ class StockTransferSplitMulti(models.TransientModel):
             trf_line.quantity -= split_qty
         action = trf_line.transfer_id.wizard_view()
         return action
+
+    @api.multi
+    def cancel(self):
+        """We have to re-call the wizard when the user clicks on Cancel"""
+        self.ensure_one()
+        assert self.env.context.get('active_model') == \
+            'stock.transfer_details_items', 'Wrong underlying model'
+        trf_line = self.env['stock.transfer_details_items'].browse(
+            self.env.context['active_id'])
+        action = trf_line.transfer_id.wizard_view()
+        return action
