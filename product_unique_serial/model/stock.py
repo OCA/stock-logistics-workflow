@@ -115,7 +115,7 @@ class StockMove(models.Model):
                 cr, uid, [operation_or_move.product_id.id],
                 context=ctx)[0]
             qty = product_ctx.qty_available
-            if abs(qty) > 1:
+            if not 0 <= qty <= 1:
                 lot = self.pool.get('stock.production.lot').browse(
                     cr, uid, [lot_id])[0]
                 raise exceptions.ValidationError(_(
