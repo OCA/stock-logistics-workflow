@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-{"name": "Transportation Plan",
+{"name": "Shipment Management",
  "version": "0.1",
  "author": "Camptocamp",
  "category": "Transportation",
@@ -31,9 +31,9 @@
               "stock_route_transit",
               ],
  "demo": [],
- "data": ["data/tranport_plan_sequence.xml",
+ "data": ["data/shipment_plan_sequence.xml",
           "data/tranport_mode_data.xml",
-          "view/transport_plan.xml",
+          "view/shipment_plan.xml",
           "view/transport_mode.xml",
           "security/ir.model.access.csv",
           ],

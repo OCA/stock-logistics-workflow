@@ -9,9 +9,9 @@ from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT as DT_FORMAT
 _logger = logging.getLogger(__name__)
 
 
-class transport_plan(orm.Model):
-    _name = "transport.plan"
-    _description = "Transport Plan"
+class ShipmentPlan(orm.Model):
+    _name = "shipment.plan"
+    _description = "Shipment Plan"
 
     _columns = {
         'name': fields.char(
@@ -73,14 +73,14 @@ class transport_plan(orm.Model):
     _sql_constraints = [
         ('name_uniq',
          'unique(name)',
-         'Transport Plan Reference must be unique'),
+         'Shipment Plan Reference must be unique'),
     ]
 
     def create(self, cr, uid, vals, context=None):
         if vals.get('name', '/') == '/':
             seq_obj = self.pool.get('ir.sequence')
-            vals['name'] = seq_obj.get(cr, uid, 'transport.plan') or '/'
-        return super(transport_plan, self).create(cr, uid, vals,
+            vals['name'] = seq_obj.get(cr, uid, 'shipment.plan') or '/'
+        return super(ShipmentPlan, self).create(cr, uid, vals,
                                                    context=context)
 
     def copy(self, cr, uid, id, default=None, context=None):
@@ -90,7 +90,7 @@ class transport_plan(orm.Model):
             'state': 'draft',
             'name': '/',
         })
-        return super(transport_plan, self).copy(cr, uid, id,
+        return super(ShipmentPlan, self).copy(cr, uid, id,
                                                 default=default,
                                                 context=context)
 
@@ -98,31 +98,31 @@ class transport_plan(orm.Model):
         self.write(cr, uid, ids, {'state': 'draft'}, context=context)
         return True
 
-    def transport_cancel(self, cr, uid, ids, context=None):
+    def shipment_cancel(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'state': 'cancel'}, context=context)
         return True
 
-    def transport_procure(self, cr, uid, ids, context=None):
+    def shipment_procure(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'state': 'in_procurement'}, context=context)
         return True
 
-    def transport_confirm(self, cr, uid, ids, context=None):
+    def shipment_confirm(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'state': 'confirmed'}, context=context)
         return True
 
-    def transport_transit(self, cr, uid, ids, context=None):
+    def shipment_transit(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'state': 'in_transit'}, context=context)
         return True
 
-    def transport_at_customs(self, cr, uid, ids, context=None):
+    def shipment_at_customs(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'state': 'customs'}, context=context)
         return True
 
-    def transport_blocked(self, cr, uid, ids, context=None):
+    def shipment_blocked(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'state': 'blocked'}, context=context)
         return True
 
-    def transport_done(self, cr, uid, ids, context=None):
+    def shipment_done(self, cr, uid, ids, context=None):
         now = time.strftime(DT_FORMAT)
         self.write(cr, uid, ids,
                    {'state': 'done', 'date_end': now},

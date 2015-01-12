@@ -12,20 +12,20 @@
             groups="purchase.group_purchase_manager"
             sequence="100"/>
 
-        <menuitem id="menu_transport_plan_base" name="Transport Plan" parent="menu_order" sequence="4"/>
+        <menuitem id="menu_shipment_plan_base" name="Shipment Plan" parent="menu_order" sequence="4"/>
 
-        <record model="ir.ui.view" id="view_transport_plan_form">
-            <field name="name">transport.plan.form</field>
-            <field name="model">transport.plan</field>
+        <record model="ir.ui.view" id="view_shipment_plan_form">
+            <field name="name">shipment.plan.form</field>
+            <field name="model">shipment.plan</field>
             <field name="arch" type="xml">
-                <form string="Transport Plan" version="7.0">
+                <form string="Shipment Plan" version="7.0">
                     <header>
                         <field name="state" invisible="1"/>
                     </header>
-                    <sheet string="Transport Plan">
+                    <sheet string="Shipment Plan">
                         <div class="oe_title">
                             <h1>
-                                <label string="Transport Plan" />
+                                <label string="Shipment Plan" />
                                 <field name="name" class="oe_inline" attrs="{'invisible': [('state', '=', 'draft')]}"/>
                             </h1>
                         </div>
@@ -60,12 +60,12 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="view_transport_plan_tree">
-            <field name="name">transport.plan.tree</field>
-            <field name="model">transport.plan</field>
+        <record model="ir.ui.view" id="view_shipment_plan_tree">
+            <field name="name">shipment.plan.tree</field>
+            <field name="model">shipment.plan</field>
             <field name="arch" type="xml">
                 <tree colors="grey:state == 'done';"
-                    string="Transport Plan">
+                    string="Shipment Plan">
                     <field name="name"/>
                     <field name="user_id"/>
                     <field name="date_eta"/>
@@ -77,11 +77,11 @@
             </field>
         </record>
 
-        <record id="view_transport_plan_filter" model="ir.ui.view">
-            <field name="name">transport.plan.list.select</field>
-            <field name="model">transport.plan</field>
+        <record id="view_shipment_plan_filter" model="ir.ui.view">
+            <field name="name">shipment.plan.list.select</field>
+            <field name="model">shipment.plan</field>
             <field name="arch" type="xml">
-                <search string="Search Transport Plan">
+                <search string="Search Shipment Plan">
                     <group>
                         <field name="name"/>
                         <field name="user_id" />
@@ -98,22 +98,22 @@
             </field>
         </record>
 
-        <record model="ir.actions.act_window" id="action_transport_plan">
-            <field name="name">Transport Plan</field>
+        <record model="ir.actions.act_window" id="action_shipment_plan">
+            <field name="name">Shipment Plan</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">transport.plan</field>
+            <field name="res_model">shipment.plan</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="context">{}</field>
-            <field name="search_view_id" ref="view_transport_plan_filter"/>
+            <field name="search_view_id" ref="view_shipment_plan_filter"/>
             <field name="help"></field>
         </record>
 
         <menuitem
-            id="menu_transport_plan"
+            id="menu_shipment_plan"
             sequence="0"
-            parent="menu_transport_plan_base"
-            action="action_transport_plan"/>
+            parent="menu_shipment_plan_base"
+            action="action_shipment_plan"/>
 
     </data>
 </openerp>

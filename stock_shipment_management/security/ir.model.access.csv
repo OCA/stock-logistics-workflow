@@ -1,3 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_transport_mode,access_transport_mode,model_transport_mode,purchase.group_purchase_user,1,1,1,1
-access_transport_plan,access_transport_plan,model_transport_plan,purchase.group_purchase_user,1,1,1,1
+access_shipment_plan,access_shipment_plan,model_shipment_plan,purchase.group_purchase_user,1,1,1,1
