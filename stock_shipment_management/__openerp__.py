@@ -27,12 +27,6 @@
  'complexity': "normal",
  "images" : [],
  "website": "http://www.camptocamp.com",
- "description": """
-This module allows you to manage your transport
-===============================================
-
-A transport plan represent a kind of "contract" with your carrier.
-""",
  "depends" : ["sale",
               "purchase",
               "stock",
