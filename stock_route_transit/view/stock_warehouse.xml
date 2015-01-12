@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <record model="ir.ui.view" id='view_warehouse'>
+      <field name="model">stock.warehouse</field>
+      <field name='inherit_id' ref="stock.view_warehouse"/>
+      <field name='arch' type='xml'>
+        <field name="wh_output_stock_loc_id" position="after">
+          <field name="wh_transit_in_loc_id" readonly="1"/>
+          <field name="wh_transit_out_loc_id" readonly="1"/>
+        </field>
+        <field name="out_type_id" position="after">
+          <field name="transit_in_type_id" readonly="1"/>
+          <field name="transit_out_type_id" readonly="1"/>
+        </field>
+      </field>
+    </record>
+  </data>
+</openerp>

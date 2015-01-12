@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Author: Alexandre Fayolle
-#    Copyright 2012 Camptocamp SA
+#    Copyright 2014 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -21,17 +21,19 @@
 
 
 {
-	"name" : "SO related filters on stock.picking and sale.order",
-	"version" : "1.3",
-	"depends" : ["delivery"],
-	"author" : "Camptocamp",
-        "license": "AGPL-3",
-	"description": """add filters on stock.picking views
-        """,
-	"category" : "Generic Modules/Stock",
-	"init_xml" : [],
-	"demo_xml" : [],
-	"update_xml" : ["stock_view.xml", ],
-	"active": False,
-	"installable": False
+    "name": "Stock Routes Transit",
+    # description is in README.rst
+    "version": "0.1",
+    "depends": ["stock_dropshipping"],
+    "author": "Camptocamp",
+    "license": "AGPL-3",
+    "category": "Generic Modules/Stock",
+    "installable": True,
+    "data": ["view/stock_warehouse.xml",
+             "data/stock_location.xml",
+             "security/groups.xml",
+             ],
+    "test": ["test/stock_users.yml",
+             "test/create_warehouse.yml",
+             ],
 }
