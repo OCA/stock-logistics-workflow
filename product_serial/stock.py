@@ -368,14 +368,13 @@ class stock_production_lot(orm.Model):
     def _last_location_id_search(self, cr, uid, obj, name, args, context=None):
         _not = False
         _loc_pool = self.pool.get('stock.location')
-        _loc_ids = []
+        _loc_ids = [0]
         _is_null = False
         for _leaf in args:
             if _leaf[0] == 'last_location_id':
                 _op = _leaf[1].strip()
-                _not = (('not' in _op) or ('!' in _op) or ('<' in _op) or
-                        ('>' in _op))
-                if isinstance(_leaf[-1], (bool)):
+                _not = _op not in ('in', 'ilike', '=')
+                if isinstance(_leaf[-1], bool):
                     if _leaf[1] == '=':
                         _is_null = True
                     else:
@@ -385,8 +384,7 @@ class stock_production_lot(orm.Model):
                 else:
                     _locs = _loc_pool.name_search(cr, uid, _leaf[-1],
                                                   context=context)
-                    _locs = tuple([x[0] for x in _locs])
-                    _loc_ids.extend(_locs)
+                    _loc_ids.extend([x[0] for x in _locs])
 
         if _is_null:
             cr.execute(
@@ -398,7 +396,7 @@ class stock_production_lot(orm.Model):
                 "SELECT DISTINCT prodlot_id "
                 "FROM stock_report_prodlots "
                 "WHERE location_id %s IN %%s AND qty > 0 " %
-                (_not and 'NOT' or ''),
+                ('NOT' if _not else ''),
                 (tuple(_loc_ids), ))
         prodlot_ids = filter(None, map(lambda x: x[0], cr.fetchall()))
         return [('id', 'in', tuple(prodlot_ids))]
