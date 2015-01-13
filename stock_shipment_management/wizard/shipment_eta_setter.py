@@ -18,8 +18,23 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-from . import value_setter
-from . import shipment_carrier_setter
-from . import shipment_carrier_tracking_ref_setter
-from . import shipment_etd_setter
-from . import shipment_eta_setter
+from openerp import models, fields, api
+
+
+class ETASetter(models.TransientModel):
+    _name = "shipment.eta.setter"
+    _inherit = "shipment.value.setter"
+
+    eta = fields.Datetime(
+        'ETA',
+        help="Up to date Estimated Time of Arrival"
+    )
+
+    @api.multi
+    def set_value(self):
+        """ Changes the Shipment ETA and update arrival moves """
+        for setter in self:
+            self.shipment_id.eta = self.eta
+        moves = self.shipment_id.arrival_move_ids
+        to_write = moves.filtered(lambda r: r.state not in ('done', 'cancel'))
+        to_write.write({'date_expected': self.eta})

@@ -64,8 +64,20 @@
               </group>
               <group>
                 <field name="transport_mode_id" widget="selection"/>
-                <field name="carrier_id"/>
-                <field name="tracking_number"/>
+                <label for="carrier_id"/>
+                <div>
+                  <field name="carrier_id" class="oe_inline"/>
+                  <button name="%(action_view_change_shipment_carrier)d" string="⇒ Update"
+                      type="action"
+                      class="oe_link"/>
+                </div>
+                <label for="carrier_tracking_ref"/>
+                <div>
+                  <field name="carrier_tracking_ref" class="oe_inline"/>
+                  <button name="%(action_view_change_shipment_carrier_tracking_ref)d" string="⇒ Update"
+                      type="action"
+                      class="oe_link"/>
+                </div>
               </group>
             </group>
             <notebook>
@@ -84,8 +96,20 @@
                     <field name="initial_eta"/>
                   </group>
                   <group>
-                    <field name="etd"/>
-                    <field name="eta"/>
+                    <label for="etd"/>
+                    <div>
+                      <field name="etd" class="oe_inline"/>
+                      <button name="%(action_view_change_shipment_etd)d" string="⇒ Update"
+                          type="action"
+                          class="oe_link"/>
+                    </div>
+                    <label for="eta"/>
+                    <div>
+                      <field name="eta" class="oe_inline"/>
+                      <button name="%(action_view_change_shipment_eta)d" string="⇒ Update"
+                          type="action"
+                          class="oe_link"/>
+                    </div>
                   </group>
                 </group>
                 <group>
@@ -142,7 +166,7 @@
         <search string="Search Shipment Plan">
           <group>
             <field name="name"/>
-            <field name="tracking_number"/>
+            <field name="carrier_tracking_ref"/>
             <field name="purchase_id" />
             <field name="carrier_id" />
             <field name="from_address_id" />

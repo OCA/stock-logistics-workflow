@@ -18,8 +18,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-from . import value_setter
-from . import shipment_carrier_setter
-from . import shipment_carrier_tracking_ref_setter
-from . import shipment_etd_setter
-from . import shipment_eta_setter
+from openerp import models, fields, api
+
+
+class CarrierSetter(models.TransientModel):
+    _name = "shipment.carrier.setter"
+    _inherit = "shipment.value.setter"
+
+    carrier_id = fields.Many2one(
+        'delivery.carrier',
+        'Carrier',
+        help="Shipment carrier"
+    )
+
+    @api.multi
+    def set_value(self):
+        """ Changes the Shipment Carrier and update departure and arrival
+        pickings """
+        for setter in self:
+            self.shipment_id.carrier_id = self.carrier_id
+        pickings = self.shipment_id.departure_picking_ids
+        pickings |= self.shipment_id.arrival_picking_ids
+        to_write = pickings.filtered(
+            lambda r: r.state not in ('done', 'cancel'))
+        to_write.write({'carrier_id': self.carrier_id.id})

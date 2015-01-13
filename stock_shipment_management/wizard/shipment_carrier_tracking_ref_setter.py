@@ -18,8 +18,22 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-from . import value_setter
-from . import shipment_carrier_setter
-from . import shipment_carrier_tracking_ref_setter
-from . import shipment_etd_setter
-from . import shipment_eta_setter
+from openerp import models, fields, api
+
+
+class CarrierTrackingRefSetter(models.TransientModel):
+    _name = "shipment.carrier_tracking_ref.setter"
+    _inherit = "shipment.value.setter"
+
+    carrier_tracking_ref = fields.Char(
+        'Tracking Ref.',
+    )
+
+    @api.multi
+    def set_value(self):
+        """ Changes the Shipment ETA and update arrival moves """
+        for setter in self:
+            self.shipment_id.carrier_tracking_ref = self.carrier_tracking_ref
+        pickings = self.shipment_id.departure_picking_ids
+        pickings |= self.shipment_id.arrival_picking_ids
+        pickings.write({'carrier_tracking_ref': self.carrier_tracking_ref})

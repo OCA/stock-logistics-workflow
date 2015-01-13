@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <record id="view_shipment_etd_setter" model="ir.ui.view">
+      <field name="name">Change Shipment ETD</field>
+      <field name="model">shipment.etd.setter</field>
+      <field name="arch" type="xml">
+        <form string="Update ETD">
+          This change will be applied to all departure moves.
+          (Excluding canceled and done moves)
+          <group>
+            <field name="shipment_id" invisible="1"/>
+            <field name="etd"/>
+          </group>
+          <footer>
+            <button name="set_value" string="_Apply" type="object" class="oe_highlight"/>
+            or
+            <button string="_Cancel" class="oe_link" special="cancel" />
+          </footer>
+        </form>
+      </field>
+    </record>
+
+    <record id="action_view_change_shipment_etd" model="ir.actions.act_window">
+      <field name="name">Update Shipment ETD</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">shipment.etd.setter</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="view_shipment_etd_setter"/>
+      <field name="target">new</field>
+    </record>
+
+  </data>
+</openerp>

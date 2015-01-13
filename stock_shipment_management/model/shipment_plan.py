@@ -103,7 +103,7 @@ class ShipmentPlan(models.Model):
         readonly=True,
         states={'draft': [('readonly', False)]},
     )
-    tracking_number = fields.Char(
+    carrier_tracking_ref = fields.Char(
         'Tracking Ref.',
         readonly=True  # updated by wizard
     )

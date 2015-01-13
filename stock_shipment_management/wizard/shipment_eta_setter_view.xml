@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <record id="view_shipment_eta_setter" model="ir.ui.view">
+      <field name="name">Change Shipment ETA</field>
+      <field name="model">shipment.eta.setter</field>
+      <field name="arch" type="xml">
+        <form string="Update ETA">
+          This change will be applied to arrival moves.
+          (Excluding canceled and done moves)
+          <group>
+            <field name="shipment_id" invisible="1"/>
+            <field name="eta"/>
+          </group>
+          <footer>
+            <button name="set_value" string="_Apply" type="object" class="oe_highlight"/>
+            or
+            <button string="_Cancel" class="oe_link" special="cancel" />
+          </footer>
+        </form>
+      </field>
+    </record>
+
+    <record id="action_view_change_shipment_eta" model="ir.actions.act_window">
+      <field name="name">Update Shipment ETA</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">shipment.eta.setter</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="view_shipment_eta_setter"/>
+      <field name="target">new</field>
+    </record>
+
+  </data>
+</openerp>

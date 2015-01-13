@@ -18,8 +18,16 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-from . import value_setter
-from . import shipment_carrier_setter
-from . import shipment_carrier_tracking_ref_setter
-from . import shipment_etd_setter
-from . import shipment_eta_setter
+from openerp import models, fields
+
+
+class ValueSetter(models.AbstractModel):
+    """ generic value setter to update shipment.plan and related moves """
+
+    _name = "shipment.value.setter"
+    _description = "Change Shipment Value"
+
+    shipment_id = fields.Many2one(
+        'shipment.plan', 'Shipment',
+        default=lambda self: self.env.context.get('active_id', False) or False
+    )
