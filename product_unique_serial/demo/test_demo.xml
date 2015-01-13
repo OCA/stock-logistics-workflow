@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <!-- Products -->
+        
+        <record id="product_demo_1" model="product.product">
+            <field name="name">Huawei Ascend</field>
+            <field name="track_all">True</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="lot_unique_ok">True</field>
+            <field name="standard_price">75.50</field>
+            <field name="list_price">82.25</field>
+        </record>
+        
+        <!-- Sales Orders -->
+        
+        <record id="serial_number_demo_1" model="stock.production.lot">
+            <field name="name">86137801852514</field>
+            <field name="product_id" ref="product_demo_1"/>
+        </record>
+        
+        <record id="serial_number_demo_2" model="stock.production.lot">
+            <field name="name">86137801852515</field>
+            <field name="product_id" ref="product_demo_1"/>
+        </record>
+        
+        <record id="serial_number_demo_3" model="stock.production.lot">
+            <field name="name">86137801852516</field>
+            <field name="product_id" ref="product_demo_1"/>
+        </record>
+        
+    </data>
+</openerp>

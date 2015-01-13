@@ -11,6 +11,7 @@
         "views/stock_view.xml",
     ],
     'demo': [
+        "demo/test_demo.xml",
     ],
     'installable': True,
     'auto_install': False,
