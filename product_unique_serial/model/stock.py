@@ -27,12 +27,14 @@ class StockProductionLot(models.Model):
         store=True)  # TODO: Fix fails recomputed
 
     # Overwrite field to deny create serial number duplicated
+    """
     ref = fields.Char('Internal Reference',
                       help="Internal reference number"
                            " in this case it"
                            " is same of manufacturer's"
                            " serial number",
                       related="name", store=True, readonly=True)
+    """
 
 
 class StockMove(models.Model):
