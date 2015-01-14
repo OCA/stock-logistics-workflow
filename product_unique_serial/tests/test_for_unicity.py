@@ -74,6 +74,7 @@ class TestUnicity(TransactionCase):
         =============================================
         ||    A    ||     > 1    ||      001       ||
         =============================================
+        Warehouse: Your Company
         """
         available_serial_numbers = None
         test_passed = False
@@ -129,6 +130,7 @@ class TestUnicity(TransactionCase):
         =============================================
         ||    A    ||     > 1    ||      001       ||
         =============================================
+        Warehouse: Your Company
         """
         available_serial_numbers = None
         test_passed = False
@@ -146,6 +148,120 @@ class TestUnicity(TransactionCase):
             ).create(stock_move_data)
         # Creating the picking
         picking_type = self.env.ref('stock.picking_type_out')
+        picking_data = {
+            'name': 'Test Picking',
+            'move_type': 'direct',
+            'picking_type_id': picking_type.id,
+            'priority': '1',
+            'move_lines': [(6, 0, [stock_move_rec.id])]
+        }
+        picking = self.stock_picking_obj.create(picking_data)
+        # Marking the picking as Todo
+        picking.action_confirm()
+        # Transfering picking
+        transfer_details = picking.do_enter_transfer_details()
+        wizard_for_transfer = self.env[transfer_details.get('res_model')].\
+            browse(transfer_details.get('res_id'))
+        for transfer_item in wizard_for_transfer.item_ids:
+            available_serial_numbers = self.stock_production_lot_obj.search(
+                [('product_id', '=', transfer_item.product_id.id)])
+            if available_serial_numbers:
+                transfer_item.lot_id = available_serial_numbers[0].id
+        # Executing the picking transfering
+        try:
+            wizard_for_transfer.do_detailed_transfer()
+        except except_orm:
+            test_passed = True
+        self.assertTrue(
+            test_passed,
+            "ERROR: The module can transfer pickings-"
+            "delivery with a product that has a quantity >1 with a lot_id")
+
+    def test_4_chi_many_products_one_serial_number_in(self):
+        """
+        Test 2. Creating a pick with 2 products for the same serial number,
+        in the receipts scope, with the next form:
+        =============================================
+        || Product ||  Quantity  ||  Serial Number ||
+        =============================================
+        ||    A    ||     > 1    ||      001       ||
+        =============================================
+        Warehouse: Chicago
+        """
+        available_serial_numbers = None
+        test_passed = False
+        # Creating move line for picking
+        product = self.env.ref('product_unique_serial.product_demo_1')
+        unit_of_measure = self.env.ref('product.product_uom_unit')
+        stock_move_data = {
+            'product_id': product.id,
+            'product_uom': unit_of_measure.id,
+            'product_uom_qty': 50.0,
+            'name': "Stock move for %s for test purposes" % product.name
+        }
+        stock_move_rec = self.stock_move_obj.with_context(
+            default_picking_type_id=self.env.ref(
+                'stock.chi_picking_type_in').id
+            ).create(stock_move_data)
+        # Creating the picking
+        picking_type = self.env.ref('stock.chi_picking_type_in')
+        picking_data = {
+            'name': 'Test Picking',
+            'move_type': 'direct',
+            'picking_type_id': picking_type.id,
+            'priority': '1',
+            'move_lines': [(6, 0, [stock_move_rec.id])]
+        }
+        picking = self.stock_picking_obj.create(picking_data)
+        # Marking the picking as Todo
+        picking.action_confirm()
+        # Transfering picking
+        transfer_details = picking.do_enter_transfer_details()
+        wizard_for_transfer = self.env[transfer_details.get('res_model')].\
+            browse(transfer_details.get('res_id'))
+        for transfer_item in wizard_for_transfer.item_ids:
+            available_serial_numbers = self.stock_production_lot_obj.search(
+                [('product_id', '=', transfer_item.product_id.id)])
+            if available_serial_numbers:
+                transfer_item.lot_id = available_serial_numbers[0].id
+        # Executing the picking transfering
+        try:
+            wizard_for_transfer.do_detailed_transfer()
+        except except_orm:
+            test_passed = True
+        self.assertTrue(
+            test_passed,
+            "ERROR: The module can transfer pickings-"
+            "receipts with a product that has a quantity >1 with a lot_id")
+
+    def test_5_chi_many_products_one_serial_number_out(self):
+        """
+        Test 2. Creating a pick with 2 products for the same serial number,
+        in the delivery orders scope, with the next form:
+        =============================================
+        || Product ||  Quantity  ||  Serial Number ||
+        =============================================
+        ||    A    ||     > 1    ||      001       ||
+        =============================================
+        Warehouse: Chicago
+        """
+        available_serial_numbers = None
+        test_passed = False
+        # Creating move line for picking
+        product = self.env.ref('product_unique_serial.product_demo_1')
+        unit_of_measure = self.env.ref('product.product_uom_unit')
+        stock_move_data = {
+            'product_id': product.id,
+            'product_uom': unit_of_measure.id,
+            'product_uom_qty': 50.0,
+            'name': "Stock move for %s for test purposes" % product.name
+        }
+        stock_move_rec = self.stock_move_obj.with_context(
+            default_picking_type_id=self.env.ref(
+                'stock.chi_picking_type_out').id
+            ).create(stock_move_data)
+        # Creating the picking
+        picking_type = self.env.ref('stock.chi_picking_type_out')
         picking_data = {
             'name': 'Test Picking',
             'move_type': 'direct',
