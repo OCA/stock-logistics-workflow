@@ -107,14 +107,13 @@ class TestUnicity(TransactionCase):
         wizard_for_transfer = self.env[transfer_details.get('res_model')].\
             browse(transfer_details.get('res_id'))
         for transfer_item in wizard_for_transfer.item_ids:
-            available_serial_numbers = self.stock_production_lot_obj.search(
-                [('product_id', '=', transfer_item.product_id.id)])
-            if available_serial_numbers:
-                transfer_item.lot_id = available_serial_numbers[0].id
+            transfer_item.lot_id = self.env.ref(
+                'product_unique_serial.serial_number_demo_1').id
         # Executing the picking transfering
         try:
             wizard_for_transfer.do_detailed_transfer()
-        except except_orm:
+        except except_orm, msg:
+            print msg
             test_passed = True
         self.assertTrue(
             test_passed,
@@ -163,14 +162,13 @@ class TestUnicity(TransactionCase):
         wizard_for_transfer = self.env[transfer_details.get('res_model')].\
             browse(transfer_details.get('res_id'))
         for transfer_item in wizard_for_transfer.item_ids:
-            available_serial_numbers = self.stock_production_lot_obj.search(
-                [('product_id', '=', transfer_item.product_id.id)])
-            if available_serial_numbers:
-                transfer_item.lot_id = available_serial_numbers[0].id
+            transfer_item.lot_id = self.env.ref(
+                'product_unique_serial.serial_number_demo_1').id
         # Executing the picking transfering
         try:
             wizard_for_transfer.do_detailed_transfer()
-        except except_orm:
+        except except_orm, msg:
+            print msg
             test_passed = True
         self.assertTrue(
             test_passed,
@@ -220,14 +218,13 @@ class TestUnicity(TransactionCase):
         wizard_for_transfer = self.env[transfer_details.get('res_model')].\
             browse(transfer_details.get('res_id'))
         for transfer_item in wizard_for_transfer.item_ids:
-            available_serial_numbers = self.stock_production_lot_obj.search(
-                [('product_id', '=', transfer_item.product_id.id)])
-            if available_serial_numbers:
-                transfer_item.lot_id = available_serial_numbers[0].id
+            transfer_item.lot_id = self.env.ref(
+                'product_unique_serial.serial_number_demo_1').id
         # Executing the picking transfering
         try:
             wizard_for_transfer.do_detailed_transfer()
-        except except_orm:
+        except except_orm, msg:
+            print msg
             test_passed = True
         self.assertTrue(
             test_passed,
@@ -277,14 +274,13 @@ class TestUnicity(TransactionCase):
         wizard_for_transfer = self.env[transfer_details.get('res_model')].\
             browse(transfer_details.get('res_id'))
         for transfer_item in wizard_for_transfer.item_ids:
-            available_serial_numbers = self.stock_production_lot_obj.search(
-                [('product_id', '=', transfer_item.product_id.id)])
-            if available_serial_numbers:
-                transfer_item.lot_id = available_serial_numbers[0].id
+            transfer_item.lot_id = self.env.ref(
+                'product_unique_serial.serial_number_demo_1').id
         # Executing the picking transfering
         try:
             wizard_for_transfer.do_detailed_transfer()
-        except except_orm:
+        except except_orm, msg:
+            print msg
             test_passed = True
         self.assertTrue(
             test_passed,
@@ -329,21 +325,23 @@ class TestUnicity(TransactionCase):
         picking = self.stock_picking_obj.create(picking_data)
         # Marking the picking as Todo
         picking.action_confirm()
+        # Checking availability
+        picking.action_assign()
         # Transfering picking
         transfer_details = picking.do_enter_transfer_details()
         wizard_for_transfer = self.env[transfer_details.get('res_model')].\
             browse(transfer_details.get('res_id'))
         for transfer_item in wizard_for_transfer.item_ids:
-            available_serial_numbers = self.stock_production_lot_obj.search(
-                [('product_id', '=', transfer_item.product_id.id)])
-            if available_serial_numbers:
-                transfer_item.lot_id = available_serial_numbers[0].id
+            transfer_item.lot_id = self.env.ref(
+                'product_unique_serial.serial_number_demo_1').id
         # Executing the picking transfering
         try:
             wizard_for_transfer.do_detailed_transfer()
-        except except_orm:
+        except except_orm, msg:
+            print msg
             test_passed = True
         self.assertTrue(
             test_passed,
             "ERROR: The module can transfer pickings-"
             "internal with a product that has a quantity >1 with a lot_id")
+        self.cr.commit()
