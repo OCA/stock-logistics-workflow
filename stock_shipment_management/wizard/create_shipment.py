@@ -18,7 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-from openerp import models, api, exceptions, _
+from openerp import models, api, fields, exceptions, _
 
 
 class ShipmentPlanCreator(models.TransientModel):
@@ -30,7 +30,97 @@ class ShipmentPlanCreator(models.TransientModel):
     _name = 'shipment.plan.creator'
     _description = 'Shipment Plan Creator'
 
-    def _check_departure_moves(self, moves):
+    shipment_id = fields.Many2one(
+        'shipment.plan', 'Shipment',
+        domain="[('state', '=', 'draft'),"
+               " ('from_address_id', '=', from_address_id),"
+               " ('to_address_id', '=', to_address_id)]",
+        help="Shipment to which moves will be added.\nOnly shipment in draft "
+             "can be extended.",
+    )
+
+    move_ids = fields.One2many(
+        compute=lambda rec: True,
+        comodel_name='stock.move',
+        string='Selected Moves',
+    )
+
+    initial_etd = fields.Datetime(
+        'Initial ETD',
+        help="Initial Estimated Time of Departure"
+    )
+    initial_eta = fields.Datetime(
+        'Initial ETA',
+        help="Initial Estimated Time of Arrival"
+    )
+    from_address_id = fields.Many2one(
+        'res.partner', 'From Address',
+        readonly=True,
+    )
+    to_address_id = fields.Many2one(
+        'res.partner',
+        'To Address',
+        readonly=True,
+    )
+    consignee_id = fields.Many2one(
+        'res.partner',
+        'Consignee',
+    )
+    carrier_tracking_ref = fields.Char(
+        'Tracking Ref.',
+    )
+
+    @api.model
+    def _get_shipment_data(self, moves):
+        """ Create arrival moves based on departure moves
+
+        """
+        # outgoing picking
+        warehouses = moves.mapped(
+            lambda rec: rec.picking_id.picking_type_id.warehouse_id)
+        if len(warehouses) > 1:
+            raise exceptions.Warning("Multiple From")
+        from_address = warehouses.partner_id
+        to_address = moves.mapped(lambda rec: rec.picking_id.partner_id)
+        if len(to_address) > 1:
+            raise exceptions.Warning("Multiple To address")
+
+        data = {
+            'from_address_id': from_address.id,
+            'to_address_id': to_address.id,
+        }
+        # XXX set values for ingoing picking
+        # XXX set values for dropshipping
+
+        etds = set(m.date_expected for m in moves)
+        etas = set(m.move_dest_id.date_expected for m in moves)
+        if len(etds) == 1:
+            data['initial_etd'] = etds.pop()
+        if len(etas) == 1:
+            data['initial_eta'] = etas.pop()
+        tracking_refs = set(m.picking_id.carrier_tracking_ref for m in moves)
+        if len(tracking_refs) == 1:
+            data['carrier_tracking_ref'] = tracking_refs.pop()
+        return data
+
+    @api.model
+    def default_get(self, fields_list):
+        """ Take the pricelist of the lrs by default. Show the
+        available choice for the user.
+        """
+        defaults = super(ShipmentPlanCreator, self).default_get(fields_list)
+
+        model = self.env.context['active_model']
+        active_ids = self.env.context['active_ids']
+        recs = self.env[model].browse(active_ids)
+        if model == 'stock.picking':
+            recs = recs.mapped('move_lines')
+        defaults['move_ids'] = recs.ids
+        data = self._get_shipment_data(recs)
+        defaults.update(data)
+        return defaults
+
+    def _check_departure_moves(self):
         """ Departure moves checks:
 
           - not already assigned to a shipment plan
@@ -41,8 +131,8 @@ class ShipmentPlanCreator(models.TransientModel):
           After check there should be at least one move to allow
           shipment creation.
         """
-        mvs_already_shipped = moves.filtered('departure_shipment_id')
-        residual = moves - mvs_already_shipped
+        mvs_already_shipped = self.move_ids.filtered('departure_shipment_id')
+        residual = self.move_ids - mvs_already_shipped
         mvs_wrong_state = residual.filtered(
             lambda rec: rec.state not in ('confirmed', 'waiting', 'assigned'))
         residual -= mvs_wrong_state
@@ -100,23 +190,22 @@ class ShipmentPlanCreator(models.TransientModel):
         return True
 
     @api.multi
-    def _get_shipment_data(self, moves):
-        """ Create arrival moves based on departure moves
+    def _compute_shipment_data(self):
+        """ Compute shipment data from wizard values
 
         """
-        from_address = moves.mapped(lambda rec: rec.picking_id.partner_id)
-        from_address.ensure_one()
-        to_address = moves.mapped(lambda rec: rec.picking_id.partner_id)
-        to_address.ensure_one()
-        return {
-            'from_address_id': from_address.id,
-            'to_address_id': to_address.id,
-        }
+        data = {}
+        for field in ['from_address_id', 'to_address_id']:
+            rec = self[field]
+            if rec:
+                data[field] = rec.id
+        for field in ['initial_etd', 'initial_eta', 'carrier_tracking_ref']:
+            data[field] = self[field]
+        return data
 
     @api.multi
     def action_create_shipment(self):
-        """
-        Open the historical margin view
+        """ Create the shipment
         """
         model = self.env.context['active_model']
         active_ids = self.env.context['active_ids']
@@ -124,12 +213,25 @@ class ShipmentPlanCreator(models.TransientModel):
         if model == 'stock.picking':
             recs = recs.mapped('move_lines')
 
-        self._check_departure_moves(recs)
-        data = self._get_shipment_data(recs)
-        shipment_id = self.env['shipment.plan'].create(data)
+        self.move_ids = recs
+
+        self._check_departure_moves()
+        if not self.shipment_id:
+            data = self._compute_shipment_data()
+            self.shipment_id = self.env['shipment.plan'].create(data)
         # for move_id in move_ids:
-        recs.write({'departure_shipment_id': shipment_id.id})
+        recs.write({'departure_shipment_id': self.shipment_id.id})
         dest_moves = recs.mapped('move_dest_id')
-        dest_moves.write({'arrival_shipment_id': shipment_id.id})
+        dest_moves.write({'arrival_shipment_id': self.shipment_id.id})
 
         return {'type': 'ir.actions.act_window_close'}
+
+    @api.onchange('shipment_id')
+    def onchange_shipment(self):
+        if self.shipment_id:
+            copy_fields = [
+                'initial_etd', 'initial_eta',
+                'from_address_id', 'to_address_id',
+                'consignee_id', 'carrier_tracking_ref']
+            for field in copy_fields:
+                self[field] = self.shipment_id[field]

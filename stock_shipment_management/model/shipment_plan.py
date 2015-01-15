@@ -233,6 +233,10 @@ class ShipmentPlan(models.Model):
         if values.get('name', '/') == '/':
             seq_obj = self.env['ir.sequence']
             values['name'] = seq_obj.get('shipment.plan') or '/'
+        values.update({
+            'etd': values.get('initial_etd'),
+            'eta': values.get('initial_eta'),
+        })
         return super(ShipmentPlan, self).create(values)
 
     @api.multi
