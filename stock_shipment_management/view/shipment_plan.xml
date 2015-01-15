@@ -20,19 +20,16 @@
       <field name="arch" type="xml">
         <form string="Shipment Plan" version="7.0">
           <header>
-            <button name="action_confirm"
+            <button name="shipment_confirm"
                 string="Confirm"
                 states="draft"
-                class="oe_highlight"
-                type="object" />
-            <button name="action_cancel"
+                class="oe_highlight"/>
+            <button name="cancel"
                 string="Cancel"
-                states="draft,confirmed"
-                type="object" />
-            <button name="action_reset"
+                states="draft,confirmed"/>
+            <button name="reset"
                 string="Set to Draft"
                 states="cancel"
-                type="object"
                 class="oe_highlight" />
             <field name="state" select="1" readonly="1"
                 widget="statusbar"

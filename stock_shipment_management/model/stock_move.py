@@ -19,7 +19,7 @@
 #
 ##############################################################################
 import logging
-from openerp import models, fields
+from openerp import models, fields, api
 
 _logger = logging.getLogger(__name__)
 
@@ -37,3 +37,15 @@ class StockMove(models.Model):
         readonly=True,
         copy=False
     )
+
+    @api.multi
+    def write(self, values):
+        res = super(StockMove, self).write(values)
+        if values.get('state', '') == 'done':
+            for ship in self.mapped('departure_shipment_id'):
+                if ship.state == 'confirmed':
+                    ship.signal_workflow('transit_start')
+            for ship in self.mapped('arrival_shipment_id'):
+                if ship.state == 'in_transit':
+                    ship.signal_workflow('transit_end')
+        return res

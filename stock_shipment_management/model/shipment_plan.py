@@ -233,10 +233,6 @@ class ShipmentPlan(models.Model):
         if values.get('name', '/') == '/':
             seq_obj = self.env['ir.sequence']
             values['name'] = seq_obj.get('shipment.plan') or '/'
-        values.update({
-            'etd': values.get('initial_etd'),
-            'eta': values.get('initial_eta'),
-        })
         return super(ShipmentPlan, self).create(values)
 
     @api.multi
@@ -286,6 +282,14 @@ class ShipmentPlan(models.Model):
         action_dict = self.env.ref(ref).read()[0]
         action_dict['domain'] = [('id', 'in', pickings.ids)]
         return action_dict
+
+    @api.multi
+    def is_transit_done(self):
+        for move in self.arrival_move_ids:
+            if move.state not in ('done', 'cancel'):
+                return False
+        else:
+            return True
 
     @api.multi
     @api.depends('departure_picking_ids')
