@@ -75,21 +75,28 @@ class ShipmentPlanCreator(models.TransientModel):
         """ Create arrival moves based on departure moves
 
         """
-        # outgoing picking
-        warehouses = moves.mapped(
-            lambda rec: rec.picking_id.picking_type_id.warehouse_id)
-        if len(warehouses) > 1:
-            raise exceptions.Warning("Multiple From")
-        from_address = warehouses.partner_id
-        to_address = moves.mapped(lambda rec: rec.picking_id.partner_id)
-        if len(to_address) > 1:
-            raise exceptions.Warning("Multiple To address")
+        picking_types = moves.mapped(
+            lambda rec: rec.picking_id.picking_type_id)
+        if len(picking_types) > 1:
+            raise exceptions.Warning("Multiple picking types")
+        wh_address = picking_types.warehouse_id.partner_id
+        pick_address = moves.mapped(lambda rec: rec.picking_id.partner_id)
+
+        if picking_types.code == 'outgoing':
+            from_address = wh_address
+            if len(pick_address) > 1:
+                raise exceptions.Warning("Multiple To address")
+            to_address = pick_address
+        elif picking_types.code == 'incoming':
+            to_address = wh_address
+            if len(pick_address) > 1:
+                raise exceptions.Warning("Multiple From address")
+            from_address = pick_address
 
         data = {
             'from_address_id': from_address.id,
             'to_address_id': to_address.id,
         }
-        # XXX set values for ingoing picking
         # XXX set values for dropshipping
 
         etds = set(m.date_expected for m in moves)
