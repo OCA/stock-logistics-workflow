@@ -38,6 +38,7 @@
           "wizard/shipment_eta_setter_view.xml",
           "wizard/create_shipment_view.xml",
           "view/shipment_plan.xml",
+          "view/stock_move.xml",
           "workflow/shipment_plan.xml",
           "security/ir.model.access.csv",
           ],

@@ -17,7 +17,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
+#
 import logging
 from openerp import models, fields, api
 
@@ -37,6 +37,63 @@ class StockMove(models.Model):
         readonly=True,
         copy=False
     )
+
+    ship_carrier_id = fields.Many2one(
+        related='departure_shipment_id.carrier_id',
+        readonly=True,
+        store=True
+    )
+    ship_carrier_tracking_ref = fields.Char(
+        related='departure_shipment_id.carrier_tracking_ref',
+        string='Tracking Ref.',
+        readonly=True
+    )
+    ship_from_address_id = fields.Many2one(
+        compute='_get_ship_addresses',
+        comodel_name='res.partner',
+        string='From Address',
+        store=True
+    )
+    ship_to_address_id = fields.Many2one(
+        compute='_get_ship_addresses',
+        comodel_name='res.partner',
+        string='To Address',
+        store=True
+    )
+    ship_consignee_id = fields.Many2one(
+        related='departure_shipment_id.consignee_id',
+        string='Consignee',
+        readonly=True,
+    )
+    ship_transport_mode_id = fields.Many2one(
+        related='departure_shipment_id.transport_mode_id',
+        string='Transport by',
+        readonly=True,
+    )
+    ship_state = fields.Selection(
+        related='departure_shipment_id.state',
+        store=True,
+    )
+
+    @api.depends('picking_id.picking_type_id.code',
+                 'picking_id.picking_type_id.warehouse_id.partner_id',
+                 'picking_id.group_id.procurement_ids.purchase_id.partner_id')
+    @api.one
+    def _get_ship_addresses(self):
+        picking = self.picking_id
+        picking_type = picking.picking_type_id
+        wh_address = picking_type.warehouse_id.partner_id
+        if picking_type.code == 'outgoing':
+            ref_dropship = 'stock_dropshipping.picking_type_dropship'
+            if picking_type == self.env.ref(ref_dropship):
+                self.ship_from_address_id = picking.group_id.mapped(
+                    'procurement_ids.purchase_id.partner_id')
+            else:
+                self.ship_from_address_id = wh_address.id
+            self.ship_to_address_id = picking.partner_id.id
+        elif picking_type.code == 'incoming':
+            self.ship_to_address_id = wh_address
+            self.ship_from_address_id = picking.partner_id
 
     @api.multi
     def write(self, values):

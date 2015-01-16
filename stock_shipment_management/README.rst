@@ -45,8 +45,6 @@ Known issues / Roadmap
 
 TODO:
 
- * Manage dropshipping
- * Pipeline of stock.move
  * Partial shipment: creation of a new shipment with shipped residual.
  * Manage lost in transit product
 
