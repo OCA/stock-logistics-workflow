@@ -34,6 +34,20 @@ class TestNeedTwoInvoices(TransactionCase):
         Wizard = self.Wizard.with_context({'active_id': picking.id})
         self.assertIs(True, Wizard._need_two_invoices())
 
+    def test_so_on_delivery_need_one_invoice(self):
+        self.so.order_policy = 'picking'
+        self.so.action_button_confirm()
+
+        po = self.so.procurement_group_id.procurement_ids.purchase_id
+        self.assertTrue(po)
+        po.signal_workflow('purchase_confirm')
+        picking = po.picking_ids
+
+        self.assertEqual(1, len(picking))
+        picking.action_done()
+        Wizard = self.Wizard.with_context({'active_id': picking.id})
+        self.assertIs(False, Wizard._need_two_invoices())
+
     def setUp(self):
         super(TestNeedTwoInvoices, self).setUp()
         self.Wizard = self.env['stock.invoice.onshipping']

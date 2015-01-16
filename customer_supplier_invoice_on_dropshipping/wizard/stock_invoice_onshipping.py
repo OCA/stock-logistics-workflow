@@ -27,4 +27,10 @@ class StockInvoiceOnshipping(models.TransientModel):
 
     @api.model
     def _need_two_invoices(self):
-        return True
+        pick = self.env['stock.picking'].browse(self.env.context['active_id'])
+        so = pick.sale_id
+        po = pick.move_lines[0].purchase_line_id.order_id
+        if so.order_policy == 'picking' and po.invoice_method == 'picking':
+            return True
+        else:
+            return False
