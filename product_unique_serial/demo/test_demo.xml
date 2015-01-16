@@ -11,6 +11,7 @@
             <field name="lot_unique_ok">True</field>
             <field name="standard_price">75.50</field>
             <field name="list_price">82.25</field>
+            <field name="qty_available">500.0</field>
         </record>
         
         <!-- Sales Orders -->

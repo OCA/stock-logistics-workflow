@@ -45,6 +45,7 @@ class TestUnicity(TransactionCase):
         self.stock_move_obj = self.env['stock.move']
         self.product_uom_obj = self.env['product.uom']
         self.stock_location_obj = self.env['stock.location']
+
     # '''
     # #@mute()
     # def test_1_creating_two_equal_serial_numbers(self):
@@ -65,18 +66,62 @@ class TestUnicity(TransactionCase):
         #    " serial numbers, which is a problem that should be attended...")
     # '''
 
-    def test_2_many_products_one_serial_number_in(self):
+    def create_stock_moves(self, moves_data, picking_type_xml_id):
+        """ Returns a list of ids for each created stock.move """
+        stock_move_ids = []
+        for move in moves_data:
+            stock_move_ids.append(
+                self.stock_move_obj.with_context(
+                    default_picking_type_id=self.env.ref(
+                        picking_type_xml_id).id).\
+                create(move).id)
+        return stock_move_ids
+
+    def create_stock_picking(self, moves_data, picking_data,
+                              picking_type_xml_id):
+        """ Returns the stock.picking object """
+        move_lines = self.create_stock_moves(moves_data, picking_type_xml_id)
+        picking_type = self.env.ref(picking_type_xml_id)
+        picking_data.update(
+            {'move_lines': [(6, 0, move_lines)],
+             'picking_type_id': picking_type.id})
+        return self.stock_picking_obj.create(picking_data)
+
+    def transfer_picking(self, picking_instance, serial_number):
+        """ Creates a wizard to transfer the picking given like parameter """
+        # Marking the picking as Todo
+        picking_instance.action_confirm()
+        if picking_instance.state == 'confirmed':
+            # Checking availability
+            picking_instance.action_assign()
+        # Transfering picking
+        transfer_details = picking_instance.do_enter_transfer_details()
+        wizard_for_transfer = self.env[transfer_details.get('res_model')].\
+            browse(transfer_details.get('res_id'))
+        for transfer_item in wizard_for_transfer.item_ids:
+            transfer_item.lot_id = self.env.ref(
+                serial_number).id
+        # Executing the picking transfering
+        wizard_for_transfer.do_detailed_transfer()
+
+    def test_1_1product_1serialnumber_2p_in(self):
         """
-        Test 2. Creating a pick with 2 products for the same serial number,
+        Test 1. Creating 2 pickings with 1 product for the same serial number,
         in the receipts scope, with the next form:
+        - Picking 1
         =============================================
         || Product ||  Quantity  ||  Serial Number ||
         =============================================
-        ||    A    ||     > 1    ||      001       ||
+        ||    A    ||      1     ||      001       ||
+        =============================================
+        - Picking 2
+        =============================================
+        || Product ||  Quantity  ||  Serial Number ||
+        =============================================
+        ||    A    ||      1     ||      001       ||
         =============================================
         Warehouse: Your Company
         """
-        available_serial_numbers = None
         test_passed = False
         # Creating move line for picking
         product = self.env.ref('product_unique_serial.product_demo_1')
@@ -84,34 +129,32 @@ class TestUnicity(TransactionCase):
         stock_move_data = {
             'product_id': product.id,
             'product_uom': unit_of_measure.id,
-            'product_uom_qty': 50.0,
+            'product_uom_qty': 1.0,
             'name': "Stock move for %s for test purposes" % product.name
         }
-        stock_move_rec = self.stock_move_obj.with_context(
-            default_picking_type_id=self.env.ref('stock.picking_type_in').id
-            ).create(stock_move_data)
         # Creating the picking
-        picking_type = self.env.ref('stock.picking_type_in')
-        picking_data = {
-            'name': 'Test Picking',
+        picking_data_1 = {
+            'name': 'Test Picking 1',
             'move_type': 'direct',
-            'picking_type_id': picking_type.id,
-            'priority': '1',
-            'move_lines': [(6, 0, [stock_move_rec.id])]
+            'priority': '1'
         }
-        picking = self.stock_picking_obj.create(picking_data)
-        # Marking the picking as Todo
-        picking.action_confirm()
-        # Transfering picking
-        transfer_details = picking.do_enter_transfer_details()
-        wizard_for_transfer = self.env[transfer_details.get('res_model')].\
-            browse(transfer_details.get('res_id'))
-        for transfer_item in wizard_for_transfer.item_ids:
-            transfer_item.lot_id = self.env.ref(
-                'product_unique_serial.serial_number_demo_1').id
-        # Executing the picking transfering
+        picking_data_2 = {
+            'name': 'Test Picking 2',
+            'move_type': 'direct',
+            'priority': '1'
+        }
+        picking_1 = self.create_stock_picking(
+            [stock_move_data], picking_data_1, 'stock.picking_type_in')
+        picking_2 = self.create_stock_picking(
+            [stock_move_data], picking_data_2, 'stock.picking_type_in')
+        # Executing the wizard for pickings transfering
+        self.transfer_picking(
+            picking_1,
+            'product_unique_serial.serial_number_demo_1')
         try:
-            wizard_for_transfer.do_detailed_transfer()
+            self.transfer_picking(
+                picking_2,
+                'product_unique_serial.serial_number_demo_1')
         except except_orm, msg:
             print msg
             test_passed = True
@@ -120,6 +163,66 @@ class TestUnicity(TransactionCase):
             "ERROR: The module can transfer pickings-"
             "receipt with a product that has a quantity >1 with a lot_id")
 
+    def test_2_1product_1serialnumber_2p_out(self):
+        """
+        Test 2. Creating 2 pickings with 1 product for the same serial number,
+        in the delivery orders scope, with the next form:
+        - Picking 1
+        =============================================
+        || Product ||  Quantity  ||  Serial Number ||
+        =============================================
+        ||    A    ||      1     ||      001       ||
+        =============================================
+        - Picking 2
+        =============================================
+        || Product ||  Quantity  ||  Serial Number ||
+        =============================================
+        ||    A    ||      1     ||      001       ||
+        =============================================
+        Warehouse: Your Company
+        """
+        test_passed = False
+        # Creating move line for picking
+        product = self.env.ref('product_unique_serial.product_demo_1')
+        unit_of_measure = self.env.ref('product.product_uom_unit')
+        stock_move_data = {
+            'product_id': product.id,
+            'product_uom': unit_of_measure.id,
+            'product_uom_qty': 1.0,
+            'name': "Stock move for %s for test purposes" % product.name
+        }
+        # Creating the picking
+        picking_data_1 = {
+            'name': 'Test Picking 1',
+            'move_type': 'direct',
+            'priority': '1'
+        }
+        picking_data_2 = {
+            'name': 'Test Picking 2',
+            'move_type': 'direct',
+            'priority': '1'
+        }
+        picking_1 = self.create_stock_picking(
+            [stock_move_data], picking_data_1, 'stock.picking_type_out')
+        picking_2 = self.create_stock_picking(
+            [stock_move_data], picking_data_2, 'stock.picking_type_out')
+        # Executing the wizard for pickings transfering
+        self.transfer_picking(
+            picking_1,
+            'product_unique_serial.serial_number_demo_2')
+        try:
+            self.transfer_picking(
+                picking_2,
+                'product_unique_serial.serial_number_demo_2')
+        except except_orm, msg:
+            print msg
+            test_passed = True
+        self.assertTrue(
+            test_passed,
+            "ERROR: The module can transfer pickings-delivery-order "
+            "with a product that has a quantity >1 with a lot_id")
+
+    '''
     def test_3_many_products_one_serial_number_out(self):
         """
         Test 3. Creating a pick with 2 products for the same serial number,
@@ -329,19 +432,19 @@ class TestUnicity(TransactionCase):
         picking.action_assign()
         # Transfering picking
         transfer_details = picking.do_enter_transfer_details()
-        wizard_for_transfer = self.env[transfer_details.get('res_model')].\
-            browse(transfer_details.get('res_id'))
-        for transfer_item in wizard_for_transfer.item_ids:
-            transfer_item.lot_id = self.env.ref(
-                'product_unique_serial.serial_number_demo_1').id
-        # Executing the picking transfering
-        try:
-            wizard_for_transfer.do_detailed_transfer()
-        except except_orm, msg:
-            print msg
-            test_passed = True
-        self.assertTrue(
-            test_passed,
-            "ERROR: The module can transfer pickings-"
-            "internal with a product that has a quantity >1 with a lot_id")
-        self.cr.commit()
+        #~ wizard_for_transfer = self.env[transfer_details.get('res_model')].\
+            #~ browse(transfer_details.get('res_id'))
+        #~ for transfer_item in wizard_for_transfer.item_ids:
+            #~ transfer_item.lot_id = self.env.ref(
+                #~ 'product_unique_serial.serial_number_demo_1').id
+        #~ # Executing the picking transfering
+        #~ try:
+            #~ wizard_for_transfer.do_detailed_transfer()
+        #~ except except_orm, msg:
+            #~ print msg
+            #~ test_passed = True
+        #~ self.assertTrue(
+            #~ test_passed,
+            #~ "ERROR: The module can transfer pickings-"
+            #~ "internal with a product that has a quantity >1 with a lot_id")
+    '''
