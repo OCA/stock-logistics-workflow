@@ -38,9 +38,9 @@ class StockProductionLot(models.Model):
 class StockMove(models.Model):
     _inherit = 'stock.move'
 
-    def check_action_done(self, cr, uid, operation_or_move,
-                          lot_id=None, context=None):
-        super(StockMove, self).check_action_done(
+    def check_after_action_done(self, cr, uid, operation_or_move,
+                                lot_id=None, context=None):
+        super(StockMove, self).check_after_action_done(
             cr, uid, operation_or_move,
             lot_id, context=context)
         return self.check_unicity_qty_available(
