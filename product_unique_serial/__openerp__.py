@@ -5,7 +5,7 @@
     'website': "http://www.vauxoo.com",
     'category': 'stock',
     'version': '1.0',
-    'depends': ['stock'],
+    'depends': ['stock_no_negative'],
     'data': [
         "views/product_view.xml",
         "views/stock_view.xml",
