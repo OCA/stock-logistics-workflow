@@ -26,6 +26,7 @@
 
 from openerp.tests.common import TransactionCase
 from openerp.exceptions import except_orm
+from copy import deepcopy
 
 
 class TestUnicity(TransactionCase):
@@ -66,28 +67,40 @@ class TestUnicity(TransactionCase):
         #    " serial numbers, which is a problem that should be attended...")
     # '''
 
-    def create_stock_picking(self, moves_data, picking_data,
-                             picking_type_xml_id):
-        """ Returns the stock.picking object """
-        # Returns a list of ids for each created stock.move
+    def create_stock_picking(self, moves_data, picking_data, picking_type):
+        """ Returns the stock.picking object, with his respective created
+            created stock.move lines """
+        # Require deepcopy for clone dict into list items
+        moves_data_copy = deepcopy(moves_data)
+        picking_data_copy = picking_data.copy()
         stock_move_ids = []
-        for move_n in moves_data:
+        for move_n in moves_data_copy:
+            # Getting the qty for the stock.move
             qty = move_n.get('qty')
             del move_n['qty']
+            # Getting default data through product_id onchange
             default_product_data = self.stock_move_obj.onchange_product_id(
                 move_n.get('product_id'))
             move_n.update(default_product_data.get('value'))
-            move_n['product_uom_qty'] = qty
+            # Getting default data through product_uom_qty onchange
+            default_qty_data = self.stock_move_obj.onchange_quantity(
+                move_n.get('product_id'),
+                qty,
+                default_product_data.get('product_uom'),
+                default_product_data.get('product_uos'))
+            move_n.update(default_qty_data.get('value'))
+            # Getting the new stock.move id
             move_created = self.stock_move_obj.with_context(
-                default_picking_type_id=self.env.ref(
-                    picking_type_xml_id).id).create(move_n)
+                default_picking_type_id=picking_type.id).create(move_n)
             stock_move_ids.append(move_created.id)
         # Creating picking
-        picking_type = self.env.ref(picking_type_xml_id)
-        picking_data.update(
-            {'move_lines': [(6, 0, stock_move_ids)],
-             'picking_type_id': picking_type.id})
-        return self.stock_picking_obj.create(picking_data)
+        picking_data_copy.update({
+            'move_lines': [(6, 0, stock_move_ids)],
+            # TODO: Uncomment when fix current context bug
+            # 'move_lines': [(0, 0, moves_data_copy)],
+            # and remove move_created line
+            'picking_type_id': picking_type.id})
+        return self.stock_picking_obj.create(picking_data_copy)
 
     def transfer_picking(self, picking_instance, serial_number=None):
         """ Creates a wizard to transfer the picking given like parameter """
@@ -128,26 +141,23 @@ class TestUnicity(TransactionCase):
         # Creating move line for picking
         product = self.env.ref('product_unique_serial.product_demo_1')
         unit_of_measure = self.env.ref('product.product_uom_unit')
-        stock_move_data_1 = {
+        stock_move_datas = [{
             'product_id': product.id,
             'qty':1.0
-        }
-        stock_move_data_2 = dict(stock_move_data_1)
+        }]
         # Creating the picking
         picking_data_1 = {
             'name': 'Test Picking 1',
-            'move_type': 'direct',
-            'priority': '1'
         }
         picking_data_2 = {
             'name': 'Test Picking 2',
-            'move_type': 'direct',
-            'priority': '1'
         }
         picking_1 = self.create_stock_picking(
-            [stock_move_data_1], picking_data_1, 'stock.picking_type_in')
+            stock_move_datas, picking_data_1,
+            self.env.ref('stock.picking_type_in'))
         picking_2 = self.create_stock_picking(
-            [stock_move_data_2], picking_data_2, 'stock.picking_type_in')
+            stock_move_datas, picking_data_2,
+            self.env.ref('stock.picking_type_in'))
         # Executing the wizard for pickings transfering
         self.transfer_picking(
             picking_1,
