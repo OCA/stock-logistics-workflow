@@ -66,8 +66,10 @@ class TestUnicity(TransactionCase):
         #    " serial numbers, which is a problem that should be attended...")
     # '''
 
-    def create_stock_moves(self, moves_data, picking_type_xml_id):
-        """ Returns a list of ids for each created stock.move """
+    def create_stock_picking(self, moves_data, picking_data,
+                             picking_type_xml_id):
+        """ Returns the stock.picking object """
+        # Returns a list of ids for each created stock.move
         stock_move_ids = []
         for move in moves_data:
             stock_move_ids.append(
@@ -75,15 +77,10 @@ class TestUnicity(TransactionCase):
                     default_picking_type_id=self.env.ref(
                         picking_type_xml_id).id).\
                 create(move).id)
-        return stock_move_ids
-
-    def create_stock_picking(self, moves_data, picking_data,
-                              picking_type_xml_id):
-        """ Returns the stock.picking object """
-        move_lines = self.create_stock_moves(moves_data, picking_type_xml_id)
+        # Creating picking
         picking_type = self.env.ref(picking_type_xml_id)
         picking_data.update(
-            {'move_lines': [(6, 0, move_lines)],
+            {'move_lines': [(6, 0, stock_move_ids)],
              'picking_type_id': picking_type.id})
         return self.stock_picking_obj.create(picking_data)
 
@@ -99,8 +96,7 @@ class TestUnicity(TransactionCase):
         wizard_for_transfer = self.env[transfer_details.get('res_model')].\
             browse(transfer_details.get('res_id'))
         for transfer_item in wizard_for_transfer.item_ids:
-            transfer_item.lot_id = self.env.ref(
-                serial_number).id
+            transfer_item.lot_id = serial_number.id
         # Executing the picking transfering
         wizard_for_transfer.do_detailed_transfer()
 
@@ -150,11 +146,11 @@ class TestUnicity(TransactionCase):
         # Executing the wizard for pickings transfering
         self.transfer_picking(
             picking_1,
-            'product_unique_serial.serial_number_demo_1')
+            self.env.ref('product_unique_serial.serial_number_demo_1'))
         try:
             self.transfer_picking(
                 picking_2,
-                'product_unique_serial.serial_number_demo_1')
+                self.env.ref('product_unique_serial.serial_number_demo_1'))
         except except_orm, msg:
             print msg
             test_passed = True
