@@ -148,10 +148,10 @@ class StockMove(models.Model):
                             ) % lot_name
                     raise exceptions.ValidationError(_(
                         "Product '%s' has active "
-                        "'check no negative'\n"
+                        "'check no negative' \n"
                         "but with this move "
                         "you will have a quantity of "
-                        "'%s'\n%sin location\n'%s'"
+                        "'%s' \n%sin location \n'%s'"
                         ) % (product_data['name'],
                              qty_available,
                              lot_msg_str,
