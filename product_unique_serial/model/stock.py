@@ -39,7 +39,7 @@ class StockMove(models.Model):
     _inherit = 'stock.move'
 
     def check_after_action_done(self, cr, uid, operation_or_move,
-                          lot_id=None, context=None):
+                                lot_id=None, context=None):
         super(StockMove, self).check_after_action_done(
             cr, uid, operation_or_move,
             lot_id, context=context)
