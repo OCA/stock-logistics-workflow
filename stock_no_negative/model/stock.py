@@ -55,14 +55,25 @@ class StockMove(models.Model):
         #    + (x.package_id and -2 or 0) + (x.lot_id and -1 or 0))
         return operations
 
-    def check_action_done(self, cr, uid, operation_or_move,
+    def check_after_action_done(self, cr, uid, operation_or_move,
                           lot_id=None, context=None):
         """
         Method to check operation or move plus lot_id
-        easiest inherit cases
+        easiest inherit cases after action done
         """
-        self.check_no_negative(
+        return True
+
+    def check_before_action_done(self, cr, uid, operation_or_move,
+                          lot_id=None, context=None):
+        """
+        Method to check operation or move plus lot_id
+        easiest inherit cases before action done
+        """
+        # TODO: stock_move use product_uom
+        self.check_before_done_no_negative(
             cr, uid, operation_or_move.product_id.id,
+            operation_or_move.product_uom_id.id,
+            operation_or_move.product_qty,
             operation_or_move.location_id.id,
             lot_id=lot_id,
             context=context)
@@ -73,27 +84,40 @@ class StockMove(models.Model):
         Method to enable check operation or move
 
         We need this check after of process move to get
-        real quantity after of this moves.
+        real quantity after of this moves and we need this check
+        before of process move to validate with no real quantity
         """
-        res = super(StockMove, self).action_done(
+        # operations before done
+        operations_before_done = self.get_operations_as_action_done(
             cr, uid, ids, context=context)
-        operations = self.get_operations_as_action_done(
-            cr, uid, ids, context=context)
-        for operation in operations:
+        for operation in operations_before_done:
             lot_id = operation.lot_id.id \
                 if operation.lot_id \
                 else False
-            self.check_action_done(
+            self.check_before_action_done(
+                cr, uid, operation, lot_id, context=context)
+
+        res = super(StockMove, self).action_done(
+            cr, uid, ids, context=context)
+
+        # operations after done
+        operations_after_done = self.get_operations_as_action_done(
+            cr, uid, ids, context=context)
+        for operation in operations_after_done:
+            lot_id = operation.lot_id.id \
+                if operation.lot_id \
+                else False
+            self.check_after_action_done(
                 cr, uid, operation, lot_id, context=context)
         return res
 
-    def check_no_negative(
+    def check_before_done_no_negative(
             self, cr, uid,
-            product_id, location_id, lot_id=None,
+            product_id, product_uom, product_qty,
+            location_id, lot_id=None,
             context=None):
         """
-        Check no negative into quantity available
-        from a location.
+        Check quantity no negative from a location.
         if product has active check_no_negative and
         location is internal
         Use lot_id if exists to get quantity available
@@ -111,41 +135,41 @@ class StockMove(models.Model):
         product_pool = self.pool.get('product.product')
         location_pool = self.pool.get('stock.location')
         lot_pool = self.pool.get('stock.production.lot')
+        product_uom_obj = self.pool.get('product.uom')
         product_data = product_pool.read(
             cr, uid,
-            [product_id], ['name', 'check_no_negative'],
+            [product_id], ['name', 'check_no_negative', 'uom_id'],
             context=context)[0]
-        check_no_negative = product_data['check_no_negative']
-        if check_no_negative:
+        if product_data['check_no_negative']:
             location_data = location_pool.read(
                 cr, uid, [location_id],
                 ['complete_name', 'usage'],
                 context=context)[0]
-            location_usage = location_data['usage']
-            if location_usage == 'internal':
+            if location_data['usage'] == 'internal':
                 ctx = context.copy()
                 ctx.update({
                     'lot_id': lot_id,
                     'location': location_id,
                     'compute_child': True,
                 })
-                qty_available = product_pool.read(
+                qty_available_before_done = product_pool.read(
                     cr, uid,
                     [product_id], ['qty_available'],
                     context=ctx)[0]['qty_available']
-                lot_name = None
-                if lot_id:
-                    lot_data = lot_pool.read(
-                        cr, uid,
-                        [lot_id], ['name'],
-                        context=context)[0]
-                    lot_name = lot_data['name']
-                if qty_available < 0:
+                default_uom_id = product_data['uom_id'][0]
+                qty_computed = product_uom_obj._compute_qty(
+                    cr, uid, product_uom, product_qty, default_uom_id)
+                qty_available_after_done = qty_available_before_done - qty_computed
+                if qty_available_after_done < 0:
                     lot_msg_str = ""
-                    if lot_name:
+                    if lot_id:
+                        lot_data = lot_pool.read(
+                            cr, uid,
+                            [lot_id], ['name'],
+                            context=context)[0]
                         lot_msg_str = _(
                             " with the lot/serial '%s' "
-                            ) % lot_name
+                            ) % lot_data['name']
                     raise exceptions.ValidationError(_(
                         "Product '%s' has active "
                         "'check no negative' \n"
@@ -153,7 +177,7 @@ class StockMove(models.Model):
                         "you will have a quantity of "
                         "'%s' \n%sin location \n'%s'"
                         ) % (product_data['name'],
-                             qty_available,
+                             qty_available_after_done,
                              lot_msg_str,
                              location_data['complete_name'],))
         return True
