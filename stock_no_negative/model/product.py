@@ -30,5 +30,7 @@ class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
     check_no_negative = fields.Boolean(
-        'Check no negative', help='If this field is True can not move this '
-        'product in negative quantity available in the location source')
+        'Check no negative',
+        help='If this field is True can not move this'
+             ' product in negative quantity available in'
+             ' the internal location source')
