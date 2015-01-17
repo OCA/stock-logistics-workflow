@@ -56,7 +56,7 @@ class StockMove(models.Model):
         return operations
 
     def check_after_action_done(self, cr, uid, operation_or_move,
-                          lot_id=None, context=None):
+                                lot_id=None, context=None):
         """
         Method to check operation or move plus lot_id
         easiest inherit cases after action done
@@ -64,7 +64,7 @@ class StockMove(models.Model):
         return True
 
     def check_before_action_done(self, cr, uid, operation_or_move,
-                          lot_id=None, context=None):
+                                 lot_id=None, context=None):
         """
         Method to check operation or move plus lot_id
         easiest inherit cases before action done
@@ -159,7 +159,8 @@ class StockMove(models.Model):
                 default_uom_id = product_data['uom_id'][0]
                 qty_computed = product_uom_obj._compute_qty(
                     cr, uid, product_uom, product_qty, default_uom_id)
-                qty_available_after_done = qty_available_before_done - qty_computed
+                qty_available_after_done = \
+                    qty_available_before_done - qty_computed
                 if qty_available_after_done < 0:
                     lot_msg_str = ""
                     if lot_id:
