@@ -140,17 +140,16 @@ class TestUnicity(TransactionCase):
         test_passed = False
         # Creating move line for picking
         product = self.env.ref('product_unique_serial.product_demo_1')
-        unit_of_measure = self.env.ref('product.product_uom_unit')
         stock_move_datas = [{
             'product_id': product.id,
-            'qty':1.0
+            'qty': 1.0
         }]
-        # Creating the picking
+        # Creating the pickings
         picking_data_1 = {
-            'name': 'Test Picking 1',
+            'name': 'Test Picking IN 1',
         }
         picking_data_2 = {
-            'name': 'Test Picking 2',
+            'name': 'Test Picking IN 2',
         }
         picking_1 = self.create_stock_picking(
             stock_move_datas, picking_data_1,
@@ -174,288 +173,68 @@ class TestUnicity(TransactionCase):
             "ERROR: The module can transfer pickings-"
             "receipt with a product that has a quantity >1 with a lot_id")
 
-    #~ def test_2_1product_1serialnumber_2p_out(self):
-        #~ """
-        #~ Test 2. Creating 2 pickings with 1 product for the same serial number,
-        #~ in the delivery orders scope, with the next form:
-        #~ - Picking 1
-        #~ =============================================
-        #~ || Product ||  Quantity  ||  Serial Number ||
-        #~ =============================================
-        #~ ||    A    ||      1     ||      001       ||
-        #~ =============================================
-        #~ - Picking 2
-        #~ =============================================
-        #~ || Product ||  Quantity  ||  Serial Number ||
-        #~ =============================================
-        #~ ||    A    ||      1     ||      001       ||
-        #~ =============================================
-        #~ Warehouse: Your Company
-        #~ """
-        #~ test_passed = False
-        #~ # Creating move line for picking
-        #~ product = self.env.ref('product_unique_serial.product_demo_1')
-        #~ unit_of_measure = self.env.ref('product.product_uom_unit')
-        #~ stock_move_data = {
-            #~ 'product_id': product.id,
-            #~ 'product_uom': unit_of_measure.id,
-            #~ 'product_uom_qty': 1.0,
-            #~ 'name': "Stock move for %s for test purposes" % product.name
-        #~ }
-        #~ # Creating the picking
-        #~ picking_data_1 = {
-            #~ 'name': 'Test Picking 1',
-            #~ 'move_type': 'direct',
-            #~ 'priority': '1'
-        #~ }
-        #~ picking_data_2 = {
-            #~ 'name': 'Test Picking 2',
-            #~ 'move_type': 'direct',
-            #~ 'priority': '1'
-        #~ }
-        #~ picking_1 = self.create_stock_picking(
-            #~ [stock_move_data], picking_data_1, 'stock.picking_type_out')
-        #~ picking_2 = self.create_stock_picking(
-            #~ [stock_move_data], picking_data_2, 'stock.picking_type_out')
-        #~ # Executing the wizard for pickings transfering
-        #~ self.transfer_picking(
-            #~ picking_1,
-            #~ 'product_unique_serial.serial_number_demo_2')
-        #~ try:
-            #~ self.transfer_picking(
-                #~ picking_2,
-                #~ 'product_unique_serial.serial_number_demo_2')
-        #~ except except_orm, msg:
-            #~ print msg
-            #~ test_passed = True
-        #~ self.assertTrue(
-            #~ test_passed,
-            #~ "ERROR: The module can transfer pickings-delivery-order "
-            #~ "with a product that has a quantity >1 with a lot_id")
-
-    '''
-    def test_3_many_products_one_serial_number_out(self):
+    def test_2_1product_1serialnumber_2p_out(self):
         """
-        Test 3. Creating a pick with 2 products for the same serial number,
+        Test 2. Creating 2 pickings with 1 product for the same serial number,
         in the delivery orders scope, with the next form:
+        - Picking 1
         =============================================
         || Product ||  Quantity  ||  Serial Number ||
         =============================================
-        ||    A    ||     > 1    ||      001       ||
+        ||    A    ||      1     ||      001       ||
         =============================================
+        - Picking 2
+        =============================================
+        || Product ||  Quantity  ||  Serial Number ||
+        =============================================
+        ||    A    ||      1     ||      001       ||
+        =============================================
+        NOTE: To can operate this case, we need an IN PICKING
         Warehouse: Your Company
         """
-        available_serial_numbers = None
         test_passed = False
         # Creating move line for picking
         product = self.env.ref('product_unique_serial.product_demo_1')
-        unit_of_measure = self.env.ref('product.product_uom_unit')
-        stock_move_data = {
+        stock_move_datas = [{
             'product_id': product.id,
-            'product_uom': unit_of_measure.id,
-            'product_uom_qty': 50.0,
-            'name': "Stock move for %s for test purposes" % product.name
+            'qty': 1.0
+        }]
+        # Creating the pickings
+        picking_data_in = {
+            'name': 'Test Picking IN 1',
         }
-        stock_move_rec = self.stock_move_obj.with_context(
-            default_picking_type_id=self.env.ref('stock.picking_type_out').id
-            ).create(stock_move_data)
-        # Creating the picking
-        picking_type = self.env.ref('stock.picking_type_out')
-        picking_data = {
-            'name': 'Test Picking',
-            'move_type': 'direct',
-            'picking_type_id': picking_type.id,
-            'priority': '1',
-            'move_lines': [(6, 0, [stock_move_rec.id])]
+        picking_data_out_1 = {
+            'name': 'Test Picking OUT 1',
         }
-        picking = self.stock_picking_obj.create(picking_data)
-        # Marking the picking as Todo
-        picking.action_confirm()
-        # Transfering picking
-        transfer_details = picking.do_enter_transfer_details()
-        wizard_for_transfer = self.env[transfer_details.get('res_model')].\
-            browse(transfer_details.get('res_id'))
-        for transfer_item in wizard_for_transfer.item_ids:
-            transfer_item.lot_id = self.env.ref(
-                'product_unique_serial.serial_number_demo_1').id
-        # Executing the picking transfering
+        picking_data_out_2 = {
+            'name': 'Test Picking OUT 2',
+        }
+        # IN PROCESS
+        picking_in = self.create_stock_picking(
+            stock_move_datas, picking_data_in,
+            self.env.ref('stock.picking_type_in'))
+        self.transfer_picking(
+            picking_in,
+            self.env.ref('product_unique_serial.serial_number_demo_1'))
+        # OUT PROCESS
+        picking_out_1 = self.create_stock_picking(
+            stock_move_datas, picking_data_out_1,
+            self.env.ref('stock.picking_type_out'))
+        picking_out_2 = self.create_stock_picking(
+            stock_move_datas, picking_data_out_2,
+            self.env.ref('stock.picking_type_out'))
+        # Executing the wizard for pickings transfering
+        self.transfer_picking(
+            picking_out_1,
+            self.env.ref('product_unique_serial.serial_number_demo_1'))
         try:
-            wizard_for_transfer.do_detailed_transfer()
+            self.transfer_picking(
+                picking_out_2,
+                self.env.ref('product_unique_serial.serial_number_demo_1'))
         except except_orm, msg:
             print msg
             test_passed = True
         self.assertTrue(
             test_passed,
-            "ERROR: The module can transfer pickings-"
-            "delivery with a product that has a quantity >1 with a lot_id")
-
-    def test_4_chi_many_products_one_serial_number_in(self):
-        """
-        Test 4. Creating a pick with 2 products for the same serial number,
-        in the receipts scope, with the next form:
-        =============================================
-        || Product ||  Quantity  ||  Serial Number ||
-        =============================================
-        ||    A    ||     > 1    ||      001       ||
-        =============================================
-        Warehouse: Chicago
-        """
-        available_serial_numbers = None
-        test_passed = False
-        # Creating move line for picking
-        product = self.env.ref('product_unique_serial.product_demo_1')
-        unit_of_measure = self.env.ref('product.product_uom_unit')
-        stock_move_data = {
-            'product_id': product.id,
-            'product_uom': unit_of_measure.id,
-            'product_uom_qty': 50.0,
-            'name': "Stock move for %s for test purposes" % product.name
-        }
-        stock_move_rec = self.stock_move_obj.with_context(
-            default_picking_type_id=self.env.ref(
-                'stock.chi_picking_type_in').id
-            ).create(stock_move_data)
-        # Creating the picking
-        picking_type = self.env.ref('stock.chi_picking_type_in')
-        picking_data = {
-            'name': 'Test Picking',
-            'move_type': 'direct',
-            'picking_type_id': picking_type.id,
-            'priority': '1',
-            'move_lines': [(6, 0, [stock_move_rec.id])]
-        }
-        picking = self.stock_picking_obj.create(picking_data)
-        # Marking the picking as Todo
-        picking.action_confirm()
-        # Transfering picking
-        transfer_details = picking.do_enter_transfer_details()
-        wizard_for_transfer = self.env[transfer_details.get('res_model')].\
-            browse(transfer_details.get('res_id'))
-        for transfer_item in wizard_for_transfer.item_ids:
-            transfer_item.lot_id = self.env.ref(
-                'product_unique_serial.serial_number_demo_1').id
-        # Executing the picking transfering
-        try:
-            wizard_for_transfer.do_detailed_transfer()
-        except except_orm, msg:
-            print msg
-            test_passed = True
-        self.assertTrue(
-            test_passed,
-            "ERROR: The module can transfer pickings-"
-            "receipts with a product that has a quantity >1 with a lot_id")
-
-    def test_5_chi_many_products_one_serial_number_out(self):
-        """
-        Test 5. Creating a pick with 2 products for the same serial number,
-        in the delivery orders scope, with the next form:
-        =============================================
-        || Product ||  Quantity  ||  Serial Number ||
-        =============================================
-        ||    A    ||     > 1    ||      001       ||
-        =============================================
-        Warehouse: Chicago
-        """
-        available_serial_numbers = None
-        test_passed = False
-        # Creating move line for picking
-        product = self.env.ref('product_unique_serial.product_demo_1')
-        unit_of_measure = self.env.ref('product.product_uom_unit')
-        stock_move_data = {
-            'product_id': product.id,
-            'product_uom': unit_of_measure.id,
-            'product_uom_qty': 50.0,
-            'name': "Stock move for %s for test purposes" % product.name
-        }
-        stock_move_rec = self.stock_move_obj.with_context(
-            default_picking_type_id=self.env.ref(
-                'stock.chi_picking_type_out').id
-            ).create(stock_move_data)
-        # Creating the picking
-        picking_type = self.env.ref('stock.chi_picking_type_out')
-        picking_data = {
-            'name': 'Test Picking',
-            'move_type': 'direct',
-            'picking_type_id': picking_type.id,
-            'priority': '1',
-            'move_lines': [(6, 0, [stock_move_rec.id])]
-        }
-        picking = self.stock_picking_obj.create(picking_data)
-        # Marking the picking as Todo
-        picking.action_confirm()
-        # Transfering picking
-        transfer_details = picking.do_enter_transfer_details()
-        wizard_for_transfer = self.env[transfer_details.get('res_model')].\
-            browse(transfer_details.get('res_id'))
-        for transfer_item in wizard_for_transfer.item_ids:
-            transfer_item.lot_id = self.env.ref(
-                'product_unique_serial.serial_number_demo_1').id
-        # Executing the picking transfering
-        try:
-            wizard_for_transfer.do_detailed_transfer()
-        except except_orm, msg:
-            print msg
-            test_passed = True
-        self.assertTrue(
-            test_passed,
-            "ERROR: The module can transfer pickings-"
-            "delivery with a product that has a quantity >1 with a lot_id")
-
-    def test_6_many_products_one_serial_number_int(self):
-        """
-        Test 2. Creating a pick with 2 products for the same serial number,
-        in the internal scope, with the next form:
-        =============================================
-        || Product ||  Quantity  ||  Serial Number ||
-        =============================================
-        ||    A    ||     > 1    ||      001       ||
-        =============================================
-        Warehouse: Your Company
-        """
-        available_serial_numbers = None
-        test_passed = False
-        # Creating move line for picking
-        product = self.env.ref('product_unique_serial.product_demo_1')
-        unit_of_measure = self.env.ref('product.product_uom_unit')
-        stock_move_data = {
-            'product_id': product.id,
-            'product_uom': unit_of_measure.id,
-            'product_uom_qty': 50.0,
-            'name': "Stock move for %s for test purposes" % product.name
-        }
-        stock_move_rec = self.stock_move_obj.with_context(
-            default_picking_type_id=self.env.ref(
-                'stock.picking_type_internal').id
-            ).create(stock_move_data)
-        # Creating the picking
-        picking_type = self.env.ref('stock.picking_type_internal')
-        picking_data = {
-            'name': 'Test Picking',
-            'move_type': 'direct',
-            'picking_type_id': picking_type.id,
-            'priority': '1',
-            'move_lines': [(6, 0, [stock_move_rec.id])]
-        }
-        picking = self.stock_picking_obj.create(picking_data)
-        # Marking the picking as Todo
-        picking.action_confirm()
-        # Checking availability
-        picking.action_assign()
-        # Transfering picking
-        transfer_details = picking.do_enter_transfer_details()
-        #~ wizard_for_transfer = self.env[transfer_details.get('res_model')].\
-            #~ browse(transfer_details.get('res_id'))
-        #~ for transfer_item in wizard_for_transfer.item_ids:
-            #~ transfer_item.lot_id = self.env.ref(
-                #~ 'product_unique_serial.serial_number_demo_1').id
-        #~ # Executing the picking transfering
-        #~ try:
-            #~ wizard_for_transfer.do_detailed_transfer()
-        #~ except except_orm, msg:
-            #~ print msg
-            #~ test_passed = True
-        #~ self.assertTrue(
-            #~ test_passed,
-            #~ "ERROR: The module can transfer pickings-"
-            #~ "internal with a product that has a quantity >1 with a lot_id")
-    '''
+            "ERROR: The module can transfer pickings-delivery orders with a "
+            "product that has a quantity >1 with a lot_id")
