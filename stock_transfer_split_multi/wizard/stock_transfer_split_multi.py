@@ -44,8 +44,8 @@ class StockTransferSplitMulti(models.TransientModel):
         if split_qty > 0:
             if split_qty >= trf_line.quantity:
                 raise Warning(
-                    _("The Quantity to extract (%s) cannot be superior or equal to "
-                        "the quantity of the line (%s)")
+                    _("The Quantity to extract (%s) cannot be superior or "
+                        "equal to the quantity of the line (%s)")
                     % (split_qty, trf_line.quantity))
             new_line = trf_line.copy()
             new_line.write({'quantity': split_qty, 'packop_id': False})
