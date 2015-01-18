@@ -115,8 +115,26 @@ class TestUnicity(TransactionCase):
         wizard_for_transfer = self.env[transfer_details.get('res_model')].\
             browse(transfer_details.get('res_id'))
         if serial_number:
-            for transfer_item in wizard_for_transfer.item_ids:
-                transfer_item.lot_id = serial_number.id
+            if len(serial_number) == 1:
+                for transfer_item in wizard_for_transfer.item_ids:
+                    transfer_item.lot_id = serial_number[0].id
+            else:
+                # Case for the A, B & C serial numbers: That are 3 like
+                # value for the quantity field in the wizard, so we should
+                # split this record 2 times.
+                # Splitting the record and executing the transfer
+                wizard_split = wizard_for_transfer.item_ids[0].\
+                    split_quantities()
+                wizard_for_transfer = self.env['stock.transfer_details'].\
+                    browse(wizard_split.get('res_id'))
+                wizard_split = wizard_for_transfer.item_ids[0].\
+                    split_quantities()
+                wizard_for_transfer = self.env['stock.transfer_details'].\
+                    browse(wizard_split.get('res_id'))
+                index = 0
+                for transfer_item in wizard_for_transfer.item_ids:
+                    transfer_item.lot_id = serial_number[index].id
+                    index += 1
         # Executing the picking transfering
         wizard_for_transfer.do_detailed_transfer()
 
@@ -165,7 +183,7 @@ class TestUnicity(TransactionCase):
         try:
             self.transfer_picking(
                 picking_2,
-                self.env.ref('product_unique_serial.serial_number_demo_1'))
+                [self.env.ref('product_unique_serial.serial_number_demo_1')])
         except except_orm, msg:
             print msg
             test_passed = True
@@ -231,7 +249,7 @@ class TestUnicity(TransactionCase):
         try:
             self.transfer_picking(
                 picking_out_2,
-                self.env.ref('product_unique_serial.serial_number_demo_1'))
+                [self.env.ref('product_unique_serial.serial_number_demo_1')])
         except except_orm, msg:
             print msg
             test_passed = True
@@ -240,7 +258,7 @@ class TestUnicity(TransactionCase):
             "ERROR: The module can take 1 product with a unique serial number"
             "with different out-pickings ... This error should be fixed")
 
-    def test_3_1product_qtyno1_1serialnumber_2p_out(self):
+    def test_3_1product_qtyno1_1serialnumber_1p_in(self):
         """
         Test 3. Creating a picking with 1 product for the same serial number,
         in the delivery orders scope, with the next form:
@@ -270,7 +288,7 @@ class TestUnicity(TransactionCase):
         try:
             self.transfer_picking(
                 picking_1,
-                self.env.ref('product_unique_serial.serial_number_demo_2'))
+                [self.env.ref('product_unique_serial.serial_number_demo_2')])
         except except_orm, msg:
             print msg
             test_passed = True
@@ -278,3 +296,51 @@ class TestUnicity(TransactionCase):
             test_passed,
             "ERROR: The module can transfer pickings-"
             "receipt with a product that has a quantity >1 with a lot_id")
+
+    def test_4_1product_qty3_3serialnumber_1p_in(self):
+        """
+        Test 4. Creating a picking with 1 product for three serial numbers,
+        in the receipts scope, with the next form:
+        - Picking 1
+        =============================================
+        || Product ||  Quantity  ||  Serial Number ||
+        =============================================
+        ||    A    ||      1     ||      001       ||
+        =============================================
+        ||    A    ||      1     ||      002       ||
+        =============================================
+        ||    A    ||      1     ||      003       ||
+        =============================================
+        Warehouse: Your Company
+        """
+        test_passed = True
+        # Creating move line for picking
+        product = self.env.ref('product_unique_serial.product_demo_1')
+        stock_move_datas = [
+            {'product_id': product.id, 'qty': 1.0},
+            {'product_id': product.id, 'qty': 1.0},
+            {'product_id': product.id, 'qty': 1.0}
+        ]
+        # Creating the picking
+        picking_data_in = {
+            'name': 'Test Picking IN 1',
+        }
+        picking_in = self.create_stock_picking(
+            stock_move_datas, picking_data_in,
+            self.env.ref('stock.picking_type_in'))
+        # Executing the wizard for pickings transfering
+        try:
+            self.transfer_picking(
+                picking_in,
+                [self.env.ref('product_unique_serial.serial_number_demo_1'),
+                 self.env.ref('product_unique_serial.serial_number_demo_2'),
+                 self.env.ref('product_unique_serial.serial_number_demo_3')]
+            )
+        except except_orm, msg:
+            print msg
+            test_passed = False
+        self.assertTrue(
+            test_passed,
+            "ERROR: The module can't operate with a product that has many"
+            "associated serial numbers, of course each one being unique ..."
+            "This error should be fixed")
