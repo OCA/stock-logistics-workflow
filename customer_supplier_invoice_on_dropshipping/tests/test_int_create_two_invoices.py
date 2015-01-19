@@ -17,9 +17,9 @@
 from openerp.tests.common import TransactionCase
 
 
-class TestGetJournalType(TransactionCase):
+class TestIntCreateTwoInvoices(TransactionCase):
 
-    def test_so_and_po_on_delivery_gets_first_purchase_journal(self):
+    def no_test_so_and_po_on_delivery_creates_two_invoices(self):
         self.so.order_policy = 'picking'
         self.so.action_button_confirm()
 
@@ -36,9 +36,32 @@ class TestGetJournalType(TransactionCase):
             'active_id': picking.id,
             'active_ids': [picking.id],
         }).create({})
-        self.assertEqual('purchase', wizard.journal_type)
+        assert False
+        wizard
 
-    def test_po_on_delivery_gets_purchase_journal(self):
+    def test_so_on_delivery_creates_correct_invoice(self):
+        self.so.order_policy = 'picking'
+        self.so.action_button_confirm()
+
+        po = self.so.procurement_group_id.procurement_ids.purchase_id
+        self.assertTrue(po)
+        po.signal_workflow('purchase_confirm')
+
+        picking = po.picking_ids
+        self.assertEqual(1, len(picking))
+        picking.action_done()
+
+        wizard = self.Wizard.with_context({
+            'active_id': picking.id,
+            'active_ids': [picking.id],
+        }).create({})
+        invoice_ids = wizard.create_invoice()
+        invoices = self.env['account.invoice'].browse(invoice_ids)
+        self.assertEqual(1, len(invoices))
+        self.assertEqual(invoices.type, 'out_invoice')
+
+    def no_test_po_on_delivery_creates_correct_invoice(self):
+        self.so.order_policy = 'picking'
         self.so.action_button_confirm()
 
         po = self.so.procurement_group_id.procurement_ids.purchase_id
@@ -54,27 +77,12 @@ class TestGetJournalType(TransactionCase):
             'active_id': picking.id,
             'active_ids': [picking.id],
         }).create({})
-        self.assertEqual('purchase', wizard.journal_type)
-
-    def test_so_on_delivery_gets_sale_journal(self):
-        self.so.order_policy = 'picking'
-        self.so.action_button_confirm()
-        po = self.so.procurement_group_id.procurement_ids.purchase_id
-        self.assertTrue(po)
-        po.signal_workflow('purchase_confirm')
-
-        picking = po.picking_ids
-        self.assertEqual(1, len(picking))
-        picking.action_done()
-
-        wizard = self.Wizard.with_context({
-            'active_id': picking.id,
-            'active_ids': [picking.id],
-        }).create({})
-        self.assertEqual('sale', wizard.journal_type)
+        result = wizard.create_invoice()
+        result
+        assert 0
 
     def setUp(self):
-        super(TestGetJournalType, self).setUp()
+        super(TestIntCreateTwoInvoices, self).setUp()
         self.Wizard = self.env['stock.invoice.onshipping']
 
         customer = self.env.ref('base.res_partner_3')

@@ -8,10 +8,11 @@
       <field name="inherit_id" ref="stock_account.view_stock_invoice_onshipping"/>
       <field name="arch" type="xml">
         <field name="journal_type" position="after">
-          <field name="second_journal_type"
-            domain="[('type','=',journal_type)]"
-            readonly="1"
-            attrs="{'invisible': [('need_two_invoices', '=', False)]}"
+          <field name="need_two_invoices" invisible="0" /> <!-- XXX make invisible -->
+          <field name="second_journal_id"
+            domain="[('type','=','sale')]"
+            attrs="{'invisible': [('need_two_invoices', '=', False)],
+                    'required':  [('need_two_invoices', '=', True)]}"
             />
         </field>
       </field>

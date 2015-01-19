@@ -24,6 +24,9 @@ class StockInvoiceOnshipping(models.TransientModel):
     def _get_journal_type(self):
         return super(StockInvoiceOnshipping, self)._get_journal_type()
 
+    def _default_second_journal(self):
+        return self.env['account.journal'].search([('type', '=', 'sale')])
+
     def _need_two_invoices(self):
         pick = self.env['stock.picking'].browse(self.env.context['active_id'])
         so = pick.sale_id
@@ -35,9 +38,7 @@ class StockInvoiceOnshipping(models.TransientModel):
 
     need_two_invoices = fields.Boolean('Need two invoices',
                                        default='_need_two_invoices')
-    second_journal_type = fields.Selection([
-        ('purchase_refund', 'Refund Purchase'),
-        ('purchase', 'Create Supplier Invoice'),
-        ('sale_refund', 'Refund Sale'),
-        ('sale', 'Create Customer Invoice')
-    ], 'Second Journal Type', readonly=True)
+
+    second_journal_id = fields.Many2one('account.journal',
+                                        'Second Destination Journal',
+                                        default=_default_second_journal)
