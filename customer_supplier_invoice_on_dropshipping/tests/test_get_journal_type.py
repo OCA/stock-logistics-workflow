@@ -56,7 +56,7 @@ class TestGetJournalType(TransactionCase):
         }).create({})
         self.assertEqual('purchase', wizard._get_journal_type())
 
-    def no_test_so_on_delivery_need_one_invoice(self):
+    def test_so_on_delivery_gets_sale_journal(self):
         self.so.order_policy = 'picking'
         self.so.action_button_confirm()
         po = self.so.procurement_group_id.procurement_ids.purchase_id
@@ -71,7 +71,7 @@ class TestGetJournalType(TransactionCase):
             'active_id': picking.id,
             'active_ids': [picking.id],
         }).create({})
-        self.assertIs(False, wizard._need_two_invoices())
+        self.assertEqual('sale', wizard._get_journal_type())
 
     def setUp(self):
         super(TestGetJournalType, self).setUp()
