@@ -24,9 +24,12 @@
 #
 ###############################################################################
 
+from copy import deepcopy
+
 from openerp.tests.common import TransactionCase
 from openerp.exceptions import except_orm
-from copy import deepcopy
+from openerp.tools import mute_logger
+from psycopg2 import IntegrityError
 
 
 class TestUnicity(TransactionCase):
@@ -46,26 +49,6 @@ class TestUnicity(TransactionCase):
         self.stock_move_obj = self.env['stock.move']
         self.product_uom_obj = self.env['product.uom']
         self.stock_location_obj = self.env['stock.location']
-
-    # '''
-    # #@mute()
-    # def test_1_creating_two_equal_serial_numbers(self):
-        # """
-        # Test 1. Creating 2 equal serial numbers
-        # """
-        # product_id = self.env.ref('product_unique_serial.product_demo_1')
-        # print product_id
-        # sucessful = False
-        # lot_data = {'ref': '86137801852519', 'product_id': product_id.id}
-        # self.stock_production_lot_obj.create(lot_data)
-        # try:
-        #    self.stock_production_lot_obj.create(lot_data)
-        # except Exception:
-        #    import pdb;pdb.set_trace()
-        #    sucessful = True
-        # self.assertTrue(sucessful, "ERROR: The module can create duplicated"\
-        #    " serial numbers, which is a problem that should be attended...")
-    # '''
 
     def create_stock_picking(self, moves_data, picking_data, picking_type):
         """ Returns the stock.picking object, with his respective created
@@ -156,7 +139,6 @@ class TestUnicity(TransactionCase):
         =============================================
         Warehouse: Your Company
         """
-        test_passed = False
         # Creating move line for picking
         product = self.env.ref('product_unique_serial.product_demo_1')
         stock_move_datas = [{
@@ -180,17 +162,13 @@ class TestUnicity(TransactionCase):
         self.transfer_picking(
             picking_1,
             self.env.ref('product_unique_serial.serial_number_demo_1'))
-        try:
+        with self.assertRaisesRegexp(
+                except_orm,
+                r"you will have a quantity of '2.0' "
+                r"in lot '86137801852514'"):
             self.transfer_picking(
                 picking_2,
                 [self.env.ref('product_unique_serial.serial_number_demo_1')])
-        except except_orm, msg:
-            print msg
-            test_passed = True
-        self.assertTrue(
-            test_passed,
-            "ERROR: The module can take 1 product with a unique serial number"
-            "with different receipt-pickings ... This error should be fixed")
 
     def test_2_1product_1serialnumber_2p_out(self):
         """
@@ -211,7 +189,6 @@ class TestUnicity(TransactionCase):
         NOTE: To can operate this case, we need an IN PICKING
         Warehouse: Your Company
         """
-        test_passed = False
         # Creating move line for picking
         product = self.env.ref('product_unique_serial.product_demo_1')
         stock_move_datas = [{
@@ -246,17 +223,13 @@ class TestUnicity(TransactionCase):
         self.transfer_picking(
             picking_out_1,
             self.env.ref('product_unique_serial.serial_number_demo_1'))
-        try:
+        with self.assertRaisesRegexp(
+                except_orm,
+                r"you will have a quantity of '-1.0' "
+                r"in lot '86137801852514'"):
             self.transfer_picking(
                 picking_out_2,
                 [self.env.ref('product_unique_serial.serial_number_demo_1')])
-        except except_orm, msg:
-            print msg
-            test_passed = True
-        self.assertTrue(
-            test_passed,
-            "ERROR: The module can take 1 product with a unique serial number"
-            "with different out-pickings ... This error should be fixed")
 
     def test_3_1product_qtyno1_1serialnumber_1p_in(self):
         """
@@ -270,7 +243,6 @@ class TestUnicity(TransactionCase):
         =============================================
         Warehouse: Your Company
         """
-        test_passed = False
         # Creating move line for picking
         product = self.env.ref('product_unique_serial.product_demo_1')
         stock_move_datas = [{
@@ -285,17 +257,10 @@ class TestUnicity(TransactionCase):
             stock_move_datas, picking_data_1,
             self.env.ref('stock.picking_type_in'))
         # Executing the wizard for pickings transfering
-        try:
+        with self.assertRaisesRegexp(except_orm, r'but has qty > 1'):
             self.transfer_picking(
                 picking_1,
                 [self.env.ref('product_unique_serial.serial_number_demo_2')])
-        except except_orm, msg:
-            print msg
-            test_passed = True
-        self.assertTrue(
-            test_passed,
-            "ERROR: The module can transfer pickings-"
-            "receipt with a product that has a quantity >1 with a lot_id")
 
     def test_4_1product_qty3_3serialnumber_1p_in(self):
         """
@@ -344,3 +309,19 @@ class TestUnicity(TransactionCase):
             "ERROR: The module can't operate with a product that has many"
             "associated serial numbers, of course each one being unique ..."
             "This error should be fixed")
+
+    @mute_logger('openerp.sql_db')
+    def test_7_1serialnumber_1product_2records(self):
+        """
+        Test 7. Creating 2 identical serial numbers
+        """
+        product_id = self.env.ref('product_unique_serial.product_demo_1')
+        lot_data = {
+            'name': '86137801852520',
+            'ref': '86137801852520',
+            'product_id': product_id.id
+        }
+        self.stock_production_lot_obj.create(lot_data)
+        with self.assertRaisesRegexp(
+                IntegrityError, r'"stock_production_lot_name_ref_uniq"'):
+            self.stock_production_lot_obj.create(lot_data)
