@@ -15,14 +15,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from openerp import models, api, fields
+from openerp.tools.translate import _
 
 
 class StockInvoiceOnshipping(models.TransientModel):
     _inherit = "stock.invoice.onshipping"
-
-    @api.model
-    def _get_journal_type(self):
-        return super(StockInvoiceOnshipping, self)._get_journal_type()
 
     def _default_second_journal(self):
         return self.env['account.journal'].search([('type', '=', 'sale')])
@@ -35,6 +32,15 @@ class StockInvoiceOnshipping(models.TransientModel):
             return True
         else:
             return False
+
+    @api.depends('journal_type', 'need_two_invoices')
+    def _get_wizard_title(self):
+        if self.need_two_invoices:
+            self.wizard_title = _("Create Two Invoices")
+        else:
+            selection = dict(self.fields_get()['journal_type']['selection'])
+            journal_type = self._get_journal_type()
+            self.wizard_title = selection[journal_type]
 
     @api.multi
     def create_invoice(self):
@@ -72,3 +78,6 @@ class StockInvoiceOnshipping(models.TransientModel):
     second_journal_id = fields.Many2one('account.journal',
                                         'Second Destination Journal',
                                         default=_default_second_journal)
+    wizard_title = fields.Char('Wizard Title',
+                               compute='_get_wizard_title',
+                               readonly=True)
