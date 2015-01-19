@@ -23,6 +23,7 @@
  'license': 'AGPL-3',
  'depends': ['stock_dropshipping'],
  'data': [
+     'wizard/stock_invoice_onshipping_view.xml',
  ],
  'auto_install': False,
  'installable': True,

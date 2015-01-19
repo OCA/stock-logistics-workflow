@@ -14,7 +14,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from openerp import models, api
+from openerp import models, api, fields
 
 
 class StockInvoiceOnshipping(models.TransientModel):
@@ -22,10 +22,8 @@ class StockInvoiceOnshipping(models.TransientModel):
 
     @api.model
     def _get_journal_type(self):
-        # pick = self.env['stock.picking'].browse(self.env.context['active_id'])
         return super(StockInvoiceOnshipping, self)._get_journal_type()
 
-    @api.model
     def _need_two_invoices(self):
         pick = self.env['stock.picking'].browse(self.env.context['active_id'])
         so = pick.sale_id
@@ -34,3 +32,12 @@ class StockInvoiceOnshipping(models.TransientModel):
             return True
         else:
             return False
+
+    need_two_invoices = fields.Boolean('Need two invoices',
+                                       default='_need_two_invoices')
+    second_journal_type = fields.Selection([
+        ('purchase_refund', 'Refund Purchase'),
+        ('purchase', 'Create Supplier Invoice'),
+        ('sale_refund', 'Refund Sale'),
+        ('sale', 'Create Customer Invoice')
+    ], 'Second Journal Type', readonly=True)

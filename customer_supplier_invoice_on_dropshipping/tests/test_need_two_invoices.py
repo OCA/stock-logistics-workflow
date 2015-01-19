@@ -27,12 +27,16 @@ class TestNeedTwoInvoices(TransactionCase):
         self.assertTrue(po)
         po.invoice_method = 'picking'
         po.signal_workflow('purchase_confirm')
-        picking = po.picking_ids
 
+        picking = po.picking_ids
         self.assertEqual(1, len(picking))
         picking.action_done()
-        Wizard = self.Wizard.with_context({'active_id': picking.id})
-        self.assertIs(True, Wizard._need_two_invoices())
+
+        wizard = self.Wizard.with_context({
+            'active_id': picking.id,
+            'active_ids': [picking.id],
+        }).create({})
+        self.assertIs(True, wizard._need_two_invoices())
 
     def test_po_on_delivery_need_one_invoice(self):
         self.so.action_button_confirm()
@@ -41,26 +45,33 @@ class TestNeedTwoInvoices(TransactionCase):
         self.assertTrue(po)
         po.invoice_method = 'picking'
         po.signal_workflow('purchase_confirm')
-        picking = po.picking_ids
 
+        picking = po.picking_ids
         self.assertEqual(1, len(picking))
         picking.action_done()
-        Wizard = self.Wizard.with_context({'active_id': picking.id})
-        self.assertIs(False, Wizard._need_two_invoices())
+
+        wizard = self.Wizard.with_context({
+            'active_id': picking.id,
+            'active_ids': [picking.id],
+        }).create({})
+        self.assertIs(False, wizard._need_two_invoices())
 
     def test_so_on_delivery_need_one_invoice(self):
         self.so.order_policy = 'picking'
         self.so.action_button_confirm()
-
         po = self.so.procurement_group_id.procurement_ids.purchase_id
         self.assertTrue(po)
         po.signal_workflow('purchase_confirm')
-        picking = po.picking_ids
 
+        picking = po.picking_ids
         self.assertEqual(1, len(picking))
         picking.action_done()
-        Wizard = self.Wizard.with_context({'active_id': picking.id})
-        self.assertIs(False, Wizard._need_two_invoices())
+
+        wizard = self.Wizard.with_context({
+            'active_id': picking.id,
+            'active_ids': [picking.id],
+        }).create({})
+        self.assertIs(False, wizard._need_two_invoices())
 
     def setUp(self):
         super(TestNeedTwoInvoices, self).setUp()
