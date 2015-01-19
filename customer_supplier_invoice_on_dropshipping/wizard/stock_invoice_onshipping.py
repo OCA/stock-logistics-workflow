@@ -36,6 +36,27 @@ class StockInvoiceOnshipping(models.TransientModel):
         else:
             return False
 
+    @api.multi
+    def create_invoice(self):
+        self.ensure_one()
+        invoice_ids = super(StockInvoiceOnshipping, self).create_invoice()
+        if self.need_two_invoices:
+            pick_ids = self.env.context['active_ids']
+            pick = self.env['stock.picking'].browse(pick_ids)
+            for move in pick.move_lines:
+                if move.invoice_state == 'invoiced':
+                    move.invoice_state = '2binvoiced'
+            second_invoice_ids = pick.with_context(
+                date_inv=self.invoice_date,
+            ).action_invoice_create(
+                journal_id=self.second_journal_id.id,
+                group=self.group,
+                type='out_invoice',
+            )
+            invoice_ids += second_invoice_ids
+
+        return invoice_ids
+
     need_two_invoices = fields.Boolean('Need two invoices',
                                        default=_need_two_invoices)
 

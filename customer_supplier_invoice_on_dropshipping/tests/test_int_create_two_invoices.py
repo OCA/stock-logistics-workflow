@@ -19,7 +19,7 @@ from openerp.tests.common import TransactionCase
 
 class TestIntCreateTwoInvoices(TransactionCase):
 
-    def no_test_so_and_po_on_delivery_creates_two_invoices(self):
+    def test_so_and_po_on_delivery_creates_two_invoices(self):
         self.so.order_policy = 'picking'
         self.so.action_button_confirm()
 
@@ -36,8 +36,11 @@ class TestIntCreateTwoInvoices(TransactionCase):
             'active_id': picking.id,
             'active_ids': [picking.id],
         }).create({})
-        assert False
-        wizard
+        invoice_ids = wizard.create_invoice()
+        invoices = self.env['account.invoice'].browse(invoice_ids)
+        self.assertEqual(2, len(invoices))
+        # recset.sorted(key=lambda r: r.name)
+        # self.assertEqual(invoices.type, 'in_invoice')
 
     def test_so_on_delivery_creates_correct_invoice(self):
         self.so.order_policy = 'picking'
