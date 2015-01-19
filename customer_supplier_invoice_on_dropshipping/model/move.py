@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #    Author: Leonardo Pistone
 #    Copyright 2015 Camptocamp SA
 #
@@ -14,19 +13,17 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-{'name': 'Customer and Supplier Invoice on Dropshipping',
- 'summary':
- 'Create both Supplier and Customer Invoices from a Dropshipping Delivery',
- 'version': '0.1',
- 'author': 'Camptocamp',
- 'category': 'Warehouse',
- 'license': 'AGPL-3',
- 'depends': ['stock_account',
-             'sale_stock',
-             'stock_dropshipping'],
- 'data': [
-     'wizard/stock_invoice_onshipping_view.xml',
- ],
- 'auto_install': False,
- 'installable': True,
- }
+from openerp import models, api
+
+
+class Move(models.Model):
+    _inherit = "stock.move"
+
+    @api.model
+    def _get_master_data(self, move, company):
+        partner, uid, currency = super(Move, self)._get_master_data(move,
+                                                                    company)
+        new_partner_id = self.env.context.get('partner_to_invoice_id')
+        if new_partner_id:
+            partner = self.env['res.partner'].browse(new_partner_id)
+        return partner, uid, currency
