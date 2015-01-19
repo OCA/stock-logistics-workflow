@@ -60,8 +60,7 @@ class TestIntCreateTwoInvoices(TransactionCase):
         self.assertEqual(1, len(invoices))
         self.assertEqual(invoices.type, 'out_invoice')
 
-    def no_test_po_on_delivery_creates_correct_invoice(self):
-        self.so.order_policy = 'picking'
+    def test_po_on_delivery_creates_correct_invoice(self):
         self.so.action_button_confirm()
 
         po = self.so.procurement_group_id.procurement_ids.purchase_id
@@ -77,9 +76,10 @@ class TestIntCreateTwoInvoices(TransactionCase):
             'active_id': picking.id,
             'active_ids': [picking.id],
         }).create({})
-        result = wizard.create_invoice()
-        result
-        assert 0
+        invoice_ids = wizard.create_invoice()
+        invoices = self.env['account.invoice'].browse(invoice_ids)
+        self.assertEqual(1, len(invoices))
+        self.assertEqual(invoices.type, 'in_invoice')
 
     def setUp(self):
         super(TestIntCreateTwoInvoices, self).setUp()
