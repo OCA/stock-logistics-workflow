@@ -37,50 +37,14 @@ class StockProductionLot(models.Model):
 class StockMove(models.Model):
     _inherit = 'stock.move'
 
-    def get_operations_as_action_done(self, cr, uid, ids,
-                                      context=None):
-        """Get stock.pack.operation from stock move
-        Copied from 'action_done' original method
-
-        I don't know if use directly move.linked_move_operation_ids
-        or move.pack_operation_ids is a good idea.
-        But I prefer use native extract data.
-        Move don't exists 'lot_id', then this is necessary to get it
-        """
-
-        # Search operations that are linked to the moves
-        operations = set()
-        for move in self.browse(cr, uid, ids, context=context):
-            for link in move.linked_move_operation_ids:
-                operations.add(link.operation_id)
-
-        # Sort operations according to entire packages first,
-        # then package + lot, package only, lot only
-        operations = list(operations)
-        # This part not is necessary
-        # operations.sort(key=lambda x: (
-        #    (x.package_id and not x.product_id) and -4 or 0) \
-        #    + (x.package_id and -2 or 0) + (x.lot_id and -1 or 0))
-        return operations
-
-    def action_done(self, cr, uid, ids, context=None):
-        """
-        Method to enable check unicity on quantity on hand
-
-        We need this check after of process move to get
-        real quantity after of this moves.
-        """
-        res = super(StockMove, self).action_done(
-            cr, uid, ids, context=context)
-        operations = self.get_operations_as_action_done(
-            cr, uid, ids, context=context)
-        for operation in operations:
-            lot_id = operation.lot_id.id \
-                if operation.lot_id \
-                else False
-            self.check_unicity_qty_available(
-                cr, uid, operation, lot_id, context=context)
-        return res
+    def check_after_action_done(self, cr, uid, operation_or_move,
+                                lot_id=None, context=None):
+        super(StockMove, self).check_after_action_done(
+            cr, uid, operation_or_move,
+            lot_id, context=context)
+        return self.check_unicity_qty_available(
+            cr, uid, operation_or_move,
+            lot_id, context=context)
 
     def check_unicity_move_qty(self, cr, uid, ids, context=None):
         """
@@ -124,6 +88,7 @@ class StockMove(models.Model):
                     "you will have a quantity of "
                     "'%s' in lot '%s'"
                     ) % (operation_or_move.product_id.name, qty, lot.name))
+        return True
 
     # def check_tracking(self, cr, uid, move, lot_id, context=None):
         # res = super(StockMove, self).check_tracking(
