@@ -54,7 +54,7 @@ class TestGetJournalType(TransactionCase):
             'active_id': picking.id,
             'active_ids': [picking.id],
         }).create({})
-        self.assertEqual('purchase', wizard._get_journal_type())
+        self.assertEqual('purchase', wizard.journal_type)
 
     def test_so_on_delivery_gets_sale_journal(self):
         self.so.order_policy = 'picking'
@@ -71,7 +71,7 @@ class TestGetJournalType(TransactionCase):
             'active_id': picking.id,
             'active_ids': [picking.id],
         }).create({})
-        self.assertEqual('sale', wizard._get_journal_type())
+        self.assertEqual('sale', wizard.journal_type)
 
     def setUp(self):
         super(TestGetJournalType, self).setUp()
