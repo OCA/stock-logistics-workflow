@@ -37,7 +37,7 @@ class StockInvoiceOnshipping(models.TransientModel):
             return False
 
     need_two_invoices = fields.Boolean('Need two invoices',
-                                       default='_need_two_invoices')
+                                       default=_need_two_invoices)
 
     second_journal_id = fields.Many2one('account.journal',
                                         'Second Destination Journal',
