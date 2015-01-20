@@ -34,10 +34,7 @@ class stock_picking(models.Model):
         self.ensure_one()
         account_moves = self.env['account.move'].search(
             [('ref', '=', self.name)])
-        if account_moves:
-            return True
-        else:
-            return False
+        return bool(account_moves)
 
     @api.multi
     def action_revert_done(self):
