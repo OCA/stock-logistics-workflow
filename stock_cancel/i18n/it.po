@@ -1,0 +1,44 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_cancel
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-01-08 09:48+0000\n"
+"PO-Revision-Date: 2015-01-08 09:48+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_cancel
+#: view:stock.picking:stock_cancel.stock_picking_cancel_form
+msgid "Are you sure you want to reopen this picking?"
+msgstr "Sei sicuro di voler riaprire questo movimento di magazzino?"
+
+#. module: stock_cancel
+#: model:ir.model,name:stock_cancel.model_stock_picking
+msgid "Picking List"
+msgstr "Picking List"
+
+#. module: stock_cancel
+#: view:stock.picking:stock_cancel.stock_picking_cancel_form
+msgid "Reopen"
+msgstr "Riapri"
+
+#. module: stock_cancel
+#: code:addons/stock_cancel/stock.py:47
+#, python-format
+msgid "Stock move line %s has valuation moves (%s): remove them first."
+msgstr "La riga %s ha movimenti valorizzati (%s): rimuovili."
+
+#. module: stock_cancel
+#: code:addons/stock_cancel/stock.py:60
+#, python-format
+msgid "The picking %s has been set to draft state"
+msgstr "Il movimento '%s' è stato riportato allo stato bozza."
+
