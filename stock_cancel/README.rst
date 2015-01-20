@@ -1,4 +1,4 @@
-Module name
+Stock Cancel
 ===========
 
 This module allows you to bring back a completed stock picking to draft state
@@ -10,18 +10,6 @@ To install this module, you need to:
 
  * install stock_picking_invoice_link
 
-Configuration
-=============
-
-
-Usage
-=====
-
-
-Known issues / Roadmap
-======================
-
- * ...
 
 Credits
 =======
