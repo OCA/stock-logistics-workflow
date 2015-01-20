@@ -1,7 +1,7 @@
 Stock Cancel
 ===========
 
-This module allows you to bring back a completed stock picking to draft state
+This module allows you to bring back a full stock picking to draft state
 
 Installation
 ============
