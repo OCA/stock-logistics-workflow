@@ -313,7 +313,6 @@ class TestUnicity(TransactionCase):
                  self.env.ref('product_unique_serial.serial_number_demo_3')]
             )
         except except_orm, msg:
-            print msg
             test_passed = False
         self.assertTrue(
             test_passed,
