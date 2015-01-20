@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data>
+    <data noupdate="0">
         
         <!-- Products -->
         
         <record id="product_demo_1" model="product.product">
             <field name="name">Huawei Ascend</field>
-            <field name="track_all">True</field>
+            <field name="track_all" eval="True"/>
+            <field name="check_no_negative" eval="False"/>
             <field name="categ_id" ref="product.product_category_all"/>
-            <field name="lot_unique_ok">True</field>
+            <field name="lot_unique_ok" eval="True"/>
             <field name="standard_price">75.50</field>
             <field name="list_price">82.25</field>
+        </record>
+        
+        <record id="product_demo_2" model="product.product">
+            <field name="name">Nokia 2630</field>
+            <field name="track_all" eval="True"/>
+            <field name="check_no_negative" eval="True"/>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="lot_unique_ok" eval="True"/>
+            <field name="standard_price">35.50</field>
+            <field name="list_price">42.28</field>
         </record>
         
         <!-- Sales Orders -->

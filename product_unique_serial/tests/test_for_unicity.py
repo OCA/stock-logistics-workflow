@@ -57,13 +57,22 @@ class TestUnicity(TransactionCase):
         moves_data_copy = deepcopy(moves_data)
         picking_data_copy = picking_data.copy()
         stock_move_ids = []
+        default_product_data = None
         for move_n in moves_data_copy:
             # Getting the qty for the stock.move
             qty = move_n.get('qty')
             del move_n['qty']
             # Getting default data through product_id onchange
-            default_product_data = self.stock_move_obj.onchange_product_id(
-                move_n.get('product_id'))
+            if 'source_loc' in move_n.keys() and  'destination_loc' in move_n.keys():
+                default_product_data = self.stock_move_obj.onchange_product_id(
+                    prod_id=move_n.get('product_id'),
+                    loc_id=move_n.get('source_loc'),
+                    loc_dest_id=move_n.get('destination_loc'))
+                del move_n['source_loc']
+                del move_n['destination_loc']
+            else:
+                default_product_data = self.stock_move_obj.onchange_product_id(
+                    move_n.get('product_id'))
             move_n.update(default_product_data.get('value'))
             # Getting default data through product_uom_qty onchange
             default_qty_data = self.stock_move_obj.onchange_quantity(
@@ -93,33 +102,34 @@ class TestUnicity(TransactionCase):
         if picking_instance.state == 'confirmed':
             # Checking availability
             picking_instance.action_assign()
-        # Transfering picking
-        transfer_details = picking_instance.do_enter_transfer_details()
-        wizard_for_transfer = self.env[transfer_details.get('res_model')].\
-            browse(transfer_details.get('res_id'))
-        if serial_number:
-            if len(serial_number) == 1:
-                for transfer_item in wizard_for_transfer.item_ids:
-                    transfer_item.lot_id = serial_number[0].id
-            else:
-                # Case for the A, B & C serial numbers: That are 3 like
-                # value for the quantity field in the wizard, so we should
-                # split this record 2 times.
-                # Splitting the record and executing the transfer
-                wizard_split = wizard_for_transfer.item_ids[0].\
-                    split_quantities()
-                wizard_for_transfer = self.env['stock.transfer_details'].\
-                    browse(wizard_split.get('res_id'))
-                wizard_split = wizard_for_transfer.item_ids[0].\
-                    split_quantities()
-                wizard_for_transfer = self.env['stock.transfer_details'].\
-                    browse(wizard_split.get('res_id'))
-                index = 0
-                for transfer_item in wizard_for_transfer.item_ids:
-                    transfer_item.lot_id = serial_number[index].id
-                    index += 1
-        # Executing the picking transfering
-        wizard_for_transfer.do_detailed_transfer()
+        if picking_instance.state == 'assigned':
+            # Transfering picking
+            transfer_details = picking_instance.do_enter_transfer_details()
+            wizard_for_transfer = self.env[transfer_details.get('res_model')].\
+                browse(transfer_details.get('res_id'))
+            if serial_number:
+                if len(serial_number) == 1:
+                    for transfer_item in wizard_for_transfer.item_ids:
+                        transfer_item.lot_id = serial_number[0].id
+                else:
+                    # Case for the A, B & C serial numbers: That are 3 like
+                    # value for the quantity field in the wizard, so we should
+                    # split this record 2 times.
+                    # Splitting the record and executing the transfer
+                    wizard_split = wizard_for_transfer.item_ids[0].\
+                        split_quantities()
+                    wizard_for_transfer = self.env['stock.transfer_details'].\
+                        browse(wizard_split.get('res_id'))
+                    wizard_split = wizard_for_transfer.item_ids[0].\
+                        split_quantities()
+                    wizard_for_transfer = self.env['stock.transfer_details'].\
+                        browse(wizard_split.get('res_id'))
+                    index = 0
+                    for transfer_item in wizard_for_transfer.item_ids:
+                        transfer_item.lot_id = serial_number[index].id
+                        index += 1
+            # Executing the picking transfering
+            wizard_for_transfer.do_detailed_transfer()
 
     def test_1_1product_1serialnumber_2p_in(self):
         """
@@ -310,8 +320,73 @@ class TestUnicity(TransactionCase):
             "associated serial numbers, of course each one being unique ..."
             "This error should be fixed")
 
+    def test_5_1product_1serialnumber_2p_internal(self):
+        """
+        Test 5. Creating 2 pickings with 1 product for the same serial number,
+        in the internal scope, with the next form:
+        - Picking 1
+        =============================================
+        || Product ||  Quantity  ||  Serial Number ||
+        =============================================
+        ||    A    ||      1     ||      001       ||
+        =============================================
+        - Picking 2
+        =============================================
+        || Product ||  Quantity  ||  Serial Number ||
+        =============================================
+        ||    A    ||      1     ||      001       ||
+        =============================================
+        NOTE: To can operate this case, we need an IN PICKING
+        Warehouse: Your Company
+        """
+        product = self.env.ref('product_unique_serial.product_demo_2')
+        stock_move_in_datas = [
+            {'product_id': product.id,
+             'qty': 1.0,
+             'source_loc': self.env.ref('stock.stock_location_suppliers').id,
+             'destination_loc': self.env.ref('stock.stock_location_components').id
+            }]
+        stock_move_internal_datas = [
+            {'product_id': product.id,
+             'qty': 1.0,
+             'source_loc': self.env.ref('stock.stock_location_components').id,
+             'destination_loc': self.env.ref('stock.stock_location_14').id
+            }]
+        picking_data_in = {
+            'name': 'Test Picking IN 1',
+        }
+        picking_data_internal_1 = {
+            'name': 'Test Picking INTERNAL 1',
+        }
+        picking_data_internal_2 = {
+            'name': 'Test Picking INTERNAL 2',
+        }
+        # IN PROCESS
+        picking_in = self.create_stock_picking(
+            stock_move_in_datas, picking_data_in,
+            self.env.ref('stock.picking_type_in'))
+        self.transfer_picking(
+            picking_in,
+            [self.env.ref('product_unique_serial.serial_number_demo_1')])
+        # INTERNAL PROCESS
+        picking_internal_1 = self.create_stock_picking(
+            stock_move_internal_datas, picking_data_internal_1,
+            self.env.ref('stock.picking_type_internal'))
+        picking_internal_2 = self.create_stock_picking(
+            stock_move_internal_datas, picking_data_internal_2,
+            self.env.ref('stock.picking_type_internal'))
+        self.transfer_picking(
+            picking_internal_1,
+            [self.env.ref('product_unique_serial.serial_number_demo_1')])
+        with self.assertRaisesRegexp(
+                except_orm,
+                r"Product 'Nokia 2630' has active 'check no negative'"):
+            self.transfer_picking(
+                picking_internal_2,
+                [self.env.ref('product_unique_serial.serial_number_demo_1')])
+
     @mute_logger('openerp.sql_db')
-    def test_7_1serialnumber_1product_2records(self):
+    def test_6_1serialnumber_1product_2records(self):
         """
         Test 7. Creating 2 identical serial numbers
         """
