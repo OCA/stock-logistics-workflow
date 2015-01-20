@@ -44,7 +44,7 @@ class stock_picking(models.Model):
                     _('Picking %s has valuation moves: '
                         'remove them first.')
                     % (picking.name))
-           if picking.invoice_id:
+            if picking.invoice_id:
                 raise exceptions.Warning(
                     _('Picking %s has invoices!') % (picking.name))
             picking.move_lines.write({'state': 'draft'})
