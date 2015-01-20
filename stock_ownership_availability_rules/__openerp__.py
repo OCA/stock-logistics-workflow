@@ -16,7 +16,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 {'name': 'Stock Ownership Availability Rules',
  'summary': 'Enforce ownership on stock availability',
- 'version': '0.1',
+ 'version': '0.2',
  'author': 'Camptocamp',
  'category': 'Purchase Management',
  'license': 'AGPL-3',
@@ -26,6 +26,7 @@
  'demo': [],
  'data': [
      'view/quant.xml',
+     'view/move.xml',
      'security/group.xml'
  ],
  "pre_init_hook": 'fill_quant_owner',
