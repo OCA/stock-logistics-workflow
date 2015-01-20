@@ -14,7 +14,7 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-{'name': 'Customer and Supplier Invoice on Dropshipping',
+{'name': 'Stock Dropshipping Dual Invoice',
  'summary':
  'Create both Supplier and Customer Invoices from a Dropshipping Delivery',
  'version': '0.1',

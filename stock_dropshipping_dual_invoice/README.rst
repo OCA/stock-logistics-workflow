@@ -1,5 +1,5 @@
-Customer Supplier Invoice on Dropshipping
-=========================================
+Stock Dropshipping Dual Invoice
+===============================
 
 This module allows to handle a case which does not work on Odoo 8.0: a drop
 shipping delivery where the attached sale and purchase are both invoiced on
