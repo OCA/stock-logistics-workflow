@@ -29,10 +29,11 @@ from openerp import models, api, _, workflow, exceptions
 class stock_picking(models.Model):
     _inherit = 'stock.picking'
 
-    @api.model
-    def has_valuation_moves(self, move):
+    @api.multi
+    def has_valuation_moves(self):
+        self.ensure_one()
         account_moves = self.env['account.move'].search(
-            [('ref', '=', move.picking_id.name)])
+            [('ref', '=', self.name)])
         if account_moves:
             return True
         else:
@@ -41,13 +42,12 @@ class stock_picking(models.Model):
     @api.multi
     def action_revert_done(self):
         for picking in self:
-            for line in picking.move_lines:
-                if self.has_valuation_moves(line):
-                    raise exceptions.Warning(
-                        _('Stock move line %s has valuation moves (%s): '
-                            'remove them first.')
-                        % (line.name, line.picking_id.name))
-                line.state = 'draft'
+            if picking.has_valuation_moves():
+                raise exceptions.Warning(
+                    _('Picking %s has valuation moves: '
+                        'remove them first.')
+                    % (picking.name))
+            picking.move_lines.write({'state': 'draft'})
             picking.state = 'draft'
             if picking.invoice_state == 'invoiced' and not picking.invoice_id:
                 picking.invoice_state = '2binvoiced'
@@ -56,6 +56,6 @@ class stock_picking(models.Model):
                 self._uid, 'stock.picking', picking.id, self._cr)
             workflow.trg_create(
                 self._uid, 'stock.picking', picking.id, self._cr)
-            picking.log(
-                _("The picking %s has been set to draft state") % picking.name)
+            picking.message_post(
+                _("The picking has been re-opened and set to draft state"))
         return
