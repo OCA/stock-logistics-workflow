@@ -63,7 +63,8 @@ class TestUnicity(TransactionCase):
             qty = move_n.get('qty')
             del move_n['qty']
             # Getting default data through product_id onchange
-            if 'source_loc' in move_n.keys() and  'destination_loc' in move_n.keys():
+            if 'source_loc' in move_n.keys()\
+                    and 'destination_loc' in move_n.keys():
                 default_product_data = self.stock_move_obj.onchange_product_id(
                     prod_id=move_n.get('product_id'),
                     loc_id=move_n.get('source_loc'),
@@ -344,14 +345,13 @@ class TestUnicity(TransactionCase):
             {'product_id': product.id,
              'qty': 1.0,
              'source_loc': self.env.ref('stock.stock_location_suppliers').id,
-             'destination_loc': self.env.ref('stock.stock_location_components').id
-            }]
+             'destination_loc': self.env.ref(
+                 'stock.stock_location_components').id}]
         stock_move_internal_datas = [
             {'product_id': product.id,
              'qty': 1.0,
              'source_loc': self.env.ref('stock.stock_location_components').id,
-             'destination_loc': self.env.ref('stock.stock_location_14').id
-            }]
+             'destination_loc': self.env.ref('stock.stock_location_14').id}]
         picking_data_in = {
             'name': 'Test Picking IN 1',
         }
