@@ -26,6 +26,7 @@
              'stock_dropshipping'],
  'data': [
      'wizard/stock_invoice_onshipping_view.xml',
+     'security/group.xml',
  ],
  'auto_install': False,
  'installable': True,
