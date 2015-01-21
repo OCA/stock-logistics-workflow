@@ -289,7 +289,6 @@ class TestUnicity(TransactionCase):
         =============================================
         Warehouse: Your Company
         """
-        test_passed = True
         # Creating move line for picking
         product = self.env.ref('product_unique_serial.product_demo_1')
         stock_move_datas = [
@@ -305,21 +304,12 @@ class TestUnicity(TransactionCase):
             stock_move_datas, picking_data_in,
             self.env.ref('stock.picking_type_in'))
         # Executing the wizard for pickings transfering
-        try:
-            self.transfer_picking(
-                picking_in,
-                [self.env.ref('product_unique_serial.serial_number_demo_1'),
-                 self.env.ref('product_unique_serial.serial_number_demo_2'),
-                 self.env.ref('product_unique_serial.serial_number_demo_3')]
-            )
-        except except_orm, msg:
-            print msg
-            test_passed = False
-        self.assertTrue(
-            test_passed,
-            "ERROR: The module can't operate with a product that has many"
-            "associated serial numbers, of course each one being unique ..."
-            "This error should be fixed")
+        self.transfer_picking(
+            picking_in,
+            [self.env.ref('product_unique_serial.serial_number_demo_1'),
+             self.env.ref('product_unique_serial.serial_number_demo_2'),
+             self.env.ref('product_unique_serial.serial_number_demo_3')]
+        )
 
     def test_5_1product_1serialnumber_2p_internal(self):
         """
