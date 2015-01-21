@@ -303,7 +303,8 @@ class TestUnicity(TransactionCase):
         picking_in = self.create_stock_picking(
             stock_move_datas, picking_data_in,
             self.env.ref('stock.picking_type_in'))
-        # Executing the wizard for pickings transfering
+        # Executing the wizard for pickings transfering: this should be correct
+        # 'cause is the ideal case
         self.transfer_picking(
             picking_in,
             [self.env.ref('product_unique_serial.serial_number_demo_1'),
