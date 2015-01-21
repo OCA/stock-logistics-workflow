@@ -34,6 +34,7 @@ class StockProductionLot(models.Model):
                            " serial number",
                       related="name", store=True, readonly=True)
 
+
 class StockMove(models.Model):
     _inherit = 'stock.move'
 
@@ -92,6 +93,6 @@ class StockMove(models.Model):
 
     def check_tracking(self, cr, uid, move, lot_id, context=None):
         res = super(StockMove, self).check_tracking(
-           cr, uid, move, lot_id, context=context)
+            cr, uid, move, lot_id, context=context)
         self.check_unicity_move_qty(cr, uid, [move.id], context=context)
         return res

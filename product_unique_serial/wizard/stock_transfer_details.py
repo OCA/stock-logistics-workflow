@@ -12,7 +12,7 @@ def domain_str_append(old_domain_str, subdomain_str):
         ", " + subdomain_str + "]")
 
 
-class stock_transfer_details(models.TransientModel):
+class StockTransferDetails(models.TransientModel):
     _inherit = 'stock.transfer_details'
 
     @api.model
@@ -23,7 +23,7 @@ class stock_transfer_details(models.TransientModel):
         Set option "no_create = True"
         when picking type is different to incoming.
         """
-        res = super(stock_transfer_details, self).fields_view_get(
+        res = super(StockTransferDetails, self).fields_view_get(
             view_id=view_id, view_type=view_type,
             toolbar=toolbar, submenu=submenu)
         context = self._context
