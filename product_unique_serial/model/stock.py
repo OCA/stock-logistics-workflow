@@ -91,8 +91,8 @@ class StockMove(models.Model):
                     ) % (operation_or_move.product_id.name, qty, lot.name))
         return True
 
-    # def check_tracking(self, cr, uid, move, lot_id, context=None):
-        # res = super(StockMove, self).check_tracking(
-        #    cr, uid, move, lot_id, context=context)
-        # self.check_unicity_move_qty(cr, uid, [move.id], context=context)
-        # return res
+    def check_tracking(self, cr, uid, move, lot_id, context=None):
+        res = super(StockMove, self).check_tracking(
+            cr, uid, move, lot_id, context=context)
+        self.check_unicity_move_qty(cr, uid, [move.id], context=context)
+        return res
