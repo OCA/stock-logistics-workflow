@@ -8,6 +8,9 @@ delivery.
 The wizard to generate the invoice has been modified to ask for the two
 journals to use for the two invoices that will be created.
 
+The generated customer and supplier invoices are then linked to the sale and
+purchase, respectively.
+
 See also the discussion on odoo/odoo#4131.
 
 Known issues

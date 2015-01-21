@@ -50,6 +50,9 @@ class TestIntCreateTwoInvoices(TransactionCase):
         # make sure the partner check does not pass trivially
         self.assertNotEqual(invoices[0].partner_id, invoices[1].partner_id)
 
+        self.assertEqual(invoices[0], po.invoice_ids)
+        self.assertEqual(invoices[1], self.so.invoice_ids)
+
     def test_so_on_delivery_creates_correct_invoice(self):
         self.so.order_policy = 'picking'
         self.so.action_button_confirm()
@@ -71,6 +74,10 @@ class TestIntCreateTwoInvoices(TransactionCase):
         self.assertEqual(1, len(invoices))
         self.assertEqual(invoices.type, 'out_invoice')
 
+        self.assertEqual(invoices, self.so.invoice_ids)
+        self.assertEqual(1, len(po.invoice_ids))
+        self.assertNotEqual(invoices, po.invoice_ids)
+
     def test_po_on_delivery_creates_correct_invoice(self):
         self.so.action_button_confirm()
 
@@ -91,6 +98,9 @@ class TestIntCreateTwoInvoices(TransactionCase):
         invoices = self.env['account.invoice'].browse(invoice_ids)
         self.assertEqual(1, len(invoices))
         self.assertEqual(invoices.type, 'in_invoice')
+
+        self.assertEqual(0, len(self.so.invoice_ids))
+        self.assertEqual(invoices, po.invoice_ids)
 
     def setUp(self):
         super(TestIntCreateTwoInvoices, self).setUp()
