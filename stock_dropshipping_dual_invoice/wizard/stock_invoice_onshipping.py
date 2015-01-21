@@ -43,6 +43,15 @@ class StockInvoiceOnshipping(models.TransientModel):
             self.wizard_title = selection[journal_type]
 
     @api.multi
+    def open_invoice(self):
+        action_data = super(StockInvoiceOnshipping, self).open_invoice()
+        if self.need_two_invoices:
+            # do not show the two invoices, because a form view would be wrong
+            return True
+        else:
+            return action_data
+
+    @api.multi
     def create_invoice(self):
         self.ensure_one()
         if self.need_two_invoices:

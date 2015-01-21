@@ -13,13 +13,29 @@ purchase, respectively.
 
 See also the discussion on odoo/odoo#4131.
 
+Usage
+=====
+
+- Choose a product that has a supplier.
+- Create a Sale of the product. Choose in the line the Drop Shipping route,
+  and choose to invoice in delivery.
+- Find the automatically generated RFQ, in it specify invoicing on
+  delivery, and validate.
+- Open the delivery, transfer it, and click the button to generate the
+  invoice.
+- Fill in the wizard. Two invoices will be generated -- one for the customer,
+  one for the supplier.
+- You can find the generated customer and supplier invoices from the Sale and
+  Purchase Orders, respectively.
+
 Known issues
 ------------
 
-The wizard does create a supplier invoice and a customer invoice, but in order
-to see them correctly, the user has to open them via the "Customer Invoices"
-and "Supplier Invoices" menu. That is because they have two different form
-views.
+When the wizard creates a supplier invoice and a customer invoice, it does not
+show them, and instead the wizard is simply closed, going back to the picking.
+This is because we cannot easily show a customer and a supplier invoice
+together in a tree view, because one of them would not get the correct form
+view.
 
 Credits
 =======
