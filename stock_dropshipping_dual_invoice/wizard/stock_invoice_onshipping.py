@@ -25,13 +25,14 @@ class StockInvoiceOnshipping(models.TransientModel):
         return self.env['account.journal'].search([('type', '=', 'sale')])
 
     def _need_two_invoices(self):
-        pick = self.env['stock.picking'].browse(self.env.context['active_id'])
-        so = pick.sale_id
-        po = pick.move_lines[0].purchase_line_id.order_id
-        if so.order_policy == 'picking' and po.invoice_method == 'picking':
-            return True
-        else:
-            return False
+        if 'active_id' in self.env.context:
+            pick = self.env['stock.picking'].browse(self.env.context['active_id'])
+            so = pick.sale_id
+            po = pick.move_lines[0].purchase_line_id.order_id
+            if so.order_policy == 'picking' and po.invoice_method == 'picking':
+                return True
+
+        return False
 
     @api.depends('journal_type', 'need_two_invoices')
     def _get_wizard_title(self):
