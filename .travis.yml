@@ -5,8 +5,10 @@ python:
 
 env:
   - VERSION="8.0" LINT_CHECK="1"
-  - VERSION="8.0" ODOO_REPO="odoo/odoo" LINT_CHECK="0"
-  - VERSION="8.0" ODOO_REPO="OCA/OCB" LINT_CHECK="0"
+  - VERSION="8.0" ODOO_REPO="odoo/odoo" INCLUDE="stock_route_transit" LINT_CHECK="0"
+  - VERSION="8.0" ODOO_REPO="OCA/OCB" INCLUDE="stock_route_transit" LINT_CHECK="0"
+  - VERSION="8.0" ODOO_REPO="odoo/odoo" EXCLUDE="stock_route_transit" LINT_CHECK="0"
+  - VERSION="8.0" ODOO_REPO="OCA/OCB" EXCLUDE="stock_route_transit" LINT_CHECK="0"
 
 virtualenv:
   system_site_packages: true
