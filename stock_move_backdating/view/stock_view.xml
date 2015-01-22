@@ -9,7 +9,9 @@
 			<field name="inherit_id" ref="stock.view_move_form" />
 			<field name="arch" type="xml">
 				<xpath expr="//field[@name='date_expected']" position="after">
-					<field name="date_backdating" on_change="on_change_date_backdating(date_backdating)" />
+					<field
+            name="date_backdating"
+            on_change="on_change_date_backdating(date_backdating)" />
 				</xpath>
 			</field>
 		</record>
@@ -20,7 +22,9 @@
 			<field name="inherit_id" ref="stock.view_move_picking_form" />
 			<field name="arch" type="xml">
 				<xpath expr="//field[@name='date_expected']" position="after">
-					<field name="date_backdating" on_change="on_change_date_backdating(date_backdating)" />
+					<field
+            name="date_backdating"
+            on_change="on_change_date_backdating(date_backdating)" />
 				</xpath>
 			</field>
 		</record>

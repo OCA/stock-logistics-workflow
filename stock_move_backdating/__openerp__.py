@@ -19,22 +19,33 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
+
 {
-    "name": "Stock Move Backdating",
-    "version": "1.0",
-    'author': ['Marco Dieckhoff, BREMSKERL', 'Agile Business Group'],
-    "category": "Stock Logistics",
+    'name': 'Stock Move Backdating',
+    'version': '1.0',
+    'category': 'Stock Logistics',
+    'description': """
+Allows back-dating of stock moves
+=================================
+This module allows to register old stock moves (with date != now).
+On stock moves, user can specify the "Actual Movement Date", that will be
+used as movement date.
+
+Contributors
+------------
+* Marco Dieckhoff
+* BREMSKERL
+* Agile Business Group
+* El Hadji Dem (elhadji.dem@savoirfairelinux.com)
+    """,
+    'author': 'Bremskerl',
     'website': 'www.bremskerl.com',
-    "depends": ["stock"],
-    "summary": "Allows back-dating of stock moves",
-    "description": """This module allows to register old stock moves
-    (with date != now).
-    On stock moves, user can specify the "Actual Movement Date", that will be
-    used as movement date""",
+    'depends': ['stock'],
     'data': [
-        "view/stock_view.xml",
-        "wizard/stock_partial_picking_view.xml",
+        'view/stock_view.xml',
+        'wizard/stock_partial_picking_view.xml',
     ],
-    'demo': [],
     'installable': True,
+    'auto_install': False,
 }
