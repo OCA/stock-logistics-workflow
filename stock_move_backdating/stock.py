@@ -81,10 +81,10 @@ class stock_move(orm.Model):
         if (dt > NOW):
             warning = {'title': _('Error!'), 'message': _(
                 'You can not process an actual movement date in the future.')}
-            values = {
-                'date_backdating': NOW.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
-            }
-            return {'warning': warning, 'value': values}
+            # Delete values (old code) because it shows many times
+            # the warning message
+            # It looks like a bug in Odoo.
+            return {'warning': warning}
 
         # otherwise, ok
         return {}
