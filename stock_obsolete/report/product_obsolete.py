@@ -41,7 +41,7 @@ class ProductObsolete(report_sxw.rml_parse):
         else:
             amount = str(amount)
         orig = amount
-        new = re.sub("^(-?\d+)(\d{3})", "\g<1>'\g<2>", amount)
+        new = re.sub(r"^(-?\d+)(\d{3})", r"\g<1>'\g<2>", amount)
         if orig == new:
             return new
         else:
