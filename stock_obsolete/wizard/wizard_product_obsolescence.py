@@ -1,33 +1,21 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) Camptocamp SA
-# Author: Arnaud Wüst
+#    Author: Joël Grand-Guillaume, Matthieu Dietrich
+#    Copyright 2008-2015 Camptocamp SA
 #
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
 #
-#    This file is part of the c2c_planning_management module
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
 #
-#
-# WARNING: This program as such is intended to be used by professional
-# programmers who take the whole responsability of assessing all potential
-# consequences resulting from its eventual inadequacies and bugs
-# End users who are looking for a ready-to-use solution with commercial
-# garantees and support are strongly adviced to contract a Free Software
-# Service Company
-#
-# This program is Free Software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 
@@ -43,7 +31,8 @@ class wizard_product_obsolescence(orm.TransientModel):
         result = mod_obj._get_id(cr, uid, 'stock', 'stock_location_company')
         stock_location_id = mod_obj.read(cr, uid,
                                          [result],
-                                         ['res_id'])[0]['res_id']
+                                         ['res_id'],
+                                         context=context)[0]['res_id']
         return stock_location_id
 
     _columns = {
@@ -65,7 +54,9 @@ class wizard_product_obsolescence(orm.TransientModel):
         mod_obj = self.pool.get('ir.model.data')
         result = mod_obj._get_id(cr, uid, 'stock_obsolete',
                                  'product_product_obsolet_tree_view')
-        tree_view_id = mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
+        tree_view_id = mod_obj.read(cr, uid,
+                                    [result], ['res_id'],
+                                    context=context)[0]['res_id']
 
         # take only stockable product type
         wizard = self.browse(cr, uid, ids, context=context)[0]
