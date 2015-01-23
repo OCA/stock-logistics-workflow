@@ -60,7 +60,7 @@ class ProductObsolete(report_sxw.rml_parse):
     def set_context(self, objects, data, ids, report_type=None):
         prod_obj = self.pool.get('product.product')
         if (data.get('ids', False) and
-            data.get('model', False) == 'product.product'):
+           data.get('model', False) == 'product.product'):
             ids = [data['ids']]
         else:
             ids = prod_obj.search(self.cr, self.uid,
