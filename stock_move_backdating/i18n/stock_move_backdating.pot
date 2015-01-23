@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-22 20:26+0000\n"
-"PO-Revision-Date: 2015-01-22 15:26-0500\n"
+"POT-Creation-Date: 2015-01-23 21:28+0000\n"
+"PO-Revision-Date: 2015-01-23 16:29-0500\n"
 "Last-Translator: EL Hadji DEM <elhadji.dem@savoirfairelinux.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -45,13 +45,14 @@ msgid ""
 msgstr ""
 
 #. module: stock_move_backdating
-#: code:addons/stock_move_backdating/stock.py:82
+#: code:addons/stock_move_backdating/stock.py:55
+#: code:addons/stock_move_backdating/stock.py:97 constraint:stock.move:0
 #, python-format
 msgid "You can not process an actual movement date in the future."
 msgstr ""
 
 #. module: stock_move_backdating
-#: code:addons/stock_move_backdating/stock.py:82
+#: code:addons/stock_move_backdating/stock.py:97
 #, python-format
 msgid "Error!"
 msgstr ""

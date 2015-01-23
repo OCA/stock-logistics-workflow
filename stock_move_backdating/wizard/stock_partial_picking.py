@@ -40,8 +40,8 @@ class stock_partial_picking(osv.TransientModel):
     name = 'stock.partial.picking'
 
     def _partial_move_for(self, cr, uid, move, context=None):
-        partial_move = super(
-            stock_partial_picking, self)._partial_move_for(
+        partial_move = \
+            super(stock_partial_picking, self)._partial_move_for(
                 cr, uid, move, context=context)
         partial_move.update({'date_backdating': move.date_backdating},)
         return partial_move

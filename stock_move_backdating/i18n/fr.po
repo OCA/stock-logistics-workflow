@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-22 20:27+0000\n"
-"PO-Revision-Date: 2015-01-22 15:33-0500\n"
+"POT-Creation-Date: 2015-01-23 21:30+0000\n"
+"PO-Revision-Date: 2015-01-23 16:30-0500\n"
 "Last-Translator: EL Hadji DEM <elhadji.dem@savoirfairelinux.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 #. module: stock_move_backdating
 #: model:ir.model,name:stock_move_backdating.model_stock_partial_picking_line
 msgid "stock.partial.picking.line"
-msgstr "stock.partial.picking.line"
+msgstr ""
 
 #. module: stock_move_backdating
 #: field:stock.move,date_backdating:0
@@ -47,14 +47,15 @@ msgstr ""
 "cette date  au lieu de la date du jour lorsque le traitement est fait."
 
 #. module: stock_move_backdating
-#: code:addons/stock_move_backdating/stock.py:82
+#: code:addons/stock_move_backdating/stock.py:55
+#: code:addons/stock_move_backdating/stock.py:97 constraint:stock.move:0
 #, python-format
 msgid "You can not process an actual movement date in the future."
 msgstr ""
 "Vous ne pouvez pas traiter une date actuelle de mouvement dans le futur."
 
 #. module: stock_move_backdating
-#: code:addons/stock_move_backdating/stock.py:82
+#: code:addons/stock_move_backdating/stock.py:97
 #, python-format
 msgid "Error!"
 msgstr "Erreur!"

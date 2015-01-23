@@ -30,6 +30,17 @@ class stock_move(orm.Model):
     _name = "stock.move"
     _inherit = _name
 
+    def check_date_backdating(self, cr, uid, ids, context=None):
+        if not ids:
+            return False
+        date_backdating = self.browse(
+            cr, uid, ids[0], context=context).date_backdating
+        if date_backdating:
+            date_backdating = datetime.strptime(
+                date_backdating, DEFAULT_SERVER_DATETIME_FORMAT)
+            return date_backdating <= datetime.now()
+        return True
+
     _columns = {
         'date_backdating': fields.datetime(
             "Actual Movement Date", readonly=False,
@@ -40,6 +51,12 @@ class stock_move(orm.Model):
                  "of current date when processing to done."
         ),
     }
+
+    _constraints = [
+        (check_date_backdating,
+         _('You can not process an actual movement date in the future.'),
+         ['date_backdating']),
+    ]
 
     def action_done(self, cr, uid, ids, context=None):
         # look at previous state and find date_backdating
