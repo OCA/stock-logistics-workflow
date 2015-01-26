@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_mrp_product_produce_wizard_inh_locklot" model="ir.ui.view">
+            <field name="name">view.mrp.product.produce.wizard.inh.locklot</field>
+            <field name="model">mrp.product.produce</field>
+            <field name="inherit_id" ref="mrp.view_mrp_product_produce_wizard"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@string='Produce']/field[@name='lot_id']" position="attributes">
+                    <attribute name="domain">[('product_id','=',product_id),('locked','=',False)]</attribute>
+                </xpath>
+                <xpath expr="//tree[@string='Consume Lines']/field[@name='lot_id']" position="attributes">
+                    <attribute name="domain">[('product_id','=',product_id),('locked','=',False)]</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

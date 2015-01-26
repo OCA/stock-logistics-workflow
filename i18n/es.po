@@ -1,0 +1,71 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* mrp_lock_lot
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-01-26 12:38+0000\n"
+"PO-Revision-Date: 2015-01-26 13:41+0100\n"
+"Last-Translator: Alfredo <alfredodelafuente@avanzosc.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: mrp_lock_lot
+#: code:addons/mrp_lock_lot/models/mrp_production_lot.py:23
+#, python-format
+msgid "Error!: Found stock movements for this lot with location destination type in virtual/company"
+msgstr "Error!: Encontrados movimientos de stock para este lote con tipo de ubicación destino virtual/compañia"
+
+#. module: mrp_lock_lot
+#: view:stock.production.lot:mrp_lock_lot.view_production_lot_form_inh_locklot
+msgid "Lock"
+msgstr "Bloquear"
+
+#. module: mrp_lock_lot
+#: view:stock.production.lot:mrp_lock_lot.search_product_lot_filter_inh_locklot
+#: field:stock.production.lot,locked:0
+#: view:stock.quant:mrp_lock_lot.quant_search_view_inh_locklot
+#: field:stock.quant,locked:0
+msgid "Locked"
+msgstr "Bloqueado"
+
+#. module: mrp_lock_lot
+#: view:stock.quant:mrp_lock_lot.quant_search_view_inh_locklot
+msgid "Lot"
+msgstr "Lote"
+
+#. module: mrp_lock_lot
+#: model:ir.model,name:mrp_lock_lot.model_stock_production_lot
+msgid "Lot/Serial"
+msgstr "Lote/Nº de serie"
+
+#. module: mrp_lock_lot
+#: view:stock.production.lot:mrp_lock_lot.search_product_lot_filter_inh_locklot
+msgid "Product"
+msgstr "Producto"
+
+#. module: mrp_lock_lot
+#: model:ir.model,name:mrp_lock_lot.model_stock_quant
+msgid "Quants"
+msgstr "Quants"
+
+#. module: mrp_lock_lot
+#: view:stock.production.lot:mrp_lock_lot.view_production_lot_form_inh_locklot
+msgid "Unlock"
+msgstr "Desbloquear"
+
+#. module: mrp_lock_lot
+#: view:mrp.product.produce:mrp_lock_lot.view_mrp_product_produce_wizard_inh_locklot
+msgid "[('product_id','=',product_id),('locked','=',False)]"
+msgstr "[('product_id','=',product_id),('locked','=',False)]"
+
+#. module: mrp_lock_lot
+#: view:stock.transfer_details:mrp_lock_lot.view_stock_enter_transfer_details_inh_locklot
+msgid "[('product_id','=?',product_id),('locked','=',False)]"
+msgstr "[('product_id','=?',product_id),('locked','=',False)]"
+
