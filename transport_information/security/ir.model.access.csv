@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_transport_mode_all,access_transport_mode_all,model_transport_mode,,1,0,0,0
+access_transport_mode_manager,access_transport_mode_manager,model_transport_mode,purchase.group_purchase_manager,1,1,1,1
+access_transport_vehicle_all,access_transport_vehicle_all,model_transport_vehicle,,1,0,0,0
+access_transport_vehicle_manager,access_transport_vehicle_manager,model_transport_vehicle,purchase.group_purchase_manager,1,1,1,1
