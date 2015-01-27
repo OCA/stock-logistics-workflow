@@ -11,8 +11,8 @@
                 </field>
                 <div class="oe_button_box oe_right" position="before">
                     <header>
-                        <button name="button_lock" string="Lock" attrs="{'invisible':[('locked','=',True)]}"/>
-                        <button name="button_unlock" string="Unlock" attrs="{'invisible':[('locked','=',False)]}"/>
+                        <button name="button_lock" string="Lock" type="object" attrs="{'invisible':[('locked','=',True)]}"/>
+                        <button name="button_unlock" string="Unlock" type="object" attrs="{'invisible':[('locked','=',False)]}"/>
                     </header>
                 </div>
             </field>
