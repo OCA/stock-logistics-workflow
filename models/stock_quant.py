@@ -16,9 +16,7 @@ class StockQuant(models.Model):
                    restrict_lot_id=False, restrict_partner_id=False,
                    context=None):
         domain += [('locked', '=', False)]
-        my_context = context.copy()
-        my_context.update({'locked': False})
         return super(StockQuant, self).quants_get(
             cr, uid, location, product, qty, domain=domain,
             restrict_lot_id=restrict_lot_id,
-            restrict_partner_id=restrict_partner_id, context=my_context)
+            restrict_partner_id=restrict_partner_id, context=context)

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_wiz_lock_lot_form" model="ir.ui.view">
+            <field name="name">view.wiz.lock.lot.form</field>
+            <field name="model">wiz.lock.lot</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Lock/Unlock lots">
+                    <label string="What do you want to do with selected lots?" colspan="4" />
+                    <footer>
+                        <button class="oe_highlight" name="action_lock_lots" string="Lock lots" type="object" />
+                        <button class="oe_highlight" name="action_unlock_lots" string="Unlock lots" type="object" />
+                        or
+                        <button class="oe_link" special="cancel" string="Cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+            <record id="action_lock_lot" model="ir.actions.act_window">
+            <field name="name">Lock/Unlock lot</field>
+            <field name="res_model">wiz.lock.lot</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_wiz_lock_lot_form" />
+            <field name="target">new</field>
+        </record>
+
+        <record id="action_wizard_lock_lot" model="ir.values">
+            <field name="model_id" ref="model_stock_production_lot" />
+            <field name="name">Lock/Unlock lot</field>
+            <field name="key2">client_action_multi</field>
+            <field name="value"
+                eval="'ir.actions.act_window,' + str(ref('action_lock_lot'))" />
+            <field name="key">action</field>
+            <field name="model">stock.production.lot</field>
+        </record>
+
+    </data>
+</openerp>

@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
+        <!-- 
+        <record id="action_lock_unlock_lot" model="ir.values">
+            <field name="model_id" ref="model_stock_production_lot" />
+            <field name="name">Lock/Unlock lot</field>
+            <field name="key2">client_action_multi</field>
+            <field name="value"
+                eval="'ir.actions.act_window,' + str(ref('action_sayma_export'))" />
+            <field name="key">action</field>
+            <field name="model">stock.production.lot</field>
+        </record>
+        -->
         <record id="view_production_lot_form_inh_locklot" model="ir.ui.view">
             <field name="name">view.production.lot.form.inh.locklot</field>
             <field name="model">stock.production.lot</field>

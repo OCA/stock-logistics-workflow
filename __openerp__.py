@@ -35,6 +35,8 @@
                 ],
     "data": ['wizard/stock_transfer_details_view.xml',
              'wizard/mrp_product_produce_view.xml',
+             'wizard/wiz_lock_lot_view.xml',
+             'views/stock_config_settings_view.xml',
              'views/stock_production_lot_view.xml',
              'views/stock_quant_view.xml',
              ],

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-26 12:38+0000\n"
-"PO-Revision-Date: 2015-01-26 13:41+0100\n"
+"POT-Creation-Date: 2015-01-28 18:01+0000\n"
+"PO-Revision-Date: 2015-01-28 19:07+0100\n"
 "Last-Translator: Alfredo <alfredodelafuente@avanzosc.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,15 +16,70 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: mrp_lock_lot
-#: code:addons/mrp_lock_lot/models/mrp_production_lot.py:23
+#: view:wiz.lock.lot:mrp_lock_lot.view_wiz_lock_lot_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: mrp_lock_lot
+#: field:stock.config.settings,group_lot_default_locked:0
+msgid "Create in locked status when create a lot"
+msgstr "Crear en estado \"Bloqueado\" cuando se cree el lote"
+
+#. module: mrp_lock_lot
+#: field:wiz.lock.lot,create_uid:0
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: mrp_lock_lot
+#: field:wiz.lock.lot,create_date:0
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: mrp_lock_lot
+#: code:addons/mrp_lock_lot/models/mrp_production_lot.py:30
 #, python-format
-msgid "Error!: Found stock movements for this lot with location destination type in virtual/company"
-msgstr "Error!: Encontrados movimientos de stock para este lote con tipo de ubicación destino virtual/compañia"
+msgid "Error!: Found stock movements for lot: \"%\" with location destination type in virtual/company"
+msgstr "Error!: Encontrados movimientos de stock para el lote: \"%\" con ubicación destino tipo virtual/empresa"
+
+#. module: mrp_lock_lot
+#: field:wiz.lock.lot,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: mrp_lock_lot
+#: help:stock.config.settings,group_lot_default_locked:0
+msgid "If the field is activated by creating a lot is created in astate locked"
+msgstr "Si el campo esta activado al crear el lote se creará con estado bloqueado"
+
+#. module: mrp_lock_lot
+#: field:wiz.lock.lot,write_uid:0
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: mrp_lock_lot
+#: field:wiz.lock.lot,write_date:0
+msgid "Last Updated on"
+msgstr "Última actualización el"
 
 #. module: mrp_lock_lot
 #: view:stock.production.lot:mrp_lock_lot.view_production_lot_form_inh_locklot
 msgid "Lock"
 msgstr "Bloquear"
+
+#. module: mrp_lock_lot
+#: view:wiz.lock.lot:mrp_lock_lot.view_wiz_lock_lot_form
+msgid "Lock lots"
+msgstr "Bloquear lotes"
+
+#. module: mrp_lock_lot
+#: model:ir.actions.act_window,name:mrp_lock_lot.action_lock_lot
+msgid "Lock/Unlock lot"
+msgstr "Bloquear/Desbloquear lote"
+
+#. module: mrp_lock_lot
+#: view:wiz.lock.lot:mrp_lock_lot.view_wiz_lock_lot_form
+msgid "Lock/Unlock lots"
+msgstr "Bloquear/Desbloquear lotes"
 
 #. module: mrp_lock_lot
 #: view:stock.production.lot:mrp_lock_lot.search_product_lot_filter_inh_locklot
@@ -60,6 +115,16 @@ msgid "Unlock"
 msgstr "Desbloquear"
 
 #. module: mrp_lock_lot
+#: view:wiz.lock.lot:mrp_lock_lot.view_wiz_lock_lot_form
+msgid "Unlock lots"
+msgstr "Desbloquear lotes"
+
+#. module: mrp_lock_lot
+#: view:wiz.lock.lot:mrp_lock_lot.view_wiz_lock_lot_form
+msgid "What do you want to do with selected lots?"
+msgstr "¿Que quieres hacer con los lotes seleccionados?"
+
+#. module: mrp_lock_lot
 #: view:mrp.product.produce:mrp_lock_lot.view_mrp_product_produce_wizard_inh_locklot
 msgid "[('product_id','=',product_id),('locked','=',False)]"
 msgstr "[('product_id','=',product_id),('locked','=',False)]"
@@ -68,4 +133,9 @@ msgstr "[('product_id','=',product_id),('locked','=',False)]"
 #: view:stock.transfer_details:mrp_lock_lot.view_stock_enter_transfer_details_inh_locklot
 msgid "[('product_id','=?',product_id),('locked','=',False)]"
 msgstr "[('product_id','=?',product_id),('locked','=',False)]"
+
+#. module: mrp_lock_lot
+#: view:wiz.lock.lot:mrp_lock_lot.view_wiz_lock_lot_form
+msgid "or"
+msgstr "or"
 
