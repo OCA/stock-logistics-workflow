@@ -2,18 +2,6 @@
 <openerp>
   <data>
 
-    <menuitem name="Order Management"
-      id="menu_order"
-      sequence="25"/>
-
-    <menuitem name="Configuration"
-      id="menu_order_configuration"
-      parent="menu_order"
-      groups="purchase.group_purchase_manager"
-      sequence="100"/>
-
-    <menuitem id="menu_shipment_plan_base" name="Shipment Plan" parent="menu_order" sequence="4"/>
-
     <record model="ir.ui.view" id="view_shipment_plan_form">
       <field name="name">shipment.plan.form</field>
       <field name="model">shipment.plan</field>
@@ -144,7 +132,7 @@
       <field name="model">shipment.plan</field>
       <field name="arch" type="xml">
         <tree colors="grey:state == 'done';"
-          string="Shipment Plan">
+          string="Shipment Plans">
           <field name="name"/>
           <field name="user_id"/>
           <field name="eta"/>
@@ -183,7 +171,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="action_shipment_plan">
-      <field name="name">Shipment Plan</field>
+      <field name="name">Shipment Plans</field>
       <field name="type">ir.actions.act_window</field>
       <field name="res_model">shipment.plan</field>
       <field name="view_type">form</field>
@@ -199,10 +187,10 @@
     </record>
 
     <menuitem
-      id="menu_shipment_plan"
-      sequence="0"
-      parent="menu_shipment_plan_base"
-      action="action_shipment_plan"/>
+      id="menu_action_shipment"
+      action="action_shipment_plan"
+      parent="menu_shipment"
+      sequence="1"/>
 
   </data>
 </openerp>

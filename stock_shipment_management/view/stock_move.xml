@@ -67,8 +67,24 @@
       </field>
     </record>
 
-    <record id="action_move_transit_pipeline" model="ir.actions.act_window">
-        <field name="name">Transit Pipeline</field>
+    <record id="action_move_transit_pipeline_waiting" model="ir.actions.act_window">
+        <field name="name">Waiting planifitation</field>
+        <field name="res_model">stock.move</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="view_move_transit_pipline_tree"/>
+        <field name="search_view_id" ref="view_move_transit_pipeline_search"/>
+        <field name="domain" eval="[('location_dest_id', '=', ref('stock_route_transit.transit_outgoing'))]"/>
+        <field name="context">{'search_default_ship_to_plan': 1}</field>
+        <field name="help" type="html">
+          <p>
+            This menu shows you the move you needs to assign to a Shipment.
+          </p>
+        </field>
+    </record>
+
+    <record id="action_move_transit_pipeline_in_transit" model="ir.actions.act_window">
+        <field name="name">In Transit</field>
         <field name="res_model">stock.move</field>
         <field name="type">ir.actions.act_window</field>
         <field name="view_type">form</field>
@@ -78,14 +94,24 @@
         <field name="context">{'search_default_ship_in_transit': 1}</field>
         <field name="help" type="html">
           <p>
-            This menu gives you the full traceability of inventory
-            operations on a specific product. You can filter on the product
-            to see all the past or future movements for the product.
+            This menu shows you the move in transit.
           </p>
         </field>
     </record>
 
-    <menuitem action="action_move_transit_pipeline" id="menu_action_move_transit" parent="stock.menu_traceability" sequence="4" groups="stock.group_locations"/>
+    <menuitem
+      id="menu_action_move_transit_pipeline_waiting"
+      action="action_move_transit_pipeline_waiting"
+      parent="menu_shipment"
+      sequence="1"
+      groups="stock.group_locations"/>
+
+    <menuitem
+      id="menu_action_move_transit_pipeline_in_transit"
+      action="action_move_transit_pipeline_in_transit"
+      parent="menu_shipment"
+      sequence="2"
+      groups="stock.group_locations"/>
 
   </data>
 </openerp>
