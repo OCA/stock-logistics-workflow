@@ -61,6 +61,7 @@ class ShipmentPlan(models.Model):
         'delivery.carrier',
         'Carrier',
         readonly=True,  # updated by wizard
+        track_visibility='onchange',
     )
     initial_etd = fields.Datetime(
         'Initial ETD',
@@ -77,11 +78,13 @@ class ShipmentPlan(models.Model):
     etd = fields.Datetime(
         'ETD',
         readonly=True,  # updated by wizard
+        track_visibility='onchange',
         help="Up to date Estimated Time of Departure"
     )
     eta = fields.Datetime(
         'ETA',
         readonly=True,  # updated by wizard
+        track_visibility='onchange',
         help="Up to date Estimated Time of Arrival"
     )
     from_address_id = fields.Many2one(
@@ -105,7 +108,8 @@ class ShipmentPlan(models.Model):
     )
     carrier_tracking_ref = fields.Char(
         'Tracking Ref.',
-        readonly=True  # updated by wizard
+        readonly=True,  # updated by wizard
+        track_visibility='onchange',
     )
     transport_mode_id = fields.Many2one(
         'transport.mode',
