@@ -74,6 +74,16 @@ class StockMove(models.Model):
         related='departure_shipment_id.state',
         store=True,
     )
+    ship_etd = fields.Datetime(
+        related='date_expected',
+        string='ETD',
+        store=True
+    )
+    ship_eta = fields.Datetime(
+        related='move_dest_id.date_expected',
+        string='ETA',
+        store=True
+    )
 
     @api.depends('picking_id.picking_type_id.code',
                  'picking_id.picking_type_id.warehouse_id.partner_id',

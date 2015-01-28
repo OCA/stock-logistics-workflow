@@ -11,6 +11,8 @@
           <field name="product_uom_qty"/>
           <field name="product_uom"  string="Unit of Measure" groups="product.group_uom"/>
           <field name="product_packaging" domain="[('product_tmpl_id','=',product_id)]" groups="product.group_stock_packaging"/>
+          <field name="ship_etd"/>
+          <field name="ship_eta"/>
           <field name="ship_carrier_tracking_ref"/>
           <field name="ship_from_address_id"/>
           <field name="ship_to_address_id"/>
