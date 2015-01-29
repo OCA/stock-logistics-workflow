@@ -116,6 +116,7 @@ class TestPickingToPackOps(TransactionCase):
         self.partner2 = self.env.ref('base.res_partner_2')
 
         self.Quant = self.env['stock.quant']
-        self.assertFalse(self.Quant.search([('product_id', '=', self.product1.id)]))
-        self.assertFalse(self.Quant.search([('product_id', '=', self.product2.id)]))
-
+        self.assertFalse(self.Quant.search([('product_id', '=',
+                                             self.product1.id)]))
+        self.assertFalse(self.Quant.search([('product_id', '=',
+                                             self.product2.id)]))
