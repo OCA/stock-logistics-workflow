@@ -116,3 +116,52 @@ class StockMove(models.Model):
                 if ship.state == 'in_transit':
                     ship.signal_workflow('transit_end')
         return res
+
+    @api.multi
+    def _picking_assign(self, procurement_group, location_from, location_to):
+        """ When an arrival transit move is split, we create a backorder
+
+        """
+        res = super(StockMove, self)._picking_assign(
+            procurement_group, location_from, location_to)
+        if self.env.context.get('split_transit_arrival') == 'arrival':
+            context = {'do_only_split': True}
+            Picking = self.env['stock.picking'].with_context(**context)
+            Picking._create_backorder(self.picking_id, backorder_moves=self)
+        return res
+
+    @api.model
+    def split(self, move, qty,
+              restrict_lot_id=False, restrict_partner_id=False):
+        """ Propagate the splitting of a departure transit move to
+        its arrival transit move
+
+        Here, we remove picking_id to force arrival move to trigger
+        _picking_assign for new move
+
+        """
+        context = {}
+        if move.departure_shipment_id:
+            context['split_transit_arrival'] = 'departure'
+        # On propagate split
+        if self.env.context.get('split_transit_arrival') == 'departure':
+            context['split_transit_arrival'] = 'arrival'
+
+        _self = self.with_context(**context)
+        res = super(StockMove, _self).split(
+            move, qty,
+            restrict_lot_id=restrict_lot_id,
+            restrict_partner_id=restrict_partner_id)
+        return res
+
+    @api.multi
+    def copy(self, default=None):
+        """ Ensure an arrival move from Transit is not assigned to same picking
+        when source move is split
+
+        """
+        if default is None:
+            default = {}
+        if self.env.context.get('split_transit_arrival') == 'arrival':
+            default['picking_id'] = False
+        return super(StockMove, self).copy(default=default)
