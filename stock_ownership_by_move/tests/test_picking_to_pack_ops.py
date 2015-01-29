@@ -28,6 +28,20 @@ class TestPickingToPackOps(TransactionCase):
         self.assertEqual(1, len(result))
         self.assertEqual(self.partner2.id, result[0]['owner_id'])
 
+    def test_two_moves_same_owner_are_grouped(self):
+        pick = self._picking_factory(owner=self.partner1)
+        pick.move_lines = (
+            self._move_factory(product=self.product1, owner=self.partner2) |
+            self._move_factory(product=self.product1, owner=self.partner2,
+                               qty=2.0)
+        )
+
+        result = pick._prepare_pack_ops(pick, [], {self.product1: 7.0})
+
+        self.assertEqual(1, len(result))
+        self.assertEqual(self.partner2.id, result[0]['owner_id'])
+        self.assertEqual(7.0, result[0]['product_qty'])
+
     def _picking_factory(self, owner):
         return self.env['stock.picking'].create({
             'picking_type_id': self.env.ref('stock.picking_type_in').id,
