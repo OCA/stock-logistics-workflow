@@ -69,17 +69,18 @@ class StockPartialPicking(orm.TransientModel):
             wizard = self.browse(cr, uid, ids[0], context=context)
             picking_pool = self.pool['stock.picking']
             delivered_picking_id = res['res_id']
-            open_picking_id = res['context']['active_id']
             delivered_picking = picking_pool.browse(
                 cr, uid, delivered_picking_id, context=context)
             for delivered_line in delivered_picking.move_lines:
                 for wizard_line in wizard.move_ids:
                     if (
-                        wizard_line.product_id.id == delivered_line.product_id.id
+                        wizard_line.product_id.id
+                        == delivered_line.product_id.id
                         and
                         wizard_line.quantity == delivered_line.product_qty
                         and
-                        wizard_line.product_uom.id == delivered_line.product_uom.id
+                        wizard_line.product_uom.id
+                        == delivered_line.product_uom.id
                     ):
                         delivered_line.write(
                             {'product_uos_qty': wizard_line.product_uos_qty},
@@ -87,6 +88,7 @@ class StockPartialPicking(orm.TransientModel):
                         wizard_line.move_id.write(
                             {'product_uos_qty': wizard_line.product_uos_qty * (
                                 wizard_line.move_id.product_qty
-                                / delivered_line.product_qty)}, context=context)
+                                / delivered_line.product_qty)},
+                            context=context)
                         break
         return res
