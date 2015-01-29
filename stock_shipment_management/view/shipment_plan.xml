@@ -32,11 +32,11 @@
             </div>
             <div class="oe_right oe_button_box" name="buttons">
               <button class="oe_inline oe_stat_button" type="object" name="action_view_departure_picking"
-                  icon="fa-long-arrow-up">
+                  icon="fa-upload">
                   <field string="Pickings" name="departure_picking_count" widget="statinfo"/>
               </button>
               <button class="oe_inline oe_stat_button" type="object" name="action_view_arrival_picking"
-                  icon="fa-long-arrow-down">
+                  icon="fa-download">
                   <field string="Pickings" name="arrival_picking_count" widget="statinfo"/>
               </button>
             </div>
