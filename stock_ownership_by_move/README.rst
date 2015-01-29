@@ -29,7 +29,6 @@ Known Issues / Roadmap
 - The "Owner" field in the move form view inside the picking is already added
   in the module stock_ownership_availability_rules. It could be added here
   instead.
-- Add some tests specific to this module.
 - Check what happens when using the barcode interface.
 - The original method tries to respect the order of moves when generating pack
   operations. We don't, because we use a dictionary which is unordered.
