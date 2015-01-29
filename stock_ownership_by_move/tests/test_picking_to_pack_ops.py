@@ -14,6 +14,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from openerp.tests.common import TransactionCase
+import operator
 
 
 class TestPickingToPackOps(TransactionCase):
@@ -40,7 +41,24 @@ class TestPickingToPackOps(TransactionCase):
 
         self.assertEqual(1, len(result))
         self.assertEqual(self.partner2.id, result[0]['owner_id'])
-        self.assertEqual(7.0, result[0]['product_qty'])
+        self.assertAlmostEqual(7.0, result[0]['product_qty'])
+
+    def test_two_moves_two_owners_are_not_grouped(self):
+        pick = self._picking_factory(owner=self.partner1)
+        pick.move_lines = (
+            self._move_factory(product=self.product1, owner=self.partner1) |
+            self._move_factory(product=self.product1, owner=self.partner2,
+                               qty=7.0)
+        )
+
+        result = pick._prepare_pack_ops(pick, [], {self.product1: 12.0})
+
+        self.assertEqual(2, len(result))
+        result.sort(key=operator.itemgetter('product_qty'))
+        self.assertEqual(self.partner1.id, result[0]['owner_id'])
+        self.assertEqual(self.partner2.id, result[1]['owner_id'])
+        self.assertAlmostEqual(5.0, result[0]['product_qty'])
+        self.assertAlmostEqual(7.0, result[1]['product_qty'])
 
     def _picking_factory(self, owner):
         return self.env['stock.picking'].create({
