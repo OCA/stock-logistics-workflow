@@ -32,7 +32,11 @@ class stock_move(orm.Model):
         for move in self.browse(cr, uid, ids, context=context):
             res[move.id] = ''
             main_partner_id = (
-                move.picking_id.partner_id.commercial_partner_id.id)
+                move.picking_id
+                and move.picking_id.partner_id
+                and move.picking_id.partner_id.commercial_partner_id
+                and move.picking_id.partner_id.commercial_partner_id.id
+                or False)
             product = move.product_id
             if product and main_partner_id:
                 code_ids = product_customer_code_obj.search(
