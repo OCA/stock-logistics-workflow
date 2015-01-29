@@ -19,7 +19,20 @@ import operator
 
 class TestPickingToPackOps(TransactionCase):
 
-    def test_one_move_takes_owner_from_move(self):
+    def test_one_move_to_quant(self):
+        Quant = self.env['stock.quant']
+        self.assertFalse(Quant.search([('product_id', '=', self.product1.id)]))
+        self.assertFalse(Quant.search([('product_id', '=', self.product2.id)]))
+
+        pick = self._picking_factory(owner=self.partner1)
+        pick.move_lines = self._move_factory(product=self.product1,
+                                             owner=self.partner2)
+        pick.action_done()
+        new_quant = Quant.search([('product_id', '=', self.product1.id)])
+        self.assertEqual(1, len(new_quant))
+        self.assertEqual(self.partner2, new_quant.owner_id)
+
+    def no_test_one_move_takes_owner_from_move(self):
         pick = self._picking_factory(owner=self.partner1)
         pick.move_lines = self._move_factory(product=self.product1,
                                              owner=self.partner2)
