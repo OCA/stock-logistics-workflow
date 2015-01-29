@@ -19,20 +19,7 @@ import operator
 
 class TestPickingToPackOps(TransactionCase):
 
-    def test_one_move_to_quant(self):
-        Quant = self.env['stock.quant']
-        self.assertFalse(Quant.search([('product_id', '=', self.product1.id)]))
-        self.assertFalse(Quant.search([('product_id', '=', self.product2.id)]))
-
-        pick = self._picking_factory(owner=self.partner1)
-        pick.move_lines = self._move_factory(product=self.product1,
-                                             owner=self.partner2)
-        pick.action_done()
-        new_quant = Quant.search([('product_id', '=', self.product1.id)])
-        self.assertEqual(1, len(new_quant))
-        self.assertEqual(self.partner2, new_quant.owner_id)
-
-    def no_test_one_move_takes_owner_from_move(self):
+    def test_one_move_takes_owner_from_move(self):
         pick = self._picking_factory(owner=self.partner1)
         pick.move_lines = self._move_factory(product=self.product1,
                                              owner=self.partner2)
@@ -73,6 +60,37 @@ class TestPickingToPackOps(TransactionCase):
         self.assertAlmostEqual(5.0, result[0]['product_qty'])
         self.assertAlmostEqual(7.0, result[1]['product_qty'])
 
+    def test_one_move_to_action_done_to_quant(self):
+        """action_done is maybe obsolete, but we test it nonetheless.
+
+        This already propagates the owner from the move in the stock module.
+
+        """
+        pick = self._picking_factory(owner=self.partner1)
+        pick.move_lines = self._move_factory(product=self.product1,
+                                             owner=self.partner2)
+        pick.action_done()
+
+        new_quant = self.Quant.search([('product_id', '=', self.product1.id)])
+        self.assertEqual(1, len(new_quant))
+        self.assertEqual(self.partner2, new_quant.owner_id)
+
+    def test_one_move_to_prepare_partial_do_transfer_to_quant(self):
+        """prepare_partial and do_transfer are the methods used when you pass
+        from the 'Transfer Details' wizard.
+
+        """
+        pick = self._picking_factory(owner=self.partner1)
+        pick.move_lines = self._move_factory(product=self.product1,
+                                             owner=self.partner2)
+        pick.action_confirm()
+        pick.do_prepare_partial()
+        pick.do_transfer()
+
+        new_quant = self.Quant.search([('product_id', '=', self.product1.id)])
+        self.assertEqual(1, len(new_quant))
+        self.assertEqual(self.partner2, new_quant.owner_id)
+
     def _picking_factory(self, owner):
         return self.env['stock.picking'].create({
             'picking_type_id': self.env.ref('stock.picking_type_in').id,
@@ -96,3 +114,8 @@ class TestPickingToPackOps(TransactionCase):
         self.product2 = self.env.ref('product.product_product_36')
         self.partner1 = self.env.ref('base.res_partner_1')
         self.partner2 = self.env.ref('base.res_partner_2')
+
+        self.Quant = self.env['stock.quant']
+        self.assertFalse(self.Quant.search([('product_id', '=', self.product1.id)]))
+        self.assertFalse(self.Quant.search([('product_id', '=', self.product2.id)]))
+
