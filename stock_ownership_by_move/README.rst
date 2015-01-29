@@ -17,7 +17,7 @@ Usage
 - In a picking, you can set the owner on every line.
 - When transferring a picking, lines with different owners will not be grouped.
 - In the transfer details wizard, the owner of every line can be changed.
-- After the trasfer, the owner is also shown in the Operations tab.
+- After the transfer, the owner is also shown in the Operations tab.
 - Generated quants have the selected owner.
 - The "Owner" field is not shown anymore in the picking.
 
