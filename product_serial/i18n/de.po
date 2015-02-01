@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-10-09 09:30+0000\n"
-"PO-Revision-Date: 2015-01-31 15:17+0100\n"
-"Last-Translator: Rudolf Schnapka <schnapkar@golive-saar.de>\n"
+"PO-Revision-Date: 2015-01-31 15:48+0100\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -166,17 +166,17 @@ msgstr "{'location_id':location_id, 'product_id':product_id}"
 #. module: product_serial
 #: view:stock.picking:0 view:stock.picking.in:0 view:stock.picking.out:0
 msgid "Spread Production Lots"
-msgstr ""
+msgstr "Fertigungslose verteilen"
 
 #. module: product_serial
 #: field:stock.picking.prodlot.selection,suffix:0
 msgid "Suffix"
-msgstr ""
+msgstr "Suffix"
 
 #. module: product_serial
 #: view:stock.move:0
 msgid "onchange_product_id(product_id,location_id,location_dest_id, False)"
-msgstr ""
+msgstr "onchange_product_id(product_id,location_id,location_dest_id, False)"
 
 #. module: product_serial
 #: help:product.product,lot_split_type:0
@@ -185,33 +185,37 @@ msgid ""
 "the first Logistical Unit quantity of the product form packaging tab (to be "
 "improved to take into account all LU)"
 msgstr ""
+"Kein: Keine Aufteilung; Einzel: 1 Position/Prudukteinheit; Logistische "
+"Einheit: Aufteilen unter Nutzung der ersten Logistischen Einheit der "
+"Produktverpackung (Erweiterung für alle LU angestrebt)"
 
 #. module: product_serial
 #: view:res.company:0
 msgid "Product serial"
-msgstr ""
+msgstr "Produktseriennummer"
 
 #. module: product_serial
 #: model:ir.model,name:product_serial.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Lagerumbuchung"
 
 #. module: product_serial
 #: view:stock.move:0
 msgid "Manual split"
-msgstr ""
+msgstr "Manuelle Aufteilung"
 
 #. module: product_serial
 #: help:res.company,autosplit_is_active:0
 msgid "Active the automatic split of move lines on the pickings."
 msgstr ""
+"Die autom. Aufteilung von Lagerbuchungen durch Kommissionierung einschalten."
 
 #. module: product_serial
 #: view:stock.picking.prodlot.selection:0
 msgid "Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
 #. module: product_serial
 #: model:ir.actions.act_window,name:product_serial.act_prodlot_location_open
 msgid "Prodlots"
-msgstr ""
+msgstr "Fertigungslose"
