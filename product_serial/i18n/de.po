@@ -48,11 +48,6 @@ msgstr "Letzter Platz"
 
 #. module: product_serial
 #: view:stock.move:0
-msgid "[('product_id','=?',product_id)]"
-msgstr "[('product_id','=?',product_id)]"
-
-#. module: product_serial
-#: view:stock.move:0
 msgid "Manual Split"
 msgstr "Manuelle Aufteilung"
 
