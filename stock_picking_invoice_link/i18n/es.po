@@ -31,7 +31,7 @@ msgstr "Línea de factura"
 #. module: stock_picking_invoice_link
 #: field:stock.picking,invoice_view_xmlid:0
 msgid "Invoice View XMLID"
-msgstr "XMLID de la factura"
+msgstr "XMLID de la vista"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_stock_picking
