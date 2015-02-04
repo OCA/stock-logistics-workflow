@@ -23,11 +23,7 @@ class StockProductionLot(models.Model):
             cond = [('lot_id', '=', lot.id),
                     ('reservation_id', '!=', False)]
             for quant in stock_quant_obj.search(cond):
-                usage = False
-                if quant.reservation_id.location_dest_id:
-                    usage = quant.reservation_id.location_dest_id.usage
-                if (usage and usage in ('view', 'internal') and
-                        quant.reservation_id.state == 'done'):
+                if quant.reservation_id.state not in ('cancel', 'done'):
                     raise exceptions.Warning(
                         _('Error!: Found stock movements for lot: "%" with'
                           ' location destination type in virtual/company')
