@@ -1,0 +1,688 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_shipment_management
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-04 12:31+0000\n"
+"PO-Revision-Date: 2015-02-04 12:31+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_shipment_management
+#: code:addons/stock_shipment_management/wizard/create_shipment.py:145
+#, python-format
+msgid "(Only transit move that are not departure moves of a shipment plan and in confirm, waiting or assigned state can be used)"
+msgstr ""
+
+#. module: stock_shipment_management
+#: model:ir.actions.act_window,help:stock_shipment_management.action_move_transit_pipeline_in_transit
+msgid "<p>\n"
+"            This menu shows you the move in transit.\n"
+"          </p>\n"
+"        "
+msgstr ""
+
+#. module: stock_shipment_management
+#: model:ir.actions.act_window,help:stock_shipment_management.action_move_transit_pipeline_waiting
+msgid "<p>\n"
+"            This menu shows you the move you needs to assign to a Shipment.\n"
+"          </p>\n"
+"        "
+msgstr ""
+
+#. module: stock_shipment_management
+#: model:ir.actions.act_window,name:stock_shipment_management.move_shipment_plan_create_act_window
+#: model:ir.actions.act_window,name:stock_shipment_management.picking_shipment_plan_create_act_window
+msgid "Add to a Shipment Plan"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.plan:stock_shipment_management.view_shipment_plan_form
+msgid "Additional notes..."
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:shipment.plan,arrival_move_ids:0
+msgid "Arrival Moves"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.plan:stock_shipment_management.view_shipment_plan_form
+msgid "Arrival moves"
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:stock.move,arrival_shipment_id:0
+msgid "Arrival shipment"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.plan:stock_shipment_management.view_shipment_plan_form
+#: selection:shipment.plan,state:0
+#: view:shipment.plan.creator:stock_shipment_management.view_create_shipment_plan
+msgid "Cancel"
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:shipment.carrier.setter,carrier_id:0
+#: view:shipment.plan:stock_shipment_management.view_shipment_plan_filter
+#: field:shipment.plan,carrier_id:0
+msgid "Carrier"
+msgstr ""
+
+#. module: stock_shipment_management
+#: model:ir.model,name:stock_shipment_management.model_shipment_carrier_setter
+#: model:ir.model,name:stock_shipment_management.model_shipment_carrier_tracking_ref_setter
+#: model:ir.model,name:stock_shipment_management.model_shipment_eta_setter
+#: model:ir.model,name:stock_shipment_management.model_shipment_etd_setter
+#: model:ir.model,name:stock_shipment_management.model_shipment_value_setter
+msgid "Change Shipment Value"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.plan:stock_shipment_management.view_shipment_plan_form
+msgid "Confirm"
+msgstr ""
+
+#. module: stock_shipment_management
+#: selection:shipment.plan,state:0
+msgid "Confirmed"
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:shipment.plan,consignee_id:0
+#: field:shipment.plan.creator,consignee_id:0
+msgid "Consignee"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.plan.creator:stock_shipment_management.view_create_shipment_plan
+msgid "Create a new Shipment Plan using following data taken from selected moves:"
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:shipment.carrier.setter,create_uid:0
+#: field:shipment.carrier_tracking_ref.setter,create_uid:0
+#: field:shipment.eta.setter,create_uid:0
+#: field:shipment.etd.setter,create_uid:0
+#: field:shipment.plan,create_uid:0
+#: field:shipment.plan.creator,create_uid:0
+msgid "Created by"
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:shipment.carrier.setter,create_date:0
+#: field:shipment.carrier_tracking_ref.setter,create_date:0
+#: field:shipment.eta.setter,create_date:0
+#: field:shipment.etd.setter,create_date:0
+#: field:shipment.plan,create_date:0
+#: field:shipment.plan.creator,create_date:0
+msgid "Created on"
+msgstr ""
+
+#. module: stock_shipment_management
+#: help:shipment.plan,message_last_post:0
+msgid "Date of the last message posted on the record."
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:shipment.plan,departure_move_ids:0
+msgid "Departure Moves"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.plan:stock_shipment_management.view_shipment_plan_form
+msgid "Departure moves"
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:stock.move,departure_shipment_id:0
+msgid "Departure shipment"
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:shipment.plan,note:0
+msgid "Description / Remarks"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.plan:stock_shipment_management.view_shipment_plan_form
+msgid "Details"
+msgstr ""
+
+#. module: stock_shipment_management
+#: selection:shipment.plan,state:0
+#: view:stock.move:stock_shipment_management.view_move_transit_pipeline_search
+msgid "Done"
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:shipment.eta.setter,eta:0
+#: field:shipment.plan,eta:0
+#: field:stock.move,ship_eta:0
+msgid "ETA"
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:shipment.etd.setter,etd:0
+#: field:shipment.plan,etd:0
+#: field:stock.move,ship_etd:0
+msgid "ETD"
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:shipment.plan,message_follower_ids:0
+msgid "Followers"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.plan:stock_shipment_management.view_shipment_plan_filter
+msgid "From"
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:shipment.plan,from_address_id:0
+#: field:shipment.plan.creator,from_address_id:0
+#: field:stock.move,ship_from_address_id:0
+msgid "From Address"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:stock.move:stock_shipment_management.view_move_transit_pipeline_search
+msgid "Group By"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.plan:stock_shipment_management.view_shipment_plan_filter
+msgid "Group By..."
+msgstr ""
+
+#. module: stock_shipment_management
+#: help:shipment.plan,message_summary:0
+msgid "Holds the Chatter summary (number of messages, ...). This summary is directly in html format in order to be inserted in kanban views."
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:shipment.carrier.setter,id:0
+#: field:shipment.carrier_tracking_ref.setter,id:0
+#: field:shipment.eta.setter,id:0
+#: field:shipment.etd.setter,id:0
+#: field:shipment.plan,id:0
+#: field:shipment.plan.creator,id:0
+#: field:shipment.value.setter,id:0
+msgid "ID"
+msgstr ""
+
+#. module: stock_shipment_management
+#: help:shipment.plan,message_unread:0
+msgid "If checked new messages require your attention."
+msgstr ""
+
+#. module: stock_shipment_management
+#: model:ir.actions.act_window,name:stock_shipment_management.action_move_transit_pipeline_in_transit
+#: model:ir.ui.menu,name:stock_shipment_management.menu_action_move_transit_pipeline_in_transit
+#: selection:shipment.plan,state:0
+#: view:stock.move:stock_shipment_management.view_move_transit_pipeline_search
+msgid "In Transit"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.plan:stock_shipment_management.view_shipment_plan_filter
+msgid "In transit"
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:shipment.plan,initial_eta:0
+#: field:shipment.plan.creator,initial_eta:0
+msgid "Initial ETA"
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:shipment.plan,initial_etd:0
+#: field:shipment.plan.creator,initial_etd:0
+msgid "Initial ETD"
+msgstr ""
+
+#. module: stock_shipment_management
+#: help:shipment.plan,initial_eta:0
+#: help:shipment.plan.creator,initial_eta:0
+msgid "Initial Estimated Time of Arrival"
+msgstr ""
+
+#. module: stock_shipment_management
+#: help:shipment.plan,initial_etd:0
+#: help:shipment.plan.creator,initial_etd:0
+msgid "Initial Estimated Time of Departure"
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:shipment.plan,message_is_follower:0
+msgid "Is a Follower"
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:shipment.plan,message_last_post:0
+msgid "Last Message Date"
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:shipment.carrier.setter,write_uid:0
+#: field:shipment.carrier_tracking_ref.setter,write_uid:0
+#: field:shipment.eta.setter,write_uid:0
+#: field:shipment.etd.setter,write_uid:0
+#: field:shipment.plan,write_uid:0
+#: field:shipment.plan.creator,write_uid:0
+msgid "Last Updated by"
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:shipment.carrier.setter,write_date:0
+#: field:shipment.carrier_tracking_ref.setter,write_date:0
+#: field:shipment.eta.setter,write_date:0
+#: field:shipment.etd.setter,write_date:0
+#: field:shipment.plan,write_date:0
+#: field:shipment.plan.creator,write_date:0
+msgid "Last Updated on"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:stock.move:stock_shipment_management.view_move_transit_pipeline_search
+msgid "Lot"
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:shipment.plan,message_ids:0
+msgid "Messages"
+msgstr ""
+
+#. module: stock_shipment_management
+#: help:shipment.plan,message_ids:0
+msgid "Messages and communication history"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:stock.move:stock_shipment_management.view_move_transit_pipline_tree
+msgid "Moves"
+msgstr ""
+
+#. module: stock_shipment_management
+#: code:addons/stock_shipment_management/wizard/create_shipment.py:174
+#, python-format
+msgid "Moves %s are not going to Transit."
+msgstr ""
+
+#. module: stock_shipment_management
+#: code:addons/stock_shipment_management/wizard/create_shipment.py:159
+#, python-format
+msgid "Moves %s from picking %s are in state %s"
+msgstr ""
+
+#. module: stock_shipment_management
+#: code:addons/stock_shipment_management/wizard/create_shipment.py:179
+#, python-format
+msgid "Moves %s have no chained move set."
+msgstr ""
+
+#. module: stock_shipment_management
+#: selection:shipment.plan,state:0
+#: view:stock.move:stock_shipment_management.view_move_transit_pipeline_search
+msgid "New"
+msgstr ""
+
+#. module: stock_shipment_management
+#: code:addons/stock_shipment_management/wizard/create_shipment.py:144
+#, python-format
+msgid "No valid stock moves found to create the shipment!"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.plan.creator:stock_shipment_management.view_create_shipment_plan
+msgid "Or select the Shipment plan to extend."
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:stock.move:stock_shipment_management.view_move_transit_pipeline_search
+msgid "Package"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:stock.move:stock_shipment_management.view_move_transit_pipeline_search
+msgid "Picking"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.plan:stock_shipment_management.view_shipment_plan_form
+msgid "Pickings"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:stock.move:stock_shipment_management.view_move_transit_pipeline_search
+msgid "Planned"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:stock.move:stock_shipment_management.view_move_transit_pipeline_search
+msgid "Product"
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:shipment.plan,purchase_id:0
+msgid "Purchase Order"
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:shipment.plan,name:0
+#: view:stock.move:stock_shipment_management.view_move_transit_pipeline_search
+msgid "Reference"
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:shipment.plan,user_id:0
+msgid "Responsible"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:stock.move:stock_shipment_management.view_move_transit_pipeline_search
+msgid "Scheduled Date"
+msgstr ""
+
+#. module: stock_shipment_management
+#: help:stock.move,ship_eta:0
+#: help:stock.move,ship_etd:0
+msgid "Scheduled date for the processing of this move"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.plan:stock_shipment_management.view_shipment_plan_filter
+msgid "Search Shipment Plan"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.plan:stock_shipment_management.view_shipment_plan_form
+msgid "Set to Draft"
+msgstr ""
+
+#. module: stock_shipment_management
+#: model:ir.ui.menu,name:stock_shipment_management.menu_shipment
+#: field:shipment.carrier.setter,shipment_id:0
+#: field:shipment.carrier_tracking_ref.setter,shipment_id:0
+#: field:shipment.eta.setter,shipment_id:0
+#: field:shipment.etd.setter,shipment_id:0
+#: field:shipment.plan.creator,shipment_id:0
+#: field:shipment.value.setter,shipment_id:0
+msgid "Shipment"
+msgstr ""
+
+#. module: stock_shipment_management
+#: code:addons/stock_shipment_management/wizard/create_shipment.py:149
+#, python-format
+msgid "Shipment %s already covers moves %s"
+msgstr ""
+
+#. module: stock_shipment_management
+#: model:ir.model,name:stock_shipment_management.model_shipment_plan
+#: view:shipment.plan:stock_shipment_management.view_shipment_plan_form
+#: view:stock.move:stock_shipment_management.view_move_transit_pipeline_search
+msgid "Shipment Plan"
+msgstr ""
+
+#. module: stock_shipment_management
+#: model:ir.model,name:stock_shipment_management.model_shipment_plan_creator
+msgid "Shipment Plan Creator"
+msgstr ""
+
+#. module: stock_shipment_management
+#: sql_constraint:shipment.plan:0
+msgid "Shipment Plan Reference must be unique"
+msgstr ""
+
+#. module: stock_shipment_management
+#: model:ir.actions.act_window,name:stock_shipment_management.action_shipment_plan
+#: model:ir.ui.menu,name:stock_shipment_management.menu_action_shipment
+#: view:shipment.plan:stock_shipment_management.view_shipment_plan_tree
+msgid "Shipment Plans"
+msgstr ""
+
+#. module: stock_shipment_management
+#: help:shipment.carrier.setter,carrier_id:0
+msgid "Shipment carrier"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.plan.creator:stock_shipment_management.view_create_shipment_plan
+msgid "Shipment plan creation"
+msgstr ""
+
+#. module: stock_shipment_management
+#: help:shipment.plan.creator,shipment_id:0
+msgid "Shipment to which moves will be added.\n"
+"Only shipment in draft can be extended."
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:stock.move:stock_shipment_management.view_move_transit_pipeline_search
+msgid "Shipping Carrier"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:stock.move:stock_shipment_management.view_move_transit_pipeline_search
+msgid "Shipping Consignee"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:stock.move:stock_shipment_management.view_move_transit_pipeline_search
+msgid "Shipping From"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:stock.move:stock_shipment_management.view_move_transit_pipeline_search
+msgid "Shipping To"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:stock.move:stock_shipment_management.view_move_transit_pipeline_search
+msgid "Shipping state"
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:shipment.plan,state:0
+#: field:stock.move,ship_state:0
+msgid "State"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.plan:stock_shipment_management.view_shipment_plan_filter
+msgid "Status"
+msgstr ""
+
+#. module: stock_shipment_management
+#: model:ir.model,name:stock_shipment_management.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:stock.move:stock_shipment_management.view_move_transit_pipeline_search
+msgid "Stock Moves"
+msgstr ""
+
+#. module: stock_shipment_management
+#: model:ir.actions.act_window,name:stock_shipment_management.shipment_open_picking
+msgid "Stock Pickings"
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:shipment.plan,message_summary:0
+msgid "Summary"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.etd.setter:stock_shipment_management.view_shipment_etd_setter
+msgid "This change will be applied to all departure moves.\n"
+"          (Excluding canceled and done moves)"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.eta.setter:stock_shipment_management.view_shipment_eta_setter
+msgid "This change will be applied to arrival moves.\n"
+"          (Excluding canceled and done moves)"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.carrier_tracking_ref.setter:stock_shipment_management.view_shipment_carrier_tracking_ref_setter
+msgid "This change will be applied to related pickings"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.carrier.setter:stock_shipment_management.view_shipment_carrier_setter
+msgid "This change will be applied to related pickings."
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:shipment.plan,to_address_id:0
+#: field:shipment.plan.creator,to_address_id:0
+#: field:stock.move,ship_to_address_id:0
+msgid "To Address"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:stock.move:stock_shipment_management.view_move_transit_pipeline_search
+msgid "To Plan"
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:shipment.carrier_tracking_ref.setter,carrier_tracking_ref:0
+#: field:shipment.plan,carrier_tracking_ref:0
+#: field:shipment.plan.creator,carrier_tracking_ref:0
+msgid "Tracking Ref."
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.plan:stock_shipment_management.view_shipment_plan_filter
+msgid "Transport Mode"
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:shipment.plan,transport_mode_id:0
+msgid "Transport by"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:stock.move:stock_shipment_management.view_move_transit_pipline_tree
+msgid "Unit of Measure"
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:shipment.plan,message_unread:0
+msgid "Unread Messages"
+msgstr ""
+
+#. module: stock_shipment_management
+#: help:shipment.eta.setter,eta:0
+#: help:shipment.plan,eta:0
+msgid "Up to date Estimated Time of Arrival"
+msgstr ""
+
+#. module: stock_shipment_management
+#: help:shipment.etd.setter,etd:0
+#: help:shipment.plan,etd:0
+msgid "Up to date Estimated Time of Departure"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.carrier.setter:stock_shipment_management.view_shipment_carrier_setter
+msgid "Update Carrier"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.eta.setter:stock_shipment_management.view_shipment_eta_setter
+msgid "Update ETA"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.etd.setter:stock_shipment_management.view_shipment_etd_setter
+msgid "Update ETD"
+msgstr ""
+
+#. module: stock_shipment_management
+#: model:ir.actions.act_window,name:stock_shipment_management.action_view_change_shipment_carrier
+msgid "Update Shipment Carrier"
+msgstr ""
+
+#. module: stock_shipment_management
+#: model:ir.actions.act_window,name:stock_shipment_management.action_view_change_shipment_eta
+msgid "Update Shipment ETA"
+msgstr ""
+
+#. module: stock_shipment_management
+#: model:ir.actions.act_window,name:stock_shipment_management.action_view_change_shipment_etd
+msgid "Update Shipment ETD"
+msgstr ""
+
+#. module: stock_shipment_management
+#: model:ir.actions.act_window,name:stock_shipment_management.action_view_change_shipment_carrier_tracking_ref
+msgid "Update Shipment Tracking Ref."
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.carrier_tracking_ref.setter:stock_shipment_management.view_shipment_carrier_tracking_ref_setter
+msgid "Update Tracking Ref."
+msgstr ""
+
+#. module: stock_shipment_management
+#: model:ir.actions.act_window,name:stock_shipment_management.action_move_transit_pipeline_waiting
+#: model:ir.ui.menu,name:stock_shipment_management.menu_action_move_transit_pipeline_waiting
+msgid "Waiting planifitation"
+msgstr ""
+
+#. module: stock_shipment_management
+#: field:shipment.plan,weight_net:0
+msgid "Weight net"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.plan.creator:stock_shipment_management.view_create_shipment_plan
+msgid "_Add"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.carrier.setter:stock_shipment_management.view_shipment_carrier_setter
+#: view:shipment.carrier_tracking_ref.setter:stock_shipment_management.view_shipment_carrier_tracking_ref_setter
+#: view:shipment.eta.setter:stock_shipment_management.view_shipment_eta_setter
+#: view:shipment.etd.setter:stock_shipment_management.view_shipment_etd_setter
+msgid "_Apply"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.carrier.setter:stock_shipment_management.view_shipment_carrier_setter
+#: view:shipment.carrier_tracking_ref.setter:stock_shipment_management.view_shipment_carrier_tracking_ref_setter
+#: view:shipment.eta.setter:stock_shipment_management.view_shipment_eta_setter
+#: view:shipment.etd.setter:stock_shipment_management.view_shipment_etd_setter
+msgid "_Cancel"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.plan.creator:stock_shipment_management.view_create_shipment_plan
+msgid "_Create"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.carrier.setter:stock_shipment_management.view_shipment_carrier_setter
+#: view:shipment.carrier_tracking_ref.setter:stock_shipment_management.view_shipment_carrier_tracking_ref_setter
+#: view:shipment.eta.setter:stock_shipment_management.view_shipment_eta_setter
+#: view:shipment.etd.setter:stock_shipment_management.view_shipment_etd_setter
+#: view:shipment.plan.creator:stock_shipment_management.view_create_shipment_plan
+msgid "or"
+msgstr ""
+
+#. module: stock_shipment_management
+#: view:shipment.plan:stock_shipment_management.view_shipment_plan_form
+msgid "⇒ Update"
+msgstr ""
+
