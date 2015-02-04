@@ -23,13 +23,15 @@ class StockProductionLot(models.Model):
             cond = [('lot_id', '=', lot.id),
                     ('reservation_id', '!=', False)]
             for quant in stock_quant_obj.search(cond):
-                for move in quant.history_ids:
-                    if (move.location_dest_id and move.location_dest_id.usage
-                            in ('view', 'internal') and move.state != 'done'):
-                        raise exceptions.Warning(
-                            _('Error!: Found stock movements for lot: "%" with'
-                              ' location destination type in virtual/company')
-                            % (lot.name))
+                usage = False
+                if quant.reservation_id.location_dest_id:
+                    usage = quant.reservation_id.location_dest_id.usage
+                if (usage and usage in ('view', 'internal') and
+                        quant.reservation_id.state == 'done'):
+                    raise exceptions.Warning(
+                        _('Error!: Found stock movements for lot: "%" with'
+                          ' location destination type in virtual/company')
+                        % (lot.name))
 
         return self.write({'locked': True})
 

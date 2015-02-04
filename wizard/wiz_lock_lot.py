@@ -26,14 +26,10 @@ class WizLockLot(models.TransientModel):
     def action_lock_lots(self):
         lot_obj = self.env['stock.production.lot']
         active_ids = self._context['active_ids']
-        for lot in lot_obj.browse(active_ids):
-            if not lot.locked:
-                lot.button_lock()
+        lot_obj.browse(active_ids).button_lock()
 
     @api.multi
     def action_unlock_lots(self):
         lot_obj = self.env['stock.production.lot']
         active_ids = self._context['active_ids']
-        for lot in lot_obj.browse(active_ids):
-            if lot.locked:
-                lot.button_unlock()
+        lot_obj.browse(active_ids).button_unlock()

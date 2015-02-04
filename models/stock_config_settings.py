@@ -9,6 +9,5 @@ class StockConfigSettings(models.TransientModel):
     _inherit = 'stock.config.settings'
 
     group_lot_default_locked = fields.Boolean(
-        string='Create in locked status when create a lot',
-        help='If the field is activated by creating a lot is created in a'
-             'state locked')
+        string='Create lot in lock status',
+        help='If checked, production lots will be created locked by default')
