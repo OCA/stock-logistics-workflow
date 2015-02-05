@@ -34,6 +34,30 @@
     - transit_in_type_id.active == True
     - transit_out_type_id.active == True
 -
+  check transit in picking type locations
+-
+  !assert {model: stock.warehouse, id: wh2}:
+    - transit_in_type_id.default_location_src_id.usage == 'supplier'
+    - transit_in_type_id.default_location_dest_id == wh_transit_in_loc_id
+-
+  check in picking type locations
+-
+  !assert {model: stock.warehouse, id: wh2}:
+    - in_type_id.default_location_src_id == wh_transit_in_loc_id
+    - in_type_id.default_location_dest_id == lot_stock_id
+-
+  check transit out picking type locations
+-
+  !assert {model: stock.warehouse, id: wh2}:
+    - transit_out_type_id.default_location_src_id == lot_stock_id
+    - transit_out_type_id.default_location_dest_id == wh_transit_out_loc_id
+-
+  check transit out picking type locations
+-
+  !assert {model: stock.warehouse, id: wh2}:
+    - out_type_id.default_location_src_id == wh_transit_out_loc_id
+    - out_type_id.default_location_dest_id.usage == 'customer'
+-
   check procurement rule on stock location.
   -> we want the MTO rule + [move to transit location with outgoing picking type]
 -
