@@ -44,6 +44,7 @@
     'author': 'OPENTIA',
     'contributors': 'Julius Network Solutions, Camptocamp',
     'website': 'http://www.opentia.com/, http://www.julius.fr/',
+    'license': 'AGPL-3',
     'demo': [],
     'data': [
         'product_view.xml',

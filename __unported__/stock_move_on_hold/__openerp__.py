@@ -28,6 +28,7 @@
     You should use the sale_prepayment module to be automated with sale orders and invoices.
     """,
     "website" : "http://www.julius.fr",
+    "license": "AGPL-3",
     "depends" : [
                  "stock",
                  ],

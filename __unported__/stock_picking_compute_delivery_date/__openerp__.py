@@ -23,6 +23,7 @@
  "author": "Camptocamp",
  "category": 'Warehouse Management',
  "website": "http://camptocamp.com",
+ "license": "AGPL-3",
  "description": """
 Stock Picking Compute Delivery Date
 ===================================

@@ -25,6 +25,7 @@
     'author': ['Marco Dieckhoff, BREMSKERL', 'Agile Business Group'],
     "category": "Stock Logistics",
     'website': 'www.bremskerl.com',
+    'license': 'AGPL-3',
     "depends": ["stock"],
     "summary": "Allows back-dating of stock moves",
     "description": """This module allows to register old stock moves
