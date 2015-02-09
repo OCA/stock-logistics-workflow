@@ -47,6 +47,7 @@ To import these scenarios, you can use the import script located in the "scripts
     ],
 
     'data': [
+        'security/ir.model.access.csv',
         'stock_scanner_view.xml',
     ],
 
