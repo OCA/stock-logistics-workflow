@@ -29,6 +29,7 @@
 picking to draft state""",
     'author': 'www.andreacometa.it',
     'website': 'http://www.andreacometa.it',
+    'license': 'AGPL-3',
     'depends': ['stock_picking_invoice_link'],
     'data': [
         'stock_view.xml',
