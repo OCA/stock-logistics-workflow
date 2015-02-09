@@ -37,6 +37,7 @@ import unicodedata
 from datetime import datetime
 from oobjlib.connection import Connection
 from oobjlib.component import Object
+from functools import reduce
 
 # Translation configuration
 I18N_DIR = '%s/i18n/' % os.path.dirname(os.path.realpath(__file__))
@@ -73,6 +74,7 @@ COLOR_PAIRS = {
 
 
 class Sentinel(object):
+
     """
     Sentinel class
     Manages scanner terminals
@@ -257,7 +259,7 @@ class Sentinel(object):
             self.screen.bkgd(0, color)
 
         # Normalize the text, because ncurses doesn't know UTF-8 with python 2.x
-        if type(text) is str:
+        if isinstance(text, str):
             text = text.decode('utf-8')
         text = unicodedata.normalize('NFKD', unicode(text)).encode('ascii', 'ignore')
         text = ''.join([char not in ('\r', '\n') and curses.ascii.unctrl(char) or char for char in text])
@@ -433,7 +435,7 @@ class Sentinel(object):
                         repr(result),
                         repr(value),
                         '#' * 79,
-                        reduce(lambda x, y: x + y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback))
+                        reduce(lambda x, y: x + y, traceback.format_exception(sys.exc_info()[0], sys.exc_info()[1], sys.exc_info()[2]))
                     )
 
                     # Writes traceback in log file
