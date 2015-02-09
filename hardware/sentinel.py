@@ -283,7 +283,7 @@ class Sentinel(object):
             while True:
                 # Display the menu
                 self.screen.addstr(height - 1, x, (self.window_width - x - 1) * ' ', color)
-                self.screen.addstr(y, x, '\n'.join(text_lines[first_line:first_line + height]), color)
+                self.screen.addstr(y, x, '\n'.join(text_lines[first_line:first_line + height - y]), color)
 
                 # Display arrows
                 if first_line > 0:
@@ -298,7 +298,7 @@ class Sentinel(object):
                     scroll_height = len(text_lines) - height
                     position_percent = float(first_line) / scroll_height
                     position = y + min(int(round((height - 1) * position_percent)), self.window_height - 2)
-                    self._display(' ', x=self.window_width - 1, y=position, color='info', modifier=curses.A_REVERSE)
+                    self._display(' ', x=self.window_width - 1, y=position - 1, color='info', modifier=curses.A_REVERSE)
                 self.screen.move(cursor_y, cursor_x)
 
                 # Get the pushed key
