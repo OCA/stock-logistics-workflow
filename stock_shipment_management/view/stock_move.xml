@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+    <record id="view_move_transit_pipline_tree" model="ir.ui.view">
+      <field name="name">Stock Moves</field>
+      <field name="model">stock.move</field>
+      <field name="arch" type="xml">
+        <tree colors="green:ship_state == 'in_transit'" string="Moves" create="false">
+          <field name="product_id"/>
+          <field name="product_uom_qty"/>
+          <field name="product_uom"  string="Unit of Measure" groups="product.group_uom"/>
+          <field name="product_packaging" domain="[('product_tmpl_id','=',product_id)]" groups="product.group_stock_packaging"/>
+          <field name="ship_etd"/>
+          <field name="ship_eta"/>
+          <field name="ship_carrier_tracking_ref"/>
+          <field name="ship_from_address_id"/>
+          <field name="ship_to_address_id"/>
+          <field name="ship_consignee_id"/>
+          <field name="ship_transport_mode_id"/>
+          <field name="ship_state"/>
+          <field name="departure_shipment_id" invisible="1"/>
+          <field name="picking_id" invisible="1"/>
+          <field name="restrict_lot_id" invisible="1"/>
+          <field name="ship_carrier_id" invisible="1"/>
+          <field name="date_expected" invisible="1"/>
+          <field name="state" invisible="1"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="view_move_transit_pipeline_search" model="ir.ui.view">
+      <field name="name">stock.move.transit.pipeline.search</field>
+      <field name="model">stock.move</field>
+      <field name="arch" type="xml">
+        <search string="Stock Moves">
+            <field name="origin" filter_domain="['|', '|', ('origin', 'ilike', self), ('name', 'ilike', self), ('picking_id', 'ilike', self)]" string="Reference"/>
+            <field name="date" groups="base.group_no_one"/>
+
+            <filter string="To Plan" name="ship_to_plan" domain="[('ship_state', '=', False), ('state', 'not in', ('done', 'cancel'))]"/>
+            <filter string="Planned" name="ship_planned" domain="[('ship_state', '=', 'confirm')]"/>
+            <filter string="In Transit" name="ship_in_transit" domain="[('ship_state', '=', 'in_transit')]"/>
+            <filter string="Done" name="ship_done" domain="[('ship_state', '=', 'done')]"/>
+            <filter string="New" name="ship_new" domain="[('ship_state', '=', 'draft')]"/>
+            <separator/>
+            <field name="restrict_lot_id"/>
+            <field name="product_id"/>
+            <field name="departure_shipment_id"/>
+            <field name="product_packaging"/>
+            <field name="picking_id"/>
+            <field name="ship_carrier_id"/>
+            <field name="ship_consignee_id"/>
+            <field name="ship_from_address_id"/>
+            <field name="ship_to_address_id"/>
+            <group expand="0" string="Group By">
+                <filter string="Shipment Plan" name="groupby_shipment_plan" domain="[]"  context="{'group_by':'departure_shipment_id'}"/>
+                <filter string="Package" name="groupby_package" domain="[]"  context="{'group_by':'product_packaging'}"/>
+                <filter string="Picking" name="groupby_picking_id" domain="[]"  context="{'group_by':'picking_id'}"/>
+                <filter string="Shipping Consignee" name="groupby_ship_consignee" domain="[]" context="{'group_by':'ship_consignee_id'}"/>
+                <filter string="Product" name="by_product" domain="[]"  context="{'group_by':'product_id'}"/>
+                <filter string="Lot" name="groupby_lot" domain="[]"  context="{'group_by':'restrict_lot_id'}"/>
+                <filter string="Shipping Carrier" name="groupby_ship_carrier" domain="[]" context="{'group_by':'ship_carrier_id'}"/>
+                <filter string="Scheduled Date" name="groupby_date" domain="[]" context="{'group_by':'date_expected'}"/>
+                <filter string="Shipping state" name="groupby_ship_state" domain="[]" context="{'group_by': 'ship_state'}"/>
+                <filter string="Shipping From" name="groupby_ship_from" domain="[]" context="{'group_by': 'ship_from_address_id'}"/>
+                <filter string="Shipping To" name="groupby_ship_to" domain="[]" context="{'group_by': 'ship_to_address_id'}"/>
+            </group>
+        </search>
+      </field>
+    </record>
+
+    <record id="action_move_transit_pipeline_waiting" model="ir.actions.act_window">
+        <field name="name">Waiting planifitation</field>
+        <field name="res_model">stock.move</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="view_move_transit_pipline_tree"/>
+        <field name="search_view_id" ref="view_move_transit_pipeline_search"/>
+        <field name="domain" eval="[('location_dest_id', '=', ref('stock_route_transit.transit_outgoing'))]"/>
+        <field name="context">{'search_default_ship_to_plan': 1}</field>
+        <field name="help" type="html">
+          <p>
+            This menu shows you the move you needs to assign to a Shipment.
+          </p>
+        </field>
+    </record>
+
+    <record id="action_move_transit_pipeline_in_transit" model="ir.actions.act_window">
+        <field name="name">In Transit</field>
+        <field name="res_model">stock.move</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="view_move_transit_pipline_tree"/>
+        <field name="search_view_id" ref="view_move_transit_pipeline_search"/>
+        <field name="domain" eval="[('location_dest_id', '=', ref('stock_route_transit.transit_outgoing'))]"/>
+        <field name="context">{'search_default_ship_in_transit': 1}</field>
+        <field name="help" type="html">
+          <p>
+            This menu shows you the move in transit.
+          </p>
+        </field>
+    </record>
+
+    <menuitem
+      id="menu_action_move_transit_pipeline_waiting"
+      action="action_move_transit_pipeline_waiting"
+      parent="menu_shipment"
+      sequence="1"
+      groups="stock.group_locations"/>
+
+    <menuitem
+      id="menu_action_move_transit_pipeline_in_transit"
+      action="action_move_transit_pipeline_in_transit"
+      parent="menu_shipment"
+      sequence="2"
+      groups="stock.group_locations"/>
+
+  </data>
+</openerp>

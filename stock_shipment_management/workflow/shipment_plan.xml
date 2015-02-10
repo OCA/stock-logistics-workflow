@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+    <record id="wkf_shipment_plan" model="workflow">
+      <field name="name">shipment.plan</field>
+      <field name="osv">shipment.plan</field>
+      <field name="on_create">True</field>
+    </record>
+
+    <!-- Activity -->
+    <record id="act_draft" model="workflow.activity">
+      <field name="wkf_id" ref="wkf_shipment_plan"/>
+      <field name="flow_start">True</field>
+      <field name="name">draft</field>
+    </record>
+
+    <record id="act_confirm" model="workflow.activity">
+      <field name="wkf_id" ref="wkf_shipment_plan"/>
+      <field name="name">confirm</field>
+      <field name="kind">function</field>
+      <field name="action">action_confirm()</field>
+    </record>
+
+    <record id="act_in_transit" model="workflow.activity">
+      <field name="wkf_id" ref="wkf_shipment_plan"/>
+      <field name="name">in_transit</field>
+      <field name="kind">function</field>
+      <field name="action">action_transit()</field>
+    </record>
+
+    <record id="act_done" model="workflow.activity">
+      <field name="wkf_id" ref="wkf_shipment_plan"/>
+      <field name="name">done</field>
+      <field name="flow_stop">True</field>
+      <field name="kind">function</field>
+      <field name="action">action_done()</field>
+    </record>
+
+    <record id="act_cancel" model="workflow.activity">
+      <field name="wkf_id" ref="wkf_shipment_plan"/>
+      <field name="name">cancel</field>
+      <field name="flow_stop">True</field>
+      <field name="kind">stopall</field>
+      <field name="action">action_cancel()</field>
+    </record>
+
+    <record id="act_reset" model="workflow.activity">
+      <field name="wkf_id" ref="wkf_shipment_plan"/>
+      <field name="name">reset</field>
+      <field name="action">action_reset()</field>
+    </record>
+
+    <!-- Transistion -->
+
+    <record id="trans_draft_confirmed" model="workflow.transition">
+      <field name="act_from" ref="act_draft"/>
+      <field name="act_to" ref="act_confirm"/>
+      <field name="signal">shipment_confirm</field>
+    </record>
+    <record id="trans_confirmed_in_transit" model="workflow.transition">
+      <field name="act_from" ref="act_confirm"/>
+      <field name="act_to" ref="act_in_transit"/>
+      <field name="signal">transit_start</field>
+    </record>
+    <record id="trans_draft_cancel" model="workflow.transition">
+      <field name="act_from" ref="act_draft"/>
+      <field name="act_to" ref="act_cancel"/>
+      <field name="signal">cancel</field>
+    </record>
+    <record id="trans_confirm_cancel" model="workflow.transition">
+      <field name="act_from" ref="act_confirm"/>
+      <field name="act_to" ref="act_cancel"/>
+      <field name="signal">cancel</field>
+    </record>
+    <record id="trans_in_transit_cancel" model="workflow.transition">
+      <field name="act_from" ref="act_in_transit"/>
+      <field name="act_to" ref="act_cancel"/>
+      <field name="signal">cancel</field>
+    </record>
+    <record id="trans_in_transit_done" model="workflow.transition">
+      <field name="act_from" ref="act_in_transit"/>
+      <field name="act_to" ref="act_done"/>
+      <field name="signal">transit_end</field>
+      <field name="condition">is_transit_done()</field>
+    </record>
+    <record id="trans_cancel_reset" model="workflow.transition">
+      <field name="act_from" ref="act_cancel"/>
+      <field name="act_to" ref="act_reset"/>
+      <field name="signal">reset</field>
+    </record>
+    <record id="trans_reset_draft" model="workflow.transition">
+      <field name="act_from" ref="act_reset"/>
+      <field name="act_to" ref="act_draft"/>
+    </record>
+
+  </data>
+</openerp>
+
