@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Author: Alexandre Fayolle
-#    Copyright 2014 Camptocamp SA
+#    Copyright 2014-2015 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -244,8 +244,8 @@ class StockWarehouse(orm.Model):
         of the addon
         """
         for warehouse in self.browse(cr, uid, ids, context=context):
-            if not (warehouse.wh_transit_out_loc_id
-                    and warehouse.wh_transit_in_loc_id):
+            if not (warehouse.wh_transit_out_loc_id and
+                    warehouse.wh_transit_in_loc_id):
                 # this can happen for warehouses created before this module was
                 # installed
                 in_id, out_id = self._create_transit_locations(
@@ -257,8 +257,8 @@ class StockWarehouse(orm.Model):
                 warehouse.write(
                     {'wh_transit_in_loc_id': in_id,
                      'wh_transit_out_loc_id': out_id})
-            if not (warehouse.transit_in_type_id
-                    and warehouse.transit_out_type_id):
+            if not (warehouse.transit_in_type_id and
+                    warehouse.transit_out_type_id):
                 self._create_transit_sequences_and_picking_types(cr, uid,
                                                                  warehouse,
                                                                  context)
@@ -376,7 +376,10 @@ class StockWarehouse(orm.Model):
         picking_type_writes = [
             (wh.in_type_id.id,
              {'default_location_dest_id': input_loc.id,
-              'default_location_src_id': input_from_loc.id}),
+              'default_location_src_id': input_from_loc.id,
+              'code': 'reception'
+                      if 'transit' in new_reception_step
+                      else 'incoming'}),
             (wh.out_type_id.id,
              {'default_location_src_id': output_loc.id,
               'default_location_dest_id': output_to_loc.id}),
@@ -406,7 +409,29 @@ class StockWarehouse(orm.Model):
                         {'active': cross_dock_active},
                         context=context)
 
+        if warehouse.buy_to_resupply:
+            pull_rule = warehouse.buy_pull_id
+            if 'transit' in new_reception_step:
+                picking_type = warehouse.transit_in_type_id
+                proc_location = picking_type.default_location_dest_id
+            else:
+                picking_type = warehouse.in_type_id
+                proc_location = picking_type.default_location_dest_id
+
+            pull_rule.write({'picking_type_id': picking_type.id,
+                             'location_id': proc_location.id,
+                             })
         return True
+
+    def _get_buy_pull_rule(self, cr, uid, warehouse, context=None):
+        value = super(StockWarehouse, self)._get_buy_pull_rule(cr, uid,
+                                                               warehouse,
+                                                               context=context)
+        wh = warehouse
+        if 'transit' in warehouse.reception_steps:
+            value['picking_type_id'] = wh.transit_in_type_id.id
+            value['location_id'] = wh.in_type_id.default_location_dest_id.id
+        return value
 
     def create_sequences_and_picking_types(self, cr, uid,
                                            warehouse,
@@ -459,11 +484,18 @@ class StockWarehouse(orm.Model):
             warehouse.in_type_id.write(
                 {'default_location_dest_id': input_loc.id,
                  'default_location_src_id': warehouse.wh_transit_in_loc_id.id,
+                 'code': 'reception',
                  }
                 )
+        else:
+            warehouse.in_type_id.write(
+                {'code': 'incoming',
+                 }
+                )
+
         pick_type_val = {'name': _('Customer reception'),
                          'warehouse_id': warehouse.id,
-                         'code': 'outgoing',
+                         'code': 'reception',
                          'sequence_id': out_transit_seq_id,
                          'default_location_src_id':
                              warehouse.wh_transit_out_loc_id.id,

@@ -15,6 +15,11 @@ before reaching their final destination. This allows for tracking the shipping
 date separately from the delivery date, as well as managing incidents which can
 occure during transport.
 
+When this moduleis installed and configured on a warehouse, displaying the
+pickings of a Purchase Order will only show the picking from Supplier to
+Transit. To change that you may install `purchase_all_shipments` from
+https://github.com/OCA/purchase-workflow
+
 Contributors:
 
 * Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
