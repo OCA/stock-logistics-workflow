@@ -11,3 +11,13 @@ MRP lock lot
   virtual/company.
 * Changes in manufacturing, and delivery orders, to selecting the locked
   bundles is prevented.
+
+Credits
+=======
+
+Contributors
+------------
+* Pedro M. Baeza <pedro.baeza@serviciosbaeza.com
+* Ana Juaristi <ajuaristo@gmail.com>
+* Alfredo de la Fuente <alfredodelafuente@avanzosc.es>
+* Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>

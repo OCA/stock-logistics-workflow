@@ -4,39 +4,60 @@
         <record id="view_production_lot_form_inh_locklot" model="ir.ui.view">
             <field name="name">view.production.lot.form.inh.locklot</field>
             <field name="model">stock.production.lot</field>
-            <field name="inherit_id" ref="stock.view_production_lot_form"/>
+            <field name="inherit_id" ref="stock.view_production_lot_form" />
+            <field name="groups_id" eval="[(4, ref('group_lock_lot'))]" />
             <field name="arch" type="xml">
-                <field name="ref" position="after">
-                    <field name="locked" />
-                </field>
                 <div class="oe_button_box oe_right" position="before">
                     <header>
-                        <button name="button_lock" string="Lock" type="object" attrs="{'invisible':[('locked','=',True)]}"/>
-                        <button name="button_unlock" string="Unlock" type="object" attrs="{'invisible':[('locked','=',False)]}"/>
+                        <button name="button_lock" string="Lock"
+                            type="object" attrs="{'invisible':[('locked','=',True)]}" />
+                        <button name="button_unlock" string="Unlock"
+                            type="object" attrs="{'invisible':[('locked','=',False)]}" />
                     </header>
                 </div>
             </field>
         </record>
+
+        <record model="ir.ui.view" id="stock_lot_chatter_form_view">
+            <field name="name">stock.lot.chatter.form</field>
+            <field name="model">stock.production.lot</field>
+            <field name="inherit_id" ref="stock.view_production_lot_form" />
+            <field name="arch" type="xml">
+                <field name="ref" position="after">
+                    <field name="locked" />
+                </field>
+                <form position="inside">
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"
+                            groups="base.group_user" />
+                        <field name="message_ids" widget="mail_thread" />
+                    </div>
+                </form>
+            </field>
+        </record>
+
         <record id="view_production_lot_tree_inh_locklot" model="ir.ui.view">
             <field name="name">view.production.lot.tree.inh.locklot</field>
             <field name="model">stock.production.lot</field>
-            <field name="inherit_id" ref="stock.view_production_lot_tree"/>
+            <field name="inherit_id" ref="stock.view_production_lot_tree" />
             <field name="arch" type="xml">
                 <field name="create_date" position="after">
                     <field name="locked" />
                 </field>
             </field>
         </record>
+
         <record id="search_product_lot_filter_inh_locklot" model="ir.ui.view">
             <field name="name">search.product.lot.filter.inh.locklot</field>
             <field name="model">stock.production.lot</field>
-            <field name="inherit_id" ref="stock.search_product_lot_filter"/>
+            <field name="inherit_id" ref="stock.search_product_lot_filter" />
             <field name="arch" type="xml">
                 <field name="name" position="before">
                     <field name="locked" />
                 </field>
                 <filter string="Product" position="before">
-                    <filter string="Locked" domain="[]" context="{'group_by':'locked'}"/>
+                    <filter string="Locked" domain="[]"
+                        context="{'group_by':'locked'}" />
                 </filter>
             </field>
         </record>

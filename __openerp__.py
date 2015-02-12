@@ -19,6 +19,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 {
     "name": "MRP Lock Lot",
     "version": "1.0",
@@ -28,17 +29,22 @@
         "Ana Juaristi <ajuaristio@gmail.com>",
         "Pedro Manuel Baeza <pedro.baeza@serviciosbaeza.com>",
         "Alfredo de la Fuente <alfredodelafuente@avanzosc.es>",
-        ],
+        "Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>",
+    ],
     "category": "Manufacturing",
-    "depends": ['stock',
-                'mrp',
-                ],
-    "data": ['wizard/stock_transfer_details_view.xml',
-             'wizard/mrp_product_produce_view.xml',
-             'wizard/wiz_lock_lot_view.xml',
-             'views/stock_config_settings_view.xml',
-             'views/stock_production_lot_view.xml',
-             'views/stock_quant_view.xml',
-             ],
-    "installable": True
+    "depends": [
+        "stock",
+        "mrp",
+    ],
+    "data": [
+        "security/mrp_lock_lot_security.xml",
+        "data/mrp_lock_lot_data.xml",
+        "wizard/stock_transfer_details_view.xml",
+        "wizard/mrp_product_produce_view.xml",
+        "wizard/wiz_lock_lot_view.xml",
+        "views/stock_config_settings_view.xml",
+        "views/stock_production_lot_view.xml",
+        "views/stock_quant_view.xml",
+    ],
+    "installable": True,
 }
