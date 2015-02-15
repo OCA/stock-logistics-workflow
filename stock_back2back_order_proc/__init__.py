@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (c) 2010-2011 Elico Corp. All Rights Reserved.
+#    Copyright (c) 2010-2015 Elico Corp. All Rights Reserved.
 #    Author: Ian Li <ian.li@elico-corp.com>
 #    Alex Duan <alex.duan@elico-corp.com>
 #
