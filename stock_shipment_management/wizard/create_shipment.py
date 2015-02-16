@@ -162,8 +162,9 @@ class ShipmentPlanCreator(models.TransientModel):
             for pick in pickings:
                 for state in states:
                     mvs = mvs_wrong_state.filtered(
-                        lambda rec: rec.picking_id == pick
-                        and rec.state == state)
+                        lambda rec:
+                            rec.picking_id == pick and
+                            rec.state == state)
                     if mvs:
                         str_mvs = u', '.join(['%s [%s]' % (mv.id, mv.name)
                                              for mv in mvs])

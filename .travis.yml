@@ -17,7 +17,6 @@ install:
   - git clone https://github.com/OCA/maintainer-quality-tools.git $HOME/maintainer-quality-tools
   - export PATH=$HOME/maintainer-quality-tools/travis:$PATH
   - travis_install_nightly
-  - pip install coveralls flake8
   - git clone https://github.com/OCA/product-attribute -b ${VERSION} $HOME/product-attribute
   - git clone https://github.com/OCA/webkit-tools -b ${VERSION} $HOME/webkit-tools
   - git clone https://github.com/OCA/stock-logistics-warehouse -b ${VERSION} $HOME/stock-logistics-warehouse

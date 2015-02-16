@@ -244,8 +244,8 @@ class StockWarehouse(orm.Model):
         of the addon
         """
         for warehouse in self.browse(cr, uid, ids, context=context):
-            if not (warehouse.wh_transit_out_loc_id
-                    and warehouse.wh_transit_in_loc_id):
+            if not (warehouse.wh_transit_out_loc_id and
+                    warehouse.wh_transit_in_loc_id):
                 # this can happen for warehouses created before this module was
                 # installed
                 in_id, out_id = self._create_transit_locations(
@@ -257,8 +257,8 @@ class StockWarehouse(orm.Model):
                 warehouse.write(
                     {'wh_transit_in_loc_id': in_id,
                      'wh_transit_out_loc_id': out_id})
-            if not (warehouse.transit_in_type_id
-                    and warehouse.transit_out_type_id):
+            if not (warehouse.transit_in_type_id and
+                    warehouse.transit_out_type_id):
                 self._create_transit_sequences_and_picking_types(cr, uid,
                                                                  warehouse,
                                                                  context)

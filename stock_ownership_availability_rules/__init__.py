@@ -12,9 +12,9 @@ def fill_quant_owner(cr):
 
     for quant in orphan_quants:
         quant.owner_id = (
-            quant.location_id.partner_id
-            or quant.location_id.company_id.partner_id
-            or Company.browse(
+            quant.location_id.partner_id or
+            quant.location_id.company_id.partner_id or
+            Company.browse(
                 Company._company_default_get('stock.quant')
             ).partner_id
         )
