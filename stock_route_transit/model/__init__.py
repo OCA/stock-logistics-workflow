@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Author: Alexandre Fayolle
-#    Copyright 2014 Camptocamp SA
+#    Copyright 2015 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -19,4 +19,5 @@
 #
 ##############################################################################
 
+from . import stock_picking_type
 from . import stock_warehouse

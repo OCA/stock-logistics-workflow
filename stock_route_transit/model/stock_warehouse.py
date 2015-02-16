@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Author: Alexandre Fayolle
-#    Copyright 2014 Camptocamp SA
+#    Copyright 2014-2015 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -349,6 +349,8 @@ class StockWarehouse(orm.Model):
                                                  context)
         # due to poor design in base class, we need to redo everything... :-(
         # and add our stuff
+        customer_loc, supplier_loc = self._get_partner_locations(
+            cr, uid, warehouse.id, context=context)
         picking_type_obj = self.pool.get('stock.picking.type')
         route_obj = self.pool.get('stock.location.route')
         new_reception_step = new_reception_step or warehouse.reception_steps
@@ -361,11 +363,26 @@ class StockWarehouse(orm.Model):
             output_loc = warehouse.lot_stock_id
         else:
             output_loc = warehouse.wh_output_stock_loc_id
+        if 'transit' in new_reception_step:
+            input_from_loc = warehouse.wh_transit_in_loc_id
+        else:
+            input_from_loc = supplier_loc
+        if 'transit' in new_delivery_step:
+            output_to_loc = warehouse.wh_transit_out_loc_id
+        else:
+            output_to_loc = customer_loc
 
         wh = warehouse
         picking_type_writes = [
-            (wh.in_type_id.id, {'default_location_dest_id': input_loc.id}),
-            (wh.out_type_id.id, {'default_location_src_id': output_loc.id}),
+            (wh.in_type_id.id,
+             {'default_location_dest_id': input_loc.id,
+              'default_location_src_id': input_from_loc.id,
+              'code': 'reception'
+                      if 'transit' in new_reception_step
+                      else 'incoming'}),
+            (wh.out_type_id.id,
+             {'default_location_src_id': output_loc.id,
+              'default_location_dest_id': output_to_loc.id}),
             (wh.pick_type_id.id,
              {'active': new_delivery_step
               not in ('ship_only', 'ship_transit')}),
@@ -392,7 +409,29 @@ class StockWarehouse(orm.Model):
                         {'active': cross_dock_active},
                         context=context)
 
+        if warehouse.buy_to_resupply:
+            pull_rule = warehouse.buy_pull_id
+            if 'transit' in new_reception_step:
+                picking_type = warehouse.transit_in_type_id
+                proc_location = picking_type.default_location_dest_id
+            else:
+                picking_type = warehouse.in_type_id
+                proc_location = picking_type.default_location_dest_id
+
+            pull_rule.write({'picking_type_id': picking_type.id,
+                             'location_id': proc_location.id,
+                             })
         return True
+
+    def _get_buy_pull_rule(self, cr, uid, warehouse, context=None):
+        value = super(StockWarehouse, self)._get_buy_pull_rule(cr, uid,
+                                                               warehouse,
+                                                               context=context)
+        wh = warehouse
+        if 'transit' in warehouse.reception_steps:
+            value['picking_type_id'] = wh.transit_in_type_id.id
+            value['location_id'] = wh.in_type_id.default_location_dest_id.id
+        return value
 
     def create_sequences_and_picking_types(self, cr, uid,
                                            warehouse,
@@ -432,24 +471,50 @@ class StockWarehouse(orm.Model):
                          'sequence_id': in_transit_seq_id,
                          'default_location_src_id': supplier_loc.id,
                          'default_location_dest_id':
-                             warehouse.wh_input_stock_loc_id.id,
+                             warehouse.wh_transit_in_loc_id.id,
                          'active': 'transit' in warehouse.reception_steps,
                          }
         in_transit_type = picking_type_obj.create(cr, uid,
                                                   pick_type_val,
                                                   context=context)
+        if 'transit' in warehouse.reception_steps:
+            input_loc = warehouse.wh_input_stock_loc_id
+            if warehouse.reception_steps.endswith('one_step'):
+                input_loc = warehouse.lot_stock_id
+            warehouse.in_type_id.write(
+                {'default_location_dest_id': input_loc.id,
+                 'default_location_src_id': warehouse.wh_transit_in_loc_id.id,
+                 'code': 'reception',
+                 }
+                )
+        else:
+            warehouse.in_type_id.write(
+                {'code': 'incoming',
+                 }
+                )
+
         pick_type_val = {'name': _('Customer reception'),
                          'warehouse_id': warehouse.id,
-                         'code': 'outgoing',
+                         'code': 'reception',
                          'sequence_id': out_transit_seq_id,
                          'default_location_src_id':
-                             warehouse.wh_output_stock_loc_id.id,
+                             warehouse.wh_transit_out_loc_id.id,
                          'default_location_dest_id': customer_loc.id,
                          'active': 'transit' in warehouse.delivery_steps,
                          }
         out_transit_type = picking_type_obj.create(cr, uid,
                                                    pick_type_val,
                                                    context=context)
+        if 'transit' in warehouse.delivery_steps:
+            output_loc = warehouse.wh_output_stock_loc_id
+            if warehouse.delivery_steps == 'ship_transit':
+                output_loc = warehouse.lot_stock_id
+            transit_out_loc = warehouse.wh_transit_out_loc_id
+            warehouse.out_type_id.write(
+                {'default_location_src_id': output_loc.id,
+                 'default_location_dest_id': transit_out_loc.id,
+                 }
+                )
         self.write(cr, uid, warehouse.id,
                    {'transit_in_type_id': in_transit_type,
                     'transit_out_type_id': out_transit_type,
