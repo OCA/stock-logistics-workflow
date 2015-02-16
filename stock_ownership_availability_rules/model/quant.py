@@ -33,9 +33,9 @@ class Quant(models.Model):
             location = self.env['stock.location'].browse(vals['location_id'])
 
             vals['owner_id'] = (
-                location.partner_id.id
-                or location.company_id.partner_id.id
-                or Company.browse(
+                location.partner_id.id or
+                location.company_id.partner_id.id or
+                Company.browse(
                     Company._company_default_get('stock.quant')
                 ).partner_id.id
             )
@@ -69,8 +69,8 @@ class Quant(models.Model):
             prefered_domain_list = []
 
         if not restrict_partner_id:
-            restrict_partner_id = (location.partner_id.id
-                                   or location.company_id.partner_id.id)
+            restrict_partner_id = (location.partner_id.id or
+                                   location.company_id.partner_id.id)
 
         domain += [
             ('owner_id', '=', restrict_partner_id),
