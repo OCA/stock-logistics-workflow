@@ -78,7 +78,7 @@
         <field name="view_type">form</field>
         <field name="view_id" ref="view_move_transit_pipline_tree"/>
         <field name="search_view_id" ref="view_move_transit_pipeline_search"/>
-        <field name="domain" eval="[('location_dest_id', '=', ref('stock_route_transit.transit_outgoing'))]"/>
+        <field name="domain" eval="[('location_dest_id.usage', '=', 'transit')]"/>
         <field name="context">{'search_default_ship_to_plan': 1}</field>
         <field name="help" type="html">
           <p>
@@ -94,7 +94,7 @@
         <field name="view_type">form</field>
         <field name="view_id" ref="view_move_transit_pipline_tree"/>
         <field name="search_view_id" ref="view_move_transit_pipeline_search"/>
-        <field name="domain" eval="[('location_dest_id', '=', ref('stock_route_transit.transit_outgoing'))]"/>
+        <field name="domain" eval="[('location_dest_id.usage', '=', 'transit')]"/>
         <field name="context">{'search_default_ship_in_transit': 1}</field>
         <field name="help" type="html">
           <p>
