@@ -19,7 +19,7 @@
 #
 #
 {"name": "Shipment Management",
- "version": "0.1",
+ "version": "0.1.1",
  "author": "Camptocamp",
  "category": "Transportation",
  "license": 'AGPL-3',
