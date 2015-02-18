@@ -45,12 +45,6 @@
       <field name="action">action_cancel()</field>
     </record>
 
-    <record id="act_reset" model="workflow.activity">
-      <field name="wkf_id" ref="wkf_shipment_plan"/>
-      <field name="name">reset</field>
-      <field name="action">action_reset()</field>
-    </record>
-
     <!-- Transistion -->
 
     <record id="trans_draft_confirmed" model="workflow.transition">
@@ -83,15 +77,6 @@
       <field name="act_to" ref="act_done"/>
       <field name="signal">transit_end</field>
       <field name="condition">is_transit_done()</field>
-    </record>
-    <record id="trans_cancel_reset" model="workflow.transition">
-      <field name="act_from" ref="act_cancel"/>
-      <field name="act_to" ref="act_reset"/>
-      <field name="signal">reset</field>
-    </record>
-    <record id="trans_reset_draft" model="workflow.transition">
-      <field name="act_from" ref="act_reset"/>
-      <field name="act_to" ref="act_draft"/>
     </record>
 
   </data>
