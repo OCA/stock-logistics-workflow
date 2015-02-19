@@ -20,6 +20,7 @@
 
 from openerp.addons.stock.tests.common import TestStockCommon
 
+
 class TestCancelPicking(TestStockCommon):
 
     def test_cancel_picking(self):
@@ -37,12 +38,22 @@ class TestCancelPicking(TestStockCommon):
         picking_out.action_confirm()
         picking_out.action_assign()
         picking_out.do_transfer()
-        quants = self.StockQuantObj.search([('product_id', '=', self.productA.id), ('location_id', '=', self.stock_location)])
+        quants = self.StockQuantObj.search([
+            ('product_id', '=', self.productA.id),
+            ('location_id', '=', self.stock_location)
+            ])
         total_qty = [quant.qty for quant in quants]
-        self.assertEqual(sum(total_qty), -1, 'Expecting -1 Unit , got %.4f Unit on location stock!' % (sum(total_qty)))
-        import pdb; pdb.set_trace()
+        self.assertEqual(
+            sum(total_qty), -1,
+            'Expecting -1 Unit , got %.4f Unit on location stock!' % (
+                sum(total_qty)))
         picking_out.action_revert_done()
-        quants = self.StockQuantObj.search([('product_id', '=', self.productA.id), ('location_id', '=', self.stock_location)])
+        quants = self.StockQuantObj.search([
+            ('product_id', '=', self.productA.id),
+            ('location_id', '=', self.stock_location)
+            ])
         total_qty = [quant.qty for quant in quants]
-        self.assertEqual(sum(total_qty), 0, 'Expecting 0 Unit , got %.4f Unit on location stock!' % (sum(total_qty)))
-        
+        self.assertEqual(
+            sum(total_qty), 0,
+            'Expecting 0 Unit , got %.4f Unit on location stock!' % (
+                sum(total_qty)))
