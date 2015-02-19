@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_picking_form_inh_pickingpackageinfo">
+            <field name="name">view.picking.form.inh.pickingpackageinfo</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form" />
+            <field name="arch" type="xml">
+                <page string="Operations" position="after">
+                    <page string="Packages" attrs="{'invisible': [('packages','=',[])]}">
+                        <field name="packages" >
+                            <tree editable="top">
+                                <field name="name" />
+                                <field name="ul_id" />
+                                <field name="width" />
+                                <field name="height" />
+                                <field name="length" />
+                                <field name="permitted_volume" />
+                                <field name="tvolume_charge" />
+                                <field name="total_estim_weight"/>
+                                <field name="total_estim_weight_net" />
+                                <field name="empty_weight" />
+                                <field name="real_weight" />
+                            </tree>
+                        </field>
+                    </page>
+                </page>
+            </field>
+        </record>
+    </data>
+</openerp>

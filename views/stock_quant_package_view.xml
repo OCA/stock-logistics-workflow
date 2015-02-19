@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_quant_package_form_inh_pickingpackageinfo">
+            <field name="name">view.quant.package.form.inh.pickingpackageinfo</field>
+            <field name="model">stock.quant.package</field>
+            <field name="inherit_id" ref="stock.view_quant_package_form" />
+            <field name="arch" type="xml">
+                <field name="qty" position="after">
+                    <field name="weight" />
+                    <field name="total_weight" sum="sum_total_weight"/>
+                    <field name="weight_net" />
+                    <field name="total_weight_net" sum="sum_total_weight_net" /> 
+                    <field name="volume" />
+                    <field name="total_volume" sum="sum_total_volume"/>
+                </field>
+                <notebook position="before">
+                    <group >
+                        <group>
+                            <field name="width" />
+                            <field name="height" />
+                            <field name="length" />
+                            <field name="empty_weight" />
+                            <field name="real_weight" />
+                        </group>
+                        <group>
+                            <field name="total_estim_weight"/>
+                            <field name="total_estim_weight_net" />
+                            <field name="permitted_volume" />
+                            <field name="tvolume_charge" />
+                        </group>
+                    </group>
+                </notebook>
+                <page string="Content" position="after">
+                    <page string="Pickings">
+                        <field name="pickings" />
+                    </page>
+                </page>
+                <field name="quant_ids" position="after">
+                    <field name="total_weight" invisible="1"/>
+                    <field name="total_weight_net" invisible="1"/>
+                    <field name="total_volume" invisible="1"/>
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_quant_package_tree_inh_pickingpackageinfo">
+            <field name="name">view.quant.package.form.inh.pickingpackageinfo</field>
+            <field name="model">stock.quant.package</field>
+            <field name="inherit_id" ref="stock.view_quant_package_tree" />
+            <field name="arch" type="xml">
+                <field name="ul_id" position="before">
+                    <field name="name" />
+                </field>
+                <field name="ul_id" position="after">
+                    <field name="width" />
+                    <field name="height" />
+                    <field name="length" />
+                    <field name="permitted_volume" />
+                    <field name="tvolume_charge" />
+                    <field name="total_estim_weight"/>
+                    <field name="total_estim_weight_net" />
+                    <field name="empty_weight" />
+                    <field name="real_weight" />
+                </field>
+                <field name="complete_name" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="company_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>

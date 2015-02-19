@@ -1,0 +1,142 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_picking_package_info
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-19 15:40+0000\n"
+"PO-Revision-Date: 2015-02-19 16:42+0100\n"
+"Last-Translator: Alfredo <alfredodelafuente@avanzosc.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_package_info
+#: view:stock.quant.package:stock_picking_package_info.view_quant_package_form_inh_pickingpackageinfo
+msgid "Content"
+msgstr "Contenido"
+
+#. module: stock_picking_package_info
+#: field:stock.quant.package,empty_weight:0
+msgid "Empty Package Weight"
+msgstr "Peso paquete vacio"
+
+#. module: stock_picking_package_info
+#: field:stock.quant.package,height:0
+msgid "Height"
+msgstr "Altura"
+
+#. module: stock_picking_package_info
+#: field:stock.quant.package,length:0
+msgid "Length"
+msgstr "Longitud"
+
+#. module: stock_picking_package_info
+#: view:stock.picking:stock_picking_package_info.view_picking_form_inh_pickingpackageinfo
+msgid "Operations"
+msgstr "Operaciones"
+
+#. module: stock_picking_package_info
+#: view:stock.picking:stock_picking_package_info.view_picking_form_inh_pickingpackageinfo
+#: field:stock.picking,packages:0
+msgid "Packages"
+msgstr "Paquetes"
+
+#. module: stock_picking_package_info
+#: field:stock.quant.package,permitted_volume:0
+msgid "Permitted volume"
+msgstr "Volumen permitido"
+
+#. module: stock_picking_package_info
+#: model:ir.model,name:stock_picking_package_info.model_stock_quant_package
+msgid "Physical Packages"
+msgstr "Paquetes físicos"
+
+#. module: stock_picking_package_info
+#: model:ir.model,name:stock_picking_package_info.model_stock_picking
+msgid "Picking List"
+msgstr "Albarán"
+
+#. module: stock_picking_package_info
+#: model:ir.model,name:stock_picking_package_info.model_stock_transfer_details
+msgid "Picking wizard"
+msgstr "Asistente de albarán"
+
+#. module: stock_picking_package_info
+#: view:stock.quant.package:stock_picking_package_info.view_quant_package_form_inh_pickingpackageinfo
+#: field:stock.quant.package,pickings:0
+msgid "Pickings"
+msgstr "Albaranes"
+
+#. module: stock_picking_package_info
+#: model:ir.model,name:stock_picking_package_info.model_stock_quant
+msgid "Quants"
+msgstr "Quants"
+
+#. module: stock_picking_package_info
+#: field:stock.quant.package,real_weight:0
+msgid "Real weight"
+msgstr "Peso real"
+
+#. module: stock_picking_package_info
+#: model:ir.model,name:stock_picking_package_info.model_stock_return_picking
+msgid "Return Picking"
+msgstr "Devolver albarán"
+
+#. module: stock_picking_package_info
+#: help:stock.quant.package,height:0
+msgid "The height of the package"
+msgstr "La altura del paquete"
+
+#. module: stock_picking_package_info
+#: help:stock.quant.package,length:0
+msgid "The length of the package"
+msgstr "La longitud del paquete"
+
+#. module: stock_picking_package_info
+#: help:stock.quant.package,width:0
+msgid "The width of the package"
+msgstr "La anchura del paquete"
+
+#. module: stock_picking_package_info
+#: field:stock.quant,total_weight_net:0
+#: field:stock.quant.package,total_weight_net:0
+msgid "Total Net weight"
+msgstr "Total peso neto"
+
+#. module: stock_picking_package_info
+#: field:stock.quant,total_volume:0
+#: field:stock.quant.package,total_volume:0
+msgid "Total Volume"
+msgstr "Total volumen"
+
+#. module: stock_picking_package_info
+#: field:stock.quant.package,total_estim_weight_net:0
+msgid "Total estimated Net weight"
+msgstr "Total peso neto estimado"
+
+#. module: stock_picking_package_info
+#: field:stock.quant.package,total_estim_weight:0
+msgid "Total estimated weight"
+msgstr "Total peso bruto estimado"
+
+#. module: stock_picking_package_info
+#: field:stock.quant.package,tvolume_charge:0
+msgid "Total volume charge"
+msgstr "Volumen total carga"
+
+#. module: stock_picking_package_info
+#: field:stock.quant,total_weight:0
+#: field:stock.quant.package,total_weight:0
+msgid "Total weight"
+msgstr "Peso total"
+
+#. module: stock_picking_package_info
+#: field:stock.quant.package,width:0
+msgid "Width"
+msgstr "Anchura"
+

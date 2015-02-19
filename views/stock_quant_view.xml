@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_stock_quant_form_inh_pickingpackageinfo">
+            <field name="name">view.stock.quant.form.inh.pickingpackageinfo</field>
+            <field name="model">stock.quant</field>
+            <field name="inherit_id" ref="stock.view_stock_quant_form" />
+            <field name="arch" type="xml">
+                <field name="qty" position="before">
+                    <field name="weight" />
+                    <field name="total_weight" />
+                    <field name="weight_net" />
+                    <field name="total_weight_net" />
+                    <field name="volume" />
+                    <field name="total_volume" />
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_stock_quant_tree_inh_pickingpackageinfo">
+            <field name="name">view.stock.quant.tree.inh.pickingpackageinfo</field>
+            <field name="model">stock.quant</field>
+            <field name="inherit_id" ref="stock.view_stock_quant_tree" />
+            <field name="arch" type="xml">
+                <field name="qty" position="before">
+                    <field name="weight" />
+                    <field name="total_weight" />
+                    <field name="weight_net" />
+                    <field name="total_weight_net" />
+                    <field name="volume" />
+                    <field name="total_volume" />
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>
