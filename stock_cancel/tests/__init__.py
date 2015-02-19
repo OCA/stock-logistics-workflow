@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
-#    Copyright (c) 2014 Andrea Cometa All Rights Reserved.
-#                       www.andreacometa.it
-#                       openerp@andreacometa.it
+#    Copyright (C) 2013 Agile Business Group sagl (<http://www.agilebg.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -21,19 +18,4 @@
 #
 ##############################################################################
 
-{
-    'name': 'Stock Cancel',
-    'version': '1.2',
-    'category': 'Stock',
-    'description': """This module allows you to bring back a completed stock
-picking to draft state""",
-    'author': 'www.andreacometa.it',
-    'website': 'http://www.andreacometa.it',
-    'license': 'AGPL-3',
-    'depends': ['stock_picking_invoice_link'],
-    'data': [
-        'stock_view.xml',
-        ],
-    'installable': True,
-    'images': ['images/stock_picking.jpg'],
-}
+from . import test_cancel_picking
