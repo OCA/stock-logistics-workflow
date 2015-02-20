@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-19 15:40+0000\n"
-"PO-Revision-Date: 2015-02-19 16:42+0100\n"
+"POT-Creation-Date: 2015-02-20 10:25+0000\n"
+"PO-Revision-Date: 2015-02-20 11:26+0100\n"
 "Last-Translator: Alfredo <alfredodelafuente@avanzosc.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr "Contenido"
 #. module: stock_picking_package_info
 #: field:stock.quant.package,empty_weight:0
 msgid "Empty Package Weight"
-msgstr "Peso paquete vacio"
+msgstr "Tara paquete"
 
 #. module: stock_picking_package_info
 #: field:stock.quant.package,height:0

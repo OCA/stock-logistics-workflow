@@ -8,12 +8,18 @@ from openerp import models, fields, api
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
-#    packages = fields.Many2many(
-#        comodel_name='stock.quant.package', string='Packages')
+    @api.one
+    @api.depends('pack_operation_ids', 'pack_operation_ids.result_package_id')
+    def _calculate_packages(self):
+        self.packages = [
+            operation.result_package_id.id for operation in
+            self.pack_operation_ids if operation.result_package_id]
+
     packages = fields.Many2many(
         comodel_name='stock.quant.package',
         relation='rel_picking_package', column1='picking_id',
-        column2='package_id', string='Packages')
+        column2='package_id', string='Packages',
+        compute='_calculate_packages', store=True)
 
 
 class StockQuant(models.Model):
@@ -22,23 +28,17 @@ class StockQuant(models.Model):
     @api.one
     @api.depends('product_id', 'product_id.weight', 'qty')
     def _calculate_total_weight(self):
-        self.total_weight = 0
-        if self.product_id:
-            self.total_weight = self.product_id.weight * self.qty
+        self.total_weight = self.product_id.weight * self.qty
 
     @api.one
     @api.depends('product_id', 'product_id.weight_net', 'qty')
     def _calculate_total_weight_net(self):
-        self.total_weight_net = 0
-        if self.product_id:
-            self.total_weight_net = self.product_id.weight_net * self.qty
+        self.total_weight_net = self.product_id.weight_net * self.qty
 
     @api.one
     @api.depends('product_id', 'product_id.volume', 'qty')
     def _calculate_total_volume(self):
-        self.total_volume = 0
-        if self.product_id:
-            self.total_volume = self.product_id.volume * self.qty
+        self.total_volume = self.product_id.volume * self.qty
 
     weight = fields.Float(string='Weight', related="product_id.weight")
     weight_net = fields.Float(
@@ -56,9 +56,7 @@ class StockQuant(models.Model):
     @api.one
     @api.onchange('product_id', 'qty')
     def onchange_total_weight(self):
-        self.total_weight = 0
-        if self.product_id:
-            self.total_weight = self.product_id.weight * self.qty
+        self.total_weight = self.product_id.weight * self.qty
 
 
 class StockQuantPackage(models.Model):
@@ -67,44 +65,32 @@ class StockQuantPackage(models.Model):
     @api.one
     @api.depends('quant_ids', 'quant_ids.total_weight')
     def _calculate_total_weight(self):
-        total_weight = 0
-        for quant in self.quant_ids:
-            total_weight += quant.total_weight
-        self.total_weight = total_weight
+        self.total_weight = sum(x.total_weight for x in self.quant_ids)
 
     @api.one
     @api.depends('quant_ids', 'quant_ids.total_weight_net')
     def _calculate_total_weight_net(self):
-        total_weight_net = 0
-        for quant in self.quant_ids:
-            total_weight_net += quant.total_weight_net
-        self.total_weight_net = total_weight_net
+        self.total_weight_net = sum(x.total_weight_net for x in self.quant_ids)
 
     @api.one
     @api.depends('total_weight', 'empty_weight', 'quant_ids.total_weight')
     def _calculate_total_estim_weight(self):
-        total_estim_weight = self.total_weight + self.empty_weight
-        for quant in self.quant_ids:
-            total_estim_weight += quant.total_weight
-        self.total_estim_weight = total_estim_weight
-        self.real_weight = total_estim_weight
+        self.total_estim_weight = (self.total_weight + self.empty_weight +
+                                   sum(x.total_weight for x in self.quant_ids))
+        self.real_weight = self.total_estim_weight
 
     @api.one
     @api.depends('total_weight_net', 'empty_weight',
                  'quant_ids.total_weight_net')
     def _calculate_total_estim_weight_net(self):
-        total_estim_weight_net = self.total_weight_net + self.empty_weight
-        for quant in self.quant_ids:
-            total_estim_weight_net += quant.total_weight_net
-        self.total_estim_weight_net = total_estim_weight_net
+        self.total_estim_weight_net = (
+            self.total_weight_net + self.empty_weight +
+            sum(x.total_weight_net for x in self.quant_ids))
 
     @api.one
     @api.depends('quant_ids', 'quant_ids.total_volume')
     def _calculate_total_volume(self):
-        total_volume = 0
-        for quant in self.quant_ids:
-            total_volume += quant.total_volume
-        self.total_volume = total_volume
+        self.total_volume = sum(x.total_volume for x in self.quant_ids)
 
     @api.one
     @api.depends('height', 'width', 'length')
@@ -114,10 +100,8 @@ class StockQuantPackage(models.Model):
     @api.one
     @api.depends('total_volume', 'quant_ids.total_volume')
     def _calculate_tvolume_charge(self):
-        total_tvolume_charge = self.total_volume
-        for quant in self.quant_ids:
-            total_tvolume_charge += quant.total_volume
-        self.total_tvolume_charge = total_tvolume_charge
+        self.total_tvolume_charge = (
+            self.total_volume + sum(x.total_volume for x in self.quant_ids))
 
     height = fields.Float(string='Height', help='The height of the package')
     width = fields.Float(string='Width', help='The width of the package')
@@ -151,18 +135,14 @@ class StockQuantPackage(models.Model):
     @api.one
     @api.onchange('ul_id')
     def onchange_ul_id(self):
-        self.height, self.width, self.length, self.empty_weigth = 0, 0, 0, 0
-        if self.ul_id:
-            self.height = self.ul_id.height
-            self.width = self.ul_id.width
-            self.length = self.ul_id.length
-            self.empty_weight = self.ul_id.weight
+        self.height = self.ul_id.height
+        self.width = self.ul_id.width
+        self.length = self.ul_id.length
+        self.empty_weight = self.ul_id.weight
 
     @api.one
     @api.onchange('total_weight', 'empty_weight', 'quant_ids')
     @api.depends('total_weight', 'empty_weight', 'quant_ids.total_weight')
     def onchange_real_weight(self):
-        real_weight = self.total_weight + self.empty_weight
-        for quant in self.quant_ids:
-            real_weight += quant.total_weight
-        self.real_weight = real_weight
+        self.real_weight = (self.total_weight + self.empty_weight +
+                            sum(x.total_weight for x in self.quant_ids))

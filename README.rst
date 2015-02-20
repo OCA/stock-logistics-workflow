@@ -1,7 +1,8 @@
-Stock picking package info
-==========================
+Stock picking packaging info
+============================
 
-This module displays the following information on packages:
+This module displays in the pickings, all packages appearing in operations. in
+the package provides the following information:
 
 Width, height, length, total estimated weight, total estimated net weight,
 permitted volume, total volume charge, empty package weight, and real weight.
@@ -12,8 +13,6 @@ logical unit. The values of these fields can be modified.
 
 In the field "real weight", shown the value of total estimated weight field.
 The value of this field can be changed.
-
-In the pickings show all packages appearing in operations.
 
 Credits
 =======
