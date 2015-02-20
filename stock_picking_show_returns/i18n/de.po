@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-01 14:28+0000\n"
-"PO-Revision-Date: 2015-02-01 15:34+0100\n"
+"PO-Revision-Date: 2015-02-01 15:40+0100\n"
 "Last-Translator: Rudolf Schnapka <rs@techno-flex.de>\n"
 "Language-Team: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
 "X-Generator: Poedit 1.5.4\n"
 
 #. module: stock_picking_show_returns
@@ -23,24 +23,24 @@ msgstr ""
 #: field:stock.picking,return_ids:0 field:stock.picking.in,return_ids:0
 #: field:stock.picking.out,return_ids:0
 msgid "Return pickings"
-msgstr ""
+msgstr "Bestandsrückläufer"
 
 #. module: stock_picking_show_returns
 #: view:stock.picking.in:0 view:stock.picking.out:0
 msgid "Returns"
-msgstr ""
+msgstr "Rückläufer"
 
 #. module: stock_picking_show_returns
 #: model:ir.model,name:stock_picking_show_returns.model_stock_picking
 msgid "Picking List"
-msgstr ""
+msgstr "Kommissionierschein"
 
 #. module: stock_picking_show_returns
 #: model:ir.model,name:stock_picking_show_returns.model_stock_picking_out
 msgid "Delivery Orders"
-msgstr ""
+msgstr "Lieferaufträge"
 
 #. module: stock_picking_show_returns
 #: model:ir.model,name:stock_picking_show_returns.model_stock_picking_in
 msgid "Incoming Shipments"
-msgstr ""
+msgstr "Eingehende Lieferungen"
