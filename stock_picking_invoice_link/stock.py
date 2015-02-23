@@ -34,6 +34,7 @@ class stock_move(orm.Model):
         inv_line_id = super(stock_move, self)._create_invoice_line_from_vals(
             cr, uid, move, invoice_line_vals, context=context)
         move.write({'invoice_line_id': inv_line_id})
+        move.picking_id.invoice_id = invoice_line_vals['invoice_id']
         return inv_line_id
 
 
@@ -59,13 +60,6 @@ class stock_picking(orm.Model):
             _get_invoice_view_xmlid, type='char', string="Invoice View XMLID",
             readonly=True),
     }
-
-    def _create_invoice_from_picking(
-            self, cr, uid, picking, vals, context=None):
-        invoice_id = super(stock_picking, self)._create_invoice_from_picking(
-            cr, uid, picking, vals, context=context)
-        picking.write({'invoice_id': invoice_id})
-        return invoice_id
 
 
 class account_invoice(orm.Model):
