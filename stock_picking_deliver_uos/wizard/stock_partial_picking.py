@@ -20,7 +20,7 @@
 
 from openerp.osv import orm, fields
 import openerp.addons.decimal_precision as dp
-
+from openerp import SUPERUSER_ID
 
 class StockPartialPickingLine(orm.TransientModel):
     _inherit = 'stock.partial.picking.line'
@@ -70,7 +70,7 @@ class StockPartialPicking(orm.TransientModel):
             picking_pool = self.pool['stock.picking']
             delivered_picking_id = res['res_id']
             delivered_picking = picking_pool.browse(
-                cr, uid, delivered_picking_id, context=context)
+                cr, SUPERUSER_ID, delivered_picking_id, context=context)
             for delivered_line in delivered_picking.move_lines:
                 for wizard_line in wizard.move_ids:
                     if (
