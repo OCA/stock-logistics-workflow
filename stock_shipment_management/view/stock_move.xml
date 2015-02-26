@@ -10,6 +10,7 @@
           <field name="product_id"/>
           <field name="product_uom_qty"/>
           <field name="product_uom"  string="Unit of Measure" groups="product.group_uom"/>
+          <field name="origin" string="Origin"/>
           <field name="product_packaging" domain="[('product_tmpl_id','=',product_id)]" groups="product.group_stock_packaging"/>
           <field name="ship_etd"/>
           <field name="ship_eta"/>
@@ -53,6 +54,7 @@
             <field name="ship_from_address_id"/>
             <field name="ship_to_address_id"/>
             <group expand="0" string="Group By">
+                <filter string="Origin" name="origin" domain="[]"  context="{'group_by':'origin'}"/>
                 <filter string="Shipment Plan" name="groupby_shipment_plan" domain="[]"  context="{'group_by':'departure_shipment_id'}"/>
                 <filter string="Package" name="groupby_package" domain="[]"  context="{'group_by':'product_packaging'}"/>
                 <filter string="Picking" name="groupby_picking_id" domain="[]"  context="{'group_by':'picking_id'}"/>
