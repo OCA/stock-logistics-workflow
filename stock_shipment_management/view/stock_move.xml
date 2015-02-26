@@ -10,7 +10,7 @@
           <field name="product_id"/>
           <field name="product_uom_qty"/>
           <field name="product_uom"  string="Unit of Measure" groups="product.group_uom"/>
-          <field name="group_id" string="Origin"/>
+          <field name="origin" string="Origin"/>
           <field name="product_packaging" domain="[('product_tmpl_id','=',product_id)]" groups="product.group_stock_packaging"/>
           <field name="ship_etd"/>
           <field name="ship_eta"/>
