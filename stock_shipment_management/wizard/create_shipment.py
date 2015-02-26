@@ -131,10 +131,8 @@ class ShipmentPlanCreator(models.TransientModel):
         mvs_wrong_state = residual.filtered(
             lambda rec: rec.state not in ('confirmed', 'waiting', 'assigned'))
         residual -= mvs_wrong_state
-        loc_ref = 'stock_route_transit.transit_outgoing'
-        transit_location = self.env.ref(loc_ref)
         mvs_not_transit = residual.filtered(
-            lambda rec: rec.location_dest_id != transit_location)
+            lambda rec: rec.location_dest_id.usage != 'transit')
         residual -= mvs_not_transit
         mvs_no_dest = residual.filtered(
             lambda rec: not rec.move_dest_id)
