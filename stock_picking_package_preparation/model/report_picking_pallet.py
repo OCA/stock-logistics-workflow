@@ -19,21 +19,22 @@
 #
 ##############################################################################
 
-{'name': 'Stock Picking Pallet',
- 'version': '1.0',
- 'author': 'Camptocamp',
- 'maintainer': 'Camptocamp',
- 'license': 'AGPL-3',
- 'category': 'Warehouse Management',
- 'depends': ['stock'],
- 'website': 'http://www.camptocamp.com',
- 'data': ['view/stock_picking_pallet_view.xml',
-          'view/report_picking_pallet.xml',
-          'data/ir_sequence_data.xml',
-          'security/ir.model.access.csv',
-          'report.xml',
-          ],
- 'test': [],
- 'installable': True,
- 'auto_install': False,
- }
+from openerp import models, api
+
+report_name = 'stock_picking_pallet.report_picking_pallet'
+
+
+class PickingPalletReport(models.AbstractModel):
+    _name = 'report.%s' % report_name
+
+    @api.multi
+    def render_html(self, data=None):
+        report_obj = self.env['report']
+        report = report_obj._get_report_from_name(report_name)
+        pallets = self.env['stock.picking.pallet'].browse(self.ids)
+        docargs = {
+            'doc_ids': pallets.ids,
+            'doc_model': report.model,
+            'docs': pallets,
+        }
+        return report_obj.render(report_name, docargs)

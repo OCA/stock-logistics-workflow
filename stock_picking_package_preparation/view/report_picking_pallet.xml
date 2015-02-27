@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <template id="report_picking_pallet_document">
+      <t t-call="report.external_layout">
+        <div class="page">
+        </div>
+      </t>
+    </template>
+
+    <template id="report_picking_pallet">
+      <t t-call="report.html_container">
+        <t t-foreach="doc_ids" t-as="doc_id">
+          <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'stock_picking_pallet.report_picking_pallet_document')"/>
+        </t>
+      </t>
+    </template>
+  </data>
+</openerp>

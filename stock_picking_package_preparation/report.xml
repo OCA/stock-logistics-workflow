@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data noupdate="0">
+    <report
+      id="action_report_picking_pallet"
+      model="stock.picking.pallet"
+      string="Pallets"
+      report_type="qweb-pdf"
+      name="stock_picking_pallet.report_picking_pallet"
+      file="stock.picking.pallet"
+      />
+  </data>
+</openerp>
