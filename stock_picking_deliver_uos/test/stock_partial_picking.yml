@@ -42,6 +42,11 @@
   !python {model: stock.picking}: |
     self.force_assign(cr, uid, [ref("partial_picking_out")])
 -
+  I select for this file a user that is not admin
+-
+  !context
+    uid: 'base.user_demo'
+-
   I create a stock.partial picking, check default values, Onchange method and i deliver the picking
 -
   !python {model: stock.partial.picking}: |
