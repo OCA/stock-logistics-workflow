@@ -34,10 +34,10 @@ class StockLocation(orm.Model):
             [('retention', _('Retention Mode')), ('thru', _('Thru mode'))],
             _('Retention Mode'),
             required=True,
-            help=_("In 'Retention mode' the system wait for the\
-                  whole quantity before the stuff is processed.\n" +
-                   "In 'Thru mode' the shipped quantity is processed regardless\
-                  of the ordered quantity.")
+            help=_("In 'Retention mode' the system waits for the"
+                   "whole quantity before the products processed.\n"
+                   "In 'Thru mode' the shipped quantity is processed regardless"
+                   "of the ordered quantity.")
         ),
     }
     _defaults = {
@@ -49,22 +49,32 @@ class StockPicking(orm.Model):
     _name = 'stock.picking'
     _inherit = "stock.picking"
 
-    def get_move_chain(self, cr, uid, move_id, context=None, move_obj=False):
-        '''Recursively get the chained moves
-        @return list of the chained moves
+    def get_move_chain(self, cr, uid, move_id, context=None):
+        '''For xmlrpc call: get the chained move ids
+
+        @return a list of ids of chained moves'''
+        move_list_obj = self._get_move_chain(
+            cr, uid, move_id, context=context)
+        return [m.id for m in move_list_obj]
+
+    def _get_move_chain(self, cr, uid, move_id, context=None, move_obj=False):
+        '''get the chained moves
+
+        @return a list of the chained moves
         '''
         if not move_obj:
-            move_obj = self.pool.get('stock.move')
-        move_tbc = move_obj.browse(cr, uid, move_id, context, move_obj)
+            move_obj = self.pool['stock.move']
+        move_tbc = move_obj.browse(cr, uid, move_id, context)
 
         # If there is move_dest_id in the chain
-        if move_tbc.move_dest_id:
-            move_chain = self.get_move_chain(
-                cr, uid, move_tbc.move_dest_id.id, context)
-        else:
-            move_chain = []
+        move_chain = []
+        while move_tbc.move_dest_id:
+            move_chain.append(move_tbc)
+            move_tbc = move_tbc.move_dest_id
 
-        move_chain.append(move_tbc)
+        # for the last one move to push into the stack.
+        if move_tbc not in move_chain:
+            move_chain.append(move_tbc)
         return move_chain
 
     def copy_pick_chain(self, cr, uid, all_moves, context=None):
@@ -74,7 +84,7 @@ class StockPicking(orm.Model):
         '''
         new_picks = {}
         all_chained_moves = []
-        sequence_obj = self.pool.get('ir.sequence')
+        sequence_obj = self.pool['ir.sequence']
 
         def _get_sequence_name(seq_obj, pick):
             if pick.type == 'internal':
@@ -85,19 +95,13 @@ class StockPicking(orm.Model):
 
         for move in all_moves:
             all_chained_moves.extend(
-                self.get_move_chain(cr, uid, move.id, context))
+                self._get_move_chain(cr, uid, move.id, context))
 
         for move in all_chained_moves:
-            if not move.picking_id:
-                # TODO handle this kind of exception.
-                raise orm.except_orm(
-                    _('Data Error'),
-                    _('There is no picking relates to this move: ') +
-                    '%s' % move.name)
-            if move.picking_id.id and (move.picking_id.id not in new_picks):
+            if move.picking_id and (move.picking_id.id not in new_picks):
                 pick_tbc = self.browse(cr, uid, move.picking_id.id, context)
-                new_note = ((pick_tbc.note if pick_tbc.note else '') +
-                            ' Copy of stock.pick[%d].') % move.picking_id.id
+                new_note = ((pick_tbc.note if pick_tbc.note else u'') +
+                            _('\nCopy of stock.pick[%d].')) % move.picking_id.id
                 new_pick_id = self.copy(
                     cr, uid, move.picking_id.id,
                     {
@@ -111,54 +115,68 @@ class StockPicking(orm.Model):
         return new_picks
 
     def copy_move_chain(
-            self, cr, uid, move_id, product_qty, new_picks, context=None, move_obj=False):
-        '''Recursively copy the chained move until a location in retention mode or the end.
+            self, cr, uid, move_id, product_qty, new_picks=False, context=None, move_obj=False):
+        '''Copy the chained moves until a location in retention mode or the end.
+
         @return id of the new first move.
         '''
+        new_picks = new_picks or {}
         if not move_obj:
-            move_obj = self.pool.get('stock.move')
+            move_obj = self.pool['stock.move']
         move_tbc = move_obj.browse(cr, uid, move_id, context)
         move_dest_id = False
+        new_move_stack = []
 
         # If there is move_dest_id in the chain and the current location is in thru mode,
         # we need to make a copy of that, then use it as new move_dest_id.
-        if move_tbc.move_dest_id and \
+        while move_tbc.move_dest_id and \
                 move_tbc.location_dest_id.retention_mode == 'thru':
-            move_dest_id = self.copy_move_chain(
-                cr, uid, move_tbc.move_dest_id.id, product_qty, new_picks, context, move_obj)
 
-        my_picking_id = new_picks.get(move_tbc.picking_id.id, False)
+            my_picking_id = new_picks.get(move_tbc.picking_id.id, False)
 
-        new_note = ((move_tbc.note if move_tbc.note else '') + ' Copy of stock.move[%d].') % move_id
-        new_move_id = move_obj.copy(
-            cr, uid, move_id,
-            {
-                'move_dest_id': move_dest_id,
-                'state': 'waiting',
-                'note': new_note,
-                # Don't inherit child, populate it in next step. The same to next line.
-                'move_history_ids': False,
-                'move_history_ids2': False,
-                'product_qty': product_qty,
-                'product_uos_qty': product_qty,
-                'picking_id': my_picking_id,
-                'price_unit': move_tbc.price_unit,
-            })
+            new_note = ((move_tbc.note if move_tbc.note else u'') +
+                        _('\nCopy of stock.move[%d].')) % move_id
+            new_move_id = move_obj.copy(
+                cr, uid, move_id,
+                {
+                    'move_dest_id': False,
+                    'state': 'waiting',
+                    'note': new_note,
+                    # Don't inherit child, populate it in next step. The same to next line.
+                    'move_history_ids': False,
+                    'move_history_ids2': False,
+                    'product_qty': product_qty,
+                    'product_uos_qty': product_qty,
+                    'picking_id': my_picking_id,
+                    'price_unit': move_tbc.price_unit,
+                })
+            # push the new move id for assigning the field: move_dest_id
+            new_move_stack.append(new_move_id)
+            move_tbc = move_tbc.move_dest_id
 
-        # Create the move_history_ids (child) if there is.
-        if move_dest_id:
-            move_obj.write(
-                cr, uid, [new_move_id],
-                {'move_history_ids': [(4, move_dest_id)]})
-        return new_move_id
+        while len(new_move_stack):
+            # fill the field: move_dest_id from the stack
+            move_dest_id = new_move_stack.pop()
+            pre_move_id = False
+            if len(new_move_stack):
+                pre_move_id = new_move_stack[-1]
+
+            # Create the move_history_ids (child) if there is.
+            if pre_move_id:
+                move_obj.write(
+                    cr, uid, pre_move_id, {'move_dest_id': move_dest_id}, context=context)
+                move_obj.write(
+                    cr, uid, [pre_move_id],
+                    {'move_history_ids': [(4, move_dest_id)]})
+        return move_dest_id
 
     def update_move_chain_pick(self, cr, uid, move_id, vals, new_picks, context=None):
-        '''Recursively update the new chained move with the new related picking
+        '''Update the new chained move with the new related picking
             by the first move id until a location in retention mode or the end.
 
         @return True if ok.
         '''
-        move_obj = self.pool.get('stock.move')
+        move_obj = self.pool['stock.move']
         move_tbu = move_obj.browse(cr, uid, move_id, context)
 
         while True:
@@ -172,13 +190,17 @@ class StockPicking(orm.Model):
         return True
 
     def update_move_chain(self, cr, uid, move_id, vals, context=None):
-        '''Recursively update the old chained move by the first move id
+        '''Update the old chained move by the first move id
             until a location in retention mode or the end.
 
+        @param move_id: id of stock move integer
         @return True if ok.
         '''
+        assert move_id, "move id should be False!"
+        if isinstance(move_id, (tuple, list)):
+            move_id = move_id[0]
         ids = [move_id]
-        move_obj = self.pool.get('stock.move')
+        move_obj = self.pool['stock.move']
         move_tbu = move_obj.browse(cr, uid, move_id, context)
 
         while move_tbu.move_dest_id and move_tbu.location_dest_id.retention_mode == 'thru':
@@ -216,7 +238,7 @@ class StockPicking(orm.Model):
     # do_partial()!
     def do_partial(self, cr, uid, ids, partial_datas, context=None):
         """ Makes partial picking and moves done.
-        @param partial_datas : Dictionary containing details of partial picking
+        @param partial_datas: Dictionary containing details of partial picking
                           like partner_id, partner_id, delivery_date,
                           delivery moves with product_id, product_qty, uom
         @return: Dictionary of values
@@ -226,13 +248,15 @@ class StockPicking(orm.Model):
         else:
             context = dict(context)
         res = {}
-        move_obj = self.pool.get('stock.move')
-        uom_obj = self.pool.get('product.uom')
+        move_obj = self.pool['stock.move']
+        uom_obj = self.pool['product.uom']
         wf_service = netsvc.LocalService("workflow")
         for pick in self.browse(cr, uid, ids, context=context):
             complete, too_many, too_few = [], [], []
-            # Elico
+            # changes begain<<<<<<<<
             all_moves = []
+            # - new_picking = None
+            # changes end<<<<<<
             move_product_qty, prodlot_ids, partial_qty, uos_qty, product_uoms = {}, {}, {}, {}, {}
             for move in pick.move_lines:
                 if move.state in ('done', 'cancel'):
@@ -272,6 +296,7 @@ class StockPicking(orm.Model):
                         {'price_unit': product_price,
                          'price_currency_id': product_currency})
 
+            # changes begain<<<<<<<<<<
             # check if there is a production location in the chain
             if self.has_production_mode(cr, uid, all_moves, context=context):
                 res[pick.id] = super(StockPicking, self).do_partial(
@@ -281,33 +306,32 @@ class StockPicking(orm.Model):
                 for move in too_few:
                     product_qty = move_product_qty[move.id]
                     if product_qty != 0:
-                        if product_qty != 0:
-                            """Copy not only one move, but all the moves
-                            where the destination location is in THRU MODE """
-                            new_move_id = self.copy_move_chain(
-                                cr, uid, move.id, product_qty,
-                                new_picks, context)
+                        """Copy not only one move, but all the moves
+                        where the destination location is in THRU MODE """
+                        new_move_id = self.copy_move_chain(
+                            cr, uid, move.id, product_qty,
+                            new_picks, context)
 
-                            prodlot_id = prodlot_ids[move.id]
-                            if prodlot_id:
-                                self.update_move_chain(cr, uid, new_move_id, {
-                                    'prodlot_id': prodlot_id,
-                                }, context)
-
-                            """Update the old moves with
-                                the remaining quantity"""
-                            self.update_move_chain(cr, uid, move.id, {
-                                'product_qty': move.product_qty - product_qty,
-                                # TODO: put correct uos_qty
-                                'product_uos_qty': move.product_qty - product_qty,
+                        prodlot_id = prodlot_ids[move.id]
+                        if prodlot_id:
+                            self.update_move_chain(cr, uid, new_move_id, {
+                                'prodlot_id': prodlot_id,
                             }, context)
 
-                        else:
-                            move_obj.write(
-                                cr, uid, [move.id],
-                                {
-                                    'states': 'waiting',
-                                })
+                        """Update the old moves with
+                            the remaining quantity"""
+                        self.update_move_chain(cr, uid, move.id, {
+                            'product_qty': move.product_qty - product_qty,
+                            # TODO: put correct uos_qty
+                            'product_uos_qty': move.product_qty - product_qty,
+                        }, context)
+
+                    else:
+                        move_obj.write(
+                            cr, uid, [move.id],
+                            {
+                                'states': 'waiting',
+                            })
                 for move in complete:
                         defaults = {}
                         if prodlot_ids.get(move.id):
@@ -396,64 +420,13 @@ class StockPicking(orm.Model):
                         self.action_assign_wkf(
                             cr, uid, [move.move_dest_id.picking_id.id],
                             context=context)
+            # changes end<<<<<<<<<<<
         return res
 
 
 class StockMove(orm.Model):
     _name = "stock.move"
     _inherit = "stock.move"
-
-    def copy_move_chain(self, cr, uid, move_id, product_qty, context=None):
-        '''Recursively copy the chained move until a location in retention mode or the end.
-        @return id of the new first move.
-        '''
-        move_tbc = self.browse(cr, uid, move_id, context)
-        move_dest_id = False
-        # If there is move_dest_id in the chain and the current location is in thru mode,
-        # we need to make a copy of that, then use it as new move_dest_id.
-        if move_tbc.move_dest_id and move_tbc.location_dest_id.retention_mode == 'thru':
-            move_dest_id = self.copy_move_chain(
-                cr, uid, move_tbc.move_dest_id.id, product_qty, context)
-
-        new_note = ((move_tbc.note if move_tbc.note else '') + ' Copy of stock.move[%d].') % move_id
-        new_move_id = self.copy(
-            cr, uid, move_id,
-            {
-                'move_dest_id': move_dest_id,
-                'state': 'waiting',
-                'note': new_note,
-                # Don't inherit child, populate it in next step. The same to next line.
-                'move_history_ids': False,
-                'move_history_ids2': False,
-                'product_qty': product_qty,
-                'product_uos_qty': product_qty,
-                'picking_id': move_tbc.picking_id.id,
-                'price_unit': move_tbc.price_unit,
-                'auto_validate': False
-            })
-        # Create the move_history_ids (child) if there is.
-        if move_dest_id:
-            self.write(cr, uid, [new_move_id], {'move_history_ids': [(4, move_dest_id)]})
-        return new_move_id
-
-    def update_move_chain(self, cr, uid, move_id, vals, context=None):
-        '''Recursively update the chained move by the first move id
-        until a location in retention mode or the end.
-
-        @return True if ok.
-        '''
-
-        if isinstance(move_id, list):
-            move_id = move_id[0]
-        ids = [move_id]
-        move_tbu = self.browse(cr, uid, move_id, context)
-
-        while move_tbu.move_dest_id and move_tbu.location_dest_id.retention_mode == 'thru':
-            ids.append(move_tbu.move_dest_id.id)
-            move_tbu = move_tbu.move_dest_id
-
-        self.write(cr, uid, ids, vals, context)
-        return True
 
     def do_partial(self, cr, uid, ids, partial_datas, context=None):
         """ Makes partial pickings and moves done.
@@ -462,7 +435,7 @@ class StockMove(orm.Model):
                           moves with product_id, product_qty, uom
         """
         res = {}
-        picking_obj = self.pool.get('stock.picking')
+        picking_obj = self.pool['stock.picking']
         wf_service = netsvc.LocalService("workflow")
 
         if context is None:
@@ -501,32 +474,34 @@ class StockMove(orm.Model):
         for move in too_few:
             product_qty = move_product_qty[move.id]
             if product_qty != 0:
+                # changes begain<<<<<<<<<<<<<<
                 prodlot_id = prodlot_ids[move.id]
                 if prodlot_id:
-                    self.update_move_chain(
+                    picking_obj.update_move_chain(
                         cr, uid, [move.id],
                         {'prodlot_id': prodlot_id},
-                        context)
+                        context=context)
 
                 """Copy not only one move, but all the moves where the
                     destination location is in THRU MODE """
-                new_move_id = self.copy_move_chain(cr, uid, move.id, product_qty, context)
+                new_move_id = picking_obj.copy_move_chain(
+                    cr, uid, move.id, product_qty, context=context)
                 complete.append(self.browse(cr, uid, new_move_id))
 
                 """Update not only one move,
                     but all the moves where the destination location is in THRU MODE """
-                self.update_move_chain(
+                picking_obj.update_move_chain(
                     cr, uid, [move.id],
                     {'product_qty': move.product_qty - product_qty,
                      'product_uos_qty': move.product_qty - product_qty},
-                    context)
+                    context=context)
             else:
                 self.write(
                     cr, uid, [move.id],
                     {
                         'states': 'waiting',
                     })
-
+        # changes end<<<<<<<<<<<<<<
         for move in too_many:
             self.write(
                 cr, uid, [move.id],

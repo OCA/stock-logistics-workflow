@@ -33,7 +33,7 @@ in chained locations introducing true back-to-back orders.
 STANDARD ODOO BACK-TO-BACK ORDER BEHAVIOR:
 Original behavior is not fully suitable to handle back-to-back backorders
     process (check "back-to-back orders comparison.pdf"):
-eg: Let's take the following example to understand the implemented difference:
+    Let's take the following example to understand the implemented difference:
 - One PO from a supplier for the full quantity (eg 100 PCE) and
     your supplier ships immediately
     only the available quantity which is 70 PCE.
@@ -111,6 +111,12 @@ Please note:
 - As many back order as necessary can be created:
     all chained moves are automatically updated and created accordingly
 - this behavior works as well in case of sales orders.
+
+Warning:
+- This module reimplement the method: do_partial of object: stock picking and stock move.
+    - the version of your server code(module:stock) should be consist with this module's.
+        Currently this module uses odoo code(commit:73f7a2ba35e21)
+    - be careful if any of your installed module reimplements this method as well.
 """,
     'author': 'Elico Corp',
     'website': 'http://www.openerp.net.cn/',
