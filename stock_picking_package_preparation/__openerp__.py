@@ -28,6 +28,7 @@
  'depends': ['stock'],
  'website': 'http://www.camptocamp.com',
  'data': ['view/stock_picking_pallet_view.xml',
+          'data/ir_sequence_data.xml',
           ],
  'test': [],
  'installable': True,
