@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api
+from openerp import models, fields, api, exceptions, _
 
 
 class StockPickingPallet(models.Model):
@@ -78,7 +78,8 @@ class StockPickingPallet(models.Model):
         default=_default_company_id,
     )
     pack_operation_ids = fields.One2many(
-        related='picking_ids.pack_operation_ids',
+        comodel_name='stock.pack.operation',
+        compute='_compute_pack_operation_ids',
         readonly=True,
     )
     dest_pack_id = fields.Many2one(
@@ -87,6 +88,11 @@ class StockPickingPallet(models.Model):
         readonly=True,
     )
     note = fields.Text()
+
+    @api.depends('picking_ids',
+                 'picking_ids.pack_operation_ids')
+    def _compute_pack_operation_ids(self):
+        self.pack_operation_ids = self.mapped('picking_ids.pack_operation_ids')
 
     @api.multi
     def action_done(self):
@@ -97,6 +103,57 @@ class StockPickingPallet(models.Model):
         self.state = 'cancel'
 
     @api.multi
-    def generate_pack(self):
-        # TODO generate the pack, confirm the pickings
+    def _prepare_package(self):
+        location = self.mapped('picking_ids.location_dest_id')
+        if len(location) != 1:
+            raise exceptions.Warning(
+                _('All the transfers must have the same destination location')
+            )
+        values = {
+            'packaging_id': self.packaging_id.id,
+            'ul_id': self.ul_id.id,
+            'location_id': location.id,
+        }
+        return values
+
+    @api.multi
+    def _generate_pack(self):
+        self.ensure_one()
+        pack_model = self.env['stock.quant.package']
+        move_model = self.env['stock.move']
+        operation_model = self.env['stock.pack.operation']
+
+        if any(picking.state != 'assigned' for picking in self.picking_ids):
+            raise exceptions.Warning(
+                _('All the transfers must be "Ready to Transfer".')
+            )
+
+        operations = operation_model.browse()
+        for picking in self.picking_ids:
+            if not picking.pack_operation_ids:
+                picking.do_prepare_partial()
+            operations |= picking.pack_operation_ids
+
+        for operation in operations:
+            if (operation.product_id and
+                    operation.location_id and
+                    operation.location_dest_id):
+                move_model.check_tracking_product(
+                    operation.product_id,
+                    operation.lot_id.id,
+                    operation.location_id,
+                    operation.location_dest_id
+                )
+            operation.qty_done = operation.product_qty
+
+        pack = pack_model.create(self._prepare_package())
+
+        operations.write({'result_package_id': pack.id})
+        self.dest_pack_id = pack.id
+        self.picking_ids.do_transfer()
+
+    @api.multi
+    def do_generate_pack(self):
+        for pallet in self:
+            pallet._generate_pack()
         self.action_done()
