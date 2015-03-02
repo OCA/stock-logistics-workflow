@@ -26,7 +26,7 @@
 This module adds a link between pickings and generated invoices, so that user can easly reach the invoice related to the picking. It also adds a link between stock moves and invoice lines.
 
 """,
-    'author': 'Agile Business Group',
+    'author': "Agile Business Group,Odoo Community Association (OCA)",
     'website': 'http://www.agilebg.com',
     'license': 'AGPL-3',
     "depends": ['stock'],

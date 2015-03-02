@@ -29,7 +29,7 @@ custom attributes, from the Finished Products tab in the Manufacturing Order.
 
 """,
  'complexity': 'easy',
- 'author': 'Camptocamp',
+ 'author': "Camptocamp,Odoo Community Association (OCA)",
  'website': 'http://www.camptocamp.com/',
  'depends': ['mrp', 'production_lot_custom_attributes'],
  'init_xml': [],

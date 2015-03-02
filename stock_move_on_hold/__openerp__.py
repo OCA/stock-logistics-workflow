@@ -22,7 +22,7 @@
 {
     "name" : "Stock On Hold Status",
     "version" : "1.0",
-    "author" : "Julius Network Solutions",
+    "author" : "Julius Network Solutions,Odoo Community Association (OCA)",
     "description" : """ This Module allows to hold pickings.
     It's adding a button which holding the picking and workflow.
     You should use the sale_prepayment module to be automated with sale orders and invoices.
