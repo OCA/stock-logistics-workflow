@@ -45,6 +45,7 @@ class StockPickingPallet(models.Model):
         default='draft',
         string='State',
         readonly=True,
+        copy=False,
     )
     partner_id = fields.Many2one(
         comodel_name='res.partner',
@@ -55,6 +56,7 @@ class StockPickingPallet(models.Model):
     picking_ids = fields.Many2many(
         comodel_name='stock.picking',
         string='Transfers',
+        copy=False,
         states={'done': [('readonly', True)], 'cancel': [('readonly', True)]},
     )
     ul_id = fields.Many2one(
@@ -89,6 +91,7 @@ class StockPickingPallet(models.Model):
         comodel_name='stock.quant.package',
         string='Pack',
         readonly=True,
+        copy=False,
     )
     note = fields.Text()
 
