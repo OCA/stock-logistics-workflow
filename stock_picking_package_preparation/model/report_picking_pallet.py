@@ -32,9 +32,17 @@ class PickingPalletReport(models.AbstractModel):
         report_obj = self.env['report']
         report = report_obj._get_report_from_name(report_name)
         pallets = self.env['stock.picking.pallet'].browse(self.ids)
+
+        lines = {}
+        for pallet in pallets:
+            package = pallet.dest_package_id
+            quants = self.env['stock.quant'].browse(package.get_content())
+            lines[pallet] = quants
+
         docargs = {
             'doc_ids': pallets.ids,
             'doc_model': report.model,
             'docs': pallets,
+            'lines': lines,
         }
         return report_obj.render(report_name, docargs)
