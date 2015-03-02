@@ -94,6 +94,39 @@ class StockPickingPallet(models.Model):
         copy=False,
     )
     note = fields.Text()
+    weight = fields.Float(compute='_compute_weight')
+    net_weight = fields.Float(compute='_compute_weight')
+    quant_ids = fields.Many2many(
+        compute='_compute_quant_ids',
+        comodel_name='stock.quant',
+        name='All Content',
+    )
+
+    @api.one
+    @api.depends('dest_package_id',
+                 'dest_package_id.children_ids')
+    def _compute_quant_ids(self):
+        package = self.dest_package_id
+        quants = self.env['stock.quant'].browse(package.get_content())
+        self.quant_ids = quants
+
+    @api.one
+    @api.depends('dest_package_id',
+                 'dest_package_id.children_ids',
+                 'dest_package_id.ul_id',
+                 'dest_package_id.quant_ids')
+    def _compute_weight(self):
+        package = self.dest_package_id
+        quant_model = self.env['stock.quant']
+        package_model = self.env['stock.quant.package']
+        quants = quant_model.browse(package.get_content())
+        # weight of the products only
+        net_weight = sum(l.product_id.weight * l.qty for l in quants)
+        # weight of the empty packages + products
+        child_packages = package_model.search([('id', 'child_of', package.id)])
+        weight = sum(child_packages.mapped('ul_id.weight')) + net_weight
+        self.net_weight = net_weight
+        self.weight = weight
 
     @api.depends('picking_ids',
                  'picking_ids.pack_operation_ids')

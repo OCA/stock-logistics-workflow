@@ -30,9 +30,11 @@
             </div>
             <div class="col-xs-2">
               <strong>Gross weight</strong>
+              <p t-field="o.weight"/>
             </div>
             <div class="col-xs-2">
               <strong>Net weight</strong>
+              <p t-field="o.net_weight"/>
             </div>
             <div class="col-xs-2" t-if="o.dest_package_id.ul_id">
               <strong>Dimensions</strong>
@@ -61,7 +63,7 @@
               </tr>
             </thead>
             <tbody class="invoice_tbody">
-              <t t-foreach="lines[o]" t-as="l">
+              <t t-foreach="o.quant_ids" t-as="l">
                 <tr class="small">
                   <td><span t-field="l.product_id.name"/></td>
                   <td class="text-center"><span t-field="l.lot_id.name"/></td>
