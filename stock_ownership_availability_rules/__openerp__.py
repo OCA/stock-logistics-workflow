@@ -17,7 +17,7 @@
 {'name': 'Stock Ownership Availability Rules',
  'summary': 'Enforce ownership on stock availability',
  'version': '0.2',
- 'author': 'Camptocamp',
+ 'author': "Camptocamp,Odoo Community Association (OCA)",
  'category': 'Purchase Management',
  'license': 'AGPL-3',
  'images': [],

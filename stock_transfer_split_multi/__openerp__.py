@@ -26,7 +26,7 @@
     'category': 'Warehouse Management',
     'license': 'AGPL-3',
     'summary': "In the stock transfer wizard, you can split by multiple units",
-    'author': 'Akretion',
+    'author': "Akretion,Odoo Community Association (OCA)",
     'website': 'http://www.akretion.com',
     'depends': ['stock'],
     'data': [

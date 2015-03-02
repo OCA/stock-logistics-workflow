@@ -21,7 +21,7 @@
 
 {'name': 'Create configuration of stock location flow',
  'version': '1.0',
- 'author': 'Camptocamp',
+ 'author': "Camptocamp,Odoo Community Association (OCA)",
  'maintainer': 'Camptocamp',
  'category': 'Warehouse',
  'complexity': 'easy', #easy, normal, expert

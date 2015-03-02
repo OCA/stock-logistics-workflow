@@ -25,7 +25,7 @@
     # description is in README.rst
     "version": "0.1",
     "depends": ["stock_dropshipping"],
-    "author": "Camptocamp",
+    "author": "Camptocamp,Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "category": "Generic Modules/Stock",
     "installable": True,

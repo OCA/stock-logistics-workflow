@@ -23,7 +23,7 @@
     "name": "Product Serial",
     "summary": "Enhance Serial Number management",
     "version": "1.0",
-    "author": "Akretion, NaN·tic",
+    "author": "Akretion, NaN·tic,Odoo Community Association (OCA)",
     "website": "http://www.akretion.com",
     "depends": ["stock"],
     "category": "Generic Modules/Inventory Control",

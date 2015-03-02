@@ -24,7 +24,7 @@
  'depends': ['stock',
              'procurement',
              ],
- 'author': "Camptocamp",
+ 'author': "Camptocamp,Odoo Community Association (OCA)",
  'description': """
 Check again availability of delivery orders after inventories
 =============================================================

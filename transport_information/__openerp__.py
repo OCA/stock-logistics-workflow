@@ -22,7 +22,7 @@
 {"name": "Transport Information",
  "summary": "Transport Information",
  "version": "0.1",
- "author": "Camptocamp",
+ "author": "Camptocamp,Odoo Community Association (OCA)",
  "category": "Purchase Management",
  "license": "AGPL-3",
  'complexity': "easy",

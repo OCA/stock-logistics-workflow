@@ -20,7 +20,7 @@
 ##############################################################################
 {'name': 'Stock picking no confirm split',
  'version': 'version',
- 'author': 'Camptocamp',
+ 'author': "Camptocamp,Odoo Community Association (OCA)",
  'maintainer': 'Camptocamp',
  'category': 'stock',
  'complexity': "normal",  # easy, normal, expert

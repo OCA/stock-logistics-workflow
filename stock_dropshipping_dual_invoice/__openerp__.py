@@ -18,7 +18,7 @@
  'summary':
  'Create both Supplier and Customer Invoices from a Dropshipping Delivery',
  'version': '0.1',
- 'author': 'Camptocamp',
+ 'author': "Camptocamp,Odoo Community Association (OCA)",
  'category': 'Warehouse',
  'license': 'AGPL-3',
  'depends': ['stock_account',

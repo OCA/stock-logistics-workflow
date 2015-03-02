@@ -27,7 +27,7 @@
     'category': 'Stock',
     'description': """This module allows you to bring back a completed stock
 picking to draft state""",
-    'author': 'www.andreacometa.it',
+    'author': "www.andreacometa.it,Odoo Community Association (OCA)",
     'website': 'http://www.andreacometa.it',
     'license': 'AGPL-3',
     'depends': ['stock_picking_invoice_link'],
