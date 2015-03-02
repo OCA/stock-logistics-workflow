@@ -29,7 +29,6 @@
  'website': 'http://www.camptocamp.com',
  'data': ['view/stock_picking_pallet_view.xml',
           'view/report_picking_pallet.xml',
-          'data/ir_sequence_data.xml',
           'security/ir.model.access.csv',
           'report.xml',
           ],

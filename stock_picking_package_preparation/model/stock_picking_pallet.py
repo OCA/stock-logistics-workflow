@@ -32,9 +32,10 @@ class StockPickingPallet(models.Model):
         return company_model._company_default_get('stock.picking.pallet')
 
     name = fields.Char(
-        default='/',
+        related='dest_pack_id.name',
         readonly=True,
         select=True,
+        store=True,
     )
     state = fields.Selection(
         selection=[('draft', 'Draft'),
@@ -95,13 +96,6 @@ class StockPickingPallet(models.Model):
                  'picking_ids.pack_operation_ids')
     def _compute_pack_operation_ids(self):
         self.pack_operation_ids = self.mapped('picking_ids.pack_operation_ids')
-
-    @api.model
-    def create(self, vals):
-        if vals.get('name') or '/' == '/':
-            sequence_obj = self.env['ir.sequence']
-            vals['name'] = sequence_obj.next_by_code('stock.picking.pallet')
-        return super(StockPickingPallet, self).create(vals)
 
     @api.multi
     def action_done(self):
