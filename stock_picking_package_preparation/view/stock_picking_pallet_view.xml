@@ -9,7 +9,7 @@
           <field name="name"/>
           <field name="partner_id"/>
           <field name="date"/>
-          <field name="dest_pack_id"/>
+          <field name="dest_package_id"/>
           <field name="state"/>
         </tree>
       </field>
@@ -35,7 +35,7 @@
               <group>
                 <field name="partner_id"/>
                 <field name="date"/>
-                <field name="dest_pack_id"/>
+                <field name="dest_package_id"/>
               </group>
               <group>
                 <field name="ul_id"/>

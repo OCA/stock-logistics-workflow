@@ -32,7 +32,7 @@ class StockPickingPallet(models.Model):
         return company_model._company_default_get('stock.picking.pallet')
 
     name = fields.Char(
-        related='dest_pack_id.name',
+        related='dest_package_id.name',
         readonly=True,
         select=True,
         store=True,
@@ -87,7 +87,7 @@ class StockPickingPallet(models.Model):
         compute='_compute_pack_operation_ids',
         readonly=True,
     )
-    dest_pack_id = fields.Many2one(
+    dest_package_id = fields.Many2one(
         comodel_name='stock.quant.package',
         string='Pack',
         readonly=True,
@@ -155,7 +155,7 @@ class StockPickingPallet(models.Model):
         pack = pack_model.create(self._prepare_package())
 
         operations.write({'result_package_id': pack.id})
-        self.dest_pack_id = pack.id
+        self.dest_package_id = pack.id
         self.picking_ids.do_transfer()
 
     @api.multi
