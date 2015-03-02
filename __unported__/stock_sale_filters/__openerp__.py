@@ -24,7 +24,7 @@
 	"name" : "SO related filters on stock.picking and sale.order",
 	"version" : "1.3",
 	"depends" : ["delivery"],
-	"author" : "Camptocamp",
+	"author" : "Camptocamp,Odoo Community Association (OCA)",
         "license": "AGPL-3",
 	"description": """add filters on stock.picking views
         """,

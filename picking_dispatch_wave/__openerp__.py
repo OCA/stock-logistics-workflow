@@ -24,7 +24,7 @@
     "name": "Picking Dispatch Wave",
     "version": "0.1",
     "depends": ['picking_dispatch'],
-    "author": "Camptocamp",
+    "author": "Camptocamp,Odoo Community Association (OCA)",
     'license': 'AGPL-3',
     "description": """Allows to set a picking dispatch
 including the number maximum of pickings that you want to pick:

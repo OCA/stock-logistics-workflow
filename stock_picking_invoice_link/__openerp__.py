@@ -30,7 +30,7 @@ So that user can easly reach the invoice related to the picking.
 Probably to be modified according to bug 1169998 (when solution will come)
 https://bugs.launchpad.net/openobject-addons/+bug/1169998
 """,
-    'author': 'Agile Business Group',
+    'author': "Agile Business Group,Odoo Community Association (OCA)",
     'website': 'http://www.agilebg.com',
     'license': 'AGPL-3',
     "depends": ['stock'],

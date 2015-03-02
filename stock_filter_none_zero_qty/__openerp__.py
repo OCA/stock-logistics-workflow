@@ -41,7 +41,7 @@
         "product",
     ],
     'category': 'Warehouse',
-    'author': 'OPENTIA',
+    'author': "OPENTIA,Odoo Community Association (OCA)",
     'contributors': 'Julius Network Solutions, Camptocamp',
     'website': 'http://www.opentia.com/, http://www.julius.fr/',
     'demo': [],

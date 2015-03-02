@@ -20,7 +20,7 @@
 ##############################################################################
 {"name": "Stock Picking Update Date",
  "version": "1.0",
- "author": "Camptocamp",
+ "author": "Camptocamp,Odoo Community Association (OCA)",
  "category": 'Warehouse Management',
  "website": "http://camptocamp.com",
  "description": """

@@ -23,7 +23,7 @@
     "name": "Stock obsolete",
     "summary": "Add product depreciation",
     "version": "1.0",
-    "author": "Camptocamp",
+    "author": "Camptocamp,Odoo Community Association (OCA)",
     "category": "Generic Modules/Stock",
     "description":
     """
