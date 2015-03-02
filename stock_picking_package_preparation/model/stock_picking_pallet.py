@@ -40,6 +40,7 @@ class StockPickingPallet(models.Model):
     state = fields.Selection(
         selection=[('draft', 'Draft'),
                    ('cancel', 'Cancelled'),
+                   ('in_pack', 'In Pack'),
                    ('done', 'Done'),
                    ],
         default='draft',
@@ -51,35 +52,47 @@ class StockPickingPallet(models.Model):
         comodel_name='res.partner',
         string='Partner',
         required=True,
-        states={'done': [('readonly', True)], 'cancel': [('readonly', True)]},
+        states={'done': [('readonly', True)],
+                'in_pack': [('readonly', True)],
+                'cancel': [('readonly', True)]},
     )
     picking_ids = fields.Many2many(
         comodel_name='stock.picking',
         string='Transfers',
         copy=False,
-        states={'done': [('readonly', True)], 'cancel': [('readonly', True)]},
+        states={'done': [('readonly', True)],
+                'in_pack': [('readonly', True)],
+                'cancel': [('readonly', True)]},
     )
     ul_id = fields.Many2one(
         comodel_name='product.ul',
         string='Logistic Unit',
-        states={'done': [('readonly', True)], 'cancel': [('readonly', True)]},
+        states={'done': [('readonly', True)],
+                'in_pack': [('readonly', True)],
+                'cancel': [('readonly', True)]},
     )
     packaging_id = fields.Many2one(
         comodel_name='product.packaging',
         string='Packaging',
-        states={'done': [('readonly', True)], 'cancel': [('readonly', True)]},
+        states={'done': [('readonly', True)],
+                'in_pack': [('readonly', True)],
+                'cancel': [('readonly', True)]},
     )
     date = fields.Datetime(
         string='Document Date',
         default=fields.Datetime.now,
-        states={'done': [('readonly', True)], 'cancel': [('readonly', True)]},
+        states={'done': [('readonly', True)],
+                'in_pack': [('readonly', True)],
+                'cancel': [('readonly', True)]},
     )
     company_id = fields.Many2one(
         comodel_name='res.company',
         string='Company',
         required=True,
         select=True,
-        states={'done': [('readonly', True)], 'cancel': [('readonly', True)]},
+        states={'done': [('readonly', True)],
+                'in_pack': [('readonly', True)],
+                'cancel': [('readonly', True)]},
         default=_default_company_id,
     )
     pack_operation_ids = fields.One2many(
@@ -135,11 +148,36 @@ class StockPickingPallet(models.Model):
 
     @api.multi
     def action_done(self):
+        if not self.dest_package_id:
+            raise exceptions.Warning(
+                _('The package has not been generated.')
+            )
+        self.picking_ids.do_transfer()
         self.state = 'done'
 
     @api.multi
     def action_cancel(self):
+        if self.state == 'done':
+            raise exceptions.Warning(
+                _('Cannot cancel a done pallet.')
+            )
+        if self.dest_package_id:
+            self.dest_package_id.unlink()
         self.state = 'cancel'
+
+    @api.multi
+    def action_draft(self):
+        if self.state != 'cancel':
+            raise exceptions.Warning(
+                _('Only canceled pallet can be reset to draft.')
+            )
+        self.state = 'draft'
+
+    @api.multi
+    def action_put_in_pack(self):
+        for pallet in self:
+            pallet._generate_pack()
+        self.state = 'in_pack'
 
     @api.multi
     def _prepare_package(self):
@@ -189,10 +227,3 @@ class StockPickingPallet(models.Model):
 
         operations.write({'result_package_id': pack.id})
         self.dest_package_id = pack.id
-        self.picking_ids.do_transfer()
-
-    @api.multi
-    def do_generate_pack(self):
-        for pallet in self:
-            pallet._generate_pack()
-        self.action_done()

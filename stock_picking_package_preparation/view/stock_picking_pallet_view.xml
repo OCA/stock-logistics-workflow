@@ -9,7 +9,7 @@
           <field name="name"/>
           <field name="partner_id"/>
           <field name="date"/>
-          <field name="dest_package_id"/>
+          <field name="dest_package_id" attrs="{'invisible': [('state', '!=', 'done')]}"/>
           <field name="state"/>
         </tree>
       </field>
@@ -21,8 +21,10 @@
       <field name="arch" type="xml">
         <form string="Pallet Preparation">
           <header>
-            <button name="do_generate_pack" states="draft" string="Pallet done" type="object" class="oe_highlight" groups="base.group_user"/>
-            <button name="action_cancel" states="draft" string="Cancel" groups="base.group_user" type="object"/>
+            <button name="action_put_in_pack" states="draft" string="Put in pack" type="object" class="oe_highlight" groups="base.group_user"/>
+            <button name="action_done" states="in_pack" string="Pallet done" type="object" class="oe_highlight" groups="base.group_user"/>
+            <button name="action_cancel" states="draft,in_pack" string="Cancel" groups="base.group_user" type="object"/>
+            <button name="action_draft" states="cancel" string="Reset to draft" type="object" class="oe_highlight" groups="base.group_user"/>
             <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,partially_available,assigned,done" statusbar_colors='{"shipping_except":"red","invoice_except":"red","waiting_date":"blue"}'/>
           </header>
           <sheet>
@@ -35,7 +37,7 @@
               <group>
                 <field name="partner_id"/>
                 <field name="date"/>
-                <field name="dest_package_id"/>
+                <field name="dest_package_id" attrs="{'invisible': [('state', '!=', 'done')]}"/>
               </group>
               <group>
                 <field name="ul_id"/>
