@@ -240,8 +240,10 @@ class ShipmentPlan(models.Model):
         return super(ShipmentPlan, self).create(values)
 
     @api.multi
-    def action_reset(self):
+    def action_cancel_draft(self):
         self.write({'state': 'draft'})
+        self.delete_workflow()
+        self.create_workflow()
         return True
 
     @api.multi
