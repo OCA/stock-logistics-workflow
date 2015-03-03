@@ -50,7 +50,7 @@ class stock_picking(models.Model):
             picking.move_lines.write({'state': 'draft'})
             picking.state = 'draft'
             for move in picking.move_lines:
-                for quant in picking.move_lines.quant_ids:
+                for quant in move.quant_ids:
                     if move.location_dest_id.id == quant.location_id.id:
                         quant.location_id = move.location_id.id
             if picking.invoice_state == 'invoiced' and not picking.invoice_id:
