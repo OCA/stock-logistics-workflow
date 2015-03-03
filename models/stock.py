@@ -58,6 +58,11 @@ class StockQuant(models.Model):
     def onchange_total_weight(self):
         self.total_weight = self.product_id.weight * self.qty
 
+    @api.one
+    @api.onchange('product_id', 'qty')
+    def onchange_total_weight_net(self):
+        self.total_weight = self.product_id.weight_net * self.qty
+
 
 class StockQuantPackage(models.Model):
     _inherit = 'stock.quant.package'
@@ -73,19 +78,26 @@ class StockQuantPackage(models.Model):
         self.total_weight_net = sum(x.total_weight_net for x in self.quant_ids)
 
     @api.one
-    @api.depends('total_weight', 'empty_weight', 'quant_ids.total_weight')
+    @api.depends('total_weight', 'empty_weight', 'quant_ids.total_weight',
+                 'children_ids', 'children_ids.total_weight',
+                 'children_ids.empty_weight')
     def _calculate_total_estim_weight(self):
         self.total_estim_weight = (self.total_weight + self.empty_weight +
-                                   sum(x.total_weight for x in self.quant_ids))
+                                   sum(x.total_weight for x in
+                                       self.children_ids) +
+                                   sum(x.empty_weight for x in
+                                       self.children_ids))
         self.real_weight = self.total_estim_weight
 
     @api.one
     @api.depends('total_weight_net', 'empty_weight',
-                 'quant_ids.total_weight_net')
+                 'quant_ids.total_weight_net', 'children_ids',
+                 'children_ids.empty_weight', 'children_ids.total_weight_net')
     def _calculate_total_estim_weight_net(self):
         self.total_estim_weight_net = (
             self.total_weight_net + self.empty_weight +
-            sum(x.total_weight_net for x in self.quant_ids))
+            sum(x.total_weight_net for x in self.children_ids) +
+            sum(x.empty_weight for x in self.children_ids))
 
     @api.one
     @api.depends('quant_ids', 'quant_ids.total_volume')
@@ -98,10 +110,10 @@ class StockQuantPackage(models.Model):
         self.permitted_volume = self.height * self.width * self.length
 
     @api.one
-    @api.depends('total_volume', 'quant_ids.total_volume')
+    @api.depends('total_volume', 'children_ids', 'children_ids.total_volume')
     def _calculate_tvolume_charge(self):
-        self.total_tvolume_charge = (
-            self.total_volume + sum(x.total_volume for x in self.quant_ids))
+        self.tvolume_charge = (
+            self.total_volume + sum(x.total_volume for x in self.children_ids))
 
     height = fields.Float(string='Height', help='The height of the package')
     width = fields.Float(string='Width', help='The width of the package')
@@ -141,8 +153,11 @@ class StockQuantPackage(models.Model):
         self.empty_weight = self.ul_id.weight
 
     @api.one
-    @api.onchange('total_weight', 'empty_weight', 'quant_ids')
-    @api.depends('total_weight', 'empty_weight', 'quant_ids.total_weight')
+    @api.onchange('total_weight', 'empty_weight', 'quant_ids', 'children_ids')
+    @api.depends('total_weight', 'empty_weight', 'quant_ids.total_weight',
+                 'children_ids', 'children_ids.total_weight',
+                 'children_ids.empty_weight')
     def onchange_real_weight(self):
         self.real_weight = (self.total_weight + self.empty_weight +
-                            sum(x.total_weight for x in self.quant_ids))
+                            sum(x.total_weight for x in self.children_ids) +
+                            sum(x.empty_weight for x in self.children_ids))
