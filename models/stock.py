@@ -82,11 +82,9 @@ class StockQuantPackage(models.Model):
                  'children_ids', 'children_ids.total_weight',
                  'children_ids.empty_weight')
     def _calculate_total_estim_weight(self):
-        self.total_estim_weight = (self.total_weight + self.empty_weight +
-                                   sum(x.total_weight for x in
-                                       self.children_ids) +
-                                   sum(x.empty_weight for x in
-                                       self.children_ids))
+        self.total_estim_weight = (
+            self.total_weight + self.empty_weight +
+            sum(x.total_weight + x.empty_weight for x in self.children_ids))
         self.real_weight = self.total_estim_weight
 
     @api.one
@@ -96,8 +94,8 @@ class StockQuantPackage(models.Model):
     def _calculate_total_estim_weight_net(self):
         self.total_estim_weight_net = (
             self.total_weight_net + self.empty_weight +
-            sum(x.total_weight_net for x in self.children_ids) +
-            sum(x.empty_weight for x in self.children_ids))
+            sum(x.total_weight_net + x.empty_weight for x in
+                self.children_ids))
 
     @api.one
     @api.depends('quant_ids', 'quant_ids.total_volume')
@@ -158,6 +156,6 @@ class StockQuantPackage(models.Model):
                  'children_ids', 'children_ids.total_weight',
                  'children_ids.empty_weight')
     def onchange_real_weight(self):
-        self.real_weight = (self.total_weight + self.empty_weight +
-                            sum(x.total_weight for x in self.children_ids) +
-                            sum(x.empty_weight for x in self.children_ids))
+        self.real_weight = (
+            self.total_weight + self.empty_weight +
+            sum(x.total_weight + x.empty_weight for x in self.children_ids))
