@@ -23,6 +23,10 @@
                   <td>Document Nr.</td>
                   <td><span t-field="o.name"/></td>
                 </tr>
+                <tr>
+                  <td>Shipment Date</td>
+                  <td><span t-field="o.date_done"/></td>
+                </tr>
               </table>
             </div>
           </div>

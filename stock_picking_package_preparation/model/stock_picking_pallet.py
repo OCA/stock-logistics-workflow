@@ -85,6 +85,10 @@ class StockPickingPallet(models.Model):
                 'in_pack': [('readonly', True)],
                 'cancel': [('readonly', True)]},
     )
+    date_done = fields.Datetime(
+        string='Shipping Date',
+        readonly=True,
+    )
     company_id = fields.Many2one(
         comodel_name='res.company',
         string='Company',
@@ -153,7 +157,7 @@ class StockPickingPallet(models.Model):
                 _('The package has not been generated.')
             )
         self.picking_ids.do_transfer()
-        self.state = 'done'
+        self.write({'state': 'done', 'date_done': fields.Datetime.now()})
 
     @api.multi
     def action_cancel(self):
