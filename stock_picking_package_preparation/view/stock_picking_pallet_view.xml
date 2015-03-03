@@ -10,7 +10,7 @@
           <field name="partner_id"/>
           <field name="date"/>
           <field name="date_done"/>
-          <field name="dest_package_id" attrs="{'invisible': [('state', '!=', 'done')]}"/>
+          <field name="dest_package_id"/>
           <field name="state"/>
         </tree>
       </field>
@@ -38,8 +38,8 @@
               <group>
                 <field name="partner_id"/>
                 <field name="date"/>
-                <field name="date_done"/>
-                <field name="dest_package_id" attrs="{'invisible': [('state', '!=', 'done')]}"/>
+                <field name="date_done" attrs="{'invisible': [('state', '!=', 'done')]}"/>
+                <field name="dest_package_id" attrs="{'invisible': [('dest_package_id', '=', False)]}"/>
               </group>
               <group>
                 <field name="ul_id"/>
