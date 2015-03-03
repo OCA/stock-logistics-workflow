@@ -32,7 +32,7 @@ class StockPickingPallet(models.Model):
         return company_model._company_default_get('stock.picking.pallet')
 
     name = fields.Char(
-        related='dest_package_id.name',
+        related='package_id.name',
         readonly=True,
         select=True,
         store=True,
@@ -104,7 +104,7 @@ class StockPickingPallet(models.Model):
         compute='_compute_pack_operation_ids',
         readonly=True,
     )
-    dest_package_id = fields.Many2one(
+    package_id = fields.Many2one(
         comodel_name='stock.quant.package',
         string='Pack',
         readonly=True,
@@ -120,20 +120,20 @@ class StockPickingPallet(models.Model):
     )
 
     @api.one
-    @api.depends('dest_package_id',
-                 'dest_package_id.children_ids')
+    @api.depends('package_id',
+                 'package_id.children_ids')
     def _compute_quant_ids(self):
-        package = self.dest_package_id
+        package = self.package_id
         quants = self.env['stock.quant'].browse(package.get_content())
         self.quant_ids = quants
 
     @api.one
-    @api.depends('dest_package_id',
-                 'dest_package_id.children_ids',
-                 'dest_package_id.ul_id',
-                 'dest_package_id.quant_ids')
+    @api.depends('package_id',
+                 'package_id.children_ids',
+                 'package_id.ul_id',
+                 'package_id.quant_ids')
     def _compute_weight(self):
-        package = self.dest_package_id
+        package = self.package_id
         quant_model = self.env['stock.quant']
         package_model = self.env['stock.quant.package']
         quants = quant_model.browse(package.get_content())
@@ -152,7 +152,7 @@ class StockPickingPallet(models.Model):
 
     @api.multi
     def action_done(self):
-        if not self.dest_package_id:
+        if not self.package_id:
             raise exceptions.Warning(
                 _('The package has not been generated.')
             )
@@ -165,8 +165,8 @@ class StockPickingPallet(models.Model):
             raise exceptions.Warning(
                 _('Cannot cancel a done pallet.')
             )
-        if self.dest_package_id:
-            self.dest_package_id.unlink()
+        if self.package_id:
+            self.package_id.unlink()
         self.state = 'cancel'
 
     @api.multi
@@ -230,4 +230,4 @@ class StockPickingPallet(models.Model):
         pack = pack_model.create(self._prepare_package())
 
         operations.write({'result_package_id': pack.id})
-        self.dest_package_id = pack.id
+        self.package_id = pack.id

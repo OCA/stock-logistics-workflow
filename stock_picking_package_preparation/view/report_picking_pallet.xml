@@ -53,9 +53,9 @@
                   <td>Dimensions</td>
                   <td>
                     <strong>
-                      <span t-field="o.dest_package_id.ul_id.height"/> cm x
-                      <span t-field="o.dest_package_id.ul_id.width"/> cm x
-                      <span t-field="o.dest_package_id.ul_id.length"/> cm
+                      <span t-field="o.package_id.ul_id.height"/> cm x
+                      <span t-field="o.package_id.ul_id.width"/> cm x
+                      <span t-field="o.package_id.ul_id.length"/> cm
                     </strong>
                   </td>
                 </tr>
