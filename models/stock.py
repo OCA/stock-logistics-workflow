@@ -61,7 +61,7 @@ class StockQuant(models.Model):
     @api.one
     @api.onchange('product_id', 'qty')
     def onchange_total_weight_net(self):
-        self.total_weight = self.product_id.weight_net * self.qty
+        self.total_weight_net = self.product_id.weight_net * self.qty
 
 
 class StockQuantPackage(models.Model):
