@@ -23,7 +23,7 @@
 #
 ##############################################################################
 
-from openerp import models, api, _, workflow, exceptions
+from openerp import models, api, _, exceptions
 
 
 class stock_picking(models.Model):
@@ -55,11 +55,6 @@ class stock_picking(models.Model):
                         quant.location_id = move.location_id.id
             if picking.invoice_state == 'invoiced' and not picking.invoice_id:
                 picking.invoice_state = '2binvoiced'
-            # Deleting the existing instance of workflow
-            workflow.trg_delete(
-                self._uid, 'stock.picking', picking.id, self._cr)
-            workflow.trg_create(
-                self._uid, 'stock.picking', picking.id, self._cr)
             picking.message_post(
                 _("The picking has been re-opened and set to draft state"))
         return
