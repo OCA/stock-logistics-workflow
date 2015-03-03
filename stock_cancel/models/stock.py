@@ -23,10 +23,10 @@
 #
 ##############################################################################
 
-from openerp import models, api, _, workflow, exceptions
+from openerp import models, api, _, exceptions
 
 
-class stock_picking(models.Model):
+class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
     @api.multi
@@ -38,6 +38,7 @@ class stock_picking(models.Model):
 
     @api.multi
     def action_revert_done(self):
+        quant_obj = self.env['stock.quant']
         for picking in self:
             if picking.has_valuation_moves():
                 raise exceptions.Warning(
@@ -47,15 +48,27 @@ class stock_picking(models.Model):
             if picking.invoice_id:
                 raise exceptions.Warning(
                     _('Picking %s has invoices!') % (picking.name))
+            for move in picking.move_lines:
+                for quant in move.quant_ids:
+                    if quant.location_id == move.location_dest_id:
+                        if quant.qty != move.product_uom_qty:
+                            raise exceptions.Warning(
+                                _('Picking %s cannot be cancelled because '
+                                  'their quants have later moves associated '
+                                  'to them.')
+                                % (picking.name))
+                        quant_obj.quants_move(
+                            [(quant, quant.qty)], move, move.location_id,
+                            location_from=move.location_dest_id,
+                            lot_id=quant.lot_id.id, owner_id=quant.owner_id.id)
+                quant_obj.quants_unreserve(move)
             picking.move_lines.write({'state': 'draft'})
             picking.state = 'draft'
             if picking.invoice_state == 'invoiced' and not picking.invoice_id:
                 picking.invoice_state = '2binvoiced'
             # Deleting the existing instance of workflow
-            workflow.trg_delete(
-                self._uid, 'stock.picking', picking.id, self._cr)
-            workflow.trg_create(
-                self._uid, 'stock.picking', picking.id, self._cr)
+            picking.delete_workflow()
+            picking.create_workflow()
             picking.message_post(
                 _("The picking has been re-opened and set to draft state"))
         return

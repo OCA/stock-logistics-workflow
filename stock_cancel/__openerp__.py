@@ -22,18 +22,19 @@
 ##############################################################################
 
 {
-    'name': 'Stock Cancel',
-    'version': '1.2',
-    'category': 'Stock',
-    'description': """This module allows you to bring back a completed stock
-picking to draft state""",
-    'author': "www.andreacometa.it,Odoo Community Association (OCA)",
-    'website': 'http://www.andreacometa.it',
-    'license': 'AGPL-3',
-    'depends': ['stock_picking_invoice_link'],
-    'data': [
-        'stock_view.xml',
-        ],
-    'installable': False,
-    'images': ['images/stock_picking.jpg'],
+    "name": "Stock Cancel",
+    "version": "1.2",
+    "category": "Stock",
+    "author": "www.andreacometa.it, Odoo Community Association (OCA)",
+    "website": "http://www.andreacometa.it",
+    "depends": [
+        "stock_picking_invoice_link"
+    ],
+    "data": [
+        "views/stock_view.xml",
+    ],
+    "installable": True,
+    "images": [
+        "images/stock_picking.jpg"
+    ],
 }
