@@ -12,6 +12,21 @@
             </div>
           </div>
 
+          <div class="row mb16">
+            <div class="col-xs-6">
+              <table style="width: 100%;">
+                <tr>
+                  <td>Document Date</td>
+                  <td><span t-field="o.date"/></td>
+                </tr>
+                <tr>
+                  <td>Document Nr.</td>
+                  <td><span t-field="o.name"/></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
           <h2>
             <center>
               <span>PACKING LIST N°</span>
@@ -19,34 +34,32 @@
             </center>
           </h2>
 
-          <div class="row mt32 mb32">
-            <div class="col-xs-2">
-              <strong>Document Date</strong>
-              <p t-field="o.date"/>
-            </div>
-            <div class="col-xs-2" t-if="o.name">
-              <strong>Document Nr.</strong>
-              <p t-field="o.name"/>
-            </div>
-            <div class="col-xs-2">
-              <strong>Gross weight</strong>
-              <p t-field="o.weight"/>
-            </div>
-            <div class="col-xs-2">
-              <strong>Net weight</strong>
-              <p t-field="o.net_weight"/>
-            </div>
-            <div class="col-xs-2" t-if="o.dest_package_id.ul_id">
-              <strong>Dimensions</strong>
-              <p>
-                <span t-field="o.dest_package_id.ul_id.height"/> cm x
-                <span t-field="o.dest_package_id.ul_id.width"/> cm x
-                <span t-field="o.dest_package_id.ul_id.length"/> cm
-              </p>
+          <div class="row mt16 mb16">
+            <div class="col-xs-8">
+              <table style="width: 100%;">
+                <tr>
+                  <td>Gross weight</td>
+                  <td><strong><span t-field="o.weight"/> kg</strong></td>
+                </tr>
+                <tr>
+                  <td>Net weight</td>
+                  <td><strong><span t-field="o.net_weight"/> kg</strong></td>
+                </tr>
+                <tr>
+                  <td>Dimensions</td>
+                  <td>
+                    <strong>
+                      <span t-field="o.dest_package_id.ul_id.height"/> cm x
+                      <span t-field="o.dest_package_id.ul_id.width"/> cm x
+                      <span t-field="o.dest_package_id.ul_id.length"/> cm
+                    </strong>
+                  </td>
+                </tr>
+              </table>
             </div>
           </div>
 
-          <h2>
+          <h2 style="border: 1px solid #000; padding-top: 8px; padding-bottom: 8px;">
             <center>
               <span>CERTIFIED SWISS COSMETICS WITHOUT ALCOHOL</span>
             </center>
