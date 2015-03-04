@@ -35,7 +35,7 @@ class stock_move(orm.Model):
         for stock_move in self.browse(
                 cr, uid, ids, context=context):
             if stock_move.date_backdating and \
-                    stock_move.stock_backdating > now:
+                    stock_move.date_backdating > now:
                 return False
         return True
 
