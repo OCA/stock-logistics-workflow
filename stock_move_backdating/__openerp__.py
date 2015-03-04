@@ -38,6 +38,7 @@ Contributors
 * BREMSKERL
 * Agile Business Group
 * El Hadji Dem (elhadji.dem@savoirfairelinux.com)
+* David Dufresne (david.dufresne@savoirfairelinux.com)
     """,
     'author': 'Bremskerl',
     'website': 'www.bremskerl.com',

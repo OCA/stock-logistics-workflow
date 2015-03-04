@@ -31,14 +31,12 @@ class stock_move(orm.Model):
     _inherit = _name
 
     def check_date_backdating(self, cr, uid, ids, context=None):
-        if not ids:
-            return False
-        date_backdating = self.browse(
-            cr, uid, ids[0], context=context).date_backdating
-        if date_backdating:
-            date_backdating = datetime.strptime(
-                date_backdating, DEFAULT_SERVER_DATETIME_FORMAT)
-            return date_backdating <= datetime.now()
+        now = datetime.now().strftime(DEFAULT_SERVER_DATETIME_FORMAT)
+        for stock_move in self.browse(
+                cr, uid, ids, context=context):
+            if stock_move.date_backdating and \
+                    stock_move.stock_backdating > now:
+                return False
         return True
 
     _columns = {
@@ -93,9 +91,9 @@ class stock_move(orm.Model):
             return {}
 
         dt = datetime.strptime(date_backdating, DEFAULT_SERVER_DATETIME_FORMAT)
-        NOW = datetime.now()
+        now = datetime.now()
 
-        if (dt > NOW):
+        if (dt > now):
             warning = {'title': _('Error!'), 'message': _(
                 'You can not process an actual movement date in the future.')}
             # Delete values (old code) because it shows many times
