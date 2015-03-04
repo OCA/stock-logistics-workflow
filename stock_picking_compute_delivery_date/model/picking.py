@@ -27,7 +27,12 @@ from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT as DT_FORMAT
 from openerp.tools.translate import _
 from openerp import pooler
 
+
 _logger = logging.getLogger(__name__)
+
+
+def strptime(string):
+    return dt.datetime.strptime(string, DT_FORMAT)
 
 
 class PlanFinished(Exception):
@@ -68,8 +73,7 @@ class StockPickingOut(orm.Model):
 
         for move_in in move_obj.browse(cr, uid, move_in_ids, context=context):
             plan.append({
-                'date': dt.datetime.strptime(move_in.date_expected, DT_FORMAT)
-                + security_delta,
+                'date': strptime(move_in.date_expected) + security_delta,
                 'quantity': move_in.product_qty,
                 'pick_in_name': move_in.picking_id.name
             })
@@ -100,9 +104,7 @@ class StockPickingOut(orm.Model):
                 move_in = move_obj.browse(cr, uid, move_in_ids[0],
                                           context=context)
 
-                move_in_date = dt.datetime.strptime(
-                    move_in.date_expected, DT_FORMAT
-                )
+                move_in_date = strptime(move_in.date_expected)
                 new_date_str = dt.datetime.strftime(
                     move_in_date + security_delta, DT_FORMAT
                 )

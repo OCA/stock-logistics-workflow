@@ -20,12 +20,11 @@
 ##############################################################################
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-from osv import fields, orm
+
+from openerp.osv import fields, orm
+from openerp.tools import DEFAULT_SERVER_DATE_FORMAT as DATE_FMT
 
 
-# ----------------------------------------------------------
-# Stock Location
-# ----------------------------------------------------------
 class StockLocation(orm.Model):
     _inherit = "stock.location"
 
@@ -41,17 +40,18 @@ class StockLocation(orm.Model):
         # wich determine reference date for out stock computing
         if context.get('ref_date', False):
             date_ref = context['ref_date']
-            past_date_ref = (datetime.strptime(context['ref_date'], '%Y-%m-%d')
-                             + relativedelta(months=-int(period),
-                                             day=1,
-                                             days=-1)).strftime('%Y-%m-%d')
+            past_date_ref = (datetime.strptime(context['ref_date'],
+                                               DATE_FMT) +
+                             relativedelta(months=-int(period),
+                                           day=1,
+                                           days=-1)).strftime(DATE_FMT)
         # if no date take today
         else:
             date_ref = datetime.now()
-            past_date_ref = (datetime.now()
-                             + relativedelta(months=-int(period),
-                                             day=1,
-                                             days=-1)).strftime('%Y-%m-%d')
+            past_date_ref = (datetime.now() +
+                             relativedelta(months=-int(period),
+                                           day=1,
+                                           days=-1)).strftime(DATE_FMT)
         # Construct sql clause
         sql_clause = "and date_expected between '%s' and '%s' " \
             % (past_date_ref, date_ref)
@@ -79,38 +79,38 @@ class StockLocation(orm.Model):
             cr.execute("""select sum(product_qty), product_id, product_uom
                           from stock_move
                           where location_id not in (
-                       """ + location_ids_str
-                           + """) and location_dest_id in ("""
-                           + location_ids_str
-                           + """) and product_id in ("""
-                           + prod_ids_str + """) and state in ("""
-                           + states_str + """)"""
-                           + sql_clause
-                           + """group by product_id,product_uom""")
+                       """ + location_ids_str +
+                       ") and location_dest_id in (" +
+                       location_ids_str +
+                       ") and product_id in (" +
+                       prod_ids_str + ") and state in (" +
+                       states_str + ")" +
+                       sql_clause +
+                       "group by product_id,product_uom")
             results = cr.fetchall()
         if 'out' in what:
             # all moves from a location in the set to a location out of the set
             cr.execute("""select sum(product_qty), product_id, product_uom
                           from stock_move
                           where location_id in (
-                       """ + location_ids_str
-                           + """) and location_dest_id not in ("""
-                           + location_ids_str + """) and product_id in ("""
-                           + prod_ids_str + """) and state in ("""
-                           + states_str + """) """
-                           + sql_clause
-                           + """group by product_id,product_uom""")
+                       """ + location_ids_str +
+                       ") and location_dest_id not in (" +
+                       location_ids_str + ") and product_id  in (" +
+                       prod_ids_str + ") and state in (" +
+                       states_str + ") " +
+                       sql_clause +
+                       "group by product_id,product_uom")
             results2 = cr.fetchall()
         uom_obj = self.pool.get('product.uom')
         for amount, prod_id, prod_uom in results:
             amount = uom_obj._compute_qty(cr, uid, prod_uom, amount,
-                                          context.get('uom', False)
-                                          or product2uom[prod_id])
+                                          context.get('uom', False) or
+                                          product2uom[prod_id])
             res[prod_id] += amount
         for amount, prod_id, prod_uom in results2:
             amount = uom_obj._compute_qty(cr, uid, prod_uom, amount,
-                                          context.get('uom', False)
-                                          or product2uom[prod_id])
+                                          context.get('uom', False) or
+                                          product2uom[prod_id])
             res[prod_id] -= amount
         return res
 
