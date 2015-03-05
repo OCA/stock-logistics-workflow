@@ -163,7 +163,7 @@ class ShipmentPlan(models.Model):
         readonly=True,
     )
     weight_net = fields.Float(
-        _compute='_compute_weights',
+        compute='_compute_weights',
         readonly=True,
     )
     departure_picking_count = fields.Integer(
@@ -226,7 +226,7 @@ class ShipmentPlan(models.Model):
             weight += move.weight or 0.0
             weight_net += move.weight_net or 0.0
         self.weight = weight
-        self.weight_net = weight
+        self.weight_net = weight_net
 
     _sql_constraints = [
         ('name_uniq',
