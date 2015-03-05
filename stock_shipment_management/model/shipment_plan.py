@@ -207,11 +207,13 @@ class ShipmentPlan(models.Model):
             shipment.arrival_picking_ids = [(6, 0, pickings[shipment.id])]
 
     @api.one
-    @api.depends('departure_picking_ids.volume')
+    @api.depends('departure_move_ids.product_id',
+                 'departure_move_ids.product_qty',
+                 'departure_move_ids.product_id.volume')
     def _compute_volume(self):
-        volume = 0
-        for picking in self.departure_picking_ids:
-            volume += picking.volume or 0.0
+        volume = 0.0
+        for move in self.departure_move_ids:
+            volume += move.product_qty * move.product_id.volume
         self.volume = volume
 
     @api.one
