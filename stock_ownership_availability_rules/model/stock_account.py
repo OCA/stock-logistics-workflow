@@ -27,6 +27,12 @@ _logger = logging.getLogger(__name__)
 class stock_quant(osv.osv):
     _inherit = "stock.quant"
 
+    def _get_internal_loc(self, cr, uid, move, context=None):
+        if move.location_dest_id.usage == 'internal':
+            return move.location_dest_id.id
+        elif move.location_id.usage == 'internal':
+            return move.location_id.id
+    
     """
     Following method is a copy from the official Odoo branch
     (addons/stock_account/stock_account.py) with only change on the condition
@@ -60,9 +66,13 @@ class stock_quant(osv.osv):
         if move.product_id.valuation != 'real_time':
             return False
         for q in quants:
-            # if q.owner_id:  # REPLACED
+            # if q.owner_id:  # REPLACED FROM
             if q.owner_id and q.owner_id.id != \
-                self._get_company_partner_id(location_to): # REPLACED
+                q._get_company_partner_id(
+                    location_obj.browse(cr, uid,
+                        self._get_internal_loc(cr, uid, move, context=context)
+                    )
+                ): # REPLACED TO
                 # if the quant isn't owned by the company, we don't make any 
                 # valuation entry
                 return False
