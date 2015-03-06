@@ -24,6 +24,30 @@
       </field>
     </record>
 
+    <record id="view_move_tree" model="ir.ui.view">
+      <field name="name">view_move_picking_tree</field>
+      <field name="model">stock.move</field>
+      <field name="inherit_id" ref="stock.view_move_tree"/>
+      <field name="arch" type="xml">
+
+        <field name="location_dest_id" position="before">
+          <field name="restrict_partner_id"/>
+        </field>
+
+      </field>
+    </record>
+
+    <record id="view_move_search" model="ir.ui.view">
+      <field name="name">view_move_search</field>
+      <field name="model">stock.move</field>
+      <field name="inherit_id" ref="stock.view_move_search"/>
+      <field name="arch" type="xml">
+        <filter name="groupby_location_id" position="before">
+           <filter name="ownergroup" string='Owner' context="{'group_by' : 'restrict_partner_id'}" groups="stock.group_tracking_owner"/>
+        </filter>
+      </field>
+    </record>
+
   </data>
 </openerp>
 
