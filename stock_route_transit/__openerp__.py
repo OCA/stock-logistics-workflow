@@ -23,7 +23,7 @@
 {
     "name": "Stock Routes Transit",
     # description is in README.rst
-    "version": "0.1",
+    "version": "0.2",
     "depends": ["stock_dropshipping"],
     "author": "Camptocamp,Odoo Community Association (OCA)",
     "license": "AGPL-3",

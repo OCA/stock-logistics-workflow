@@ -349,30 +349,30 @@ class StockWarehouse(orm.Model):
                                                  context)
         # due to poor design in base class, we need to redo everything... :-(
         # and add our stuff
+        wh = warehouse
         customer_loc, supplier_loc = self._get_partner_locations(
-            cr, uid, warehouse.id, context=context)
+            cr, uid, wh.id, context=context)
         picking_type_obj = self.pool.get('stock.picking.type')
         route_obj = self.pool.get('stock.location.route')
-        new_reception_step = new_reception_step or warehouse.reception_steps
-        new_delivery_step = new_delivery_step or warehouse.delivery_steps
+        new_reception_step = new_reception_step or wh.reception_steps
+        new_delivery_step = new_delivery_step or wh.delivery_steps
         if new_reception_step in ('transit_one_step', 'one_step'):
-            input_loc = warehouse.lot_stock_id
+            input_loc = wh.lot_stock_id
         else:
-            input_loc = warehouse.wh_input_stock_loc_id
+            input_loc = wh.wh_input_stock_loc_id
         if new_delivery_step in ('ship_transit', 'ship_only'):
-            output_loc = warehouse.lot_stock_id
+            output_loc = wh.lot_stock_id
         else:
-            output_loc = warehouse.wh_output_stock_loc_id
+            output_loc = wh.wh_output_stock_loc_id
         if 'transit' in new_reception_step:
-            input_from_loc = warehouse.wh_transit_in_loc_id
+            input_from_loc = wh.wh_transit_in_loc_id
         else:
             input_from_loc = supplier_loc
         if 'transit' in new_delivery_step:
-            output_to_loc = warehouse.wh_transit_out_loc_id
+            output_to_loc = wh.wh_transit_out_loc_id
         else:
             output_to_loc = customer_loc
 
-        wh = warehouse
         picking_type_writes = [
             (wh.in_type_id.id,
              {'default_location_dest_id': input_loc.id,
@@ -389,9 +389,19 @@ class StockWarehouse(orm.Model):
             (wh.pack_type_id.id,
              {'active': new_delivery_step.startswith('pick_pack_ship')}),
             (wh.transit_in_type_id.id,
-             {'active': 'transit' in new_reception_step}),
+             {'active': 'transit' in new_reception_step,
+              # the following should not be necessary, only there
+              # to fix possible misconfigs by the user
+              'default_location_src_id': supplier_loc.id,
+              'default_location_dest_id': wh.wh_transit_in_loc_id.id
+              }),
             (wh.transit_out_type_id.id,
-             {'active': 'transit' in new_delivery_step}),
+             {'active': 'transit' in new_delivery_step,
+              # the following should not be necessary, only there
+              # to fix possible misconfigs by the user
+              'default_location_dest_id': customer_loc.id,
+              'default_location_src_id': wh.wh_transit_out_loc_id.id
+              }),
         ]
         for pick_type_id, vals in picking_type_writes:
             picking_type_obj.write(
@@ -405,17 +415,17 @@ class StockWarehouse(orm.Model):
         else:
             cross_dock_active = True
         route_obj.write(cr, uid,
-                        warehouse.crossdock_route_id.id,
+                        wh.crossdock_route_id.id,
                         {'active': cross_dock_active},
                         context=context)
 
         if warehouse.buy_to_resupply:
-            pull_rule = warehouse.buy_pull_id
+            pull_rule = wh.buy_pull_id
             if 'transit' in new_reception_step:
-                picking_type = warehouse.transit_in_type_id
+                picking_type = wh.transit_in_type_id
                 proc_location = picking_type.default_location_dest_id
             else:
-                picking_type = warehouse.in_type_id
+                picking_type = wh.in_type_id
                 proc_location = picking_type.default_location_dest_id
 
             pull_rule.write({'picking_type_id': picking_type.id,
@@ -430,7 +440,7 @@ class StockWarehouse(orm.Model):
         wh = warehouse
         if 'transit' in warehouse.reception_steps:
             value['picking_type_id'] = wh.transit_in_type_id.id
-            value['location_id'] = wh.in_type_id.default_location_dest_id.id
+            value['location_id'] = wh.in_type_id.default_location_src_id.id
         return value
 
     def create_sequences_and_picking_types(self, cr, uid,
