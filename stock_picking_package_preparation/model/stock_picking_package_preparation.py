@@ -58,6 +58,9 @@ class StockPickingPackagePreparation(models.Model):
     )
     picking_ids = fields.Many2many(
         comodel_name='stock.picking',
+        relation='stock_picking_pack_prepare_rel',
+        column1='stock_picking_package_preparation_id',
+        column2='stock_picking_id',
         string='Transfers',
         copy=False,
         states={'done': [('readonly', True)],
@@ -116,6 +119,9 @@ class StockPickingPackagePreparation(models.Model):
     quant_ids = fields.Many2many(
         compute='_compute_quant_ids',
         comodel_name='stock.quant',
+        relation='stock_quant_pack_prepare_rel',
+        column1='stock_picking_package_preparation_id',
+        column2='stock_quant_id',
         name='All Content',
     )
 
