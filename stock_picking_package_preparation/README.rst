@@ -1,7 +1,7 @@
-Stock Picking Pallet
-====================
+Stock Picking Package Preparation
+=================================
 
 New wizard that:
 
-* Generates a new picking based on a selection of pickings
-* Create a pallet for all the packs
+* Add a model allowing to prepare a package for a selection of
+  pickings

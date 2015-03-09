@@ -22,14 +22,14 @@
 from openerp import models, fields, api, exceptions, _
 
 
-class StockPickingPallet(models.Model):
-    _name = 'stock.picking.pallet'
-    _description = 'Prepare Pallet'
+class StockPickingPackagePreparation(models.Model):
+    _name = 'stock.picking.package.preparation'
+    _description = 'Package Preparation'
     _inherit = ['mail.thread']
 
     def _default_company_id(self):
         company_model = self.env['res.company']
-        return company_model._company_default_get('stock.picking.pallet')
+        return company_model._company_default_get(self._name)
 
     name = fields.Char(
         related='package_id.name',
@@ -163,7 +163,7 @@ class StockPickingPallet(models.Model):
     def action_cancel(self):
         if self.state == 'done':
             raise exceptions.Warning(
-                _('Cannot cancel a done pallet.')
+                _('Cannot cancel a done package preparation.')
             )
         if self.package_id:
             self.package_id.unlink()
@@ -173,14 +173,14 @@ class StockPickingPallet(models.Model):
     def action_draft(self):
         if self.state != 'cancel':
             raise exceptions.Warning(
-                _('Only canceled pallet can be reset to draft.')
+                _('Only canceled package preparations can be reset to draft.')
             )
         self.state = 'draft'
 
     @api.multi
     def action_put_in_pack(self):
-        for pallet in self:
-            pallet._generate_pack()
+        for preparation in self:
+            preparation._generate_pack()
         self.state = 'in_pack'
 
     @api.multi

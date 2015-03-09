@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
   <data>
-    <template id="report_picking_pallet_document">
+    <template id="report_picking_package_preparation_document">
       <t t-call="report.external_layout">
         <div class="page">
           <div class="row">
@@ -96,10 +96,10 @@
       </t>
     </template>
 
-    <template id="report_picking_pallet">
+    <template id="report_picking_package_preparation">
       <t t-call="report.html_container">
         <t t-foreach="doc_ids" t-as="doc_id">
-          <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'stock_picking_pallet.report_picking_pallet_document')"/>
+          <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'stock_picking_pallet.report_picking_package_preparation_document')"/>
         </t>
       </t>
     </template>

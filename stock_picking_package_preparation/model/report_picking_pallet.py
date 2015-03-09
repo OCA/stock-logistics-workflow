@@ -24,18 +24,19 @@ from openerp import models, api
 report_name = 'stock_picking_pallet.report_picking_pallet'
 
 
-class PickingPalletReport(models.AbstractModel):
+class PickingPackagePreparationReport(models.AbstractModel):
     _name = 'report.%s' % report_name
 
     @api.multi
     def render_html(self, data=None):
         report_obj = self.env['report']
         report = report_obj._get_report_from_name(report_name)
-        pallets = self.env['stock.picking.pallet'].browse(self.ids)
+        preparation_model = self.env['stock.picking.package.preparation']
+        preparations = preparation_model.browse(self.ids)
 
         docargs = {
-            'doc_ids': pallets.ids,
+            'doc_ids': preparations.ids,
             'doc_model': report.model,
-            'docs': pallets,
+            'docs': preparations,
         }
         return report_obj.render(report_name, docargs)

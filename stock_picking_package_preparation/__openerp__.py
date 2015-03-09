@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-{'name': 'Stock Picking Pallet',
+{'name': 'Stock Picking Package Preparation',
  'version': '1.0',
  'author': 'Camptocamp',
  'maintainer': 'Camptocamp',

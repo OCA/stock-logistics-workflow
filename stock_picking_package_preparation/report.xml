@@ -2,12 +2,12 @@
 <openerp>
   <data noupdate="0">
     <report
-      id="action_report_picking_pallet"
-      model="stock.picking.pallet"
-      string="Pallets"
+      id="action_report_picking_package_preparation"
+      model="stock.picking.package.preparation"
+      string="Export Packing List"
       report_type="qweb-pdf"
-      name="stock_picking_pallet.report_picking_pallet"
-      file="stock.picking.pallet"
+      name="stock_picking_pallet.report_picking_package_preparation"
+      file="stock.picking.package.preparation"
       />
   </data>
 </openerp>
