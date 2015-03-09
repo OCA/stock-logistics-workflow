@@ -21,7 +21,8 @@
 
 from openerp import models, api
 
-report_name = 'stock_picking_pallet.report_picking_pallet'
+report_name = ('stock_picking_package_preparation.'
+               'report_picking_package_preparation')
 
 
 class PickingPackagePreparationReport(models.AbstractModel):

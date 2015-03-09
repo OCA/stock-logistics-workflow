@@ -99,7 +99,7 @@
     <template id="report_picking_package_preparation">
       <t t-call="report.html_container">
         <t t-foreach="doc_ids" t-as="doc_id">
-          <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'stock_picking_pallet.report_picking_package_preparation_document')"/>
+          <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'stock_picking_package_preparation.report_picking_package_preparation_document')"/>
         </t>
       </t>
     </template>

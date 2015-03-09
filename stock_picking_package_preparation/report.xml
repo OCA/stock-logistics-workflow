@@ -6,7 +6,7 @@
       model="stock.picking.package.preparation"
       string="Export Packing List"
       report_type="qweb-pdf"
-      name="stock_picking_pallet.report_picking_package_preparation"
+      name="stock_picking_package_preparation.report_picking_package_preparation"
       file="stock.picking.package.preparation"
       />
   </data>

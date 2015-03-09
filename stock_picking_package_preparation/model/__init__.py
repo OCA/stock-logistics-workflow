@@ -19,5 +19,5 @@
 #
 ##############################################################################
 
-from . import stock_picking_pallet
-from . import report_picking_pallet
+from . import stock_picking_package_preparation
+from . import report_picking_package_preparation
