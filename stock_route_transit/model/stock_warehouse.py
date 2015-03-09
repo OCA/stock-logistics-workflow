@@ -295,7 +295,7 @@ class StockWarehouse(orm.Model):
             if new_delivery_step == 'ship_transit':
                 location_obj.write(cr, uid,
                                    warehouse.wh_output_stock_loc_id.id,
-                                   {'active': True},
+                                   {'active': False},
                                    context=context)
             if new_delivery_step == 'pick_pack_ship_transit':
                 location_obj.write(cr, uid,
