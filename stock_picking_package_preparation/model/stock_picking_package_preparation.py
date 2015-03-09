@@ -114,8 +114,12 @@ class StockPickingPackagePreparation(models.Model):
         copy=False,
     )
     note = fields.Text()
-    weight = fields.Float(compute='_compute_weight')
-    net_weight = fields.Float(compute='_compute_weight')
+    weight = fields.Float(compute='_compute_weight',
+                          help="The weight is computed when the preparation "
+                               "is done.")
+    net_weight = fields.Float(compute='_compute_weight',
+                              help="The weight is computed when the "
+                                   "preparation is done.")
     quant_ids = fields.Many2many(
         compute='_compute_quant_ids',
         comodel_name='stock.quant',
@@ -191,8 +195,12 @@ class StockPickingPackagePreparation(models.Model):
 
     @api.multi
     def _prepare_package(self):
+        if not self.picking_ids:
+            raise exceptions.Warning(
+                _('No transfer selected for this preparation.')
+            )
         location = self.mapped('picking_ids.location_dest_id')
-        if len(location) != 1:
+        if len(location) > 1:
             raise exceptions.Warning(
                 _('All the transfers must have the same destination location')
             )
