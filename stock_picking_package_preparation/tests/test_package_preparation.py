@@ -116,3 +116,16 @@ class TestPackagePreparation(TransactionCase):
         self.assertEquals(package.ul_id, self.ul)
         self.assertEquals(package.packaging_id, self.packaging)
         self.assertEquals(package.location_id, location)
+
+    def test_weight(self):
+        self.product1.weight = 5  # * 5 units
+        self.product2.weight = 2  # * 5 units
+        self.ul.weight = 4
+        pickings = self.picking_a + self.picking_b
+        pickings.action_confirm()
+        pickings.force_assign()
+        prep = self._create_preparation(pickings)
+        prep.action_put_in_pack()
+        prep.action_done()
+        self.assertEquals(prep.weight, 64)
+        self.assertEquals(prep.net_weight, 60)
