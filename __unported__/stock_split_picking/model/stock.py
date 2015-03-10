@@ -33,7 +33,7 @@ class stock_picking_out(orm.Model):
            correct context"""
         if context is None:
             context = {}
-        """Open the partial picking wizard"""
+        #  Open the partial picking wizard
         ctx = context.copy()
         ctx.update({
             'active_model': self._name,

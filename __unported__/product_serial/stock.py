@@ -320,10 +320,9 @@ class stock_picking(orm.Model):
                 # if the key already exist, we update new_line_list and
                 # we delete the invoice line
                 else:
-                    new_line_list[hash_key]['quantity'] = new_line_list[
-                        hash_key]['quantity'] + line.quantity
-                    new_line_list[hash_key]['price_subtotal'] = new_line_list[hash_key]['price_subtotal'] \
-                        + line.price_subtotal
+                    _new_line = new_line_list[hash_key]
+                    _new_line['quantity'] += line.quantity
+                    _new_line['price_subtotal'] += line.price_subtotal
                     self.pool.get('account.invoice.line').unlink(
                         cursor, user, line.id, context=context)
 

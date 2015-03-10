@@ -1,0 +1,68 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+# 	* stock_cancel
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-01 13:57+0000\n"
+"PO-Revision-Date: 2015-02-01 15:00+0100\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>\n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#. module: stock_cancel
+#: model:ir.model,name:stock_cancel.model_stock_picking_in
+#, fuzzy
+msgid "Incoming Shipments"
+msgstr "Wareneingang"
+
+#. module: stock_cancel
+#: code:addons/stock_cancel/stock.py:45
+#, fuzzy, python-format
+msgid "Error"
+msgstr "Fehler"
+
+#. module: stock_cancel
+#: view:stock.picking:0 view:stock.picking.in:0 view:stock.picking.out:0
+msgid "Are you sure you want to reopen this stock picking?"
+msgstr "Sind Sie sicher, dass Sie diese Lagerentnahme erneut öffnen möchten?"
+
+#. module: stock_cancel
+#: view:stock.picking:0 view:stock.picking.in:0 view:stock.picking.out:0
+msgid "Reopen"
+msgstr "Wiedereröffnung"
+
+#. module: stock_cancel
+#: model:ir.model,name:stock_cancel.model_stock_picking
+msgid "Picking List"
+msgstr "Kommissionierschein"
+
+#. module: stock_cancel
+#: model:ir.model,name:stock_cancel.model_stock_picking_out
+#, fuzzy
+msgid "Delivery Orders"
+msgstr "Warenauslieferung"
+
+#. module: stock_cancel
+#: code:addons/stock_cancel/stock.py:59
+#, python-format
+msgid "The stock picking '%s' has been set in draft state."
+msgstr "Die Lagerentnahme '%s' wurde in den Entwurf versetzt."
+
+#. module: stock_cancel
+#: code:addons/stock_cancel/stock.py:46
+#, python-format
+msgid ""
+"Line %s has valuation moves (%s).                             Remove them "
+"first"
+msgstr ""
+"Zeile %s weist bewertete Buchungen (%s) aus. Entfernen Sie diese zuerst"
+
+#~ msgid "Reference must be unique per Company!"
+#~ msgstr "Referenz muß je Unternehmen eindeutig sein!"
