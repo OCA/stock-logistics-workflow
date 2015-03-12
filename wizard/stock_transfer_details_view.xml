@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_stock_enter_transfer_details_inh_packageinfo" model="ir.ui.view">
+            <field name="name">view.stock.enter.transfer.details.inh.packageinfo</field>
+            <field name="model">stock.transfer_details</field>
+            <field name="inherit_id" ref="stock.view_stock_enter_transfer_details" />
+            <field name="arch" type="xml">
+                <button name="do_detailed_transfer" position="before">
+                    <button name="do_record" string="Record" type="object" class="oe_highlight"/>
+                    or
+                </button>
+            </field>
+        </record>
+    </data>
+</openerp>
