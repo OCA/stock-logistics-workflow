@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-20 10:25+0000\n"
-"PO-Revision-Date: 2015-02-20 11:26+0100\n"
+"POT-Creation-Date: 2015-03-12 14:39+0000\n"
+"PO-Revision-Date: 2015-03-12 15:40+0100\n"
 "Last-Translator: Alfredo <alfredodelafuente@avanzosc.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -83,9 +83,9 @@ msgid "Real weight"
 msgstr "Peso real"
 
 #. module: stock_picking_package_info
-#: model:ir.model,name:stock_picking_package_info.model_stock_return_picking
-msgid "Return Picking"
-msgstr "Devolver albarán"
+#: view:stock.transfer_details:stock_picking_package_info.view_stock_enter_transfer_details_inh_packageinfo
+msgid "Record"
+msgstr "Grabar"
 
 #. module: stock_picking_package_info
 #: help:stock.quant.package,height:0
@@ -139,4 +139,9 @@ msgstr "Peso total"
 #: field:stock.quant.package,width:0
 msgid "Width"
 msgstr "Anchura"
+
+#. module: stock_picking_package_info
+#: view:stock.transfer_details:stock_picking_package_info.view_stock_enter_transfer_details_inh_packageinfo
+msgid "or"
+msgstr "o"
 

@@ -1,6 +1,5 @@
 Stock picking packaging info
 ============================
-
 This module displays in the pickings, all packages appearing in operations. in
 the package provides the following information:
 
@@ -13,6 +12,9 @@ logical unit. The values of these fields can be modified.
 
 In the field "real weight", shown the value of total estimated weight field.
 The value of this field can be changed.
+
+In the transfer wizard pickings, has gotten the new "Record" button, allowing
+only modify operations of the picking
 
 Credits
 =======

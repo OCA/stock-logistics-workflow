@@ -28,7 +28,8 @@
     'depends': ["product",
                 "stock"
                 ],
-    'data': ["views/stock_quant_package_view.xml",
+    'data': ["wizard/stock_transfer_details_view.xml",
+             "views/stock_quant_package_view.xml",
              "views/stock_picking_view.xml",
              ],
     'installable': True,
