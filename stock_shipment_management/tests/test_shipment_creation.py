@@ -38,7 +38,10 @@ class TestShipmentCreation(common.TransactionCase):
 
         SO = self.env['sale.order']
         SOL = self.env['sale.order.line']
-
+        product = self.env.ref('product.product_product_33')
+        product.write({'volume': 0.010,
+                       'weight_net': 0.12,
+                       'weight': 0.16})
         so_vals = {
             'partner_id': self.ref('base.res_partner_1'),
         }
@@ -47,7 +50,7 @@ class TestShipmentCreation(common.TransactionCase):
 
         sol_vals = {
             'order_id': self.so.id,
-            'product_id': self.ref('product.product_product_33'),
+            'product_id': product.id,
             'name': "[HEAD-USB] Headset USB",
             'product_uom_qty': 42,
             'product_uom': self.ref('product.product_uom_unit'),
@@ -83,20 +86,26 @@ class TestShipmentCreation(common.TransactionCase):
 
         shipment = self.departure_move.departure_shipment_id
 
-        self.assertEquals(shipment.departure_move_ids,
-                          self.departure_move)
-        self.assertEquals(shipment.arrival_move_ids,
-                          self.dest_move)
+        self.assertEqual(shipment.departure_move_ids,
+                         self.departure_move)
+        self.assertEqual(shipment.arrival_move_ids,
+                         self.dest_move)
 
-        self.assertEquals(shipment.departure_picking_ids,
-                          self.departure_move.picking_id)
-        self.assertEquals(shipment.arrival_picking_ids,
-                          self.dest_move.picking_id)
+        self.assertEqual(shipment.departure_picking_ids,
+                         self.departure_move.picking_id)
+        self.assertEqual(shipment.arrival_picking_ids,
+                         self.dest_move.picking_id)
 
-        self.assertEquals(shipment.departure_picking_count,
-                          1)
-        self.assertEquals(shipment.arrival_picking_count,
-                          1)
+        self.assertEqual(shipment.departure_picking_count,
+                         1)
+        self.assertEqual(shipment.arrival_picking_count,
+                         1)
+        self.assertAlmostEqual(shipment.volume,
+                               42*0.01)
+        self.assertAlmostEqual(shipment.weight_net,
+                               42*0.12)
+        self.assertAlmostEqual(shipment.weight,
+                               42*0.16)
 
     def test_create_shiping_from_move(self):
         """ Try to create a shipment from a move
@@ -112,17 +121,23 @@ class TestShipmentCreation(common.TransactionCase):
 
         shipment = self.departure_move.departure_shipment_id
 
-        self.assertEquals(shipment.departure_move_ids,
-                          self.departure_move)
-        self.assertEquals(shipment.arrival_move_ids,
-                          self.dest_move)
+        self.assertEqual(shipment.departure_move_ids,
+                         self.departure_move)
+        self.assertEqual(shipment.arrival_move_ids,
+                         self.dest_move)
 
-        self.assertEquals(shipment.departure_picking_ids,
-                          self.departure_move.picking_id)
-        self.assertEquals(shipment.arrival_picking_ids,
-                          self.dest_move.picking_id)
+        self.assertEqual(shipment.departure_picking_ids,
+                         self.departure_move.picking_id)
+        self.assertEqual(shipment.arrival_picking_ids,
+                         self.dest_move.picking_id)
 
-        self.assertEquals(shipment.departure_picking_count,
-                          1)
-        self.assertEquals(shipment.arrival_picking_count,
-                          1)
+        self.assertEqual(shipment.departure_picking_count,
+                         1)
+        self.assertEqual(shipment.arrival_picking_count,
+                         1)
+        self.assertAlmostEqual(shipment.volume,
+                               42*0.01)
+        self.assertAlmostEqual(shipment.weight_net,
+                               42*0.12)
+        self.assertAlmostEqual(shipment.weight,
+                               42*0.16)
