@@ -9,18 +9,18 @@
                 <page string="Operations" position="after">
                     <page string="Packages" attrs="{'invisible': [('packages','=',[])]}">
                         <field name="packages" >
-                            <tree editable="top">
+                            <tree>
                                 <field name="name" />
                                 <field name="ul_id" />
                                 <field name="width" />
                                 <field name="height" />
                                 <field name="length" />
                                 <field name="permitted_volume" />
-                                <field name="tvolume_charge" />
-                                <field name="total_estim_weight"/>
-                                <field name="total_estim_weight_net" />
-                                <field name="empty_weight" />
-                                <field name="real_weight" />
+                                <field name="tvolume_charge" sum="sum_tvolume_charge"/>
+                                <field name="total_estim_weight" sum="sum_total_estim_weight"/>
+                                <field name="total_estim_weight_net" sum="sum_estim_weight_net"/>
+                                <field name="empty_weight" sum="sum_empty_weight"/>
+                                <field name="real_weight" sum="sum_real_weight"/>
                             </tree>
                         </field>
                     </page>

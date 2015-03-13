@@ -8,18 +8,15 @@ from openerp import models, fields, api
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
-    @api.one
-    @api.depends('pack_operation_ids', 'pack_operation_ids.result_package_id')
-    def _calculate_packages(self):
-        self.packages = [
-            operation.result_package_id.id for operation in
-            self.pack_operation_ids if operation.result_package_id]
-
     packages = fields.Many2many(
         comodel_name='stock.quant.package',
         relation='rel_picking_package', column1='picking_id',
-        column2='package_id', string='Packages',
-        compute='_calculate_packages', store=True)
+        column2='package_id', string='Packages')
+
+    def _catch_operations(self):
+        self.packages = [
+            operation.result_package_id.id for operation in
+            self.pack_operation_ids if operation.result_package_id]
 
 
 class StockQuant(models.Model):
