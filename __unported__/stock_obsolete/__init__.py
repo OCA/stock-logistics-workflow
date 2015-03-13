@@ -1,8 +1,8 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Product serial module for OpenERP
-#    Copyright (C) 2008 Raphaël Valyi
+#    Author: Joël Grand-Guillaume, Matthieu Dietrich
+#    Copyright 2008-2015 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,8 +18,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-from . import product
-from . import stock
-from . import company
 from . import wizard
+from . import stock_obsolete
+from . import report

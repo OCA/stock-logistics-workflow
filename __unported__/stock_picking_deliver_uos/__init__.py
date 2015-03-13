@@ -1,8 +1,7 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Product serial module for OpenERP
-#    Copyright (C) 2008 Raphaël Valyi
+#    Copyright (C) 2014 Agile Business Group sagl (<http://www.agilebg.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,7 +18,4 @@
 #
 ##############################################################################
 
-from . import product
-from . import stock
-from . import company
 from . import wizard

@@ -19,6 +19,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import stock
-import wizard
-import account
+from . import stock
+from . import wizard
+from . import account

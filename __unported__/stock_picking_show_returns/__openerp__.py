@@ -24,7 +24,8 @@
 {
     "name": "Show returns on stock pickings",
     "version": "1.0",
-    "author": "Serv. Tecnol. Avanzados - Pedro M. Baeza,Odoo Community Association (OCA)",
+    "author": "Serv. Tecnol. Avanzados - Pedro M. Baeza,"
+              "Odoo Community Association (OCA)",
     "category": "Warehouse Management",
     "description": """
     Show in pickings one tab that contains returns made for that picking.

@@ -24,9 +24,15 @@ import datetime as dt
 
 from openerp.osv import orm
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT as DT_FORMAT
+from openerp.tools.translate import _
 from openerp import pooler
 
+
 _logger = logging.getLogger(__name__)
+
+
+def strptime(string):
+    return dt.datetime.strptime(string, DT_FORMAT)
 
 
 class PlanFinished(Exception):
@@ -55,7 +61,9 @@ class StockPickingOut(orm.Model):
         stock_now = product.qty_available
         today = dt.datetime.today()
         security_delta = self._security_delta(cr, uid, product, context)
-        plan = [{'date': today + security_delta, 'quantity': stock_now}]
+        plan = [{'date': today + security_delta,
+                 'quantity': stock_now,
+                 'pick_in_name': _('initial stock')}]
 
         move_in_ids = move_obj.search(cr, uid, [
             ('product_id', '=', product.id),
@@ -65,9 +73,9 @@ class StockPickingOut(orm.Model):
 
         for move_in in move_obj.browse(cr, uid, move_in_ids, context=context):
             plan.append({
-                'date': dt.datetime.strptime(move_in.date_expected, DT_FORMAT)
-                + security_delta,
-                'quantity': move_in.product_qty
+                'date': strptime(move_in.date_expected) + security_delta,
+                'quantity': move_in.product_qty,
+                'pick_in_name': move_in.picking_id.name
             })
         return iter(plan)
 
@@ -87,23 +95,27 @@ class StockPickingOut(orm.Model):
             ('state', 'in', ('confirmed', 'assigned', 'pending')),
         ], context=context)
 
-        for move_out_id in move_out_ids:
+        for move_out in self.pool['stock.move'].browse(cr, uid, move_out_ids,
+                                                       context=context):
             move_in_ids = move_obj.search(cr, uid, [
-                ('move_dest_id', '=', move_out_id)
+                ('move_dest_id', '=', move_out.id)
             ], order="date_expected desc", context=context)
             if move_in_ids:
                 move_in = move_obj.browse(cr, uid, move_in_ids[0],
                                           context=context)
 
-                move_in_date = dt.datetime.strptime(
-                    move_in.date_expected, DT_FORMAT
-                )
+                move_in_date = strptime(move_in.date_expected)
                 new_date_str = dt.datetime.strftime(
                     move_in_date + security_delta, DT_FORMAT
                 )
-                move_obj.write(cr, uid, move_out_id, {
+                move_obj.write(cr, uid, move_out.id, {
                     'date_expected': new_date_str
                 }, context=context)
+                message = _("Scheduled date update to %s from %s") \
+                    % (new_date_str, move_in.picking_id.name)
+                # Post message on stock picking
+                self.message_post(cr, uid, move_out.picking_id.id,
+                                  body=message, context=context)
 
     def compute_mts_delivery_dates(self, cr, uid, product, context=None):
         move_obj = self.pool['stock.move']
@@ -135,6 +147,11 @@ class StockPickingOut(orm.Model):
                         move_obj.write(cr, uid, move_out.id, {
                             'date_expected': new_date_str,
                         }, context=context)
+                        message = _("Scheduled date update to %s from %s") \
+                            % (new_date_str, current_plan['pick_in_name'])
+                        # Post message on stock picking
+                        self.message_post(cr, uid, move_out.picking_id.id,
+                                          body=message, context=context)
                         remaining_out_qty = 0.0
                     else:
                         remaining_out_qty -= current_plan['quantity']

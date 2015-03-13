@@ -1,0 +1,53 @@
+-
+  Create the location
+-
+ !record {model: stock.location, id: stock_location_output_2}:
+    name: Customer shop
+    usage: customer
+-
+   I check that the new obsolescence fields exists for a demo product
+-
+  !assert {model: product.product, id: product.product_product_6}:
+    - outgoing_qty_till_12m == 0.0
+    - outgoing_qty_till_24m == 0.0
+    - depreciation == 'no'
+-
+  I create a picking.
+-
+ !record {model: stock.picking, id: outgoing_shipment2}:
+    type: out
+    location_dest_id: stock_location_output_2
+-
+   I create a move scheduled for 4 weeks earlier...
+-
+ !record {model: stock.move, id: outgoing_shipment_monitor2}:
+    date: !eval "(datetime.now() + timedelta(days=-28)).strftime('%Y-%m-%d')"
+    date_expected: !eval "(datetime.now() + timedelta(days=-28)).strftime('%Y-%m-%d')"
+    picking_id: outgoing_shipment2
+    product_id: product.product_product_6
+    product_uom: product.product_uom_unit
+    product_qty: 130.0
+    location_id: stock.stock_location_company
+    location_dest_id: stock_location_output_2
+-
+   I create a move scheduled for more than 1 year earlier...
+-
+ !record {model: stock.move, id: outgoing_shipment_monitor3}:
+    date: !eval "(datetime.now() + timedelta(days=-400)).strftime('%Y-%m-%d')"
+    date_expected: !eval "(datetime.now() + timedelta(days=-400)).strftime('%Y-%m-%d')"
+    picking_id: outgoing_shipment2
+    product_id: product.product_product_6
+    product_uom: product.product_uom_unit
+    product_qty: 130.0
+    location_id: stock.stock_location_company
+    location_dest_id: stock_location_output_2
+-
+    ...and I validate the picking.
+-
+  !workflow {model: stock.picking, action: button_confirm, ref: outgoing_shipment2}
+-
+   I check that the new obsolescence fields were updated
+-
+  !assert {model: product.product, id: product.product_product_6}:
+    - outgoing_qty_till_12m == -130.0
+    - outgoing_qty_till_24m == -260.0
