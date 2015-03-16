@@ -16,7 +16,7 @@ class StockTransferDetails(models.TransientModel):
         return result
 
     @api.one
-    def do_record(self):
+    def do_save_for_later(self):
         operation_obj = self.env['stock.pack.operation']
         # Create new and update existing pack operations
         for lstits in [self.item_ids, self.packop_ids]:

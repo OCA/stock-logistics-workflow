@@ -13,8 +13,8 @@ logical unit. The values of these fields can be modified.
 In the field "real weight", shown the value of total estimated weight field.
 The value of this field can be changed.
 
-In the transfer wizard pickings, you have a new button "Record", that allows
-only modify datas of operations of the picking
+In the transfer wizard pickings, you have a new button "Save for later", that
+allows only modify datas of operations of the picking.
 
 Credits
 =======
