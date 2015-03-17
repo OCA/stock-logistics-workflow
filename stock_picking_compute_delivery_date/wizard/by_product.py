@@ -35,4 +35,6 @@ class ComputeDeliveryDateByProductWizard(orm.TransientModel):
                                           context=context):
             pick_obj.compute_delivery_dates(cr, uid, product, context=context)
 
+        # Publish messages on pickings
+        pick_obj.picking_notify(cr, uid, context=context)
         return True
