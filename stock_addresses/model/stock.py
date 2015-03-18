@@ -40,7 +40,16 @@ class StockMove(models.Model):
             if not picking.delivery_address_id:
                 changes['delivery_address_id'] = picking.group_id.partner_id.id
             if not picking.origin_address_id:
-                changes['origin_address_id'] = picking.group_id.partner_id.id
+                origin_address = picking.mapped(
+                    'move_lines.procurement_id.origin_address_id'
+                    )
+                if len(origin_address) > 1:
+                    _logger.error(
+                        'more than one origin address found for picking %s',
+                        picking
+                        )
+                    origin_address = origin_address[0]
+                changes['origin_address_id'] = origin_address.id
             picking.write(changes)
         return res
 
