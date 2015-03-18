@@ -93,13 +93,13 @@ class StockMove(models.Model):
         picking = self.picking_id
         picking_type = picking.picking_type_id
         wh_address = picking_type.warehouse_id.partner_id
-        if picking_type.code == 'outgoing':
-            ref_dropship = 'stock_dropshipping.picking_type_dropship'
-            if picking_type == self.env.ref(ref_dropship):
-                self.ship_from_address_id = picking.group_id.mapped(
-                    'procurement_ids.purchase_id.partner_id')
-            else:
-                self.ship_from_address_id = wh_address.id
+        ref_dropship = 'stock_dropshipping.picking_type_dropship'
+        if picking_type == self.env.ref(ref_dropship):
+            self.ship_from_address_id = picking.group_id.mapped(
+                'procurement_ids.purchase_id.partner_id')
+            self.ship_to_address_id = self.partner_id
+        elif picking_type.code == 'outgoing':
+            self.ship_from_address_id = wh_address.id
             self.ship_to_address_id = picking.partner_id.id
         elif picking_type.code == 'incoming':
             self.ship_to_address_id = wh_address
