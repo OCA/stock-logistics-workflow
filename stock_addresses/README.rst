@@ -21,6 +21,7 @@ Contributors
 * Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
 * Yannick Vaucher <yannick.vaucher@camptocamp.com>
 * Leonardo Pistone <leonardo.pistone@camptocamp.com>
+* Nicolas Bessi <nicolas.bessi@camptocamp.com>
 
 Maintainer
 ----------

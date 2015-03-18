@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data noupdate="0">
+
+    <record id="base_ifrc_partner_form_view_consignee_check_box" model="ir.ui.view">
+      <field name="name">ifrc base partner view consignee check box</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+        <notebook position="inside">
+          <page string="Consignee">
+            <group col="4">
+              <field name="is_consignee"/>
+            </group>
+          </page>
+        </notebook>
+      </field>
+    </record>
+
+    <record id="view_res_partner_filter" model="ir.ui.view">
+      <field name="name">res.partner.select</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_res_partner_filter"/>
+      <field name="arch" type="xml">
+        <filter name="supplier" position="after">
+          <filter string="Consignees" name="consignee" domain="[('is_consignee','=',1)]" help="Consignee Partners"/>
+        </filter>
+      </field>
+    </record>
+
+    <record id="action_consignee_form" model="ir.actions.act_window">
+      <field name="name">Consignees</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">res.partner</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">kanban,tree,form</field>
+      <field name="context">{"search_default_consignee":1, "default_is_consignee": True}</field>
+      <field name="search_view_id" ref="base.view_res_partner_filter"/>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          Click to add a consignee in your address book.
+        </p>
+      </field>
+    </record>
+
+    <menuitem
+      id="menu_consignee"
+      parent="base.menu_sales"
+      action="action_consignee_form"
+      sequence="3"/>
+
+  </data>
+</openerp>
