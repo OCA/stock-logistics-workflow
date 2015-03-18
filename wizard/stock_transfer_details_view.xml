@@ -10,6 +10,9 @@
                     <button name="do_save_for_later" string="Save for later" type="object" class="oe_highlight"/>
                     or
                 </button>
+                <button name="do_detailed_transfer" position="attributes">
+                    <attribute name="confirm">You are going to transfer. Are you sure?</attribute>
+                </button>
             </field>
         </record>
     </data>
