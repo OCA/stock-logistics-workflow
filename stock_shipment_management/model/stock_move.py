@@ -49,14 +49,12 @@ class StockMove(models.Model):
         readonly=True
     )
     ship_from_address_id = fields.Many2one(
-        compute='_get_ship_addresses',
-        comodel_name='res.partner',
+        related='picking_id.origin_address_id',
         string='From Address',
         store=True
     )
     ship_to_address_id = fields.Many2one(
-        compute='_get_ship_addresses',
-        comodel_name='res.partner',
+        related='picking_id.delivery_address_id',
         string='To Address',
         store=True
     )
@@ -84,26 +82,6 @@ class StockMove(models.Model):
         string='ETA',
         store=True
     )
-
-    @api.depends('picking_id.picking_type_id.code',
-                 'picking_id.picking_type_id.warehouse_id.partner_id',
-                 'picking_id.group_id.procurement_ids.purchase_id.partner_id')
-    @api.one
-    def _get_ship_addresses(self):
-        picking = self.picking_id
-        picking_type = picking.picking_type_id
-        wh_address = picking_type.warehouse_id.partner_id
-        ref_dropship = 'stock_dropshipping.picking_type_dropship'
-        if picking_type == self.env.ref(ref_dropship):
-            self.ship_from_address_id = picking.group_id.mapped(
-                'procurement_ids.purchase_id.partner_id')
-            self.ship_to_address_id = self.partner_id
-        elif picking_type.code == 'outgoing':
-            self.ship_from_address_id = wh_address.id
-            self.ship_to_address_id = picking.partner_id.id
-        elif picking_type.code == 'incoming':
-            self.ship_to_address_id = wh_address
-            self.ship_from_address_id = picking.partner_id
 
     @api.multi
     def write(self, values):
