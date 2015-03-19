@@ -32,6 +32,7 @@
              ],
  'demo': [],
  'data': ['view/stock.xml',
+          'view/procurement.xml',
           ],
  'auto_install': False,
  'installable': True,
