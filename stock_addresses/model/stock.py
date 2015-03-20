@@ -18,8 +18,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-
+import logging
 from openerp import models, fields, api
+
+
+_logger = logging.getLogger(__name__)
 
 
 class StockMove(models.Model):
@@ -68,7 +71,10 @@ class StockMove(models.Model):
     def _prepare_procurement_from_move(self, move):
         _super = super(StockMove, self)
         res = _super._prepare_procurement_from_move(move)
-        res.update({'origin_address_id': move.procurement_id.origin_address_id.id})
+        update = {
+            'origin_address_id': move.procurement_id.origin_address_id.id
+            }
+        res.update(update)
         return res
 
 

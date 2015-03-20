@@ -63,8 +63,6 @@ class ProcurementOrder(models.Model):
         related='group_id.delivery_address_id'
         )
 
-
-
     @api.model
     def _prepare_orderpoint_procurement(self, orderpoint, product_qty):
         _super = super(ProcurementOrder, self)
