@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="stock_picking_disable_button_form_view">
+            <field name="name">stock.picking.disable_button.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form" />
+            <field name="arch" type="xml">
+                <button name="force_assign" position="attributes">
+                    <attribute name="groups">stock.group_stock_force_availability</attribute>
+                </button>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="stock_move_disable_button_form_view">
+            <field name="name">stock.move.disable_button.form</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_form" />
+            <field name="arch" type="xml">
+                <button name="force_assign" position="attributes">
+                    <attribute name="groups">stock.group_stock_force_availability</attribute>
+                </button>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="stock_move_picking_disable_button_form_view">
+            <field name="name">stock.move.picking.disable_button.form</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_picking_form" />
+            <field name="arch" type="xml">
+                <button name="force_assign" position="attributes">
+                    <attribute name="groups">stock.group_stock_force_availability</attribute>
+                </button>
+            </field>
+        </record>
+    </data>
+</openerp>
