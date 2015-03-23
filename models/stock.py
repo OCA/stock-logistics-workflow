@@ -12,8 +12,8 @@ class StockPicking(models.Model):
         comodel_name='stock.quant.package',
         relation='rel_picking_package', column1='picking_id',
         column2='package_id', string='Packages')
-    total_ul_packages_info = fields.One2many(
-        "stock.picking.total.ul.package.info", "picking",
+    package_totals = fields.One2many(
+        "stock.picking.package.total", "picking",
         string="Total UL Packages Info", readonly=True)
     num_packages = fields.Integer(string='Num. Packages', readonly=True)
 
@@ -21,39 +21,28 @@ class StockPicking(models.Model):
         self.packages = [
             operation.result_package_id.id for operation in
             self.pack_operation_ids if operation.result_package_id]
-        self. _calculate_total_ul_packages_info()
+        self. _calculate_package_totals()
 
-    def _calculate_total_ul_packages_info(self):
-        package_datas = {}
-        if self.total_ul_packages_info:
-            self.total_ul_packages_info.unlink()
-        for package in self.packages:
-            found = False
-            for data in package_datas:
-                datos_array = package_datas[data]
-                ul_id = datos_array['ul_id']
-                quantity = datos_array['quantity']
-                if ul_id == package.ul_id.id:
-                    found = True
-                    quantity += 1
-                    package_datas[data].update({'quantity': quantity})
-                    break
-            if not found:
-                package_datas[(package.ul_id.id)] = {'ul_id': package.ul_id.id,
-                                                     'quantity': 1}
+    def _calculate_package_totals(self):
         self.num_packages = 0
-        for data in package_datas:
-            datos_array = package_datas[data]
-            values = {'picking': self.id,
-                      'ul': datos_array['ul_id'],
-                      'quantity': datos_array['quantity']}
-            self.env['stock.picking.total.ul.package.info'].create(values)
-            self.num_packages += datos_array['quantity']
+        if self.package_totals:
+            self.package_totals.unlink()
+        if self.packages:
+            products_ul = self.env['product.ul'].search([])
+            for product_ul in products_ul:
+                cont = len(self.packages.filtered(lambda x: x.ul_id.id ==
+                                                  product_ul.id))
+                if cont > 0:
+                    values = {'picking': self.id,
+                              'ul': product_ul.id,
+                              'quantity': cont}
+                    self.env['stock.picking.package.total'].create(values)
+                    self.num_packages += cont
 
 
-class StockPickingTotalUlPackageInfo(models.Model):
-    _name = 'stock.picking.total.ul.package.info'
-    _description = "Stock Picking Total UL Package Info"
+class StockPickingPackageTotal(models.Model):
+    _name = 'stock.picking.package.total'
+    _description = "Stock Picking Package Total"
 
     picking = fields.Many2one('stock.picking', string='Picking')
     ul = fields.Many2one('product.ul', string='Logistic Unit')

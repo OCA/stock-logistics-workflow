@@ -23,8 +23,8 @@
                                 <field name="real_weight" sum="sum_real_weight"/>
                             </tree>
                         </field>
-                        <group name="group_total_ul_packages_info" string="Total packages by logistic unit">
-                            <field name="total_ul_packages_info" nolabel="1">
+                        <group name="group_package_totals" string="Total packages by logistic unit">
+                            <field name="package_totals" nolabel="1">
                                 <tree >
                                     <field name="ul" />
                                     <field name="quantity" sum="sum_quantity"/>

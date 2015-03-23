@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-23 10:51+0000\n"
-"PO-Revision-Date: 2015-03-23 10:51+0000\n"
+"POT-Creation-Date: 2015-03-23 15:13+0000\n"
+"PO-Revision-Date: 2015-03-23 15:13+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,12 +21,12 @@ msgid "Content"
 msgstr ""
 
 #. module: stock_picking_package_info
-#: field:stock.picking.total.ul.package.info,create_uid:0
+#: field:stock.picking.package.total,create_uid:0
 msgid "Created by"
 msgstr ""
 
 #. module: stock_picking_package_info
-#: field:stock.picking.total.ul.package.info,create_date:0
+#: field:stock.picking.package.total,create_date:0
 msgid "Created on"
 msgstr ""
 
@@ -41,17 +41,17 @@ msgid "Height"
 msgstr ""
 
 #. module: stock_picking_package_info
-#: field:stock.picking.total.ul.package.info,id:0
+#: field:stock.picking.package.total,id:0
 msgid "ID"
 msgstr ""
 
 #. module: stock_picking_package_info
-#: field:stock.picking.total.ul.package.info,write_uid:0
+#: field:stock.picking.package.total,write_uid:0
 msgid "Last Updated by"
 msgstr ""
 
 #. module: stock_picking_package_info
-#: field:stock.picking.total.ul.package.info,write_date:0
+#: field:stock.picking.package.total,write_date:0
 msgid "Last Updated on"
 msgstr ""
 
@@ -61,13 +61,13 @@ msgid "Length"
 msgstr ""
 
 #. module: stock_picking_package_info
-#: field:stock.picking.total.ul.package.info,ul:0
+#: field:stock.picking.package.total,ul:0
 msgid "Logistic Unit"
 msgstr ""
 
 #. module: stock_picking_package_info
 #: field:stock.picking,num_packages:0
-#: field:stock.picking.total.ul.package.info,quantity:0
+#: field:stock.picking.package.total,quantity:0
 msgid "Num. Packages"
 msgstr ""
 
@@ -93,7 +93,7 @@ msgid "Physical Packages"
 msgstr ""
 
 #. module: stock_picking_package_info
-#: field:stock.picking.total.ul.package.info,picking:0
+#: field:stock.picking.package.total,picking:0
 msgid "Picking"
 msgstr ""
 
@@ -147,16 +147,6 @@ msgstr ""
 #: field:stock.quant,total_weight_net:0
 #: field:stock.quant.package,total_weight_net:0
 msgid "Total Net weight"
-msgstr ""
-
-#. module: stock_picking_package_info
-#: field:stock.picking,total_ul_packages_info:0
-msgid "Total UL Packages Info"
-msgstr ""
-
-#. module: stock_picking_package_info
-#: model:res.groups,name:stock_picking_package_info.group_total_ul_package_info
-msgid "Total UL package info"
 msgstr ""
 
 #. module: stock_picking_package_info
