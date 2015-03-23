@@ -155,6 +155,7 @@ class StockPickingPackagePreparation(models.Model):
         self.net_weight = net_weight
         self.weight = weight
 
+    @api.one
     @api.depends('picking_ids',
                  'picking_ids.pack_operation_ids')
     def _compute_pack_operation_ids(self):
@@ -162,7 +163,7 @@ class StockPickingPackagePreparation(models.Model):
 
     @api.multi
     def action_done(self):
-        if not self.package_id:
+        if not self.mapped('package_id'):
             raise exceptions.Warning(
                 _('The package has not been generated.')
             )
@@ -171,30 +172,32 @@ class StockPickingPackagePreparation(models.Model):
 
     @api.multi
     def action_cancel(self):
-        if self.state == 'done':
+        if any(prep.state == 'done' for prep in self):
             raise exceptions.Warning(
                 _('Cannot cancel a done package preparation.')
             )
-        if self.package_id:
-            self.package_id.unlink()
-        self.state = 'cancel'
+        package_ids = self.mapped('package_id')
+        if package_ids:
+            package_ids.unlink()
+        self.write({'state': 'cancel'})
 
     @api.multi
     def action_draft(self):
-        if self.state != 'cancel':
+        if any(prep.state != 'cancel' for prep in self):
             raise exceptions.Warning(
                 _('Only canceled package preparations can be reset to draft.')
             )
-        self.state = 'draft'
+        self.write({'state': 'draft'})
 
     @api.multi
     def action_put_in_pack(self):
         for preparation in self:
             preparation._generate_pack()
-        self.state = 'in_pack'
+        self.write({'state': 'in_pack'})
 
     @api.multi
     def _prepare_package(self):
+        self.ensure_one()
         if not self.picking_ids:
             raise exceptions.Warning(
                 _('No transfer selected for this preparation.')
