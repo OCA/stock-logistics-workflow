@@ -16,6 +16,9 @@ The value of this field can be changed.
 In the transfer wizard pickings, you have a new button "Save for later", that
 allows only modify datas of operations of the picking.
 
+Also, this module displays in the pickings, the number of packages per logistic
+unit.
+
 Credits
 =======
 

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-16 08:45+0000\n"
-"PO-Revision-Date: 2015-03-16 09:47+0100\n"
+"POT-Creation-Date: 2015-03-23 10:51+0000\n"
+"PO-Revision-Date: 2015-03-23 11:55+0100\n"
 "Last-Translator: Alfredo <alfredodelafuente@avanzosc.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,6 +21,16 @@ msgid "Content"
 msgstr "Contenido"
 
 #. module: stock_picking_package_info
+#: field:stock.picking.total.ul.package.info,create_uid:0
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: stock_picking_package_info
+#: field:stock.picking.total.ul.package.info,create_date:0
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: stock_picking_package_info
 #: field:stock.quant.package,empty_weight:0
 msgid "Empty Package Weight"
 msgstr "Tara paquete"
@@ -31,9 +41,35 @@ msgid "Height"
 msgstr "Altura"
 
 #. module: stock_picking_package_info
+#: field:stock.picking.total.ul.package.info,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_picking_package_info
+#: field:stock.picking.total.ul.package.info,write_uid:0
+msgid "Last Updated by"
+msgstr "Última actulización por"
+
+#. module: stock_picking_package_info
+#: field:stock.picking.total.ul.package.info,write_date:0
+msgid "Last Updated on"
+msgstr "Última actulización el"
+
+#. module: stock_picking_package_info
 #: field:stock.quant.package,length:0
 msgid "Length"
 msgstr "Longitud"
+
+#. module: stock_picking_package_info
+#: field:stock.picking.total.ul.package.info,ul:0
+msgid "Logistic Unit"
+msgstr "Unidad logística"
+
+#. module: stock_picking_package_info
+#: field:stock.picking,num_packages:0
+#: field:stock.picking.total.ul.package.info,quantity:0
+msgid "Num. Packages"
+msgstr "Num. Paquetes"
 
 #. module: stock_picking_package_info
 #: view:stock.picking:stock_picking_package_info.view_picking_form_inh_pickingpackageinfo
@@ -57,9 +93,14 @@ msgid "Physical Packages"
 msgstr "Paquetes físicos"
 
 #. module: stock_picking_package_info
+#: field:stock.picking.total.ul.package.info,picking:0
+msgid "Picking"
+msgstr "Albarán"
+
+#. module: stock_picking_package_info
 #: model:ir.model,name:stock_picking_package_info.model_stock_picking
 msgid "Picking List"
-msgstr "Albarán"
+msgstr "Lista albaranes"
 
 #. module: stock_picking_package_info
 #: model:ir.model,name:stock_picking_package_info.model_stock_transfer_details
@@ -109,6 +150,16 @@ msgid "Total Net weight"
 msgstr "Total peso neto"
 
 #. module: stock_picking_package_info
+#: field:stock.picking,total_ul_packages_info:0
+msgid "Total UL Packages Info"
+msgstr "Total UL Packages Info"
+
+#. module: stock_picking_package_info
+#: model:res.groups,name:stock_picking_package_info.group_total_ul_package_info
+msgid "Total UL package info"
+msgstr "Total UL package info"
+
+#. module: stock_picking_package_info
 #: field:stock.quant,total_volume:0
 #: field:stock.quant.package,total_volume:0
 msgid "Total Volume"
@@ -125,6 +176,11 @@ msgid "Total estimated weight"
 msgstr "Total peso bruto estimado"
 
 #. module: stock_picking_package_info
+#: view:stock.picking:stock_picking_package_info.view_picking_form_inh_pickingpackageinfo
+msgid "Total packages by logistic unit"
+msgstr "Total paquetes por unidad logística"
+
+#. module: stock_picking_package_info
 #: field:stock.quant.package,tvolume_charge:0
 msgid "Total volume charge"
 msgstr "Volumen total carga"
@@ -139,6 +195,11 @@ msgstr "Peso total"
 #: field:stock.quant.package,width:0
 msgid "Width"
 msgstr "Anchura"
+
+#. module: stock_picking_package_info
+#: view:stock.transfer_details:stock_picking_package_info.view_stock_enter_transfer_details_inh_packageinfo
+msgid "You are going to transfer. Are you sure?"
+msgstr "Va a realizar la transferencia. Esta seguro?"
 
 #. module: stock_picking_package_info
 #: view:stock.transfer_details:stock_picking_package_info.view_stock_enter_transfer_details_inh_packageinfo

@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_picking_total_ul_package_info,stock_picking_total_ul_package_info,stock_picking_package_info.model_stock_picking_total_ul_package_info,stock_picking_package_info.group_total_ul_package_info,1,1,1,1
+

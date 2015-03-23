@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="group_total_ul_package_info" model="res.groups">
+            <field name="name">Total UL package info</field>
+        </record>
+    </data>
+</openerp>
