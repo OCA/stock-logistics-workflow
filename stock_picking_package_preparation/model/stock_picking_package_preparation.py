@@ -27,6 +27,10 @@ class StockPickingPackagePreparation(models.Model):
     _description = 'Package Preparation'
     _inherit = ['mail.thread']
 
+    FIELDS_STATES = {'done': [('readonly', True)],
+                     'in_pack': [('readonly', True)],
+                     'cancel': [('readonly', True)]}
+
     def _default_company_id(self):
         company_model = self.env['res.company']
         return company_model._company_default_get(self._name)
@@ -52,9 +56,7 @@ class StockPickingPackagePreparation(models.Model):
         comodel_name='res.partner',
         string='Partner',
         required=True,
-        states={'done': [('readonly', True)],
-                'in_pack': [('readonly', True)],
-                'cancel': [('readonly', True)]},
+        states=FIELDS_STATES,
     )
     picking_ids = fields.Many2many(
         comodel_name='stock.picking',
@@ -63,30 +65,22 @@ class StockPickingPackagePreparation(models.Model):
         column2='stock_picking_id',
         string='Transfers',
         copy=False,
-        states={'done': [('readonly', True)],
-                'in_pack': [('readonly', True)],
-                'cancel': [('readonly', True)]},
+        states=FIELDS_STATES,
     )
     ul_id = fields.Many2one(
         comodel_name='product.ul',
         string='Logistic Unit',
-        states={'done': [('readonly', True)],
-                'in_pack': [('readonly', True)],
-                'cancel': [('readonly', True)]},
+        states=FIELDS_STATES,
     )
     packaging_id = fields.Many2one(
         comodel_name='product.packaging',
         string='Packaging',
-        states={'done': [('readonly', True)],
-                'in_pack': [('readonly', True)],
-                'cancel': [('readonly', True)]},
+        states=FIELDS_STATES,
     )
     date = fields.Datetime(
         string='Document Date',
         default=fields.Datetime.now,
-        states={'done': [('readonly', True)],
-                'in_pack': [('readonly', True)],
-                'cancel': [('readonly', True)]},
+        states=FIELDS_STATES,
     )
     date_done = fields.Datetime(
         string='Shipping Date',
@@ -97,9 +91,7 @@ class StockPickingPackagePreparation(models.Model):
         string='Company',
         required=True,
         select=True,
-        states={'done': [('readonly', True)],
-                'in_pack': [('readonly', True)],
-                'cancel': [('readonly', True)]},
+        states=FIELDS_STATES,
         default=_default_company_id,
     )
     pack_operation_ids = fields.One2many(
