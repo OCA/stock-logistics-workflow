@@ -29,6 +29,7 @@
  "depends": ["delivery",
              "stock_route_transit",
              "transport_information",
+             "stock_addresses",
              ],
  "demo": [],
  "data": ["data/shipment_plan_sequence.xml",

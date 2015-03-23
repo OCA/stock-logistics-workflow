@@ -1,0 +1,5 @@
+-
+   Ensure that everything in there can be done by Warehouse / Manager
+-
+  !context
+    uid: res_users_stock_manager
