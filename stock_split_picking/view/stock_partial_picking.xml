@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <record id="xml_id" model="ir.ui.view">
+      <field name="name">Stock picking out Split button</field>
+      <field name="model">stock.picking.out</field>
+      <field name="inherit_id" ref="stock.view_picking_out_form" />
+      <field name="arch" type="xml">
+        <field name ="state" position="before">
+          <button name="split_process"
+                  states="draft,confirmed,assigned"
+                  string="Split"
+                  groups="stock.group_stock_user"
+                  type="object"/>
+        </field>
+      </field>
+    </record>
+  </data>
+</openerp>
