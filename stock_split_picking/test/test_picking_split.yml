@@ -1,0 +1,64 @@
+-
+  In order to test stock picking out spliting
+  I have to ensure when I split out picking, related backorder is not in state done
+-
+  I create a new GameBoy product for my tests
+-
+  !record {model: product.product, id: product_gameboy}:
+    categ_id: product.product_category_1
+    name: GameBoy
+    procure_method: make_to_stock
+    supply_method: buy
+    type: product
+    uom_id: product.product_uom_unit
+    uom_po_id: product.product_uom_unit
+    property_stock_inventory: stock.location_inventory
+    property_stock_procurement: stock.location_procurement
+    property_stock_production: stock.location_production
+-
+  I create a manual stock picking out
+-
+ !record {model: stock.picking, id: outgoing_shipment}:
+    type: out
+    location_dest_id: stock.stock_location_7
+-
+ !record {model: stock.move, id: outgoing_shipment_gameboy}:
+    company_id: base.main_company
+    picking_id: outgoing_shipment
+    product_id: product_gameboy
+    product_uom: product.product_uom_unit
+    product_qty: 130.0
+    product_uos_qty: 130.0
+    location_id: stock.stock_location_stock
+    location_dest_id: stock.stock_location_7
+-
+  Then I split my shippement in two 40/90
+-
+  !python {model: stock.partial.picking}: |
+    context.update({'active_model': 'stock.picking',
+                    'active_id': ref('outgoing_shipment'),
+                    'active_ids': [ref('outgoing_shipment')],
+                    'partial_no_confirm': True})
+-
+  !record {model: stock.partial.picking, id: partial_pick}:
+    move_ids:
+        - quantity: 40
+          product_id: product_gameboy
+          product_uom: product.product_uom_unit
+          move_id: outgoing_shipment_gameboy
+          location_id: stock.stock_location_stock
+          location_dest_id: stock.stock_location_7
+-
+  !python {model: stock.partial.picking }: |
+    self.do_partial(cr, uid, [ref('partial_pick')], context=context)
+-
+  I check that the backorder has 40 units with state set to assigned not done
+-
+  !python {model: stock.picking}: |
+    shipment = self.browse(cr, uid, ref("outgoing_shipment"))
+    backorder = shipment.backorder_id
+    assert backorder, "Backorder should be created after partial split."
+    assert backorder.state == 'assigned', "Backorder should not be close."
+    for move_line in backorder.move_lines:
+        assert move_line.product_qty == 40, "Qty in backorder does not correspond."
+        assert move_line.state == 'assigned', "Move line of backorder should not be closed."
