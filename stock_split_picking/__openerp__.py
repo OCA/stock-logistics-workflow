@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-##############################################################################
 #
-#    Author: Nicolas Bessi, Guewen Baconnier
-#    Copyright 2013 Camptocamp SA
+#
+#    Author: Nicolas Bessi, Guewen Baconnier, Yannick Vaucher
+#    Copyright 2013-2015 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -17,28 +17,20 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
-{'name': 'Stock picking no confirm split',
- 'version': 'version',
+#
+{'name': 'Split picking',
+ 'summary': 'Split a picking in two unconfirmed pickings',
+ 'version': '1.0',
  'author': "Camptocamp,Odoo Community Association (OCA)",
  'maintainer': 'Camptocamp',
- 'category': 'stock',
+ 'license': 'AGPL-3',
+ 'category': 'Warehouse Management',
  'complexity': "normal",  # easy, normal, expert
  'depends': ['stock'],
- 'description': """
-Split picking without delivery
-------------------------------
-
-This addon adds a "Split" button on the out picking form header.
-
-It works like the classical picking split (when you deliver) but does not pass
- the backorder and backorder lines to state "done".
-""",
  'website': 'http://www.camptocamp.com',
  'data': ['view/stock_partial_picking.xml'],
  'demo': [],
  'test': ['test/test_picking_split.yml'],
  'installable': True,
  'auto_install': False,
- 'license': 'AGPL-3',
  }

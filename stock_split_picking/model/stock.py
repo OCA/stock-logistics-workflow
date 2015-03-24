@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-##############################################################################
 #
-#    Author: Nicolas Bessi, Guewen Baconnier
+#
+#    Author: Nicolas Bessi, Guewen Baconnier, Yannick Vaucher
 #    Copyright 2013-2015 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
+#
 """Adds a split button on stock picking out to enable partial picking without
    passing backorder state to done"""
 from openerp import models, api, _
