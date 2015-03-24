@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Author: Nicolas Bessi, Guewen Baconnier
-#    Copyright 2013 Camptocamp SA
+#    Copyright 2013-2015 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -24,9 +24,12 @@ from openerp.osv import orm
 from openerp import netsvc
 
 
-class stock_picking_out(orm.Model):
+class stock_picking(orm.Model):
+    """Adds picking split without done state.
+    Long piece of code has to be copied from OpenERP
+    as there is no hook..."""
 
-    _inherit = "stock.picking.out"
+    _inherit = "stock.picking"
 
     def split_process(self, cr, uid, ids, context=None):
         """Use to trigger the wizard from button with
@@ -50,15 +53,6 @@ class stock_picking_out(orm.Model):
             'context': ctx,
             'nodestroy': True,
         }
-
-
-class stock_picking(orm.Model):
-
-    """Adds picking split without done state.
-    Long piece of code has to be copied from OpenERP
-    as there is no hook..."""
-
-    _inherit = "stock.picking"
 
     def do_partial(self, cr, uid, ids, partial_datas, context=None):
         """ Makes partial picking and moves done.
