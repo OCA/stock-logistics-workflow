@@ -38,8 +38,7 @@ It works like the classical picking split (when you deliver) but does not pass
  'data': ['view/stock_partial_picking.xml'],
  'demo': [],
  'test': ['test/test_picking_split.yml'],
- 'installable': False,
+ 'installable': True,
  'auto_install': False,
  'license': 'AGPL-3',
- 'application': False,
  }
