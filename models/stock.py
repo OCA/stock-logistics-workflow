@@ -21,7 +21,7 @@ class StockPicking(models.Model):
         self.packages = [
             operation.result_package_id.id for operation in
             self.pack_operation_ids if operation.result_package_id]
-        self. _calculate_package_totals()
+        self._calculate_package_totals()
 
     def _calculate_package_totals(self):
         self.num_packages = 0

@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-23 15:14+0000\n"
-"PO-Revision-Date: 2015-03-23 16:16+0100\n"
+"PO-Revision-Date: 2015-03-24 08:14+0100\n"
 "Last-Translator: Alfredo <alfredodelafuente@avanzosc.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -189,7 +189,7 @@ msgstr "Anchura"
 #. module: stock_picking_package_info
 #: view:stock.transfer_details:stock_picking_package_info.view_stock_enter_transfer_details_inh_packageinfo
 msgid "You are going to transfer. Are you sure?"
-msgstr "Va a realizar la transferencia. Esta seguro?"
+msgstr "Va a realizar la transferencia. ¿Esta seguro?"
 
 #. module: stock_picking_package_info
 #: view:stock.transfer_details:stock_picking_package_info.view_stock_enter_transfer_details_inh_packageinfo
