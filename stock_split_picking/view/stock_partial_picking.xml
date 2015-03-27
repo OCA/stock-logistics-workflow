@@ -8,7 +8,7 @@
       <field name="arch" type="xml">
         <field name ="state" position="before">
           <button name="split_process"
-                  states="draft,confirmed,assigned"
+                  states="draft,confirmed,assigned,partially_available"
                   string="Split"
                   groups="stock.group_stock_user"
                   type="object"
