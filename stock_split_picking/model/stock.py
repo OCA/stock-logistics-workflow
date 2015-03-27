@@ -43,5 +43,27 @@ class stock_picking(models.Model):
             {'picking_id': len(self.ids) and self.ids[0] or False,
              })
         view_dict = wiz.wizard_view()
-        view_dict['name'] =  _('Enter quantities to split')
+        view_dict['name'] = _('Enter quantities to split')
         return view_dict
+
+
+class StockMove(models.Model):
+
+    _inherit = 'stock.move'
+
+    @api.model
+    def split(self, move, qty,
+              restrict_lot_id=False, restrict_partner_id=False):
+        new_move = super(StockMove, self).split(
+            move, qty,
+            restrict_lot_id=restrict_lot_id,
+            restrict_partner_id=restrict_partner_id,
+        )
+        new_move = self.browse(new_move)
+        if move.procurement_id:
+            defaults = {'product_qty': qty,
+                        'state': 'running'}
+            new_procurement = move.procurement_id.copy(default=defaults)
+            new_move.procurement_id = new_procurement
+            move.procurement_id.product_qty = move.product_qty
+        return new_move.id
