@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data noupdate="0">
-        <record id="group_lock_lot" model="res.groups">
-            <field name="name">Manage Lot locking and unlocking</field>
-            <field name="category_id" ref="base.module_category_hidden" />
-        </record>
-    </data>
-</openerp>

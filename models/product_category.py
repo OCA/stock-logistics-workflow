@@ -5,9 +5,9 @@
 from openerp import models, fields
 
 
-class StockConfigSettings(models.TransientModel):
-    _inherit = 'stock.config.settings'
+class ProductCategory(models.Model):
+    _inherit = 'product.category'
 
-    group_lot_default_locked = fields.Boolean(
+    lot_default_locked = fields.Boolean(
         string='Create lot in lock status',
         help='If checked, production lots will be created locked by default')

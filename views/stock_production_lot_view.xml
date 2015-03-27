@@ -5,7 +5,6 @@
             <field name="name">view.production.lot.form.inh.locklot</field>
             <field name="model">stock.production.lot</field>
             <field name="inherit_id" ref="stock.view_production_lot_form" />
-            <field name="groups_id" eval="[(4, ref('group_lock_lot'))]" />
             <field name="arch" type="xml">
                 <div class="oe_button_box oe_right" position="before">
                     <header>

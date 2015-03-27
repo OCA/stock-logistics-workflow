@@ -1,8 +1,8 @@
 MRP lock lot
 ============
 * This module allows you to define whether a lot is locked or not. By default,
-  the value that will catch, which will define in Configuration - Configuration
-  - Warehouse, in the field "Create in locked status when create a lot".
+  the value that will catch, which will define in product category, in the
+  field "Create in locked status when create a lot".
 * To lock/unlock a lot, have created 2 new buttons in form. Also from the tree
   view, by selecting the lots in option "Lock/Unlock lots".
 * When you lock one lot, validates that does not exist a quant assigned to the

@@ -23,9 +23,7 @@
 {
     "name": "MRP Lock Lot",
     "version": "1.0",
-    "author": "OdooMRP team,"
-              "Avanzosc,"
-              "Serv. Tecnol. Avanzados - Pedro M. Baeza",
+    "author": "OdooMRP team",
     "website": "http://www.odoomrp.com",
     "contributors": [
         "Ana Juaristi <ajuaristio@gmail.com>",
@@ -34,17 +32,15 @@
         "Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>",
     ],
     "category": "Manufacturing",
-    "depends": [
-        "stock",
-        "mrp",
+    "depends": ["stock",
+                "mrp",
+                "product",
     ],
     "data": [
-        "security/mrp_lock_lot_security.xml",
-        "data/mrp_lock_lot_data.xml",
         "wizard/stock_transfer_details_view.xml",
         "wizard/mrp_product_produce_view.xml",
         "wizard/wiz_lock_lot_view.xml",
-        "views/stock_config_settings_view.xml",
+        "views/product_category_view.xml",
         "views/stock_production_lot_view.xml",
         "views/stock_quant_view.xml",
     ],

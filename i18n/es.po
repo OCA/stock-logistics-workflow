@@ -6,13 +6,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-13 08:38+0000\n"
-"PO-Revision-Date: 2015-02-13 08:38+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2015-03-27 10:05+0000\n"
+"PO-Revision-Date: 2015-03-27 11:11+0100\n"
+"Last-Translator: Alfredo <alfredodelafuente@avanzosc.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 
 #. module: mrp_lock_lot
@@ -21,7 +21,7 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 #. module: mrp_lock_lot
-#: field:stock.config.settings,group_lot_default_locked:0
+#: field:product.category,lot_default_locked:0
 msgid "Create lot in lock status"
 msgstr "Crear lote en estado bloqueado"
 
@@ -36,11 +36,10 @@ msgid "Created on"
 msgstr "Creado el"
 
 #. module: mrp_lock_lot
-#: code:addons/mrp_lock_lot/models/mrp_production_lot.py:28
-#: code:addons/mrp_lock_lot/models/mrp_production_lot.py:40
+#: code:addons/mrp_lock_lot/models/mrp_production_lot.py:32
 #, python-format
 msgid "Error!: Found stock movements for lot: \"%\" with location destination type in virtual/company"
-msgstr "Error!: Encontrados movimientos de stock para el lote: \"%\" con ubicación destino tipo virtual/empresa"
+msgstr "Error!: Encontrados movimientos de stock para el lote: \"%\" con ubicación destino tipo virtual/compañía"
 
 #. module: mrp_lock_lot
 #: field:wiz.lock.lot,id:0
@@ -48,7 +47,7 @@ msgid "ID"
 msgstr "ID"
 
 #. module: mrp_lock_lot
-#: help:stock.config.settings,group_lot_default_locked:0
+#: help:product.category,lot_default_locked:0
 msgid "If checked, production lots will be created locked by default"
 msgstr "Si marcado, los lotes de producción se crearán bloqueados por defecto"
 
@@ -66,6 +65,11 @@ msgstr "Última actualización el"
 #: view:stock.production.lot:mrp_lock_lot.view_production_lot_form_inh_locklot
 msgid "Lock"
 msgstr "Bloquear"
+
+#. module: mrp_lock_lot
+#: view:product.category:mrp_lock_lot.product_category_form_view_inh_locklot
+msgid "Lock Lot Properties"
+msgstr "Propiedades de bloqueo de lotes"
 
 #. module: mrp_lock_lot
 #: view:wiz.lock.lot:mrp_lock_lot.view_wiz_lock_lot_form
@@ -96,31 +100,19 @@ msgid "Lot"
 msgstr "Lote"
 
 #. module: mrp_lock_lot
-#: model:mail.message.subtype,description:mrp_lock_lot.mt_lock_lot
-#: model:mail.message.subtype,name:mrp_lock_lot.mt_lock_lot
-msgid "Lot Locked"
-msgstr "Lote bloqueado"
-
-#. module: mrp_lock_lot
-#: model:mail.message.subtype,description:mrp_lock_lot.mt_unlock_lot
-#: model:mail.message.subtype,name:mrp_lock_lot.mt_unlock_lot
-msgid "Lot Unlocked"
-msgstr "Lote desbloqueado"
-
-#. module: mrp_lock_lot
 #: model:ir.model,name:mrp_lock_lot.model_stock_production_lot
 msgid "Lot/Serial"
 msgstr "Lote/Nº de serie"
 
 #. module: mrp_lock_lot
-#: model:res.groups,name:mrp_lock_lot.group_lock_lot
-msgid "Manage Lot locking and unlocking"
-msgstr "Gestionar bloqueo/desbloqueo de lotes"
-
-#. module: mrp_lock_lot
 #: view:stock.production.lot:mrp_lock_lot.search_product_lot_filter_inh_locklot
 msgid "Product"
 msgstr "Producto"
+
+#. module: mrp_lock_lot
+#: model:ir.model,name:mrp_lock_lot.model_product_category
+msgid "Product Category"
+msgstr "Categoría de producto"
 
 #. module: mrp_lock_lot
 #: model:ir.model,name:mrp_lock_lot.model_stock_quant
@@ -141,16 +133,6 @@ msgstr "Desbloquear lotes"
 #: view:wiz.lock.lot:mrp_lock_lot.view_wiz_lock_lot_form
 msgid "What do you want to do with selected lots?"
 msgstr "¿Que quieres hacer con los lotes seleccionados?"
-
-#. module: mrp_lock_lot
-#: view:mrp.product.produce:mrp_lock_lot.view_mrp_product_produce_wizard_inh_locklot
-msgid "[('product_id','=',product_id),('locked','=',False)]"
-msgstr "[('product_id','=',product_id),('locked','=',False)]"
-
-#. module: mrp_lock_lot
-#: view:stock.transfer_details:mrp_lock_lot.view_stock_enter_transfer_details_inh_locklot
-msgid "[('product_id','=?',product_id),('locked','=',False)]"
-msgstr "[('product_id','=?',product_id),('locked','=',False)]"
 
 #. module: mrp_lock_lot
 #: view:wiz.lock.lot:mrp_lock_lot.view_wiz_lock_lot_form

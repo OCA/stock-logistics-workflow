@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="product_category_form_view_inh_locklot" model="ir.ui.view">
+            <field name="name">product.category.form.view.inh.locklot</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_form_view"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//group[@name='parent']" position="inside">
+                        <group name="locklot_property" string="Lock Lot Properties" colspan="2">
+                            <field name="lot_default_locked" />
+                        </group>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+    </data>
+</openerp>

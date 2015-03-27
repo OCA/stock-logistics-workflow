@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-13 08:39+0000\n"
-"PO-Revision-Date: 2015-02-13 08:39+0000\n"
+"POT-Creation-Date: 2015-03-27 10:04+0000\n"
+"PO-Revision-Date: 2015-03-27 10:04+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgid "Cancel"
 msgstr ""
 
 #. module: mrp_lock_lot
-#: field:stock.config.settings,group_lot_default_locked:0
+#: field:product.category,lot_default_locked:0
 msgid "Create lot in lock status"
 msgstr ""
 
@@ -36,8 +36,7 @@ msgid "Created on"
 msgstr ""
 
 #. module: mrp_lock_lot
-#: code:addons/mrp_lock_lot/models/mrp_production_lot.py:28
-#: code:addons/mrp_lock_lot/models/mrp_production_lot.py:40
+#: code:addons/mrp_lock_lot/models/mrp_production_lot.py:32
 #, python-format
 msgid "Error!: Found stock movements for lot: \"%\" with location destination type in virtual/company"
 msgstr ""
@@ -48,7 +47,7 @@ msgid "ID"
 msgstr ""
 
 #. module: mrp_lock_lot
-#: help:stock.config.settings,group_lot_default_locked:0
+#: help:product.category,lot_default_locked:0
 msgid "If checked, production lots will be created locked by default"
 msgstr ""
 
@@ -65,6 +64,11 @@ msgstr ""
 #. module: mrp_lock_lot
 #: view:stock.production.lot:mrp_lock_lot.view_production_lot_form_inh_locklot
 msgid "Lock"
+msgstr ""
+
+#. module: mrp_lock_lot
+#: view:product.category:mrp_lock_lot.product_category_form_view_inh_locklot
+msgid "Lock Lot Properties"
 msgstr ""
 
 #. module: mrp_lock_lot
@@ -96,30 +100,18 @@ msgid "Lot"
 msgstr ""
 
 #. module: mrp_lock_lot
-#: model:mail.message.subtype,description:mrp_lock_lot.mt_lock_lot
-#: model:mail.message.subtype,name:mrp_lock_lot.mt_lock_lot
-msgid "Lot Locked"
-msgstr ""
-
-#. module: mrp_lock_lot
-#: model:mail.message.subtype,description:mrp_lock_lot.mt_unlock_lot
-#: model:mail.message.subtype,name:mrp_lock_lot.mt_unlock_lot
-msgid "Lot Unlocked"
-msgstr ""
-
-#. module: mrp_lock_lot
 #: model:ir.model,name:mrp_lock_lot.model_stock_production_lot
 msgid "Lot/Serial"
 msgstr ""
 
 #. module: mrp_lock_lot
-#: model:res.groups,name:mrp_lock_lot.group_lock_lot
-msgid "Manage Lot locking and unlocking"
+#: view:stock.production.lot:mrp_lock_lot.search_product_lot_filter_inh_locklot
+msgid "Product"
 msgstr ""
 
 #. module: mrp_lock_lot
-#: view:stock.production.lot:mrp_lock_lot.search_product_lot_filter_inh_locklot
-msgid "Product"
+#: model:ir.model,name:mrp_lock_lot.model_product_category
+msgid "Product Category"
 msgstr ""
 
 #. module: mrp_lock_lot
@@ -140,16 +132,6 @@ msgstr ""
 #. module: mrp_lock_lot
 #: view:wiz.lock.lot:mrp_lock_lot.view_wiz_lock_lot_form
 msgid "What do you want to do with selected lots?"
-msgstr ""
-
-#. module: mrp_lock_lot
-#: view:mrp.product.produce:mrp_lock_lot.view_mrp_product_produce_wizard_inh_locklot
-msgid "[('product_id','=',product_id),('locked','=',False)]"
-msgstr ""
-
-#. module: mrp_lock_lot
-#: view:stock.transfer_details:mrp_lock_lot.view_stock_enter_transfer_details_inh_locklot
-msgid "[('product_id','=?',product_id),('locked','=',False)]"
 msgstr ""
 
 #. module: mrp_lock_lot
