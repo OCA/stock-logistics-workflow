@@ -39,6 +39,10 @@ class StockPicking(models.Model):
                     self.env['stock.picking.package.total'].create(values)
                     self.num_packages += cont
 
+    @api.one
+    def button_refresh_package_totals(self):
+        self._calculate_package_totals()
+
 
 class StockPickingPackageTotal(models.Model):
     _name = 'stock.picking.package.total'
