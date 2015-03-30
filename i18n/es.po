@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-27 10:05+0000\n"
-"PO-Revision-Date: 2015-03-27 11:11+0100\n"
+"POT-Creation-Date: 2015-03-30 09:55+0000\n"
+"PO-Revision-Date: 2015-03-30 11:56+0100\n"
 "Last-Translator: Alfredo <alfredodelafuente@avanzosc.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr "Cancelar"
 
 #. module: mrp_lock_lot
 #: field:product.category,lot_default_locked:0
-msgid "Create lot in lock status"
+msgid "Create lot in locked status"
 msgstr "Crear lote en estado bloqueado"
 
 #. module: mrp_lock_lot
@@ -36,10 +36,10 @@ msgid "Created on"
 msgstr "Creado el"
 
 #. module: mrp_lock_lot
-#: code:addons/mrp_lock_lot/models/mrp_production_lot.py:32
+#: code:addons/mrp_lock_lot/models/mrp_production_lot.py:43
 #, python-format
 msgid "Error!: Found stock movements for lot: \"%\" with location destination type in virtual/company"
-msgstr "Error!: Encontrados movimientos de stock para el lote: \"%\" con ubicación destino tipo virtual/compañía"
+msgstr "Error!: Encontrados movimientos de stock para el lote: \"%\" con ubicación destino tipo virtual/empresa"
 
 #. module: mrp_lock_lot
 #: field:wiz.lock.lot,id:0
@@ -98,6 +98,18 @@ msgstr "Bloqueado"
 #: view:stock.quant:mrp_lock_lot.quant_search_view_inh_locklot
 msgid "Lot"
 msgstr "Lote"
+
+#. module: mrp_lock_lot
+#: model:mail.message.subtype,description:mrp_lock_lot.mt_lock_lot
+#: model:mail.message.subtype,name:mrp_lock_lot.mt_lock_lot
+msgid "Lot Locked"
+msgstr "Lote bloqueado"
+
+#. module: mrp_lock_lot
+#: model:mail.message.subtype,description:mrp_lock_lot.mt_unlock_lot
+#: model:mail.message.subtype,name:mrp_lock_lot.mt_unlock_lot
+msgid "Lot Unlocked"
+msgstr "Lote desbloqueado"
 
 #. module: mrp_lock_lot
 #: model:ir.model,name:mrp_lock_lot.model_stock_production_lot

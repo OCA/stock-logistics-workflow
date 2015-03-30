@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- Lot-related subtypes for messaging / Chatter -->
+        <record id="mt_lock_lot" model="mail.message.subtype">
+            <field name="name">Lot Locked</field>
+            <field name="res_model">stock.production.lot</field>
+            <field name="default" eval="False"/>
+            <field name="description">Lot Locked</field>
+        </record>
+        <record id="mt_unlock_lot" model="mail.message.subtype">
+            <field name="name">Lot Unlocked</field>
+            <field name="res_model">stock.production.lot</field>
+            <field name="default" eval="False"/>
+            <field name="description">Lot Unlocked</field>
+        </record>
+    </data>
+</openerp>

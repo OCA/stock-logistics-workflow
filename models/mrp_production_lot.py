@@ -6,7 +6,18 @@ from openerp import models, fields, api, exceptions, _
 
 
 class StockProductionLot(models.Model):
-    _inherit = 'stock.production.lot'
+    _name = 'stock.production.lot'
+    _inherit = ['stock.production.lot', 'mail.thread']
+
+    _mail_post_access = 'read'
+    _track = {
+        'locked': {
+            'mrp_lock_lot.mt_lock_lot': lambda self, cr, uid, obj,
+            ctx=None: obj.locked,
+            'mrp_lock_lot.mt_unlock_lot': lambda self, cr, uid, obj,
+            ctx=None: not obj.locked,
+        },
+    }
 
     @api.one
     def _get_locked_value(self):
