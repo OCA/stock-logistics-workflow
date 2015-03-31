@@ -17,7 +17,8 @@ class StockTransferDetails(models.TransientModel):
 
     @api.one
     def do_save_for_later(self):
-        operation_obj = self.env['stock.pack.operation']
+        operation_obj = self.env['stock.pack.operation'].with_context(
+            no_recompute=True)
         # Create new and update existing pack operations
         for lstits in [self.item_ids, self.packop_ids]:
             for prod in lstits:
@@ -34,12 +35,9 @@ class StockTransferDetails(models.TransientModel):
                     'owner_id': prod.owner_id.id,
                 }
                 if prod.packop_id:
-                    if prod.packop_id.product_qty != prod.quantity:
-                        qty = prod.packop_id.product_qty - prod.quantity
-                        prod.packop_id.write({'product_qty': qty})
-                        pack_datas['picking_id'] = self.picking_id.id
-                        operation_obj.create(pack_datas)
-                    else:
-                        prod.packop_id.write(pack_datas)
+                    prod.packop_id.with_context(no_recompute=True).write(
+                        pack_datas)
+                else:
+                    operation_obj.create(pack_datas)
         self.picking_id._catch_operations()
         return True
