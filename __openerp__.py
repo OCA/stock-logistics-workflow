@@ -30,11 +30,11 @@
     'depends': ["product",
                 "stock"
                 ],
-    'data': ['security/stock_picking_package_info.xml',
-             'security/ir.model.access.csv',
-             'wizard/stock_transfer_details_view.xml',
-             'views/stock_quant_package_view.xml',
-             'views/stock_picking_view.xml',
-             ],
+    'data': [
+        'security/ir.model.access.csv',
+        'wizard/stock_transfer_details_view.xml',
+        'views/stock_quant_package_view.xml',
+        'views/stock_picking_view.xml',
+    ],
     'installable': True,
 }

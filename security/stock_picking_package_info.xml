@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
-        <record id="group_stock_picking_package_total" model="res.groups">
-            <field name="name">Stock picking package total</field>
-        </record>
-    </data>
-</openerp>

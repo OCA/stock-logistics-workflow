@@ -28,15 +28,17 @@ class StockPicking(models.Model):
         if self.package_totals:
             self.package_totals.unlink()
         if self.packages:
+            package_total_obj = self.env['stock.picking.package.total'].sudo()
             products_ul = self.env['product.ul'].search([])
             for product_ul in products_ul:
                 cont = len(self.packages.filtered(lambda x: x.ul_id.id ==
                                                   product_ul.id))
-                if cont > 0:
-                    values = {'picking': self.id,
-                              'ul': product_ul.id,
-                              'quantity': cont}
-                    self.env['stock.picking.package.total'].create(values)
+                if cont:
+                    package_total_obj.create({
+                        'picking': self.id,
+                        'ul': product_ul.id,
+                        'quantity': cont
+                    })
                     self.num_packages += cont
 
 
