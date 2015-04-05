@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+<data>
+    <record model="ir.ui.view" id="inherit_product_ul_tree_view">
+        <field name="name">product.ul.tree</field>
+        <field name="model">product.ul</field>
+        <field name="inherit_id" ref="product.product_ul_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <field name='long'/>
+                <field name='width'/>
+                <field name='high'/>
+                <field name='cbm'/>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="inherit_product_ul_form_view">
+        <field name="name">product.ul.form</field>
+        <field name="model">product.ul</field>
+        <field name="inherit_id" ref="product.product_ul_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+            	<group string='Size Info'>
+                <field name='long'/>
+                <field name='width'/>
+                <field name='high'/>
+                <field name='cbm'/>
+              </group>
+            </xpath>
+        </field>
+    </record>
+</data>
+</openerp>

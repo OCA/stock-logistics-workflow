@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- stock tracking form view -->
+        <record id="inherit_stock_tracking" model="ir.ui.view">
+            <field name="name">inherit.stock.tracking.form</field>
+            <field name="model">stock.tracking</field>
+            <field name="inherit_id" ref="stock.view_tracking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/group/group[@string='Traceability']" position="after">
+                   <group string="Customer Info" col="4">
+                        <field name="pack_address" colspan="4"/>
+                        <field name="pack_note" colspan="4"/>
+                    </group>
+                    <newline/>
+                    <group string="Pack Dimensions" col="4">
+                        <group colspan="2">
+                            <field name="net_weight"   colspan="2"/>
+                            <field name="gross_weight" colspan="2"/>
+                            <field name="pack_cbm"     colspan="2"/>
+                        </group>
+                       <group colspan="2">
+                            <field name="ul_id" colspan="2" invisible='1'/>
+                            <field name="pack_h" colspan="2"/>
+                            <field name="pack_w" colspan="2"/>
+                            <field name="pack_l" colspan="2"/>
+                       </group>
+                   </group>
+                </xpath>
+            </field>
+        </record>
+                
+        <!-- stock.tracking tree-->
+        <record id="inherit_view_tracking_tree" model="ir.ui.view">
+            <field name="name">stock.tracking.tree</field>
+            <field name="model">stock.tracking</field>
+            <field name="inherit_id" ref="stock.view_tracking_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree/field[@name='serial']" position="after">
+                    <field name="pack_h"/>
+                    <field name="pack_w"/>
+                    <field name="pack_l"/>
+                    <field name="net_weight"/>
+                    <field name="gross_weight"/>
+                </xpath>
+            </field>
+        </record>
+                
+        <!--  Stock move view   -->    
+        <record id='act_pack_open_stock_moves' model='ir.actions.act_window'>
+            <field name="domain">[('tracking_id','in',active_ids)]</field>
+            <field name="name">Open Stock Move</field>
+            <field name="res_model">stock.move</field>
+            <field name="src_model">stock.tracking</field>
+        </record>
+        <record id='values_pack_open_stock_moves' model='ir.values'>
+            <field name="name">Open Stock Move</field>
+            <field name="key2">client_action_multi</field>
+            <field name="model">stock.tracking</field>
+            <field name="value_unpickle" eval="'ir.actions.act_window,' + str(ref('act_pack_open_stock_moves'))"/>
+        </record>
+    </data>
+</openerp>

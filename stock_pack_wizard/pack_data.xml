@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+        <!-- group pack_manager -->
+        <record id="pack_manager" model="res.groups">
+            <field name="name">Pack Manager</field>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+            <field name="implied_ids" eval="[(6,0, [ref('stock.group_tracking_lot'),])]"/>
+        </record>
+
+        <!--menu packs only "group trackling lot" -->
+        <record id="stock.menu_action_tracking_form" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6,0, [ref('stock.group_tracking_lot'),])]"/>
+        </record>
+
+        <record forcecreate="True" id="decimal_height" model="decimal.precision">
+            <field name="name">Pack Height</field>
+            <field name="digits">3</field>
+        </record>
+    </data>
+</openerp>
