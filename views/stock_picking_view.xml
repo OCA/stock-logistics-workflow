@@ -24,6 +24,8 @@
                             </tree>
                         </field>
                         <group name="group_package_totals" string="Total packages by logistic unit">
+                            <button name="button_refresh_package_totals" string="(Refresh)" type="object"/>
+                            <newline/>
                             <field name="package_totals" nolabel="1">
                                 <tree >
                                     <field name="ul" />

@@ -8,6 +8,11 @@ from openerp import models, fields, api
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
+    @api.one
+    @api.depends('package_totals', 'package_totals.quantity')
+    def _compute_num_packages(self):
+        self.num_packages = sum(x.quantity for x in self.package_totals)
+
     packages = fields.Many2many(
         comodel_name='stock.quant.package',
         relation='rel_picking_package', column1='picking_id',
@@ -15,7 +20,8 @@ class StockPicking(models.Model):
     package_totals = fields.One2many(
         "stock.picking.package.total", "picking",
         string="Total UL Packages Info", readonly=True)
-    num_packages = fields.Integer(string='Num. Packages', readonly=True)
+    num_packages = fields.Integer(
+        string='Num. Packages', compute='_compute_num_packages', store=True)
 
     def _catch_operations(self):
         self.packages = [
@@ -24,7 +30,6 @@ class StockPicking(models.Model):
         self._calculate_package_totals()
 
     def _calculate_package_totals(self):
-        self.num_packages = 0
         if self.package_totals:
             self.package_totals.unlink()
         if self.packages:
@@ -37,9 +42,12 @@ class StockPicking(models.Model):
                     package_total_obj.create({
                         'picking': self.id,
                         'ul': product_ul.id,
-                        'quantity': cont
+                        'quantity': cont,
                     })
-                    self.num_packages += cont
+
+    @api.one
+    def button_refresh_package_totals(self):
+        self._calculate_package_totals()
 
 
 class StockPickingPackageTotal(models.Model):

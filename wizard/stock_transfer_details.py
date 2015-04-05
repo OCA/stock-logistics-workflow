@@ -35,9 +35,9 @@ class StockTransferDetails(models.TransientModel):
                     'owner_id': prod.owner_id.id,
                 }
                 if prod.packop_id:
-                    prod.packop_id.with_context(no_recompute=True).write(
-                        pack_datas)
+                    prod.packop_id.write(pack_datas)
                 else:
+                    pack_datas['picking_id'] = self.picking_id.id
                     operation_obj.create(pack_datas)
         self.picking_id._catch_operations()
         return True
