@@ -20,7 +20,7 @@
 ##############################################################################
 
 {'name': 'Delivery Orders Mass Assign',
- 'version': '0.1',
+ 'version': '0.2',
  'author': "Camptocamp,Odoo Community Association (OCA)",
  'license': 'AGPL-3',
  'category': 'Warehouse Management',
@@ -32,8 +32,11 @@ Delivery Orders Mass Assign
 
 Facilities to check the availability of delivery orders:
 
-* A wizard which allows to check availability on multiple delivery
-  orders at a time.
+* A wizard which allows on multiple delivery orders at a time to:
+    * check availability of Delivery Orders;
+    * force availability of Delivery Orders;
+    * process Pickings (deliver);
+
 * A scheduled action to check availability of all the delivery orders.
   It is not active by default.
 

@@ -6,8 +6,14 @@
       <field name="model">stock.picking.check.assign.all</field>
       <field name="arch" type="xml">
         <form string="Check the availability of the selected delivery orders" version="7.0">
+              <group>
+                  <field name="check_availability"/>
+                  <field name="force_availability"/>
+                  <field name="process_picking"/>
+                  <field name="create_invoice"/>
+              </group>
           <footer>
-            <button name="check" string="Check Availability" type="object" class="oe_highlight"/>
+            <button name="check" string="Apply" type="object" class="oe_highlight"/>
             or
             <button string="Cancel" class="oe_link" special="cancel"/>
           </footer>
