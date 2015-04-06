@@ -69,7 +69,7 @@ class check_assign_all(orm.TransientModel):
                   ('state', '=', 'confirmed'),
                   ('id', 'in', picking_ids)]
         confirmed_picking_ids = picking_obj.search(
-                cr, uid, domain, order='min_date', context=context)
+            cr, uid, domain, order='min_date', context=context)
 
         # Assign all picking if asked
         if wizard.check_availability and confirmed_picking_ids:
@@ -85,7 +85,7 @@ class check_assign_all(orm.TransientModel):
                   ('state', '=', 'assigned'),
                   ('id', 'in', picking_ids)]
         assigned_picking_ids = picking_obj.search(
-                cr, uid, domain, order='min_date', context=context)
+            cr, uid, domain, order='min_date', context=context)
 
         # Process all pickings if asked
         if wizard.process_picking and assigned_picking_ids:
@@ -94,7 +94,7 @@ class check_assign_all(orm.TransientModel):
                 ctx = context.copy()
                 ctx['active_ids'] = [picking.id]
                 process_wizard_id = process_wizard_obj.create(
-                     cr, uid, {}, context=ctx)
+                    cr, uid, {}, context=ctx)
                 process_wizard_obj.do_partial(
                     cr, uid, [process_wizard_id], context=context)
 
@@ -103,7 +103,7 @@ class check_assign_all(orm.TransientModel):
                   ('invoice_state', '=', '2binvoiced'),
                   ('id', 'in', picking_ids)]
         to_invoice_picking_ids = picking_obj.search(
-                cr, uid, domain, order='min_date', context=context)
+            cr, uid, domain, order='min_date', context=context)
 
         # Invoice all pickings if asked
         if wizard.create_invoice and to_invoice_picking_ids:
