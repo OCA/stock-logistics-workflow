@@ -12,7 +12,7 @@
                   string="Split"
                   groups="stock.group_stock_user"
                   type="object"
-                  attrs="{'invisible': ['|', ('picking_type_code', '!=', 'outgoing')]}"/>
+                  attrs="{'invisible': ['|', ('picking_type_code', 'not in', ('outgoing', 'incoming'))]}"/>
         </field>
       </field>
     </record>
