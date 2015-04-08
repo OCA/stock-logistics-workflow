@@ -4,7 +4,6 @@
         <record model="ir.ui.view" id="product_product_obsolet_tree_view">
             <field name="name">product.product.tree</field>
             <field name="model">product.product</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Products obsolescence" editable="bottom" colors="red:outgoing_qty_till_12m==0.0;blue:depreciation in ['full']">
                     <field name="default_code"/>
@@ -24,7 +23,6 @@
         <record model="ir.ui.view" id="product_product_obsolet_form_view">
             <field name="name">product.normal.inherit.stock_obsolete.form</field>
             <field name="model">product.product</field>
-            <field name="type">form</field>
             <field name="inherit_id" ref="product.product_normal_form_view"/>
             <field name="arch" type="xml">
                 <field name="uos_coeff" position="after">
@@ -38,7 +36,6 @@
         <record id="wizard_product_obsolescence_form_view" model="ir.ui.view">
             <field name="name">wizard.product.obsolescence.form</field>
             <field name="model">wizard.product.obsolescence</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Product obsolescence computation">
                     <group colspan="4" col="2" string="Options">
