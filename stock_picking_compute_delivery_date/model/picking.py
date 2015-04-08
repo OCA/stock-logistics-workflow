@@ -233,10 +233,16 @@ class StockPickingOut(orm.Model):
                     product.name)
 
         # Publish messages on pickings
-        self.picking_notify(cr, uid, messages, context=context)
+        try:
+            self.picking_notify(cr, uid, messages, context=context)
+            if use_new_cursor:
+                cr.commit()
+        except:
+            if use_new_cursor:
+                cr.rollback()
+            _logger.exception('Could not add messages to pickings')
 
         if use_new_cursor:
-            cr.commit()
             cr.close()
 
         return True
