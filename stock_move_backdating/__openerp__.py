@@ -40,7 +40,7 @@ Contributors
 * El Hadji Dem (elhadji.dem@savoirfairelinux.com)
 * David Dufresne (david.dufresne@savoirfairelinux.com)
     """,
-    'author': 'Bremskerl',
+    'author': 'Bremskerl, Odoo Community Association (OCA)',
     'website': 'www.bremskerl.com',
     'depends': ['stock'],
     'data': [
