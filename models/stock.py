@@ -3,6 +3,7 @@
 # For copyright and license notices, see __openerp__.py file in root directory
 ##############################################################################
 from openerp import models, fields, api
+from openerp.addons import decimal_precision as dp
 
 
 class StockPicking(models.Model):
@@ -17,6 +18,9 @@ class StockPicking(models.Model):
         comodel_name='stock.quant.package',
         relation='rel_picking_package', column1='picking_id',
         column2='package_id', string='Packages')
+    packages_info = fields.One2many(
+        "stock.picking.package.kg.lot", "picking", string="Packages Info",
+        readonly=True)
     package_totals = fields.One2many(
         "stock.picking.package.total", "picking",
         string="Total UL Packages Info", readonly=True)
@@ -27,7 +31,34 @@ class StockPicking(models.Model):
         self.packages = [
             operation.result_package_id.id for operation in
             self.pack_operation_ids if operation.result_package_id]
+        self._calculate_package_info()
         self._calculate_package_totals()
+
+    def _calculate_package_info(self):
+        if self.packages_info:
+            self.packages_info.unlink()
+        if self.packages:
+            for package in self.packages:
+                kg_net = sum(x.product_qty for x in
+                             self.pack_operation_ids.filtered(
+                                 lambda r: r.result_package_id.id ==
+                                 package.id))
+                vals = {'picking': self.id,
+                        'package': package.id,
+                        'kg_net': kg_net,
+                        'gross_net': kg_net + package.empty_weight
+                        }
+                lots = False
+                for operation in self.pack_operation_ids.filtered(
+                        lambda r: r.result_package_id.id == package.id):
+                    if (operation.lot_id.name and
+                       (not lots or operation.lot_id.name not in lots)):
+                        if not lots:
+                            lots = operation.lot_id.name
+                        else:
+                            lots += ', ' + operation.lot_id.name
+                vals['lots'] = lots
+                self.env['stock.picking.package.kg.lot'].create(vals)
 
     def _calculate_package_totals(self):
         if self.package_totals:
@@ -48,6 +79,20 @@ class StockPicking(models.Model):
     @api.one
     def button_refresh_package_totals(self):
         self._calculate_package_totals()
+
+
+class StockPickingPackageKkLot(models.Model):
+    _name = 'stock.picking.package.kg.lot'
+    _description = "Stock Picking Package KG Lot"
+
+    picking = fields.Many2one('stock.picking', string='Picking')
+    package = fields.Many2one('stock.quant.package', string='Package')
+    kg_net = fields.Float(
+        'KG. Net', digits_compute=dp.get_precision('Product Unit of Measure'))
+    lots = fields.Char(string='Lots/Serial Numbers')
+    gross_net = fields.Float(
+        'KG. Gross',
+        digits_compute=dp.get_precision('Product Unit of Measure'))
 
 
 class StockPickingPackageTotal(models.Model):

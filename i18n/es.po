@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-30 08:50+0000\n"
-"PO-Revision-Date: 2015-03-30 10:53+0100\n"
+"POT-Creation-Date: 2015-04-11 19:50+0000\n"
+"PO-Revision-Date: 2015-04-11 21:54+0100\n"
 "Last-Translator: Alfredo <alfredodelafuente@avanzosc.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,16 +16,23 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_picking_package_info
+#: view:stock.picking:stock_picking_package_info.view_picking_form_inh_pickingpackageinfo
+msgid "(Refresh)"
+msgstr "(Actualizar)"
+
+#. module: stock_picking_package_info
 #: view:stock.quant.package:stock_picking_package_info.view_quant_package_form_inh_pickingpackageinfo
 msgid "Content"
 msgstr "Contenido"
 
 #. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,create_uid:0
 #: field:stock.picking.package.total,create_uid:0
 msgid "Created by"
 msgstr "Creado por"
 
 #. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,create_date:0
 #: field:stock.picking.package.total,create_date:0
 msgid "Created on"
 msgstr "Creado el"
@@ -41,16 +48,29 @@ msgid "Height"
 msgstr "Altura"
 
 #. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,id:0
 #: field:stock.picking.package.total,id:0
 msgid "ID"
 msgstr "ID"
 
 #. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,gross_net:0
+msgid "KG. Gross"
+msgstr "KG. Brutos"
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,kg_net:0
+msgid "KG. Net"
+msgstr "KG. Netos"
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,write_uid:0
 #: field:stock.picking.package.total,write_uid:0
 msgid "Last Updated by"
 msgstr "Última actualización por"
 
 #. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,write_date:0
 #: field:stock.picking.package.total,write_date:0
 msgid "Last Updated on"
 msgstr "Última actualización el"
@@ -66,6 +86,11 @@ msgid "Logistic Unit"
 msgstr "Unidad logística"
 
 #. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,lots:0
+msgid "Lots/Serial Numbers"
+msgstr "Lotes/Números de serie"
+
+#. module: stock_picking_package_info
 #: field:stock.picking,num_packages:0
 #: field:stock.picking.package.total,quantity:0
 msgid "Num. Packages"
@@ -77,10 +102,20 @@ msgid "Operations"
 msgstr "Operaciones"
 
 #. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,package:0
+msgid "Package"
+msgstr "Paquete"
+
+#. module: stock_picking_package_info
 #: view:stock.picking:stock_picking_package_info.view_picking_form_inh_pickingpackageinfo
 #: field:stock.picking,packages:0
 msgid "Packages"
 msgstr "Paquetes"
+
+#. module: stock_picking_package_info
+#: field:stock.picking,packages_info:0
+msgid "Packages Info"
+msgstr "Información paquetes"
 
 #. module: stock_picking_package_info
 #: field:stock.quant.package,permitted_volume:0
@@ -93,9 +128,10 @@ msgid "Physical Packages"
 msgstr "Paquetes físicos"
 
 #. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,picking:0
 #: field:stock.picking.package.total,picking:0
 msgid "Picking"
-msgstr "Albarán"
+msgstr "Picking"
 
 #. module: stock_picking_package_info
 #: model:ir.model,name:stock_picking_package_info.model_stock_picking
@@ -105,7 +141,7 @@ msgstr "Albarán"
 #. module: stock_picking_package_info
 #: model:ir.model,name:stock_picking_package_info.model_stock_transfer_details
 msgid "Picking wizard"
-msgstr "Asistente de albarán"
+msgstr "Wizard albarán"
 
 #. module: stock_picking_package_info
 #: view:stock.quant.package:stock_picking_package_info.view_quant_package_form_inh_pickingpackageinfo
@@ -124,28 +160,23 @@ msgid "Real weight"
 msgstr "Peso real"
 
 #. module: stock_picking_package_info
-#: view:stock.picking:stock_picking_package_info.view_picking_form_inh_pickingpackageinfo
-msgid "(Refresh)"
-msgstr "(Actualizar)"
-
-#. module: stock_picking_package_info
 #: view:stock.transfer_details:stock_picking_package_info.view_stock_enter_transfer_details_inh_packageinfo
 msgid "Save for later"
 msgstr "Guardar para más adelante"
 
 #. module: stock_picking_package_info
+#: model:ir.model,name:stock_picking_package_info.model_stock_picking_package_info
+msgid "Stock Picking Package Info"
+msgstr "Stock Picking Package Info"
+
+#. module: stock_picking_package_info
+#: model:ir.model,name:stock_picking_package_info.model_stock_picking_package_kg_lot
+msgid "Stock Picking Package KG Lot"
+msgstr "Stock Picking Package KG Lot"
+
+#. module: stock_picking_package_info
 #: model:ir.model,name:stock_picking_package_info.model_stock_picking_package_total
 msgid "Stock Picking Package Total"
-msgstr "Total paquete albarán"
-
-#. module: stock_picking_package_info
-#: model:ir.model,name:stock_picking_package_info.model_stock_picking_total_ul_package_info
-msgid "Stock Picking Total UL Package Info"
-msgstr "Total paquetes por unidad logística"
-
-#. module: stock_picking_package_info
-#: model:res.groups,name:stock_picking_package_info.group_stock_picking_package_total
-msgid "Stock picking package total"
 msgstr "Total paquete albarán"
 
 #. module: stock_picking_package_info
@@ -162,6 +193,11 @@ msgstr "La longitud del paquete"
 #: help:stock.quant.package,width:0
 msgid "The width of the package"
 msgstr "La anchura del paquete"
+
+#. module: stock_picking_package_info
+#: view:stock.picking:stock_picking_package_info.view_picking_form_inh_pickingpackageinfo
+msgid "Total Kg. and Lots by package"
+msgstr "Total Kg. y lotes por paquete"
 
 #. module: stock_picking_package_info
 #: field:stock.quant,total_weight_net:0
@@ -214,7 +250,7 @@ msgstr "Anchura"
 #. module: stock_picking_package_info
 #: view:stock.transfer_details:stock_picking_package_info.view_stock_enter_transfer_details_inh_packageinfo
 msgid "You are going to transfer. Are you sure?"
-msgstr "Va a realizar la transferencia. Esta seguro?"
+msgstr "Va a realizar la transferencia. ¿Esta seguro?"
 
 #. module: stock_picking_package_info
 #: view:stock.transfer_details:stock_picking_package_info.view_stock_enter_transfer_details_inh_packageinfo

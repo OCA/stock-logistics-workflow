@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-30 08:49+0000\n"
-"PO-Revision-Date: 2015-03-30 08:49+0000\n"
+"POT-Creation-Date: 2015-04-11 19:50+0000\n"
+"PO-Revision-Date: 2015-04-11 19:50+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,16 +16,23 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_picking_package_info
+#: view:stock.picking:stock_picking_package_info.view_picking_form_inh_pickingpackageinfo
+msgid "(Refresh)"
+msgstr ""
+
+#. module: stock_picking_package_info
 #: view:stock.quant.package:stock_picking_package_info.view_quant_package_form_inh_pickingpackageinfo
 msgid "Content"
 msgstr ""
 
 #. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,create_uid:0
 #: field:stock.picking.package.total,create_uid:0
 msgid "Created by"
 msgstr ""
 
 #. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,create_date:0
 #: field:stock.picking.package.total,create_date:0
 msgid "Created on"
 msgstr ""
@@ -41,16 +48,29 @@ msgid "Height"
 msgstr ""
 
 #. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,id:0
 #: field:stock.picking.package.total,id:0
 msgid "ID"
 msgstr ""
 
 #. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,gross_net:0
+msgid "KG. Gross"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,kg_net:0
+msgid "KG. Net"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,write_uid:0
 #: field:stock.picking.package.total,write_uid:0
 msgid "Last Updated by"
 msgstr ""
 
 #. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,write_date:0
 #: field:stock.picking.package.total,write_date:0
 msgid "Last Updated on"
 msgstr ""
@@ -66,6 +86,11 @@ msgid "Logistic Unit"
 msgstr ""
 
 #. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,lots:0
+msgid "Lots/Serial Numbers"
+msgstr ""
+
+#. module: stock_picking_package_info
 #: field:stock.picking,num_packages:0
 #: field:stock.picking.package.total,quantity:0
 msgid "Num. Packages"
@@ -77,9 +102,19 @@ msgid "Operations"
 msgstr ""
 
 #. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,package:0
+msgid "Package"
+msgstr ""
+
+#. module: stock_picking_package_info
 #: view:stock.picking:stock_picking_package_info.view_picking_form_inh_pickingpackageinfo
 #: field:stock.picking,packages:0
 msgid "Packages"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.picking,packages_info:0
+msgid "Packages Info"
 msgstr ""
 
 #. module: stock_picking_package_info
@@ -93,6 +128,7 @@ msgid "Physical Packages"
 msgstr ""
 
 #. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,picking:0
 #: field:stock.picking.package.total,picking:0
 msgid "Picking"
 msgstr ""
@@ -124,28 +160,23 @@ msgid "Real weight"
 msgstr ""
 
 #. module: stock_picking_package_info
-#: view:stock.picking:stock_picking_package_info.view_picking_form_inh_pickingpackageinfo
-msgid "(Refresh)"
-msgstr ""
-
-#. module: stock_picking_package_info
 #: view:stock.transfer_details:stock_picking_package_info.view_stock_enter_transfer_details_inh_packageinfo
 msgid "Save for later"
 msgstr ""
 
 #. module: stock_picking_package_info
+#: model:ir.model,name:stock_picking_package_info.model_stock_picking_package_info
+msgid "Stock Picking Package Info"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: model:ir.model,name:stock_picking_package_info.model_stock_picking_package_kg_lot
+msgid "Stock Picking Package KG Lot"
+msgstr ""
+
+#. module: stock_picking_package_info
 #: model:ir.model,name:stock_picking_package_info.model_stock_picking_package_total
 msgid "Stock Picking Package Total"
-msgstr ""
-
-#. module: stock_picking_package_info
-#: model:ir.model,name:stock_picking_package_info.model_stock_picking_total_ul_package_info
-msgid "Stock Picking Total UL Package Info"
-msgstr ""
-
-#. module: stock_picking_package_info
-#: model:res.groups,name:stock_picking_package_info.group_stock_picking_package_total
-msgid "Stock picking package total"
 msgstr ""
 
 #. module: stock_picking_package_info
@@ -161,6 +192,11 @@ msgstr ""
 #. module: stock_picking_package_info
 #: help:stock.quant.package,width:0
 msgid "The width of the package"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: view:stock.picking:stock_picking_package_info.view_picking_form_inh_pickingpackageinfo
+msgid "Total Kg. and Lots by package"
 msgstr ""
 
 #. module: stock_picking_package_info

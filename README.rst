@@ -17,7 +17,7 @@ In the transfer wizard pickings, you have a new button "Save for later", that
 allows only modify datas of operations of the picking.
 
 Also, this module displays in the pickings, the number of packages per logistic
-unit.
+unit, and kg. and lots by package.
 
 Credits
 =======
@@ -26,5 +26,4 @@ Contributors
 ------------
 * Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>
 * Ana Juaristi <ajuaristo@gmail.com>
-* Daniel Campos <danielcampos@avanzosc.es>
 * Alfredo de la Fuente <alfredodelafuente@avanzosc.es>
