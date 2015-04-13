@@ -50,13 +50,12 @@ class StockPicking(models.Model):
                         }
                 lots = False
                 for operation in self.pack_operation_ids.filtered(
-                        lambda r: r.result_package_id.id == package.id):
-                    if (operation.lot_id.name and
-                       (not lots or operation.lot_id.name not in lots)):
-                        if not lots:
-                            lots = operation.lot_id.name
-                        else:
-                            lots += ', ' + operation.lot_id.name
+                        lambda r: r.result_package_id.id == package.id and
+                        r.lot_id):
+                    if not lots:
+                        lots = operation.lot_id.name
+                    else:
+                        lots += ', ' + operation.lot_id.name
                 vals['lots'] = lots
                 self.env['stock.picking.package.kg.lot'].create(vals)
 
