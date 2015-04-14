@@ -3,7 +3,8 @@
 #
 #    Author: Guewen Baconnier
 #    Copyright 2014 Camptocamp SA
-#
+#    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
+
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
 #    published by the Free Software Foundation, either version 3 of the
@@ -46,8 +47,18 @@ class check_assign_all(orm.TransientModel):
             """ Orders."""),
     }
 
+    def _default_force_availability(self, cr, uid, context=None):
+        context = context or {}
+        return context.get('force_availability', False)
+
+    def _default_process_picking(self, cr, uid, context=None):
+        context = context or {}
+        return context.get('process_picking', False)
+
     _defaults = {
         'check_availability': True,
+        'force_availability': _default_force_availability,
+        'process_picking': _default_process_picking,
     }
 
     def check(self, cr, uid, ids, context=None):
@@ -121,5 +132,4 @@ class check_assign_all(orm.TransientModel):
                 'context': ctx,
             }
         else:
-            # close the wizard
-            return {'type': 'ir.actions.act_window_close'}
+            return True

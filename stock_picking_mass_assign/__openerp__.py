@@ -21,7 +21,7 @@
 
 {'name': 'Delivery Orders Mass Assign',
  'version': '0.2',
- 'author': "Camptocamp,Odoo Community Association (OCA)",
+ 'author': "Camptocamp,GRAP,Odoo Community Association (OCA)",
  'license': 'AGPL-3',
  'category': 'Warehouse Management',
  'depends': ['stock',

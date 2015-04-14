@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-06 11:21+0000\n"
-"PO-Revision-Date: 2015-04-06 11:21+0000\n"
+"POT-Creation-Date: 2015-04-14 15:51+0000\n"
+"PO-Revision-Date: 2015-04-14 15:51+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -42,6 +42,7 @@ msgid "Create Invoices/Refunds"
 msgstr "Créer factures/avoirs"
 
 #. module: stock_picking_mass_assign
+#: model:ir.actions.act_window,name:stock_picking_mass_assign.action_deliver_all
 #: field:stock.picking.check.assign.all,process_picking:0
 msgid "Deliver"
 msgstr "Livraison"
@@ -55,17 +56,20 @@ msgstr "Vérification de la disponibilité des bons de livraisons"
 
 #. module: stock_picking_mass_assign
 #: code:addons/stock_picking_mass_assign/wizard/check_assign_all.py:62
+#: code:addons/stock_picking_mass_assign/wizard/check_assign_all.py:75
 #, python-format
 msgid "Error"
 msgstr "Erreur"
 
 #. module: stock_picking_mass_assign
+#: model:ir.actions.act_window,name:stock_picking_mass_assign.action_force_availability_all
 #: field:stock.picking.check.assign.all,force_availability:0
 msgid "Force Availability"
 msgstr "Forcer la disponibilité"
 
 #. module: stock_picking_mass_assign
 #: code:addons/stock_picking_mass_assign/wizard/check_assign_all.py:63
+#: code:addons/stock_picking_mass_assign/wizard/check_assign_all.py:76
 #, python-format
 msgid "No selected delivery orders"
 msgstr "Aucun bon de livraison sélectionnés"
@@ -79,6 +83,7 @@ msgstr "Opération de manutention"
 
 #. module: stock_picking_mass_assign
 #: code:addons/stock_picking_mass_assign/wizard/check_assign_all.py:115
+#: code:addons/stock_picking_mass_assign/wizard/check_assign_all.py:128
 #, python-format
 msgid "Stock Invoice Onshipping"
 msgstr "Créer les factures brouillons"
