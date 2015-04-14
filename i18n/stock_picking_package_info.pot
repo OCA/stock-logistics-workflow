@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-11 19:50+0000\n"
-"PO-Revision-Date: 2015-04-11 19:50+0000\n"
+"POT-Creation-Date: 2015-04-14 06:15+0000\n"
+"PO-Revision-Date: 2015-04-14 06:15+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -55,12 +55,12 @@ msgstr ""
 
 #. module: stock_picking_package_info
 #: field:stock.picking.package.kg.lot,gross_net:0
-msgid "KG. Gross"
+msgid "Kg Gross"
 msgstr ""
 
 #. module: stock_picking_package_info
 #: field:stock.picking.package.kg.lot,kg_net:0
-msgid "KG. Net"
+msgid "Kg Net"
 msgstr ""
 
 #. module: stock_picking_package_info
@@ -162,16 +162,6 @@ msgstr ""
 #. module: stock_picking_package_info
 #: view:stock.transfer_details:stock_picking_package_info.view_stock_enter_transfer_details_inh_packageinfo
 msgid "Save for later"
-msgstr ""
-
-#. module: stock_picking_package_info
-#: model:ir.model,name:stock_picking_package_info.model_stock_picking_package_info
-msgid "Stock Picking Package Info"
-msgstr ""
-
-#. module: stock_picking_package_info
-#: model:ir.model,name:stock_picking_package_info.model_stock_picking_package_kg_lot
-msgid "Stock Picking Package KG Lot"
 msgstr ""
 
 #. module: stock_picking_package_info

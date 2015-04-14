@@ -87,10 +87,10 @@ class StockPickingPackageKkLot(models.Model):
     picking = fields.Many2one('stock.picking', string='Picking')
     package = fields.Many2one('stock.quant.package', string='Package')
     kg_net = fields.Float(
-        'KG. Net', digits_compute=dp.get_precision('Product Unit of Measure'))
+        'Kg Net', digits_compute=dp.get_precision('Product Unit of Measure'))
     lots = fields.Char(string='Lots/Serial Numbers')
     gross_net = fields.Float(
-        'KG. Gross',
+        'Kg Gross',
         digits_compute=dp.get_precision('Product Unit of Measure'))
 
 
