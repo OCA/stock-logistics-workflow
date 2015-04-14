@@ -22,6 +22,16 @@ class Quant(models.Model):
     _inherit = 'stock.quant'
 
     @api.model
+    def _get_company_partner_id(self, location):
+        Company = self.env['res.company']
+        res = (location.company_id.partner_id.id or
+            Company.browse(
+                Company._company_default_get('stock.quant')
+            ).partner_id.id
+        )
+        return res
+    
+    @api.model
     def create(self, vals):
         """Set the owner based on the location.
 
@@ -29,15 +39,11 @@ class Quant(models.Model):
 
         """
         if not vals.get('owner_id'):
-            Company = self.env['res.company']
             location = self.env['stock.location'].browse(vals['location_id'])
 
             vals['owner_id'] = (
                 location.partner_id.id or
-                location.company_id.partner_id.id or
-                Company.browse(
-                    Company._company_default_get('stock.quant')
-                ).partner_id.id
+                self._get_company_partner_id(location)
             )
 
         return super(Quant, self).create(vals)
