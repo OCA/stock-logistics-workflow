@@ -17,7 +17,7 @@ class StockPicking(models.Model):
     packages = fields.Many2many(
         comodel_name='stock.quant.package',
         relation='rel_picking_package', column1='picking_id',
-        column2='package_id', string='Packages')
+        column2='package_id', string='Packages', copy=False)
     packages_info = fields.One2many(
         "stock.picking.package.kg.lot", "picking", string="Packages Info",
         readonly=True)
