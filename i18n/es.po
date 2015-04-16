@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-14 06:15+0000\n"
-"PO-Revision-Date: 2015-04-14 08:21+0100\n"
+"POT-Creation-Date: 2015-04-16 13:45+0000\n"
+"PO-Revision-Date: 2015-04-16 15:46+0100\n"
 "Last-Translator: Alfredo <alfredodelafuente@avanzosc.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -136,12 +136,12 @@ msgstr "Albarán"
 #. module: stock_picking_package_info
 #: model:ir.model,name:stock_picking_package_info.model_stock_picking
 msgid "Picking List"
-msgstr "Lista albaranes"
+msgstr "Albarán"
 
 #. module: stock_picking_package_info
 #: model:ir.model,name:stock_picking_package_info.model_stock_transfer_details
 msgid "Picking wizard"
-msgstr "Wizard albarán"
+msgstr "Asistente de albarán"
 
 #. module: stock_picking_package_info
 #: view:stock.quant.package:stock_picking_package_info.view_quant_package_form_inh_pickingpackageinfo
@@ -163,6 +163,11 @@ msgstr "Peso real"
 #: view:stock.transfer_details:stock_picking_package_info.view_stock_enter_transfer_details_inh_packageinfo
 msgid "Save for later"
 msgstr "Guardar para más adelante"
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,sequence:0
+msgid "Sequence"
+msgstr "Secuencia"
 
 #. module: stock_picking_package_info
 #: model:ir.model,name:stock_picking_package_info.model_stock_picking_package_total

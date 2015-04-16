@@ -38,12 +38,15 @@ class StockPicking(models.Model):
         if self.packages_info:
             self.packages_info.unlink()
         if self.packages:
+            sequence = 0
             for package in self.packages:
                 kg_net = sum(x.product_qty for x in
                              self.pack_operation_ids.filtered(
                                  lambda r: r.result_package_id.id ==
                                  package.id))
+                sequence += 1
                 vals = {'picking': self.id,
+                        'sequence': sequence,
                         'package': package.id,
                         'kg_net': kg_net,
                         'gross_net': kg_net + package.empty_weight
@@ -85,6 +88,7 @@ class StockPickingPackageKkLot(models.Model):
     _description = "Stock Picking Package KG Lot"
 
     picking = fields.Many2one('stock.picking', string='Picking')
+    sequence = fields.Integer('Sequence')
     package = fields.Many2one('stock.quant.package', string='Package')
     kg_net = fields.Float(
         'Kg Net', digits_compute=dp.get_precision('Product Unit of Measure'))
