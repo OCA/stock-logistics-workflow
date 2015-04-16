@@ -43,7 +43,6 @@
                     <group name="group_packages_info" string="Total Kg. and Lots by package">
                         <field name="packages_info" nolabel="1">
                             <tree>
-                                <field name="sequence" />
                                 <field name="package" />
                                 <field name="kg_net" sum="sum_kg_net"/>
                                 <field name="lots" />

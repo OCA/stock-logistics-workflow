@@ -86,6 +86,7 @@ class StockPicking(models.Model):
 class StockPickingPackageKkLot(models.Model):
     _name = 'stock.picking.package.kg.lot'
     _description = "Stock Picking Package KG Lot"
+    _order = 'sequence'
 
     picking = fields.Many2one('stock.picking', string='Picking')
     sequence = fields.Integer('Sequence')
