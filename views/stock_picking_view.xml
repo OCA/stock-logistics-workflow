@@ -36,21 +36,19 @@
                                 </tree>
                             </field>
                         </group>
+                        <group name="group_packages_info" string="Total Kg. and Lots by package">
+                            <field name="packages_info" nolabel="1">
+                                <tree>
+                                    <field name="package" />
+                                    <field name="kg_net" sum="sum_kg_net"/>
+                                    <field name="lots" />
+                                    <field name="gross_net" sum="sum_gross_net"/>
+                                </tree>
+                            </field>
+                        </group>
                         <field name="num_packages" invisible="1"/>
                     </page>
                 </page>
-                <field name="pack_operation_ids" position="after">
-                    <group name="group_packages_info" string="Total Kg. and Lots by package">
-                        <field name="packages_info" nolabel="1">
-                            <tree>
-                                <field name="package" />
-                                <field name="kg_net" sum="sum_kg_net"/>
-                                <field name="lots" />
-                                <field name="gross_net" sum="sum_gross_net"/>
-                            </tree>
-                        </field>
-                    </group>
-                </field>
             </field>
         </record>
     </data>

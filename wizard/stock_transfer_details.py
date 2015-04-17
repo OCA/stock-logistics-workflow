@@ -20,6 +20,10 @@ class StockTransferDetails(models.TransientModel):
         operation_obj = self.env['stock.pack.operation'].with_context(
             no_recompute=True)
         # Create new and update existing pack operations
+
+        if not self.item_ids and not self.packop_ids:
+            self.picking_id._delete_packages_information()
+            return True
         for lstits in [self.item_ids, self.packop_ids]:
             for prod in lstits:
                 pack_datas = {
