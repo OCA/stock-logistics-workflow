@@ -30,8 +30,7 @@ class StockPicking(models.Model):
     @api.multi
     def action_assign(self):
         super(StockPicking, self).action_assign()
-        for picking in self:
-            picking._delete_packages_information()
+        self._delete_packages_information()
         return True
 
     @api.one
