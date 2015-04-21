@@ -3,3 +3,4 @@
 # For copyright and license notices, see __openerp__.py file in root directory
 ##############################################################################
 from . import stock_transfer_details
+from . import assign_manual_quants

@@ -19,6 +19,8 @@ allows only modify datas of operations of the picking.
 Also, this module displays in the pickings, the number of packages per logistic
 unit, and kg. and lots by package.
 
+You can print labels of pallets.
+
 Credits
 =======
 

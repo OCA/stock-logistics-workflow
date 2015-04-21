@@ -28,13 +28,15 @@
     'website': "http://www.odoomrp.com",
     'category': 'Warehouse Management',
     'depends': ["product",
-                "stock"
+                "stock",
+                "stock_quant_manual_assign"
                 ],
     'data': [
         'security/ir.model.access.csv',
         'wizard/stock_transfer_details_view.xml',
         'views/stock_quant_package_view.xml',
         'views/stock_picking_view.xml',
+        'reports/label_creator_palet_report.xml'
     ],
     'installable': True,
 }

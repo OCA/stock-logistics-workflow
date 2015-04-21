@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-16 13:45+0000\n"
-"PO-Revision-Date: 2015-04-16 13:45+0000\n"
+"POT-Creation-Date: 2015-04-21 08:37+0000\n"
+"PO-Revision-Date: 2015-04-21 08:37+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,6 +18,16 @@ msgstr ""
 #. module: stock_picking_package_info
 #: view:stock.picking:stock_picking_package_info.view_picking_form_inh_pickingpackageinfo
 msgid "(Refresh)"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: view:website:stock_picking_package_info.label_creator_palet_report_document
+msgid "Adress:"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: view:website:stock_picking_package_info.label_creator_palet_report_document
+msgid "Client:"
 msgstr ""
 
 #. module: stock_picking_package_info
@@ -40,6 +50,16 @@ msgstr ""
 #. module: stock_picking_package_info
 #: field:stock.quant.package,empty_weight:0
 msgid "Empty Package Weight"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: model:ir.actions.report.xml,name:stock_picking_package_info.label_creator_palet_report
+msgid "Etiqueta palet"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: view:website:stock_picking_package_info.label_creator_palet_report_document
+msgid "Gross Weight:"
 msgstr ""
 
 #. module: stock_picking_package_info
@@ -91,9 +111,24 @@ msgid "Lots/Serial Numbers"
 msgstr ""
 
 #. module: stock_picking_package_info
+#: view:website:stock_picking_package_info.label_creator_palet_report_document
+msgid "NET Weight:"
+msgstr ""
+
+#. module: stock_picking_package_info
 #: field:stock.picking,num_packages:0
 #: field:stock.picking.package.total,quantity:0
 msgid "Num. Packages"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: view:website:stock_picking_package_info.label_creator_palet_report_document
+msgid "Number of lots:"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: view:website:stock_picking_package_info.label_creator_palet_report_document
+msgid "Nº Picking:"
 msgstr ""
 
 #. module: stock_picking_package_info
@@ -104,6 +139,16 @@ msgstr ""
 #. module: stock_picking_package_info
 #: field:stock.picking.package.kg.lot,package:0
 msgid "Package"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: view:website:stock_picking_package_info.label_creator_palet_report_document
+msgid "Package Nº"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: view:website:stock_picking_package_info.label_creator_palet_report_document
+msgid "Package:"
 msgstr ""
 
 #. module: stock_picking_package_info
@@ -235,6 +280,11 @@ msgstr ""
 #: field:stock.quant,total_weight:0
 #: field:stock.quant.package,total_weight:0
 msgid "Total weight"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: view:website:stock_picking_package_info.label_creator_palet_report_document
+msgid "Type:"
 msgstr ""
 
 #. module: stock_picking_package_info
