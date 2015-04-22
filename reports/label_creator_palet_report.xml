@@ -19,16 +19,16 @@
                     <t t-foreach="o.packages_info" t-as="p">
                         <div class="page" style="margin: 0 auto; text-align: center;">
                         <p><b>Client: </b><span t-field="o.partner_id" /></p>
-                        <p><b>Adress: </b><span t-field="o.partner_id.street" /></p>
+                        <p><b>Address: </b><span t-field="o.partner_id.street" /></p>
                         <br/>
-                        <p><b>Nº Picking: </b><span t-field="o.name" /></p>
+                        <p><b>Picking: </b><span t-field="o.name" /></p>
                         <br/>
                         <p><b>Package: </b><span t-field="p.package.name" /></p>
                         <p><b>Number of lots: </b><span t-field="p.lots" /></p>
                         <p><b>Type: </b><span t-field="p.package.ul_id.name" /></p>
                         <p><b>NET Weight: </b><span t-field="p.kg_net"/></p>
                         <p><b>Gross Weight: </b><span t-field="p.gross_net" /></p>
-                        <p><b>Package Nº</b><span t-field="p.sequence" /> de <span t-field="o.num_packages"/></p>
+                        <p><b>Package number: </b><span t-field="p.sequence" /> de <span t-field="o.num_packages"/></p>
                         <br/>
                         </div>
                     </t>
