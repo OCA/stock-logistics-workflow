@@ -1,20 +1,19 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* stock_picking_package_info
+#	* stock_picking_package_info
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-21 08:38+0000\n"
-"PO-Revision-Date: 2015-04-21 10:42+0100\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2015-04-22 07:56+0000\n"
+"PO-Revision-Date: 2015-04-22 09:58+0100\n"
+"Last-Translator: Alfredo <alfredodelafuente@avanzosc.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: Poedit 1.5.4\n"
 
 #. module: stock_picking_package_info
 #: view:stock.picking:stock_picking_package_info.view_picking_form_inh_pickingpackageinfo
@@ -52,11 +51,6 @@ msgstr "Creado el"
 #: field:stock.quant.package,empty_weight:0
 msgid "Empty Package Weight"
 msgstr "Tara paquete"
-
-#. module: stock_picking_package_info
-#: model:ir.actions.report.xml,name:stock_picking_package_info.label_creator_palet_report
-msgid "Etiqueta palet"
-msgstr "Etiqueta palet"
 
 #. module: stock_picking_package_info
 #: view:website:stock_picking_package_info.label_creator_palet_report_document
@@ -182,12 +176,17 @@ msgstr "Albarán"
 #. module: stock_picking_package_info
 #: model:ir.model,name:stock_picking_package_info.model_stock_picking
 msgid "Picking List"
-msgstr "Albarán"
+msgstr "Lista albarán"
+
+#. module: stock_picking_package_info
+#: model:ir.actions.report.xml,name:stock_picking_package_info.label_creator_palet_report
+msgid "Picking palet label"
+msgstr "Etiqueta palet albarán"
 
 #. module: stock_picking_package_info
 #: model:ir.model,name:stock_picking_package_info.model_stock_transfer_details
 msgid "Picking wizard"
-msgstr "Wizard albarán"
+msgstr "Wizard Albarán"
 
 #. module: stock_picking_package_info
 #: view:stock.quant.package:stock_picking_package_info.view_quant_package_form_inh_pickingpackageinfo
@@ -252,7 +251,8 @@ msgid "Total UL Packages Info"
 msgstr "Total paquetes por unidad logística"
 
 #. module: stock_picking_package_info
-#: field:stock.quant,total_volume:0 field:stock.quant.package,total_volume:0
+#: field:stock.quant,total_volume:0
+#: field:stock.quant.package,total_volume:0
 msgid "Total Volume"
 msgstr "Total volumen"
 
@@ -277,14 +277,15 @@ msgid "Total volume charge"
 msgstr "Volumen total carga"
 
 #. module: stock_picking_package_info
-#: field:stock.quant,total_weight:0 field:stock.quant.package,total_weight:0
+#: field:stock.quant,total_weight:0
+#: field:stock.quant.package,total_weight:0
 msgid "Total weight"
 msgstr "Peso total"
 
 #. module: stock_picking_package_info
 #: view:website:stock_picking_package_info.label_creator_palet_report_document
 msgid "Type:"
-msgstr "Type:"
+msgstr "Tipo:"
 
 #. module: stock_picking_package_info
 #: field:stock.quant.package,width:0

@@ -5,7 +5,7 @@
         <report
 		    id="label_creator_palet_report"
 		    model="stock.picking"
-		    string="Etiqueta palet"
+		    string="Picking palet label"
 		    report_type="qweb-pdf"
 		    name="stock_picking_package_info.label_creator_palet_report_document"
 		    file="stock_picking_package_info.label_creator_palet"

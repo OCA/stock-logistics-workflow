@@ -29,7 +29,6 @@
     'category': 'Warehouse Management',
     'depends': ["product",
                 "stock",
-                "stock_quant_manual_assign"
                 ],
     'data': [
         'security/ir.model.access.csv',
