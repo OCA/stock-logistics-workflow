@@ -30,8 +30,7 @@
     product with the notion parent product and child products(components)
 """,
     'website': 'http://wwww.akretion.com/',
-    'depends': ['sale',
-                'stock'],
+    'depends': ['sale_stock'],
     'data': [
         'stock_view.xml',
     ],
