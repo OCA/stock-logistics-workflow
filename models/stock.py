@@ -36,12 +36,13 @@ class StockPicking(models.Model):
     @api.one
     def _delete_packages_information(self):
         self.pack_operation_ids.unlink()
-        self.packages.unlink()
+        self.packages= [(6, 0, [])]
         self.packages_info.unlink()
         self.package_totals.unlink()
         return True
 
     def _catch_operations(self):
+        self.packages= [(6, 0, [])]
         self.packages = [
             operation.result_package_id.id for operation in
             self.pack_operation_ids if operation.result_package_id]
