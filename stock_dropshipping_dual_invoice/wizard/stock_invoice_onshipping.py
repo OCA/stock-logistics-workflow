@@ -22,7 +22,8 @@ class StockInvoiceOnshipping(models.TransientModel):
     _inherit = "stock.invoice.onshipping"
 
     def _default_second_journal(self):
-        return self.env['account.journal'].search([('type', '=', 'sale')])
+        res = self.env['account.journal'].search([('type', '=', 'sale')])
+        return res and res[0] or False
 
     def _need_two_invoices(self):
         if 'active_id' in self.env.context:
