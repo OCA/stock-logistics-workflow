@@ -97,6 +97,14 @@ class StockPicking(models.Model):
     def button_refresh_package_totals(self):
         self._calculate_package_totals()
 
+    @api.one
+    def do_prepare_partial(self):
+        """
+        To avoid this change https://github.com/odoo/odoo/commit/c06a969
+        """
+        if not self.pack_operation_ids:
+            super(StockPicking, self).do_prepare_partial()
+
 
 class StockPickingPackageKkLot(models.Model):
     _name = 'stock.picking.package.kg.lot'
