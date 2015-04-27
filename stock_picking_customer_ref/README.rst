@@ -10,6 +10,6 @@ Credits
 Contributors
 ------------
 * Pedro M. Baeza <pedro.baeza@serviciosbaeza.com
-* Ana Juaristi <ajuaristo@gmail.com>
+* Ana Juaristi <anajuaristi@avanzosc.es>
 * Mikel Arregi <mikelarregi@avanzosc.es>
 * Alfredo de la Fuente <alfredodelafuente@avanzosc.es>
