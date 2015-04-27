@@ -1,0 +1,81 @@
+-
+  In order to test stock picking out spliting
+  I have to ensure when I split out picking, related backorder is not in state done
+-
+  I create a new GameBoy2 product for my tests
+-
+  !record {model: product.product, id: product_gameboy2}:
+    categ_id: product.product_category_1
+    name: GameBoy2
+    type: product
+    uom_id: product.product_uom_unit
+    uom_po_id: product.product_uom_unit
+    property_stock_inventory: stock.location_inventory
+    property_stock_procurement: stock.location_procurement
+    property_stock_production: stock.location_production
+-
+  I add some stock for the product
+-
+ !python {model: stock.change.product.qty}: |
+    data = {'product_id': ref('product_gameboy2'),
+            'new_quantity': 130,
+            'location_id': ref('stock.stock_location_stock'),
+            }
+    id = self.create(cr, uid, data, context=context)
+    self.change_product_qty(cr, uid, [id], context=context)
+-
+  I create a manual stock picking out
+-
+ !record {model: stock.picking, id: outgoing_shipment_gameboy2}:
+    picking_type_id: stock.picking_type_out
+    origin: 'outgoing shipment main_warehouse'
+    partner_id: base.res_partner_6
+    move_lines:
+      - product_id: product_gameboy2
+        product_uom: product.product_uom_unit
+        product_uom_qty: 130.0
+        product_uos_qty: 130.0
+        picking_type_id: stock.picking_type_out
+        location_id: stock.stock_location_stock
+        location_dest_id: stock.stock_location_7
+-
+  I reserve  the picking
+-
+ !python {model: stock.picking, id: outgoing_shipment_gameboy2}: |
+     self.action_assign()
+-
+  Then I split my shippement in two 40/90
+-
+  !python {model: stock.transfer_details}: |
+    context.update({'active_model': 'stock.picking',
+                    'active_id': ref('outgoing_shipment_gameboy2'),
+                    'active_ids': [ref('outgoing_shipment_gameboy2')]})
+-
+  !record {model: stock.transfer_details, id: partial_pick2}:
+    picking_id: outgoing_shipment_gameboy2
+    item_ids:
+        - quantity: 40
+          product_id: product_gameboy2
+          product_uom_id: product.product_uom_unit
+          sourceloc_id: stock.stock_location_stock
+          destinationloc_id: stock.stock_location_7
+-
+  !python {model: stock.transfer_details}: |
+    wiz = self.browse(cr, uid, ref("partial_pick2"))
+    wiz.with_context(do_only_split=True).do_detailed_transfer()
+-
+  I check that the backorder has 40 units with state set to assigned not done
+-
+  !python {model: stock.picking, id: outgoing_shipment_gameboy2}: |
+    # we switch self and backorder to mimick what Odoo is doing
+    # When creating a backorder
+    self = self.search([('backorder_id', '=', self.id)])
+    backorder = self.backorder_id
+    assert backorder, "Backorder should be created after partial split."
+    assert backorder.state == 'assigned', "Backorder should be assigned, not %r." % backorder.state
+    for move_line in backorder.move_lines:
+        assert move_line.product_qty == 40, "Qty in backorder does not correspond."
+        assert move_line.state == 'assigned', "Move line of backorder should be assigned, not %r." % move_line.state
+    for move_line in self.move_lines:
+        assert move_line.product_qty == 90, "Qty in backorder does not correspond."
+        assert move_line.state == 'assigned', "Move line of backorder should be assigned, not %r." % move_line.state
