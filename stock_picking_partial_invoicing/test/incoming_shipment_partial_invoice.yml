@@ -15,14 +15,6 @@
     picking_id: incoming_shipment_1
     product_id: product.product_product_6
     product_qty: 4.0
-    product_uos_qty: 5.0
--
-  !record {model: stock.move, id: incoming_shipment_1_product_2}:
-    company_id: base.main_company
-    picking_id: incoming_shipment_1
-    product_id: product.product_product_6
-    product_qty: 4.0
-    product_uos_qty: 5.0
 -
   Then I confirm the picking
 -
@@ -73,12 +65,12 @@
 -
   !python {model: account.invoice}: |
     incoming_shipment_1_product_1 = self.pool.get('stock.move').browse(cr, uid, ref('incoming_shipment_1_product_1'), context=context)
+    product_qty = 0.0
     for invoice_line in incoming_shipment_1_product_1.invoice_lines:
-        product_qty = 0.0
         invoice = invoice_line.invoice_id
         for inv_line in invoice.invoice_line:
             product_qty += inv_line.quantity
-        assert product_qty == 1, "More or less than 1 unit was invoiced"
+    assert product_qty == 1, "More or less than 1 unit was invoiced"
 -
   I make another invoice of the incoming shipment
 -
@@ -108,9 +100,9 @@
 -
   !python {model: account.invoice}: |
     incoming_shipment_1_product_1 = self.pool.get('stock.move').browse(cr, uid, ref('incoming_shipment_1_product_1'), context=context)
+    product_qty = 0.0
     for invoice_line in incoming_shipment_1_product_1.invoice_lines:
-        product_qty = 0.0
         invoice = invoice_line.invoice_id
         for inv_line in invoice.invoice_line:
             product_qty += inv_line.quantity
-        assert product_qty == 2, "More or less than 2 units have been invoiced in total for this incoming shipment"
+    assert product_qty == 2, "More or less than 2 units have been invoiced in total for this incoming shipment"

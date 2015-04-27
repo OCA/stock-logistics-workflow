@@ -140,12 +140,12 @@ class stock_invoice_onshipping(orm.TransientModel):
                 product_qty = move.product_uos_qty or move.product_qty
                 if move.invoiced_qty != product_qty:
                     picking_obj.write(cr, uid, [picking.id],
-                                      {'invoiced': False, 'invoice_state':
-                                          '2binvoiced'}, context=context)
+                                      {'invoice_state': '2binvoiced'},
+                                      context=context)
         return res
 
 
-class purchase_line_invoice_line(orm.TransientModel):
+class stock_invoice_onshipping_line(orm.TransientModel):
 
     _name = 'stock.invoice.onshipping.line'
 
