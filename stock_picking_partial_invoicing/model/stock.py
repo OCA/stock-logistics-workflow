@@ -46,4 +46,3 @@ class StockMove(models.Model):
             move, invoice_line_vals)
         move.write({'invoice_lines': [(4, invl)]})
         return invl
-
