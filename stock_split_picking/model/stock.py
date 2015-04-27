@@ -54,12 +54,22 @@ class StockMove(models.Model):
     @api.model
     def split(self, move, qty,
               restrict_lot_id=False, restrict_partner_id=False):
-        new_move = super(StockMove, self).split(
+        new_move_id = super(StockMove, self).split(
             move, qty,
             restrict_lot_id=restrict_lot_id,
             restrict_partner_id=restrict_partner_id,
         )
-        new_move = self.browse(new_move)
+        new_move = self.browse(new_move_id)
+        move_assigned = move.state == 'assigned'
+        moves = move + new_move
+        if move.reserved_availability > move.product_qty:
+            moves.do_unreserve()
+        if move.picking_id:
+            move.picking_id.pack_operation_ids.unlink()
+        if move_assigned:
+            moves.action_assign()
+        else:
+            moves.action_confirm()
         if move.procurement_id:
             defaults = {'product_qty': qty,
                         'state': 'running'}
