@@ -7,7 +7,7 @@ Split picking
 This module adds a "Split" button on the outgoing pickings form.
 
 It works like the classical picking Transfer but it leaves both
-pickings (picking and it's backorder) as confirmed without
+pickings (picking and its backorder) as confirmed without
 processing the transfer.
 
 Installation
@@ -18,8 +18,8 @@ This module only needs `stock` module.
 Known issues / Roadmap
 ======================
 
- * When splitting a picking in an unassigned state, wizard won't
-   be auto completed with picking lines.
+* When splitting a picking in an unassigned state, wizard won't
+  be auto completed with picking lines.
 
 Credits
 =======
