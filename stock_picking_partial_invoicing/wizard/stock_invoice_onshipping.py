@@ -85,11 +85,6 @@ class StockInvoiceOnshipping(models.TransientModel):
         changed_lines = {}
 
         for line in self.line_ids:
-            if not line.picking_id:
-                raise exceptions.Warning(
-                    _('Error'),
-                    _("""You cannot add additional lines to invoice.""")
-                )
             if line.invoiced_qty > line.product_qty:
                 raise exceptions.Warning(
                     _('Error'),
