@@ -22,7 +22,7 @@
 from openerp.osv import fields, orm
 
 
-class stock_move(orm.Model):
+class StockMove(orm.Model):
 
     def _invoiced_qty(self, cursor, user, ids, name, arg, context=None):
         res = {}
@@ -46,11 +46,11 @@ class stock_move(orm.Model):
     }
 
 
-class stock_picking(orm.Model):
+class StockPicking(orm.Model):
     _inherit = "stock.picking"
 
     def _invoice_line_hook(self, cr, uid, move_line, invoice_line_id):
-        res = super(stock_picking, self)._invoice_line_hook(
+        res = super(StockPicking, self)._invoice_line_hook(
             cr, uid, move_line, invoice_line_id)
         move_line.write({'invoice_lines': [(4, invoice_line_id)]})
         return res

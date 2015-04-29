@@ -24,7 +24,7 @@ from openerp.tools.translate import _
 import openerp.addons.decimal_precision as dp
 
 
-class stock_invoice_onshipping(orm.TransientModel):
+class StockInvoiceOnshipping(orm.TransientModel):
 
     _inherit = 'stock.invoice.onshipping'
 
@@ -51,7 +51,7 @@ class stock_invoice_onshipping(orm.TransientModel):
                         'invoiced_qty': qty_to_invoice,
                         'price_unit': move.price_unit,
                     })
-        defaults = super(stock_invoice_onshipping, self).default_get(
+        defaults = super(StockInvoiceOnshipping, self).default_get(
             cr, uid, fields, context=context)
         defaults['line_ids'] = lines
         return defaults
@@ -59,18 +59,12 @@ class stock_invoice_onshipping(orm.TransientModel):
     def create_invoice(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
-        picking_obj = self.pool.get('stock.picking')
-        invoice_obj = self.pool.get('account.invoice')
-        invoice_line_obj = self.pool.get('account.invoice.line')
+        picking_obj = self.pool['stock.picking']
+        invoice_obj = self.pool['account.invoice']
+        invoice_line_obj = self.pool['account.invoice.line']
         wizard = self.browse(cr, uid, ids[0], context=context)
         changed_lines = {}
-
         for line in wizard.line_ids:
-            if not line.picking_id:
-                raise orm.except_orm(
-                    _('Error'),
-                    _("""You cannot add additional lines to invoice.""")
-                )
             if line.invoiced_qty > line.product_qty:
                 raise orm.except_orm(
                     _('Error'),
@@ -90,7 +84,7 @@ class stock_invoice_onshipping(orm.TransientModel):
                 _('Error'),
                 _("""Nothing to invoice!""")
             )
-        res = super(stock_invoice_onshipping, self).create_invoice(
+        res = super(StockInvoiceOnshipping, self).create_invoice(
             cr, uid, ids, context=context)
         invl_to_rm = []
         invl_qty_to_upd = {}
@@ -145,7 +139,7 @@ class stock_invoice_onshipping(orm.TransientModel):
         return res
 
 
-class stock_invoice_onshipping_line(orm.TransientModel):
+class StockInvoiceOnshippingLine(orm.TransientModel):
 
     _name = 'stock.invoice.onshipping.line'
 
