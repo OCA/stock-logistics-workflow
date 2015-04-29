@@ -33,7 +33,7 @@ class StockMove(models.Model):
 
     _inherit = 'stock.move'
 
-    invoiced_qty = fields.Float(string='Invoiced quantity',
+    invoiced_qty = fields.Float('Invoiced quantity',
                                 compute="calc_invoiced_qty",)
     invoice_lines = fields.Many2many('account.invoice.line',
                                      'stock_move_invoice_rel',
