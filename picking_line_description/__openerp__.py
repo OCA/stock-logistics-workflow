@@ -45,5 +45,5 @@ Settings --> Configuration --> Warehouse --> Products
     'test': [
         'test/picking_line_description.yml',
     ],
-    'installable': False
+    'installable': True
 }
