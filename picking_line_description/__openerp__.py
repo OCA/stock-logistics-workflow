@@ -22,15 +22,7 @@
     'name': "Picking line description",
     'version': '1.0',
     'category': 'Warehouse Management',
-    'description': """
-This module allows to use only the product description on the picking lines.
-To do so, the user has to belong to
-group_use_product_description_per_picking_line.
-This is possible by selecting the related option in the following menu:
-
-Settings --> Configuration --> Warehouse --> Products
-    """,
-    'author': "Agile Business Group,Odoo Community Association (OCA)",
+    'author': "Agile Business Group, Odoo Community Association (OCA)",
     'website': 'http://www.agilebg.com',
     'license': 'AGPL-3',
     'depends': [
