@@ -33,7 +33,7 @@
     I can make a partial delivery specifying 2 pieces
     (the system computes the internal uom qty:  3 m²)""",
     'data': [
-        "wizard/stock_partial_picking_view.xml",
+        "wizard/stock_transfer_details_view.xml",
     ],
     'test': ['test/stock_partial_picking.yml'],
     'demo': [],
