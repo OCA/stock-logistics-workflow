@@ -20,7 +20,7 @@
 {
     "name": "Stock Picking Deliver UOS",
     "version": "1.0",
-    'author': ['Agile Business Group'],
+    'author': "Agile Business Group, Odoo Community Association (OCA)",
     "category": "Stock Logistics",
     'website': 'www.agilebg.com',
     "depends": ["stock", "product", "base"],
