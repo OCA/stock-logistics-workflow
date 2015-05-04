@@ -24,14 +24,7 @@
     "category": "Stock Logistics",
     'website': 'www.agilebg.com',
     "depends": ["stock", "product", "base"],
-    "summary": "Add fields uos and uos_quantity on Stock Partial Picking",
-    "description": """This module adds two fields, uos and uos quantity on
-    Stock Partial Picking wizard allowing the user to use the uos quantity
-    (instead of the standard uom) to specify the quantity to be delivered.
-    For example if i have to deliver 3 tables (uos qty=3 uos=pz)
-    each one of 1,5 m² (uom=m², line uom qty=4,5),
-    I can make a partial delivery specifying 2 pieces
-    (the system computes the internal uom qty:  3 m²)""",
+    "summary": "Add fields uos and uos_quantity on Stock Transfer Details",
     'data': [
         "wizard/stock_transfer_details_view.xml",
     ],
