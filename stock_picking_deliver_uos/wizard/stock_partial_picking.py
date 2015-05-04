@@ -22,7 +22,7 @@ from openerp import models, fields, api
 import openerp.addons.decimal_precision as dp
 
 
-class stock_transfer_details(models.TransientModel):
+class StockTransferDetails(models.TransientModel):
     _inherit = 'stock.transfer_details'
     _description = 'Picking wizard'
 
@@ -35,7 +35,7 @@ class stock_transfer_details(models.TransientModel):
     def default_get(self, cr, uid, fields, context=None):
         if context is None:
             context = {}
-        res = super(stock_transfer_details, self).default_get(
+        res = super(StockTransferDetails, self).default_get(
             cr, uid, fields, context=context)
         if not res.get('item_ids') or len(res.get('item_ids')) != 1:
             return res
@@ -58,7 +58,7 @@ class stock_transfer_details(models.TransientModel):
         return res
 
 
-class stock_transfer_details_items(models.TransientModel):
+class StockTransferDetailsItems(models.TransientModel):
     _inherit = 'stock.transfer_details_items'
     _description = 'Picking wizard items'
 
