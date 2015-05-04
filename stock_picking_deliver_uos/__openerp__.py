@@ -37,5 +37,5 @@
     ],
     'test': ['test/stock_partial_picking.yml'],
     'demo': [],
-    'installable': False,
+    'installable': True,
 }
