@@ -21,7 +21,7 @@
 from openerp.osv import fields, orm
 
 
-class stock_move(orm.Model):
+class StockMove(orm.Model):
     _inherit = "stock.move"
 
     _columns = {
@@ -30,7 +30,7 @@ class stock_move(orm.Model):
     }
 
 
-class stock_picking(orm.Model):
+class StockPicking(orm.Model):
     _inherit = "stock.picking"
 
     def _get_invoice_view_xmlid(self, cr, uid, ids, name, arg, context=None):
@@ -57,7 +57,7 @@ class stock_picking(orm.Model):
             self, cr, uid, ids, journal_id, group=False,
             type='out_invoice', context=None
     ):
-        res = super(stock_picking, self).action_invoice_create(
+        res = super(StockPicking, self).action_invoice_create(
             cr, uid, ids, journal_id, group=group,
             type='out_invoice', context=context)
         self.write(cr, uid, ids[0], {'invoice_id': res[0]})
@@ -67,7 +67,7 @@ class stock_picking(orm.Model):
             self, cr, uid, moves, journal_id,
             inv_type='out_invoice', context=None
     ):
-        res = super(stock_picking, self)._invoice_create_line(
+        res = super(StockPicking, self)._invoice_create_line(
             cr, uid, moves, journal_id, inv_type='out_invoice', context=context)
         stock_move_obj = self.pool.get('stock.move')
         for move in moves:
@@ -76,7 +76,7 @@ class stock_picking(orm.Model):
         return res
 
 
-class account_invoice(orm.Model):
+class AccountInvoice(orm.Model):
     _inherit = "account.invoice"
 
     _columns = {
@@ -87,7 +87,7 @@ class account_invoice(orm.Model):
     }
 
 
-class account_invoice_line(orm.Model):
+class AccountInvoiceLine(orm.Model):
     _inherit = "account.invoice.line"
 
     _columns = {
