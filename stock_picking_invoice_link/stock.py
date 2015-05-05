@@ -53,51 +53,27 @@ class stock_picking(orm.Model):
             readonly=True),
     }
 
-    def _invoice_hook(self, cr, uid, picking, invoice_id):
-        res = super(stock_picking, self)._invoice_hook(
-            cr, uid, picking, invoice_id)
-        picking.write({'invoice_id': invoice_id})
+    def action_invoice_create(
+            self, cr, uid, ids, journal_id, group=False,
+            type='out_invoice', context=None
+    ):
+        res = super(stock_picking, self).action_invoice_create(
+            cr, uid, ids, journal_id, group=group,
+            type='out_invoice', context=context)
+        self.write(cr, uid, ids[0], {'invoice_id': res[0]})
         return res
 
-    def _invoice_line_hook(self, cr, uid, move_line, invoice_line_id):
-        res = super(stock_picking, self)._invoice_line_hook(
-            cr, uid, move_line, invoice_line_id)
-        move_line.write({'invoice_line_id': invoice_line_id})
+    def _invoice_create_line(
+            self, cr, uid, moves, journal_id,
+            inv_type='out_invoice', context=None
+    ):
+        res = super(stock_picking, self)._invoice_create_line(
+            cr, uid, moves, journal_id, inv_type='out_invoice', context=context)
+        stock_move_obj = self.pool.get('stock.move')
+        for move in moves:
+            stock_move_obj.write(
+                cr, uid, [move.id], {'invoice_line_id':  res[0]})
         return res
-
-
-class stock_picking_out(orm.Model):
-    _inherit = "stock.picking.out"
-
-    def _out_get_invoice_view_xmlid(
-            self, cr, uid, ids, name, arg, context=None):
-        return self.pool['stock.picking']._get_invoice_view_xmlid(
-            cr, uid, ids, name, arg, context=context)
-
-    _columns = {
-        'invoice_id': fields.many2one(
-            'account.invoice', 'Invoice', readonly=True),
-        'invoice_view_xmlid': fields.function(
-            _out_get_invoice_view_xmlid, type='char',
-            string="Invoice View XMLID", readonly=True),
-    }
-
-
-class stock_picking_in(orm.Model):
-    _inherit = "stock.picking.in"
-
-    def _in_get_invoice_view_xmlid(
-            self, cr, uid, ids, name, arg, context=None):
-        return self.pool['stock.picking']._get_invoice_view_xmlid(
-            cr, uid, ids, name, arg, context=context)
-
-    _columns = {
-        'invoice_id': fields.many2one(
-            'account.invoice', 'Invoice', readonly=True),
-        'invoice_view_xmlid': fields.function(
-            _in_get_invoice_view_xmlid, type='char',
-            string="Invoice View XMLID", readonly=True),
-    }
 
 
 class account_invoice(orm.Model):
@@ -106,8 +82,8 @@ class account_invoice(orm.Model):
     _columns = {
         'picking_ids': fields.one2many(
             'stock.picking', 'invoice_id', 'Related Pickings', readonly=True,
-            help="Related pickings "
-            "(only when the invoice has been generated from the picking)."),
+            help="Related pickings (only when the invoice has been generated "
+                 "from the picking)."),
     }
 
 
@@ -118,6 +94,6 @@ class account_invoice_line(orm.Model):
         'move_line_ids': fields.one2many(
             'stock.move', 'invoice_line_id', 'Related Stock Moves',
             readonly=True,
-            help="Related stock moves "
-            "(only when the invoice has been generated from the picking)."),
+            help="Related stock moves (only when the invoice has been "
+                 "generated from the picking)."),
     }
