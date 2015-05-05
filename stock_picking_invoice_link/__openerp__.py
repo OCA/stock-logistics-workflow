@@ -23,13 +23,6 @@
     'version': '1.0',
     'category': 'Warehouse Management',
     'summary': 'Adds link between pickings and generated invoices',
-    'description': """
-This module adds a link between pickings and generated invoices.
-So that user can easly reach the invoice related to the picking.
-
-Probably to be modified according to bug 1169998 (when solution will come)
-https://bugs.launchpad.net/openobject-addons/+bug/1169998
-""",
     'author': "Agile Business Group, Odoo Community Association (OCA)",
     'website': 'http://www.agilebg.com',
     'license': 'AGPL-3',
