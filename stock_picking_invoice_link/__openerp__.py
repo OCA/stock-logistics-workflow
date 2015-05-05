@@ -19,8 +19,8 @@
 ##############################################################################
 
 {
-    'name': "Picking Invoice Link",
-    'version': '0.2',
+    'name': "Stock Picking Invoice Link",
+    'version': '1.0',
     'category': 'Warehouse Management',
     'summary': 'Adds link between pickings and generated invoices',
     'description': """
@@ -30,16 +30,14 @@ So that user can easly reach the invoice related to the picking.
 Probably to be modified according to bug 1169998 (when solution will come)
 https://bugs.launchpad.net/openobject-addons/+bug/1169998
 """,
-    'author': "Agile Business Group,Odoo Community Association (OCA)",
+    'author': "Agile Business Group, Odoo Community Association (OCA)",
     'website': 'http://www.agilebg.com',
     'license': 'AGPL-3',
-    "depends": ['stock'],
-    "data": [
+    'depends': ['stock', 'stock_account'],
+    'data': [
         "stock_view.xml",
         "account_invoice_view.xml",
     ],
-    "demo": [],
-    'test': [],
-    "active": False,
-    "installable": True
+    'auto_install': False,
+    'installable': True
 }
