@@ -17,6 +17,7 @@ Contributors
 ------------
 
 * Lorenzo Battistini <lorenzo.battistini@agilebg.com>
+* Alexis de Lattre <alexis.delattre@akretion.com>
 * Alex Comba <alex.comba@agilebg.com>
 
 Maintainer
