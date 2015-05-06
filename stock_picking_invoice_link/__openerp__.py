@@ -26,7 +26,7 @@
     'author': "Agile Business Group, Odoo Community Association (OCA)",
     'website': 'http://www.agilebg.com',
     'license': 'AGPL-3',
-    'depends': ['stock', 'stock_account'],
+    'depends': ['stock_account'],
     'data': [
         "stock_view.xml",
         "account_invoice_view.xml",
