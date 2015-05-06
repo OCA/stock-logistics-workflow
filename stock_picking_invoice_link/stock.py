@@ -68,7 +68,8 @@ class StockPicking(orm.Model):
             inv_type='out_invoice', context=None
     ):
         res = super(StockPicking, self)._invoice_create_line(
-            cr, uid, moves, journal_id, inv_type='out_invoice', context=context)
+            cr, uid, moves, journal_id,
+            inv_type='out_invoice', context=context)
         stock_move_obj = self.pool.get('stock.move')
         for move in moves:
             stock_move_obj.write(
