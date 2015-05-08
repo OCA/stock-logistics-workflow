@@ -24,7 +24,7 @@
  'maintainer': 'Camptocamp',
  'category': 'Products',
  'complexity': "normal",  # easy, normal, expert
- 'depends': ['stock',
+ 'depends': ['stock','delivery'
              ],
  'website': 'http://www.camptocamp.com/',
  'data': ['picking_dispatch_view.xml',
