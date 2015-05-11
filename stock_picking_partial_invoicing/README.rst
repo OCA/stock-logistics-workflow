@@ -9,7 +9,8 @@ a delivered Order or received Incoming Shipment.
 Installation
 ============
 
-No additional installation instructions are required.
+This module depends on the module 'report_xls', available in
+https://github.com/OCA/reporting-engine
 
 
 Configuration
