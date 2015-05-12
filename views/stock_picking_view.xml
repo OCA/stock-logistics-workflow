@@ -6,6 +6,9 @@
             <field name="model">stock.picking</field>
             <field name="inherit_id" ref="stock.view_picking_form" />
             <field name="arch" type="xml">
+                <page string="Operations" position="attributes" >
+                    <attribute name="attrs"></attribute>
+                </page>
                 <field name="product_qty" position="attributes" >
                     <attribute name="sum">sum_product_qty</attribute>
                 </field>
