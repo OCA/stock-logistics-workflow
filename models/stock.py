@@ -95,10 +95,11 @@ class StockPicking(models.Model):
 
     @api.one
     def button_refresh_package_totals(self):
+        self._calculate_package_info()
         self._calculate_package_totals()
 
 
-class StockPickingPackageKkLot(models.Model):
+class StockPickingPackageKgLot(models.Model):
     _name = 'stock.picking.package.kg.lot'
     _description = "Stock Picking Package KG Lot"
     _order = 'sequence'
