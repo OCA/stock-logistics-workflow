@@ -40,7 +40,8 @@ class StockProductionLot(models.Model):
             for quant in stock_quant_obj.search(cond):
                 if quant.reservation_id.state not in ('cancel', 'done'):
                     raise exceptions.Warning(
-                        _('Error! Serial Number/Lot "%s" currently has reservations.')
+                        _('Error! Serial Number/Lot "%s" currently has '
+                          'reservations.')
                         % (lot.name))
         return self.write({'locked': True})
 
