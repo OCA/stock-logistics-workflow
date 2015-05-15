@@ -10,7 +10,7 @@
                     <field name="locked" />
                 </field>
                 <filter string='Lot' position="after">
-                    <filter string='Locked' context="{'group_by' : 'locked'}" groups="stock.group_production_lot"/>
+                    <filter string='Blocked' context="{'group_by' : 'locked'}" groups="stock.group_production_lot"/>
                 </filter>
             </field>
         </record>

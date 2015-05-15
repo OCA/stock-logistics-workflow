@@ -22,7 +22,7 @@ msgstr "Cancelar"
 
 #. module: mrp_lock_lot
 #: field:product.category,lot_default_locked:0
-msgid "Create lot in locked status"
+msgid "Block new Serial Numbers/lots"
 msgstr "Crear lote en estado bloqueado"
 
 #. module: mrp_lock_lot
@@ -38,7 +38,7 @@ msgstr "Creado el"
 #. module: mrp_lock_lot
 #: code:addons/mrp_lock_lot/models/mrp_production_lot.py:43
 #, python-format
-msgid "Error!: Found stock movements for lot: \"%\" with location destination type in virtual/company"
+msgid "Error! Serial Number/Lot \"%s\" currently has reservations."
 msgstr "Error!: Encontrados movimientos de stock para el lote: \"%\" con ubicación destino tipo virtual/empresa"
 
 #. module: mrp_lock_lot
@@ -48,7 +48,7 @@ msgstr "ID"
 
 #. module: mrp_lock_lot
 #: help:product.category,lot_default_locked:0
-msgid "If checked, production lots will be created locked by default"
+msgid "If checked, future Serial Numbers/lots will be created blocked by default"
 msgstr "Si marcado, los lotes de producción se crearán bloqueados por defecto"
 
 #. module: mrp_lock_lot
@@ -63,27 +63,27 @@ msgstr "Última actualización el"
 
 #. module: mrp_lock_lot
 #: view:stock.production.lot:mrp_lock_lot.view_production_lot_form_inh_locklot
-msgid "Lock"
+msgid "Block"
 msgstr "Bloquear"
 
 #. module: mrp_lock_lot
 #: view:product.category:mrp_lock_lot.product_category_form_view_inh_locklot
-msgid "Lock Lot Properties"
+msgid "Serial Nunber/lot blocking"
 msgstr "Propiedades de bloqueo de lotes"
 
 #. module: mrp_lock_lot
 #: view:wiz.lock.lot:mrp_lock_lot.view_wiz_lock_lot_form
-msgid "Lock lots"
+msgid "Block Serial Numbers/Lots"
 msgstr "Bloquear lotes"
 
 #. module: mrp_lock_lot
 #: model:ir.actions.act_window,name:mrp_lock_lot.action_lock_lot
-msgid "Lock/Unlock lot"
+msgid "Block/Unblock Serial Number/lot"
 msgstr "Bloquear/Desbloquear lote"
 
 #. module: mrp_lock_lot
 #: view:wiz.lock.lot:mrp_lock_lot.view_wiz_lock_lot_form
-msgid "Lock/Unlock lots"
+msgid "Block/Unblock Serial Numbers/lots"
 msgstr "Bloquear/Desbloquear lotes"
 
 #. module: mrp_lock_lot
@@ -91,7 +91,7 @@ msgstr "Bloquear/Desbloquear lotes"
 #: field:stock.production.lot,locked:0
 #: view:stock.quant:mrp_lock_lot.quant_search_view_inh_locklot
 #: field:stock.quant,locked:0
-msgid "Locked"
+msgid "Blocked"
 msgstr "Bloqueado"
 
 #. module: mrp_lock_lot
@@ -102,13 +102,13 @@ msgstr "Lote"
 #. module: mrp_lock_lot
 #: model:mail.message.subtype,description:mrp_lock_lot.mt_lock_lot
 #: model:mail.message.subtype,name:mrp_lock_lot.mt_lock_lot
-msgid "Lot Locked"
+msgid "Serial Number/lot blocked"
 msgstr "Lote bloqueado"
 
 #. module: mrp_lock_lot
 #: model:mail.message.subtype,description:mrp_lock_lot.mt_unlock_lot
 #: model:mail.message.subtype,name:mrp_lock_lot.mt_unlock_lot
-msgid "Lot Unlocked"
+msgid "Serial Number/lot unblocked"
 msgstr "Lote desbloqueado"
 
 #. module: mrp_lock_lot
@@ -133,17 +133,17 @@ msgstr "Quants"
 
 #. module: mrp_lock_lot
 #: view:stock.production.lot:mrp_lock_lot.view_production_lot_form_inh_locklot
-msgid "Unlock"
+msgid "Unblock"
 msgstr "Desbloquear"
 
 #. module: mrp_lock_lot
 #: view:wiz.lock.lot:mrp_lock_lot.view_wiz_lock_lot_form
-msgid "Unlock lots"
+msgid "Unblock Serial Numbers/Lots"
 msgstr "Desbloquear lotes"
 
 #. module: mrp_lock_lot
 #: view:wiz.lock.lot:mrp_lock_lot.view_wiz_lock_lot_form
-msgid "What do you want to do with selected lots?"
+msgid "What do you want to do with selected Serial Numbers/Lots?"
 msgstr "¿Que quieres hacer con los lotes seleccionados?"
 
 #. module: mrp_lock_lot

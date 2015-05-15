@@ -8,7 +8,7 @@
             <field name="arch" type="xml">
                 <data>
                     <xpath expr="//group[@name='parent']" position="inside">
-                        <group name="locklot_property" string="Lock Lot Properties" colspan="2">
+                        <group name="locklot_property" string="Serial Nunber/lot blocking" colspan="2">
                             <field name="lot_default_locked" />
                         </group>
                     </xpath>

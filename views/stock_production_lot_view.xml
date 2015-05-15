@@ -8,9 +8,9 @@
             <field name="arch" type="xml">
                 <div class="oe_button_box oe_right" position="before">
                     <header>
-                        <button name="button_lock" string="Lock"
+                        <button name="button_lock" string="Block"
                             type="object" attrs="{'invisible':[('locked','=',True)]}" />
-                        <button name="button_unlock" string="Unlock"
+                        <button name="button_unlock" string="Unblock"
                             type="object" attrs="{'invisible':[('locked','=',False)]}" />
                     </header>
                 </div>
@@ -55,7 +55,7 @@
                     <field name="locked" />
                 </field>
                 <filter string="Product" position="before">
-                    <filter string="Locked" domain="[]"
+                    <filter string="Blocked" domain="[]"
                         context="{'group_by':'locked'}" />
                 </filter>
             </field>

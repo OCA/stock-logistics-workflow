@@ -23,7 +23,7 @@ class StockProductionLot(models.Model):
     def _get_locked_value(self):
         return self.product_id.categ_id.lot_default_locked
 
-    locked = fields.Boolean(string='Locked', default='_get_locked_value',
+    locked = fields.Boolean(string='Blocked', default='_get_locked_value',
                             readonly=True)
 
     @api.one
@@ -40,8 +40,7 @@ class StockProductionLot(models.Model):
             for quant in stock_quant_obj.search(cond):
                 if quant.reservation_id.state not in ('cancel', 'done'):
                     raise exceptions.Warning(
-                        _('Error!: Found stock movements for lot: "%" with'
-                          ' location destination type in virtual/company')
+                        _('Error! Serial Number/Lot "%s" currently has reservations.')
                         % (lot.name))
         return self.write({'locked': True})
 

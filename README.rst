@@ -1,16 +1,18 @@
-MRP lock lot
-============
-* This module allows you to define whether a lot is locked or not. By default,
-  the value that will catch, which will define in product category, in the
-  field "Create in locked status when create a lot".
-* To lock/unlock a lot, have created 2 new buttons in form. Also from the tree
-  view, by selecting the lots in option "Lock/Unlock lots".
-* When you lock one lot, validates that does not exist a quant assigned to the
-  lot, or if exist the quant assigned to the lot, that there is no movement of
-  stock, with different state to "done", and with destination location type
-  virtual/company.
-* Changes in manufacturing, and delivery orders, to selecting the locked
-  bundles is prevented.
+Block down Serial Numbers/lots
+==============================
+This module allows you to define whether a Serial Number/lot is blocked
+or not.
+The default value can be set on the Product Category, in the
+field "Block new Serial Numbers/lots".
+
+Two new buttons let you block/unblock a Serial Number/lot in the form view.
+Blocking/unblocking can also be done from the list view, by selecting the
+Serial Numbers/lots and choosing the option "Block/Unblock lots".
+
+Only lots which have no reservation can be blocked.
+
+Manufacturing Orders and Delivery Orders are not allowed to select a
+blocked down Serial Number/lot.
 
 Credits
 =======

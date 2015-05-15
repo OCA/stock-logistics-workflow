@@ -9,7 +9,7 @@ class StockQuant(models.Model):
     _inherit = 'stock.quant'
 
     locked = fields.Boolean(
-        string='Locked', related="lot_id.locked", default=False,
+        string='Blocked', related="lot_id.locked", default=False,
         store=True)
 
     def quants_get(self, cr, uid, location, product, qty, domain=None,

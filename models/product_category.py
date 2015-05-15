@@ -9,5 +9,5 @@ class ProductCategory(models.Model):
     _inherit = 'product.category'
 
     lot_default_locked = fields.Boolean(
-        string='Create lot in locked status',
-        help='If checked, production lots will be created locked by default')
+        string='Block new Serial Numbers/lots',
+        help='If checked, future Serial Numbers/lots will be created blocked by default')
