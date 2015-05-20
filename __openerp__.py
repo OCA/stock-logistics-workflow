@@ -41,6 +41,6 @@
     "data": [
         "wizard/mrp_product_produce_view.xml",
     ],
-    "auto": True,
+    "auto_install": True,
     "installable": True,
 }
