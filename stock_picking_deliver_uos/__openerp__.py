@@ -23,7 +23,7 @@
     'author': "Agile Business Group, Odoo Community Association (OCA)",
     "category": "Stock Logistics",
     'website': 'www.agilebg.com',
-    "depends": ["stock", "product", "base"],
+    "depends": ["stock"],
     "summary": "Add fields uos and uos_quantity on Stock Transfer Details",
     'data': [
         "wizard/stock_transfer_details_view.xml",

@@ -24,7 +24,6 @@ import openerp.addons.decimal_precision as dp
 
 class StockTransferDetails(models.TransientModel):
     _inherit = 'stock.transfer_details'
-    _description = 'Picking wizard'
 
     product_uos_qty = fields.Float(
         'Quantity (UOS)',
@@ -32,35 +31,33 @@ class StockTransferDetails(models.TransientModel):
     product_uos = fields.Many2one(
         "product.uom", string='Product UOS', readonly=True)
 
-    def default_get(self, cr, uid, fields, context=None):
-        if context is None:
-            context = {}
-        res = super(StockTransferDetails, self).default_get(
-            cr, uid, fields, context=context)
-        if not res.get('item_ids') or len(res.get('item_ids')) != 1:
-            return res
-
+    @api.model
+    def default_get(self, fields):
+        res = super(StockTransferDetails, self).default_get(fields)
         for item in res.get('item_ids'):
-            item.update(
-                {
-                    'product_uos': item.get('product_uom_id', False),
-                    'product_uos_qty': item.get('quantity', 0)
-                })
-        if not res.get('packop_ids') or len(res.get('packop_ids')) != 1:
-            return res
-
-        for item in res.get('packop_ids'):
-            item.update(
-                {
-                    'product_uos': item.get('product_uom_id', False),
-                    'product_uos_qty': item.get('quantity', 0)
-                })
+            pack_operation_model = self.env['stock.pack.operation']
+            if (
+                'packop_id' in item
+                and len(pack_operation_model.browse(
+                    item['packop_id']).linked_move_operation_ids) == 1
+            ):
+                p_uos = pack_operation_model.browse(
+                    item['packop_id']).linked_move_operation_ids[0]. \
+                    move_id.product_uos
+                p_uos_qty = pack_operation_model.browse(
+                    item['packop_id']).linked_move_operation_ids[0]. \
+                    move_id.product_uos_qty
+                item.update(
+                    {
+                        'product_uos': p_uos.id,
+                        'product_uos_qty': p_uos_qty
+                    }
+                )
         return res
 
 
 class StockTransferDetailsItems(models.TransientModel):
     _inherit = 'stock.transfer_details_items'
-    _description = 'Picking wizard items'
 
     product_uos_qty = fields.Float(
         'Quantity (UOS)',
@@ -68,6 +65,16 @@ class StockTransferDetailsItems(models.TransientModel):
     product_uos = fields.Many2one(
         "product.uom", string='Product UOS', readonly=True)
 
-    @api.onchange('product_uos_qty')
-    def onchange_product_uos_qty(self):
-        self.quantity = self.quantity * (self.product_uos_qty / self.quantity)
+    def onchange_product_uos_qty(
+            self, cr, uid, ids, product_uos_qty, packop_id, context=None
+    ):
+        vals = {}
+        pack_operation = self.pool['stock.pack.operation'].browse(
+            cr, uid, packop_id, context=context)
+        if len(pack_operation.linked_move_operation_ids) == 1:
+            p_qty = pack_operation.linked_move_operation_ids[
+                0].move_id.product_qty
+            p_uos_qty = pack_operation.linked_move_operation_ids[
+                0].move_id.product_uos_qty
+            vals['quantity'] = p_qty * (product_uos_qty / p_uos_qty)
+        return {'value': vals}
