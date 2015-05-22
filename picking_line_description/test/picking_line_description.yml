@@ -2,22 +2,27 @@
     In order to test picking_line_description,
     I assign group_use_product_description_per_picking_line group to the admin user
 -
-    !record {model: res.users, id: base.user_root}:
-        groups_id:
-        - picking_line_description.group_use_product_description_per_picking_line
+  !python {model: res.users}: |
+    self.write(
+      cr, uid, [ref("base.user_root")],
+      {'groups_id': [(4, ref("picking_line_description.group_use_product_description_per_picking_line"))]})
 -
     I set the description field on the product 'USB Adapter'
 -
-    !record {model: product.product, id: product.product_product_48}:
-        description: 'Wi-Fi Adapter'
+  !python {model: product.product}: |
+    self.write(
+      cr, uid, [ref("product.product_product_48")], {'description': 'Wi-Fi Adapter'})
 -
     Now i create an outgoing picking order that uses my product
 -
     !record {model: stock.picking, id: stock_picking_out0}:
         partner_id: base.res_partner_2
+        picking_type_id: stock.picking_type_out
         move_lines:
             - product_id: product.product_product_48
-              product_qty: 10
+              product_uom_qty: 10
+              location_id: stock.stock_location_stock
+              location_dest_id: stock.stock_location_customers
 -
     I verify that the onchange of product on move line was correctly triggered
 -

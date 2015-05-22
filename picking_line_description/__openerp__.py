@@ -26,7 +26,8 @@
     'website': 'http://www.agilebg.com',
     'license': 'AGPL-3',
     'depends': [
-        'stock',
+        'stock_account',
+        'delivery',
     ],
     'data': [
         'security/stock_security.xml',
