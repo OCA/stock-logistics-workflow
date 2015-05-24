@@ -1,5 +1,7 @@
 #    Author: Leonardo Pistone
 #    Copyright 2015 Camptocamp SA
+#    Contributor: Pedro M. Baeza
+#    Copyright 2015 Serv. Tecnol. Avanzados
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -33,7 +35,6 @@ class StockInvoiceOnshipping(models.TransientModel):
             po = pick.move_lines[0].purchase_line_id.order_id
             if so.order_policy == 'picking' and po.invoice_method == 'picking':
                 return True
-
         return False
 
     @api.depends('journal_type', 'need_two_invoices')
@@ -47,34 +48,43 @@ class StockInvoiceOnshipping(models.TransientModel):
 
     @api.multi
     def open_invoice(self):
-        action_data = super(StockInvoiceOnshipping, self).open_invoice()
+        res = super(StockInvoiceOnshipping, self).open_invoice()
         if self.need_two_invoices:
-            # do not show the two invoices, because a form view would be wrong
-            return True
-        else:
-            return action_data
+            res['view_id'] = self.env.ref('account.invoice_tree').id
+            res['name'] = _('Invoices')
+            res['view_mode'] = 'tree'
+            del res['views']
+            del res['display_name']
+        return res
 
     @api.multi
     def create_invoice(self):
-        self.ensure_one()
         if self.need_two_invoices:
-            pick_ids = self.env.context['active_ids']
-            pick = self.env['stock.picking'].browse(pick_ids)
-
-            first_invoice_ids = pick.with_context(
-                partner_to_invoice_id=pick.partner_id.id,
-                date_inv=self.invoice_date,
-                inv_type='in_invoice',
-            ).action_invoice_create(
-                journal_id=self.journal_id.id,
-                group=self.group,
-                type='in_invoice',
-            )
-
-            for move in pick.move_lines:
-                if move.invoice_state == 'invoiced':
-                    move.invoice_state = '2binvoiced'
-            second_invoice_ids = pick.with_context(
+            picking_ids = self.env.context['active_ids']
+            picking_model = self.env['stock.picking']
+            pickings = picking_model.browse(picking_ids)
+            # Group picking by customer
+            pickings_by_partner = {}
+            for picking in pickings:
+                if not pickings_by_partner.get(picking.partner_id):
+                    pickings_by_partner[picking.partner_id] = picking_model
+                pickings_by_partner[picking.partner_id] += picking
+            first_invoice_ids = []
+            for partner, pickings_grouped in pickings_by_partner.iteritems():
+                first_invoice_ids += pickings_grouped.with_context(
+                    partner_to_invoice_id=partner.id,
+                    date_inv=self.invoice_date,
+                    inv_type='in_invoice',
+                ).action_invoice_create(
+                    journal_id=self.journal_id.id,
+                    group=self.group,
+                    type='in_invoice',
+                )
+            # Allow to invoice again
+            pickings.mapped('move_lines').filtered(
+                lambda x: x.invoice_state == 'invoiced').write(
+                {'invoice_state': '2binvoiced'})
+            second_invoice_ids = pickings.with_context(
                 date_inv=self.invoice_date,
                 inv_type='out_invoice',
             ).action_invoice_create(
