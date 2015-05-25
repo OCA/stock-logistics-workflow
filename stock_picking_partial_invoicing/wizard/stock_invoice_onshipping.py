@@ -114,6 +114,7 @@ class StockInvoiceOnshipping(orm.TransientModel):
                             invl_qty_to_upd[inv_line.id] = \
                                 changed_lines[picking.id][move.id][
                                     'invoiced_qty']
+        context['stock_invoice_onshipping'] = True
         if invl_to_rm:
             invoice_line_obj.unlink(cr, uid, invl_to_rm, context=context)
 

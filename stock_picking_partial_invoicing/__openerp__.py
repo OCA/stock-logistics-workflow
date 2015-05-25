@@ -53,7 +53,7 @@ and what quantity to invoice.
 Known issues / Roadmap
 ======================
 
-This module conflicts with module 'stock_picking_invoice_link' available in
+This module conflicts with module 'product_serial' available in
 the same OCA repository.
 
 Credits
@@ -82,7 +82,8 @@ To contribute to this module, please visit http://odoo-community.org.
     'author': "Eficent,Odoo Community Association (OCA)",
     'website': 'http://www.eficent.com',
     'license': 'AGPL-3',
-    "depends": ['stock'],
+    'depends': ['stock'],
+    'conflicts': ['product_serial'],
     "data": [
         'wizard/stock_invoice_onshipping.xml',
         'view/stock.xml',
