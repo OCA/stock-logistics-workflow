@@ -50,11 +50,21 @@ When the user wants to create an invoice for a Delivery Order or
 Incoming Shipment she/he can indicate which moves should be invoiced,
 and what quantity to invoice.
 
+If the system identifies that the stock move has been fully invoiced, it
+will change the corresponding status.
+
+If the user deletes the invoice or an invoice line, or reduces the quantity
+to be invoiced, the corresponding stock move changes to the status 'To be
+invoiced'.
+
+The user is not allowed to invoice more quantity than what exists in the
+corresponding stock move.
+
 Known issues / Roadmap
 ======================
 
-This module conflicts with module 'stock_picking_invoice_link' available in
-the same OCA repository.
+No issues have been identified.
+
 
 Credits
 =======
