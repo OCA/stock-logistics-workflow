@@ -132,16 +132,17 @@ class StockInvoiceOnshipping(models.TransientModel):
                             invl_qty_to_upd[inv_line.id] = \
                                 changed_lines[picking.id][move.id][
                                     'invoiced_qty']
+        self = self.with_context(stock_invoice_onshipping=1)
         invoice_line_obj.browse(invl_to_rm).unlink()
-        inv_ids_to_update = []
+        inv_ids_to_update = {}
         for inv_line in invoice_line_obj.browse(invl_qty_to_upd.keys()):
             inv_line.write({'quantity': invl_qty_to_upd[inv_line.id]})
-            inv_ids_to_update.append(inv_line.invoice_id.id)
+            inv_ids_to_update[inv_line.invoice_id.id] = True
         journal2type = {'sale': 'out_invoice', 'purchase': 'in_invoice',
                         'sale_refund': 'out_refund',
                         'purchase_refund': 'in_refund'}
         inv_type = journal2type.get(self.journal_type) or 'out_invoice'
-        invoices_to_update = invoice_obj.browse(inv_ids_to_update)
+        invoices_to_update = invoice_obj.browse(inv_ids_to_update.keys())
         invoices_to_update.button_compute(
             set_total=(inv_type in ('in_invoice', 'in_refund')))
         for picking in picking_obj.browse(picking_ids):
