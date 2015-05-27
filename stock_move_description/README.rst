@@ -1,15 +1,15 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
     :alt: License: AGPL-3
 
-Picking line description
-========================
+Stock move description
+======================
 
 This module allows to use only the product description on the picking lines.
 
 Configuration
 =============
 
-The user has to belong to group_use_product_description_per_picking_line.
+The user has to belong to group_use_product_description_per_stock_move.
 This is possible by selecting the related option in the following menu:
 
 * Settings --> Configuration --> Warehouse --> Products

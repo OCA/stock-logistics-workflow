@@ -5,7 +5,7 @@
   !python {model: res.users}: |
     self.write(
       cr, uid, [ref("base.user_root")],
-      {'groups_id': [(4, ref("picking_line_description.group_use_product_description_per_picking_line"))]})
+      {'groups_id': [(4, ref("stock_move_description.group_use_product_description_per_stock_move"))]})
 -
     I set the description field on the product 'USB Adapter'
 -

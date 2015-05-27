@@ -19,7 +19,7 @@
 #
 ##############################################################################
 {
-    'name': "Picking line description",
+    'name': "Stock move description",
     'version': '1.0',
     'category': 'Warehouse Management',
     'author': "Agile Business Group, Odoo Community Association (OCA)",
@@ -35,7 +35,7 @@
         'stock_move_view.xml',
     ],
     'test': [
-        'test/picking_line_description.yml',
+        'test/stock_move_description.yml',
     ],
     'installable': True
 }

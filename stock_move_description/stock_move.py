@@ -51,8 +51,8 @@ class StockMove(orm.Model):
             context['lang'] = lang
             user_groups = [g.id for g in user.groups_id]
             group_ref = self.pool.get('ir.model.data').get_object_reference(
-                cr, uid, 'picking_line_description',
-                'group_use_product_description_per_picking_line'
+                cr, uid, 'stock_move_description',
+                'group_use_product_description_per_stock_move'
             )
             if group_ref and group_ref[1] in user_groups:
                 product_obj = self.pool.get('product.product')
