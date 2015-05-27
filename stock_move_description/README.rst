@@ -4,7 +4,7 @@
 Stock move description
 ======================
 
-This module allows to use only the product description on the picking lines.
+This module allows to use only the product description on the stock moves.
 
 Configuration
 =============

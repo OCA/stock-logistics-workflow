@@ -27,7 +27,7 @@ class StockConfigSettings(osv.TransientModel):
 
     _columns = {
         'group_use_product_description_per_stock_move': fields.boolean(
-            "Allow using only the product description on the picking lines",
+            "Allow using only the product description on the stock moves",
             implied_group="stock_move_description."
             "group_use_product_description_per_stock_move",
             help="Allows you to use only product description on the "

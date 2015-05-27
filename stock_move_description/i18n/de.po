@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* picking_line_description
+#	* stock_move_description
 #
 msgid ""
 msgstr ""
@@ -15,28 +15,28 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: picking_line_description
-#: field:stock.config.settings,group_use_product_description_per_picking_line:0
-msgid "Allow using only the product description on the picking lines"
+#. module: stock_move_description
+#: field:stock.config.settings,group_use_product_description_per_stock_move:0
+msgid "Allow using only the product description on the stock moves"
 msgstr "Erlaubt die alleinige Nutzung der Produktbeschreibung  auf Kommissionspositionen"
 
-#. module: picking_line_description
-#: help:stock.config.settings,group_use_product_description_per_picking_line:0
+#. module: stock_move_description
+#: help:stock.config.settings,group_use_product_description_per_stock_move:0
 msgid "Allows you to use only product description on the picking lines."
 msgstr "Erlaubt es Ihnen, nur die Produktbeschreibung auf Kommissionspositionen zu verwenden."
 
-#. module: picking_line_description
-#: model:ir.model,name:picking_line_description.model_stock_config_settings
+#. module: stock_move_description
+#: model:ir.model,name:stock_move_description.model_stock_config_settings
 msgid "stock.config.settings"
 msgstr "stock.config.settings"
 
-#. module: picking_line_description
-#: model:res.groups,name:picking_line_description.group_use_product_description_per_picking_line
+#. module: stock_move_description
+#: model:res.groups,name:stock_move_description.group_use_product_description_per_stock_move
 msgid "Use only product description on picking lines"
 msgstr "Verwenden Sie ggf. nur die Produktbeschreibung auf Kommissionsscheinen"
 
-#. module: picking_line_description
-#: model:ir.model,name:picking_line_description.model_stock_move
+#. module: stock_move_description
+#: model:ir.model,name:stock_move_description.model_stock_move
 msgid "Stock Move"
 msgstr "Lagerbuchung"
 
