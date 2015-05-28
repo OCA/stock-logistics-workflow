@@ -23,6 +23,23 @@ from openerp.tools.translate import _
 class StockInvoiceOnshipping(models.TransientModel):
     _inherit = "stock.invoice.onshipping"
 
+    @api.model
+    def _get_journal_type(self):
+        res_ids = self.env.context.get('active_ids', [])
+        pickings = self.env['stock.picking'].browse(res_ids)
+        pick = pickings and pickings[0]
+        if pick.move_lines:
+            src_usage = pick.move_lines[0].location_id.usage
+            dest_usage = pick.move_lines[0].location_dest_id.usage
+            if src_usage == 'supplier' and dest_usage == 'customer':
+                moves = pick.move_lines.filtered('purchase_line_id')
+                moves = moves and moves[0]
+                pick_purchase = (
+                    moves.purchase_line_id.order_id.invoice_method ==
+                    'picking')
+                return "purchase" if pick_purchase else "sale"
+        return super(StockInvoiceOnshipping, self)._get_journal_type()
+
     def _default_second_journal(self):
         res = self.env['account.journal'].search([('type', '=', 'sale')])
         return res and res[0] or False
@@ -32,9 +49,11 @@ class StockInvoiceOnshipping(models.TransientModel):
             pick = self.env['stock.picking'].browse(
                 self.env.context['active_id'])
             so = pick.sale_id
-            po = pick.move_lines[0].purchase_line_id.order_id
-            if so.order_policy == 'picking' and po.invoice_method == 'picking':
-                return True
+            moves = pick.move_lines.filtered('purchase_line_id')
+            moves = moves and moves[0]
+            return (so.order_policy == 'picking' and
+                    moves.purchase_line_id.order_id.invoice_method ==
+                    'picking')
         return False
 
     @api.depends('journal_type', 'need_two_invoices')
@@ -105,3 +124,4 @@ class StockInvoiceOnshipping(models.TransientModel):
     wizard_title = fields.Char('Wizard Title',
                                compute='_get_wizard_title',
                                readonly=True)
+    journal_type = fields.Selection(default=_get_journal_type)
