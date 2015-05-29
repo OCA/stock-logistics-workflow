@@ -27,7 +27,6 @@
     'license': 'AGPL-3',
     'depends': [
         'stock_account',
-        'delivery',
     ],
     'data': [
         'security/stock_security.xml',
