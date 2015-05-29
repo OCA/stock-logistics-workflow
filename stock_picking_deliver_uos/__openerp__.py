@@ -18,17 +18,21 @@
 #
 ##############################################################################
 {
-    "name": "Stock Picking Deliver UOS",
-    "version": "1.0",
-    'author': "Agile Business Group, Odoo Community Association (OCA)",
-    "category": "Stock Logistics",
+    'name': 'Stock Picking Deliver UOS',
+    'version': '1.0',
+    'author': 'Agile Business Group, Odoo Community Association (OCA)',
+    'category': 'Stock Logistics',
+    'summary': 'Adds fields uos and uos_quantity to Stock Transfer Details',
     'website': 'www.agilebg.com',
-    "depends": ["stock"],
-    "summary": "Add fields uos and uos_quantity on Stock Transfer Details",
-    'data': [
-        "wizard/stock_transfer_details_view.xml",
+    'depends': [
+        'stock'
     ],
-    'test': ['test/stock_partial_picking.yml'],
-    'demo': [],
+    'license': 'AGPL-3',
+    'data': [
+        'wizard/stock_transfer_details_view.xml',
+    ],
+    'test': [
+        'test/stock_partial_picking.yml'
+    ],
     'installable': True,
 }
