@@ -37,7 +37,7 @@ class StockMove(orm.Model):
             'line_parent_id',
             type='many2one',
             relation='sale.order.line',
-            string='Parent Product',
+            string='Parent Sale Line',
             store={
                 'stock.move': (
                     lambda self, cr, uid, ids, c=None: ids,
