@@ -4,7 +4,6 @@
         <record id="view_create_picking_dispatch" model="ir.ui.view">
             <field name="name">picking_dispatch_create_form</field>
             <field name="model">picking.dispatch.creator</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Picking Dispatch properties" version="7.0">
                     <separator string="Picking Dispatch"/>
