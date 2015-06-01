@@ -19,5 +19,13 @@
 #
 ##############################################################################
 
-from . import stock
-from . import company
+from openerp import models, fields
+
+
+class Company(models.Model):
+    _inherit = 'res.company'
+
+    warning_time = fields.Float(
+        string='Warning time', default=2.0,
+        help="The warning time (in days) before that the requested date"
+             " indicated on the delivery order expires.")

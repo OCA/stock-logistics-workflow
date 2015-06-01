@@ -36,6 +36,7 @@
     'data': [
         'stock_view.xml',
         'sale_view.xml',
+        'company_view.xml',
     ],
     'installable': True,
 }
