@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-	<data>
+    <data>
 
         <report
-		    id="label_creator_palet_report"
-		    model="stock.picking"
-		    string="Picking palet label"
-		    report_type="qweb-pdf"
-		    name="stock_picking_package_info.label_creator_palet_report_document"
-		    file="stock_picking_package_info.label_creator_palet"
-		    attachment_use="False"
-		/>
+            id="label_creator_palet_report"
+            model="stock.picking"
+            string="Picking palet label"
+            report_type="qweb-pdf"
+            name="stock_picking_package_info.label_creator_palet_report_document"
+            file="stock_picking_package_info.label_creator_palet"
+            attachment_use="False"
+        />
 
-		<template id="label_creator_palet_report_document">
-
+        <template id="label_creator_palet_report_document">
             <t t-foreach="docs" t-as="o">
-
                     <t t-foreach="o.packages_info" t-as="p">
                         <div class="page" style="margin: 0 auto; text-align: center;">
                         <p><b>Client: </b><span t-field="o.partner_id" /></p>
@@ -24,16 +22,16 @@
                         <p><b>Picking: </b><span t-field="o.name" /></p>
                         <br/>
                         <p><b>Package: </b><span t-field="p.package.name" /></p>
-                        <p><b>Number of lots: </b><span t-field="p.lots" /></p>
+                        <p><b>Number of lots: </b><t t-foreach="p.lots" t-as="lot"><span t-field="lot.name" />, </t></p>
                         <p><b>Type: </b><span t-field="p.package.ul_id.name" /></p>
-                        <p><b>NET Weight: </b><span t-field="p.kg_net"/></p>
-                        <p><b>Gross Weight: </b><span t-field="p.gross_net" /></p>
+                        <p><b>NET Weight: </b><span t-field="p.net_weight"/></p>
+                        <p><b>Gross Weight: </b><span t-field="p.gross_weight" /></p>
                         <p><b>Package number: </b><span t-field="p.sequence" /> de <span t-field="o.num_packages"/></p>
                         <br/>
                         </div>
                     </t>
 
             </t>
-		</template>
-	</data>
+        </template>
+    </data>
 </openerp>

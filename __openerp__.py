@@ -19,23 +19,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 {
-    'name': 'Stock picking package info',
-    'version': "1.0",
+    "name": "Stock picking package info",
+    "version": "1.0",
     "author": "OdooMRP team,"
               "AvanzOSC,"
               "Serv. Tecnol. Avanzados - Pedro M. Baeza",
-    'website': "http://www.odoomrp.com",
-    'category': 'Warehouse Management',
-    'depends': ["product",
-                "stock",
-                ],
-    'data': [
-        'security/ir.model.access.csv',
-        'wizard/stock_transfer_details_view.xml',
-        'views/stock_quant_package_view.xml',
-        'views/stock_picking_view.xml',
-        'reports/label_creator_palet_report.xml'
+    "website": "http://www.odoomrp.com",
+    "category": "Inventory, Logistic, Storage",
+    "depends": [
+        "product",
+        "stock",
     ],
-    'installable': True,
+    "data": [
+        "security/ir.model.access.csv",
+        "wizard/stock_transfer_details_view.xml",
+        "views/stock_quant_package_view.xml",
+        "views/stock_picking_view.xml",
+        "reports/label_creator_palet_report.xml"
+    ],
+    "installable": True,
 }

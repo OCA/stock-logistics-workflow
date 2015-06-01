@@ -3,8 +3,15 @@ Stock picking packaging info
 This module displays in the pickings, all packages appearing in operations. in
 the package provides the following information:
 
-Width, height, length, total estimated weight, total estimated net weight,
-permitted volume, total volume charge, empty package weight, and real weight.
+* Width
+* Height
+* Length
+* Total estimated weight
+* Total estimated net weight
+* Permitted volume
+* Total volume charge
+* Empty package weight
+* Real weight
 
 When selecting the logical unit in the form of packages, will be brought to the
 form the width, height, length, and empty package weight values, defined in the
