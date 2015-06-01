@@ -101,4 +101,4 @@ class StockQuantPackage(models.Model):
                 'length': ul.length,
                 'empty_weight': ul.empty_weight,
             })
-        super(StockQuantPackage, self).create(values)
+        return super(StockQuantPackage, self).create(values)
