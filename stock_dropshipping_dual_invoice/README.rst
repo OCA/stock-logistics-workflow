@@ -1,3 +1,6 @@
+.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
+    :alt: License: AGPL-3
+
 Stock Dropshipping Dual Invoice
 ===============================
 
@@ -54,6 +57,7 @@ Contributors
 ------------
 
 * Leonardo Pistone <leonardo.pistone@camptocamp.com>
+* Pedro M. Baeza <pedro.baeza@gmail.com>
 
 Maintainer
 ----------
