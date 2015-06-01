@@ -23,8 +23,8 @@
 {
     "name": "Stock picking package info",
     "version": "1.0",
-    "author": "OdooMRP team,"
-              "AvanzOSC,"
+    "author": "OdooMRP team, "
+              "AvanzOSC, "
               "Serv. Tecnol. Avanzados - Pedro M. Baeza",
     "website": "http://www.odoomrp.com",
     "category": "Inventory, Logistic, Storage",

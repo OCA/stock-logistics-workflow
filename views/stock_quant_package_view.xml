@@ -31,7 +31,7 @@
                         </group>
                     </group>
                 </notebook>
-<!--                 <page string="Content" position="after">
+                <page string="Content" position="after">
                     <page string="Pickings">
                         <field name="pickings" />
                     </page>
@@ -40,7 +40,7 @@
                     <field name="total_weight" invisible="1"/>
                     <field name="total_weight_net" invisible="1"/>
                     <field name="total_volume" invisible="1"/>
-                </field> -->
+                </field>
             </field>
         </record>
         

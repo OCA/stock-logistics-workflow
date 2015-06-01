@@ -55,6 +55,11 @@ class StockQuantPackage(models.Model):
             self.total_volume + sum(x.total_volume for x in self.children_ids))
         self.permitted_volume = self.height * self.width * self.length
 
+    @api.one
+    def _get_pickings(self):
+        self.pickings = self.env['stock.pack.operation'].search(
+            [('result_package_id', '=', self.id)]).mapped('picking_id')
+
     height = fields.Float(string='Height', help='The height of the package')
     width = fields.Float(string='Width', help='The width of the package')
     length = fields.Float(string='Length', help='The length of the package')
@@ -74,11 +79,9 @@ class StockQuantPackage(models.Model):
         string='Permitted volume', compute='_calculate_totals')
     tvolume_charge = fields.Float(
         string='Total volume charge', compute='_calculate_totals')
-
-#     pickings = fields.Many2many(
-#         comodel_name='stock.picking',
-#         relation='rel_picking_package', column1='package_id',
-#         column2='picking_id', string='Pickings')
+    pickings = fields.Many2many(
+        comodel_name='stock.picking', string='Pickings',
+        compute='_get_pickings')
 
     @api.one
     @api.onchange('ul_id')
