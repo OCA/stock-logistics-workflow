@@ -31,33 +31,20 @@ class SaleOrderLine(orm.Model):
                                           'Children Line'),
         }
 
-
-class SaleOrder(orm.Model):
-    _inherit = 'sale.order'
-
-    def copy(self, cr, uid, id, default=None, context=None):
+    def copy_data(self, cr, uid, id, default=None, context=None):
         if default is None:
             default = {}
-        default = {'order_line': False}
-        new_order_id = super(SaleOrder, self).copy(cr, uid, id,
-                                                   default=default,
-                                                   context=context)
-        order_line_model = self.pool.get('sale.order.line')
-        order = self.browse(cr, uid, id, context=context)
-        for origin_order_line in order.order_line:
-            if not origin_order_line.line_parent_id:
-                default = {
-                    'order_id': new_order_id,
-                    'line_child_ids': False,
-                }
-                new_order_line_id = order_line_model.copy(
-                    cr, uid, origin_order_line.id,
-                    default=default, context=context)
-            for child_line in origin_order_line.line_child_ids:
-                default = {
-                    'line_parent_id': new_order_line_id,
-                    'order_id': new_order_id,
-                    }
-                order_line_model.copy(cr, uid, child_line.id,
-                                      default=default, context=context)
-        return new_order_id
+        order_line = self.browse(cr, uid, id, context=context)
+        if not order_line.line_parent_id:
+            default = {
+                'line_child_ids': False,
+            }
+        data = super(SaleOrderLine, self).copy_data(
+            cr, uid, id, default=default, context=context)
+        for child_line in order_line.line_child_ids:
+            default = {
+                'line_parent_id': id,
+            }
+            super(SaleOrderLine, self).copy_data(
+                cr, uid, child_line.id, default=default, context=context)
+        return data
