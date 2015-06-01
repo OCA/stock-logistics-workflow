@@ -1,15 +1,10 @@
+.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
+    :alt: License: AGPL-3
+
 Stock Cancel
-===========
-
-This module allows you to bring back a full stock picking to draft state
-
-Installation
 ============
 
-To install this module, you need to:
-
- * install stock_picking_invoice_link
-
+This module allows you to bring back a full stock picking to draft state
 
 
 Bug Tracker
@@ -29,7 +24,12 @@ Contributors
 
 * Andrea Cometa (<http://www.andreacometa.it>)
 * Agile Business Group sagl (<http://www.agilebg.com>)
+* Lorenzo Battistini <lorenzo.battistini@agilebg.com>
 * Alexis de Lattre (<alexis@via.ecp.fr>)
+* Pedro M. Baeza <pedro.baeza@gmail.com>
+* Yannick Vaucher <yannick.vaucher@camptocamp.com>
+* Rudolf Schnapka <rs@techno-flex.de>
+
 
 Maintainer
 ----------
