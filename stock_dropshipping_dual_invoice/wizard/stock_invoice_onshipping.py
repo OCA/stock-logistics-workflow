@@ -64,6 +64,7 @@ class StockInvoiceOnshipping(models.TransientModel):
             first_invoice_ids = pick.with_context(
                 partner_to_invoice_id=pick.partner_id.id,
                 date_inv=self.invoice_date,
+                inv_type='in_invoice',
             ).action_invoice_create(
                 journal_id=self.journal_id.id,
                 group=self.group,
@@ -75,6 +76,7 @@ class StockInvoiceOnshipping(models.TransientModel):
                     move.invoice_state = '2binvoiced'
             second_invoice_ids = pick.with_context(
                 date_inv=self.invoice_date,
+                inv_type='out_invoice',
             ).action_invoice_create(
                 journal_id=self.second_journal_id.id,
                 group=self.group,
