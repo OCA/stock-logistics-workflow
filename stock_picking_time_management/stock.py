@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-#from datetime import datetime
+import datetime
 from dateutil.relativedelta import relativedelta
 from openerp import models, fields, api
 
@@ -28,61 +28,51 @@ class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
     @api.one
-    @api.depends('sale_id', 'requested_date')
-    def compute_requested_date(self):
-        if self.sale_id.requested_date:
-            requested_date = self.sale_id.requested_date
-        else:
-            delay = 0
-            for line in self.sale_id.order_line:
-                if line.delay > delay:
-                    delay = line.delay
-            date_confirm_dt = fields.Date.from_string(
-                self.sale_id.date_confirm)
-            requested_date_dt = date_confirm_dt + relativedelta(
-                days=delay or 0.0)
-            requested_date = fields.Date.to_string(requested_date_dt)
-        self.requested_date = requested_date
+    @api.depends('company_id', 'company_id.warning_time', 'min_date')
+    def compute_start_warning_date(self):
+        if self.min_date:
+            company = self.company_id
+            warning_time = company.warning_time
+            min_date_dt = fields.Datetime.from_string(self.min_date)
+            start_warning_date = min_date_dt - relativedelta(
+                days=warning_time or 0.0)
+            self.start_warning_date = fields.Date.to_string(start_warning_date)
 
-    requested_date = fields.Date(
-        string='Requested Date',
-        compute='compute_requested_date',
-        readonly=True,
-        help="The date requested for product availability to the customer."
-             " If this date is set in the sale order then it will be used."
-             " Otherwise we will use the order confirmation date,"
-             " increased of the greatest delivery lead time on order lines.")
+    start_warning_date = fields.Date(
+        string='Start Warning Date',
+        compute='compute_start_warning_date',
+        readonly=True, store=True)
 
 
 class StockPickingType(models.Model):
     _inherit = 'stock.picking.type'
 
-    @api.multi
-    @api.depends('name', 'code', 'warehouse_id')
-    def _get_picking_count(self, field_names, arg):
-        obj = self.pool.get('stock.picking')
-        import pdb;pdb.set_trace()
-        result = super(StockPickingType, self)._get_picking_count(
-            field_names, arg)
+    @api.one
+    def _get_picking_count_late_soon(self):
+        picking_obj = self.env['stock.picking']
+        time_dt = fields.Datetime.context_timestamp(
+            self, timestamp=datetime.datetime.now())
+        time_str = fields.Date.to_string(time_dt)
         domains = {
             'count_picking_late_soon': [
-                ('requested_date', '<', ),
-                ('state', 'not in', ('cancel', 'done')),
-                ('picking_type_id', 'in', self.ids)
+                ('start_warning_date', '<=', time_str),
+                ('min_date', '>', time_str),
+                ('state', 'in', ('assigned',
+                                 'waiting',
+                                 'confirmed',
+                                 'partially_available'))
             ]
         }
-        for field in domains:
-            data = obj.read_group(
-                domains[field],
-                ['picking_type_id'],
-                ['picking_type_id']
-            )
-            count = dict(map(lambda x: (
-                x['picking_type_id'] and x['picking_type_id'][0],
-                x['picking_type_id_count']), data)
-            )
-            for tid in self.ids:
-                result.setdefault(tid, {})[field] = count.get(tid, 0)
-        return result
+        data = picking_obj.read_group(
+            domains['count_picking_late_soon'],
+            ['picking_type_id'],
+            ['picking_type_id']
+        )
+        count = dict(map(lambda x: (
+            x['picking_type_id'] and x['picking_type_id'][0],
+            x['picking_type_id_count']), data)
+        )
+        self.count_picking_late_soon = count.get(self.id, 0)
 
-    count_picking_late_soon = fields.Integer(compute='_get_picking_count')
+    count_picking_late_soon = fields.Integer(
+        compute='_get_picking_count_late_soon')

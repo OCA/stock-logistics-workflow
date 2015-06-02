@@ -26,8 +26,13 @@
     'license': 'AGPL-3',
     'summary': "",
     'description': """
+    This module calculates the number of delivery order whose
+    delivery date is close and display them.
+    A parameter (warning time) was added to the company's configuration
+    to define a number of days before which it is estimated
+    that the delivery date is near.
     """,
-    'author': 'Akretion',
+    'author': 'Akretion, Odoo Community Association (OCA)',
     'website': 'http://www.akretion.com/',
     'depends': [
         'stock',
@@ -35,7 +40,6 @@
     ],
     'data': [
         'stock_view.xml',
-        'sale_view.xml',
         'company_view.xml',
     ],
     'installable': True,
