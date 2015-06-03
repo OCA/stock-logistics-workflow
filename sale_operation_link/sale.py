@@ -19,32 +19,30 @@
 #
 ##############################################################################
 
-from openerp.osv import orm, fields
+from openerp import models, api, fields
 
 
-class SaleOrderLine(orm.Model):
+class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    _columns = {
-        'line_parent_id': fields.many2one('sale.order.line', 'Parent Line'),
-        'line_child_ids': fields.one2many('sale.order.line', 'line_parent_id',
-                                          'Children Line'),
-        }
+    line_parent_id = fields.Many2one('sale.order.line', 'Parent Line')
+    line_child_ids = fields.One2many('sale.order.line', 'line_parent_id',
+                                          'Children Line')
 
-    def copy_data(self, cr, uid, id, default=None, context=None):
+    @api.one
+    def copy_data(self,default=None):
         if default is None:
             default = {}
-        order_line = self.browse(cr, uid, id, context=context)
-        if not order_line.line_parent_id:
+        if not self.line_parent_id:
             default = {
                 'line_child_ids': False,
             }
         data = super(SaleOrderLine, self).copy_data(
-            cr, uid, id, default=default, context=context)
-        for child_line in order_line.line_child_ids:
+            default=default)
+        for child_line in self.line_child_ids:
             default = {
                 'line_parent_id': id,
             }
             super(SaleOrderLine, self).copy_data(
-                cr, uid, child_line.id, default=default, context=context)
+                default=default)
         return data

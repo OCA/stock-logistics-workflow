@@ -19,34 +19,21 @@
 #
 ##############################################################################
 
-from openerp.osv import orm, fields
-
-
-class StockMove(orm.Model):
-    _inherit = 'stock.move'
-    _order = 'sale_parent_line_id desc'
-
-    def _get_move_from_order_line(self, cr, uid, ids, context=None):
-        move_ids = self.pool['stock.move'].search(
-            cr, uid, [('sale_line_id', 'in', ids)], context=context)
-        return move_ids
-
-    _columns = {
-        'sale_parent_line_id': fields.related(
-            'sale_line_id',
-            'line_parent_id',
-            type='many2one',
-            relation='sale.order.line',
-            string='Parent Sale Line',
-            store={
-                'stock.move': (
-                    lambda self, cr, uid, ids, c=None: ids,
-                    ['sale_line_id'],
-                    10),
-                'sale.order.line': (
-                    _get_move_from_order_line,
-                    ['line_parent_id'],
-                    20)
-            }
-        )
-    }
+{
+    'name': 'Sale operation link',
+    'version': '1.0.0',
+    'category': 'Generic Modules',
+    'author': 'Akretion',
+    'license': 'AGPL-3',
+    'description': """
+    This module allows a suitable display of picking lines for bundle
+    product with the notion parent product and child products(components)
+""",
+    'website': 'http://wwww.akretion.com/',
+    'depends': ['sale_stock'],
+    'data': [
+        'sale_view.xml'
+    ],
+    'installable': True,
+    'auto_install': False,
+}
