@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api
+from openerp import models, fields, api, _
 import openerp.addons.decimal_precision as dp
 
 
@@ -69,12 +69,19 @@ class StockTransferDetailsItems(models.TransientModel):
             self, cr, uid, ids, product_uos_qty, packop_id, context=None
     ):
         vals = {}
+        warning = {}
         pack_operation = self.pool['stock.pack.operation'].browse(
             cr, uid, packop_id, context=context)
+        if len(pack_operation.linked_move_operation_ids) > 1:
+            warning.update({
+                'title': _('Warning'),
+                'message': _("The product_uos_qty changing do have any effect "
+                             "in case the linked moves are more than one")})
         if len(pack_operation.linked_move_operation_ids) == 1:
             p_qty = pack_operation.linked_move_operation_ids[
                 0].move_id.product_qty
             p_uos_qty = pack_operation.linked_move_operation_ids[
                 0].move_id.product_uos_qty
             vals['quantity'] = p_qty * (product_uos_qty / p_uos_qty)
-        return {'value': vals}
+
+        return {'value': vals, 'warning': warning}

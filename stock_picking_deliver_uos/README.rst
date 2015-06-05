@@ -8,6 +8,9 @@ This module adds two fields, uos and uos quantity to Stock Transfer Details
 wizard allowing the user to use the uos quantity (instead of the standard uom)
 to specify the quantity to be delivered.
 
+Note: the module handles only the case when one stock move leads to one
+pack operation.
+
 For example if I have to deliver 3 tables (uos qty=3 uos=pz) each one of 1,5 m²
 (uom=m², uom qty=4,5), I can make a transfer specifying 2 pieces (the
 system computes the internal uom qty:  3 m²)
