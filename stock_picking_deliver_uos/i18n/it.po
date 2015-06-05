@@ -52,4 +52,4 @@ msgstr ""
 #: code:addons/stock_picking_deliver_uos/wizard/stock_transfer_details.py:77
 #, python-format
 msgid "Warning"
-msgstr "Attenzione\t"
+msgstr "Attenzione"
