@@ -47,13 +47,11 @@ class StockPicking(models.Model):
 class StockPickingType(models.Model):
     _inherit = 'stock.picking.type'
 
-    @api.one
-    def _get_picking_count_late_soon(self):
-        picking_obj = self.env['stock.picking']
+    def _get_domains(self, vals):
         time_dt = fields.Datetime.context_timestamp(
             self, timestamp=datetime.datetime.now())
         time_str = fields.Date.to_string(time_dt)
-        domains = {
+        vals = {
             'count_picking_late_soon': [
                 ('start_warning_date', '<=', time_str),
                 ('min_date', '>', time_str),
@@ -63,6 +61,13 @@ class StockPickingType(models.Model):
                                  'partially_available'))
             ]
         }
+        return vals
+
+    @api.one
+    def _get_picking_count_late(self):
+        picking_obj = self.env['stock.picking']
+        domains = {}
+        domains = self._get_domains(domains)
         data = picking_obj.read_group(
             domains['count_picking_late_soon'],
             ['picking_type_id'],
@@ -75,4 +80,4 @@ class StockPickingType(models.Model):
         self.count_picking_late_soon = count.get(self.id, 0)
 
     count_picking_late_soon = fields.Integer(
-        compute='_get_picking_count_late_soon')
+        compute='_get_picking_count_late')
