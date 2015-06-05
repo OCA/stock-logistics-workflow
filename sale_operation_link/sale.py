@@ -27,10 +27,10 @@ class SaleOrderLine(models.Model):
 
     line_parent_id = fields.Many2one('sale.order.line', 'Parent Line')
     line_child_ids = fields.One2many('sale.order.line', 'line_parent_id',
-                                          'Children Line')
+                                     'Children Line')
 
     @api.one
-    def copy_data(self,default=None):
+    def copy_data(self, default=None):
         if default is None:
             default = {}
         if not self.line_parent_id:
