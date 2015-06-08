@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright (C) 2014 Agile Business Group sagl (<http://www.agilebg.com>)
+#    Copyright (C) 2014-15 Agile Business Group sagl (<http://www.agilebg.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -17,5 +17,22 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-from . import wizard
+{
+    'name': 'Stock Picking Deliver UOS',
+    'version': '1.0',
+    'author': 'Agile Business Group, Odoo Community Association (OCA)',
+    'category': 'Stock Logistics',
+    'summary': 'Adds fields uos and uos_quantity to Stock Transfer Details',
+    'website': 'www.agilebg.com',
+    'depends': [
+        'stock'
+    ],
+    'license': 'AGPL-3',
+    'data': [
+        'wizard/stock_transfer_details_view.xml',
+    ],
+    'test': [
+        'test/stock_partial_picking.yml'
+    ],
+    'installable': True,
+}
