@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Alex Comba <alex.comba@agilebg.com>
-#    Copyright (C) 2014 Agile Business Group sagl
+#    Copyright (C) 2014-15 Agile Business Group sagl
 #    (<http://www.agilebg.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,19 +18,5 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-from openerp.osv import fields, osv
-
-
-class stock_config_settings(osv.TransientModel):
-    _inherit = 'stock.config.settings'
-
-    _columns = {
-        'group_use_product_description_per_picking_line': fields.boolean(
-            "Allow using only the product description on the picking lines",
-            implied_group="picking_line_description."
-            "group_use_product_description_per_picking_line",
-            help="Allows you to use only product description on the "
-            "picking lines."
-        ),
-    }
+from . import stock_config_settings
+from . import stock_move

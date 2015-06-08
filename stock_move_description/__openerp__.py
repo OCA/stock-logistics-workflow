@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Alex Comba <alex.comba@agilebg.com>
-#    Copyright (C) 2014 Agile Business Group sagl
+#    Copyright (C) 2014-15 Agile Business Group sagl
 #    (<http://www.agilebg.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,5 +18,23 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from . import stock_config_settings
-from . import stock_move
+{
+    'name': "Stock move description",
+    'version': '1.0',
+    'category': 'Warehouse Management',
+    'author': "Agile Business Group, Odoo Community Association (OCA)",
+    'website': 'http://www.agilebg.com',
+    'license': 'AGPL-3',
+    'depends': [
+        'stock',
+    ],
+    'data': [
+        'security/stock_security.xml',
+        'stock_config_settings_view.xml',
+        'stock_move_view.xml',
+    ],
+    'test': [
+        'test/stock_move_description.yml',
+    ],
+    'installable': True
+}

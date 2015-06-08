@@ -3,8 +3,8 @@
 
     <data noupdate="0">
 
-        <record id="group_use_product_description_per_picking_line" model="res.groups">
-            <field name="name">Use only product description on picking lines</field>
+        <record id="group_use_product_description_per_stock_move" model="res.groups">
+            <field name="name">Use only product description on stock moves</field>
             <field name="category_id" ref="base.module_category_hidden"/>
         </record>
 

@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Alex Comba <alex.comba@agilebg.com>
-#    Copyright (C) 2014 Agile Business Group sagl
+#    Copyright (C) 2014-15 Agile Business Group sagl
 #    (<http://www.agilebg.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -23,7 +22,7 @@
 from openerp.osv import orm, fields
 
 
-class stock_move(orm.Model):
+class StockMove(orm.Model):
     _inherit = "stock.move"
 
     _columns = {
@@ -34,9 +33,8 @@ class stock_move(orm.Model):
             self, cr, uid, ids, prod_id=False, loc_id=False,
             loc_dest_id=False, partner_id=False, context=None
     ):
-        if context is None:
-            context = {}
-        res = super(stock_move, self).onchange_product_id(
+        context = dict(context or {})
+        res = super(StockMove, self).onchange_product_id(
             cr, uid, ids, prod_id=prod_id, loc_id=loc_id,
             loc_dest_id=loc_dest_id, partner_id=partner_id
         )
@@ -52,17 +50,15 @@ class stock_move(orm.Model):
             context['lang'] = lang
             user_groups = [g.id for g in user.groups_id]
             group_ref = self.pool.get('ir.model.data').get_object_reference(
-                cr, uid, 'picking_line_description',
-                'group_use_product_description_per_picking_line'
+                cr, uid, 'stock_move_description',
+                'group_use_product_description_per_stock_move'
             )
             if group_ref and group_ref[1] in user_groups:
                 product_obj = self.pool.get('product.product')
                 product = product_obj.browse(
                     cr, uid, prod_id, context=context)
-                if (
-                        product and
-                        product.description and
-                        'value' in res
-                ):
+                if product.description:
+                    if 'value' not in res:
+                        res['value'] = {}
                     res['value']['name'] = product.description
         return res
