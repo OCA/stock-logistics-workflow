@@ -26,6 +26,7 @@ class Product(models.Model):
         result['context'] = (
             "{'search_default_locationgroup': 1, "
             "'search_default_ownergroup': 1, "
-            "'search_default_internal_loc': 1}"
+            "'search_default_internal_loc': 1, "
+            "'search_default_without_reservation': 1}"
         )
         return result
