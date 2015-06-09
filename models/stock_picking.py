@@ -19,17 +19,11 @@ class StockPickingPackageWeightLot(models.Model):
         comodel_name='stock.quant.package', string='Package')
     lots = fields.Many2many(
         comodel_name='stock.production.lot', string='Lots/Serial Numbers',
-        compute='_get_lot_ids')
+        relation='rel_package_weight_lot')
     net_weight = fields.Float(
         string='Net Weight', digits=dp.get_precision('Stock Weight'))
     gross_weight = fields.Float(
-        string='Gross Weight',
-        digits_compute=dp.get_precision('Stock Weight'))
-
-    @api.one
-    @api.depends('package')
-    def _get_lot_ids(self):
-        self.lots = self.package.quant_ids.mapped('lot_id')
+        string='Gross Weight', digits=dp.get_precision('Stock Weight'))
 
 
 class StockPickingPackageTotal(models.Model):
@@ -65,12 +59,14 @@ class StockPicking(models.Model):
                 lambda r: r.result_package_id == package)
             total_weight = 0.0
             for pack_operation in package_operations:
-                total_weight = (pack_operation.product_qty *
-                                pack_operation.product_id.weight)
+                total_weight += (pack_operation.product_qty *
+                                 pack_operation.product_id.weight)
             vals = {
                 'picking': self.id,
                 'sequence': sequence,
                 'package': package.id,
+                'lots': [(6, 0, (package.quant_ids.mapped('lot_id').ids or
+                                 package_operations.mapped('lot_id').ids))],
                 'net_weight': total_weight,
                 'gross_weight': total_weight + package.empty_weight,
             }
