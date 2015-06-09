@@ -91,7 +91,7 @@ class StockQuantPackage(models.Model):
         self.length = self.ul_id.length
         self.empty_weight = self.ul_id.weight
 
-    @api.one
+    @api.model
     def create(self, values):
         if values.get('ul_id', False):
             ul = self.env['product.ul'].browse(values.get('ul_id'))
@@ -99,6 +99,6 @@ class StockQuantPackage(models.Model):
                 'height': ul.height,
                 'width': ul.width,
                 'length': ul.length,
-                'empty_weight': ul.empty_weight,
+                'empty_weight': ul.weight,
             })
         return super(StockQuantPackage, self).create(values)
