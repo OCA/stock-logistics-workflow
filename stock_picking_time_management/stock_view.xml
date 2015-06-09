@@ -2,6 +2,24 @@
 <openerp>
 <data>
 
+        <record id="action_picking_tree_late_soon" model="ir.actions.act_window">
+            <field name="name">Late Soon Transfers</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain"></field>
+            <field name="context">{
+                    'search_default_picking_type_id': [active_id],
+                    'default_picking_type_id': active_id,
+                    'contact_display': 'partner_address',
+                    'search_default_late_soon': 1,
+                    'search_default_confirmed': 1,
+            }
+            </field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
         <record id="stock_picking_type_kanban" model="ir.ui.view">
             <field name="model">stock.picking.type</field>
             <field name="inherit_id" ref="stock.stock_picking_type_kanban"/>
@@ -32,23 +50,6 @@
             </field>
         </record>
 
-        <record id="action_picking_tree_late_soon" model="ir.actions.act_window">
-            <field name="name">Late Soon Transfers</field>
-            <field name="res_model">stock.picking</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form,calendar</field>
-            <field name="domain"></field>
-            <field name="context">{
-                    'search_default_picking_type_id': [active_id],
-                    'default_picking_type_id': active_id,
-                    'contact_display': 'partner_address',
-                    'search_default_late_soon': 1,
-                    'search_default_confirmed': 1,
-            }
-            </field>
-            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
-        </record>
 
 </data>
 </openerp>
