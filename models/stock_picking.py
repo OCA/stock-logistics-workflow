@@ -21,7 +21,7 @@ class StockPickingPackageWeightLot(models.Model):
         comodel_name='stock.production.lot', string='Lots/Serial Numbers',
         compute='_get_lot_ids')
     net_weight = fields.Float(
-        string='Net Weight', digits_compute=dp.get_precision('Stock Weight'))
+        string='Net Weight', digits=dp.get_precision('Stock Weight'))
     gross_weight = fields.Float(
         string='Gross Weight',
         digits_compute=dp.get_precision('Stock Weight'))
@@ -102,9 +102,3 @@ class StockPicking(models.Model):
         string='Total UL Packages Info', compute='_calc_picking_packages_info')
     num_packages = fields.Integer(
         string='# Packages', compute='_calc_picking_packages_info')
-
-    @api.multi
-    def action_assign(self):
-        super(StockPicking, self).action_assign()
-        self.pack_operation_ids.unlink()
-        return True
