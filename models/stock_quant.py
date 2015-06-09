@@ -99,6 +99,6 @@ class StockQuantPackage(models.Model):
                 'height': ul.height,
                 'width': ul.width,
                 'length': ul.length,
-                'empty_weight': ul.empty_weight,
+                'empty_weight': ul.weight,
             })
         return super(StockQuantPackage, self).create(values)
