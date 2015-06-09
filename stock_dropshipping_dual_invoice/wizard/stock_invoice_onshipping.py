@@ -25,15 +25,13 @@ class StockInvoiceOnshipping(models.TransientModel):
 
     @api.model
     def _get_journal_type(self):
-        res_ids = self.env.context.get('active_ids', [])
-        pickings = self.env['stock.picking'].browse(res_ids)
-        pick = pickings and pickings[0]
-        if pick.move_lines:
-            src_usage = pick.move_lines[0].location_id.usage
-            dest_usage = pick.move_lines[0].location_dest_id.usage
+        res_id = self.env.context.get('active_id', False)
+        picking = self.env['stock.picking'].browse(res_id)
+        if picking.move_lines:
+            src_usage = picking.move_lines[0].location_id.usage
+            dest_usage = picking.move_lines[0].location_dest_id.usage
             if src_usage == 'supplier' and dest_usage == 'customer':
-                moves = pick.move_lines.filtered('purchase_line_id')
-                moves = moves and moves[0]
+                moves = picking.move_lines.filtered('purchase_line_id')[:1]
                 pick_purchase = (
                     moves.purchase_line_id.order_id.invoice_method ==
                     'picking')
@@ -46,11 +44,10 @@ class StockInvoiceOnshipping(models.TransientModel):
 
     def _need_two_invoices(self):
         if 'active_id' in self.env.context:
-            pick = self.env['stock.picking'].browse(
+            picking = self.env['stock.picking'].browse(
                 self.env.context['active_id'])
-            so = pick.sale_id
-            moves = pick.move_lines.filtered('purchase_line_id')
-            moves = moves and moves[0]
+            so = picking.sale_id
+            moves = picking.move_lines.filtered('purchase_line_id')[:1]
             return (so.order_policy == 'picking' and
                     moves.purchase_line_id.order_id.invoice_method ==
                     'picking')
