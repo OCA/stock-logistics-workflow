@@ -34,6 +34,10 @@
         "Alfredo de la Fuente <alfredodelafuente@avanzosc.es>",
         "Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>",
         ],
+    "description": """
+    Bridge module for compatibility with first versions that depends on the new
+    one.
+    """,
     "category": "Manufacturing",
     "depends": ["mrp",
                 "stock_lock_lot",
