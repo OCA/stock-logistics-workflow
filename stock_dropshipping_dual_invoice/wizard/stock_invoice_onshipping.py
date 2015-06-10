@@ -1,5 +1,7 @@
 #    Author: Leonardo Pistone
 #    Copyright 2015 Camptocamp SA
+#    Contributor: Pedro M. Baeza
+#    Copyright 2015 Serv. Tecnol. Avanzados
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -21,19 +23,34 @@ from openerp.tools.translate import _
 class StockInvoiceOnshipping(models.TransientModel):
     _inherit = "stock.invoice.onshipping"
 
+    @api.model
+    def _get_journal_type(self):
+        res_id = self.env.context.get('active_id', False)
+        picking = self.env['stock.picking'].browse(res_id)
+        if picking.move_lines:
+            src_usage = picking.move_lines[0].location_id.usage
+            dest_usage = picking.move_lines[0].location_dest_id.usage
+            if src_usage == 'supplier' and dest_usage == 'customer':
+                moves = picking.move_lines.filtered('purchase_line_id')[:1]
+                pick_purchase = (
+                    moves.purchase_line_id.order_id.invoice_method ==
+                    'picking')
+                return "purchase" if pick_purchase else "sale"
+        return super(StockInvoiceOnshipping, self)._get_journal_type()
+
     def _default_second_journal(self):
         res = self.env['account.journal'].search([('type', '=', 'sale')])
         return res and res[0] or False
 
     def _need_two_invoices(self):
         if 'active_id' in self.env.context:
-            pick = self.env['stock.picking'].browse(
+            picking = self.env['stock.picking'].browse(
                 self.env.context['active_id'])
-            so = pick.sale_id
-            po = pick.move_lines[0].purchase_line_id.order_id
-            if so.order_policy == 'picking' and po.invoice_method == 'picking':
-                return True
-
+            so = picking.sale_id
+            moves = picking.move_lines.filtered('purchase_line_id')[:1]
+            return (so.order_policy == 'picking' and
+                    moves.purchase_line_id.order_id.invoice_method ==
+                    'picking')
         return False
 
     @api.depends('journal_type', 'need_two_invoices')
@@ -47,34 +64,43 @@ class StockInvoiceOnshipping(models.TransientModel):
 
     @api.multi
     def open_invoice(self):
-        action_data = super(StockInvoiceOnshipping, self).open_invoice()
+        res = super(StockInvoiceOnshipping, self).open_invoice()
         if self.need_two_invoices:
-            # do not show the two invoices, because a form view would be wrong
-            return True
-        else:
-            return action_data
+            res['view_id'] = self.env.ref('account.invoice_tree').id
+            res['name'] = _('Invoices')
+            res['view_mode'] = 'tree'
+            del res['views']
+            del res['display_name']
+        return res
 
     @api.multi
     def create_invoice(self):
-        self.ensure_one()
         if self.need_two_invoices:
-            pick_ids = self.env.context['active_ids']
-            pick = self.env['stock.picking'].browse(pick_ids)
-
-            first_invoice_ids = pick.with_context(
-                partner_to_invoice_id=pick.partner_id.id,
-                date_inv=self.invoice_date,
-                inv_type='in_invoice',
-            ).action_invoice_create(
-                journal_id=self.journal_id.id,
-                group=self.group,
-                type='in_invoice',
-            )
-
-            for move in pick.move_lines:
-                if move.invoice_state == 'invoiced':
-                    move.invoice_state = '2binvoiced'
-            second_invoice_ids = pick.with_context(
+            picking_ids = self.env.context['active_ids']
+            picking_model = self.env['stock.picking']
+            pickings = picking_model.browse(picking_ids)
+            # Group picking by customer
+            pickings_by_partner = {}
+            for picking in pickings:
+                if not pickings_by_partner.get(picking.partner_id):
+                    pickings_by_partner[picking.partner_id] = picking_model
+                pickings_by_partner[picking.partner_id] += picking
+            first_invoice_ids = []
+            for partner, pickings_grouped in pickings_by_partner.iteritems():
+                first_invoice_ids += pickings_grouped.with_context(
+                    partner_to_invoice_id=partner.id,
+                    date_inv=self.invoice_date,
+                    inv_type='in_invoice',
+                ).action_invoice_create(
+                    journal_id=self.journal_id.id,
+                    group=self.group,
+                    type='in_invoice',
+                )
+            # Allow to invoice again
+            pickings.mapped('move_lines').filtered(
+                lambda x: x.invoice_state == 'invoiced').write(
+                {'invoice_state': '2binvoiced'})
+            second_invoice_ids = pickings.with_context(
                 date_inv=self.invoice_date,
                 inv_type='out_invoice',
             ).action_invoice_create(
@@ -95,3 +121,4 @@ class StockInvoiceOnshipping(models.TransientModel):
     wizard_title = fields.Char('Wizard Title',
                                compute='_get_wizard_title',
                                readonly=True)
+    journal_type = fields.Selection(default=_get_journal_type)
