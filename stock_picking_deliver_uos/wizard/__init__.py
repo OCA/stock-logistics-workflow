@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-#    Author: Leonardo Pistone
-#    Copyright 2014 Camptocamp SA
+##############################################################################
+#
+#    Copyright (C) 2014-15 Agile Business Group sagl (<http://www.agilebg.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -14,19 +15,7 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
 
-from openerp import models
-
-
-class Product(models.Model):
-    _inherit = 'product.template'
-
-    def action_open_quants(self, cr, uid, ids, context=None):
-        result = super(Product, self).action_open_quants(cr, uid, ids, context)
-        result['context'] = (
-            "{'search_default_locationgroup': 1, "
-            "'search_default_ownergroup': 1, "
-            "'search_default_internal_loc': 1, "
-            "'search_default_without_reservation': 1}"
-        )
-        return result
+from . import stock_transfer_details

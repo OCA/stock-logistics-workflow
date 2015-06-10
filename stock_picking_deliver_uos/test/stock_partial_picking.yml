@@ -1,0 +1,58 @@
+-
+    I create a product 'shelf'
+-
+    !record {model: product.product, id:  product_product_shelf}:
+        categ_id: product.product_category_all
+        name: shelf
+        type: product
+        uom_id: product.product_uom_meter
+        list_price: 1.0
+-
+  I create a picking
+-
+  !record {model: stock.picking, id: partial_picking}:
+    partner_id: base.res_partner_2
+    picking_type_id: stock.picking_type_out
+    move_lines:
+      - product_id: product_product_shelf
+        product_uom_qty: 4.5
+        product_uom: product.product_uom_meter
+        product_uos_qty: 3
+        product_uos: product.product_uom_unit
+        location_id: stock.stock_location_stock
+        location_dest_id: stock.stock_location_customers
+
+-
+  Then I confirm the picking
+-
+  !python {model: stock.picking}: |
+    self.action_assign(cr, uid, [ref("partial_picking")])
+-
+  Then I force the Assignment
+-
+  !python {model: stock.picking}: |
+    self.force_assign(cr, uid, [ref("partial_picking")])
+-
+  I create a stock.partial picking, check default values, Onchange method and i deliver the picking
+-
+  !python {model: stock.transfer_details}: |
+    context.update({'active_model': 'stock.picking', 'active_id': ref('partial_picking'), 'active_ids': [ref('partial_picking')]})
+    wizard_id = self.create(cr,uid,{'picking_id':ref('partial_picking')},context)
+    wizard = self.browse(cr, uid, wizard_id)
+    picking = self.pool.get('stock.picking').browse(cr, uid, ref('partial_picking'))
+    wiz_line_obj = self.pool.get('stock.transfer_details_items')
+    assert len(wizard.item_ids) == 1, "Wrong line's quantity"
+    for wiz_line in wizard.item_ids:
+      result = wiz_line.onchange_product_uos_qty(2, wiz_line.packop_id.id, context=None)
+      assert result['value']['quantity'] == 3, "On change method return wrong value"
+      wiz_line.write(result['value'])
+    wizard.do_detailed_transfer()
+-
+  Finally I check picking line after deliver
+-
+  !python {model: stock.picking}: |
+    picking = self.browse(cr, uid, ref("partial_picking"))
+    assert len(picking.move_lines) == 1, "Wrong line's quantity"
+    for line in picking.move_lines:
+      if line.product_id.id == ref('product_product_shelf'):
+        assert line.product_qty == 3.0, "Wrong Value on line on product_20"

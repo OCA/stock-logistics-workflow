@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Alexandre Fayolle
-#    Copyright 2012 Camptocamp SA
+#    Author: Guewen Baconnier
+#    Copyright 2015 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,32 +18,20 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{'name': 'Picking dispatch',
- 'version': '1.2.3',
- 'author': "Camptocamp,Odoo Community Association (OCA)",
+
+{'name': 'Stock Picking Package Preparation',
+ 'version': '1.0',
+ 'author': 'Camptocamp,Odoo Community Association (OCA)',
  'maintainer': 'Camptocamp',
- 'category': 'Products',
- 'complexity': "normal",  # easy, normal, expert
+ 'license': 'AGPL-3',
+ 'category': 'Warehouse Management',
  'depends': ['stock',
-             'delivery',
              ],
- 'website': 'http://www.camptocamp.com/',
- 'data': ['picking_dispatch_view.xml',
-          'picking_dispatch_sequence.xml',
-          'wizard/create_dispatch_view.xml',
-          'wizard/dispatch_assign_picker_view.xml',
-          'wizard/dispatch_start_view.xml',
-          'wizard/check_assign_all_view.xml',
-          'views/report_picking_dispatch.xml',
-          'picking_dispatch_report.xml',
-          'cron_data.xml',
+ 'website': 'http://www.camptocamp.com',
+ 'data': ['view/stock_picking_package_preparation_view.xml',
           'security/ir.model.access.csv',
-          'security/security.xml',
-          # 'picking_dispatch_workflow.xml',
           ],
- 'tests': [],
+ 'test': [],
  'installable': True,
  'auto_install': False,
- 'license': 'AGPL-3',
- 'application': False
  }
