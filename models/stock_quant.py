@@ -15,6 +15,8 @@ class StockQuant(models.Model):
     def quants_get(self, cr, uid, location, product, qty, domain=None,
                    restrict_lot_id=False, restrict_partner_id=False,
                    context=None):
+        if domain is None:
+            domain = []
         domain += [('locked', '=', False)]
         return super(StockQuant, self).quants_get(
             cr, uid, location, product, qty, domain=domain,
