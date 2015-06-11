@@ -68,16 +68,17 @@ class StockPickingType(models.Model):
         picking_obj = self.env['stock.picking']
         domains = {}
         domains = self._get_domains(domains)
-        data = picking_obj.read_group(
-            domains['count_picking_late_soon'],
-            ['picking_type_id'],
-            ['picking_type_id']
-        )
-        count = dict(map(lambda x: (
-            x['picking_type_id'] and x['picking_type_id'][0],
-            x['picking_type_id_count']), data)
-        )
-        self.count_picking_late_soon = count.get(self.id, 0)
+        for field in domains:
+            data = picking_obj.read_group(
+                domains[field],
+                ['picking_type_id'],
+                ['picking_type_id']
+            )
+            count = dict(map(lambda x: (
+                x['picking_type_id'] and x['picking_type_id'][0],
+                x['picking_type_id_count']), data)
+            )
+            self.count_picking_late_soon = count.get(self.id, 0)
 
     count_picking_late_soon = fields.Integer(
         compute='_get_picking_count_late')

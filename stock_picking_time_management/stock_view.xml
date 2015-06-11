@@ -29,7 +29,7 @@
                 </field>
                 <xpath expr="//div[@class='oe_items_list oe_kanban_ellipsis']/div[1]" position="before">
                     <div>
-                        <a name="%(stock_picking_time_management.action_picking_tree_late_soon)d" type="action">
+                        <a name="%(action_picking_tree_late_soon)d" type="action">
                             <field name="count_picking_late_soon"/> Late Soon
                         </a>
                     </div>
@@ -49,7 +49,6 @@
                 </xpath>
             </field>
         </record>
-
 
 </data>
 </openerp>
