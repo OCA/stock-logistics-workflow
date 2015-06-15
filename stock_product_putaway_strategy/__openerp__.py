@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) Bubbles-iT (<http://www.bubbles-it.be>)
 #    Copyright (C) 2004 OpenERP SA (<http://www.openerp.com>)
 #
@@ -20,16 +21,14 @@
 ##############################################################################
 {
     "name" : "Putaway apply",
-    "version" : "0.1",
-    "author": "Bubbles-iT, Odoo Community Association (OCA).",
+    "version" : "0.9",
+    "author": "Bubbles-iT.",
     "category": 'Warehouse Management',
-    "description":' Usually Putaway strategy works on categories matched to the product on Shipment. This module does it on Product level.',
+    "description":'',
     "website": "http://www.bubbles-it.be",
     "depends" : ["stock"],
-    "demo" : [
-             ],
     "data": [
-             "putaway_apply_view.xml",
+             "stock_product_putaway_strategy",
              'security/ir.model.access.csv',
              ],
     "auto_install": False,

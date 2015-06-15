@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+        <record id="view_putaway_inherit" model="ir.ui.view">
+            <field name="name">product.putaway.form.inherit</field>
+            <field name="model">product.putaway</field>
+            <field name="inherit_id" ref="stock.view_putaway"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div" position="replace"/>
+                <xpath expr="//group" position="after">
+                    <notebook string="Putaway">
+                        <page string="Categories" attrs="{'invisible': 
+                                [('method', '!=', 'fixed')]}">
+                            <field name="fixed_location_ids" colspan="4"
+                                 nolabel="1">
+                                <tree editable="top">
+                                    <field name="sequence" widget='handle'/>
+                                    <field name="category_id"/> 
+                                    <field name="fixed_location_id"/> 
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Product" attrs="{'invisible': 
+                                [('method', '!=', 'fixed')]}">
+                            <field name="fixed_location_by_product_ids" 
+                                    colspan="4" nolabel="1">
+                                <tree editable="top">
+                                <field name="sequence" widget='handle'/>
+                                <field name="product_id"/> 
+                                <field name="fixed_location_id"/> 
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
+
