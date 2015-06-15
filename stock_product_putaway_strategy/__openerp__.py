@@ -28,7 +28,7 @@
     "website": "http://www.bubbles-it.be",
     "depends" : ["stock"],
     "data": [
-             "stock_product_putaway_strategy",
+             "stock_product_putaway_strategy.xml",
              'security/ir.model.access.csv',
              ],
     "auto_install": False,
