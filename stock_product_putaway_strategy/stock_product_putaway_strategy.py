@@ -41,8 +41,10 @@ class product_putaway_strategy(osv.Model):
 
     _columns = { 
         'fixed_location_by_product_ids': 
-            fields.one2many('stock.fixed.putaway.byprod.strat', 'putaway_id', 'Fixed Locations Per Product Category',
-             help='When the method is fixed, this location will be used to store the products', copy=True),
+            fields.one2many('stock.fixed.putaway.byprod.strat', 'putaway_id', 
+                'Fixed Locations Per Product Category',
+                help='When the method is fixed, this location will be'
+                    ' used to store the products', copy=True),
     }
  
 class fixed_putaway_by_prod_strat(osv.Model):
@@ -55,7 +57,10 @@ class fixed_putaway_by_prod_strat(osv.Model):
                                         required=True),
         'fixed_location_id': fields.many2one('stock.location', 'Location', 
                                         required=True),
-        'sequence': fields.integer('Priority', help="Give to the more specialized category, a higher priority to have them in top of the list."),
+        'sequence': fields.integer('Priority', 
+            help="Give to the more"
+            "specialized category, a higher priority to have them in top"
+            " of the list."),
     }
 
 
