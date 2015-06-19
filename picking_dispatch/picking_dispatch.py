@@ -220,6 +220,7 @@ class StockMove(Model):
     _columns = {
         'dispatch_id': fields.many2one(
             'picking.dispatch', 'Dispatch',
+            select=True,
             help='who this move is dispatched to'),
     }
 
