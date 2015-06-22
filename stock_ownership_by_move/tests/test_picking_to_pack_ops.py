@@ -24,6 +24,7 @@ class TestPickingToPackOps(TransactionCase):
         pick.move_lines = self._move_factory(product=self.product1,
                                              owner=self.partner2)
 
+        pick.action_confirm()
         result = pick._prepare_pack_ops(pick, [], {self.product1: 5.0})
 
         self.assertEqual(1, len(result))
@@ -37,6 +38,7 @@ class TestPickingToPackOps(TransactionCase):
                                qty=2.0)
         )
 
+        pick.action_confirm()
         result = pick._prepare_pack_ops(pick, [], {self.product1: 7.0})
 
         self.assertEqual(1, len(result))
@@ -51,6 +53,7 @@ class TestPickingToPackOps(TransactionCase):
                                qty=7.0)
         )
 
+        pick.action_confirm()
         result = pick._prepare_pack_ops(pick, [], {self.product1: 12.0})
 
         self.assertEqual(2, len(result))

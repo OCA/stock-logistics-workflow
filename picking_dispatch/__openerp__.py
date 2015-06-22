@@ -25,6 +25,7 @@
  'category': 'Products',
  'complexity': "normal",  # easy, normal, expert
  'depends': ['stock',
+             'delivery',
              ],
  'website': 'http://www.camptocamp.com/',
  'data': ['picking_dispatch_view.xml',

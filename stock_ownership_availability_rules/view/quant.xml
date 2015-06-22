@@ -10,9 +10,16 @@
       <field name="inherit_id" ref="stock.quant_search_view"/>
       <field name="arch" type="xml">
         <filter string='Owner' position="replace"/>
+
         <filter name="locationgroup" position="after">
            <filter name="ownergroup" string='Owner' context="{'group_by' : 'owner_id'}" groups="stock.group_tracking_owner"/>
         </filter>
+
+        <filter name="internal_loc" position="after">
+          <separator/> <!-- to get AND instead of OR between filters (WAT) -->
+          <filter name="without_reservation" string="Available (without reservation)" domain="[('reservation_id','=', False)]"/>
+        </filter>
+
       </field>
     </record>
 
