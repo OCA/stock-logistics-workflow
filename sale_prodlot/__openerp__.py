@@ -20,7 +20,7 @@
 #
 ###############################################################################
 
-{'name': 'Sale option',
+{'name': 'sale_prodlot',
  'version': '0.0.1',
  'author': 'Akretion',
  'website': 'www.akretion.com',
@@ -31,18 +31,12 @@
  """,
  'depends': [
      'sale',
-     'sale_embedded_configuration',
-     'mrp',
+     'mrp'
  ],
  'data': [
-     'sale_view.xml',
      'product_view.xml',
-     'mrp_view.xml',
-    'demo/product_demo.xml',
+     'sale_view.xml'
  ],
- # 'demo': [
- #    'demo/product_demo.xml',
- # ],
  'installable': True,
  'application': False,
 }
