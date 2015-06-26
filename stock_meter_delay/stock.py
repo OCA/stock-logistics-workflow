@@ -28,13 +28,13 @@ class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
     @api.one
-    @api.depends('company_id', 'company_id.warning_time', 'min_date')
+    @api.depends('company_id', 'company_id.warning_time', 'max_date')
     def compute_start_warning_date(self):
-        if self.min_date:
+        if self.max_date:
             company = self.company_id
             warning_time = company.warning_time
-            min_date_dt = fields.Datetime.from_string(self.min_date)
-            start_warning_date = min_date_dt - relativedelta(
+            max_date_dt = fields.Datetime.from_string(self.max_date)
+            start_warning_date = max_date_dt - relativedelta(
                 days=warning_time or 0.0)
             self.start_warning_date = fields.Date.to_string(start_warning_date)
 
@@ -54,7 +54,7 @@ class StockPickingType(models.Model):
         vals = {
             'count_picking_late_soon': [
                 ('start_warning_date', '<=', time_str),
-                ('min_date', '>', time_str),
+                ('max_date', '>', time_str),
                 ('state', 'in', ('assigned',
                                  'waiting',
                                  'confirmed',

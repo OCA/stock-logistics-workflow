@@ -20,7 +20,7 @@
 ##############################################################################
 
 {
-    'name': 'Stock Picking Time Management',
+    'name': 'Stock Meter Delay',
     'version': '0.1',
     'category': 'Warehouse Management',
     'license': 'AGPL-3',
