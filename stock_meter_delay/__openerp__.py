@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright (C) 2015 AKRETION
-#    @author Chafique Delli <chafique.delli@akretion.com>
+#    Copyright (C) 2015 AKRETION (<http://www.akretion.com>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -23,17 +22,9 @@
     'name': 'Stock Meter Delay',
     'version': '0.1',
     'category': 'Warehouse Management',
-    'license': 'AGPL-3',
-    'summary': "",
-    'description': """
-    This module calculates the number of delivery order whose
-    delivery date is close and display them.
-    A parameter (warning time) was added to the company's configuration
-    to define a number of days before which it is estimated
-    that the delivery date is near.
-    """,
     'author': 'Akretion, Odoo Community Association (OCA)',
     'website': 'http://www.akretion.com/',
+    'license': 'AGPL-3',
     'depends': [
         'stock',
         'sale_order_dates'

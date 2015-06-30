@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_picking_time_management
+#	* stock_meter_delay
 #
 msgid ""
 msgstr ""
@@ -15,48 +15,48 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: stock_picking_time_management
-#: model:ir.model,name:stock_picking_time_management.model_res_company
+#. module: stock_meter_delay
+#: model:ir.model,name:stock_meter_delay.model_res_company
 msgid "Companies"
 msgstr "Sociétés"
 
-#. module: stock_picking_time_management
-#: view:stock.picking:stock_picking_time_management.view_picking_internal_search
-#: view:stock.picking.type:stock_picking_time_management.stock_picking_type_kanban
+#. module: stock_meter_delay
+#: view:stock.picking:stock_meter_delay.view_picking_internal_search
+#: view:stock.picking.type:stock_meter_delay.stock_picking_type_kanban
 msgid "Late Soon"
 msgstr "Bientôt en Retard"
 
-#. module: stock_picking_time_management
-#: model:ir.actions.act_window,name:stock_picking_time_management.action_picking_tree_late_soon
+#. module: stock_meter_delay
+#: model:ir.actions.act_window,name:stock_meter_delay.action_picking_tree_late_soon
 msgid "Late Soon Transfers"
 msgstr "Livraisons bientôt en retard"
 
-#. module: stock_picking_time_management
-#: model:ir.model,name:stock_picking_time_management.model_stock_picking
+#. module: stock_meter_delay
+#: model:ir.model,name:stock_meter_delay.model_stock_picking
 msgid "Picking List"
 msgstr "Opération de manutention"
 
-#. module: stock_picking_time_management
-#: view:stock.picking:stock_picking_time_management.view_picking_internal_search
+#. module: stock_meter_delay
+#: view:stock.picking:stock_meter_delay.view_picking_internal_search
 msgid "Pickings that are late soon on requested time"
 msgstr "Les préparations de commandes dont la date demandée est proche."
 
-#. module: stock_picking_time_management
+#. module: stock_meter_delay
 #: field:stock.picking,start_warning_date:0
 msgid "Start Warning Date"
 msgstr "Date de début d'alerte"
 
-#. module: stock_picking_time_management
-#: model:ir.model,name:stock_picking_time_management.model_stock_picking_type
+#. module: stock_meter_delay
+#: model:ir.model,name:stock_meter_delay.model_stock_picking_type
 msgid "The picking type determines the picking view"
 msgstr "Le type de préparation de commandes détermine le type de vue."
 
-#. module: stock_picking_time_management
+#. module: stock_meter_delay
 #: help:res.company,warning_time:0
 msgid "The warning time (in days) before that the requested date indicated on the delivery order expires."
 msgstr "Le délai d'alerte (en jours) avant que la date demandée sur le bon de livraison expire."
 
-#. module: stock_picking_time_management
+#. module: stock_meter_delay
 #: field:res.company,warning_time:0
 msgid "Warning time"
 msgstr "Délai d'alerte"
