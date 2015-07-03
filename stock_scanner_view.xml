@@ -60,6 +60,7 @@
 	                    <field name="warehouse_id"/>
 	                    <field name="user_id"/>
 	                    <field name="log_enabled"/>
+                        <field name="last_call_dt"/>
 	                    <newline/>
                     </group>
                     <group colspan="4">
@@ -595,6 +596,9 @@
             <field name="view_id" ref="view_scanner_scenario_custom_tree"/>
         </record>
         <menuitem id="menu_scanner_scenario_custom" parent="menu_scanner_configuration" sequence="50" action="act_open_scanner_scenario_custom_view"/>
+
+        <!-- configuration wizard -->
+        <menuitem id="menu_scanner_config_wizard" parent="menu_scanner_configuration" sequence="10" action="action_stock_scanner_config_wizard"/>
 
     </data>
 </openerp>

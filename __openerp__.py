@@ -41,7 +41,8 @@ module.
 To import these scenarios, you can use the import script located in the
 "scripts" directory.
 """,
-    'author': 'SYLEAM',
+    'author': 'SYLEAM,'
+               'ACSONE SA/NV',
     'website': 'http://www.Syleam.fr/',
     'images': [],
     'depends': [
@@ -50,7 +51,11 @@ To import these scenarios, you can use the import script located in the
     ],
 
     'data': [
+        'data/stock_scanner_data.xml',
+        'data/ir_cron.xml',
+        'security/stock_scanner_security.xml',
         'security/ir.model.access.csv',
+        'wizard/stock_scanner_config_wizard_view.xml',
         'stock_scanner_view.xml',
     ],
 

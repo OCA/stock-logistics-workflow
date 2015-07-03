@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="stock_scanner_config_wizard_view">
+            <field name="name">stock.scanner.config.wizard.view</field>
+            <field name="model">stock.scanner.config.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Configure scanner module">
+                    <group>
+                        <p>
+                        This wizard allow you to configure some parameters of
+                        the stock_scanner module
+                        </p>
+                    </group>
+                    <group>
+                        <field name="is_login_enabled"/>
+                        <field name="session_timeout_delay" attrs="{'invisible': [('is_login_enabled', '=', False)]}"/>
+                    </group>
+                    <footer>
+                        <button name="apply_config"
+                            string="Apply"
+                            type="object"
+                            icon="gtk-execute"
+                            class="oe_highlight" />
+                        or
+                        <button string="Close" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_stock_scanner_config_wizard">
+            <field name="name">Configure scanner module</field>
+            <field name="res_model">stock.scanner.config.wizard</field>
+            <field name="view_id" ref="stock_scanner_config_wizard_view"/>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="type">ir.actions.act_window</field>
+        </record>
+
+    </data>
+</openerp>

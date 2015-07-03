@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        <record id="hardware_scanner_session_timeout_sec" model="ir.config_parameter">
+            <field name="key">hardware_scanner_session_timeout</field>
+            <field name="value">1800</field>
+        </record>
+    </data>
+</openerp>

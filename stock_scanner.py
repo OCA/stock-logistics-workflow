@@ -40,6 +40,7 @@ import uuid
 from psycopg2 import OperationalError, errorcodes
 import random
 import time
+import datetime
 
 from .common import PYTHON_CODE_DEFAULT
 
@@ -458,6 +459,10 @@ class scanner_hardware(models.Model):
         ondelete='restrict',
         help='Allow to define an other user for execute all scenarios with '
              'that scanner instead of default user')
+    last_call_dt = fields.Datetime(
+        string='Last call',
+        help='Date and time of the last call to the system done by the scanner'
+        )
     scenario_id = fields.Many2one(
         'scanner.scenario',
         string='Scenario',
@@ -552,6 +557,18 @@ class scanner_hardware(models.Model):
         help='Color for the error background')
 
     @api.model
+    def timeout_session(self):
+        timeout_delay = self.env['ir.config_parameter'].get_param(
+            'hardware_scanner_session_timeout', 1800)  # seconds
+        expired_dt = datetime.datetime.now() - datetime.timedelta(
+            seconds=int(timeout_delay))
+        expired_str = fields.Datetime.to_string(expired_dt)
+        terminals = self.search([('last_call_dt', '<', expired_str)])
+        terminals.write({'user_id': False,
+                         'last_call_dt': False})
+        terminals.empty_scanner_values()
+
+    @api.model
     def _get_terminal(self, terminal_number):
         terminal = self.search([('code', '=', terminal_number)])
         terminal.ensure_one()
@@ -574,6 +591,9 @@ class scanner_hardware(models.Model):
         """
         # Retrieve the terminal id
         terminal = self._get_terminal(terminal_number)
+        if terminal.user_id.id:
+            # only reset last call if user_id
+            terminal.last_call_dt = fields.Datetime.now()
         # Change uid if defined on the stock scanner
         uid = terminal.user_id.id or self.env.uid
         return terminal.sudo(uid)._scanner_call(
