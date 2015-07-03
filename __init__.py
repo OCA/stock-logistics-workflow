@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    stock_scanner module for OpenERP, Allows managing barcode readers with simple scenarios
+#    stock_scanner module for OpenERP, Allows managing barcode readers with
+#    simple scenarios
 #    Copyright (C) 2011 SYLEAM Info Services (<http://www.syleam.fr/>)
 #              Sylvain Garancher <sylvain.garancher@syleam.fr>
 #    Copyright (C) 2015 Objectif-PI (<http://www.objectif-pi.com>).
@@ -10,8 +11,8 @@
 #    This file is a part of stock_scanner
 #
 #    stock_scanner is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
+#    it under the terms of the GNU Affero General Public License as published
+#    by the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    stock_scanner is distributed in the hope that it will be useful,
@@ -25,6 +26,4 @@
 ##############################################################################
 
 
-import stock_scanner
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+from . import stock_scanner
