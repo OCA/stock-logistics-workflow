@@ -68,6 +68,7 @@ class account_invoice(orm.Model):
     _columns = {
         'picking_ids': fields.one2many(
             'stock.picking', 'invoice_id', 'Related Pickings', readonly=True,
+            copy=False,
             help="Related pickings "
             "(only when the invoice has been generated from the picking)."),
     }
