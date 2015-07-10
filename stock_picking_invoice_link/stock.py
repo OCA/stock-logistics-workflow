@@ -21,7 +21,7 @@
 from openerp.osv import fields, orm
 
 
-class stock_move(orm.Model):
+class StockMove(orm.Model):
     _inherit = "stock.move"
 
     _columns = {
@@ -31,14 +31,14 @@ class stock_move(orm.Model):
 
     def _create_invoice_line_from_vals(
             self, cr, uid, move, invoice_line_vals, context=None):
-        inv_line_id = super(stock_move, self)._create_invoice_line_from_vals(
+        inv_line_id = super(StockMove, self)._create_invoice_line_from_vals(
             cr, uid, move, invoice_line_vals, context=context)
         move.write({'invoice_line_id': inv_line_id})
         move.picking_id.invoice_id = invoice_line_vals['invoice_id']
         return inv_line_id
 
 
-class stock_picking(orm.Model):
+class StockPicking(orm.Model):
     _inherit = "stock.picking"
 
     def _get_invoice_view_xmlid(self, cr, uid, ids, name, arg, context=None):
@@ -62,7 +62,7 @@ class stock_picking(orm.Model):
     }
 
 
-class account_invoice(orm.Model):
+class AccountInvoice(orm.Model):
     _inherit = "account.invoice"
 
     _columns = {
@@ -74,7 +74,7 @@ class account_invoice(orm.Model):
     }
 
 
-class account_invoice_line(orm.Model):
+class AccountInvoiceLine(orm.Model):
     _inherit = "account.invoice.line"
 
     _columns = {
