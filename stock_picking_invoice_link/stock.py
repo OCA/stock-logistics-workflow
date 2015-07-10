@@ -62,7 +62,7 @@ class AccountInvoice(models.Model):
         string='Related Pickings', readonly=True,
         copy=False,
         help="Related pickings "
-        "(only when the invoice has been generated from the picking).")
+             "(only when the invoice has been generated from the picking).")
 
 
 class AccountInvoiceLine(models.Model):
@@ -72,4 +72,4 @@ class AccountInvoiceLine(models.Model):
         comodel_name='stock.move', inverse_name='invoice_line_id',
         string='Related Stock Moves', readonly=True,
         help="Related stock moves "
-        "(only when the invoice has been generated from the picking).")
+             "(only when the invoice has been generated from the picking).")
