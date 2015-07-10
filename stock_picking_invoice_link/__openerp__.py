@@ -19,19 +19,19 @@
 ##############################################################################
 
 {
-    'name': "Picking Invoice Link",
+    'name': 'Stock Picking Invoice Link',
     'version': '1.0',
     'category': 'Warehouse Management',
     'summary': 'Adds link between pickings and generated invoices',
-    'author': "Agile Business Group, Odoo Community Association (OCA)",
+    'author': 'Agile Business Group, Odoo Community Association (OCA)',
     'website': 'http://www.agilebg.com',
     'license': 'AGPL-3',
-    "depends": ['stock_account'],
-    "data": [
-        "stock_view.xml",
-        "account_invoice_view.xml",
+    'depends': ['stock_account'],
+    'data': [
+        'stock_view.xml',
+        'account_invoice_view.xml',
     ],
-    "demo": [],
+    'demo': [],
     'test': [],
     'installable': True,
 }
