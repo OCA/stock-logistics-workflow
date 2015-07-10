@@ -1,8 +1,8 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
     :alt: License: AGPL-3
 
-Stock Picking Invoice Link
-==========================
+Link between the invoice and its source picking
+===============================================
 
 This module adds a link between pickings and generated invoices.
 So that user can easily reach the invoice related to the picking
