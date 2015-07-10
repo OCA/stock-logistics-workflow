@@ -1,89 +1,31 @@
-# Translation of OpenERP Server.
+# Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* stock_picking_invoice_link
+#	* stock_picking_invoice_link
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 7.0\n"
+"Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-01 15:29+0000\n"
-"PO-Revision-Date: 2015-02-01 16:30+0100\n"
-"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>\n"
+"POT-Creation-Date: 2015-07-10 14:26+0000\n"
+"PO-Revision-Date: 2015-07-10 14:26+0000\n"
+"Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"X-Generator: Poedit 1.5.4\n"
 
 #. module: stock_picking_invoice_link
-#: view:stock.move:0
-msgid "Traceability"
-msgstr ""
-
-#. module: stock_picking_invoice_link
-#: model:ir.model,name:stock_picking_invoice_link.model_stock_move
-msgid "Stock Move"
-msgstr ""
-
-#. module: stock_picking_invoice_link
-#: model:ir.model,name:stock_picking_invoice_link.model_stock_picking_in
-msgid "Incoming Shipments"
-msgstr ""
-
-#. module: stock_picking_invoice_link
-#: help:account.invoice,picking_ids:0
-msgid ""
-"Related pickings (only when the invoice has been generated from the picking)."
-msgstr ""
-
-#. module: stock_picking_invoice_link
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking_invoice_view_xmlid
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking_invoice_view_xmlid_4946
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking_invoice_view_xmlid_4948
-#: field:stock.picking,invoice_view_xmlid:0
-#: field:stock.picking.in,invoice_view_xmlid:0
-#: field:stock.picking.out,invoice_view_xmlid:0
-msgid "Invoice View XMLID"
-msgstr ""
-
-#. module: stock_picking_invoice_link
-#: field:account.invoice,picking_ids:0
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_invoice_picking_ids
-msgid "Related Pickings"
-msgstr ""
-
-#. module: stock_picking_invoice_link
-#: view:account.invoice:0
-msgid "Pickings"
-msgstr ""
-
-#. module: stock_picking_invoice_link
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move_invoice_line_id
-#: field:stock.move,invoice_line_id:0
-msgid "Invoice line"
+#: model:ir.model,name:stock_picking_invoice_link.model_account_invoice
+#: view:stock.picking:stock_picking_invoice_link.view_picking_form
+#: field:stock.picking,invoice_id:0
+msgid "Invoice"
 msgstr ""
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_invoice_line
+#: field:stock.move,invoice_line_id:0
 msgid "Invoice Line"
-msgstr ""
-
-#. module: stock_picking_invoice_link
-#: field:account.invoice.line,move_line_ids:0
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_invoice_line_move_line_ids
-msgid "Related Stock Moves"
-msgstr ""
-
-#. module: stock_picking_invoice_link
-#: model:ir.model,name:stock_picking_invoice_link.model_account_invoice
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking_invoice_id
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking_invoice_id_4947
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking_invoice_id_4949
-#: field:stock.picking,invoice_id:0 view:stock.picking.in:0
-#: field:stock.picking.in,invoice_id:0 view:stock.picking.out:0
-#: field:stock.picking.out,invoice_id:0
-msgid "Invoice"
 msgstr ""
 
 #. module: stock_picking_invoice_link
@@ -92,13 +34,33 @@ msgid "Picking List"
 msgstr ""
 
 #. module: stock_picking_invoice_link
-#: help:account.invoice.line,move_line_ids:0
-msgid ""
-"Related stock moves (only when the invoice has been generated from the "
-"picking)."
+#: view:account.invoice:stock_picking_invoice_link.invoice_form
+#: view:account.invoice:stock_picking_invoice_link.invoice_supplier_form
+msgid "Pickings"
 msgstr ""
 
 #. module: stock_picking_invoice_link
-#: model:ir.model,name:stock_picking_invoice_link.model_stock_picking_out
-msgid "Delivery Orders"
+#: field:account.invoice,picking_ids:0
+msgid "Related Pickings"
 msgstr ""
+
+#. module: stock_picking_invoice_link
+#: field:account.invoice.line,move_line_ids:0
+msgid "Related Stock Moves"
+msgstr ""
+
+#. module: stock_picking_invoice_link
+#: help:account.invoice,picking_ids:0
+msgid "Related pickings (only when the invoice has been generated from the picking)."
+msgstr ""
+
+#. module: stock_picking_invoice_link
+#: help:account.invoice.line,move_line_ids:0
+msgid "Related stock moves (only when the invoice has been generated from the picking)."
+msgstr ""
+
+#. module: stock_picking_invoice_link
+#: model:ir.model,name:stock_picking_invoice_link.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
