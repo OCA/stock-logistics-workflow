@@ -39,14 +39,13 @@ class StockMove(models.Model):
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    @api.multi
+    @api.one
     def _get_invoice_view_xmlid(self):
-        for pick in self:
-            if pick.invoice_id:
-                if pick.invoice_id.type in ('in_invoice', 'in_refund'):
-                    pick.invoice_view_xmlid = 'account.invoice_supplier_form'
-                else:
-                    pick.invoice_view_xmlid = 'account.invoice_form'
+        if self.invoice_id:
+            if self.invoice_id.type in ('in_invoice', 'in_refund'):
+                self.invoice_view_xmlid = 'account.invoice_supplier_form'
+            else:
+                self.invoice_view_xmlid = 'account.invoice_form'
 
     invoice_id = fields.Many2one(comodel_name='account.invoice',
                                  string='Invoice', readonly=True)
