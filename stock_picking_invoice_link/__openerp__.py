@@ -20,10 +20,10 @@
 
 {
     'name': "Picking Invoice Link",
-    'version': '0.2',
+    'version': '1.0',
     'category': 'Warehouse Management',
     'summary': 'Adds link between pickings and generated invoices',
-    'author': "Agile Business Group,Odoo Community Association (OCA)",
+    'author': "Agile Business Group, Odoo Community Association (OCA)",
     'website': 'http://www.agilebg.com',
     'license': 'AGPL-3',
     "depends": ['stock_account'],
