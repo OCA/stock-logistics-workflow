@@ -9,7 +9,8 @@
 -
   I create an outgoing move for a Make to Order, Buy product
 -
-  !record {model: stock.picking.out, id: picking_out_mto}:
+  !record {model: stock.picking, id: picking_out_mto}:
+    picking_type_id: picking_type_out
 -
   !record {model: stock.move, id: move_out_mto}:
     picking_id: picking_out_mto
@@ -23,7 +24,8 @@
   we have when the move is automatically created by a Purchase Order created
   by the scheduler.
 -
-  !record {model: stock.picking.in, id: picking_in_mto}:
+  !record {model: stock.picking, id: picking_in_mto}:
+    picking_type_id: stock.picking_type_in
 -
   !record {model: stock.move, id: move_in_mto}:
     picking_id: picking_in_mto
