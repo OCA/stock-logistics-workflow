@@ -31,6 +31,8 @@
     product_uom: product.product_uom_unit
     name: line1 in
     product_id: product.product_product_48
+    location_id: stock.stock_location_suppliers
+    location_dest_id: stock.stock_location_stock
 -
   !python {model: stock.move}: |
     import datetime
@@ -48,6 +50,8 @@
     product_uom: product.product_uom_unit
     name: line2 in
     product_id: product.product_product_48
+    location_id: stock.stock_location_suppliers
+    location_dest_id: stock.stock_location_stock
 -
   !python {model: stock.move}: |
     import datetime
@@ -65,6 +69,8 @@
     product_uom: product.product_uom_unit
     name: line3 in
     product_id: product.product_product_48
+    location_id: stock.stock_location_suppliers
+    location_dest_id: stock.stock_location_stock
 -
   !python {model: stock.move}: |
     import datetime
@@ -92,6 +98,8 @@
     product_uom: product.product_uom_unit
     name: line1 out
     product_id: product.product_product_48
+    location_id: stock.stock_location_stock
+    location_dest_id: stock.stock_location_customers
 -
   !python {model: stock.move}: |
     import datetime
@@ -109,6 +117,8 @@
     product_uom: product.product_uom_unit
     name: line2 out
     product_id: product.product_product_48
+    location_id: stock.stock_location_stock
+    location_dest_id: stock.stock_location_customers
 -
   !python {model: stock.move}: |
     import datetime

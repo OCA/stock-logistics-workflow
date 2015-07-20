@@ -17,6 +17,8 @@
     product_qty: 57
     product_uom: product.product_uom_unit
     product_id: product.product_product_33
+    location_id: stock.stock_location_stock
+    location_dest_id: stock.stock_location_customers
 -
   !workflow {model: stock.picking, action: button_confirm, ref: picking_out_mto}
 -
@@ -33,6 +35,8 @@
     product_uom: product.product_uom_unit
     product_id: product.product_product_33
     move_dest_id: move_out_mto
+    location_id: stock.stock_location_suppliers
+    location_dest_id: stock.stock_location_stock
 -
   !workflow {model: stock.picking, action: button_confirm, ref: picking_in_mto}
 -
