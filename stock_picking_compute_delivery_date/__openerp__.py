@@ -97,5 +97,5 @@ Possible future improvements
      'test/test_mts_2.yml',
      'test/test_mto.yml',
  ],
- "installable": False,
+ "installable": True,
  }
