@@ -67,7 +67,7 @@ class StockPicking(orm.Model):
 
         move_in_ids = move_obj.search(cr, uid, [
             ('product_id', '=', product.id),
-            ('picking_id.type', '=', 'in'),
+            ('picking_id.picking_type.code', '=', 'incoming'),
             ('state', 'in', ('confirmed', 'assigned', 'pending')),
         ], order='date_expected', context=context)
 
@@ -91,7 +91,7 @@ class StockPicking(orm.Model):
 
         move_out_ids = move_obj.search(cr, uid, [
             ('product_id', '=', product.id),
-            ('picking_id.type', '=', 'out'),
+            ('picking_id.picking_type_id.code', '=', 'outgoing'),
             ('state', 'in', ('confirmed', 'assigned', 'pending')),
         ], context=context)
 
@@ -127,7 +127,7 @@ class StockPicking(orm.Model):
         # lead to moves changing order, and the result to not converge.
         move_out_ids = move_obj.search(cr, uid, [
             ('product_id', '=', product.id),
-            ('picking_id.type', '=', 'out'),
+            ('picking_id.picking_type_id.code', '=', 'outgoing'),
             ('state', 'in', ('confirmed', 'assigned', 'pending')),
         ], order='date', context=context)
 
@@ -188,7 +188,7 @@ class StockPicking(orm.Model):
             cr,
             uid,
             domain=[
-                ('picking_id.type', '=', 'out'),
+                ('picking_id.picking_type_id.code', '=', 'outgoing'),
                 ('state', 'in', ('confirmed', 'assigned', 'pending'))
             ],
             fields=['product_id'],
