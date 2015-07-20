@@ -27,7 +27,7 @@ class ComputeDeliveryDateByProductWizard(orm.TransientModel):
     _name = 'compute.delivery.date.by.product.wizard'
 
     def do_compute(self, cr, uid, ids, context=None):
-        pick_obj = self.pool['stock.picking.out']
+        pick_obj = self.pool['stock.picking']
         product_obj = self.pool['product.product']
 
         product_ids = context['active_ids']

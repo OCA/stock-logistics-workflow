@@ -34,7 +34,7 @@ class ComputeAllDeliveryDatesWizard(orm.TransientModel):
         """
         if context is None:
             context = {}
-        pick_obj = self.pool['stock.picking.out']
+        pick_obj = self.pool['stock.picking']
 
         if 'use_new_cursor' in context:
             pick_obj.compute_all_delivery_dates(

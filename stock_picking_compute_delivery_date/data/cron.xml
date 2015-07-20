@@ -10,7 +10,7 @@
       <field name="interval_type">days</field>
       <field name="numbercall">-1</field>
       <field eval="False" name="doall" />
-      <field name="model">stock.picking.out</field>
+      <field name="model">stock.picking</field>
       <field name="function">compute_all_delivery_dates</field>
       <field name="args">()</field>
     </record>
