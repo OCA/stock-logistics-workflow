@@ -182,10 +182,50 @@ class PickingDispatch(models.Model):
                     _('Error'),
                     _('This dispatch cannot be processed until %s') % obj.date)
 
-    @api.multi
-    def action_assign_moves(self):
-        for rec in self:
-            rec.move_ids.action_assign()
+    def action_assign_moves(self, cr, uid, ids, context=None):
+        move_obj = self.pool['stock.move']
+        location_obj = self.pool['stock.location']
+
+        move_ids = move_obj.search(cr, uid, [
+            ('dispatch_id', 'in', ids),
+            ('state', 'in', ('confirmed', 'waiting')),
+        ], context=context)
+
+        cr.execute("""
+            SELECT
+                product_id,
+                location_id,
+                SUM(product_qty)
+            FROM stock_move
+            WHERE
+                dispatch_id in %s
+                AND state in ('confirmed', 'waiting')
+            GROUP BY product_id, location_id
+            """, (tuple(ids), ))
+        groups = cr.fetchall()
+
+        for product_id, location_id, quantity in groups:
+            # Try to reserve all moves with the same product and location
+            # together
+            res = location_obj._product_reserve(
+                cr,
+                uid,
+                [location_id],
+                product_id,
+                quantity,
+                lock=True,
+                context=context
+            )
+
+            if res and len(res) == 1:
+                move_obj.write(cr, uid, move_ids, {'state': 'assigned',
+                                                   'location_id': res[0][1]})
+            else:
+                # We could not reserve all the moves together, or the
+                # reservation is split among many sublocations.
+                # If that's the case, fall back to reserving one move at a time
+                move_obj.action_assign(cr, uid, move_ids)
+
         return True
 
     @api.multi

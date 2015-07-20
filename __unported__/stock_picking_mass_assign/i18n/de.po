@@ -1,20 +1,24 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-# 	* stock_picking_mass_assign
+#	* stock_picking_mass_assign
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-17 09:00+0000\n"
-"PO-Revision-Date: 2015-02-01 13:42+0100\n"
-"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>\n"
+"POT-Creation-Date: 2015-04-06 11:29+0000\n"
+"PO-Revision-Date: 2015-04-06 11:29+0000\n"
+"Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Language: de\n"
-"X-Generator: Poedit 1.5.4\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_mass_assign
+#: view:stock.picking.check.assign.all:0
+msgid "Apply"
+msgstr ""
 
 #. module: stock_picking_mass_assign
 #: view:stock.picking.check.assign.all:0
@@ -23,7 +27,7 @@ msgstr "Abbrechen"
 
 #. module: stock_picking_mass_assign
 #: model:ir.actions.act_window,name:stock_picking_mass_assign.action_check_assign_all
-#: view:stock.picking.check.assign.all:0
+#: field:stock.picking.check.assign.all,check_availability:0
 msgid "Check Availability"
 msgstr "Verfügbarkeit prüfen"
 
@@ -33,16 +37,14 @@ msgid "Check the availability of the selected delivery orders"
 msgstr "Verfügbarkeit für ausgewählte Lieferaufträge prüfen"
 
 #. module: stock_picking_mass_assign
-#: code:_description:0
-#: model:ir.model,name:stock_picking_mass_assign.model_stock_picking
-#, python-format
-msgid "Picking List"
-msgstr "Kommissionierschein"
+#: field:stock.picking.check.assign.all,create_invoice:0
+msgid "Create Invoices/Refunds"
+msgstr "Erstelle Rechnung / Gutschrift"
 
 #. module: stock_picking_mass_assign
-#: view:stock.picking.check.assign.all:0
-msgid "or"
-msgstr "oder"
+#: field:stock.picking.check.assign.all,process_picking:0
+msgid "Deliver"
+msgstr "Ausliefern"
 
 #. module: stock_picking_mass_assign
 #: code:_description:0
@@ -50,3 +52,60 @@ msgstr "oder"
 #, python-format
 msgid "Delivery Orders Check Availability"
 msgstr "Verfügbarkeitsprüfung zur Lieferung"
+
+#. module: stock_picking_mass_assign
+#: code:addons/stock_picking_mass_assign/wizard/check_assign_all.py:62
+#, python-format
+msgid "Error"
+msgstr ""
+
+#. module: stock_picking_mass_assign
+#: field:stock.picking.check.assign.all,force_availability:0
+msgid "Force Availability"
+msgstr "Erzwinge Verfügbarkeit"
+
+#. module: stock_picking_mass_assign
+#: code:addons/stock_picking_mass_assign/wizard/check_assign_all.py:63
+#, python-format
+msgid "No selected delivery orders"
+msgstr ""
+
+#. module: stock_picking_mass_assign
+#: code:_description:0
+#: model:ir.model,name:stock_picking_mass_assign.model_stock_picking
+#, python-format
+msgid "Picking List"
+msgstr "Kommissionierschein"
+
+#. module: stock_picking_mass_assign
+#: code:addons/stock_picking_mass_assign/wizard/check_assign_all.py:115
+#, python-format
+msgid "Stock Invoice Onshipping"
+msgstr ""
+
+#. module: stock_picking_mass_assign
+#: help:stock.picking.check.assign.all,check_availability:0
+msgid "check this box if you want to check the availability of the selected Delivery Orders."
+msgstr ""
+
+#. module: stock_picking_mass_assign
+#: help:stock.picking.check.assign.all,create_invoice:0
+msgid "check this box if you want to create Invoices or Refunds for all the selected Delivery Orders."
+msgstr ""
+
+#. module: stock_picking_mass_assign
+#: help:stock.picking.check.assign.all,process_picking:0
+msgid "check this box if you want to deliver all the selected Delivery Orders.\n"
+" You'll not have the possibility to realize a partial delivery.\n"
+" If you want to do that, please do it manually on the Delivery Order form."
+msgstr ""
+
+#. module: stock_picking_mass_assign
+#: help:stock.picking.check.assign.all,force_availability:0
+msgid "check this box if you want to force the availability of the selected Delivery Orders."
+msgstr ""
+
+#. module: stock_picking_mass_assign
+#: view:stock.picking.check.assign.all:0
+msgid "or"
+msgstr "oder"
