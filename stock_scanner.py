@@ -31,7 +31,7 @@ from openerp import _
 from openerp.tools.misc import logged
 from openerp.tools.misc import ustr
 from openerp import workflow
-from openerp.exceptions import Warning
+from openerp.exceptions import Warning, AccessDenied
 from openerp.exceptions import except_orm
 
 from threading import Semaphore
@@ -564,8 +564,7 @@ class scanner_hardware(models.Model):
             seconds=int(timeout_delay))
         expired_str = fields.Datetime.to_string(expired_dt)
         terminals = self.search([('last_call_dt', '<', expired_str)])
-        terminals.write({'user_id': False,
-                         'last_call_dt': False})
+        terminals.logout()
         terminals.empty_scanner_values()
 
     @api.model
@@ -578,6 +577,8 @@ class scanner_hardware(models.Model):
     @api.model
     def scanner_check(self, terminal_number):
         terminal = self._get_terminal(terminal_number)
+        uid = terminal.user_id.id or self.env.uid
+        terminal = terminal.sudo(uid)
         return terminal.scenario_id and (
             terminal.scenario_id.id,
             terminal.scenario_id.name) or False
@@ -644,6 +645,8 @@ class scanner_hardware(models.Model):
                 scenario_ids = scanner_scenario_obj.search(
                     [('name', '=', message),
                      ('type', '=', 'menu'),
+                     '|',
+                     ('warehouse_ids', '=', False),
                      ('warehouse_ids', 'in', [self.warehouse_id.id])])
                 if message == -1:
                     scenario_ids = [False]
@@ -681,7 +684,7 @@ class scanner_hardware(models.Model):
         elif action == 'end':
             # Empty the values
             logger.info('[%s] End scenario request' % self.code)
-            self.empty_scanner_values()
+            self.sudo().empty_scanner_values()
 
             return ('F', [_('This scenario'), _('is finished')], '')
 
@@ -701,7 +704,7 @@ class scanner_hardware(models.Model):
         Sends an error message
         """
         self.ensure_one()
-        self.empty_scanner_values()
+        self.sudo().empty_scanner_values()
         return ('R', message, 0)
 
     def _unknown_action(self, message):
@@ -742,6 +745,37 @@ class scanner_hardware(models.Model):
         End the end barcode is read, we execute this step
         """
         return self.scanner_call(terminal_number=numterm, action='end')
+
+    @api.one
+    def check_credentials(self, login, password):
+        res_users = self.env['res.users']
+        try:
+            users = res_users.search([('login', '=', login)])
+            if len(users) == 1:
+                uid = users[0].id
+                res_users.sudo(uid).check_credentials(password)
+            return uid
+        except AccessDenied:
+            return False
+
+    @api.one
+    def login(self, login, password):
+        """This method assign the uid associated to login
+        as current user of the hardware.
+        The method MUST be called on the last step since the login
+        scenario will no more be visible by the current user once it will
+        be assigned this one
+        """
+        uid = self.check_credentials(login, password)[0]
+        if uid:
+            self.write({'user_id': uid,
+                        'last_call_dt': fields.Datetime.now()})
+
+    @api.multi
+    def logout(self):
+        self.write({'user_id': False,
+                    'last_call_dt': False})
+        return True
 
     @api.multi
     def _memorize(self, scenario_id, step_id, previous_steps_id=False,
@@ -810,6 +844,8 @@ class scanner_hardware(models.Model):
                 scenario_ids = scanner_scenario_obj.search(
                     [('name', '=', message),
                      ('type', '=', 'scenario'),
+                     '|',
+                     ('warehouse_ids', '=', False),
                      ('warehouse_ids', 'in', [terminal_warehouse_ids])])
 
             # If at least one scenario was found, pick the start step of the
@@ -1051,7 +1087,9 @@ class scanner_hardware(models.Model):
 
         scanner_scenario_obj = self.env['scanner.scenario']
         scanner_scenario_ids = scanner_scenario_obj.search(
-            [('warehouse_ids', 'in', [self.warehouse_id.id]),
+            ['|',
+             ('warehouse_ids', '=', False),
+             ('warehouse_ids', 'in', [self.warehouse_id.id]),
              ('parent_id', '=', parent_id)])
         return scanner_scenario_ids.mapped('name')
 

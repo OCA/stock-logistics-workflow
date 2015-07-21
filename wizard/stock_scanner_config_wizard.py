@@ -3,6 +3,8 @@ from openerp import models, api, fields
 
 ACTIVABLE_XML_IDS = [
     'stock_scanner.hardware_reset_user_id_on_timeout',
+    'stock_scanner.scanner_scenario_login',
+    'stock_scanner.scanner_scenario_logout',
 ]
 
 
