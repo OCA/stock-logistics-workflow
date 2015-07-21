@@ -66,6 +66,10 @@ Possible future improvements
   expected dates of the chained moves. This could make the MTO part of this
   module unnecessary, if the change is consistent. That could be investigated
   further.
+* For the MTS computation, all outgoing and incoming moves are grouped together
+  for the computation of the availability plan. In other words, the plan is
+  global for any products, and it does not take into account the presence of
+  different warehouses.
 
 Bug Tracker
 ===========
