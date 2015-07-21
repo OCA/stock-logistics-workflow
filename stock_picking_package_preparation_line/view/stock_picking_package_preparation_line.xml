@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data noupdate="0">
+
+    <record id="sppp_line_stock_picking_package_preparation_form" model="ir.ui.view">
+        <field name="name">sppp.line.stock.picking.package.preparation.form</field>
+        <field name="model">stock.picking.package.preparation</field>
+        <field name="inherit_id" ref="stock_picking_package_preparation.stock_picking_package_preparation_form"/>
+        <field name="arch" type="xml">
+            <page string="Transfers" position="before">
+                <page string="Details">
+                    <field name="line_ids"
+                           attrs="{'readonly': [('state', '=', 'done')]}">
+                        <tree>
+                            <field name="product_id" />
+                            <field name="product_uom_qty" />
+                            <field name="product_uom" />
+                            <field name="name" />
+                        </tree>
+                        <form>
+                            <group>
+                                <field name="product_id" />
+                                <field name="product_uom_qty" />
+                                <field name="product_uom" />
+                            </group>
+                            <field name="name" colspan="4"
+                                   nolabel="1" placeholder="Description"/>
+                        </form>
+                    </field>
+                </page>
+            </page>
+        </field>
+    </record>
+
+</data>
+</openerp>
