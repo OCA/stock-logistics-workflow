@@ -562,13 +562,14 @@ class scanner_hardware(models.Model):
         # Retrieve the terminal id
         terminal = self._get_terminal(terminal_number)
         # Change uid if defined on the stock scanner
-        uid = terminal.user_id and terminal.user_id.id or self.env.uid
+        uid = terminal.user_id.id or self.env.uid
         return terminal.sudo(uid)._scanner_call(
             action, message=message, transition_type=transition_type)
 
-    @api.model
+    @api.multi
     def _scanner_call(self, action, message=False,
                       transition_type='keyboard'):
+        self.ensure_one()
         scanner_scenario_obj = self.env['scanner.scenario']
         # Retrieve the terminal screen size
         if action == 'screen_size':
@@ -647,7 +648,6 @@ class scanner_hardware(models.Model):
         elif action == 'end':
             # Empty the values
             logger.info('[%s] End scenario request' % self.code)
-#             @api.one
             self.empty_scanner_values()
 
             return ('F', [_('This scenario'), _('is finished')], '')
@@ -662,15 +662,15 @@ class scanner_hardware(models.Model):
         # Nothing matched, return an error
         return self._send_error(['Unknown', 'action'])
 
-    @api.one
+    @api.multi
     def _send_error(self, message):
         """
         Sends an error message
         """
+        self.ensure_one()
         self.empty_scanner_values()
         return ('R', message, 0)
 
-    @api.one
     def _unknown_action(self, message):
         """
         Sends an unknown action message
@@ -710,13 +710,14 @@ class scanner_hardware(models.Model):
         """
         return self.scanner_call(terminal_number=numterm, action='end')
 
-    @api.model
+    @api.multi
     def _memorize(self, scenario_id, step_id, previous_steps_id=False,
                   previous_steps_message=False, obj=None):
         """
         After affect a scenario to a scanner, we must memorize it
         If obj is specify, save it as well (ex: res.partner,12)
         """
+        self.ensure_one()
         args = {
             'scenario_id': scenario_id,
             'step_id': step_id,
@@ -728,13 +729,14 @@ class scanner_hardware(models.Model):
 
         self.write(args)
 
-#   @api.model
+    @api.multi
     def _do_scenario_save(self, message, transition_type, scenario_id=None,
                           step_id=None, current_object=''):
         """
         Save the scenario on this terminal and execute the current step
         Return the action to the terminal
         """
+        self.ensure_one()
         scanner_scenario_obj = self.env['scanner.scenario']
         scanner_step_obj = self.env['scanner.scenario.step']
         terminal = self
@@ -816,17 +818,24 @@ class scanner_hardware(models.Model):
                 tracer = ''
                 ctx = {
                     'context': self.env.context,
-                    'model': self.pool.get(
-                        transition.from_id.scenario_id.model_id.model),
+                    'model': self.env[
+                        transition.from_id.scenario_id.model_id.model],
                     'cr': self.env.cr,
                     'pool': self.pool,
+                    'env': self.env,
                     'uid': self.env.uid,
                     'm': message,
                     'message': message,
                     't': self,
                     'terminal': self,
                 }
-                expr = eval(str(transition.condition), ctx)
+                try:
+                    expr = eval(str(transition.condition), ctx)
+                except:
+                    logger.exception(
+                        "Error when evaluating transition condition /n %s",
+                        transition.condition)
+                    raise
 
                 # Invalid condition, evaluate next transition
                 if not expr:
@@ -885,7 +894,8 @@ class scanner_hardware(models.Model):
             ld = {
                 'cr': self.env.cr,
                 'uid': self.env.uid,
-                'pool': self.env,
+                'pool': self.pool,
+                'env': self.env,
                 'model': self.env[step.scenario_id.model_id.model],
                 'custom': self.env['scanner.scenario.custom'],
                 'term': self,
@@ -909,7 +919,8 @@ class scanner_hardware(models.Model):
             if step.step_stop:
                 terminal.empty_scanner_values()
         except:
-            pass
+            logger.exception('Error when executing code \n, %s',
+                             step.python_code)
 
         scenario_rs._semaphore_release(
             terminal.warehouse_id.id,
@@ -921,8 +932,7 @@ class scanner_hardware(models.Model):
                 'res', ['nothing']), ld.get(
                 'val', 0))
 
-    @logged
-    @api.model
+    @api.multi
     def _scenario_save(self, message, transition_type, scenario_id=None,
                        step_id=None, current_object=None):
         """
@@ -930,6 +940,7 @@ class scanner_hardware(models.Model):
         retrying the same step
         Return the action to the terminal
         """
+        self.ensure_one()
         result = ('M', ['TEST'], False)
         tries = 0
         current_object = current_object or ''
@@ -1011,15 +1022,15 @@ class scanner_hardware(models.Model):
              ('parent_id', '=', parent_id)])
         return scanner_scenario_ids.mapped('name')
 
-    @api.model
+    @api.multi
     def _screen_size(self):
         """
         Retrieve the screen size for this terminal
         """
+        self.ensure_one()
         return (self.screen_width, self.screen_height)
 
-    @api.one
-    def _log(self, log_message):
+    def log(self, log_message):
         if self.log_enabled:
             logger.info('[%s] %s' % (self.code, ustr(log_message)))
 

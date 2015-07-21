@@ -15,6 +15,6 @@
   <Step reference_res_id="276ac2a2-39a0-11e2-b299-74de2b37388c" name="Unknown location" step_back="False" step_stop="False" step_start="False"/>
   <Step reference_res_id="d8e9a09e-399f-11e2-81a9-74de2b37388c" name="Location selection" step_back="False" step_stop="False" step_start="True"/>
   <Step reference_res_id="eb535090-399f-11e2-8def-74de2b37388c" name="Informations display" step_back="False" step_stop="True" step_start="False"/>
-  <Transition reference_res_id="136e2690-39a0-11e2-b3e5-74de2b37388c" name="Location selection OK" sequence="0" tracer="" to_id="eb535090-399f-11e2-8def-74de2b37388c" transition_type="keyboard" condition="model.name_search(cr, uid, message, operator='=', context=context)" from_id="d8e9a09e-399f-11e2-81a9-74de2b37388c"/>
-  <Transition reference_res_id="362bd86c-39a0-11e2-805e-74de2b37388c" name="Location selection NOK" sequence="0" tracer="" to_id="276ac2a2-39a0-11e2-b299-74de2b37388c" transition_type="keyboard" condition="not model.name_search(cr, uid, message, operator='=', context=context)" from_id="d8e9a09e-399f-11e2-81a9-74de2b37388c"/>
+  <Transition reference_res_id="136e2690-39a0-11e2-b3e5-74de2b37388c" name="Location selection OK" sequence="0" tracer="" to_id="eb535090-399f-11e2-8def-74de2b37388c" transition_type="keyboard" condition="model.name_search(message, operator='=')" from_id="d8e9a09e-399f-11e2-81a9-74de2b37388c"/>
+  <Transition reference_res_id="362bd86c-39a0-11e2-805e-74de2b37388c" name="Location selection NOK" sequence="0" tracer="" to_id="276ac2a2-39a0-11e2-b299-74de2b37388c" transition_type="keyboard" condition="not model.name_search(message, operator='=')" from_id="d8e9a09e-399f-11e2-81a9-74de2b37388c"/>
 </scenario>

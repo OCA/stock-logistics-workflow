@@ -4,10 +4,9 @@
 # Put the returned result or message in <res>, as a list of strings.
 # Put the returned value in <val>, as an integer
 
-terminal.write({'tmp_val3': message}, context=context)
+terminal.write({'tmp_val3': message})
 
-product_id = model.search(cr, uid, [('default_code', '=', terminal.tmp_val2)], context=context)[0]
-product = model.browse(cr, uid, product_id, context=context)
+product = model.search([('default_code', '=', terminal.tmp_val2)])[0]
 
 act = 'T'
 res = [
