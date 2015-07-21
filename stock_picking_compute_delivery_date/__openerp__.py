@@ -92,6 +92,7 @@ Possible future improvements
      'data/cron.xml',
  ],
  "test": [
+     'test/setup_company.yml',
      'test/setup_user.yml',
      'test/test_mts_1.yml',
      'test/test_mts_2.yml',
