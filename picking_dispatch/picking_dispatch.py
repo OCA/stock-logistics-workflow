@@ -130,6 +130,8 @@ class PickingDispatch(models.Model):
         (_check_picker_assigned, 'Please select a picker.', ['picker_id'])
     ]
 
+    _order = 'date desc, id desc'
+
     @api.multi
     def action_assign(self):
         _logger.debug('set state to assigned for picking.dispatch %s', self)
