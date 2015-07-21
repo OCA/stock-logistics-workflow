@@ -2,6 +2,9 @@
   !python {model: res.company, id: base.main_company}: |
     self.security_lead = 2.0
 -
+  !context
+    uid: 'res_users_emma'
+-
   I update the available quantity for the product "Ink Cartridge"
 -
   !record {model: stock.change.product.qty, id: change_qty_2}:

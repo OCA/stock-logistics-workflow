@@ -2,6 +2,9 @@
   !python {model: res.company, id: base.main_company}: |
     self.security_lead = 2.0
 -
+  !context
+    uid: 'res_users_emma'
+-
   I create an outgoing move for a Make to Order, Buy product
 -
   !record {model: stock.picking, id: picking_out_mto}:
