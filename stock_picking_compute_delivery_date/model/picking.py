@@ -26,6 +26,7 @@ from openerp.osv import orm
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT as DT_FORMAT
 from openerp.tools.translate import _
 from openerp import pooler
+from openerp import api
 
 
 _logger = logging.getLogger(__name__)
@@ -67,7 +68,7 @@ class StockPicking(orm.Model):
 
         move_in_ids = move_obj.search(cr, uid, [
             ('product_id', '=', product.id),
-            ('picking_id.picking_type.code', '=', 'incoming'),
+            ('picking_id.picking_type_id.code', '=', 'incoming'),
             ('state', 'in', ('confirmed', 'assigned', 'pending')),
         ], order='date_expected', context=context)
 
@@ -79,11 +80,11 @@ class StockPicking(orm.Model):
             })
         return iter(plan)
 
-    def compute_delivery_dates(self, cr, uid, product, context=None):
-        if product.procure_method == 'make_to_stock':
-            return self.compute_mts_delivery_dates(cr, uid, product, context)
-        else:
-            return self.compute_mto_delivery_dates(cr, uid, product, context)
+    @api.model
+    def compute_delivery_dates(self, product):
+        self.compute_mts_delivery_dates(product)
+        self.compute_mto_delivery_dates(product)
+        return True
 
     def compute_mto_delivery_dates(self, cr, uid, product, context=None):
         move_obj = self.pool['stock.move']
@@ -93,6 +94,7 @@ class StockPicking(orm.Model):
             ('product_id', '=', product.id),
             ('picking_id.picking_type_id.code', '=', 'outgoing'),
             ('state', 'in', ('confirmed', 'assigned', 'pending')),
+            ('move_orig_ids', '!=', False),
         ], context=context)
 
         for move_out in self.pool['stock.move'].browse(cr, uid, move_out_ids,
@@ -129,6 +131,7 @@ class StockPicking(orm.Model):
             ('product_id', '=', product.id),
             ('picking_id.picking_type_id.code', '=', 'outgoing'),
             ('state', 'in', ('confirmed', 'assigned', 'pending')),
+            ('move_orig_ids', '=', False),
         ], order='date', context=context)
 
         current_plan = plan.next()
