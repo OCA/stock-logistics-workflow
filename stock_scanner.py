@@ -368,6 +368,7 @@ class scanner_scenario_transition(models.Model):
         required=False,
         related="from_id.scenario_id",
         store=True,
+        ondelete='cascade',
         readonly=True)
 
     @api.one
@@ -463,7 +464,8 @@ class scanner_hardware(models.Model):
     previous_steps_id = fields.Text(
         string='Previous Step',
         readonly=True,
-        help='Previous step for this hardware')
+        help='Previous step for this hardware',
+        default='')
     previous_steps_message = fields.Text(
         string='Previous Message',
         readonly=True,

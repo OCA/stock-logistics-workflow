@@ -55,7 +55,9 @@ To import these scenarios, you can use the import script located in the
     ],
 
     'qweb': [],
-    'demo': [],
+    'demo': [
+        'demo/stock_scanner_demo.xml'
+    ],
     'test': [],
     'installable': True,
     'auto_install': False,
