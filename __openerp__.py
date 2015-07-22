@@ -5,9 +5,7 @@
 #    simple scenarios
 #    Copyright (C) 2011 SYLEAM Info Services (<http://www.syleam.fr/>)
 #              Sylvain Garancher <sylvain.garancher@syleam.fr>
-#    Copyright (C) 2015 Objectif-PI (<http://www.objectif-pi.com>).
-#       Damien CRIER <damien.crier@objectif-pi.com>
-#
+
 #    This file is a part of stock_scanner
 #
 #    stock_scanner is free software: you can redistribute it and/or modify

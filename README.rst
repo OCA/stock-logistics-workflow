@@ -125,4 +125,15 @@ Valid key codes are :
     - KEY_RIGHT : Right arrow
     - KEY_BACKSPACE : Backspace
     - KEY_DC : Delete
+Credits
+=======
 
+Contributors
+------------
+* Alexandre Fayolle <afayolle.ml@free.fr>
+* Christophe CHAUVET <christophe.chauvet@syleam.fr>
+* Damien Crier <damien@crier.me>
+* Laetitia Gangloff <laetitia.gangloff@acsone.eu>
+* Laurent Mignon <laurent.mignon@acsone.eu>
+* Sebastien LANGE <sebastien.lange@syleam.fr>
+* Sylvain Garancher <sylvain.garancher@syleam.fr>
