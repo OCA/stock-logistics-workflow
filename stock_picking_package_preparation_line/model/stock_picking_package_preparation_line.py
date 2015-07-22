@@ -38,6 +38,13 @@ class StockPickingPackagePreparationLine(models.Model):
     product_uom = fields.Many2one('product.uom')
     note = fields.Text()
 
+    @api.onchange('product_id')
+    def _onchange_product_id(self):
+        if self.product_id:
+            name = self.product_id.name_get()
+            if name:
+                self.name = name[0][1]
+
 
 class StockPickingPackagePreparation(models.Model):
 

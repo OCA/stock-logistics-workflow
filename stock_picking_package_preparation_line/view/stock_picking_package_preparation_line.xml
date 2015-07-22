@@ -12,10 +12,10 @@
                     <field name="line_ids"
                            attrs="{'readonly': [('state', '=', 'done')]}">
                         <tree>
+                            <field name="name" />
                             <field name="product_id" />
                             <field name="product_uom_qty" />
                             <field name="product_uom" />
-                            <field name="name" />
                         </tree>
                         <form>
                             <group>
