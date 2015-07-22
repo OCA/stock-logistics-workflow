@@ -29,9 +29,11 @@ class StockPickingPackagePreparationLine(models.Model):
     _description = 'Package Preparation Line'
     _inherit = ['mail.thread']
 
-    package_preparation_id = fields.Many2one('stock.move', string='Sock Move')
+    package_preparation_id = fields.Many2one(
+        'stock.picking.package.preparation', string='Stock Move',
+        ondelete='cascade')
     name = fields.Text(string='Description', required=True)
-    move_id = fields.Many2one('stock.move', string='Sock Move')
+    move_id = fields.Many2one('stock.move', string='Stock Move')
     product_id = fields.Many2one('product.product', string='Product')
     product_uom_qty = fields.Float(
         digits_compute=dp.get_precision('Product Unit of Measure'))
@@ -45,6 +47,26 @@ class StockPickingPackagePreparationLine(models.Model):
             if name:
                 self.name = name[0][1]
 
+    def _prepare_lines_from_pickings(self, picking_ids):
+        lines = []
+        if not picking_ids:
+            return lines
+        picking_model = self.env['stock.picking']
+        for picking in picking_model.browse(picking_ids):
+            for move_line in picking.move_lines:
+                # ----- search if the move is related with a
+                #       PackagePreparationLine, yet. If not, create a new line
+                if not self.search([('move_id', '=', move_line.id)],
+                                   count=True):
+                    lines.append({
+                        'move_id': move_line.id,
+                        'name': move_line.product_id.name_get()[0][1],
+                        'product_id': move_line.product_id.id,
+                        'product_uom_qty': move_line.product_uom_qty,
+                        'product_uom': move_line.product_uom.id,
+                        })
+        return lines
+
 
 class StockPickingPackagePreparation(models.Model):
 
@@ -52,3 +74,17 @@ class StockPickingPackagePreparation(models.Model):
 
     line_ids = fields.One2many('stock.picking.package.preparation.line',
                                'package_preparation_id')
+
+    @api.model
+    def create(self, values):
+        # ----- Create a PackagePreparationLine for every stock move
+        #       in the pickings added to PackagePreparation
+        if values.get('picking_ids', False):
+            package_preparation_lines = self.env[
+                'stock.picking.package.preparation.line'
+                ]._prepare_lines_from_pickings(values['picking_ids'][0][2])
+            if package_preparation_lines:
+                values.update({
+                    'line_ids': [(0, 0, v) for v in package_preparation_lines]
+                })
+        return super(StockPickingPackagePreparation, self).create(values)
