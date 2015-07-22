@@ -88,3 +88,15 @@ class StockPickingPackagePreparation(models.Model):
                     'line_ids': [(0, 0, v) for v in package_preparation_lines]
                 })
         return super(StockPickingPackagePreparation, self).create(values)
+
+    @api.multi
+    def write(self, values):
+        if values.get('picking_ids', False):
+            package_preparation_lines = self.env[
+                'stock.picking.package.preparation.line'
+                ]._prepare_lines_from_pickings(values['picking_ids'][0][2])
+            if package_preparation_lines:
+                values.update({
+                    'line_ids': [(0, 0, v) for v in package_preparation_lines]
+                })
+        return super(StockPickingPackagePreparation, self).write(values)
