@@ -46,6 +46,7 @@ class StockPickingPackagePreparationLine(models.Model):
             name = self.product_id.name_get()
             if name:
                 self.name = name[0][1]
+            self.product_uom = self.product_id.uom_id.id
 
     def _prepare_lines_from_pickings(self, picking_ids):
         lines = []
