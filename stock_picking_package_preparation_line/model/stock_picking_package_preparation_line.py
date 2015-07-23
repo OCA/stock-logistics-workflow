@@ -68,6 +68,8 @@ class StockPickingPackagePreparationLine(models.Model):
                 'move_lines': [(0, 0, move_data)],
                 }
             picking = picking_model.create(picking_data)
+            # ----- Set the picking as "To DO"
+            picking.action_confirm()
             # ----- Add the relation between the new stock move
             #       and PackagePreparationLine
             values.update({'move_id': picking.move_lines[0].id, })
