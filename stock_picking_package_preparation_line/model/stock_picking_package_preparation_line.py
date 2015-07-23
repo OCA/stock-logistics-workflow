@@ -39,6 +39,7 @@ class StockPickingPackagePreparationLine(models.Model):
     product_uom_qty = fields.Float(
         digits_compute=dp.get_precision('Product Unit of Measure'))
     product_uom = fields.Many2one('product.uom')
+    sequence = fields.Integer()
     note = fields.Text()
 
     @api.model
