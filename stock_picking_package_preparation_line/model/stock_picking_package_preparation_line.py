@@ -40,6 +40,44 @@ class StockPickingPackagePreparationLine(models.Model):
     product_uom = fields.Many2one('product.uom')
     note = fields.Text()
 
+    @api.model
+    def create(self, values):
+        # ----- Create a stock move and stock picking related with
+        #       StockPickingPackagePreparationLine if this one has
+        #       a product in the values
+        if values.get('product_id', False) and not values.get('move_id', False):
+            package = self.env['stock.picking.package.preparation'].browse(
+                values['package_preparation_id'])
+            picking_model = self.env['stock.picking']
+            picking_type = self.env.ref('stock.picking_type_out')
+            move_data = {
+                'name': values['name'],
+                'product_id': values['product_id'],
+                'product_uom_qty': values['product_uom_qty'],
+                'product_uom': values['product_uom'],
+                'partner_id': package.partner_id.id,
+                'location_id': picking_type.default_location_src_id.id,
+                'location_dest_id': picking_type.default_location_dest_id.id,
+                }
+            picking_data = {
+                'move_type': 'direct',
+                'partner_id': package.partner_id.id,
+                'company_id': package.company_id.id,
+                'date': package.date,
+                'picking_type_id': picking_type.id,
+                'move_lines': [(0, 0, move_data)],
+                }
+            picking = picking_model.create(picking_data)
+            # ----- Add the relation between the new stock move
+            #       and PackagePreparationLine
+            values.update({'move_id': picking.move_lines[0].id, })
+            # ----- Add the relation between the new picking
+            #       and PackagePreparation
+            package.with_context(
+                no_package_preparation_line=True
+                ).picking_ids = [(4, picking.id)]
+        return super(StockPickingPackagePreparationLine, self).create(values)
+
     @api.onchange('product_id')
     def _onchange_product_id(self):
         if self.product_id:
@@ -80,7 +118,8 @@ class StockPickingPackagePreparation(models.Model):
     def create(self, values):
         # ----- Create a PackagePreparationLine for every stock move
         #       in the pickings added to PackagePreparation
-        if values.get('picking_ids', False):
+        if values.get('picking_ids', False) and \
+                not self.env.context.get('no_package_preparation_line', False):
             package_preparation_lines = self.env[
                 'stock.picking.package.preparation.line'
                 ]._prepare_lines_from_pickings(values['picking_ids'][0][2])
@@ -92,7 +131,8 @@ class StockPickingPackagePreparation(models.Model):
 
     @api.multi
     def write(self, values):
-        if values.get('picking_ids', False):
+        if values.get('picking_ids', False) and \
+                not self.env.context.get('no_package_preparation_line', False):
             package_preparation_lines = self.env[
                 'stock.picking.package.preparation.line'
                 ]._prepare_lines_from_pickings(values['picking_ids'][0][2])
