@@ -152,18 +152,18 @@ class scanner_scenario(models.Model):
         ondelete='restrict',
         help='Company to be used on this scenario')
     group_ids = fields.Many2many(
-            'res.groups',
-            'scanner_scenario_res_groups_rel',
-            'scenario_id',
-            'group_id',
-            'Allowed Groups',
-            default=lambda self: [self.env.ref('stock.group_stock_user').id])
+        'res.groups',
+        'scanner_scenario_res_groups_rel',
+        'scenario_id',
+        'group_id',
+        'Allowed Groups',
+        default=lambda self: [self.env.ref('stock.group_stock_user').id])
     user_ids = fields.Many2many(
-            'res.users',
-            'scanner_scenario_res_users_rel',
-            'scenario_id',
-            'user_id',
-            'Allowed Users')
+        'res.users',
+        'scanner_scenario_res_users_rel',
+        'scenario_id',
+        'user_id',
+        'Allowed Users')
 
     _sql_constraints = [
         ('reference_res_id_uniq',

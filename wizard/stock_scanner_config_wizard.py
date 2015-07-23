@@ -39,7 +39,7 @@ class StockScannerConfigWizard(models.TransientModel):
     session_timeout_delay = fields.Integer(
         'Session validity in seconds',
         default=lambda self: self.env.ref(
-                'stock_scanner.hardware_scanner_session_timeout_sec').value)
+            'stock_scanner.hardware_scanner_session_timeout_sec').value)
 
     @api.one
     def apply_config(self):
