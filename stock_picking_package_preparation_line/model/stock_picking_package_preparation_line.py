@@ -46,6 +46,9 @@ class StockPickingPackagePreparationLine(models.Model):
         # ----- Create a stock move and stock picking related with
         #       StockPickingPackagePreparationLine if this one has
         #       a product in the values
+        # ----- If values has 'move_id' this means the record is not created
+        #       manually but from a procedure, so we don't need to recreate
+        #       picking and move again
         if values.get('product_id', False) and not values.get('move_id', False):
             package = self.env['stock.picking.package.preparation'].browse(
                 values['package_preparation_id'])
