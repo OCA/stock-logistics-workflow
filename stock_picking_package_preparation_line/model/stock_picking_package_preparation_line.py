@@ -33,7 +33,8 @@ class StockPickingPackagePreparationLine(models.Model):
         'stock.picking.package.preparation', string='Stock Move',
         ondelete='cascade')
     name = fields.Text(string='Description', required=True)
-    move_id = fields.Many2one('stock.move', string='Stock Move')
+    move_id = fields.Many2one('stock.move', string='Stock Move',
+                              ondelete='cascade')
     product_id = fields.Many2one('product.product', string='Product')
     product_uom_qty = fields.Float(
         digits_compute=dp.get_precision('Product Unit of Measure'))
