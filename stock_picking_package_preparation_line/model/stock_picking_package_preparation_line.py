@@ -50,7 +50,8 @@ class StockPickingPackagePreparationLine(models.Model):
             package = self.env['stock.picking.package.preparation'].browse(
                 values['package_preparation_id'])
             picking_model = self.env['stock.picking']
-            picking_type = self.env.ref('stock.picking_type_out')
+            picking_type = package.picking_type_id or \
+                self.env.ref('stock.picking_type_out')
             move_data = {
                 'name': values['name'],
                 'product_id': values['product_id'],
@@ -114,6 +115,7 @@ class StockPickingPackagePreparation(models.Model):
 
     _inherit = 'stock.picking.package.preparation'
 
+    picking_type_id = fields.Many2one(related='picking_ids.picking_type_id')
     line_ids = fields.One2many('stock.picking.package.preparation.line',
                                'package_preparation_id')
 
