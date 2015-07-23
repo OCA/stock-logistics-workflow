@@ -28,12 +28,13 @@
     'category': 'Warehouse Management',
     'depends': [
         'stock_picking_package_preparation',
-     ],
+    ],
     'website': 'http://www.apuliasoftware.it',
     'data': [
         'view/stock_picking_package_preparation_line.xml',
+        'security/ir.model.access.csv',
     ],
     'test': [],
     'installable': True,
     'auto_install': False,
- }
+}
