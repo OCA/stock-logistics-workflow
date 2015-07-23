@@ -602,10 +602,10 @@ class Sentinel(object):
             if key == '\n':
                 # Return key : Validate the choice
                 return confirm
-            elif key == ('KEY_DOWN' or
-                         key == 'KEY_LEFT' or
-                         key == 'KEY_UP' or
-                         key == 'KEY_RIGHT'):
+            elif (key == 'KEY_DOWN' or
+                  key == 'KEY_LEFT' or
+                  key == 'KEY_UP' or
+                  key == 'KEY_RIGHT'):
                 # Arrow key : change value
                 confirm = not confirm
             elif key.upper() == 'O' or key.upper() == 'Y':
