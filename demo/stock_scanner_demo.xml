@@ -1,6 +1,15 @@
 <?xml version="1.0" ?>
 <openerp>
     <data noupdate="0">
+
+        <!-- Sentinel user -->
+        <record id="user_sentinel" model="res.users">
+            <field name="name">sentinel</field>
+            <field name="login">sentinel</field>
+            <field name="password">sentinel</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="groups_id" eval="[(6,0,[ref('group_stock_scanner_sentinel')])]"/>
+        </record>
     
         <!-- Scanner Hardware  -->
         <record id ="scanner_hardware_1" model="scanner.hardware">

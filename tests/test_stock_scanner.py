@@ -18,8 +18,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import datetime
 
-from openerp import _
+from openerp import _, fields
 from openerp.tests import common
 
 
@@ -48,9 +49,9 @@ class TestStockScanner(common.TransactionCase):
 
         # call to screen_color
         ret = scanner_hardware.scanner_call(code, action='screen_colors')
-        self.assertEquals(('M', {'base': (u'white', u'blue'),
-                                 'error': (u'yellow', u'red'),
-                                 'info': (u'yellow', u'blue')}, 0),
+        self.assertEquals(('M', {'base': ('white', 'blue'),
+                                 'error': ('yellow', 'red'),
+                                 'info': ('yellow', 'blue')}, 0),
                           ret)
 
         #  a call without action will return the list of root scenario
@@ -161,3 +162,155 @@ class TestStockScanner(common.TransactionCase):
         # the next call to the parser return the available scenarii
         ret = scanner_hardware.scanner_call(code, action=None)
         self.assertEquals(('L', [scanner_scenario_menu_tutorial.name], 0), ret)
+
+    def test_login_logout(self):
+        demo_uid = self.ref('base.user_demo')
+        user_demo = self.browse_ref('base.user_demo')
+        sentinel_uid = self.ref('stock_scanner.user_sentinel')
+        scanner_scenario_login = self.browse_ref(
+            'stock_scanner.scanner_scenario_login')
+        scanner_scenario_logout = self.browse_ref(
+            'stock_scanner.scanner_scenario_logout')
+        scanner_scenario = self.env['scanner.scenario']
+        # by default the login/logout scenarii are hidden
+        res = scanner_scenario.search(
+            [('id', 'in', (scanner_scenario_login.id,
+                           scanner_scenario_logout.id))])
+        self.assertFalse(res)
+
+        # a cron used to manage the timeout of the session on the scanner
+        # hardware is also disabled by default
+        hardware_reset_user_id_on_timeout = self.browse_ref(
+            'stock_scanner.hardware_reset_user_id_on_timeout')
+        self.assertFalse(hardware_reset_user_id_on_timeout.active)
+
+        # the demo scenario is available to users members of
+        # stock.group_stock_user as previously
+        scanner_hardware_1 = self.browse_ref(
+            'stock_scanner.scanner_hardware_1')
+        scanner_scenario_menu_tutorial = self.browse_ref(
+            'stock_scanner.scanner_scenario_menu_tutorial')
+        code = scanner_hardware_1.code
+        scanner_hardware = self.env['scanner.hardware']
+        ret = scanner_hardware.sudo(demo_uid).scanner_call(code, action=None)
+        self.assertEquals(('L', [scanner_scenario_menu_tutorial.name], 0), ret)
+        # The technical user to use by sentinel when using the login/logout
+        # functionality show nothings
+        ret = scanner_hardware.sudo(sentinel_uid).scanner_call(code,
+                                                               action=None)
+        self.assertEquals(('L', [], 0), ret)
+        # The login/lgout functionnality can be enabled by a wizard.
+        wizard = self.env['stock.scanner.config.wizard'].create(
+            {'is_login_enabled': True})
+        wizard.apply_config()
+        # when the config is applied, the cron and the 2 dedicated scenarii
+        # become actives
+        self.assertTrue(hardware_reset_user_id_on_timeout.active)
+        res = scanner_scenario.search(
+            [('id', 'in', (scanner_scenario_login.id,
+                           scanner_scenario_logout.id))])
+        self.assertEquals(2, len(res))
+
+        # Once the functionality is enabled, the sentinel user show the login
+        # scenario if not yer logged in
+        scanner_hardware = scanner_hardware.sudo(sentinel_uid)
+        ret = scanner_hardware.scanner_call(code, action=None)
+        self.assertEquals(('L', [scanner_scenario_login.name], 0), ret)
+
+        # Let's start the login scenario
+        ret = scanner_hardware.scanner_call(
+            code, action='action',
+            message=scanner_scenario_login.name)
+        # The first step is to enter the login name
+        self.assertEquals(('T', ['Login ?'], 0), ret)
+        ret = scanner_hardware.scanner_call(
+            code, action='action', message=user_demo.login,
+            transition_type='keyboard')
+        # The second step is to enter the pwd
+        self.assertEquals(('T', ['| Login demo', 'Pwd ?'], 0), ret)
+        # If we give a wrong password an error message is displayed
+        ret = scanner_hardware.scanner_call(
+            code, action='action', message='wrong',
+            transition_type='keyboard')
+        self.assertEquals(('E', ['Wrong login/password'], True), ret)
+
+        # And the step back is to return on the first step
+        ret = scanner_hardware.scanner_call(
+            code, action='back', message='',
+            transition_type='keyboard')
+        self.assertEquals(('T', ['Login ?'], 0), ret)
+        # we enter the login
+        ret = scanner_hardware.scanner_call(
+            code, action='action',
+            message=user_demo.login)
+        # and the right pwd
+        ret = scanner_hardware.scanner_call(
+            code, action='action',
+            message=user_demo.login)
+        # now we are logged in
+        self.assertEquals(('F', ['You are now authenticated as demo !'], 0),
+                          ret)
+        # once we are logged in, the hardware display the available scenarii
+        # including the logout one
+        ret = scanner_hardware.scanner_call(
+            code, action='menu', message=None,
+            transition_type='keyboard')
+        self.assertEquals(('L',
+                           [scanner_scenario_menu_tutorial.name,
+                            scanner_scenario_logout.name], 0), ret)
+
+        # if we logout, only the login scenario will be displayed again
+        ret = scanner_hardware.scanner_call(
+            code, action='action', message=scanner_scenario_logout.name,
+            transition_type='keyboard')
+        self.assertEquals(
+            ('C', ['', 'Do you really want to logout?'], 0), ret)
+        ret = scanner_hardware.scanner_call(
+            code, action='action', message=True,
+            transition_type='keyboard')
+        self.assertEquals(
+            ('F', ['You are now logged out', 'Bye !'], 0), ret)
+        ret = scanner_hardware.scanner_call(
+            code, action='menu', message=None,
+            transition_type='keyboard')
+        self.assertEquals(('L', [scanner_scenario_login.name], 0), ret)
+
+    def test_login_timeout(self):
+        """Test the wizard used to reset the user on the hardware when
+        time is out"""
+        # The login/lgout functionnality can be enabled by a wizard.
+        wizard = self.env['stock.scanner.config.wizard'].create(
+            {'is_login_enabled': True})
+        wizard.apply_config()
+        scanner_hardware_1 = self.browse_ref(
+            'stock_scanner.scanner_hardware_1')
+        # before login user_id and last_call_dt are empty
+        self.assertFalse(scanner_hardware_1.user_id)
+        self.assertFalse(scanner_hardware_1.last_call_dt)
+
+        # login the user using the function on the hardware
+        user_demo = self.browse_ref('base.user_demo')
+        scanner_hardware_1.login(user_demo.login, 'demo')
+
+        # when logged in the user_id and last_call_dt are no longer empty
+        self.assertTrue(scanner_hardware_1.user_id)
+        self.assertTrue(scanner_hardware_1.last_call_dt)
+
+        # a call to the function called by the cron has no impact if the
+        # session is not timed out
+        scanner_hardware_1.timeout_session()
+        self.assertTrue(scanner_hardware_1.user_id)
+        self.assertTrue(scanner_hardware_1.last_call_dt)
+
+        # we update the last_call_dt with an older value to simulate
+        # the elapsed time without activity
+        timeout_last_call_td = fields.Datetime.from_string(
+            scanner_hardware_1.last_call_dt) - datetime.timedelta(
+                wizard.session_timeout_delay + 1)
+        scanner_hardware_1.last_call_dt = fields.Datetime.to_string(
+            timeout_last_call_td)
+
+        # a new call to the session timeout will reset the connected user
+        scanner_hardware_1.timeout_session()
+        self.assertFalse(scanner_hardware_1.user_id)
+        self.assertFalse(scanner_hardware_1.last_call_dt)

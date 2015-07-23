@@ -750,6 +750,7 @@ class scanner_hardware(models.Model):
     def check_credentials(self, login, password):
         res_users = self.env['res.users']
         try:
+            uid = False
             users = res_users.search([('login', '=', login)])
             if len(users) == 1:
                 uid = users[0].id
