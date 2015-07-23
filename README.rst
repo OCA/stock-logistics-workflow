@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/syleam/stock_scanner.svg?branch=8.0)](https://travis-ci.org/syleam/stock_scanner)
+[![Coverage Status](https://coveralls.io/repos/syleam/stock_scanner/badge.svg?branch=8.0)](https://coveralls.io/r/syleam/stock_scanner?branch=8.0)
 ====================================================
 Stock Scanner : WorkFlow engine for scanner hardware
 ====================================================
