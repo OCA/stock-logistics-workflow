@@ -80,7 +80,6 @@ class TestStockScanner(common.TransactionCase):
             code, action='action',
             message=scanner_scenario_step_types.name)
 
-        print ret
         self.assertEqual(scanner_hardware_1.scenario_id,
                          scanner_scenario_step_types)
 
