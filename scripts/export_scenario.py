@@ -56,7 +56,8 @@ group.add_option('', '--id', dest='scenario_id',
                  help='id of the scenario to extract')
 group.add_option('', '--directory', dest='directory',
                  default='.',
-                 help='directory where the script will write the scenario files')
+                 help='directory where the script will write the scenario '
+                 'files')
 parser.add_option_group(group)
 opts, args = parser.parse_args()
 
@@ -69,12 +70,14 @@ else:
     logger.setLevel(logging.INFO)
     ch.setLevel(logging.INFO)
 
-formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+formatter = logging.Formatter(
+    "%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
 try:
-    logger.info('Open connection to "%s:%s" on "%s" with user "%s" ' % (opts.server, opts.port, opts.dbname, opts.user))
+    logger.info('Open connection to "%s:%s" on "%s" with user "%s" ',
+                opts.server, opts.port, opts.dbname, opts.user)
     cnx = Connection(
         server=opts.server,
         dbname=opts.dbname,
@@ -94,7 +97,8 @@ opts.directory = os.path.expanduser(opts.directory)
 scenario_obj = Object(cnx, 'scanner.scenario')
 model_obj = Object(cnx, 'ir.model')
 warehouse_obj = Object(cnx, 'stock.warehouse')
-scen_read = scenario_obj.read(int(opts.scenario_id), [], {'active_test': False})
+scen_read = scenario_obj.read(
+    int(opts.scenario_id), [], {'active_test': False})
 if not scen_read:
     logger.error('Scenario ID %s not found' % opts.scenario_id)
     sys.exit(1)
@@ -106,13 +110,16 @@ for field in scen_read:
     node = SubElement(root, field)
     if field == 'model_id':
         if scen_read[field]:
-            node.text = model_obj.read(scen_read.get('model_id', [0])[0], ['model']).get('model')
+            node.text = model_obj.read(
+                scen_read.get('model_id', [0])[0], ['model']).get('model')
     elif field == 'company_id':
         if scen_read[field]:
             node.text = scen_read.get('company_id', [0])[1]
     elif field == 'parent_id':
         if scen_read[field]:
-            node.text = scenario_obj.read(scen_read.get('parent_id', [0])[0], ['reference_res_id']).get('reference_res_id')
+            node.text = scenario_obj.read(
+                scen_read.get('parent_id', [0])[0],
+                ['reference_res_id']).get('reference_res_id')
     elif field in ['name', 'notes', 'title']:
         if scen_read[field]:
             node.text = unicode(scen_read[field])
@@ -123,7 +130,8 @@ for field in scen_read:
         else:
             resid['scenario'] = unicode(uuid.uuid1())
             node.text = resid['scenario']
-            scenario_obj.write([int(opts.scenario_id)], {'resid': resid['scenario']})
+            scenario_obj.write([int(opts.scenario_id)],
+                               {'resid': resid['scenario']})
     elif field == 'warehouse_ids':
         root.remove(node)
         for warehouse in warehouse_obj.read(scen_read[field], ['name']):
@@ -133,7 +141,9 @@ for field in scen_read:
         node.text = unicode(scen_read[field])
 # add step
 step_obj = Object(cnx, 'scanner.scenario.step')
-step_ids = step_obj.search([('scenario_id', '=', int(opts.scenario_id))], 0, None, 'reference_res_id')
+step_ids = step_obj.search(
+    [('scenario_id', '=', int(opts.scenario_id))], 0, None,
+    'reference_res_id')
 for step_id in step_ids:
     step = step_obj.read(step_id, [])
     # delete unuse key
@@ -144,10 +154,12 @@ for step_id in step_ids:
     # get res_id
     if not step['reference_res_id']:
         step['reference_res_id'] = unicode(uuid.uuid1())
-        step_obj.write([step_id], {'reference_res_id': step['reference_res_id']})
+        step_obj.write([step_id],
+                       {'reference_res_id': step['reference_res_id']})
     resid[step_id] = unicode(step['reference_res_id'])
     # save code
-    src_file = open('%s/%s.py' % (opts.directory, step['reference_res_id']), 'w')
+    src_file = open('%s/%s.py' % (
+                    opts.directory, step['reference_res_id']), 'w')
     src_file.write(step['python_code'].encode('utf-8'))
     src_file.close()
     del step['python_code']
@@ -157,7 +169,9 @@ for step_id in step_ids:
     node = SubElement(root, 'Step', attrib=step)
 # add transition
 transition_obj = Object(cnx, 'scanner.scenario.transition')
-transition_ids = transition_obj.search([('from_id.scenario_id', '=', int(opts.scenario_id))], 0, None, 'reference_res_id')
+transition_ids = transition_obj.search(
+    [('from_id.scenario_id', '=', int(opts.scenario_id))],
+    0, None, 'reference_res_id')
 for transition_id in transition_ids:
     transition = transition_obj.read(transition_id, [])
     del transition['id']
@@ -165,7 +179,9 @@ for transition_id in transition_ids:
     # get res id
     if not transition['reference_res_id']:
         transition['reference_res_id'] = unicode(uuid.uuid1())
-        transition_obj.write([transition_id], {'reference_res_id': transition['reference_res_id']})
+        transition_obj.write(
+            [transition_id],
+            {'reference_res_id': transition['reference_res_id']})
     # not write False in attribute tracer
     if not transition['tracer']:
         transition['tracer'] = ''
@@ -178,8 +194,8 @@ for transition_id in transition_ids:
     node = SubElement(root, 'Transition', attrib=transition)
 
 xml_file = open('%s/scenario.xml' % opts.directory, 'w')
-scenario_xml = tostring(root, encoding='UTF-8', xml_declaration=opts.header, pretty_print=opts.indent)
+scenario_xml = tostring(
+    root, encoding='UTF-8', xml_declaration=opts.header,
+    pretty_print=opts.indent)
 xml_file.write(scenario_xml)
 xml_file.close()
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

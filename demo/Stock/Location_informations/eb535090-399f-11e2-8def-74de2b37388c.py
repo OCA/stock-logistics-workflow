@@ -1,3 +1,4 @@
+# flake8: noqa
 # Use <m> or <message> to retrieve the data transmitted by the scanner.
 # Use <t> or <terminal> to retrieve the running terminal browse record.
 # Put the returned action code in <act>, as a single character.

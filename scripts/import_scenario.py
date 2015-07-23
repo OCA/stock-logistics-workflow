@@ -43,11 +43,13 @@ group = OptionGroup(parser, "Object arguments",
                     "Application Options")
 group.add_option('', '--directory', dest='directory',
                  default='.',
-                 help='directory where the script will search for the scenario files (default \'.\')')
+                 help='directory where the script will search for the '
+                 'scenario files (default \'.\')')
 group.add_option('-r', '--recursive', dest='recursive',
                  action='store_true',
                  default=False,
-                 help='Recursively imports scenarios from the supplied directory')
+                 help='Recursively imports scenarios from the supplied '
+                 'directory')
 group.add_option('-v', '--verbose', dest='verbose',
                  action='store_true',
                  default=False,
@@ -64,12 +66,14 @@ else:
     logger.setLevel(logging.INFO)
     ch.setLevel(logging.INFO)
 
-formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+formatter = logging.Formatter(
+    "%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
 try:
-    logger.info('Open connection to "%s:%s" on "%s" with user "%s" ' % (opts.server, opts.port, opts.dbname, opts.user))
+    logger.info('Open connection to "%s:%s" on "%s" with user "%s" ',
+                opts.server, opts.port, opts.dbname, opts.user)
     cnx = Connection(
         server=opts.server,
         dbname=opts.dbname,
@@ -129,7 +133,9 @@ for directory in directories:
         elif node.tag == 'warehouse_ids':
             if 'warehouse_ids' not in scen_vals:
                 scen_vals['warehouse_ids'] = []
-            warehouse_ids = warehouse_obj.search([('name', '=', node.text)], 0, None, None, {'active_test': False})
+            warehouse_ids = warehouse_obj.search(
+                [('name', '=', node.text)],
+                0, None, None, {'active_test': False})
             if warehouse_ids:
                 scen_vals['warehouse_ids'].append((4, warehouse_ids[0]))
         elif node.tag in ('active', 'shared_custom'):
@@ -141,7 +147,9 @@ for directory in directories:
 
     if scen_vals['model_id']:
         logger.info('Search model: %s' % scen_vals['model_id'])
-        scen_vals['model_id'] = model_obj.search([('model', '=', scen_vals['model_id'])], 0, None, None, {'active_test': False}) or False
+        scen_vals['model_id'] = model_obj.search(
+            [('model', '=', scen_vals['model_id'])], 0,
+            None, None, {'active_test': False}) or False
         if scen_vals['model_id']:
             logger.info('Model found')
             scen_vals['model_id'] = scen_vals['model_id'][0]
@@ -151,7 +159,9 @@ for directory in directories:
 
     if scen_vals.get('company_id'):
         logger.info('Search company: %s' % scen_vals['company_id'])
-        scen_vals['company_id'] = company_obj.search([('name', '=', scen_vals['company_id'])], 0, None, None, {'active_test': False}) or False
+        scen_vals['company_id'] = company_obj.search(
+            [('name', '=', scen_vals['company_id'])], 0,
+            None, None, {'active_test': False}) or False
         if scen_vals['company_id']:
             logger.info('Company found')
             scen_vals['company_id'] = scen_vals['company_id'][0]
@@ -161,7 +171,9 @@ for directory in directories:
 
     if 'parent_id' in scen_vals and scen_vals['parent_id']:
         logger.info('Search parent: %s' % scen_vals['parent_id'])
-        scen_vals['parent_id'] = scenario_obj.search([('reference_res_id', '=', scen_vals['parent_id'])], 0, None, None, {'active_test': False}) or False
+        scen_vals['parent_id'] = scenario_obj.search(
+            [('reference_res_id', '=', scen_vals['parent_id'])], 0,
+            None, None, {'active_test': False}) or False
         if scen_vals['parent_id']:
             logger.info('Parent found')
             scen_vals['parent_id'] = scen_vals['parent_id'][0]
@@ -170,7 +182,9 @@ for directory in directories:
             sys.exit(1)
 
     # create or update
-    scenario_ids = scenario_obj.search([('reference_res_id', '=', scen_vals['reference_res_id'])], 0, None, None, {'active_test': False})
+    scenario_ids = scenario_obj.search(
+        [('reference_res_id', '=', scen_vals['reference_res_id'])], 0,
+        None, None, {'active_test': False})
     if scenario_ids:
         logger.info('Scenario exists, update it')
         del scen_vals['reference_res_id']
@@ -183,8 +197,11 @@ for directory in directories:
     # List scenario steps and transitions, to be able to remove deleted data
     scenario_data = scenario_obj.read(scenario_id, ['step_ids'])
     all_step_ids = set(scenario_data['step_ids'])
-    step_data = step_obj.read(list(all_step_ids), ['in_transition_ids', 'out_transition_ids'])
-    all_transition_ids = set(sum([data['in_transition_ids'] + data['out_transition_ids'] for data in step_data], []))
+    step_data = step_obj.read(
+        list(all_step_ids), ['in_transition_ids', 'out_transition_ids'])
+    all_transition_ids = set(
+        sum([data['in_transition_ids'] +
+             data['out_transition_ids'] for data in step_data], []))
 
     # parse step
     logger.info('Update steps')
@@ -203,12 +220,15 @@ for directory in directories:
             compiler.compileFile(filename)
         except Exception, e:
             print 'Compile error in file %s :' % filename
-            print ''.join(traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback))
+            print ''.join(traceback.format_exception(
+                sys.exc_type, sys.exc_value, sys.exc_traceback))
         python_code = open(filename, 'r')
         step_vals['python_code'] = python_code.read()
         python_code.close()
         # create or update
-        step_ids = step_obj.search([('reference_res_id', '=', step_vals['reference_res_id'])], 0, None, None, {'active_test': False})
+        step_ids = step_obj.search(
+            [('reference_res_id', '=', step_vals['reference_res_id'])], 0,
+            None, None, {'active_test': False})
         if step_ids:
             resid[step_vals['reference_res_id']] = step_ids[0]
             all_step_ids -= set(step_ids)
@@ -226,7 +246,9 @@ for directory in directories:
                 item = resid[item]
             trans_vals[key] = item
         # create or update
-        trans_ids = trans_obj.search([('reference_res_id', '=', trans_vals['reference_res_id'])], 0, None, None, {'active_test': False})
+        trans_ids = trans_obj.search(
+            [('reference_res_id', '=', trans_vals['reference_res_id'])], 0,
+            None, None, {'active_test': False})
         if trans_ids:
             all_transition_ids -= set(trans_ids)
             del trans_vals['reference_res_id']
@@ -240,5 +262,3 @@ for directory in directories:
     trans_obj.unlink(list(all_transition_ids))
 
 logger.info('Import scenario done!')
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -45,6 +45,9 @@ I18N_DIR = '%s/i18n/' % os.path.dirname(os.path.realpath(__file__))
 I18N_DOMAIN = 'sentinel'
 I18N_DEFAULT = 'en_US'
 
+# _ will be initialized by gettext.install but prevent pep8 issues
+_ = lambda a: a  # noqa
+
 # Default configuration
 DEFAULT_CONFIG = {
     'host': 'localhost',
@@ -113,9 +116,11 @@ class Sentinel(object):
         lang = context.get('lang', I18N_DEFAULT)
         gettext.install(I18N_DOMAIN)
         try:
-            language = gettext.translation(I18N_DOMAIN, I18N_DIR, languages=[lang])
+            language = gettext.translation(
+                I18N_DOMAIN, I18N_DIR, languages=[lang])
         except:
-            language = gettext.translation(I18N_DOMAIN, I18N_DIR, languages=[I18N_DEFAULT])
+            language = gettext.translation(
+                I18N_DOMAIN, I18N_DIR, languages=[I18N_DEFAULT])
         language.install()
 
         # Initialize hardware
@@ -137,7 +142,8 @@ class Sentinel(object):
             self.hardware_code = ssh_data[0]
             self.scanner_check()
         except:
-            self.hardware_code = self._input_text(_('Autoconfiguration failed !\nPlease enter terminal code'))
+            self.hardware_code = self._input_text(
+                _('Autoconfiguration failed !\nPlease enter terminal code'))
             self.scanner_check()
 
         # Resize window to terminal screen size
@@ -147,11 +153,13 @@ class Sentinel(object):
         self._reinit_colors()
 
         # Initialize mouse events capture
-        curses.mousemask(curses.BUTTON1_CLICKED | curses.BUTTON1_DOUBLE_CLICKED)
+        curses.mousemask(
+            curses.BUTTON1_CLICKED | curses.BUTTON1_DOUBLE_CLICKED)
 
-        # Reinitialize to the main menu when using a test file (useful when the last run has crashed before end)
+        # Reinitialize to the main menu when using a test file (useful when
+        # the last run has crashed before end)
         if test_file_name:
-            (code, result, value) = self.oerp_call('end')
+            self.oerp_call('end')
 
         # Load the sentinel
         self.main_loop()
@@ -166,7 +174,7 @@ class Sentinel(object):
         Resizes the window
         """
         # Asks for the hardware screen size
-        (code, (width, height), value) = self.oerp_call('screen_size')
+        (width, height) = self.oerp_call('screen_size')[1]
         self._set_screen_size(width, height)
 
     def _init_colors(self):
@@ -174,8 +182,9 @@ class Sentinel(object):
         Initialize curses colors
         """
         # Declare all configured color pairs for curses
-        for name, (id, front_color, back_color) in COLOR_PAIRS.items():
-            curses.init_pair(id, COLOR_NAMES[front_color], COLOR_NAMES[back_color])
+        for (the_id, front_color, back_color) in COLOR_PAIRS.values():
+            curses.init_pair(
+                the_id, COLOR_NAMES[front_color], COLOR_NAMES[back_color])
 
         # Set the default background color
         self.screen.bkgd(0, self._get_color('base'))
@@ -185,7 +194,7 @@ class Sentinel(object):
         Initializes the colors from OpenERP configuration
         """
         # Asks for the hardware screen size
-        (code, colors, value) = self.oerp_call('screen_colors')
+        colors = self.oerp_call('screen_colors')[1]
         COLOR_PAIRS['base'] = (1, colors['base'][0], colors['base'][1])
         COLOR_PAIRS['info'] = (2, colors['info'][0], colors['info'][1])
         COLOR_PAIRS['error'] = (3, colors['error'][0], colors['error'][1])
@@ -204,7 +213,8 @@ class Sentinel(object):
 
     def _read_from_file(self):
         """
-        Emulates the getkey method of curses, reading from the supplied test file
+        Emulates the getkey method of curses, reading from the supplied test
+        file
         """
         key = self.test_file.read(1)
         if key == ':':
@@ -239,7 +249,9 @@ class Sentinel(object):
             raise SentinelBackException('Back')
         return key
 
-    def _display(self, text='', x=0, y=0, clear=False, color='base', bgcolor=False, modifier=curses.A_NORMAL, cursor=None, height=None, scroll=False, title=None):
+    def _display(self, text='', x=0, y=0, clear=False, color='base',
+                 bgcolor=False, modifier=curses.A_NORMAL, cursor=None,
+                 height=None, scroll=False, title=None):
         """
         Display a line of text
         """
@@ -251,7 +263,9 @@ class Sentinel(object):
         if title is not None:
             y += 1
             title = title.center(self.window_width)
-            self._display(title, color='info', modifier=curses.A_REVERSE | curses.A_BOLD)
+            self._display(
+                title, color='info',
+                modifier=curses.A_REVERSE | curses.A_BOLD)
 
         # Compute the display modifiers
         color = self._get_color(color) | modifier
@@ -259,11 +273,15 @@ class Sentinel(object):
         if bgcolor:
             self.screen.bkgd(0, color)
 
-        # Normalize the text, because ncurses doesn't know UTF-8 with python 2.x
+        # Normalize the text, because ncurses doesn't know UTF-8 with
+        # python 2.x
         if isinstance(text, str):
             text = text.decode('utf-8')
-        text = unicodedata.normalize('NFKD', unicode(text)).encode('ascii', 'ignore')
-        text = ''.join([char not in ('\r', '\n') and curses.ascii.unctrl(char) or char for char in text])
+        text = unicodedata.normalize(
+            'NFKD', unicode(text)).encode('ascii', 'ignore')
+        text = ''.join(
+            [char not in ('\r', '\n') and
+             curses.ascii.unctrl(char) or char for char in text])
 
         # Display the text
         if not scroll:
@@ -272,34 +290,49 @@ class Sentinel(object):
             # Wrap the text to avoid splitting words
             text_lines = []
             for line in text.splitlines():
-                text_lines.extend(textwrap.wrap(line, self.window_width - x - 1) or [''])
+                text_lines.extend(
+                    textwrap.wrap(line, self.window_width - x - 1) or [''])
 
             # Initialize variables
             first_line = 0
             if height is None:
                 height = self.window_height
 
-            (cursor_y, cursor_x) = cursor or (self.window_height - 1, self.window_width - 1)
+            (cursor_y, cursor_x) = cursor or (
+                self.window_height - 1, self.window_width - 1)
 
             while True:
                 # Display the menu
-                self.screen.addstr(height - 1, x, (self.window_width - x - 1) * ' ', color)
-                self.screen.addstr(y, x, '\n'.join(text_lines[first_line:first_line + height - y]), color)
+                self.screen.addstr(height - 1, x,
+                                   (self.window_width - x - 1) * ' ', color)
+                self.screen.addstr(
+                    y, x, '\n'.join(
+                        text_lines[first_line:first_line + height - y]),
+                    color)
 
                 # Display arrows
                 if first_line > 0:
-                    self.screen.addch(y, self.window_width - 1, curses.ACS_UARROW)
+                    self.screen.addch(
+                        y, self.window_width - 1, curses.ACS_UARROW)
                 if first_line + height < len(text_lines):
-                    self.screen.addch(min(height + y - 1, self.window_height - 2), self.window_width - 1, curses.ACS_DARROW)
+                    self.screen.addch(
+                        min(height + y - 1, self.window_height - 2),
+                        self.window_width - 1, curses.ACS_DARROW)
                 else:
-                    self.screen.addch(min(height + y - 1, self.window_height - 2), self.window_width - 1, ' ')
+                    self.screen.addch(
+                        min(height + y - 1, self.window_height - 2),
+                        self.window_width - 1, ' ')
 
                 # Set the cursor position
                 if height < len(text_lines):
                     scroll_height = len(text_lines) - height
                     position_percent = float(first_line) / scroll_height
-                    position = y + min(int(round((height - 1) * position_percent)), self.window_height - 2)
-                    self._display(' ', x=self.window_width - 1, y=position - 1, color='info', modifier=curses.A_REVERSE)
+                    position = y + min(
+                        int(round((height - 1) * position_percent)),
+                        self.window_height - 2)
+                    self._display(
+                        ' ', x=self.window_width - 1, y=position - 1,
+                        color='info', modifier=curses.A_REVERSE)
                 self.screen.move(cursor_y, cursor_x)
 
                 # Get the pushed key
@@ -316,7 +349,8 @@ class Sentinel(object):
                     return key
 
                 # Avoid going out of the list
-                first_line = min(max(0, first_line), max(0, len(text_lines) - height))
+                first_line = min(
+                    max(0, first_line), max(0, len(text_lines) - height))
 
     def main_loop(self):
         """
@@ -338,12 +372,15 @@ class Sentinel(object):
                         title_key = '|'
                         if isinstance(result, (types.NoneType, bool)):
                             pass
-                        elif isinstance(result, dict) and result.get(title_key, None):
+                        elif (isinstance(result, dict) and
+                              result.get(title_key, None)):
                             title = result[title_key]
                             del result[title_key]
-                        elif isinstance(result[0], (tuple, list)) and result[0][0] == title_key:
+                        elif (isinstance(result[0], (tuple, list)) and
+                              result[0][0] == title_key):
                             title = result.pop(0)[1]
-                        elif isinstance(result[0], basestring) and result[0].startswith(title_key):
+                        elif (isinstance(result[0], basestring) and
+                              result[0].startswith(title_key)):
                             title = result.pop(0)[len(title_key):]
 
                         if title is None and self.scenario_name:
@@ -352,12 +389,17 @@ class Sentinel(object):
 
                         if code == 'Q' or code == 'N':
                             # Quantity selection
-                            quantity = self._select_quantity('\n'.join(result), '%g' % value, integer=(code == 'N'), title=title)
-                            (code, result, value) = self.oerp_call('action', quantity)
+                            quantity = self._select_quantity(
+                                '\n'.join(result), '%g' % value,
+                                integer=(code == 'N'), title=title)
+                            (code, result, value) = self.oerp_call('action',
+                                                                   quantity)
                         elif code == 'C':
                             # Confirmation query
-                            confirm = self._confirm('\n'.join(result), title=title)
-                            (code, result, value) = self.oerp_call('action', confirm)
+                            confirm = self._confirm(
+                                '\n'.join(result), title=title)
+                            (code, result, value) = self.oerp_call('action',
+                                                                   confirm)
                         elif code == 'T':
                             # Select arguments from value
                             default = ''
@@ -369,42 +411,57 @@ class Sentinel(object):
                                 default = value
 
                             # Text input
-                            text = self._input_text('\n'.join(result), default=default, size=size, title=title)
-                            (code, result, value) = self.oerp_call('action', text)
+                            text = self._input_text(
+                                '\n'.join(result), default=default,
+                                size=size, title=title)
+                            (code, result, value) = self.oerp_call('action',
+                                                                   text)
                         elif code == 'R':
                             # Critical error
                             self.scenario_id = False
                             self.scenario_name = False
                             self._display_error('\n'.join(result), title=title)
                         elif code == 'U':
-                            # Unknown action : message with return back to the last state
-                            self._display('\n'.join(result), clear=True, scroll=True, title=title)
+                            # Unknown action : message with return back to the
+                            # last state
+                            self._display(
+                                '\n'.join(result), clear=True, scroll=True,
+                                title=title)
                             (code, result, value) = self.oerp_call('back')
                         elif code == 'E':
                             # Error message
-                            self._display_error('\n'.join(result), title=title)
+                            self._display_error(
+                                '\n'.join(result), title=title)
                             # Execute transition
                             if not value:
-                                (code, result, value) = self.oerp_call('action')
+                                (code, result, value) = self.oerp_call(
+                                    'action')
                             else:
                                 # Back to the previous step required
-                                (code, result, value) = self.oerp_call('restart')
+                                (code, result, value) = self.oerp_call(
+                                    'restart')
                         elif code == 'M':
                             # Simple message
-                            self._display('\n'.join(result), clear=True, scroll=True, title=title)
+                            self._display(
+                                '\n'.join(result), clear=True, scroll=True,
+                                title=title)
                             # Execute transition
-                            (code, result, value) = self.oerp_call('action', value)
+                            (code, result, value) = self.oerp_call('action',
+                                                                   value)
                         elif code == 'L':
                             if result:
                                 # Select a value in the list
                                 choice = self._menu_choice(result, title=title)
                                 # Send the result to OpenERP
-                                (code, result, value) = self.oerp_call('action', choice)
+                                (code, result, value) = self.oerp_call(
+                                    'action', choice)
                             else:
                                 # Empty list supplied, display an error
-                                (code, result, value) = ('E', [_('No value available')], False)
+                                (code, result, value) = (
+                                    'E', [_('No value available')], False)
 
-                            # Check if we are in a scenario (to retrieve the scenario name from a submenu)
+                            # Check if we are in a scenario (to retrieve the
+                            # scenario name from a submenu)
                             self.scanner_check()
                             if not self.scenario_id:
                                 self.scenario_id = True
@@ -413,7 +470,8 @@ class Sentinel(object):
                             # End of scenario
                             self.scenario_id = False
                             self.scenario_name = False
-                            self._display('\n'.join(result), clear=True, scroll=True, title=title)
+                            self._display('\n'.join(result), clear=True,
+                                          scroll=True, title=title)
                         else:
                             # Default call
                             (code, result, value) = self.oerp_call('restart')
@@ -426,18 +484,26 @@ class Sentinel(object):
                     self.screen.bkgd(0, self._get_color('base'))
                 except Exception:
                     # Generates log contents
-                    log_contents = '%s\n# %s\n# Hardware code : %s\n# Current scenario : %s (%s)\n# Current values :\n#\tcode : %s\n#\tresult : %s\n#\tvalue : %s\n%s\n%s\n' % (
-                        '#' * 79,
-                        datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-                        self.hardware_code,
-                        str(self.scenario_id),
-                        self.scenario_name,
-                        code,
-                        repr(result),
-                        repr(value),
-                        '#' * 79,
-                        reduce(lambda x, y: x + y, traceback.format_exception(sys.exc_info()[0], sys.exc_info()[1], sys.exc_info()[2]))
-                    )
+                    log_contents = """%s
+# %s
+# Hardware code : %s
+# ''Current scenario : %s (%s)
+# Current values :
+#\tcode : %s
+#\tresult : %s
+#\tvalue : %s
+%s
+%s
+"""
+                    log_contents = log_contents % (
+                        '#' * 79, datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                        self.hardware_code, str(self.scenario_id),
+                        self.scenario_name, code, repr(result), repr(value),
+                        '#' * 79, reduce(
+                            lambda x, y: x + y, traceback.format_exception(
+                                sys.exc_info()[0],
+                                sys.exc_info()[1],
+                                sys.exc_info()[2])))
 
                     # Writes traceback in log file
                     logfile = open('oerp_sentinel.log', 'a')
@@ -445,7 +511,9 @@ class Sentinel(object):
                     logfile.close()
 
                     # Display error message
-                    (code, result, value) = ('E', [_('An error occured\n\nPlease contact your administrator')], False)
+                    (code, result, value) = (
+                        'E', [_('An error occured\n\nPlease contact your '
+                                'administrator')], False)
             except KeyboardInterrupt:
                 # If Ctrl+C, exit
                 (code, result, value) = self.oerp_call('end')
@@ -457,7 +525,8 @@ class Sentinel(object):
         Displays an error messge, changing the background to red
         """
         # Display error message
-        self._display(error_message, color='error', bgcolor=True, clear=True, scroll=True, title=title)
+        self._display(error_message, color='error', bgcolor=True, clear=True,
+                      scroll=True, title=title)
         # Restore normal background colors
         self.screen.bkgd(0, self._get_color('base'))
 
@@ -465,7 +534,8 @@ class Sentinel(object):
         """
         Calls a method from OpenERP Server
         """
-        return self.hardware_obj.scanner_call(self.hardware_code, action, message, 'keyboard')
+        return self.hardware_obj.scanner_call(self.hardware_code, action,
+                                              message, 'keyboard')
 
     def _select_scenario(self):
         """
@@ -519,17 +589,23 @@ class Sentinel(object):
                 no_modifier = curses.A_BOLD | curses.A_REVERSE
 
             # Display Yes
-            self._display(yes_text, x=yes_start, y=self.window_height - 1, color='info', modifier=yes_modifier)
+            self._display(yes_text, x=yes_start, y=self.window_height - 1,
+                          color='info', modifier=yes_modifier)
             # Display No
-            self._display(no_text, x=no_start, y=self.window_height - 1, color='info', modifier=no_modifier)
+            self._display(no_text, x=no_start, y=self.window_height - 1,
+                          color='info', modifier=no_modifier)
 
             # Display the confirmation message
-            key = self._display(message, scroll=True, height=self.window_height - 1, title=title)
+            key = self._display(message, scroll=True,
+                                height=self.window_height - 1, title=title)
 
             if key == '\n':
                 # Return key : Validate the choice
                 return confirm
-            elif key == 'KEY_DOWN' or key == 'KEY_LEFT' or key == 'KEY_UP' or key == 'KEY_RIGHT':
+            elif key == ('KEY_DOWN' or
+                         key == 'KEY_LEFT' or
+                         key == 'KEY_UP' or
+                         key == 'KEY_RIGHT'):
                 # Arrow key : change value
                 confirm = not confirm
             elif key.upper() == 'O' or key.upper() == 'Y':
@@ -566,12 +642,17 @@ class Sentinel(object):
             self._display(clear=True)
 
             # Display the current value if echoing is needed
-            display_value = ''.join([curses.ascii.unctrl(char) for char in value])
+            display_value = ''.join(
+                [curses.ascii.unctrl(char) for char in value])
             display_start = max(0, len(display_value) - self.window_width + 1)
             display_value = display_value[display_start:]
             self._display(' ' * (self.window_width - 1), 0, line)
-            self._display(display_value, 0, line, color='info', modifier=curses.A_BOLD)
-            key = self._display(message, scroll=True, height=self.window_height - 1, cursor=(line, min(len(value), self.window_width - 1)), title=title)
+            self._display(
+                display_value, 0, line, color='info', modifier=curses.A_BOLD)
+            key = self._display(
+                message, scroll=True, height=self.window_height - 1,
+                cursor=(line, min(len(value), self.window_width - 1)),
+                title=title)
 
             # Printable character : store in value
             if len(key) == 1 and (curses.ascii.isprint(key) or ord(key) < 32):
@@ -586,7 +667,8 @@ class Sentinel(object):
                 curses.flushinp()
                 return value.strip()
 
-    def _select_quantity(self, message, quantity='0', integer=False, title=None):
+    def _select_quantity(self, message, quantity='0', integer=False,
+                         title=None):
         """
         Allows the user to select  quantity
         """
@@ -597,10 +679,14 @@ class Sentinel(object):
             # Clear the screen
             self._display(clear=True)
             # Diplays the selected quantity
-            self._display(_('Selected : %s') % quantity, y=self.window_height - 1, color='info', modifier=curses.A_BOLD)
+            self._display(
+                _('Selected : %s') % quantity, y=self.window_height - 1,
+                color='info', modifier=curses.A_BOLD)
 
             # Display the message and get the key
-            key = self._display(message, scroll=True, height=self.window_height - 1, title=title)
+            key = self._display(
+                message, scroll=True, height=self.window_height - 1,
+                title=title)
 
             if key == '\n':
                 # Return key : Validate the choice
@@ -615,7 +701,9 @@ class Sentinel(object):
                     quantity = key
                 else:
                     quantity += key
-            elif not integer and '.' not in quantity and (key == '.' or key == ',' or key == '*'):
+            elif (not integer and
+                  '.' not in quantity and
+                  (key == '.' or key == ',' or key == '*')):
                 # Decimal point
                 quantity += '.'
             elif key == 'KEY_BACKSPACE' or key == 'KEY_DC':
@@ -654,7 +742,9 @@ class Sentinel(object):
         nb_char = int(math.floor(math.log10(len(entries))) + 1)
         decal = nb_char + 3
         for value in entries:
-            display.append('%s: %s' % (str(index).rjust(nb_char), value[:self.window_width - decal]))
+            display.append(
+                '%s: %s' % (str(index).rjust(nb_char),
+                            value[:self.window_width - decal]))
             index += 1
 
         while True:
@@ -680,11 +770,17 @@ class Sentinel(object):
                 highlighted = highlighted + 1
             elif key == 'KEY_RIGHT':
                 # Move display
-                first_column = max(0, min(first_column + 1, max_length - self.window_width + decal))
+                first_column = max(
+                    0, min(first_column + 1,
+                           max_length - self.window_width + decal))
                 display = []
                 index = 0
                 for value in entries:
-                    display.append('%s: %s' % (str(index).rjust(nb_char), value[first_column:self.window_width - decal + first_column]))
+                    display.append(
+                        '%s: %s' % (
+                            str(index).rjust(nb_char),
+                            value[first_column:
+                                  self.window_width - decal + first_column]))
                     index += 1
             elif key == 'KEY_UP':
                 # Up key : Go up in the list
@@ -695,7 +791,11 @@ class Sentinel(object):
                 display = []
                 index = 0
                 for value in entries:
-                    display.append('%s: %s' % (str(index).rjust(nb_char), value[first_column:self.window_width - decal + first_column]))
+                    display.append(
+                        '%s: %s' % (
+                            str(index).rjust(nb_char),
+                            value[first_column:
+                                  self.window_width - decal + first_column]))
                     index += 1
             elif key == 'KEY_MOUSE':
                 # First line to be displayed
@@ -703,15 +803,18 @@ class Sentinel(object):
                 nb_lines = self.window_height - 1
                 middle = int(math.floor((nb_lines - 1) / 2))
 
-                # Change the first line if there is too much lines for the screen
+                # Change the first line if there is too much lines for the
+                # screen
                 if len(entries) > nb_lines and highlighted >= middle:
-                    first_line = min(highlighted - middle, len(entries) - nb_lines)
+                    first_line = min(highlighted - middle,
+                                     len(entries) - nb_lines)
 
                 # Retrieve mouse event information
                 mouse_info = curses.getmouse()
 
                 # Set the selected entry
-                highlighted = min(max(0, first_line + mouse_info[2]), len(entries) - 1)
+                highlighted = min(max(0, first_line + mouse_info[2]),
+                                  len(entries) - 1)
 
                 # If we double clicked, auto-validate
                 if mouse_info[4] & curses.BUTTON1_DOUBLE_CLICKED:
@@ -721,7 +824,8 @@ class Sentinel(object):
             highlighted %= len(entries)
 
             # Auto validate if max number is reached
-            current_nb_char = int(math.floor(math.log10(max(1, highlighted))) + 1)
+            current_nb_char = int(
+                math.floor(math.log10(max(1, highlighted))) + 1)
             if highlighted and digit_key and current_nb_char >= nb_char:
                 return keys[highlighted]
 
@@ -739,24 +843,32 @@ class Sentinel(object):
             first_line = min(highlighted - middle, len(entries) - nb_lines)
 
         # Display all entries, normal display
-        self._display('\n'.join(entries[first_line:first_line + nb_lines]), clear=True, title=title)
+        self._display('\n'.join(entries[first_line:first_line + nb_lines]),
+                      clear=True, title=title)
         # Highlight selected entry
-        self._display(entries[highlighted].ljust(self.window_width - 1), y=highlighted - first_line, modifier=curses.A_REVERSE | curses.A_BOLD, title=title)
+        self._display(
+            entries[highlighted].ljust(self.window_width - 1),
+            y=highlighted - first_line,
+            modifier=curses.A_REVERSE | curses.A_BOLD, title=title)
 
         # Display arrows
         if first_line > 0:
             self.screen.addch(0, self.window_width - 1, curses.ACS_UARROW)
         if first_line + nb_lines < len(entries):
-            self.screen.addch(nb_lines - 1, self.window_width - 1, curses.ACS_DARROW)
+            self.screen.addch(
+                nb_lines - 1, self.window_width - 1, curses.ACS_DARROW)
 
         # Diplays number of the selected entry
-        self._display(_('Selected : %d') % highlighted, y=nb_lines, color='info', modifier=curses.A_BOLD)
+        self._display(_('Selected : %d') % highlighted, y=nb_lines,
+                      color='info', modifier=curses.A_BOLD)
 
         # Set the cursor position
         if nb_lines < len(entries):
             position_percent = float(highlighted) / len(entries)
             position = int(round((nb_lines - 1) * position_percent))
-            self._display(' ', x=self.window_width - 1, y=position, color='info', modifier=curses.A_REVERSE)
+            self._display(
+                ' ', x=self.window_width - 1, y=position, color='info',
+                modifier=curses.A_REVERSE)
         self.screen.move(self.window_height - 1, self.window_width - 1)
 
 
@@ -769,5 +881,3 @@ class SentinelBackException (SentinelException):
 
 if __name__ == '__main__':
     curses.wrapper(Sentinel)
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
