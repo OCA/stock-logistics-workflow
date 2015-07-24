@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright (C) 2012+ BREMSKERL-REIBBELAGWERKE EMMERLING GmbH & Co. KG
+#    Copyright (C) 2012 BREMSKERL-REIBBELAGWERKE EMMERLING GmbH & Co. KG
 #    Author Marco Dieckhoff
-#    Copyright (C) 2013 Agile Business Group (<http://www.agilebg.com>)
+#    Copyright (C) 2013 Agile Business Group  (<http://www.agilebg.com>)
+#    Copyright (C) 2015 Savoir-faire Linux (<http://www.savoirfairelinux.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,18 +21,8 @@
 #
 ##############################################################################
 
+from . import test_stock_move_backdating
 
-{
-    'name': 'Stock Move Backdating',
-    'version': '1.0',
-    'category': 'Stock Logistics',
-    'author': 'Bremskerl, Odoo Community Association (OCA)',
-    'website': 'www.bremskerl.com',
-    'depends': ['stock_account'],
-    'data': [
-        'view/stock_view.xml',
-        'wizard/stock_transfer_details_view.xml',
-    ],
-    'installable': True,
-    'auto_install': False,
-}
+checks = [
+    test_stock_move_backdating
+]
