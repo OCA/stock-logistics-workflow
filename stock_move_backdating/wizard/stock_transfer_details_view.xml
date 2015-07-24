@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <record id="view_stock_enter_transfer_details_backdate" model="ir.ui.view">
+      <field name="name">stock.transfer_details.backdate"</field>
+      <field name="model">stock.transfer_details</field>
+      <field name="inherit_id" ref="stock.view_stock_enter_transfer_details" />
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='item_ids']/tree//field[@name='product_uom_id']" position="after">
+          <field name="date_backdating" />
+        </xpath>
+      </field>
+    </record>
+  </data>
+</openerp>
