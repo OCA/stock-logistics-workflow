@@ -3,7 +3,8 @@
 #
 #    Copyright (C) 2012 BREMSKERL-REIBBELAGWERKE EMMERLING GmbH & Co. KG
 #    Author Marco Dieckhoff
-#    Copyright (C) 2013 Agile Business Group (<http://www.agilebg.com>)
+#    Copyright (C) 2013 Agile Business Group  (<http://www.agilebg.com>)
+#    Copyright (C) 2015 Savoir-faire Linux (<http://www.savoirfairelinux.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,7 +21,8 @@
 #
 ##############################################################################
 
-from . import (
-    model,
-    wizard,
-)
+from . import test_stock_move_backdating
+
+checks = [
+    test_stock_move_backdating
+]
