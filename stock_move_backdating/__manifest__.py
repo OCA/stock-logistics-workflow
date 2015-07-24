@@ -3,7 +3,7 @@
 #
 #    Copyright (C) 2012+ BREMSKERL-REIBBELAGWERKE EMMERLING GmbH & Co. KG
 #    Author Marco Dieckhoff
-#    Copyright (C) 2013 Agile Business Group sagl (<http://www.agilebg.com>)
+#    Copyright (C) 2013 Agile Business Group (<http://www.agilebg.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,23 +19,19 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
+
 {
-    "name": "Stock Move Backdating",
-    "version": "1.0",
-    'author': ['Marco Dieckhoff, BREMSKERL', 'Agile Business Group'],
-    "category": "Stock Logistics",
+    'name': 'Stock Move Backdating',
+    'version': '1.0',
+    'category': 'Stock Logistics',
+    'author': 'Bremskerl, Odoo Community Association (OCA)',
     'website': 'www.bremskerl.com',
-    'license': 'AGPL-3',
-    "depends": ["stock"],
-    "summary": "Allows back-dating of stock moves",
-    "description": """This module allows to register old stock moves
-    (with date != now).
-    On stock moves, user can specify the "Actual Movement Date", that will be
-    used as movement date""",
+    'depends': ['stock_account'],
     'data': [
-        "view/stock_view.xml",
-        "wizard/stock_partial_picking_view.xml",
+        'view/stock_view.xml',
+        'wizard/stock_transfer_details_view.xml',
     ],
-    'demo': [],
-    'installable': False,
+    'installable': True,
+    'auto_install': False,
 }
