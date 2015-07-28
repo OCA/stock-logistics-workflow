@@ -29,13 +29,18 @@ class stock_move(orm.Model):
             'account.invoice.line', 'Invoice Line', readonly=True),
     }
 
+    def _link_invoice_to_picking(
+            self, cr, uid, move, inv_line_id, invoice_line_vals, context=None):
+        move.write({'invoice_line_id': inv_line_id})
+        move.picking_id.invoice_id = invoice_line_vals['invoice_id']
+        return inv_line_id
+
     def _create_invoice_line_from_vals(
             self, cr, uid, move, invoice_line_vals, context=None):
         inv_line_id = super(stock_move, self)._create_invoice_line_from_vals(
             cr, uid, move, invoice_line_vals, context=context)
-        move.write({'invoice_line_id': inv_line_id})
-        move.picking_id.invoice_id = invoice_line_vals['invoice_id']
-        return inv_line_id
+        self._link_invoice_to_picking(
+            cr, uid, move, inv_line_id, invoice_line_vals, context=context)
 
 
 class stock_picking(orm.Model):
