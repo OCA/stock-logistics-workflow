@@ -27,7 +27,6 @@
     'category': 'Inventory, Logistic, Storage',
     'license': 'AGPL-3',
     'summary': 'Disallow negative stock levels by default',
-    'description': '',
     'author': 'Akretion,Odoo Community Association (OCA)',
     'website': 'http://www.akretion.com',
     'depends': ['stock'],
