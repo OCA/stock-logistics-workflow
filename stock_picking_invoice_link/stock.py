@@ -39,7 +39,7 @@ class stock_move(orm.Model):
             self, cr, uid, move, invoice_line_vals, context=None):
         inv_line_id = super(stock_move, self)._create_invoice_line_from_vals(
             cr, uid, move, invoice_line_vals, context=context)
-        self._link_invoice_to_picking(
+        return self._link_invoice_to_picking(
             cr, uid, move, inv_line_id, invoice_line_vals, context=context)
 
 
