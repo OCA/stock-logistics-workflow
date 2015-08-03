@@ -29,12 +29,7 @@ class StockMove(models.Model):
     _inherit = 'stock.move'
     _order = 'date_expected desc, sequence, id'
 
-    @api.model
-    def _get_sequence(self):
-        last_sequence = 10
-        return last_sequence
-
-    sequence = fields.Integer(default=_get_sequence)
+    sequence = fields.Integer()
 
     @api.model
     def _get_invoice_line_vals(self, move, partner, inv_type):
@@ -43,3 +38,17 @@ class StockMove(models.Model):
                                                             inv_type)
         res['sequence'] = move.sequence
         return res
+
+
+class StockPicking(models.Model):
+    _inherit = 'stock.picking'
+
+    @api.depends('move_lines')
+    def _get_max_line_sequence(self):
+        for picking in self:
+            picking.max_line_sequence = (
+                max(picking.mapped('move_lines.sequence')) + 10
+                )
+
+    max_line_sequence = fields.Integer(string='Max sequence in lines',
+                                       compute='_get_max_line_sequence')
