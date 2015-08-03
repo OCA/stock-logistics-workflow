@@ -229,12 +229,13 @@ class PickingDispatch(Model):
 
             if res and len(res) == 1:
                 move_obj.write(cr, uid, move_ids, {'state': 'assigned',
-                                                   'location_id': res[0][1]})
+                                                   'location_id': res[0][1]},
+                               context=context)
             else:
                 # We could not reserve all the moves together, or the
                 # reservation is split among many sublocations.
                 # If that's the case, fall back to reserving one move at a time
-                move_obj.action_assign(cr, uid, move_ids)
+                move_obj.action_assign(cr, uid, move_ids, context=context)
 
         return True
 
