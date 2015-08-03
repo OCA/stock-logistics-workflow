@@ -31,7 +31,7 @@
     invoice_state: '2binvoiced'
     origin: 'outgoing shipment'
     partner_id: base.res_partner_6
-    date: !eval "'%s-%s-15' %((datetime.now()-timedelta(days=60)).year, (datetime.now()-timedelta(days=60)).month)"
+    date: !eval "'%s-%s-15' %((datetime.now()-timedelta(days=60)).year, (str((datetime.now()+timedelta(days=60)).month).rjust(2,'0')))"
     move_lines:
       - product_id: product.product_product_6
         product_uom: product.product_uom_unit
@@ -39,6 +39,7 @@
         picking_type_id: stock.picking_type_out
         location_id: stock.stock_location_stock
         location_dest_id: stock.stock_location_customers
+        sequence: 10
 -
   In order to test create invoice for purchase order line.
 -
