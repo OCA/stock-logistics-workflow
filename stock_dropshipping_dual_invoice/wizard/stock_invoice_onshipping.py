@@ -48,9 +48,13 @@ class StockInvoiceOnshipping(models.TransientModel):
                 self.env.context['active_id'])
             so = picking.sale_id
             moves = picking.move_lines.filtered('purchase_line_id')[:1]
-            return (so.order_policy == 'picking' and
+            if (so.order_policy == 'picking' and
                     moves.purchase_line_id.order_id.invoice_method ==
-                    'picking')
+                    'picking'):
+                # We still need to investigate if this an MTO or drop-shipping
+                p_type = picking.picking_type_id
+                return (p_type.default_location_src_id.usage == 'supplier' and
+                        p_type.default_location_dest_id.usage == 'customer')
         return False
 
     @api.depends('journal_type', 'need_two_invoices')
