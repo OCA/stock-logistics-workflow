@@ -51,7 +51,9 @@ class StockInvoiceOnshipping(models.TransientModel):
             if (so.order_policy == 'picking' and
                     moves.purchase_line_id.order_id.invoice_method ==
                     'picking'):
-                # We still need to investigate if this an MTO or drop-shipping
+                # MTO pickings are also associated to both a sales and purchase
+                # order line, so we still need to investigate if this an MTO
+                # or drop-shipping
                 p_type = picking.picking_type_id
                 return (p_type.default_location_src_id.usage == 'supplier' and
                         p_type.default_location_dest_id.usage == 'customer')
