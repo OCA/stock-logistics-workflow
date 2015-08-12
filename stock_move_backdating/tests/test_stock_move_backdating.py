@@ -28,15 +28,6 @@ from datetime import datetime, timedelta
 
 class TestStockMoveBackdating(common.TransactionCase):
 
-    def getDemoObject(self, module, data_id):
-        if module == '':
-            module = 'stock_move_backdating'
-        xmlid = '%s.%s' % (module, data_id)
-        return self.model_data.xmlid_to_object(xmlid)
-
-    def getIdDemoObj(self, module, data_id):
-        return self.getDemoObject(module, data_id).id
-
     def setUp(self):
         super(TestStockMoveBackdating, self).setUp()
 
@@ -45,57 +36,82 @@ class TestStockMoveBackdating(common.TransactionCase):
         self.product_model = self.env["product.product"]
         self.location_model = self.env["stock.location"]
         self.model_data = self.env['ir.model.data']
+        self.stock_transfer_details = self.registry("stock.transfer_details")
 
-        product_uom_id = self.env['product.uom'].search([])[0]
+        self.product_uom_id = self.env['product.uom'].search([])[0]
 
-        product_id = self.product_model.create(
+        self.location_id = self.location_model.search(
+            [('usage', '=', 'internal')])[0]
+
+        self.location_supplier_id = self.location_model.search(
+            [('usage', '=', 'supplier')])[0]
+
+        self.product_id = self.product_model.create(
             {
                 'name': 'Prod 1',
-                'uom_id': product_uom_id.id,
-                'uom_po_id': product_uom_id.id,
+                'uom_id': self.product_uom_id.id,
+                'uom_po_id': self.product_uom_id.id,
                 'standard': 'standard',
             }
         )
-        product_id.product_tmpl_id.write(
+        self.product_id.product_tmpl_id.write(
             {
                 'property_stock_account_input': (
-                    self.getIdDemoObj('account','income_fx_income')
+                    self.ref('account.income_fx_income')
                 ),
                 'property_stock_account_output': (
-                    self.getIdDemoObj('account','a_expense')
+                    self.ref('account.a_expense')
                 )
             }
         )
-        location_id = self.location_model.search(
-            [('usage', '=', 'internal')])[0]
 
-        location_supplier_id = self.location_model.search(
-            [('usage', '=', 'supplier')])[0]
+    def create_assigne_picking(self):
+        self.picking_out = self.env['stock.picking'].create({
+            'picking_type_id': self.ref('stock.picking_type_out')})
 
         self.move_id = self.move_model.create(
             {
-                'product_id': product_id.id,
+                'product_id': self.product_id.id,
                 'product_uom_qty': 10,
                 'name': 'Test',
-                'location_id': location_id.id,
-                'location_dest_id': location_supplier_id.id,
-                'product_uom': product_uom_id.id,
+                'location_id': self.location_id.id,
+                'location_dest_id': self.location_supplier_id.id,
+                'product_uom': self.product_uom_id.id,
+                'picking_id': self.picking_out.id
             })
-        self.move_id.refresh()
+
+        self.picking_out.action_confirm()
+        self.picking_out.force_assign()
+
+    def run_picking(self, back_date):
+        cr = self.env.cr
+        uid = self.env.uid
+        pick = self.picking_out
+        context = self.env.context.copy()
+        context.update(
+            {
+                'active_model': 'stock.picking',
+                'active_ids': [pick.id],
+                'active_id': len([pick.id]) and pick.id or False
+            }
+        )
+        pick_wizard_id = self.stock_transfer_details.create(
+            cr, uid, {'picking_id': pick.id}, context)
+        pick_wizard = self.stock_transfer_details.browse(
+            cr, uid, pick_wizard_id)
+        pick_wizard.item_ids[0].write({'date': back_date})
+        return self.stock_transfer_details.do_detailed_transfer(
+            cr, uid, [pick_wizard_id], context)
 
     def ComputeMove(self, timedelta_days):
-
-        move = self.move_id
-
         now = datetime.now()
-
         back_date = (now - timedelta(days=timedelta_days)).strftime(
             DEFAULT_SERVER_DATE_FORMAT)
-
-        move.write({'date_backdating': back_date})
-        move.action_done()
+        self.create_assigne_picking()
+        self.run_picking(back_date)
+        self.picking_out.action_done()
+        move = self.move_id
         move.refresh()
-
         self.assertEqual(move.date[0:10], back_date)
 
     def test_0_stock_move_backdate_yesterday(self):
