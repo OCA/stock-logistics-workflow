@@ -18,28 +18,25 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api
+from openerp import models, api, _
+from openerp.exceptions import Warning
+from datetime import datetime
+from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 
 class StockTransferDetailsItems(models.TransientModel):
     _inherit = 'stock.transfer_details_items'
 
-    date_backdating = fields.Datetime("Actual Movement Date")
+    _defaults = {
+        'date': datetime.now(),
+    }
 
-    @api.onchange('date_backdating')
-    def on_change_date_backdating(self):
-        self.date = self.date_backdating
-        # for link_move in self.packop_id.linked_move_operation_ids:
-            # link_move.move_id.write({'date_backdating': self.date_backdating}
-        # )
-        # return {}
-# class stock_transfer_details(models.TransientModel):
-    # _inherit = 'stock.transfer_details'
-#
-    # @api.one
-    # def do_detailed_transfer(self):
-        # for wizard_line in self.item_ids:
-            # date_backdating = wizard_line.date_backdating
-            # wizard_line.move_lines.write({'date_backdating': date_backdating, })
-        # return super(stock_partial_picking, self).do_partial(cr, uid, ids,
-                                                             # context=context)
+    @api.one
+    @api.constrains('date')
+    def check_date(self):
+        now = datetime.now().strftime(
+            DEFAULT_SERVER_DATETIME_FORMAT)
+        if self.date and self.date > now:
+            raise Warning(
+                _("You can not process an actual movement date in the future.")
+            )

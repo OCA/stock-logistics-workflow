@@ -29,7 +29,6 @@
     'website': 'www.bremskerl.com',
     'depends': ['stock_account'],
     'data': [
-        'view/stock_view.xml',
         'wizard/stock_transfer_details_view.xml',
     ],
     'installable': True,
