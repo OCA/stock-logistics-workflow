@@ -5,7 +5,7 @@ Allows back-dating of stock moves
 ===========
 
 This module allows to register old stock moves (with date != now).
-On stock moves, user can specify the "Actual Movement Date", that will be
+On picking transfer, user can specify the "Date", that will be
 used as movement date.
 
 

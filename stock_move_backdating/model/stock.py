@@ -20,82 +20,26 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api
-from openerp.exceptions import Warning
-from datetime import datetime
-from openerp.tools.translate import _
-from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
+from openerp import models, api
 
 
 class stock_move(models.Model):
     _inherit = "stock.move"
 
-    @api.one
-    @api.constrains('date_backdating')
-    def check_date_backdating(self):
-        now = datetime.now().strftime(
-            DEFAULT_SERVER_DATETIME_FORMAT)
-        if self.date_backdating and \
-                self.date_backdating > now:
-            raise Warning(
-                "You can not process an actual movement date in the future.")
-
-    date_backdating = fields.Datetime(
-        "Actual Movement Date", readonly=False,
-        states={
-            'done': [('readonly', True)], 'cancel': [('readonly', True)]},
-        help="Date when the move action was committed. "
-        "Will set the move date to this date instead "
-        "of current date when processing to done."
-    )
-
-    # @api.multi
-    # def action_done(self):
-        # if not already in done and date is given
-        # import pdb;pdb.set_trace()
-        # self.filtered(
-            # lambda m: (
-                # (m.state != 'done') and (m.date_backdating)
-            # )
-        # )
-        # look at previous state and find date_backdating
-        # backdating_dates = {
-            # m.id: m.date_backdating for m in self}
-
+    @api.multi
+    def action_done(self):
         # do actual processing
-        # result = super(stock_move, self).action_done()
-
+        result = super(stock_move, self).action_done()
         # overwrite date field where applicable
-        # for move in self:
-            # self.write(
-                # {'date': backdating_dates[move.id]},
-            # )
+        for move in self:
+            self.write(
+                {
+                    'date':
+                        move.linked_move_operation_ids[0].operation_id.date
+                }
+            )
 
-        # return result
-
-    @api.onchange('date_backdating')
-    def on_change_date_backdating(self):
-        """ Test if date is in the past
-        @param date_backdating: date
-        """
-        # do nothing if empty
-        if (not self.date_backdating):
-            return {}
-
-        dt = datetime.strptime(
-            self.date_backdating, DEFAULT_SERVER_DATETIME_FORMAT)
-        now = datetime.now()
-
-        if (dt > now):
-            warning = {'title': _('Error!'), 'message': _(
-                'You can not process an actual movement date in the future.')}
-            # Delete values (old code) because it shows many times
-            # the warning message
-            # It looks like a bug in Odoo.
-            return {'warning': warning}
-
-        # otherwise, ok
-        return {}
+        return result
 
 
 class stock_quant(models.Model):
@@ -110,9 +54,7 @@ class stock_quant(models.Model):
         )
         for o2m_tuple in res:
             date = False
-            if move.date_backdating:
-                date = move.date_backdating[:10]
-            elif move.date:
+            if move.date:
                 date = move.date[:10]
             o2m_tuple[2]['date'] = date
             if 'move_date' not in self._context:
