@@ -32,12 +32,17 @@ class stock_move(models.Model):
         result = super(stock_move, self).action_done()
         # overwrite date field where applicable
         for move in self:
-            self.write(
-                {
-                    'date':
-                        move.linked_move_operation_ids[0].operation_id.date
-                }
-            )
+            if move.linked_move_operation_ids:
+                operation = move.linked_move_operation_ids[0]
+                move.write(
+                    {
+                        'date': operation.operation_id.date
+                    }
+                )
+                move.refresh()
+                if move.quant_ids:
+                    for quant in move.quant_ids:
+                        quant.write({'in_date': move.date})
 
         return result
 
