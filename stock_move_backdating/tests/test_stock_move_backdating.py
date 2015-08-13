@@ -51,7 +51,6 @@ class TestStockMoveBackdating(common.TransactionCase):
                 'name': 'Prod 1',
                 'uom_id': self.product_uom_id.id,
                 'uom_po_id': self.product_uom_id.id,
-                'standard': 'standard',
             }
         )
         self.product_id.product_tmpl_id.write(
@@ -113,6 +112,8 @@ class TestStockMoveBackdating(common.TransactionCase):
         move = self.move_id
         move.refresh()
         self.assertEqual(move.date[0:10], back_date)
+        for quant in move.quant_ids:
+            self.assertEqual(quant.in_date[0:10], back_date)
 
     def test_0_stock_move_backdate_yesterday(self):
         self.ComputeMove(1)
