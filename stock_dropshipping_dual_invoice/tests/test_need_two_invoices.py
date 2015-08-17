@@ -73,14 +73,32 @@ class TestNeedTwoInvoices(TransactionCase):
         }).create({})
         self.assertIs(False, wizard._need_two_invoices())
 
+    def test_so_mto_need_one_invoice(self):
+        self.so.order_policy = 'picking'
+        self.sol.route_id = self.mto_route.id
+        self.so.action_button_confirm()
+        procurements = self.so.procurement_group_id.procurement_ids
+        procurements.run()
+        po = procurements.filtered('purchase_id')[:1].purchase_id
+        self.assertTrue(po)
+        po.invoice_method = 'picking'
+        po.signal_workflow('purchase_confirm')
+        picking = po.picking_ids
+        self.assertEqual(1, len(picking))
+        picking.action_done()
+        wizard = self.Wizard.with_context({
+            'active_id': picking.id,
+            'active_ids': [picking.id],
+        }).create({})
+        self.assertIs(False, wizard._need_two_invoices())
+
     def setUp(self):
         super(TestNeedTwoInvoices, self).setUp()
         self.Wizard = self.env['stock.invoice.onshipping']
-
         customer = self.env.ref('base.res_partner_3')
         product = self.env.ref('product.product_product_36')
         dropship_route = self.env.ref('stock_dropshipping.route_drop_shipping')
-
+        self.mto_route = self.env.ref('stock.route_warehouse0_mto')
         self.so = self.env['sale.order'].create({
             'partner_id': customer.id,
         })
