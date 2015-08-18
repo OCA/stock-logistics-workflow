@@ -127,6 +127,8 @@ class PickingDispatch(Model):
         (_check_picker_assigned, 'Please select a picker.', ['picker_id'])
     ]
 
+    _order = 'date desc, id desc'
+
     def copy(self, cr, uid, id, default=None, context=None):
         if default is None:
             default = {}
