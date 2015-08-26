@@ -156,7 +156,17 @@ class StockPickingPackagePreparation(models.Model):
                 # ----- Set the picking as "To DO" and try to set it as
                 #       assigned
                 picking.action_confirm()
+                # ----- Show an error if a picking is not confirmed
+                if picking.state != 'confirmed':
+                    raise exceptions.Warning(
+                        _('Impossibile to create confirmed picking. \
+Please Check products availability!'))
                 picking.action_assign()
+                # ----- Show an error if a picking is not assigned
+                if picking.state != 'assigned':
+                    raise exceptions.Warning(
+                        _('Impossibile to create confirmed picking. \
+Please Check products availability!'))
                 # ----- Add the relation between the new picking
                 #       and PackagePreparation
                 package.picking_ids = [(4, picking.id)]
