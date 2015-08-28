@@ -19,15 +19,23 @@ class TestStockCancel(common.TransactionCase):
         self.supplier_location = self.env.ref('stock.stock_location_suppliers')
         self.stock_location = self.env.ref('stock.stock_location_stock')
         self.customer_location = self.env.ref('stock.stock_location_customers')
-        self.product = self.product_model.create({'name': 'Product A'})
+        self.product_1 = self.product_model.create({'name': 'Product A'})
+        self.product_2 = self.product_model.create({'name': 'Product B'})
         self.picking_in = self.picking_model.create({
             'partner_id': self.partner_delta.id,
             'picking_type_id': self.picking_type_in.id,
             'move_lines': [(0, 0, {
-                'name': self.product.name,
-                'product_id': self.product.id,
+                'name': self.product_1.name,
+                'product_id': self.product_1.id,
                 'product_uom_qty': 288,
-                'product_uom': self.product.uom_id.id,
+                'product_uom': self.product_1.uom_id.id,
+                'location_id': self.supplier_location.id,
+                'location_dest_id': self.stock_location.id,
+            }), (0, 0, {
+                'name': self.product_2.name,
+                'product_id': self.product_2.id,
+                'product_uom_qty': 188,
+                'product_uom': self.product_2.uom_id.id,
                 'location_id': self.supplier_location.id,
                 'location_dest_id': self.stock_location.id,
             })],
@@ -46,10 +54,10 @@ class TestStockCancel(common.TransactionCase):
             'partner_id': self.partner_delta.id,
             'picking_type_id': self.picking_type_out.id,
             'move_lines': [(0, 0, {
-                'name': self.product.name,
-                'product_id': self.product.id,
-                'product_uom_qty': 10,
-                'product_uom': self.product.uom_id.id,
+                'name': self.product_1.name,
+                'product_id': self.product_1.id,
+                'product_uom_qty': 100,
+                'product_uom': self.product_1.uom_id.id,
                 'location_id': self.stock_location.id,
                 'location_dest_id': self.customer_location.id,
             })],

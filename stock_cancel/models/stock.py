@@ -47,24 +47,25 @@ class StockPicking(models.Model):
                     % (picking.name))
             if picking.invoice_id:
                 raise exceptions.Warning(
-                    _('Picking %s has invoices!') % (picking.name))
+                    _('Picking %s has been invoiced') % (picking.name))
             for move in picking.move_lines:
-                for quant in move.quant_ids:
-                    if quant.location_id == move.location_dest_id:
-                        if quant.qty != move.product_uom_qty:
-                            raise exceptions.Warning(
-                                _('Picking %s cannot be cancelled because '
-                                  'their quants have later moves associated '
-                                  'to them.')
-                                % (picking.name))
-                        quant_obj.quants_move(
-                            [(quant, quant.qty)], move, move.location_id,
-                            location_from=move.location_dest_id,
-                            lot_id=quant.lot_id.id, owner_id=quant.owner_id.id)
+                quants = move.quant_ids.filtered(
+                    lambda q: q.location_id == move.location_dest_id)
+                if quants.filtered(lambda q: q.qty != move.product_uom_qty):
+                    raise exceptions.Warning(
+                        _('Picking %s cannot be cancelled because '
+                          'their quants have later moves associated '
+                          'to them.')
+                        % (picking.name))
+                for quant in quants:
+                    quant_obj.quants_move(
+                        [(quant, quant.qty)], move, move.location_id,
+                        location_from=move.location_dest_id,
+                        lot_id=quant.lot_id.id, owner_id=quant.owner_id.id)
                 quant_obj.quants_unreserve(move)
             picking.move_lines.write({'state': 'draft'})
             picking.state = 'draft'
-            if picking.invoice_state == 'invoiced' and not picking.invoice_id:
+            if picking.invoice_state == 'invoiced':
                 picking.invoice_state = '2binvoiced'
             # Deleting the existing instance of workflow
             picking.delete_workflow()
