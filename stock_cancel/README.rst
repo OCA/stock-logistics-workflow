@@ -20,6 +20,12 @@ For further information, please visit:
 * https://www.odoo.com/forum/help-1
 
 
+Known issues / Roadmap
+======================
+
+* Split quants are not reverted to its previous state.
+
+
 Bug Tracker
 ===========
 

@@ -58,10 +58,13 @@ class StockPicking(models.Model):
                           'to them.')
                         % (picking.name))
                 for quant in quants:
-                    quant_obj.quants_move(
-                        [(quant, quant.qty)], move, move.location_id,
-                        location_from=move.location_dest_id,
-                        lot_id=quant.lot_id.id, owner_id=quant.owner_id.id)
+                    if picking.picking_type_id.code == 'incoming':
+                        quant.sudo().unlink()
+                    else:
+                        quant_obj.quants_move(
+                            [(quant, quant.qty)], move, move.location_id,
+                            location_from=move.location_dest_id,
+                            lot_id=quant.lot_id.id, owner_id=quant.owner_id.id)
                 quant_obj.quants_unreserve(move)
             picking.move_lines.write({'state': 'draft'})
             picking.state = 'draft'
