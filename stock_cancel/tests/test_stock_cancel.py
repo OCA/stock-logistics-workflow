@@ -46,8 +46,12 @@ class TestStockCancel(common.TransactionCase):
 
     def test_transferred_stock_picking_cancel(self):
         self.assertEqual(self.picking_in.state, 'done')
+        self.assertEqual(self.product_1.qty_available, 288)
+        self.assertEqual(self.product_2.qty_available, 188)
         self.picking_in.action_revert_done()
         self.assertEqual(self.picking_in.state, 'draft')
+        self.assertEqual(self.product_1.qty_available, 0)
+        self.assertEqual(self.product_2.qty_available, 0)
 
     def test_stock_picking_cancel_errors(self):
         picking_out = self.picking_model.create({

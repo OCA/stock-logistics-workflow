@@ -23,7 +23,7 @@
 
 {
     "name": "Stock Cancel",
-    "version": "1.2",
+    "version": "8.0.1.3.0",
     "category": "Stock",
     "author": "www.andreacometa.it, Odoo Community Association (OCA)",
     "website": "http://www.andreacometa.it",
