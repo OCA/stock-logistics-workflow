@@ -70,6 +70,16 @@ class StockPickingPackagePreparationLine(models.Model):
                         })
         return lines
 
+    @api.multi
+    def get_move_data(self):
+        self.ensure_one()
+        return {
+            'name': self.name,
+            'product_id': self.product_id.id,
+            'product_uom_qty': self.product_uom_qty,
+            'product_uom': self.product_uom.id,
+            }
+
 
 class StockPickingPackagePreparation(models.Model):
 
@@ -128,17 +138,14 @@ class StockPickingPackagePreparation(models.Model):
                 # ----- If line has 'move_id' this means we don't need to
                 #       recreate picking and move again
                 if line.product_id and not line.move_id:
-                    move_data = {
-                        'name': line.name,
-                        'product_id': line.product_id.id,
-                        'product_uom_qty': line.product_uom_qty,
-                        'product_uom': line.product_uom.id,
+                    move_data = line.get_move_data()
+                    move_data.update({
                         'partner_id': package.partner_id.id,
                         'location_id':
                             picking_type.default_location_src_id.id,
                         'location_dest_id':
                             picking_type.default_location_dest_id.id,
-                        }
+                        })
                     moves.append((line, move_data))
             if moves:
                 picking_data = {
