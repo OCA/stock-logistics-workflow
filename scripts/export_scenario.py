@@ -97,6 +97,8 @@ opts.directory = os.path.expanduser(opts.directory)
 scenario_obj = Object(cnx, 'scanner.scenario')
 model_obj = Object(cnx, 'ir.model')
 warehouse_obj = Object(cnx, 'stock.warehouse')
+user_obj = Object(cnx, 'res.users')
+group_obj = Object(cnx, 'res.groups')
 scen_read = scenario_obj.read(
     int(opts.scenario_id), [], {'active_test': False})
 if not scen_read:
@@ -104,6 +106,13 @@ if not scen_read:
     sys.exit(1)
 del scen_read['step_ids']
 del scen_read['id']
+
+field_to_remove = ['create_uid', 'create_date',
+                   'write_uid', 'write_date',
+                   '__last_update', 'display_name']
+for field in field_to_remove:
+    del scen_read[field]
+
 # create node and attributs
 root = Element('scenario')
 for field in scen_read:
@@ -137,6 +146,16 @@ for field in scen_read:
         for warehouse in warehouse_obj.read(scen_read[field], ['name']):
             node = SubElement(root, 'warehouse_ids')
             node.text = unicode(warehouse.get('name'))
+    elif field == 'group_ids':
+        root.remove(node)
+        for group in group_obj.read(scen_read[field], ['full_name']):
+            node = SubElement(root, 'group_ids')
+            node.text = unicode(group.get('full_name'))
+    elif field == 'user_ids':
+        root.remove(node)
+        for user in user_obj.read(scen_read[field], ['login']):
+            node = SubElement(root, 'user_ids')
+            node.text = unicode(user.get('login'))
     else:
         node.text = unicode(scen_read[field])
 # add step
@@ -151,6 +170,8 @@ for step_id in step_ids:
     del step['out_transition_ids']
     del step['id']
     del step['scenario_id']
+    for field in field_to_remove:
+        del step[field]
     # get res_id
     if not step['reference_res_id']:
         step['reference_res_id'] = unicode(uuid.uuid1())
@@ -176,6 +197,8 @@ for transition_id in transition_ids:
     transition = transition_obj.read(transition_id, [])
     del transition['id']
     del transition['scenario_id']
+    for field in field_to_remove:
+        del transition[field]
     # get res id
     if not transition['reference_res_id']:
         transition['reference_res_id'] = unicode(uuid.uuid1())
