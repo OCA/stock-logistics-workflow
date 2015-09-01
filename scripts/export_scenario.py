@@ -104,6 +104,13 @@ if not scen_read:
     sys.exit(1)
 del scen_read['step_ids']
 del scen_read['id']
+
+field_to_remove = ['create_uid', 'create_date',
+                   'write_uid', 'write_date',
+                   '__last_update', 'display_name']
+for field in field_to_remove:
+    del scen_read[field]
+
 # create node and attributs
 root = Element('scenario')
 for field in scen_read:
@@ -151,6 +158,8 @@ for step_id in step_ids:
     del step['out_transition_ids']
     del step['id']
     del step['scenario_id']
+    for field in field_to_remove:
+        del step[field]
     # get res_id
     if not step['reference_res_id']:
         step['reference_res_id'] = unicode(uuid.uuid1())
@@ -176,6 +185,8 @@ for transition_id in transition_ids:
     transition = transition_obj.read(transition_id, [])
     del transition['id']
     del transition['scenario_id']
+    for field in field_to_remove:
+        del transition[field]
     # get res id
     if not transition['reference_res_id']:
         transition['reference_res_id'] = unicode(uuid.uuid1())
