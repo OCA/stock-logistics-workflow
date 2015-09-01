@@ -97,6 +97,8 @@ opts.directory = os.path.expanduser(opts.directory)
 scenario_obj = Object(cnx, 'scanner.scenario')
 model_obj = Object(cnx, 'ir.model')
 warehouse_obj = Object(cnx, 'stock.warehouse')
+user_obj = Object(cnx, 'res.users')
+group_obj = Object(cnx, 'res.groups')
 scen_read = scenario_obj.read(
     int(opts.scenario_id), [], {'active_test': False})
 if not scen_read:
@@ -144,6 +146,16 @@ for field in scen_read:
         for warehouse in warehouse_obj.read(scen_read[field], ['name']):
             node = SubElement(root, 'warehouse_ids')
             node.text = unicode(warehouse.get('name'))
+    elif field == 'group_ids':
+        root.remove(node)
+        for group in group_obj.read(scen_read[field], ['full_name']):
+            node = SubElement(root, 'group_ids')
+            node.text = unicode(group.get('full_name'))
+    elif field == 'user_ids':
+        root.remove(node)
+        for user in user_obj.read(scen_read[field], ['login']):
+            node = SubElement(root, 'user_ids')
+            node.text = unicode(user.get('login'))
     else:
         node.text = unicode(scen_read[field])
 # add step

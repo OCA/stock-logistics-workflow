@@ -106,6 +106,8 @@ for directory in directories:
     model_obj = Object(cnx, 'ir.model')
     company_obj = Object(cnx, 'res.company')
     warehouse_obj = Object(cnx, 'stock.warehouse')
+    user_obj = Object(cnx, 'res.users')
+    group_obj = Object(cnx, 'res.groups')
     step_obj = Object(cnx, 'scanner.scenario.step')
     trans_obj = Object(cnx, 'scanner.scenario.transition')
     xml_file = open('%s/scenario.xml' % directory, 'r')
@@ -138,6 +140,20 @@ for directory in directories:
                 0, None, None, {'active_test': False})
             if warehouse_ids:
                 scen_vals['warehouse_ids'].append((4, warehouse_ids[0]))
+        elif node.tag == 'group_ids':
+            if 'group_ids' not in scen_vals:
+                scen_vals['group_ids'] = []
+                group_ids = group_obj.search(
+                    [('full_name', '=', node.text)])
+                if group_ids:
+                    scen_vals['group_ids'].append((4, group_ids[0]))
+        elif node.tag == 'user_ids':
+            if 'user_ids' not in scen_vals:
+                scen_vals['user_ids'] = []
+                user_ids = user_obj.search(
+                    [('login', '=', node.text)])
+                if user_ids:
+                    scen_vals['user_ids'].append((4, user_ids[0]))
         elif node.tag in ('active', 'shared_custom'):
             scen_vals[node.tag] = eval(node.text) or False
         else:
