@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
 #    Author: Leonardo Pistone
-#    Copyright 2014 Camptocamp SA
+#    Copyright 2014, 2015 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -16,8 +14,6 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
 
 import logging
 import datetime as dt
@@ -26,6 +22,7 @@ from openerp.osv import orm
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT as DT_FORMAT
 from openerp.tools.translate import _
 from openerp import pooler
+from openerp import api
 
 
 _logger = logging.getLogger(__name__)
@@ -48,9 +45,9 @@ class PlanFinished(Exception):
     pass
 
 
-class StockPickingOut(orm.Model):
+class StockPicking(orm.Model):
 
-    _inherit = 'stock.picking.out'
+    _inherit = 'stock.picking'
 
     def _security_delta(self, cr, uid, product, context=None):
         return dt.timedelta(days=product.company_id.security_lead or 0.0)
@@ -67,7 +64,7 @@ class StockPickingOut(orm.Model):
 
         move_in_ids = move_obj.search(cr, uid, [
             ('product_id', '=', product.id),
-            ('picking_id.type', '=', 'in'),
+            ('picking_id.picking_type_id.code', '=', 'incoming'),
             ('state', 'in', ('confirmed', 'assigned', 'pending')),
         ], order='date_expected', context=context)
 
@@ -79,11 +76,11 @@ class StockPickingOut(orm.Model):
             })
         return iter(plan)
 
-    def compute_delivery_dates(self, cr, uid, product, context=None):
-        if product.procure_method == 'make_to_stock':
-            return self.compute_mts_delivery_dates(cr, uid, product, context)
-        else:
-            return self.compute_mto_delivery_dates(cr, uid, product, context)
+    @api.model
+    def compute_delivery_dates(self, product):
+        self.compute_mts_delivery_dates(product)
+        self.compute_mto_delivery_dates(product)
+        return True
 
     def compute_mto_delivery_dates(self, cr, uid, product, context=None):
         move_obj = self.pool['stock.move']
@@ -91,8 +88,9 @@ class StockPickingOut(orm.Model):
 
         move_out_ids = move_obj.search(cr, uid, [
             ('product_id', '=', product.id),
-            ('picking_id.type', '=', 'out'),
+            ('picking_id.picking_type_id.code', '=', 'outgoing'),
             ('state', 'in', ('confirmed', 'assigned', 'pending')),
+            ('move_orig_ids', '!=', False),
         ], context=context)
 
         for move_out in self.pool['stock.move'].browse(cr, uid, move_out_ids,
@@ -127,8 +125,9 @@ class StockPickingOut(orm.Model):
         # lead to moves changing order, and the result to not converge.
         move_out_ids = move_obj.search(cr, uid, [
             ('product_id', '=', product.id),
-            ('picking_id.type', '=', 'out'),
+            ('picking_id.picking_type_id.code', '=', 'outgoing'),
             ('state', 'in', ('confirmed', 'assigned', 'pending')),
+            ('move_orig_ids', '=', False),
         ], order='date', context=context)
 
         current_plan = plan.next()
@@ -188,7 +187,7 @@ class StockPickingOut(orm.Model):
             cr,
             uid,
             domain=[
-                ('picking_id.type', '=', 'out'),
+                ('picking_id.picking_type_id.code', '=', 'outgoing'),
                 ('state', 'in', ('confirmed', 'assigned', 'pending'))
             ],
             fields=['product_id'],

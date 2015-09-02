@@ -1,45 +1,48 @@
 -
-  !record {model: res.company, id: base.main_company}:
-    security_lead: 2.0
--
-  I select for this file a user that is not admin
--
   !context
-  uid: 'res_users_emma'
+    uid: 'res_users_emma'
 -
   I create an outgoing move for a Make to Order, Buy product
 -
-  !record {model: stock.picking.out, id: picking_out_mto}:
+  !record {model: stock.picking, id: picking_out_mto}:
+    picking_type_id: stock.picking_type_out
 -
   !record {model: stock.move, id: move_out_mto}:
     picking_id: picking_out_mto
-    product_qty: 57
+    product_uom_qty: 57
     product_uom: product.product_uom_unit
     product_id: product.product_product_33
+    location_id: stock.stock_location_stock
+    location_dest_id: stock.stock_location_customers
 -
-  !workflow {model: stock.picking, action: button_confirm, ref: picking_out_mto}
+  !python {model: stock.picking, id: picking_out_mto}: |
+    self.action_assign()
 -
   I create an incoming move chained to the outgoing one. That is the situation
   we have when the move is automatically created by a Purchase Order created
   by the scheduler.
 -
-  !record {model: stock.picking.in, id: picking_in_mto}:
+  !record {model: stock.picking, id: picking_in_mto}:
+    picking_type_id: stock.picking_type_in
 -
   !record {model: stock.move, id: move_in_mto}:
     picking_id: picking_in_mto
-    product_qty: 57
+    product_uom_qty: 57
     product_uom: product.product_uom_unit
     product_id: product.product_product_33
     move_dest_id: move_out_mto
+    location_id: stock.stock_location_suppliers
+    location_dest_id: stock.stock_location_stock
 -
-  !workflow {model: stock.picking, action: button_confirm, ref: picking_in_mto}
+  !python {model: stock.picking, id: picking_in_mto}: |
+    self.action_assign()
 -
   I set the expected date of the incoming move to 10 June next year
 -
   !python {model: stock.move}: |
     import datetime as dt
     self.write(cr, uid, ref('move_in_mto'), {
-        'date_expected': '{0}-06-10'.format(dt.date.today().year + 1)
+        'date_expected': '{year}-06-10 00:00:00'.format(year=dt.date.today().year + 1)
     })
 -
   I compute the delivery dates with the global wizard

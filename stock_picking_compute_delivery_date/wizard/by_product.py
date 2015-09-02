@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
 #    Author: Leonardo Pistone
-#    Copyright 2014 Camptocamp SA
+#    Copyright 2014, 2015 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -16,31 +14,21 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
 
 from openerp.osv import orm
 
 
-class ComputeAllDeliveryDatesWizard(orm.TransientModel):
+class ComputeDeliveryDateByProductWizard(orm.TransientModel):
 
-    _name = 'compute.all.delivery.dates.wizard'
+    _name = 'compute.delivery.date.by.product.wizard'
 
     def do_compute(self, cr, uid, ids, context=None):
-        """Delegate the picking to compute delivery dates for all products.
+        pick_obj = self.pool['stock.picking']
+        product_obj = self.pool['product.product']
 
-        If use_new_cursor is in the context, pass it as a parameter.
-
-        """
-        if context is None:
-            context = {}
-        pick_obj = self.pool['stock.picking.out']
-
-        if 'use_new_cursor' in context:
-            pick_obj.compute_all_delivery_dates(
-                cr, uid, use_new_cursor=context['use_new_cursor'],
-                context=context)
-        else:
-            pick_obj.compute_all_delivery_dates(cr, uid, context=context)
+        product_ids = context['active_ids']
+        for product in product_obj.browse(cr, uid, product_ids,
+                                          context=context):
+            pick_obj.compute_delivery_dates(cr, uid, product, context=context)
 
         return True
