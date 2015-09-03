@@ -2,6 +2,17 @@
 Stock Scanner : WorkFlow engine for scanner hardware
 ====================================================
 
+Allows managing barcode readers with simple scenarios
+- You can define a workfow for each object (stock picking, inventory, sale, etc)
+- Works with all scanner hardware model (just SSH client required)
+
+The "sentinel" specific ncurses client, available in the "hardware" directory, requires the "openobject-library" python module, available from pip :
+    $ sudo pip install openobject-library
+
+Some demo/tutorial scenarios are available in the "demo" directory of the module.
+To import these scenarios, you can use the import script located in the
+"scripts" directory.
+
 How does it work ?
 ==================
 
@@ -19,7 +30,7 @@ If you plan to use the specific "sentinel.py", you will need the "openobject-lib
 
 .. note::
 
-   You must use openobject-library earlier than 2.0 with Odoo v7.
+   You must use openobject-library earlier than 2.0 with Odoo.
    The version 2.0 of openobject-library only implements the Net-RPC protocol, which was removed from v7.
 
 To test the module, some demo scenarii are available in the `demo` directory of the module.
@@ -53,14 +64,14 @@ scenario no more appear.
 The Login/logout functionality enable you to specify on the scenario a list of users and/or a list of groups with access to the scenario.
 
 To enable the Login/logout functionality:
-* Go to "Warehouse > Configuration > Configure scanner module" and check the checkbox Login/logout scenarii enabled.
-* Create a *Technical User* 'sentinel' **without roles in Humane Resources** and with 'Sentinel: technical users' checked.
-* Use this user to launch your sentinel session.
+    * Go to "Settings > Warehouse" and check the checkbox Login/logout scenarii enabled.
+    * Create a *Technical User* 'sentinel' **without roles in Human Resources** and with 'Sentinel: technical users' checked.
+    * Use this user to launch your sentinel session.
 
 Be carefull, the role *Sentinel: technical users* is a technical role and should be used only by sentinel.
 
 The timeout of sessions is managed by a dedicated cron that reset the incative sessions. The timeout can be configured on 
-configuration wizard. "Warehouse > Configuration > Configure scanner module"
+settings. "Settings > Warehouse"
 
 For the sentinel.py client
 --------------------------
@@ -68,7 +79,6 @@ For the sentinel.py client
 The sentinel.py client uses a config file named `.oerpsentinelrc`, using the standard `ini` format.
 
 This file simply contains information for server connection (hostname, port, username, password and database).
-
 
 Writing scenarii
 ================
@@ -100,7 +110,7 @@ As stated previously, the step must always return :
 - Optionally, a default value, in the `val` variable
 
 Step types
-~~~~~~~~~~
+----------
 
 The step types are mostly managed by the client.
 
@@ -152,6 +162,7 @@ Valid key codes are :
     - KEY_RIGHT : Right arrow
     - KEY_BACKSPACE : Backspace
     - KEY_DC : Delete
+
 Credits
 =======
 
