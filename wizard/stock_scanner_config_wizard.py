@@ -27,23 +27,23 @@ ACTIVABLE_XML_IDS = [
 ]
 
 
-class StockScannerConfigWizard(models.TransientModel):
-    _name = 'stock.scanner.config.wizard'
-    _description = 'Stock scanner module configuration'
+class StockConfig(models.TransientModel):
+    """Add options to configure login/logout on scanner"""
+    _inherit = 'stock.config.settings'
 
-    is_login_enabled = fields.Boolean(
-        'Login/logout scenarii enabled',
-        default=lambda self: self.env.ref(
-            ACTIVABLE_XML_IDS[0]).active)
+    is_login_enabled = fields.Boolean('Login/logout scenarii enabled')
+    session_timeout_delay = fields.Integer('Session validity in seconds')
 
-    session_timeout_delay = fields.Integer(
-        'Session validity in seconds',
-        default=lambda self: self.env.ref(
-            'stock_scanner.hardware_scanner_session_timeout_sec').value)
+    @api.multi
+    def get_default_scanner_config(self, fields):
+        is_login_enabled = self.env.ref(ACTIVABLE_XML_IDS[0]).active
+        session_timeout_delay = self.env.ref(
+            'stock_scanner.hardware_scanner_session_timeout_sec').value
+        return {'is_login_enabled': is_login_enabled,
+                'session_timeout_delay': int(session_timeout_delay)}
 
-    @api.one
-    def apply_config(self):
-        self.ensure_one()
+    @api.multi
+    def set_default_scanner_config(self):
         for xml_id in ACTIVABLE_XML_IDS:
             self.env.ref(xml_id).active = self.is_login_enabled
 

@@ -1,44 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        <record model="ir.ui.view" id="stock_scanner_config_wizard_view">
-            <field name="name">stock.scanner.config.wizard.view</field>
-            <field name="model">stock.scanner.config.wizard</field>
-            <field name="type">form</field>
+        <record id="stock_config_setting_view_form_inherit_stock_scanner" model="ir.ui.view">
+            <field name="name">stock.config.settings.form</field>
+            <field name="model">stock.config.settings</field>
+            <field name="inherit_id" ref="stock.view_stock_config_settings" />
             <field name="arch" type="xml">
-                <form string="Configure scanner module">
-                    <group>
-                        <p>
-                        This wizard allow you to configure some parameters of
-                        the stock_scanner module
-                        </p>
-                    </group>
-                    <group>
-                        <field name="is_login_enabled"/>
-                        <field name="session_timeout_delay" attrs="{'invisible': [('is_login_enabled', '=', False)]}"/>
-                    </group>
-                    <footer>
-                        <button name="apply_config"
-                            string="Apply"
-                            type="object"
-                            icon="gtk-execute"
-                            class="oe_highlight" />
-                        or
-                        <button string="Close" class="oe_link" special="cancel" />
-                    </footer>
-                </form>
+                <data>
+                    <xpath expr="//group[last()]" position="after">
+                        <separator string="Configure scanner module"/>
+                        <group>
+                            <label for="id" string="Configure scanner module" />
+                            <div>
+                                <div>
+                                    <field name="is_login_enabled" class="oe_inline"/>
+                                    <label for="is_login_enabled"/>
+                                </div>
+                                <div>
+                                    <label for="session_timeout_delay"/>
+                                    <field name="session_timeout_delay" attrs="{'invisible': [('is_login_enabled', '=', False)]}" class="oe_inline"/>
+                                </div>
+                            </div>
+                        </group>
+                    </xpath>
+                </data>
             </field>
         </record>
-
-        <record model="ir.actions.act_window" id="action_stock_scanner_config_wizard">
-            <field name="name">Configure scanner module</field>
-            <field name="res_model">stock.scanner.config.wizard</field>
-            <field name="view_id" ref="stock_scanner_config_wizard_view"/>
-            <field name="view_type">form</field>
-            <field name="view_mode">form</field>
-            <field name="target">new</field>
-            <field name="type">ir.actions.act_window</field>
-        </record>
-
     </data>
 </openerp>
