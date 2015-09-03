@@ -26,9 +26,6 @@ from openerp.tests import common
 
 class TestStockScanner(common.TransactionCase):
 
-    def setUp(self):
-        common.TransactionCase.setUp(self)
-
     def test_scanner_call(self):
         scanner_hardware_1 = self.browse_ref(
             'stock_scanner.scanner_hardware_1')
@@ -199,10 +196,10 @@ class TestStockScanner(common.TransactionCase):
         ret = scanner_hardware.sudo(sentinel_uid).scanner_call(code,
                                                                action=None)
         self.assertEquals(('L', [], 0), ret)
-        # The login/lgout functionnality can be enabled by a wizard.
-        wizard = self.env['stock.scanner.config.wizard'].create(
+        # The login/lgout functionnality can be enabled by a configuration
+        wizard = self.env['stock.config.settings'].create(
             {'is_login_enabled': True})
-        wizard.apply_config()
+        wizard.execute()
         # when the config is applied, the cron and the 2 dedicated scenarii
         # become actives
         self.assertTrue(hardware_reset_user_id_on_timeout.active)
@@ -278,10 +275,10 @@ class TestStockScanner(common.TransactionCase):
     def test_login_timeout(self):
         """Test the wizard used to reset the user on the hardware when
         time is out"""
-        # The login/lgout functionnality can be enabled by a wizard.
-        wizard = self.env['stock.scanner.config.wizard'].create(
+        # The login/lgout functionnality can be enabled by configuration.
+        wizard = self.env['stock.config.settings'].create(
             {'is_login_enabled': True})
-        wizard.apply_config()
+        wizard.execute()
         scanner_hardware_1 = self.browse_ref(
             'stock_scanner.scanner_hardware_1')
         # before login user_id and last_call_dt are empty

@@ -191,7 +191,7 @@ class Sentinel(object):
 
     def _reinit_colors(self):
         """
-        Initializes the colors from OpenERP configuration
+        Initializes the colors from Odoo configuration
         """
         # Asks for the hardware screen size
         colors = self.oerp_call('screen_colors')[1]
@@ -452,7 +452,7 @@ class Sentinel(object):
                             if result:
                                 # Select a value in the list
                                 choice = self._menu_choice(result, title=title)
-                                # Send the result to OpenERP
+                                # Send the result to Odoo
                                 (code, result, value) = self.oerp_call(
                                     'action', choice)
                             else:
@@ -522,7 +522,7 @@ class Sentinel(object):
 
     def _display_error(self, error_message, title=None):
         """
-        Displays an error messge, changing the background to red
+        Displays an error message, changing the background to red
         """
         # Display error message
         self._display(error_message, color='error', bgcolor=True, clear=True,
@@ -532,7 +532,7 @@ class Sentinel(object):
 
     def oerp_call(self, action, message=False):
         """
-        Calls a method from OpenERP Server
+        Calls a method from Odoo Server
         """
         return self.hardware_obj.scanner_call(self.hardware_code, action,
                                               message, 'keyboard')
@@ -563,7 +563,7 @@ class Sentinel(object):
 
     def _confirm(self, message, title=None):
         """
-        Allows the user to select  quantity
+        Allows the user to select quantity
         """
         confirm = False
 

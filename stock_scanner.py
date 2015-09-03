@@ -462,7 +462,7 @@ class scanner_hardware(models.Model):
     last_call_dt = fields.Datetime(
         string='Last call',
         help='Date and time of the last call to the system done by the scanner'
-        )
+    )
     scenario_id = fields.Many2one(
         'scanner.scenario',
         string='Scenario',

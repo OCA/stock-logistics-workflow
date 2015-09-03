@@ -2,19 +2,19 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    wms_scanner module for OpenERP, Module for manage barcode reader
+#    stock_scanner module for OpenERP, Module for manage barcode reader
 #    Copyright (C) 2011 SYLEAM (<http://www.syleam.fr/>)
 #              Christophe CHAUVET <christophe.chauvet@syleam.fr>
 #              Jean-Sébastien SUZANNE <jean-sebastien.suzanne@syleam.fr>
 #
-#    This file is a part of wms_scanner
+#    This file is a part of stock_scanner
 #
-#    wms_scanner is free software: you can redistribute it and/or modify
+#    stock_scanner is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
-#    wms_scanner is distributed in the hope that it will be useful,
+#    stock_scanner is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
