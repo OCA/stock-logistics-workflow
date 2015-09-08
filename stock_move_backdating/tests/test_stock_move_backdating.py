@@ -31,11 +31,12 @@ class TestStockMoveBackdating(common.TransactionCase):
     def setUp(self):
         super(TestStockMoveBackdating, self).setUp()
 
-        self.user_model = self.env["res.users"]
+        self.demo_user = self.env.ref('base.user_demo')
+        self.env.uid = self.demo_user.id
         self.move_model = self.env["stock.move"]
+        self.picking_model = self.env["stock.picking"]
         self.product_model = self.env["product.product"]
         self.location_model = self.env["stock.location"]
-        self.model_data = self.env['ir.model.data']
         self.stock_transfer_details = self.registry("stock.transfer_details")
 
         self.product_uom_id = self.env['product.uom'].search([])[0]
@@ -102,7 +103,7 @@ class TestStockMoveBackdating(common.TransactionCase):
         return self.stock_transfer_details.do_detailed_transfer(
             cr, uid, [pick_wizard_id], context)
 
-    def ComputeMove(self, timedelta_days):
+    def computeMove(self, timedelta_days):
         now = datetime.now()
         back_date = (now - timedelta(days=timedelta_days)).strftime(
             DEFAULT_SERVER_DATE_FORMAT)
@@ -112,16 +113,18 @@ class TestStockMoveBackdating(common.TransactionCase):
         move = self.move_id
         move.refresh()
         self.assertEqual(move.date[0:10], back_date)
+        self.assertEqual(self.picking_out.state, 'done')
+        self.assertEqual(move.state, 'done')
         for quant in move.quant_ids:
             self.assertEqual(quant.in_date[0:10], back_date)
 
     def test_0_stock_move_backdate_yesterday(self):
-        self.ComputeMove(1)
+        self.computeMove(1)
 
     def test_1_stock_move_backdate_last_month(self):
-        self.ComputeMove(31)
+        self.computeMove(31)
 
     def test_2_stock_move_backdate_future(self):
         self.assertRaises(
             orm.except_orm,
-            self.ComputeMove, -1)
+            self.computeMove, -1)
