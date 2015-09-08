@@ -34,15 +34,11 @@ class stock_move(models.Model):
         for move in self:
             if move.linked_move_operation_ids:
                 operation = move.linked_move_operation_ids[0]
-                move.write(
-                    {
-                        'date': operation.operation_id.date
-                    }
-                )
+                move.date = operation.operation_id.date
                 move.refresh()
                 if move.quant_ids:
                     for quant in move.quant_ids:
-                        quant.write({'in_date': move.date})
+                        quant.sudo().in_date = move.date
 
         return result
 
