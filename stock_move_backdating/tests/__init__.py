@@ -22,7 +22,3 @@
 ##############################################################################
 
 from . import test_stock_move_backdating
-
-checks = [
-    test_stock_move_backdating
-]
