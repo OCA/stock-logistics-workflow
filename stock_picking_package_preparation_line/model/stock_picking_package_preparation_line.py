@@ -44,24 +44,9 @@ class StockPickingPackagePreparationLine(models.Model):
 
     @api.multi
     def write(self, values):
-        # ----- Don't use get method of dict because product_uom_qty can be
-        #       0.0, too. I need only to know if it's changed
+        res = super(StockPickingPackagePreparationLine, self).write(values)
         if 'product_uom_qty' in values and self.move_id:
-            # ----- Simulate the partial transfer of a picking to use standard
-            #       flow of pickings
-            transfer_model = self.env['stock.transfer_details']
-            transfer = transfer_model.create({
-                'picking_id': self.move_id.picking_id.id,
-                'item_ids': [(0, 0, {
-                    'product_id': self.product_id.id,
-                    'product_uom_id': self.product_uom.id,
-                    'quantity': values['product_uom_qty'],
-                    'sourceloc_id': self.move_id.location_id.id,
-                    'destinationloc_id': self.move_id.location_dest_id.id,
-                    })]
-                })
-            transfer.do_detailed_transfer()
-        return super(StockPickingPackagePreparationLine, self).write(values)
+            self.move_id.product_uom_qty = values['product_uom_qty']
 
     @api.onchange('product_id')
     def _onchange_product_id(self):
