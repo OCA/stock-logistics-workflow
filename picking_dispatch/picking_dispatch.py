@@ -20,6 +20,7 @@
 ##############################################################################
 import logging
 from datetime import datetime
+from openerp import netsvc
 from openerp.osv.orm import Model
 from openerp.osv import fields
 from openerp.osv.osv import except_osv
@@ -197,6 +198,7 @@ class PickingDispatch(Model):
     def action_assign_moves(self, cr, uid, ids, context=None):
         move_obj = self.pool['stock.move']
         location_obj = self.pool['stock.location']
+        wf_service = netsvc.LocalService("workflow")
 
         move_ids = move_obj.search(cr, uid, [
             ('dispatch_id', 'in', ids),
@@ -233,6 +235,15 @@ class PickingDispatch(Model):
                 move_obj.write(cr, uid, move_ids, {'state': 'assigned',
                                                    'location_id': res[0][1]},
                                context=context)
+                # trigger workflow on related pickings
+                cr.execute("""
+                    SELECT DISTINCT picking_id
+                    FROM stock_move
+                    WHERE id in %s
+                    """, (tuple(move_ids), ))
+                pick_ids = [x[0] for x in cr.fetchall()]
+                for pick_id in pick_ids:
+                    wf_service.trg_write(uid, 'stock.picking', pick_id, cr)
             else:
                 # We could not reserve all the moves together, or the
                 # reservation is split among many sublocations.
