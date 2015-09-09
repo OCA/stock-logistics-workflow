@@ -23,25 +23,17 @@
 {
     "name": "MRP Lock Lot",
     "Summary": "Restrict blocked lots in Manufacturing Orders",
-    "version": "2.0",
+    "version": "8.0.2.0",
     "author": "OdooMRP team,"
               "Avanzosc,"
-              "Serv. Tecnol. Avanzados - Pedro M. Baeza",
+              "Serv. Tecnol. Avanzados - Pedro M. Baeza,"
+              "Odoo Community Association (OCA)",
     "website": "http://www.odoomrp.com",
-    "contributors": [
-        "Ana Juaristi <ajuaristio@gmail.com>",
-        "Pedro Manuel Baeza <pedro.baeza@serviciosbaeza.com>",
-        "Alfredo de la Fuente <alfredodelafuente@avanzosc.es>",
-        "Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>",
-        ],
-    "description": """
-    Bridge module for compatibility with first versions that depends on the new
-    one.
-    """,
     "category": "Manufacturing",
-    "depends": ["mrp",
-                "stock_lock_lot",
-                ],
+    "depends": [
+        "mrp",
+        "stock_lock_lot",
+    ],
     "data": [
         "wizard/mrp_product_produce_view.xml",
     ],

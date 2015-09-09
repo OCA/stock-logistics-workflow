@@ -23,18 +23,13 @@
 {
     "name": "Stock Lock Lot",
     "Summary": "Restrict blocked lots in Stock Moves and reservations",
-    "version": "1.0",
+    "version": "8.0.1.0",
     "author": "OdooMRP team,"
               "Avanzosc,"
-              "Serv. Tecnol. Avanzados - Pedro M. Baeza",
+              "Serv. Tecnol. Avanzados - Pedro M. Baeza,"
+              "Odoo Community Association (OCA)",
     "website": "http://www.odoomrp.com",
-    "contributors": [
-        "Ana Juaristi <ajuaristio@gmail.com>",
-        "Pedro Manuel Baeza <pedro.baeza@serviciosbaeza.com>",
-        "Alfredo de la Fuente <alfredodelafuente@avanzosc.es>",
-        "Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>",
-        ],
-    "category": "Manufacturing",
+    "category": "Warehouse Management",
     "depends": ["stock",
                 "product",
                 ],

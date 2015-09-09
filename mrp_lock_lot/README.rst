@@ -2,25 +2,12 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-=========================
-Block Serial Numbers/lots
-=========================
+=================================================
+Block Serial Numbers/lots on manufacturing orders
+=================================================
 
-This module allows you to define whether a Serial Number/lot is blocked
-or not.
-The default value can be set on the Product Category, in the
-field "Block new Serial Numbers/lots".
-
-Usage
-=====
-
-Two new buttons let you block/unblock a Serial Number/lot in the form view.
-Blocking/unblocking can also be done from the list view, by selecting the
-Serial Numbers/lots and choosing the option "Block/Unblock lots".
-
-Only lots which have no reservation can be blocked.
-
-Delivery Orders are not allowed to select a blocked Serial Number/lot.
+Using this module, Manufacturing Orders are not allowed to select a
+blocked Serial Number/lot.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
@@ -49,7 +36,6 @@ Contributors
 * Ana Juaristi <anajuaristi@avanzosc.es>
 * Alfredo de la Fuente <alfredodelafuente@avanzosc.es>
 * Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>
-* Lionel Sausin <ls@numerigraphe.com>
 
 Maintainer
 ----------
