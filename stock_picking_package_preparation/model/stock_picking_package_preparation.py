@@ -136,6 +136,8 @@ class StockPickingPackagePreparation(models.Model):
                  'package_id.quant_ids')
     def _compute_weight(self):
         package = self.package_id
+        if not package:
+            return
         quant_model = self.env['stock.quant']
         package_model = self.env['stock.quant.package']
         quants = quant_model.browse(package.get_content())
