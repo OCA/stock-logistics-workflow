@@ -3,6 +3,7 @@
 #
 #    Author: Francesco Apruzzese
 #    Copyright 2015 Apulia Software srl
+#    Copyright 2015 Lorenzo Battistini - Agile Business Group
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -109,8 +110,7 @@ class StockPickingPackagePreparation(models.Model):
         copy=False,
         states=FIELDS_STATES)
 
-    @api.model
-    def create(self, values):
+    def _update_line_ids(self, values):
         # ----- Create a PackagePreparationLine for every stock move
         #       in the pickings added to PackagePreparation
         if values.get('picking_ids', False):
@@ -121,20 +121,16 @@ class StockPickingPackagePreparation(models.Model):
                 values.update({
                     'line_ids': [(0, 0, v) for v in package_preparation_lines]
                 })
+        return values
+
+    @api.model
+    def create(self, values):
+        values = self._update_line_ids(values)
         return super(StockPickingPackagePreparation, self).create(values)
 
     @api.multi
     def write(self, values):
-        # ----- Create a PackagePreparationLine for every stock move
-        #       in the pickings added to PackagePreparation
-        if values.get('picking_ids', False):
-            package_preparation_lines = self.env[
-                'stock.picking.package.preparation.line'
-                ]._prepare_lines_from_pickings(values['picking_ids'][0][2])
-            if package_preparation_lines:
-                values.update({
-                    'line_ids': [(0, 0, v) for v in package_preparation_lines]
-                })
+        values = self._update_line_ids(values)
         return super(StockPickingPackagePreparation, self).write(values)
 
     @api.multi
