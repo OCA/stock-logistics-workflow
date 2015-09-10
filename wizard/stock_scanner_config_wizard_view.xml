@@ -17,7 +17,7 @@
                                     <label for="is_login_enabled"/>
                                 </div>
                                 <div>
-                                    <label for="session_timeout_delay"/>
+                                    <label for="session_timeout_delay" attrs="{'invisible': [('is_login_enabled', '=', False)]}"/>
                                     <field name="session_timeout_delay" attrs="{'invisible': [('is_login_enabled', '=', False)]}" class="oe_inline"/>
                                 </div>
                             </div>
