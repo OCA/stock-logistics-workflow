@@ -29,6 +29,8 @@
                             <field name="name" colspan="4"
                                    nolabel="1" placeholder="Description"/>
                             <field name="move_id" invisible="1"/>
+                            <field name="note" colspan="4"
+                                   nolabel="1" placeholder="Note"/>
                         </form>
                     </field>
                 </page>
