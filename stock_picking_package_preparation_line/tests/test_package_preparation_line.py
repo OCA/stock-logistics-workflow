@@ -86,4 +86,3 @@ class TestPackagePreparationLine(TransactionCase):
         self._create_line(self.preparation, self.product2, 2.0)
         self.preparation.action_put_in_pack()
         self.assertEquals(len(self.preparation.picking_ids), 1)
-
