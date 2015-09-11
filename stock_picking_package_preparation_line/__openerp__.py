@@ -32,7 +32,7 @@
     ],
     'website': 'http://www.apuliasoftware.it',
     'data': [
-        'view/stock_picking_package_preparation_line.xml',
+        'views/stock_picking_package_preparation_line.xml',
         'security/ir.model.access.csv',
     ],
     'test': [],
