@@ -15,8 +15,7 @@
                             <field name="name" />
                             <field name="product_id"/>
                             <field name="product_uom_qty" />
-                            <field name="product_uom" />
-
+                            <field name="product_uom" groups="product.group_uom"/>
                         </tree>
                         <form>
                             <group>
@@ -24,7 +23,7 @@
                                        attrs="{'readonly': [('move_id', '!=', False)]}"/>
                                 <field name="product_uom_qty"
                                        attrs="{'required': [('product_id', '!=', False)]}"/>
-                                <field name="product_uom"
+                                <field name="product_uom" groups="product.group_uom"
                                        attrs="{'required': [('product_id', '!=', False)], 'readonly': [('move_id', '!=', False)]}"/>
                             </group>
                             <field name="name" colspan="4"
