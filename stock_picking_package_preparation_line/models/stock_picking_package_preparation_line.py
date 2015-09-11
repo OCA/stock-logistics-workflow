@@ -28,6 +28,7 @@ class StockPickingPackagePreparationLine(models.Model):
 
     _name = 'stock.picking.package.preparation.line'
     _description = 'Package Preparation Line'
+    _order = 'sequence asc'
 
     package_preparation_id = fields.Many2one(
         'stock.picking.package.preparation', string='Stock Move',
