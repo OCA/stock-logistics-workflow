@@ -19,7 +19,7 @@
 #
 ##############################################################################
 {'name': 'Picking dispatch',
- 'version': '1.2.3',
+ 'version': '1.2.4',
  'author': "Camptocamp,Odoo Community Association (OCA)",
  'maintainer': 'Camptocamp',
  'category': 'Products',
