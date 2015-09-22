@@ -23,7 +23,7 @@
 {
     "name": "MRP Lock Lot",
     "Summary": "Restrict blocked lots in Manufacturing Orders",
-    "version": "8.0.2.0",
+    "version": "8.0.2.0.0",
     "author": "OdooMRP team,"
               "Avanzosc,"
               "Serv. Tecnol. Avanzados - Pedro M. Baeza,"
