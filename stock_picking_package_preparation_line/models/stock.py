@@ -35,5 +35,6 @@ class StockMove(models.Model):
                 prep_lines = prep_line_model.search([
                     ('move_id', '=', move.id),
                     ])
-                prep_lines.product_uom_qty = values['product_uom_qty']
+                if prep_lines:
+                    prep_lines.product_uom_qty = values['product_uom_qty']
         return res
