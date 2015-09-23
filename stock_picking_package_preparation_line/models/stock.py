@@ -24,17 +24,32 @@ from openerp import models, api
 class StockMove(models.Model):
     _inherit = 'stock.move'
 
+    def get_packs(self):
+        packs = self.env['stock.picking.package.preparation']
+        pack_line_model = self.env['stock.picking.package.preparation.line']
+        pack_lines = pack_line_model.search([
+            ('move_id', '=', self.id),
+            ])
+        for pack_line in pack_lines:
+            packs |= pack_line.package_preparation_id
+        return packs
+
     @api.multi
     def write(self, values):
         res = super(StockMove, self).write(values)
-        if 'product_uom_qty' in values:
-            for move in self:
-                prep_line_model = self.env[
-                    'stock.picking.package.preparation.line'
-                    ]
-                prep_lines = prep_line_model.search([
-                    ('move_id', '=', move.id),
-                    ])
-                if prep_lines:
-                    prep_lines.product_uom_qty = values['product_uom_qty']
+        pack_to_update = self.env['stock.picking.package.preparation']
+        for move in self:
+            pack_to_update |= move.get_packs()
+        if pack_to_update:
+            pack_to_update._update_line_ids()
+        return res
+
+    @api.multi
+    def unlink(self):
+        pack_to_update = self.env['stock.picking.package.preparation']
+        for move in self:
+            pack_to_update |= move.get_packs()
+        res = super(StockMove, self).unlink()
+        if pack_to_update:
+            pack_to_update._update_line_ids()
         return res

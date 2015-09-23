@@ -111,7 +111,31 @@ class StockPickingPackagePreparation(models.Model):
         copy=False,
         states=FIELDS_STATES)
 
-    def _update_line_ids(self, values):
+    @api.multi
+    def _update_line_ids(self):
+        # Update package lines according to pickings.
+        # Lines with move_id will be updated
+        # Lines without move_id not be touched
+        line_model = self.env['stock.picking.package.preparation.line']
+        for pack in self:
+            for line in pack.line_ids:
+                if line.move_id:
+                    line.unlink()
+            package_preparation_lines = (
+                line_model._prepare_lines_from_pickings(
+                    [p.id for p in pack.picking_ids]))
+            if package_preparation_lines:
+                for line_vals in package_preparation_lines:
+                    line_vals['package_preparation_id'] = pack.id
+                    line_model.create(line_vals)
+
+    @api.model
+    def create(self, values):
+        pack = super(StockPickingPackagePreparation, self).create(values)
+        pack._update_line_ids()
+        return pack
+
+    def _update_line_vals(self, values):
         # ----- Create a PackagePreparationLine for every stock move
         #       in the pickings added to PackagePreparation
         if values.get('picking_ids', False):
@@ -124,15 +148,11 @@ class StockPickingPackagePreparation(models.Model):
                 })
         return values
 
-    @api.model
-    def create(self, values):
-        values = self._update_line_ids(values)
-        return super(StockPickingPackagePreparation, self).create(values)
-
     @api.multi
     def write(self, values):
-        values = self._update_line_ids(values)
-        return super(StockPickingPackagePreparation, self).write(values)
+        values = self._update_line_vals(values)
+        res = super(StockPickingPackagePreparation, self).write(values)
+        return res
 
     @api.multi
     def action_put_in_pack(self):
