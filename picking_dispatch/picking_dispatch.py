@@ -251,7 +251,7 @@ class PickingDispatch(Model):
                 # We could not reserve all the moves all at once, or the
                 # reservation is split among many sublocations.
                 # If that's the case, fall back to reserving one move at a time
-                move_obj.action_assign(cr, uid, move_ids, context=context)
+                move_obj.action_assign(cr, uid, move_ids)
 
         return True
 
