@@ -20,6 +20,7 @@
 ##############################################################################
 import logging
 from datetime import datetime
+from openerp import netsvc
 from openerp.osv.orm import Model
 from openerp.osv import fields
 from openerp.osv.osv import except_osv
@@ -197,12 +198,16 @@ class PickingDispatch(Model):
     def action_assign_moves(self, cr, uid, ids, context=None):
         move_obj = self.pool['stock.move']
         location_obj = self.pool['stock.location']
+        wf_service = netsvc.LocalService("workflow")
 
         move_ids = move_obj.search(cr, uid, [
             ('dispatch_id', 'in', ids),
             ('state', 'in', ('confirmed', 'waiting')),
         ], context=context)
 
+        # In order to avoid calling _product_reserve on each stock move,
+        # a groupyby is first done to try to reserve products for all the
+        # moves (grouped by product and location) present in the dispatches.
         cr.execute("""
             SELECT
                 product_id,
@@ -217,8 +222,7 @@ class PickingDispatch(Model):
         groups = cr.fetchall()
 
         for product_id, location_id, quantity in groups:
-            # Try to reserve all moves with the same product and location
-            # together
+            # Reserve quantity for "grouped" moves
             res = location_obj._product_reserve(
                 cr,
                 uid,
@@ -230,11 +234,21 @@ class PickingDispatch(Model):
             )
 
             if res and len(res) == 1:
+                # The reservation worked: mark moves as assigned...
                 move_obj.write(cr, uid, move_ids, {'state': 'assigned',
                                                    'location_id': res[0][1]},
                                context=context)
+                # ... and trigger workflow on the moves' related pickings
+                cr.execute("""
+                    SELECT DISTINCT picking_id
+                    FROM stock_move
+                    WHERE id in %s
+                    """, (tuple(move_ids), ))
+                pick_ids = [x[0] for x in cr.fetchall()]
+                for pick_id in pick_ids:
+                    wf_service.trg_write(uid, 'stock.picking', pick_id, cr)
             else:
-                # We could not reserve all the moves together, or the
+                # We could not reserve all the moves all at once, or the
                 # reservation is split among many sublocations.
                 # If that's the case, fall back to reserving one move at a time
                 move_obj.action_assign(cr, uid, move_ids)

@@ -67,6 +67,7 @@ class TestPickingDispatch(TransactionCase):
         self.dispatch.check_assign_all()
         for move in self.picking.move_lines:
             self.assertEqual(move.state, 'assigned')
+        self.assertEqual(self.picking.state, 'assigned')
 
     def test_cancel(self):
         self.dispatch.action_cancel()
