@@ -131,8 +131,8 @@ class StockPickingPackagePreparation(models.Model):
 
     @api.model
     def create(self, values):
+        values = self._update_line_vals(values)
         pack = super(StockPickingPackagePreparation, self).create(values)
-        pack._update_line_ids()
         return pack
 
     def _update_line_vals(self, values):
@@ -150,6 +150,29 @@ class StockPickingPackagePreparation(models.Model):
 
     @api.multi
     def write(self, values):
+        # ----- Delete package preparation line if the relative picking is
+        #       delete from package preparation
+        if values.get('picking_ids', False):
+            picking_model = self.env['stock.move']
+            package_preparation_line_model = self.env[
+                'stock.picking.package.preparation.line']
+            # ----- Collect new pickings to read the change
+            changed_picking_ids = []
+            for picking_ids in values['picking_ids']:
+                if picking_ids[0] == 6:
+                    changed_picking_ids.extend(picking_ids[2])
+            for pack in self:
+                # ----- Collect deleted pickings
+                #       to delete package preparation lines
+                move_ids = [m.id
+                            for p in pack.picking_ids
+                            if p.id not in changed_picking_ids
+                            for m in p.move_lines]
+                if move_ids:
+                    package_lines = package_preparation_line_model.search(
+                        [('move_id', 'in', move_ids),
+                         ('package_preparation_id', '=', pack.id)])
+                    package_lines.unlink()
         values = self._update_line_vals(values)
         res = super(StockPickingPackagePreparation, self).write(values)
         return res
