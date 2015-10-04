@@ -3,21 +3,18 @@
 # * stock_picking_invoice_link
 # 
 # Translators:
-# Antonio Trueba, 2016
-# Antonio Trueba, 2016
-# javialgios <javi.algios@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-24 02:43+0000\n"
-"PO-Revision-Date: 2016-04-23 07:50+0000\n"
+"POT-Creation-Date: 2016-05-04 02:49+0000\n"
+"PO-Revision-Date: 2016-05-03 14:11+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Spanish (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/es/)\n"
+"Language-Team: English (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/en/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
+"Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_picking_invoice_link
@@ -25,56 +22,61 @@ msgstr ""
 #: view:stock.picking:stock_picking_invoice_link.view_picking_form
 #: field:stock.picking,invoice_id:0
 msgid "Invoice"
-msgstr "Factura"
+msgstr "Invoice"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_invoice_line
 #: field:stock.move,invoice_line_id:0
 msgid "Invoice Line"
-msgstr "Linea de factura"
+msgstr "Invoice Line"
+
+#. module: stock_picking_invoice_link
+#: field:stock.picking,invoice_view_xmlid:0
+msgid "Invoice View XMLID"
+msgstr "Invoice View XMLID"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_stock_picking
 msgid "Picking List"
-msgstr "Lista albaranes"
+msgstr "Picking List"
 
 #. module: stock_picking_invoice_link
 #: view:account.invoice:stock_picking_invoice_link.invoice_form
 #: view:account.invoice:stock_picking_invoice_link.invoice_supplier_form
 msgid "Pickings"
-msgstr "Albaranes"
+msgstr "Pickings"
 
 #. module: stock_picking_invoice_link
 #: field:account.invoice,picking_ids:0
 msgid "Related Pickings"
-msgstr "Albaranes relacionados"
+msgstr "Related Pickings"
 
 #. module: stock_picking_invoice_link
 #: field:account.invoice.line,move_line_ids:0
 msgid "Related Stock Moves"
-msgstr "Movimientos de existencias relacionados"
+msgstr "Related Stock Moves"
 
 #. module: stock_picking_invoice_link
 #: help:account.invoice,picking_ids:0
 msgid ""
 "Related pickings (only when the invoice has been generated from the "
 "picking)."
-msgstr "Albaranes relacionados (sólo cuando la factura se ha generado desde el albarán)"
+msgstr "Related pickings (only when the invoice has been generated from the picking)."
 
 #. module: stock_picking_invoice_link
 #: help:account.invoice.line,move_line_ids:0
 msgid ""
 "Related stock moves (only when the invoice has been generated from the "
 "picking)."
-msgstr "Movimientos de existencias relacionados (sólo cuando la factura se ha generado desde el albarán)"
+msgstr "Related stock moves (only when the invoice has been generated from the picking)."
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_stock_move
 msgid "Stock Move"
-msgstr "Movimiento de existencias"
+msgstr "Stock Move"
 
 #. module: stock_picking_invoice_link
 #: code:addons/stock_picking_invoice_link/models/stock.py:56
 #, python-format
 msgid "You can't remove an invoice that it is not in state'draft' or 'cancel'"
-msgstr "No se puede borrar una factura que no esté en borrador o cancelada"
+msgstr "You can't remove an invoice that it is not in state'draft' or 'cancel'"
