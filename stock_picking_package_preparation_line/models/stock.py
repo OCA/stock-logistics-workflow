@@ -37,11 +37,12 @@ class StockMove(models.Model):
     @api.multi
     def write(self, values):
         res = super(StockMove, self).write(values)
-        pack_to_update = self.env['stock.picking.package.preparation']
-        for move in self:
-            pack_to_update |= move.get_packs()
-        if pack_to_update:
-            pack_to_update._update_line_ids()
+        if not self.env.context.get('skip_update_line_ids', False):
+            pack_to_update = self.env['stock.picking.package.preparation']
+            for move in self:
+                pack_to_update |= move.get_packs()
+            if pack_to_update:
+                pack_to_update._update_line_ids()
         return res
 
     @api.multi
