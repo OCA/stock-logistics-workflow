@@ -163,7 +163,6 @@ class StockPickingPackagePreparation(models.Model):
         # ----- Delete package preparation line if the relative picking is
         #       delete from package preparation
         if values.get('picking_ids', False):
-            picking_model = self.env['stock.move']
             package_preparation_line_model = self.env[
                 'stock.picking.package.preparation.line']
             # ----- Collect new pickings to read the change
