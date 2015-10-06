@@ -83,7 +83,7 @@ class StockPickingPackagePreparationLine(models.Model):
                                    count=True):
                     lines.append({
                         'move_id': move_line.id,
-                        'name': move_line.product_id.name_get()[0][1],
+                        'name': move_line.name,
                         'product_id': move_line.product_id.id,
                         'product_uom_qty': move_line.product_uom_qty,
                         'product_uom': move_line.product_uom.id,
