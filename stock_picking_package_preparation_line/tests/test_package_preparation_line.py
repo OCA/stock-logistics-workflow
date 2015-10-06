@@ -105,3 +105,16 @@ class TestPackagePreparationLine(TransactionCase):
         self.preparation.action_put_in_pack()
         self.preparation.line_ids[0].move_id.product_uom_qty = 3.0
         self.assertEquals(self.preparation.line_ids[0].product_uom_qty, 3.0)
+
+    def test_package_with_description_line_and_product_line(self):
+        # ----- Create a package prepartion with 2 line one of them is a
+        #       description line only to test picking have only one move
+        self._create_line(self.preparation, self.product2, 1.0)
+        self._create_line(self.preparation, None, 0)
+        self.preparation.action_put_in_pack()
+        # ----- Check have only one move line
+        self.assertEqual(len(self.preparation.picking_ids[0].move_lines), 1)
+        # ----- Check product on move line is the same
+        self.assertEqual(
+            self.preparation.picking_ids[0].move_lines[0].product_id,
+            self.product2)
