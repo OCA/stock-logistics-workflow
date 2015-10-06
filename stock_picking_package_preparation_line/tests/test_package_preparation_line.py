@@ -69,7 +69,7 @@ class TestPackagePreparationLine(TransactionCase):
         self.preparation = self._create_preparation()
 
     def test_preparation_line_empty(self):
-        # ----- Preparation is created withiut lines.
+        # ----- Preparation is created without lines.
         #       Test if line_ids is empty
         self.assertEquals(len(self.preparation.line_ids), 0)
 
