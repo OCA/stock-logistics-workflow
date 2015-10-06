@@ -118,3 +118,13 @@ class TestPackagePreparationLine(TransactionCase):
         self.assertEqual(
             self.preparation.picking_ids[0].move_lines[0].product_id,
             self.product2)
+
+    def test_remove_picking_from_package_preparation(self):
+        # ----- Remove picking from package preparation to test what happens
+        #       to package preparation line
+        self.picking2 = self._create_picking()
+        self._create_move(self.picking2, self.product2)
+        self.preparation.picking_ids = [
+            (6, 0, [self.picking.id, self.picking2.id])]
+        self.preparation.picking_ids = [(3, self.picking.id)]
+        self.assertEquals(len(self.preparation.line_ids), 1)
