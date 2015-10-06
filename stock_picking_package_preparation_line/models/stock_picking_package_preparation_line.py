@@ -77,6 +77,10 @@ class StockPickingPackagePreparationLine(models.Model):
         picking_model = self.env['stock.picking']
         for picking in picking_model.browse(picking_ids):
             for move_line in picking.move_lines:
+                # ----- If stock move is cancel, don't create package
+                #       preparation line
+                if move_line.state == 'cancel':
+                    continue
                 # ----- search if the move is related with a
                 #       PackagePreparationLine, yet. If not, create a new line
                 if not self.search([('move_id', '=', move_line.id)],
