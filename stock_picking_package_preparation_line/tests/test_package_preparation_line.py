@@ -87,6 +87,17 @@ class TestPackagePreparationLine(TransactionCase):
         self.preparation.action_put_in_pack()
         self.assertEquals(len(self.preparation.picking_ids), 1)
 
+    def test_change_qty_on_preparation_line(self):
+        # ---- Create a Preparation Line, then change qty on line
+        #      Test if qty on stock move are equals to qty on Preparation Line
+        self._create_line(self.preparation, self.product2, 3.0)
+        self.preparation.action_put_in_pack()
+        # ---- Modify qty on line
+        test_line = self.preparation.line_ids[0]
+        test_line.product_uom_qty = 4.0
+        self.assertEquals(test_line.product_uom_qty,
+                          test_line.move_id.product_qty)
+
     def test_change_stock_move_quantity(self):
         # ----- Create a package preparation line with relative stock move
         #       to test a change on stock move quantity
