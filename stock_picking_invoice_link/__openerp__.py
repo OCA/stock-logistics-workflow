@@ -20,7 +20,7 @@
 
 {
     'name': 'Stock Picking Invoice Link',
-    'version': '1.0',
+    'version': '8.0.1.0.0',
     'category': 'Warehouse Management',
     'summary': 'Adds link between pickings and generated invoices',
     'author': 'Agile Business Group, Odoo Community Association (OCA)',
