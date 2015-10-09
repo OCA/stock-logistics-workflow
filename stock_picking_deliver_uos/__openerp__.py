@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Stock Picking Deliver UOS',
-    'version': '1.0',
+    'version': '8.0.1.0.0',
     'author': 'Agile Business Group, Odoo Community Association (OCA)',
     'category': 'Stock Logistics',
     'summary': 'Adds fields uos and uos_quantity to Stock Transfer Details',

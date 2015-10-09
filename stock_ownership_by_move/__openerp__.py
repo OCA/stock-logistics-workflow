@@ -17,7 +17,7 @@
 
 {'name': 'Stock Ownership By Move',
  'summary': 'Preserve Ownership of moves (not pickings) on reception.',
- 'version': '0.1',
+ 'version': '8.0.0.1.0',
  'author': "Camptocamp,Odoo Community Association (OCA)",
  'category': 'Warehouse Management',
  'license': 'AGPL-3',

@@ -23,7 +23,7 @@
 #
 {
     'name': 'Stock picking lines with sequence number',
-    'version': '0.1',
+    'version': '8.0.0.1.0',
     'category': 'Warehouse Management',
     'summary': '''
 Provide a new field on stock moves, allowing to manage the orders of moves

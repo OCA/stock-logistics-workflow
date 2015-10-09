@@ -22,7 +22,7 @@
 
 {
     'name': 'Stock Transfer Split Multi',
-    'version': '1.0',
+    'version': '8.0.1.0.0',
     'category': 'Warehouse Management',
     'license': 'AGPL-3',
     'summary': "In the stock transfer wizard, you can split by multiple units",

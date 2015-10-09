@@ -17,7 +17,7 @@
 {'name': 'Stock Dropshipping Dual Invoice',
  'summary':
  'Create both Supplier and Customer Invoices from a Dropshipping Delivery',
- 'version': '0.1',
+ 'version': '8.0.0.1.0',
  'author': "Camptocamp, "
            "Serv. Tecnol. Avanzados - Pedro M. Baeza, "
            "Odoo Community Association (OCA)",

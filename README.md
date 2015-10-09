@@ -22,19 +22,19 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
-[picking_dispatch](picking_dispatch/) | 1.2.3 | Picking dispatch
-[stock_dropshipping_dual_invoice](stock_dropshipping_dual_invoice/) | 0.1 | Create both Supplier and Customer Invoices from a Dropshipping Delivery
-[stock_move_description](stock_move_description/) | 1.0 | Stock move description
-[stock_ownership_availability_rules](stock_ownership_availability_rules/) | 0.2 | Enforce ownership on stock availability
-[stock_ownership_by_move](stock_ownership_by_move/) | 0.1 | Preserve Ownership of moves (not pickings) on reception.
-[stock_picking_backorder_strategy](stock_picking_backorder_strategy/) | 0.1 | Picking backordering strategies
-[stock_picking_compute_delivery_date](stock_picking_compute_delivery_date/) | 1.1 | Stock Picking Compute Delivery Date
-[stock_picking_deliver_uos](stock_picking_deliver_uos/) | 1.0 | Adds fields uos and uos_quantity to Stock Transfer Details
-[stock_picking_invoice_link](stock_picking_invoice_link/) | 1.0 | Adds link between pickings and generated invoices
-[stock_picking_package_preparation](stock_picking_package_preparation/) | 1.0 | Stock Picking Package Preparation
-[stock_picking_reorder_lines](stock_picking_reorder_lines/) | 0.1 | Provide a new field on stock moves, allowing to manage the orders of moves in a picking.
-[stock_split_picking](stock_split_picking/) | 1.0 | Split a picking in two unconfirmed pickings
-[stock_transfer_split_multi](stock_transfer_split_multi/) | 1.0 | In the stock transfer wizard, you can split by multiple units
+[picking_dispatch](picking_dispatch/) | 8.0.1.2.3 | Picking dispatch
+[stock_dropshipping_dual_invoice](stock_dropshipping_dual_invoice/) | 8.0.0.1.0 | Create both Supplier and Customer Invoices from a Dropshipping Delivery
+[stock_move_description](stock_move_description/) | 8.0.1.0.0 | Stock move description
+[stock_ownership_availability_rules](stock_ownership_availability_rules/) | 8.0.0.2.0 | Enforce ownership on stock availability
+[stock_ownership_by_move](stock_ownership_by_move/) | 8.0.0.1.0 | Preserve Ownership of moves (not pickings) on reception.
+[stock_picking_backorder_strategy](stock_picking_backorder_strategy/) | 8.0.0.1.0 | Picking backordering strategies
+[stock_picking_compute_delivery_date](stock_picking_compute_delivery_date/) | 8.0.1.1.0 | Stock Picking Compute Delivery Date
+[stock_picking_deliver_uos](stock_picking_deliver_uos/) | 8.0.1.0.0 | Adds fields uos and uos_quantity to Stock Transfer Details
+[stock_picking_invoice_link](stock_picking_invoice_link/) | 8.0.1.0.0 | Adds link between pickings and generated invoices
+[stock_picking_package_preparation](stock_picking_package_preparation/) | 8.0.1.0.0 | Stock Picking Package Preparation
+[stock_picking_reorder_lines](stock_picking_reorder_lines/) | 8.0.0.1.0 | Provide a new field on stock moves, allowing to manage the orders of moves in a picking.
+[stock_split_picking](stock_split_picking/) | 8.0.1.0.0 | Split a picking in two unconfirmed pickings
+[stock_transfer_split_multi](stock_transfer_split_multi/) | 8.0.1.0.0 | In the stock transfer wizard, you can split by multiple units
 
 Unported addons
 ---------------
