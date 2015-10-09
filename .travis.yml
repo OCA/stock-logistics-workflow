@@ -1,12 +1,29 @@
 language: python
 
+sudo: false
+cache:
+  apt: true
+  directories:
+    - $HOME/.pip-cache/
+
+addons:
+  apt:
+    packages:
+      - expect-dev
+      - python-lxml
+      - python-simplejson
+      - python-yaml
+
 python:
   - "2.7"
 
 env:
-  - VERSION="8.0" LINT_CHECK="1"
-  - VERSION="8.0" ODOO_REPO="odoo/odoo" LINT_CHECK="0"
-  - VERSION="8.0" ODOO_REPO="OCA/OCB" LINT_CHECK="0"
+  global:
+  - LINT_CHECK=0 TESTS="0" VERSION="8.0" ODOO_REPO="vauxoo/odoo"
+
+  matrix:
+  - LINT_CHECK=1
+  - TESTS="1"
 
 virtualenv:
   system_site_packages: true
@@ -21,7 +38,7 @@ install:
   - git clone https://github.com/OCA/stock-logistics-warehouse -b ${VERSION} $HOME/stock-logistics-warehouse
 
 script:
-  - travis_run_tests
+  - travis_wait travis_run_tests
 
 after_success:
-  coveralls
+  - travis_after_tests_success
