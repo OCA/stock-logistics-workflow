@@ -40,19 +40,19 @@ Unported addons
 ---------------
 addon | version | summary
 --- | --- | ---
-[picking_dispatch_wave](__unported__/picking_dispatch_wave/) | 0.1 (unported) | Picking Dispatch Wave
-[product_customer_code_picking](__unported__/product_customer_code_picking/) | 1.0 (unported) | Product Customer code for stock picking
-[product_serial](__unported__/product_serial/) | 1.0 (unported) | Enhance Serial Number management
-[stock_filter_none_zero_qty](__unported__/stock_filter_none_zero_qty/) | 1.0 (unported) | Filter products in stock
-[stock_inventory_retry_assign](__unported__/stock_inventory_retry_assign/) | 1.0 (unported) | Check Availability after Inventories
-[stock_location_flow_creator](__unported__/stock_location_flow_creator/) | 1.0 (unported) | Create configuration of stock location flow
-[stock_move_backdating](__unported__/stock_move_backdating/) | 1.0 (unported) | Allows back-dating of stock moves
-[stock_move_on_hold](__unported__/stock_move_on_hold/) | 1.0 (unported) | Stock On Hold Status
-[stock_obsolete](__unported__/stock_obsolete/) | 1.0 (unported) | Add product depreciation
-[stock_picking_mass_assign](__unported__/stock_picking_mass_assign/) | 0.2 (unported) | Delivery Orders Mass Assign
-[stock_picking_priority](__unported__/stock_picking_priority/) | 0.2 (unported) | Picking Priority
-[stock_picking_show_returns](__unported__/stock_picking_show_returns/) | 1.0 (unported) | Show returns on stock pickings
-[stock_sale_filters](__unported__/stock_sale_filters/) | 1.3 (unported) | SO related filters on stock.picking and sale.order
+[picking_dispatch_wave](picking_dispatch_wave/) | 0.1 (unported) | Picking Dispatch Wave
+[product_customer_code_picking](product_customer_code_picking/) | 1.0 (unported) | Product Customer code for stock picking
+[product_serial](product_serial/) | 1.0 (unported) | Enhance Serial Number management
 [stock_cancel](stock_cancel/) | 1.2 (unported) | Stock Cancel
+[stock_filter_none_zero_qty](stock_filter_none_zero_qty/) | 1.0 (unported) | Filter products in stock
+[stock_inventory_retry_assign](stock_inventory_retry_assign/) | 1.0 (unported) | Check Availability after Inventories
+[stock_location_flow_creator](stock_location_flow_creator/) | 1.0 (unported) | Create configuration of stock location flow
+[stock_move_backdating](stock_move_backdating/) | 1.0 (unported) | Allows back-dating of stock moves
+[stock_move_on_hold](stock_move_on_hold/) | 1.0 (unported) | Stock On Hold Status
+[stock_obsolete](stock_obsolete/) | 1.0 (unported) | Add product depreciation
+[stock_picking_mass_assign](stock_picking_mass_assign/) | 0.2 (unported) | Delivery Orders Mass Assign
+[stock_picking_priority](stock_picking_priority/) | 0.2 (unported) | Picking Priority
+[stock_picking_show_returns](stock_picking_show_returns/) | 1.0 (unported) | Show returns on stock pickings
+[stock_sale_filters](stock_sale_filters/) | 1.3 (unported) | SO related filters on stock.picking and sale.order
 
 [//]: # (end addons)
