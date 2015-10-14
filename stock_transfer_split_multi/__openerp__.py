@@ -33,5 +33,5 @@
         'wizard/stock_transfer_split_multi.xml',
         'wizard/stock_transfer_details.xml',
         ],
-    'installable': True,
+    'installable': False,
 }

@@ -36,5 +36,5 @@
      'test/test_mts_2.yml',
      'test/test_mto.yml',
  ],
- "installable": True,
+ 'installable': False,
  }

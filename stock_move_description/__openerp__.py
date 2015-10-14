@@ -36,5 +36,5 @@
     'test': [
         'test/stock_move_description.yml',
     ],
-    'installable': True
+    'installable': False
 }

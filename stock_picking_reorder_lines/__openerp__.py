@@ -35,7 +35,7 @@ in a picking.
     'data': ['stock_view.xml'],
     'demo': [],
     'test': ['test/invoice_from_picking.yml'],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'application': False,
     'license': "AGPL-3",
