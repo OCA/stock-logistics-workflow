@@ -32,6 +32,6 @@
  'demo': [],
  'test': ['test/test_picking_split.yml',
           'test/test_assigned_picking_split.yml'],
- 'installable': True,
+ 'installable': False,
  'auto_install': False,
  }
