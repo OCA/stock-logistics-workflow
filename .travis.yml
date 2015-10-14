@@ -14,7 +14,7 @@ python:
 
 env:
   global:
-    - VERSION="8.0" TESTS="0" LINT_CHECK="0"
+    - VERSION="9.0" TESTS="0" LINT_CHECK="0"
   matrix:
     - LINT_CHECK="1"
     - TESTS="1" ODOO_REPO="odoo/odoo" EXCLUDE="picking_dispatch,stock_split_picking"
