@@ -36,7 +36,6 @@
         'views/stock_picking_package_preparation_line.xml',
         'security/ir.model.access.csv',
     ],
-    'test': [],
     'installable': True,
     'auto_install': False,
 }
