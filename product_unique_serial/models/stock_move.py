@@ -18,7 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp import _, exceptions, models
+from openerp import _, api, exceptions, models
 
 
 class StockMove(models.Model):
@@ -28,21 +28,19 @@ class StockMove(models.Model):
     """
     _inherit = 'stock.move'
 
-    def check_after_action_done(self, cr, uid, operation_or_move,
-                                lot_id=None, context=None):
-        super(StockMove, self).check_after_action_done(
-            cr, uid, operation_or_move, lot_id, context=context)
-        return self.check_unicity_qty_available(cr, uid, operation_or_move,
-                                                lot_id, context=context)
+    @api.model
+    def check_after_action_done(self, operation_or_move, lot_id):
+        super(StockMove, self).\
+            check_after_action_done(operation_or_move, lot_id)
+        return self.check_unicity_qty_available(operation_or_move, lot_id)
 
-    def check_unicity_move_qty(self, cr, uid, ids, context=None):
+    @api.multi
+    def check_unicity_move_qty(self):
         """
         Check move quantity to verify that has qty = 1
         if 'lot unique' is ok on product
         """
-        if not isinstance(ids, list):
-            ids = [ids]
-        for move in self.browse(cr, uid, ids, context=context):
+        for move in self:
             if move.product_id.lot_unique_ok:
                 for move_operation in \
                         move.linked_move_operation_ids:
@@ -53,23 +51,20 @@ class StockMove(models.Model):
                             "but has qty > 1"
                         ) % (move.product_id.name))
 
-    def check_unicity_qty_available(self, cr, uid, operation_or_move,
-                                    lot_id,
-                                    context=None):
+    @api.model
+    def check_unicity_qty_available(self, operation_or_move, lot_id):
         """
         Check quantity on hand to verify that has qty = 1
         if 'lot unique' is ok on product
         """
         if operation_or_move.product_id.lot_unique_ok and lot_id:
-            ctx = context.copy()
+            ctx = self.env.context.copy()
             ctx.update({'lot_id': lot_id})
-            product_ctx = self.pool.get('product.product').browse(
-                cr, uid, [operation_or_move.product_id.id],
-                context=ctx)[0]
+            product_ctx = self.env['product.product'].browse(
+                operation_or_move.product_id.id)[0]
             qty = product_ctx.qty_available
             if not 0 <= qty <= 1:
-                lot = self.pool.get('stock.production.lot').browse(
-                    cr, uid, [lot_id])[0]
+                lot = self.env['stock.production.lot'].browse(lot_id)[0]
                 raise exceptions.ValidationError(_(
                     "Product '%s' has active "
                     "'unique lot'\n"
@@ -79,8 +74,8 @@ class StockMove(models.Model):
                 ) % (operation_or_move.product_id.name, qty, lot.name))
         return True
 
-    def check_tracking(self, cr, uid, move, lot_id, context=None):
-        res = super(StockMove, self).check_tracking(
-            cr, uid, move, lot_id, context=context)
-        self.check_unicity_move_qty(cr, uid, [move.id], context=context)
+    @api.model
+    def check_tracking(self, move, lot_id):
+        res = super(StockMove, self).check_tracking(move, lot_id)
+        self.check_unicity_move_qty()
         return res

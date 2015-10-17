@@ -23,14 +23,11 @@ from lxml import etree
 from openerp import api, models
 
 
-def domain_str_append(old_domain_str, subdomain_str):
-    return old_domain_str.replace(
-        "]",
-        ", " + subdomain_str + "]")
-
-
 class StockTransferDetails(models.TransientModel):
     _inherit = 'stock.transfer_details'
+
+    def domain_str_append(self, old_domain_str, subdomain_str):
+        return old_domain_str.replace("]", ", " + subdomain_str + "]")
 
     @api.model
     def fields_view_get(self, view_id=None, view_type='form',
@@ -72,7 +69,7 @@ class StockTransferDetails(models.TransientModel):
                         # just allow to create new one or
                         # allow to select a serial without moves
                         sub_domain = "('quant_ids', '=', [])"
-                    new_domain = domain_str_append(
+                    new_domain = self.domain_str_append(
                         node.get('domain'), sub_domain)
                     node.set('domain', new_domain)
                 res['fields']['item_ids']['views'][
