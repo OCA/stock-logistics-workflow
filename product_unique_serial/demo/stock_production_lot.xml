@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+        <!-- Sales Orders -->
+        <record id="serial_number_demo_1" model="stock.production.lot">
+            <field name="name">86137801852514</field>
+            <field name="product_id" ref="product_demo_1"/>
+        </record>
+
+        <record id="serial_number_demo_2" model="stock.production.lot">
+            <field name="name">86137801852515</field>
+            <field name="product_id" ref="product_demo_1"/>
+        </record>
+
+        <record id="serial_number_demo_3" model="stock.production.lot">
+            <field name="name">86137801852516</field>
+            <field name="product_id" ref="product_demo_1"/>
+        </record>
+    </data>
+</openerp>
