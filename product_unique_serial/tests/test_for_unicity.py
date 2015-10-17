@@ -21,7 +21,7 @@
 
 from copy import deepcopy
 
-from openerp.exceptions import except_orm
+from openerp.exceptions import ValidationError
 from openerp.tests.common import TransactionCase
 from openerp.tools import mute_logger
 from psycopg2 import IntegrityError
@@ -168,10 +168,7 @@ class TestUnicity(TransactionCase):
         self.transfer_picking(
             picking_1,
             self.env.ref('product_unique_serial.serial_number_demo_1'))
-        with self.assertRaisesRegexp(
-                except_orm,
-                r"you will have a quantity of '2.0' "
-                r"in lot '86137801852514'"):
+        with self.assertRaises(ValidationError):
             self.transfer_picking(
                 picking_2,
                 [self.env.ref('product_unique_serial.serial_number_demo_1')])
@@ -229,10 +226,7 @@ class TestUnicity(TransactionCase):
         self.transfer_picking(
             picking_out_1,
             self.env.ref('product_unique_serial.serial_number_demo_1'))
-        with self.assertRaisesRegexp(
-                except_orm,
-                r"you will have a quantity of '-1.0' "
-                r"in lot '86137801852514'"):
+        with self.assertRaises(ValidationError):
             self.transfer_picking(
                 picking_out_2,
                 [self.env.ref('product_unique_serial.serial_number_demo_1')])
@@ -263,7 +257,7 @@ class TestUnicity(TransactionCase):
             stock_move_datas, picking_data_1,
             self.env.ref('stock.picking_type_in'))
         # Executing the wizard for pickings transfering
-        with self.assertRaisesRegexp(except_orm, r'but has qty > 1'):
+        with self.assertRaises(ValidationError):
             self.transfer_picking(
                 picking_1,
                 [self.env.ref('product_unique_serial.serial_number_demo_2')])
@@ -300,12 +294,13 @@ class TestUnicity(TransactionCase):
             self.env.ref('stock.picking_type_in'))
         # Executing the wizard for pickings transfering: this should be correct
         # 'cause is the ideal case
-        self.transfer_picking(
-            picking_in,
-            [self.env.ref('product_unique_serial.serial_number_demo_1'),
-             self.env.ref('product_unique_serial.serial_number_demo_2'),
-             self.env.ref('product_unique_serial.serial_number_demo_3')]
-        )
+        with self.assertRaises(ValidationError):
+            self.transfer_picking(
+                picking_in,
+                [self.env.ref('product_unique_serial.serial_number_demo_1'),
+                 self.env.ref('product_unique_serial.serial_number_demo_2'),
+                 self.env.ref('product_unique_serial.serial_number_demo_3')]
+            )
 
     def test_5_1product_1serialnumber_2p_internal(self):
         """
@@ -364,9 +359,7 @@ class TestUnicity(TransactionCase):
         self.transfer_picking(
             picking_internal_1,
             [self.env.ref('product_unique_serial.serial_number_demo_1')])
-        with self.assertRaisesRegexp(
-                except_orm,
-                r"Product 'Nokia 2630' has active 'check no negative'"):
+        with self.assertRaises(ValidationError):
             self.transfer_picking(
                 picking_internal_2,
                 [self.env.ref('product_unique_serial.serial_number_demo_1')])
@@ -383,6 +376,5 @@ class TestUnicity(TransactionCase):
             'product_id': product_id.id
         }
         self.stock_production_lot_obj.create(lot_data)
-        with self.assertRaisesRegexp(
-                IntegrityError, r'"stock_production_lot_name_ref_uniq"'):
+        with self.assertRaises(IntegrityError):
             self.stock_production_lot_obj.create(lot_data)
