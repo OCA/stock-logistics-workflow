@@ -1,5 +1,10 @@
+language: python
+
 sudo: false
-cache: pip
+cache:
+  apt: true
+  directories:
+    - $HOME/.pip-cache/
 
 addons:
   apt:
