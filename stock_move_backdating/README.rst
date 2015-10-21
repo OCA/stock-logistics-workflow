@@ -1,8 +1,9 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
     :alt: License: AGPL-3
 
+=================================
 Allows back-dating of stock moves
-===========
+=================================
 
 This module allows to register old stock moves (with date != now).
 On picking transfer, user can specify the "Date", that will be
