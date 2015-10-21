@@ -1,3 +1,4 @@
+[![Runbot Status](https://runbot.odoo-community.org/runbot/badge/flat/154/8.0.svg)](https://runbot.odoo-community.org/runbot/repo/github-com-oca-server-tools-154)
 [![Build Status](https://travis-ci.org/OCA/stock-logistics-workflow.svg?branch=8.0)](https://travis-ci.org/OCA/stock-logistics-workflow)
 [![Coverage Status](https://img.shields.io/coveralls/OCA/stock-logistics-workflow.svg)](https://coveralls.io/r/OCA/stock-logistics-workflow?branch=8.0)
 
@@ -56,3 +57,8 @@ addon | version | summary
 [stock_sale_filters](stock_sale_filters/) | 1.3 (unported) | SO related filters on stock.picking and sale.order
 
 [//]: # (end addons)
+
+Translation status
+------------------
+
+[![Transifex Status](https://www.transifex.com/projects/p/OCA-stock-logistics-workflow-8-0/chart/image_png)](https://www.transifex.com/projects/p/OCA-stock-logistics-workflow-8-0)
