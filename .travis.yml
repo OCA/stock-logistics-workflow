@@ -19,7 +19,7 @@ python:
 
 env:
   global:
-  - LINT_CHECK=0 TESTS="0" VERSION="8.0" ODOO_REPO="vauxoo/odoo"
+  - LINT_CHECK=0 TESTS="0" VERSION="8.0" ODOO_REPO="odoo/odoo"
 
   matrix:
   - LINT_CHECK=1
