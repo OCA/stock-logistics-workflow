@@ -52,15 +52,11 @@ class StockPickingPackagePreparationLine(models.Model):
         if 'product_uom_qty' in values and self.move_id:
             if self.move_id.product_uom_qty != values['product_uom_qty']:
                 # perform a new reservation with the new quantity
-                self.move_id.with_context(
-                    skip_update_line_ids=True
-                    ).picking_id.do_unreserve()
-                self.move_id.with_context(
-                    skip_update_line_ids=True
-                    ).product_uom_qty = values['product_uom_qty']
-                self.move_id.with_context(
-                    skip_update_line_ids=True
-                    ).picking_id.action_assign()
+                move_context = self.move_id.with_context(
+                    skip_update_line_ids=True)
+                move_context.picking_id.do_unreserve()
+                move_context.product_uom_qty = values['product_uom_qty']
+                move_context.picking_id.action_assign()
 
     @api.onchange('product_id')
     def _onchange_product_id(self):
