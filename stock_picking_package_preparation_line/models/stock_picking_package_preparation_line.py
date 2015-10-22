@@ -140,6 +140,7 @@ class StockPickingPackagePreparation(models.Model):
                     line_model.create(line_vals)
 
     @api.model
+    @api.returns('self', lambda value: value.id)
     def create(self, values):
         values = self._update_line_vals(values)
         pack = super(StockPickingPackagePreparation, self).create(values)
