@@ -29,7 +29,7 @@ class StockMove(models.Model):
         pack_lines = pack_line_model.search([
             ('move_id', '=', self.id),
             ])
-        return pack_lines.mapped('package.preparation_id')
+        return pack_lines.mapped('package_preparation_id')
 
     @api.multi
     def write(self, values):
