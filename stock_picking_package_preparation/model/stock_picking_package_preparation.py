@@ -118,7 +118,7 @@ class StockPickingPackagePreparation(models.Model):
         relation='stock_quant_pack_prepare_rel',
         column1='stock_picking_package_preparation_id',
         column2='stock_quant_id',
-        name='All Content',
+        string='All Content',
     )
 
     @api.one
