@@ -25,14 +25,11 @@ class StockMove(models.Model):
     _inherit = 'stock.move'
 
     def get_packs(self):
-        packs = self.env['stock.picking.package.preparation']
         pack_line_model = self.env['stock.picking.package.preparation.line']
         pack_lines = pack_line_model.search([
             ('move_id', '=', self.id),
             ])
-        for pack_line in pack_lines:
-            packs |= pack_line.package_preparation_id
-        return packs
+        return pack_lines.mapped('package.preparation_id')
 
     @api.multi
     def write(self, values):
