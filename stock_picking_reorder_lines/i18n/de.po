@@ -1,26 +1,31 @@
-# Translation of OpenERP Server.
+# Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* stock_picking_reorder_lines
-#
+# * stock_picking_reorder_lines
+# 
+# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: ODOO Server 8.0\n"
+"Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-30 12:04+0000\n"
-"PO-Revision-Date: 2015-10-04 13:47+0200\n"
-"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2015-10-22 09:31+0000\n"
+"PO-Revision-Date: 2015-10-21 16:34+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"Language-Team: German (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Content-Transfer-Encoding: \n"
 "Language: de\n"
-"X-Generator: Poedit 1.8.3\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_picking_reorder_lines
-#: model:ir.model,name:stock_picking_reorder_lines.model_stock_move
-msgid "Stock Move"
-msgstr "Lagerbuchung"
+#: model:ir.model,name:stock_picking_reorder_lines.model_stock_picking
+msgid "Picking List"
+msgstr "Kommissionierliste"
+
+#. module: stock_picking_reorder_lines
+#: model:ir.model,name:stock_picking_reorder_lines.model_procurement_order
+msgid "Procurement"
+msgstr ""
 
 #. module: stock_picking_reorder_lines
 #: field:stock.move,sequence:0
@@ -28,16 +33,16 @@ msgid "Sequence"
 msgstr "Reihenfolge"
 
 #. module: stock_picking_reorder_lines
-#: model:ir.model,name:stock_picking_reorder_lines.model_sale_order
-msgid "Sales Order"
-msgstr "Verkaufsauftrag"
+#: model:ir.model,name:stock_picking_reorder_lines.model_stock_move
+msgid "Stock Move"
+msgstr "Lagerbuchung"
 
 #. module: stock_picking_reorder_lines
-#: help:stock.move,sequence:0
-msgid "Gives the sequence of this line when displaying the picking."
-msgstr "Liefert die Reihenfolge dieser Position bei Anzeige der Kommissionierung."
-
-#. module: stock_picking_reorder_lines
-#: model:ir.model,name:stock_picking_reorder_lines.model_stock_picking
-msgid "Picking List"
-msgstr "Kommissionierliste"
+#: view:stock.picking:stock_picking_reorder_lines.view_picking_form
+msgid ""
+"{'address_in_id': partner_id, "
+"'form_view_ref':'stock.view_move_picking_form', "
+"'tree_view_ref':'stock.view_move_picking_tree', 'default_picking_type_id': "
+"picking_type_id,'default_picking_id': active_id, 'default_sequence': "
+"max_line_sequence}"
+msgstr ""
