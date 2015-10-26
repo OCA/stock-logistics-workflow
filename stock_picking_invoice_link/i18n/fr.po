@@ -1,0 +1,71 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_picking_invoice_link
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: stock-logistics-workflow (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-10-22 09:31+0000\n"
+"PO-Revision-Date: 2015-10-21 16:34+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: French (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: stock_picking_invoice_link
+#: model:ir.model,name:stock_picking_invoice_link.model_account_invoice
+#: view:stock.picking:stock_picking_invoice_link.view_picking_form
+#: field:stock.picking,invoice_id:0
+msgid "Invoice"
+msgstr ""
+
+#. module: stock_picking_invoice_link
+#: model:ir.model,name:stock_picking_invoice_link.model_account_invoice_line
+#: field:stock.move,invoice_line_id:0
+msgid "Invoice Line"
+msgstr ""
+
+#. module: stock_picking_invoice_link
+#: model:ir.model,name:stock_picking_invoice_link.model_stock_picking
+msgid "Picking List"
+msgstr "Bon de livraison"
+
+#. module: stock_picking_invoice_link
+#: view:account.invoice:stock_picking_invoice_link.invoice_form
+#: view:account.invoice:stock_picking_invoice_link.invoice_supplier_form
+msgid "Pickings"
+msgstr "Pickings"
+
+#. module: stock_picking_invoice_link
+#: field:account.invoice,picking_ids:0
+msgid "Related Pickings"
+msgstr ""
+
+#. module: stock_picking_invoice_link
+#: field:account.invoice.line,move_line_ids:0
+msgid "Related Stock Moves"
+msgstr ""
+
+#. module: stock_picking_invoice_link
+#: help:account.invoice,picking_ids:0
+msgid ""
+"Related pickings (only when the invoice has been generated from the "
+"picking)."
+msgstr ""
+
+#. module: stock_picking_invoice_link
+#: help:account.invoice.line,move_line_ids:0
+msgid ""
+"Related stock moves (only when the invoice has been generated from the "
+"picking)."
+msgstr ""
+
+#. module: stock_picking_invoice_link
+#: model:ir.model,name:stock_picking_invoice_link.model_stock_move
+msgid "Stock Move"
+msgstr "Mouvement de stock"

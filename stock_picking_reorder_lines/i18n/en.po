@@ -1,24 +1,31 @@
-# Translation of OpenERP Server.
+# Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_picking_reorder_lines
-#
+# * stock_picking_reorder_lines
+# 
+# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 7.0\n"
+"Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-30 12:04+0000\n"
-"PO-Revision-Date: 2013-09-30 12:04+0000\n"
-"Last-Translator: <>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2015-10-22 09:31+0000\n"
+"PO-Revision-Date: 2015-10-21 16:34+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"Language-Team: English (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/en/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_picking_reorder_lines
-#: model:ir.model,name:stock_picking_reorder_lines.model_stock_move
-msgid "Stock Move"
-msgstr "Stock Move"
+#: model:ir.model,name:stock_picking_reorder_lines.model_stock_picking
+msgid "Picking List"
+msgstr "Picking List"
+
+#. module: stock_picking_reorder_lines
+#: model:ir.model,name:stock_picking_reorder_lines.model_procurement_order
+msgid "Procurement"
+msgstr "Procurement"
 
 #. module: stock_picking_reorder_lines
 #: field:stock.move,sequence:0
@@ -26,17 +33,16 @@ msgid "Sequence"
 msgstr "Sequence"
 
 #. module: stock_picking_reorder_lines
-#: model:ir.model,name:stock_picking_reorder_lines.model_sale_order
-msgid "Sales Order"
-msgstr "Sales Order"
+#: model:ir.model,name:stock_picking_reorder_lines.model_stock_move
+msgid "Stock Move"
+msgstr "Stock Move"
 
 #. module: stock_picking_reorder_lines
-#: help:stock.move,sequence:0
-msgid "Gives the sequence of this line when displaying the picking."
-msgstr "Gives the sequence of this line when displaying the picking."
-
-#. module: stock_picking_reorder_lines
-#: model:ir.model,name:stock_picking_reorder_lines.model_stock_picking
-msgid "Picking List"
-msgstr "Picking List"
-
+#: view:stock.picking:stock_picking_reorder_lines.view_picking_form
+msgid ""
+"{'address_in_id': partner_id, "
+"'form_view_ref':'stock.view_move_picking_form', "
+"'tree_view_ref':'stock.view_move_picking_tree', 'default_picking_type_id': "
+"picking_type_id,'default_picking_id': active_id, 'default_sequence': "
+"max_line_sequence}"
+msgstr "{'address_in_id': partner_id, 'form_view_ref':'stock.view_move_picking_form', 'tree_view_ref':'stock.view_move_picking_tree', 'default_picking_type_id': picking_type_id,'default_picking_id': active_id, 'default_sequence': max_line_sequence}"

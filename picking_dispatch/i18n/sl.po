@@ -3,19 +3,20 @@
 # * picking_dispatch
 # 
 # Translators:
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 09:31+0000\n"
-"PO-Revision-Date: 2015-10-21 16:33+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: English (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/en/)\n"
+"PO-Revision-Date: 2015-10-22 10:02+0000\n"
+"Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
+"Language-Team: Slovenian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/sl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: en\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: sl\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
 
 #. module: picking_dispatch
 #: code:addons/picking_dispatch/wizard/create_dispatch.py:97
@@ -23,63 +24,63 @@ msgstr ""
 msgid ""
 "(Only move that are not part of a dispatch order and in confirm, waiting or "
 "assigned state can be used)"
-msgstr "(Only move that are not part of a dispatch order and in confirm, waiting or assigned state can be used)"
+msgstr "(uporabljajo se lahko le premiki, ki niso del odpremnih nalogov in so potrjeni, na čakanju ali dodeljeni)"
 
 #. module: picking_dispatch
 #: view:stock.picking:picking_dispatch.view_picking_form
 msgid "Additional Info"
-msgstr "Additional Info"
+msgstr "Dodatne informacije"
 
 #. module: picking_dispatch
 #: code:addons/picking_dispatch/wizard/dispatch_start.py:47
 #, python-format
 msgid "All the picking dispatches must be assigned to be started."
-msgstr "All the picking dispatches must be assigned to be started."
+msgstr "Vse odpreme zbirnikov morajo biti pred zagonom dodeljene."
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form
 msgid "Assign"
-msgstr "Assign"
+msgstr "Dodeli"
 
 #. module: picking_dispatch
 #: model:ir.actions.act_window,name:picking_dispatch.action_picking_dispatch_assign_picker
 msgid "Assign Picker"
-msgstr "Assign Picker"
+msgstr "Dodeli odbiratelja"
 
 #. module: picking_dispatch
 #: view:picking.dispatch.assign.picker:picking_dispatch.view_picking_dispatch_assign_picker
 msgid "Assign a picker on dispatches"
-msgstr "Assign a picker on dispatches"
+msgstr "Odpremam dodeli odbiratelja"
 
 #. module: picking_dispatch
 #: view:picking.dispatch.creator:picking_dispatch.view_create_picking_dispatch
 msgid "Assign picking operations to an employee."
-msgstr "Assign picking operations to an employee."
+msgstr "Dodeli zbirne operacije kadru."
 
 #. module: picking_dispatch
 #: view:picking.dispatch.assign.picker:picking_dispatch.view_picking_dispatch_assign_picker
 msgid "Assign the picker"
-msgstr "Assign the picker"
+msgstr "Dodeli odbiratelja"
 
 #. module: picking_dispatch
 #: selection:picking.dispatch,state:0
 msgid "Assigned"
-msgstr "Assigned"
+msgstr "Dodeljeno"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 msgid "Assigned and Valid Dispatch order"
-msgstr "Assigned and Valid Dispatch order"
+msgstr "Dodeljeni in veljavni odpremni nalog"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,backorder_id:0
 msgid "Back Order of"
-msgstr "Back Order of"
+msgstr "Odloženo naročilo od"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 msgid "Back Orders"
-msgstr "Back Orders"
+msgstr "Odložena naročila"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form
@@ -88,44 +89,44 @@ msgstr "Back Orders"
 #: view:picking.dispatch.creator:picking_dispatch.view_create_picking_dispatch
 #: view:picking.dispatch.start:picking_dispatch.view_picking_dispatch_start
 msgid "Cancel"
-msgstr "Cancel"
+msgstr "Preklic"
 
 #. module: picking_dispatch
 #: selection:picking.dispatch,state:0
 msgid "Cancelled"
-msgstr "Cancelled"
+msgstr "Preklicano"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Carrier"
-msgstr "Carrier"
+msgstr "Prevoznik"
 
 #. module: picking_dispatch
 #: model:ir.actions.act_window,name:picking_dispatch.action_dispatch_check_assign_all
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form
 #: view:picking.dispatch.check.assign.all:picking_dispatch.view_dispatch_check_assign_all
 msgid "Check Availability"
-msgstr "Check Availability"
+msgstr "Preveri razpoložljivost"
 
 #. module: picking_dispatch
 #: view:picking.dispatch.check.assign.all:picking_dispatch.view_dispatch_check_assign_all
 msgid "Check the availability of the selected dispatches"
-msgstr "Check the availability of the selected dispatches"
+msgstr "Preveri razpoložljivost izbranih odprem"
 
 #. module: picking_dispatch
 #: model:ir.model,name:picking_dispatch.model_res_company
 msgid "Companies"
-msgstr "Companies"
+msgstr "Družbe"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,company_id:0
 msgid "Company"
-msgstr "Company"
+msgstr "Družba"
 
 #. module: picking_dispatch
 #: model:ir.actions.act_window,name:picking_dispatch.picking_dispatch_create_act_window
 msgid "Create Picking Dispatch"
-msgstr "Create Picking Dispatch"
+msgstr "Ustvari zbirnik odpreme"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,create_uid:0
@@ -134,7 +135,7 @@ msgstr "Create Picking Dispatch"
 #: field:picking.dispatch.creator,create_uid:0
 #: field:picking.dispatch.start,create_uid:0
 msgid "Created by"
-msgstr "Created by"
+msgstr "Ustvaril"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,create_date:0
@@ -143,76 +144,76 @@ msgstr "Created by"
 #: field:picking.dispatch.creator,create_date:0
 #: field:picking.dispatch.start,create_date:0
 msgid "Created on"
-msgstr "Created on"
+msgstr "Ustvarjeno"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,date:0 field:picking.dispatch.creator,date:0
 msgid "Date"
-msgstr "Date"
+msgstr "Datum"
 
 #. module: picking_dispatch
 #: help:picking.dispatch.creator,date:0
 msgid "Date on which the picking dispatched is to be processed"
-msgstr "Date on which the picking dispatched is to be processed"
+msgstr "Datum, na katerega se zbirnik odpreme obdela"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Date:"
-msgstr "Date:"
+msgstr "Datum:"
 
 #. module: picking_dispatch
 #: field:res.company,default_picker_id:0
 msgid "Default Picker"
-msgstr "Default Picker"
+msgstr "Privzeti odbiratelj"
 
 #. module: picking_dispatch
 #: field:stock.move,dispatch_id:0
 msgid "Dispatch"
-msgstr "Dispatch"
+msgstr "Odprema"
 
 #. module: picking_dispatch
 #: code:addons/picking_dispatch/wizard/create_dispatch.py:104
 #, python-format
 msgid "Dispatch %s already covers moves %s"
-msgstr "Dispatch %s already covers moves %s"
+msgstr "Odprema %s že pokriva premike %s"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Dispatch Order"
-msgstr "Dispatch Order"
+msgstr "Odpremni nalog"
 
 #. module: picking_dispatch
 #: model:ir.model,name:picking_dispatch.model_picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 msgid "Dispatch Picking Order"
-msgstr "Dispatch Picking Order"
+msgstr "Nalog odpreme zbirnika"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,state:0
 msgid "Dispatch State"
-msgstr "Dispatch State"
+msgstr "Stanje odpreme"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 msgid "Dispatch order In Progress"
-msgstr "Dispatch order In Progress"
+msgstr "Odpremni nalog v teku"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 msgid "Dispatch order already processed"
-msgstr "Dispatch order already processed"
+msgstr "Odpremni nalog že obdelan"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 #: selection:picking.dispatch,state:0
 msgid "Done"
-msgstr "Done"
+msgstr "Opravljeno"
 
 #. module: picking_dispatch
 #: selection:picking.dispatch,state:0
 msgid "Draft"
-msgstr "Draft"
+msgstr "Osnutek"
 
 #. module: picking_dispatch
 #: code:addons/picking_dispatch/picking_dispatch.py:182
@@ -222,17 +223,17 @@ msgstr "Draft"
 #: code:addons/picking_dispatch/wizard/dispatch_start.py:46
 #, python-format
 msgid "Error"
-msgstr "Error"
+msgstr "Napaka"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Explanation"
-msgstr "Explanation"
+msgstr "Obrazložitev"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 msgid "Group By..."
-msgstr "Group By..."
+msgstr "Združi po..."
 
 #. module: picking_dispatch
 #: field:picking.dispatch,id:0 field:picking.dispatch.assign.picker,id:0
@@ -246,12 +247,12 @@ msgstr "ID"
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 #: selection:picking.dispatch,state:0
 msgid "In Progress"
-msgstr "In Progress"
+msgstr "V teku"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 msgid "Is a Back Order"
-msgstr "Is a Back Order"
+msgstr "Je odloženo naročilo"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,write_uid:0
@@ -260,7 +261,7 @@ msgstr "Is a Back Order"
 #: field:picking.dispatch.creator,write_uid:0
 #: field:picking.dispatch.start,write_uid:0
 msgid "Last Updated by"
-msgstr "Last Updated by"
+msgstr "Zadnji posodobil"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,write_date:0
@@ -269,75 +270,75 @@ msgstr "Last Updated by"
 #: field:picking.dispatch.creator,write_date:0
 #: field:picking.dispatch.start,write_date:0
 msgid "Last Updated on"
-msgstr "Last Updated on"
+msgstr "Zadnjič posodobljeno"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,move_ids:0
 msgid "Moves"
-msgstr "Moves"
+msgstr "Premiki"
 
 #. module: picking_dispatch
 #: code:addons/picking_dispatch/wizard/create_dispatch.py:111
 #, python-format
 msgid "Moves %s from picking %s are in state %s"
-msgstr "Moves %s from picking %s are in state %s"
+msgstr "Premiki %s iz zbirnika %s so v stanju %s"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 msgid "My Dispatch Order"
-msgstr "My Dispatch Order"
+msgstr "Moji odpremni nalogi"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,name:0 field:picking.dispatch.creator,name:0
 msgid "Name"
-msgstr "Name"
+msgstr "Naziv"
 
 #. module: picking_dispatch
 #: help:picking.dispatch,name:0 help:picking.dispatch.creator,name:0
 msgid "Name of the picking dispatch"
-msgstr "Name of the picking dispatch"
+msgstr "Naziv zbirnika odpreme"
 
 #. module: picking_dispatch
 #: code:addons/picking_dispatch/wizard/check_assign_all.py:36
 #, python-format
 msgid "No selected dispatch"
-msgstr "No selected dispatch"
+msgstr "Ni izbranih odprem"
 
 #. module: picking_dispatch
 #: code:addons/picking_dispatch/wizard/dispatch_assign_picker.py:45
 #: code:addons/picking_dispatch/wizard/dispatch_start.py:38
 #, python-format
 msgid "No selected picking dispatch"
-msgstr "No selected picking dispatch"
+msgstr "Ni izbranih zbirnikov odprem"
 
 #. module: picking_dispatch
 #: code:addons/picking_dispatch/wizard/create_dispatch.py:96
 #, python-format
 msgid "No valid stock moves found to create the dispatch!"
-msgstr "No valid stock moves found to create the dispatch!"
+msgstr "Noben veljaven premik zalog za ustvarjanje odpreme ni najden!"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form
 #: field:picking.dispatch,notes:0 field:picking.dispatch.creator,notes:0
 msgid "Notes"
-msgstr "Notes"
+msgstr "Opombe"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 msgid "Order Date"
-msgstr "Order Date"
+msgstr "Datum naloga"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Picked By"
-msgstr "Picked By"
+msgstr "Odbral"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,picker_id:0
 #: field:picking.dispatch.assign.picker,picker_id:0
 #: field:picking.dispatch.creator,picker_id:0
 msgid "Picker"
-msgstr "Picker"
+msgstr "Odbiratelj"
 
 #. module: picking_dispatch
 #: model:ir.actions.act_window,name:picking_dispatch.action_picking_dispatch_tree
@@ -346,147 +347,147 @@ msgstr "Picker"
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_tree
 #: view:picking.dispatch.creator:picking_dispatch.view_create_picking_dispatch
 msgid "Picking Dispatch"
-msgstr "Picking Dispatch"
+msgstr "Zbirnik odpreme"
 
 #. module: picking_dispatch
 #: model:ir.model,name:picking_dispatch.model_picking_dispatch_assign_picker
 msgid "Picking Dispatch Assign Picker"
-msgstr "Picking Dispatch Assign Picker"
+msgstr "Dodeli odbiratelja zbirnika odpreme"
 
 #. module: picking_dispatch
 #: model:ir.model,name:picking_dispatch.model_picking_dispatch_check_assign_all
 msgid "Picking Dispatch Check Availability"
-msgstr "Picking Dispatch Check Availability"
+msgstr "Preveri razpoložljivost zbirnika odpreme"
 
 #. module: picking_dispatch
 #: model:ir.model,name:picking_dispatch.model_picking_dispatch_creator
 msgid "Picking Dispatch Creator"
-msgstr "Picking Dispatch Creator"
+msgstr "Zbirnik odpreme ustvaril"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form
 msgid "Picking Dispatch Name"
-msgstr "Picking Dispatch Name"
+msgstr "Naziv zbirnika odpreme"
 
 #. module: picking_dispatch
 #: model:ir.model,name:picking_dispatch.model_picking_dispatch_start
 msgid "Picking Dispatch Start"
-msgstr "Picking Dispatch Start"
+msgstr "Zagon zbirnika odpreme"
 
 #. module: picking_dispatch
 #: view:picking.dispatch.creator:picking_dispatch.view_create_picking_dispatch
 msgid "Picking Dispatch properties"
-msgstr "Picking Dispatch properties"
+msgstr "Lastnosti zbirnika odpreme"
 
 #. module: picking_dispatch
 #: model:ir.model,name:picking_dispatch.model_stock_picking
 msgid "Picking List"
-msgstr "Picking List"
+msgstr "Zbirnik"
 
 #. module: picking_dispatch
 #: model:ir.actions.report.xml,name:picking_dispatch.action_report_picking_dispatch
 msgid "Picking dispatch"
-msgstr "Picking dispatch"
+msgstr "Zbirnik odpreme"
 
 #. module: picking_dispatch
 #: view:res.company:picking_dispatch.view_company_form_inherit
 msgid "Pickings"
-msgstr "Pickings"
+msgstr "Zbirniki"
 
 #. module: picking_dispatch
 #: constraint:picking.dispatch:0
 msgid "Please select a picker."
-msgstr "Please select a picker."
+msgstr "Izberite odbiratelja"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Printed by:"
-msgstr "Printed by:"
+msgstr "Natisnil:"
 
 #. module: picking_dispatch
 #: model:ir.model,name:picking_dispatch.model_product_product
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Product"
-msgstr "Product"
+msgstr "Proizvod"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Product Code"
-msgstr "Product Code"
+msgstr "Koda proizvoda"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "QTY"
-msgstr "QTY"
+msgstr "KOL"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 msgid "Ready to Process"
-msgstr "Ready to Process"
+msgstr "Pripravljeno na obdelavo"
 
 #. module: picking_dispatch
 #: view:stock.picking:picking_dispatch.view_picking_form
 msgid "Related Dispatch"
-msgstr "Related Dispatch"
+msgstr "Povezana odprema"
 
 #. module: picking_dispatch
 #: field:stock.picking,related_dispatch_ids:0
 msgid "Related Dispatch Picking"
-msgstr "Related Dispatch Picking"
+msgstr "Povezan zbirnik odpreme"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form
 msgid "Related Picking"
-msgstr "Related Picking"
+msgstr "Povezan zbirnik"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form
 #: view:picking.dispatch.start:picking_dispatch.view_picking_dispatch_start
 msgid "Start"
-msgstr "Start"
+msgstr "Zagon"
 
 #. module: picking_dispatch
 #: model:ir.actions.act_window,name:picking_dispatch.action_picking_dispatch_start
 #: view:picking.dispatch.start:picking_dispatch.view_picking_dispatch_start
 msgid "Start Dispatches"
-msgstr "Start Dispatches"
+msgstr "Zagon odprem"
 
 #. module: picking_dispatch
 #: code:addons/picking_dispatch/wizard/dispatch_start.py:53
 #, python-format
 msgid "Started Picking Dispatch"
-msgstr "Started Picking Dispatch"
+msgstr "Zagnani zbirnik odpreme"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 msgid "State"
-msgstr "State"
+msgstr "Stanje"
 
 #. module: picking_dispatch
 #: model:ir.model,name:picking_dispatch.model_stock_move
 msgid "Stock Move"
-msgstr "Stock Move"
+msgstr "Premik zaloge"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form
 msgid "Stock Moves"
-msgstr "Stock Moves"
+msgstr "Premiki zalog"
 
 #. module: picking_dispatch
 #: help:picking.dispatch.creator,picker_id:0
 msgid "The user to which the pickings are assigned"
-msgstr "The user to which the pickings are assigned"
+msgstr "Uporabnik, kateremu so zbirniki dodeljeni"
 
 #. module: picking_dispatch
 #: code:addons/picking_dispatch/picking_dispatch.py:183
 #, python-format
 msgid "This dispatch cannot be processed until %s"
-msgstr "This dispatch cannot be processed until %s"
+msgstr "Ta odprema ne more biti obdelana do %s"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Variant"
-msgstr "Variant"
+msgstr "Različica"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
@@ -497,40 +498,40 @@ msgstr "Visa:_________________"
 #: view:product.product:picking_dispatch.product_normal_form_view
 #: field:product.product,description_warehouse:0
 msgid "Warehouse Description"
-msgstr "Warehouse Description"
+msgstr "Opis skladišča"
 
 #. module: picking_dispatch
 #: code:addons/picking_dispatch/wizard/create_dispatch.py:113
 #, python-format
 msgid "Warning !"
-msgstr "Warning !"
+msgstr "Pozor!"
 
 #. module: picking_dispatch
 #: view:picking.dispatch.creator:picking_dispatch.view_create_picking_dispatch
 msgid "_Create"
-msgstr "_Create"
+msgstr "_Ustvari"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "breakage"
-msgstr "breakage"
+msgstr "okvara"
 
 #. module: picking_dispatch
 #: help:picking.dispatch,date:0
 msgid "date on which the picking dispatched is to be processed"
-msgstr "date on which the picking dispatched is to be processed"
+msgstr "datum, na katerega se zbirnik odpreme obdela"
 
 #. module: picking_dispatch
 #: help:picking.dispatch,notes:0 help:picking.dispatch.creator,notes:0
 msgid "free form remarks"
-msgstr "free form remarks"
+msgstr "prosti komentarji"
 
 #. module: picking_dispatch
 #: help:picking.dispatch,backorder_id:0
 msgid ""
 "if this dispatch was split, this links to the dispatch order containing the "
 "other part which was processed"
-msgstr "if this dispatch was split, this links to the dispatch order containing the other part which was processed"
+msgstr "če je ta odprema bila razdeljena, se poveže z odpremnim nalogom, ki vsebuje drugi del, ki je bil obdelan"
 
 #. module: picking_dispatch
 #: view:picking.dispatch.assign.picker:picking_dispatch.view_picking_dispatch_assign_picker
@@ -538,7 +539,7 @@ msgstr "if this dispatch was split, this links to the dispatch order containing 
 #: view:picking.dispatch.creator:picking_dispatch.view_create_picking_dispatch
 #: view:picking.dispatch.start:picking_dispatch.view_picking_dispatch_start
 msgid "or"
-msgstr "or"
+msgstr "ali"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
@@ -548,31 +549,31 @@ msgstr "picker_id"
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "stock error"
-msgstr "stock error"
+msgstr "napaka zaloge"
 
 #. module: picking_dispatch
 #: help:picking.dispatch,move_ids:0
 msgid "the list of moves to be processed"
-msgstr "the list of moves to be processed"
+msgstr "seznam premikov za obdelavo"
 
 #. module: picking_dispatch
 #: help:picking.dispatch,state:0
 msgid ""
 "the state of the picking. Workflow is draft -> assigned -> progress -> done "
 "or cancel"
-msgstr "the state of the picking. Workflow is draft -> assigned -> progress -> done or cancel"
+msgstr "stanje zbirnika. Procesni tok je osnutek -> dodeljeno -> v teku -> opravljeno ali preklicano"
 
 #. module: picking_dispatch
 #: help:picking.dispatch,picker_id:0
 msgid "the user to which the pickings are assigned"
-msgstr "the user to which the pickings are assigned"
+msgstr "uporabnik, kateremu so zbirniki dodeljeni"
 
 #. module: picking_dispatch
 #: help:res.company,default_picker_id:0
 msgid "the user to which the pickings are assigned by default"
-msgstr "the user to which the pickings are assigned by default"
+msgstr "uporabnik, kateremu so zbirniki privzeto dodeljeni"
 
 #. module: picking_dispatch
 #: help:stock.move,dispatch_id:0
 msgid "who this move is dispatched to"
-msgstr "who this move is dispatched to"
+msgstr "komu je bil premik odpremljen"
