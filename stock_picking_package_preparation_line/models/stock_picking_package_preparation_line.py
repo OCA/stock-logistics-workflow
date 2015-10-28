@@ -43,7 +43,7 @@ class StockPickingPackagePreparationLine(models.Model):
              "will not generate a back order, but will just deliver the new "
              "quantity")
     product_uom = fields.Many2one('product.uom')
-    sequence = fields.Integer()
+    sequence = fields.Integer(default=10)
     note = fields.Text()
 
     @api.multi
