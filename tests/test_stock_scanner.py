@@ -46,16 +46,17 @@ class TestStockScanner(common.TransactionCase):
 
         # call to screen_color
         ret = scanner_hardware.scanner_call(code, action='screen_colors')
-        self.assertEquals(('M', {'base': ('white', 'blue'),
-                                 'error': ('yellow', 'red'),
-                                 'info': ('yellow', 'blue')}, 0),
-                          ret)
+        self.assertEquals(('M', {
+            'base': ('white', 'blue'),
+            'error': ('yellow', 'red'),
+            'info': ('yellow', 'blue'),
+        }, 0), ret)
 
         #  a call without action will return the list of root scenario
         scanner_scenario_menu_tutorial = self.browse_ref(
-            'stock_scanner.scanner_scenario_menu_tutorial')
+            'stock_scanner.9c85e020-3992-11e2-9e8f-74de2b37388c')
         ret = scanner_hardware.scanner_call(code, action=None)
-        self.assertEquals(('L', [scanner_scenario_menu_tutorial.name], 0), ret)
+        self.assertEquals(('L', ['Tutorial', 'Stock', 'Tests'], 0), ret)
 
         # to select a menu we call the hardware whith action = action and
         # message = name of the menu to select
@@ -66,11 +67,11 @@ class TestStockScanner(common.TransactionCase):
         # the result is the list of nested scenario since or scenario is a
         # menu with the parent menu as title
         scanner_scenario_step_types = self.browse_ref(
-            'stock_scanner.scanner_scenario_step_types')
+            'stock_scanner.c53aa73a-3992-11e2-a0eb-74de2b37388c')
 
         self.assertEquals(
-            ('L', ['|' + scanner_scenario_menu_tutorial.name,
-                   scanner_scenario_step_types.name], 0), ret)
+            ('L', ['|' + 'Tutorial',
+                   'Step types', 'Sentinel'], 0), ret)
 
         # when we select a scenario of type scenario,
         # the scenario is linked to the hardware
@@ -91,7 +92,7 @@ class TestStockScanner(common.TransactionCase):
                            0), ret)
         # and the current step is saved on the hardware
         scanner_scenario_step_types_intro_step = self.browse_ref(
-            'stock_scanner.scanner_scenario_step_types_intro_step')
+            'stock_scanner.e20faafe-3992-11e2-a73e-74de2b37388c')
         self.assertEquals(
             scanner_hardware_1.step_id,
             scanner_scenario_step_types_intro_step)
@@ -109,7 +110,7 @@ class TestStockScanner(common.TransactionCase):
                            0), ret)
 
         scanner_scenario_step_types_message_step = self.browse_ref(
-            'stock_scanner.scanner_scenario_step_types_message_step')
+            'stock_scanner.ede349e4-3992-11e2-9044-74de2b37388c')
         self.assertEquals(
             scanner_hardware_1.step_id,
             scanner_scenario_step_types_message_step)
@@ -141,7 +142,7 @@ class TestStockScanner(common.TransactionCase):
             code, action='action', message='',
             transition_type='keyboard')
         scanner_scenario_step_types_list_step = self.browse_ref(
-            'stock_scanner.scanner_scenario_step_types_list_step')
+            'stock_scanner.1e4f0d52-3993-11e2-82db-74de2b37388c')
         self.assertEquals(
             scanner_hardware_1.step_id,
             scanner_scenario_step_types_list_step)
@@ -158,7 +159,7 @@ class TestStockScanner(common.TransactionCase):
 
         # the next call to the parser return the available scenarii
         ret = scanner_hardware.scanner_call(code, action=None)
-        self.assertEquals(('L', [scanner_scenario_menu_tutorial.name], 0), ret)
+        self.assertEquals(('L', ['Tutorial', 'Stock', 'Tests'], 0), ret)
 
     def test_login_logout(self):
         demo_uid = self.ref('base.user_demo')
@@ -185,12 +186,10 @@ class TestStockScanner(common.TransactionCase):
         # stock.group_stock_user as previously
         scanner_hardware_1 = self.browse_ref(
             'stock_scanner.scanner_hardware_1')
-        scanner_scenario_menu_tutorial = self.browse_ref(
-            'stock_scanner.scanner_scenario_menu_tutorial')
         code = scanner_hardware_1.code
         scanner_hardware = self.env['scanner.hardware']
         ret = scanner_hardware.sudo(demo_uid).scanner_call(code, action=None)
-        self.assertEquals(('L', [scanner_scenario_menu_tutorial.name], 0), ret)
+        self.assertEquals(('L', ['Tutorial', 'Stock', 'Tests'], 0), ret)
         # The technical user to use by sentinel when using the login/logout
         # functionality show nothings
         ret = scanner_hardware.sudo(sentinel_uid).scanner_call(code,
@@ -252,9 +251,12 @@ class TestStockScanner(common.TransactionCase):
         ret = scanner_hardware.scanner_call(
             code, action='menu', message=None,
             transition_type='keyboard')
-        self.assertEquals(('L',
-                           [scanner_scenario_menu_tutorial.name,
-                            scanner_scenario_logout.name], 0), ret)
+        self.assertEquals(('L', [
+            'Tutorial',
+            'Stock',
+            'Tests',
+            'Logout',
+        ], 0), ret)
 
         # if we logout, only the login scenario will be displayed again
         ret = scanner_hardware.scanner_call(

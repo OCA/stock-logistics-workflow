@@ -47,6 +47,7 @@
 
     'qweb': [],
     'demo': [
+        'demo/stock_scanner_demo.xml',
         'demo/Tutorial/Tutorial.scenario',
         'demo/Tutorial/Step_types/Step_types.scenario',
         'demo/Tutorial/Sentinel/Sentinel.scenario',
