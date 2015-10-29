@@ -25,6 +25,6 @@
 #
 ##############################################################################
 
-
+from . import load_scenario
 from . import stock_scanner
 from . import wizard
