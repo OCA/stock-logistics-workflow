@@ -34,7 +34,6 @@ from openerp import workflow
 from openerp.exceptions import Warning, AccessDenied
 from openerp.exceptions import except_orm
 
-from threading import Semaphore
 import logging
 import uuid
 from psycopg2 import OperationalError, errorcodes
@@ -177,11 +176,6 @@ class scanner_scenario(models.Model):
         if not super(scanner_scenario, self)._check_recursion():
             raise Warning(_('Error ! You can not create recursive scenarios.'))
 
-    # Dict to save the semaphores
-    # Format : {scenario: {warehouse: {reference_document: instance of
-    # semaphore}}}
-    _semaphores = {}
-
     @api.model
     def create(self, vals):
         """
@@ -192,46 +186,6 @@ class scanner_scenario(models.Model):
             vals['reference_res_id'] = uuid.uuid1()
 
         return super(scanner_scenario, self).create(vals=vals)
-
-    def _semaphore_acquire(self, warehouse_id, reference_document):
-        """
-        Make an acquire on a semaphore to take a token
-        The semaphore is use like a mutex one on one
-        """
-        # Retrieve the active semaphore
-        semaphore = self._semaphores.get(
-            self.id,
-            {}).get(
-            warehouse_id,
-            {}).get(
-            reference_document,
-            None)
-
-        # If there is no semaphore, create a new one
-        if semaphore is None:
-            semaphore = Semaphore()
-
-            # No semaphore for this scenario
-            if not self._semaphores.get(id, False):
-                self._semaphores[self.id] = {}
-
-            # no semaphore for this scenario in this warehouse
-            if not self._semaphores[self.id].get(warehouse_id, False):
-                self._semaphores[self.id][warehouse_id] = {}
-
-            # Store the semaphore
-            self._semaphores[self.id][warehouse_id][
-                reference_document] = semaphore
-
-        # Acquire the mutex
-        semaphore.acquire()
-
-    def _semaphore_release(self, warehouse_id, reference_document):
-        """
-        Make a release on a semaphore to free a token
-        The semaphore is use like a mutex one on one
-        """
-        self._semaphores[self.id][warehouse_id][reference_document].release()
 
 
 class scanner_scenario_step(models.Model):
@@ -956,13 +910,7 @@ class scanner_hardware(models.Model):
             previous_steps_message=terminal.previous_steps_message,
             obj=current_object)
 
-        scenario_rs = terminal.scenario_id
         try:
-            # MUTEX Acquire
-            terminal.scenario_id._semaphore_acquire(
-                terminal.warehouse_id.id,
-                terminal.reference_document or 0)
-
             # Execute the step
             step = terminal.step_id
 
@@ -996,10 +944,6 @@ class scanner_hardware(models.Model):
         except:
             logger.exception('Error when executing code \n, %s',
                              step.python_code)
-
-        scenario_rs._semaphore_release(
-            terminal.warehouse_id.id,
-            terminal.reference_document or 0)
 
         return (
             ld.get(
