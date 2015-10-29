@@ -27,21 +27,8 @@
     'name': 'Stock Scanner',
     'version': '1.0',
     'category': 'Generic Modules/Inventory Control',
-    'description': """Allows managing barcode readers with simple scenarios
-- You can define a workfow for each object (stock picking, inventory, sale,
-etc)
-- Works with all scanner hardware model (just SSH client required)
-
-The "sentinel" specific ncurses client, available in the "hardware" directory,
-requires the "openobject-library" python module, available from pip :
-    $ sudo pip install openobject-library
-
-Some demo/tutorial scenarios are available in the "demo" directory of the
-module.
-To import these scenarios, you can use the import script located in the
-"scripts" directory.
-""",
-    'author': 'SYLEAM',
+    'author': 'SYLEAM,'
+              'ACSONE SA/NV',
     'website': 'http://www.Syleam.fr/',
     'images': [],
     'depends': [
@@ -50,7 +37,11 @@ To import these scenarios, you can use the import script located in the
     ],
 
     'data': [
+        'security/stock_scanner_security.xml',
         'security/ir.model.access.csv',
+        'data/stock_scanner_data.xml',
+        'data/ir_cron.xml',
+        'wizard/stock_scanner_config_wizard_view.xml',
         'stock_scanner_view.xml',
     ],
 

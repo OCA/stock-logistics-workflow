@@ -2,19 +2,19 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    wms_scanner module for OpenERP, Module for manage barcode reader
+#    stock_scanner module for OpenERP, Module for manage barcode reader
 #    Copyright (C) 2011 SYLEAM (<http://www.syleam.fr/>)
 #              Christophe CHAUVET <christophe.chauvet@syleam.fr>
 #              Jean-Sébastien SUZANNE <jean-sebastien.suzanne@syleam.fr>
 #
-#    This file is a part of wms_scanner
+#    This file is a part of stock_scanner
 #
-#    wms_scanner is free software: you can redistribute it and/or modify
+#    stock_scanner is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
-#    wms_scanner is distributed in the hope that it will be useful,
+#    stock_scanner is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
@@ -106,6 +106,8 @@ for directory in directories:
     model_obj = Object(cnx, 'ir.model')
     company_obj = Object(cnx, 'res.company')
     warehouse_obj = Object(cnx, 'stock.warehouse')
+    user_obj = Object(cnx, 'res.users')
+    group_obj = Object(cnx, 'res.groups')
     step_obj = Object(cnx, 'scanner.scenario.step')
     trans_obj = Object(cnx, 'scanner.scenario.transition')
     xml_file = open('%s/scenario.xml' % directory, 'r')
@@ -138,6 +140,20 @@ for directory in directories:
                 0, None, None, {'active_test': False})
             if warehouse_ids:
                 scen_vals['warehouse_ids'].append((4, warehouse_ids[0]))
+        elif node.tag == 'group_ids':
+            if 'group_ids' not in scen_vals:
+                scen_vals['group_ids'] = []
+                group_ids = group_obj.search(
+                    [('full_name', '=', node.text)])
+                if group_ids:
+                    scen_vals['group_ids'].append((4, group_ids[0]))
+        elif node.tag == 'user_ids':
+            if 'user_ids' not in scen_vals:
+                scen_vals['user_ids'] = []
+                user_ids = user_obj.search(
+                    [('login', '=', node.text)])
+                if user_ids:
+                    scen_vals['user_ids'].append((4, user_ids[0]))
         elif node.tag in ('active', 'shared_custom'):
             scen_vals[node.tag] = eval(node.text) or False
         else:

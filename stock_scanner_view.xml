@@ -60,6 +60,7 @@
 	                    <field name="warehouse_id"/>
 	                    <field name="user_id"/>
 	                    <field name="log_enabled"/>
+                        <field name="last_call_dt"/>
 	                    <newline/>
                     </group>
                     <group colspan="4">
@@ -234,6 +235,14 @@
                         </page>
                         <page string="Warehouses">
                             <field name="warehouse_ids" nolabel="1" colspan="4"/>
+                        </page>
+                        <page string="Security">
+                            <group colspan="2" col="2">
+                                <separator string="Allowed Users" colspan="1"/>
+                                <separator string="Allowed Users Groups" colspan="1"/>
+                                <field name="user_ids" nolabel="1"/>
+                                <field name="group_ids" nolabel="1"/>
+                            </group>
                         </page>
                         <page string="Note">
                             <separator string="Add note, modification date, etc." colspan="4"/>

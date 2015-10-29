@@ -1,0 +1,226 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        <record id="hardware_scanner_session_timeout_sec" model="ir.config_parameter">
+            <field name="key">hardware_scanner_session_timeout</field>
+            <field name="value">1800</field>
+        </record>
+
+        <!-- Login scenario -->
+
+        <record id ="scanner_scenario_login" model="scanner.scenario">
+            <field name="name">Login</field>
+            <field name="type">scenario</field>
+            <field name="group_ids" eval="[(4, ref('group_stock_scanner_sentinel')),]"/>
+            <field name="model_id" ref="model_scanner_hardware"/>
+            <field name="active" eval="False"/>
+        </record>
+
+        <record id="scanner_scenario_login_step_login" model="scanner.scenario.step">
+            <field name="name">Login name</field>
+            <field name="no_back" eval="True"/>
+            <field name="step_start" eval="True"/>
+            <field name="step_stop" eval="False"/>
+            <field name="step_back" eval="True"/>
+            <field name="scenario_id" ref="scanner_scenario_login"/>
+            <field name="python_code"><![CDATA['Use <m> or <message> to retrieve the data transmitted by the scanner.'
+'Use <t> or <terminal> to retrieve the running terminal browse record.'
+'Put the returned action code in <act>, as a single character.'
+'Put the returned result or message in <res>, as a list of strings.'
+'Put the returned value in <val>, as an integer'
+from openerp import _
+act = 'T'
+res = [
+    _('Login ?'),
+]
+]]></field>
+        </record>
+
+        <record id="scanner_scenario_login_step_pwd" model="scanner.scenario.step">
+            <field name="name">Pwd</field>
+            <field name="no_back" eval="False"/>
+            <field name="step_start" eval="False"/>
+            <field name="step_stop" eval="False"/>
+            <field name="step_back" eval="False"/>
+            <field name="scenario_id" ref="scanner_scenario_login"/>
+            <field name="python_code"><![CDATA['Use <m> or <message> to retrieve the data transmitted by the scanner.'
+'Use <t> or <terminal> to retrieve the running terminal browse record.'
+'Put the returned action code in <act>, as a single character.'
+'Put the returned result or message in <res>, as a list of strings.'
+'Put the returned value in <val>, as an integer'
+from openerp import _
+terminal.write({'tmp_val1': message})
+act = 'T'
+res = [
+    _('| Login %s') %  message,
+    'Pwd ?',
+]
+]]></field>
+        </record>
+
+        <record id="scanner_scenario_login_step_done" model="scanner.scenario.step">
+            <field name="name">Authentication OK</field>
+            <field name="no_back" eval="False"/>
+            <field name="step_start" eval="False"/>
+            <field name="step_stop" eval="True"/>
+            <field name="step_back" eval="False"/>
+            <field name="scenario_id" ref="scanner_scenario_login"/>
+            <field name="python_code"><![CDATA['Use <m> or <message> to retrieve the data transmitted by the scanner.'
+'Use <t> or <terminal> to retrieve the running terminal browse record.'
+'Put the returned action code in <act>, as a single character.'
+'Put the returned result or message in <res>, as a list of strings.'
+'Put the returned value in <val>, as an integer'
+terminal.login(terminal.tmp_val1, message)
+from openerp import _
+act = 'F'
+res = [
+   _('You are now authenticated as %s !') % terminal.tmp_val1 ,
+]
+]]></field>
+        </record>
+
+        <record id="scanner_scenario_login_step_error" model="scanner.scenario.step">
+            <field name="name">Authentication error</field>
+            <field name="no_back" eval="False"/>
+            <field name="step_start" eval="False"/>
+            <field name="step_stop" eval="False"/>
+            <field name="step_back" eval="False"/>
+            <field name="scenario_id" ref="scanner_scenario_login"/>
+            <field name="python_code"><![CDATA['Use <m> or <message> to retrieve the data transmitted by the scanner.'
+'Use <t> or <terminal> to retrieve the running terminal browse record.'
+'Put the returned action code in <act>, as a single character.'
+'Put the returned result or message in <res>, as a list of strings.'
+'Put the returned value in <val>, as an integer'
+from openerp import _
+act = 'E'
+res = [
+    _('Wrong login/password'),
+]
+val = True
+
+]]></field>
+        </record>
+
+        <record id="scanner_scenario_transition_login_to_pwd" model="scanner.scenario.transition">
+            <field name="name">Login entered -&gt; Enter password</field>
+            <field name="from_id" ref="scanner_scenario_login_step_login"/>
+            <field name="to_id" ref="scanner_scenario_login_step_pwd"/>
+            <field name="transition_type">keyboard</field>
+            <field name="scenario_id" ref="scanner_scenario_login"/>
+            <field name="condition">True</field>
+        </record>
+
+        <record id="scanner_scenario_transition_pwd_to_done" model="scanner.scenario.transition">
+            <field name="name">Authenticate</field>
+            <field name="from_id" ref="scanner_scenario_login_step_pwd"/>
+            <field name="to_id" ref="scanner_scenario_login_step_done"/>
+            <field name="transition_type">keyboard</field>
+            <field name="scenario_id" ref="scanner_scenario_login"/>
+            <field name="condition">terminal.check_credentials(terminal.tmp_val1, message)[0]</field>
+            <field name="sequence">0</field>
+        </record>
+
+        <record id="scanner_scenario_transition_pwd_to_error" model="scanner.scenario.transition">
+            <field name="name">Authentication error</field>
+            <field name="from_id" ref="scanner_scenario_login_step_pwd"/>
+            <field name="to_id" ref="scanner_scenario_login_step_error"/>
+            <field name="transition_type">keyboard</field>
+            <field name="scenario_id" ref="scanner_scenario_login"/>
+            <field name="condition">True</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- Logout scenario -->
+        <record id ="scanner_scenario_logout" model="scanner.scenario">
+            <field name="name">Logout</field>
+            <field name="type">scenario</field>
+            <field name="model_id" ref="model_scanner_hardware"/>
+            <field name="active" eval="False"/>
+            <field name="sequence" eval="9999"/>
+            <field name="group_ids" eval="[(4, ref('base.group_user')),]"/>
+        </record>
+
+        <record id="scanner_scenario_logout_step_confirm" model="scanner.scenario.step">
+            <field name="name">Logout confirm</field>
+            <field name="no_back" eval="False"/>
+            <field name="step_start" eval="True"/>
+            <field name="step_stop" eval="False"/>
+            <field name="step_back" eval="False"/>
+            <field name="scenario_id" ref="scanner_scenario_logout"/>
+            <field name="python_code"><![CDATA['Use <m> or <message> to retrieve the data transmitted by the scanner.'
+'Use <t> or <terminal> to retrieve the running terminal browse record.'
+'Put the returned action code in <act>, as a single character.'
+'Put the returned result or message in <res>, as a list of strings.'
+'Put the returned value in <val>, as an integer'
+from openerp import _
+act = 'C'
+res = [
+    '',
+    _('Do you really want to logout?'),
+]
+]]></field>
+        </record>
+
+        <record id="scanner_scenario_logout_step_confirmed" model="scanner.scenario.step">
+            <field name="name">Logout confirmed</field>
+            <field name="no_back" eval="False"/>
+            <field name="step_start" eval="False"/>
+            <field name="step_stop" eval="True"/>
+            <field name="step_back" eval="False"/>
+            <field name="scenario_id" ref="scanner_scenario_logout"/>
+            <field name="python_code"><![CDATA['Use <m> or <message> to retrieve the data transmitted by the scanner.'
+'Use <t> or <terminal> to retrieve the running terminal browse record.'
+'Put the returned action code in <act>, as a single character.'
+'Put the returned result or message in <res>, as a list of strings.'
+'Put the returned value in <val>, as an integer'
+from openerp import _
+terminal.logout()
+act = 'F'
+res = [
+   _('You are now logged out'),
+   _('Bye !'),
+]
+]]></field>
+            </record>
+
+        <record id="scanner_scenario_logout_step_cancelled" model="scanner.scenario.step">
+            <field name="name">Logout cancelled</field>
+            <field name="no_back" eval="False"/>
+            <field name="step_start" eval="False"/>
+            <field name="step_stop" eval="True"/>
+            <field name="step_back" eval="False"/>
+            <field name="scenario_id" ref="scanner_scenario_logout"/>
+            <field name="python_code"><![CDATA['Use <m> or <message> to retrieve the data transmitted by the scanner.'
+'Use <t> or <terminal> to retrieve the running terminal browse record.'
+'Put the returned action code in <act>, as a single character.'
+'Put the returned result or message in <res>, as a list of strings.'
+'Put the returned value in <val>, as an integer'
+from openerp import _
+act = 'F'
+res = [
+   _('Logout cancelled'),
+   _('You are authenticated as %s !') % terminal.user_id.name,
+]
+]]></field>
+            </record>
+ 
+        <record id="scanner_scenario_transition_logout_to_confirmed" model="scanner.scenario.transition">
+            <field name="name">Logout confirmed</field>
+            <field name="from_id" ref="scanner_scenario_logout_step_confirm"/>
+            <field name="to_id" ref="scanner_scenario_logout_step_confirmed"/>
+            <field name="transition_type">keyboard</field>
+            <field name="scenario_id" ref="scanner_scenario_logout"/>
+            <field name="condition">message</field>
+        </record>
+
+        <record id="scanner_scenario_transition_logout_to_cancelled" model="scanner.scenario.transition">
+            <field name="name">Logout cancelled</field>
+            <field name="from_id" ref="scanner_scenario_logout_step_confirm"/>
+            <field name="to_id" ref="scanner_scenario_logout_step_cancelled"/>
+            <field name="transition_type">keyboard</field>
+            <field name="scenario_id" ref="scanner_scenario_logout"/>
+            <field name="condition">not message</field>
+        </record>
+    </data>
+
+</openerp>

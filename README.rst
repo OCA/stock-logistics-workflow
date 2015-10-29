@@ -2,15 +2,26 @@
 Stock Scanner : WorkFlow engine for scanner hardware
 ====================================================
 
+Allows managing barcode readers with simple scenarios
+- You can define a workfow for each object (stock picking, inventory, sale, etc)
+- Works with all scanner hardware model (just SSH client required)
+
+The "sentinel" specific ncurses client, available in the "hardware" directory, requires the "openobject-library" python module, available from pip :
+    $ sudo pip install openobject-library
+
+Some demo/tutorial scenarios are available in the "demo" directory of the module.
+To import these scenarios, you can use the import script located in the
+"scripts" directory.
+
 How does it work ?
 ==================
 
 On start-up, the client lists available scenarii.
-When the user selects a scenario, the current scenario and step are stored on the hardware configuration's entry in OpenERP.
+When the user selects a scenario, the current scenario and step are stored on the hardware configuration's entry in Odoo.
 
 When the client sends a message to the server, the next step is selected depending on the current step and the message sent.
 Then, the server returns the result of the step, which contains the step type code and the text to display on the hardware screen.
-Unlike the standard OpenERP Workflow, each step needs to find a valid transition, because a step needs to be displayed on the hardware screen at all times.
+Unlike the standard Odoo Workflow, each step needs to find a valid transition, because a step needs to be displayed on the hardware screen at all times.
 
 Installation
 ============
@@ -19,7 +30,7 @@ If you plan to use the specific "sentinel.py", you will need the "openobject-lib
 
 .. note::
 
-   You must use openobject-library earlier than 2.0 with OpenERP v7.
+   You must use openobject-library earlier than 2.0 with Odoo.
    The version 2.0 of openobject-library only implements the Net-RPC protocol, which was removed from v7.
 
 To test the module, some demo scenarii are available in the `demo` directory of the module.
@@ -27,14 +38,40 @@ To test the module, some demo scenarii are available in the `demo` directory of 
 Configuration
 =============
 
-In OpenERP : Declare hardware
------------------------------
+In Odoo
+-------
 
-You have to declare some hardware scanners in OpenERP.
+Declare hardware
+^^^^^^^^^^^^^^^^
+
+You have to declare some hardware scanners in Odoo.
 
 Go to "Warehouse > Configuration > Scanner Hardware" and create a new record.
 
 The "step type code" sent by the "sentinel.py" client at start-up is the IP address of the hardware, if connected through SSH.
+
+If needed enable Login/Logout
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The module come with 2 predifined scenarii for Login and Logout. The functionality is disabled by default and the user to use in
+Odoo must be specified in the .oerp_sentinelrc file used by sentinel and can be overriden on the Scanner Hardware definition
+in Odoo. 
+
+If the Login/logout functionality is enabled, when a user start a session with sentinel, only the Login scenario is displayed on the
+screen. The scenario will prompt the user for its login and pwd. If the authentication succeed, each interaction with Odoo will be done
+using the uid of the connected user. Once connected, a Logout scenario is displayed in the list of available scenarii and the Login
+scenario no more appear. 
+
+The Login/logout functionality enable you to specify on the scenario a list of users and/or a list of groups with access to the scenario.
+
+To enable the Login/logout functionality:
+    * Go to "Settings > Warehouse" and check the checkbox Login/logout scenarii enabled.
+    * Create a *Technical User* 'sentinel' **without roles in Human Resources** and with 'Sentinel: technical users' checked.
+    * Use this user to launch your sentinel session.
+
+Be carefull, the role *Sentinel: technical users* is a technical role and should be used only by sentinel.
+
+The timeout of sessions is managed by a dedicated cron that reset the incative sessions. The timeout can be configured on 
+settings. "Settings > Warehouse"
 
 For the sentinel.py client
 --------------------------
@@ -51,7 +88,7 @@ Creation
 
 The preferred way to start the creation of a scenario is to create steps and transitions in diagram view.
 
-Once your steps are created, you can write python code directly from OpenERP, or you can export the scenario to write the python code with your preferred code editor.
+Once your steps are created, you can write python code directly from Odoo, or you can export the scenario to write the python code with your preferred code editor.
 
 In the python code of each step, some variables are available :
     - cr : Cursor to the database
@@ -73,7 +110,7 @@ As stated previously, the step must always return :
 - Optionally, a default value, in the `val` variable
 
 Step types
-~~~~~~~~~~
+----------
 
 The step types are mostly managed by the client.
 
@@ -125,6 +162,7 @@ Valid key codes are :
     - KEY_RIGHT : Right arrow
     - KEY_BACKSPACE : Backspace
     - KEY_DC : Delete
+
 Credits
 =======
 
