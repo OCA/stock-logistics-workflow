@@ -98,23 +98,23 @@ class scanner_scenario(models.Model):
         default=True,
         help='If check, this object is always available')
     model_id = fields.Many2one(
-        'ir.model',
+        comodel_name='ir.model',
         string='Model',
         required=False,
         ondelete='restrict',
         help='Model used for this scenario')
     step_ids = fields.One2many(
-        'scanner.scenario.step',
-        'scenario_id',
+        comodel_name='scanner.scenario.step',
+        inverse_name='scenario_id',
         string='Scenario',
         ondelete='cascade',
         help='Step of the current running scenario')
     warehouse_ids = fields.Many2many(
-        'stock.warehouse',
-        'scanner_scenario_warehouse_rel',
-        'scenario_id',
-        'warehouse_id',
-        'Warehouses',
+        comodel_name='stock.warehouse',
+        relation='scanner_scenario_warehouse_rel',
+        column1='scenario_id',
+        column2='warehouse_id',
+        string='Warehouses',
         help='Warehouses for this scenario')
     notes = fields.Text(
         string='Notes',
@@ -133,37 +133,37 @@ class scanner_scenario(models.Model):
         help='Allows to share the custom values with a shared scanner in the '
              'same warehouse')
     parent_id = fields.Many2one(
-        'scanner.scenario',
+        comodel_name='scanner.scenario',
         string='Parent',
         required=False,
         ondelete='restrict',
         help='Parent scenario, used to create menus')
     type = fields.Selection(
-        '_type_get',
+        selection='_type_get',
         string='Type',
         required=True,
         default='scenario',
         help='Defines if this scenario is a menu or an executable scenario')
     company_id = fields.Many2one(
-        'res.company',
+        comodel_name='res.company',
         string='Company',
         required=True,
         default=lambda self: self.env.user.company_id.id,
         ondelete='restrict',
         help='Company to be used on this scenario')
     group_ids = fields.Many2many(
-        'res.groups',
-        'scanner_scenario_res_groups_rel',
-        'scenario_id',
-        'group_id',
-        'Allowed Groups',
+        comodel_name='res.groups',
+        relation='scanner_scenario_res_groups_rel',
+        column1='scenario_id',
+        column2='group_id',
+        string='Allowed Groups',
         default=lambda self: [self.env.ref('stock.group_stock_user').id])
     user_ids = fields.Many2many(
-        'res.users',
-        'scanner_scenario_res_users_rel',
-        'scenario_id',
-        'user_id',
-        'Allowed Users')
+        comodel_name='res.users',
+        relation='scanner_scenario_res_users_rel',
+        column1='scenario_id',
+        column2='user_id',
+        string='Allowed Users')
 
     _sql_constraints = [
         ('reference_res_id_uniq',
@@ -247,7 +247,7 @@ class scanner_scenario_step(models.Model):
         required=False,
         help='Name of the step')
     scenario_id = fields.Many2one(
-        'scanner.scenario',
+        comodel_name='scanner.scenario',
         string='Scenario',
         required=True,
         ondelete='cascade',
@@ -269,14 +269,14 @@ class scanner_scenario_step(models.Model):
         default=False,
         help='Check this to prevent returning back this step')
     out_transition_ids = fields.One2many(
-        'scanner.scenario.transition',
-        'from_id',
+        comodel_name='scanner.scenario.transition',
+        inverse_name='from_id',
         string='Outgoing transitons',
         ondelete='cascade',
         help='Transitions which goes to this step')
     in_transition_ids = fields.One2many(
-        'scanner.scenario.transition',
-        'to_id',
+        comodel_name='scanner.scenario.transition',
+        inverse_name='to_id',
         string='Incoming transitons',
         ondelete='cascade',
         help='Transitions which goes to the next step')
@@ -338,13 +338,13 @@ class scanner_scenario_transition(models.Model):
         required=False,
         help='Sequence order')
     from_id = fields.Many2one(
-        'scanner.scenario.step',
+        comodel_name='scanner.scenario.step',
         string='From',
         required=True,
         ondelete='cascade',
         help='Step which launches this transition')
     to_id = fields.Many2one(
-        'scanner.scenario.step',
+        comodel_name='scanner.scenario.step',
         string='To',
         required=True,
         ondelete='cascade',
@@ -357,7 +357,7 @@ class scanner_scenario_transition(models.Model):
         help='The transition is followed only if this condition is evaluated '
              'as True')
     transition_type = fields.Selection(
-        '_transition_type_get',
+        selection='_transition_type_get',
         string='Transition Type',
         default="scanner",
         help='Type of transition')
@@ -377,7 +377,7 @@ class scanner_scenario_transition(models.Model):
         readonly=True,
         help='Used by export/import scenario')
     scenario_id = fields.Many2one(
-        'scanner.scenario',
+        comodel_name='scanner.scenario',
         string='Scenario',
         required=False,
         related="from_id.scenario_id",
@@ -447,13 +447,13 @@ class scanner_hardware(models.Model):
         required=False,
         help='Height of the terminal\'s screen')
     warehouse_id = fields.Many2one(
-        'stock.warehouse',
+        comodel_name='stock.warehouse',
         string='Warehouse',
         required=True,
         ondelete='restrict',
         help='Warehouse where is located this hardware')
     user_id = fields.Many2one(
-        'res.users',
+        comodel_name='res.users',
         string='User',
         required=False,
         ondelete='restrict',
@@ -464,7 +464,7 @@ class scanner_hardware(models.Model):
         help='Date and time of the last call to the system done by the scanner'
     )
     scenario_id = fields.Many2one(
-        'scanner.scenario',
+        comodel_name='scanner.scenario',
         string='Scenario',
         required=False,
         readonly=True,
@@ -472,7 +472,7 @@ class scanner_hardware(models.Model):
         ondelete='restrict',
         help='Scenario used for this hardware')
     step_id = fields.Many2one(
-        'scanner.scenario.step',
+        comodel_name='scanner.scenario.step',
         string='Current Step',
         required=False,
         readonly=True,
@@ -495,62 +495,62 @@ class scanner_hardware(models.Model):
         readonly=True,
         help='ID of the reference document')
     tmp_val1 = fields.Char(
-        'Temp value 1',
+        string='Temp value 1',
         size=256,
         readonly=True,
         help='Temporary value')
     tmp_val2 = fields.Char(
-        'Temp value 2',
+        string='Temp value 2',
         size=256,
         readonly=True,
         help='Temporary value')
     tmp_val3 = fields.Char(
-        'Temp value 3',
+        string='Temp value 3',
         size=256,
         readonly=True,
         help='Temporary value')
     tmp_val4 = fields.Char(
-        'Temp value 4',
+        string='Temp value 4',
         size=256,
         readonly=True,
         help='Temporary value')
     tmp_val5 = fields.Char(
-        'Temp value 5',
+        string='Temp value 5',
         size=256,
         readonly=True,
         help='Temporary value')
     base_fg_color = fields.Selection(
-        '_colors_get',
+        selection='_colors_get',
         string='Base - Text Color',
         required=True,
         default='white',
         help='Default color for the text')
     base_bg_color = fields.Selection(
-        '_colors_get',
+        selection='_colors_get',
         string='Base - Background Color',
         required=True,
         default='blue',
         help='Default color for the background')
     info_fg_color = fields.Selection(
-        '_colors_get',
+        selection='_colors_get',
         string='Info - Text Color',
         required=True,
         default='yellow',
         help='Color for the info text')
     info_bg_color = fields.Selection(
-        '_colors_get',
+        selection='_colors_get',
         string='Info - Background Color',
         required=True,
         default='blue',
         help='Color for the info background')
     error_fg_color = fields.Selection(
-        '_colors_get',
+        selection='_colors_get',
         string='Error - Text Color',
         required=True,
         default='yellow',
         help='Color for the error text')
     error_bg_color = fields.Selection(
-        '_colors_get',
+        selection='_colors_get',
         string='Error - Background Color',
         required=True,
         default='red',
@@ -642,12 +642,13 @@ class scanner_hardware(models.Model):
             else:
                 logger.info('[%s] Action : %s (no current scenario)',
                             self.code, message)
-                scenario_ids = scanner_scenario_obj.search(
-                    [('name', '=', message),
-                     ('type', '=', 'menu'),
-                     '|',
-                     ('warehouse_ids', '=', False),
-                     ('warehouse_ids', 'in', [self.warehouse_id.id])])
+                scenario_ids = scanner_scenario_obj.search([
+                    ('name', '=', message),
+                    ('type', '=', 'menu'),
+                    '|',
+                    ('warehouse_ids', '=', False),
+                    ('warehouse_ids', 'in', [self.warehouse_id.id]),
+                ])
                 if message == -1:
                     scenario_ids = [False]
                 if scenario_ids:
@@ -707,10 +708,12 @@ class scanner_hardware(models.Model):
         self.sudo().empty_scanner_values()
         return ('R', message, 0)
 
+    @api.multi
     def _unknown_action(self, message):
         """
         Sends an unknown action message
         """
+        self.ensure_one()
         return ('U', message, 0)
 
     @api.one
@@ -842,20 +845,22 @@ class scanner_hardware(models.Model):
             # Retrieve the warehouse's scenarios
             scenario_ids = []
             if terminal_warehouse_ids:
-                scenario_ids = scanner_scenario_obj.search(
-                    [('name', '=', message),
-                     ('type', '=', 'scenario'),
-                     '|',
-                     ('warehouse_ids', '=', False),
-                     ('warehouse_ids', 'in', [terminal_warehouse_ids])])
+                scenario_ids = scanner_scenario_obj.search([
+                    ('name', '=', message),
+                    ('type', '=', 'scenario'),
+                    '|',
+                    ('warehouse_ids', '=', False),
+                    ('warehouse_ids', 'in', [terminal_warehouse_ids]),
+                ])
 
             # If at least one scenario was found, pick the start step of the
             # first
             if scenario_ids:
                 scenario_id = scenario_ids[0]
-                step_ids = scanner_step_obj.search(
-                    [('scenario_id', '=', scenario_id.id),
-                     ('step_start', '=', True)])
+                step_ids = scanner_step_obj.search([
+                    ('scenario_id', '=', scenario_id.id),
+                    ('step_start', '=', True),
+                ])
 
                 # No start step found on the scenario, return an error
                 if not step_ids:
@@ -1239,8 +1244,10 @@ class scanner_scenario_custom(models.Model):
                 ('scanner_id.warehouse_id', '=', scanner.warehouse_id.id)]
 
         # Default domain
-        return [('scenario_id', '=', scenario.id),
-                ('scanner_id', '=', scanner.id)]
+        return [
+            ('scenario_id', '=', scenario.id),
+            ('scanner_id', '=', scanner.id),
+        ]
 
     @api.model
     def _get_values(self, scenario, scanner, model='', res_id=None,
@@ -1304,16 +1311,18 @@ class scanner_scenario_custom(models.Model):
 
         # If custom values are shared, search for other hardware using the same
         if scenario.shared_custom is True:
-            scanner_ids = scanner_hardware_obj.search(
-                [('scenario_id', '=', scenario.id),
-                 ('warehouse_id', '=', scanner.warehouse_id.id),
-                 ('reference_document', '=', scanner.reference_document),
-                 ('id', '!=', scanner.id)])
+            scanner_ids = scanner_hardware_obj.search([
+                ('scenario_id', '=', scenario.id),
+                ('warehouse_id', '=', scanner.warehouse_id.id),
+                ('reference_document', '=', scanner.reference_document),
+                ('id', '!=', scanner.id),
+            ])
 
         # Search for values attached to the current scenario
-        values_attached = self.search(
-            [('scenario_id', '=', scenario.id),
-             ('scanner_id', '=', scanner.id)])
+        values_attached = self.search([
+            ('scenario_id', '=', scenario.id),
+            ('scanner_id', '=', scanner.id),
+        ])
 
         # If other scanners are on the current scenario, attach the first
         if scanner_ids:
