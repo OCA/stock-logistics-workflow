@@ -54,6 +54,9 @@ group.add_option('', '--indent', dest='indent',
 group.add_option('', '--id', dest='scenario_id',
                  default=False,
                  help='id of the scenario to extract')
+group.add_option('', '--name', dest='name',
+                 default='',
+                 help='Name of the scenario (default : last directory name)')
 group.add_option('', '--directory', dest='directory',
                  default='.',
                  help='directory where the script will write the scenario '
@@ -216,7 +219,11 @@ for transition_id in transition_ids:
         transition[key] = unicode(item)
     node = SubElement(root, 'Transition', attrib=transition)
 
-xml_file = open('%s/scenario.xml' % opts.directory, 'w')
+scenario_name = opts.name
+if not scenario_name:
+    scenario_name = os.path.split(opts.directory.strip('/'))[1]
+
+xml_file = open('%s/%s.scenario' % (opts.directory, scenario_name), 'w')
 scenario_xml = tostring(
     root, encoding='UTF-8', xml_declaration=opts.header,
     pretty_print=opts.indent)
