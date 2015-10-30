@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    stock_scanner module for OpenERP, Allows managing barcode readers with simple scenarios
+#    stock_scanner module for OpenERP, Allows managing barcode readers with
+#    simple scenarios
 #    Copyright (C) 2015 SYLEAM Info Services (<http://www.Syleam.fr/>)
 #              Sylvain Garancher <sylvain.garancher@syleam.fr>
 #
 #    This file is a part of stock_scanner
 #
 #    stock_scanner is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
+#    it under the terms of the GNU Affero General Public License as published
+#    by the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    stock_scanner is distributed in the hope that it will be useful,
@@ -64,7 +65,8 @@ def import_scenario(env, module, scenario_xml, mode, directory, filename):
                 scenario_values['warehouse_ids'] = []
             warehouse_ids = warehouse_obj.search([('name', '=', node.text)])
             if warehouse_ids:
-                scenario_values['warehouse_ids'].append((4, warehouse_ids[0].id))
+                scenario_values['warehouse_ids'].append(
+                    (4, warehouse_ids[0].id))
         elif node.tag == 'group_ids':
             if 'group_ids' not in scenario_values:
                 scenario_values['group_ids'] = []
@@ -111,7 +113,13 @@ def import_scenario(env, module, scenario_xml, mode, directory, filename):
             return
 
     # Create or update the scenario
-    ir_model_data_obj._update('scanner.scenario', module, scenario_values, xml_id=scenario_values['reference_res_id'], mode=mode)
+    ir_model_data_obj._update(
+        'scanner.scenario',
+        module,
+        scenario_values,
+        xml_id=scenario_values['reference_res_id'],
+        mode=mode,
+    )
     scenario = env.ref('%s.%s' % (module, scenario_values['reference_res_id']))
 
     # Create or update steps
@@ -127,7 +135,10 @@ def import_scenario(env, module, scenario_xml, mode, directory, filename):
         step_values['scenario_id'] = scenario.id
 
         # Get python source
-        python_filename = '%s/%s.py' % (directory, step_values['reference_res_id'])
+        python_filename = '%s/%s.py' % (
+            directory,
+            step_values['reference_res_id'],
+        )
         python_file = misc.file_open(python_filename)
         try:
             step_values['python_code'] = python_file.read()
@@ -147,7 +158,13 @@ def import_scenario(env, module, scenario_xml, mode, directory, filename):
             python_file.close()
 
         # Create or update
-        ir_model_data_obj._update('scanner.scenario.step', module, step_values, xml_id=step_values['reference_res_id'], mode=mode)
+        ir_model_data_obj._update(
+            'scanner.scenario.step',
+            module,
+            step_values,
+            xml_id=step_values['reference_res_id'],
+            mode=mode,
+        )
         step = env.ref('%s.%s' % (module, step_values['reference_res_id']))
         resid[step_values['reference_res_id']] = step.id
 
@@ -161,10 +178,18 @@ def import_scenario(env, module, scenario_xml, mode, directory, filename):
             transition_values[key] = item
 
         # Create or update
-        ir_model_data_obj._update('scanner.scenario.transition', module, transition_values, xml_id=transition_values['reference_res_id'], mode=mode)
+        ir_model_data_obj._update(
+            'scanner.scenario.transition',
+            module,
+            transition_values,
+            xml_id=transition_values['reference_res_id'],
+            mode=mode,
+        )
 
 
-def scenario_convert_file(cr, module, filename, idref, mode='update', noupdate=False, kind=None, report=None, pathname=None):
+def scenario_convert_file(cr, module, filename, idref,
+                          mode='update', noupdate=False,
+                          kind=None, report=None, pathname=None):
     if pathname is None:
         pathname = os.path.join(module, filename)
 
@@ -177,13 +202,17 @@ def scenario_convert_file(cr, module, filename, idref, mode='update', noupdate=F
                 uid = openerp.SUPERUSER_ID
                 env = openerp.api.Environment(cr, uid, {'active_test': False})
 
-                import_scenario(env, module, fp.read(), mode, directory, filename)
+                import_scenario(env, module, fp.read(),
+                                mode, directory, filename)
         finally:
             fp.close()
     else:
-        convert_file(cr, module, filename, idref, mode=mode, noupdate=noupdate, kind=kind, report=report, pathname=pathname)
+        convert_file(cr, module, filename, idref,
+                     mode=mode, noupdate=noupdate,
+                     kind=kind, report=report, pathname=pathname)
 
-# Monkey patch Odoo's module file loading to be able to load scenarios from manifest file
+# Monkey patch Odoo's module file loading
+# To be able to load scenarios from manifest file
 openerp.tools.convert_file = scenario_convert_file
 openerp.tools.convert.convert_file = scenario_convert_file
 
