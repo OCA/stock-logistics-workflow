@@ -10,8 +10,7 @@ The "sentinel" specific ncurses client, available in the "hardware" directory, r
     $ sudo pip install openobject-library
 
 Some demo/tutorial scenarios are available in the "demo" directory of the module.
-To import these scenarios, you can use the import script located in the
-"scripts" directory.
+These scenarios, are automatically imported when installing a new database with demo data.
 
 How does it work ?
 ==================
@@ -94,13 +93,16 @@ In the python code of each step, some variables are available :
     - cr : Cursor to the database
     - uid : ID of the user executing the step (user used to log in with the sentinel, or user configured on the hardware, if any)
     - pool : Pooler to the database
+    - env : Environment used to execute the scenario (new API)
     - model : Pooler on the model configured on the scenario
+    - custom : Pooler on the custom values model
+    - term : Recordset on the current scenario
     - context : Context used on the step
     - m or message : Last message sent by the hardware
     - t or terminal : Browse record on the hardware executing the step
     - tracer : Value of the tracer of the used transition to access this step
     - wkf or workflow : Workflow service
-    - scenario : Browse record on the current scenario for the hardware
+    - scenario : Recordset on the current scenario for the hardware
 
 Some of these variables are also available on transition conditions execution.
 
@@ -131,13 +133,20 @@ The standard step types are :
    The automatic step often needs to define a value in `val`, corresponding to the value the user must send.
    This step type is generally used as replacement of another type, at the end of the step code, by redefining the `act` variable in some cases, for example when a single value is available for a list step.
 
-Import and export
------------------
+Import
+------
 
-The import and export scripts are in the `script` directory of the module
+Scenarios are automatically imported on a module update, like any other data.
+You just have to add the path to your `Scenario_Name.scenario` files in the `data` or `demo` sections in the `__openerp__.py` file.
+The UUID of each element is used as XML ID during this import.
+
+Export
+------
+
+The export script is in the `script` directory of the module
 
 A scenario is exported as a set of files, containing :
-    - scenario.xml : Global description of the scenario (name, warehouses, steps, transitions, etc.)
+    - Scenario_Name.scenario : Global description of the scenario (name, warehouses, steps, transitions, etc.)
     - A .py file per step : The name of the file is the uuid of the step
 
 Using a test file
