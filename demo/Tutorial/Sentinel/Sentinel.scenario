@@ -1,24 +1,24 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <scenario>
-  <reference_res_id>6e529a24-399a-11e2-8cb1-74de2b37388c</reference_res_id>
+  <id>scanner_scenario_sentinel</id>
   <model_id>scanner.hardware</model_id>
   <name>Sentinel</name>
   <notes/>
   <sequence>20</sequence>
-  <parent_id>9c85e020-3992-11e2-9e8f-74de2b37388c</parent_id>
+  <parent_id>scanner_scenario_tutorial</parent_id>
   <shared_custom>False</shared_custom>
   <warehouse_ids>OpenERP S.A.</warehouse_ids>
   <warehouse_ids>Shop 1</warehouse_ids>
   <warehouse_ids>Shop 2</warehouse_ids>
   <active>True</active>
   <type>scenario</type>
-  <Step reference_res_id="057c873e-399b-11e2-a637-74de2b37388c" name="Going back" step_back="True" step_stop="False" step_start="False"/>
-  <Step reference_res_id="9e4ea92e-399b-11e2-b3d4-74de2b37388c" name="Return values" step_back="False" step_stop="True" step_start="False"/>
-  <Step reference_res_id="c6615c5a-399a-11e2-b338-74de2b37388c" name="Introduction" step_back="True" step_stop="False" step_start="True"/>
-  <Step reference_res_id="d2911402-399a-11e2-a948-74de2b37388c" name="Scrolling" step_back="False" step_stop="False" step_start="False"/>
-  <Step reference_res_id="e9a28bbc-399a-11e2-afaf-74de2b37388c" name="List Scrolling" step_back="True" step_stop="False" step_start="False"/>
-  <Transition reference_res_id="6a01859c-399b-11e2-8a90-74de2b37388c" name="Intro &gt; Scroll" sequence="0" tracer="" to_id="d2911402-399a-11e2-a948-74de2b37388c" transition_type="keyboard" condition="True" from_id="c6615c5a-399a-11e2-b338-74de2b37388c"/>
-  <Transition reference_res_id="78fbbb76-399b-11e2-bcc6-74de2b37388c" name="Scroll &gt; List Scroll" sequence="0" tracer="" to_id="e9a28bbc-399a-11e2-afaf-74de2b37388c" transition_type="keyboard" condition="True" from_id="d2911402-399a-11e2-a948-74de2b37388c"/>
-  <Transition reference_res_id="81f421f0-399b-11e2-91d9-74de2b37388c" name="List Scroll &gt; Back" sequence="0" tracer="" to_id="057c873e-399b-11e2-a637-74de2b37388c" transition_type="keyboard" condition="True" from_id="e9a28bbc-399a-11e2-afaf-74de2b37388c"/>
-  <Transition reference_res_id="a5234f48-399b-11e2-b300-74de2b37388c" name="Back &gt; End" sequence="0" tracer="" to_id="9e4ea92e-399b-11e2-b3d4-74de2b37388c" transition_type="keyboard" condition="True" from_id="057c873e-399b-11e2-a637-74de2b37388c"/>
+  <Step id="scanner_scenario_step_sentinel_going_back" name="Going back" step_back="True" step_stop="False" step_start="False"/>
+  <Step id="scanner_scenario_step_sentinel_return_values" name="Return values" step_back="False" step_stop="True" step_start="False"/>
+  <Step id="scanner_scenario_step_sentinel_introduction" name="Introduction" step_back="True" step_stop="False" step_start="True"/>
+  <Step id="scanner_scenario_step_sentinel_scrolling" name="Scrolling" step_back="False" step_stop="False" step_start="False"/>
+  <Step id="scanner_scenario_step_sentinel_list_scrolling" name="List Scrolling" step_back="True" step_stop="False" step_start="False"/>
+  <Transition id="scanner_scenario_transition_sentinel_intro_scroll" name="Intro &gt; Scroll" sequence="0" tracer="" to_id="scanner_scenario_step_sentinel_scrolling" transition_type="keyboard" condition="True" from_id="scanner_scenario_step_sentinel_introduction"/>
+  <Transition id="scanner_scenario_transition_sentinel_scroll_list_scroll" name="Scroll &gt; List Scroll" sequence="0" tracer="" to_id="scanner_scenario_step_sentinel_list_scrolling" transition_type="keyboard" condition="True" from_id="scanner_scenario_step_sentinel_scrolling"/>
+  <Transition id="scanner_scenario_transition_sentinel_list_scroll_back" name="List Scroll &gt; Back" sequence="0" tracer="" to_id="scanner_scenario_step_sentinel_going_back" transition_type="keyboard" condition="True" from_id="scanner_scenario_step_sentinel_list_scrolling"/>
+  <Transition id="scanner_scenario_transition_sentinel_back_end" name="Back &gt; End" sequence="0" tracer="" to_id="scanner_scenario_step_sentinel_return_values" transition_type="keyboard" condition="True" from_id="scanner_scenario_step_sentinel_going_back"/>
 </scenario>

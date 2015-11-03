@@ -1,20 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <scenario>
-  <reference_res_id>d73e7b22-399d-11e2-a1ae-74de2b37388c</reference_res_id>
+  <id>scanner_scenario_location_informations</id>
   <model_id>stock.location</model_id>
   <name>Location informations</name>
   <notes/>
   <sequence>110</sequence>
-  <parent_id>bcc2e81e-399d-11e2-ae24-74de2b37388c</parent_id>
+  <parent_id>scanner_scenario_stock</parent_id>
   <shared_custom>False</shared_custom>
   <warehouse_ids>OpenERP S.A.</warehouse_ids>
   <warehouse_ids>Shop 1</warehouse_ids>
   <warehouse_ids>Shop 2</warehouse_ids>
   <active>True</active>
   <type>scenario</type>
-  <Step reference_res_id="276ac2a2-39a0-11e2-b299-74de2b37388c" name="Unknown location" step_back="False" step_stop="False" step_start="False"/>
-  <Step reference_res_id="d8e9a09e-399f-11e2-81a9-74de2b37388c" name="Location selection" step_back="False" step_stop="False" step_start="True"/>
-  <Step reference_res_id="eb535090-399f-11e2-8def-74de2b37388c" name="Informations display" step_back="False" step_stop="True" step_start="False"/>
-  <Transition reference_res_id="136e2690-39a0-11e2-b3e5-74de2b37388c" name="Location selection OK" sequence="0" tracer="" to_id="eb535090-399f-11e2-8def-74de2b37388c" transition_type="keyboard" condition="model.name_search(message, operator='=')" from_id="d8e9a09e-399f-11e2-81a9-74de2b37388c"/>
-  <Transition reference_res_id="362bd86c-39a0-11e2-805e-74de2b37388c" name="Location selection NOK" sequence="0" tracer="" to_id="276ac2a2-39a0-11e2-b299-74de2b37388c" transition_type="keyboard" condition="not model.name_search(message, operator='=')" from_id="d8e9a09e-399f-11e2-81a9-74de2b37388c"/>
+  <Step id="scanner_scenario_step_location_informations_unknown_location" name="Unknown location" step_back="False" step_stop="False" step_start="False"/>
+  <Step id="scanner_scenario_step_location_informations_location_selection" name="Location selection" step_back="False" step_stop="False" step_start="True"/>
+  <Step id="scanner_scenario_step_location_informations_informations_display" name="Informations display" step_back="False" step_stop="True" step_start="False"/>
+  <Transition id="scanner_scenario_transition_location_informations_location_selection_ok" name="Location selection OK" sequence="0" tracer="" to_id="scanner_scenario_step_location_informations_informations_display" transition_type="keyboard" condition="model.name_search(message, operator='=')" from_id="scanner_scenario_step_location_informations_location_selection"/>
+  <Transition id="scanner_scenario_transition_location_informations_location_selection_nok" name="Location selection NOK" sequence="0" tracer="" to_id="scanner_scenario_step_location_informations_unknown_location" transition_type="keyboard" condition="not model.name_search(message, operator='=')" from_id="scanner_scenario_step_location_informations_location_selection"/>
 </scenario>

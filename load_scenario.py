@@ -31,14 +31,36 @@ from lxml.etree import parse
 from StringIO import StringIO
 
 import openerp
+from openerp import exceptions
 from openerp.tools import misc
+from openerp.tools.translate import _
 from openerp.tools.convert import convert_file
 import logging
 logger = logging.getLogger('init:stock_scanner')
 
 
+def get_xml_id(element, module, values):
+    """
+    Returns the XML ID of an element from its values
+    """
+    xml_id = values.get('id')
+    if not xml_id:
+        xml_id = values.get('reference_res_id')
+    if not xml_id:
+        raise exceptions.Warning(
+            _('The id of a %s cannot be empty!') % element
+        )
+
+    if '.' not in xml_id:
+        xml_id = '%s.%s' % (
+            module,
+            xml_id,
+        )
+
+    return xml_id
+
+
 def import_scenario(env, module, scenario_xml, mode, directory, filename):
-    scenario_obj = env['scanner.scenario']
     model_obj = env['ir.model']
     company_obj = env['res.company']
     warehouse_obj = env['stock.warehouse']
@@ -88,6 +110,9 @@ def import_scenario(env, module, scenario_xml, mode, directory, filename):
         else:
             scenario_values[node.tag] = node.text or False
 
+    # Transition from old format to new format
+    scenario_xml_id = get_xml_id(_('scenario'), module, scenario_values)
+
     if scenario_values['model_id']:
         scenario_values['model_id'] = model_obj.search([
             ('model', '=', scenario_values['model_id']),
@@ -104,10 +129,13 @@ def import_scenario(env, module, scenario_xml, mode, directory, filename):
             logger.error('Company not found')
             return
 
-    if 'parent_id' in scenario_values and scenario_values['parent_id']:
-        scenario_values['parent_id'] = scenario_obj.search([
-            ('reference_res_id', '=', scenario_values['parent_id']),
-        ]).id or False
+    if scenario_values.get('parent_id'):
+        if '.' not in scenario_values['parent_id']:
+            scenario_values['parent_id'] = '%s.%s' % (
+                module,
+                scenario_values['parent_id']
+            )
+        scenario_values['parent_id'] = env.ref(scenario_values['parent_id']).id
         if not scenario_values['parent_id']:
             logger.error('Parent not found')
             return
@@ -117,10 +145,10 @@ def import_scenario(env, module, scenario_xml, mode, directory, filename):
         'scanner.scenario',
         module,
         scenario_values,
-        xml_id=scenario_values['reference_res_id'],
+        xml_id=scenario_xml_id,
         mode=mode,
     )
-    scenario = env.ref('%s.%s' % (module, scenario_values['reference_res_id']))
+    scenario = env.ref(scenario_xml_id)
 
     # Create or update steps
     resid = {}
@@ -134,12 +162,26 @@ def import_scenario(env, module, scenario_xml, mode, directory, filename):
         # Get scenario id
         step_values['scenario_id'] = scenario.id
 
+        # Transition from old to new format
+        step_xml_id = get_xml_id(_('step'), module, step_values)
+
         # Get python source
         python_filename = '%s/%s.py' % (
             directory,
-            step_values['reference_res_id'],
+            step_xml_id,
         )
-        python_file = misc.file_open(python_filename)
+        # Alow to use the id without module name for the current module
+        try:
+            python_file = misc.file_open(python_filename)
+        except IOError:
+            if module == step_xml_id.split('.')[0]:
+                python_filename = '%s/%s.py' % (
+                    directory,
+                    step_xml_id.split('.')[1],
+                )
+                python_file = misc.file_open(python_filename)
+
+        # Load python code and check syntax
         try:
             step_values['python_code'] = python_file.read()
 
@@ -162,18 +204,18 @@ def import_scenario(env, module, scenario_xml, mode, directory, filename):
             'scanner.scenario.step',
             module,
             step_values,
-            xml_id=step_values['reference_res_id'],
+            xml_id=step_xml_id,
             mode=mode,
         )
-        step = env.ref('%s.%s' % (module, step_values['reference_res_id']))
-        resid[step_values['reference_res_id']] = step.id
+        step = env.ref(step_xml_id)
+        resid[step_xml_id] = step.id
 
     # Create or update transitions
     for node in transitions:
         transition_values = {}
         for key, item in node.items():
             if key in ['to_id', 'from_id']:
-                item = resid[item]
+                item = resid[get_xml_id(_('step'), module, {'id': item})]
 
             transition_values[key] = item
 
@@ -182,7 +224,7 @@ def import_scenario(env, module, scenario_xml, mode, directory, filename):
             'scanner.scenario.transition',
             module,
             transition_values,
-            xml_id=transition_values['reference_res_id'],
+            xml_id=get_xml_id(_('transition'), module, transition_values),
             mode=mode,
         )
 

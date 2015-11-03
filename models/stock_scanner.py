@@ -35,7 +35,6 @@ from openerp.exceptions import Warning, AccessDenied
 from openerp.exceptions import except_orm
 
 import logging
-import uuid
 from psycopg2 import OperationalError, errorcodes
 import random
 import time
@@ -118,14 +117,6 @@ class ScannerScenario(models.Model):
     notes = fields.Text(
         string='Notes',
         help='Store different notes, date and title for modification, etc...')
-    reference_res_id = fields.Char(
-        string='Reference ID',
-        size=64,
-        copy=False,
-        default=lambda self: uuid.uuid1(),
-        required=False,
-        readonly=True,
-        help='Used by export/import scenario')
     shared_custom = fields.Boolean(
         string='Shared Custom',
         default=False,
@@ -164,28 +155,11 @@ class ScannerScenario(models.Model):
         column2='user_id',
         string='Allowed Users')
 
-    _sql_constraints = [
-        ('reference_res_id_uniq',
-         'unique (reference_res_id)',
-         _('The reference ID of the scenario must be unique !')),
-    ]
-
     @api.one
     @api.constrains('parent_id')
     def _check_recursion(self):
         if not super(ScannerScenario, self)._check_recursion():
             raise Warning(_('Error ! You can not create recursive scenarios.'))
-
-    @api.model
-    def create(self, vals):
-        """
-        If the reference ID is not in vals, we create it with uuid1
-        """
-        # Generate a uuid if there is none
-        if 'reference_res_id' not in vals:
-            vals['reference_res_id'] = uuid.uuid1()
-
-        return super(ScannerScenario, self).create(vals=vals)
 
 
 class ScannerScenarioStep(models.Model):
@@ -238,31 +212,6 @@ class ScannerScenarioStep(models.Model):
         string='Python code',
         default=PYTHON_CODE_DEFAULT,
         help='Python code to execute')
-    reference_res_id = fields.Char(
-        string='Reference ID',
-        size=64,
-        copy=False,
-        default=lambda self: uuid.uuid1(),
-        required=False,
-        readonly=True,
-        help='Used by export/import scenario')
-
-    _sql_constraints = [
-        ('reference_res_id_uniq',
-         'unique (reference_res_id)',
-         _('The reference ID of the step must be unique')),
-    ]
-
-    @api.model
-    def create(self, vals):
-        """
-        If the reference ID is not in vals, we create it with uuid1
-        """
-        # Generate a uuid if there is none
-        if 'reference_res_id' not in vals:
-            vals['reference_res_id'] = uuid.uuid1()
-
-        return super(ScannerScenarioStep, self).create(vals=vals)
 
 
 class ScannerScenarioTransition(models.Model):
@@ -322,14 +271,6 @@ class ScannerScenarioTransition(models.Model):
         default=False,
         help='Used to determine fron which transition we arrive to the '
              'destination step')
-    reference_res_id = fields.Char(
-        string='Reference ID',
-        size=64,
-        copy=False,
-        default=lambda self: uuid.uuid1(),
-        required=False,
-        readonly=True,
-        help='Used by export/import scenario')
     scenario_id = fields.Many2one(
         comodel_name='scanner.scenario',
         string='Scenario',
@@ -346,23 +287,6 @@ class ScannerScenarioTransition(models.Model):
             raise Warning(_('Error ! You can not create recursive scenarios.'))
 
         return True
-
-    _sql_constraints = [
-        ('reference_res_id_uniq',
-         'unique (reference_res_id)',
-         _('The reference ID of the transition must be unique')),
-    ]
-
-    @api.model
-    def create(self, vals):
-        """
-        If the reference ID is not in vals, we create it with uuid1
-        """
-        # Generate a uuid if there is none
-        if 'reference_res_id' not in vals:
-            vals['reference_res_id'] = uuid.uuid1()
-
-        return super(ScannerScenarioTransition, self).create(vals=vals)
 
 
 class ScannerHardware(models.Model):

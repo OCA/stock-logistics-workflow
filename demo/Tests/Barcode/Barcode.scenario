@@ -1,18 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <scenario>
-  <reference_res_id>dc6f0e58-18f6-11e2-99fe-0026b938255f</reference_res_id>
+  <id>scanner_scenario_barcode</id>
   <model_id>scanner.hardware</model_id>
   <name>Barcode</name>
   <notes/>
   <sequence>1010</sequence>
-  <parent_id>8ee59742-9052-11e1-ab2b-101f74fcdfea</parent_id>
+  <parent_id>scanner_scenario_tests</parent_id>
   <shared_custom>False</shared_custom>
   <warehouse_ids>OpenERP S.A.</warehouse_ids>
   <warehouse_ids>Shop 1</warehouse_ids>
   <warehouse_ids>Shop 2</warehouse_ids>
   <active>True</active>
   <type>scenario</type>
-  <Step reference_res_id="09f1a320-18f9-11e2-a2a6-0026b938255f" name="Result display" step_back="False" step_stop="True" step_start="False"/>
-  <Step reference_res_id="dc72c142-18f6-11e2-99fe-0026b938255f" name="Barcode read" step_back="False" step_stop="False" step_start="True"/>
-  <Transition reference_res_id="1581715c-18f9-11e2-8fae-0026b938255f" name="Barcode read" sequence="0" tracer="" to_id="09f1a320-18f9-11e2-a2a6-0026b938255f" transition_type="keyboard" condition="True" from_id="dc72c142-18f6-11e2-99fe-0026b938255f"/>
+  <Step id="scanner_scenario_step_barcode_result_display" name="Result display" step_back="False" step_stop="True" step_start="False"/>
+  <Step id="scanner_scenario_step_barcode_barcode_read" name="Barcode read" step_back="False" step_stop="False" step_start="True"/>
+  <Transition id="scanner_scenario_transition_barcode_barcode_read" name="Barcode read" sequence="0" tracer="" to_id="scanner_scenario_step_barcode_result_display" transition_type="keyboard" condition="True" from_id="scanner_scenario_step_barcode_barcode_read"/>
 </scenario>

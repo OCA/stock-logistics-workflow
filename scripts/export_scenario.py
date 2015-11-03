@@ -24,13 +24,13 @@
 #
 ##############################################################################
 
+import re
 from oobjlib.connection import Connection
 from oobjlib.component import Object
 from oobjlib.common import GetParser
 from optparse import OptionGroup
 from lxml.etree import Element, SubElement
 from lxml.etree import tostring
-import uuid
 import os
 
 import logging
@@ -45,11 +45,11 @@ group.add_option('-v', '--verbose', dest='verbose',
                  help='Add verbose mode')
 group.add_option('', '--header', dest='header',
                  action='store_true',
-                 default=False,
-                 help='Add XML and OpenObkect Header')
+                 default=True,
+                 help='Add XML and OpenObject Header')
 group.add_option('', '--indent', dest='indent',
                  action='store_true',
-                 default=False,
+                 default=True,
                  help='Indent the XML output')
 group.add_option('', '--id', dest='scenario_id',
                  default=False,
@@ -93,6 +93,13 @@ except Exception, e:
     sys.exit(1)
 
 
+def normalize_name(name):
+    """
+    Replace all non alphanumeric characters by underscores
+    """
+    return re.sub(r'[^\w\d]', '_', name).lower()
+
+
 resid = {}
 opts.directory = os.path.expanduser(opts.directory)
 
@@ -108,13 +115,19 @@ if not scen_read:
     logger.error('Scenario ID %s not found' % opts.scenario_id)
     sys.exit(1)
 del scen_read['step_ids']
-del scen_read['id']
 
 field_to_remove = ['create_uid', 'create_date',
                    'write_uid', 'write_date',
                    '__last_update', 'display_name']
 for field in field_to_remove:
     del scen_read[field]
+
+scenario_xml_id = scenario_obj.get_metadata(opts.scenario_id)[0]['xmlid']
+if not scenario_xml_id:
+    scenario_xml_id = 'scanner_scenario_%s' % (
+        normalize_name(scen_read['name']),
+    )
+resid['scenario'] = scenario_xml_id
 
 # create node and attributs
 root = Element('scenario')
@@ -129,21 +142,17 @@ for field in scen_read:
             node.text = scen_read.get('company_id', [0])[1]
     elif field == 'parent_id':
         if scen_read[field]:
-            node.text = scenario_obj.read(
-                scen_read.get('parent_id', [0])[0],
-                ['reference_res_id']).get('reference_res_id')
+            parent_id, parent_name = scen_read['parent_id']
+            node.text = scenario_obj.get_metadata(parent_id)[0]['xmlid']
+            if not node.text:
+                node.text = 'scanner_scenario_%s' % normalize_name(
+                    parent_name,
+                )
     elif field in ['name', 'notes', 'title']:
         if scen_read[field]:
             node.text = unicode(scen_read[field])
-    elif field == 'resid':
-        if scen_read[field]:
-            node.text = unicode(scen_read[field])
-            resid['scenario'] = unicode(scen_read[field])
-        else:
-            resid['scenario'] = unicode(uuid.uuid1())
-            node.text = resid['scenario']
-            scenario_obj.write([int(opts.scenario_id)],
-                               {'resid': resid['scenario']})
+    elif field == 'id':
+        node.text = scenario_xml_id
     elif field == 'warehouse_ids':
         root.remove(node)
         for warehouse in warehouse_obj.read(scen_read[field], ['name']):
@@ -161,29 +170,42 @@ for field in scen_read:
             node.text = unicode(user.get('login'))
     else:
         node.text = unicode(scen_read[field])
+
 # add step
 step_obj = Object(cnx, 'scanner.scenario.step')
-step_ids = step_obj.search(
-    [('scenario_id', '=', int(opts.scenario_id))], 0, None,
-    'reference_res_id')
+step_ids = step_obj.search([
+    ('scenario_id', '=', int(opts.scenario_id)),
+], 0, None, 'name')
 for step_id in step_ids:
     step = step_obj.read(step_id, [])
     # delete unuse key
     del step['in_transition_ids']
     del step['out_transition_ids']
-    del step['id']
     del step['scenario_id']
     for field in field_to_remove:
         del step[field]
+
     # get res_id
-    if not step['reference_res_id']:
-        step['reference_res_id'] = unicode(uuid.uuid1())
-        step_obj.write([step_id],
-                       {'reference_res_id': step['reference_res_id']})
-    resid[step_id] = unicode(step['reference_res_id'])
+    step_xml_id = step_obj.get_metadata(step_id)[0]['xmlid']
+    if not step_xml_id:
+        step_xml_id = 'scanner_scenario_step_%s_%s' % (
+            normalize_name(scen_read['name']),
+            normalize_name(step['name']),
+        )
+    step['id'] = step_xml_id
+
+    resid[step_id] = step_xml_id
+
+    # Do not add the scenario name on the python filename
+    # if this step is defined in the same module as the scenario
+    if '.' in scenario_xml_id and '.' in step_xml_id:
+        scenario_module = scenario_xml_id.split('.')[0]
+        step_module = step_xml_id.split('.')[0]
+        if scenario_module == step_module:
+            python_filename = step_xml_id.split('.')[1]
+
     # save code
-    src_file = open('%s/%s.py' % (
-                    opts.directory, step['reference_res_id']), 'w')
+    src_file = open('%s/%s.py' % (opts.directory, step_xml_id), 'w')
     src_file.write(step['python_code'].encode('utf-8'))
     src_file.close()
     del step['python_code']
@@ -191,23 +213,27 @@ for step_id in step_ids:
     for key, item in step.items():
         step[key] = unicode(item)
     node = SubElement(root, 'Step', attrib=step)
+
 # add transition
 transition_obj = Object(cnx, 'scanner.scenario.transition')
-transition_ids = transition_obj.search(
-    [('from_id.scenario_id', '=', int(opts.scenario_id))],
-    0, None, 'reference_res_id')
+transition_ids = transition_obj.search([
+    ('from_id.scenario_id', '=', int(opts.scenario_id)),
+], 0, None, 'name')
 for transition_id in transition_ids:
     transition = transition_obj.read(transition_id, [])
-    del transition['id']
     del transition['scenario_id']
     for field in field_to_remove:
         del transition[field]
+
     # get res id
-    if not transition['reference_res_id']:
-        transition['reference_res_id'] = unicode(uuid.uuid1())
-        transition_obj.write(
-            [transition_id],
-            {'reference_res_id': transition['reference_res_id']})
+    transition_xml_id = transition_obj.get_metadata(transition_id)[0]['xmlid']
+    transition['id'] = transition_xml_id
+    if not transition_xml_id:
+        transition['id'] = 'scanner_scenario_%s_%s' % (
+            normalize_name(scen_read['name']),
+            normalize_name(transition['name']),
+        )
+
     # not write False in attribute tracer
     if not transition['tracer']:
         transition['tracer'] = ''

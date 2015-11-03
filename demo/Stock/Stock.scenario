@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <scenario>
-  <reference_res_id>bcc2e81e-399d-11e2-ae24-74de2b37388c</reference_res_id>
+  <id>scanner_scenario_stock</id>
   <model_id/>
   <name>Stock</name>
   <notes/>

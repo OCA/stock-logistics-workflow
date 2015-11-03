@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <scenario>
-  <reference_res_id>8ee59742-9052-11e1-ab2b-101f74fcdfea</reference_res_id>
+  <id>scanner_scenario_tests</id>
   <model_id/>
   <name>Tests</name>
   <notes/>

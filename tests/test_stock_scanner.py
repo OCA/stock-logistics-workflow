@@ -54,7 +54,7 @@ class TestStockScanner(common.TransactionCase):
 
         #  a call without action will return the list of root scenario
         scanner_scenario_menu_tutorial = self.browse_ref(
-            'stock_scanner.9c85e020-3992-11e2-9e8f-74de2b37388c')
+            'stock_scanner.scanner_scenario_tutorial')
         ret = scanner_hardware.scanner_call(code, action=None)
         self.assertEquals(('L', ['Tutorial', 'Stock', 'Tests'], 0), ret)
 
@@ -67,7 +67,7 @@ class TestStockScanner(common.TransactionCase):
         # the result is the list of nested scenario since or scenario is a
         # menu with the parent menu as title
         scanner_scenario_step_types = self.browse_ref(
-            'stock_scanner.c53aa73a-3992-11e2-a0eb-74de2b37388c')
+            'stock_scanner.scanner_scenario_step_types')
 
         self.assertEquals(
             ('L', ['|' + 'Tutorial',
@@ -92,7 +92,7 @@ class TestStockScanner(common.TransactionCase):
                            0), ret)
         # and the current step is saved on the hardware
         scanner_scenario_step_types_intro_step = self.browse_ref(
-            'stock_scanner.e20faafe-3992-11e2-a73e-74de2b37388c')
+            'stock_scanner.scanner_scenario_step_step_types_introduction')
         self.assertEquals(
             scanner_hardware_1.step_id,
             scanner_scenario_step_types_intro_step)
@@ -110,7 +110,7 @@ class TestStockScanner(common.TransactionCase):
                            0), ret)
 
         scanner_scenario_step_types_message_step = self.browse_ref(
-            'stock_scanner.ede349e4-3992-11e2-9044-74de2b37388c')
+            'stock_scanner.scanner_scenario_step_step_types_message')
         self.assertEquals(
             scanner_hardware_1.step_id,
             scanner_scenario_step_types_message_step)
@@ -142,7 +142,7 @@ class TestStockScanner(common.TransactionCase):
             code, action='action', message='',
             transition_type='keyboard')
         scanner_scenario_step_types_list_step = self.browse_ref(
-            'stock_scanner.1e4f0d52-3993-11e2-82db-74de2b37388c')
+            'stock_scanner.scanner_scenario_step_step_types_list')
         self.assertEquals(
             scanner_hardware_1.step_id,
             scanner_scenario_step_types_list_step)

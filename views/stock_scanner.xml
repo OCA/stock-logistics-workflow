@@ -194,7 +194,6 @@
                                                         <field name="condition" colspan="4"/>
                                                         <field name="transition_type"/>
                                                         <field name="tracer"/>
-                                                        <field name="reference_res_id"/>
                                                         <newline/>
                                                     </group>
                                                 </form>
@@ -217,7 +216,6 @@
                                                         <field name="condition" colspan="4"/>
                                                         <field name="transition_type"/>
                                                         <field name="tracer"/>
-                                                        <field name="reference_res_id"/>
                                                         <newline/>
                                                     </group>
                                                 </form>
@@ -228,7 +226,6 @@
                                             <field name="python_code" colspan="4" nolabel="1"/>
                                         </page>
                                     </notebook>
-                                    <field name="reference_res_id"/>
                                     <newline/>
                                 </form>
                             </field>
@@ -249,7 +246,6 @@
                             <field name="notes" colspan="4" nolabel="1"/>
                         </page>
                     </notebook>
-                    <field name="reference_res_id"/>
                     <newline/>
                 </form>
             </field>
@@ -385,7 +381,6 @@
                                         <field name="condition" colspan="4"/>
                                         <field name="transition_type"/>
                                         <field name="tracer"/>
-                                        <field name="reference_res_id"/>
                                         <newline/>
                                     </group>
                                 </form>
@@ -408,14 +403,12 @@
                                         <field name="condition" colspan="4"/>
                                         <field name="transition_type"/>
                                         <field name="tracer"/>
-                                        <field name="reference_res_id"/>
                                         <newline/>
                                     </group>
                                 </form>
                             </field>
                         </page>
                     </notebook>
-                    <field name="reference_res_id"/>
                     <newline/>
                 </form>
             </field>
@@ -488,7 +481,6 @@
                         <field name="condition" colspan="4"/>
                         <field name="transition_type"/>
                         <field name="tracer"/>
-                        <field name="reference_res_id"/>
                         <newline/>
                     </group>
                 </form>

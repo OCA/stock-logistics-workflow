@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <scenario>
-  <reference_res_id>9c85e020-3992-11e2-9e8f-74de2b37388c</reference_res_id>
+  <id>scanner_scenario_tutorial</id>
   <model_id/>
   <name>Tutorial</name>
   <notes/>
