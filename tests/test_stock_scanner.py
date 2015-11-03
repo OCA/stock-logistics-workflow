@@ -29,6 +29,11 @@ class TestStockScanner(common.TransactionCase):
     def test_scanner_call(self):
         scanner_hardware_1 = self.browse_ref(
             'stock_scanner.scanner_hardware_1')
+
+        # Reset the current scenario
+        # just in case the database has been manually used
+        scanner_hardware_1.empty_scanner_values()
+
         # By default a scanner is not associated to a user
         self.assertFalse(scanner_hardware_1.user_id)
         # nor to a scenario
@@ -186,6 +191,11 @@ class TestStockScanner(common.TransactionCase):
         # stock.group_stock_user as previously
         scanner_hardware_1 = self.browse_ref(
             'stock_scanner.scanner_hardware_1')
+
+        # Reset the current scenario
+        # just in case the database has been manually used
+        scanner_hardware_1.empty_scanner_values()
+
         code = scanner_hardware_1.code
         scanner_hardware = self.env['scanner.hardware']
         ret = scanner_hardware.sudo(demo_uid).scanner_call(code, action=None)
@@ -283,6 +293,11 @@ class TestStockScanner(common.TransactionCase):
         wizard.execute()
         scanner_hardware_1 = self.browse_ref(
             'stock_scanner.scanner_hardware_1')
+
+        # Reset the current scenario
+        # just in case the database has been manually used
+        scanner_hardware_1.empty_scanner_values()
+
         # before login user_id and last_call_dt are empty
         self.assertFalse(scanner_hardware_1.user_id)
         self.assertFalse(scanner_hardware_1.last_call_dt)
