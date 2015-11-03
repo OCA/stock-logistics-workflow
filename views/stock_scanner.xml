@@ -7,7 +7,7 @@
         #    Copyright (C) 2011 SYLEAM Info Services ([http://www.Syleam.fr/])
         #              Sylvain Garancher [sylvain.garancher@syleam.fr]
         #    Copyright (C) 2015 Objectif-PI ([http://www.objectif-pi.com]).
-		#       Damien CRIER [damien.crier@objectif-pi.com]
+        #              Damien CRIER [damien.crier@objectif-pi.com]
         #
         #    This file is a part of stock_scanner
         #
@@ -55,13 +55,13 @@
             <field name="arch" type="xml">
                 <form string="Scanner Hardware">
                     <group colspan="4" col="4">
-	                    <field name="code"/>
-	                    <field name="name"/>
-	                    <field name="warehouse_id"/>
-	                    <field name="user_id"/>
-	                    <field name="log_enabled"/>
+                        <field name="code"/>
+                        <field name="name"/>
+                        <field name="warehouse_id"/>
+                        <field name="user_id"/>
+                        <field name="log_enabled"/>
                         <field name="last_call_dt"/>
-	                    <newline/>
+                        <newline/>
                     </group>
                     <group colspan="4">
                         <separator string="Screen size" colspan="4"/>
@@ -145,16 +145,16 @@
             <field name="model">scanner.scenario</field>
             <field name="arch" type="xml">
                 <form string="Scanner Scenario" version="8.0">
-                	<group colspan="4" col="4">
-	                    <field name="name"/>
-	                    <field name="active"/>
-	                    <field name="type"/>
-	                    <field name="sequence"/>
-	                    <field name="parent_id"/>
-	                    <field name="model_id" attrs="{'invisible': [('type','!=', 'scenario')], 'required': [('type', '=', 'scenario')]}"/>
-	                    <field name="company_id" invisible="1"/>
-	                    <field name="shared_custom" attrs="{'invisible': [('type','!=', 'scenario')]}"/>
-                	</group>
+                    <group colspan="4" col="4">
+                        <field name="name"/>
+                        <field name="active"/>
+                        <field name="type"/>
+                        <field name="sequence"/>
+                        <field name="parent_id"/>
+                        <field name="model_id" attrs="{'invisible': [('type','!=', 'scenario')], 'required': [('type', '=', 'scenario')]}"/>
+                        <field name="company_id" invisible="1"/>
+                        <field name="shared_custom" attrs="{'invisible': [('type','!=', 'scenario')]}"/>
+                    </group>
                     <notebook colspan="4">
                         <page string="Steps" attrs="{'invisible': [('type','!=', 'scenario')]}">
                             <field name="step_ids" nolabel="1">
@@ -187,15 +187,15 @@
                                                     <field name="tracer"/>
                                                 </tree>
                                                 <form string="Transition">
-	                                                <group colspan="4" col="4">
-	                                                    <field name="name" colspan="4"/>
-	                                                    <field name="sequence"/>
-	                                                    <field name="to_id" domain="[('scenario_id','=', parent.scenario_id)]"/>
-	                                                    <field name="condition" colspan="4"/>
-	                                                    <field name="transition_type"/>
-	                                                    <field name="tracer"/>
-	                                                    <field name="reference_res_id"/>
-	                                                    <newline/>
+                                                    <group colspan="4" col="4">
+                                                        <field name="name" colspan="4"/>
+                                                        <field name="sequence"/>
+                                                        <field name="to_id" domain="[('scenario_id','=', parent.scenario_id)]"/>
+                                                        <field name="condition" colspan="4"/>
+                                                        <field name="transition_type"/>
+                                                        <field name="tracer"/>
+                                                        <field name="reference_res_id"/>
+                                                        <newline/>
                                                     </group>
                                                 </form>
                                             </field>
@@ -210,15 +210,15 @@
                                                     <field name="tracer"/>
                                                 </tree>
                                                 <form string="Transition">
-	                                                <group colspan="4" col="4">
-	                                                    <field name="name" colspan="4"/>
-	                                                    <field name="sequence"/>
-	                                                    <field name="from_id" domain="[('scenario_id','=', parent.scenario_id)]"/>
-	                                                    <field name="condition" colspan="4"/>
-	                                                    <field name="transition_type"/>
-	                                                    <field name="tracer"/>
-	                                                    <field name="reference_res_id"/>
-	                                                    <newline/>
+                                                    <group colspan="4" col="4">
+                                                        <field name="name" colspan="4"/>
+                                                        <field name="sequence"/>
+                                                        <field name="from_id" domain="[('scenario_id','=', parent.scenario_id)]"/>
+                                                        <field name="condition" colspan="4"/>
+                                                        <field name="transition_type"/>
+                                                        <field name="tracer"/>
+                                                        <field name="reference_res_id"/>
+                                                        <newline/>
                                                     </group>
                                                 </form>
                                             </field>
@@ -378,15 +378,15 @@
                                     <field name="tracer"/>
                                 </tree>
                                 <form string="Transition">
-	                                <group colspan="4" col="4">
-	                                    <field name="name"/>
-	                                    <field name="sequence"/>
-	                                    <field name="to_id" domain="[('scenario_id','=', parent.scenario_id)]"/>
-	                                    <field name="condition" colspan="4"/>
-	                                    <field name="transition_type"/>
-	                                    <field name="tracer"/>
-	                                    <field name="reference_res_id"/>
-	                                    <newline/>
+                                    <group colspan="4" col="4">
+                                        <field name="name"/>
+                                        <field name="sequence"/>
+                                        <field name="to_id" domain="[('scenario_id','=', parent.scenario_id)]"/>
+                                        <field name="condition" colspan="4"/>
+                                        <field name="transition_type"/>
+                                        <field name="tracer"/>
+                                        <field name="reference_res_id"/>
+                                        <newline/>
                                     </group>
                                 </form>
                             </field>
@@ -401,17 +401,17 @@
                                     <field name="tracer"/>
                                 </tree>
                                 <form string="Transition">
-	                                <group colspan="4" col="4">
-	                                    <field name="name"/>
-	                                    <field name="sequence"/>
-	                                    <field name="from_id" domain="[('scenario_id','=', parent.scenario_id)]"/>
-	                                    <field name="condition" colspan="4"/>
-	                                    <field name="transition_type"/>
-	                                    <field name="tracer"/>
-	                                    <field name="reference_res_id"/>
-	                                    <newline/>
+                                    <group colspan="4" col="4">
+                                        <field name="name"/>
+                                        <field name="sequence"/>
+                                        <field name="from_id" domain="[('scenario_id','=', parent.scenario_id)]"/>
+                                        <field name="condition" colspan="4"/>
+                                        <field name="transition_type"/>
+                                        <field name="tracer"/>
+                                        <field name="reference_res_id"/>
+                                        <newline/>
                                     </group>
-   	                            </form>
+                                </form>
                             </field>
                         </page>
                     </notebook>
@@ -480,16 +480,16 @@
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
                 <form string="Transition">
-                	<group colspan="4" col="4">
-	                    <field name="name" colspan="2"/>
-	                    <field name="sequence"/>
-	                    <field name="from_id"/>
-	                    <field name="to_id"/>
-	                    <field name="condition" colspan="4"/>
-	                    <field name="transition_type"/>
-	                    <field name="tracer"/>
-	                    <field name="reference_res_id"/>
-	                    <newline/>
+                    <group colspan="4" col="4">
+                        <field name="name" colspan="2"/>
+                        <field name="sequence"/>
+                        <field name="from_id"/>
+                        <field name="to_id"/>
+                        <field name="condition" colspan="4"/>
+                        <field name="transition_type"/>
+                        <field name="tracer"/>
+                        <field name="reference_res_id"/>
+                        <newline/>
                     </group>
                 </form>
             </field>
@@ -539,11 +539,11 @@
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
                 <form string="Scenario Custom Values">
-                	<group colspan="4" col="4">
-	                    <field name="scenario_id"/>
-	                    <field name="scanner_id"/>
-	                    <field name="model"/>
-	                    <field name="res_id"/>
+                    <group colspan="4" col="4">
+                        <field name="scenario_id"/>
+                        <field name="scanner_id"/>
+                        <field name="model"/>
+                        <field name="res_id"/>
                     </group>
                     <notebook colspan="4">
                         <page string="Char">

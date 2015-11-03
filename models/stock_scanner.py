@@ -63,7 +63,7 @@ PG_CONCURRENCY_ERRORS_TO_RETRY = (
 MAX_TRIES_ON_CONCURRENCY_FAILURE = 5
 
 
-class scanner_scenario(models.Model):
+class ScannerScenario(models.Model):
     _name = 'scanner.scenario'
     _description = 'Scenario for scanner'
 
@@ -173,7 +173,7 @@ class scanner_scenario(models.Model):
     @api.one
     @api.constrains('parent_id')
     def _check_recursion(self):
-        if not super(scanner_scenario, self)._check_recursion():
+        if not super(ScannerScenario, self)._check_recursion():
             raise Warning(_('Error ! You can not create recursive scenarios.'))
 
     @api.model
@@ -185,10 +185,10 @@ class scanner_scenario(models.Model):
         if 'reference_res_id' not in vals:
             vals['reference_res_id'] = uuid.uuid1()
 
-        return super(scanner_scenario, self).create(vals=vals)
+        return super(ScannerScenario, self).create(vals=vals)
 
 
-class scanner_scenario_step(models.Model):
+class ScannerScenarioStep(models.Model):
     _name = 'scanner.scenario.step'
     _description = 'Step for scenario'
 
@@ -262,10 +262,10 @@ class scanner_scenario_step(models.Model):
         if 'reference_res_id' not in vals:
             vals['reference_res_id'] = uuid.uuid1()
 
-        return super(scanner_scenario_step, self).create(vals=vals)
+        return super(ScannerScenarioStep, self).create(vals=vals)
 
 
-class scanner_scenario_transition(models.Model):
+class ScannerScenarioTransition(models.Model):
     _name = 'scanner.scenario.transition'
     _description = 'Transition for scenario'
 
@@ -362,10 +362,10 @@ class scanner_scenario_transition(models.Model):
         if 'reference_res_id' not in vals:
             vals['reference_res_id'] = uuid.uuid1()
 
-        return super(scanner_scenario_transition, self).create(vals=vals)
+        return super(ScannerScenarioTransition, self).create(vals=vals)
 
 
-class scanner_hardware(models.Model):
+class ScannerHardware(models.Model):
     _name = 'scanner.hardware'
     _description = 'Scanner Hardware'
 
@@ -1056,7 +1056,7 @@ class scanner_hardware(models.Model):
             logger.info('[%s] %s' % (self.code, ustr(log_message)))
 
 
-class scanner_scenario_custom(models.Model):
+class ScannerScenarioCustom(models.Model):
     _name = 'scanner.scenario.custom'
     _description = 'Temporary value for scenario'
 
