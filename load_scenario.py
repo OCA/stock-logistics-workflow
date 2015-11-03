@@ -74,6 +74,7 @@ def import_scenario(env, module, scenario_xml, mode, directory, filename):
     steps = []
     transitions = []
     scenario_values = {}
+    noupdate = root.get('noupdate', False)
 
     # parse of the scenario
     for node in root.getchildren():
@@ -152,6 +153,7 @@ def import_scenario(env, module, scenario_xml, mode, directory, filename):
         scenario_values,
         xml_id=scenario_xml_id,
         mode=mode,
+        noupdate=noupdate,
     )
     scenario = env.ref(scenario_xml_id)
 
@@ -211,6 +213,7 @@ def import_scenario(env, module, scenario_xml, mode, directory, filename):
             step_values,
             xml_id=step_xml_id,
             mode=mode,
+            noupdate=noupdate,
         )
         step = env.ref(step_xml_id)
         resid[step_xml_id] = step.id
@@ -231,6 +234,7 @@ def import_scenario(env, module, scenario_xml, mode, directory, filename):
             transition_values,
             xml_id=get_xml_id(_('transition'), module, transition_values),
             mode=mode,
+            noupdate=noupdate,
         )
 
 
