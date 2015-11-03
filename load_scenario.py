@@ -92,11 +92,16 @@ def import_scenario(env, module, scenario_xml, mode, directory, filename):
         elif node.tag == 'group_ids':
             if 'group_ids' not in scenario_values:
                 scenario_values['group_ids'] = []
-                group_ids = group_obj.search([
-                    ('full_name', '=', node.text),
-                ])
-                if group_ids:
-                    scenario_values['group_ids'].append((4, group_ids[0].id))
+
+            group_ids = group_obj.search([
+                ('full_name', '=', node.text),
+            ])
+            if group_ids:
+                scenario_values['group_ids'].append((4, group_ids[0].id))
+            else:
+                scenario_values['group_ids'].append(
+                    (4, env.ref(node.text).id),
+                )
         elif node.tag == 'user_ids':
             if 'user_ids' not in scenario_values:
                 scenario_values['user_ids'] = []

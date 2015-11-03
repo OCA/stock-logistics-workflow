@@ -160,9 +160,11 @@ for field in scen_read:
             node.text = unicode(warehouse.get('name'))
     elif field == 'group_ids':
         root.remove(node)
-        for group in group_obj.read(scen_read[field], ['full_name']):
-            node = SubElement(root, 'group_ids')
-            node.text = unicode(group.get('full_name'))
+        for group_id in scen_read[field]:
+            group_xml_id = group_obj.get_metadata(group_id)[0]['xmlid']
+            if group_xml_id:
+                node = SubElement(root, 'group_ids')
+                node.text = group_xml_id
     elif field == 'user_ids':
         root.remove(node)
         for user in user_obj.read(scen_read[field], ['login']):
