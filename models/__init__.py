@@ -25,4 +25,8 @@
 #
 ##############################################################################
 
-from . import stock_scanner
+from . import scanner_scenario
+from . import scanner_scenario_step
+from . import scanner_scenario_transition
+from . import scanner_scenario_custom
+from . import scanner_hardware

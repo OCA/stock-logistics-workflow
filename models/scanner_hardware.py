@@ -5,7 +5,7 @@
 #    simple scenarios
 #    Copyright (C) 2011 SYLEAM Info Services (<http://www.syleam.fr/>)
 #              Sylvain Garancher <sylvain.garancher@syleam.fr>
-
+#
 #    This file is a part of stock_scanner
 #
 #    stock_scanner is free software: you can redistribute it and/or modify
@@ -23,24 +23,18 @@
 #
 ##############################################################################
 
-
-from openerp import models
-from openerp import fields
-from openerp import api
-from openerp import _
-from openerp.tools.misc import logged
-from openerp.tools.misc import ustr
-from openerp import workflow
-from openerp.exceptions import Warning, AccessDenied
-from openerp.exceptions import except_orm
-
 import logging
-from psycopg2 import OperationalError, errorcodes
 import random
 import time
 import datetime
 
-from .common import PYTHON_CODE_DEFAULT
+from psycopg2 import OperationalError, errorcodes
+
+from openerp import models, api, fields, exceptions
+from openerp import workflow
+from openerp import _
+from openerp.tools.misc import ustr
+
 
 logger = logging.getLogger('stock_scanner')
 
@@ -60,233 +54,6 @@ PG_CONCURRENCY_ERRORS_TO_RETRY = (
     errorcodes.SERIALIZATION_FAILURE,
     errorcodes.DEADLOCK_DETECTED)
 MAX_TRIES_ON_CONCURRENCY_FAILURE = 5
-
-
-class ScannerScenario(models.Model):
-    _name = 'scanner.scenario'
-    _description = 'Scenario for scanner'
-
-    _order = 'sequence'
-
-    _parent_name = 'parent_id'
-
-    @api.model
-    def _type_get(self):
-        return [
-            ('scenario', 'Scenario'),
-            ('menu', 'Menu'),
-            ('shortcut', 'Shortcut'),
-        ]
-
-    # ===========================================================================
-    # COLUMNS
-    # ===========================================================================
-    name = fields.Char(
-        string='Name',
-        size=64,
-        required=True,
-        help='Appear on barcode reader screen')
-    sequence = fields.Integer(
-        string='Sequence',
-        default=0,
-        required=False,
-        help="Sequence order")
-    active = fields.Boolean(
-        string='Active',
-        default=True,
-        help='If check, this object is always available')
-    model_id = fields.Many2one(
-        comodel_name='ir.model',
-        string='Model',
-        required=False,
-        ondelete='restrict',
-        help='Model used for this scenario')
-    step_ids = fields.One2many(
-        comodel_name='scanner.scenario.step',
-        inverse_name='scenario_id',
-        string='Scenario',
-        ondelete='cascade',
-        help='Step of the current running scenario')
-    warehouse_ids = fields.Many2many(
-        comodel_name='stock.warehouse',
-        relation='scanner_scenario_warehouse_rel',
-        column1='scenario_id',
-        column2='warehouse_id',
-        string='Warehouses',
-        help='Warehouses for this scenario')
-    notes = fields.Text(
-        string='Notes',
-        help='Store different notes, date and title for modification, etc...')
-    shared_custom = fields.Boolean(
-        string='Shared Custom',
-        default=False,
-        help='Allows to share the custom values with a shared scanner in the '
-             'same warehouse')
-    parent_id = fields.Many2one(
-        comodel_name='scanner.scenario',
-        string='Parent',
-        required=False,
-        ondelete='restrict',
-        help='Parent scenario, used to create menus')
-    type = fields.Selection(
-        selection='_type_get',
-        string='Type',
-        required=True,
-        default='scenario',
-        help='Defines if this scenario is a menu or an executable scenario')
-    company_id = fields.Many2one(
-        comodel_name='res.company',
-        string='Company',
-        required=True,
-        default=lambda self: self.env.user.company_id.id,
-        ondelete='restrict',
-        help='Company to be used on this scenario')
-    group_ids = fields.Many2many(
-        comodel_name='res.groups',
-        relation='scanner_scenario_res_groups_rel',
-        column1='scenario_id',
-        column2='group_id',
-        string='Allowed Groups',
-        default=lambda self: [self.env.ref('stock.group_stock_user').id])
-    user_ids = fields.Many2many(
-        comodel_name='res.users',
-        relation='scanner_scenario_res_users_rel',
-        column1='scenario_id',
-        column2='user_id',
-        string='Allowed Users')
-
-    @api.one
-    @api.constrains('parent_id')
-    def _check_recursion(self):
-        if not super(ScannerScenario, self)._check_recursion():
-            raise Warning(_('Error ! You can not create recursive scenarios.'))
-
-
-class ScannerScenarioStep(models.Model):
-    _name = 'scanner.scenario.step'
-    _description = 'Step for scenario'
-
-    # ===========================================================================
-    # COLUMNS
-    # ===========================================================================
-    name = fields.Char(
-        string='Name',
-        size=61,
-        required=False,
-        help='Name of the step')
-    scenario_id = fields.Many2one(
-        comodel_name='scanner.scenario',
-        string='Scenario',
-        required=True,
-        ondelete='cascade',
-        help='Scenario for this step')
-    step_start = fields.Boolean(
-        string='Step start',
-        default=False,
-        help='Check this if this is the first step of the scenario')
-    step_stop = fields.Boolean(
-        string='Step stop',
-        default=False,
-        help='Check this if this is the  last step of the scenario')
-    step_back = fields.Boolean(
-        string='Step back',
-        default=False,
-        help='Check this to stop at this step when returning back')
-    no_back = fields.Boolean(
-        string='No back',
-        default=False,
-        help='Check this to prevent returning back this step')
-    out_transition_ids = fields.One2many(
-        comodel_name='scanner.scenario.transition',
-        inverse_name='from_id',
-        string='Outgoing transitons',
-        ondelete='cascade',
-        help='Transitions which goes to this step')
-    in_transition_ids = fields.One2many(
-        comodel_name='scanner.scenario.transition',
-        inverse_name='to_id',
-        string='Incoming transitons',
-        ondelete='cascade',
-        help='Transitions which goes to the next step')
-    python_code = fields.Text(
-        string='Python code',
-        default=PYTHON_CODE_DEFAULT,
-        help='Python code to execute')
-
-
-class ScannerScenarioTransition(models.Model):
-    _name = 'scanner.scenario.transition'
-    _description = 'Transition for scenario'
-
-    _order = 'sequence'
-
-    @api.model
-    def _transition_type_get(self):
-        return [
-            ('scanner', 'Scanner'),
-            ('keyboard', 'Keyboard'),
-        ]
-
-    # ===========================================================================
-    # COLUMNS
-    # ===========================================================================
-    name = fields.Char(
-        string='Name',
-        size=64,
-        required=True,
-        help='Name of the transition')
-    sequence = fields.Integer(
-        string='Sequence',
-        default=0,
-        required=False,
-        help='Sequence order')
-    from_id = fields.Many2one(
-        comodel_name='scanner.scenario.step',
-        string='From',
-        required=True,
-        ondelete='cascade',
-        help='Step which launches this transition')
-    to_id = fields.Many2one(
-        comodel_name='scanner.scenario.step',
-        string='To',
-        required=True,
-        ondelete='cascade',
-        help='Step which is reached by this transition')
-    condition = fields.Char(
-        string='Condition',
-        size=256,
-        required=True,
-        default='True',
-        help='The transition is followed only if this condition is evaluated '
-             'as True')
-    transition_type = fields.Selection(
-        selection='_transition_type_get',
-        string='Transition Type',
-        default="scanner",
-        help='Type of transition')
-    tracer = fields.Char(
-        string='Tracer',
-        size=12,
-        required=False,
-        default=False,
-        help='Used to determine fron which transition we arrive to the '
-             'destination step')
-    scenario_id = fields.Many2one(
-        comodel_name='scanner.scenario',
-        string='Scenario',
-        required=False,
-        related="from_id.scenario_id",
-        store=True,
-        ondelete='cascade',
-        readonly=True)
-
-    @api.one
-    @api.constrains('from_id', 'to_id')
-    def _check_scenario(self):
-        if self.from_id.scenario_id.id != self.to_id.scenario_id.id:
-            raise Warning(_('Error ! You can not create recursive scenarios.'))
-
-        return True
 
 
 class ScannerHardware(models.Model):
@@ -451,7 +218,6 @@ class ScannerHardware(models.Model):
         terminal.ensure_one()
         return terminal
 
-    @logged
     @api.model
     def scanner_check(self, terminal_number):
         terminal = self._get_terminal(terminal_number)
@@ -461,7 +227,6 @@ class ScannerHardware(models.Model):
             terminal.scenario_id.id,
             terminal.scenario_id.name) or False
 
-    @logged
     @api.model
     def scanner_call(self, terminal_number, action, message=False,
                      transition_type='keyboard'):
@@ -637,7 +402,7 @@ class ScannerHardware(models.Model):
                 uid = users[0].id
                 res_users.sudo(uid).check_credentials(password)
             return uid
-        except AccessDenied:
+        except exceptions.AccessDenied:
             return False
 
     @api.one
@@ -932,7 +697,7 @@ class ScannerHardware(models.Model):
                     MAX_TRIES_ON_CONCURRENCY_FAILURE,
                     wait_time)
                 time.sleep(wait_time)
-            except (except_orm, Warning) as e:
+            except (exceptions.except_orm, exceptions.Warning) as e:
                 # ORM exception, display the error message and require the "go
                 # back" action
                 self.env.cr.rollback()
@@ -978,223 +743,3 @@ class ScannerHardware(models.Model):
     def log(self, log_message):
         if self.log_enabled:
             logger.info('[%s] %s' % (self.code, ustr(log_message)))
-
-
-class ScannerScenarioCustom(models.Model):
-    _name = 'scanner.scenario.custom'
-    _description = 'Temporary value for scenario'
-
-    _rec_name = "scenario_id"
-
-    # ===========================================================================
-    # COLUMNS
-    # ===========================================================================
-    scenario_id = fields.Many2one(
-        'scanner.scenario',
-        string='Scenario',
-        required=False,
-        ondelete='cascade',
-        help='Values used for this scenario')
-    scanner_id = fields.Many2one(
-        'scanner.hardware',
-        string='Scanner',
-        required=False,
-        ondelete='cascade',
-        help='Values used for this scanner')
-    model = fields.Char(
-        string='Model',
-        size=255,
-        required=True,
-        help='Model used for these data')
-    res_id = fields.Integer(
-        string='Values id',
-        default=0,
-        required=True,
-        help='ID of the model source')
-    char_val1 = fields.Char(
-        string='Char Value 1',
-        size=255,
-        default='',
-        required=False,
-        help='Temporary char value')
-    char_val2 = fields.Char(
-        string='Char Value 2',
-        size=255,
-        default='',
-        required=False,
-        help='Temporary char value')
-    char_val3 = fields.Char(
-        string='Char Value 3',
-        size=255,
-        default='',
-        required=False,
-        help='Temporary char value')
-    char_val4 = fields.Char(
-        string='Char Value 4',
-        size=255,
-        default='',
-        required=False,
-        help='Temporary char value')
-    char_val5 = fields.Char(
-        string='Char Value 5',
-        size=255,
-        default='',
-        required=False,
-        help='Temporary char value')
-    int_val1 = fields.Integer(
-        string='Int Value 1',
-        default=0,
-        required=False,
-        help='Temporary int value')
-    int_val2 = fields.Integer(
-        string='Int Value 2',
-        default=0,
-        required=False,
-        help='Temporary int value')
-    int_val3 = fields.Integer(
-        string='Int Value 3',
-        default=0,
-        required=False,
-        help='Temporary int value')
-    int_val4 = fields.Integer(
-        string='Int Value 4',
-        default=0,
-        required=False,
-        help='Temporary int value')
-    int_val5 = fields.Integer(
-        string='Int Value 5',
-        default=0,
-        required=False,
-        help='Temporary int value')
-    float_val1 = fields.Float(
-        string='Float Value 1',
-        default=0.0,
-        required=False,
-        help='Temporary float value')
-    float_val2 = fields.Float(
-        string='Float Value 2',
-        default=0.0,
-        required=False,
-        help='Temporary float value')
-    float_val3 = fields.Float(
-        string='Float Value 3',
-        default=0.0,
-        required=False,
-        help='Temporary float value')
-    float_val4 = fields.Float(
-        string='Float Value 4',
-        default=0.0,
-        required=False,
-        help='Temporary float value')
-    float_val5 = fields.Float(
-        string='Float Value 5',
-        default=0.0,
-        required=False,
-        help='Temporary float value')
-    text_val = fields.Text(
-        string='Text',
-        default='',
-        required=False,
-        help='Temporary text value')
-
-    @api.model
-    def _get_domain(self, scenario, scanner):
-        """
-        Create a domain to find custom values.
-        Use the fields shared_custom of scenario and scanner
-        """
-        # Domain if custom values are shared
-        if scenario.shared_custom is True:
-            return [
-                ('scenario_id', '=', scenario.id),
-                ('scanner_id.reference_document', '=',
-                 scanner.reference_document),
-                ('scanner_id.warehouse_id', '=', scanner.warehouse_id.id)]
-
-        # Default domain
-        return [
-            ('scenario_id', '=', scenario.id),
-            ('scanner_id', '=', scanner.id),
-        ]
-
-    @api.model
-    def _get_values(self, scenario, scanner, model='', res_id=None,
-                    domain=None):
-        """
-        Returns read customs line
-        @param domain : list of tuple for search method
-        """
-        # Get the default search domain
-        search_domain = self._get_domain(scenario, scanner)
-
-        # Add custom values in search domain
-        if domain is not None:
-            search_domain.extend(domain)
-
-        # Add model in search domain, if any
-        if model:
-            search_domain.append(('model', '=', model))
-
-        # Add res_id in search domain, if any
-        if res_id:
-            search_domain.append(('res_id', '=', res_id))
-
-        # Search for values
-        ids = self.search(search_domain)
-
-        # If ids were found, return data from these ids
-        if ids:
-            return self.read(ids, [])
-
-        # No id found, return an empty list
-        return []
-
-    @api.model
-    def _set_values(self, values):
-        """
-        values is a dict, from a 'read' function
-        Get id in values and delete some fields
-        """
-        # Copy values to let original dict unchanged
-        vals = values.copy()
-
-        # Get id from values, in a list
-        ids = [values.get('id', None)]
-
-        # Remove unwanted fields from vals
-        for key in ['id', 'scenario_id', 'scanner_id', 'model', 'res_id']:
-            if key in vals:
-                del vals[key]
-
-        # Write new values
-        return self.write(ids, vals)
-
-    @api.model
-    def _remove_values(self, scenario, scanner):
-        """
-        Unlink all the line links from current scenario
-        """
-        scanner_hardware_obj = self.env['scanner.hardware']
-        scanner_ids = []
-
-        # If custom values are shared, search for other hardware using the same
-        if scenario.shared_custom is True:
-            scanner_ids = scanner_hardware_obj.search([
-                ('scenario_id', '=', scenario.id),
-                ('warehouse_id', '=', scanner.warehouse_id.id),
-                ('reference_document', '=', scanner.reference_document),
-                ('id', '!=', scanner.id),
-            ])
-
-        # Search for values attached to the current scenario
-        values_attached = self.search([
-            ('scenario_id', '=', scenario.id),
-            ('scanner_id', '=', scanner.id),
-        ])
-
-        # If other scanners are on the current scenario, attach the first
-        if scanner_ids:
-            return values_attached.write({'scanner_id': scanner_ids.id})
-
-        # Else, delete the current custom values
-        return values_attached.unlink()

@@ -39,10 +39,15 @@
     'data': [
         'security/stock_scanner_security.xml',
         'security/ir.model.access.csv',
-        'data/stock_scanner_data.xml',
+        'data/stock_scanner.xml',
         'data/ir_cron.xml',
         'wizard/stock_scanner_config_wizard_view.xml',
-        'views/stock_scanner.xml',
+        'views/menu.xml',
+        'views/scanner_scenario.xml',
+        'views/scanner_scenario_step.xml',
+        'views/scanner_scenario_transition.xml',
+        'views/scanner_scenario_custom.xml',
+        'views/scanner_hardware.xml',
     ],
 
     'qweb': [],
