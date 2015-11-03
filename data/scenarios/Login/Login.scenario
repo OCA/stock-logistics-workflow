@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<scenario>
+  <group_ids>stock_scanner.group_stock_scanner_sentinel</group_ids>
+  <name>Login</name>
+  <sequence>0</sequence>
+  <notes/>
+  <parent_id/>
+  <shared_custom>False</shared_custom>
+  <active>False</active>
+  <model_id>scanner.hardware</model_id>
+  <type>scenario</type>
+  <id>stock_scanner.scanner_scenario_login</id>
+  <Step id="stock_scanner.scanner_scenario_login_step_error" name="Authentication error" no_back="False" step_back="False" step_start="False" step_stop="False"/>
+  <Step id="stock_scanner.scanner_scenario_login_step_done" name="Authentication OK" no_back="False" step_back="False" step_start="False" step_stop="True"/>
+  <Step id="stock_scanner.scanner_scenario_login_step_login" name="Login name" no_back="True" step_back="True" step_start="True" step_stop="False"/>
+  <Step id="stock_scanner.scanner_scenario_login_step_pwd" name="Pwd" no_back="False" step_back="False" step_start="False" step_stop="False"/>
+  <Transition condition="terminal.check_credentials(terminal.tmp_val1, message)[0]" from_id="stock_scanner.scanner_scenario_login_step_pwd" id="stock_scanner.scanner_scenario_transition_pwd_to_done" name="Authenticate" sequence="0" to_id="stock_scanner.scanner_scenario_login_step_done" tracer="" transition_type="keyboard"/>
+  <Transition condition="True" from_id="stock_scanner.scanner_scenario_login_step_pwd" id="stock_scanner.scanner_scenario_transition_pwd_to_error" name="Authentication error" sequence="10" to_id="stock_scanner.scanner_scenario_login_step_error" tracer="" transition_type="keyboard"/>
+  <Transition condition="True" from_id="stock_scanner.scanner_scenario_login_step_login" id="stock_scanner.scanner_scenario_transition_login_to_pwd" name="Login entered -&gt; Enter password" sequence="0" to_id="stock_scanner.scanner_scenario_login_step_pwd" tracer="" transition_type="keyboard"/>
+</scenario>

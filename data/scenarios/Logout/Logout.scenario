@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<scenario>
+  <group_ids>base.group_user</group_ids>
+  <name>Logout</name>
+  <sequence>9999</sequence>
+  <notes/>
+  <parent_id/>
+  <shared_custom>False</shared_custom>
+  <active>False</active>
+  <model_id>scanner.hardware</model_id>
+  <type>scenario</type>
+  <id>stock_scanner.scanner_scenario_logout</id>
+  <Step id="stock_scanner.scanner_scenario_logout_step_cancelled" name="Logout cancelled" no_back="False" step_back="False" step_start="False" step_stop="True"/>
+  <Step id="stock_scanner.scanner_scenario_logout_step_confirm" name="Logout confirm" no_back="False" step_back="False" step_start="True" step_stop="False"/>
+  <Step id="stock_scanner.scanner_scenario_logout_step_confirmed" name="Logout confirmed" no_back="False" step_back="False" step_start="False" step_stop="True"/>
+  <Transition condition="not message" from_id="stock_scanner.scanner_scenario_logout_step_confirm" id="stock_scanner.scanner_scenario_transition_logout_to_cancelled" name="Logout cancelled" sequence="0" to_id="stock_scanner.scanner_scenario_logout_step_cancelled" tracer="" transition_type="keyboard"/>
+  <Transition condition="message" from_id="stock_scanner.scanner_scenario_logout_step_confirm" id="stock_scanner.scanner_scenario_transition_logout_to_confirmed" name="Logout confirmed" sequence="0" to_id="stock_scanner.scanner_scenario_logout_step_confirmed" tracer="" transition_type="keyboard"/>
+</scenario>
