@@ -124,15 +124,12 @@ class ScannerHardware(models.Model):
         default=False,
         ondelete='restrict',
         help='Current step for this hardware')
-    previous_steps_id = fields.Text(
-        string='Previous Step',
+    step_history_ids = fields.One2many(
+        comodel_name='scanner.hardware.step.history',
+        inverse_name='hardware_id', string='Steps History',
         readonly=True,
-        help='Previous step for this hardware',
-        default='')
-    previous_steps_message = fields.Text(
-        string='Previous Message',
-        readonly=True,
-        help='Previous message for this hardware')
+        help='History of all steps executed by this hardware'
+        'during the current scenario')
     reference_document = fields.Integer(
         string='Reference',
         default=0,
@@ -374,8 +371,9 @@ class ScannerHardware(models.Model):
         self.write({
             'scenario_id': False,
             'step_id': False,
-            'previous_steps_id': '',
-            'previous_steps_message': '',
+            'step_history_ids': [
+                (2, history.id) for history in self.step_history_ids
+            ],
             'reference_document': 0,
             'tmp_val1': '',
             'tmp_val2': '',
@@ -425,8 +423,7 @@ class ScannerHardware(models.Model):
         return True
 
     @api.multi
-    def _memorize(self, scenario_id, step_id, previous_steps_id=False,
-                  previous_steps_message=False, obj=None):
+    def _memorize(self, scenario_id, step_id, obj=None):
         """
         After affect a scenario to a scanner, we must memorize it
         If obj is specify, save it as well (ex: res.partner,12)
@@ -435,8 +432,6 @@ class ScannerHardware(models.Model):
         args = {
             'scenario_id': scenario_id,
             'step_id': step_id,
-            'previous_steps_id': previous_steps_id,
-            'previous_steps_message': previous_steps_message,
         }
         if obj is not None and isinstance(obj, int):
             args['reference_document'] = obj
@@ -462,21 +457,21 @@ class ScannerHardware(models.Model):
                 terminal.scenario_id.id):
             if terminal.step_id.no_back:
                 step_id = terminal.step_id.id
-            elif terminal.previous_steps_id:
-                previous_steps_id = terminal.previous_steps_id.split(',')
-                previous_steps_message = terminal.previous_steps_message.split(
-                    '\n')
-                if not previous_steps_id:
-                    return terminal.scanner_end(numterm=terminal.code)
+            elif terminal.step_history_ids:
+                last_call = terminal.step_history_ids[-1]
 
-                # Retrieve step id
-                step_id = int(previous_steps_id.pop())
-                terminal.previous_steps_id = ','.join(previous_steps_id)
+                # Retrieve last values
+                step_id = last_call.step_id.id
+                message = eval(last_call.message)
 
-                # Retrieve message
-                message = eval(previous_steps_message.pop())
-                terminal.previous_steps_message = '\n'.join(
-                    previous_steps_message)
+                # Prevent looping on the same step
+                if step_id == terminal.step_id.id:
+                    # Remove the history line
+                    last_call.unlink()
+                    return self._do_scenario_save(
+                        message, transition_type,
+                        scenario_id=scenario_id, step_id=step_id,
+                        current_object=current_object)
             else:
                 scenario_id = False
                 message = terminal.scenario_id.name
@@ -514,6 +509,12 @@ class ScannerHardware(models.Model):
                          _('A001')])
 
                 step_id = step_ids[0]
+                # Store the first step in terminal history
+                terminal.step_history_ids.create({
+                    'hardware_id': terminal.id,
+                    'step_id': step_id.id,
+                    'message': repr(message)
+                })
 
             else:
                 return self._send_error([_('Scenario'), _('not found')])
@@ -564,18 +565,16 @@ class ScannerHardware(models.Model):
                 tracer = transition.tracer
 
                 # Store the old step id if we are on a back step
-                if (transition.from_id.step_back and
-                        terminal.previous_steps_id.split(
-                        ',')[-1] != str(transition.from_id.id)):
-                    terminal.previous_steps_message = (
-                        terminal.previous_steps_id and '%s\n%s' % (
-                            terminal.previous_steps_message, repr(message)) or
-                        repr(message))
-                    terminal.previous_steps_id = (
-                        terminal.previous_steps_id and '%s,%d' % (
-                            terminal.previous_steps_id,
-                            transition.from_id.id) or
-                        str(transition.from_id.id))
+                if transition.from_id.step_back and (
+                    not terminal.step_history_ids or
+                    terminal.step_history_ids[
+                        -1].step_id != transition.to_id.id
+                ):
+                    terminal.step_history_ids.create({
+                        'hardware_id': terminal.id,
+                        'step_id': transition.to_id.id,
+                        'message': repr(message)
+                    })
 
                 # Valid transition found, stop searching
                 break
@@ -592,11 +591,10 @@ class ScannerHardware(models.Model):
 
         if not isinstance(scenario_id, int):
             scenario_id = scenario_id.id
+
         terminal._memorize(
             scenario_id,
             step_id,
-            previous_steps_id=terminal.previous_steps_id,
-            previous_steps_message=terminal.previous_steps_message,
             obj=current_object)
 
         try:
