@@ -182,5 +182,6 @@ Contributors
 * Damien Crier <damien@crier.me>
 * Laetitia Gangloff <laetitia.gangloff@acsone.eu>
 * Laurent Mignon <laurent.mignon@acsone.eu>
+* Olivier Dony <odo@openerp.com>
 * Sebastien LANGE <sebastien.lange@syleam.fr>
 * Sylvain Garancher <sylvain.garancher@syleam.fr>
