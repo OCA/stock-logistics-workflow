@@ -42,10 +42,12 @@ class StockProductionLot(models.Model):
     @api.one
     @api.onchange('product_id')
     def onchange_product_id(self):
+        '''Instruct the client to lock/unlock a lot on product change'''
         self.locked = self._get_product_locked(self.product_id)
 
     @api.multi
     def button_lock(self):
+        '''Lock the lot if the reservations allow it'''
         stock_quant_obj = self.env['stock.quant']
         for lot in self:
             cond = [('lot_id', '=', lot.id),
@@ -62,14 +64,18 @@ class StockProductionLot(models.Model):
     def button_unlock(self):
         return self.write({'locked': False})
 
-    @api.model
-    def create(self, vals):
-        product = self.env['product.product'].browse(vals.get('product_id'))
+    # Kept in old API to maintain compatibility
+    def create(self, cr, uid, vals, context=None):
+        '''Force the locking/unlocking, ignoring the value of 'locked'.'''
+        product = self.pool['product.product'].browse(
+            cr, uid, vals.get('product_id'))
         vals['locked'] = self._get_product_locked(product)
-        return super(StockProductionLot, self).create(vals)
+        return super(StockProductionLot, self).create(
+            cr, uid, vals, context=context)
 
-    @api.one
+    @api.multi
     def write(self, values):
+        '''Lock the lot if changing the product and locking is required'''
         if 'product_id' in values:
             product = self.env['product.product'].browse(
                 values.get('product_id'))
