@@ -713,7 +713,7 @@ class ScannerHardware(models.Model):
 
         # Manage automatic steps
         if result[0] == 'A':
-            return self.scanner_call('action', message=result[2])
+            return self.scanner_call(self.code, 'action', message=result[2])
 
         return result
 
