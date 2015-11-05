@@ -458,7 +458,7 @@ class Sentinel(object):
                             else:
                                 # Empty list supplied, display an error
                                 (code, result, value) = (
-                                    'E', [_('No value available')], False)
+                                    'E', [_('No value available')], True)
 
                             # Check if we are in a scenario (to retrieve the
                             # scenario name from a submenu)
