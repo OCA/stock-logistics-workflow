@@ -569,7 +569,7 @@ class ScannerHardware(models.Model):
                 if transition.from_id.step_back and (
                     not terminal.step_history_ids or
                     terminal.step_history_ids[
-                        -1].step_id != transition.to_id.id
+                        -1].step_id != transition.to_id
                 ):
                     terminal.step_history_ids.create({
                         'hardware_id': terminal.id,
