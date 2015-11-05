@@ -690,7 +690,7 @@ class Sentinel(object):
 
             if key == '\n':
                 # Return key : Validate the choice
-                return quantity
+                return float(quantity)
             elif key.isdigit():
                 if not digit_key_pressed:
                     quantity = '0'
