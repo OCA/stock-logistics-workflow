@@ -439,7 +439,7 @@ class Sentinel(object):
                             else:
                                 # Back to the previous step required
                                 (code, result, value) = self.oerp_call(
-                                    'restart')
+                                    'back')
                         elif code == 'M':
                             # Simple message
                             self._display(

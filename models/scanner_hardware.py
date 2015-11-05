@@ -465,7 +465,8 @@ class ScannerHardware(models.Model):
                 message = eval(last_call.message)
 
                 # Prevent looping on the same step
-                if step_id == terminal.step_id.id:
+                if step_id == terminal.step_id.id and \
+                   transition_type == 'back':
                     # Remove the history line
                     last_call.unlink()
                     return self._do_scenario_save(
