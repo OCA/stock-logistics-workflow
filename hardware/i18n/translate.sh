@@ -24,7 +24,15 @@ init)
     fi
     # Initialize translation file
     mkdir -p sentinel
-    msginit --input=sentinel.pot --output=sentinel/$2.po --locale=$2
+    msginit --input=sentinel/sentinel.pot --output=sentinel/$2.po --locale=$2
+    ;;
+update)
+    if [ $# -lt 2 ]; then
+        display_usage
+    fi
+    # Initialize translation file
+    mkdir -p sentinel
+    msgmerge --previous sentinel/$2.po sentinel/sentinel.pot --output=sentinel/$2.po
     ;;
 compile)
     if [ $# -lt 2 ]; then
