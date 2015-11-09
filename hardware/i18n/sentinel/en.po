@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sentinel 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-15 18:02+0200\n"
+"POT-Creation-Date: 2015-11-09 16:30+0100\n"
 "PO-Revision-Date: 2012-05-15 18:03+0100\n"
 "Last-Translator: Sylvain Garancher <sylvain.garancher@syleam.fr>\n"
 "Language-Team: English\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../sentinel.py:126
+#: ../sentinel.py:143
 msgid ""
 "Autoconfiguration failed !\n"
 "Please enter terminal code"
@@ -25,11 +25,11 @@ msgstr ""
 "Autoconfiguration failed !\n"
 "Please enter terminal code"
 
-#: ../sentinel.py:337
+#: ../sentinel.py:458
 msgid "No value available"
 msgstr "No value available"
 
-#: ../sentinel.py:372
+#: ../sentinel.py:512
 msgid ""
 "An error occured\n"
 "\n"
@@ -39,29 +39,28 @@ msgstr ""
 "\n"
 "Please contact your administrator"
 
-#: ../sentinel.py:403
+#: ../sentinel.py:546
 msgid "No scenario available !"
 msgstr "No scenario available !"
 
-#: ../sentinel.py:406
-msgid "|Scenarios"
-msgstr "|Scenarios"
+#: ../sentinel.py:549
+msgid "Scenarios"
+msgstr "Scenarios"
 
-#: ../sentinel.py:425
+#: ../sentinel.py:574
 msgid "Yes"
 msgstr "Yes"
 
-#: ../sentinel.py:428
+#: ../sentinel.py:577
 msgid "No"
 msgstr "No"
 
-#: ../sentinel.py:507
+#: ../sentinel.py:680
 #, python-format
 msgid "Selected : %s"
 msgstr "Selected : %s"
 
-#: ../sentinel.py:671
+#: ../sentinel.py:859
 #, python-format
 msgid "Selected : %d"
 msgstr "Selected : %d"
-

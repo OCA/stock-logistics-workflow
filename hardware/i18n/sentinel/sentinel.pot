@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sentinel 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-15 18:02+0200\n"
+"POT-Creation-Date: 2015-11-09 16:30+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,45 +17,45 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../sentinel.py:126
+#: ../sentinel.py:143
 msgid ""
 "Autoconfiguration failed !\n"
 "Please enter terminal code"
 msgstr ""
 
-#: ../sentinel.py:337
+#: ../sentinel.py:458
 msgid "No value available"
 msgstr ""
 
-#: ../sentinel.py:372
+#: ../sentinel.py:512
 msgid ""
 "An error occured\n"
 "\n"
 "Please contact your administrator"
 msgstr ""
 
-#: ../sentinel.py:403
+#: ../sentinel.py:546
 msgid "No scenario available !"
 msgstr ""
 
-#: ../sentinel.py:406
-msgid "|Scenarios"
+#: ../sentinel.py:549
+msgid "Scenarios"
 msgstr ""
 
-#: ../sentinel.py:425
+#: ../sentinel.py:574
 msgid "Yes"
 msgstr ""
 
-#: ../sentinel.py:428
+#: ../sentinel.py:577
 msgid "No"
 msgstr ""
 
-#: ../sentinel.py:507
+#: ../sentinel.py:680
 #, python-format
 msgid "Selected : %s"
 msgstr ""
 
-#: ../sentinel.py:671
+#: ../sentinel.py:859
 #, python-format
 msgid "Selected : %d"
 msgstr ""

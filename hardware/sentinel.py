@@ -549,7 +549,7 @@ class Sentinel(object):
             return ('R', [_('No scenario available !')], 0)
 
         # Select a scenario in the list
-        choice = self._menu_choice(values, title='Scenarios')
+        choice = self._menu_choice(values, title=_('Scenarios'))
         ret = self.oerp_call('action', choice)
 
         # Store the scenario id and name
