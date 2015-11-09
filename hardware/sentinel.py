@@ -121,7 +121,11 @@ class Sentinel(object):
         except:
             language = gettext.translation(
                 I18N_DOMAIN, I18N_DIR, languages=[I18N_DEFAULT])
-        language.install()
+
+        # Replace global dummy lambda by the translations gettext method
+        # The install method of gettext doesn't replace the function if exists
+        global _
+        _ = language.gettext
 
         # Initialize hardware
         self.hardware_obj = Object(self.connection, 'scanner.hardware')
