@@ -37,9 +37,9 @@ class AccountInvoiceLine(models.Model):
     _inherit = 'account.invoice.line'
 
     stock_moves = fields.Many2many('stock.move',
-                                      'stock_move_invoice_rel',
-                                      'invoice_line_id', 'move_id',
-                                      'Stock Moves', readonly=True)
+                                   'stock_move_invoice_rel',
+                                   'invoice_line_id', 'move_id',
+                                   'Stock Moves', readonly=True)
 
     @api.multi
     def update_stock_moves(self):
