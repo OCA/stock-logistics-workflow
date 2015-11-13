@@ -27,12 +27,14 @@ and what quantity to invoice.
 If the system identifies that the stock move has been fully invoiced, it
 will change the corresponding status.
 
-If the user deletes the invoice or an invoice line, or reduces the quantity
-to be invoiced, the corresponding stock move changes to the status 'To be
-invoiced'.
+If the user deletes the invoice or an invoice line, the corresponding stock
+move changes to the status 'To be invoiced'.
 
-The user is not allowed to invoice more quantity than what exists in the
-corresponding stock move.
+If the user changes the quantity in the invoice, the invoice control in
+the stock move will not be changed. This allows for more flexibility (e.g.
+the company will not accept an invoice for some products that were
+received with defects).
+
 
 Known issues / Roadmap
 ======================
