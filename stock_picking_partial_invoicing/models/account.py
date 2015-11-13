@@ -88,6 +88,8 @@ class AccountInvoiceLine(orm.Model):
     def write(self, cr, uid, ids, vals, context=None):
         if context is None:
             context = {}
+        if not isinstance(ids, list):
+            ids = [ids]
         res = super(AccountInvoiceLine, self).write(cr, uid, ids, vals,
                                                     context=context)
         if 'quantity' in vals:
