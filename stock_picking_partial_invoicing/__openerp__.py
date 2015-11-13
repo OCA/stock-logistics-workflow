@@ -95,7 +95,8 @@ To contribute to this module, please visit http://odoo-community.org.
     "depends": ['stock'],
     "data": [
         'wizard/stock_invoice_onshipping.xml',
-        'view/stock.xml',
+        'views/stock_view.xml',
+        'views/account_invoice_view.xml',
 
 
     ],

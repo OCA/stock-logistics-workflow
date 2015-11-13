@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, orm
+from openerp.osv import orm, fields
 
 
 class AccountInvoice(orm.Model):
@@ -54,6 +54,12 @@ class AccountInvoice(orm.Model):
 class AccountInvoiceLine(orm.Model):
 
     _inherit = 'account.invoice.line'
+
+    _columns = {
+        'stock_moves': fields.many2many('stock.move', 'stock_move_invoice_rel',
+                                        'invoice_line_id', 'move_id',
+                                        'Stock Moves', readonly=True)
+    }
 
     def unlink(self, cr, uid, ids, context=None):
         if context is None:
