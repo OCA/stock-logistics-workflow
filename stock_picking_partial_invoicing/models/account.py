@@ -94,17 +94,8 @@ class AccountInvoiceLine(orm.Model):
                                                     context=context)
         if 'quantity' in vals:
             for line in self.browse(cr, uid, ids, context=context):
-                move_obj = self.pool['stock.move']
                 picking_obj = self.pool['stock.picking']
-                cr.execute("""
-                SELECT move_id
-                FROM stock_move_invoice_rel
-                WHERE invoice_line_id = %s
-                """, (line.id, ))
-                res = cr.fetchone()
-                if res:
-                    move_id = res[0]
-                    move = move_obj.browse(cr, uid, move_id, context=context)
+                for move in line.stock_moves:
                     product_qty = move.product_uos_qty or move.product_qty
                     if move.picking_id:
                         if move.invoiced_qty > product_qty:
