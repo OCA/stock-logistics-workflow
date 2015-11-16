@@ -24,8 +24,10 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [picking_dispatch](picking_dispatch/) | 8.0.1.2.3 | Picking dispatch
+[product_unique_serial](product_unique_serial/) | 8.0.1.0.1 | Product Serial Unique Number
 [stock_dropshipping_dual_invoice](stock_dropshipping_dual_invoice/) | 8.0.0.1.0 | Create both Supplier and Customer Invoices from a Dropshipping Delivery
 [stock_move_description](stock_move_description/) | 8.0.1.0.0 | Stock move description
+[stock_no_negative](stock_no_negative/) | 8.0.1.0.1 | Stock Check No Negative
 [stock_ownership_availability_rules](stock_ownership_availability_rules/) | 8.0.0.2.0 | Enforce ownership on stock availability
 [stock_ownership_by_move](stock_ownership_by_move/) | 8.0.0.1.0 | Preserve Ownership of moves (not pickings) on reception.
 [stock_picking_backorder_strategy](stock_picking_backorder_strategy/) | 8.0.0.1.0 | Picking backordering strategies
