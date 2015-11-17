@@ -7,9 +7,9 @@
 
 act = 'T'
 res = [
-    '|Text input step',
+    _('|Text input step'),
     '',
-    'This step allows the user to enter custom text.',
+    _('This step allows the user to enter custom text.'),
     '',
-    'You will also use this step for barcode scanning.',
+    _('You will also use this step for barcode scanning.'),
 ]

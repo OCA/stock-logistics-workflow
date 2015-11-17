@@ -7,7 +7,7 @@
 
 act = 'L'
 res = [
-    ('|', 'List step'),
-    ('error', 'Go to Error step'),
-    ('continue', 'Go to next step'),
+    ('|', _('List step')),
+    ('error', _('Go to Error step')),
+    ('continue', _('Go to next step')),
 ]

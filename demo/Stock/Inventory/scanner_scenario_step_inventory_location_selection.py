@@ -11,8 +11,8 @@ product = model.search([('default_code', '=', terminal.tmp_val2)])[0]
 
 act = 'T'
 res = [
-    'Product : [%s] %s' % (product.default_code, product.name),
-    'Quantity : %g %s' % (float(message), product.uom_id.name),
+    _('Product : [%s] %s') % (product.default_code, product.name),
+    _('Quantity : %g %s') % (float(message), product.uom_id.name),
     '',
-    'Location ?',
+    _('Location ?'),
 ]

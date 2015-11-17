@@ -11,8 +11,8 @@ product = model.search([('default_code', '=', message)])
 
 act = 'Q'
 res = [
-    'Product : [%s] %s' % (product.default_code, product.name),
-    'UoM : %s' % product.uom_id.name,
+    _('Product : [%s] %s') % (product.default_code, product.name),
+    _('UoM : %s') % product.uom_id.name,
     '',
-    'Select quantity',
+    _('Select quantity'),
 ]

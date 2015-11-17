@@ -7,5 +7,5 @@
 
 act = 'T'
 res = [
-    'Enter a location name',
+    _('Enter a location name'),
 ]

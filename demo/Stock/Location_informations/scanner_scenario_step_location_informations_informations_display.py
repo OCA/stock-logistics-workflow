@@ -10,16 +10,16 @@ report_stock_ids = report_stock_obj.search(cr, uid, [('location_id.name', '=', m
 
 act = 'F'
 res = [
-    'Location : %s' % message,
+    _('Location : %s') % message,
     '',
 ]
 
 if not report_stock_ids:
-    res.append('Empty location !')
+    res.append(_('Empty location !'))
 
 for report_stock in report_stock_obj.browse(cr, uid, report_stock_ids, context=context):
     res.extend([
-        'Product : [%s] %s' % (report_stock.product_id.default_code, report_stock.product_id.name),
-        'Quantity : %g %s' % (report_stock.product_qty, report_stock.uom_id.name),
+        _('Product : [%s] %s') % (report_stock.product_id.default_code, report_stock.product_id.name),
+        _('Quantity : %g %s') % (report_stock.product_qty, report_stock.uom_id.name),
         '',
     ])

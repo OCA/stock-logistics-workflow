@@ -7,15 +7,15 @@
 
 act = 'M'
 res = [
-    '|Introduction',
+    _('|Introduction'),
     '',
-    'Welcome on the stock_scanner module.',
+    _('Welcome on the stock_scanner module.'),
     '',
-    'This scenario will explain all step types.',
+    _('This scenario will explain all step types.'),
     # '',
-    # 'All step types allow scrolling, if the displayed text doesn\'t fit on the screen.',
-    # 'To scroll, simply use the arrow keys.',
+    # _('All step types allow scrolling, if the displayed text doesn\'t fit on the screen.'),
+    # _('To scroll, simply use the arrow keys.'),
     # '',
-    # 'For \'List\' steps, the scrolling is horizontal, because the vertical moves are used to choose the value.',
-    # 'For all other types of steps, the scrolling is vertical.',
+    # _('For \'List\' steps, the scrolling is horizontal, because the vertical moves are used to choose the value.'),
+    # _('For all other types of steps, the scrolling is vertical.'),
 ]

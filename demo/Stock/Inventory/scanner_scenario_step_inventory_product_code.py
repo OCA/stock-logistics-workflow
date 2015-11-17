@@ -24,7 +24,7 @@ elif tracer == 'location' and terminal.tmp_val2:
     location_id = stock_location_obj.name_search(message, operator='=')[0][0]
 
     product = model.search([('default_code', '=', default_code)])[0]
-    
+
     stock_inventory_line_obj.create(cr, uid, {
         'inventory_id': stock_inventory_id,
         'product_id': product.id,
@@ -37,5 +37,5 @@ elif tracer == 'location' and terminal.tmp_val2:
 
 act = 'T'
 res = [
-    'Product code ?',
+    _('Product code ?'),
 ]

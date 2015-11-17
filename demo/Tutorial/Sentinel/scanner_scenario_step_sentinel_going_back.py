@@ -7,7 +7,7 @@
 
 act = 'M'
 res = [
-    'Going back',
+    _('Going back'),
     '',
-    'By pressing the escape key, you can return back to the last \'Return step\'.',
+    _('By pressing the escape key, you can return back to the last \'Return step\'.'),
 ]

@@ -7,7 +7,7 @@
 
 act = 'M'
 res = [
-    '|Message step',
+    _('|Message step'),
     '',
-    'A step designed to display some information, without waiting for any user input.',
+    _('A step designed to display some information, without waiting for any user input.'),
 ]

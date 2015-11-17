@@ -7,7 +7,7 @@
 
 act = 'Q'
 res = [
-    '|Quantity (float) step',
+    _('|Quantity (float) step'),
     '',
-    'This step allows the user to send float quantities.',
+    _('This step allows the user to send float quantities.'),
 ]

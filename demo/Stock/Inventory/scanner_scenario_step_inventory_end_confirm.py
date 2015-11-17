@@ -7,5 +7,5 @@
 
 act = 'C'
 res = [
-    'Are you sure to want to finish this inventory ?',
+    _('Are you sure to want to finish this inventory ?'),
 ]

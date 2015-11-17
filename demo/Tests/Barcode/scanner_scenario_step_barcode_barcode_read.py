@@ -6,4 +6,4 @@
 # Put the returned value in <val>, as an integer
 
 act = 'T'
-res = ['Scan a barcode']
+res = [_('Scan a barcode')]

@@ -7,11 +7,11 @@
 
 act = 'M'
 res = [
-    'Scrolling',
+    _('Scrolling'),
     '',
-    'All step types allow the user to scroll if the text doesn\'t fit on screen.',
+    _('All step types allow the user to scroll if the text doesn\'t fit on screen.'),
     '',
-    'Except the list steps, the user can scroll using the up/down arrow keys.',
+    _('Except the list steps, the user can scroll using the up/down arrow keys.'),
     '',
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nibh lorem, volutpat sit amet faucibus ut, adipiscing vitae lacus. Vestibulum hendrerit, sapien a porta posuere, augue ipsum mattis neque, sit amet sagittis felis lectus ut risus. Sed aliquam felis ut orci adipiscing auctor. Donec malesuada lorem eu nunc vestibulum elementum. Quisque orci quam, lobortis at mattis sit amet, gravida semper quam. Curabitur lobortis, eros ut porttitor rutrum, erat sem tincidunt augue, sed accumsan felis magna at purus. Sed laoreet consectetur viverra. Aliquam a odio sapien. Suspendisse potenti. Donec dignissim sagittis lacus, a auctor leo ultricies vel. Pellentesque eleifend porta nulla elementum faucibus.',
+    _('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nibh lorem, volutpat sit amet faucibus ut, adipiscing vitae lacus. Vestibulum hendrerit, sapien a porta posuere, augue ipsum mattis neque, sit amet sagittis felis lectus ut risus. Sed aliquam felis ut orci adipiscing auctor. Donec malesuada lorem eu nunc vestibulum elementum. Quisque orci quam, lobortis at mattis sit amet, gravida semper quam. Curabitur lobortis, eros ut porttitor rutrum, erat sem tincidunt augue, sed accumsan felis magna at purus. Sed laoreet consectetur viverra. Aliquam a odio sapien. Suspendisse potenti. Donec dignissim sagittis lacus, a auctor leo ultricies vel. Pellentesque eleifend porta nulla elementum faucibus.'),
 ]

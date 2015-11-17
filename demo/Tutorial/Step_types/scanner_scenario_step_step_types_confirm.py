@@ -7,7 +7,7 @@
 
 act = 'C'
 res = [
-    '|Confirm step',
+    _('|Confirm step'),
     '',
-    'This step waits for a confirmation from the user.',
+    _('This step waits for a confirmation from the user.'),
 ]

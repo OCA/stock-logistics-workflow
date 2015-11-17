@@ -7,7 +7,7 @@
 
 act = 'F'
 res = [
-    '|Final step',
+    _('|Final step'),
     '',
-    'After this step, the scenario is finished.',
+    _('After this step, the scenario is finished.'),
 ]

@@ -7,6 +7,6 @@
 
 act = 'E'
 res = [
-    'Unknown product %s' % message,
+    _('Unknown product %s') % message,
 ]
 val = True

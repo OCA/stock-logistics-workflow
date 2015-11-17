@@ -10,9 +10,9 @@ length = 2
 
 act = 'F'
 res = [
-    u'Result :',
+    _('Result :'),
     message,
-    u'',
-    u'Hexa :',
-    u' '.join([string[start:start + length] for start in range(0, len(string), length)]),
+    '',
+    _('Hexa :'),
+    ' '.join([string[start:start + length] for start in range(0, len(string), length)]),
 ]

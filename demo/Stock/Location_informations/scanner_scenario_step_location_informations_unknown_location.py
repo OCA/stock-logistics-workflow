@@ -7,6 +7,6 @@
 
 act = 'E'
 res = [
-    'Unknown location %s' % message,
+    _('Unknown location %s') % message,
 ]
 val = True

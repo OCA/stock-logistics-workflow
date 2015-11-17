@@ -12,5 +12,5 @@ stock_inventory_obj.action_done(cr, uid, [stock_inventory_id], context=context)
 
 act = 'F'
 res = [
-    'Inventory done !',
+    _('Inventory done !'),
 ]

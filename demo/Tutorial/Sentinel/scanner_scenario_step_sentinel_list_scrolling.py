@@ -7,6 +7,6 @@
 
 act = 'L'
 res = [
-    ('|', 'List Scrolling'),
-    ('', 'Long texts in a list allows the user to scroll horizontally with left/right arrow keys'),
+    ('|', _('List Scrolling')),
+    ('', _('Long texts in a list allows the user to scroll horizontally with left/right arrow keys')),
 ]

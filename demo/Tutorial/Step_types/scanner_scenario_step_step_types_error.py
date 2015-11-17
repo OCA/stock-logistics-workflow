@@ -7,10 +7,10 @@
 
 act = 'E'
 res = [
-    '|Error step',
+    _('|Error step'),
     '',
-    'This step shows an error message, using the error colors defined in the hardware configuration.',
+    _('This step shows an error message, using the error colors defined in the hardware configuration.'),
     '',
-    'After this step, the scenario automatically goes back if the returned value is set to True.',
+    _('After this step, the scenario automatically goes back if the returned value is set to True.'),
 ]
 val = True

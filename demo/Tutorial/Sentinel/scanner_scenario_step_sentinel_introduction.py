@@ -7,9 +7,9 @@
 
 act = 'M'
 res = [
-    'Introduction',
+    _('Introduction'),
     '',
-    'This scenario will explain some features of the sentinel ncurses client.',
+    _('This scenario will explain some features of the sentinel ncurses client.'),
     '',
-    'This client is specific to the stock_scanner module.',
+    _('This client is specific to the stock_scanner module.'),
 ]
