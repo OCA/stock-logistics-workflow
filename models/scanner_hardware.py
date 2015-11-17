@@ -619,6 +619,7 @@ class ScannerHardware(models.Model):
                 'wkf': workflow,
                 'workflow': workflow,
                 'scenario': terminal.scenario_id,
+                '_': _,
             }
 
             terminal.log('Executing step %d : %s' % (step_id, step.name))
