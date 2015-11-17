@@ -112,8 +112,8 @@ class Sentinel(object):
             self.test_file = open(test_file_name, 'r')
 
         # Initialize translations
-        context = Object(self.connection, 'res.users').context_get()
-        lang = context.get('lang', I18N_DEFAULT)
+        self.context = Object(self.connection, 'res.users').context_get()
+        lang = self.context.get('lang', I18N_DEFAULT)
         gettext.install(I18N_DOMAIN)
         try:
             language = gettext.translation(
@@ -169,7 +169,7 @@ class Sentinel(object):
         self.main_loop()
 
     def scanner_check(self):
-        self.scenario_id = self.hardware_obj.scanner_check(self.hardware_code)
+        self.scenario_id = self.hardware_obj.scanner_check(self.hardware_code, self.context)
         if isinstance(self.scenario_id, list):
             self.scenario_id, self.scenario_name = self.scenario_id
 
@@ -538,8 +538,8 @@ class Sentinel(object):
         """
         Calls a method from Odoo Server
         """
-        return self.hardware_obj.scanner_call(self.hardware_code, action,
-                                              message, 'keyboard')
+        return self.hardware_obj.scanner_call(
+            self.hardware_code, action, message, 'keyboard', self.context)
 
     def _select_scenario(self):
         """
