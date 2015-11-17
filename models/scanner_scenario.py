@@ -53,6 +53,7 @@ class ScannerScenario(models.Model):
         string='Name',
         size=64,
         required=True,
+        translate=True,
         help='Appear on barcode reader screen')
     sequence = fields.Integer(
         string='Sequence',
