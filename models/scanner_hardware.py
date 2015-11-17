@@ -129,7 +129,7 @@ class ScannerHardware(models.Model):
         inverse_name='hardware_id', string='Steps History',
         readonly=True,
         help='History of all steps executed by this hardware'
-        'during the current scenario')
+        ' during the current scenario')
     reference_document = fields.Integer(
         string='Reference',
         default=0,
@@ -584,7 +584,7 @@ class ScannerHardware(models.Model):
             if not step_id:
                 terminal.log('No valid transition found !')
                 return self._unknown_action(
-                    [_('Please contact'), _('your'), _('adminstrator')])
+                    [_('Please contact'), _('your'), _('administrator')])
 
         # Memorize the current step
         if not isinstance(step_id, int):

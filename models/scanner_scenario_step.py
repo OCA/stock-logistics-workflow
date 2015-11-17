@@ -69,13 +69,13 @@ class ScannerScenarioStep(models.Model):
     out_transition_ids = fields.One2many(
         comodel_name='scanner.scenario.transition',
         inverse_name='from_id',
-        string='Outgoing transitons',
+        string='Outgoing transitions',
         ondelete='cascade',
         help='Transitions which goes to this step')
     in_transition_ids = fields.One2many(
         comodel_name='scanner.scenario.transition',
         inverse_name='to_id',
-        string='Incoming transitons',
+        string='Incoming transitions',
         ondelete='cascade',
         help='Transitions which goes to the next step')
     python_code = fields.Text(
