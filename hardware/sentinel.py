@@ -169,7 +169,8 @@ class Sentinel(object):
         self.main_loop()
 
     def scanner_check(self):
-        self.scenario_id = self.hardware_obj.scanner_check(self.hardware_code, self.context)
+        self.scenario_id = self.hardware_obj.scanner_check(
+            self.hardware_code, self.context)
         if isinstance(self.scenario_id, list):
             self.scenario_id, self.scenario_name = self.scenario_id
 
