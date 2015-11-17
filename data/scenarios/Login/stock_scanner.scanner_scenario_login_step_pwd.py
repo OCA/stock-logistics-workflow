@@ -3,10 +3,11 @@
 'Put the returned action code in <act>, as a single character.'
 'Put the returned result or message in <res>, as a list of strings.'
 'Put the returned value in <val>, as an integer'
-from openerp import _
+
 terminal.write({'tmp_val1': message})
+
 act = 'T'
 res = [
-    _('| Login %s') %  message,
-    'Pwd ?',
+    _('| Login %s') % message,
+    _('Pwd ?'),
 ]

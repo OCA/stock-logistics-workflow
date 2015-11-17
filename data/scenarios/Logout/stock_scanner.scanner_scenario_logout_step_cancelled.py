@@ -3,9 +3,9 @@
 'Put the returned action code in <act>, as a single character.'
 'Put the returned result or message in <res>, as a list of strings.'
 'Put the returned value in <val>, as an integer'
-from openerp import _
+
 act = 'F'
 res = [
-   _('Logout cancelled'),
-   _('You are authenticated as %s !') % terminal.user_id.name,
+    _('Logout cancelled'),
+    _('You are authenticated as %s !') % terminal.user_id.name,
 ]
