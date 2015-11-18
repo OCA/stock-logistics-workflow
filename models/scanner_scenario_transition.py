@@ -48,7 +48,6 @@ class ScannerScenarioTransition(models.Model):
     # ===========================================================================
     name = fields.Char(
         string='Name',
-        size=64,
         required=True,
         help='Name of the transition')
     sequence = fields.Integer(
@@ -70,7 +69,6 @@ class ScannerScenarioTransition(models.Model):
         help='Step which is reached by this transition')
     condition = fields.Char(
         string='Condition',
-        size=256,
         required=True,
         default='True',
         help='The transition is followed only if this condition is evaluated '
@@ -82,7 +80,6 @@ class ScannerScenarioTransition(models.Model):
         help='Type of transition')
     tracer = fields.Char(
         string='Tracer',
-        size=12,
         required=False,
         default=False,
         help='Used to determine fron which transition we arrive to the '

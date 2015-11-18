@@ -51,7 +51,6 @@ class ScannerScenario(models.Model):
     # ===========================================================================
     name = fields.Char(
         string='Name',
-        size=64,
         required=True,
         translate=True,
         help='Appear on barcode reader screen')

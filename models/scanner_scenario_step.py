@@ -41,7 +41,6 @@ class ScannerScenarioStep(models.Model):
     # ===========================================================================
     name = fields.Char(
         string='Name',
-        size=61,
         required=False,
         help='Name of the step')
     scenario_id = fields.Many2one(
