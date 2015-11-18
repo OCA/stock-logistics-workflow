@@ -103,6 +103,7 @@ In the python code of each step, some variables are available :
     - tracer : Value of the tracer of the used transition to access this step
     - wkf or workflow : Workflow service
     - scenario : Recordset on the current scenario for the hardware
+    - _ : The translation function provided by Odoo (useable like in any other python file)
 
 Some of these variables are also available on transition conditions execution.
 
