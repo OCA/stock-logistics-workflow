@@ -29,7 +29,7 @@ class StockMove(models.Model):
     @api.multi
     def action_done(self):
         # do actual processing
-        result = super(stock_move, self).action_done()
+        result = super(StockMove, self).action_done()
         # overwrite date field where applicable
         for move in self:
             if move.linked_move_operation_ids:
