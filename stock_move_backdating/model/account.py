@@ -21,7 +21,7 @@
 from openerp import models, api
 
 
-class account_move(models.Model):
+class AccountMove(models.Model):
     _inherit = "account.move"
 
     @api.model

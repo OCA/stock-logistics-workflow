@@ -23,7 +23,7 @@
 from openerp import models, api
 
 
-class stock_move(models.Model):
+class StockMove(models.Model):
     _inherit = "stock.move"
 
     @api.multi
