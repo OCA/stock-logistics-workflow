@@ -3,7 +3,7 @@
 #
 #    Copyright (C) 2012+ BREMSKERL-REIBBELAGWERKE EMMERLING GmbH & Co. KG
 #    Author Marco Dieckhoff
-#    Copyright (C) 2013 Agile Business Group (<http://www.agilebg.com>)
+#    Copyright (C) 2015 Agile Business Group (<http://www.agilebg.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -23,7 +23,7 @@
 
 {
     'name': 'Stock Move Backdating',
-    'version': '8.0.0.1.0',
+    'version': '8.0.1.0.0',
     'category': 'Stock Logistics',
     'author': 'Marco Dieckhoff, BREMSKERL, Agile Business Group,'
     ' Odoo Community Association (OCA)',
