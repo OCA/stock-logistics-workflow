@@ -1,0 +1,47 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_analytic
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-11-19 20:50+0000\n"
+"PO-Revision-Date: 2015-11-19 20:50+0000\n"
+"Last-Translator: Fabio Vilchez\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_analytic
+#: field:stock.move,account_analytic_id:0
+msgid "Analytic account"
+msgstr "Cuenta analítica"
+
+#. module: stock_analytic
+#: model:ir.model,name:stock_analytic.model_purchase_order
+msgid "Purchase Order"
+msgstr "Pedido de compra"
+
+#. module: stock_analytic
+#: model:ir.model,name:stock_analytic.model_sale_order
+msgid "Sales Order"
+msgstr "Pedido de venta"
+
+#. module: stock_analytic
+#: model:ir.model,name:stock_analytic.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento stock"
+
+#. module: stock_analytic
+#: field:purchase.order,website_message_ids:0
+msgid "Website Messages"
+msgstr "Mensajes del sitio web"
+
+#. module: stock_analytic
+#: help:purchase.order,website_message_ids:0
+msgid "Website communication history"
+msgstr "Historial de comunicaciones del sitio web"
+
