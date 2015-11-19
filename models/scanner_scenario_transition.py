@@ -23,6 +23,9 @@
 #
 ##############################################################################
 
+import sys
+import compiler
+import traceback
 from openerp import models, api, fields, exceptions
 from openerp import _
 
@@ -100,5 +103,31 @@ class ScannerScenarioTransition(models.Model):
             raise exceptions.Warning(
                 _('Error ! You can not create recursive scenarios.'),
             )
+
+        return True
+
+    @api.multi
+    @api.constrains('condition')
+    def _check_condition_syntax(self):
+        """
+        Syntax check the python condition of a transition
+        """
+        for transition in self:
+            try:
+                compiler.parse(transition.condition)
+            except SyntaxError, exception:
+                logger.error(''.join(traceback.format_exception(
+                    sys.exc_type,
+                    sys.exc_value,
+                    sys.exc_traceback,
+                )))
+                raise exceptions.ValidationError(
+                    _('Error in condition for transition "%s"'
+                      ' at line %d, offset %d:\n%s') % (
+                          transition.name,
+                          exception.lineno,
+                          exception.offset,
+                          exception.msg,
+                    ))
 
         return True

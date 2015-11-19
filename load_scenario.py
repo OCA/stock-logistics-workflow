@@ -23,10 +23,7 @@
 #
 ##############################################################################
 
-import compiler
 import os
-import sys
-import traceback
 from lxml.etree import parse
 from StringIO import StringIO
 
@@ -191,17 +188,6 @@ def import_scenario(env, module, scenario_xml, mode, directory, filename):
         # Load python code and check syntax
         try:
             step_values['python_code'] = python_file.read()
-
-            # Syntax check the python code
-            try:
-                compiler.parse(step_values['python_code'])
-            except Exception:
-                logger.error('Compile error in file %s :' % python_filename)
-                logger.error(''.join(traceback.format_exception(
-                    sys.exc_type,
-                    sys.exc_value,
-                    sys.exc_traceback,
-                )))
 
         finally:
             python_file.close()

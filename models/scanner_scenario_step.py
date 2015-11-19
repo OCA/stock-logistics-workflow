@@ -23,8 +23,11 @@
 #
 ##############################################################################
 
-from openerp import models
-from openerp import fields
+import sys
+import compiler
+import traceback
+from openerp import models, api, fields, exceptions
+from openerp import _
 
 from .common import PYTHON_CODE_DEFAULT
 
@@ -81,3 +84,29 @@ class ScannerScenarioStep(models.Model):
         string='Python code',
         default=PYTHON_CODE_DEFAULT,
         help='Python code to execute')
+
+    @api.multi
+    @api.constrains('python_code')
+    def _check_python_code_syntax(self):
+        """
+        Syntax check the python code of a step
+        """
+        for step in self:
+            try:
+                compiler.parse(step.python_code)
+            except SyntaxError, exception:
+                logger.error(''.join(traceback.format_exception(
+                    sys.exc_type,
+                    sys.exc_value,
+                    sys.exc_traceback,
+                )))
+                raise exceptions.ValidationError(
+                    _('Error in python code for step "%s"'
+                      ' at line %d, offset %d:\n%s') % (
+                          step.name,
+                          exception.lineno,
+                          exception.offset,
+                          exception.msg,
+                    ))
+
+        return True
