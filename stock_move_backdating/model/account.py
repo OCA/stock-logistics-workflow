@@ -33,4 +33,4 @@ class AccountMove(models.Model):
             if period_ids:
                 vals['period_id'] = period_ids[0].id
                 vals['date'] = self._context['move_date']
-        return super(account_move, self).create(vals)
+        return super(AccountMove, self).create(vals)
