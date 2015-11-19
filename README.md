@@ -38,7 +38,6 @@ addon | version | summary
 [stock_picking_reorder_lines](stock_picking_reorder_lines/) | 8.0.0.1.0 | Provide a new field on stock moves, allowing to manage the orders of moves in a picking.
 [stock_split_picking](stock_split_picking/) | 8.0.1.0.0 | Split a picking in two unconfirmed pickings
 [stock_transfer_split_multi](stock_transfer_split_multi/) | 8.0.1.0.0 | In the stock transfer wizard, you can split by multiple units
-[stock_move_backdating](stock_move_backdating/) | 8.0.0.1.0 | Allows back-dating of stock moves
 
 Unported addons
 ---------------
@@ -51,6 +50,7 @@ addon | version | summary
 [stock_filter_none_zero_qty](stock_filter_none_zero_qty/) | 1.0 (unported) | Filter products in stock
 [stock_inventory_retry_assign](stock_inventory_retry_assign/) | 1.0 (unported) | Check Availability after Inventories
 [stock_location_flow_creator](stock_location_flow_creator/) | 1.0 (unported) | Create configuration of stock location flow
+[stock_move_backdating](stock_move_backdating/) | 1.0 (unported) | Allows back-dating of stock moves
 [stock_move_on_hold](stock_move_on_hold/) | 1.0 (unported) | Stock On Hold Status
 [stock_obsolete](stock_obsolete/) | 1.0 (unported) | Add product depreciation
 [stock_picking_mass_assign](stock_picking_mass_assign/) | 0.2 (unported) | Delivery Orders Mass Assign
