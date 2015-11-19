@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp import models, api, _
+from openerp import models, fields, api, _
 from openerp.exceptions import Warning
 from datetime import datetime
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
@@ -28,15 +28,16 @@ class StockTransferDetailsItems(models.TransientModel):
     _inherit = 'stock.transfer_details_items'
 
     _defaults = {
-        'date': datetime.now(),
+        'date': fields.Datetime.now,
     }
 
     @api.one
     @api.constrains('date')
     def check_date(self):
-        now = datetime.now().strftime(
-            DEFAULT_SERVER_DATETIME_FORMAT)
-        if self.date and self.date > now:
-            raise Warning(
-                _("You can not process an actual movement date in the future.")
-            )
+        if self.date:
+            now = datetime.utcnow()
+            dt = fields.Datetime.from_string(self.date)
+            if  dt > now:
+                raise Warning(
+                    _("You can not process an actual movement date in the future.")
+                )
