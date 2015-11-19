@@ -35,29 +35,7 @@ class stock_move(models.Model):
             if move.linked_move_operation_ids:
                 operation = move.linked_move_operation_ids[0]
                 move.date = operation.operation_id.date
-                move.refresh()
                 if move.quant_ids:
-                    for quant in move.quant_ids:
-                        quant.sudo().in_date = move.date
+                    move.quant_ids.sudo().write({'in_date': move.date})
 
         return result
-
-
-class stock_quant(models.Model):
-    _inherit = "stock.quant"
-
-    @api.model
-    def _create_account_move_line(
-        self, quants, move, credit_account_id, debit_account_id, journal_id
-    ):
-        res = super(stock_quant, self)._create_account_move_line(
-            quants, move, credit_account_id, debit_account_id, journal_id
-        )
-        for o2m_tuple in res:
-            date = False
-            if move.date:
-                date = move.date[:10]
-            o2m_tuple[2]['date'] = date
-            if 'move_date' not in self._context:
-                res = res.with_context(move_date=date)
-        return res
