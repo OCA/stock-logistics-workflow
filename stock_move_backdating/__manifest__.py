@@ -23,7 +23,7 @@
 
 {
     'name': 'Stock Move Backdating',
-    'version': '1.0',
+    'version': '8.0.0.1.0',
     'category': 'Stock Logistics',
     'author': 'Marco Dieckhoff, BREMSKERL, Agile Business Group,'
     ' Odoo Community Association (OCA)',
