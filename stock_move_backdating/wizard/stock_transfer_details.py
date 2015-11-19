@@ -21,7 +21,6 @@
 from openerp import models, fields, api, _
 from openerp.exceptions import Warning as UserError
 from datetime import datetime
-from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 
 class StockTransferDetailsItems(models.TransientModel):
@@ -37,7 +36,10 @@ class StockTransferDetailsItems(models.TransientModel):
         if self.date:
             now = datetime.utcnow()
             dt = fields.Datetime.from_string(self.date)
-            if  dt > now:
+            if dt > now:
                 raise UserError(
-                    _("You can not process an actual movement date in the future.")
+                    _(
+                        "You can not process an actual"
+                        " movement date in the future."
+                    )
                 )
