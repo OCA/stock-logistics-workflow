@@ -19,8 +19,8 @@
 #
 ###############################################################################
 
-import stock
-import sale
-import purchase
+from . import stock
+from . import sale
+from . import purchase
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

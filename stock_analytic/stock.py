@@ -64,7 +64,7 @@ class stock_quant(osv.Model):
                                                      )
         # Add analytic account in debit line
         res[0][2].update({
-                            'analytic_account_id': move.account_analytic_id.id,
-                                })
+            'analytic_account_id': move.account_analytic_id.id,
+        })
         return res
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
