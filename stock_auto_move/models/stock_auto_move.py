@@ -17,13 +17,16 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from openerp import fields, models, api
+from openerp import api, fields, models
+
 
 class stock_auto_move_move(models.Model):
     _inherit = "stock.move"
 
-    auto_move = fields.Boolean("Automatic move", help="If this option is selected, the move will be automatically "
-                                                      "processed as soon as the products are available.")
+    auto_move = fields.Boolean(
+        "Automatic move",
+        help="If this option is selected, the move will be automatically "
+        "processed as soon as the products are available.")
 
     @api.multi
     def action_assign(self):
@@ -37,22 +40,24 @@ class stock_auto_move_move(models.Model):
         todo_pickings.do_prepare_partial()
         moves.action_done()
 
-
     @api.multi
     def action_confirm(self):
+        automatic_group = self.env.ref('stock_auto_move.automatic_group')
         for move in self:
-            if move.auto_move and move.group_id != self.env.ref('stock_auto_move.automatic_group'):
-                move.group_id = self.env.ref('stock_auto_move.automatic_group')
+            if move.auto_move and move.group_id != automatic_group:
+                move.group_id = automatic_group
         return super(stock_auto_move_move, self).action_confirm()
 
 
 class stock_auto_move_procurement_rule(models.Model):
     _inherit = 'procurement.rule'
 
-    auto_move = fields.Boolean("Automatic move", help="If this option is selected, the generated move will be "
-                                                      "automatically processed as soon as the products are available. "
-                                                      "This can be useful for situations with chained moves where we "
-                                                      "do not want an operator action.")
+    auto_move = fields.Boolean(
+        "Automatic move",
+        help="If this option is selected, the generated move will be "
+        "automatically processed as soon as the products are available. "
+        "This can be useful for situations with chained moves where we "
+        "do not want an operator action.")
 
 
 class stock_auto_move_procurement(models.Model):
@@ -60,7 +65,8 @@ class stock_auto_move_procurement(models.Model):
 
     @api.model
     def _run_move_create(self, procurement):
-        res = super(stock_auto_move_procurement, self)._run_move_create(procurement)
+        res = super(stock_auto_move_procurement, self)._run_move_create(
+            procurement)
         res.update({'auto_move': procurement.rule_id.auto_move})
         return res
 
@@ -71,7 +77,8 @@ class stock_auto_move_location_path(models.Model):
     @api.model
     def _prepare_push_apply(self, rule, move):
         """Set auto move to the new move created by push rule."""
-        res = super(stock_auto_move_location_path, self)._prepare_push_apply(rule, move)
+        res = super(stock_auto_move_location_path, self)._prepare_push_apply(
+            rule, move)
         res.update({
             'auto_move': (rule.auto == 'auto'),
         })
