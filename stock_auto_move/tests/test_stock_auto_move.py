@@ -19,12 +19,14 @@
 
 from openerp.tests import common
 
+
 class TestStockAutoMove(common.TransactionCase):
 
     def setUp(self):
         super(TestStockAutoMove, self).setUp()
         self.product_a1232 = self.browse_ref("product.product_product_6")
-        self.location_shelf = self.browse_ref("stock.stock_location_components")
+        self.location_shelf = self.browse_ref(
+            "stock.stock_location_components")
         self.location_1 = self.browse_ref("stock_auto_move.stock_location_a")
         self.location_2 = self.browse_ref("stock_auto_move.stock_location_b")
         self.location_3 = self.browse_ref("stock_auto_move.stock_location_c")
@@ -96,8 +98,10 @@ class TestStockAutoMove(common.TransactionCase):
         self.assertEqual(move1.state, 'done')
 
     def test_20_procurement_auto_move(self):
-        """Check that move generated with procurement rule have auto_move set."""
-        self.product_a1232.route_ids = [(4, self.ref("stock_auto_move.test_route"))]
+        """Check that move generated with procurement rule
+           have auto_move set."""
+        self.product_a1232.route_ids = [
+            (4, self.ref("stock_auto_move.test_route"))]
         proc = self.env["procurement.order"].create({
             'name': 'Test Procurement with auto_move',
             'date_planned': '2015-02-02 00:00:00',
@@ -109,7 +113,9 @@ class TestStockAutoMove(common.TransactionCase):
         })
         proc.check()
         proc.run()
-        self.assertEqual(proc.rule_id.id, self.ref("stock_auto_move.procurement_rule_a_to_b"))
+        self.assertEqual(
+            proc.rule_id.id,
+            self.ref("stock_auto_move.procurement_rule_a_to_b"))
 
         for move in proc.move_ids:
             self.assertEqual(move.auto_move, True)
@@ -117,7 +123,8 @@ class TestStockAutoMove(common.TransactionCase):
 
     def test_30_push_rule_auto(self):
         """Checks that push rule with auto set leads to an auto_move."""
-        self.product_a1232.route_ids = [(4, self.ref("stock_auto_move.test_route"))]
+        self.product_a1232.route_ids = [
+            (4, self.ref("stock_auto_move.test_route"))]
         move3 = self.env["stock.move"].create({
             'name': "Supply source location for test",
             'product_id': self.product_a1232.id,
@@ -129,9 +136,11 @@ class TestStockAutoMove(common.TransactionCase):
         })
         move3.action_confirm()
         move3.action_done()
-        quants_in_3 = self.env['stock.quant'].search([('product_id','=',self.product_a1232.id),
-                                                      ('location_id','=',self.location_3.id)])
-        quants_in_1 = self.env['stock.quant'].search([('product_id','=',self.product_a1232.id),
-                                                      ('location_id','=',self.location_1.id)])
+        quants_in_3 = self.env['stock.quant'].search(
+            [('product_id', '=', self.product_a1232.id),
+             ('location_id', '=', self.location_3.id)])
+        quants_in_1 = self.env['stock.quant'].search(
+            [('product_id', '=', self.product_a1232.id),
+             ('location_id', '=', self.location_1.id)])
         self.assertEqual(len(quants_in_3), 0)
         self.assertGreater(len(quants_in_1), 0)

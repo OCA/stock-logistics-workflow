@@ -53,7 +53,8 @@ msgstr ""
 "groupe que l'utilisateur ou la règle d'approvisionnement sélectionne.\n"
 
 #. module: stock_auto_move
-#: field:procurement.rule,auto_move:0 field:stock.move,auto_move:0
+#: field:procurement.rule,auto_move:0
+#: field:stock.move,auto_move:0
 msgid "Automatic move"
 msgstr "Mouvement automatique"
 
