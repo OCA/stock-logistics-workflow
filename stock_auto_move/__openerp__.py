@@ -19,36 +19,20 @@
 
 {
     'name': 'Automatic Move Processing',
-    'version': '0.1',
-    'author': 'NDP Systèmes',
-    'maintainer': 'NDP Systèmes',
+    'version': '8.0.1.0.0',
+    'author': 'NDP Systèmes, Odoo Community Association (OCA)',
     'category': 'Warehouse',
-    'depends': ['stock'],
-    'description': """
-Automatic Move Processing
-=========================
-This modules adds the possibility to have move automatically processed as soon as the products are available in the
-move source location.
-
-It also adds the possibility to define the move as being automatic in a procurement rule.
-
-Automatic moves are triggered by previous move when the move is chained or by the scheduler otherwise.
-
-Note that automatic moves are given a procurement group name "Automatic", whatever the user or the procurement rule
-selects.
-""",
     'website': 'http://www.ndp-systemes.fr',
+    'depends': ['stock'],
     'data': [
-        'stock_auto_move_data.xml',
-        'stock_auto_move_view.xml',
+        'data/stock_auto_move_data.xml',
+        'views/stock_auto_move_view.xml',
     ],
     'demo': [
-        'stock_auto_move_demo.xml',
+        'demo/stock_auto_move_demo.xml',
     ],
-    'test': [],
     'installable': True,
     'auto_install': False,
     'license': 'AGPL-3',
     'application': False,
 }
-
