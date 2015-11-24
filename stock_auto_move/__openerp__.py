@@ -1,4 +1,4 @@
-# -*- coding: utf8 -*-
+# -*- coding: utf-8 -*-
 #
 # Copyright (C) 2014 NDP Systèmes (<http://www.ndp-systemes.fr>).
 #
