@@ -1,3 +1,3 @@
-# -*- coding: utf8 -*-
+# -*- coding: utf-8 -*-
 
 from . import stock_auto_move
