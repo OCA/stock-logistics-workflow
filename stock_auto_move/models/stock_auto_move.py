@@ -1,4 +1,4 @@
-# -*- coding: utf8 -*-
+# -*- coding: utf-8 -*-
 #
 # Copyright (C) 2014 NDP Systèmes (<http://www.ndp-systemes.fr>).
 #
@@ -20,7 +20,7 @@
 from openerp import api, fields, models
 
 
-class stock_auto_move_move(models.Model):
+class StockMove(models.Model):
     _inherit = "stock.move"
 
     auto_move = fields.Boolean(
@@ -30,7 +30,7 @@ class stock_auto_move_move(models.Model):
 
     @api.multi
     def action_assign(self):
-        super(stock_auto_move_move, self).action_assign()
+        super(StockMove, self).action_assign()
         # picking_env = self.env['stock.picking']
         # Transfer all pickings which have an auto move assigned
         moves = self.filtered(lambda m: m.state == 'assigned' and m.auto_move)
@@ -46,10 +46,10 @@ class stock_auto_move_move(models.Model):
         for move in self:
             if move.auto_move and move.group_id != automatic_group:
                 move.group_id = automatic_group
-        return super(stock_auto_move_move, self).action_confirm()
+        return super(StockMove, self).action_confirm()
 
 
-class stock_auto_move_procurement_rule(models.Model):
+class ProcurementRule(models.Model):
     _inherit = 'procurement.rule'
 
     auto_move = fields.Boolean(
@@ -60,24 +60,24 @@ class stock_auto_move_procurement_rule(models.Model):
         "do not want an operator action.")
 
 
-class stock_auto_move_procurement(models.Model):
+class ProcurementOrder(models.Model):
     _inherit = 'procurement.order'
 
     @api.model
     def _run_move_create(self, procurement):
-        res = super(stock_auto_move_procurement, self)._run_move_create(
+        res = super(ProcurementOrder, self)._run_move_create(
             procurement)
         res.update({'auto_move': procurement.rule_id.auto_move})
         return res
 
 
-class stock_auto_move_location_path(models.Model):
+class StockLocationPath(models.Model):
     _inherit = 'stock.location.path'
 
     @api.model
     def _prepare_push_apply(self, rule, move):
         """Set auto move to the new move created by push rule."""
-        res = super(stock_auto_move_location_path, self)._prepare_push_apply(
+        res = super(StockLocationPath, self)._prepare_push_apply(
             rule, move)
         res.update({
             'auto_move': (rule.auto == 'auto'),
