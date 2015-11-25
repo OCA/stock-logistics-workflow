@@ -540,7 +540,7 @@ class ScannerHardware(models.Model):
                     expr = eval(str(transition.condition), ctx)
                 except:
                     logger.exception(
-                        "Error when evaluating transition condition /n %s",
+                        "Error when evaluating transition condition\n%s",
                         transition.condition)
                     raise
 
