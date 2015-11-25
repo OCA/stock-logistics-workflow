@@ -517,20 +517,12 @@ class ScannerHardware(models.Model):
 
         elif transition_type not in ('back', 'none', 'restart'):
             # Retrieve outgoing transitions from the current step
-            scanner_transition_obj = self.pool.get(
-                'scanner.scenario.transition')
-            transition_ids = scanner_transition_obj.search(
-                self.env.cr, self.env.uid, [
-                    ('from_id', '=', step_id)], context=self.env.context)
-#
-#             # Evaluate the condition for each transition
-            for transition in scanner_transition_obj.browse(
-                    self.env.cr,
-                    self.env.uid,
-                    transition_ids,
-                    context=self.env.context):
+            transition_obj = self.env['scanner.scenario.transition']
+            transitions = transition_obj.search([('from_id', '=', step_id)])
+
+            # Evaluate the condition for each transition
+            for transition in transitions:
                 step_id = False
-                tracer = ''
                 ctx = {
                     'context': self.env.context,
                     'model': self.env[
