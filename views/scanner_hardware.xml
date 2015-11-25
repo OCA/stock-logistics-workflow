@@ -89,6 +89,7 @@
                         <field name="step_history_ids" colspan="4" nolabel="1">
                             <tree>
                                 <field name="step_id"/>
+                                <field name="transition_id"/>
                                 <field name="message"/>
                             </tree>
                         </field>

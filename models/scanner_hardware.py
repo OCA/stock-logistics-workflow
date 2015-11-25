@@ -455,10 +455,12 @@ class ScannerHardware(models.Model):
 
                 # Retrieve last values
                 step_id = last_call.step_id.id
+                transition = last_call.transition_id
+                tracer = last_call.transition_id.tracer
                 message = eval(last_call.message)
 
                 # Prevent looping on the same step
-                if step_id == terminal.step_id.id and \
+                if transition.to_id == terminal.step_id and \
                    transition_type == 'back':
                     # Remove the history line
                     last_call.unlink()
@@ -561,12 +563,12 @@ class ScannerHardware(models.Model):
                 # Store the old step id if we are on a back step
                 if transition.from_id.step_back and (
                     not terminal.step_history_ids or
-                    terminal.step_history_ids[
-                        -1].step_id != transition.to_id
+                    terminal.step_history_ids[-1].transition_id != transition
                 ):
                     terminal.step_history_ids.create({
                         'hardware_id': terminal.id,
                         'step_id': transition.to_id.id,
+                        'transition_id': transition.id,
                         'message': repr(message)
                     })
 

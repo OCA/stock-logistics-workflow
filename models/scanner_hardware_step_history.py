@@ -37,6 +37,9 @@ class ScannerHardwareStepHistory(models.Model):
     step_id = fields.Many2one(
         comodel_name='scanner.scenario.step', string='Step',
         help='Step executed during this history line')
+    transition_id = fields.Many2one(
+        comodel_name='scanner.scenario.transition', string='Transition',
+        help='Transition executed during this history line')
     message = fields.Char(
         string='Message',
         help='Message sent during execution of the step')
