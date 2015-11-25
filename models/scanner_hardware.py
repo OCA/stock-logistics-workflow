@@ -443,7 +443,7 @@ class ScannerHardware(models.Model):
         scanner_step_obj = self.env['scanner.scenario.step']
         terminal = self
 
-        tracer = False
+        tracer = ''
 
         if (transition_type == 'restart' or
             transition_type == 'back' and
