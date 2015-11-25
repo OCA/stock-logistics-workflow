@@ -490,9 +490,9 @@ class ScannerHardware(models.Model):
             # If at least one scenario was found, pick the start step of the
             # first
             if scenario_ids:
-                scenario_id = scenario_ids[0]
+                scenario_id = scenario_ids[0].id
                 step_ids = scanner_step_obj.search([
-                    ('scenario_id', '=', scenario_id.id),
+                    ('scenario_id', '=', scenario_id),
                     ('step_start', '=', True),
                 ])
 
@@ -504,11 +504,11 @@ class ScannerHardware(models.Model):
                          _('administrator'),
                          _('A001')])
 
-                step_id = step_ids[0]
+                step_id = step_ids[0].id
                 # Store the first step in terminal history
                 terminal.step_history_ids.create({
                     'hardware_id': terminal.id,
-                    'step_id': step_id.id,
+                    'step_id': step_id,
                     'message': repr(message)
                 })
 
@@ -582,12 +582,6 @@ class ScannerHardware(models.Model):
                     [_('Please contact'), _('your'), _('administrator')])
 
         # Memorize the current step
-        if not isinstance(step_id, int):
-            step_id = step_id.id
-
-        if not isinstance(scenario_id, int):
-            scenario_id = scenario_id.id
-
         terminal._memorize(
             scenario_id,
             step_id,
