@@ -248,7 +248,7 @@ class TestStockScanner(common.TransactionCase):
         # and the right pwd
         ret = scanner_hardware.scanner_call(
             code, action='action',
-            message=user_demo.login)
+            message=user_demo.password)
         # now we are logged in
         self.assertEquals(('F', ['You are now authenticated as demo !'], 0),
                           ret)
