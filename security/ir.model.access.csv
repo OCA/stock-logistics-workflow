@@ -2,6 +2,9 @@
 "scanner_hardware_user","scanner_hardware_user","stock_scanner.model_scanner_hardware",,1,1,,
 "scanner_hardware_sentinel","scanner_hardware_sentinel","stock_scanner.model_scanner_hardware","group_stock_scanner_sentinel",1,1,,
 "scanner_hardware_manager","scanner_hardware_manager","stock_scanner.model_scanner_hardware","stock.group_stock_manager",1,1,1,1
+"scanner_hardware_step_history_user","scanner_hardware_step_history_user","stock_scanner.model_scanner_hardware_step_history",,1,1,1,1
+"scanner_hardware_step_history_sentinel","scanner_hardware_step_history_sentinel","stock_scanner.model_scanner_hardware_step_history","group_stock_scanner_sentinel",1,1,1,1
+"scanner_hardware_step_history_manager","scanner_hardware_step_history_manager","stock_scanner.model_scanner_hardware_step_history","stock.group_stock_manager",1,1,1,1
 "scanner_scenario_user","scanner_scenario_user","stock_scanner.model_scanner_scenario",,1,,,
 "scanner_scenario_manager","scanner_scenario_manager","stock_scanner.model_scanner_scenario","stock.group_stock_manager",1,1,1,1
 "scanner_scenario_step_user","scanner_scenario_step_user","stock_scanner.model_scanner_scenario_step",,1,,,
