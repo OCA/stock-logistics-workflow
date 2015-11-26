@@ -120,10 +120,6 @@ class TestStockScanner(common.TransactionCase):
             scanner_hardware_1.step_id,
             scanner_scenario_step_types_message_step)
 
-        self.assertEquals(
-            scanner_hardware_1.previous_steps_id,
-            '%s' % scanner_scenario_step_types_intro_step.id)
-
         # a back action reset the scenario to the previous_step
         ret = scanner_hardware.scanner_call(
             code, action='back', message='',
