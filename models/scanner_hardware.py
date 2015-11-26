@@ -553,7 +553,7 @@ class ScannerHardware(models.Model):
                 tracer = transition.tracer
 
                 # Store the old step id if we are on a back step
-                if transition.from_id.step_back and (
+                if transition.to_id.step_back and (
                     not terminal.step_history_ids or
                     terminal.step_history_ids[-1].transition_id != transition
                 ):
