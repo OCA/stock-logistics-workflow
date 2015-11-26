@@ -139,7 +139,6 @@ Import
 
 Scenarios are automatically imported on a module update, like any other data.
 You just have to add the path to your `Scenario_Name.scenario` files in the `data` or `demo` sections in the `__openerp__.py` file.
-The UUID of each element is used as XML ID during this import.
 
 Export
 ------
@@ -148,7 +147,7 @@ The export script is in the `script` directory of the module
 
 A scenario is exported as a set of files, containing :
     - Scenario_Name.scenario : Global description of the scenario (name, warehouses, steps, transitions, etc.)
-    - A .py file per step : The name of the file is the uuid of the step
+    - A .py file per step : The name of the file is the XML ID of the step
 
 Using a test file
 -----------------
