@@ -188,6 +188,10 @@ Unlike the standard Odoo Workflow, each step needs to find a valid transition, b
    :alt: Try me on Runbot
    :target: https://runbot.odoo-community.org/runbot/154/8.0
 
+A client for the Datalogic PowerScan scanners was developped for a very early version or this module.
+The files have been removed, but are still available in the `git repository history
+<https://github.com/OCA/stock-logistics-workflow/tree/527f033e9d31fe822562d4716104f37f6ce1f88c/stock_scanner/hardware/datalogic/PowerScan>`_.
+
 Bug Tracker
 ===========
 
