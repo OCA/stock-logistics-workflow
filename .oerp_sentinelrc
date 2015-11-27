@@ -1,5 +1,0 @@
-[openerp]
-host = 127.13.09.03
-password = admin
-database = wms
-

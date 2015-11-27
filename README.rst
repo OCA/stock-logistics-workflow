@@ -1,31 +1,27 @@
+.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
+   :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   :alt: License: AGPL-3
+
 ====================================================
 Stock Scanner : WorkFlow engine for scanner hardware
 ====================================================
 
-Allows managing barcode readers with simple scenarios
+This module allows managing barcode readers with simple scenarios:
+
 - You can define a workfow for each object (stock picking, inventory, sale, etc)
 - Works with all scanner hardware model (just SSH client required)
-
-The "sentinel" specific ncurses client, available in the "hardware" directory, requires the "openobject-library" python module, available from pip :
-    $ sudo pip install openobject-library
 
 Some demo/tutorial scenarios are available in the "demo" directory of the module.
 These scenarios, are automatically imported when installing a new database with demo data.
 
-How does it work ?
-==================
-
-On start-up, the client lists available scenarii.
-When the user selects a scenario, the current scenario and step are stored on the hardware configuration's entry in Odoo.
-
-When the client sends a message to the server, the next step is selected depending on the current step and the message sent.
-Then, the server returns the result of the step, which contains the step type code and the text to display on the hardware screen.
-Unlike the standard Odoo Workflow, each step needs to find a valid transition, because a step needs to be displayed on the hardware screen at all times.
-
 Installation
 ============
 
-If you plan to use the specific "sentinel.py", you will need the "openobject-library" Python module.
+
+The "sentinel.py" specific ncurses client is available in the "hardware" directory.
+If you plan to use the specific "sentinel.py", you will need the "openobject-library" Python module, available from pip:
+
+    $ sudo pip install "openobject-library<2"
 
 .. note::
 
@@ -67,9 +63,9 @@ To enable the Login/logout functionality:
     * Create a *Technical User* 'sentinel' **without roles in Human Resources** and with 'Sentinel: technical users' checked.
     * Use this user to launch your sentinel session.
 
-Be carefull, the role *Sentinel: technical users* is a technical role and should be used only by sentinel.
+Be careful, the role *Sentinel: technical users* is a technical role and should only be used by sentinel.
 
-The timeout of sessions is managed by a dedicated cron that reset the incative sessions. The timeout can be configured on 
+The timeout of sessions is managed by a dedicated cron that reset the inactive sessions. The timeout can be configured on 
 settings. "Settings > Warehouse"
 
 For the sentinel.py client
@@ -79,11 +75,16 @@ The sentinel.py client uses a config file named `.oerpsentinelrc`, using the sta
 
 This file simply contains information for server connection (hostname, port, username, password and database).
 
+    [openerp]
+    host = localhost
+    password = admin
+    database = demo
+
 Writing scenarii
-================
+----------------
 
 Creation
---------
+^^^^^^^^
 
 The preferred way to start the creation of a scenario is to create steps and transitions in diagram view.
 
@@ -107,13 +108,14 @@ In the python code of each step, some variables are available :
 
 Some of these variables are also available on transition conditions execution.
 
-As stated previously, the step must always return :
+As stated previously, the step must always return:
+
 - A step type code, in the `act` variable
 - A message to display on the hardware screen, in the `res` variable
 - Optionally, a default value, in the `val` variable
 
 Step types
-----------
+^^^^^^^^^^
 
 The step types are mostly managed by the client.
 
@@ -135,13 +137,13 @@ The standard step types are :
    This step type is generally used as replacement of another type, at the end of the step code, by redefining the `act` variable in some cases, for example when a single value is available for a list step.
 
 Import
-------
+^^^^^^
 
 Scenarios are automatically imported on a module update, like any other data.
 You just have to add the path to your `Scenario_Name.scenario` files in the `data` or `demo` sections in the `__openerp__.py` file.
 
 Export
-------
+^^^^^^
 
 The export script is in the `script` directory of the module
 
@@ -150,7 +152,7 @@ A scenario is exported as a set of files, containing :
     - A .py file per step : The name of the file is the XML ID of the step
 
 Using a test file
------------------
+^^^^^^^^^^^^^^^^^
 
 When developing scenarios, you will often have the same steps to run.
 The sentinel.py client allows you to supply a file, which contains the keys pressed during the scenario.
@@ -172,8 +174,36 @@ Valid key codes are :
     - KEY_BACKSPACE : Backspace
     - KEY_DC : Delete
 
+Usage
+=====
+
+On start-up, the client lists available scenarii.
+When the user selects a scenario, the current scenario and step are stored on the hardware configuration's entry in Odoo.
+
+When the client sends a message to the server, the next step is selected depending on the current step and the message sent.
+Then, the server returns the result of the step, which contains its type code and the text to display on the hardware screen.
+Unlike the standard Odoo Workflow, each step needs to find a valid transition, because a step needs to be displayed on the hardware screen at all times.
+
+.. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
+   :alt: Try me on Runbot
+   :target: https://runbot.odoo-community.org/runbot/154/8.0
+
+Bug Tracker
+===========
+
+Bugs are tracked on `GitHub Issues
+<https://github.com/OCA/stock-logistics-workflow/issues>`_. In case of trouble, please
+check there if your issue has already been reported. If you spotted it first,
+help us smashing it by providing a detailed and welcomed `feedback
+<https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_scanner%0Aversion:%208.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+
 Credits
 =======
+
+Images
+------
+
+* Odoo Community Association: `Icon <https://github.com/OCA/maintainer-tools/blob/master/template/module/static/description/icon.svg>`_.
 
 Contributors
 ------------
@@ -185,3 +215,18 @@ Contributors
 * Olivier Dony <odo@openerp.com>
 * Sebastien LANGE <sebastien.lange@syleam.fr>
 * Sylvain Garancher <sylvain.garancher@syleam.fr>
+
+Maintainer
+----------
+
+.. image:: https://odoo-community.org/logo.png
+   :alt: Odoo Community Association
+   :target: https://odoo-community.org
+
+This module is maintained by the OCA.
+
+OCA, or the Odoo Community Association, is a nonprofit organization whose
+mission is to support the collaborative development of Odoo features and
+promote its widespread use.
+
+To contribute to this module, please visit https://odoo-community.org.
