@@ -1,27 +1,6 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    stock_scanner module for OpenERP, Allows managing barcode readers with
-#    simple scenarios
-#    Copyright (C) 2011 SYLEAM Info Services (<http://www.syleam.fr/>)
-#              Sylvain Garancher <sylvain.garancher@syleam.fr>
-#
-#    This file is a part of stock_scanner
-#
-#    stock_scanner is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published
-#    by the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    stock_scanner is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2011 Sylvain Garancher <sylvain.garancher@syleam.fr>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import logging
 import random
@@ -70,41 +49,42 @@ class ScannerHardware(models.Model):
     name = fields.Char(
         string='Name',
         required=True,
-        help='Name of the hardware')
+        help='Name of the hardware.')
     code = fields.Char(
         string='Code',
         required=True,
-        help='Code of this hardware')
+        help='Code of this hardware.')
     log_enabled = fields.Boolean(
         string='Log enabled',
         default=False,
-        help='Enable logging messages from scenarios')
+        help='Enable logging messages from scenarios.')
     screen_width = fields.Integer(
         string='Screen Width',
         default=20,
         required=False,
-        help='Width of the terminal\'s screen')
+        help='Width of the terminal\'s screen.')
     screen_height = fields.Integer(
         string='Screen Height',
         default=4,
         required=False,
-        help='Height of the terminal\'s screen')
+        help='Height of the terminal\'s screen.')
     warehouse_id = fields.Many2one(
         comodel_name='stock.warehouse',
         string='Warehouse',
         required=True,
         ondelete='restrict',
-        help='Warehouse where is located this hardware')
+        help='Warehouse where is located this hardware.')
     user_id = fields.Many2one(
         comodel_name='res.users',
         string='User',
         required=False,
         ondelete='restrict',
         help='Allow to define an other user for execute all scenarios with '
-             'that scanner instead of default user')
+             'that scanner instead of default user.')
     last_call_dt = fields.Datetime(
         string='Last call',
-        help='Date and time of the last call to the system done by the scanner'
+        help='Date and time of the last call to the system done by the '
+        'scanner.'
     )
     scenario_id = fields.Many2one(
         comodel_name='scanner.scenario',
@@ -113,7 +93,7 @@ class ScannerHardware(models.Model):
         readonly=True,
         default=False,
         ondelete='restrict',
-        help='Scenario used for this hardware')
+        help='Scenario used for this hardware.')
     step_id = fields.Many2one(
         comodel_name='scanner.scenario.step',
         string='Current Step',
@@ -121,75 +101,75 @@ class ScannerHardware(models.Model):
         readonly=True,
         default=False,
         ondelete='restrict',
-        help='Current step for this hardware')
+        help='Current step for this hardware.')
     step_history_ids = fields.One2many(
         comodel_name='scanner.hardware.step.history',
         inverse_name='hardware_id', string='Steps History',
         readonly=True,
         help='History of all steps executed by this hardware'
-        ' during the current scenario')
+        ' during the current scenario.')
     reference_document = fields.Integer(
         string='Reference',
         default=0,
         required=False,
         readonly=True,
-        help='ID of the reference document')
+        help='ID of the reference document.')
     tmp_val1 = fields.Char(
         string='Temp value 1',
         readonly=True,
-        help='Temporary value')
+        help='Temporary value.')
     tmp_val2 = fields.Char(
         string='Temp value 2',
         readonly=True,
-        help='Temporary value')
+        help='Temporary value.')
     tmp_val3 = fields.Char(
         string='Temp value 3',
         readonly=True,
-        help='Temporary value')
+        help='Temporary value.')
     tmp_val4 = fields.Char(
         string='Temp value 4',
         readonly=True,
-        help='Temporary value')
+        help='Temporary value.')
     tmp_val5 = fields.Char(
         string='Temp value 5',
         readonly=True,
-        help='Temporary value')
+        help='Temporary value.')
     base_fg_color = fields.Selection(
         selection='_colors_get',
         string='Base - Text Color',
         required=True,
         default='white',
-        help='Default color for the text')
+        help='Default color for the text.')
     base_bg_color = fields.Selection(
         selection='_colors_get',
         string='Base - Background Color',
         required=True,
         default='blue',
-        help='Default color for the background')
+        help='Default color for the background.')
     info_fg_color = fields.Selection(
         selection='_colors_get',
         string='Info - Text Color',
         required=True,
         default='yellow',
-        help='Color for the info text')
+        help='Color for the info text.')
     info_bg_color = fields.Selection(
         selection='_colors_get',
         string='Info - Background Color',
         required=True,
         default='blue',
-        help='Color for the info background')
+        help='Color for the info background.')
     error_fg_color = fields.Selection(
         selection='_colors_get',
         string='Error - Text Color',
         required=True,
         default='yellow',
-        help='Color for the error text')
+        help='Color for the error text.')
     error_bg_color = fields.Selection(
         selection='_colors_get',
         string='Error - Background Color',
         required=True,
         default='red',
-        help='Color for the error background')
+        help='Color for the error background.')
 
     @api.model
     def timeout_session(self):

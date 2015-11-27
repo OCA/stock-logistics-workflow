@@ -1,28 +1,8 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    stock_scanner module for OpenERP, Module for manage barcode reader
-#    Copyright (C) 2011 SYLEAM (<http://www.syleam.fr/>)
-#              Christophe CHAUVET <christophe.chauvet@syleam.fr>
-#              Jean-Sébastien SUZANNE <jean-sebastien.suzanne@syleam.fr>
-#
-#    This file is a part of stock_scanner
-#
-#    stock_scanner is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    stock_scanner is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2011 Christophe CHAUVET <christophe.chauvet@syleam.fr>
+# © 2011 Jean-Sébastien SUZANNE <jean-sebastien.suzanne@syleam.fr>
+# © 2015 Sylvain Garancher <sylvain.garancher@syleam.fr>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import re
 from oobjlib.connection import Connection

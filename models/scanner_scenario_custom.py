@@ -1,27 +1,6 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    stock_scanner module for OpenERP, Allows managing barcode readers with
-#    simple scenarios
-#    Copyright (C) 2011 SYLEAM Info Services (<http://www.syleam.fr/>)
-#              Sylvain Garancher <sylvain.garancher@syleam.fr>
-#
-#    This file is a part of stock_scanner
-#
-#    stock_scanner is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published
-#    by the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    stock_scanner is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2011 Sylvain Garancher <sylvain.garancher@syleam.fr>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openerp import models
 from openerp import fields
@@ -45,102 +24,102 @@ class ScannerScenarioCustom(models.Model):
         string='Scenario',
         required=False,
         ondelete='cascade',
-        help='Values used for this scenario')
+        help='Values used for this scenario.')
     scanner_id = fields.Many2one(
         'scanner.hardware',
         string='Scanner',
         required=False,
         ondelete='cascade',
-        help='Values used for this scanner')
+        help='Values used for this scanner.')
     model = fields.Char(
         string='Model',
         required=True,
-        help='Model used for these data')
+        help='Model used for these data.')
     res_id = fields.Integer(
         string='Values id',
         default=0,
         required=True,
-        help='ID of the model source')
+        help='ID of the model source.')
     char_val1 = fields.Char(
         string='Char Value 1',
         default='',
         required=False,
-        help='Temporary char value')
+        help='Temporary char value.')
     char_val2 = fields.Char(
         string='Char Value 2',
         default='',
         required=False,
-        help='Temporary char value')
+        help='Temporary char value.')
     char_val3 = fields.Char(
         string='Char Value 3',
         default='',
         required=False,
-        help='Temporary char value')
+        help='Temporary char value.')
     char_val4 = fields.Char(
         string='Char Value 4',
         default='',
         required=False,
-        help='Temporary char value')
+        help='Temporary char value.')
     char_val5 = fields.Char(
         string='Char Value 5',
         default='',
         required=False,
-        help='Temporary char value')
+        help='Temporary char value.')
     int_val1 = fields.Integer(
         string='Int Value 1',
         default=0,
         required=False,
-        help='Temporary int value')
+        help='Temporary int value.')
     int_val2 = fields.Integer(
         string='Int Value 2',
         default=0,
         required=False,
-        help='Temporary int value')
+        help='Temporary int value.')
     int_val3 = fields.Integer(
         string='Int Value 3',
         default=0,
         required=False,
-        help='Temporary int value')
+        help='Temporary int value.')
     int_val4 = fields.Integer(
         string='Int Value 4',
         default=0,
         required=False,
-        help='Temporary int value')
+        help='Temporary int value.')
     int_val5 = fields.Integer(
         string='Int Value 5',
         default=0,
         required=False,
-        help='Temporary int value')
+        help='Temporary int value.')
     float_val1 = fields.Float(
         string='Float Value 1',
         default=0.0,
         required=False,
-        help='Temporary float value')
+        help='Temporary float value.')
     float_val2 = fields.Float(
         string='Float Value 2',
         default=0.0,
         required=False,
-        help='Temporary float value')
+        help='Temporary float value.')
     float_val3 = fields.Float(
         string='Float Value 3',
         default=0.0,
         required=False,
-        help='Temporary float value')
+        help='Temporary float value.')
     float_val4 = fields.Float(
         string='Float Value 4',
         default=0.0,
         required=False,
-        help='Temporary float value')
+        help='Temporary float value.')
     float_val5 = fields.Float(
         string='Float Value 5',
         default=0.0,
         required=False,
-        help='Temporary float value')
+        help='Temporary float value.')
     text_val = fields.Text(
         string='Text',
         default='',
         required=False,
-        help='Temporary text value')
+        help='Temporary text value.')
 
     @api.model
     def _get_domain(self, scenario, scanner):
