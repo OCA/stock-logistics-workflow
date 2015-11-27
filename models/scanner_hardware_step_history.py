@@ -22,5 +22,3 @@ class ScannerHardwareStepHistory(models.Model):
     message = fields.Char(
         string='Message',
         help='Message sent during execution of the step.')
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -229,7 +229,3 @@ class Powerscan:
     def redledoff(self):
         """ Turn off the red LED """
         self._command("[9q")
-
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

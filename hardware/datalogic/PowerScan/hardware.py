@@ -527,5 +527,3 @@ if __name__ == '__main__':
 
     sys.stderr.write('User ask to shutdown the program')
     sys.exit(0)
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

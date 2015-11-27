@@ -231,5 +231,3 @@ def scenario_convert_file(cr, module, filename, idref,
 # To be able to load scenarios from manifest file
 openerp.tools.convert_file = scenario_convert_file
 openerp.tools.convert.convert_file = scenario_convert_file
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
