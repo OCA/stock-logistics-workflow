@@ -68,7 +68,7 @@ class Sentinel(object):
         """
         # Read user configuration
         config = ConfigParser.SafeConfigParser(DEFAULT_CONFIG)
-        config.read('.oerp_sentinelrc')
+        config.read(['.oerp_sentinelrc', '.openerp_sentinelrc'])
 
         # No configfile found, exit
         if 'openerp' not in config.sections():
