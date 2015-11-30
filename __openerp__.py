@@ -44,4 +44,9 @@
         'demo/Stock/Inventory/Inventory.scenario',
         'demo/Stock/Location_informations/Location_informations.scenario',
     ],
+    'images': [
+        'images/scanner_hardware.png',
+        'images/scanner_scenario.png',
+        'images/scanner_screen.png',
+    ],
 }
