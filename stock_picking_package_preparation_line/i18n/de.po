@@ -1,0 +1,118 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_picking_package_preparation_line
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: stock-logistics-workflow (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-11-28 01:56+0000\n"
+"PO-Revision-Date: 2015-11-27 13:46+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: German (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: stock_picking_package_preparation_line
+#: field:stock.picking.package.preparation.line,create_uid:0
+msgid "Created by"
+msgstr "Angelegt durch"
+
+#. module: stock_picking_package_preparation_line
+#: field:stock.picking.package.preparation.line,create_date:0
+msgid "Created on"
+msgstr "Angelegt am"
+
+#. module: stock_picking_package_preparation_line
+#: view:stock.picking.package.preparation:stock_picking_package_preparation_line.sppp_line_stock_picking_package_preparation_form
+#: field:stock.picking.package.preparation.line,name:0
+msgid "Description"
+msgstr ""
+
+#. module: stock_picking_package_preparation_line
+#: view:stock.picking.package.preparation:stock_picking_package_preparation_line.sppp_line_stock_picking_package_preparation_form
+#: field:stock.picking.package.preparation,line_ids:0
+msgid "Details"
+msgstr ""
+
+#. module: stock_picking_package_preparation_line
+#: field:stock.picking.package.preparation.line,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_picking_package_preparation_line
+#: help:stock.picking.package.preparation.line,product_uom_qty:0
+msgid ""
+"If you change this quantity for a 'ready' picking, the system will not "
+"generate a back order, but will just deliver the new quantity"
+msgstr ""
+
+#. module: stock_picking_package_preparation_line
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:229
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:235
+#, python-format
+msgid ""
+"Impossible to create confirmed picking. Please Check products availability!"
+msgstr ""
+
+#. module: stock_picking_package_preparation_line
+#: field:stock.picking.package.preparation.line,write_uid:0
+msgid "Last Updated by"
+msgstr "Zuletzt aktualisiert durch"
+
+#. module: stock_picking_package_preparation_line
+#: field:stock.picking.package.preparation.line,write_date:0
+msgid "Last Updated on"
+msgstr "Zuletzt aktualisiert am"
+
+#. module: stock_picking_package_preparation_line
+#: view:stock.picking.package.preparation:stock_picking_package_preparation_line.sppp_line_stock_picking_package_preparation_form
+#: field:stock.picking.package.preparation.line,note:0
+msgid "Note"
+msgstr "Notiz"
+
+#. module: stock_picking_package_preparation_line
+#: model:ir.model,name:stock_picking_package_preparation_line.model_stock_picking_package_preparation
+msgid "Package Preparation"
+msgstr "Paket-Aufbereitung"
+
+#. module: stock_picking_package_preparation_line
+#: model:ir.model,name:stock_picking_package_preparation_line.model_stock_picking_package_preparation_line
+msgid "Package Preparation Line"
+msgstr ""
+
+#. module: stock_picking_package_preparation_line
+#: field:stock.picking.package.preparation.line,product_id:0
+msgid "Product"
+msgstr "Produkt"
+
+#. module: stock_picking_package_preparation_line
+#: field:stock.picking.package.preparation.line,product_uom:0
+msgid "Product uom"
+msgstr ""
+
+#. module: stock_picking_package_preparation_line
+#: field:stock.picking.package.preparation.line,product_uom_qty:0
+msgid "Product uom qty"
+msgstr ""
+
+#. module: stock_picking_package_preparation_line
+#: field:stock.picking.package.preparation.line,sequence:0
+msgid "Sequence"
+msgstr "Reihenfolge"
+
+#. module: stock_picking_package_preparation_line
+#: model:ir.model,name:stock_picking_package_preparation_line.model_stock_move
+#: field:stock.picking.package.preparation.line,move_id:0
+#: field:stock.picking.package.preparation.line,package_preparation_id:0
+msgid "Stock Move"
+msgstr "Lagerbuchung"
+
+#. module: stock_picking_package_preparation_line
+#: view:stock.picking.package.preparation:stock_picking_package_preparation_line.sppp_line_stock_picking_package_preparation_form
+msgid "Transfers"
+msgstr "Umlagerungen"
