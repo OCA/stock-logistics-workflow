@@ -559,41 +559,37 @@ class ScannerHardware(models.Model):
             step_id,
             obj=current_object)
 
-        try:
-            # Execute the step
-            step = terminal.step_id
+        # Execute the step
+        step = terminal.step_id
 
-            ld = {
-                'cr': self.env.cr,
-                'uid': self.env.uid,
-                'pool': self.pool,
-                'env': self.env,
-                'model': self.env[step.scenario_id.model_id.model],
-                'custom': self.env['scanner.scenario.custom'],
-                'term': self,
-                'context': self.env.context,
-                'm': message,
-                'message': message,
-                't': terminal,
-                'terminal': terminal,
-                'tracer': tracer,
-                'wkf': workflow,
-                'workflow': workflow,
-                'scenario': terminal.scenario_id,
-                '_': _,
-            }
+        ld = {
+            'cr': self.env.cr,
+            'uid': self.env.uid,
+            'pool': self.pool,
+            'env': self.env,
+            'model': self.env[step.scenario_id.model_id.model],
+            'custom': self.env['scanner.scenario.custom'],
+            'term': self,
+            'context': self.env.context,
+            'm': message,
+            'message': message,
+            't': terminal,
+            'terminal': terminal,
+            'tracer': tracer,
+            'wkf': workflow,
+            'workflow': workflow,
+            'scenario': terminal.scenario_id,
+            '_': _,
+        }
 
-            terminal.log('Executing step %d : %s' % (step_id, step.name))
-            terminal.log('Message : %s' % repr(message))
-            if tracer:
-                terminal.log('Tracer : %s' % repr(tracer))
+        terminal.log('Executing step %d : %s' % (step_id, step.name))
+        terminal.log('Message : %s' % repr(message))
+        if tracer:
+            terminal.log('Tracer : %s' % repr(tracer))
 
-            exec step.python_code in ld
-            if step.step_stop:
-                terminal.empty_scanner_values()
-        except:
-            logger.exception('Error when executing code \n, %s',
-                             step.python_code)
+        exec step.python_code in ld
+        if step.step_stop:
+            terminal.empty_scanner_values()
 
         return (
             ld.get(
@@ -663,7 +659,7 @@ class ScannerHardware(models.Model):
                 # back" action
                 self.env.cr.rollback()
                 logger.warning('[%s] OSV Exception:', self.code, exc_info=True)
-                result = ('E', [e.name, u'', e.value], True)
+                result = ('E', [e.name or '', '', e.value or ''], True)
                 break
             except Exception as e:
                 self.env.cr.rollback()
