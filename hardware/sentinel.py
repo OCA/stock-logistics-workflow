@@ -333,7 +333,7 @@ class Sentinel(object):
 
                 # Avoid going out of the list
                 first_line = min(
-                    max(0, first_line), max(0, len(text_lines) - height))
+                    max(0, first_line), max(0, len(text_lines) - height + 1))
 
     def main_loop(self):
         """
