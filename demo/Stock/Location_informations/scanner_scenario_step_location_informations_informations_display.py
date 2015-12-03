@@ -5,21 +5,21 @@
 # Put the returned result or message in <res>, as a list of strings.
 # Put the returned value in <val>, as an integer
 
-report_stock_obj = pool.get('wms.report.stock.available')
-report_stock_ids = report_stock_obj.search(cr, uid, [('location_id.name', '=', message)], context=context)
+location = model.search([('name', '=', message)])
 
 act = 'F'
 res = [
-    _('Location : %s') % message,
-    '',
+    _('Found stock for location : %s') % location.name,
 ]
 
-if not report_stock_ids:
-    res.append(_('Empty location !'))
-
-for report_stock in report_stock_obj.browse(cr, uid, report_stock_ids, context=context):
+for location_info in env['stock.quant'].read_group(
+    [('location_id.name', '=', message), ('location_id.usage', '=', 'internal')],
+    ['location_id', 'lot_id', 'qty', 'product_id'],
+    ['product_id'],
+):
+    product = env['product.product'].browse(location_info['product_id'][0])
     res.extend([
-        _('Product : [%s] %s') % (report_stock.product_id.default_code, report_stock.product_id.name),
-        _('Quantity : %g %s') % (report_stock.product_qty, report_stock.uom_id.name),
         '',
+        _('Product : %s') % location_info['product_id'][1],
+        _('Quantity : %g %s') % (location_info['qty'], product.uom_id.name),
     ])
