@@ -21,17 +21,17 @@ elif tracer == 'location' and terminal.tmp_val2:
     stock_inventory_id = int(terminal.tmp_val1)
     default_code = terminal.tmp_val2
     quantity = float(terminal.tmp_val3)
-    location_id = stock_location_obj.name_search(message, operator='=')[0][0]
+    location = stock_location_obj.search([('name', '=', message)])[0]
 
     product = model.search([('default_code', '=', default_code)])[0]
 
-    stock_inventory_line_obj.create(cr, uid, {
+    stock_inventory_line_obj.create({
         'inventory_id': stock_inventory_id,
         'product_id': product.id,
-        'product_uom': product.uom_id.id,
+        'product_uom_id': product.uom_id.id,
         'product_qty': quantity,
-        'location_id': location_id,
-    }, context=context)
+        'location_id': location.id,
+    })
 
     terminal.write({'tmp_val2': '', 'tmp_val3': ''})
 
