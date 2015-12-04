@@ -46,9 +46,12 @@ class StockPicking(models.Model):
     @api.depends('move_lines')
     def _get_max_line_sequence(self):
         for picking in self:
-            picking.max_line_sequence = (
-                max(picking.mapped('move_lines.sequence')) + 10
-                )
+            if picking.move_lines:
+                max_line_sequence = max(
+                    picking.mapped('move_lines.sequence')) + 10
+            else:
+                max_line_sequence = 10
+            picking.max_line_sequence = max_line_sequence
 
     max_line_sequence = fields.Integer(string='Max sequence in lines',
                                        compute='_get_max_line_sequence')
