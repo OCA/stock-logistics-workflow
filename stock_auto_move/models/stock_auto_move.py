@@ -25,11 +25,15 @@ class StockMove(models.Model):
         moves.action_done()
 
     @api.multi
-    def action_confirm(self):
+    def _change_procurement_group(self):
         automatic_group = self.env.ref('stock_auto_move.automatic_group')
         for move in self:
             if move.auto_move and move.group_id != automatic_group:
                 move.group_id = automatic_group
+
+    @api.multi
+    def action_confirm(self):
+        self._change_procurement_group()
         return super(StockMove, self).action_confirm()
 
 
