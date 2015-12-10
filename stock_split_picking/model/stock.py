@@ -64,8 +64,6 @@ class StockMove(models.Model):
         moves = move + new_move
         if move.reserved_availability > move.product_qty:
             moves.do_unreserve()
-        if move.picking_id:
-            move.picking_id.pack_operation_ids.unlink()
         if move_assigned:
             moves.action_assign()
         else:
