@@ -33,19 +33,11 @@ class stock_move(orm.Model):
     def action_revert_done(self, cr, uid, ids, context=None):
         picking_obj = self.pool['stock.picking']
         for move in self.browse(cr, uid, ids, context):
-            if picking_obj.has_valuation_moves(cr, uid, move):
-                raise orm.except_orm(
-                    _('Error'),
-                    _('Line %s has valuation moves. \
-                        Remove them first') % (move.name))
-            move.write({'state': 'draft'})
-            if move.picking_id:
-                picking_obj._reopen_picking(
-                    cr, uid, move.picking_id, context=context)
-
+            picking_obj._reopen_picking(
+                cr, uid, move.picking_id, [move], context=context)
         for (id, name) in self.name_get(cr, uid, ids):
             message = _(
-                "The stock move '%s' has been set in draft state."
+                "The stock move '%s' has been set in confirm state."
             ) % (name,)
             self.log(cr, uid, id, message)
         return True
@@ -59,7 +51,16 @@ class stock_picking(orm.Model):
             ('ref', '=', move.picking_id.name),
         ])
 
-    def _reopen_picking(self, cr, uid, picking, context=None):
+    def _reopen_picking(self, cr, uid, picking, move_lines, context=None):
+        for line in move_lines:
+            if self.has_valuation_moves(cr, uid, line):
+                raise orm.except_orm(
+                    _('Error'),
+                    _('Line %s has valuation moves (%s). \
+                        Remove them first') % (line.name,
+                                               line.picking_id.name))
+            line.write({'state': 'draft'})
+
         self.write(cr, uid, [picking.id], {'state': 'draft'})
         if picking.invoice_state == 'invoiced' and not picking.invoice_id:
             self.write(cr, uid, [picking.id],
@@ -68,25 +69,24 @@ class stock_picking(orm.Model):
         # Deleting the existing instance of workflow
         wf_service.trg_delete(uid, 'stock.picking', picking.id, cr)
         wf_service.trg_create(uid, 'stock.picking', picking.id, cr)
+        if picking.type == 'in':
+            move_obj = self.pool['stock.move']
+            move_ids = [x.id for x in move_lines]
+            move_obj.action_confirm(cr, uid, move_ids, context=context)
+            move_obj.force_assign(cr, uid, move_ids, context=context)
+        wf_service.trg_validate(
+            uid, 'stock.picking', picking.id, 'button_confirm', cr)
         return True
 
     def action_revert_done(self, cr, uid, ids, context=None):
         if not len(ids):
             return False
         for picking in self.browse(cr, uid, ids, context):
-            for line in picking.move_lines:
-                if self.has_valuation_moves(cr, uid, line):
-                    raise orm.except_orm(
-                        _('Error'),
-                        _('Line %s has valuation moves (%s). \
-                            Remove them first') % (line.name,
-                                                   line.picking_id.name))
-                line.write({'state': 'draft'})
-            self._reopen_picking(cr, uid, picking, context=context)
-
+            self._reopen_picking(
+                cr, uid, picking, picking.move_lines, context=context)
         for (id, name) in self.name_get(cr, uid, ids):
             message = _(
-                "The stock picking '%s' has been set in draft state."
+                "The stock picking '%s' has been set in confirm state."
             ) % (name,)
             self.log(cr, uid, id, message)
         return True
