@@ -9,7 +9,7 @@ class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     @api.one
-    @api.depends('group_id', 'sale_id', 'sale_id.client_order_ref')
+    @api.depends('group_id')
     def _calculate_client_order_ref(self):
         sale_obj = self.env['sale.order']
         self.client_order_ref = ''
