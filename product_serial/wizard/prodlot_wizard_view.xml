@@ -3,22 +3,28 @@
 <data>
 
 
-<record id="view_stock_picking_prodlot_selection" model="ir.ui.view">
-    <field name="name">stock.picking.prodlot.selection</field>
-    <field name="model">stock.picking.prodlot.selection</field>
+<record id="view_stock_prodlot_selection" model="ir.ui.view">
+    <field name="name">stock.prodlot.selection</field>
+    <field name="model">stock.prodlot.selection</field>
     <field name="arch" type="xml">
-        <form string="Select Production Lots" version="7.0">
-            <group>
+        <form string="Select or Create Production Lots">
+            <group name="common">
                 <field name="product_id" />
+                <field name="create_prodlots"/>
+            </group>
+            <group name="from_interval" string="From Interval">
                 <field name="prefix"/>
                 <field name="first_number"/>
                 <field name="last_number"/>
                 <field name="suffix"/>
-                <field name="create_prodlots"/>
+                <button type="object" name="select_or_create_prodlots_from_interval" string="Run From Interval" class="oe_highlight"/>
+            </group>
+            <group name="from_file" string="From File">
+                <field name="prodlot_file"/>
+                <button type="object" name="select_or_create_prodlots_from_file" string="Run From File" class="oe_highlight"/>
             </group>
             <footer>
-                <button type="object" name="select_or_create_prodlots" string="Validate" class="oe_highlight"/>
-                <button string="Cancel" special="cancel" class="oe_link"/>
+                <button string="Cancel" name="cancel" type="object" class="oe_link"/>
             </footer>
         </form>
     </field>
@@ -26,55 +32,24 @@
 
 
 <record id="action_prodlot_selection" model="ir.actions.act_window">
-    <field name="name">Select Production Lots</field>
-    <field name="res_model">stock.picking.prodlot.selection</field>
-    <field name="view_type">form</field>
+    <field name="name">Select or Create Serial Numbers</field>
+    <field name="res_model">stock.prodlot.selection</field>
     <field name="view_mode">form</field>
     <field name="target">new</field>
 </record>
 
-
-<record id="view_picking_form" model="ir.ui.view">
-    <field name="name">stock.picking.form.prodlot.selection</field>
-    <field name="model">stock.picking</field>
-    <field name="inherit_id" ref="stock.view_picking_form"/>
+<record id="view_stock_enter_transfer_details" model="ir.ui.view">
+    <field name="name">product_serial.stock.transfer_details.form</field>
+    <field name="model">stock.transfer_details</field>
+    <field name="inherit_id" ref="stock.view_stock_enter_transfer_details"/>
     <field name="arch" type="xml">
-        <xpath expr="//field[@name='origin']/.." position="after">
+        <field name="picking_destination_location_id" position="after">
             <group name="prodlot_wizard">
-                <button type="action" name="%(action_prodlot_selection)d" string="Spread Production Lots" states="draft,confirmed,assigned"/>
+                <button type="action" name="%(action_prodlot_selection)d" string="Spread Serial Numbers"/>
             </group>
-        </xpath>
+        </field>
     </field>
 </record>
-
-
-<record id="view_picking_in_form" model="ir.ui.view">
-    <field name="name">stock.picking.in.form.prodlot.selection</field>
-    <field name="model">stock.picking.in</field>
-    <field name="inherit_id" ref="stock.view_picking_in_form"/>
-    <field name="arch" type="xml">
-        <xpath expr="//field[@name='origin']/.." position="after">
-            <group name="prodlot_wizard">
-                <button type="action" name="%(action_prodlot_selection)d" string="Spread Production Lots" states="draft,confirmed,assigned"/>
-            </group>
-        </xpath>
-    </field>
-</record>
-
-
-<record id="view_picking_out_form" model="ir.ui.view">
-    <field name="name">stock.picking.out.form</field>
-    <field name="model">stock.picking.out</field>
-    <field name="inherit_id" ref="stock.view_picking_out_form"/>
-    <field name="arch" type="xml">
-        <xpath expr="//field[@name='origin']/.." position="after">
-            <group name="prodlot_wizard">
-                <button type="action" name="%(action_prodlot_selection)d" string="Spread Production Lots" states="draft,confirmed,assigned"/>
-            </group>
-        </xpath>
-    </field>
-</record>
-
 
 </data>
 </openerp>

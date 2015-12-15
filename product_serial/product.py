@@ -1,9 +1,10 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Product serial module for OpenERP
+#    Product serial module for Odoo
 #    Copyright (C) 2008 Raphaël Valyi
-#    Copyright (C) 2013 Akretion (http://www.akretion.com/)
+#    Copyright (C) 2013-2015 Akretion (http://www.akretion.com/)
+#    @author Alexis de Lattre <alexis.delattre@akretion.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,27 +21,20 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, orm
+from openerp import fields, models
 
 
-class product_product(orm.Model):
-    _inherit = "product.product"
+# TODO : migration script from PP to PT
+class ProductTemplate(models.Model):
+    _inherit = "product.template"
 
-    _columns = {
-        'lot_split_type': fields.selection([
-            ('none', 'None'),
-            ('single', 'Single'),
-            ('lu', 'Logistical Unit')
-        ], 'Lot split type', required=True,
-            help="None: no split ; single: 1 line/product unit ; "
-            "Logistical Unit: split using the first Logistical Unit quantity "
-            "of the product form packaging tab "
-            "(to be improved to take into account all LU)"),
-        'track_internal': fields.boolean(
-            'Track Lots internally',
-            help="Forces to specify a Serial Number for all internal moves"),
-    }
-
-    _defaults = {
-        'lot_split_type': 'none',
-    }
+    lot_split_type = fields.Selection([
+        ('none', 'None'),
+        ('single', 'Single'),
+        # ('lu', 'Logistical Unit')  # TODO : restore if someone needs it
+        ], string='Lot split type', required=True, default='none',
+        help="You should select 'Single' if you have one serial number per "
+        "item. In this case, the Transfer pop-up on the picking will "
+        "display one line per unit for this product. "
+        "The default value is 'None': for those product, the native "
+        "process is not modified.")
