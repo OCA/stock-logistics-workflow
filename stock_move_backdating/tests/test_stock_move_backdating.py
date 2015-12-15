@@ -1,24 +1,8 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Copyright (C) 2014 Savoir-faire Linux. All Rights Reserved.
-#    Copyright (C) 2015 Agile Business Group  (<http://www.agilebg.com>)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published
-#    by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# ©2015 Agile Business Group (<http://www.agilebg.com>)
+# ©2015 BREMSKERL-REIBBELAGWERKE EMMERLING GmbH & Co. KG
+#    Author Marco Dieckhoff
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openerp.osv import orm
 from openerp.tests import common
@@ -37,7 +21,7 @@ class TestStockMoveBackdating(common.TransactionCase):
         self.picking_model = self.env["stock.picking"]
         self.product_model = self.env["product.product"]
         self.location_model = self.env["stock.location"]
-        self.stock_transfer_details = self.registry("stock.transfer_details")
+        self.stock_transfer_details = self.env["stock.transfer_details"]
 
         self.product_uom_id = self.env['product.uom'].search([])[0]
 
@@ -84,24 +68,16 @@ class TestStockMoveBackdating(common.TransactionCase):
         self.picking_out.force_assign()
 
     def run_picking(self, back_date):
-        cr = self.env.cr
-        uid = self.env.uid
         pick = self.picking_out
-        context = self.env.context.copy()
-        context.update(
-            {
-                'active_model': 'stock.picking',
-                'active_ids': [pick.id],
-                'active_id': len([pick.id]) and pick.id or False
-            }
+        pick_wizard = self.stock_transfer_details.with_context(
+            active_model='stock.picking',
+            active_ids=[pick.id],
+            active_id=len([pick.id]) and pick.id or False
+        ).create(
+            {'picking_id': pick.id}
         )
-        pick_wizard_id = self.stock_transfer_details.create(
-            cr, uid, {'picking_id': pick.id}, context)
-        pick_wizard = self.stock_transfer_details.browse(
-            cr, uid, pick_wizard_id)
         pick_wizard.item_ids[0].write({'date': back_date})
-        return self.stock_transfer_details.do_detailed_transfer(
-            cr, uid, [pick_wizard_id], context)
+        pick_wizard.do_detailed_transfer()
 
     def computeMove(self, timedelta_days):
         now = datetime.now()
