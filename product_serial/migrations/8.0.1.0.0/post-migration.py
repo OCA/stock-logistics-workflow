@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright (C) 2008 Raphaël Valyi
-#    Copyright (C) 2013-2015 Akretion (http://www.akretion.com/)
+#    Copyright (C) 2015 Akretion (http://www.akretion.com/)
+#    @author: Alexis de Lattre <alexis.delattre@akretion.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,19 +19,27 @@
 #
 ##############################################################################
 
-{
-    "name": "Product Serial",
-    "summary": "Enhance Serial Number management",
-    "version": "8.0.1.0.0",
-    "author": "Akretion,NaN·tic,Odoo Community Association (OCA)",
-    "website": "http://www.akretion.com",
-    "depends": ["stock"],
-    "category": "Inventory, Logistic, Storage",
-    "license": "AGPL-3",
-    "demo": ["product_demo.xml"],
-    "data": [
-        "product_view.xml",
-        "wizard/prodlot_wizard_view.xml",
-    ],
-    'installable': True,
-}
+from openerp import pooler, SUPERUSER_ID
+
+
+def migrate(cr, version):
+    if not version:
+        return
+
+    pool = pooler.get_pool(cr.dbname)
+    pto = pool['product.template']
+
+    pt_ids = pto.search(
+        cr, SUPERUSER_ID, ['|', ('active', '=', True), ('active', '=', False)])
+    for pt in pto.browse(cr, SUPERUSER_ID, pt_ids):
+        single = False
+        for pp in pt.product_variant_ids:
+            cr.execute(
+                'select lot_split_type from product_product where id=%s',
+                (pp.id, ))
+            res = cr.fetchall()
+            if res[0][0] == 'single':
+                single = True
+                break
+        if single:
+            pto.write(cr, SUPERUSER_ID, pt.id, {'lot_split_type': 'single'})

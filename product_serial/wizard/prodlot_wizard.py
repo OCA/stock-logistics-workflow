@@ -119,12 +119,20 @@ class StockProdlotSelection(models.TransientModel):
         return self._select_or_create_prodlots(
             transfer, self.product_id, prodlot_seq, self.create_prodlots)
 
-    # TODO : transformer en api.multi dans la classe transfer_items
+    @api.model
+    def _prepare_prodlot(self, product, lot_name):
+        '''This method is designed to be inherited'''
+        return {
+            'product_id': product.id,
+            'name': lot_name,
+        }
+
     @api.model
     def _select_or_create_prodlots(
             self, transfer, product, prodlot_seq, create_prodlots):
-        assert prodlot_seq and isinstance(prodlot_seq, list)
-        prodlot_obj = self.env['stock.production.lot']
+        assert prodlot_seq and isinstance(prodlot_seq, list),\
+            'wrong prodlot_seq'
+        splo = self.env['stock.production.lot']
         for transfer_item in transfer.item_ids:
             if transfer_item.product_id != product:
                 continue
@@ -134,28 +142,18 @@ class StockProdlotSelection(models.TransientModel):
                 break
             if create_prodlots:
                 # Create new prodlot
-                lot = prodlot_obj.create({
-                    'product_id': product.id,
-                    'name': current_lot,
-                    })
+                lot = splo.create(self._prepare_prodlot(product, current_lot))
             else:
                 # Search existing prodlots
-                lots = prodlot_obj.search([
+                lots = splo.search([
                     ('name', '=', current_lot),
-                    ('product_id', '=', transfer_item.product_id.id),
+                    ('product_id', '=', product.id),
                     ], limit=1)
                 if not lots:
                     raise UserError(_(
                         "Serial Number '%s' not found for product '%s'.")
                         % (current_lot,
                            transfer_item.product_id.name_get()[0][1]))
-
-                # ctx = context.copy()
-                # ctx['location_id'] = move.location_id.id
-                # if prodlot.stock_available < move.product_qty:
-                #    raise UserError(_(
-                #        'Not enough stock available of serial number %s.')
-                #        % current_lot)
                 lot = lots[0]
 
             transfer_item.lot_id = lot.id

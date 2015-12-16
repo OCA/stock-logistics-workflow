@@ -24,7 +24,6 @@
 from openerp import fields, models
 
 
-# TODO : migration script from PP to PT
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
@@ -32,6 +31,7 @@ class ProductTemplate(models.Model):
         ('none', 'None'),
         ('single', 'Single'),
         # ('lu', 'Logistical Unit')  # TODO : restore if someone needs it
+        # and implement it properly ('lu' was not fully implemented in v7)
         ], string='Lot split type', required=True, default='none',
         help="You should select 'Single' if you have one serial number per "
         "item. In this case, the Transfer pop-up on the picking will "
