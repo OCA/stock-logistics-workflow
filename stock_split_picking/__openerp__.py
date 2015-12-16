@@ -31,7 +31,8 @@
  'data': ['view/stock_partial_picking.xml'],
  'demo': [],
  'test': ['test/test_picking_split.yml',
-          'test/test_assigned_picking_split.yml'],
+          'test/test_assigned_picking_split.yml',
+          'test/test_picking_split_two_move_lines.yml'],
  'installable': True,
  'auto_install': False,
  }
