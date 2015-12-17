@@ -26,10 +26,6 @@ This module also adds a button *Spread Serial Numbers* on the transfer wizard wh
    :alt: Try me on Runbot
    :target: https://runbot.odoo-community.org/runbot/154/8.0
 
-For further information, please visit:
-
- * https://www.odoo.com/forum/help-1
-
 Bug Tracker
 ===========
 
@@ -49,9 +45,9 @@ Contributors
 Maintainer
 ----------
 
-.. image:: http://odoo-community.org/logo.png
+.. image:: https://odoo-community.org/logo.png
    :alt: Odoo Community Association
-   :target: http://odoo-community.org
+   :target: https://odoo-community.org
 
 This module is maintained by the OCA.
 

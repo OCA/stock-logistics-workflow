@@ -1,26 +1,7 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Product serial module for Odoo
-#    Copyright (C) 2010 NaN Projectes de Programari Lliure, S.L.
-#                       http://www.NaN-tic.com
-#    Copyright (C) 2013-2015 Akretion (http://www.akretion.com)
-#    @author Alexis de Lattre <alexis.delattre@akretion.com>
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2010 NaN Projectes de Programari Lliure, S.L. http://www.NaN-tic.com
+# © 2013-2015 Akretion (http://www.akretion.com/) - Alexis de Lattre
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openerp import models, fields, api, _
 from openerp.exceptions import Warning as UserError
@@ -39,8 +20,9 @@ class StockProdlotSelection(models.TransientModel):
     last_number = fields.Char(string='Last Number')
     prodlot_file = fields.Binary(
         string='Serial Numbers File',
-        help="The serial numbers file should be a text file with one line "
-        "per serial number (all for the same product).")
+        help="The serial numbers file should be a text file with one serial "
+        "number per line and without any field separator "
+        "(one file per product).")
     create_prodlots = fields.Boolean(string='Create New Serial Numbers')
 
     @api.model
@@ -161,7 +143,7 @@ class StockProdlotSelection(models.TransientModel):
 
     @api.multi
     def cancel(self):
-        """We have to re-call the wizard when the user clicks on Cancel"""
+        """The wizard is re-called when the user clicks on Cancel"""
         self.ensure_one()
         assert self.env.context.get('active_model') == \
             'stock.transfer_details', 'Wrong underlying model'
