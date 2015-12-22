@@ -21,7 +21,7 @@
 from openerp.osv import fields, orm
 
 
-class stock_move(orm.Models):
+class stock_move(orm.Model):
     _inherit = 'stock.move'
 
     def _get_product_customer_code(
