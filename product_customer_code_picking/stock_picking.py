@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright (C) 2013 Agile Business Group sagl (<http://www.agilebg.com>)
+#    Copyright (C) 2015 Agile Business Group sagl (<http://www.agilebg.com>)
 #    Author: Nicola Malcontenti <nicola.malcontenti@agilebg.com>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@
 from openerp.osv import fields, orm
 
 
-class stock_move(orm.Model):
+class stock_move(orm.Models):
     _inherit = 'stock.move'
 
     def _get_product_customer_code(

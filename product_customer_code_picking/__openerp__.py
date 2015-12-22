@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright (C) 2013 Agile Business Group sagl (<http://www.agilebg.com>)
+#    Copyright (C) 2015 Agile Business Group sagl (<http://www.agilebg.com>)
 #    Author: Nicola Malcontenti <nicola.malcontenti@agilebg.com>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@
 ##############################################################################
 {
     "name": "Product Customer code for stock picking",
-    "version": "1.0",
+    "version": "8.0.1.0.0",
     "author": "Agile Business Group,Odoo Community Association (OCA)",
     "website": "http://www.agilebg.com",
     "license": 'AGPL-3',
@@ -31,19 +31,9 @@
         'stock',
         'product_customer_code'
     ],
-    "description": """
-This module makes the product customer code visible in the stock moves
-of a picking.
-
-Contributors
-------------
-* Nicola Malcontenti <nicola.malcontenti@agilebg.com>
-* Alex Comba <alex.comba@agilebg.com>
-* Lorenzo Battistini <lorenzo.battistini@agilebg.com>
-""",
     "demo": [],
     "data": [
         'stock_picking_view.xml',
     ],
-    "installable": False,
+    "installable": True,
 }
