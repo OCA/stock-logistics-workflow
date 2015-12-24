@@ -14,7 +14,7 @@ class ProductTemplate(models.Model):
         ('single', 'Single'),
         # ('lu', 'Logistical Unit')  # TODO : restore if someone needs it
         # and implement it properly ('lu' was not fully implemented in v7)
-        ], string='Lot split type', required=True, default='none',
+        ], string='Lot split type', default='none',
         help="You should select 'Single' if you have one serial number per "
         "item. In this case, the Transfer pop-up on the picking will "
         "display one line per unit for this product. "
