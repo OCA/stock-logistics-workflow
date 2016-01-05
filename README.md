@@ -24,6 +24,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [picking_dispatch](picking_dispatch/) | 8.0.1.2.3 | Picking dispatch
+[procurement_jit_assign_move](procurement_jit_assign_move/) | 8.0.1.0.0 | Change the behavior of procurement_jit to assign stock moves
 [product_unique_serial](product_unique_serial/) | 8.0.1.0.1 | Product Serial Unique Number
 [stock_dropshipping_dual_invoice](stock_dropshipping_dual_invoice/) | 8.0.0.1.0 | Create both Supplier and Customer Invoices from a Dropshipping Delivery
 [stock_move_description](stock_move_description/) | 8.0.1.0.0 | Stock move description
