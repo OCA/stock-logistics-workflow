@@ -24,6 +24,7 @@
         "views/product_category_view.xml",
         "views/stock_production_lot_view.xml",
         "views/stock_quant_view.xml",
+        "views/res_config_view.xml",
     ],
     "installable": True,
     "license": "AGPL-3",

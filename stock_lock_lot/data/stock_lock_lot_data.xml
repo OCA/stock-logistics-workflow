@@ -15,4 +15,10 @@
             <field name="description">Serial Number/lot unblocked</field>
         </record>
     </data>
+    <data noupdate="1">
+        <record forcecreate="True" id="config_parameter_stock_lock_lot_strict" model="ir.config_parameter">
+            <field name="key">stock.lock.lot.strict</field>
+            <field name="value" eval="True"/>
+        </record>
+    </data>
 </openerp>
