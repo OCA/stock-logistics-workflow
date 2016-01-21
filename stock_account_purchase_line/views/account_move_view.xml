@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+        <record id="view_move_line_form" model="ir.ui.view">
+            <field name="name">account.move.line.form</field>
+            <field name="model">account.move.line</field>
+            <field name="inherit_id" ref="account.view_move_line_form"/>
+            <field name="arch" type="xml">
+                <field name="quantity" position="before">
+                    <field name="purchase_line_id"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_move_line_form2" model="ir.ui.view">
+            <field name="name">account.move.line.form2</field>
+            <field name="model">account.move.line</field>
+            <field name="inherit_id" ref="account.view_move_line_form2"/>
+            <field name="arch" type="xml">
+                <field name="quantity" position="before">
+                    <field name="purchase_line_id"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_move_line_tree" model="ir.ui.view">
+            <field name="name">account.move.line.tree</field>
+            <field name="model">account.move.line</field>
+            <field name="inherit_id" ref="account.view_move_line_tree"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="purchase_line_id"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_account_move_line_filter" model="ir.ui.view">
+            <field name="name">Journal Items</field>
+            <field name="model">account.move.line</field>
+            <field name="inherit_id" ref="account.view_account_move_line_filter"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="purchase_line_id"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_move_line_tree_reconcile" model="ir.ui.view">
+            <field name="model">account.move.line</field>
+            <field name="inherit_id" ref="account.view_move_line_tree_reconcile"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="purchase_line_id"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_move_form" model="ir.ui.view">
+            <field name="name">account.move.form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath
+                        expr="//field[@name='line_id']/form//field[@name='quantity']" position="before">
+                    <field name="purchase_line_id"/>
+                </xpath>
+                <xpath
+                        expr="//field[@name='line_id']/tree//field[@name='partner_id']" position="after">
+                    <field name="purchase_line_id"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
