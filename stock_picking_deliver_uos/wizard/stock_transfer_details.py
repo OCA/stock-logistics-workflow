@@ -37,8 +37,8 @@ class StockTransferDetails(models.TransientModel):
         for item in res.get('item_ids'):
             pack_operation_model = self.env['stock.pack.operation']
             if (
-                'packop_id' in item
-                and len(pack_operation_model.browse(
+                'packop_id' in item and
+                len(pack_operation_model.browse(
                     item['packop_id']).linked_move_operation_ids) == 1
             ):
                 p_uos = pack_operation_model.browse(
