@@ -8,12 +8,6 @@ class AccountInvoiceLine(orm.Model):
 
     _inherit = 'account.invoice.line'
 
-    _columns = {
-        'purchase_line_id': fields.many2one('purchase.order.line',
-                                            'Purchase Order Line',
-                                            ondelete='set null', select=True),
-    }
-
     def move_line_get_item(self, cr, uid, line, context=None):
         res = super(AccountInvoiceLine, self).move_line_get_item(
                 cr, uid, line, context=context)
