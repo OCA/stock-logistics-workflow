@@ -10,7 +10,7 @@
               "Odoo Community Association (OCA)",
     "website": "http://www.eficent.com",
     "category": "Generic",
-    "depends": ["account", "purchase"],
+    "depends": ["account", "purchase", "account_invoice_merge_purchase"],
     "license": "AGPL-3",
     "data": [
         "views/account_move_view.xml",
