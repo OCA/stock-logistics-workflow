@@ -3,12 +3,13 @@
 # * stock_picking_reorder_lines
 # 
 # Translators:
+# Rudolf Schnapka <rs@techno-flex.de>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-22 09:31+0000\n"
-"PO-Revision-Date: 2015-10-21 16:34+0000\n"
+"POT-Creation-Date: 2016-06-29 10:12+0000\n"
+"PO-Revision-Date: 2016-06-16 15:55+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: French (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -18,6 +19,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: stock_picking_reorder_lines
+#: field:stock.picking,max_line_sequence:0
+msgid "Max sequence in lines"
+msgstr ""
+
+#. module: stock_picking_reorder_lines
 #: model:ir.model,name:stock_picking_reorder_lines.model_stock_picking
 msgid "Picking List"
 msgstr "Opération de manutention"
@@ -25,7 +31,7 @@ msgstr "Opération de manutention"
 #. module: stock_picking_reorder_lines
 #: model:ir.model,name:stock_picking_reorder_lines.model_procurement_order
 msgid "Procurement"
-msgstr ""
+msgstr "Approvisionnement"
 
 #. module: stock_picking_reorder_lines
 #: model:ir.model,name:stock_picking_reorder_lines.model_stock_picking
