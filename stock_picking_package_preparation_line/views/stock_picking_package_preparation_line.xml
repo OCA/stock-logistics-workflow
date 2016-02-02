@@ -7,7 +7,7 @@
         <field name="model">stock.picking.package.preparation</field>
         <field name="inherit_id" ref="stock_picking_package_preparation.stock_picking_package_preparation_form"/>
         <field name="arch" type="xml">
-            <page string="Transfers" position="after">
+            <notebook position="inside">
                 <page string="Details">
                     <field name="line_ids">
                         <tree>
@@ -36,7 +36,7 @@
                         </form>
                     </field>
                 </page>
-            </page>
+            </notebook>
         </field>
     </record>
 
