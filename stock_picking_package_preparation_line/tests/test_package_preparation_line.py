@@ -28,19 +28,19 @@ class TestPackagePreparationLine(TransactionCase):
         return self.env['stock.picking'].create({
             'partner_id': self.partner.id,
             'picking_type_id': self.env.ref('stock.picking_type_out').id,
+            'location_id': self.src_location.id,
+            'location_dest_id': self.dest_location.id,
             })
 
     def _create_move(self, picking, product, quantity=1.0):
-        src_location = self.env.ref('stock.stock_location_stock')
-        dest_location = self.env.ref('stock.stock_location_customers')
         return self.env['stock.move'].create({
             'name': '/',
             'picking_id': picking.id,
             'product_id': product.id,
             'product_uom_qty': quantity,
             'product_uom': product.uom_id.id,
-            'location_id': src_location.id,
-            'location_dest_id': dest_location.id,
+            'location_id': self.src_location.id,
+            'location_dest_id': self.dest_location.id,
             'partner_id': self.partner.id,
             })
 
@@ -61,9 +61,13 @@ class TestPackagePreparationLine(TransactionCase):
 
     def setUp(self):
         super(TestPackagePreparationLine, self).setUp()
+        self.src_location = self.env.ref('stock.stock_location_stock')
+        self.dest_location = self.env.ref('stock.stock_location_customers')
         self.partner = self.env.ref('base.res_partner_2')
         self.product1 = self.env.ref('product.product_product_33')
         self.product2 = self.env.ref('product.product_product_6')
+        self.picking_type_out = self.env.ref('stock.picking_type_out')
+        self.picking_type_out.default_location_dest_id = self.dest_location.id
         self.picking = self._create_picking()
         self.move = self._create_move(self.picking, self.product1)
         self.preparation = self._create_preparation()
