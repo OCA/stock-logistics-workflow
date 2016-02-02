@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data noupdate="0">
+
+    <record id="sppp_line_stock_picking_package_preparation_form" model="ir.ui.view">
+        <field name="name">sppp.line.stock.picking.package.preparation.form</field>
+        <field name="model">stock.picking.package.preparation</field>
+        <field name="inherit_id" ref="stock_picking_package_preparation.stock_picking_package_preparation_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Details">
+                    <field name="line_ids">
+                        <tree>
+                            <field name="sequence" widget="handle"/>
+                            <field name="name" />
+                            <field name="product_id"/>
+                            <field name="product_uom_qty" />
+                            <field name="product_uom" groups="product.group_uom"/>
+                        </tree>
+                        <form>
+                            <group>
+                                <field name="product_id"
+                                       attrs="{'readonly': [('move_id', '!=', False)]}"/>
+                                <field name="product_uom_qty"
+                                       attrs="{'required': [('product_id', '!=', False)]}"/>
+                                <field name="product_uom" groups="product.group_uom"
+                                       attrs="{'required': [('product_id', '!=', False)], 'readonly': [('move_id', '!=', False)]}"/>
+                            </group>
+                            <label for="name" />
+                            <field name="name" colspan="4"
+                                   nolabel="1" placeholder="Description"/>
+                            <field name="move_id" invisible="1"/>
+                            <label for="note" />
+                            <field name="note" colspan="4"
+                                   nolabel="1" placeholder="Note"/>
+                        </form>
+                    </field>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+</data>
+</openerp>
