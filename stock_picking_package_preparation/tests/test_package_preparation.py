@@ -1,23 +1,7 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Author: Guewen Baconnier
-#    Copyright 2015 Camptocamp SA
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# Author: Guewen Baconnier
+# Copyright 2015 Camptocamp SA
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from openerp.tests.common import TransactionCase
 
@@ -25,9 +9,13 @@ from openerp.tests.common import TransactionCase
 class TestPackagePreparation(TransactionCase):
 
     def _create_picking(self):
+        src_location = self.env.ref('stock.stock_location_stock')
+        dest_location = self.env.ref('stock.stock_location_customers')
         return self.env['stock.picking'].create({
             'partner_id': self.partner.id,
             'picking_type_id': self.env.ref('stock.picking_type_out').id,
+            'location_id': src_location.id,
+            'location_dest_id': dest_location.id,
         })
 
     def _create_move(self, picking, product, quantity=5.0):
@@ -47,7 +35,6 @@ class TestPackagePreparation(TransactionCase):
         return self.env['stock.picking.package.preparation'].create({
             'partner_id': self.partner.id,
             'picking_ids': [(6, 0, pickings.ids)],
-            'ul_id': self.ul.id,
             'packaging_id': self.packaging.id,
         })
 
@@ -56,13 +43,9 @@ class TestPackagePreparation(TransactionCase):
         self.partner = self.env.ref('base.res_partner_2')
         self.product1 = self.env.ref('product.product_product_33')
         self.product2 = self.env.ref('product.product_product_36')
-        self.ul = self.env['product.ul'].create({'name': 'Pallet',
-                                                 'type': 'pallet'})
         packaging_tpl = self.env['product.template'].create({'name': 'Pallet'})
         self.packaging = self.env['product.packaging'].create({
             'name': 'Pallet',
-            'ul_container': self.ul.id,
-            'rows': 1,
             'product_tmpl_id': packaging_tpl.id,
         })
         self.picking_a = self._create_picking()
@@ -113,19 +96,16 @@ class TestPackagePreparation(TransactionCase):
         prep = self._create_preparation(pickings)
         prep.action_put_in_pack()
         package = prep.package_id
-        self.assertEquals(package.ul_id, self.ul)
         self.assertEquals(package.packaging_id, self.packaging)
         self.assertEquals(package.location_id, location)
 
     def test_weight(self):
         self.product1.weight = 5  # * 5 units
         self.product2.weight = 2  # * 5 units
-        self.ul.weight = 4
         pickings = self.picking_a + self.picking_b
         pickings.action_confirm()
         pickings.force_assign()
         prep = self._create_preparation(pickings)
         prep.action_put_in_pack()
         prep.action_done()
-        self.assertEquals(prep.weight, 64)
-        self.assertEquals(prep.net_weight, 60)
+        self.assertEquals(prep.weight, 60)
