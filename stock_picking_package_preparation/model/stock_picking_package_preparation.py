@@ -197,7 +197,7 @@ class StockPickingPackagePreparation(models.Model):
     def _generate_pack(self):
         self.ensure_one()
         pack_model = self.env['stock.quant.package']
-        move_model = self.env['stock.move']
+        moves = self.env['stock.move']
         operation_model = self.env['stock.pack.operation']
 
         if any(picking.state != 'assigned' for picking in self.picking_ids):
@@ -212,15 +212,11 @@ class StockPickingPackagePreparation(models.Model):
             operations |= picking.pack_operation_ids
 
         for operation in operations:
-            if (operation.product_id and
-                    operation.location_id and
-                    operation.location_dest_id):
-                move_model.check_tracking_product(
-                    operation.product_id,
-                    operation.lot_id.id,
-                    operation.location_id,
-                    operation.location_dest_id
-                )
+            for record in operation.linked_move_operation_ids:
+                moves |= record.move_id
+            for move in moves:
+                moves.check_tracking(move, operation)
+
             operation.qty_done = operation.product_qty
 
         pack = pack_model.create(self._prepare_package())
