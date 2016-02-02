@@ -25,9 +25,13 @@ from openerp.tests.common import TransactionCase
 class TestPackagePreparation(TransactionCase):
 
     def _create_picking(self):
+        src_location = self.env.ref('stock.stock_location_stock')
+        dest_location = self.env.ref('stock.stock_location_customers')
         return self.env['stock.picking'].create({
             'partner_id': self.partner.id,
             'picking_type_id': self.env.ref('stock.picking_type_out').id,
+            'location_id': src_location.id,
+            'location_dest_id': dest_location.id,
         })
 
     def _create_move(self, picking, product, quantity=5.0):
@@ -55,13 +59,9 @@ class TestPackagePreparation(TransactionCase):
         self.partner = self.env.ref('base.res_partner_2')
         self.product1 = self.env.ref('product.product_product_33')
         self.product2 = self.env.ref('product.product_product_36')
-        self.ul = self.env['product.ul'].create({'name': 'Pallet',
-                                                 'type': 'pallet'})
         packaging_tpl = self.env['product.template'].create({'name': 'Pallet'})
         self.packaging = self.env['product.packaging'].create({
             'name': 'Pallet',
-            'ul_container': self.ul.id,
-            'rows': 1,
             'product_tmpl_id': packaging_tpl.id,
         })
         self.picking_a = self._create_picking()
