@@ -220,6 +220,10 @@ class StockPickingPackagePreparation(models.Model):
                     'company_id': package.company_id.id,
                     'date': package.date,
                     'picking_type_id': picking_type.id,
+                    'location_id':
+                        picking_type.default_location_src_id.id,
+                    'location_dest_id':
+                        picking_type.default_location_dest_id.id,
                     }
                 picking = picking_model.create(picking_data)
                 for line, move_data in moves:
