@@ -42,7 +42,6 @@
                 <field name="package_id" attrs="{'invisible': [('package_id', '=', False)]}"/>
               </group>
               <group>
-                <field name="ul_id"/>
                 <field name="packaging_id"/>
                 <field name="company_id"/>
               </group>

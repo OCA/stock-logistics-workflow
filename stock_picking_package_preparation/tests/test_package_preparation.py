@@ -47,7 +47,6 @@ class TestPackagePreparation(TransactionCase):
         return self.env['stock.picking.package.preparation'].create({
             'partner_id': self.partner.id,
             'picking_ids': [(6, 0, pickings.ids)],
-            'ul_id': self.ul.id,
             'packaging_id': self.packaging.id,
         })
 
@@ -113,19 +112,16 @@ class TestPackagePreparation(TransactionCase):
         prep = self._create_preparation(pickings)
         prep.action_put_in_pack()
         package = prep.package_id
-        self.assertEquals(package.ul_id, self.ul)
         self.assertEquals(package.packaging_id, self.packaging)
         self.assertEquals(package.location_id, location)
 
     def test_weight(self):
         self.product1.weight = 5  # * 5 units
         self.product2.weight = 2  # * 5 units
-        self.ul.weight = 4
         pickings = self.picking_a + self.picking_b
         pickings.action_confirm()
         pickings.force_assign()
         prep = self._create_preparation(pickings)
         prep.action_put_in_pack()
         prep.action_done()
-        self.assertEquals(prep.weight, 64)
-        self.assertEquals(prep.net_weight, 60)
+        self.assertEquals(prep.weight, 60)
