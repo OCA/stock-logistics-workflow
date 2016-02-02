@@ -146,9 +146,10 @@ class StockPickingPackagePreparation(models.Model):
         # ----- Create a PackagePreparationLine for every stock move
         #       in the pickings added to PackagePreparation
         if values.get('picking_ids', False):
+            picking_ids = [t[1] for t in values['picking_ids'] if len(t)==2]
             package_preparation_lines = self.env[
                 'stock.picking.package.preparation.line'
-                ]._prepare_lines_from_pickings(values['picking_ids'][0][2])
+                ]._prepare_lines_from_pickings(picking_ids)
             if package_preparation_lines:
                 values.update({
                     'line_ids': [(0, 0, v) for v in package_preparation_lines]
