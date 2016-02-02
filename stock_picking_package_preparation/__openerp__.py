@@ -30,8 +30,9 @@
  'website': 'http://www.camptocamp.com',
  'data': ['view/stock_picking_package_preparation_view.xml',
           'security/ir.model.access.csv',
+          'security/package_preparation_security.xml',
           ],
  'test': [],
- 'installable': False,
+ 'installable': True,
  'auto_install': False,
  }
