@@ -68,9 +68,12 @@ class StockProductionLot(models.Model):
     # Kept in old API to maintain compatibility
     def create(self, cr, uid, vals, context=None):
         '''Force the locking/unlocking, ignoring the value of 'locked'.'''
-        product = self.pool['product.product'].browse(
-            cr, uid, vals.get('product_id'))
-        vals['locked'] = self._get_product_locked(product)
+        #  Web quick-create doesn't provide product_id in vals, but in context
+        product_id = vals.get('product_id', context.get('product_id', False))
+        if product_id:
+            vals['locked'] = self._get_product_locked(
+                self.pool['product.product'].browse(
+                    cr, uid, product_id, context=context))
         return super(StockProductionLot, self).create(
             cr, uid, vals, context=context)
 
