@@ -7,8 +7,11 @@
       <field name="inherit_id" ref="stock.view_picking_form" />
       <field name="arch" type="xml">
         <field name ="state" position="before">
-          <button name="split_process"
-                  states="draft,confirmed,assigned,partially_available"
+          <xpath expr="//field[@name='do_prepare_partial]/..'" position="attributes">
+            <attribute name="attrs">"{'invisible': [('state', 'in', ('draft'))]}"</attribute>
+          </xpath>
+          <button name="do_split"
+                  states="confirmed,assigned,partially_available"
                   string="Split"
                   groups="stock.group_stock_user"
                   type="object"

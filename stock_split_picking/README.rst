@@ -20,8 +20,7 @@ This module only needs `stock` module.
 Known issues / Roadmap
 ======================
 
-* When splitting a picking in an unassigned state, wizard won't
-  be auto completed with picking lines.
+* Spliting picking with packs is not implemented
 
 Usage
 =====

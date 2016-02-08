@@ -28,7 +28,7 @@
  'complexity': "normal",  # easy, normal, expert
  'depends': ['stock'],
  'website': 'http://www.camptocamp.com',
- 'data': ['views/stock_partial_picking.xml'],
+ 'data': ['views/stock_picking.xml'],
  'demo': [],
  'test': ['test/test_picking_split.yml',
           'test/test_assigned_picking_split.yml'],
