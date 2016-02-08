@@ -21,6 +21,9 @@ Known issues / Roadmap
 ======================
 
 * Spliting picking with packs is not implemented
+* It is not possible to the official method `do_split` of stock picking
+  that's why we rewrite it in a simpler way without packs.
+  https://github.com/odoo/odoo/issues/10824
 
 Usage
 =====
