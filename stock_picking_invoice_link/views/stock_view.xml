@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-<data>
+    <data>
 
         <!-- stock.picking -->
         <record id="view_picking_form" model="ir.ui.view">
@@ -9,7 +9,10 @@
             <field name="inherit_id" ref="stock_account.view_picking_inherit_form2"/>
             <field name="arch" type="xml">
                 <field name="invoice_state" position="after">
-                    <field name="invoice_id" string="Invoice" groups="account.group_account_invoice" attrs="{'invisible':[('invoice_state', '=', 'none')]}" context="{'form_view_ref': invoice_view_xmlid}"/>
+                    <field name="invoice_id" string="Invoice"
+                           groups="account.group_account_invoice"
+                           attrs="{'invisible':[('invoice_state', '=', 'none')]}"
+                           context="{'form_view_ref': invoice_view_xmlid}"/>
                     <field name="invoice_view_xmlid" invisible="1"/>
                 </field>
             </field>
@@ -38,5 +41,5 @@
             </field>
         </record>
 
-</data>
+    </data>
 </openerp>
