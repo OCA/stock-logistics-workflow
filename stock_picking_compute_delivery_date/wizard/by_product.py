@@ -29,10 +29,18 @@ class ComputeDeliveryDateByProductWizard(orm.TransientModel):
     def do_compute(self, cr, uid, ids, context=None):
         pick_obj = self.pool['stock.picking.out']
         product_obj = self.pool['product.product']
+        messages = {}
 
         product_ids = context['active_ids']
         for product in product_obj.browse(cr, uid, product_ids,
                                           context=context):
-            pick_obj.compute_delivery_dates(cr, uid, product, context=context)
+            # If a product updates an already-updated picking, overwrite
+            # the message
+            messages.update(
+                pick_obj.compute_delivery_dates(cr, uid, product,
+                                                context=context)
+            )
 
+        # Publish messages on pickings
+        pick_obj.picking_notify(cr, uid, messages, context=context)
         return True
