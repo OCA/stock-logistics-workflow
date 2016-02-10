@@ -1,24 +1,9 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Copyright (C) 2013-15 Agile Business Group sagl (<http://www.agilebg.com>)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published
-#    by the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2013-15 Agile Business Group sagl (<http://www.agilebg.com>)
+# © 2015-2016 AvanzOSC
+# License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
-from openerp import models, api, fields
+from openerp import api, exceptions, fields, models, _
 
 
 class StockMove(models.Model):
@@ -39,13 +24,13 @@ class StockMove(models.Model):
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    @api.one
+    @api.multi
     def _get_invoice_view_xmlid(self):
-        if self.invoice_id:
-            if self.invoice_id.type in ('in_invoice', 'in_refund'):
-                self.invoice_view_xmlid = 'account.invoice_supplier_form'
+        for picking in self.filtered('invoice_id'):
+            if picking.invoice_id.type in ('in_invoice', 'in_refund'):
+                picking.invoice_view_xmlid = 'account.invoice_supplier_form'
             else:
-                self.invoice_view_xmlid = 'account.invoice_form'
+                picking.invoice_view_xmlid = 'account.invoice_form'
 
     invoice_id = fields.Many2one(comodel_name='account.invoice',
                                  string='Invoice', readonly=True)
@@ -59,10 +44,32 @@ class AccountInvoice(models.Model):
 
     picking_ids = fields.One2many(
         comodel_name='stock.picking', inverse_name='invoice_id',
-        string='Related Pickings', readonly=True,
-        copy=False,
+        string='Related Pickings', readonly=True, copy=False,
         help="Related pickings "
              "(only when the invoice has been generated from the picking).")
+
+    @api.multi
+    def unlink(self):
+        if any([x and x != 'cancel' for x in
+                self.mapped('picking_ids.state')]):
+            raise exceptions.Warning(
+                _('The picking(s) %s should be cancelled before deleting the'
+                  ' invoice.') % ', '.join(self.mapped('picking_ids.name')))
+        return super(AccountInvoice, self).unlink()
+
+    @api.multi
+    def action_cancel(self):
+        res = super(AccountInvoice, self).action_cancel()
+        self.mapped('picking_ids').write(
+            {'invoice_state': '2binvoiced'})
+        return res
+
+    @api.multi
+    def action_cancel_draft(self):
+        res = super(AccountInvoice, self).action_cancel_draft()
+        self.mapped('picking_ids').write(
+            {'invoice_state': 'invoiced'})
+        return res
 
 
 class AccountInvoiceLine(models.Model):
