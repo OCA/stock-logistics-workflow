@@ -1,6 +1,8 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
-    :alt: License: AGPL-3
+   :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   :alt: License: AGPL-3
 
+===============================================
 Link between the invoice and its source picking
 ===============================================
 
@@ -8,6 +10,17 @@ This module adds a link between pickings and generated invoices.
 So that user can easily reach the invoice related to the picking
 and see the pickings related to the invoice. This only applies
 on the invoices generated from pickings.
+
+It also changes invoicing state in picking according to the related
+invoices. And it blocks deleting an invoice if it has pickings that
+have not been cancelled.
+
+Usage
+=====
+
+.. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
+   :alt: Try me on Runbot
+   :target: https://runbot.odoo-community.org/runbot/154/8.0
 
 Bug Tracker
 ===========
@@ -26,6 +39,12 @@ Contributors
 * Lorenzo Battistini <lorenzo.battistini@agilebg.com>
 * Alexis de Lattre <alexis.delattre@akretion.com>
 * Alex Comba <alex.comba@agilebg.com>
+* Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>
+* Ana Juaristi <anajuaristi@avanzosc.es>
+* Alfredo de la Fuente <alfredodelafuente@avanzosc.es>
+* Unai Alkorta
+* Iñaki Zabala
+* Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>
 
 Maintainer
 ----------
