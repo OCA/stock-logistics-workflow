@@ -1,271 +1,125 @@
-# Copyright 2016 Oihane Crucelaegui - AvanzOSC
-# Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
-# Copyright 2017 Jacques-Etienne Baudoux <je@bcim.be>
-# Copyright 2021 Tecnativa - João Marques
+# -*- coding: utf-8 -*-
+# © 2016 Oihane Crucelaegui - AvanzOSC
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
-from odoo.exceptions import UserError
-from odoo.tests.common import Form, tagged
-
-from odoo.addons.sale.tests.common import TestSaleCommon
+from openerp.addons.stock.tests.common import TestStockCommon
+from openerp import exceptions
 
 
-@tagged("post_install", "-at_install")
-class TestStockPickingInvoiceLink(TestSaleCommon):
-    def _update_product_qty(self, product):
+class TestStockPickingInvoiceLink(TestStockCommon):
+    def setUp(self):
+        super(TestStockPickingInvoiceLink, self).setUp()
+        self.picking_in = self.PickingObj.create({
+            'partner_id': self.partner_delta_id,
+            'picking_type_id': self.picking_type_in,
+            'invoice_state': '2binvoiced'})
+        self.MoveObj.create({
+            'name': self.productA.name,
+            'product_id': self.productA.id,
+            'product_uom_qty': 1,
+            'product_uom': self.productA.uom_id.id,
+            'picking_id': self.picking_in.id,
+            'location_id': self.supplier_location,
+            'location_dest_id': self.stock_location,
+            'invoice_state': '2binvoiced'})
+        self.MoveObj.create({
+            'name': self.productB.name,
+            'product_id': self.productB.id,
+            'product_uom_qty': 1,
+            'product_uom': self.productB.uom_id.id,
+            'picking_id': self.picking_in.id,
+            'location_id': self.supplier_location,
+            'location_dest_id': self.stock_location,
+            'invoice_state': '2binvoiced'})
+        self.MoveObj.create({
+            'name': self.productC.name,
+            'product_id': self.productC.id,
+            'product_uom_qty': 10,
+            'product_uom': self.productC.uom_id.id,
+            'picking_id': self.picking_in.id,
+            'location_id': self.supplier_location,
+            'location_dest_id': self.stock_location,
+            'invoice_state': '2binvoiced'})
+        self.MoveObj.create({
+            'name': self.productD.name,
+            'product_id': self.productD.id,
+            'product_uom_qty': 10,
+            'product_uom': self.productD.uom_id.id,
+            'picking_id': self.picking_in.id,
+            'location_id': self.supplier_location,
+            'location_dest_id': self.stock_location,
+            'invoice_state': '2binvoiced'})
+        self.MoveObj.create({
+            'name': self.productD.name,
+            'product_id': self.productD.id,
+            'product_uom_qty': 5,
+            'product_uom': self.productD.uom_id.id,
+            'picking_id': self.picking_in.id,
+            'location_id': self.supplier_location,
+            'location_dest_id': self.stock_location,
+            'invoice_state': '2binvoiced'})
+        context = {"active_model": 'stock.picking',
+                   "active_ids": [self.picking_in.id],
+                   "active_id": self.picking_in.id}
+        self.wizard = self.env['stock.invoice.onshipping'].with_context(
+            context).create({})
 
-        product_qty = self.env["stock.change.product.qty"].create(
-            {
-                "product_id": product.id,
-                "product_tmpl_id": product.product_tmpl_id.id,
-                "new_quantity": 100.0,
-            }
-        )
-        product_qty.change_product_qty()
-        return product_qty
+    def test_invoice_create(self):
+        self.assertEqual(self.picking_in.invoice_state, '2binvoiced')
+        for move in self.picking_in.move_lines:
+            self.assertEqual(move.invoice_state, '2binvoiced')
+        self.wizard.open_invoice()
+        self.assertTrue(self.picking_in.invoice_id)
+        self.assertEqual(self.picking_in.invoice_state, 'invoiced')
+        for move in self.picking_in.move_lines:
+            self.assertTrue(move.invoice_line_id)
+            self.assertEqual(move.invoice_state, 'invoiced')
+        self.picking_in.invoice_id.action_cancel()
+        self.assertEqual(self.picking_in.invoice_id.state, 'cancel')
+        self.assertEqual(self.picking_in.invoice_state, '2binvoiced')
+        self.picking_in.invoice_id.action_cancel_draft()
+        self.assertEqual(self.picking_in.invoice_id.state, 'draft')
+        self.assertEqual(self.picking_in.invoice_state, 'invoiced')
 
-    @classmethod
-    def setUpClass(cls, chart_template_ref=None):
-        super().setUpClass(chart_template_ref=chart_template_ref)
-        for (_, i) in cls.company_data.items():
-            if "type" in i and i.type == "product":
-                cls._update_product_qty(i)
-        cls.prod_order = cls.company_data["product_order_no"]
-        cls.prod_del = cls.company_data["product_delivery_no"]
-        cls.serv_order = cls.company_data["product_service_order"]
-        cls.so = cls.env["sale.order"].create(
-            {
-                "partner_id": cls.partner_a.id,
-                "partner_invoice_id": cls.partner_a.id,
-                "partner_shipping_id": cls.partner_a.id,
-                "order_line": [
-                    (
-                        0,
-                        0,
-                        {
-                            "name": cls.prod_order.name,
-                            "product_id": cls.prod_order.id,
-                            "product_uom_qty": 2,
-                            "product_uom": cls.prod_order.uom_id.id,
-                            "price_unit": cls.prod_order.list_price,
-                        },
-                    ),
-                    (
-                        0,
-                        0,
-                        {
-                            "name": cls.prod_del.name,
-                            "product_id": cls.prod_del.id,
-                            "product_uom_qty": 2,
-                            "product_uom": cls.prod_del.uom_id.id,
-                            "price_unit": cls.prod_del.list_price,
-                        },
-                    ),
-                    (
-                        0,
-                        0,
-                        {
-                            "name": cls.serv_order.name,
-                            "product_id": cls.serv_order.id,
-                            "product_uom_qty": 2,
-                            "product_uom": cls.serv_order.uom_id.id,
-                            "price_unit": cls.serv_order.list_price,
-                        },
-                    ),
-                ],
-                "pricelist_id": cls.env.ref("product.list0").id,
-                "picking_policy": "direct",
-            }
-        )
-        cls.so.action_confirm()
+    def test_invoice_unlink_draft(self):
+        self.wizard.open_invoice()
+        self.assertTrue(self.picking_in.invoice_id)
+        self.assertEqual(self.picking_in.invoice_state, 'invoiced')
+        self.assertEqual(self.picking_in.invoice_id.state, 'draft')
+        self.picking_in.invoice_id.unlink()
+        self.assertEqual(self.picking_in.invoice_state, '2binvoiced')
 
-    def test_00_sale_stock_invoice_link(self):
-        pick_obj = self.env["stock.picking"]
-        # invoice on order
-        self.so._create_invoices()
-        # deliver partially
-        self.assertEqual(
-            self.so.invoice_status,
-            "no",
-            "Sale Stock: so invoice_status should be "
-            '"nothing to invoice" after invoicing',
-        )
-        pick_1 = self.so.picking_ids.filtered(
-            lambda x: x.picking_type_code == "outgoing"
-            and x.state in ("confirmed", "assigned", "partially_available")
-        )
-        pick_1.move_line_ids.write({"qty_done": 1})
-        pick_1._action_done()
-        self.assertEqual(
-            self.so.invoice_status,
-            "to invoice",
-            "Sale Stock: so invoice_status should be "
-            '"to invoice" after partial delivery',
-        )
-        inv_1 = self.so._create_invoices()
-        # complete the delivery
-        self.assertEqual(
-            self.so.invoice_status,
-            "no",
-            "Sale Stock: so invoice_status should be "
-            '"nothing to invoice" after partial delivery '
-            "and invoicing",
-        )
-        self.assertEqual(
-            len(self.so.picking_ids), 2, "Sale Stock: number of pickings should be 2"
-        )
+    def test_invoice_unlink_cancel(self):
+        self.wizard.open_invoice()
+        self.assertTrue(self.picking_in.invoice_id)
+        self.assertEqual(self.picking_in.invoice_state, 'invoiced')
+        self.picking_in.invoice_id.signal_workflow('invoice_cancel')
+        self.assertEqual(self.picking_in.invoice_id.state, 'cancel')
+        self.assertEqual(self.picking_in.invoice_state, '2binvoiced')
+        self.picking_in.invoice_id.unlink()
 
-        pick_2 = self.so.picking_ids.filtered(
-            lambda x: x.picking_type_code == "outgoing"
-            and x.state in ("confirmed", "assigned", "partially_available")
-        )
-        pick_2.move_line_ids.write({"qty_done": 1})
-        pick_2._action_done()
-        backorders = pick_obj.search([("backorder_id", "=", pick_2.id)])
-        self.assertFalse(
-            backorders,
-            "Sale Stock: second picking should be "
-            "final without need for a backorder",
-        )
-        self.assertEqual(
-            self.so.invoice_status,
-            "to invoice",
-            "Sale Stock: so invoice_status should be "
-            '"to invoice" after complete delivery',
-        )
-        inv_2 = self.so._create_invoices()
-        self.assertEqual(
-            self.so.invoice_status,
-            "invoiced",
-            "Sale Stock: so invoice_status should be "
-            '"fully invoiced" after complete delivery and '
-            "invoicing",
-        )
-        # Check links
-        self.assertEqual(
-            inv_1.picking_ids,
-            pick_1,
-            "Invoice 1 must link to only First Partial Delivery",
-        )
-        self.assertEqual(
-            inv_1.invoice_line_ids.mapped("move_line_ids"),
-            pick_1.move_lines.filtered(
-                lambda x: x.product_id.invoice_policy == "delivery"
-            ),
-            "Invoice 1 lines must link to only First Partial Delivery lines",
-        )
-        self.assertEqual(
-            inv_2.picking_ids, pick_2, "Invoice 2 must link to only Second Delivery"
-        )
-        self.assertEqual(
-            inv_2.invoice_line_ids.mapped("move_line_ids"),
-            pick_2.move_lines.filtered(
-                lambda x: x.product_id.invoice_policy == "delivery"
-            ),
-            "Invoice 2 lines must link to only Second Delivery lines",
-        )
-        # Invoice view
-        result = pick_1.action_view_invoice()
-        self.assertEqual(result["views"][0][1], "form")
-        self.assertEqual(result["res_id"], inv_1.id)
-        # Mock multiple invoices linked to a picking
-        inv_3 = inv_1.copy()
-        inv_3.picking_ids |= pick_1
-        result = pick_1.action_view_invoice()
-        self.assertEqual(result["views"][0][1], "tree")
+    def test_invoice_unlink_not_draft_nor_cancel(self):
+        self.wizard.open_invoice()
+        self.assertTrue(self.picking_in.invoice_id)
+        self.assertEqual(self.picking_in.invoice_state, 'invoiced')
+        self.picking_in.invoice_id.signal_workflow('invoice_open')
+        self.assertNotIn(self.picking_in.invoice_id.state, ['draft', 'cancel'])
+        with self.assertRaises(exceptions.Warning):
+            self.picking_in.invoice_id.unlink()
 
-        # Cancel invoice and invoice
-        inv_1.button_cancel()
-        self.so._create_invoices()
-        self.assertEqual(
-            inv_1.picking_ids,
-            pick_1,
-            "Invoice 1 must link to only First Partial Delivery",
-        )
-        self.assertEqual(
-            inv_1.invoice_line_ids.mapped("move_line_ids"),
-            pick_1.move_lines.filtered(
-                lambda x: x.product_id.invoice_policy == "delivery"
-            ),
-            "Invoice 1 lines must link to only First Partial Delivery lines",
-        )
-        # Try to update a picking move which has a invoice line linked
-        with self.assertRaises(UserError):
-            pick_1.move_line_ids.write({"qty_done": 20.0})
-
-    def test_return_picking_to_refund(self):
-        pick_1 = self.so.picking_ids.filtered(
-            lambda x: x.picking_type_code == "outgoing"
-            and x.state in ("confirmed", "assigned", "partially_available")
-        )
-        pick_1.move_line_ids.write({"qty_done": 2})
-        pick_1._action_done()
-
-        # Create invoice
-        inv = self.so._create_invoices()
-        inv_line_prod_del = inv.invoice_line_ids.filtered(
-            lambda l: l.product_id == self.prod_del
-        )
-        self.assertEqual(
-            inv_line_prod_del.move_line_ids,
-            pick_1.move_lines.filtered(lambda m: m.product_id == self.prod_del),
-        )
-        # Create return picking
-        return_form = Form(self.env["stock.return.picking"])
-        return_form.picking_id = pick_1
-        return_wiz = return_form.save()
-
-        # Remove product ordered line
-        return_wiz.product_return_moves.filtered(
-            lambda l: l.product_id == self.prod_order
-        ).unlink()
-        return_wiz.product_return_moves.quantity = 1.0
-        return_wiz.product_return_moves.to_refund = True
-        res = return_wiz.create_returns()
-        return_pick = self.env["stock.picking"].browse(res["res_id"])
-        # Validate picking
-        return_pick.move_lines.quantity_done = 1.0
-        return_pick.button_validate()
-        inv = self.so._create_invoices(final=True)
-        inv_line_prod_del = inv.invoice_line_ids.filtered(
-            lambda l: l.product_id == self.prod_del
-        )
-        self.assertEqual(inv_line_prod_del.move_line_ids, return_pick.move_lines)
-
-    def test_invoice_refund(self):
-        pick_1 = self.so.picking_ids.filtered(
-            lambda x: x.picking_type_code == "outgoing"
-            and x.state in ("confirmed", "assigned", "partially_available")
-        )
-        pick_1.move_line_ids.write({"qty_done": 2})
-        pick_1._action_done()
-        # Create invoice
-        inv = self.so._create_invoices()
-        inv.action_post()
-        move_line_prod_del = pick_1.move_lines.filtered(
-            lambda l: l.product_id == self.prod_del
-        )
-        wiz_invoice_refund = (
-            self.env["account.move.reversal"]
-            .with_context(active_model="account.move", active_ids=inv.ids)
-            .create(
-                {
-                    "refund_method": "modify",
-                    "reason": "test",
-                    "journal_id": inv.journal_id.id,
-                }
-            )
-        )
-        wiz_invoice_refund.reverse_moves()
-        new_invoice = self.so.invoice_ids.filtered(
-            lambda i: i.move_type == "out_invoice" and i.state == "draft"
-        )
-        inv_line_prod_del = new_invoice.invoice_line_ids.filtered(
-            lambda l: l.product_id == self.prod_del
-        )
-        self.assertEqual(move_line_prod_del, inv_line_prod_del.move_line_ids)
-
-        # Test action open picking from an invoice
-        res = new_invoice.action_show_picking()
-        opened_picking = self.env["stock.picking"].browse(res["res_id"])
-        self.assertEqual(pick_1, opened_picking)
+    def test_xml_id(self):
+        picking_out = self.picking_in.copy(
+            default={'picking_type_id': self.picking_type_out})
+        for move in picking_out:
+            move.write({'invoice_state': '2binvoiced'})
+        context = {"active_model": 'stock.picking',
+                   "active_ids": [picking_out.id],
+                   "active_id": picking_out.id}
+        wizard_out = self.env['stock.invoice.onshipping'].with_context(
+            context).create({})
+        self.wizard.open_invoice()
+        wizard_out.open_invoice()
+        self.assertEqual(self.picking_in.invoice_view_xmlid,
+                         'account.invoice_supplier_form')
+        self.assertEqual(picking_out.invoice_view_xmlid,
+                         'account.invoice_form')
