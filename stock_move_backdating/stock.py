@@ -30,6 +30,15 @@ class stock_move(orm.Model):
     _name = "stock.move"
     _inherit = _name
 
+    def check_date_backdating(self, cr, uid, ids, context=None):
+        now = datetime.now().strftime(DEFAULT_SERVER_DATETIME_FORMAT)
+        for stock_move in self.browse(
+                cr, uid, ids, context=context):
+            if stock_move.date_backdating and \
+                    stock_move.date_backdating > now:
+                return False
+        return True
+
     _columns = {
         'date_backdating': fields.datetime(
             "Actual Movement Date", readonly=False,
@@ -40,6 +49,12 @@ class stock_move(orm.Model):
                  "of current date when processing to done."
         ),
     }
+
+    _constraints = [
+        (check_date_backdating,
+         _('You can not process an actual movement date in the future.'),
+         ['date_backdating']),
+    ]
 
     def action_done(self, cr, uid, ids, context=None):
         # look at previous state and find date_backdating
@@ -76,15 +91,15 @@ class stock_move(orm.Model):
             return {}
 
         dt = datetime.strptime(date_backdating, DEFAULT_SERVER_DATETIME_FORMAT)
-        NOW = datetime.now()
+        now = datetime.now()
 
-        if (dt > NOW):
+        if (dt > now):
             warning = {'title': _('Error!'), 'message': _(
                 'You can not process an actual movement date in the future.')}
-            values = {
-                'date_backdating': NOW.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
-            }
-            return {'warning': warning, 'value': values}
+            # Delete values (old code) because it shows many times
+            # the warning message
+            # It looks like a bug in Odoo.
+            return {'warning': warning}
 
         # otherwise, ok
         return {}
