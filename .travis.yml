@@ -31,4 +31,4 @@ script:
   - travis_run_tests
 
 after_success:
-  travis_after_test_success
+  - travis_after_test_success
