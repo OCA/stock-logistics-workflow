@@ -34,13 +34,13 @@ used as movement date.
 
 Contributors
 ------------
-* Marco Dieckhoff
-* BREMSKERL
+* Marco Dieckhoff, Bremskerl
 * Agile Business Group
 * El Hadji Dem (elhadji.dem@savoirfairelinux.com)
 * David Dufresne (david.dufresne@savoirfairelinux.com)
     """,
-    'author': 'Bremskerl, Odoo Community Association (OCA)',
+    'author': 'Marc Dieckhoff, Bremskerl, Agile Business Group,\
+               Odoo Community Association (OCA)',
     'website': 'www.bremskerl.com',
     'depends': ['stock'],
     'data': [
