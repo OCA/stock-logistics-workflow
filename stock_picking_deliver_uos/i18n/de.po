@@ -1,0 +1,55 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_picking_deliver_uos
+# 
+# Translators:
+# Rudolf Schnapka <rs@techno-flex.de>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: stock-logistics-workflow (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-10 05:29+0000\n"
+"PO-Revision-Date: 2016-01-18 19:47+0000\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>\n"
+"Language-Team: German (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: stock_picking_deliver_uos
+#: model:ir.model,name:stock_picking_deliver_uos.model_stock_transfer_details
+msgid "Picking wizard"
+msgstr "Kommissionier-Assistent"
+
+#. module: stock_picking_deliver_uos
+#: model:ir.model,name:stock_picking_deliver_uos.model_stock_transfer_details_items
+msgid "Picking wizard items"
+msgstr "Posten für Kommissionier-Assistent"
+
+#. module: stock_picking_deliver_uos
+#: field:stock.transfer_details,product_uos:0
+#: field:stock.transfer_details_items,product_uos:0
+msgid "Product UOS"
+msgstr "Produkt-VME"
+
+#. module: stock_picking_deliver_uos
+#: field:stock.transfer_details,product_uos_qty:0
+#: field:stock.transfer_details_items,product_uos_qty:0
+msgid "Quantity (UOS)"
+msgstr "Menge (VME)"
+
+#. module: stock_picking_deliver_uos
+#: code:addons/stock_picking_deliver_uos/wizard/stock_transfer_details.py:78
+#, python-format
+msgid ""
+"The product_uos_qty changing do have any effect in case the linked moves are"
+" more than one"
+msgstr "Das Ändern der Verkaufs-ME hat Auswirkungen, wenn mehr als eine Bewegung verbunden ist."
+
+#. module: stock_picking_deliver_uos
+#: code:addons/stock_picking_deliver_uos/wizard/stock_transfer_details.py:77
+#, python-format
+msgid "Warning"
+msgstr "Warnung"

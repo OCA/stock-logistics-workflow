@@ -1,0 +1,154 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_lock_lot
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-30 09:55+0000\n"
+"PO-Revision-Date: 2015-08-15 13:39+0200\n"
+"Last-Translator: Matjaz Mozetic <m.mozetic@matmoz.si>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: sl\n"
+"X-Generator: Poedit 1.8.4\n"
+
+#. module: stock_lock_lot
+#: view:wiz.lock.lot:stock_lock_lot.view_wiz_lock_lot_form
+msgid "Cancel"
+msgstr "Preklic"
+
+#. module: stock_lock_lot
+#: field:product.category,lot_default_locked:0
+msgid "Block new Serial Numbers/lots"
+msgstr "Blokiraj nove serijske številke/lote"
+
+#. module: stock_lock_lot
+#: field:wiz.lock.lot,create_uid:0
+msgid "Created by"
+msgstr "Ustvaril"
+
+#. module: stock_lock_lot
+#: field:wiz.lock.lot,create_date:0
+msgid "Created on"
+msgstr "Ustvarjeno"
+
+#. module: stock_lock_lot
+#: code:addons/stock_lock_lot/models/stock_production_lot.py:43
+#, python-format
+msgid "Error! Serial Number/Lot \"%s\" currently has reservations."
+msgstr "Napaka! Serijska številka/lot \"%s\" trenutno ima rezervacije."
+
+#. module: stock_lock_lot
+#: field:wiz.lock.lot,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_lock_lot
+#: help:product.category,lot_default_locked:0
+msgid "If checked, future Serial Numbers/lots will be created blocked by default"
+msgstr "Če je označeno, bodo bodoče serijske številke/loti privzeto ustvarjene kot blokirane"
+
+#. module: stock_lock_lot
+#: field:wiz.lock.lot,write_uid:0
+msgid "Last Updated by"
+msgstr "Zadnji posodobil"
+
+#. module: stock_lock_lot
+#: field:wiz.lock.lot,write_date:0
+msgid "Last Updated on"
+msgstr "Zadnjič posodobljeno"
+
+#. module: stock_lock_lot
+#: view:stock.production.lot:stock_lock_lot.view_production_lot_form_inh_locklot
+msgid "Block"
+msgstr "Blokiraj"
+
+#. module: stock_lock_lot
+#: view:product.category:stock_lock_lot.product_category_form_view_inh_locklot
+msgid "Serial Nunber/lot blocking"
+msgstr "Blokiranje serijske številke/lota"
+
+#. module: stock_lock_lot
+#: view:wiz.lock.lot:stock_lock_lot.view_wiz_lock_lot_form
+msgid "Block Serial Numbers/Lots"
+msgstr "Blokiranje serijskih številk/lotov"
+
+#. module: stock_lock_lot
+#: model:ir.actions.act_window,name:stock_lock_lot.action_lock_lot
+msgid "Block/Unblock Serial Number/lot"
+msgstr "Blokiraj/sprosti serijsko številko/lot"
+
+#. module: stock_lock_lot
+#: view:wiz.lock.lot:stock_lock_lot.view_wiz_lock_lot_form
+msgid "Block/Unblock Serial Numbers/lots"
+msgstr "Blokiraj/sprosti serijske številke/lote"
+
+#. module: stock_lock_lot
+#: view:stock.production.lot:stock_lock_lot.search_product_lot_filter_inh_locklot
+#: field:stock.production.lot,locked:0
+#: view:stock.quant:stock_lock_lot.quant_search_view_inh_locklot
+#: field:stock.quant,locked:0
+msgid "Blocked"
+msgstr "Blokirano"
+
+#. module: stock_lock_lot
+#: view:stock.quant:stock_lock_lot.quant_search_view_inh_locklot
+msgid "Lot"
+msgstr "Lot"
+
+#. module: stock_lock_lot
+#: model:mail.message.subtype,description:stock_lock_lot.mt_lock_lot
+#: model:mail.message.subtype,name:stock_lock_lot.mt_lock_lot
+msgid "Serial Number/lot blocked"
+msgstr "Serijska številke/loti blokirani"
+
+#. module: stock_lock_lot
+#: model:mail.message.subtype,description:stock_lock_lot.mt_unlock_lot
+#: model:mail.message.subtype,name:stock_lock_lot.mt_unlock_lot
+msgid "Serial Number/lot unblocked"
+msgstr "Serijske številke/loti sproščeni"
+
+#. module: stock_lock_lot
+#: model:ir.model,name:stock_lock_lot.model_stock_production_lot
+msgid "Lot/Serial"
+msgstr "Lot/serijska št."
+
+#. module: stock_lock_lot
+#: view:stock.production.lot:stock_lock_lot.search_product_lot_filter_inh_locklot
+msgid "Product"
+msgstr "Proizvod"
+
+#. module: stock_lock_lot
+#: model:ir.model,name:stock_lock_lot.model_product_category
+msgid "Product Category"
+msgstr "Kategorija proizvoda"
+
+#. module: stock_lock_lot
+#: model:ir.model,name:stock_lock_lot.model_stock_quant
+msgid "Quants"
+msgstr "Kvanti"
+
+#. module: stock_lock_lot
+#: view:stock.production.lot:stock_lock_lot.view_production_lot_form_inh_locklot
+msgid "Unblock"
+msgstr "Sprosti"
+
+#. module: stock_lock_lot
+#: view:wiz.lock.lot:stock_lock_lot.view_wiz_lock_lot_form
+msgid "Unblock Serial Numbers/Lots"
+msgstr "Sprostitev serijskih številk/lotov"
+
+#. module: stock_lock_lot
+#: view:wiz.lock.lot:stock_lock_lot.view_wiz_lock_lot_form
+msgid "What do you want to do with selected Serial Numbers/Lots?"
+msgstr "Kaj želite storiti z izbranimi serijskimi številkami/loti?"
+
+#. module: stock_lock_lot
+#: view:wiz.lock.lot:stock_lock_lot.view_wiz_lock_lot_form
+msgid "or"
+msgstr "ali"

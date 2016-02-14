@@ -1,27 +1,47 @@
-sudo: required
 language: python
+
+sudo: false
+cache:
+  apt: true
+  directories:
+    - $HOME/.pip-cache/
+
+addons:
+  apt:
+    packages:
+      - expect-dev
+      - python-lxml
+      - python-simplejson
+      - python-serial
+      - python-yaml
 
 python:
   - "2.7"
 
 env:
-  - VERSION="8.0" LINT_CHECK="1"
-  - VERSION="8.0" ODOO_REPO="odoo/odoo" LINT_CHECK="0"
-  - VERSION="8.0" ODOO_REPO="OCA/OCB"  LINT_CHECK="0"
+  global:
+     - VERSION="8.0" TESTS="0" LINT_CHECK="0" TRANSIFEX="0"
+     - TRANSIFEX_USER='transbot@odoo-community.org'
+     - secure: Q3NYtZSe8DFS4/0JL8ki9NdIvP0NFY/ZRWtAQCDdcDdHKeSEjkCtf5btFuF0if1wa62UI4ZrDqT1/Fix2zAT5PW7mjAio0h2DYJAxBIZa7VIZEJC4tB93xgHq9SFByNGG5iE/zwXwTPLGpiGSnLgNgw0Zndv3ZTAJNhaxpKtqIo=
+
+  matrix:
+  - LINT_CHECK="1"
+  - TRANSIFEX="1"
+  - TESTS="1" ODOO_REPO="odoo/odoo" EXCLUDE=procurement_jit_assign_move
+  - TESTS="1" ODOO_REPO="OCA/OCB" EXCLUDE=procurement_jit_assign_move
+  - TESTS="1" ODOO_REPO="odoo/odoo" INCLUDE=procurement_jit_assign_move
+  - TESTS="1" ODOO_REPO="OCA/OCB" INCLUDE=procurement_jit_assign_move
 
 virtualenv:
   system_site_packages: true
 
 install:
-  - git clone https://github.com/OCA/maintainer-quality-tools.git $HOME/maintainer-quality-tools
-  - export PATH=$HOME/maintainer-quality-tools/travis:$PATH
+  - git clone --depth=1 https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
+  - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
-  - git clone https://github.com/OCA/product-attribute -b ${VERSION} $HOME/product-attribute
-  - git clone https://github.com/OCA/webkit-tools -b ${VERSION} $HOME/webkit-tools
-  - git clone https://github.com/OCA/stock-logistics-warehouse -b ${VERSION} $HOME/stock-logistics-warehouse
 
 script:
   - travis_run_tests
 
 after_success:
-  coveralls
+  - travis_after_tests_success

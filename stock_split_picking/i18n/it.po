@@ -1,0 +1,39 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_split_picking
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: stock-logistics-workflow (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-10-22 09:31+0000\n"
+"PO-Revision-Date: 2015-10-21 16:34+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: Italian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/it/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: stock_split_picking
+#: code:addons/stock_split_picking/model/stock.py:46
+#, python-format
+msgid "Enter quantities to split"
+msgstr ""
+
+#. module: stock_split_picking
+#: model:ir.model,name:stock_split_picking.model_stock_picking
+msgid "Picking List"
+msgstr ""
+
+#. module: stock_split_picking
+#: view:stock.picking:stock_split_picking.view_picking_form
+msgid "Split"
+msgstr ""
+
+#. module: stock_split_picking
+#: model:ir.model,name:stock_split_picking.model_stock_move
+msgid "Stock Move"
+msgstr "Movimento di magazzino"

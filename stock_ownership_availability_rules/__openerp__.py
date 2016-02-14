@@ -16,7 +16,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 {'name': 'Stock Ownership Availability Rules',
  'summary': 'Enforce ownership on stock availability',
- 'version': '0.2',
+ 'version': '8.0.0.2.0',
  'author': "Camptocamp,Odoo Community Association (OCA)",
  'category': 'Purchase Management',
  'license': 'AGPL-3',

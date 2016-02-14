@@ -42,6 +42,8 @@ class Picking(models.Model):
         ops_data = []
 
         for move in picking.move_lines:
+            if move.state not in ('assigned', 'confirmed'):
+                continue
             grouped[(move.product_id, move.restrict_partner_id)].append(move)
 
         for product, owner in grouped:

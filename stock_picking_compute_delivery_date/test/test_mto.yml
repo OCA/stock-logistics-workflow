@@ -1,0 +1,104 @@
+-
+  !context
+    uid: 'res_users_emma'
+-
+  I create an outgoing move for a Make to Order, Buy product
+-
+  !record {model: stock.picking, id: picking_out_mto}:
+    picking_type_id: stock.picking_type_out
+-
+  !record {model: stock.move, id: move_out_mto}:
+    picking_id: picking_out_mto
+    product_uom_qty: 57
+    product_uom: product.product_uom_unit
+    product_id: product.product_product_33
+    location_id: stock.stock_location_stock
+    location_dest_id: stock.stock_location_customers
+-
+  !python {model: stock.picking, id: picking_out_mto}: |
+    self.action_assign()
+-
+  I create an incoming move chained to the outgoing one. That is the situation
+  we have when the move is automatically created by a Purchase Order created
+  by the scheduler.
+-
+  !record {model: stock.picking, id: picking_in_mto}:
+    picking_type_id: stock.picking_type_in
+-
+  !record {model: stock.move, id: move_in_mto}:
+    picking_id: picking_in_mto
+    product_uom_qty: 57
+    product_uom: product.product_uom_unit
+    product_id: product.product_product_33
+    move_dest_id: move_out_mto
+    location_id: stock.stock_location_suppliers
+    location_dest_id: stock.stock_location_stock
+-
+  !python {model: stock.picking, id: picking_in_mto}: |
+    self.action_assign()
+-
+  I set the expected date of the incoming move to 10 June next year
+-
+  !python {model: stock.move}: |
+    import datetime as dt
+    self.write(cr, uid, ref('move_in_mto'), {
+        'date_expected': '{year}-06-10 00:00:00'.format(year=dt.date.today().year + 1)
+    })
+-
+  I compute the delivery dates with the global wizard
+-
+  !record {model: compute.all.delivery.dates.wizard, id: global_wizard_1}:
+-
+  I run the global wizard with the existing cursor, because a new cursor would
+  isolate us from test data created in the main transaction, like the user
+  itself.
+-
+  !python {model: compute.all.delivery.dates.wizard}: |
+    self.do_compute(
+        cr,
+        uid,
+        [ref('global_wizard_1')],
+        {'use_new_cursor': False}
+    )
+-
+  I check that the date of the outgoing move was updated as expected
+-
+  !python {model: stock.move}: |
+    import datetime as dt
+    move_out_mto = model.browse(cr, uid, ref('move_out_mto'), context)
+    actual_date = move_out_mto.date_expected[:10]
+    wanted_date = '{0}-06-12'.format(dt.date.today().year + 1)
+
+    assert actual_date == wanted_date, (
+        'move_out_mto should be delivered on {0}, not on {1}'.format(
+            wanted_date,
+            actual_date,
+        )
+    )
+-
+  I compute the delivery dates with the global wizard a second time
+-
+  !record {model: compute.all.delivery.dates.wizard, id: global_wizard_1a}:
+-
+  !python {model: compute.all.delivery.dates.wizard}: |
+    self.do_compute(
+        cr,
+        uid,
+        [ref('global_wizard_1a')],
+        {'use_new_cursor': False}
+    )
+-
+  I check that nothing changed (the operation should be idempotent)
+-
+  !python {model: stock.move}: |
+    import datetime as dt
+    move_out_mto = model.browse(cr, uid, ref('move_out_mto'), context)
+    actual_date = move_out_mto.date_expected[:10]
+    wanted_date = '{0}-06-12'.format(dt.date.today().year + 1)
+
+    assert actual_date == wanted_date, (
+        'move_out_mto should be delivered on {0}, not on {1}'.format(
+            wanted_date,
+            actual_date,
+        )
+    )

@@ -1,0 +1,38 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_ownership_availability_rules
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-04-30 13:00+0000\n"
+"PO-Revision-Date: 2015-04-30 13:00+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_ownership_availability_rules
+#: view:stock.quant:stock_ownership_availability_rules.quant_search_view
+msgid "Available (without reservation)"
+msgstr ""
+
+#. module: stock_ownership_availability_rules
+#: view:stock.move:stock_ownership_availability_rules.view_move_search
+#: view:stock.quant:stock_ownership_availability_rules.quant_search_view
+msgid "Owner"
+msgstr ""
+
+#. module: stock_ownership_availability_rules
+#: model:ir.model,name:stock_ownership_availability_rules.model_product_template
+msgid "Product Template"
+msgstr ""
+
+#. module: stock_ownership_availability_rules
+#: model:ir.model,name:stock_ownership_availability_rules.model_stock_quant
+msgid "Quants"
+msgstr ""
+

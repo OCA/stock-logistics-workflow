@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright (C) 2013 Agile Business Group sagl (<http://www.agilebg.com>)
+#    Copyright (C) 2013-15 Agile Business Group sagl (<http://www.agilebg.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -18,74 +18,58 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, orm
+from openerp import models, api, fields
 
 
-class stock_move(orm.Model):
+class StockMove(models.Model):
     _inherit = "stock.move"
 
-    _columns = {
-        'invoice_line_id': fields.many2one(
-            'account.invoice.line', 'Invoice Line', readonly=True),
-    }
+    invoice_line_id = fields.Many2one(comodel_name='account.invoice.line',
+                                      string='Invoice Line', readonly=True)
 
-    def _create_invoice_line_from_vals(
-            self, cr, uid, move, invoice_line_vals, context=None):
-        inv_line_id = super(stock_move, self)._create_invoice_line_from_vals(
-            cr, uid, move, invoice_line_vals, context=context)
-        move.write({'invoice_line_id': inv_line_id})
+    @api.model
+    def _create_invoice_line_from_vals(self, move, invoice_line_vals):
+        inv_line_id = super(StockMove, self)._create_invoice_line_from_vals(
+            move, invoice_line_vals)
+        move.invoice_line_id = inv_line_id
+        move.picking_id.invoice_id = invoice_line_vals['invoice_id']
         return inv_line_id
 
 
-class stock_picking(orm.Model):
+class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    def _get_invoice_view_xmlid(self, cr, uid, ids, name, arg, context=None):
-        res = {}
-        for pick in self.browse(cr, uid, ids, context=context):
-            if pick.invoice_id:
-                if pick.invoice_id.type in ('in_invoice', 'in_refund'):
-                    res[pick.id] = 'account.invoice_supplier_form'
-                else:
-                    res[pick.id] = 'account.invoice_form'
+    @api.one
+    def _get_invoice_view_xmlid(self):
+        if self.invoice_id:
+            if self.invoice_id.type in ('in_invoice', 'in_refund'):
+                self.invoice_view_xmlid = 'account.invoice_supplier_form'
             else:
-                res[pick.id] = False
-        return res
+                self.invoice_view_xmlid = 'account.invoice_form'
 
-    _columns = {
-        'invoice_id': fields.many2one(
-            'account.invoice', 'Invoice', readonly=True),
-        'invoice_view_xmlid': fields.function(
-            _get_invoice_view_xmlid, type='char', string="Invoice View XMLID",
-            readonly=True),
-    }
-
-    def _create_invoice_from_picking(
-            self, cr, uid, picking, vals, context=None):
-        invoice_id = super(stock_picking, self)._create_invoice_from_picking(
-            cr, uid, picking, vals, context=context)
-        picking.write({'invoice_id': invoice_id})
-        return invoice_id
+    invoice_id = fields.Many2one(comodel_name='account.invoice',
+                                 string='Invoice', readonly=True)
+    invoice_view_xmlid = fields.Char(compute='_get_invoice_view_xmlid',
+                                     string="Invoice View XMLID",
+                                     readonly=True)
 
 
-class account_invoice(orm.Model):
+class AccountInvoice(models.Model):
     _inherit = "account.invoice"
 
-    _columns = {
-        'picking_ids': fields.one2many(
-            'stock.picking', 'invoice_id', 'Related Pickings', readonly=True,
-            help="Related pickings "
-            "(only when the invoice has been generated from the picking)."),
-    }
+    picking_ids = fields.One2many(
+        comodel_name='stock.picking', inverse_name='invoice_id',
+        string='Related Pickings', readonly=True,
+        copy=False,
+        help="Related pickings "
+             "(only when the invoice has been generated from the picking).")
 
 
-class account_invoice_line(orm.Model):
+class AccountInvoiceLine(models.Model):
     _inherit = "account.invoice.line"
 
-    _columns = {
-        'move_line_ids': fields.one2many(
-            'stock.move', 'invoice_line_id', 'Related Stock Moves',
-            readonly=True,
-            help="Related stock moves "
-            "(only when the invoice has been generated from the picking)."),
-    }
+    move_line_ids = fields.One2many(
+        comodel_name='stock.move', inverse_name='invoice_line_id',
+        string='Related Stock Moves', readonly=True,
+        help="Related stock moves "
+             "(only when the invoice has been generated from the picking).")

@@ -19,12 +19,13 @@
 #
 ##############################################################################
 {'name': 'Picking dispatch',
- 'version': '1.2.3',
+ 'version': '8.0.1.2.3',
  'author': "Camptocamp,Odoo Community Association (OCA)",
  'maintainer': 'Camptocamp',
  'category': 'Products',
  'complexity': "normal",  # easy, normal, expert
  'depends': ['stock',
+             'delivery',
              ],
  'website': 'http://www.camptocamp.com/',
  'data': ['picking_dispatch_view.xml',

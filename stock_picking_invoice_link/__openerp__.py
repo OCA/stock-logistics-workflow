@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright (C) 2013 Agile Business Group sagl (<http://www.agilebg.com>)
+#    Copyright (C) 2013-15 Agile Business Group sagl (<http://www.agilebg.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -19,30 +19,19 @@
 ##############################################################################
 
 {
-    'name': "Picking Invoice Link",
-    'version': '0.2',
+    'name': 'Stock Picking Invoice Link',
+    'version': '8.0.1.0.0',
     'category': 'Warehouse Management',
     'summary': 'Adds link between pickings and generated invoices',
-    'description': """
-This module adds a link between pickings and generated invoices.
-So that user can easly reach the invoice related to the picking
-and see the pickings related to the invoice. This only applies
-on the invoices generated from pickings.
-
-Authors
-=======
-* Lorenzo Battistini <lorenzo.battistini@agilebg.com>
-* Alexis de Lattre <alexis.delattre@akretion.com>
-""",
-    'author': "Agile Business Group,Odoo Community Association (OCA)",
+    'author': 'Agile Business Group, Odoo Community Association (OCA)',
     'website': 'http://www.agilebg.com',
     'license': 'AGPL-3',
-    "depends": ['stock_account'],
-    "data": [
-        "stock_view.xml",
-        "account_invoice_view.xml",
+    'depends': ['stock_account'],
+    'data': [
+        'stock_view.xml',
+        'account_invoice_view.xml',
     ],
-    "demo": [],
+    'demo': [],
     'test': [],
     'installable': True,
 }
