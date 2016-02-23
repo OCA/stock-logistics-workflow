@@ -32,7 +32,7 @@ class StockPicking(models.Model):
             else:
                 picking.invoice_view_xmlid = 'account.invoice_form'
 
-    invoice_id = fields.Many2one(comodel_name='account.invoice',
+    invoice_id = fields.Many2one(comodel_name='account.invoice', copy=False,
                                  string='Invoice', readonly=True)
     invoice_view_xmlid = fields.Char(compute='_get_invoice_view_xmlid',
                                      string="Invoice View XMLID",
@@ -50,12 +50,16 @@ class AccountInvoice(models.Model):
 
     @api.multi
     def unlink(self):
-        if any([x and x != 'cancel' for x in
-                self.mapped('picking_ids.state')]):
-            raise exceptions.Warning(
-                _('The picking(s) %s should be cancelled before deleting the'
-                  ' invoice.') % ', '.join(self.mapped('picking_ids.name')))
-        return super(AccountInvoice, self).unlink()
+        for invoice in self:
+            if invoice.state not in ('draft', 'cancel'):
+                raise exceptions.Warning(
+                    _('You can\'t remove an invoice that it is not in state'
+                      '\'draft\' or \'cancel\''))
+            elif invoice.state == 'draft':
+                for picking in invoice.picking_ids.filtered(
+                        lambda x: x.state != 'cancel'):
+                    picking.write({'invoice_state': '2binvoiced'})
+            return super(AccountInvoice, invoice).unlink()
 
     @api.multi
     def action_cancel(self):

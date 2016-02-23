@@ -64,7 +64,7 @@ class TestStockPickingInvoiceLink(TestStockCommon):
         self.wizard = self.env['stock.invoice.onshipping'].with_context(
             context).create({})
 
-    def test_invoce_create(self):
+    def test_invoice_create(self):
         self.assertEqual(self.picking_in.invoice_state, '2binvoiced')
         for move in self.picking_in.move_lines:
             self.assertEqual(move.invoice_state, '2binvoiced')
@@ -81,14 +81,31 @@ class TestStockPickingInvoiceLink(TestStockCommon):
         self.assertEqual(self.picking_in.invoice_id.state, 'draft')
         self.assertEqual(self.picking_in.invoice_state, 'invoiced')
 
-    def test_invoice_unlink(self):
+    def test_invoice_unlink_draft(self):
         self.wizard.open_invoice()
         self.assertTrue(self.picking_in.invoice_id)
+        self.assertEqual(self.picking_in.invoice_state, 'invoiced')
+        self.assertEqual(self.picking_in.invoice_id.state, 'draft')
+        self.picking_in.invoice_id.unlink()
+        self.assertEqual(self.picking_in.invoice_state, '2binvoiced')
+
+    def test_invoice_unlink_cancel(self):
+        self.wizard.open_invoice()
+        self.assertTrue(self.picking_in.invoice_id)
+        self.assertEqual(self.picking_in.invoice_state, 'invoiced')
+        self.picking_in.invoice_id.signal_workflow('invoice_cancel')
+        self.assertEqual(self.picking_in.invoice_id.state, 'cancel')
+        self.assertEqual(self.picking_in.invoice_state, '2binvoiced')
+        self.picking_in.invoice_id.unlink()
+
+    def test_invoice_unlink_not_draft_nor_cancel(self):
+        self.wizard.open_invoice()
+        self.assertTrue(self.picking_in.invoice_id)
+        self.assertEqual(self.picking_in.invoice_state, 'invoiced')
+        self.picking_in.invoice_id.signal_workflow('invoice_open')
+        self.assertNotIn(self.picking_in.invoice_id.state, ['draft', 'cancel'])
         with self.assertRaises(exceptions.Warning):
             self.picking_in.invoice_id.unlink()
-        self.picking_in.action_cancel()
-        self.picking_in.invoice_id.unlink()
-        self.assertFalse(self.picking_in.invoice_id)
 
     def test_xml_id(self):
         picking_out = self.picking_in.copy(
