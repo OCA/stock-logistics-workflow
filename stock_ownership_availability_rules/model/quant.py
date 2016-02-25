@@ -27,6 +27,9 @@ class Quant(models.Model):
 
         This is not a default method because we need to know the location.
 
+        Quants are always created as superuser and can't be manually created
+        (enforced by ACL). Therefore, we can't use the company of the current
+        user as default owner.
         """
         if not vals.get('owner_id'):
             Company = self.env['res.company']
@@ -36,7 +39,7 @@ class Quant(models.Model):
                 location.partner_id.id or
                 location.company_id.partner_id.id or
                 Company.browse(
-                    Company._company_default_get('stock.quant')
+                    self.env.context.get('company_id')
                 ).partner_id.id
             )
 
@@ -47,6 +50,28 @@ class Quant(models.Model):
                                readonly=True,
                                select=True,
                                required=True)
+
+    @api.model
+    def _quant_create(self, qty, move, lot_id=False, owner_id=False,
+                      src_package_id=False, dest_package_id=False,
+                      force_location_from=False, force_location_to=False,
+                      context=None):
+        # _quant_create call the create method with SUPERUSER_ID. Therefore,
+        # If the quant is for a location without an associated company_id,
+        # or partner the quant will be created without owner.
+        # Put the company id into the context to work around this bug in the
+        # odoo core (quant created as superuser).
+        # The create method will take care of the company_id into the context
+        # to determine the owner of the quant.
+        company_id = self.env.user.company_id.id
+        this = self.with_context(
+            company_id=company_id)
+        return super(Quant, this)._quant_create(
+            qty, move, lot_id=lot_id, owner_id=owner_id,
+            src_package_id=src_package_id, dest_package_id=dest_package_id,
+            force_location_from=force_location_from,
+            force_location_to=force_location_to,
+            context=context)
 
     @api.model
     def quants_get_prefered_domain(self, location, product, qty, domain=None,
