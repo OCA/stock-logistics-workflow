@@ -34,6 +34,11 @@
  !python {model: stock.picking, id: outgoing_shipment_gameboy}:
      self.action_confirm()
 -
+  I assign the picking
+-
+ !python {model: stock.picking, id: outgoing_shipment_gameboy}:
+     self.force_assign()
+-
   Then I split my shippement in two 40/90
 -
   !python {model: stock.transfer_details}: |
