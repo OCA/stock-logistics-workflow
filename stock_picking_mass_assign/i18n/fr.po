@@ -26,6 +26,11 @@ msgid "Cancel"
 msgstr "Annuler"
 
 #. module: stock_picking_mass_assign
+#: model:ir.actions.act_window,name:stock_picking_mass_assign.action_cancel_availability_all
+msgid "Cancel Availability"
+msgstr "Annuler la disponibilité"
+
+#. module: stock_picking_mass_assign
 #: model:ir.actions.act_window,name:stock_picking_mass_assign.action_check_assign_all
 #: field:stock.picking.check.assign.all,check_availability:0
 msgid "Check Availability"
