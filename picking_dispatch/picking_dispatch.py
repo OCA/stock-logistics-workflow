@@ -200,16 +200,12 @@ class PickingDispatch(Model):
         location_obj = self.pool['stock.location']
         wf_service = netsvc.LocalService("workflow")
 
-        move_ids = move_obj.search(cr, uid, [
-            ('dispatch_id', 'in', ids),
-            ('state', 'in', ('confirmed', 'waiting')),
-        ], context=context)
-
         # In order to avoid calling _product_reserve on each stock move,
         # a groupyby is first done to try to reserve products for all the
         # moves (grouped by product and location) present in the dispatches.
         cr.execute("""
             SELECT
+                ARRAY_AGG(id),
                 product_id,
                 location_id,
                 SUM(product_qty)
@@ -221,7 +217,7 @@ class PickingDispatch(Model):
             """, (tuple(ids), ))
         groups = cr.fetchall()
 
-        for product_id, location_id, quantity in groups:
+        for move_ids, product_id, location_id, quantity in groups:
             # Reserve quantity for "grouped" moves
             res = location_obj._product_reserve(
                 cr,
