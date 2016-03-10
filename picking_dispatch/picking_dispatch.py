@@ -186,13 +186,9 @@ class PickingDispatch(models.Model):
         move_obj = self.pool['stock.move']
         location_obj = self.pool['stock.location']
 
-        move_ids = move_obj.search(cr, uid, [
-            ('dispatch_id', 'in', ids),
-            ('state', 'in', ('confirmed', 'waiting')),
-        ], context=context)
-
         cr.execute("""
             SELECT
+                ARRAY_AGG(id),
                 product_id,
                 location_id,
                 SUM(product_qty)
@@ -204,7 +200,7 @@ class PickingDispatch(models.Model):
             """, (tuple(ids), ))
         groups = cr.fetchall()
 
-        for product_id, location_id, quantity in groups:
+        for move_ids, product_id, location_id, quantity in groups:
             # Try to reserve all moves with the same product and location
             # together
             res = location_obj._product_reserve(
