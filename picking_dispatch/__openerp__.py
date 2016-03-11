@@ -38,6 +38,7 @@
                 'wizard/create_dispatch_view.xml',
                 'wizard/dispatch_assign_picker_view.xml',
                 'wizard/dispatch_start_view.xml',
+                'wizard/cancel_assign_all_view.xml',
                 'wizard/check_assign_all_view.xml',
                 'report.xml',
                 'cron_data.xml',
