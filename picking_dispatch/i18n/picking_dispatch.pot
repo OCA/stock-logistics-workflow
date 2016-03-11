@@ -77,6 +77,17 @@ msgid "Cancel"
 msgstr ""
 
 #. module: picking_dispatch
+#: model:ir.actions.act_window,name:picking_dispatch.action_dispatch_cancel_assign_all
+#: view:picking.dispatch.cancel.assign.all:0
+msgid "Cancel Availability"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:picking.dispatch.cancel.assign.all:0
+msgid "Cancel the availability of the selected dispatches"
+msgstr ""
+
+#. module: picking_dispatch
 #: selection:picking.dispatch,state:0
 msgid "Cancelled"
 msgstr ""
