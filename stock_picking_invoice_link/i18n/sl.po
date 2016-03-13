@@ -3,13 +3,14 @@
 # * stock_picking_invoice_link
 # 
 # Translators:
-# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015-2016
+# Rudolf Schnapka <rs@techno-flex.de>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-22 09:31+0000\n"
-"PO-Revision-Date: 2015-10-22 03:58+0000\n"
+"POT-Creation-Date: 2016-05-04 02:49+0000\n"
+"PO-Revision-Date: 2016-05-03 15:00+0000\n"
 "Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/sl/)\n"
 "MIME-Version: 1.0\n"
@@ -30,6 +31,11 @@ msgstr "Račun"
 #: field:stock.move,invoice_line_id:0
 msgid "Invoice Line"
 msgstr "Postavka računa"
+
+#. module: stock_picking_invoice_link
+#: field:stock.picking,invoice_view_xmlid:0
+msgid "Invoice View XMLID"
+msgstr "XMLID prikaza računa"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_stock_picking
@@ -70,3 +76,9 @@ msgstr "Povezani premiki zalog (le za račune, ki so bili ustvarjeni iz zbirnika
 #: model:ir.model,name:stock_picking_invoice_link.model_stock_move
 msgid "Stock Move"
 msgstr "Premik zaloge"
+
+#. module: stock_picking_invoice_link
+#: code:addons/stock_picking_invoice_link/models/stock.py:56
+#, python-format
+msgid "You can't remove an invoice that it is not in state'draft' or 'cancel'"
+msgstr "Račun lahko odstranite le, če je v stanju 'osnutek' ali stanju 'preklicano'"
