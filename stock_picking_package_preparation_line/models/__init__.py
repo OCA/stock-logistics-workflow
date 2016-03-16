@@ -6,5 +6,6 @@
 ##############################################################################
 
 
+from . import ir_config
 from . import stock_picking_package_preparation_line
 from . import stock
