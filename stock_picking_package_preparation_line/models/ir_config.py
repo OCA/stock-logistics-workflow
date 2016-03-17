@@ -2,7 +2,7 @@
 # © 2015 - Francesco Apruzzese <f.apruzzese@apuliasoftware.it>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import models, fields, api
+from openerp import models, fields
 
 
 class ResCompany(models.Model):
@@ -14,7 +14,7 @@ class ResCompany(models.Model):
         string='Default Picking Type used in package preparation')
 
 
-class StockPickingPackagePreparationLineSettings(models.Model):
+class StockPickingPackagePreparationLineSettings(models.TransientModel):
 
     _inherit = 'stock.config.settings'
 
