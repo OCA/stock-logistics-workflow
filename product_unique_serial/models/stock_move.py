@@ -61,7 +61,6 @@ class StockMove(models.Model):
         if operation_or_move.product_id.lot_unique_ok and lot_id:
             qty = sum([x.qty for x in operation_or_move.lot_id.quant_ids])
             if not 0 <= qty <= 1:
-                import pdb; pdb.set_trace()
                 raise exceptions.ValidationError(_(
                     "Product '%s' has active "
                     "'unique lot'\n"
