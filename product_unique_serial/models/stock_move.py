@@ -51,7 +51,6 @@ class StockMove(models.Model):
                 ))
         return res
 
-
     @api.multi
     def check_unicity_move_qty(self):
         """
@@ -77,7 +76,8 @@ class StockMove(models.Model):
         """
         lot_id = operation_or_move.lot_id
         if operation_or_move.product_id.lot_unique_ok and lot_id:
-            qty = sum([x.qty + x.propagated_from_id.qty for x in operation_or_move.lot_id.quant_ids])
+            qty = sum([x.qty + x.propagated_from_id.qty
+                       for x in operation_or_move.lot_id.quant_ids])
             if qty != 1 or operation_or_move.product_qty != 1:
                 raise exceptions.ValidationError(_(
                     "Product '%s' has active "
