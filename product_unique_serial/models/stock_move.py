@@ -74,8 +74,8 @@ class StockMove(models.Model):
         Check quantity on lot to verify that has qty = 1
         if 'lot unique' is ok on product
         """
-        lot_id = operation_or_move.lot_id
-        if operation_or_move.product_id.lot_unique_ok and lot_id:
+        lot = operation_or_move.lot_id
+        if operation_or_move.product_id.lot_unique_ok and lot:
             qty = sum([x.qty + x.propagated_from_id.qty
                        for x in operation_or_move.lot_id.quant_ids])
             if qty != 1 or operation_or_move.product_qty != 1:
@@ -85,7 +85,7 @@ class StockMove(models.Model):
                     "but with this move "
                     "you will have a quantity of "
                     "'%s' in lot '%s'"
-                ) % (operation_or_move.product_id.name, qty, lot_id.name))
+                ) % (operation_or_move.product_id.name, qty, lot.name))
         return True
 
     @api.model
