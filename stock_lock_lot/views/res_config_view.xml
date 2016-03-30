@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_stock_configuration" model="ir.ui.view">
+            <field name="name">Stock settings: Strict locking</field>
+            <field name="model">stock.config.settings</field>
+            <field name="inherit_id" ref="stock.view_stock_config_settings" />
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//group[last()]" position="after">
+                        <group>
+                            <label for="id" string="Lot blocking" />
+                            <div>
+                                <field name="stock_lock_lot_strict" class="oe_inline" />
+                                <label for="stock_lock_lot_strict" />
+                            </div>
+                        </group>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+    </data>
+</openerp>
