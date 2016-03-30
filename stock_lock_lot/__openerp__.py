@@ -6,7 +6,7 @@
 {
     "name": "Stock Lock Lot",
     "Summary": "Restrict blocked lots in Stock Moves and reservations",
-    "version": "8.0.1.0.0",
+    "version": "8.0.1.1.0",
     "author": "OdooMRP team,"
               "Avanzosc,"
               "Serv. Tecnol. Avanzados - Pedro M. Baeza,"
@@ -17,12 +17,14 @@
                 "product",
                 ],
     "data": [
+        "security/stock_lock_lot_security.xml",
         "data/stock_lock_lot_data.xml",
         "wizard/stock_transfer_details_view.xml",
         "wizard/wiz_lock_lot_view.xml",
         "views/product_category_view.xml",
         "views/stock_production_lot_view.xml",
         "views/stock_quant_view.xml",
+        "views/res_config_view.xml",
     ],
     "installable": True,
     "license": "AGPL-3",
