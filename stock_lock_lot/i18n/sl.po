@@ -159,3 +159,21 @@ msgstr "[('product_id','=?',product_id),('locked','=',False)]"
 #: view:wiz.lock.lot:stock_lock_lot.view_wiz_lock_lot_form
 msgid "or"
 msgstr "ali"
+
+#. module: stock_lock_lot
+#: model:res.groups,name:stock_lock_lot.group_lock_lot
+msgid "Can block/unblock Serial Numbers/Lots"
+msgstr ""
+
+#. module: stock_lock_lot
+#: code:addons/stock_lock_lot/models/stock_production_lot.py:54
+#, python-format
+msgid "You are not allowed to block Serial Numbers/Lots"
+msgstr ""
+
+#. module: stock_lock_lot
+#: code:addons/stock_lock_lot/models/stock_production_lot.py:72
+#, python-format
+msgid "You are not allowed to unblock Serial Numbers/Lots"
+msgstr "
+
