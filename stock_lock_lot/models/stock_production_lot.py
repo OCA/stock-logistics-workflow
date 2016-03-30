@@ -69,6 +69,8 @@ class StockProductionLot(models.Model):
     def create(self, cr, uid, vals, context=None):
         '''Force the locking/unlocking, ignoring the value of 'locked'.'''
         #  Web quick-create doesn't provide product_id in vals, but in context
+        if context is None:
+            context = {}
         product_id = vals.get('product_id', context.get('product_id', False))
         if product_id:
             vals['locked'] = self._get_product_locked(
