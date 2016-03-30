@@ -6,3 +6,4 @@
 from . import product_category
 from . import stock_production_lot
 from . import stock_quant
+from . import res_config
