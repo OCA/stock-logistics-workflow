@@ -43,12 +43,12 @@ class StockProductionLot(models.Model):
     @api.one
     @api.onchange('product_id')
     def onchange_product_id(self):
-        '''Instruct the client to lock/unlock a lot on product change'''
+        """Instruct the client to lock/unlock a lot on product change"""
         self.locked = self._get_product_locked(self.product_id)
 
     @api.multi
     def button_lock(self):
-        '''Lock the lot if the reservations and permissions allow it'''
+        """"Lock the lot if the reservations and permissions allow it"""
         if not self.user_has_groups('stock_lock_lot.group_lock_lot'):
             raise exceptions.Warning(
                 _('You are not allowed to block Serial Numbers/Lots'))
@@ -66,7 +66,7 @@ class StockProductionLot(models.Model):
 
     @api.multi
     def button_unlock(self):
-        '''Lock the lot if the permissions allow it'''
+        """"Lock the lot if the permissions allow it"""
         if not self.user_has_groups('stock_lock_lot.group_lock_lot'):
             raise exceptions.Warning(
                 _('You are not allowed to unblock Serial Numbers/Lots'))
@@ -74,7 +74,7 @@ class StockProductionLot(models.Model):
 
     # Kept in old API to maintain compatibility
     def create(self, cr, uid, vals, context=None):
-        '''Force the locking/unlocking, ignoring the value of 'locked'.'''
+        """Force the locking/unlocking, ignoring the value of 'locked'."""
         #  Web quick-create doesn't provide product_id in vals, but in context
         product_id = vals.get('product_id', context.get('product_id', False))
         if product_id:
@@ -86,7 +86,7 @@ class StockProductionLot(models.Model):
 
     @api.multi
     def write(self, values):
-        '''Lock the lot if changing the product and locking is required'''
+        """"Lock the lot if changing the product and locking is required"""
         if 'product_id' in values:
             product = self.env['product.product'].browse(
                 values.get('product_id'))
