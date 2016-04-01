@@ -6,26 +6,44 @@
 
 from openerp import models, fields, api, _
 from openerp.exceptions import Warning as UserError
-from datetime import datetime
+
+
+def check_date(date):
+    now = fields.Datetime.now()
+    if date > now:
+        raise UserError(
+            _("You can not process an actual "
+              "movement date in the future."))
+
+
+class StockTransferDetails(models.TransientModel):
+    _inherit = 'stock.transfer_details'
+
+    date_backdating = fields.Datetime(string='Actual Movement Date')
+
+    @api.onchange('date_backdating')
+    def onchange_date_backdating(self):
+        check_date(self.date_backdating)
+        for item in self.item_ids:
+            item.date = self.date_backdating
+        for packop in self.packop_ids:
+            packop.date = self.date_backdating
+
+    @api.model
+    def default_get(self, fields_list):
+        res = super(StockTransferDetails, self).default_get(fields_list)
+        now = fields.Datetime.now()
+        res['date_backdating'] = now
+        for item in res['item_ids']:
+            item['date'] = now
+        for packop in res['packop_ids']:
+            packop['date'] = now
+        return res
 
 
 class StockTransferDetailsItems(models.TransientModel):
     _inherit = 'stock.transfer_details_items'
 
-    _defaults = {
-        'date': fields.Datetime.now,
-    }
-
-    @api.one
-    @api.constrains('date')
-    def check_date(self):
-        if self.date:
-            now = datetime.utcnow()
-            dt = fields.Datetime.from_string(self.date)
-            if dt > now:
-                raise UserError(
-                    _(
-                        "You can not process an actual"
-                        " movement date in the future."
-                    )
-                )
+    @api.onchange('date')
+    def onchange_date(self):
+        check_date(self.date)

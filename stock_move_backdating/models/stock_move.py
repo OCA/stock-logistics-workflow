@@ -21,5 +21,10 @@ class StockMove(models.Model):
                 move.date = operation.operation_id.date
                 if move.quant_ids:
                     move.quant_ids.sudo().write({'in_date': move.date})
-
+        pickings = self.mapped('picking_id').filtered(
+            lambda r: r.state == 'done')
+        for picking in pickings:
+            # set date_done as the youngest date among the moves
+            dates = picking.mapped('move_lines.date')
+            picking.write({'date_done': max(dates)})
         return result
