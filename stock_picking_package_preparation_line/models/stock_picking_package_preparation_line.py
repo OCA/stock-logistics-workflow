@@ -22,6 +22,7 @@
 
 from openerp import models, fields, api, exceptions, _
 import openerp.addons.decimal_precision as dp
+from datetime import datetime
 
 
 class StockPickingPackagePreparationLine(models.Model):
@@ -43,6 +44,7 @@ class StockPickingPackagePreparationLine(models.Model):
              "will not generate a back order, but will just deliver the new "
              "quantity")
     product_uom = fields.Many2one('product.uom')
+    lot_id = fields.Many2one('stock.production.lot', 'Lot')
     sequence = fields.Integer(default=10)
     note = fields.Text()
 
@@ -87,6 +89,8 @@ class StockPickingPackagePreparationLine(models.Model):
                         'product_id': move_line.product_id.id,
                         'product_uom_qty': move_line.product_uom_qty,
                         'product_uom': move_line.product_uom.id,
+                        'lot_id': move_line.restrict_lot_id.id
+                        if move_line.restrict_lot_id else False,
                         })
         return lines
 
@@ -98,6 +102,8 @@ class StockPickingPackagePreparationLine(models.Model):
             'product_id': self.product_id.id,
             'product_uom_qty': self.product_uom_qty,
             'product_uom': self.product_uom.id,
+            'restrict_lot_id': self.lot_id.id
+            if self.lot_id else False,
             }
 
 
@@ -190,6 +196,7 @@ class StockPickingPackagePreparation(models.Model):
         #       a product in the values
         picking_model = self.env['stock.picking']
         move_model = self.env['stock.move']
+        pack_model = self.env['stock.pack.operation']
         for package in self:
             picking_type = package.picking_type_id or \
                 self.env.ref('stock.picking_type_out')
@@ -220,6 +227,19 @@ class StockPickingPackagePreparation(models.Model):
                     move_data.update({'picking_id': picking.id})
                     move = move_model.create(move_data)
                     line.move_id = move.id
+                    # ----- Create pack to force lot
+                    if line.lot_id:
+                        pack_model.create({
+                            'product_id': line.product_id.id,
+                            'product_uom_id': line.product_uom.id,
+                            'product_qty': line.product_uom_qty,
+                            'lot_id': line.lot_id.id,
+                            'location_id': move_data['location_id'],
+                            'location_dest_id': move_data['location_dest_id'],
+                            'date': datetime.now(),
+                            # 'owner_id': prod.owner_id.id,
+                            'picking_id': picking.id
+                            })
                 # ----- Set the picking as "To DO" and try to set it as
                 #       assigned
                 picking.action_confirm()
@@ -229,6 +249,9 @@ class StockPickingPackagePreparation(models.Model):
                         _('Impossible to create confirmed picking. '
                           'Please Check products availability!'))
                 picking.action_assign()
+                # ----- Force assign if a picking is not assigned
+                if picking.state != 'assigned':
+                    picking.force_assign()
                 # ----- Show an error if a picking is not assigned
                 if picking.state != 'assigned':
                     raise exceptions.Warning(
