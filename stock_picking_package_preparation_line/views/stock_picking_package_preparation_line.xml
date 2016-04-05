@@ -16,6 +16,7 @@
                             <field name="product_id"/>
                             <field name="product_uom_qty" />
                             <field name="product_uom" groups="product.group_uom"/>
+                            <field name="lot_id"/>
                         </tree>
                         <form>
                             <group>
@@ -25,6 +26,8 @@
                                        attrs="{'required': [('product_id', '!=', False)]}"/>
                                 <field name="product_uom" groups="product.group_uom"
                                        attrs="{'required': [('product_id', '!=', False)], 'readonly': [('move_id', '!=', False)]}"/>
+                                <field name="lot_id"
+                                       attrs="{'invisible': [('product_id', '=', False)], 'readonly': [('move_id', '!=', False)]}"/>
                             </group>
                             <label for="name" />
                             <field name="name" colspan="4"
