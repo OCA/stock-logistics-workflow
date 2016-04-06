@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openerp.addons.stock.tests.common import TestStockCommon
+from openerp import exceptions
 
 
 class TestLockingUnlocking(TestStockCommon):
@@ -41,9 +42,18 @@ class TestLockingUnlocking(TestStockCommon):
              'location_dest_id': self.customer_location,
              'restrict_lot_id': self.lot.id})
 
+        # Make an unauthorized user
+        self.unauthorized_user = self.env["res.users"].create({
+            "name": __file__,
+            "login": __file__,
+        })
+
     def test_lock(self):
         # Verify the button locks the lot
         self.lot.button_lock()
+        # Verify unauthorized users can't unlock the lot
+        with self.assertRaises(exceptions.Warning):
+            self.lot.sudo(self.unauthorized_user).button_lock()
         self.assertTrue(self.lot.locked,
                         "The lot should be locked when the button is pressed")
         self.assertTrue(all([quant.locked for quant in self.lot.quant_ids]),
@@ -60,6 +70,9 @@ class TestLockingUnlocking(TestStockCommon):
 
     def test_unlock(self):
         self.lot.button_lock()
+        # Verify unauthorized users can't unlock the lot
+        with self.assertRaises(exceptions.Warning):
+            self.lot.sudo(self.unauthorized_user).button_unlock()
         # Verify the button unlocks the lot when it's been locked
         self.lot.button_unlock()
         self.assertFalse(
