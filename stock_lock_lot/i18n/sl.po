@@ -162,7 +162,7 @@ msgstr "ali"
 
 #. module: stock_lock_lot
 #: model:res.groups,name:stock_lock_lot.group_lock_lot
-msgid "Can block/unblock Serial Numbers/Lots"
+msgid "Allow to block/unblock Serial Numbers/Lots"
 msgstr ""
 
 #. module: stock_lock_lot

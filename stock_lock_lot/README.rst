@@ -18,7 +18,7 @@ To allow a user to block or unblock a Lot:
 
 #. open the user settings (menu "Configuration > Users")
 #. in the "Warehouse" section, check the box
-   "Can block/unblock Serial Numbers/Lots"
+   "Allow to block/unblock Serial Numbers/Lots"
 
 Usage
 =====

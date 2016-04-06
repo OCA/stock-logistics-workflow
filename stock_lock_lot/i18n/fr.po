@@ -161,7 +161,7 @@ msgstr "ou"
 
 #. module: stock_lock_lot
 #: model:res.groups,name:stock_lock_lot.group_lock_lot
-msgid "Can block/unblock Serial Numbers/Lots"
+msgid "Allow to block/unblock Serial Numbers/Lots"
 msgstr "Peut bloquer/débloquer les numéros de séries/lots"
 
 #. module: stock_lock_lot
