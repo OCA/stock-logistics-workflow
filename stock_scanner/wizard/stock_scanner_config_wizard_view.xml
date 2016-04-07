@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="stock_config_setting_view_form_inherit_stock_scanner" model="ir.ui.view">
+            <field name="name">stock.config.settings.form</field>
+            <field name="model">stock.config.settings</field>
+            <field name="inherit_id" ref="stock.view_stock_config_settings" />
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//group[last()]" position="after">
+                        <separator string="Configure scanner module"/>
+                        <group>
+                            <label for="id" string="Configure scanner module" />
+                            <div>
+                                <div>
+                                    <field name="is_login_enabled" class="oe_inline"/>
+                                    <label for="is_login_enabled"/>
+                                </div>
+                                <div>
+                                    <label for="session_timeout_delay" attrs="{'invisible': [('is_login_enabled', '=', False)]}"/>
+                                    <field name="session_timeout_delay" attrs="{'invisible': [('is_login_enabled', '=', False)]}" class="oe_inline"/>
+                                </div>
+                            </div>
+                        </group>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+    </data>
+</openerp>

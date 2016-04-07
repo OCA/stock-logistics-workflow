@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        ##############################################################################
+        #
+        #    stock_scanner module for OpenERP, Allows managing barcode readers with simple scenarios
+        #    Copyright (C) 2011 SYLEAM Info Services ([http://www.Syleam.fr/])
+        #              Sylvain Garancher [sylvain.garancher@syleam.fr]
+        #    Copyright (C) 2015 Objectif-PI ([http://www.objectif-pi.com]).
+        #              Damien CRIER [damien.crier@objectif-pi.com]
+        #
+        #    This file is a part of stock_scanner
+        #
+        #    stock_scanner is free software: you can redistribute it and/or modify
+        #    it under the terms of the GNU Affero General Public License as published by
+        #    the Free Software Foundation, either version 3 of the License, or
+        #    (at your option) any later version.
+        #
+        #    stock_scanner is distributed in the hope that it will be useful,
+        #    but WITHOUT ANY WARRANTY; without even the implied warranty of
+        #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        #    GNU Affero General Public License for more details.
+        #
+        #    You should have received a copy of the GNU Affero General Public License
+        #    along with this program.  If not, see [http://www.gnu.org/licenses/].
+        #
+        ##############################################################################
+
+        <record id="view_scanner_scenario_custom_tree" model="ir.ui.view">
+            <field name="name">scanner.scenario.custom.tree</field>
+            <field name="model">scanner.scenario.custom</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <tree string="Scenario Custom Values">
+                    <field name="scenario_id"/>
+                    <field name="scanner_id"/>
+                    <field name="model"/>
+                    <field name="res_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_scanner_scenario_custom_form" model="ir.ui.view">
+            <field name="name">scanner.scenario.custom.form</field>
+            <field name="model">scanner.scenario.custom</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <form string="Scenario Custom Values">
+                    <group colspan="4" col="4">
+                        <field name="scenario_id"/>
+                        <field name="scanner_id"/>
+                        <field name="model"/>
+                        <field name="res_id"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Char">
+                            <field name="char_val1" colspan="4"/>
+                            <field name="char_val2" colspan="4"/>
+                            <field name="char_val3" colspan="4"/>
+                            <field name="char_val4" colspan="4"/>
+                            <field name="char_val5" colspan="4"/>
+                        </page>
+                        <page string="Integer">
+                            <field name="int_val1" colspan="4"/>
+                            <field name="int_val2" colspan="4"/>
+                            <field name="int_val3" colspan="4"/>
+                            <field name="int_val4" colspan="4"/>
+                            <field name="int_val5" colspan="4"/>
+                        </page>
+                        <page string="Float">
+                            <field name="float_val1" colspan="4"/>
+                            <field name="float_val2" colspan="4"/>
+                            <field name="float_val3" colspan="4"/>
+                            <field name="float_val4" colspan="4"/>
+                            <field name="float_val5" colspan="4"/>
+                        </page>
+                        <page string="Text">
+                            <field name="text_val" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="act_open_scanner_scenario_custom_view">
+            <field name="name">Scenario Custom Values</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">scanner.scenario.custom</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+        <record model="ir.actions.act_window.view" id="act_open_scanner_scenario_custom_view_form">
+            <field name="act_window_id" ref="act_open_scanner_scenario_custom_view"/>
+            <field name="sequence" eval="20"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_scanner_scenario_custom_form"/>
+        </record>
+        <record model="ir.actions.act_window.view" id="act_open_scanner_scenario_custom_view_tree">
+            <field name="act_window_id" ref="act_open_scanner_scenario_custom_view"/>
+            <field name="sequence" eval="10"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_scanner_scenario_custom_tree"/>
+        </record>
+        <menuitem id="menu_scanner_scenario_custom" parent="menu_scanner_configuration" sequence="50" action="act_open_scanner_scenario_custom_view"/>
+    </data>
+</openerp>

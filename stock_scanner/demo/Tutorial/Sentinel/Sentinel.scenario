@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<scenario>
+  <id>scanner_scenario_sentinel</id>
+  <model_id>scanner.hardware</model_id>
+  <name>Sentinel</name>
+  <notes/>
+  <sequence>20</sequence>
+  <parent_id>scanner_scenario_tutorial</parent_id>
+  <shared_custom>False</shared_custom>
+  <warehouse_ids>OpenERP S.A.</warehouse_ids>
+  <warehouse_ids>Shop 1</warehouse_ids>
+  <warehouse_ids>Shop 2</warehouse_ids>
+  <active>True</active>
+  <type>scenario</type>
+  <Step id="scanner_scenario_step_sentinel_going_back" name="Going back" step_back="True" step_stop="False" step_start="False"/>
+  <Step id="scanner_scenario_step_sentinel_return_values" name="Return values" step_back="False" step_stop="True" step_start="False"/>
+  <Step id="scanner_scenario_step_sentinel_introduction" name="Introduction" step_back="True" step_stop="False" step_start="True"/>
+  <Step id="scanner_scenario_step_sentinel_scrolling" name="Scrolling" step_back="False" step_stop="False" step_start="False"/>
+  <Step id="scanner_scenario_step_sentinel_list_scrolling" name="List Scrolling" step_back="True" step_stop="False" step_start="False"/>
+  <Transition id="scanner_scenario_transition_sentinel_intro_scroll" name="Intro &gt; Scroll" sequence="0" tracer="" to_id="scanner_scenario_step_sentinel_scrolling" transition_type="keyboard" condition="True" from_id="scanner_scenario_step_sentinel_introduction"/>
+  <Transition id="scanner_scenario_transition_sentinel_scroll_list_scroll" name="Scroll &gt; List Scroll" sequence="0" tracer="" to_id="scanner_scenario_step_sentinel_list_scrolling" transition_type="keyboard" condition="True" from_id="scanner_scenario_step_sentinel_scrolling"/>
+  <Transition id="scanner_scenario_transition_sentinel_list_scroll_back" name="List Scroll &gt; Back" sequence="0" tracer="" to_id="scanner_scenario_step_sentinel_going_back" transition_type="keyboard" condition="True" from_id="scanner_scenario_step_sentinel_list_scrolling"/>
+  <Transition id="scanner_scenario_transition_sentinel_back_end" name="Back &gt; End" sequence="0" tracer="" to_id="scanner_scenario_step_sentinel_return_values" transition_type="keyboard" condition="True" from_id="scanner_scenario_step_sentinel_going_back"/>
+</scenario>
