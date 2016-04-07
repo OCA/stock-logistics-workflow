@@ -23,8 +23,9 @@ I18N_DIR = '%s/i18n/' % os.path.dirname(os.path.realpath(__file__))
 I18N_DOMAIN = 'sentinel'
 I18N_DEFAULT = 'en_US'
 
-# _ will be initialized by gettext.install but prevent pep8 issues
-_ = lambda a: a  # noqa
+
+# _ will be initialized by gettext.install but declared to prevent pep8 issues
+_ = None
 
 # Default configuration
 DEFAULT_CONFIG = {
