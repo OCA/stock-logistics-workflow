@@ -45,7 +45,7 @@ class TestStockScanner(common.TransactionCase):
         scanner_scenario_menu_tutorial = self.browse_ref(
             'stock_scanner.scanner_scenario_tutorial')
         ret = scanner_hardware.scanner_call(code, action=None)
-        self.assertEquals(('L', ['Tutorial', 'Stock', 'Tests'], 0), ret)
+        self.assertEquals(('L', ['Tutorial'], 0), ret)
 
         # to select a menu we call the hardware whith action = action and
         # message = name of the menu to select
@@ -144,7 +144,7 @@ class TestStockScanner(common.TransactionCase):
 
         # the next call to the parser return the available scenarii
         ret = scanner_hardware.scanner_call(code, action=None)
-        self.assertEquals(('L', ['Tutorial', 'Stock', 'Tests'], 0), ret)
+        self.assertEquals(('L', ['Tutorial'], 0), ret)
 
     def test_login_logout(self):
         demo_uid = self.ref('base.user_demo')
@@ -179,7 +179,7 @@ class TestStockScanner(common.TransactionCase):
         code = scanner_hardware_1.code
         scanner_hardware = self.env['scanner.hardware']
         ret = scanner_hardware.sudo(demo_uid).scanner_call(code, action=None)
-        self.assertEquals(('L', ['Tutorial', 'Stock', 'Tests'], 0), ret)
+        self.assertEquals(('L', ['Tutorial'], 0), ret)
         # The technical user to use by sentinel when using the login/logout
         # functionality show nothings
         ret = scanner_hardware.sudo(sentinel_uid).scanner_call(code,
@@ -243,8 +243,6 @@ class TestStockScanner(common.TransactionCase):
             transition_type='keyboard')
         self.assertEquals(('L', [
             'Tutorial',
-            'Stock',
-            'Tests',
             'Logout',
         ], 0), ret)
 

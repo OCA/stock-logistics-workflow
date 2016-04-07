@@ -38,11 +38,6 @@
         'demo/Tutorial/Tutorial.scenario',
         'demo/Tutorial/Step_types/Step_types.scenario',
         'demo/Tutorial/Sentinel/Sentinel.scenario',
-        'demo/Tests/Tests.scenario',
-        'demo/Tests/Barcode/Barcode.scenario',
-        'demo/Stock/Stock.scenario',
-        'demo/Stock/Inventory/Inventory.scenario',
-        'demo/Stock/Location_informations/Location_informations.scenario',
     ],
     'images': [
         'images/scanner_hardware.png',
