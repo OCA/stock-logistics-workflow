@@ -103,10 +103,10 @@ class ScannerScenarioTransition(models.Model):
                 raise exceptions.ValidationError(
                     _('Error in condition for transition "%s"'
                       ' at line %d, offset %d:\n%s') % (
-                          transition.name,
-                          exception.lineno,
-                          exception.offset,
-                          exception.msg,
+                        transition.name,
+                        exception.lineno,
+                        exception.offset,
+                        exception.msg,
                     ))
 
         return True
