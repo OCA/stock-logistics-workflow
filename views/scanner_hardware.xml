@@ -56,7 +56,7 @@
                         <newline/>
                     </group>
                     <group colspan="4">
-                        <separator string="Screen size" colspan="4"/>
+                        <separator string="Screen size" colspan="2"/>
                         <field name="screen_width"/>
                         <field name="screen_height"/>
                     </group>
