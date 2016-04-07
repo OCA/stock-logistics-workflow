@@ -179,10 +179,10 @@ class TestPackagePreparationLine(TransactionCase):
         self.preparation.action_done()
         # ----- Check lot on quants of stock move
         self.assertEqual(
-            self.preparation.picking_ids[0].move_lines[0].\
+            self.preparation.picking_ids[0].move_lines[0].
             quant_ids[0].lot_id.id,
             lot.id)
         self.assertEqual(
-            self.preparation.picking_ids[0].move_lines[0].\
+            self.preparation.picking_ids[0].move_lines[0].
             quant_ids[1].lot_id.id,
             lot.id)
