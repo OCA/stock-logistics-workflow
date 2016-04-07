@@ -58,7 +58,7 @@ class ScannerScenarioTransition(models.Model):
     transition_type = fields.Selection(
         selection='_transition_type_get',
         string='Transition Type',
-        default="scanner",
+        default="keyboard",
         help='Type of transition.')
     tracer = fields.Char(
         string='Tracer',
