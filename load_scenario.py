@@ -9,6 +9,7 @@ from StringIO import StringIO
 import openerp
 from openerp import exceptions
 from openerp.tools import misc
+from openerp.tools.safe_eval import safe_eval
 from openerp.tools.translate import _
 from openerp.tools.convert import convert_file
 import logging
@@ -88,7 +89,7 @@ def import_scenario(env, module, scenario_xml, mode, directory, filename):
                 if user_ids:
                     scenario_values['user_ids'].append((4, user_ids[0].id))
         elif node.tag in ('active', 'shared_custom'):
-            scenario_values[node.tag] = eval(node.text) or False
+            scenario_values[node.tag] = safe_eval(node.text) or False
         else:
             scenario_values[node.tag] = node.text or False
 

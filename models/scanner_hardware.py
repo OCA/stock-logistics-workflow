@@ -13,6 +13,7 @@ from openerp import models, api, fields, exceptions
 from openerp import workflow
 from openerp import _
 from openerp.tools.misc import ustr
+from openerp.tools.safe_eval import safe_eval
 
 
 logger = logging.getLogger('stock_scanner')
@@ -437,7 +438,7 @@ class ScannerHardware(models.Model):
                 step_id = last_call.step_id.id
                 transition = last_call.transition_id
                 tracer = last_call.transition_id.tracer
-                message = eval(last_call.message)
+                message = safe_eval(last_call.message)
 
                 # Prevent looping on the same step
                 if transition.to_id == terminal.step_id and \
@@ -517,7 +518,7 @@ class ScannerHardware(models.Model):
                     'terminal': self,
                 }
                 try:
-                    expr = eval(str(transition.condition), ctx)
+                    expr = safe_eval(str(transition.condition), ctx)
                 except:
                     logger.exception(
                         "Error when evaluating transition condition\n%s",
