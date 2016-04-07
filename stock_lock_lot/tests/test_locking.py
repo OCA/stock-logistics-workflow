@@ -89,6 +89,18 @@ class TestLockingUnlocking(TestStockCommon):
                 move.state, 'assigned',
                 'The stock move should be assigned')
 
+    def test_lock_unreserve(self):
+        """Blocking a lot must unreserve all the quants"""
+        # Reserve the lot
+        self.picking_out.action_assign()
+        # Check the lot has reservations
+        domain = [('lot_id', '=', self.lot.id),
+                  ('reservation_id', '!=', False)]
+        self.assertTrue(self.env['stock.quant'].search_count(domain))
+        # Lock and check the lot has no reservations anymore
+        self.lot.button_lock()
+        self.assertFalse(self.env['stock.quant'].search_count(domain))
+
     def test_category_locked(self):
         self.productA.categ_id.lot_default_locked = True
         lot1 = self.LotObj.create({'name': 'Lot in locked category',
