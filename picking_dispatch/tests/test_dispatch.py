@@ -1,4 +1,3 @@
-from openerp import netsvc
 from openerp.tests.common import TransactionCase
 
 
@@ -9,15 +8,16 @@ class TestPickingDispatch(TransactionCase):
         reg = self.registry
         ref = self.ref
         dispatch_obj = reg('picking.dispatch')
-        pick = reg('stock.picking.out').create(
+        pick = reg('stock.picking').create(
             self.cr, self.uid,
-            {'type': 'out',
+            {'picking_type_id': self.ref('stock.picking_type_out'),
+             'type': 'out',
              'location_dest_id': ref('stock.stock_location_customers'),
              'move_lines': [
                  (0, 0, {'name': 'move1',
                          'product_id': ref('product.product_product_6'),
                          'product_uom': ref('product.product_uom_unit'),
-                         'product_qty': 1,
+                         'product_uom_qty': 1,
                          'location_id': ref('stock.stock_location_stock'),
                          'location_dest_id':
                              ref('stock.stock_location_customers')
@@ -26,7 +26,7 @@ class TestPickingDispatch(TransactionCase):
                  (0, 0, {'name': 'move2',
                          'product_id': ref('product.product_product_7'),
                          'product_uom': ref('product.product_uom_unit'),
-                         'product_qty': 1,
+                         'product_uom_qty': 1,
                          'location_id': ref('stock.stock_location_stock'),
                          'location_dest_id':
                              ref('stock.stock_location_customers')
@@ -34,13 +34,8 @@ class TestPickingDispatch(TransactionCase):
                   ),
                  ]
              })
-        wf_service = netsvc.LocalService("workflow")
-        wf_service.trg_validate(self.uid,
-                                'stock.picking',
-                                pick,
-                                'button_confirm',
-                                self.cr)
         self.picking = reg('stock.picking').browse(self.cr, self.uid, pick)
+        self.picking.action_confirm()
         disp = dispatch_obj.create(
             self.cr, self.uid,
             {'move_ids': [(4, line.id)
