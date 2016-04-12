@@ -18,9 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from . import picking_dispatch
-from . import stock
-from . import product
-from . import company
-from . import wizard
+
+from . import models
 from . import report
+from . import wizard
