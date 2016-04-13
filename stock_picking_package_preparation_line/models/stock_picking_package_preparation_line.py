@@ -237,7 +237,6 @@ class StockPickingPackagePreparation(models.Model):
                             'location_id': move_data['location_id'],
                             'location_dest_id': move_data['location_dest_id'],
                             'date': datetime.now(),
-                            # 'owner_id': prod.owner_id.id,
                             'picking_id': picking.id
                             })
                 # ----- Set the picking as "To DO" and try to set it as
