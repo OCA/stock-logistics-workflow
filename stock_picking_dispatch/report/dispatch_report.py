@@ -149,7 +149,7 @@ class PrintDispatch(report_sxw.rml_parse):
 
 
 class ReportPrintDispatch(models.AbstractModel):
-    _name = 'report.picking_dispatch.report_picking_dispatch'
+    _name = 'report.stock_picking_dispatch.report_picking_dispatch'
     _inherit = 'report.abstract_report'
-    _template = 'picking_dispatch.report_picking_dispatch'
+    _template = 'stock_picking_dispatch.report_picking_dispatch'
     _wrapped_report_class = PrintDispatch

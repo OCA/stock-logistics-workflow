@@ -6,7 +6,7 @@
             id="action_report_picking_dispatch"
             model="picking.dispatch"
             report_type="qweb-pdf"
-            name="picking_dispatch.report_picking_dispatch"
+            name="stock_picking_dispatch.report_picking_dispatch"
             file="picking_dispatch.report_picking_dispatch"
         />
 
