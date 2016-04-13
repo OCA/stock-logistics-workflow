@@ -9,13 +9,20 @@ from datetime import datetime
 class StockTransferDetails(models.TransientModel):
     _inherit = 'stock.transfer_details'
 
-    @api.one
+    @api.model
+    def default_get(self, fields):
+        picking = self.env['stock.picking'].browse(
+            self.env.context.get('active_id'))
+        if picking.pack_operation_ids:
+            picking.create_all_move_packages()
+        return super(StockTransferDetails, self).default_get(fields)
+
+    @api.multi
     def do_save_for_later(self):
+        self.ensure_one()
         operation_obj = self.env['stock.pack.operation'].with_context(
             no_recompute=True)
-        if not self.item_ids and not self.packop_ids:
-            self.picking_id.pack_operation_ids.unlink()
-            return True
+        self.picking_id.pack_operation_ids.unlink()
         # Create new and update existing pack operations
         for lstits in [self.item_ids, self.packop_ids]:
             for prod in lstits:

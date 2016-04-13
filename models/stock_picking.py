@@ -103,3 +103,31 @@ class StockPicking(models.Model):
         string='Total UL Packages Info', compute='_calc_picking_packages_info')
     num_packages = fields.Integer(
         string='# Packages', compute='_calc_picking_packages_info')
+
+    @api.multi
+    def create_all_move_packages(self):
+        location_obj = self.env['stock.location']
+        pack_op_obj = self.env['stock.pack.operation']
+        for picking in self:
+            for move in picking.move_lines:
+                op_qty = sum([x.product_qty for x in
+                              move.mapped('linked_move_operation_ids.'
+                                          'operation_id')])
+                if not move.product_qty - op_qty > 0:
+                    continue
+                location_dest = location_obj.get_putaway_strategy(
+                    picking.location_dest_id, move.product_id) or \
+                    picking.location_dest_id
+                val_dict = {
+                    'picking_id': picking.id,
+                    'product_qty': move.product_qty - op_qty,
+                    'product_id': move.product_id.id,
+                    'package_id': False,
+                    'lot_id': False,
+                    'owner_id': picking.owner_id.id,
+                    'location_id': picking.location_id.id,
+                    'location_dest_id': location_dest.id,
+                    'product_uom_id': move.product_id.uom_id.id,
+                    }
+                pack_op_obj.create(val_dict)
+        return True
