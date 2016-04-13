@@ -2,13 +2,10 @@
 # © 2012-2014 Alexandre Fayolle, Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp.osv import orm, fields
+from openerp import fields, models
 
 
-class Product(orm.Model):
+class Product(models.Model):
     _inherit = "product.product"
-
-    _columns = {
-        'description_warehouse': fields.text('Warehouse Description',
-                                             translate=True),
-    }
+    description_warehouse = fields.Text('Warehouse Description',
+                                        translate=True)

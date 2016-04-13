@@ -27,6 +27,14 @@ From there, you can perform various operations:
  * Make partial delivery
  * Print a report to pick the proper goods at once
 
+Known issues / Roadmap
+======================
+
+Unported features
+-----------------
+Until V7, when marking a picking dispatch as done, it was possible to choose partial quantities for each move and create backorder picking dispatch.
+This feature is currently unported in V8 / V9.
+
 
 Bug Tracker
 ===========
@@ -52,6 +60,7 @@ Contributors
 * Yannick Vaucher <yannick.vaucher@camptocamp.com>
 * Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
 * Joël Grand-Guillaume <joel.grandguillaume@camptocamp.com>
+* Cyril Gaudin <cyril.gaudin@camptocamp.com>
 
 
 Maintainer

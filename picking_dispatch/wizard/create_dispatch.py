@@ -2,63 +2,50 @@
 # © 2012-2014 Alexandre Fayolle, Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from openerp import _, api, fields, models
+from openerp.exceptions import UserError
 
-class picking_dispatch_creator(TransientModel):
 
+class PickingDispatchCreator(models.TransientModel):
     """Create a picking dispatch from stock.picking. This will take all related
     stock move from the selected picking and put them in the dispatch order."""
 
     _name = 'picking.dispatch.creator'
     _description = 'Picking Dispatch Creator'
-    _columns = {
-        'name': fields.char('Name', size=96, required=True,
-                            help='Name of the picking dispatch'),
-        'date': fields.date(
-            'Date',
-            required=True,
-            select=True,
-            help='Date on which the picking dispatched is to be processed'),
-        'picker_id': fields.many2one(
-            'res.users',
-            'Picker',
-            required=True,
-            help='The user to which the pickings are assigned'),
-        'notes': fields.text('Notes', help='free form remarks'),
-    }
 
-    def _default_picker(self, cr, uid, context=None):
-        user_obj = self.pool.get('res.users')
-        company = user_obj.browse(cr, uid, uid).company_id
-        return (
-            company.default_picker_id.id
-            if company.default_picker_id
-            else False
-        )
+    name = fields.Text(
+        'Name', size=96, required=True,
+        default=lambda x: x.env['ir.sequence'].next_by_code(
+            'picking.dispatch'
+        ),
+        help='Name of the picking dispatch'
+    )
+    date = fields.Date(
+        'Date', required=True, select=True, default=fields.Date.context_today,
+        help='Date on which the picking dispatched is to be processed'
+    )
 
-    _defaults = {
-        'name': lambda obj, cr, uid, ctxt: obj.pool.get('ir.sequence').get(
-            cr, uid, 'picking.dispatch'),
-        'date': fields.date.context_today,
-        'picker_id': _default_picker,
-    }
+    picker_id = fields.Many2one(
+        'res.users', string='Picker', required=True,
+        default=lambda self: self.env.user.company_id.default_picker_id,
+        help='The user to which the pickings are assigned'
+    )
 
-    def action_create_dispatch(self, cr, uid, ids, context=None):
+    notes = fields.Text('Notes', help='free form remarks')
+
+    @api.multi
+    def action_create_dispatch(self):
         """
         Open the historical margin view
         """
-        move_obj = self.pool.get('stock.move')
-        dispatch_obj = self.pool.get('picking.dispatch')
-        if context is None:
-            context = {}
-        wiz = self.read(cr, uid, ids, [], context=context)[0]
-        all_move_ids = move_obj.search(cr, uid,
-                                       [('picking_id', 'in',
-                                         context['active_ids'])],
-                                       context=context)
-        ok_move_ids = []
+        move_obj = self.env['stock.move']
+        selected_moves = move_obj.search(
+            [('picking_id', 'in', self.env.context['active_ids'])]
+        )
+        ok_move_ids = move_obj
         already_dispatched_ids = {}
         wrong_state_ids = {}
-        for move in move_obj.browse(cr, uid, all_move_ids, context=context):
+        for move in selected_moves:
             if move.dispatch_id:
                 already_dispatched_ids.setdefault(
                     move.dispatch_id.name, []
@@ -70,7 +57,8 @@ class picking_dispatch_creator(TransientModel):
                     move.picking_id.name, {}
                 ).setdefault(move.state, []).append(move.id)
             else:
-                ok_move_ids.append(move.id)
+                ok_move_ids |= move
+
         if not ok_move_ids:
             problems = [
                 _("No valid stock moves found to create the dispatch!"),
@@ -90,17 +78,13 @@ class picking_dispatch_creator(TransientModel):
                     problems.append(
                         _('Moves %s from picking %s are in state %s') %
                         (tuple(mvs), pck, state))
-            raise osv.except_osv(_('Warning !'), u'\n'.join(problems))
+            raise UserError(u'\n'.join(problems))
 
-        data = {'date': wiz.get('date'),
-                'name': wiz.get('name'),
-                'notes': wiz.get('notes'),
-                }
-        if wiz.get('picker_id'):
-            data['picker_id'] = wiz.get('picker_id')[0]
-        dispatch_id = dispatch_obj.create(cr, uid, data, context=context)
-        # for move_id in move_ids:
-        move_obj.write(cr, uid, ok_move_ids, {'dispatch_id': dispatch_id},
-                       context=context)
+        dispatch = self.env['picking.dispatch'].create({
+            'name': self.name,
+            'date': self.date,
+            'notes': self.notes,
+            'picker_id': self.picker_id.id,
+        })
 
-        return {'type': 'ir.actions.act_window_close'}
+        ok_move_ids.write({'dispatch_id': dispatch.id})

@@ -1,43 +1,50 @@
 # -*- coding: utf-8 -*-
 # © 2012-2014 Guewen Baconnier, Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+from datetime import date
+from openerp import _, api, fields, models
 
-from openerp.osv import orm
-from openerp.tools.translate import _
 
-
-class picking_dispatch_start(orm.TransientModel):
+class PickingDispatchStart(models.TransientModel):
     _name = 'picking.dispatch.start'
     _description = 'Picking Dispatch Start'
 
-    def start(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
+    def _get_message(self):
+        selected_count = len(self.env.context['active_ids'])
 
-        dispatch_ids = context.get('active_ids')
-        if not dispatch_ids:
-            raise orm.except_orm(
-                _('Error'),
-                _('No selected picking dispatch'))
+        assigned_count = self.env['picking.dispatch'].search_count(
+            self._get_assigned_domain()
+        )
 
-        dispatch_obj = self.pool['picking.dispatch']
-        domain = [('state', '=', 'assigned'),
-                  ('id', 'in', dispatch_ids)]
-        check_ids = dispatch_obj.search(cr, uid, domain, context=context)
-        if dispatch_ids != check_ids:
-            raise orm.except_orm(
-                _('Error'),
-                _('All the picking dispatches must be assigned to '
-                  'be started.'))
+        message = "<ul><li>%s</li>" % _(
+            "%s dispatch(es) will be started</li>"
+        ) % assigned_count
 
-        dispatch_obj.action_progress(cr, uid, dispatch_ids, context=context)
-        return {
-            'type': 'ir.actions.act_window',
-            'name': _('Started Picking Dispatch'),
-            'res_model': 'picking.dispatch',
-            'view_type': 'form',
-            'view_mode': 'tree, form',
-            'target': 'current',
-            'domain': [('id', 'in', dispatch_ids)],
-            'nodestroy': True,
-        }
+        if selected_count != assigned_count:
+            message += "<li>%s</li>" % _(
+                "%s dispatch(es) ignored because current state "
+                "is not 'Assigned' or date is not reached"
+            ) % (selected_count - assigned_count)
+        message += "</ul>"
+
+        return message
+
+    message = fields.Html(readonly=True, default=_get_message)
+
+    @api.multi
+    def start(self):
+        assigned_dispatches = self.env['picking.dispatch'].search(
+            self._get_assigned_domain()
+        )
+        assigned_dispatches.action_progress()
+
+    def _get_assigned_domain(self):
+        """ Return the domain to use for searching startable picking distpatch.
+
+        :rtype: list
+        """
+        return [
+            ('id', 'in', self.env.context['active_ids']),
+            ('state', '=', 'assigned'),
+            ('date', '<=', date.today())
+        ]

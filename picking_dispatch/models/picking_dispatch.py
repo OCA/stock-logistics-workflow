@@ -3,9 +3,9 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import logging
-from datetime import datetime
+from datetime import datetime, date
 from openerp import models, fields, api
-from openerp.osv.osv import except_osv
+from openerp.exceptions import UserError
 from openerp.tools.translate import _
 
 _logger = logging.getLogger(__name__)
@@ -50,21 +50,23 @@ class PickingDispatch(models.Model):
 
     name = fields.Char(
         'Name',
-        required=True, select=True,
+        required=True, index=True,
         copy=False, unique=True,
         states={'draft': [('readonly', False)]},
-        default=lambda self: self.env['ir.sequence'].get('picking.dispatch'),
+        default=lambda self: self.env['ir.sequence'].next_by_code(
+            'picking.dispatch'
+        ),
         help='Name of the picking dispatch')
     date = fields.Date(
         'Date',
-        required=True, readonly=True, select=True,
+        required=True, readonly=True, index=True,
         states={'draft': [('readonly', False)],
                 'assigned': [('readonly', False)]},
         default=fields.Date.context_today,
         help='date on which the picking dispatched is to be processed')
     picker_id = fields.Many2one(
         'res.users', 'Picker',
-        readonly=True, select=True,
+        readonly=True, index=True,
         states={'draft': [('readonly', False)],
                 'assigned': [('readonly', False),
                              ('required', True)]},
@@ -79,7 +81,7 @@ class PickingDispatch(models.Model):
         'picking.dispatch', 'Back Order of',
         help='if this dispatch was split, this links to the dispatch '
         'order containing the other part which was processed',
-        select=True)
+        index=True)
     state = fields.Selection(
         [
             ('draft', 'Draft'),
@@ -88,7 +90,7 @@ class PickingDispatch(models.Model):
             ('done', 'Done'),
             ('cancel', 'Cancelled'),
         ], 'Dispatch State',
-        readonly=True, select=True, copy=False,
+        readonly=True, index=True, copy=False,
         default='draft',
         help='the state of the picking. '
         'Workflow is draft -> assigned -> progress -> done or cancel')
@@ -111,7 +113,9 @@ class PickingDispatch(models.Model):
         return True
 
     _constraints = [
-        (_check_picker_assigned, 'Please select a picker.', ['picker_id'])
+        (_check_picker_assigned,
+         'Please select a picker.',
+         ['state', 'picker_id'])
     ]
 
     _order = 'date desc, id desc'
@@ -120,14 +124,12 @@ class PickingDispatch(models.Model):
     def action_assign(self):
         _logger.debug('set state to assigned for picking.dispatch %s', self)
         self.write({'state': 'assigned'})
-        return True
 
     @api.multi
     def action_progress(self):
         self.assert_start_ok()
         _logger.debug('set state to progress for picking.dispatch %s', self)
         self.write({'state': 'progress'})
-        return True
 
     @api.multi
     def action_done(self):
@@ -160,21 +162,18 @@ class PickingDispatch(models.Model):
 
     @api.multi
     def assert_start_ok(self):
-        now = datetime.now().date()
-        for obj in self:
-            date = datetime.strptime(obj.date, '%Y-%m-%d').date()
-            if now < date:
-                raise except_osv(
-                    _('Error'),
-                    _('This dispatch cannot be processed until %s') % obj.date)
+        today = date.today()
+        for dispatch in self:
+            if today < datetime.strptime(dispatch.date, '%Y-%m-%d').date():
+                raise UserError(_('This dispatch cannot be processed until %s')
+                                % dispatch.date)
 
-    def action_assign_moves(self, cr, uid, ids, context=None):
-        move_obj = self.pool['stock.move']
-        move_ids = move_obj.search(cr, uid,
-                                   [('dispatch_id', 'in', ids)],
-                                   context=context)
-        move_obj.action_assign(cr, uid, move_ids)
-        return True
+    @api.multi
+    def action_assign_moves(self):
+        moves = self.env['stock.move'].search(
+            [('dispatch_id', 'in', self.ids)]
+        )
+        moves.action_assign()
 
     @api.multi
     def check_assign_all(self, domain=None):
@@ -188,4 +187,3 @@ class PickingDispatch(models.Model):
                 domain = [('state', 'in', ('draft', 'assigned'))]
             pickings = self.search(domain)
         pickings.action_assign_moves()
-        return True

@@ -5,7 +5,8 @@
       <field name="name">picking.dispatch.start.form</field>
       <field name="model">picking.dispatch.start</field>
       <field name="arch" type="xml">
-        <form string="Start Dispatches" version="7.0">
+        <form string="Start Dispatches">
+          <field name="message" />
           <footer>
             <button name="start" string="Start" type="object" class="oe_highlight"/>
             or

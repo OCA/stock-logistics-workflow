@@ -112,10 +112,9 @@
     </record>
 
     <menuitem action='action_picking_dispatch_tree'
-              parent='stock.menu_stock_warehouse_mgmt'
+              parent='stock.menu_stock_root'
               id='menu_action_picking_dispatch'
-              sequence='10'/>
-
+              sequence='3'/>
 
   </data>
 </openerp>
