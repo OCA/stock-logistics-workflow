@@ -9,8 +9,10 @@
                 <div class="oe_button_box oe_right" position="before">
                     <header>
                         <button name="button_lock" string="Block"
+                            groups="stock_lock_lot.group_lock_lot"
                             type="object" attrs="{'invisible':[('locked','=',True)]}" />
                         <button name="button_unlock" string="Unblock"
+                            groups="stock_lock_lot.group_lock_lot"
                             type="object" attrs="{'invisible':[('locked','=',False)]}" />
                     </header>
                 </div>

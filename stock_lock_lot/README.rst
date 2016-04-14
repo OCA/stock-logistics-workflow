@@ -11,6 +11,15 @@ or not.
 The default value can be set on the Product Category, in the
 field "Block new Serial Numbers/lots".
 
+Configuration
+=============
+
+To allow a user to block or unblock a Lot:
+
+#. open the user settings (menu "Configuration > Users")
+#. in the "Warehouse" section, check the box
+   "Allow to block/unblock Serial Numbers/Lots"
+
 Usage
 =====
 
@@ -25,10 +34,6 @@ Delivery Orders are not allowed to select a blocked Serial Number/lot.
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
    :target: https://runbot.odoo-community.org/runbot/154/8.0
-
-For further information, please visit:
-
-* https://www.odoo.com/forum/help-1
 
 Bug Tracker
 ===========
@@ -54,6 +59,7 @@ Contributors
 Maintainer
 ----------
 
+
 .. image:: https://odoo-community.org/logo.png
    :alt: Odoo Community Association
    :target: https://odoo-community.org
@@ -64,4 +70,4 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-To contribute to this module, please visit http://odoo-community.org.
+To contribute to this module, please visit https://odoo-community.org.
