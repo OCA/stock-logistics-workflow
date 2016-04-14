@@ -10,7 +10,8 @@
                     <header>
                         <button name="button_lock" string="Block"
                             groups="stock_lock_lot.group_lock_lot"
-                            type="object" attrs="{'invisible':[('locked','=',True)]}" />
+                            type="object" attrs="{'invisible':[('locked','=',True)]}"
+                            confirm="If you block this Serial Number/Lot, all its reservations will be removed, and the pending stock moves will be marked 'unavailable'."/>
                         <button name="button_unlock" string="Unblock"
                             groups="stock_lock_lot.group_lock_lot"
                             type="object" attrs="{'invisible':[('locked','=',False)]}" />

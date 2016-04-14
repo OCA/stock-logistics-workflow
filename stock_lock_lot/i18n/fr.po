@@ -71,10 +71,9 @@ msgid "Created on"
 msgstr "Créé le"
 
 #. module: stock_lock_lot
-#: code:addons/stock_lock_lot/models/stock_production_lot.py:62
-#, python-format
-msgid "Error! Serial Number/Lot \"%s\" currently has reservations."
-msgstr "Erreur ! Il existe actuellement des reservations pour le numéro de série/lot \"%s\"."
+#: selection:stock.production.lot,lock_reason:0
+msgid "Demanded by product category"
+msgstr "Exigé par la catégorie d'article"
 
 #. module: stock_lock_lot
 #: field:wiz.lock.lot,id:0
@@ -86,6 +85,11 @@ msgstr "Id."
 msgid ""
 "If checked, future Serial Numbers/lots will be created blocked by default"
 msgstr "Si coché, les lots de production seront créés verrouillés par défaut"
+
+#. module: stock_lock_lot
+#: view:stock.production.lot:stock_lock_lot.view_production_lot_form_inh_locklot
+msgid "If you block this Serial Number/Lot, all its reservations will be removed, and the pending stock moves will be marked 'unavailable'."
+msgstr "Si vous bloquez ce lot, toutes les réservations seront supprimées, et les mouvements de stock à venir seront marqués \"Indisponibles\"."
 
 #. module: stock_lock_lot
 #: field:wiz.lock.lot,write_uid:0
@@ -108,6 +112,11 @@ msgid "Lot/Serial"
 msgstr "Lot/n° de série"
 
 #. module: stock_lock_lot
+#: selection:stock.production.lot,lock_reason:0
+msgid "None"
+msgstr "Aucune"
+
+#. module: stock_lock_lot
 #: view:stock.production.lot:stock_lock_lot.search_product_lot_filter_inh_locklot
 msgid "Product"
 msgstr "Article"
@@ -121,6 +130,11 @@ msgstr "Catégorie d'articles"
 #: model:ir.model,name:stock_lock_lot.model_stock_quant
 msgid "Quants"
 msgstr "Quants"
+
+#. module: stock_lock_lot
+#: field:stock.production.lot,lock_reason:0
+msgid "Reason to block the lot"
+msgstr "Raison du blocage du lot"
 
 #. module: stock_lock_lot
 #: model:mail.message.subtype,description:stock_lock_lot.mt_lock_lot
