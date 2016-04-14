@@ -26,19 +26,32 @@ class StockProductionLot(models.Model):
         @param product: browse-record for product.product
         @return True when the category of the product or one of the parents
                 demand new lots to be locked"""
+        return self._get_lock_reason(product) != 'none'
+
+    def _get_lock_reason(self, product):
+        """Reason to create locked
+
+        @param product: browse-record for product.product"""
         _locked = product.categ_id.lot_default_locked
         categ = product.categ_id.parent_id
         while categ and not _locked:
             _locked = categ.lot_default_locked
             categ = categ.parent_id
-        return _locked
+        return _locked and 'category' or 'none'
 
     @api.one
     def _get_locked_value(self):
         return self._get_product_locked(self.product_id)
 
-    locked = fields.Boolean(string='Blocked', default='_get_locked_value',
-                            readonly=True)
+    locked = fields.Boolean(
+        string='Blocked', default=lambda x: x._get_locked_value(),
+        readonly=True)
+    lock_reason = fields.Selection(
+        selection=[('category', 'Demanded by product category'),
+                   ('none', 'None')],
+        string='Reason to block the lot',
+        track_visibility='onchange')
+    product_id = fields.Many2one(track_visibility='onchange')
 
     @api.one
     @api.onchange('product_id')
@@ -48,49 +61,44 @@ class StockProductionLot(models.Model):
 
     @api.multi
     def button_lock(self):
-        """"Lock the lot if the reservations and permissions allow it"""
+        """"Block the lot
+
+        If the lot has reservations, they will be undone to lock the lot."""
         if not self.user_has_groups('stock_lock_lot.group_lock_lot'):
-            raise exceptions.Warning(
+            raise exceptions.AccessError(
                 _('You are not allowed to block Serial Numbers/Lots'))
-        stock_quant_obj = self.env['stock.quant']
-        for lot in self:
-            cond = [('lot_id', '=', lot.id),
-                    ('reservation_id', '!=', False)]
-            for quant in stock_quant_obj.search(cond):
-                if quant.reservation_id.state not in ('cancel', 'done'):
-                    raise exceptions.Warning(
-                        _('Error! Serial Number/Lot "%s" currently has '
-                          'reservations.')
-                        % (lot.name))
+        reserved_quants = self.env['stock.quant'].search(
+            [('lot_id', 'in', self.ids),
+             ('reservation_id', '!=', False),
+             ('reservation_id.state', 'not in', ('cancel', 'done'))])
+        reserved_quants.mapped("reservation_id").do_unreserve()
+        # Block the lot
         return self.write({'locked': True})
 
     @api.multi
     def button_unlock(self):
         """"Lock the lot if the permissions allow it"""
         if not self.user_has_groups('stock_lock_lot.group_lock_lot'):
-            raise exceptions.Warning(
+            raise exceptions.AccessError(
                 _('You are not allowed to unblock Serial Numbers/Lots'))
         return self.write({'locked': False})
 
-    # Kept in old API to maintain compatibility
-    def create(self, cr, uid, vals, context=None):
+    @api.model
+    def create(self, vals):
         """Force the locking/unlocking, ignoring the value of 'locked'."""
-        #  Web quick-create doesn't provide product_id in vals, but in context
-        if context is None:
-            context = {}
-        product_id = vals.get('product_id', context.get('product_id', False))
-        if product_id:
-            vals['locked'] = self._get_product_locked(
-                self.pool['product.product'].browse(
-                    cr, uid, product_id, context=context))
-        return super(StockProductionLot, self).create(
-            cr, uid, vals, context=context)
+        product = self.env['product.product'].browse(
+            vals.get('product_id',
+                     # Web quick-create provide in context
+                     self.env.context.get('product_id', False)))
+        vals['locked'] = self._get_product_locked(product)
+        vals['lock_reason'] = self._get_lock_reason(product)
+        return super(StockProductionLot, self).create(vals)
 
     @api.multi
     def write(self, values):
         """"Lock the lot if changing the product and locking is required"""
         if 'product_id' in values:
-            product = self.env['product.product'].browse(
-                values.get('product_id'))
+            product = self.env['product.product'].browse(values['product_id'])
             values['locked'] = self._get_product_locked(product)
+            values['lock_reason'] = self._get_lock_reason(product)
         return super(StockProductionLot, self).write(values)
