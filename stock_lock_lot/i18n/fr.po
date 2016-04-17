@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-09 09:36+0000\n"
-"PO-Revision-Date: 2016-03-04 12:22+0000\n"
+"POT-Creation-Date: 2016-04-15 00:49+0000\n"
+"PO-Revision-Date: 2016-04-14 14:00+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: French (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -16,6 +16,11 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: stock_lock_lot
+#: model:res.groups,name:stock_lock_lot.group_lock_lot
+msgid "Allow to block/unblock Serial Numbers/Lots"
+msgstr "Peut bloquer/débloquer les numéros de séries/lots"
 
 #. module: stock_lock_lot
 #: view:stock.production.lot:stock_lock_lot.view_production_lot_form_inh_locklot
@@ -66,7 +71,7 @@ msgid "Created on"
 msgstr "Créé le"
 
 #. module: stock_lock_lot
-#: code:addons/stock_lock_lot/models/stock_production_lot.py:59
+#: code:addons/stock_lock_lot/models/stock_production_lot.py:62
 #, python-format
 msgid "Error! Serial Number/Lot \"%s\" currently has reservations."
 msgstr "Erreur ! Il existe actuellement des reservations pour le numéro de série/lot \"%s\"."
@@ -150,21 +155,6 @@ msgid "What do you want to do with selected Serial Numbers/Lots?"
 msgstr "Que souhaitez-vous faire sur les n° de série/lots sélectionnés ?"
 
 #. module: stock_lock_lot
-#: view:stock.transfer_details:stock_lock_lot.view_stock_enter_transfer_details_inh_locklot
-msgid "[('product_id','=?',product_id),('locked','=',False)]"
-msgstr ""
-
-#. module: stock_lock_lot
-#: view:wiz.lock.lot:stock_lock_lot.view_wiz_lock_lot_form
-msgid "or"
-msgstr "ou"
-
-#. module: stock_lock_lot
-#: model:res.groups,name:stock_lock_lot.group_lock_lot
-msgid "Allow to block/unblock Serial Numbers/Lots"
-msgstr "Peut bloquer/débloquer les numéros de séries/lots"
-
-#. module: stock_lock_lot
 #: code:addons/stock_lock_lot/models/stock_production_lot.py:54
 #, python-format
 msgid "You are not allowed to block Serial Numbers/Lots"
@@ -176,3 +166,12 @@ msgstr "Vous n'êtes pas autorisé(e) à bloquer un numéro de série/lot"
 msgid "You are not allowed to unblock Serial Numbers/Lots"
 msgstr "Vous n'êtes pas autorisé(e) à débloquer un numéro de série/lot"
 
+#. module: stock_lock_lot
+#: view:stock.transfer_details:stock_lock_lot.view_stock_enter_transfer_details_inh_locklot
+msgid "[('product_id','=?',product_id),('locked','=',False)]"
+msgstr ""
+
+#. module: stock_lock_lot
+#: view:wiz.lock.lot:stock_lock_lot.view_wiz_lock_lot_form
+msgid "or"
+msgstr "ou"
