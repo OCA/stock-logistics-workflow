@@ -4,12 +4,20 @@
 
 
 from openerp import api, models
-from openerp.exceptions import Warning
+from openerp.exceptions import Warning as UserError
 from openerp.tools.translate import _
 
 
 class StockProductionLot(models.Model):
     _inherit = 'stock.production.lot'
+
+    @api.multi
+    def _prepare_picking_vals(self, warehouse):
+        return {
+            'origin': _('Lot: %s') % self.name,
+            'picking_type_id': warehouse.int_type_id.id or self.env.ref(
+                'stock.picking_type_internal').id,
+        }
 
     @api.multi
     def _prepare_move_vals(self, picking, quant, strap_location_id):
@@ -33,24 +41,35 @@ class StockProductionLot(models.Model):
     @api.multi
     def action_scrap_lot(self):
         self.ensure_one()
-        if not self.quant_ids:
-            raise Warning(_('Product list must be defined.'))
+        quants = self.quant_ids.filtered(
+            lambda x: x.location_id.usage == 'internal')
+        if not quants:
+            raise UserError(_("This lot don't contains any quant in internal "
+                            "location."))
         move_obj = self.env['stock.move']
+        picking_obj = self.env['stock.picking']
+        pickings = picking_obj.browse()
         strap_location_id = self.env.ref('stock.stock_location_scrapped').id
-        picking = self.env['stock.picking'].create({
-            'origin': 'Lot: %s' % self.name,
-            'picking_type_id': self.env.ref('stock.picking_type_internal').id,
-        })
-        for quant in self.quant_ids:
+        warehouse_ids = []
+        for quant in quants.sorted(key=lambda x: x.history_ids[-1:].
+                                   picking_id.picking_type_id.warehouse_id.id):
+            warehouse = quant.history_ids[-1:].picking_id.picking_type_id.\
+                warehouse_id
+            if warehouse.id not in warehouse_ids:
+                warehouse_ids.append(warehouse.id)
+                picking = picking_obj.create(self._prepare_picking_vals(
+                    warehouse))
+                pickings |= picking
             move = move_obj.create(self._prepare_move_vals(
                 picking, quant, strap_location_id))
             quant.reservation_id = move.id
-        if picking:
-            return {
-                'view_type': 'form',
-                'view_mode': 'form',
-                'res_model': 'stock.picking',
-                'type': 'ir.actions.act_window',
-                'res_id': picking.id,
-                'context': self.env.context
-            }
+
+        result = self.env.ref('stock.action_picking_tree').read()[0]
+        result['context'] = self.env.context
+        if len(pickings) != 1:
+            result['domain'] = "[('id', 'in', %s)]" % pickings.ids
+        else:
+            res = self.env.ref('stock.view_picking_form', False)
+            result['views'] = [(res and res.id or False, 'form')]
+            result['res_id'] = pickings.id
+        return result

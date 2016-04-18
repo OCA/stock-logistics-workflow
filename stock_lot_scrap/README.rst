@@ -7,13 +7,7 @@ Scrap Complete Lot
 ==================
 
 This module adds a button in *Production Lot/Serial Number* view form to
-*Scrap* all products contained.
-
-Usage
-=====
-
-Go to *Warehouse > Traceability > Serial Numbers*, and enter in view form mode.
-Click button *Scrap*
+*Scrap* all quants contained.
 
 
 Configuration
@@ -23,9 +17,16 @@ Configuration
 * Enable *Track lots or serial numbers*.
 
 
+Usage
+=====
+
+Go to *Warehouse > Traceability > Serial Numbers*, and enter in view form mode.
+Click button *Scrap*
+
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
    :target: https://runbot.odoo-community.org/runbot/154/8.0
+
 
 Bug Tracker
 ===========
