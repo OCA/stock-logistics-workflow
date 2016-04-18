@@ -150,3 +150,35 @@ class TestPackagePreparationLine(TransactionCase):
             (6, 0, [self.picking.id, self.picking2.id])]
         self.preparation.picking_ids = [(3, self.picking.id)]
         self.assertEquals(len(self.preparation.line_ids), 1)
+
+    def test_standard_flow_with_detail_with_lot(self):
+        # ----- Test a standard flow of a package preparation but add a lot
+        #       on detail
+        # ----- Create a lot
+        lot = self.env['stock.production.lot'].create({
+            'name': self.product1.name,
+            'product_id': self.product1.id,
+            })
+        # ----- Add a line in preparation with lot
+        line = self._create_line(self.preparation, self.product1, 2.0)
+        # ----- Assign lot to line
+        line.lot_id = lot.id
+        # ----- Put In Pack
+        self.preparation.action_put_in_pack()
+        # ----- Check operations
+        self.assertEqual(len(self.preparation.pack_operation_ids), 1)
+        # ----- Check Lot on Operation
+        self.assertEqual(
+            self.preparation.pack_operation_ids[0].lot_id.id,
+            lot.id)
+        # ----- Package Done
+        self.preparation.action_done()
+        # ----- Check lot on quants of stock move
+        self.assertEqual(
+            self.preparation.picking_ids[0].move_lines[0].
+            quant_ids[0].lot_id.id,
+            lot.id)
+        self.assertEqual(
+            self.preparation.picking_ids[0].move_lines[0].
+            quant_ids[1].lot_id.id,
+            lot.id)

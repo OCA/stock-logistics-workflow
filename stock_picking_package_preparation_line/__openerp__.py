@@ -28,6 +28,7 @@
     'license': 'AGPL-3',
     'category': 'Warehouse Management',
     'depends': [
+        'stock',
         'product',
         'stock_picking_package_preparation',
     ],
