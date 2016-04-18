@@ -52,7 +52,7 @@ class TestLockingUnlocking(TestStockCommon):
         # Verify the button locks the lot
         self.lot.button_lock()
         # Verify unauthorized users can't unlock the lot
-        with self.assertRaises(exceptions.Warning):
+        with self.assertRaises(exceptions.AccessError):
             self.lot.sudo(self.unauthorized_user).button_lock()
         self.assertTrue(self.lot.locked,
                         "The lot should be locked when the button is pressed")
@@ -71,7 +71,7 @@ class TestLockingUnlocking(TestStockCommon):
     def test_unlock(self):
         self.lot.button_lock()
         # Verify unauthorized users can't unlock the lot
-        with self.assertRaises(exceptions.Warning):
+        with self.assertRaises(exceptions.AccessError):
             self.lot.sudo(self.unauthorized_user).button_unlock()
         # Verify the button unlocks the lot when it's been locked
         self.lot.button_unlock()
