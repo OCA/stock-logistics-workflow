@@ -22,7 +22,7 @@ class TestPickingDispatch(TransactionCase):
         self.picking.action_confirm()
 
         self.dispatch = self.dispatch_model.create({
-            'picker_id': self.env.user.id,
+            'picker_id': self.env.uid,
             'move_ids': [
                 (4, line.id) for line in self.picking.move_lines
             ]
@@ -56,9 +56,11 @@ class TestPickingDispatch(TransactionCase):
         self.assertEqual(pickings, self.picking)
 
     def test_picking_related_dispatch(self):
-        # Coverage test
         empty_picking = self.picking_model.new()
         self.assertFalse(empty_picking.related_dispatch_ids)
+
+        dispatchless_picking = self.create_simple_picking([])
+        self.assertFalse(dispatchless_picking.related_dispatch_ids)
 
         self.assertEqual(self.dispatch, self.picking.related_dispatch_ids)
 
@@ -66,12 +68,11 @@ class TestPickingDispatch(TransactionCase):
         with self.assertRaises(ValidationError):
             self.dispatch_model.create({'state': 'assigned'})
         self.dispatch_model.create({
-            'picker_id': self.env.user.id, 'state': 'assigned'
+            'picker_id': self.env.uid, 'state': 'assigned'
         })
 
     def test_related_picking(self):
-        picking_ids = [pick.id for pick in self.dispatch.related_picking_ids]
-        self.assertEqual(picking_ids, [self.picking.id])
+        self.assertEqual(self.dispatch.related_picking_ids, self.picking)
         self.assertEqual(self.picking.state, 'confirmed')
         for move in self.picking.move_lines:
             self.assertEqual(move.state, 'confirmed')
@@ -196,7 +197,7 @@ class TestPickingDispatch(TransactionCase):
     def test_create_wizard__wrong_states_only(self):
         wizard = self.env['picking.dispatch.creator'].create({
             'name': 'Unittest wizard',
-            'picker_id': self.env.user.id
+            'picker_id': self.env.uid
         })
         picking2 = self.create_simple_picking([
             self.ref('product.product_product_8'),
@@ -216,12 +217,12 @@ class TestPickingDispatch(TransactionCase):
 
     def test_start_wizard(self):
         dispatch2 = self.dispatch_model.create({
-            'picker_id': self.env.user.id,
+            'picker_id': self.env.uid,
             'state': 'assigned'
         })
 
         dispatch3 = self.dispatch_model.create({
-            'picker_id': self.env.user.id,
+            'picker_id': self.env.uid,
             'state': 'assigned',
             'date': date.today() + timedelta(days=2)
         })

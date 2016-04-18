@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import logging
-from openerp import fields, models
+from openerp import api, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -12,9 +12,10 @@ class StockMove(models.Model):
     _inherit = 'stock.move'
     dispatch_id = fields.Many2one(
         'picking.dispatch', 'Dispatch', index=True, copy=False,
-        help='who this move is dispatched to'
+        help='In which picking dispatch this move will be processed.'
     )
 
+    @api.multi
     def action_cancel(self):
         """
         in addition to what the method in the parent class does,
@@ -24,10 +25,7 @@ class StockMove(models.Model):
         status = super(StockMove, self).action_cancel()
 
         if self.ids:
-            dispatches = self.env['picking.dispatch']
-            for move in self:
-                if move.dispatch_id:
-                    dispatches |= move.dispatch_id
+            dispatches = self.mapped('dispatch_id')
 
             # Keep on picking_dispatch which all moves canceled
             dispatches.filtered(
@@ -40,6 +38,7 @@ class StockMove(models.Model):
 
         return status
 
+    @api.multi
     def action_done(self):
         """
         in addition to the parent method does, set the dispatch done if all
@@ -48,9 +47,7 @@ class StockMove(models.Model):
         _logger.debug('done stock.moves %s', self.ids)
         status = super(StockMove, self).action_done()
         if self.ids:
-            dispatches = self.env['picking.dispatch']
-            for move in self:
-                if move.dispatch_id:
-                    dispatches |= move.dispatch_id
-            dispatches.check_finished()
+            dispatches = self.mapped('dispatch_id')
+            if dispatches:
+                dispatches.check_finished()
         return status

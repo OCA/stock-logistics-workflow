@@ -31,7 +31,7 @@ class StockPicking(models.Model):
         }
 
         for picking in self:
-            picking.related_dispatch_ids = picking_distpatches[picking.id]
+            picking.related_dispatch_ids = picking_distpatches.get(picking.id)
 
     @api.multi
     def _search_dispatch_pickings(self, operator, value):

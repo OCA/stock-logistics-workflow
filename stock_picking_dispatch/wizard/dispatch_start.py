@@ -17,7 +17,7 @@ class PickingDispatchStart(models.TransientModel):
         )
 
         message = "<ul><li>%s</li>" % _(
-            "%s dispatch(es) will be started</li>"
+            "%s dispatch(es) will be started"
         ) % assigned_count
 
         if selected_count != assigned_count:

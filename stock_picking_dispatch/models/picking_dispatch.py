@@ -3,7 +3,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import logging
-from datetime import datetime, date
 from openerp import models, fields, api
 from openerp.exceptions import UserError
 from openerp.tools.translate import _
@@ -162,9 +161,9 @@ class PickingDispatch(models.Model):
 
     @api.multi
     def assert_start_ok(self):
-        today = date.today()
+        today = fields.Date.today()
         for dispatch in self:
-            if today < datetime.strptime(dispatch.date, '%Y-%m-%d').date():
+            if today < dispatch.date:
                 raise UserError(_('This dispatch cannot be processed until %s')
                                 % dispatch.date)
 
