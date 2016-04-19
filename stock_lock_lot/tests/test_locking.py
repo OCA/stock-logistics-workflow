@@ -9,6 +9,8 @@ from openerp import exceptions
 class TestLockingUnlocking(TestStockCommon):
     def setUp(self):
         super(TestLockingUnlocking, self).setUp()
+        self.env['stock.config.settings']._write_or_create_param(
+            'stock.lock.lot.strict', False)
 
         self.LotObj = self.env['stock.production.lot']
 
