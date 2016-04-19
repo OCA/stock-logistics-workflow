@@ -20,13 +20,13 @@ class StockProductionLot(models.Model):
         }
 
     @api.multi
-    def _prepare_move_vals(self, picking, quant, strap_location_id):
+    def _prepare_move_vals(self, picking, quant, scrap_location_id):
         self.ensure_one()
         move_obj = self.env['stock.move']
         product = quant.product_id
         res = move_obj.onchange_product_id(
             prod_id=product.id, loc_id=quant.location_id.id,
-            loc_dest_id=strap_location_id)['value']
+            loc_dest_id=scrap_location_id)['value']
         res.update(move_obj.onchange_quantity(
             product.id, quant.qty, res['product_uom'], res['product_uos']
         )['value'])
@@ -44,12 +44,12 @@ class StockProductionLot(models.Model):
         quants = self.quant_ids.filtered(
             lambda x: x.location_id.usage == 'internal')
         if not quants:
-            raise UserError(_("This lot don't contains any quant in internal "
+            raise UserError(_("This lot doesn't contain any quant in internal "
                             "location."))
         move_obj = self.env['stock.move']
         picking_obj = self.env['stock.picking']
         pickings = picking_obj.browse()
-        strap_location_id = self.env.ref('stock.stock_location_scrapped').id
+        scrap_location_id = self.env.ref('stock.stock_location_scrapped').id
         warehouse_ids = []
         for quant in quants.sorted(key=lambda x: x.history_ids[-1:].
                                    picking_id.picking_type_id.warehouse_id.id):
@@ -61,7 +61,7 @@ class StockProductionLot(models.Model):
                     warehouse))
                 pickings |= picking
             move = move_obj.create(self._prepare_move_vals(
-                picking, quant, strap_location_id))
+                picking, quant, scrap_location_id))
             quant.reservation_id = move.id
 
         result = self.env.ref('stock.action_picking_tree').read()[0]

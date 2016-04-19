@@ -20,8 +20,8 @@ Configuration
 Usage
 =====
 
-Go to *Warehouse > Traceability > Serial Numbers*, and enter in view form mode.
-Click button *Scrap*
+* Go to *Warehouse > Traceability > Serial Numbers*, and enter in view form mode.
+* Click button *Scrap*
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
