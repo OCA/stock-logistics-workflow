@@ -61,20 +61,18 @@ class StockProductionLot(models.Model):
 
     @api.multi
     def button_lock(self):
-        """"Lock the lot if the reservations and permissions allow it"""
+        """"Block the lot
+
+        If the lot has reservations, they will be undone to lock the lot."""
         if not self.user_has_groups('stock_lock_lot.group_lock_lot'):
             raise exceptions.AccessError(
                 _('You are not allowed to block Serial Numbers/Lots'))
-        stock_quant_obj = self.env['stock.quant']
-        for lot in self:
-            cond = [('lot_id', '=', lot.id),
-                    ('reservation_id', '!=', False)]
-            for quant in stock_quant_obj.search(cond):
-                if quant.reservation_id.state not in ('cancel', 'done'):
-                    raise exceptions.Warning(
-                        _('Error! Serial Number/Lot "%s" currently has '
-                          'reservations.')
-                        % (lot.name))
+        reserved_quants = self.env['stock.quant'].search(
+            [('lot_id', 'in', self.ids),
+             ('reservation_id', '!=', False),
+             ('reservation_id.state', 'not in', ('cancel', 'done'))])
+        reserved_quants.mapped("reservation_id").do_unreserve()
+        # Block the lot
         return self.write({'locked': True})
 
     @api.multi
