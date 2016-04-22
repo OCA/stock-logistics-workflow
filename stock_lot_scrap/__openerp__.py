@@ -13,9 +13,6 @@
               "Odoo Community Association (OCA)",
     'website': 'http://www.tecnativa.com',
     'depends': ['stock'],
-    'data': [
-        'views/sock_scrap_lot_view.xml',
-    ],
     'installable': True,
     'images': [],
 }
