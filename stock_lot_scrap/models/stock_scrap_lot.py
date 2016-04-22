@@ -1,15 +1,44 @@
 # -*- coding: utf-8 -*-
 # © 2016 Carlos Dauden <carlos.dauden@tecnativa.com>
+# © 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from openerp import api, models
+from openerp import api, models, _
 from openerp.exceptions import Warning as UserError
-from openerp.tools.translate import _
+from lxml import etree
 
 
 class StockProductionLot(models.Model):
     _inherit = 'stock.production.lot'
+
+    @api.model
+    def fields_view_get(self, view_id=None, view_type='form', toolbar=False,
+                        submenu=False):
+        """Inject the button here to avoid conflicts with other modules
+         that add a header element in the main view.
+        """
+        res = super(StockProductionLot, self).fields_view_get(
+            view_id=view_id, view_type=view_type, toolbar=toolbar,
+            submenu=submenu)
+        eview = etree.fromstring(res['arch'])
+        xml_header = eview.xpath("//header")
+        if not xml_header:
+            # Create a header
+            header_element = etree.Element('header')
+            # Append it to the view
+            forms = eview.xpath("//form")
+            if forms:
+                forms[0].insert(0, header_element)
+        else:
+            header_element = xml_header[0]
+        button_element = etree.Element(
+            'button', {'type': 'object',
+                       'name': 'action_scrap_lot',
+                       'string': _('Scrap')})
+        header_element.append(button_element)
+        res['arch'] = etree.tostring(eview)
+        return res
 
     @api.multi
     def _prepare_picking_vals(self, warehouse):
@@ -63,7 +92,8 @@ class StockProductionLot(models.Model):
             move = move_obj.create(self._prepare_move_vals(
                 picking, quant, scrap_location_id))
             quant.reservation_id = move.id
-
+            move.action_confirm()
+            move.action_assign()
         result = self.env.ref('stock.action_picking_tree').read()[0]
         result['context'] = self.env.context
         if len(pickings) != 1:
