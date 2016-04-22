@@ -29,7 +29,7 @@ msgid "Lot: %s"
 msgstr "Lote: %s"
 
 #. module: stock_lot_scrap
-#: view:stock.production.lot:stock_lot_scrap.view_production_lot_form
+#: code:addons/stock_lot_scrap/models/stock_scrap_lot.py:38
 msgid "Scrap"
 msgstr "Desechar"
 
