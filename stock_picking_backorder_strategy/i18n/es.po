@@ -4,12 +4,14 @@
 # 
 # Translators:
 # Antonio Trueba, 2016
+# Antonio Trueba, 2016
+# Lionel Sausin <ls@numerigraphe.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-10 05:29+0000\n"
-"PO-Revision-Date: 2016-02-16 14:48+0000\n"
+"POT-Creation-Date: 2016-04-24 02:43+0000\n"
+"PO-Revision-Date: 2016-04-20 09:18+0000\n"
 "Last-Translator: Antonio Trueba\n"
 "Language-Team: Spanish (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -52,7 +54,7 @@ msgstr ""
 #. module: stock_picking_backorder_strategy
 #: model:ir.model,name:stock_picking_backorder_strategy.model_stock_picking
 msgid "Picking List"
-msgstr ""
+msgstr "Lista albaranes"
 
 #. module: stock_picking_backorder_strategy
 #: model:ir.model,name:stock_picking_backorder_strategy.model_stock_picking_type

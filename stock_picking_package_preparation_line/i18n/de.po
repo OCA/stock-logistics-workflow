@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-10 05:29+0000\n"
-"PO-Revision-Date: 2016-01-18 19:48+0000\n"
-"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>\n"
+"POT-Creation-Date: 2016-04-24 02:43+0000\n"
+"PO-Revision-Date: 2016-04-18 11:18+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: German (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -53,8 +53,8 @@ msgid ""
 msgstr "Wenn Sie diese Menge, bei einer Kommissionierung die 'Bereit' ist, ändern, erstellt das System keinen Rückstand, sondern liefert die neue Menge einfach aus."
 
 #. module: stock_picking_package_preparation_line
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:229
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:235
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:248
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:257
 #, python-format
 msgid ""
 "Impossible to create confirmed picking. Please Check products availability!"
@@ -69,6 +69,11 @@ msgstr "Zuletzt aktualisiert durch"
 #: field:stock.picking.package.preparation.line,write_date:0
 msgid "Last Updated on"
 msgstr "Zuletzt aktualisiert am"
+
+#. module: stock_picking_package_preparation_line
+#: field:stock.picking.package.preparation.line,lot_id:0
+msgid "Lot"
+msgstr ""
 
 #. module: stock_picking_package_preparation_line
 #: view:stock.picking.package.preparation:stock_picking_package_preparation_line.sppp_line_stock_picking_package_preparation_form

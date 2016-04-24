@@ -4,12 +4,15 @@
 # 
 # Translators:
 # Antonio Trueba, 2016
+# Antonio Trueba, 2016
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2016
+# Paolo Valier, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-10 05:29+0000\n"
-"PO-Revision-Date: 2016-02-16 14:53+0000\n"
+"POT-Creation-Date: 2016-04-24 02:43+0000\n"
+"PO-Revision-Date: 2016-04-18 09:15+0000\n"
 "Last-Translator: Antonio Trueba\n"
 "Language-Team: Spanish (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -110,7 +113,7 @@ msgstr ""
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_picking_package_preparation
 #: help:stock.picking.package.preparation,message_unread:0
@@ -143,12 +146,12 @@ msgstr ""
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última actualización de"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última actualización en"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,ul_id:0

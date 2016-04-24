@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-15 00:49+0000\n"
-"PO-Revision-Date: 2016-04-15 04:50+0000\n"
+"POT-Creation-Date: 2016-04-24 02:43+0000\n"
+"PO-Revision-Date: 2016-04-19 09:04+0000\n"
 "Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/sl/)\n"
 "MIME-Version: 1.0\n"
@@ -73,10 +73,9 @@ msgid "Created on"
 msgstr "Ustvarjeno"
 
 #. module: stock_lock_lot
-#: code:addons/stock_lock_lot/models/stock_production_lot.py:62
-#, python-format
-msgid "Error! Serial Number/Lot \"%s\" currently has reservations."
-msgstr "Napaka! Serijska številka/lot \"%s\" trenutno ima rezervacije."
+#: selection:stock.production.lot,lock_reason:0
+msgid "Demanded by product category"
+msgstr "Zahteva za kategorijo proizvodov"
 
 #. module: stock_lock_lot
 #: field:wiz.lock.lot,id:0
@@ -88,6 +87,13 @@ msgstr "ID"
 msgid ""
 "If checked, future Serial Numbers/lots will be created blocked by default"
 msgstr "Če je označeno, bodo bodoče serijske številke/loti privzeto ustvarjene kot blokirane"
+
+#. module: stock_lock_lot
+#: view:stock.production.lot:stock_lock_lot.view_production_lot_form_inh_locklot
+msgid ""
+"If you block this Serial Number/Lot, all its reservations will be removed, "
+"and the pending stock moves will be marked 'unavailable'."
+msgstr "Če blokirate to serijsko številko/lot, bodo tudi vse povezane rezervacije odstranjene, čakajoči premiki zaloge pa bodo označeni kot 'ni na razpolago'."
 
 #. module: stock_lock_lot
 #: field:wiz.lock.lot,write_uid:0
@@ -105,9 +111,19 @@ msgid "Lot"
 msgstr "Lot"
 
 #. module: stock_lock_lot
+#: view:stock.config.settings:stock_lock_lot.view_stock_configuration
+msgid "Lot blocking"
+msgstr "Blokiranje lota"
+
+#. module: stock_lock_lot
 #: model:ir.model,name:stock_lock_lot.model_stock_production_lot
 msgid "Lot/Serial"
 msgstr "Lot/serijska št."
+
+#. module: stock_lock_lot
+#: selection:stock.production.lot,lock_reason:0
+msgid "None"
+msgstr "Brez"
 
 #. module: stock_lock_lot
 #: view:stock.production.lot:stock_lock_lot.search_product_lot_filter_inh_locklot
@@ -123,6 +139,11 @@ msgstr "Kategorija proizvoda"
 #: model:ir.model,name:stock_lock_lot.model_stock_quant
 msgid "Quants"
 msgstr "Kvanti"
+
+#. module: stock_lock_lot
+#: field:stock.production.lot,lock_reason:0
+msgid "Reason to block the lot"
+msgstr "Vzrok zaustavitve lota"
 
 #. module: stock_lock_lot
 #: model:mail.message.subtype,description:stock_lock_lot.mt_lock_lot
@@ -142,6 +163,19 @@ msgid "Serial Nunber/lot blocking"
 msgstr "Blokiranje serijske številke/lota"
 
 #. module: stock_lock_lot
+#: field:stock.config.settings,stock_lock_lot_strict:0
+msgid "Strictly forbid moves on blocked Serial Numbers/lots."
+msgstr "Striktna prepoved premikov pri blokiranih serijskih številkah/lotih."
+
+#. module: stock_lock_lot
+#: code:addons/stock_lock_lot/models/stock_quant.py:37
+#, python-format
+msgid ""
+"The following lots/serial number is blocked and cannot be moved:\n"
+"%s"
+msgstr "Naslednji/a lot/serijska številka je blokiran/a in se ga/je ne more premikati:\n%s"
+
+#. module: stock_lock_lot
 #: view:stock.production.lot:stock_lock_lot.view_production_lot_form_inh_locklot
 msgid "Unblock"
 msgstr "Sprosti"
@@ -157,13 +191,20 @@ msgid "What do you want to do with selected Serial Numbers/Lots?"
 msgstr "Kaj želite storiti z izbranimi serijskimi številkami/loti?"
 
 #. module: stock_lock_lot
-#: code:addons/stock_lock_lot/models/stock_production_lot.py:54
+#: help:stock.config.settings,stock_lock_lot_strict:0
+msgid ""
+"When this box is checked, users are not allowed to force theavailability on "
+"blocked Serial Numbers/lots."
+msgstr "Če označeno, se uporabnikom ne dovoli vsiljevati razpoložljivosti pri blokiranih serijskih številkah/lotih."
+
+#. module: stock_lock_lot
+#: code:addons/stock_lock_lot/models/stock_production_lot.py:69
 #, python-format
 msgid "You are not allowed to block Serial Numbers/Lots"
 msgstr "Blokiranje serijskih številk/lotov vam ni dovoljeno"
 
 #. module: stock_lock_lot
-#: code:addons/stock_lock_lot/models/stock_production_lot.py:72
+#: code:addons/stock_lock_lot/models/stock_production_lot.py:83
 #, python-format
 msgid "You are not allowed to unblock Serial Numbers/Lots"
 msgstr "Sprostitev serijskih številk/lotov vam ni dovoljena"

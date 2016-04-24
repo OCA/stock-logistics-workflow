@@ -4,12 +4,13 @@
 # 
 # Translators:
 # Antonio Trueba, 2016
+# Antonio Trueba, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-10 05:29+0000\n"
-"PO-Revision-Date: 2016-02-16 14:55+0000\n"
+"POT-Creation-Date: 2016-04-24 02:43+0000\n"
+"PO-Revision-Date: 2016-04-20 09:18+0000\n"
 "Last-Translator: Antonio Trueba\n"
 "Language-Team: Spanish (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -241,7 +242,7 @@ msgstr "Agrupar por..."
 #: field:picking.dispatch.creator,id:0 field:picking.dispatch.start,id:0
 #: field:report.picking_dispatch.report_picking_dispatch,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
@@ -261,7 +262,7 @@ msgstr ""
 #: field:picking.dispatch.creator,write_uid:0
 #: field:picking.dispatch.start,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última actualización de"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,write_date:0
@@ -270,7 +271,7 @@ msgstr ""
 #: field:picking.dispatch.creator,write_date:0
 #: field:picking.dispatch.start,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última actualización en"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,move_ids:0
@@ -382,7 +383,7 @@ msgstr ""
 #. module: picking_dispatch
 #: model:ir.model,name:picking_dispatch.model_stock_picking
 msgid "Picking List"
-msgstr ""
+msgstr "Lista albaranes"
 
 #. module: picking_dispatch
 #: model:ir.actions.report.xml,name:picking_dispatch.action_report_picking_dispatch
@@ -392,7 +393,7 @@ msgstr ""
 #. module: picking_dispatch
 #: view:res.company:picking_dispatch.view_company_form_inherit
 msgid "Pickings"
-msgstr ""
+msgstr "Albaranes"
 
 #. module: picking_dispatch
 #: constraint:picking.dispatch:0
@@ -466,7 +467,7 @@ msgstr "Estado"
 #. module: picking_dispatch
 #: model:ir.model,name:picking_dispatch.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimiento de existencias"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form
