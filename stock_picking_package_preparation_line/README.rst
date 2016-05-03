@@ -44,6 +44,7 @@ Contributors
 ------------
 
 * Francesco Apruzzese <f.apruzzese@apuliasoftware.it>
+* Alessio Gerace <alessio.gerace@agilebg.com>
 
 Maintainer
 ----------
