@@ -43,6 +43,19 @@ class TestDeliveryWithoutOwner(TransactionCase):
         self.move.product_uom_qty = 80
         self.picking.action_assign()
         self.assertEqual('assigned', self.picking.state)
+        # finalize picking
+        self.picking.do_prepare_partial()
+        self.picking.do_transfer()
+        self.assertEqual('done', self.picking.state)
+        # return picking
+        return_pick_wiz = self.env['stock.return.picking'].with_context(
+            active_id=self.picking.id, active_ids=[self.picking.id]).create({})
+        return_pick_id = int(
+            return_pick_wiz.create_returns()['domain'].
+            split('[')[2].split(']')[0])
+        return_picking = self.env['stock.picking'].browse(return_pick_id)
+        return_picking.action_assign()
+        self.assertEqual('assigned', return_picking.state)
 
     def test_it_partially_reserves_my_stock(self):
         self.move.product_uom_qty = 150

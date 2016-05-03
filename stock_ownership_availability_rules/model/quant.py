@@ -96,6 +96,9 @@ class Quant(models.Model):
         if not restrict_partner_id:
             restrict_partner_id = (location.partner_id.id or
                                    location.company_id.partner_id.id)
+        if not restrict_partner_id:
+            # location can be customer, so use partner from user company
+            restrict_partner_id = self.env.user.company_id.partner_id.id
 
         domain += [
             ('owner_id', '=', restrict_partner_id),
