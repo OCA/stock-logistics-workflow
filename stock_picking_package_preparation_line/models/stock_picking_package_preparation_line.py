@@ -197,9 +197,11 @@ class StockPickingPackagePreparation(models.Model):
         picking_model = self.env['stock.picking']
         move_model = self.env['stock.move']
         pack_model = self.env['stock.pack.operation']
+        default_picking_type = self.env.user.company_id.\
+            default_picking_type_for_package_preparation_id or \
+            self.env.ref('stock.picking_type_out')
         for package in self:
-            picking_type = package.picking_type_id or \
-                self.env.ref('stock.picking_type_out')
+            picking_type = package.picking_type_id or default_picking_type
             moves = []
             for line in package.line_ids:
                 # ----- If line has 'move_id' this means we don't need to

@@ -34,6 +34,7 @@
     ],
     'website': 'http://www.apuliasoftware.it',
     'data': [
+        'views/ir_config_view.xml',
         'views/stock_picking_package_preparation_line.xml',
         'security/ir.model.access.csv',
     ],
