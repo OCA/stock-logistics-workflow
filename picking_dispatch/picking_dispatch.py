@@ -43,6 +43,9 @@ class PickingDispatch(models.Model):
 
     @api.multi
     def _get_related_picking(self):
+        if not self.ids:
+            return
+
         cr = self.env.cr
         picking_ids = {}
         for dispatch in self:
