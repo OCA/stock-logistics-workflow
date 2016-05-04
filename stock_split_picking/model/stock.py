@@ -37,14 +37,21 @@ class stock_picking(models.Model):
             'active_ids': self.ids,
             'active_id': len(self.ids) and self.ids[0] or False,
             'do_only_split': True,
+            'default_picking_id': len(self.ids) and self.ids[0] or False,
         }
 
-        wiz = self.env['stock.transfer_details'].with_context(**ctx).create(
-            {'picking_id': len(self.ids) and self.ids[0] or False,
-             })
-        view_dict = wiz.wizard_view()
-        view_dict['name'] = _('Enter quantities to split')
-        return view_dict
+        view = self.env.ref('stock.view_stock_enter_transfer_details')
+        return {
+            'name': _('Enter quantities to split'),
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'stock.transfer_details',
+            'views': [(view.id, 'form')],
+            'view_id': view.id,
+            'target': 'new',
+            'context': ctx,
+        }
 
 
 class StockMove(models.Model):
