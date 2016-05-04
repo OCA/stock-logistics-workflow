@@ -35,6 +35,9 @@ class check_assign_all(orm.TransientModel):
         'force_availability': fields.boolean(
             'Force Availability', help="""check this box if you want to"""
             """ force the availability of the selected Delivery Orders."""),
+        'cancel_availability': fields.boolean(
+            'Cancel Availability', help="""check this box if you want to"""
+            """ cancel the availability of the selected Delivery Orders."""),
         'process_picking': fields.boolean(
             'Deliver', help="""check this box if you want to"""
             """ deliver all the selected Delivery Orders.\n You'll not have"""
@@ -55,8 +58,17 @@ class check_assign_all(orm.TransientModel):
         context = context or {}
         return context.get('process_picking', False)
 
+    def _default_cancel_availability(self, cr, uid, context=None):
+        context = context or {}
+        return context.get('cancel_availability', False)
+
+    def _default_check_availability(self, cr, uid, context=None):
+        return (not self._default_cancel_availability(cr, uid,
+                                                      context=context))
+
     _defaults = {
-        'check_availability': True,
+        'check_availability': _default_check_availability,
+        'cancel_availability': _default_cancel_availability,
         'force_availability': _default_force_availability,
         'process_picking': _default_process_picking,
     }
@@ -97,6 +109,10 @@ class check_assign_all(orm.TransientModel):
                   ('id', 'in', picking_ids)]
         assigned_picking_ids = picking_obj.search(
             cr, uid, domain, order='min_date', context=context)
+
+        # Cancal availability all pickings if asked
+        if wizard.cancel_availability and assigned_picking_ids:
+            picking_obj.cancel_assign(cr, uid, assigned_picking_ids)
 
         # Process all pickings if asked
         if wizard.process_picking and assigned_picking_ids:

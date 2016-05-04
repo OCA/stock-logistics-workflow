@@ -9,6 +9,7 @@
               <group>
                   <field name="check_availability"/>
                   <field name="force_availability"/>
+                  <field name="cancel_availability"/>
                   <field name="process_picking"/>
                   <field name="create_invoice"/>
               </group>
@@ -54,6 +55,25 @@
       <field name="name">Force Availability</field>
       <field name="key2">client_action_multi</field>
       <field name="value" eval="'ir.actions.act_window,' + str(ref('action_force_availability_all'))"/>
+      <field name="key">action</field>
+      <field name="model">stock.picking.out</field>
+    </record>
+
+<!-- Cancel Availability Action -->
+    <record id="action_cancel_availability_all" model="ir.actions.act_window">
+      <field name="name">Cancel Availability</field>
+      <field name="res_model">stock.picking.check.assign.all</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+      <field name="context">{'cancel_availability': 1}</field>
+    </record>
+
+    <record id="action_cancel_availability_all_values" model="ir.values">
+      <field name="model_id" ref="stock.model_stock_picking_out" />
+      <field name="name">Cancel Availability</field>
+      <field name="key2">client_action_multi</field>
+      <field name="value" eval="'ir.actions.act_window,' + str(ref('action_cancel_availability_all'))"/>
       <field name="key">action</field>
       <field name="model">stock.picking.out</field>
     </record>
