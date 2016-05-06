@@ -58,6 +58,7 @@ class StockPicking(models.Model):
         for record in self:
             sequence = 0
             for package in record.packages:
+                record.packages_info.unlink()
                 sequence += 1
                 package_operations = record.pack_operation_ids.filtered(
                     lambda r: r.result_package_id == package)
@@ -77,6 +78,7 @@ class StockPicking(models.Model):
                 }
                 pack_weight += pack_weight_obj.create(vals)
             if record.packages:
+                record.package_totals.unlink()
                 for product_ul in self.env['product.ul'].search([]):
                     cont = len(record.packages.filtered(
                         lambda x: x.ul_id.id == product_ul.id))
@@ -87,10 +89,9 @@ class StockPicking(models.Model):
                             'quantity': cont,
                         }
                         pack_total += pack_total_obj.create(vals)
-            record.packages_info = pack_weight
-            record.package_totals = pack_total
-            record.num_packages = sum(x.quantity for x in
-                                      record.package_totals)
+            record.packages_info = pack_weight.ids
+            record.package_totals = pack_total.ids
+            record.num_packages = sum(x.quantity for x in pack_total)
 
     packages = fields.Many2many(
         comodel_name='stock.quant.package', string='Packages',

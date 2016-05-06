@@ -23,6 +23,7 @@
 {
     "name": "Stock picking package info",
     "version": "8.0.1.1.0",
+    "license": "AGPL-3",
     "author": "OdooMRP team, "
               "AvanzOSC, "
               "Serv. Tecnol. Avanzados - Pedro M. Baeza",
