@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-24 02:43+0000\n"
-"PO-Revision-Date: 2016-04-19 09:04+0000\n"
+"POT-Creation-Date: 2016-05-04 02:49+0000\n"
+"PO-Revision-Date: 2016-05-03 14:58+0000\n"
 "Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/sl/)\n"
 "MIME-Version: 1.0\n"
@@ -78,6 +78,11 @@ msgid "Demanded by product category"
 msgstr "Zahteva za kategorijo proizvodov"
 
 #. module: stock_lock_lot
+#: field:wiz.lock.lot,display_name:0
+msgid "Display Name"
+msgstr "Prikazni naziv"
+
+#. module: stock_lock_lot
 #: field:wiz.lock.lot,id:0
 msgid "ID"
 msgstr "ID"
@@ -94,6 +99,11 @@ msgid ""
 "If you block this Serial Number/Lot, all its reservations will be removed, "
 "and the pending stock moves will be marked 'unavailable'."
 msgstr "Če blokirate to serijsko številko/lot, bodo tudi vse povezane rezervacije odstranjene, čakajoči premiki zaloge pa bodo označeni kot 'ni na razpolago'."
+
+#. module: stock_lock_lot
+#: field:wiz.lock.lot,__last_update:0
+msgid "Last Modified on"
+msgstr "Zadnjič spremenjeno"
 
 #. module: stock_lock_lot
 #: field:wiz.lock.lot,write_uid:0

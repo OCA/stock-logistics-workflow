@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-22 09:31+0000\n"
-"PO-Revision-Date: 2015-10-21 16:33+0000\n"
+"POT-Creation-Date: 2016-05-04 02:49+0000\n"
+"PO-Revision-Date: 2016-05-03 14:09+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: English (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/en/)\n"
 "MIME-Version: 1.0\n"
@@ -203,6 +203,16 @@ msgid "Dispatch order already processed"
 msgstr "Dispatch order already processed"
 
 #. module: picking_dispatch
+#: field:picking.dispatch,display_name:0
+#: field:picking.dispatch.assign.picker,display_name:0
+#: field:picking.dispatch.check.assign.all,display_name:0
+#: field:picking.dispatch.creator,display_name:0
+#: field:picking.dispatch.start,display_name:0
+#: field:report.picking_dispatch.report_picking_dispatch,display_name:0
+msgid "Display Name"
+msgstr "Display Name"
+
+#. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 #: selection:picking.dispatch,state:0
@@ -215,7 +225,7 @@ msgid "Draft"
 msgstr "Draft"
 
 #. module: picking_dispatch
-#: code:addons/picking_dispatch/picking_dispatch.py:182
+#: code:addons/picking_dispatch/picking_dispatch.py:185
 #: code:addons/picking_dispatch/wizard/check_assign_all.py:36
 #: code:addons/picking_dispatch/wizard/dispatch_assign_picker.py:44
 #: code:addons/picking_dispatch/wizard/dispatch_start.py:37
@@ -252,6 +262,16 @@ msgstr "In Progress"
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 msgid "Is a Back Order"
 msgstr "Is a Back Order"
+
+#. module: picking_dispatch
+#: field:picking.dispatch,__last_update:0
+#: field:picking.dispatch.assign.picker,__last_update:0
+#: field:picking.dispatch.check.assign.all,__last_update:0
+#: field:picking.dispatch.creator,__last_update:0
+#: field:picking.dispatch.start,__last_update:0
+#: field:report.picking_dispatch.report_picking_dispatch,__last_update:0
+msgid "Last Modified on"
+msgstr "Last Modified on"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,write_uid:0
@@ -430,6 +450,7 @@ msgid "Related Dispatch"
 msgstr "Related Dispatch"
 
 #. module: picking_dispatch
+#: field:picking.dispatch,related_picking_ids:0
 #: field:stock.picking,related_dispatch_ids:0
 msgid "Related Dispatch Picking"
 msgstr "Related Dispatch Picking"
@@ -478,7 +499,7 @@ msgid "The user to which the pickings are assigned"
 msgstr "The user to which the pickings are assigned"
 
 #. module: picking_dispatch
-#: code:addons/picking_dispatch/picking_dispatch.py:183
+#: code:addons/picking_dispatch/picking_dispatch.py:186
 #, python-format
 msgid "This dispatch cannot be processed until %s"
 msgstr "This dispatch cannot be processed until %s"

@@ -3,20 +3,25 @@
 # * stock_picking_package_preparation_line
 # 
 # Translators:
-# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-24 02:43+0000\n"
-"PO-Revision-Date: 2016-04-18 11:18+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"POT-Creation-Date: 2016-05-04 02:49+0000\n"
+"PO-Revision-Date: 2016-05-03 15:01+0000\n"
+"Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/sl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: sl\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+
+#. module: stock_picking_package_preparation_line
+#: model:ir.model,name:stock_picking_package_preparation_line.model_res_company
+msgid "Companies"
+msgstr "Družbe"
 
 #. module: stock_picking_package_preparation_line
 #: field:stock.picking.package.preparation.line,create_uid:0
@@ -27,6 +32,12 @@ msgstr "Ustvaril"
 #: field:stock.picking.package.preparation.line,create_date:0
 msgid "Created on"
 msgstr "Ustvarjeno"
+
+#. module: stock_picking_package_preparation_line
+#: field:res.company,default_picking_type_for_package_preparation_id:0
+#: field:stock.config.settings,default_picking_type_for_package_preparation_id:0
+msgid "Default Picking Type used in package preparation"
+msgstr "Privzeti tip zbirnika uporabljen pri pripravi pakiranja"
 
 #. module: stock_picking_package_preparation_line
 #: view:stock.picking.package.preparation:stock_picking_package_preparation_line.sppp_line_stock_picking_package_preparation_form
@@ -41,6 +52,11 @@ msgid "Details"
 msgstr "Podrobnosti"
 
 #. module: stock_picking_package_preparation_line
+#: field:stock.picking.package.preparation.line,display_name:0
+msgid "Display Name"
+msgstr "Prikazni naziv"
+
+#. module: stock_picking_package_preparation_line
 #: field:stock.picking.package.preparation.line,id:0
 msgid "ID"
 msgstr "ID"
@@ -53,12 +69,17 @@ msgid ""
 msgstr "Če spremenite to količino za 'pripravljen' zbirnik, sistem ne bo ustvaril čakajočega naloga, ampak bo enostavno dobavil novo količino."
 
 #. module: stock_picking_package_preparation_line
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:248
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:257
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:250
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:259
 #, python-format
 msgid ""
 "Impossible to create confirmed picking. Please Check products availability!"
 msgstr "Potrjen zbirnik je nemogoče ustvariti. Preverite razpoložljivost proizvodov!"
+
+#. module: stock_picking_package_preparation_line
+#: field:stock.picking.package.preparation.line,__last_update:0
+msgid "Last Modified on"
+msgstr "Zadnjič spremenjeno"
 
 #. module: stock_picking_package_preparation_line
 #: field:stock.picking.package.preparation.line,write_uid:0
@@ -83,6 +104,7 @@ msgstr "Opomba"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model,name:stock_picking_package_preparation_line.model_stock_picking_package_preparation
+#: view:stock.config.settings:stock_picking_package_preparation_line.view_stock_picking_package_preparation_line_setting
 msgid "Package Preparation"
 msgstr "Priprava pakiranja"
 
@@ -90,6 +112,11 @@ msgstr "Priprava pakiranja"
 #: model:ir.model,name:stock_picking_package_preparation_line.model_stock_picking_package_preparation_line
 msgid "Package Preparation Line"
 msgstr "Postavka priprave pakiranja"
+
+#. module: stock_picking_package_preparation_line
+#: field:stock.picking.package.preparation,picking_type_id:0
+msgid "Picking Type"
+msgstr "Tip zbirnika"
 
 #. module: stock_picking_package_preparation_line
 #: field:stock.picking.package.preparation.line,product_id:0

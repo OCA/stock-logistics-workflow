@@ -3,75 +3,74 @@
 # * stock_picking_compute_delivery_date
 # 
 # Translators:
-# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-04 02:49+0000\n"
-"PO-Revision-Date: 2016-05-03 14:59+0000\n"
-"Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
-"Language-Team: Slovenian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/sl/)\n"
+"PO-Revision-Date: 2016-05-03 14:10+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"Language-Team: English (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/en/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: sl\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_picking_compute_delivery_date
 #: view:compute.all.delivery.dates.wizard:stock_picking_compute_delivery_date.compute_all_delivery_dates_form
 #: view:compute.delivery.date.by.product.wizard:stock_picking_compute_delivery_date.compute_delivery_date_by_product_form
 msgid "Cancel"
-msgstr "Preklic"
+msgstr "Cancel"
 
 #. module: stock_picking_compute_delivery_date
 #: view:compute.all.delivery.dates.wizard:stock_picking_compute_delivery_date.compute_all_delivery_dates_form
 #: view:compute.delivery.date.by.product.wizard:stock_picking_compute_delivery_date.compute_delivery_date_by_product_form
 msgid "Compute"
-msgstr "Obdelaj"
+msgstr "Compute"
 
 #. module: stock_picking_compute_delivery_date
 #: view:compute.all.delivery.dates.wizard:stock_picking_compute_delivery_date.compute_all_delivery_dates_form
 msgid "Compute All Delivery Dates"
-msgstr "Obdelaj vse datume dostav"
+msgstr "Compute All Delivery Dates"
 
 #. module: stock_picking_compute_delivery_date
 #: view:compute.delivery.date.by.product.wizard:stock_picking_compute_delivery_date.compute_delivery_date_by_product_form
 msgid "Compute Delivery Dates"
-msgstr "Obdelaj datume dostav"
+msgstr "Compute Delivery Dates"
 
 #. module: stock_picking_compute_delivery_date
 #: model:ir.ui.menu,name:stock_picking_compute_delivery_date.product_compute_all_delivery_dates_menu
 msgid "Compute all delivery dates"
-msgstr "Obdelaj vse datume dostav"
+msgstr "Compute all delivery dates"
 
 #. module: stock_picking_compute_delivery_date
 #: model:ir.actions.act_window,name:stock_picking_compute_delivery_date.product_compute_all_delivery_dates_action
 msgid "Compute delivery dates for all products"
-msgstr "Obdelaj datume dostav za vse proizvode"
+msgstr "Compute delivery dates for all products"
 
 #. module: stock_picking_compute_delivery_date
 #: model:ir.actions.act_window,name:stock_picking_compute_delivery_date.product_compute_delivery_date_wizard_action
 msgid "Compute delivery dates for product"
-msgstr "Obdelaj datume dostav za proizvod"
+msgstr "Compute delivery dates for product"
 
 #. module: stock_picking_compute_delivery_date
 #: field:compute.all.delivery.dates.wizard,create_uid:0
 #: field:compute.delivery.date.by.product.wizard,create_uid:0
 msgid "Created by"
-msgstr "Ustvaril"
+msgstr "Created by"
 
 #. module: stock_picking_compute_delivery_date
 #: field:compute.all.delivery.dates.wizard,create_date:0
 #: field:compute.delivery.date.by.product.wizard,create_date:0
 msgid "Created on"
-msgstr "Ustvarjeno"
+msgstr "Created on"
 
 #. module: stock_picking_compute_delivery_date
 #: field:compute.all.delivery.dates.wizard,display_name:0
 #: field:compute.delivery.date.by.product.wizard,display_name:0
 msgid "Display Name"
-msgstr "Prikazni naziv"
+msgstr "Display Name"
 
 #. module: stock_picking_compute_delivery_date
 #: field:compute.all.delivery.dates.wizard,id:0
@@ -83,31 +82,31 @@ msgstr "ID"
 #: field:compute.all.delivery.dates.wizard,__last_update:0
 #: field:compute.delivery.date.by.product.wizard,__last_update:0
 msgid "Last Modified on"
-msgstr "Zadnjič spremenjeno"
+msgstr "Last Modified on"
 
 #. module: stock_picking_compute_delivery_date
 #: field:compute.all.delivery.dates.wizard,write_uid:0
 #: field:compute.delivery.date.by.product.wizard,write_uid:0
 msgid "Last Updated by"
-msgstr "Zadnji posodobil"
+msgstr "Last Updated by"
 
 #. module: stock_picking_compute_delivery_date
 #: field:compute.all.delivery.dates.wizard,write_date:0
 #: field:compute.delivery.date.by.product.wizard,write_date:0
 msgid "Last Updated on"
-msgstr "Zadnjič posodobljeno"
+msgstr "Last Updated on"
 
 #. module: stock_picking_compute_delivery_date
 #: model:ir.model,name:stock_picking_compute_delivery_date.model_stock_picking
 msgid "Picking List"
-msgstr "Zbirnik"
+msgstr "Picking List"
 
 #. module: stock_picking_compute_delivery_date
 #: code:addons/stock_picking_compute_delivery_date/model/picking.py:112
 #: code:addons/stock_picking_compute_delivery_date/model/picking.py:149
 #, python-format
 msgid "Scheduled date update to %s from %s"
-msgstr "Načrtovana posodobitev datuma na %s iz %s"
+msgstr "Scheduled date update to %s from %s"
 
 #. module: stock_picking_compute_delivery_date
 #: view:compute.all.delivery.dates.wizard:stock_picking_compute_delivery_date.compute_all_delivery_dates_form
@@ -117,7 +116,7 @@ msgid ""
 "available stock and the expected dates of all moves of the same product. For"
 " Make To Order products, it is based on the date of the corresponding "
 "incoming move."
-msgstr "Ponovna obdelava datumov dostave za vse izhodne premike vseh proizvodov. Za proizvode 'Na zalogo' je izračun osnovan na razpoložljivi zalogi in pričakovanih datumih vseh premikov istega proizvoda. Za proizvode 'Po naročilu' je osnovan na datumu ustrezajočega vhodnega premika."
+msgstr "This will recompute the delivery dates of all outgoing moves for all products. For Make To Stock products, the computation is based on the available stock and the expected dates of all moves of the same product. For Make To Order products, it is based on the date of the corresponding incoming move."
 
 #. module: stock_picking_compute_delivery_date
 #: view:compute.delivery.date.by.product.wizard:stock_picking_compute_delivery_date.compute_delivery_date_by_product_form
@@ -127,16 +126,16 @@ msgid ""
 "the available stock and the expected dates of all moves of the same product."
 " For Make To Order products, it is based on the date of the corresponding "
 "incoming move."
-msgstr "Ponovna obdelava datumov dostave za vse izhodne premike izbranega proizvoda. Za proizvode 'Na zalogo' je izračun osnovan na razpoložljivi zalogi in pričakovanih datumih vseh premikov istega proizvoda. Za proizvode 'Po naročilu' je osnovan na datumu ustrezajočega vhodnega premika."
+msgstr "This will recompute the delivery dates of all outgoing moves for the selected product. For Make To Stock products, the computation is based on the available stock and the expected dates of all moves of the same product. For Make To Order products, it is based on the date of the corresponding incoming move."
 
 #. module: stock_picking_compute_delivery_date
 #: code:addons/stock_picking_compute_delivery_date/model/picking.py:63
 #, python-format
 msgid "initial stock"
-msgstr "začetna zaloga"
+msgstr "initial stock"
 
 #. module: stock_picking_compute_delivery_date
 #: view:compute.all.delivery.dates.wizard:stock_picking_compute_delivery_date.compute_all_delivery_dates_form
 #: view:compute.delivery.date.by.product.wizard:stock_picking_compute_delivery_date.compute_delivery_date_by_product_form
 msgid "or"
-msgstr "ali"
+msgstr "or"

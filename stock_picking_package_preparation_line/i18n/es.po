@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-24 02:43+0000\n"
-"PO-Revision-Date: 2016-04-20 09:18+0000\n"
+"POT-Creation-Date: 2016-05-04 02:49+0000\n"
+"PO-Revision-Date: 2016-05-03 14:25+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Spanish (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -18,6 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: stock_picking_package_preparation_line
+#: model:ir.model,name:stock_picking_package_preparation_line.model_res_company
+msgid "Companies"
+msgstr "Compañías"
 
 #. module: stock_picking_package_preparation_line
 #: field:stock.picking.package.preparation.line,create_uid:0
@@ -28,6 +33,12 @@ msgstr "Creado por"
 #: field:stock.picking.package.preparation.line,create_date:0
 msgid "Created on"
 msgstr "Creado el"
+
+#. module: stock_picking_package_preparation_line
+#: field:res.company,default_picking_type_for_package_preparation_id:0
+#: field:stock.config.settings,default_picking_type_for_package_preparation_id:0
+msgid "Default Picking Type used in package preparation"
+msgstr ""
 
 #. module: stock_picking_package_preparation_line
 #: view:stock.picking.package.preparation:stock_picking_package_preparation_line.sppp_line_stock_picking_package_preparation_form
@@ -42,6 +53,11 @@ msgid "Details"
 msgstr "Detalles"
 
 #. module: stock_picking_package_preparation_line
+#: field:stock.picking.package.preparation.line,display_name:0
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_picking_package_preparation_line
 #: field:stock.picking.package.preparation.line,id:0
 msgid "ID"
 msgstr "ID"
@@ -54,11 +70,16 @@ msgid ""
 msgstr ""
 
 #. module: stock_picking_package_preparation_line
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:248
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:257
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:250
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:259
 #, python-format
 msgid ""
 "Impossible to create confirmed picking. Please Check products availability!"
+msgstr ""
+
+#. module: stock_picking_package_preparation_line
+#: field:stock.picking.package.preparation.line,__last_update:0
+msgid "Last Modified on"
 msgstr ""
 
 #. module: stock_picking_package_preparation_line
@@ -84,12 +105,18 @@ msgstr "Nota"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model,name:stock_picking_package_preparation_line.model_stock_picking_package_preparation
+#: view:stock.config.settings:stock_picking_package_preparation_line.view_stock_picking_package_preparation_line_setting
 msgid "Package Preparation"
 msgstr ""
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model,name:stock_picking_package_preparation_line.model_stock_picking_package_preparation_line
 msgid "Package Preparation Line"
+msgstr ""
+
+#. module: stock_picking_package_preparation_line
+#: field:stock.picking.package.preparation,picking_type_id:0
+msgid "Picking Type"
 msgstr ""
 
 #. module: stock_picking_package_preparation_line
