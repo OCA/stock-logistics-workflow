@@ -49,16 +49,21 @@ class StockPicking(models.Model):
                 'result_package_id')
 
     @api.multi
-    @api.depends('packages', 'packages.ul_id')
+    @api.depends('pack_operation_ids', 'pack_operation_ids.result_package_id',
+                 'pack_operation_ids.result_package_id.ul_id')
     def _calc_picking_packages_info(self):
-        pack_weight = self.env['stock.picking.package.weight.lot']
         pack_weight_obj = self.env['stock.picking.package.weight.lot']
-        pack_total = self.env['stock.picking.package.total']
         pack_total_obj = self.env['stock.picking.package.total']
         for record in self:
+            pack_infos = pack_weight_obj.search([('picking', '=', record.id)])
+            pack_infos.unlink()
+            pack_totals = pack_total_obj.search([('picking', '=', record.id)])
+            pack_totals.unlink()
+            pack_weight = self.env['stock.picking.package.weight.lot']
+            pack_total = self.env['stock.picking.package.total']
+            packages = record.pack_operation_ids.mapped('result_package_id')
             sequence = 0
-            for package in record.packages:
-                record.packages_info.unlink()
+            for package in packages:
                 sequence += 1
                 package_operations = record.pack_operation_ids.filtered(
                     lambda r: r.result_package_id == package)
@@ -77,10 +82,9 @@ class StockPicking(models.Model):
                     'gross_weight': total_weight + package.empty_weight,
                 }
                 pack_weight += pack_weight_obj.create(vals)
-            if record.packages:
-                record.package_totals.unlink()
+            if packages:
                 for product_ul in self.env['product.ul'].search([]):
-                    cont = len(record.packages.filtered(
+                    cont = len(packages.filtered(
                         lambda x: x.ul_id.id == product_ul.id))
                     if cont:
                         vals = {
@@ -96,12 +100,13 @@ class StockPicking(models.Model):
     packages = fields.Many2many(
         comodel_name='stock.quant.package', string='Packages',
         compute='_calc_picking_packages')
-    packages_info = fields.One2many(
+    packages_info = fields.Many2many(
         comodel_name='stock.picking.package.weight.lot',
-        inverse_name='picking', string='Packages Info',
+        relation='stock_picking_packages_info', string='Packages Info',
         compute='_calc_picking_packages_info')
-    package_totals = fields.One2many(
-        comodel_name='stock.picking.package.total', inverse_name='picking',
+    package_totals = fields.Many2many(
+        comodel_name='stock.picking.package.total',
+        relation='stock_picking_packages_total',
         string='Total UL Packages Info', compute='_calc_picking_packages_info')
     num_packages = fields.Integer(
         string='# Packages', compute='_calc_picking_packages_info')
