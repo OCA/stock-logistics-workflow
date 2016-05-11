@@ -1,0 +1,40 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+# 	* stock_filter_none_zero_qty
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-05-11 16:19-0500\n"
+"PO-Revision-Date: 2016-05-11 18:13-0500\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.7\n"
+"Last-Translator: Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>\n"
+"Language: es\n"
+
+#. module: stock_filter_none_zero_qty
+#: code:addons/stock_filter_none_zero_qty/product.py:55
+#, python-format
+msgid "Operator %s not suported in searches for qty_available (product.product)."
+msgstr "El operador %s no está soportado en búsquedas de qty_available (product.product)."
+
+#. module: stock_filter_none_zero_qty
+#: model:ir.model,name:stock_filter_none_zero_qty.model_product_product
+msgid "Product"
+msgstr "Producto"
+
+#. module: stock_filter_none_zero_qty
+#: code:addons/stock_filter_none_zero_qty/product.py:55
+#, python-format
+msgid "Error !"
+msgstr "¡Error!"
+
+#. module: stock_filter_none_zero_qty
+#: view:product.product:0
+msgid "Real Stock"
+msgstr "Existencias Reales"
