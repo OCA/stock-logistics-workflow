@@ -3,21 +3,20 @@
 # * stock_picking_package_preparation
 # 
 # Translators:
-# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015-2016
-# Rudolf Schnapka <rs@techno-flex.de>, 2016
+# Paolo Valier, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-04 02:49+0000\n"
-"PO-Revision-Date: 2016-05-03 15:00+0000\n"
-"Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
-"Language-Team: Slovenian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/sl/)\n"
+"POT-Creation-Date: 2016-03-13 11:03+0000\n"
+"PO-Revision-Date: 2016-03-13 13:24+0000\n"
+"Last-Translator: Paolo Valier\n"
+"Language-Team: Italian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: sl\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_picking_package_preparation
 #: model:ir.actions.act_window,help:stock_picking_package_preparation.action_stock_picking_package_preparation
@@ -26,97 +25,87 @@ msgid ""
 "          Click to prepare a new package preparation.\n"
 "        </p>\n"
 "      "
-msgstr "<p class=\"oe_view_nocontent_create\">\n          Priprava pakiranja.\n        </p>\n      "
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Add an internal note..."
-msgstr "Dodaj interno opombo..."
-
-#. module: stock_picking_package_preparation
-#: field:stock.picking.package.preparation,quant_ids:0
-msgid "All Content"
-msgstr "Vsa vsebina"
+msgstr "Aggiungi una nota interna..."
 
 #. module: stock_picking_package_preparation
 #: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:220
 #, python-format
 msgid "All the transfers must be \"Ready to Transfer\"."
-msgstr "Vse premestitve morajo biti \"Pripravljene za premestitev\"."
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:202
 #, python-format
 msgid "All the transfers must have the same destination location"
-msgstr "Vse premestitve morajo imeti isto ciljno lokacijo"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Cancel"
-msgstr "Preklic"
+msgstr "Annulla"
 
 #. module: stock_picking_package_preparation
 #: selection:stock.picking.package.preparation,state:0
 msgid "Cancelled"
-msgstr "Preklicano"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:171
 #, python-format
 msgid "Cannot cancel a done package preparation."
-msgstr "Ne morete preklicati opravljene priprave pakiranja."
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,company_id:0
 msgid "Company"
-msgstr "Družba"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,create_uid:0
 msgid "Created by"
-msgstr "Ustvaril"
+msgstr "Creato da"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,create_date:0
 msgid "Created on"
-msgstr "Ustvarjeno"
+msgstr "Creato il"
 
 #. module: stock_picking_package_preparation
 #: help:stock.picking.package.preparation,message_last_post:0
 msgid "Date of the last message posted on the record."
-msgstr "Datum zadnjega sporočila objavljenega na zapisu."
-
-#. module: stock_picking_package_preparation
-#: field:stock.picking.package.preparation,display_name:0
-msgid "Display Name"
-msgstr "Prikazni naziv"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,date:0
 msgid "Document Date"
-msgstr "Datum dokumenta"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: selection:stock.picking.package.preparation,state:0
 msgid "Done"
-msgstr "Opravljeno"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: selection:stock.picking.package.preparation,state:0
 msgid "Draft"
-msgstr "Osnutek"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_follower_ids:0
 msgid "Followers"
-msgstr "Sledilci"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: help:stock.picking.package.preparation,message_summary:0
 msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
-msgstr "Povzetek pogovorov (število sporočil,..). Povzetek je neposredno v html formatu, da se lahko neposredno vstavi v prikaze tipa kanban."
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,id:0
@@ -126,7 +115,7 @@ msgstr "ID"
 #. module: stock_picking_package_preparation
 #: help:stock.picking.package.preparation,message_unread:0
 msgid "If checked new messages require your attention."
-msgstr "Če označeno, zahtevajo nova sporočila vašo pozornost."
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
@@ -134,172 +123,146 @@ msgid ""
 "If there is no product but a source package, this means the source package "
 "was moved entirely.  If there is a product and a source package, the product"
 " was taken from the source package."
-msgstr "Če v izvornem pakiranju ni proizvoda, pomeni, da je bilo izvorno pakiranje v celoti premaknjeno. Če obstajata tako proizvod, kot izvorno pakiranje, je proizvod bil vzet iz izvornega pakiranja."
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: selection:stock.picking.package.preparation,state:0
 msgid "In Pack"
-msgstr "V pakiranju"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_is_follower:0
 msgid "Is a Follower"
-msgstr "Je sledilec"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_last_post:0
 msgid "Last Message Date"
-msgstr "Datum zadnjega sporočila"
-
-#. module: stock_picking_package_preparation
-#: field:stock.picking.package.preparation,__last_update:0
-msgid "Last Modified on"
-msgstr "Zadnjič spremenjeno"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,write_uid:0
 msgid "Last Updated by"
-msgstr "Zadnji posodobil"
+msgstr "Ultimo aggiornamento di"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,write_date:0
 msgid "Last Updated on"
-msgstr "Zadnjič posodobljeno"
+msgstr "Ultimo aggiornamento il"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,ul_id:0
 msgid "Logistic Unit"
-msgstr "Logistična enota"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_ids:0
 msgid "Messages"
-msgstr "Sporočila"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: help:stock.picking.package.preparation,message_ids:0
 msgid "Messages and communication history"
-msgstr "Sporočila in kronologija komunikacij"
-
-#. module: stock_picking_package_preparation
-#: field:stock.picking.package.preparation,net_weight:0
-msgid "Net weight"
-msgstr "Neto masa"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:197
 #, python-format
 msgid "No transfer selected for this preparation."
-msgstr "Za to pripravo ni izbrane premestitve."
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,note:0
 msgid "Note"
-msgstr "Opomba"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:182
 #, python-format
 msgid "Only canceled package preparations can be reset to draft."
-msgstr "Le preklicane priprave pakiranj se lahko ponastavi v osnutek."
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Operations"
-msgstr "Operacije"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,package_id:0
 msgid "Pack"
-msgstr "Pakiranje"
-
-#. module: stock_picking_package_preparation
-#: field:stock.picking.package.preparation,pack_operation_ids:0
-msgid "Pack operation ids"
-msgstr "ID-ji operacij pakiranja"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: model:ir.model,name:stock_picking_package_preparation.model_stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Package Preparation"
-msgstr "Priprava pakiranja"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: model:ir.actions.act_window,name:stock_picking_package_preparation.action_stock_picking_package_preparation
 #: model:ir.ui.menu,name:stock_picking_package_preparation.menu_stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_tree
 msgid "Package Preparations"
-msgstr "Priprave pakiranj"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,name:0
 msgid "Package Reference"
-msgstr "Sklic pakiranja"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Package done"
-msgstr "Pakiranje opravljeno"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,packaging_id:0
 msgid "Packaging"
-msgstr "Pakiranje"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,partner_id:0
 msgid "Partner"
-msgstr "Partner"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Put in pack"
-msgstr "Vključi v pakiranje"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Reset to draft"
-msgstr "Ponastavi v osnutek"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,date_done:0
 msgid "Shipping Date"
-msgstr "Datum odpreme"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,state:0
 msgid "State"
-msgstr "Stanje"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_summary:0
 msgid "Summary"
-msgstr "Povzetek"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:162
 #, python-format
 msgid "The package has not been generated."
-msgstr "Pakiranje ni bilo ustvarjeno."
-
-#. module: stock_picking_package_preparation
-#: help:stock.picking.package.preparation,net_weight:0
-#: help:stock.picking.package.preparation,weight:0
-msgid "The weight is computed when the preparation is done."
-msgstr "Masa se izračuna potem, ko se priprava opravi."
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
 #: field:stock.picking.package.preparation,picking_ids:0
 msgid "Transfers"
-msgstr "Premestitve"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_unread:0
 msgid "Unread Messages"
-msgstr "Neprebrana sporočila"
-
-#. module: stock_picking_package_preparation
-#: field:stock.picking.package.preparation,weight:0
-msgid "Weight"
-msgstr "Masa"
+msgstr ""
