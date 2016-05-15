@@ -4,12 +4,13 @@
 # 
 # Translators:
 # Paolo Valier, 2016
+# Paolo Valier, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-13 11:03+0000\n"
-"PO-Revision-Date: 2016-03-13 13:21+0000\n"
+"POT-Creation-Date: 2016-05-08 17:05+0000\n"
+"PO-Revision-Date: 2016-05-13 13:24+0000\n"
 "Last-Translator: Paolo Valier\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -32,15 +33,20 @@ msgid "Invoice Line"
 msgstr "Riga Fattura"
 
 #. module: stock_picking_invoice_link
+#: field:stock.picking,invoice_view_xmlid:0
+msgid "Invoice View XMLID"
+msgstr ""
+
+#. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_stock_picking
 msgid "Picking List"
-msgstr ""
+msgstr "Lista Picking"
 
 #. module: stock_picking_invoice_link
 #: view:account.invoice:stock_picking_invoice_link.invoice_form
 #: view:account.invoice:stock_picking_invoice_link.invoice_supplier_form
 msgid "Pickings"
-msgstr ""
+msgstr "Picking"
 
 #. module: stock_picking_invoice_link
 #: field:account.invoice,picking_ids:0
