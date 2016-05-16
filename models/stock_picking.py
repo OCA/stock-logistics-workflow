@@ -93,8 +93,8 @@ class StockPicking(models.Model):
                             'quantity': cont,
                         }
                         pack_total += pack_total_obj.create(vals)
-            record.packages_info = pack_weight.ids
-            record.package_totals = pack_total.ids
+            record.packages_info = pack_weight
+            record.package_totals = pack_total
             record.num_packages = sum(x.quantity for x in pack_total)
 
     packages = fields.Many2many(
