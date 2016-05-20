@@ -13,8 +13,6 @@ class StockPickingPackageWeightLot(models.Model):
     _description = 'Stock Picking Package Weight Total'
     _order = 'sequence'
 
-    picking = fields.Many2one(
-        comodel_name='stock.picking', string='Picking')
     sequence = fields.Integer(string='Sequence')
     package = fields.Many2one(
         comodel_name='stock.quant.package', string='Package')
@@ -31,8 +29,6 @@ class StockPickingPackageTotal(models.Model):
     _name = 'stock.picking.package.total'
     _description = 'Stock Picking Package Total'
 
-    picking = fields.Many2one(
-        comodel_name='stock.picking', string='Picking')
     ul = fields.Many2one(
         comodel_name='product.ul', string='Logistic Unit')
     quantity = fields.Integer(string='# Packages')
@@ -45,8 +41,9 @@ class StockPicking(models.Model):
     @api.depends('pack_operation_ids', 'pack_operation_ids.result_package_id')
     def _calc_picking_packages(self):
         for record in self:
-            record.packages = record.pack_operation_ids.mapped(
-                'result_package_id')
+            record.packages = (record.pack_operation_ids.mapped(
+                'result_package_id') | record.pack_operation_ids.mapped(
+                'package_id'))
 
     @api.multi
     @api.depends('pack_operation_ids', 'pack_operation_ids.result_package_id',
@@ -55,44 +52,35 @@ class StockPicking(models.Model):
         pack_weight_obj = self.env['stock.picking.package.weight.lot']
         pack_total_obj = self.env['stock.picking.package.total']
         for record in self:
-            pack_infos = pack_weight_obj.search([('picking', '=', record.id)])
-            pack_infos.unlink()
-            pack_totals = pack_total_obj.search([('picking', '=', record.id)])
-            pack_totals.unlink()
+            record.packages_info.unlink()
+            record.package_totals.unlink()
             pack_weight = self.env['stock.picking.package.weight.lot']
             pack_total = self.env['stock.picking.package.total']
-            packages = record.pack_operation_ids.mapped('result_package_id')
+            packages = (record.pack_operation_ids.mapped('result_package_id') |
+                        record.pack_operation_ids.mapped('package_id'))
             sequence = 0
             for package in packages:
                 sequence += 1
-                package_operations = record.pack_operation_ids.filtered(
-                    lambda r: r.result_package_id == package)
-                total_weight = 0.0
-                for pack_operation in package_operations:
-                    total_weight += (pack_operation.product_qty *
-                                     pack_operation.product_id.weight)
+                total_weight = sum([(x.qty * x.product_id.weight) for x
+                                    in package.quant_ids])
+                lots = (package.quant_ids.mapped('lot_id').ids or [])
                 vals = {
-                    'picking': record.id,
                     'sequence': sequence,
                     'package': package.id,
-                    'lots': [(6, 0,
-                              (package.quant_ids.mapped('lot_id').ids or
-                               package_operations.mapped('lot_id').ids))],
+                    'lots': [(6, 0, lots)],
                     'net_weight': total_weight,
                     'gross_weight': total_weight + package.empty_weight,
                 }
                 pack_weight += pack_weight_obj.create(vals)
             if packages:
-                for product_ul in self.env['product.ul'].search([]):
+                for product_ul in packages.mapped('ul_id'):
                     cont = len(packages.filtered(
                         lambda x: x.ul_id.id == product_ul.id))
-                    if cont:
-                        vals = {
-                            'picking': record.id,
-                            'ul': product_ul.id,
-                            'quantity': cont,
-                        }
-                        pack_total += pack_total_obj.create(vals)
+                    vals = {
+                        'ul': product_ul.id,
+                        'quantity': cont,
+                    }
+                    pack_total += pack_total_obj.create(vals)
             record.packages_info = pack_weight
             record.package_totals = pack_total
             record.num_packages = sum(x.quantity for x in pack_total)
@@ -144,7 +132,7 @@ class StockPicking(models.Model):
                 if packs:
                     qty = sum([x.product_qty for x in packs])
                     new_qty = vals.get('product_qty', 0) - qty
-                    if new_qty:
+                    if new_qty > 0:
                         vals.update({'product_qty': new_qty})
                     else:
                         continue
