@@ -13,3 +13,4 @@ Contributors
 * Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>
 * Pedro M. Baeza <pedro.baeza@serviciobaeza.com>
 * Ana Juaristi <anajuaristi@avanzosc.es>
+* Alessio Gerace <alessio.gerace@agilebg.com>
