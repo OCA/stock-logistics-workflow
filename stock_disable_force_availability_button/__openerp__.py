@@ -7,11 +7,11 @@
     "depends": ["stock"],
     "author": "OdooMRP team,"
               "AvanzOSC,"
-              "Serv. Tecnol. Avanzados - Pedro M. Baeza,"
+              "Tecnativa - Pedro M. Baeza,"
               "Odoo Community Association (OCA),"
               "Agile Business Group",
     "website": "http://www.odoomrp.com",
-    "category": "Custom Module",
+    "category": "Warehouse Management",
     "license": "AGPL-3",
     "application": False,
     "installable": True,
