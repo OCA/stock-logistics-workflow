@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * stock_split_picking
+# * mrp_lock_lot
 # 
 # Translators:
 # Paolo Valier, 2016
@@ -18,23 +18,7 @@ msgstr ""
 "Language: it\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. module: stock_split_picking
-#: code:addons/stock_split_picking/model/stock.py:46
-#, python-format
-msgid "Enter quantities to split"
-msgstr "Inserire quantità da dividere"
-
-#. module: stock_split_picking
-#: model:ir.model,name:stock_split_picking.model_stock_picking
-msgid "Picking List"
-msgstr "Lista Picking"
-
-#. module: stock_split_picking
-#: view:stock.picking:stock_split_picking.view_picking_form
-msgid "Split"
-msgstr ""
-
-#. module: stock_split_picking
-#: model:ir.model,name:stock_split_picking.model_stock_move
-msgid "Stock Move"
-msgstr "Movimento di magazzino"
+#. module: mrp_lock_lot
+#: view:mrp.product.produce:mrp_lock_lot.view_mrp_product_produce_wizard_inh_locklot
+msgid "[('product_id','=',product_id),('locked','=',False)]"
+msgstr "[('product_id','=',product_id),('locked','=',False)]"

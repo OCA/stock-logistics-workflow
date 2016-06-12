@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-15 17:32+0000\n"
-"PO-Revision-Date: 2016-05-19 06:28+0000\n"
+"POT-Creation-Date: 2016-05-22 18:05+0000\n"
+"PO-Revision-Date: 2016-06-06 07:24+0000\n"
 "Last-Translator: Paolo Valier\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -41,7 +41,7 @@ msgstr ""
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form
 msgid "Assign"
-msgstr ""
+msgstr "Assegna"
 
 #. module: picking_dispatch
 #: model:ir.actions.act_window,name:picking_dispatch.action_picking_dispatch_assign_picker
@@ -66,7 +66,7 @@ msgstr ""
 #. module: picking_dispatch
 #: selection:picking.dispatch,state:0
 msgid "Assigned"
-msgstr ""
+msgstr "Assegnato"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
@@ -100,14 +100,14 @@ msgstr "Annullato"
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Carrier"
-msgstr ""
+msgstr "Vettore"
 
 #. module: picking_dispatch
 #: model:ir.actions.act_window,name:picking_dispatch.action_dispatch_check_assign_all
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form
 #: view:picking.dispatch.check.assign.all:picking_dispatch.view_dispatch_check_assign_all
 msgid "Check Availability"
-msgstr ""
+msgstr "Controllo Disponibilità"
 
 #. module: picking_dispatch
 #: view:picking.dispatch.check.assign.all:picking_dispatch.view_dispatch_check_assign_all
@@ -150,7 +150,7 @@ msgstr "Creato il"
 #. module: picking_dispatch
 #: field:picking.dispatch,date:0 field:picking.dispatch.creator,date:0
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #. module: picking_dispatch
 #: help:picking.dispatch.creator,date:0
@@ -160,7 +160,7 @@ msgstr ""
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Date:"
-msgstr ""
+msgstr "Data:"
 
 #. module: picking_dispatch
 #: field:res.company,default_picker_id:0
@@ -234,7 +234,7 @@ msgstr "Bozza"
 #: code:addons/picking_dispatch/wizard/dispatch_start.py:46
 #, python-format
 msgid "Error"
-msgstr ""
+msgstr "Errore"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
@@ -244,7 +244,7 @@ msgstr ""
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 msgid "Group By..."
-msgstr ""
+msgstr "Raggruppa per..."
 
 #. module: picking_dispatch
 #: field:picking.dispatch,id:0 field:picking.dispatch.assign.picker,id:0
@@ -258,7 +258,7 @@ msgstr "ID"
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 #: selection:picking.dispatch,state:0
 msgid "In Progress"
-msgstr ""
+msgstr "In Corso"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
@@ -439,7 +439,7 @@ msgstr "Codice Prodotto"
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "QTY"
-msgstr ""
+msgstr "Qtà"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
@@ -509,7 +509,7 @@ msgstr ""
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Variant"
-msgstr ""
+msgstr "Variante"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
