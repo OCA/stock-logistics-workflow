@@ -20,8 +20,8 @@
 ##############################################################################
 
 {'name': 'Stock Route Sales Teams',
- 'version': '1.0',
- 'author': 'Camptocamp',
+ 'version': '8.0.1.0',
+ 'author': 'Camptocamp, Odoo Community Association (OCA)',
  'maintainer': 'Camptocamp',
  'license': 'AGPL-3',
  'category': 'Specific',
