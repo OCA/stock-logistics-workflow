@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<scenario>
+  <id>scanner_scenario_step_types</id>
+  <model_id>scanner.hardware</model_id>
+  <name>Step types</name>
+  <notes/>
+  <sequence>10</sequence>
+  <parent_id>scanner_scenario_tutorial</parent_id>
+  <shared_custom>False</shared_custom>
+  <warehouse_ids>OpenERP S.A.</warehouse_ids>
+  <warehouse_ids>Shop 1</warehouse_ids>
+  <warehouse_ids>Shop 2</warehouse_ids>
+  <active>True</active>
+  <type>scenario</type>
+  <Step id="scanner_scenario_step_step_types_confirm" name="C : Confirm" step_back="True" step_stop="False" step_start="False"/>
+  <Step id="scanner_scenario_step_step_types_error" name="E : Error" step_back="False" step_stop="False" step_start="False"/>
+  <Step id="scanner_scenario_step_step_types_list" name="L : List" step_back="True" step_stop="False" step_start="False"/>
+  <Step id="scanner_scenario_step_step_types_quantity_float" name="Q : Quantity (float)" step_back="False" step_stop="False" step_start="False"/>
+  <Step id="scanner_scenario_step_step_types_number_integer" name="N : Number (integer)" step_back="False" step_stop="False" step_start="False"/>
+  <Step id="scanner_scenario_step_step_types_text_input" name="T : Text input" step_back="False" step_stop="False" step_start="False"/>
+  <Step id="scanner_scenario_step_step_types_final" name="F : Final" step_back="False" step_stop="True" step_start="False"/>
+  <Step id="scanner_scenario_step_step_types_introduction" name="Introduction" step_back="True" step_stop="False" step_start="True"/>
+  <Step id="scanner_scenario_step_step_types_message" name="M : Message" step_back="True" step_stop="False" step_start="False"/>
+  <Transition id="scanner_scenario_transition_step_types_l_e" name="L &gt; E" sequence="0" tracer="" to_id="scanner_scenario_step_step_types_error" transition_type="keyboard" condition="message == 'error'" from_id="scanner_scenario_step_step_types_list"/>
+  <Transition id="scanner_scenario_transition_step_types_q_t" name="Q &gt; T" sequence="0" tracer="" to_id="scanner_scenario_step_step_types_text_input" transition_type="keyboard" condition="True" from_id="scanner_scenario_step_step_types_quantity_float"/>
+  <Transition id="scanner_scenario_transition_step_types_t_f" name="T &gt; F" sequence="0" tracer="" to_id="scanner_scenario_step_step_types_final" transition_type="keyboard" condition="True" from_id="scanner_scenario_step_step_types_text_input"/>
+  <Transition id="scanner_scenario_transition_step_types_intro_m" name="Intro &gt; M" sequence="0" tracer="" to_id="scanner_scenario_step_step_types_message" transition_type="keyboard" condition="True" from_id="scanner_scenario_step_step_types_introduction"/>
+  <Transition id="scanner_scenario_transition_step_types_m_l" name="M &gt; L" sequence="0" tracer="" to_id="scanner_scenario_step_step_types_list" transition_type="keyboard" condition="True" from_id="scanner_scenario_step_step_types_message"/>
+  <Transition id="scanner_scenario_transition_step_types_c_n" name="C &gt; N" sequence="0" tracer="" to_id="scanner_scenario_step_step_types_number_integer" transition_type="keyboard" condition="True" from_id="scanner_scenario_step_step_types_confirm"/>
+  <Transition id="scanner_scenario_transition_step_types_l_n" name="L &gt; N" sequence="0" tracer="" to_id="scanner_scenario_step_step_types_confirm" transition_type="keyboard" condition="message == 'continue'" from_id="scanner_scenario_step_step_types_list"/>
+  <Transition id="scanner_scenario_transition_step_types_n_q" name="N &gt; Q" sequence="0" tracer="" to_id="scanner_scenario_step_step_types_quantity_float" transition_type="keyboard" condition="True" from_id="scanner_scenario_step_step_types_number_integer"/>
+</scenario>

@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        <record id="hardware_reset_user_id_on_timeout" model="ir.cron">
+            <field name="name">Remove the current user_id and scenario values on session timeout</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <field name="nextcall">2014-02-10 21:00:00</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+            <field eval="False" name="active"/>
+            <field name="model">scanner.hardware</field>
+            <field name="function">timeout_session</field>
+        </record>
+    </data>
+</openerp>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        ##############################################################################
+        #
+        #    stock_scanner module for OpenERP, Allows managing barcode readers with simple scenarios
+        #    Copyright (C) 2011 SYLEAM Info Services ([http://www.Syleam.fr/])
+        #              Sylvain Garancher [sylvain.garancher@syleam.fr]
+        #    Copyright (C) 2015 Objectif-PI ([http://www.objectif-pi.com]).
+        #              Damien CRIER [damien.crier@objectif-pi.com]
+        #
+        #    This file is a part of stock_scanner
+        #
+        #    stock_scanner is free software: you can redistribute it and/or modify
+        #    it under the terms of the GNU Affero General Public License as published by
+        #    the Free Software Foundation, either version 3 of the License, or
+        #    (at your option) any later version.
+        #
+        #    stock_scanner is distributed in the hope that it will be useful,
+        #    but WITHOUT ANY WARRANTY; without even the implied warranty of
+        #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        #    GNU Affero General Public License for more details.
+        #
+        #    You should have received a copy of the GNU Affero General Public License
+        #    along with this program.  If not, see [http://www.gnu.org/licenses/].
+        #
+        ##############################################################################
+
+        <record id="view_scanner_scenario_step_search" model="ir.ui.view">
+            <field name="name">scanner.scenario.step.search</field>
+            <field name="model">scanner.scenario.step</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <search string="Scenario Step">
+                    <field name="name"/>
+                    <field name="scenario_id"/>
+                    <field name="step_start"/>
+                    <field name="step_stop"/>
+                    <field name="step_back"/>
+                    <field name="no_back"/>
+                </search>
+            </field>
+        </record>
+        <record id="view_scanner_scenario_step_tree" model="ir.ui.view">
+            <field name="name">scanner.scenario.step.tree</field>
+            <field name="model">scanner.scenario.step</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <tree string="Scenario Step">
+                    <field name="scenario_id"/>
+                    <field name="name"/>
+                    <field name="step_start"/>
+                    <field name="step_stop"/>
+                    <field name="step_back"/>
+                    <field name="no_back"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_scanner_scenario_step_form" model="ir.ui.view">
+            <field name="name">scanner.scenario.step.form</field>
+            <field name="model">scanner.scenario.step</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <form string="Scenario Step">
+                    <group colspan="4" col="6">
+                        <field name="name" colspan="4"/>
+                        <field name="scenario_id"/>
+                        <field name="step_start"/>
+                        <field name="step_stop"/>
+                        <field name="step_back"/>
+                        <field name="no_back"/>
+                        <newline/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Code">
+                            <separator string="Enter the python code here" colspan="4"/>
+                            <field name="python_code" colspan="4" nolabel="1"/>
+                        </page>
+                        <page string="Transition">
+                            <separator string="Outgoing transitions" colspan="4"/>
+                            <field name="out_transition_ids" colspan="4" nolabel="1">
+                                <tree string="Transition">
+                                    <field name="sequence"/>
+                                    <field name="name"/>
+                                    <field name="to_id"/>
+                                    <field name="condition"/>
+                                    <field name="transition_type"/>
+                                    <field name="tracer"/>
+                                </tree>
+                                <form string="Transition">
+                                    <group colspan="4" col="4">
+                                        <field name="name"/>
+                                        <field name="sequence"/>
+                                        <field name="to_id" domain="[('scenario_id','=', parent.scenario_id)]"/>
+                                        <field name="condition" colspan="4"/>
+                                        <field name="transition_type"/>
+                                        <field name="tracer"/>
+                                        <newline/>
+                                    </group>
+                                </form>
+                            </field>
+                            <separator string="Incoming transitions" colspan="4"/>
+                            <field name="in_transition_ids" colspan="4" nolabel="1">
+                                <tree string="Transition">
+                                    <field name="sequence"/>
+                                    <field name="name"/>
+                                    <field name="from_id"/>
+                                    <field name="condition"/>
+                                    <field name="transition_type"/>
+                                    <field name="tracer"/>
+                                </tree>
+                                <form string="Transition">
+                                    <group colspan="4" col="4">
+                                        <field name="name"/>
+                                        <field name="sequence"/>
+                                        <field name="from_id" domain="[('scenario_id','=', parent.scenario_id)]"/>
+                                        <field name="condition" colspan="4"/>
+                                        <field name="transition_type"/>
+                                        <field name="tracer"/>
+                                        <newline/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                    <newline/>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="act_open_scanner_scenario_step_view">
+            <field name="name">Scenario Step</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">scanner.scenario.step</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+        <record model="ir.actions.act_window.view" id="act_open_scanner_scenario_step_view_form">
+            <field name="act_window_id" ref="act_open_scanner_scenario_step_view"/>
+            <field name="sequence" eval="20"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_scanner_scenario_step_form"/>
+        </record>
+        <record model="ir.actions.act_window.view" id="act_open_scanner_scenario_step_view_tree">
+            <field name="act_window_id" ref="act_open_scanner_scenario_step_view"/>
+            <field name="sequence" eval="10"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_scanner_scenario_step_tree"/>
+        </record>
+        <menuitem id="menu_scanner_scenario_step" parent="menu_scanner_configuration" sequence="30" action="act_open_scanner_scenario_step_view"/>
+    </data>
+</openerp>
