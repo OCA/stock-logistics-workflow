@@ -1,0 +1,94 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_auto_move
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-01-14 13:49+0000\n"
+"PO-Revision-Date: 2015-01-14 14:52+0100\n"
+"Last-Translator: Nicolas PIGANEAU <nicolas.piganeau@ndp-systemes.fr>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: fr\n"
+"X-Generator: Poedit 1.7.3\n"
+
+#. module: base
+#: model:ir.module.module,shortdesc:base.module_stock_auto_move
+msgid "Automatic Move Processing"
+msgstr "Mouvements automatiques"
+
+#. module: base
+#: model:ir.module.module,description:base.module_stock_auto_move
+msgid ""
+"\n"
+"Automatic Move Processing\n"
+"=========================\n"
+"This modules adds the possibility to have move automatically processed as soon as the products are available in the\n"
+"move source location.\n"
+"\n"
+"It also adds the possibility to define the move as being automatic in a procurement rule.\n"
+"\n"
+"Automatic moves are triggered by previous move when the move is chained or by the scheduler otherwise.\n"
+"\n"
+"Note that automatic moves are given a procurement group name \"Automatic\", whatever the user or the procurement rule\n"
+"selects.\n"
+msgstr ""
+"\n"
+"Mouvements automatiques\n"
+"=======================\n"
+"Ce module ajoute la possibilité d'avoir des mouvements executés automatiquement dès que les articles sont \n"
+"disponibles dans l'emplacement source du mouvement.\n"
+"\n"
+"Il ajoute également la possibilité de définir des mouvements automatiques dans les règles de réapprovisionnement.\n"
+"\n"
+"Les mouvements automatiques sont déclenchés par la réalisation du mouvement précédent si le mouvement est chainé \n"
+"ou par le planificateur dans le cas contraire.\n"
+"\n"
+"Notez que les mouvements automatiques sont ajoutés au groupe d'approvisionnement \"Automatic\" quelque soit le \n"
+"groupe que l'utilisateur ou la règle d'approvisionnement sélectionne.\n"
+
+#. module: stock_auto_move
+#: field:procurement.rule,auto_move:0
+#: field:stock.move,auto_move:0
+msgid "Automatic move"
+msgstr "Mouvement automatique"
+
+#. module: stock_auto_move
+#: help:procurement.rule,auto_move:0
+msgid "If this option is selected, the generated move will be automatically processed as soon as the products are available. This can be useful for situations with chained moves where we do not want an operator action."
+msgstr "Si cette option est sélectionnée, le mouvement généré sera traité automatiquement dès que les articles seront disponible. Cela peut être utile dans des situations avec des mouvements chainés où l'on ne souhaite pas d'action de l'opérateur."
+
+#. module: stock_auto_move
+#: help:stock.move,auto_move:0
+msgid "If this option is selected, the move will be automatically processed as soon as the products are available."
+msgstr "Si cette option est sélectionnée, le mouvement sera traité automatiquement dès que les articles seront disponible"
+
+#. module: stock_auto_move
+#: model:stock.location,name:stock_auto_move.stock_location_a
+msgid "Location 1"
+msgstr "Emplacement 1"
+
+#. module: stock_auto_move
+#: model:stock.location,name:stock_auto_move.stock_location_b
+msgid "Location 2"
+msgstr "Emplacement 2"
+
+#. module: stock_auto_move
+#: model:ir.model,name:stock_auto_move.model_procurement_order
+msgid "Procurement"
+msgstr "Approvisionnement"
+
+#. module: stock_auto_move
+#: model:ir.model,name:stock_auto_move.model_procurement_rule
+msgid "Procurement Rule"
+msgstr "Règle d'approvisionnement"
+
+#. module: stock_auto_move
+#: model:ir.model,name:stock_auto_move.model_stock_move
+msgid "Stock Move"
+msgstr "Mouvement de stock"
