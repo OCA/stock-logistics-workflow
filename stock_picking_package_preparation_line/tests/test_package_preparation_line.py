@@ -173,7 +173,7 @@ class TestPackagePreparationLine(TransactionCase):
         self.assertEqual(len(self.preparation.pack_operation_ids), 1)
         # ----- Check Lot on Operation
         self.assertEqual(
-            self.preparation.pack_operation_ids[0].lot_id.id,
+            self.preparation.pack_operation_ids[0].pack_lot_ids[0].lot_id.id,
             lot.id)
         # ----- Package Done
         self.preparation.action_done()
