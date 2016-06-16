@@ -206,6 +206,7 @@ class StockPickingPackagePreparation(models.Model):
             default_picking_type_for_package_preparation_id or \
             self.env.ref('stock.picking_type_out')
         pack_model = self.env['stock.pack.operation']
+        operation_lot = self.env['stock.pack.operation.lot']
         for package in self:
             picking_type = package.picking_type_id or default_picking_type
             moves = []
@@ -241,16 +242,21 @@ class StockPickingPackagePreparation(models.Model):
                     line.move_id = move.id
                     # ----- Create pack to force lot
                     if line.lot_id:
-                        pack_model.create({
+                        operation = pack_model.create({
                             'product_id': line.product_id.id,
                             'product_uom_id': line.product_uom.id,
                             'product_qty': line.product_uom_qty,
-                            'lot_id': line.lot_id.id,
+                            'qty_done': line.product_uom_qty,
                             'location_id': move_data['location_id'],
                             'location_dest_id': move_data['location_dest_id'],
                             'date': datetime.now(),
-                            'picking_id': picking.id
+                            'picking_id': picking.id,
                             })
+                        operation_lot.create({
+                            'operation_id': operation.id,
+                            'qty': line.product_uom_qty,
+                            'lot_id': line.lot_id.id,
+                        })
                 # ----- Set the picking as "To DO" and try to set it as
                 #       assigned
                 picking.action_confirm()
