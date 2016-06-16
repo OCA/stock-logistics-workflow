@@ -77,6 +77,17 @@ msgid "Cancel"
 msgstr "Annulé"
 
 #. module: picking_dispatch
+#: model:ir.actions.act_window,name:picking_dispatch.action_dispatch_cancel_assign_all
+#: view:picking.dispatch.cancel.assign.all:0
+msgid "Cancel Availability"
+msgstr "Annuler la disponibilité"
+
+#. module: picking_dispatch
+#: view:picking.dispatch.cancel.assign.all:0
+msgid "Cancel the availability of the selected dispatches"
+msgstr "Annuler la disponibilité sur les bons de préparation sélectionnés"
+
+#. module: picking_dispatch
 #: selection:picking.dispatch,state:0
 msgid "Cancelled"
 msgstr "Annulé"
