@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    @copyright (C) 2016-TODAY LasLabs, Inc. [https://laslabs.com]
+    @author Dave Lasley <dave@laslabs.com>
+    @license AGPL-3
+-->
+
+<odoo>
+
+    <record id="stock_picking_dispatch_rate_purchase_view_form" model="ir.ui.view">
+        <field name="name">stock.picking.dispatch.rate.purchase.view.form</field>
+        <field name="model">stock.picking.dispatch.rate.purchase</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group string="Purchase Rates">
+                        <field name="date_po" />
+                        <field name="group_by" />
+                        <field name="rate_ids" />
+                    </group>
+                </sheet>
+                <footer>
+                    <button special="cancel"
+                            string="Cancel"
+                            />
+                    or
+                    <button name="action_purchase"
+                            type="object"
+                            string="Purchase"
+                            class="oe_highlight"
+                            />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="stock_picking_dispatch_rate_purchase_action" model="ir.actions.act_window">
+        <field name="name">Purchase Rate</field>
+        <field name="res_model">stock.picking.dispatch.rate.purchase</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="stock_picking_dispatch_rate_purchase_view_form"/>
+    </record>
+
+</odoo>
