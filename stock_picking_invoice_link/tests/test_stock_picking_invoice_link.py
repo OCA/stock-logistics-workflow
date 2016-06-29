@@ -77,16 +77,23 @@ class TestStockPickingInvoiceLink(TestStockCommon):
             self.assertEqual(move.invoice_state, '2binvoiced')
         self.wizard.open_invoice()
         self.assertTrue(self.picking_in.invoice_ids)
-        self.assertTrue(self.picking_in.invoice_id)
+        invoice = self.picking_in.invoice_id
+        self.assertTrue(invoice)
         self.assertEqual(self.picking_in.invoice_state, 'invoiced')
         for move in self.picking_in.move_lines:
             self.assertTrue(move.invoice_line_ids)
             self.assertTrue(move.invoice_line_id)
             self.assertEqual(move.invoice_state, 'invoiced')
-        self.picking_in.invoice_ids.action_cancel()
+        invoice.action_cancel()
         self.assertEqual(self.picking_in.invoice_state, '2binvoiced')
-        self.picking_in.invoice_ids.action_cancel_draft()
+        invoice.action_cancel_draft()
         self.assertEqual(self.picking_in.invoice_state, 'invoiced')
+        self.assertEqual(
+            set(invoice.invoice_line.ids),
+            set(self.picking_in.move_lines.mapped('invoice_line_id').ids))
+        self.assertEqual(
+            set(self.picking_in.move_lines.ids),
+            set(invoice.invoice_line.mapped('move_line_ids').ids))
 
     def test_invoice_unlink_draft(self):
         self.wizard.open_invoice()
