@@ -2,21 +2,18 @@
 # This file contains the translation of the following modules:
 # * stock_scanner
 # 
-# Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-06-29 10:12+0000\n"
 "PO-Revision-Date: 2016-06-29 10:12+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
-"Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: fr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: \n"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Sentinel/scanner_scenario_step_sentinel_return_values.py:26
@@ -25,9 +22,8 @@ msgid ""
 "- A dict (text input step). The key 'default' is the default value, the key "
 "'size' is the maximum size before automatic validation."
 msgstr ""
-"- Un dictionnaire (étape de saisie de texte). La clé 'default' définit la "
-"valeur par défaut, la clé 'size' définit la taille maximum avant validation "
-"automatique."
+"- A dict (text input step). The key 'default' is the default value, the key "
+"'size' is the maximum size before automatic validation."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Sentinel/scanner_scenario_step_sentinel_return_values.py:22
@@ -36,8 +32,8 @@ msgid ""
 "- A dict of strings (list step). The key is the returned value, the second "
 "value is the displayed value."
 msgstr ""
-"- Un dictionnaire de chaînes de caractères (étape liste). La clé est la "
-"valeur retournée, la seconde valeur est la valeur affichée."
+"- A dict of strings (list step). The key is the returned value, the second "
+"value is the displayed value."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Sentinel/scanner_scenario_step_sentinel_return_values.py:20
@@ -47,9 +43,9 @@ msgid ""
 "text to display. The long lines will be splitted automatically to fit on "
 "screen."
 msgstr ""
-"- Une liste de chaînes de caractères (tous les types d'étapes). Chaque "
-"chaîne de caractère correspond à une ligne de texte à afficher. Les longues "
-"lignes seront coupées automatiquement pour tenir sur l'écran."
+"- A list of strings (all step types). Each string corresponds to a line of "
+"text to display. The long lines will be splitted automatically to fit on "
+"screen."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Sentinel/scanner_scenario_step_sentinel_return_values.py:21
@@ -58,9 +54,8 @@ msgid ""
 "- A list of tuples of two strings (list steps). The first value of each "
 "tuple is the returned value, the second value is the displayed value."
 msgstr ""
-"- Une liste de tuples de deux chaînes de caractères (étape liste). La "
-"première valeur de chaque tuple est la valeur retournée, la seconde valeur "
-"est la valeur affichée."
+"- A list of tuples of two strings (list steps). The first value of each "
+"tuple is the returned value, the second value is the displayed value."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Sentinel/scanner_scenario_step_sentinel_return_values.py:25
@@ -69,26 +64,26 @@ msgid ""
 "- A single value (all step types). The type of the value depends on the type"
 " of step (float, integer, boolean...)."
 msgstr ""
-"- Une valeur seule (tous les types d'étapes). Le type de valeur dépend du "
-"type de l'étape (flottant, entier, booléen...)."
+"- A single value (all step types). The type of the value depends on the type"
+" of step (float, integer, boolean...)."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Sentinel/scanner_scenario_step_sentinel_return_values.py:13
 #, python-format
 msgid "- act : Type of step"
-msgstr "- act : Type d'étape"
+msgstr "- act : Type of step"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Sentinel/scanner_scenario_step_sentinel_return_values.py:14
 #, python-format
 msgid "- res : Content to display"
-msgstr "- res : Contenu à afficher"
+msgstr "- res : Content to display"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Sentinel/scanner_scenario_step_sentinel_return_values.py:15
 #, python-format
 msgid "- val : Default value"
-msgstr "- val : Valeur par défaut"
+msgstr "- val : Default value"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Step_types/scanner_scenario_step_step_types_message.py:12
@@ -97,8 +92,8 @@ msgid ""
 "A step designed to display some information, without waiting for any user "
 "input."
 msgstr ""
-"Une étape destinée à afficher des informations, sans attendre d'entrée "
-"utilisateur."
+"A step designed to display some information, without waiting for any user "
+"input."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/models/scanner_hardware.py:486
@@ -109,12 +104,12 @@ msgstr "A001"
 #. module: stock_scanner
 #: field:scanner.scenario,active:0
 msgid "Active"
-msgstr "Actif"
+msgstr "Active"
 
 #. module: stock_scanner
 #: view:scanner.scenario:stock_scanner.view_scanner_scenario_form
 msgid "Add note, modification date, etc."
-msgstr "Ajouter une note, une date de modification, etc."
+msgstr "Add note, modification date, etc."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Step_types/scanner_scenario_step_step_types_error.py:14
@@ -123,14 +118,14 @@ msgid ""
 "After this step, the scenario automatically goes back if the returned value "
 "is set to True."
 msgstr ""
-"Après cette étape, le scénario retourne automatiquement à l'étape précédente"
-" si la valeur de retour est définie à True."
+"After this step, the scenario automatically goes back if the returned value "
+"is set to True."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Step_types/scanner_scenario_step_step_types_final.py:12
 #, python-format
 msgid "After this step, the scenario is finished."
-msgstr "Après cette étape, le scénario est terminé."
+msgstr "After this step, the scenario is finished."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Sentinel/scanner_scenario_step_sentinel_scrolling.py:12
@@ -138,14 +133,13 @@ msgstr "Après cette étape, le scénario est terminé."
 msgid ""
 "All step types allow the user to scroll if the text doesn't fit on screen."
 msgstr ""
-"Tous les types d'étapes permettent à l'utilisateur de faire défiler si le "
-"texte ne tient pas sur l'écran."
+"All step types allow the user to scroll if the text doesn't fit on screen."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Sentinel/scanner_scenario_step_sentinel_return_values.py:12
 #, python-format
 msgid "All steps must return three values :"
-msgstr "Tous les types d'étapes doivent retourner trois valeurs :"
+msgstr "All steps must return three values :"
 
 #. module: stock_scanner
 #: help:scanner.hardware,user_id:0
@@ -153,24 +147,24 @@ msgid ""
 "Allow to define an other user for execute all scenarios with that scanner "
 "instead of default user."
 msgstr ""
-"Permet de spécifier l'utilisateur qui exécutera les scénarios à la place de "
-"l'utilisateur par défaut."
+"Allow to define an other user for execute all scenarios with that scanner "
+"instead of default user."
 
 #. module: stock_scanner
 #: field:scanner.scenario,group_ids:0
 msgid "Allowed Groups"
-msgstr "Groupes autorisés"
+msgstr "Allowed Groups"
 
 #. module: stock_scanner
 #: view:scanner.scenario:stock_scanner.view_scanner_scenario_form
 #: field:scanner.scenario,user_ids:0
 msgid "Allowed Users"
-msgstr "Utilisateurs autorisés"
+msgstr "Allowed Users"
 
 #. module: stock_scanner
 #: view:scanner.scenario:stock_scanner.view_scanner_scenario_form
 msgid "Allowed Users Groups"
-msgstr "Groupes d'utilisateurs autorisés"
+msgstr "Allowed Users Groups"
 
 #. module: stock_scanner
 #: help:scanner.scenario,shared_custom:0
@@ -178,8 +172,8 @@ msgid ""
 "Allows to share the custom values with a shared scanner in the same "
 "warehouse."
 msgstr ""
-"Permet de partager les valeurs personnalisées avec un autre scanner dans le "
-"même entrepôt."
+"Allows to share the custom values with a shared scanner in the same "
+"warehouse."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/hardware/sentinel.py:499
@@ -189,14 +183,14 @@ msgid ""
 "\n"
 "Please contact your administrator"
 msgstr ""
-"Une erreur est survenue\n"
+"An error occured\n"
 "\n"
-"Merci de contacter votre administrateur"
+"Please contact your administrator"
 
 #. module: stock_scanner
 #: help:scanner.scenario,name:0
 msgid "Appear on barcode reader screen."
-msgstr "Apparaît sur l'écran du lecteur de codes barres."
+msgstr "Appear on barcode reader screen."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/hardware/sentinel.py:129
@@ -205,30 +199,30 @@ msgid ""
 "Autoconfiguration failed !\n"
 "Please enter terminal code"
 msgstr ""
-"Autoconfiguration échouée !\n"
-"Merci de saisir le code du terminal"
+"Autoconfiguration failed !\n"
+"Please enter terminal code"
 
 #. module: stock_scanner
 #: field:scanner.hardware,base_bg_color:0
 msgid "Base - Background Color"
-msgstr "Base - Couleur de fond"
+msgstr "Base - Background Color"
 
 #. module: stock_scanner
 #: field:scanner.hardware,base_fg_color:0
 msgid "Base - Text Color"
-msgstr "Base - Couleur du texte"
+msgstr "Base - Text Color"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/models/scanner_hardware.py:22
 #, python-format
 msgid "Black"
-msgstr "Noir"
+msgstr "Black"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/models/scanner_hardware.py:23
 #, python-format
 msgid "Blue"
-msgstr "Bleu"
+msgstr "Blue"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Sentinel/scanner_scenario_step_sentinel_going_back.py:12
@@ -236,19 +230,18 @@ msgstr "Bleu"
 msgid ""
 "By pressing the escape key, you can return back to the last 'Return step'."
 msgstr ""
-"En appuyant sur la touche d'échappement, vous pouvez retourner à la dernière"
-" 'Étape retour'."
+"By pressing the escape key, you can return back to the last 'Return step'."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/data/scenarios/Logout/stock_scanner.scanner_scenario_logout_step_confirmed.py:13
 #, python-format
 msgid "Bye !"
-msgstr "Au revoir !"
+msgstr "Bye !"
 
 #. module: stock_scanner
 #: view:scanner.scenario:stock_scanner.view_scanner_scenario_search
 msgid "Can contain scenarios or submenus"
-msgstr "Peut contenir des scénarios ou sous-menus"
+msgstr "Can contain scenarios or submenus"
 
 #. module: stock_scanner
 #: view:scanner.scenario.custom:stock_scanner.view_scanner_scenario_custom_form
@@ -258,50 +251,47 @@ msgstr "Char"
 #. module: stock_scanner
 #: field:scanner.scenario.custom,char_val1:0
 msgid "Char Value 1"
-msgstr "Valeur char 1"
+msgstr "Char Value 1"
 
 #. module: stock_scanner
 #: field:scanner.scenario.custom,char_val2:0
 msgid "Char Value 2"
-msgstr "Valeur char 2"
+msgstr "Char Value 2"
 
 #. module: stock_scanner
 #: field:scanner.scenario.custom,char_val3:0
 msgid "Char Value 3"
-msgstr "Valeur char 3"
+msgstr "Char Value 3"
 
 #. module: stock_scanner
 #: field:scanner.scenario.custom,char_val4:0
 msgid "Char Value 4"
-msgstr "Valeur char 4"
+msgstr "Char Value 4"
 
 #. module: stock_scanner
 #: field:scanner.scenario.custom,char_val5:0
 msgid "Char Value 5"
-msgstr "Valeur char 5"
+msgstr "Char Value 5"
 
 #. module: stock_scanner
 #: help:scanner.scenario.step,step_stop:0
 msgid "Check this if this is the  last step of the scenario."
-msgstr "Cocher si cette étape est la dernière du scénario."
+msgstr "Check this if this is the  last step of the scenario."
 
 #. module: stock_scanner
 #: help:scanner.scenario.step,step_start:0
 msgid "Check this if this is the first step of the scenario."
-msgstr "Cocher si cette étape est la première du scénario."
+msgstr "Check this if this is the first step of the scenario."
 
 #. module: stock_scanner
 #: help:scanner.scenario.step,no_back:0
 msgid "Check this to prevent returning back this step."
-msgstr ""
-"Cocher cette case pour empêcher les retours en arrière à partir de cette "
-"étape."
+msgstr "Check this to prevent returning back this step."
 
 #. module: stock_scanner
 #: help:scanner.scenario.step,step_back:0
 msgid "Check this to stop at this step when returning back."
-msgstr ""
-"Cocher cette case pour bloquer à cette étape lors de retours en arrière."
+msgstr "Check this to stop at this step when returning back."
 
 #. module: stock_scanner
 #: field:scanner.hardware,code:0
@@ -313,37 +303,37 @@ msgstr "Code"
 #. module: stock_scanner
 #: help:scanner.hardware,code:0
 msgid "Code of this hardware."
-msgstr "Code pour ce matériel."
+msgstr "Code of this hardware."
 
 #. module: stock_scanner
 #: help:scanner.hardware,error_bg_color:0
 msgid "Color for the error background."
-msgstr "Couleur de fond des messages d'erreur."
+msgstr "Color for the error background."
 
 #. module: stock_scanner
 #: help:scanner.hardware,error_fg_color:0
 msgid "Color for the error text."
-msgstr "Couleur du texte des messages d'erreur."
+msgstr "Color for the error text."
 
 #. module: stock_scanner
 #: help:scanner.hardware,info_bg_color:0
 msgid "Color for the info background."
-msgstr "Couleur de fond des zones d'information."
+msgstr "Color for the info background."
 
 #. module: stock_scanner
 #: help:scanner.hardware,info_fg_color:0
 msgid "Color for the info text."
-msgstr "Couleur du texte des zones d'information."
+msgstr "Color for the info text."
 
 #. module: stock_scanner
 #: field:scanner.scenario,company_id:0
 msgid "Company"
-msgstr "Société"
+msgstr "Company"
 
 #. module: stock_scanner
 #: help:scanner.scenario,company_id:0
 msgid "Company to be used on this scenario."
-msgstr "Société utilisée pour ce scénario."
+msgstr "Company to be used on this scenario."
 
 #. module: stock_scanner
 #: field:scanner.scenario.transition,condition:0
@@ -353,7 +343,7 @@ msgstr "Condition"
 #. module: stock_scanner
 #: view:stock.config.settings:stock_scanner.stock_config_setting_view_form_inherit_stock_scanner
 msgid "Configure scanner module"
-msgstr "Configuration du module de scanner"
+msgstr "Configure scanner module"
 
 #. module: stock_scanner
 #: field:scanner.hardware,create_uid:0
@@ -363,7 +353,7 @@ msgstr "Configuration du module de scanner"
 #: field:scanner.scenario.step,create_uid:0
 #: field:scanner.scenario.transition,create_uid:0
 msgid "Created by"
-msgstr "Créé par"
+msgstr "Created by"
 
 #. module: stock_scanner
 #: field:scanner.hardware,create_date:0
@@ -373,22 +363,22 @@ msgstr "Créé par"
 #: field:scanner.scenario.step,create_date:0
 #: field:scanner.scenario.transition,create_date:0
 msgid "Created on"
-msgstr "Créé le"
+msgstr "Created on"
 
 #. module: stock_scanner
 #: field:scanner.hardware,step_id:0
 msgid "Current Step"
-msgstr "Étape courante"
+msgstr "Current Step"
 
 #. module: stock_scanner
 #: view:scanner.hardware:stock_scanner.view_scanner_hardware_form
 msgid "Current Steps History"
-msgstr "Historique des étapes courantes"
+msgstr "Current Steps History"
 
 #. module: stock_scanner
 #: help:scanner.hardware,step_id:0
 msgid "Current step for this hardware."
-msgstr "Étape courante pour ce matériel."
+msgstr "Current step for this hardware."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/models/scanner_hardware.py:24
@@ -399,27 +389,27 @@ msgstr "Cyan"
 #. module: stock_scanner
 #: help:scanner.hardware,last_call_dt:0
 msgid "Date and time of the last call to the system done by the scanner."
-msgstr "Date et heure du dernier appel au système fait par le scanner."
+msgstr "Date and time of the last call to the system done by the scanner."
 
 #. module: stock_scanner
 #: help:scanner.hardware,base_bg_color:0
 msgid "Default color for the background."
-msgstr "Couleur par défaut du fond."
+msgstr "Default color for the background."
 
 #. module: stock_scanner
 #: help:scanner.hardware,base_fg_color:0
 msgid "Default color for the text."
-msgstr "Couleur par défaut du texte."
+msgstr "Default color for the text."
 
 #. module: stock_scanner
 #: help:scanner.scenario,type:0
 msgid "Defines if this scenario is a menu or an executable scenario."
-msgstr "Définit si ce scénario est un menu, ou un scénario exécutable."
+msgstr "Defines if this scenario is a menu or an executable scenario."
 
 #. module: stock_scanner
 #: view:scanner.scenario:stock_scanner.view_scanner_scenario_search
 msgid "Directly launch a scenario"
-msgstr "Exécuter directement un scénario"
+msgstr "Directly launch a scenario"
 
 #. module: stock_scanner
 #: field:scanner.hardware,display_name:0
@@ -429,41 +419,41 @@ msgstr "Exécuter directement un scénario"
 #: field:scanner.scenario.step,display_name:0
 #: field:scanner.scenario.transition,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Display Name"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/data/scenarios/Logout/stock_scanner.scanner_scenario_logout_step_confirm.py:11
 #, python-format
 msgid "Do you really want to logout?"
-msgstr "Voulez-vous vraiment vous déconnecter ?"
+msgstr "Do you really want to logout?"
 
 #. module: stock_scanner
 #: help:scanner.hardware,log_enabled:0
 msgid "Enable logging messages from scenarios."
-msgstr "Active la journalisation des messages depuis les scénarios."
+msgstr "Enable logging messages from scenarios."
 
 #. module: stock_scanner
 #: view:scanner.scenario:stock_scanner.view_scanner_scenario_form
 #: view:scanner.scenario.step:stock_scanner.view_scanner_scenario_step_form
 msgid "Enter the python code here"
-msgstr "Entrer le code python ici"
+msgstr "Enter the python code here"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/models/scanner_scenario.py:110
 #: code:addons/stock_scanner/models/scanner_scenario_transition.py:83
 #, python-format
 msgid "Error ! You can not create recursive scenarios."
-msgstr "Erreur ! Vous ne pouvez créer de scénarios récursifs."
+msgstr "Error ! You can not create recursive scenarios."
 
 #. module: stock_scanner
 #: field:scanner.hardware,error_bg_color:0
 msgid "Error - Background Color"
-msgstr "Erreur - Couleur de fond"
+msgstr "Error - Background Color"
 
 #. module: stock_scanner
 #: field:scanner.hardware,error_fg_color:0
 msgid "Error - Text Color"
-msgstr "Erreur - Couleur du texte"
+msgstr "Error - Text Color"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/models/scanner_scenario_transition.py:104
@@ -472,7 +462,7 @@ msgid ""
 "Error in condition for transition \"%s\" at line %d, offset %d:\n"
 "%s"
 msgstr ""
-"Erreur dans la condition de la transition \"%s\" à la ligne %d, caractère %d:\n"
+"Error in condition for transition \"%s\" at line %d, offset %d:\n"
 "%s"
 
 #. module: stock_scanner
@@ -482,7 +472,7 @@ msgid ""
 "Error in python code for step \"%s\" at line %d, offset %d:\n"
 "%s"
 msgstr ""
-"Erreur dans le code python de l'étape \"%s\" à la ligne %d, caractère %d:\n"
+"Error in python code for step \"%s\" at line %d, offset %d:\n"
 "%s"
 
 #. module: stock_scanner
@@ -491,95 +481,93 @@ msgstr ""
 msgid ""
 "Except the list steps, the user can scroll using the up/down arrow keys."
 msgstr ""
-"Excepté pour les étapes listes, l'utilisateur peut faire défiler en "
-"utilisant les flèches haut/bas."
+"Except the list steps, the user can scroll using the up/down arrow keys."
 
 #. module: stock_scanner
 #: view:scanner.scenario.custom:stock_scanner.view_scanner_scenario_custom_form
 msgid "Float"
-msgstr "Flottant"
+msgstr "Float"
 
 #. module: stock_scanner
 #: field:scanner.scenario.custom,float_val1:0
 msgid "Float Value 1"
-msgstr "Valeur flottante 1"
+msgstr "Float Value 1"
 
 #. module: stock_scanner
 #: field:scanner.scenario.custom,float_val2:0
 msgid "Float Value 2"
-msgstr "Valeur flottante 2"
+msgstr "Float Value 2"
 
 #. module: stock_scanner
 #: field:scanner.scenario.custom,float_val3:0
 msgid "Float Value 3"
-msgstr "Valeur flottante 3"
+msgstr "Float Value 3"
 
 #. module: stock_scanner
 #: field:scanner.scenario.custom,float_val4:0
 msgid "Float Value 4"
-msgstr "Valeur flottante 4"
+msgstr "Float Value 4"
 
 #. module: stock_scanner
 #: field:scanner.scenario.custom,float_val5:0
 msgid "Float Value 5"
-msgstr "Valeur flottante 5"
+msgstr "Float Value 5"
 
 #. module: stock_scanner
 #: field:scanner.scenario.transition,from_id:0
 msgid "From"
-msgstr "De"
+msgstr "From"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Step_types/scanner_scenario_step_step_types_list.py:11
 #, python-format
 msgid "Go to Error step"
-msgstr "Aller à l'étape d'erreur"
+msgstr "Go to Error step"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Step_types/scanner_scenario_step_step_types_list.py:12
 #, python-format
 msgid "Go to next step"
-msgstr "Aller à la prochaine étape"
+msgstr "Go to next step"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Sentinel/scanner_scenario_step_sentinel_going_back.py:10
 #, python-format
 msgid "Going back"
-msgstr "Retour en arrière"
+msgstr "Going back"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/models/scanner_hardware.py:25
 #, python-format
 msgid "Green"
-msgstr "Vert"
+msgstr "Green"
 
 #. module: stock_scanner
 #: view:scanner.scenario:stock_scanner.view_scanner_scenario_search
 msgid "Group By..."
-msgstr "Regrouper par..."
+msgstr "Group By..."
 
 #. module: stock_scanner
 #: field:scanner.hardware.step.history,hardware_id:0
 msgid "Hardware"
-msgstr "Matériel"
+msgstr "Hardware"
 
 #. module: stock_scanner
 #: help:scanner.hardware.step.history,hardware_id:0
 msgid "Hardware linked to this history line."
-msgstr "Matériel lié à cette ligne d'historique."
+msgstr "Hardware linked to this history line."
 
 #. module: stock_scanner
 #: help:scanner.hardware,screen_height:0
 msgid "Height of the terminal's screen."
-msgstr "Hauteur de l'écran du terminal."
+msgstr "Height of the terminal's screen."
 
 #. module: stock_scanner
 #: help:scanner.hardware,step_history_ids:0
 msgid ""
 "History of all steps executed by this hardware during the current scenario."
 msgstr ""
-"Historique de toutes les étapes exécutées par ce matériel pendant le "
-"scénario courant."
+"History of all steps executed by this hardware during the current scenario."
 
 #. module: stock_scanner
 #: field:scanner.hardware,id:0 field:scanner.hardware.step.history,id:0
@@ -591,64 +579,64 @@ msgstr "ID"
 #. module: stock_scanner
 #: help:scanner.scenario.custom,res_id:0
 msgid "ID of the model source."
-msgstr "ID du modèle source."
+msgstr "ID of the model source."
 
 #. module: stock_scanner
 #: help:scanner.hardware,reference_document:0
 msgid "ID of the reference document."
-msgstr "ID du document de référence."
+msgstr "ID of the reference document."
 
 #. module: stock_scanner
 #: help:scanner.scenario,active:0
 msgid "If check, this object is always available."
-msgstr "Si coché, cet objet est toujours disponible."
+msgstr "If check, this object is always available."
 
 #. module: stock_scanner
 #: view:scanner.scenario:stock_scanner.view_scanner_scenario_form
 #: view:scanner.scenario.step:stock_scanner.view_scanner_scenario_step_form
 #: field:scanner.scenario.step,in_transition_ids:0
 msgid "Incoming transitions"
-msgstr "Transitions entrantes"
+msgstr "Incoming transitions"
 
 #. module: stock_scanner
 #: field:scanner.hardware,info_bg_color:0
 msgid "Info - Background Color"
-msgstr "Info - Couleur de fond"
+msgstr "Info - Background Color"
 
 #. module: stock_scanner
 #: field:scanner.hardware,info_fg_color:0
 msgid "Info - Text Color"
-msgstr "Info - Couleur du texte"
+msgstr "Info - Text Color"
 
 #. module: stock_scanner
 #: field:scanner.scenario.custom,int_val1:0
 msgid "Int Value 1"
-msgstr "Valeur entière 1"
+msgstr "Int Value 1"
 
 #. module: stock_scanner
 #: field:scanner.scenario.custom,int_val2:0
 msgid "Int Value 2"
-msgstr "Valeur entière 2"
+msgstr "Int Value 2"
 
 #. module: stock_scanner
 #: field:scanner.scenario.custom,int_val3:0
 msgid "Int Value 3"
-msgstr "Valeur entière 3"
+msgstr "Int Value 3"
 
 #. module: stock_scanner
 #: field:scanner.scenario.custom,int_val4:0
 msgid "Int Value 4"
-msgstr "Valeur entière 4"
+msgstr "Int Value 4"
 
 #. module: stock_scanner
 #: field:scanner.scenario.custom,int_val5:0
 msgid "Int Value 5"
-msgstr "Valeur entière 5"
+msgstr "Int Value 5"
 
 #. module: stock_scanner
 #: view:scanner.scenario.custom:stock_scanner.view_scanner_scenario_custom_form
 msgid "Integer"
-msgstr "Entier"
+msgstr "Integer"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Sentinel/scanner_scenario_step_sentinel_introduction.py:10
@@ -664,7 +652,7 @@ msgstr "Introduction"
 #: field:scanner.scenario.step,__last_update:0
 #: field:scanner.scenario.transition,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Last Modified on"
 
 #. module: stock_scanner
 #: field:scanner.hardware,write_uid:0
@@ -674,7 +662,7 @@ msgstr ""
 #: field:scanner.scenario.step,write_uid:0
 #: field:scanner.scenario.transition,write_uid:0
 msgid "Last Updated by"
-msgstr "Dernière modification par"
+msgstr "Last Updated by"
 
 #. module: stock_scanner
 #: field:scanner.hardware,write_date:0
@@ -684,34 +672,34 @@ msgstr "Dernière modification par"
 #: field:scanner.scenario.step,write_date:0
 #: field:scanner.scenario.transition,write_date:0
 msgid "Last Updated on"
-msgstr "Dernière modification le"
+msgstr "Last Updated on"
 
 #. module: stock_scanner
 #: field:scanner.hardware,last_call_dt:0
 msgid "Last call"
-msgstr "Dernier appel"
+msgstr "Last call"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Sentinel/scanner_scenario_step_sentinel_list_scrolling.py:10
 #, python-format
 msgid "List Scrolling"
-msgstr "Défilement de liste"
+msgstr "List Scrolling"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Step_types/scanner_scenario_step_step_types_list.py:10
 #, python-format
 msgid "List step"
-msgstr "Étpae liste"
+msgstr "List step"
 
 #. module: stock_scanner
 #: field:scanner.hardware,log_enabled:0
 msgid "Log enabled"
-msgstr "Journalisation activée"
+msgstr "Log enabled"
 
 #. module: stock_scanner
 #: model:scanner.scenario,name:stock_scanner.scanner_scenario_login
 msgid "Login"
-msgstr "Connexion"
+msgstr "Login"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/data/scenarios/Login/stock_scanner.scanner_scenario_login_step_login.py:10
@@ -722,18 +710,18 @@ msgstr "Login ?"
 #. module: stock_scanner
 #: field:stock.config.settings,is_login_enabled:0
 msgid "Login/logout scenarii enabled"
-msgstr "Scénarios de connexion/déconnexion activés"
+msgstr "Login/logout scenarii enabled"
 
 #. module: stock_scanner
 #: model:scanner.scenario,name:stock_scanner.scanner_scenario_logout
 msgid "Logout"
-msgstr "Déconnexion"
+msgstr "Logout"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/data/scenarios/Logout/stock_scanner.scanner_scenario_logout_step_cancelled.py:10
 #, python-format
 msgid "Logout cancelled"
-msgstr "Déconnexion annulée"
+msgstr "Logout cancelled"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Sentinel/scanner_scenario_step_sentinel_list_scrolling.py:11
@@ -742,8 +730,8 @@ msgid ""
 "Long texts in a list allows the user to scroll horizontally with left/right "
 "arrow keys"
 msgstr ""
-"Les longs textes dans une liste peuvent être parcourus horizontalement avec "
-"les flèches gauche/droite"
+"Long texts in a list allows the user to scroll horizontally with left/right "
+"arrow keys"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Sentinel/scanner_scenario_step_sentinel_scrolling.py:16
@@ -775,7 +763,7 @@ msgstr ""
 #: code:addons/stock_scanner/models/scanner_hardware.py:26
 #, python-format
 msgid "Magenta"
-msgstr "Mangenta"
+msgstr "Magenta"
 
 #. module: stock_scanner
 #: view:scanner.scenario:stock_scanner.view_scanner_scenario_search
@@ -790,43 +778,43 @@ msgstr "Message"
 #. module: stock_scanner
 #: help:scanner.hardware.step.history,message:0
 msgid "Message sent during execution of the step."
-msgstr "Message envoyé pendant l'exécution de l'étape."
+msgstr "Message sent during execution of the step."
 
 #. module: stock_scanner
 #: field:scanner.scenario,model_id:0 field:scanner.scenario.custom,model:0
 msgid "Model"
-msgstr "Modèle"
+msgstr "Model"
 
 #. module: stock_scanner
 #: help:scanner.scenario.custom,model:0
 msgid "Model used for these data."
-msgstr "Modèle utilisé pour ces données."
+msgstr "Model used for these data."
 
 #. module: stock_scanner
 #: help:scanner.scenario,model_id:0
 msgid "Model used for this scenario."
-msgstr "Modèle utilisé par ce scénario."
+msgstr "Model used for this scenario."
 
 #. module: stock_scanner
 #: field:scanner.hardware,name:0 field:scanner.scenario,name:0
 #: field:scanner.scenario.step,name:0 field:scanner.scenario.transition,name:0
 msgid "Name"
-msgstr "Nom"
+msgstr "Name"
 
 #. module: stock_scanner
 #: help:scanner.hardware,name:0
 msgid "Name of the hardware."
-msgstr "Nom du matériel."
+msgstr "Name of the hardware."
 
 #. module: stock_scanner
 #: help:scanner.scenario.step,name:0
 msgid "Name of the step."
-msgstr "Nom de l'étape."
+msgstr "Name of the step."
 
 #. module: stock_scanner
 #: help:scanner.scenario.transition,name:0
 msgid "Name of the transition."
-msgstr "Nom de la transition."
+msgstr "Name of the transition."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/hardware/sentinel.py:564
@@ -837,19 +825,19 @@ msgstr "No"
 #. module: stock_scanner
 #: field:scanner.scenario.step,no_back:0
 msgid "No back"
-msgstr "Étape retour"
+msgstr "No back"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/hardware/sentinel.py:533
 #, python-format
 msgid "No scenario available !"
-msgstr "Aucun scénario disponible !"
+msgstr "No scenario available !"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/hardware/sentinel.py:445
 #, python-format
 msgid "No value available"
-msgstr "Pas de valeur disponible"
+msgstr "No value available"
 
 #. module: stock_scanner
 #: view:scanner.scenario:stock_scanner.view_scanner_scenario_form
@@ -866,7 +854,7 @@ msgstr "Notes"
 #: view:scanner.scenario.step:stock_scanner.view_scanner_scenario_step_form
 #: field:scanner.scenario.step,out_transition_ids:0
 msgid "Outgoing transitions"
-msgstr "Transitions sortantes"
+msgstr "Outgoing transitions"
 
 #. module: stock_scanner
 #: view:scanner.scenario:stock_scanner.view_scanner_scenario_search
@@ -877,52 +865,52 @@ msgstr "Parent"
 #. module: stock_scanner
 #: help:scanner.scenario,parent_id:0
 msgid "Parent scenario, used to create menus."
-msgstr "Scénario parent, utilisé pour créer des menus."
+msgstr "Parent scenario, used to create menus."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/models/scanner_hardware.py:483
 #: code:addons/stock_scanner/models/scanner_hardware.py:555
 #, python-format
 msgid "Please contact"
-msgstr "Merci de contacter"
+msgstr "Please contact"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/data/scenarios/Login/stock_scanner.scanner_scenario_login_step_pwd.py:13
 #, python-format
 msgid "Pwd ?"
-msgstr "Mdp ?"
+msgstr "Pwd ?"
 
 #. module: stock_scanner
 #: field:scanner.scenario.step,python_code:0
 msgid "Python code"
-msgstr "Code python"
+msgstr "Python code"
 
 #. module: stock_scanner
 #: help:scanner.scenario.step,python_code:0
 msgid "Python code to execute."
-msgstr "Code python à exécuter."
+msgstr "Python code to execute."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/models/scanner_hardware.py:27
 #, python-format
 msgid "Red"
-msgstr "Rouge"
+msgstr "Red"
 
 #. module: stock_scanner
 #: field:scanner.hardware,reference_document:0
 msgid "Reference"
-msgstr "Référence"
+msgstr "Reference"
 
 #. module: stock_scanner
 #: view:scanner.hardware:stock_scanner.view_scanner_hardware_form
 msgid "Reset Scenario"
-msgstr "Réinitialiser le scénario"
+msgstr "Reset Scenario"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Sentinel/scanner_scenario_step_sentinel_return_values.py:10
 #, python-format
 msgid "Return values of a step"
-msgstr "Valeurs de retour d'une étape"
+msgstr "Return values of a step"
 
 #. module: stock_scanner
 #: field:scanner.scenario.custom,scanner_id:0
@@ -932,7 +920,7 @@ msgstr "Scanner"
 #. module: stock_scanner
 #: model:ir.ui.menu,name:stock_scanner.menu_scanner_configuration
 msgid "Scanner Configuration"
-msgstr "Configuration des scanners"
+msgstr "Scanner Configuration"
 
 #. module: stock_scanner
 #: model:ir.actions.act_window,name:stock_scanner.act_open_scanner_hardware_view
@@ -941,7 +929,7 @@ msgstr "Configuration des scanners"
 #: view:scanner.hardware:stock_scanner.view_scanner_hardware_form
 #: view:scanner.hardware:stock_scanner.view_scanner_hardware_tree
 msgid "Scanner Hardware"
-msgstr "Matériel"
+msgstr "Scanner Hardware"
 
 #. module: stock_scanner
 #: model:ir.actions.act_window,name:stock_scanner.act_open_scanner_scenario_view
@@ -950,12 +938,12 @@ msgstr "Matériel"
 #: view:scanner.scenario:stock_scanner.view_scanner_scenario_search
 #: view:scanner.scenario:stock_scanner.view_scanner_scenario_tree
 msgid "Scanner Scenario"
-msgstr "Scénario"
+msgstr "Scanner Scenario"
 
 #. module: stock_scanner
 #: view:scanner.hardware:stock_scanner.view_scanner_hardware_form
 msgid "Scanner status"
-msgstr "Statut du scanner"
+msgstr "Scanner status"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/models/scanner_hardware.py:497
@@ -967,7 +955,7 @@ msgstr "Statut du scanner"
 #: field:scanner.scenario.transition,scenario_id:0
 #, python-format
 msgid "Scenario"
-msgstr "Scénario"
+msgstr "Scenario"
 
 #. module: stock_scanner
 #: model:ir.actions.act_window,name:stock_scanner.act_open_scanner_scenario_custom_view
@@ -975,12 +963,12 @@ msgstr "Scénario"
 #: view:scanner.scenario.custom:stock_scanner.view_scanner_scenario_custom_form
 #: view:scanner.scenario.custom:stock_scanner.view_scanner_scenario_custom_tree
 msgid "Scenario Custom Values"
-msgstr "Valeurs personnalisées de scénario"
+msgstr "Scenario Custom Values"
 
 #. module: stock_scanner
 #: view:scanner.scenario:stock_scanner.view_scanner_scenario_diagram
 msgid "Scenario Editor"
-msgstr "Éditeur de scénarios"
+msgstr "Scenario Editor"
 
 #. module: stock_scanner
 #: model:ir.actions.act_window,name:stock_scanner.act_open_scanner_scenario_step_view
@@ -990,72 +978,72 @@ msgstr "Éditeur de scénarios"
 #: view:scanner.scenario.step:stock_scanner.view_scanner_scenario_step_tree
 #: view:scanner.scenario.transition:stock_scanner.view_scanner_scenario_transition_search
 msgid "Scenario Step"
-msgstr "Étape"
+msgstr "Scenario Step"
 
 #. module: stock_scanner
 #: model:ir.model,name:stock_scanner.model_scanner_scenario
 msgid "Scenario for scanner"
-msgstr "Scénario pour scanner"
+msgstr "Scenario for scanner"
 
 #. module: stock_scanner
 #: help:scanner.scenario.step,scenario_id:0
 #: help:scanner.scenario.transition,scenario_id:0
 msgid "Scenario for this step."
-msgstr "Scénario de cette étape."
+msgstr "Scenario for this step."
 
 #. module: stock_scanner
 #: help:scanner.hardware,scenario_id:0
 msgid "Scenario used for this hardware."
-msgstr "Scenario utilisé pour ce matériel."
+msgstr "Scenario used for this hardware."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/hardware/sentinel.py:536
 #, python-format
 msgid "Scenarios"
-msgstr "Scénarios"
+msgstr "Scenarios"
 
 #. module: stock_scanner
 #: field:scanner.hardware,screen_height:0
 msgid "Screen Height"
-msgstr "Hauteur d'affichage"
+msgstr "Screen Height"
 
 #. module: stock_scanner
 #: field:scanner.hardware,screen_width:0
 msgid "Screen Width"
-msgstr "Largeur d'affichage"
+msgstr "Screen Width"
 
 #. module: stock_scanner
 #: view:scanner.hardware:stock_scanner.view_scanner_hardware_form
 msgid "Screen colors"
-msgstr "Couleurs d'affichage"
+msgstr "Screen colors"
 
 #. module: stock_scanner
 #: view:scanner.hardware:stock_scanner.view_scanner_hardware_form
 msgid "Screen size"
-msgstr "Taille d'écran"
+msgstr "Screen size"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Sentinel/scanner_scenario_step_sentinel_scrolling.py:10
 #, python-format
 msgid "Scrolling"
-msgstr "Défilement"
+msgstr "Scrolling"
 
 #. module: stock_scanner
 #: view:scanner.scenario:stock_scanner.view_scanner_scenario_form
 msgid "Security"
-msgstr "Sécurité"
+msgstr "Security"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/hardware/sentinel.py:846
 #, python-format
 msgid "Selected : %d"
-msgstr "Selectionné : %d"
+msgstr "Selected : %d"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/hardware/sentinel.py:667
 #, python-format
 msgid "Selected : %s"
-msgstr "Selectionné : %s"
+msgstr "Selected : %s"
 
 #. module: stock_scanner
 #: model:scanner.scenario,name:stock_scanner.scanner_scenario_sentinel
@@ -1065,126 +1053,125 @@ msgstr "Sentinel"
 #. module: stock_scanner
 #: model:res.groups,name:stock_scanner.group_stock_scanner_sentinel
 msgid "Sentinel: technical users"
-msgstr "Sentinel : Utilisateurs techniques"
+msgstr "Sentinel: technical users"
 
 #. module: stock_scanner
 #: field:scanner.scenario,sequence:0
 #: field:scanner.scenario.transition,sequence:0
 msgid "Sequence"
-msgstr "Séquence"
+msgstr "Sequence"
 
 #. module: stock_scanner
 #: help:scanner.scenario,sequence:0
 #: help:scanner.scenario.transition,sequence:0
 msgid "Sequence order."
-msgstr "Séquence."
+msgstr "Sequence order."
 
 #. module: stock_scanner
 #: field:stock.config.settings,session_timeout_delay:0
 msgid "Session validity in seconds"
-msgstr "Validité de la session, en secondes"
+msgstr "Session validity in seconds"
 
 #. module: stock_scanner
 #: field:scanner.scenario,shared_custom:0
 msgid "Shared Custom"
-msgstr "Partager les valeurs personnalisées"
+msgstr "Shared Custom"
 
 #. module: stock_scanner
 #: field:scanner.hardware.step.history,step_id:0
 #: view:scanner.scenario:stock_scanner.view_scanner_scenario_form
 msgid "Step"
-msgstr "Étape"
+msgstr "Step"
 
 #. module: stock_scanner
 #: field:scanner.scenario.step,step_back:0
 msgid "Step back"
-msgstr "Étape retour"
+msgstr "Step back"
 
 #. module: stock_scanner
 #: help:scanner.hardware.step.history,step_id:0
 msgid "Step executed during this history line."
-msgstr "Étape exécutée durant cette ligne d'historique."
+msgstr "Step executed during this history line."
 
 #. module: stock_scanner
 #: model:ir.model,name:stock_scanner.model_scanner_scenario_step
 msgid "Step for scenario"
-msgstr "Étape pour scénario"
+msgstr "Step for scenario"
 
 #. module: stock_scanner
 #: help:scanner.scenario,step_ids:0
 msgid "Step of the current running scenario."
-msgstr "Étape du scénario courant."
+msgstr "Step of the current running scenario."
 
 #. module: stock_scanner
 #: field:scanner.scenario.step,step_start:0
 msgid "Step start"
-msgstr "Étape de départ"
+msgstr "Step start"
 
 #. module: stock_scanner
 #: field:scanner.scenario.step,step_stop:0
 msgid "Step stop"
-msgstr "Étape de fin"
+msgstr "Step stop"
 
 #. module: stock_scanner
 #: model:scanner.scenario,name:stock_scanner.scanner_scenario_step_types
 msgid "Step types"
-msgstr "Types d'étapes"
+msgstr "Step types"
 
 #. module: stock_scanner
 #: help:scanner.scenario.transition,to_id:0
 msgid "Step which is reached by this transition."
-msgstr "Étape atteinte par cette transition."
+msgstr "Step which is reached by this transition."
 
 #. module: stock_scanner
 #: help:scanner.scenario.transition,from_id:0
 msgid "Step which launches this transition."
-msgstr "Étape qui mène à cette transition."
+msgstr "Step which launches this transition."
 
 #. module: stock_scanner
 #: view:scanner.scenario:stock_scanner.view_scanner_scenario_form
 msgid "Steps"
-msgstr "Étapes"
+msgstr "Steps"
 
 #. module: stock_scanner
 #: field:scanner.hardware,step_history_ids:0
 msgid "Steps History"
-msgstr "Historique des étapes"
+msgstr "Steps History"
 
 #. module: stock_scanner
 #: model:ir.model,name:stock_scanner.model_scanner_hardware_step_history
 msgid "Steps History of Scanner Hardware"
-msgstr "Historique des étapes de ce matériel"
+msgstr "Steps History of Scanner Hardware"
 
 #. module: stock_scanner
 #: help:scanner.scenario,notes:0
 msgid "Store different notes, date and title for modification, etc..."
-msgstr ""
-"Stocke différentes notes, dates et titres pour les modifications, etc."
+msgstr "Store different notes, date and title for modification, etc..."
 
 #. module: stock_scanner
 #: field:scanner.hardware,tmp_val1:0
 msgid "Temp value 1"
-msgstr "Valeur temporaire 1"
+msgstr "Temp value 1"
 
 #. module: stock_scanner
 #: field:scanner.hardware,tmp_val2:0
 msgid "Temp value 2"
-msgstr "Valeur temporaire 2"
+msgstr "Temp value 2"
 
 #. module: stock_scanner
 #: field:scanner.hardware,tmp_val3:0
 msgid "Temp value 3"
-msgstr "Valeur temporaire 3"
+msgstr "Temp value 3"
 
 #. module: stock_scanner
 #: field:scanner.hardware,tmp_val4:0
 msgid "Temp value 4"
-msgstr "Valeur temporaire 4"
+msgstr "Temp value 4"
 
 #. module: stock_scanner
 #: field:scanner.hardware,tmp_val5:0
 msgid "Temp value 5"
-msgstr "Valeur temporaire 5"
+msgstr "Temp value 5"
 
 #. module: stock_scanner
 #: help:scanner.scenario.custom,char_val1:0
@@ -1193,7 +1180,7 @@ msgstr "Valeur temporaire 5"
 #: help:scanner.scenario.custom,char_val4:0
 #: help:scanner.scenario.custom,char_val5:0
 msgid "Temporary char value."
-msgstr "Valeur char temporaire."
+msgstr "Temporary char value."
 
 #. module: stock_scanner
 #: help:scanner.scenario.custom,float_val1:0
@@ -1202,7 +1189,7 @@ msgstr "Valeur char temporaire."
 #: help:scanner.scenario.custom,float_val4:0
 #: help:scanner.scenario.custom,float_val5:0
 msgid "Temporary float value."
-msgstr "Valeur flottante temporaire."
+msgstr "Temporary float value."
 
 #. module: stock_scanner
 #: help:scanner.scenario.custom,int_val1:0
@@ -1211,85 +1198,85 @@ msgstr "Valeur flottante temporaire."
 #: help:scanner.scenario.custom,int_val4:0
 #: help:scanner.scenario.custom,int_val5:0
 msgid "Temporary int value."
-msgstr "Valeur entière temporaire."
+msgstr "Temporary int value."
 
 #. module: stock_scanner
 #: help:scanner.scenario.custom,text_val:0
 msgid "Temporary text value."
-msgstr "Valeur texte temporaire."
+msgstr "Temporary text value."
 
 #. module: stock_scanner
 #: model:ir.model,name:stock_scanner.model_scanner_scenario_custom
 msgid "Temporary value for scenario"
-msgstr "Valeur temporaire pour scénario"
+msgstr "Temporary value for scenario"
 
 #. module: stock_scanner
 #: help:scanner.hardware,tmp_val1:0 help:scanner.hardware,tmp_val2:0
 #: help:scanner.hardware,tmp_val3:0 help:scanner.hardware,tmp_val4:0
 #: help:scanner.hardware,tmp_val5:0
 msgid "Temporary value."
-msgstr "Valeur temporaire."
+msgstr "Temporary value."
 
 #. module: stock_scanner
 #: view:scanner.hardware:stock_scanner.view_scanner_hardware_form
 msgid "Temporary values"
-msgstr "Valeurs temporaires"
+msgstr "Temporary values"
 
 #. module: stock_scanner
 #: view:scanner.scenario.custom:stock_scanner.view_scanner_scenario_custom_form
 #: field:scanner.scenario.custom,text_val:0
 msgid "Text"
-msgstr "Texte"
+msgstr "Text"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Sentinel/scanner_scenario_step_sentinel_return_values.py:17
 #, python-format
 msgid "The 'act' variable must be a single character string."
-msgstr "La variable 'act' doit contenir un seul caractère."
+msgstr "The 'act' variable must be a single character string."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Sentinel/scanner_scenario_step_sentinel_return_values.py:19
 #, python-format
 msgid "The 'res' variable can contain multiple values :"
-msgstr "La variable 'res' peut contenir plusieurs valeurs :"
+msgstr "The 'res' variable can contain multiple values :"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Sentinel/scanner_scenario_step_sentinel_return_values.py:24
 #, python-format
 msgid "The 'val' variable can contain multiple values :"
-msgstr "La variable 'val' peut contenir plusieurs valeurs :"
+msgstr "The 'val' variable can contain multiple values :"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/load_scenario.py:28
 #, python-format
 msgid "The id of a %s cannot be empty!"
-msgstr "L'identifiant d'un %s ne peut être vide !"
+msgstr "The id of a %s cannot be empty!"
 
 #. module: stock_scanner
 #: help:scanner.scenario.transition,condition:0
 msgid ""
 "The transition is followed only if this condition is evaluated as True."
 msgstr ""
-"La transition est suivie uniquement si la condition est évaluée à True."
+"The transition is followed only if this condition is evaluated as True."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Sentinel/scanner_scenario_step_sentinel_introduction.py:14
 #, python-format
 msgid "This client is specific to the stock_scanner module."
-msgstr "Ce client est spécifique pour le module stock_scanner."
+msgstr "This client is specific to the stock_scanner module."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/models/scanner_hardware.py:304
 #: code:addons/stock_scanner/tests/test_stock_scanner.py:140
 #, python-format
 msgid "This scenario"
-msgstr "Ce scénario"
+msgstr "This scenario"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Step_types/scanner_scenario_step_step_types_introduction.py:14
 #, python-format
 msgid "This scenario will explain all step types."
-msgstr "Ce scénario explique tous les types d'étapes."
+msgstr "This scenario will explain all step types."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Sentinel/scanner_scenario_step_sentinel_introduction.py:12
@@ -1297,26 +1284,25 @@ msgstr "Ce scénario explique tous les types d'étapes."
 msgid ""
 "This scenario will explain some features of the sentinel ncurses client."
 msgstr ""
-"Ce scénario explique quelques fonctionnalités du client ncurses sentinel."
+"This scenario will explain some features of the sentinel ncurses client."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Step_types/scanner_scenario_step_step_types_text_input.py:12
 #, python-format
 msgid "This step allows the user to enter custom text."
-msgstr "Cette étape permet à l'utilisateur de saisir du texte."
+msgstr "This step allows the user to enter custom text."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Step_types/scanner_scenario_step_step_types_quantity_float.py:12
 #, python-format
 msgid "This step allows the user to send float quantities."
-msgstr ""
-"Cette étape permet à l'utilisateur d'envoyer des quantités flottantes."
+msgstr "This step allows the user to send float quantities."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Step_types/scanner_scenario_step_step_types_number_integer.py:12
 #, python-format
 msgid "This step allows the user to send integer numbers."
-msgstr "Cette étape permet à l'utilisateur d'envoyer des nombres entiers."
+msgstr "This step allows the user to send integer numbers."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Step_types/scanner_scenario_step_step_types_error.py:12
@@ -1325,24 +1311,24 @@ msgid ""
 "This step shows an error message, using the error colors defined in the "
 "hardware configuration."
 msgstr ""
-"Cette étape affiche un message d'erreur, utilisant les couleurs d'erreur "
-"définies dans la configuration du matériel."
+"This step shows an error message, using the error colors defined in the "
+"hardware configuration."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Step_types/scanner_scenario_step_step_types_confirm.py:12
 #, python-format
 msgid "This step waits for a confirmation from the user."
-msgstr "Cette étape attend une confirmation de l'utilisateur."
+msgstr "This step waits for a confirmation from the user."
 
 #. module: stock_scanner
 #: field:scanner.scenario.transition,to_id:0
 msgid "To"
-msgstr "Vers"
+msgstr "To"
 
 #. module: stock_scanner
 #: field:scanner.scenario.transition,tracer:0
 msgid "Tracer"
-msgstr "Traceur"
+msgstr "Tracer"
 
 #. module: stock_scanner
 #: model:ir.actions.act_window,name:stock_scanner.act_open_scanner_scenario_transition_view
@@ -1358,32 +1344,32 @@ msgstr "Transition"
 #. module: stock_scanner
 #: field:scanner.scenario.transition,transition_type:0
 msgid "Transition Type"
-msgstr "Type de transition"
+msgstr "Transition Type"
 
 #. module: stock_scanner
 #: help:scanner.hardware.step.history,transition_id:0
 msgid "Transition executed during this history line."
-msgstr "Étape exécutée durant cette ligne d'historique."
+msgstr "Transition executed during this history line."
 
 #. module: stock_scanner
 #: model:ir.model,name:stock_scanner.model_scanner_scenario_transition
 msgid "Transition for scenario"
-msgstr "Transition pour le scénario"
+msgstr "Transition for scenario"
 
 #. module: stock_scanner
 #: help:scanner.scenario.step,in_transition_ids:0
 msgid "Transitions which goes to the next step."
-msgstr "Transition vers l'étape suivante."
+msgstr "Transitions which goes to the next step."
 
 #. module: stock_scanner
 #: help:scanner.scenario.step,out_transition_ids:0
 msgid "Transitions which goes to this step."
-msgstr "Transition menant vers cette étape."
+msgstr "Transitions which goes to this step."
 
 #. module: stock_scanner
 #: model:scanner.scenario,name:stock_scanner.scanner_scenario_tutorial
 msgid "Tutorial"
-msgstr "Tutoriel"
+msgstr "Tutorial"
 
 #. module: stock_scanner
 #: field:scanner.scenario,type:0
@@ -1393,85 +1379,84 @@ msgstr "Type"
 #. module: stock_scanner
 #: help:scanner.scenario.transition,transition_type:0
 msgid "Type of transition."
-msgstr "Type de transition."
+msgstr "Type of transition."
 
 #. module: stock_scanner
 #: help:scanner.scenario.transition,tracer:0
 msgid ""
 "Used to determine fron which transition we arrive to the destination step."
 msgstr ""
-"Utilisé pour déterminer de quelle transition nous venons pour l'étape "
-"destination."
+"Used to determine fron which transition we arrive to the destination step."
 
 #. module: stock_scanner
 #: field:scanner.hardware,user_id:0
 msgid "User"
-msgstr "Utilisateur"
+msgstr "User"
 
 #. module: stock_scanner
 #: field:scanner.scenario.custom,res_id:0
 msgid "Values id"
-msgstr "ID de la valeur"
+msgstr "Values id"
 
 #. module: stock_scanner
 #: help:scanner.scenario.custom,scanner_id:0
 msgid "Values used for this scanner."
-msgstr "Valeurs utilisées pour ce scanner."
+msgstr "Values used for this scanner."
 
 #. module: stock_scanner
 #: help:scanner.scenario.custom,scenario_id:0
 msgid "Values used for this scenario."
-msgstr "Valeurs utilisées pour ce scénario."
+msgstr "Values used for this scenario."
 
 #. module: stock_scanner
 #: field:scanner.hardware,warehouse_id:0
 msgid "Warehouse"
-msgstr "Entrepôt"
+msgstr "Warehouse"
 
 #. module: stock_scanner
 #: help:scanner.hardware,warehouse_id:0
 msgid "Warehouse where is located this hardware."
-msgstr "Entrepôt dans lequel est situé ce matériel."
+msgstr "Warehouse where is located this hardware."
 
 #. module: stock_scanner
 #: view:scanner.scenario:stock_scanner.view_scanner_scenario_form
 #: field:scanner.scenario,warehouse_ids:0
 msgid "Warehouses"
-msgstr "Entrepôts"
+msgstr "Warehouses"
 
 #. module: stock_scanner
 #: help:scanner.scenario,warehouse_ids:0
 msgid "Warehouses for this scenario."
-msgstr "Entrepôts de ce scénario."
+msgstr "Warehouses for this scenario."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Step_types/scanner_scenario_step_step_types_introduction.py:12
 #, python-format
 msgid "Welcome on the stock_scanner module."
-msgstr "Bienvenue dans le module stock_scanner."
+msgstr "Welcome on the stock_scanner module."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/models/scanner_hardware.py:28
 #, python-format
 msgid "White"
-msgstr "Blanc"
+msgstr "White"
 
 #. module: stock_scanner
 #: help:scanner.hardware,screen_width:0
 msgid "Width of the terminal's screen."
-msgstr "Largeur de l'écran du terminal."
+msgstr "Width of the terminal's screen."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/data/scenarios/Login/stock_scanner.scanner_scenario_login_step_error.py:10
 #, python-format
 msgid "Wrong login/password"
-msgstr "Identifiant/mot de passe erroné"
+msgstr "Wrong login/password"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/models/scanner_hardware.py:29
 #, python-format
 msgid "Yellow"
-msgstr "Jaune"
+msgstr "Yellow"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/hardware/sentinel.py:561
@@ -1483,58 +1468,58 @@ msgstr "Yes"
 #: code:addons/stock_scanner/data/scenarios/Logout/stock_scanner.scanner_scenario_logout_step_cancelled.py:11
 #, python-format
 msgid "You are authenticated as %s !"
-msgstr "Vous êtes authentifié en tant que %s !"
+msgstr "You are authenticated as %s !"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/data/scenarios/Login/stock_scanner.scanner_scenario_login_step_done.py:12
 #, python-format
 msgid "You are now authenticated as %s !"
-msgstr "Vous êtes maintenant authentifié en tant que %s !"
+msgstr "You are now authenticated as %s !"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/data/scenarios/Logout/stock_scanner.scanner_scenario_logout_step_confirmed.py:12
 #, python-format
 msgid "You are now logged out"
-msgstr "Vous êtes maintenant déconnecté"
+msgstr "You are now logged out"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Step_types/scanner_scenario_step_step_types_text_input.py:14
 #, python-format
 msgid "You will also use this step for barcode scanning."
-msgstr "Vous utiliserez aussi cette étape pour scanner des codes barre."
+msgstr "You will also use this step for barcode scanning."
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/models/scanner_hardware.py:485
 #: code:addons/stock_scanner/models/scanner_hardware.py:555
 #, python-format
 msgid "administrator"
-msgstr "administrateur"
+msgstr "administrator"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/models/scanner_hardware.py:304
 #: code:addons/stock_scanner/tests/test_stock_scanner.py:140
 #, python-format
 msgid "is finished"
-msgstr "est terminé"
+msgstr "is finished"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/models/scanner_hardware.py:497
 #, python-format
 msgid "not found"
-msgstr "introuvable"
+msgstr "not found"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/load_scenario.py:97
 #, python-format
 msgid "scenario"
-msgstr "scénario"
+msgstr "scenario"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/load_scenario.py:150
 #: code:addons/stock_scanner/load_scenario.py:192
 #, python-format
 msgid "step"
-msgstr "étape"
+msgstr "step"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/load_scenario.py:201
@@ -1547,7 +1532,7 @@ msgstr "transition"
 #: code:addons/stock_scanner/models/scanner_hardware.py:555
 #, python-format
 msgid "your"
-msgstr "votre"
+msgstr "your"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/data/scenarios/Login/stock_scanner.scanner_scenario_login_step_pwd.py:12
@@ -1559,19 +1544,19 @@ msgstr "| Login %s"
 #: code:addons/stock_scanner/demo/Tutorial/Step_types/scanner_scenario_step_step_types_confirm.py:10
 #, python-format
 msgid "|Confirm step"
-msgstr "|Étape de confirmation"
+msgstr "|Confirm step"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Step_types/scanner_scenario_step_step_types_error.py:10
 #, python-format
 msgid "|Error step"
-msgstr "|Étape d'erreur"
+msgstr "|Error step"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Step_types/scanner_scenario_step_step_types_final.py:10
 #, python-format
 msgid "|Final step"
-msgstr "|Étape finale"
+msgstr "|Final step"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Step_types/scanner_scenario_step_step_types_introduction.py:10
@@ -1583,22 +1568,22 @@ msgstr "|Introduction"
 #: code:addons/stock_scanner/demo/Tutorial/Step_types/scanner_scenario_step_step_types_message.py:10
 #, python-format
 msgid "|Message step"
-msgstr "|Étape de message"
+msgstr "|Message step"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Step_types/scanner_scenario_step_step_types_number_integer.py:10
 #, python-format
 msgid "|Number (integer) step"
-msgstr "|Étape de nombre (entier)"
+msgstr "|Number (integer) step"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Step_types/scanner_scenario_step_step_types_quantity_float.py:10
 #, python-format
 msgid "|Quantity (float) step"
-msgstr "|Étape de quantité (flottant)"
+msgstr "|Quantity (float) step"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Step_types/scanner_scenario_step_step_types_text_input.py:10
 #, python-format
 msgid "|Text input step"
-msgstr "|Étape de saisie de texte"
+msgstr "|Text input step"

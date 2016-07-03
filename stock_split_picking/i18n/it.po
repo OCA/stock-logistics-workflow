@@ -4,11 +4,12 @@
 # 
 # Translators:
 # Paolo Valier, 2016
+# Paolo Valier, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-22 18:05+0000\n"
+"POT-Creation-Date: 2016-06-29 10:12+0000\n"
 "PO-Revision-Date: 2016-06-06 07:17+0000\n"
 "Last-Translator: Paolo Valier\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/it/)\n"
@@ -19,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_split_picking
-#: code:addons/stock_split_picking/model/stock.py:46
+#: code:addons/stock_split_picking/model/stock.py:45
 #, python-format
 msgid "Enter quantities to split"
 msgstr "Inserire quantità da dividere"
