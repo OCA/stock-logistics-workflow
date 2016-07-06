@@ -2,12 +2,12 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-==============================
-Show returns on stock pickings
-==============================
+=================================
+Display returns on stock pickings
+=================================
 
-This module enables one tab in the pickings that contains returns made for that 
-picking.
+This module adds one tab in the pickings form view to display the returns
+pickings related to the current one.
 
 Usage
 =====
