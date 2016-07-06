@@ -12,7 +12,6 @@
     "license": "AGPL-3",
     "depends": [
         "stock",
-        "delivery",
     ],
     "demo": [],
     "data": [
