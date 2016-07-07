@@ -14,12 +14,13 @@ class StockPicking(models.Model):
     @api.multi
     def check_assign_all(self):
         """ Try to assign confirmed pickings """
-        if self is None:
-            domain = [('type', '=', 'out'),
+        pickings = self
+        if not pickings:
+            domain = [('picking_type_code', '=', 'outgoing'),
                       ('state', '=', 'confirmed')]
-            self = self.search(domain, order='min_date')
+            pickings = self.search(domain, order='min_date')
 
-        for picking in self:
+        for picking in pickings:
             try:
                 picking.action_assign()
             except Exception:
