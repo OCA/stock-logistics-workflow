@@ -1,0 +1,321 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_picking_package_info
+# 
+# Translators:
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: odoomrp-wip (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-10-07 10:45+0000\n"
+"PO-Revision-Date: 2015-09-20 19:06+0000\n"
+"Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
+"Language-Team: Slovenian (http://www.transifex.com/oca/odoomrp-wip-8-0/language/sl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: sl\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.total,quantity:0
+msgid "# Packages"
+msgstr "# pakiranj"
+
+#. module: stock_picking_package_info
+#: view:website:stock_picking_package_info.label_creator_palet_report_document
+msgid "Address:"
+msgstr "Naslov:"
+
+#. module: stock_picking_package_info
+#: view:website:stock_picking_package_info.label_creator_palet_report_document
+msgid "Client:"
+msgstr "Stranka:"
+
+#. module: stock_picking_package_info
+#: view:stock.quant.package:stock_picking_package_info.stock_quant_package_info_form_view
+msgid "Content"
+msgstr "Vsebina"
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.total,create_uid:0
+#: field:stock.picking.package.weight.lot,create_uid:0
+msgid "Created by"
+msgstr "Ustvaril"
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.total,create_date:0
+#: field:stock.picking.package.weight.lot,create_date:0
+msgid "Created on"
+msgstr "Ustvarjeno"
+
+#. module: stock_picking_package_info
+#: field:stock.quant.package,empty_weight:0
+msgid "Empty Package Weight"
+msgstr "Masa praznega pakiranja"
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.weight.lot,gross_weight:0
+msgid "Gross Weight"
+msgstr "Bruto masa"
+
+#. module: stock_picking_package_info
+#: view:website:stock_picking_package_info.label_creator_palet_report_document
+msgid "Gross Weight:"
+msgstr "Bruto masa:"
+
+#. module: stock_picking_package_info
+#: field:stock.quant.package,height:0
+msgid "Height"
+msgstr "Višina"
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.total,id:0
+#: field:stock.picking.package.weight.lot,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.total,write_uid:0
+#: field:stock.picking.package.weight.lot,write_uid:0
+msgid "Last Updated by"
+msgstr "Zadnji posodobil"
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.total,write_date:0
+#: field:stock.picking.package.weight.lot,write_date:0
+msgid "Last Updated on"
+msgstr "Zadnjič posodobljeno"
+
+#. module: stock_picking_package_info
+#: field:stock.quant.package,length:0
+msgid "Length"
+msgstr "Dolžina"
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.total,ul:0
+msgid "Logistic Unit"
+msgstr "Logistična enota"
+
+#. module: stock_picking_package_info
+#: view:stock.picking.package.weight.lot:stock_picking_package_info.stock_picking_package_weight_lot_form_view
+msgid "Lots"
+msgstr "Loti"
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.weight.lot,lots:0
+msgid "Lots/Serial Numbers"
+msgstr "Loti/serijske številke"
+
+#. module: stock_picking_package_info
+#: view:website:stock_picking_package_info.label_creator_palet_report_document
+msgid "NET Weight:"
+msgstr "Neto masa:"
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.weight.lot,net_weight:0
+msgid "Net Weight"
+msgstr "Neto masa"
+
+#. module: stock_picking_package_info
+#: view:website:stock_picking_package_info.label_creator_palet_report_document
+msgid "Number of lots:"
+msgstr "Št. lotov:"
+
+#. module: stock_picking_package_info
+#: view:stock.picking:stock_picking_package_info.stock_picking_package_info_form_view
+msgid "Operations"
+msgstr "Operacije"
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.weight.lot,package:0
+msgid "Package"
+msgstr "Pakiranje"
+
+#. module: stock_picking_package_info
+#: view:website:stock_picking_package_info.label_creator_palet_report_document
+msgid "Package number:"
+msgstr "Številka pakiranja:"
+
+#. module: stock_picking_package_info
+#: view:website:stock_picking_package_info.label_creator_palet_report_document
+msgid "Package:"
+msgstr "Pakiranje:"
+
+#. module: stock_picking_package_info
+#: view:stock.picking:stock_picking_package_info.stock_picking_package_info_form_view
+msgid "Packages"
+msgstr "Pakiranja"
+
+#. module: stock_picking_package_info
+#: model:ir.model,name:stock_picking_package_info.model_stock_quant_package
+msgid "Physical Packages"
+msgstr "Fizična pakiranja"
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.total,picking:0
+#: field:stock.picking.package.weight.lot,picking:0
+msgid "Picking"
+msgstr "Zbirnik"
+
+#. module: stock_picking_package_info
+#: model:ir.model,name:stock_picking_package_info.model_stock_picking
+msgid "Picking List"
+msgstr "Zbirnik"
+
+#. module: stock_picking_package_info
+#: model:ir.actions.report.xml,name:stock_picking_package_info.label_creator_palet_report
+msgid "Picking palet label"
+msgstr "Etiketa palete zbirnika"
+
+#. module: stock_picking_package_info
+#: model:ir.model,name:stock_picking_package_info.model_stock_transfer_details
+msgid "Picking wizard"
+msgstr "Čarovnik za zbirnike"
+
+#. module: stock_picking_package_info
+#: view:website:stock_picking_package_info.label_creator_palet_report_document
+msgid "Picking:"
+msgstr "Zbirnik:"
+
+#. module: stock_picking_package_info
+#: view:stock.quant.package:stock_picking_package_info.stock_quant_package_info_form_view
+msgid "Pickings"
+msgstr "Zbirniki"
+
+#. module: stock_picking_package_info
+#: model:ir.model,name:stock_picking_package_info.model_stock_quant
+msgid "Quants"
+msgstr "Kvanti"
+
+#. module: stock_picking_package_info
+#: field:stock.quant.package,real_weight:0
+msgid "Real Weight"
+msgstr "Realna masa"
+
+#. module: stock_picking_package_info
+#: view:stock.transfer_details:stock_picking_package_info.view_stock_enter_transfer_details_inh_packageinfo
+msgid "Save for later"
+msgstr "Shrani za kasneje"
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.weight.lot,sequence:0
+msgid "Sequence"
+msgstr "Zaporedje"
+
+#. module: stock_picking_package_info
+#: model:ir.model,name:stock_picking_package_info.model_stock_picking_package_total
+msgid "Stock Picking Package Total"
+msgstr "Zbirnik zaloge pakiranja skupaj"
+
+#. module: stock_picking_package_info
+#: model:ir.model,name:stock_picking_package_info.model_stock_picking_package_weight_lot
+#: view:stock.picking.package.weight.lot:stock_picking_package_info.stock_picking_package_weight_lot_form_view
+msgid "Stock Picking Package Weight Total"
+msgstr "Skupna masa pakiranja zbirnika zaloge"
+
+#. module: stock_picking_package_info
+#: help:stock.quant.package,height:0
+msgid "The height of the package"
+msgstr "Višina pakiranja"
+
+#. module: stock_picking_package_info
+#: help:stock.quant.package,length:0
+msgid "The length of the package"
+msgstr "Dolžina pakiranja"
+
+#. module: stock_picking_package_info
+#: help:stock.quant.package,width:0
+msgid "The width of the package"
+msgstr "Širina pakiranja"
+
+#. module: stock_picking_package_info
+#: view:stock.picking:stock_picking_package_info.stock_picking_package_info_form_view
+msgid "Total Weight and Lots by package"
+msgstr "Skupna masa in loti po pakiranju"
+
+#. module: stock_picking_package_info
+#: view:stock.picking:stock_picking_package_info.stock_picking_package_info_form_view
+msgid "Total packages by logistic unit"
+msgstr "Skupaj pakiranj po logistični enoti"
+
+#. module: stock_picking_package_info
+#: view:website:stock_picking_package_info.label_creator_palet_report_document
+msgid "Type:"
+msgstr "Tip:"
+
+#. module: stock_picking_package_info
+#: field:stock.quant.package,width:0
+msgid "Width"
+msgstr "Širina"
+
+#. module: stock_picking_package_info
+#: view:stock.transfer_details:stock_picking_package_info.view_stock_enter_transfer_details_inh_packageinfo
+msgid "You are going to transfer. Are you sure?"
+msgstr "Izvedli boste premestitev. Ste prepričani?"
+
+#. module: stock_picking_package_info
+#: view:stock.quant.package:stock_picking_package_info.stock_quant_package_info_tree_view
+msgid "base.group_multi_company"
+msgstr "base.group_multi_company"
+
+#. module: stock_picking_package_info
+#: view:stock.transfer_details:stock_picking_package_info.view_stock_enter_transfer_details_inh_packageinfo
+msgid "or"
+msgstr "ali"
+
+#. module: stock_picking_package_info
+#: view:stock.picking:stock_picking_package_info.stock_picking_package_info_form_view
+msgid "sum_empty_weight"
+msgstr "sum_empty_weight"
+
+#. module: stock_picking_package_info
+#: view:stock.picking:stock_picking_package_info.stock_picking_package_info_form_view
+msgid "sum_estim_weight_net"
+msgstr "sum_estim_weight_net"
+
+#. module: stock_picking_package_info
+#: view:stock.picking:stock_picking_package_info.stock_picking_package_info_form_view
+msgid "sum_gross_weight"
+msgstr "sum_gross_weight"
+
+#. module: stock_picking_package_info
+#: view:stock.picking:stock_picking_package_info.stock_picking_package_info_form_view
+msgid "sum_net_weight"
+msgstr "sum_net_weight"
+
+#. module: stock_picking_package_info
+#: view:stock.picking:stock_picking_package_info.stock_picking_package_info_form_view
+msgid "sum_quantity"
+msgstr "sum_quantity"
+
+#. module: stock_picking_package_info
+#: view:stock.picking:stock_picking_package_info.stock_picking_package_info_form_view
+msgid "sum_real_weight"
+msgstr "sum_real_weight"
+
+#. module: stock_picking_package_info
+#: view:stock.picking:stock_picking_package_info.stock_picking_package_info_form_view
+msgid "sum_total_estim_weight"
+msgstr "sum_total_estim_weight"
+
+#. module: stock_picking_package_info
+#: view:stock.quant.package:stock_picking_package_info.stock_quant_package_info_form_view
+msgid "sum_total_volume"
+msgstr "sum_total_volume"
+
+#. module: stock_picking_package_info
+#: view:stock.quant.package:stock_picking_package_info.stock_quant_package_info_form_view
+msgid "sum_total_weight"
+msgstr "sum_total_weight"
+
+#. module: stock_picking_package_info
+#: view:stock.quant.package:stock_picking_package_info.stock_quant_package_info_form_view
+msgid "sum_total_weight_net"
+msgstr "sum_total_weight_net"
+
+#. module: stock_picking_package_info
+#: view:stock.picking:stock_picking_package_info.stock_picking_package_info_form_view
+msgid "sum_tvolume_charge"
+msgstr "sum_tvolume_charge"

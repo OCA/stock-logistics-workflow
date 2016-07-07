@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_stock_enter_transfer_details_inh_packageinfo" model="ir.ui.view">
+            <field name="name">view.stock.enter.transfer.details.inh.packageinfo</field>
+            <field name="model">stock.transfer_details</field>
+            <field name="inherit_id" ref="stock.view_stock_enter_transfer_details" />
+            <field name="arch" type="xml">
+                <button name="do_detailed_transfer" position="before">
+                    <button name="do_save_for_later" string="Save for later" type="object" class="oe_highlight"/>
+                    or
+                </button>
+                <button name="do_detailed_transfer" position="attributes">
+                    <attribute name="confirm">You are going to transfer. Are you sure?</attribute>
+                </button>
+            </field>
+        </record>
+    </data>
+</openerp>
