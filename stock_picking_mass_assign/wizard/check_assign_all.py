@@ -1,135 +1,76 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Author: Guewen Baconnier
-#    Copyright 2014 Camptocamp SA
-#    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
-
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
-
-from openerp.osv import orm, fields
-from openerp.tools.translate import _
+# © 2014-2016 Camptocamp SA (Guewen Baconnier)
+# © 2014 GRAP (Sylvain Le Gal)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
+from openerp import _, api, fields, models
+from openerp.exceptions import UserError
 
 
-class check_assign_all(orm.TransientModel):
+class CheckAssignAll(models.TransientModel):
     _name = 'stock.picking.check.assign.all'
     _description = 'Delivery Orders Check Availability'
 
-    _columns = {
-        'check_availability': fields.boolean(
-            'Check Availability', help="""check this box if you want to"""
-            """ check the availability of the selected Delivery Orders."""),
-        'force_availability': fields.boolean(
-            'Force Availability', help="""check this box if you want to"""
-            """ force the availability of the selected Delivery Orders."""),
-        'process_picking': fields.boolean(
-            'Deliver', help="""check this box if you want to"""
-            """ deliver all the selected Delivery Orders.\n You'll not have"""
-            """ the possibility to realize a partial delivery.\n If you want"""
-            """ to do that, please do it manually on the Delivery Order"""
-            """ form."""),
-        'create_invoice': fields.boolean(
-            'Create Invoices/Refunds', help="""check this box if you want to"""
-            """ create Invoices or Refunds for all the selected Delivery"""
-            """ Orders."""),
-    }
+    @api.multi
+    def _default_force_availability(self):
+        return self.env.context.get('force_availability', False)
 
-    def _default_force_availability(self, cr, uid, context=None):
-        context = context or {}
-        return context.get('force_availability', False)
+    @api.multi
+    def _default_process_picking(self):
+        return self.env.context.get('process_picking', False)
 
-    def _default_process_picking(self, cr, uid, context=None):
-        context = context or {}
-        return context.get('process_picking', False)
+    check_availability = fields.Boolean(
+        'Check Availability',
+        default=True,
+        help="""check this box if you want to check the availability of """
+        """the selected Delivery Orders.""")
+    force_availability = fields.Boolean(
+        'Force Availability',
+        default='_default_force_availability',
+        help="""check this box if you want to force the availability of """
+        """the selected Delivery Orders.""")
+    process_picking = fields.Boolean(
+        'Deliver',
+        default='_default_process_picking',
+        help="""check this box if you want to deliver all the selected """
+        """Delivery Orders.\n You'll not have the possibility to realize a """
+        """partial delivery.\n If you want to do that, please do it """
+        """manually on the Delivery Order form.""")
 
-    _defaults = {
-        'check_availability': True,
-        'force_availability': _default_force_availability,
-        'process_picking': _default_process_picking,
-    }
-
-    def check(self, cr, uid, ids, context=None):
-        context = context or {}
-        picking_obj = self.pool['stock.picking']
-        process_wizard_obj = self.pool['stock.partial.picking']
-        picking_ids = context.get('active_ids')
-        wizard_id = ids[0]
+    @api.multi
+    def check(self):
+        self.ensure_one()
+        picking_obj = self.env['stock.picking']
+        immediate_transfer_obj = self.env['stock.immediate.transfer']
+        picking_ids = self.env.context.get('active_ids')
 
         if not picking_ids:
-            raise orm.except_orm(
-                _('Error'),
-                _('No selected delivery orders'))
-
-        wizard = self.browse(cr, uid, wizard_id, context=context)
+            raise UserError(_('No selected delivery orders'))
 
         # Get confirmed pickings
-        domain = [('type', '=', 'out'),
+        domain = [('picking_type_code', '=', 'outgoing'),
                   ('state', '=', 'confirmed'),
                   ('id', 'in', picking_ids)]
-        confirmed_picking_ids = picking_obj.search(
-            cr, uid, domain, order='min_date', context=context)
+        confirmed_pickings = picking_obj.search(domain, order='min_date')
 
         # Assign all picking if asked
-        if wizard.check_availability and confirmed_picking_ids:
-            picking_obj.check_assign_all(
-                cr, uid, confirmed_picking_ids, context=context)
+        if self.check_availability and confirmed_pickings:
+            confirmed_pickings.check_assign_all()
 
         # Force availability if asked
-        if wizard.force_availability and confirmed_picking_ids:
-            picking_obj.force_assign(cr, uid, confirmed_picking_ids)
+        if self.force_availability and confirmed_pickings:
+            confirmed_pickings.force_assign()
 
         # Get all pickings ready to deliver
-        domain = [('type', '=', 'out'),
+        domain = [('picking_type_code', '=', 'outgoing'),
                   ('state', '=', 'assigned'),
                   ('id', 'in', picking_ids)]
-        assigned_picking_ids = picking_obj.search(
-            cr, uid, domain, order='min_date', context=context)
+        assigned_pickings = picking_obj.search(domain, order='min_date')
 
         # Process all pickings if asked
-        if wizard.process_picking and assigned_picking_ids:
-            for picking in picking_obj.browse(
-                    cr, uid, assigned_picking_ids, context=context):
-                ctx = context.copy()
-                ctx['active_ids'] = [picking.id]
-                process_wizard_id = process_wizard_obj.create(
-                    cr, uid, {}, context=ctx)
-                process_wizard_obj.do_partial(
-                    cr, uid, [process_wizard_id], context=context)
+        if self.process_picking and assigned_pickings:
+            for picking in assigned_pickings:
+                wizard = immediate_transfer_obj.create(
+                    {'pick_id': picking.id})
+                wizard.process()
 
-        # Get all pickings ready to invoice
-        domain = [('type', '=', 'out'),
-                  ('invoice_state', '=', '2binvoiced'),
-                  ('id', 'in', picking_ids)]
-        to_invoice_picking_ids = picking_obj.search(
-            cr, uid, domain, order='min_date', context=context)
-
-        # Invoice all pickings if asked
-        if wizard.create_invoice and to_invoice_picking_ids:
-            # return the regular wizard to invoice many pickings
-            ctx = context.copy()
-            ctx['active_ids'] = to_invoice_picking_ids
-            ctx['active_model'] = 'stock.picking.out'
-            return {
-                'name': _('Stock Invoice Onshipping'),
-                'view_type': 'form',
-                'view_mode': 'form',
-                'res_model': 'stock.invoice.onshipping',
-                'type': 'ir.actions.act_window',
-                'target': 'new',
-                'context': ctx,
-            }
-        else:
-            return True
+        return True
