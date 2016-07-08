@@ -14,7 +14,7 @@
 
         <template id="label_creator_palet_report_document">
             <t t-foreach="docs" t-as="o">
-                    <t t-foreach="o.packages_info" t-as="p">
+                    <t t-foreach="o.package_info_ids" t-as="p">
                         <div class="page" style="margin: 0 auto; text-align: center;">
                         <p><b>Client: </b><span t-field="o.partner_id" /></p>
                         <p><b>Address: </b><span t-field="o.partner_id.street" /></p>

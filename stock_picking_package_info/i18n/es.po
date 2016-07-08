@@ -297,7 +297,7 @@ msgstr ""
 
 #. module: stock_picking_package_info
 #: view:stock.picking:stock_picking_package_info.stock_picking_package_info_form_view
-msgid "sum_total_estim_weight"
+msgid "sum_total_est_weight"
 msgstr ""
 
 #. module: stock_picking_package_info
@@ -317,5 +317,5 @@ msgstr ""
 
 #. module: stock_picking_package_info
 #: view:stock.picking:stock_picking_package_info.stock_picking_package_info_form_view
-msgid "sum_tvolume_charge"
+msgid "sum_total_volume_charge"
 msgstr ""

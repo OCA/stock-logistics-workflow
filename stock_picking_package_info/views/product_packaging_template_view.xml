@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright 2016 LasLabs Inc.
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+
+<odoo>
+    <record id="product_packaging_template_form_view" model="ir.ui.view">
+        <field name="name">product.packaging.template.form.view</field>
+        <field name="model">product.packaging.template</field>
+        <field name="arch" type="xml">
+            <form string="Product Packaging Template">
+                <sheet>
+                    <group>
+                        <field name="packaging_template_name" />
+                        <field name="active" />
+                        <field name="type"/>
+                    </group>
+                    <group string="Physical">
+                        <group>
+                            <field name="length" />
+                            <field name="width" />
+                            <field name="height" />
+                            <field name="weight" />
+                        </group>
+                        <group>
+                            <field name="length_uom_id" />
+                            <field name="width_uom_id" />
+                            <field name="height_uom_id" />
+                            <field name="weight_uom_id" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="product_packaging_template_tree" model="ir.ui.view">
+        <field name="name">product.packaging.template.tree</field>
+        <field name="model">product.packaging.template</field>
+        <field name="arch" type="xml">
+            <tree string="Product Packaging Templates">
+                <field name="packaging_template_name"/>
+                <field name="type"/>
+                <field name="length" />
+                <field name="length_uom_id" />
+                <field name="width" />
+                <field name="width_uom_id" />
+                <field name="height" />
+                <field name="height_uom_id" />
+            </tree>
+        </field>
+    </record>
+    
+    <record id="product_packaging_template_view_search" model="ir.ui.view">
+        <field name="name">product.packaging.template.view.search</field>
+        <field name="model">product.packaging.template</field>
+        <field name="arch" type="xml">
+            <search string="Product Packaging Templates">
+                
+                <field name="packaging_template_name"/>
+                <field name="type"/>
+                <field name="length" />
+                <field name="length_uom_id" />
+                <field name="width" />
+                <field name="width_uom_id" />
+                <field name="height" />
+                <field name="height_uom_id" />
+    
+                <filter string="Length"
+                        domain=""
+                        context="{'group_by': 'length'}" />
+                <filter string="Length UOM"
+                        domain=""
+                        context="{'group_by': 'length_uom_id'}" />
+                <filter string="Width"
+                        domain=""
+                        context="{'group_by': 'width'}" />
+                <filter string="Width UOM"
+                        domain=""
+                        context="{'group_by': 'width_uom_id'}" />
+                <filter string="Height"
+                        domain=""
+                        context="{'group_by': 'height'}" />
+                <filter string="Height UOM"
+                        domain=""
+                        context="{'group_by': 'height_uom_id'}" />
+                
+            </search>
+        </field>
+    </record>
+
+    <record id="product_packaging_template_form_action" model="ir.actions.act_window">
+        <field name="name">Product Packaging Template</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.packaging.template</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to add a new Product Packaging Template
+          </p><p>
+            The product packaging template defines the container used for
+            the package. It has a type (e.g. pallet, box, ...) and you can
+            specify its size.
+          </p>
+        </field>
+    </record>
+
+    <menuitem
+        action="product_packaging_template_form_action"
+        id="menu_product_packaging_template_form_action"
+        parent="stock.menu_stock_inventory_control" sequence="7"/>
+</odoo>
