@@ -1,0 +1,49 @@
+<odoo>
+    <!-- Stock picking tree: Allow -->
+    <record id="vpicktree" model="ir.ui.view">
+        <field name="name">stock.picking.tree</field>
+        <field name="model">stock.picking</field>
+        <field name="arch" type="xml">
+            <tree decoration-info="state == 'draft'" decoration-muted="state == 'cancel'"
+                  decoration-danger="state not in ('cancel', 'done') and min_date &lt; current_date"
+                  string="Picking list">
+                <field name="name"/>
+                <field name="location_dest_id"/>
+                <field name="partner_id"/>
+                <field name="date" invisible="1"/>
+                <field name="min_date"/>
+                <field name="origin"/>
+                <field name="group_id" invisible="1"/>
+                <field name="backorder_id"/>
+                <field name="state"/>
+                <field name="priority" invisible="1"/>
+                <field name="picking_type_id" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <!-- Stock picking : add batch picking id -->
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.form.batch</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <field name="group_id" position="before">
+                <field name="batch_picking_id"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Stock picking : add batch search -->
+    <record id="view_picking_internal_search" model="ir.ui.view">
+        <field name="name">stock.picking.search.batch_picking</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="batch_picking_id"/>
+            </field>
+        </field>
+    </record>
+</odoo>
