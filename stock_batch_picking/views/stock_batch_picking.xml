@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- stock.batch.picking form view -->
+    <record model="ir.ui.view" id="stock_bacth_picking_form">
+        <field name="name">stock.bacth.picking.form</field>
+        <field name="model">stock.batch.picking</field>
+        <field name="arch" type="xml">
+            <form string="Batch picking">
+                <header>
+                    <button name="action_assign" class="oe_highlight" string="Reserve All"
+                            states="draft" type="object"/>
+                    <button name="action_transfer" states="draft" string="Validate" type="object"/>
+                    <button name="action_transfer" states="assigned" string="Validate" class="oe_highlight" type="object"/>
+                    <button name="action_cancel" states="draft,assigned" string="Cancel" type="object"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <div class="oe_edit_only">
+                            <label for="name" string="Batch Name"/>
+                        </div>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="picker_id"/>
+                        <field name="date"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Pickings">
+                                <field name="active_picking_ids" invisible="True"/>
+                                <button name="remove_undone_pickings" string="Remove Undone" type="object"
+                                        class="oe_link" attrs="{'invisible': [('active_picking_ids', '=', [])]}" />
+                            <field name="picking_ids" widget="many2many" colspan="4" nolabel="1"
+                                   domain="[('state', 'not in', ('done', 'cancel'))]"/>
+                        </page>
+                        <page string="Operations">
+                            <field name="pack_operation_ids" invisible="1"/>
+                            <field name="pack_operation_product_ids">
+                                <tree editable="bottom" create="false" delete="false"
+                                      decoration-muted="result_package_id" decoration-danger="qty_done&gt;product_qty"
+                                      decoration-success="qty_done==product_qty and state!='done' and not result_package_id">
+                                    <field name="package_id" groups="stock.group_tracking_lot" invisible="1"/>
+                                    <field name="product_id" readonly="True"/>
+                                    <field name="product_uom_id" readonly="True" groups="product.group_uom"/>
+                                    <field name="from_loc" groups="stock.group_locations,stock.group_tracking_lot"/>
+                                    <field name="to_loc" groups="stock.group_locations,stock.group_tracking_lot"/>
+                                    <field name="lots_visible" invisible="1"/>
+                                    <field name="product_qty" readonly="True"/>
+                                    <field name="qty_done" attrs="{'readonly': [('lots_visible', '=', True)]}"/>
+                                    <field name="result_package_id" invisible="1"/>
+                                    <field name="state" invisible="1"/>
+                                </tree>
+                            </field>
+                            <field name="pack_operation_pack_ids"
+                                   attrs="{'invisible': [('pack_operation_pack_ids', '=', [])]}"
+                                   groups="stock.group_tracking_lot">
+                                <tree editable="bottom" create="false" delete="false" decoration-muted="qty_done&gt;0">
+                                    <field name="package_id" readonly="True" string="Package To Move"/>
+                                    <field name="from_loc" readonly="True"
+                                           groups="stock.group_locations,stock.group_tracking_lot"/>
+                                    <field name="to_loc" readonly="True"
+                                           groups="stock.group_locations,stock.group_tracking_lot"/>
+                                    <field name="processed_boolean"/>
+                                    <field name="lots_visible" invisible="1"/>
+                                    <field name="qty_done" attrs="{'readonly': [('lots_visible', '=', True)]}"/>
+                                    <field name="state" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Moves">
+                            <field name="move_ids" nolabel="1" colspan='4'/>
+                        </page>
+                        <page string='Notes'>
+                            <field name='notes' colspan='4' nolabel='1'/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- stock.batch.picking tree view -->
+    <record model="ir.ui.view" id="stock_bacth_picking_tree">
+        <field name="name">stock.batch.picking.tree</field>
+        <field name="model">stock.batch.picking</field>
+        <field name="arch" type="xml">
+            <tree string="Picking Dispatch">
+                <field name="name"/>
+                <field name="picker_id"/>
+                <field name="date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.server" id="action_stock_batch_picking_assign_all">
+        <field name="name">Reserve All</field>
+        <field name="model_id" ref="stock_batch_picking.model_stock_batch_picking"/>
+        <field name="code">
+            if context.get('active_model') == 'stock.batch.picking' and context.get('active_ids'):
+            batches = self.pool['stock.batch.picking'].action_assign(cr, uid, context['active_ids'], context=context)
+        </field>
+    </record>
+
+    <record model="ir.values" id="stock_batch_picking_assign_all">
+        <field name="model_id" ref="stock_batch_picking.model_stock_batch_picking"/>
+        <field name="name">Reserve All</field>
+        <field name="key2">client_action_multi</field>
+        <field name="value" eval="'ir.actions.server,' +str(ref('action_stock_batch_picking_assign_all'))"/>
+        <field name="key">action</field>
+        <field name="model">stock.batch.picking</field>
+    </record>
+
+    <!-- stock.batch.picking search view -->
+    <record id="stock_bacth_picking_search" model="ir.ui.view">
+        <field name="name">batch.picking.search</field>
+        <field name="model">stock.batch.picking</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="picker_id"/>
+                <field name="state"/>
+                <field name="date"/>
+                <group expand="0" string="Group By...">
+                    <filter name="picker_id" string="Picker" context="{'group_by':'picker_id'}"/>
+                    <filter name="state" string="State" context="{'group_by':'state'}"/>
+                    <filter name="date" string="Order Date" context="{'group_by':'date'}"/>
+                </group>
+                <filter name="no_picker_id" string="Unassigned" domain="[('picker_id','=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_stock_batch_picking_tree"
+            model="ir.actions.act_window">
+        <field name="name">Batch Picking</field>
+        <field name="res_model">stock.batch.picking</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- stock.batch.picking menuitem in Inventory main menu -->
+    <menuitem action='action_stock_batch_picking_tree'
+              parent='stock.menu_stock_root'
+              id='menu_action_stoch_batch_picking'
+              sequence='3'/>
+</odoo>
