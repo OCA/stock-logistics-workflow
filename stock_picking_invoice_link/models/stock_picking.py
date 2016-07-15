@@ -11,15 +11,13 @@ class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     invoice_ids = fields.Many2many(
-        comodel_name='account.invoice', copy=False, string='Invoices',
-        readonly=True)
-    # Provide this field for backwards compatibility
-    invoice_id = fields.Many2one(
-        comodel_name='account.invoice', string='Invoice',
-        compute="_compute_invoice_id")
+        comodel_name='account.invoice', string='Invoices',
+        compute="_compute_invoice_ids")
 
     @api.multi
-    @api.depends('invoice_ids')
-    def _compute_invoice_id(self):
-        for move in self:
-            move.invoice_id = move.invoice_ids[:1]
+    def _compute_invoice_ids(self):
+        for picking in self:
+            invoices = self.env['account.invoice']
+            for line in picking.move_lines:
+                invoices |= line.invoice_line_ids.mapped('invoice_id')
+            picking.invoice_ids = invoices
