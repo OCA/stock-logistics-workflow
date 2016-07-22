@@ -45,6 +45,7 @@ addon | version | summary
 [stock_picking_package_preparation](stock_picking_package_preparation/) | 8.0.1.0.0 | Stock Picking Package Preparation
 [stock_picking_package_preparation_line](stock_picking_package_preparation_line/) | 8.0.1.0.0 | Stock Picking Package Preparation Line
 [stock_picking_reorder_lines](stock_picking_reorder_lines/) | 8.0.0.1.0 | Provide a new field on stock moves, allowing to manage the orders of moves in a picking.
+[stock_picking_show_return](stock_picking_show_return/) | 8.0.1.0.0 | Show returns on stock pickings
 [stock_scanner](stock_scanner/) | 8.0.1.0.0 | Allows managing barcode readers with simple scenarios
 [stock_split_picking](stock_split_picking/) | 8.0.1.0.0 | Split a picking in two unconfirmed pickings
 [stock_transfer_split_multi](stock_transfer_split_multi/) | 8.0.1.0.0 | In the stock transfer wizard, you can split by multiple units
@@ -65,7 +66,6 @@ addon | version | summary
 [stock_obsolete](stock_obsolete/) | 1.0 (unported) | Add product depreciation
 [stock_picking_mass_assign](stock_picking_mass_assign/) | 0.2 (unported) | Delivery Orders Mass Assign
 [stock_picking_priority](stock_picking_priority/) | 0.2 (unported) | Picking Priority
-[stock_picking_show_returns](stock_picking_show_returns/) | 1.0 (unported) | Show returns on stock pickings
 [stock_sale_filters](stock_sale_filters/) | 1.3 (unported) | SO related filters on stock.picking and sale.order
 
 [//]: # (end addons)
