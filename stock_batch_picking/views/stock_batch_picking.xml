@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- stock.batch.picking form view -->
-    <record model="ir.ui.view" id="stock_bacth_picking_form">
-        <field name="name">stock.bacth.picking.form</field>
+    <record model="ir.ui.view" id="stock_batch_picking_form">
+        <field name="name">stock.batch.picking.form</field>
         <field name="model">stock.batch.picking</field>
         <field name="arch" type="xml">
             <form string="Batch picking">
@@ -82,11 +82,11 @@
     </record>
 
     <!-- stock.batch.picking tree view -->
-    <record model="ir.ui.view" id="stock_bacth_picking_tree">
+    <record model="ir.ui.view" id="stock_batch_picking_tree">
         <field name="name">stock.batch.picking.tree</field>
         <field name="model">stock.batch.picking</field>
         <field name="arch" type="xml">
-            <tree string="Picking Dispatch">
+            <tree string="Batch Picking">
                 <field name="name"/>
                 <field name="picker_id"/>
                 <field name="date"/>
@@ -114,7 +114,7 @@
     </record>
 
     <!-- stock.batch.picking search view -->
-    <record id="stock_bacth_picking_search" model="ir.ui.view">
+    <record id="stock_batch_picking_search" model="ir.ui.view">
         <field name="name">batch.picking.search</field>
         <field name="model">stock.batch.picking</field>
         <field name="arch" type="xml">

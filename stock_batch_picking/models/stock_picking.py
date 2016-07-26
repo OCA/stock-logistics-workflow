@@ -13,7 +13,7 @@ class StockPicking(models.Model):
         string='Batch',
         copy=False,
         domain="[('state', '=', 'draft')]",
-        help='In which picking dispatch this move will be processed.'
+        help='In which batch picking this picking will be processed.'
     )
 
     @api.multi
@@ -46,10 +46,10 @@ class StockPicking(models.Model):
 
         return result
 
-    def force_transfer(self, force_qties=True):
+    def force_transfer(self, force_qty=True):
         """ Do the picking transfer (by calling do_transfer)
 
-        If *force_qties* is True, force the transfer for all product_qty
+        If *force_qty* is True, force the transfer for all product_qty
         when qty_done is 0.
 
         Otherwise, process only pack operation with qty_done.
@@ -61,7 +61,7 @@ class StockPicking(models.Model):
                 if pick.state != 'assigned':
                     continue
 
-            if force_qties:
+            if force_qty:
                 for pack in pick.pack_operation_ids:
                     pack.qty_done = pack.product_qty
             else:

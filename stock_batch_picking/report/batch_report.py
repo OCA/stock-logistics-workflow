@@ -10,7 +10,7 @@ from openerp import pooler, models
 _logger = logging.getLogger(__name__)
 
 
-class BatchAgregation(object):
+class BatchAggregation(object):
     """ Group operations from a single batch by source and dest locations
     """
 
@@ -40,15 +40,29 @@ class BatchAgregation(object):
         return self.batch_id.id == other.batch_id.id
 
     def iter_locations(self):
+        """ Iterate over operations grouped by (loc_source, loc_dest)
+        and return informations to display in report for these locs.
+
+        Informations are like:
+        (
+            (loc_source_name, loc_dest_name),
+            (
+                (product1, product1_qty, product1_carrier)
+                (product2, product2_qty, product2_carrier)
+                [...]
+            )
+        )
+        """
         for locations in self.operations_by_loc:
             offset = commonprefix(locations).rfind('/') + 1
             display_locations = tuple(
-                loc[offset:].strip() for loc in locations)
+                loc[offset:].strip() for loc in locations
+            )
             yield display_locations, self._product_quantity(locations)
 
     def _product_quantity(self, locations):
-        """iterate over the different products concerned by the operations for the
-        specified locations with their total quantity, sorted by product
+        """ Iterate over the different products concerned by the operations for
+        the specified locations with their total quantity, sorted by product
         default_code
 
         locations: a tuple (source_location, dest_location)
@@ -107,7 +121,7 @@ class PrintBatch(report_sxw.rml_parse):
 
                 key = key_dict[id1], key_dict[id2]
                 pack_operations.setdefault(key, []).append(op)
-            new_objects.append(BatchAgregation(batch, pack_operations))
+            new_objects.append(BatchAggregation(batch, pack_operations))
         return super(PrintBatch, self).set_context(new_objects, data, ids,
                                                    report_type=report_type)
 

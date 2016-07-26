@@ -46,7 +46,7 @@ class StockBatchPickingCreator(models.TransientModel):
 
         if not pickings:
             raise UserError(_(
-                "All selected picking are already in a batch picking "
+                "All selected pickings are already in a batch picking "
                 "or are in a wrong state."
             ))
 

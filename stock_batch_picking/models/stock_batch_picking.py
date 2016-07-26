@@ -87,6 +87,8 @@ class StockBatchPicking(models.Model):
         'stock.pack.operation',
         string='Related pack operations',
         compute='_compute_pack_operation_product_ids',
+        # We need an inverse (even if empty lambda) so that pack operation
+        # can be saved (when modifying qty_done).
         inverse=lambda *args, **kwargs: None,
         states={'done': [('readonly', True)], 'cancel': [('readonly', True)]}
     )
@@ -126,16 +128,16 @@ class StockBatchPicking(models.Model):
             )
 
     def get_not_empties(self):
-        """ Retourne all batches in this recordset
+        """ Return all batches in this recordset
         for which picking_ids is not empty.
 
         :raise UserError: If all batches are empty.
         """
         if not self.mapped('picking_ids'):
             if len(self) == 1:
-                message = _('This Batch has no picking')
+                message = _('This Batch has no pickings')
             else:
-                message = _('These Batches have no picking')
+                message = _('These Batches have no pickings')
 
             raise UserError(message)
 
@@ -200,7 +202,7 @@ class StockBatchPicking(models.Model):
         for batch in batches:
             if not batch.verify_state():
                 batch.active_picking_ids.force_transfer(
-                    force_qties=all(
+                    force_qty=all(
                         operation.qty_done == 0
                         for operation in batch.pack_operation_ids
                     )
