@@ -176,11 +176,12 @@ class StockBatchPicking(models.Model):
         """ Call action_cancel for all batches pickings
         and set batches states to cancel too.
         """
-        if not self.picking_ids:
-            self.write({'state': 'cancel'})
-        else:
-            if not self.verify_state():
-                self.picking_ids.action_cancel()
+        for batch in self:
+            if not batch.picking_ids:
+                batch.write({'state': 'cancel'})
+            else:
+                if not batch.verify_state():
+                    batch.picking_ids.action_cancel()
 
     @api.multi
     def action_assign(self):

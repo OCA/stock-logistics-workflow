@@ -160,6 +160,29 @@ class TestBatchPicking(TransactionCase):
         self.assertEqual('cancel', self.picking.state)
         self.assertEqual('cancel', self.picking2.state)
 
+    def test_cancel_multi(self):
+        picking3 = self.create_simple_picking([
+            self.ref('product.product_product_8')
+        ])
+
+        batch2 = self.batch_model.create({
+            'picker_id': self.env.uid,
+            'picking_ids': [
+                (4, picking3.id),
+            ]
+        })
+
+        batches = self.batch | batch2
+
+        batches.action_cancel()
+
+        self.assertEqual('cancel', self.batch.state)
+        self.assertEqual('cancel', self.picking.state)
+        self.assertEqual('cancel', self.picking2.state)
+
+        self.assertEqual('cancel', batch2.state)
+        self.assertEqual('cancel', picking3.state)
+
     def test_cancel__no_pickings(self):
         batch = self.batch_model.create({})
         self.assertEqual('draft', batch.state)
