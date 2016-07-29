@@ -9,10 +9,9 @@ class StockChangeProductQty(models.TransientModel):
     _inherit = "stock.change.product.qty"
 
     @api.model
-    def _finalize_inventory_line(self, data):
+    def _prepare_inventory_line(self, inventory_id, data):
         line_data = super(StockChangeProductQty,
-                          self)._finalize_inventory_line(data)
-
+                          self)._prepare_inventory_line(inventory_id, data)
         Company = self.env['res.company']
         location = data.location_id
         line_data['partner_id'] = (
@@ -24,3 +23,4 @@ class StockChangeProductQty(models.TransientModel):
         )
 
         return line_data
+
