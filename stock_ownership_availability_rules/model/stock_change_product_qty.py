@@ -23,4 +23,3 @@ class StockChangeProductQty(models.TransientModel):
         )
 
         return line_data
-
