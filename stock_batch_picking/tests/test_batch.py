@@ -208,12 +208,9 @@ class TestBatchPicking(TransactionCase):
         self.assertFalse(copy.batch_picking_id)
 
     def test_create_wizard(self):
-        self.env.user.company_id.default_picker_id = self.user_demo
-
         wizard = self.env['stock.batch.picking.creator'].create({
             'name': 'Unittest wizard',
         })
-        self.assertEqual(self.user_demo, wizard.picker_id)
 
         # Pickings already in batch.
         with self.assertRaises(UserError):
@@ -238,10 +235,45 @@ class TestBatchPicking(TransactionCase):
         )
         self.assertEqual(1, len(batch))
 
-        self.assertEqual(self.user_demo, batch.picker_id)
         # Only picking3 because self.picking is already in another batch.
         self.assertEqual(picking3, batch.picking_ids)
         self.assertEqual(batch, picking3.batch_picking_id)
+
+    def test_wizard_picker_id(self):
+        wh_main = self.browse_ref("stock.warehouse0")
+
+        wizard_model = self.env['stock.batch.picking.creator']
+        wizard = wizard_model.create({
+            'name': 'Unittest wizard',
+        })
+        self.assertFalse(wizard.picker_id)
+
+        wh_main.default_picker_id = self.env.user
+
+        wizard = wizard_model.create({
+            'name': 'Unittest wizard',
+        })
+        self.assertEqual(self.env.user, wizard.picker_id)
+
+        other_wh = self.env['stock.warehouse'].create({
+            'name': 'Unittest other warehouse',
+            'code': 'UWH',
+        })
+
+        wizard = wizard_model.with_context(warehouse_id=other_wh.id).create({
+            'name': 'Unittest wizard',
+        })
+        self.assertFalse(wizard.picker_id)
+
+        user2 = self.env['res.users'].create({
+            'name': 'Unittest user',
+            'login': 'unittest_user'
+        })
+        other_wh.default_picker_id = user2
+        wizard = wizard_model.with_context(warehouse_id=other_wh.id).create({
+            'name': 'Unittest wizard',
+        })
+        self.assertEqual(user2, wizard.picker_id)
 
     def test_backorder(self):
         # Change move lines quantities for product 6 and 7

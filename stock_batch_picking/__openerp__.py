@@ -19,6 +19,7 @@
         'views/product_product.xml',
         'views/report_batch_picking.xml',
         'views/stock_picking.xml',
+        'views/stock_warehouse.xml',
         'wizard/batch_picking_creator_view.xml',
         'security/ir.model.access.csv',
     ],

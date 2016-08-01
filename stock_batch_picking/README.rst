@@ -9,10 +9,10 @@ but reworked for matching Odoo 9 new picking system (with pack operations).
 
 Batch picking allows you to manage several pickings at the same time.
 After having created a batch with a list of stock picking, you can:
- * Check availability and reserve quants for all pickings
- * Mark all pickings as done when delivery is done.
- * Make partial delivery by filling done quantities in pack operations tab.
- * Print a report to pick the proper goods at once
+* Check availability and reserve quants for all pickings
+* Mark all pickings as done when delivery is done.
+* Make partial delivery by filling done quantities in pack operations tab.
+* Print a report to pick the proper goods at once
 
 
 .. image:: static/stock_picking_list.png

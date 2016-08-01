@@ -4,5 +4,5 @@
 
 from . import stock_batch_picking
 from . import product_product
-from . import res_company
 from . import stock_picking
+from . import stock_warehouse

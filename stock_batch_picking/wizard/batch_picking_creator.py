@@ -13,6 +13,25 @@ class StockBatchPickingCreator(models.TransientModel):
     _name = 'stock.batch.picking.creator'
     _description = 'Batch Picking Creator'
 
+    def _default_picker_id(self):
+        """ Return default_picker_id from the main company warehouse
+        except if a warehouse_id is specified in context.
+        """
+        warehouse_id = self.env.context.get('warehouse_id')
+        if warehouse_id:
+            warehouse = self.env['stock.warehouse'].browse(warehouse_id)
+        else:
+            warehouse = self.env['stock.warehouse'].search([
+                ('company_id', '=', self.env.user.company_id.id)
+            ], limit=1)
+
+            if warehouse:
+                warehouse = warehouse[0]
+            else:
+                warehouse = False
+
+        return warehouse.default_picker_id if warehouse else False
+
     name = fields.Char(
         'Name', required=True,
         default=lambda x: x.env['ir.sequence'].next_by_code(
@@ -27,7 +46,7 @@ class StockBatchPickingCreator(models.TransientModel):
 
     picker_id = fields.Many2one(
         'res.users', string='Picker',
-        default=lambda self: self.env.user.company_id.default_picker_id,
+        default=_default_picker_id,
         help='The user to which the pickings are assigned'
     )
 
