@@ -13,6 +13,26 @@ class StockBatchPickingCreator(models.TransientModel):
     _name = 'stock.batch.picking.creator'
     _description = 'Batch Picking Creator'
 
+    name = fields.Char(
+        'Name', required=True,
+        default=lambda x: x.env['ir.sequence'].next_by_code(
+            'stock.batch.picking'
+        ),
+        help='Name of the batch picking'
+    )
+    date = fields.Date(
+        'Date', required=True, select=True, default=fields.Date.context_today,
+        help='Date on which the batch picking is to be processed'
+    )
+
+    picker_id = fields.Many2one(
+        'res.users', string='Picker',
+        default=lambda self: self._default_picker_id(),
+        help='The user to which the pickings are assigned'
+    )
+
+    notes = fields.Text('Notes', help='free form remarks')
+
     def _default_picker_id(self):
         """ Return default_picker_id from the main company warehouse
         except if a warehouse_id is specified in context.
@@ -31,26 +51,6 @@ class StockBatchPickingCreator(models.TransientModel):
                 warehouse = False
 
         return warehouse.default_picker_id if warehouse else False
-
-    name = fields.Char(
-        'Name', required=True,
-        default=lambda x: x.env['ir.sequence'].next_by_code(
-            'stock.batch.picking'
-        ),
-        help='Name of the batch picking'
-    )
-    date = fields.Date(
-        'Date', required=True, select=True, default=fields.Date.context_today,
-        help='Date on which the batch picking is to be processed'
-    )
-
-    picker_id = fields.Many2one(
-        'res.users', string='Picker',
-        default=_default_picker_id,
-        help='The user to which the pickings are assigned'
-    )
-
-    notes = fields.Text('Notes', help='free form remarks')
 
     @api.multi
     def action_create_batch(self):
