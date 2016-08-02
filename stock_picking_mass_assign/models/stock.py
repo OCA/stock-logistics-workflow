@@ -2,7 +2,7 @@
 # © 2014-2016 Camptocamp SA (Guewen Baconnier)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 import logging
-from openerp import api, models
+from openerp import _, api, models
 
 _logger = logging.getLogger(__name__)
 
@@ -26,6 +26,6 @@ class StockPicking(models.Model):
             except Exception:
                 # ignore the error, the picking will just stay as confirmed
                 name = picking.name
-                _logger.info('error in action_assign for picking %s',
-                             name, exc_info=True)
+                _logger.exception(_('error in action_assign for picking %s')
+                                  % name, exc_info=True)
         return True
