@@ -17,5 +17,4 @@
         'test/test_check_assign_all.yml',
     ],
     'installable': True,
-    'auto_install': False,
 }
