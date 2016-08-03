@@ -18,7 +18,7 @@
 				</div>
 				<div class="form-group col-sm-12 col-md-5">
 					<label for="search_query">
-						Query / Barcode
+						Name / Origin
 					</label>
 					<input type="text"
 						   class="form-control"
@@ -33,7 +33,7 @@
 					<label for="picking_type">
 						Type
 					</label>
-					<select name="picking_type" class="form-control js_picking_submit_immediate" required="">
+					<select name="picking_type" class="form-control js_picking_submit_immediate">
 						<option value="">All</option>
 						<t t-foreach="[('incoming', 'Incoming'), ('outgoing', 'Outgoing'), ('internal', 'Internal')]"
 						   t-as="picking_type">
@@ -48,7 +48,7 @@
 					<label for="picking_state">
 						State
 					</label>
-					<select name="picking_state" class="form-control js_picking_submit_immediate" required="">
+					<select name="picking_state" class="form-control js_picking_submit_immediate">
 						<option value="">All</option>
 						<t t-foreach="[('assigned', 'Available'), ('partially_available', 'Partially Available'), ('confirmed', 'Waiting Availability')]"
 						   t-as="picking_state">
@@ -90,7 +90,7 @@
 	<template id="picking_detail" name="Picking Detail">
 		<t t-call="web_stock_picking.layout">
 			<div id="wrap">
-				<div class="container">
+				<div class="container js_picking_form_barcode">
 					<form method="PATCH"
 						  t-attf-action="/web/stock/pickings/{{ picking.id }}"
 						  class="js_picking_form container-fluid mt32 mb32"
@@ -155,7 +155,7 @@
 											Force Availability
 										</button>
 									</t>
-									<t t-if="picking.state not in ['done', 'cancel', 'draft']">
+									<t t-if="picking.state not in ['done', 'cancel', 'draft'] and picking.picking_type_id.code != 'incoming'">
 										<button type="submit"
 												class="btn btn-primary mt8 mb8 js_picking_form_send"
 												name="submit"
@@ -224,7 +224,6 @@
 									-->
 								</div>
 								<div class="row">
-									<input class="js_picking_form_barcode" barcode_events="true"/>
 									<input class="hidden" id="barcodeNomenclatureId" t-att-value="warehouse.barcode_nomenclature_id.id" />
 								</div>
 							</div>
@@ -328,97 +327,7 @@
 			 aria-labelledby="pickingModalLabel"
 			 >
 			<div class="modal-dialog" role="document">
-				<t t-call="web_stock_picking.picking_validate_backorder" />
-				<t t-call="web_stock_picking.picking_immediate_transfer" />
-			</div>
-		</div>
-	</template>
-
-	<template id="picking_validate_backorder" name="Backorder Modal on Validate">
-		<div class="modal-content" id="pickingBackorderValidate">
-			<div class="modal-header">
-				<h4 class="modal-title" id="pickingModalLabel">
-					Create Backorder?
-					<button type="button" class="close pull-right" data-dismiss="modal" aria-label="X">
-						<span aria-hidden="true">&amp;times;</span>
-					</button>
-				</h4>
-			</div>
-			<div class="modal-body">
-				<div class="row">
-					<div class="col-md-6">
-						You have processed less products than the initial demand.
-					</div>
-					<div class="col-md-6">
-						Create a backorder if you expect to process the remaining products later.
-						Do not create a backorder if you will not supply the remaining products.
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<div class="col-sm-4 text-left">
-					<button type="button"
-							class="btn btn-primary js_picking_btn_additional"
-							name="process"
-							>
-						Create Backorder
-					</button>
-				</div>
-				<div class="col-sm-4 text-center">
-					<button type="button"
-							class="btn btn-primary js_picking_btn_additional"
-							name="process_cancel_backorder"
-							>
-						No Backorder
-					</button>
-				</div>
-				<div class="col-sm-4 text-right">
-					<button type="button"
-							class="btn btn-default"
-							data-dismiss="modal"
-							>
-						Cancel
-					</button>
-				</div>
-			</div>
-		</div>
-	</template>
-
-	<template id="picking_immediate_transfer" name="Picking Immediate Transfer">
-		<div class="modal-content" id="pickingImmediateTransfer">
-			<div class="modal-header">
-				<h4 class="modal-title" id="pickingModalLabel">
-					Immediate Transfer?
-					<button type="button" class="close pull-right" data-dismiss="modal" aria-label="X">
-						<span aria-hidden="true">&amp;times;</span>
-					</button>
-				</h4>
-			</div>
-			<div class="modal-body">
-				<div class="row">
-					<div class="col-md-12">
-						You haven't set processed quantities.
-						If you click apply, Odoo will process all quantities to do.
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<div class="col-sm-4 text-left">
-					<button type="button"
-							class="btn btn-primary js_picking_btn_additional"
-							name="immediate_transfer"
-							>
-						Apply
-					</button>
-				</div>
-				<div class="col-sm-4 text-right">
-					<button type="button"
-							class="btn btn-default"
-							data-dismiss="modal"
-							>
-						Cancel
-					</button>
-				</div>
+				<!-- Inject via JS QWeb -->
 			</div>
 		</div>
 	</template>

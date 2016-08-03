@@ -50,7 +50,11 @@ class WebsiteStockPickingWizard(models.TransientModel):
             ('company_id', '=', self.company_id.id),
         ]
         if self.search_query:
-            domain.append(('name', '=', self.search_query))
+            domain.extend([
+                '|',
+                ('origin', '=', self.search_query),
+                ('name', '=', self.search_query),
+            ])
         if self.picking_type:
             domain.append(('picking_type_id.code', '=', self.picking_type))
         if self.picking_state:

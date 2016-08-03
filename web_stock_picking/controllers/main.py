@@ -47,9 +47,9 @@ class WebStock(http.Controller):
             })
 
             if len(wizard_id.picking_ids) == 1:
-                return self.show_picking_detail(
-                    wizard_id.picking_ids[0].id,
-                )
+                picking_id = wizard_id.picking_ids.id
+                wizard_id.unlink()
+                return self.get_picking(picking_id)
 
         else:
             if not wizard_id:

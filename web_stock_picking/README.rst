@@ -29,6 +29,7 @@ Known issues / Roadmap
 
 * Properly handle permissions in view
 * Implement commented out view actions
+* It would be nice to also allow for a BarcodeScanner device, instead of just the element events
 
 Bug Tracker
 ===========

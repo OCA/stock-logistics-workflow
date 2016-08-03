@@ -6,12 +6,16 @@
 odoo.define('web_stock.picking', function(require) {
     'use strict';
 
+    var Widget = require('web.Widget');
     var snippet_animation = require('web_editor.snippets.animation');
     var BarcodeHandlerMixin = require('barcodes.BarcodeHandlerMixin');
     var BarcodeParser = require('barcodes.BarcodeParser');
     var $ = require('$');
     var _ = require('_');
     
+    /* It should provide a more basic version of website_form js
+     * This allows for removal of website dependencies
+     **/
     var formMixin = {
         handleSubmit: function(event) {
             var self = this;
@@ -38,11 +42,35 @@ odoo.define('web_stock.picking', function(require) {
                     } else {
                         window.location.reload();
                     }
-                    
                 }
             });
         }
     };
+    
+    /* It should provide click events for common additional action buttons
+     * in modals
+     **/
+    var buttonAdditionalMixer = {
+        events: {
+            'click .js_picking_btn_additional': function(event) {
+                $('.js_picking_additional_action').val(event.target.name || '');
+                $('#pickingModal').modal('hide');
+                $('.js_picking_validate').trigger('click');
+            }
+        }
+    };
+    
+    var ModalBackorder = Widget.extend(buttonAdditionalMixer, {
+        template: 'web_stock_picking.picking_validate_backorder',
+    });
+    
+    var ModalImmediate = Widget.extend(buttonAdditionalMixer, {
+        template: 'web_stock_picking.picking_immediate_transfer',
+    });
+    
+    var ModalOverpick = Widget.extend(buttonAdditionalMixer, {
+        template: 'web_stock_picking.picking_overpick',
+    });
     
     /* It provides Stock Picking details form and event handlers
      **/
@@ -54,41 +82,39 @@ odoo.define('web_stock.picking', function(require) {
             var self = this;
             var $validateBtn = $(self.$target.find('.js_picking_validate'));
             var $modal = $('#pickingModal');
-            var $immediateTransfer = $('#pickingImmediateTransfer');
-            var $backorderValidate = $('#pickingBackorderValidate');
-            $('.js_picking_btn_additional').click(function(event) {
-                self.$target.find('.js_picking_additional_action').val(event.target.name);
-                $modal.modal('hide');
-                $validateBtn.trigger('click');
-            });
             $modal.on('show.bs.modal', function(event) {
+                var $modalDoc = $modal.find('.modal-dialog');
                 var complete = true;
+                var overpick = false;
                 var totalVal = 0.0;
+                $modalDoc.html("");
                 _.each(self.$target.find('.js_picking_picked_qty'), function(val) {
                     var $val = $(val);
                     if ($val.val()) {
                         var floatVal = parseFloat($val.val());
+                        var productQty = parseFloat($val.data('product-qty'));
                         totalVal += floatVal;
-                        if (parseFloat($val.data('product-qty')) != floatVal) {
-                            console.log($val);
+                        if (productQty != floatVal) {
                             complete = false;
+                            if (productQty < floatVal) {
+                                overpick = true;
+                            }
                         }
                     }
                 });
+                if (overpick) {
+                    return new ModalOverpick(self).appendTo($modalDoc);
+                }
                 if (totalVal === 0) {
                     if (self.$target.find('.js_picking_pack_op_done').length === 0) {
-                        $immediateTransfer.removeClass('hidden');
-                        $backorderValidate.addClass('hidden');
-                        return;
+                        return new ModalImmediate(self).appendTo($modalDoc);
                     }
                 } else if (complete) {
                     event.preventDefault();
                     $validateBtn.trigger('click');
                     return;
                 }
-                $immediateTransfer.addClass('hidden');
-                $backorderValidate.removeClass('hidden');
-                return;
+                return new ModalBackorder(self).appendTo($modalDoc);
             });
             this.$target.find('.js_picking_form_send').click(function(event) {
                 self.$target.find('.js_picking_submit_action').val(event.target.value);
@@ -144,10 +170,6 @@ odoo.define('web_stock.picking', function(require) {
         
         on_barcode_scanned: function(barcode) {
             var self = this;
-            // @TODO: REMOVE
-            barcode = '11023454545656767';
-            
-            
             // Call hook method possibly implemented by subclass
             this.preOnchangeHook(barcode).then(function(proceed) {
                 if (proceed === true) {
@@ -200,7 +222,7 @@ odoo.define('web_stock.picking', function(require) {
             var productCode = self._identifyProductBarcode(parsedBarcode);
             var $productEls = $('.js_picking_picked_qty[data-barcode="' + productCode.code + '"]');
             if ($productEls.length === 0) {
-                alert('No product found matching barcode');
+                alert('No product on page matching barcode "' + parsedBarcode.base_code + '"');
                 return;
             }
             _.each($productEls, function(el){
@@ -230,10 +252,14 @@ odoo.define('web_stock.picking', function(require) {
     });
     
     return {
+        buttonAdditionalMixer: buttonAdditionalMixer,
         formMixin: formMixin,
         pickingForm: snippet_animation.registry.js_picking_form,
         pickingSearch: snippet_animation.registry.js_picking_search,
         pickingFormBarcode: snippet_animation.registry.js_picking_form_barcode,
+        ModalBackorder: ModalBackorder,
+        ModalImmediate: ModalImmediate,
+        ModalOverpick: ModalOverpick,
     };
     
 });

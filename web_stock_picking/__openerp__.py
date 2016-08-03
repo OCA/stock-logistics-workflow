@@ -22,6 +22,9 @@
         'views/web_warehouse.xml',
         'views/stock_warehouse.xml',
     ],
+    'qweb': [
+        'static/src/xml/*.xml',
+    ],
     'demo': [
         'demo/web_stock_picking_demo.xml',
     ],
