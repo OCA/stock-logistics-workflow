@@ -8,10 +8,14 @@ odoo.define('web_stock.picking', function(require) {
 
     var Widget = require('web.Widget');
     var snippet_animation = require('web_editor.snippets.animation');
+    var ParentedMixin = require('web.mixins').ParentedMixin;
     var BarcodeHandlerMixin = require('barcodes.BarcodeHandlerMixin');
     var BarcodeParser = require('barcodes.BarcodeParser');
+    var Model = require('web.DataModel');
     var $ = require('$');
     var _ = require('_');
+    
+    var core = require('web.core');
     
     /* It should provide a more basic version of website_form js
      * This allows for removal of website dependencies
@@ -141,31 +145,38 @@ odoo.define('web_stock.picking', function(require) {
         
     });
 
-    snippet_animation.registry.js_picking_form_barcode = snippet_animation.Class.extend(BarcodeHandlerMixin, {
+    snippet_animation.registry.js_picking_form_barcode = snippet_animation.Class.extend(ParentedMixin, BarcodeHandlerMixin, {
         
         selector: '.js_picking_form_barcode',
         loaded: false,
         barcodeParser: false,
+        barcodeHistory: [],  // Most recent first
         
         // Let subclasses add custom behavior before onchange. Must return a deferred.
         // Resolve the deferred with true proceed with the onchange, false to prevent it.
         preOnchangeHook: function() {
             return $.Deferred().resolve(true);
         },
-        
+    
         start: function() {
+            var self = this;
+            // Compat w/ multi-barcodes update
+            this.el = this.$target[0];
             this.actionMap = {
                 'product': this.handleProductScan,
                 'error': this.throwError,
+                'lot': this.handleLotScan,
             };
             if(!this.barcodeParser) {
                 this.barcodeParser = new BarcodeParser({
                     'nomenclature_id': [$('#barcodeNomenclatureId').val()],
                 });
                 this.barcodeParser.load().then(function(){
+                    self.loaded = true;
                     console.log('Barcode parser initialized');
                 });
             }
+            this.$target.on('barcode_scanned', this.on_barcode_scanned);
         },
         
         on_barcode_scanned: function(barcode) {
@@ -173,58 +184,65 @@ odoo.define('web_stock.picking', function(require) {
             // Call hook method possibly implemented by subclass
             this.preOnchangeHook(barcode).then(function(proceed) {
                 if (proceed === true) {
+                    barcode = '10123450000003';
                     var parsedBarcode = self.barcodeParser.parse_barcode(barcode);
+                    self.barcodeHistory.unshift(parsedBarcode);
                     try{
-                        self.actionMap[parsedBarcode.type](self, parsedBarcode);
+                        self.actionMap[parsedBarcode.type].call(self, parsedBarcode);
                     } catch (err) {
-                        self.actionMap.error(self, parsedBarcode, err);
+                        self.actionMap.error.call(self, parsedBarcode, err);
                     }
                 }
             });
         },
         
-        _identifyProductBarcode: function(parsedBarcode) {
-            var baseCode = parsedBarcode.base_code.split(""),
-                matching = true,
-                leftCode = [],
-                rightCode = [];
-            // @TODO: Following method does not account for zero padded values
-            // parsedBarcode: {encoding: "any", type: "product", code: "11023454545656767", base_code: "11000004545656767", value: 23.45}
-            // productCode: Object {prefix: "110", code: "23454545656767"}
-            _.each(parsedBarcode.code.split(""), function(chr, idx) {
-                if (chr != baseCode[idx]) {
-                    matching = false;
-                }
-                if (matching) {
-                    leftCode.push(chr);
-                } else {
-                    rightCode.push(chr);
-                }
-            });
-            // TODO: The replace will also kill any leading zeros from a product barcode
-            return {prefix: leftCode.join(""),
-                    code: rightCode.join("").replace(/^0+(?=\d\.)/, ''),
-                    };
-        },
-        
-        throwError: function(self, parsedBarcode, exception) {
+        throwError: function(parsedBarcode, exception) {
             console.log('throwError called with');
             console.log(parsedBarcode);
             console.log(exception);
             // @TODO: create throwError method
         },
         
-        handleProductScan: function(self, parsedBarcode) {
+        handleProductScan: function(parsedBarcode) {
             var barcodeQty = parseFloat(parsedBarcode.value);
             if (barcodeQty === 0.0) {
                 barcodeQty = 1.0;
             }
-            var productCode = self._identifyProductBarcode(parsedBarcode);
+            var productCode = this._stripBarcodePrefix(parsedBarcode);
             var $productEls = $('.js_picking_picked_qty[data-barcode="' + productCode.code + '"]');
             if ($productEls.length === 0) {
-                alert('No product on page matching barcode "' + parsedBarcode.base_code + '"');
+                alert('No product on page matching barcode "' + parsedBarcode.code + '"');
                 return;
             }
+            this._handleBarcodeQty(barcodeQty, $productEls);
+        },
+        
+        handleLotScan: function(parsedBarcode) {
+            var self = this;
+            var lotObj = new Model('stock.production.lot');
+            var barcodeQty = parseFloat(parsedBarcode.value);
+            if (barcodeQty === 0.0) {
+                barcodeQty = 1.0;
+            }
+            var lotCode = this._stripBarcodePrefix(parsedBarcode);
+            lotObj.query(['name', 'product_id'])
+                .filter(['|',
+                         ['name', '=', lotCode.code],
+                         ['ref', '=', lotCode.code],
+                        ])
+                .limit(1)
+                .first()
+                .then(function(lot){
+                    var $productEls = $('.js_picking_picked_qty[data-product-id="' + lot.product_id[0] + '"]');
+                    if ($productEls.length === 0) {
+                        alert('No product on page matching barcode "' + lotCode.code + '"');
+                        return;
+                    }
+                    self._handleBarcodeQty(barcodeQty, $productEls);
+                });
+        },
+        
+        _handleBarcodeQty: function(barcodeQty, $productEls) {
             _.each($productEls, function(el){
                 var $el = $(el);
                 // @TODO: Add better logic here
@@ -247,6 +265,46 @@ odoo.define('web_stock.picking', function(require) {
                     $el.val(newVal);
                 }
             });
+        },
+        
+        /* It identifies difference of code + base_code, and provides
+         * the prefix + a version of the code with the prefix and
+         * zeroes that were appended by parser removed
+         *
+         *  Given:
+         *      {encoding: "any", type: "product", code: "11023454545656767", base_code: "11000004545656767", value: 23.45}
+         *  For Nomenclature:
+         *      Product: 11{NNNDD}
+         *  Get:
+         *      {prefix: "110", code: "4545656767"}
+         *      
+         **/
+        _stripBarcodePrefix: function(parsedBarcode) {
+            var baseCode = parsedBarcode.base_code.split(""),
+                unmatched = 0,
+                leftCode = [],
+                rightCode = [];
+            _.each(parsedBarcode.code.split(""), function(chr, idx) {
+                if (chr != baseCode[idx]) {
+                    unmatched += 1;
+                }
+                if (!unmatched) {
+                    leftCode.push(baseCode[idx]);
+                } else {
+                    rightCode.push(baseCode[idx]);
+                }
+            });
+            leftCode = leftCode.join("");
+            rightCode = rightCode.join("").substring(unmatched);
+            var prefix, code;
+            if (rightCode.length === 0) {
+                prefix = '';
+                code = leftCode;
+            } else {
+                prefix = leftCode;
+                code = rightCode;
+            }
+            return {prefix: prefix, code: code};
         },
         
     });

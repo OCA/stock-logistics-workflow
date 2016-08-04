@@ -14,18 +14,15 @@
     "depends": [
         'barcodes',
         "stock",
-        "website_form",
+        "web_editor",
     ],
     "data": [
         'wizards/web_stock_picking_wizard_template.xml',
-        'views/assets.xml',
         'views/web_warehouse.xml',
         'views/stock_warehouse.xml',
+        'views/assets.xml',
     ],
     'qweb': [
         'static/src/xml/*.xml',
-    ],
-    'demo': [
-        'demo/web_stock_picking_demo.xml',
     ],
 }

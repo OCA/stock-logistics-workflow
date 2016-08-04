@@ -213,5 +213,5 @@ class WebStock(http.Controller):
         return {
             'errors': [],
             'error_fields': kwargs.get('error_fields', []),
-            'db_info': db_info(),
+            'db_info': json.dumps(db_info()),
         }

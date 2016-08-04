@@ -224,6 +224,7 @@
 									-->
 								</div>
 								<div class="row">
+									<!--<input type="text" class="js_picking_form_barcode" barcode_events="true" placeholder="Barcode" />-->
 									<input class="hidden" id="barcodeNomenclatureId" t-att-value="warehouse.barcode_nomenclature_id.id" />
 								</div>
 							</div>

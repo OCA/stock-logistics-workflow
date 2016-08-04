@@ -7,10 +7,16 @@
 -->
 
 <odoo>
-    <template id="assets_editor" name="Stock Picking Tour" inherit_id="website.assets_editor">
+<!--    <template id="assets_editor" name="Stock Picking Tour" inherit_id="website.assets_editor">
         <xpath expr=".">
             <script type="text/javascript"
                     src="/web_stock_picking/static/src/js/web_stock_picking.tour.js"/>
+        </xpath>
+    </template>-->
+    <template id="assets_backend" name="Stock Picking Tour" inherit_id="web.assets_backend">
+        <xpath expr=".">
+            <script type="text/javascript"
+                    src="/web_stock_picking/static/src/js/web_stock_picking.js"/>
         </xpath>
     </template>
 </odoo>
