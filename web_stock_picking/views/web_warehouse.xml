@@ -49,6 +49,9 @@
 				<t t-raw="head or ''" />
 			</head>
 			<body>
+				<a href="/web/" class="btn" style="position: absolute; top: 10px; left:10px;">
+					<i class="fa fa-home" />
+				</a>
 				<div id="wrapwrap">
 					<main>
 						<t t-raw="0"/>

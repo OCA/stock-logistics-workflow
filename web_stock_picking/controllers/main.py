@@ -28,12 +28,16 @@ class WebStock(http.Controller):
         wizard_obj = request.env['website.stock.picking.wizard']
         wizard_id = wizard_obj.action_get_wizard()
         tpl_vals = self.__get_tpl_defaults(**kwargs)
+        # @TODO: Use an autocomplete field instead of this?
+        tpl_vals.update({
+            'picking_types': request.env['stock.picking.type'].search([]),
+        })
 
         if kwargs:
 
             search_vals = {
                 'search_query': kwargs.get('search_query'),
-                'picking_type': kwargs.get('picking_type'),
+                'picking_type_id': kwargs.get('picking_type_id'),
                 'picking_state': kwargs.get('picking_state'),
             }
             if not wizard_id:
@@ -77,7 +81,6 @@ class WebStock(http.Controller):
             return self.get_pickings(
                 errors=['No picking was found']
             )
-        # @TODO: Better way to identify warehouse, this is sloppy as dung
         tpl_vals.update({
             'picking': picking_id,
             'warehouse': picking_id.picking_type_id.warehouse_id,

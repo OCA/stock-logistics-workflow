@@ -16,11 +16,11 @@ class WebsiteStockPickingWizard(models.TransientModel):
     _description = 'Website Stock Picking Wizard'
 
     search_query = fields.Char()
-    picking_type = fields.Selection([
-        ('incoming', 'Incoming'),
-        ('outgoing', 'Outgoing'),
-        ('internal', 'Internal'),
-    ])
+    # picking_type = fields.Selection([
+    #     ('incoming', 'Incoming'),
+    #     ('outgoing', 'Outgoing'),
+    #     ('internal', 'Internal'),
+    # ])
     picking_state = fields.Selection([
         ('draft', 'Draft'),
         ('cancel', 'Cancelled'),
@@ -31,6 +31,10 @@ class WebsiteStockPickingWizard(models.TransientModel):
         ('done', 'Done'),
     ],
         default='assigned',
+    )
+    picking_type_id = fields.Many2one(
+        string='Picking Type',
+        comodel_name='stock.picking.type',
     )
     company_id = fields.Many2one(
         string='Company',
@@ -55,8 +59,10 @@ class WebsiteStockPickingWizard(models.TransientModel):
                 ('origin', '=', self.search_query),
                 ('name', '=', self.search_query),
             ])
-        if self.picking_type:
-            domain.append(('picking_type_id.code', '=', self.picking_type))
+        if self.picking_type_id:
+            domain.append(('picking_type_id', '=', self.picking_type_id.id))
+        # elif self.picking_type:  # Don't search for a picking type and code
+        #     domain.append(('picking_type_id.code', '=', self.picking_type))
         if self.picking_state:
             domain.append(('state', '=', self.picking_state))
         return domain

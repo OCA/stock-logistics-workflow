@@ -28,8 +28,10 @@ Known issues / Roadmap
 ======================
 
 * Properly handle permissions in view
+* Implement proper errors instead of alerts - requires keybindings for enter/cancel
 * Implement commented out view actions
 * It would be nice to also allow for a BarcodeScanner device, instead of just the element events
+* Button injection in stock.picking.type Kanban fails silently (have also tried jQuery template injection)
 
 Bug Tracker
 ===========

@@ -16,7 +16,7 @@
 				<div class="col-sm-12 col-md-3">
 					<h1>Pickings</h1>
 				</div>
-				<div class="form-group col-sm-12 col-md-5">
+				<div class="form-group col-sm-12 col-md-4">
 					<label for="search_query">
 						Name / Origin
 					</label>
@@ -29,22 +29,21 @@
 						   onLoad="this.focus(); this.setSelectionRange(0, this.value.length)"
 						   />
 				</div>
-				<div class="form-group col-sm-6 col-md-2">
-					<label for="picking_type">
+				<div class="form-group col-sm-7 col-md-3">
+					<label for="picking_type_id">
 						Type
 					</label>
-					<select name="picking_type" class="form-control js_picking_submit_immediate">
+					<select name="picking_type_id" class="form-control js_picking_submit_immediate">
 						<option value="">All</option>
-						<t t-foreach="[('incoming', 'Incoming'), ('outgoing', 'Outgoing'), ('internal', 'Internal')]"
-						   t-as="picking_type">
-							<option t-att-value="picking_type[0]"
-									t-att-selected="wizard and picking_type[0] == wizard.picking_type">
-								<t t-esc="picking_type[1]" />
+						<t t-foreach="picking_types" t-as="picking_type">
+							<option t-att-value="picking_type.id"
+									t-att-selected="wizard and wizard.picking_type_id and picking_type.id == wizard.picking_type_id.id">
+								<t t-esc="picking_type.display_name" />
 							</option>
 						</t>
 					</select>
 				</div>
-				<div class="form-group col-sm-6 col-md-2">
+				<div class="form-group col-sm-5 col-md-2">
 					<label for="picking_state">
 						State
 					</label>
