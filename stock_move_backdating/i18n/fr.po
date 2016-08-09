@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-12 10:46+0000\n"
-"PO-Revision-Date: 2015-08-12 10:46+0000\n"
+"POT-Creation-Date: 2015-08-12 10:45+0000\n"
+"PO-Revision-Date: 2015-08-12 10:45+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,17 +18,17 @@ msgstr ""
 #. module: stock_move_backdating
 #: model:ir.model,name:stock_move_backdating.model_account_move
 msgid "Account Entry"
-msgstr "Buchungssatz"
+msgstr "Pièce comptable"
 
 #. module: stock_move_backdating
 #: model:ir.model,name:stock_move_backdating.model_stock_transfer_details
 msgid "Picking wizard"
-msgstr "Pickauftragsassistent"
+msgstr "Assistant de préparation"
 
 #. module: stock_move_backdating
 #: model:ir.model,name:stock_move_backdating.model_stock_transfer_details_items
 msgid "Picking wizard items"
-msgstr "Arttikel in Pickauftragsassistent"
+msgstr "Ligne d'assistant de préparation"
 
 #. module: stock_move_backdating
 #: model:ir.model,name:stock_move_backdating.model_stock_quant
@@ -38,11 +38,11 @@ msgstr "Quants"
 #. module: stock_move_backdating
 #: model:ir.model,name:stock_move_backdating.model_stock_move
 msgid "Stock Move"
-msgstr "Bestandsbuchung"
+msgstr "Mouvement de stock"
 
 #. module: stock_move_backdating
 #: code:addons/stock_move_backdating/wizard/stock_transfer_details.py:41
 #, python-format
 msgid "You can not process an actual movement date in the future."
-msgstr "Sie dürfen das tatsächliche Umlagerungsdatum künftig nicht ändern."
+msgstr "Vous ne pouvez pas traiter une date actuelle de mouvement dans le futur."
 
