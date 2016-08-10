@@ -45,12 +45,7 @@ class StockBatchPickingCreator(models.TransientModel):
                 ('company_id', '=', self.env.user.company_id.id)
             ], limit=1)
 
-            if warehouse:
-                warehouse = warehouse[0]
-            else:
-                warehouse = False
-
-        return warehouse.default_picker_id if warehouse else False
+        return warehouse.default_picker_id
 
     @api.multi
     def action_create_batch(self):
