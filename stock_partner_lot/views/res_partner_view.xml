@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+    <record id="view_res_partner_lots" model="ir.ui.view">
+        <field name="name">res.partner.type.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="lots" string="Products">
+                    <field name="quant_ids" mode="tree">
+                        <tree>
+                            <field name="product_id"/>
+                            <field name="lot_id"/>
+                            <field name="qty"/>
+                            <field name="product_uom_id"/>
+                            <field name="location_id"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_res_partner_lots_filter" model="ir.ui.view">
+        <field name="name">res.partner.select</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="quant_ids" string="Product" domain="[('quant_ids.product_id', 'ilike', self)]"/>
+                <field name="quant_ids" string="Lot name" domain="[('quant_ids.lot_id', 'ilike', self)]"/>
+            </xpath>
+        </field>
+    </record>
+
+</data>
+</openerp>
