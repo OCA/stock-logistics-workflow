@@ -33,6 +33,7 @@ addon | version | summary
 [stock_dropshipping_dual_invoice](stock_dropshipping_dual_invoice/) | 8.0.0.1.0 | Create both Supplier and Customer Invoices from a Dropshipping Delivery
 [stock_lock_lot](stock_lock_lot/) | 8.0.1.1.0 | Stock Lock Lot
 [stock_lot_scrap](stock_lot_scrap/) | 8.0.1.0.0 | This module adds a button in Production Lot/Serial Number view form to Scrap all products contained.
+[stock_move_backdating](stock_move_backdating/) | 8.0.1.0.0 | Stock Move Backdating
 [stock_move_description](stock_move_description/) | 8.0.1.0.0 | Stock move description
 [stock_no_negative](stock_no_negative/) | 8.0.1.0.1 | Stock Check No Negative
 [stock_ownership_availability_rules](stock_ownership_availability_rules/) | 8.0.0.2.0 | Enforce ownership on stock availability
@@ -62,7 +63,6 @@ addon | version | summary
 [stock_filter_none_zero_qty](stock_filter_none_zero_qty/) | 1.0 (unported) | Filter products in stock
 [stock_inventory_retry_assign](stock_inventory_retry_assign/) | 1.0 (unported) | Check Availability after Inventories
 [stock_location_flow_creator](stock_location_flow_creator/) | 1.0 (unported) | Create configuration of stock location flow
-[stock_move_backdating](stock_move_backdating/) | 1.0 (unported) | Allows back-dating of stock moves
 [stock_move_on_hold](stock_move_on_hold/) | 1.0 (unported) | Stock On Hold Status
 [stock_obsolete](stock_obsolete/) | 1.0 (unported) | Add product depreciation
 [stock_picking_mass_assign](stock_picking_mass_assign/) | 0.2 (unported) | Delivery Orders Mass Assign
