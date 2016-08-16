@@ -51,7 +51,7 @@ class StockMove(models.Model):
         return operations
 
     def check_after_action_done(self, cr, uid, operation_or_move,
-                                lot_id=None, context=None):
+                                context=None):
         """
         Method to check operation or move plus lot_id
         easiest inherit cases after action done
@@ -59,7 +59,7 @@ class StockMove(models.Model):
         return True
 
     def check_before_action_done(self, cr, uid, operation_or_move,
-                                 lot_id=None, context=None):
+                                 context=None):
         """
         Method to check operation or move plus lot_id
         easiest inherit cases before action done
@@ -69,7 +69,7 @@ class StockMove(models.Model):
             operation_or_move.product_uom_id.id,
             operation_or_move.product_qty,
             operation_or_move.location_id.id,
-            lot_id=lot_id,
+            lot_id=operation_or_move.lot_id.id,
             context=context)
         return True
 
@@ -86,10 +86,9 @@ class StockMove(models.Model):
             cr, uid, ids, context=context)
 
         for operation in operations_before_done:
-            lot_id = operation.lot_id.id if operation.lot_id else False
 
             self.check_before_action_done(
-                cr, uid, operation, lot_id, context=context)
+                cr, uid, operation, context=context)
 
         res = super(StockMove, self).action_done(
             cr, uid, ids, context=context)
@@ -99,10 +98,8 @@ class StockMove(models.Model):
             cr, uid, ids, context=context)
 
         for operation in operations_after_done:
-            lot_id = operation.lot_id.id if operation.lot_id else False
-
             self.check_after_action_done(
-                cr, uid, operation, lot_id, context=context)
+                cr, uid, operation, context=context)
         return res
 
     def check_before_done_no_negative(

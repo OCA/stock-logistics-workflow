@@ -29,10 +29,27 @@ class StockMove(models.Model):
     _inherit = 'stock.move'
 
     @api.model
-    def check_after_action_done(self, operation_or_move, lot_id):
+    def check_after_action_done(self, operation_or_move):
         super(StockMove, self).\
-            check_after_action_done(operation_or_move, lot_id)
-        return self.check_unicity_qty_available(operation_or_move, lot_id)
+            check_after_action_done(operation_or_move)
+        return self.check_unicity_qty_available(operation_or_move)
+
+    @api.model
+    def check_before_action_done(self, operation_or_move):
+        res = super(StockMove, self).\
+            check_before_action_done(operation_or_move)
+
+        elements = [
+            (x.product_id, x.lot_id)
+            for x in operation_or_move.picking_id.pack_operation_ids
+            if x.product_id.lot_unique_ok
+            ]
+        repeat_elements = [x for x in elements if elements.count(x) > 1]
+        if repeat_elements:
+            raise exceptions.ValidationError(_(
+                'Same lot with product unique in multiple operations'
+                ))
+        return res
 
     @api.multi
     def check_unicity_move_qty(self):
@@ -52,19 +69,16 @@ class StockMove(models.Model):
                         ) % (move.product_id.name))
 
     @api.model
-    def check_unicity_qty_available(self, operation_or_move, lot_id):
+    def check_unicity_qty_available(self, operation_or_move):
         """
-        Check quantity on hand to verify that has qty = 1
+        Check quantity on lot to verify that has qty = 1
         if 'lot unique' is ok on product
         """
-        if operation_or_move.product_id.lot_unique_ok and lot_id:
-            ctx = self.env.context.copy()
-            ctx.update({'lot_id': lot_id})
-            product_ctx = self.env['product.product'].browse(
-                operation_or_move.product_id.id)[0]
-            qty = product_ctx.qty_available
-            if not 0 <= qty <= 1:
-                lot = self.env['stock.production.lot'].browse(lot_id)[0]
+        lot = operation_or_move.lot_id
+        if operation_or_move.product_id.lot_unique_ok and lot:
+            qty = sum([x.qty + x.propagated_from_id.qty
+                       for x in operation_or_move.lot_id.quant_ids])
+            if qty != 1 or operation_or_move.product_qty != 1:
                 raise exceptions.ValidationError(_(
                     "Product '%s' has active "
                     "'unique lot'\n"

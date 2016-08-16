@@ -262,49 +262,9 @@ class TestUnicity(TransactionCase):
                 picking_1,
                 [self.env.ref('product_unique_serial.serial_number_demo_2')])
 
-    def test_4_1product_qty3_3serialnumber_1p_in(self):
+    def test_4_1product_1serialnumber_2p_internal(self):
         """
-        Test 4. Creating a picking with 1 product for three serial numbers,
-        in the receipts scope, with the next form:
-        - Picking 1
-        =============================================
-        || Product ||  Quantity  ||  Serial Number ||
-        =============================================
-        ||    A    ||      1     ||      001       ||
-        =============================================
-        ||    A    ||      1     ||      002       ||
-        =============================================
-        ||    A    ||      1     ||      003       ||
-        =============================================
-        Warehouse: Your Company
-        """
-        # Creating move line for picking
-        product = self.env.ref('product_unique_serial.product_demo_1')
-        stock_move_datas = [
-            {'product_id': product.id, 'qty': 1.0},
-            {'product_id': product.id, 'qty': 1.0},
-            {'product_id': product.id, 'qty': 1.0}
-        ]
-        # Creating the picking
-        picking_data_in = {
-            'name': 'Test Picking IN 1',
-        }
-        picking_in = self.create_stock_picking(
-            stock_move_datas, picking_data_in,
-            self.env.ref('stock.picking_type_in'))
-        # Executing the wizard for pickings transfering: this should be correct
-        # 'cause is the ideal case
-        with self.assertRaises(ValidationError):
-            self.transfer_picking(
-                picking_in,
-                [self.env.ref('product_unique_serial.serial_number_demo_1'),
-                 self.env.ref('product_unique_serial.serial_number_demo_2'),
-                 self.env.ref('product_unique_serial.serial_number_demo_3')]
-            )
-
-    def test_5_1product_1serialnumber_2p_internal(self):
-        """
-        Test 5. Creating 2 pickings with 1 product for the same serial number,
+        Test 4. Creating 2 pickings with 1 product for the same serial number,
         in the internal scope, with the next form:
         - Picking 1
         =============================================
@@ -365,9 +325,9 @@ class TestUnicity(TransactionCase):
                 [self.env.ref('product_unique_serial.serial_number_demo_1')])
 
     @mute_logger('openerp.sql_db')
-    def test_6_1serialnumber_1product_2records(self):
+    def test_5_1serialnumber_1product_2records(self):
         """
-        Test 7. Creating 2 identical serial numbers
+        Test 5. Creating 2 identical serial numbers
         """
         product_id = self.env.ref('product_unique_serial.product_demo_1')
         lot_data = {
