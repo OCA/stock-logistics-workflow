@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-10 05:29+0000\n"
+"POT-Creation-Date: 2016-08-16 02:39+0000\n"
 "PO-Revision-Date: 2016-01-18 19:45+0000\n"
 "Last-Translator: Rudolf Schnapka <rs@techno-flex.de>\n"
 "Language-Team: German (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/de/)\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_no_negative
-#: code:addons/stock_no_negative/models/stock_move.py:165
+#: code:addons/stock_no_negative/models/stock_move.py:162
 #, python-format
 msgid " with the lot/serial '%s' "
 msgstr "mit der Los-/Seriennummer '%s'"
@@ -37,7 +37,7 @@ msgid ""
 msgstr "Ist dieses Feld gesetzt, kann keine negative Bestandbuchung auf internen Quellort getätigt werden"
 
 #. module: stock_no_negative
-#: code:addons/stock_no_negative/models/stock_move.py:168
+#: code:addons/stock_no_negative/models/stock_move.py:165
 #, python-format
 msgid ""
 "Product '%s' has active 'check no negative' \n"

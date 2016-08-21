@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-22 18:05+0000\n"
+"POT-Creation-Date: 2016-08-16 02:39+0000\n"
 "PO-Revision-Date: 2016-06-06 07:24+0000\n"
 "Last-Translator: Paolo Valier\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/it/)\n"
@@ -227,7 +227,7 @@ msgid "Draft"
 msgstr "Bozza"
 
 #. module: picking_dispatch
-#: code:addons/picking_dispatch/picking_dispatch.py:185
+#: code:addons/picking_dispatch/picking_dispatch.py:187
 #: code:addons/picking_dispatch/wizard/check_assign_all.py:36
 #: code:addons/picking_dispatch/wizard/dispatch_assign_picker.py:44
 #: code:addons/picking_dispatch/wizard/dispatch_start.py:37
@@ -501,7 +501,7 @@ msgid "The user to which the pickings are assigned"
 msgstr ""
 
 #. module: picking_dispatch
-#: code:addons/picking_dispatch/picking_dispatch.py:186
+#: code:addons/picking_dispatch/picking_dispatch.py:188
 #, python-format
 msgid "This dispatch cannot be processed until %s"
 msgstr ""

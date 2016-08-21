@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-04 02:49+0000\n"
+"POT-Creation-Date: 2016-08-16 02:39+0000\n"
 "PO-Revision-Date: 2016-05-03 14:09+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: German (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/de/)\n"
@@ -226,7 +226,7 @@ msgid "Draft"
 msgstr "Entwurf"
 
 #. module: picking_dispatch
-#: code:addons/picking_dispatch/picking_dispatch.py:185
+#: code:addons/picking_dispatch/picking_dispatch.py:187
 #: code:addons/picking_dispatch/wizard/check_assign_all.py:36
 #: code:addons/picking_dispatch/wizard/dispatch_assign_picker.py:44
 #: code:addons/picking_dispatch/wizard/dispatch_start.py:37
@@ -500,7 +500,7 @@ msgid "The user to which the pickings are assigned"
 msgstr "Der Anwender, dem die Kommissionierungen zugewiesen sind"
 
 #. module: picking_dispatch
-#: code:addons/picking_dispatch/picking_dispatch.py:186
+#: code:addons/picking_dispatch/picking_dispatch.py:188
 #, python-format
 msgid "This dispatch cannot be processed until %s"
 msgstr "Diese Auslieferung darf bis %s nicht bearbeitet werden"
