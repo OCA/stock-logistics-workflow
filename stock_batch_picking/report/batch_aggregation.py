@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # © 2016 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+from collections import OrderedDict
 
 from os.path import commonprefix
 
@@ -62,20 +63,29 @@ class BatchAggregation(object):
 
         locations: a tuple (source_location, dest_location)
         """
-        products = {}
+        products = OrderedDict()
         product_qty = {}
         carrier = {}
-        operations = self.operations_by_loc[locations]
+
+        # sort operations by product default_code
+        operations = sorted(
+            self.operations_by_loc[locations],
+            key=lambda op: (op.product_id.default_code, op.product_id.id)
+        )
         for operation in operations:
-            p_code = operation.product_id.default_code
-            products[p_code] = operation.product_id
-            carrier[p_code] = (
+            product_id = operation.product_id.id
+            products[product_id] = operation.product_id
+            carrier[product_id] = (
                 operation.picking_id.carrier_id and
                 operation.picking_id.carrier_id.partner_id.name or ''
             )
-            if p_code not in product_qty:
-                product_qty[p_code] = operation.product_qty
+            if product_id not in product_qty:
+                product_qty[product_id] = operation.product_qty
             else:
-                product_qty[p_code] += operation.product_qty
-        for p_code in sorted(products):
-            yield products[p_code], product_qty[p_code], carrier[p_code]
+                product_qty[product_id] += operation.product_qty
+
+        for product_id in products:
+            yield (
+                products[product_id], product_qty[product_id],
+                carrier[product_id]
+            )
