@@ -11,15 +11,15 @@ class TestStockPickingShowReturn(common.TransactionCase):
         self.product = self.env['product.product'].create({
             'name': 'Test product',
         })
-        picking_type = self.env.ref('stock.picking_type_out')
+        picking_type = self.env.ref('stock.picking_type_internal')
         self.picking = self.env['stock.picking'].create({
             'picking_type_id': picking_type.id,
+            'location_id': picking_type.default_location_src_id.id,
+            'location_dest_id': picking_type.default_location_dest_id.id,
             'move_lines': [(0, 0, {
                 'name': self.product.name,
                 'product_id': self.product.id,
                 'product_uom': self.product.uom_id.id,
-                'location_id': picking_type.default_location_src_id.id,
-                'location_dest_id': picking_type.default_location_dest_id.id,
             })],
         })
 
