@@ -4,7 +4,7 @@
 import logging
 from openerp import models
 
-from print_batch import PrintBatch
+from . print_batch import PrintBatch
 
 
 _logger = logging.getLogger(__name__)

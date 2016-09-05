@@ -6,7 +6,7 @@ import time
 from openerp import pooler
 from openerp.report import report_sxw
 
-from batch_aggregation import BatchAggregation
+from . batch_aggregation import BatchAggregation
 
 
 class PrintBatch(report_sxw.rml_parse):
