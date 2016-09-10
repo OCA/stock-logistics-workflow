@@ -3,13 +3,13 @@
 # * product_unique_serial
 # 
 # Translators:
-# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-22 09:31+0000\n"
-"PO-Revision-Date: 2015-10-22 04:02+0000\n"
+"POT-Creation-Date: 2016-08-16 02:39+0000\n"
+"PO-Revision-Date: 2016-08-16 07:50+0000\n"
 "Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/sl/)\n"
 "MIME-Version: 1.0\n"
@@ -49,7 +49,7 @@ msgid "Picking wizard"
 msgstr "Čarovnik za zbirnike"
 
 #. module: product_unique_serial
-#: code:addons/product_unique_serial/models/stock_move.py:68
+#: code:addons/product_unique_serial/models/stock_move.py:82
 #, python-format
 msgid ""
 "Product '%s' has active 'unique lot'\n"
@@ -57,7 +57,7 @@ msgid ""
 msgstr "Proizvod '%s' ima aktiven 'unikaten lot',\na s tem premikom bi imeli količino '%s' v lotu '%s'"
 
 #. module: product_unique_serial
-#: code:addons/product_unique_serial/models/stock_move.py:48
+#: code:addons/product_unique_serial/models/stock_move.py:65
 #, python-format
 msgid "Product '%s' has active 'unique lot' but has qty > 1"
 msgstr "Proizvod '%s' ima aktiven 'unikaten lot', a ima kol > 1"
@@ -66,6 +66,12 @@ msgstr "Proizvod '%s' ima aktiven 'unikaten lot', a ima kol > 1"
 #: model:ir.model,name:product_unique_serial.model_product_template
 msgid "Product Template"
 msgstr "Predloga proizvoda"
+
+#. module: product_unique_serial
+#: code:addons/product_unique_serial/models/stock_move.py:49
+#, python-format
+msgid "Same lot with product unique in multiple operations"
+msgstr "Isti lot z unikatnim proizvodom v več operacijah."
 
 #. module: product_unique_serial
 #: model:ir.model,name:product_unique_serial.model_stock_move

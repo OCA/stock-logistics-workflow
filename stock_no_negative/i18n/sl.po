@@ -3,12 +3,13 @@
 # * stock_no_negative
 # 
 # Translators:
-# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015-2016
+# Paolo Valier, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-22 09:31+0000\n"
+"POT-Creation-Date: 2016-08-16 02:39+0000\n"
 "PO-Revision-Date: 2015-10-22 04:07+0000\n"
 "Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/sl/)\n"
@@ -19,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
 
 #. module: stock_no_negative
-#: code:addons/stock_no_negative/models/stock_move.py:165
+#: code:addons/stock_no_negative/models/stock_move.py:162
 #, python-format
 msgid " with the lot/serial '%s' "
 msgstr "z lotom/serijsko št. '%s'"
@@ -37,7 +38,7 @@ msgid ""
 msgstr "Če je to polje označeno kot 'pravilno', se tega proizvoda z negativno razpoložljivo količino na interni izvorni lokaciji ne more premikati"
 
 #. module: stock_no_negative
-#: code:addons/stock_no_negative/models/stock_move.py:168
+#: code:addons/stock_no_negative/models/stock_move.py:165
 #, python-format
 msgid ""
 "Product '%s' has active 'check no negative' \n"

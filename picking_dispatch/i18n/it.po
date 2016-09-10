@@ -4,12 +4,13 @@
 # 
 # Translators:
 # Paolo Valier, 2016
+# Paolo Valier, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-13 11:02+0000\n"
-"PO-Revision-Date: 2016-03-13 13:25+0000\n"
+"POT-Creation-Date: 2016-08-16 02:39+0000\n"
+"PO-Revision-Date: 2016-06-06 07:24+0000\n"
 "Last-Translator: Paolo Valier\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -40,7 +41,7 @@ msgstr ""
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form
 msgid "Assign"
-msgstr ""
+msgstr "Assegna"
 
 #. module: picking_dispatch
 #: model:ir.actions.act_window,name:picking_dispatch.action_picking_dispatch_assign_picker
@@ -65,7 +66,7 @@ msgstr ""
 #. module: picking_dispatch
 #: selection:picking.dispatch,state:0
 msgid "Assigned"
-msgstr ""
+msgstr "Assegnato"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
@@ -94,19 +95,19 @@ msgstr "Annulla"
 #. module: picking_dispatch
 #: selection:picking.dispatch,state:0
 msgid "Cancelled"
-msgstr ""
+msgstr "Annullato"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Carrier"
-msgstr ""
+msgstr "Vettore"
 
 #. module: picking_dispatch
 #: model:ir.actions.act_window,name:picking_dispatch.action_dispatch_check_assign_all
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form
 #: view:picking.dispatch.check.assign.all:picking_dispatch.view_dispatch_check_assign_all
 msgid "Check Availability"
-msgstr ""
+msgstr "Controllo Disponibilità"
 
 #. module: picking_dispatch
 #: view:picking.dispatch.check.assign.all:picking_dispatch.view_dispatch_check_assign_all
@@ -116,12 +117,12 @@ msgstr ""
 #. module: picking_dispatch
 #: model:ir.model,name:picking_dispatch.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Aziende"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,company_id:0
 msgid "Company"
-msgstr ""
+msgstr "Azienda"
 
 #. module: picking_dispatch
 #: model:ir.actions.act_window,name:picking_dispatch.picking_dispatch_create_act_window
@@ -149,7 +150,7 @@ msgstr "Creato il"
 #. module: picking_dispatch
 #: field:picking.dispatch,date:0 field:picking.dispatch.creator,date:0
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #. module: picking_dispatch
 #: help:picking.dispatch.creator,date:0
@@ -159,7 +160,7 @@ msgstr ""
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Date:"
-msgstr ""
+msgstr "Data:"
 
 #. module: picking_dispatch
 #: field:res.company,default_picker_id:0
@@ -204,26 +205,36 @@ msgid "Dispatch order already processed"
 msgstr ""
 
 #. module: picking_dispatch
+#: field:picking.dispatch,display_name:0
+#: field:picking.dispatch.assign.picker,display_name:0
+#: field:picking.dispatch.check.assign.all,display_name:0
+#: field:picking.dispatch.creator,display_name:0
+#: field:picking.dispatch.start,display_name:0
+#: field:report.picking_dispatch.report_picking_dispatch,display_name:0
+msgid "Display Name"
+msgstr "Nome da visualizzare"
+
+#. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 #: selection:picking.dispatch,state:0
 msgid "Done"
-msgstr ""
+msgstr "Completato"
 
 #. module: picking_dispatch
 #: selection:picking.dispatch,state:0
 msgid "Draft"
-msgstr ""
+msgstr "Bozza"
 
 #. module: picking_dispatch
-#: code:addons/picking_dispatch/picking_dispatch.py:182
+#: code:addons/picking_dispatch/picking_dispatch.py:187
 #: code:addons/picking_dispatch/wizard/check_assign_all.py:36
 #: code:addons/picking_dispatch/wizard/dispatch_assign_picker.py:44
 #: code:addons/picking_dispatch/wizard/dispatch_start.py:37
 #: code:addons/picking_dispatch/wizard/dispatch_start.py:46
 #, python-format
 msgid "Error"
-msgstr ""
+msgstr "Errore"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
@@ -233,7 +244,7 @@ msgstr ""
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 msgid "Group By..."
-msgstr ""
+msgstr "Raggruppa per..."
 
 #. module: picking_dispatch
 #: field:picking.dispatch,id:0 field:picking.dispatch.assign.picker,id:0
@@ -247,12 +258,22 @@ msgstr "ID"
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 #: selection:picking.dispatch,state:0
 msgid "In Progress"
-msgstr ""
+msgstr "In Corso"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 msgid "Is a Back Order"
 msgstr ""
+
+#. module: picking_dispatch
+#: field:picking.dispatch,__last_update:0
+#: field:picking.dispatch.assign.picker,__last_update:0
+#: field:picking.dispatch.check.assign.all,__last_update:0
+#: field:picking.dispatch.creator,__last_update:0
+#: field:picking.dispatch.start,__last_update:0
+#: field:report.picking_dispatch.report_picking_dispatch,__last_update:0
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,write_uid:0
@@ -275,7 +296,7 @@ msgstr "Ultimo aggiornamento il"
 #. module: picking_dispatch
 #: field:picking.dispatch,move_ids:0
 msgid "Moves"
-msgstr ""
+msgstr "Movimenti"
 
 #. module: picking_dispatch
 #: code:addons/picking_dispatch/wizard/create_dispatch.py:111
@@ -291,7 +312,7 @@ msgstr ""
 #. module: picking_dispatch
 #: field:picking.dispatch,name:0 field:picking.dispatch.creator,name:0
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #. module: picking_dispatch
 #: help:picking.dispatch,name:0 help:picking.dispatch.creator,name:0
@@ -321,12 +342,12 @@ msgstr ""
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form
 #: field:picking.dispatch,notes:0 field:picking.dispatch.creator,notes:0
 msgid "Notes"
-msgstr ""
+msgstr "Note"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 msgid "Order Date"
-msgstr ""
+msgstr "Data Ordine"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
@@ -382,7 +403,7 @@ msgstr ""
 #. module: picking_dispatch
 #: model:ir.model,name:picking_dispatch.model_stock_picking
 msgid "Picking List"
-msgstr ""
+msgstr "Lista Picking"
 
 #. module: picking_dispatch
 #: model:ir.actions.report.xml,name:picking_dispatch.action_report_picking_dispatch
@@ -392,7 +413,7 @@ msgstr ""
 #. module: picking_dispatch
 #: view:res.company:picking_dispatch.view_company_form_inherit
 msgid "Pickings"
-msgstr ""
+msgstr "Picking"
 
 #. module: picking_dispatch
 #: constraint:picking.dispatch:0
@@ -402,7 +423,7 @@ msgstr ""
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Printed by:"
-msgstr ""
+msgstr "Stampato da:"
 
 #. module: picking_dispatch
 #: model:ir.model,name:picking_dispatch.model_product_product
@@ -413,12 +434,12 @@ msgstr "Prodotto"
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Product Code"
-msgstr ""
+msgstr "Codice Prodotto"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "QTY"
-msgstr ""
+msgstr "Qtà"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
@@ -431,6 +452,7 @@ msgid "Related Dispatch"
 msgstr ""
 
 #. module: picking_dispatch
+#: field:picking.dispatch,related_picking_ids:0
 #: field:stock.picking,related_dispatch_ids:0
 msgid "Related Dispatch Picking"
 msgstr ""
@@ -461,7 +483,7 @@ msgstr ""
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 msgid "State"
-msgstr ""
+msgstr "Stato"
 
 #. module: picking_dispatch
 #: model:ir.model,name:picking_dispatch.model_stock_move
@@ -479,7 +501,7 @@ msgid "The user to which the pickings are assigned"
 msgstr ""
 
 #. module: picking_dispatch
-#: code:addons/picking_dispatch/picking_dispatch.py:183
+#: code:addons/picking_dispatch/picking_dispatch.py:188
 #, python-format
 msgid "This dispatch cannot be processed until %s"
 msgstr ""
@@ -487,7 +509,7 @@ msgstr ""
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Variant"
-msgstr ""
+msgstr "Variante"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
@@ -504,7 +526,7 @@ msgstr ""
 #: code:addons/picking_dispatch/wizard/create_dispatch.py:113
 #, python-format
 msgid "Warning !"
-msgstr ""
+msgstr "Avviso !"
 
 #. module: picking_dispatch
 #: view:picking.dispatch.creator:picking_dispatch.view_create_picking_dispatch

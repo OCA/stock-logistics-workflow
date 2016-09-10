@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<scenario>
+  <id>scanner_scenario_tutorial</id>
+  <model_id/>
+  <name>Tutorial</name>
+  <notes/>
+  <sequence>0</sequence>
+  <parent_id/>
+  <shared_custom>False</shared_custom>
+  <warehouse_ids>OpenERP S.A.</warehouse_ids>
+  <warehouse_ids>Shop 1</warehouse_ids>
+  <warehouse_ids>Shop 2</warehouse_ids>
+  <active>True</active>
+  <type>menu</type>
+</scenario>

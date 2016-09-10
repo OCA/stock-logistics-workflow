@@ -3,13 +3,14 @@
 # * stock_picking_back2draft
 # 
 # Translators:
+# Paolo Valier, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-04 02:49+0000\n"
-"PO-Revision-Date: 2016-05-03 14:10+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2016-05-22 18:05+0000\n"
+"PO-Revision-Date: 2016-06-06 07:17+0000\n"
+"Last-Translator: Paolo Valier\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,12 +21,12 @@ msgstr ""
 #. module: stock_picking_back2draft
 #: view:stock.picking:stock_picking_back2draft.view_picking_form_reopen
 msgid "Back to draft"
-msgstr ""
+msgstr "Reimposta a bozza"
 
 #. module: stock_picking_back2draft
 #: model:ir.model,name:stock_picking_back2draft.model_stock_picking
 msgid "Picking List"
-msgstr ""
+msgstr "Lista Picking"
 
 #. module: stock_picking_back2draft
 #: model:ir.model,name:stock_picking_back2draft.model_stock_move
