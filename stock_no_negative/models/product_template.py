@@ -19,14 +19,20 @@
 #
 ##############################################################################
 from openerp import fields, models
+from openerp.tools import config
 
 
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
+    # for not to break other tests
+    def _get_default_no_negative_policy(self):
+        return not (config['test_enable'] and
+                    not self.env.context.get('check_no_negative'))
+
     check_no_negative = fields.Boolean(
         'Check no negative',
-        default=True,
+        default=_get_default_no_negative_policy,
         help='If this field is True can not move this'
              ' product in negative quantity available in'
              ' the internal location source')
