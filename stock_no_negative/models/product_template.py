@@ -26,6 +26,7 @@ class ProductTemplate(models.Model):
 
     check_no_negative = fields.Boolean(
         'Check no negative',
+        default=True,
         help='If this field is True can not move this'
              ' product in negative quantity available in'
              ' the internal location source')
