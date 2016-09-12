@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_create_batch_picking" model="ir.ui.view">
+        <field name="name">batch_picking_create_form</field>
+        <field name="model">stock.batch.picking.creator</field>
+        <field name="arch" type="xml">
+            <form string="Batch Picking properties">
+                <separator string="Batch Picking"/>
+                <label string="Assign picking operations to an employee."/>
+                <br/>
+                <br/>
+                <label for="name"/>
+                <field name="name"/>
+                <group>
+                    <field name="date"/>
+                    <field name="picker_id"/>
+                </group>
+                <label for="notes"/>
+                <field name="notes"/>
+                <footer>
+                    <button name="action_create_batch" string="_Create" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window name="Create Batch Pickings"
+                res_model="stock.batch.picking.creator"
+                src_model="stock.picking"
+                view_mode="form"
+                target="new"
+                key2="client_action_multi"
+                id="batch_picking_create_act_window"/>
+
+</odoo>
