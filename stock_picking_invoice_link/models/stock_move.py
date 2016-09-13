@@ -12,22 +12,16 @@ class StockMove(models.Model):
 
     invoice_line_ids = fields.Many2many(
         comodel_name='account.invoice.line', string='Invoice Lines',
-        copy=False, readonly=True)
-    # Provide this field for backwards compatibility
-    invoice_line_id = fields.Many2one(
-        comodel_name='account.invoice.line', string='Invoice Line',
-        compute="_compute_invoice_line_id")
+        compute="_compute_invoice_line_ids")
 
     @api.multi
-    @api.depends('invoice_line_ids')
-    def _compute_invoice_line_id(self):
+    def _compute_invoice_line_ids(self):
         for move in self:
-            move.invoice_line_id = move.invoice_line_ids[:1]
-
-    @api.model
-    def _create_invoice_line_from_vals(self, move, invoice_line_vals):
-        inv_line_id = super(StockMove, self)._create_invoice_line_from_vals(
-            move, invoice_line_vals)
-        move.invoice_line_ids = [(4, inv_line_id)]
-        move.picking_id.invoice_ids = [(4, invoice_line_vals['invoice_id'])]
-        return inv_line_id
+            if (
+                move.procurement_id and move.procurement_id.sale_line_id and
+                move.procurement_id.sale_line_id.invoice_lines
+            ):
+                move.invoice_line_ids = (
+                    move.procurement_id.sale_line_id.invoice_lines)
+            else:
+                move.invoice_line_ids = []
