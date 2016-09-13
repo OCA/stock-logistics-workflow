@@ -21,17 +21,5 @@
             </field>
         </record>
 
-        <record id="invoice_supplier_form" model="ir.ui.view">
-            <field name="name">related.pickings.account.invoice.supplier.form</field>
-            <field name="model">account.invoice</field>
-            <field name="inherit_id" ref="account.invoice_supplier_form"/>
-            <field name="arch" type="xml">
-                <notebook position="inside">
-                    <page string="Pickings" name="pickings">
-                        <field name="picking_ids"/>
-                    </page>
-                </notebook>
-            </field>
-        </record>
     </data>
 </openerp>
