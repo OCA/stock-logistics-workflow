@@ -21,5 +21,5 @@ class StockPicking(models.Model):
     @api.multi
     @api.depends('invoice_ids')
     def _compute_invoice_id(self):
-        for move in self:
-            move.invoice_id = move.invoice_ids[:1]
+        for picking in self:
+            picking.invoice_id = picking.invoice_ids[:1]
