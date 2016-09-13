@@ -22,13 +22,13 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
+[stock_batch_picking](stock_batch_picking/) | 9.0.1.0.0 | Stock batch picking
 [stock_picking_mass_assign](stock_picking_mass_assign/) | 9.0.1.0.0 | Delivery Orders Mass Assign
 
 Unported addons
 ---------------
 addon | version | summary
 --- | --- | ---
-[picking_dispatch](picking_dispatch/) | 8.0.1.2.3 (unported) | Picking dispatch
 [picking_dispatch_wave](picking_dispatch_wave/) | 0.1 (unported) | Picking Dispatch Wave
 [product_customer_code_picking](product_customer_code_picking/) | 1.0 (unported) | Product Customer code for stock picking
 [product_serial](product_serial/) | 1.0 (unported) | Enhance Serial Number management
