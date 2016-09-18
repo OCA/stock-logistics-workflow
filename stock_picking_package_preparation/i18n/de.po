@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-22 09:31+0000\n"
-"PO-Revision-Date: 2015-10-21 16:34+0000\n"
+"POT-Creation-Date: 2016-09-13 22:02+0000\n"
+"PO-Revision-Date: 2016-09-18 08:13+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: German (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -30,6 +30,11 @@ msgstr "<p class=\"oe_view_nocontent_create\">\n          Klicken Sie hier, um e
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Add an internal note..."
 msgstr "Interne Notiz hinzufügen..."
+
+#. module: stock_picking_package_preparation
+#: field:stock.picking.package.preparation,quant_ids:0
+msgid "All Content"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:220
@@ -78,6 +83,11 @@ msgstr "Angelegt am"
 #: help:stock.picking.package.preparation,message_last_post:0
 msgid "Date of the last message posted on the record."
 msgstr "Datum der letzten gebuchten Meldung dieses Satzes."
+
+#. module: stock_picking_package_preparation
+#: field:stock.picking.package.preparation,display_name:0
+msgid "Display Name"
+msgstr "Anzeigename"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,date:0
@@ -140,6 +150,11 @@ msgid "Last Message Date"
 msgstr "Letztes Meldungsdatum"
 
 #. module: stock_picking_package_preparation
+#: field:stock.picking.package.preparation,__last_update:0
+msgid "Last Modified on"
+msgstr "Zuletzt geändert am"
+
+#. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,write_uid:0
 msgid "Last Updated by"
 msgstr "Zuletzt aktualisiert durch"
@@ -163,6 +178,11 @@ msgstr "Meldungen"
 #: help:stock.picking.package.preparation,message_ids:0
 msgid "Messages and communication history"
 msgstr "Mitteilungs- und Kommunikations-Verlauf"
+
+#. module: stock_picking_package_preparation
+#: field:stock.picking.package.preparation,net_weight:0
+msgid "Net weight"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:197
@@ -190,6 +210,11 @@ msgstr "Vorgänge"
 #: field:stock.picking.package.preparation,package_id:0
 msgid "Pack"
 msgstr "Verpacken"
+
+#. module: stock_picking_package_preparation
+#: field:stock.picking.package.preparation,pack_operation_ids:0
+msgid "Pack operation ids"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: model:ir.model,name:stock_picking_package_preparation.model_stock_picking_package_preparation
@@ -256,6 +281,12 @@ msgid "The package has not been generated."
 msgstr "Das Paket wurde nicht erzeugt."
 
 #. module: stock_picking_package_preparation
+#: help:stock.picking.package.preparation,net_weight:0
+#: help:stock.picking.package.preparation,weight:0
+msgid "The weight is computed when the preparation is done."
+msgstr ""
+
+#. module: stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
 #: field:stock.picking.package.preparation,picking_ids:0
 msgid "Transfers"
@@ -265,3 +296,8 @@ msgstr "Umlagerungen"
 #: field:stock.picking.package.preparation,message_unread:0
 msgid "Unread Messages"
 msgstr "Ungelesene Meldungen"
+
+#. module: stock_picking_package_preparation
+#: field:stock.picking.package.preparation,weight:0
+msgid "Weight"
+msgstr ""

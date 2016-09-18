@@ -1,0 +1,141 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_picking_compute_delivery_date
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: stock-logistics-workflow (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-09-13 22:02+0000\n"
+"PO-Revision-Date: 2015-10-21 16:34+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: Spanish (Spain) (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/es_ES/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es_ES\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: stock_picking_compute_delivery_date
+#: view:compute.all.delivery.dates.wizard:stock_picking_compute_delivery_date.compute_all_delivery_dates_form
+#: view:compute.delivery.date.by.product.wizard:stock_picking_compute_delivery_date.compute_delivery_date_by_product_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: stock_picking_compute_delivery_date
+#: view:compute.all.delivery.dates.wizard:stock_picking_compute_delivery_date.compute_all_delivery_dates_form
+#: view:compute.delivery.date.by.product.wizard:stock_picking_compute_delivery_date.compute_delivery_date_by_product_form
+msgid "Compute"
+msgstr ""
+
+#. module: stock_picking_compute_delivery_date
+#: view:compute.all.delivery.dates.wizard:stock_picking_compute_delivery_date.compute_all_delivery_dates_form
+msgid "Compute All Delivery Dates"
+msgstr ""
+
+#. module: stock_picking_compute_delivery_date
+#: view:compute.delivery.date.by.product.wizard:stock_picking_compute_delivery_date.compute_delivery_date_by_product_form
+msgid "Compute Delivery Dates"
+msgstr ""
+
+#. module: stock_picking_compute_delivery_date
+#: model:ir.ui.menu,name:stock_picking_compute_delivery_date.product_compute_all_delivery_dates_menu
+msgid "Compute all delivery dates"
+msgstr ""
+
+#. module: stock_picking_compute_delivery_date
+#: model:ir.actions.act_window,name:stock_picking_compute_delivery_date.product_compute_all_delivery_dates_action
+msgid "Compute delivery dates for all products"
+msgstr ""
+
+#. module: stock_picking_compute_delivery_date
+#: model:ir.actions.act_window,name:stock_picking_compute_delivery_date.product_compute_delivery_date_wizard_action
+msgid "Compute delivery dates for product"
+msgstr ""
+
+#. module: stock_picking_compute_delivery_date
+#: field:compute.all.delivery.dates.wizard,create_uid:0
+#: field:compute.delivery.date.by.product.wizard,create_uid:0
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: stock_picking_compute_delivery_date
+#: field:compute.all.delivery.dates.wizard,create_date:0
+#: field:compute.delivery.date.by.product.wizard,create_date:0
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: stock_picking_compute_delivery_date
+#: field:compute.all.delivery.dates.wizard,display_name:0
+#: field:compute.delivery.date.by.product.wizard,display_name:0
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_picking_compute_delivery_date
+#: field:compute.all.delivery.dates.wizard,id:0
+#: field:compute.delivery.date.by.product.wizard,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_picking_compute_delivery_date
+#: field:compute.all.delivery.dates.wizard,__last_update:0
+#: field:compute.delivery.date.by.product.wizard,__last_update:0
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_picking_compute_delivery_date
+#: field:compute.all.delivery.dates.wizard,write_uid:0
+#: field:compute.delivery.date.by.product.wizard,write_uid:0
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: stock_picking_compute_delivery_date
+#: field:compute.all.delivery.dates.wizard,write_date:0
+#: field:compute.delivery.date.by.product.wizard,write_date:0
+msgid "Last Updated on"
+msgstr "Última actualización en"
+
+#. module: stock_picking_compute_delivery_date
+#: model:ir.model,name:stock_picking_compute_delivery_date.model_stock_picking
+msgid "Picking List"
+msgstr ""
+
+#. module: stock_picking_compute_delivery_date
+#: code:addons/stock_picking_compute_delivery_date/model/picking.py:112
+#: code:addons/stock_picking_compute_delivery_date/model/picking.py:149
+#, python-format
+msgid "Scheduled date update to %s from %s"
+msgstr ""
+
+#. module: stock_picking_compute_delivery_date
+#: view:compute.all.delivery.dates.wizard:stock_picking_compute_delivery_date.compute_all_delivery_dates_form
+msgid ""
+"This will recompute the delivery dates of all outgoing moves for all "
+"products. For Make To Stock products, the computation is based on the "
+"available stock and the expected dates of all moves of the same product. For"
+" Make To Order products, it is based on the date of the corresponding "
+"incoming move."
+msgstr ""
+
+#. module: stock_picking_compute_delivery_date
+#: view:compute.delivery.date.by.product.wizard:stock_picking_compute_delivery_date.compute_delivery_date_by_product_form
+msgid ""
+"This will recompute the delivery dates of all outgoing moves for the "
+"selected product. For Make To Stock products, the computation is based on "
+"the available stock and the expected dates of all moves of the same product."
+" For Make To Order products, it is based on the date of the corresponding "
+"incoming move."
+msgstr ""
+
+#. module: stock_picking_compute_delivery_date
+#: code:addons/stock_picking_compute_delivery_date/model/picking.py:63
+#, python-format
+msgid "initial stock"
+msgstr ""
+
+#. module: stock_picking_compute_delivery_date
+#: view:compute.all.delivery.dates.wizard:stock_picking_compute_delivery_date.compute_all_delivery_dates_form
+#: view:compute.delivery.date.by.product.wizard:stock_picking_compute_delivery_date.compute_delivery_date_by_product_form
+msgid "or"
+msgstr ""

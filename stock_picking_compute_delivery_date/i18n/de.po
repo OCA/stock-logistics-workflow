@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-22 09:31+0000\n"
-"PO-Revision-Date: 2015-10-21 16:34+0000\n"
+"POT-Creation-Date: 2016-09-13 22:02+0000\n"
+"PO-Revision-Date: 2016-09-18 08:13+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: German (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -67,10 +67,22 @@ msgid "Created on"
 msgstr "Angelegt am"
 
 #. module: stock_picking_compute_delivery_date
+#: field:compute.all.delivery.dates.wizard,display_name:0
+#: field:compute.delivery.date.by.product.wizard,display_name:0
+msgid "Display Name"
+msgstr "Anzeigename"
+
+#. module: stock_picking_compute_delivery_date
 #: field:compute.all.delivery.dates.wizard,id:0
 #: field:compute.delivery.date.by.product.wizard,id:0
 msgid "ID"
 msgstr "ID"
+
+#. module: stock_picking_compute_delivery_date
+#: field:compute.all.delivery.dates.wizard,__last_update:0
+#: field:compute.delivery.date.by.product.wizard,__last_update:0
+msgid "Last Modified on"
+msgstr "Zuletzt geändert am"
 
 #. module: stock_picking_compute_delivery_date
 #: field:compute.all.delivery.dates.wizard,write_uid:0

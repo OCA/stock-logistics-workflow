@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-24 02:43+0000\n"
-"PO-Revision-Date: 2016-04-18 09:15+0000\n"
-"Last-Translator: Antonio Trueba\n"
+"POT-Creation-Date: 2016-09-13 22:02+0000\n"
+"PO-Revision-Date: 2016-09-16 21:45+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Spanish (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,6 +34,11 @@ msgstr ""
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Add an internal note..."
 msgstr "Añadir nota interna..."
+
+#. module: stock_picking_package_preparation
+#: field:stock.picking.package.preparation,quant_ids:0
+msgid "All Content"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:220
@@ -82,6 +87,11 @@ msgstr "Creado el"
 #: help:stock.picking.package.preparation,message_last_post:0
 msgid "Date of the last message posted on the record."
 msgstr ""
+
+#. module: stock_picking_package_preparation
+#: field:stock.picking.package.preparation,display_name:0
+msgid "Display Name"
+msgstr "Nombre mostrado"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,date:0
@@ -144,6 +154,11 @@ msgid "Last Message Date"
 msgstr ""
 
 #. module: stock_picking_package_preparation
+#: field:stock.picking.package.preparation,__last_update:0
+msgid "Last Modified on"
+msgstr "Última modificación el"
+
+#. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,write_uid:0
 msgid "Last Updated by"
 msgstr "Última actualización de"
@@ -156,7 +171,7 @@ msgstr "Última actualización en"
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,ul_id:0
 msgid "Logistic Unit"
-msgstr ""
+msgstr "Unidad logística"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_ids:0
@@ -166,6 +181,11 @@ msgstr "Mensajes"
 #. module: stock_picking_package_preparation
 #: help:stock.picking.package.preparation,message_ids:0
 msgid "Messages and communication history"
+msgstr ""
+
+#. module: stock_picking_package_preparation
+#: field:stock.picking.package.preparation,net_weight:0
+msgid "Net weight"
 msgstr ""
 
 #. module: stock_picking_package_preparation
@@ -193,6 +213,11 @@ msgstr "Operaciones"
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,package_id:0
 msgid "Pack"
+msgstr ""
+
+#. module: stock_picking_package_preparation
+#: field:stock.picking.package.preparation,pack_operation_ids:0
+msgid "Pack operation ids"
 msgstr ""
 
 #. module: stock_picking_package_preparation
@@ -260,6 +285,12 @@ msgid "The package has not been generated."
 msgstr "El paquete no ha sido generado."
 
 #. module: stock_picking_package_preparation
+#: help:stock.picking.package.preparation,net_weight:0
+#: help:stock.picking.package.preparation,weight:0
+msgid "The weight is computed when the preparation is done."
+msgstr ""
+
+#. module: stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
 #: field:stock.picking.package.preparation,picking_ids:0
 msgid "Transfers"
@@ -269,3 +300,8 @@ msgstr "Transferencias"
 #: field:stock.picking.package.preparation,message_unread:0
 msgid "Unread Messages"
 msgstr "Mensajes sin leer"
+
+#. module: stock_picking_package_preparation
+#: field:stock.picking.package.preparation,weight:0
+msgid "Weight"
+msgstr ""
