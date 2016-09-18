@@ -8,15 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-18 01:44+0000\n"
-"PO-Revision-Date: 2016-11-18 01:44+0000\n"
+"POT-Creation-Date: 2016-12-17 06:25+0000\n"
+"PO-Revision-Date: 2016-12-17 06:25+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
-"Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
+"Language-Team: Chinese (China) (https://www.transifex.com/oca/teams/23907/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: de\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: stock_auto_move
 #: model:procurement.rule,name:stock_auto_move.procurement_rule_a_to_b
@@ -61,12 +61,12 @@ msgstr ""
 #. module: stock_auto_move
 #: model:ir.model,name:stock_auto_move.model_procurement_order
 msgid "Procurement"
-msgstr "Beschaffung"
+msgstr "补货"
 
 #. module: stock_auto_move
 #: model:ir.model,name:stock_auto_move.model_procurement_rule
 msgid "Procurement Rule"
-msgstr "Beschaffungsregel"
+msgstr ""
 
 #. module: stock_auto_move
 #: model:ir.model,name:stock_auto_move.model_stock_location_path
@@ -76,7 +76,7 @@ msgstr ""
 #. module: stock_auto_move
 #: model:ir.model,name:stock_auto_move.model_stock_move
 msgid "Stock Move"
-msgstr "Lagerbuchung"
+msgstr ""
 
 #. module: stock_auto_move
 #: model:stock.location.route,name:stock_auto_move.test_route
