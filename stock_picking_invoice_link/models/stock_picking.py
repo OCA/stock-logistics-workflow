@@ -21,4 +21,3 @@ class StockPicking(models.Model):
             for line in picking.move_lines:
                 invoices |= line.invoice_line_ids.mapped('invoice_id')
             picking.invoice_ids = invoices
-
