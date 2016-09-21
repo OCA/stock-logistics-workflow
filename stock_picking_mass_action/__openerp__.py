@@ -27,7 +27,7 @@
     'license': 'AGPL-3',
     'category': 'Warehouse Management',
     'depends': [
-        'stock',
+        'stock_account',
     ],
     'data': [
         'wizard/mass_action_view.xml',

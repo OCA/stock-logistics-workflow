@@ -116,6 +116,7 @@ class StockPickingMassAction(TransientModel):
             to_invoice_pickings = picking_obj.search(domain, order='min_date')
             ctx = self.env.context.copy()
             ctx['active_ids'] = to_invoice_pickings.ids
+            ctx['active_model'] = 'stock.picking'
             return {
                 'name': _('Stock Invoice Onshipping'),
                 'view_type': 'form',
@@ -123,5 +124,5 @@ class StockPickingMassAction(TransientModel):
                 'res_model': 'stock.invoice.onshipping',
                 'type': 'ir.actions.act_window',
                 'target': 'new',
-                'context': self.env.context,
+                'context': ctx,
             }
