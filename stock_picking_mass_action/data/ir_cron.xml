@@ -2,7 +2,7 @@
 <openerp>
   <data noupdate="1">
     <record id="ir_cron_check_assign_all" model="ir.cron">
-      <field name="name">Check Availability of Delivery Orders</field>
+      <field name="name">Check Availability of Stock Picking</field>
       <field name="interval_number">1</field>
       <field name="interval_type">hours</field>
       <field name="numbercall">-1</field>

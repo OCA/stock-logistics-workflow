@@ -19,4 +19,4 @@
 #
 ##############################################################################
 
-from . import check_assign_all
+from . import mass_action

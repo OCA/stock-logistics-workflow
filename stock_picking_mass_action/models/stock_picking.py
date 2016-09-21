@@ -19,5 +19,31 @@
 #
 ##############################################################################
 
-from . import stock
-from . import wizard
+import logging
+
+from openerp import api
+from openerp.osv import orm
+from openerp.models import Model
+
+_logger = logging.getLogger(__name__)
+
+
+class StockPicking(Model):
+    _inherit = 'stock.picking'
+
+    @api.model
+    def check_assign_all(self):
+        """ Try to assign confirmed pickings """
+        type_obj = self.env['stock.picking.type']
+        out_type_ids = type_obj.search([('code', '=', 'outgoing')]).ids
+        domain = [('picking_type_id', 'in', out_type_ids),
+                  ('state', '=', 'confirmed')]
+        records = self.search(domain, order='min_date')
+
+        for record in records:
+            try:
+                record.action_assign()
+            except orm.except_orm:
+                # ignore the error, the picking will just stay as confirmed
+                _logger.info('error in action_assign for picking %s',
+                             record.name, exc_info=True)
