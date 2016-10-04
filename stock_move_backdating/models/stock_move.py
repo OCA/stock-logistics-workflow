@@ -5,6 +5,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openerp import models, api
+from ..wizards.stock_transfer_details import check_date
 
 
 class StockMove(models.Model):
@@ -20,6 +21,7 @@ class StockMove(models.Model):
                 operation = move.linked_move_operation_ids[0]
                 move.date = operation.operation_id.date
                 if move.quant_ids:
+                    check_date(move.date)
                     move.quant_ids.sudo().write({'in_date': move.date})
         pickings = self.mapped('picking_id').filtered(
             lambda r: r.state == 'done')
