@@ -11,8 +11,7 @@
                   states="draft,confirmed,assigned,partially_available"
                   string="Split"
                   groups="stock.group_stock_user"
-                  type="object"
-                  attrs="{'invisible': ['|', ('picking_type_code', 'not in', ('outgoing', 'incoming'))]}"/>
+                  type="object"/>
         </field>
       </field>
     </record>
