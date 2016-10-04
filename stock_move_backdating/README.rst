@@ -8,7 +8,9 @@ Allows back-dating of stock moves
 
 This module allows to register old stock moves (with date != now).
 On picking transfer, user can specify the "Date", that will be
-used as movement date.
+used as movements date.
+Tha date can be set in the header of the wizard (so that it will be used for
+every movement) or at line level, having different dates for different moves.
 
 Bug Tracker
 ===========
