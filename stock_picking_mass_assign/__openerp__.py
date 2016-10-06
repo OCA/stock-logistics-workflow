@@ -16,5 +16,5 @@
     "test": [
         'test/test_check_assign_all.yml',
     ],
-    'installable': True,
+    'installable': False,
 }
