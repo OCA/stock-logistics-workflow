@@ -23,7 +23,7 @@
     'author': "OpenERP SA,Odoo Community Association (OCA)",
     'license': 'AGPL-3',
     'category': 'Purchase Management',
-    'depends': ['product','stock'],
+    'depends': ['product', 'stock'],
     'demo': [],
     'data': [
         'views/product_manufacturer_view.xml'
