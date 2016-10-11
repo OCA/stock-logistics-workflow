@@ -1,106 +1,110 @@
 # -*- coding: utf-8 -*-
-# ©2015 Agile Business Group (<http://www.agilebg.com>)
-# ©2015 BREMSKERL-REIBBELAGWERKE EMMERLING GmbH & Co. KG
-#    Author Marco Dieckhoff
+# Copyright 2015-2016 Agile Business Group (<http://www.agilebg.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp.osv import orm
-from openerp.tests import common
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
 from datetime import datetime, timedelta
+from openerp.tests.common import TransactionCase
+from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
+from openerp.exceptions import Warning as UserError
 
 
-class TestStockMoveBackdating(common.TransactionCase):
+class TestStockMoveBackdating(TransactionCase):
+
+    def test_date_backdating_yesterday(self):
+        date_backdating = self._get_date_backdating(1)
+        self._transfer_picking_with_date(date_backdating)
+
+    def test_date_backdating_last_month(self):
+        date_backdating = self._get_date_backdating(31)
+        self._transfer_picking_with_date(date_backdating)
+
+    def test_date_backdating_future(self):
+        date_backdating = self._get_date_backdating(-1)
+        with self.assertRaises(UserError) as exc:
+            self._transfer_picking_with_date(date_backdating)
+        self.assertEqual(
+            exc.exception.message,
+            'You can not process an actual movement date in the future.')
+
+    def test_different_dates_backdating(self):
+        date_backdating_1 = self._get_date_backdating(1)
+        date_backdating_2 = self._get_date_backdating(2)
+        self._transfer_picking_with_dates(date_backdating_1, date_backdating_2)
+
+    def _move_factory(self, product, qty):
+        return self.env['stock.move'].create({
+            'name': '/',
+            'product_id': product.id,
+            'product_uom_qty': qty,
+            'product_uom': product.uom_id.id,
+            'location_id': self.env.ref('stock.stock_location_stock').id,
+            'location_dest_id':
+            self.env.ref('stock.stock_location_customers').id,
+        })
+
+    def _transfer_details_factory(self, picking):
+        return self.env['stock.transfer_details'].with_context(
+            active_model='stock.picking',
+            active_ids=[picking.id],
+            active_id=picking.id).create({'picking_id': picking.id})
+
+    def _get_date_backdating(self, timedelta_days):
+        now = datetime.now()
+        date_backdating = (now - timedelta(days=timedelta_days)).strftime(
+            DEFAULT_SERVER_DATE_FORMAT)
+        return date_backdating
 
     def setUp(self):
         super(TestStockMoveBackdating, self).setUp()
+        product_8 = self.env.ref('product.product_product_8')
+        product_9 = self.env.ref('product.product_product_9')
+        self.picking = self.env['stock.picking'].create({
+            'picking_type_id': self.env.ref('stock.picking_type_out').id})
+        self.picking.move_lines = (
+            self._move_factory(product=product_8, qty=1.0) |
+            self._move_factory(product=product_9, qty=2.0))
+        self.picking.action_confirm()
+        self.picking.force_assign()
 
-        self.demo_user = self.env.ref('base.user_demo')
-        self.env.uid = self.demo_user.id
-        self.move_model = self.env["stock.move"]
-        self.picking_model = self.env["stock.picking"]
-        self.product_model = self.env["product.product"]
-        self.location_model = self.env["stock.location"]
-        self.stock_transfer_details = self.env["stock.transfer_details"]
+    def _transfer_picking_with_date(self, date_backdating):
+        wizard = self._transfer_details_factory(self.picking)
+        wizard.date_backdating = date_backdating
+        wizard.onchange_date_backdating()
+        self.assertEqual(wizard.item_ids[0].date[0:10], date_backdating)
+        self.assertEqual(wizard.item_ids[0].date[0:10], date_backdating)
+        wizard.do_detailed_transfer()
+        self.assertEqual(self.picking.state, 'done')
+        self.assertEqual(
+            len(self.picking.move_lines), 2, 'Wrong number of move lines')
+        for move in self.picking.move_lines:
+            self.assertEqual(move.state, 'done')
+            self.assertEqual(move.date[0:10], date_backdating)
+            for quant in move.quant_ids:
+                self.assertEqual(quant.in_date[0:10], date_backdating)
 
-        self.product_uom_id = self.env['product.uom'].search([])[0]
+        self.assertEqual(self.picking.date_done[0:10], date_backdating)
 
-        self.location_id = self.location_model.search(
-            [('usage', '=', 'internal')])[0]
+    def _transfer_picking_with_dates(
+            self, date_backdating_1, date_backdating_2):
+        wizard = self._transfer_details_factory(self.picking)
+        wizard.item_ids[0].date = date_backdating_1
+        wizard.item_ids[1].date = date_backdating_2
+        wizard.item_ids[0].onchange_date()
+        wizard.item_ids[1].onchange_date()
+        wizard.do_detailed_transfer()
+        self.assertEqual(self.picking.state, 'done')
+        self.assertEqual(
+            len(self.picking.move_lines), 2, 'Wrong number of move lines')
+        move_1 = self.picking.move_lines[0]
+        self.assertEqual(move_1.state, 'done')
+        self.assertEqual(move_1.date[0:10], date_backdating_1)
+        for quant in move_1.quant_ids:
+            self.assertEqual(quant.in_date[0:10], date_backdating_1)
+        move_2 = self.picking.move_lines[1]
+        self.assertEqual(move_2.state, 'done')
+        self.assertEqual(move_2.date[0:10], date_backdating_2)
+        for quant in move_2.quant_ids:
+            self.assertEqual(quant.in_date[0:10], date_backdating_2)
 
-        self.location_supplier_id = self.location_model.search(
-            [('usage', '=', 'supplier')])[0]
-
-        self.product_id = self.product_model.create(
-            {
-                'name': 'Prod 1',
-                'uom_id': self.product_uom_id.id,
-                'uom_po_id': self.product_uom_id.id,
-            }
-        )
-        self.product_id.product_tmpl_id.write(
-            {
-                'property_stock_account_input': (
-                    self.ref('account.income_fx_income')
-                ),
-                'property_stock_account_output': (
-                    self.ref('account.a_expense')
-                )
-            }
-        )
-
-    def create_assigne_picking(self):
-        self.picking_out = self.env['stock.picking'].create({
-            'picking_type_id': self.ref('stock.picking_type_out')})
-
-        self.move_id = self.move_model.create(
-            {
-                'product_id': self.product_id.id,
-                'product_uom_qty': 10,
-                'name': 'Test',
-                'location_id': self.location_id.id,
-                'location_dest_id': self.location_supplier_id.id,
-                'product_uom': self.product_uom_id.id,
-                'picking_id': self.picking_out.id
-            })
-
-        self.picking_out.action_confirm()
-        self.picking_out.force_assign()
-
-    def run_picking(self, back_date):
-        pick = self.picking_out
-        pick_wizard = self.stock_transfer_details.with_context(
-            active_model='stock.picking',
-            active_ids=[pick.id],
-            active_id=len([pick.id]) and pick.id or False
-        ).create(
-            {'picking_id': pick.id}
-        )
-        pick_wizard.item_ids[0].write({'date': back_date})
-        pick_wizard.do_detailed_transfer()
-
-    def computeMove(self, timedelta_days):
-        now = datetime.now()
-        back_date = (now - timedelta(days=timedelta_days)).strftime(
-            DEFAULT_SERVER_DATE_FORMAT)
-        self.create_assigne_picking()
-        self.run_picking(back_date)
-        self.picking_out.action_done()
-        move = self.move_id
-        move.refresh()
-        self.assertEqual(move.date[0:10], back_date)
-        self.assertEqual(self.picking_out.state, 'done')
-        self.assertEqual(move.state, 'done')
-        for quant in move.quant_ids:
-            self.assertEqual(quant.in_date[0:10], back_date)
-
-    def test_0_stock_move_backdate_yesterday(self):
-        self.computeMove(1)
-
-    def test_1_stock_move_backdate_last_month(self):
-        self.computeMove(31)
-
-    def test_2_stock_move_backdate_future(self):
-        self.assertRaises(
-            orm.except_orm,
-            self.computeMove, -1)
+        max_date = max(date_backdating_1, date_backdating_2)
+        self.assertEqual(self.picking.date_done[0:10], max_date)
