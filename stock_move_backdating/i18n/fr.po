@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-16 02:39+0000\n"
-"PO-Revision-Date: 2016-08-16 02:39+0000\n"
+"POT-Creation-Date: 2016-11-18 01:44+0000\n"
+"PO-Revision-Date: 2016-11-18 01:44+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -24,6 +24,16 @@ msgid "Account Entry"
 msgstr "Pièce comptable"
 
 #. module: stock_move_backdating
+#: field:stock.transfer_details,date_backdating:0
+msgid "Actual Movement Date"
+msgstr ""
+
+#. module: stock_move_backdating
+#: model:ir.model,name:stock_move_backdating.model_stock_transfer_details
+msgid "Picking wizard"
+msgstr ""
+
+#. module: stock_move_backdating
 #: model:ir.model,name:stock_move_backdating.model_stock_transfer_details_items
 msgid "Picking wizard items"
 msgstr "Ligne d'assistant de préparation"
@@ -34,7 +44,7 @@ msgid "Stock Move"
 msgstr "Mouvement de stock"
 
 #. module: stock_move_backdating
-#: code:addons/stock_move_backdating/wizard/stock_transfer_details.py:27
+#: code:addons/stock_move_backdating/wizards/stock_transfer_details.py:15
 #, python-format
 msgid "You can not process an actual movement date in the future."
 msgstr ""
