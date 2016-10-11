@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-# ©2015 Agile Business Group (<http://www.agilebg.com>)
-# ©2015 BREMSKERL-REIBBELAGWERKE EMMERLING GmbH & Co. KG
+# Copyright 2015-2016 Agile Business Group (<http://www.agilebg.com>)
+# Copyright 2015 BREMSKERL-REIBBELAGWERKE EMMERLING GmbH & Co. KG
 #    Author Marco Dieckhoff
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-
 
 {
     'name': 'Stock Move Backdating',
@@ -14,7 +13,7 @@
     'website': 'www.bremskerl.com',
     'depends': ['stock_account'],
     'data': [
-        'wizard/stock_transfer_details_view.xml',
+        'wizards/stock_transfer_details_view.xml',
     ],
     'installable': True,
     'auto_install': False,
