@@ -60,6 +60,7 @@ Contributors
 ------------
 
 * Guewen Baconnier <guewen.baconnier@camptocamp.com>
+* Lorenzo Battistini <lorenzo.battistini@agilebg.com>
 
 Maintainer
 ----------

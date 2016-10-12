@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-22 09:31+0000\n"
-"PO-Revision-Date: 2015-10-21 16:35+0000\n"
+"POT-Creation-Date: 2016-05-04 02:49+0000\n"
+"PO-Revision-Date: 2016-05-03 14:11+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: French (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/fr/)\n"
+"Language-Team: English (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/en/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: fr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_picking_package_preparation
 #: model:ir.actions.act_window,help:stock_picking_package_preparation.action_stock_picking_package_preparation
@@ -24,45 +24,50 @@ msgid ""
 "          Click to prepare a new package preparation.\n"
 "        </p>\n"
 "      "
-msgstr "<p class=\"oe_view_nocontent_create\">\n          Cliquer pour créer une nouvelle préparation de colis.\n        </p>\n      "
+msgstr "<p class=\"oe_view_nocontent_create\">\n          Click to prepare a new package preparation.\n        </p>\n      "
 
 #. module: stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Add an internal note..."
-msgstr "Ajouter une note interne..."
+msgstr "Add an internal note..."
+
+#. module: stock_picking_package_preparation
+#: field:stock.picking.package.preparation,quant_ids:0
+msgid "All Content"
+msgstr "All Content"
 
 #. module: stock_picking_package_preparation
 #: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:220
 #, python-format
 msgid "All the transfers must be \"Ready to Transfer\"."
-msgstr "Tous les transferts doivent être \"prêts à expédier\"."
+msgstr "All the transfers must be \"Ready to Transfer\"."
 
 #. module: stock_picking_package_preparation
 #: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:202
 #, python-format
 msgid "All the transfers must have the same destination location"
-msgstr "Tous les transferts doivent avoir le même emplacement de destination"
+msgstr "All the transfers must have the same destination location"
 
 #. module: stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Cancel"
-msgstr "Annuler"
+msgstr "Cancel"
 
 #. module: stock_picking_package_preparation
 #: selection:stock.picking.package.preparation,state:0
 msgid "Cancelled"
-msgstr "Annulée"
+msgstr "Cancelled"
 
 #. module: stock_picking_package_preparation
 #: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:171
 #, python-format
 msgid "Cannot cancel a done package preparation."
-msgstr "Impossible d'annuler une préparation de colis terminée."
+msgstr "Cannot cancel a done package preparation."
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,company_id:0
 msgid "Company"
-msgstr "Société"
+msgstr "Company"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,create_uid:0
@@ -77,34 +82,39 @@ msgstr "Created on"
 #. module: stock_picking_package_preparation
 #: help:stock.picking.package.preparation,message_last_post:0
 msgid "Date of the last message posted on the record."
-msgstr ""
+msgstr "Date of the last message posted on the record."
+
+#. module: stock_picking_package_preparation
+#: field:stock.picking.package.preparation,display_name:0
+msgid "Display Name"
+msgstr "Display Name"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,date:0
 msgid "Document Date"
-msgstr ""
+msgstr "Document Date"
 
 #. module: stock_picking_package_preparation
 #: selection:stock.picking.package.preparation,state:0
 msgid "Done"
-msgstr "Terminée"
+msgstr "Done"
 
 #. module: stock_picking_package_preparation
 #: selection:stock.picking.package.preparation,state:0
 msgid "Draft"
-msgstr "Brouillon"
+msgstr "Draft"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_follower_ids:0
 msgid "Followers"
-msgstr ""
+msgstr "Followers"
 
 #. module: stock_picking_package_preparation
 #: help:stock.picking.package.preparation,message_summary:0
 msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
-msgstr ""
+msgstr "Holds the Chatter summary (number of messages, ...). This summary is directly in html format in order to be inserted in kanban views."
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,id:0
@@ -114,7 +124,7 @@ msgstr "ID"
 #. module: stock_picking_package_preparation
 #: help:stock.picking.package.preparation,message_unread:0
 msgid "If checked new messages require your attention."
-msgstr ""
+msgstr "If checked new messages require your attention."
 
 #. module: stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
@@ -122,22 +132,27 @@ msgid ""
 "If there is no product but a source package, this means the source package "
 "was moved entirely.  If there is a product and a source package, the product"
 " was taken from the source package."
-msgstr "S'il y a un colis d'origine mais pas de produit, le colis d'origine sera déplacé entièrement.  S'il y a un produit et colis d'origine, le produit est pris du colis d'origine."
+msgstr "If there is no product but a source package, this means the source package was moved entirely.  If there is a product and a source package, the product was taken from the source package."
 
 #. module: stock_picking_package_preparation
 #: selection:stock.picking.package.preparation,state:0
 msgid "In Pack"
-msgstr "Dans un colis"
+msgstr "In Pack"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_is_follower:0
 msgid "Is a Follower"
-msgstr ""
+msgstr "Is a Follower"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_last_post:0
 msgid "Last Message Date"
-msgstr ""
+msgstr "Last Message Date"
+
+#. module: stock_picking_package_preparation
+#: field:stock.picking.package.preparation,__last_update:0
+msgid "Last Modified on"
+msgstr "Last Modified on"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,write_uid:0
@@ -152,23 +167,28 @@ msgstr "Last Updated on"
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,ul_id:0
 msgid "Logistic Unit"
-msgstr "Unité logistique"
+msgstr "Logistic Unit"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_ids:0
 msgid "Messages"
-msgstr ""
+msgstr "Messages"
 
 #. module: stock_picking_package_preparation
 #: help:stock.picking.package.preparation,message_ids:0
 msgid "Messages and communication history"
-msgstr ""
+msgstr "Messages and communication history"
+
+#. module: stock_picking_package_preparation
+#: field:stock.picking.package.preparation,net_weight:0
+msgid "Net weight"
+msgstr "Net weight"
 
 #. module: stock_picking_package_preparation
 #: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:197
 #, python-format
 msgid "No transfer selected for this preparation."
-msgstr "Pas de transfert sélectionné pour cette préparation."
+msgstr "No transfer selected for this preparation."
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,note:0
@@ -179,89 +199,105 @@ msgstr "Note"
 #: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:182
 #, python-format
 msgid "Only canceled package preparations can be reset to draft."
-msgstr "Uniquement les préparations de colis annulées peuvent être remise en brouillon."
+msgstr "Only canceled package preparations can be reset to draft."
 
 #. module: stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Operations"
-msgstr "Opérations"
+msgstr "Operations"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,package_id:0
 msgid "Pack"
-msgstr "Colis"
+msgstr "Pack"
+
+#. module: stock_picking_package_preparation
+#: field:stock.picking.package.preparation,pack_operation_ids:0
+msgid "Pack operation ids"
+msgstr "Pack operation ids"
 
 #. module: stock_picking_package_preparation
 #: model:ir.model,name:stock_picking_package_preparation.model_stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Package Preparation"
-msgstr "Préparation de colis"
+msgstr "Package Preparation"
 
 #. module: stock_picking_package_preparation
 #: model:ir.actions.act_window,name:stock_picking_package_preparation.action_stock_picking_package_preparation
 #: model:ir.ui.menu,name:stock_picking_package_preparation.menu_stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_tree
 msgid "Package Preparations"
-msgstr "Préparations de colis"
+msgstr "Package Preparations"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,name:0
 msgid "Package Reference"
-msgstr "Référence du colis"
+msgstr "Package Reference"
 
 #. module: stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Package done"
-msgstr "Colis fait"
+msgstr "Package done"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,packaging_id:0
 msgid "Packaging"
-msgstr "Conditionnement"
+msgstr "Packaging"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,partner_id:0
 msgid "Partner"
-msgstr "Partenaire"
+msgstr "Partner"
 
 #. module: stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Put in pack"
-msgstr "Mettre dans le colis"
+msgstr "Put in pack"
 
 #. module: stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Reset to draft"
-msgstr "Remettre en brouillon"
+msgstr "Reset to draft"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,date_done:0
 msgid "Shipping Date"
-msgstr "Date d'expédition"
+msgstr "Shipping Date"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,state:0
 msgid "State"
-msgstr "État"
+msgstr "State"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_summary:0
 msgid "Summary"
-msgstr ""
+msgstr "Summary"
 
 #. module: stock_picking_package_preparation
 #: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:162
 #, python-format
 msgid "The package has not been generated."
-msgstr "Le colis n'a pas été généré."
+msgstr "The package has not been generated."
+
+#. module: stock_picking_package_preparation
+#: help:stock.picking.package.preparation,net_weight:0
+#: help:stock.picking.package.preparation,weight:0
+msgid "The weight is computed when the preparation is done."
+msgstr "The weight is computed when the preparation is done."
 
 #. module: stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
 #: field:stock.picking.package.preparation,picking_ids:0
 msgid "Transfers"
-msgstr "Transferts"
+msgstr "Transfers"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_unread:0
 msgid "Unread Messages"
-msgstr ""
+msgstr "Unread Messages"
+
+#. module: stock_picking_package_preparation
+#: field:stock.picking.package.preparation,weight:0
+msgid "Weight"
+msgstr "Weight"

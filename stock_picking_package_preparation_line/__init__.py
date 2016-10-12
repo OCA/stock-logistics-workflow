@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Guewen Baconnier
-#    Copyright 2015 Camptocamp SA
+#    Author: Francesco Apruzzese
+#    Copyright 2015 Apulia Software srl
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,20 +19,4 @@
 #
 ##############################################################################
 
-{'name': 'Stock Picking Package Preparation',
- 'version': '8.0.1.0.0',
- 'author': 'Camptocamp,Odoo Community Association (OCA)',
- 'maintainer': 'Camptocamp',
- 'license': 'AGPL-3',
- 'category': 'Warehouse Management',
- 'depends': ['stock',
-             ],
- 'website': 'http://www.camptocamp.com',
- 'data': ['view/stock_picking_package_preparation_view.xml',
-          'security/ir.model.access.csv',
-          'security/package_preparation_security.xml',
-          ],
- 'test': [],
- 'installable': True,
- 'auto_install': False,
- }
+from . import models

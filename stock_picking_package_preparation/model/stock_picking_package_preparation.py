@@ -67,11 +67,6 @@ class StockPickingPackagePreparation(models.Model):
         copy=False,
         states=FIELDS_STATES,
     )
-    ul_id = fields.Many2one(
-        comodel_name='product.ul',
-        string='Logistic Unit',
-        states=FIELDS_STATES,
-    )
     packaging_id = fields.Many2one(
         comodel_name='product.packaging',
         string='Packaging',
@@ -107,18 +102,15 @@ class StockPickingPackagePreparation(models.Model):
     )
     note = fields.Text()
     weight = fields.Float(compute='_compute_weight',
-                          help="The weight is computed when the preparation "
-                               "is done.")
-    net_weight = fields.Float(compute='_compute_weight',
-                              help="The weight is computed when the "
-                                   "preparation is done.")
+                          help="The weight is computed when the "
+                               "preparation is done.")
     quant_ids = fields.Many2many(
         compute='_compute_quant_ids',
         comodel_name='stock.quant',
         relation='stock_quant_pack_prepare_rel',
         column1='stock_picking_package_preparation_id',
         column2='stock_quant_id',
-        name='All Content',
+        string='All Content',
     )
 
     @api.one
@@ -132,21 +124,15 @@ class StockPickingPackagePreparation(models.Model):
     @api.one
     @api.depends('package_id',
                  'package_id.children_ids',
-                 'package_id.ul_id',
                  'package_id.quant_ids')
     def _compute_weight(self):
         package = self.package_id
         if not package:
             return
         quant_model = self.env['stock.quant']
-        package_model = self.env['stock.quant.package']
         quants = quant_model.browse(package.get_content())
         # weight of the products only
-        net_weight = sum(l.product_id.weight * l.qty for l in quants)
-        # weight of the empty packages + products
-        child_packages = package_model.search([('id', 'child_of', package.id)])
-        weight = sum(child_packages.mapped('ul_id.weight')) + net_weight
-        self.net_weight = net_weight
+        weight = sum(l.product_id.weight * l.qty for l in quants)
         self.weight = weight
 
     @api.one
@@ -203,7 +189,6 @@ class StockPickingPackagePreparation(models.Model):
             )
         values = {
             'packaging_id': self.packaging_id.id,
-            'ul_id': self.ul_id.id,
             'location_id': location.id,
         }
         return values
@@ -212,7 +197,7 @@ class StockPickingPackagePreparation(models.Model):
     def _generate_pack(self):
         self.ensure_one()
         pack_model = self.env['stock.quant.package']
-        move_model = self.env['stock.move']
+        moves = self.env['stock.move']
         operation_model = self.env['stock.pack.operation']
 
         if any(picking.state != 'assigned' for picking in self.picking_ids):
@@ -227,15 +212,11 @@ class StockPickingPackagePreparation(models.Model):
             operations |= picking.pack_operation_ids
 
         for operation in operations:
-            if (operation.product_id and
-                    operation.location_id and
-                    operation.location_dest_id):
-                move_model.check_tracking_product(
-                    operation.product_id,
-                    operation.lot_id.id,
-                    operation.location_id,
-                    operation.location_dest_id
-                )
+            for record in operation.linked_move_operation_ids:
+                moves |= record.move_id
+            for move in moves:
+                moves.check_tracking(move, operation)
+
             operation.qty_done = operation.product_qty
 
         pack = pack_model.create(self._prepare_package())

@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Guewen Baconnier
-#    Copyright 2015 Camptocamp SA
+#    Author: Francesco Apruzzese
+#    Copyright 2015 Apulia Software srl
+#    Copyright 2015 Lorenzo Battistini - Agile Business Group
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,20 +20,25 @@
 #
 ##############################################################################
 
-{'name': 'Stock Picking Package Preparation',
- 'version': '8.0.1.0.0',
- 'author': 'Camptocamp,Odoo Community Association (OCA)',
- 'maintainer': 'Camptocamp',
- 'license': 'AGPL-3',
- 'category': 'Warehouse Management',
- 'depends': ['stock',
-             ],
- 'website': 'http://www.camptocamp.com',
- 'data': ['view/stock_picking_package_preparation_view.xml',
-          'security/ir.model.access.csv',
-          'security/package_preparation_security.xml',
-          ],
- 'test': [],
- 'installable': True,
- 'auto_install': False,
- }
+{
+    'name': 'Stock Picking Package Preparation Line',
+    'version': '8.0.1.0.0',
+    'author': 'Apulia Software srl,Odoo Community Association (OCA)',
+    'maintainer': 'Odoo Community Association (OCA)',
+    'license': 'AGPL-3',
+    'category': 'Warehouse Management',
+    'depends': [
+        'stock',
+        'product',
+        'stock_picking_package_preparation',
+    ],
+    'website': 'http://www.apuliasoftware.it',
+    'data': [
+        'views/ir_config_view.xml',
+        'views/stock_picking_package_preparation_line.xml',
+        'security/ir.model.access.csv',
+        'security/package_preparation_line_security.xml',
+    ],
+    'installable': True,
+    'auto_install': False,
+}
