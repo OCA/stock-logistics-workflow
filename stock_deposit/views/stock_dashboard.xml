@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- © 2016 Sergio Teruel <sergio.teruel@tecnativa.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl-3). -->
+<odoo>
+
+<record id="deposit_stock_picking_type_kanban" model="ir.ui.view">
+    <field name="name">depoasit.stock.picking.type.kanban</field>
+    <field name="model">stock.picking.type</field>
+    <field name="inherit_id" ref="stock.stock_picking_type_kanban"/>
+    <field name="arch" type="xml">
+        <xpath expr="//kanban/field[@name='code']" position="after">
+            <field name="is_deposit"/>
+        </xpath>
+        <xpath expr="//div[contains(@class, 'o_kanban_primary_right')]"
+               position="inside">
+            <div class="row" t-if="record.is_deposit.raw_value">
+                <div class="col-xs-9">
+                    <span style="margin-top:3px;">
+                        <a name="%(stock.action_picking_form)d"
+                           type="action"><t t-esc="record.name.raw_value"/>
+                        </a>
+                    </span>
+                </div>
+                <div class="col-xs-3">
+                    <span class="fa-stack">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-building-o fa-stack-1x fa-inverse"></i>
+                    </span>
+                </div>
+            </div>
+        </xpath>
+    </field>
+</record>
+
+</odoo>

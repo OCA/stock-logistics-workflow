@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- © 2016 Sergio Teruel <sergio.teruel@tecnativa.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+<data noupdate="1">
+
+    <record id="stock_deposit_regularize_sequence" model="ir.sequence">
+        <field name="name">Stock Deposit Regularize Sequence</field>
+        <field name="code">stock.deposit.regularize.sequence</field>
+        <field name="prefix">DEP/REG/</field>
+        <field eval="1" name="number_next"/>
+        <field eval="1" name="number_increment"/>
+        <field name="padding">4</field>
+    </record>
+
+</data>
+</odoo>
