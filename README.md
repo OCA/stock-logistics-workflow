@@ -24,6 +24,7 @@ addon | version | summary
 --- | --- | ---
 [stock_batch_picking](stock_batch_picking/) | 9.0.1.0.0 | Stock batch picking
 [stock_picking_mass_assign](stock_picking_mass_assign/) | 9.0.1.0.0 | Delivery Orders Mass Assign
+[stock_picking_show_return](stock_picking_show_return/) | 9.0.1.0.0 | Show returns on stock pickings
 
 Unported addons
 ---------------
@@ -50,7 +51,6 @@ addon | version | summary
 [stock_picking_package_preparation](stock_picking_package_preparation/) | 8.0.1.0.0 (unported) | Stock Picking Package Preparation
 [stock_picking_priority](stock_picking_priority/) | 0.2 (unported) | Picking Priority
 [stock_picking_reorder_lines](stock_picking_reorder_lines/) | 8.0.0.1.0 (unported) | Provide a new field on stock moves, allowing to manage the orders of moves in a picking.
-[stock_picking_show_returns](stock_picking_show_returns/) | 1.0 (unported) | Show returns on stock pickings
 [stock_sale_filters](stock_sale_filters/) | 1.3 (unported) | SO related filters on stock.picking and sale.order
 [stock_split_picking](stock_split_picking/) | 8.0.1.0.0 (unported) | Split a picking in two unconfirmed pickings
 [stock_transfer_split_multi](stock_transfer_split_multi/) | 8.0.1.0.0 (unported) | In the stock transfer wizard, you can split by multiple units
