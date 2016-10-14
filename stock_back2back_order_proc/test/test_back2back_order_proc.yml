@@ -1,0 +1,144 @@
+-
+  In order to test stock back2back process
+  I have to ensure that when I partially receive the first picking,
+  we should split the chained moves whose location type is thru.
+  Same behavior when I process on stock move level.
+-
+  I create a new product
+-
+  !record {model: product.product, id: product_001}:
+    name: Test
+-
+  I create two locations with type thru
+-
+  !record {model: stock.location, id: location_thru_stock}:
+    name: Location Thru Stock
+    retention_mode: thru
+    usage: internal
+    chained_location_type: none
+    chained_auto_packing: manual
+-
+  !record {model: stock.location, id: location_thru_in_2}:
+    name: Location Thru In2
+    retention_mode: thru
+    usage: internal
+    chained_location_type: fixed
+    chained_location_id: location_thru_stock
+    chained_auto_packing: manual
+-
+  !record {model: stock.location, id: location_thru_in}:
+    name: Location Thru In
+    retention_mode: thru
+    usage: internal
+    chained_location_type: fixed
+    chained_location_id: location_thru_in_2
+    chained_auto_packing: manual
+-
+  I create a new warehouse to test
+-
+  !record {model: stock.warehouse, id: warehouse_thru}:
+    name: Thru Warehouse
+    lot_input_id: location_thru_in
+    lot_stock_id: location_thru_stock
+    lot_output_id: stock.stock_location_customers
+-
+  I create a manual stock picking in
+-
+ !record {model: stock.picking, id: incoming_shipment}:
+    type: in
+    location_dest_id: location_thru_in
+-
+ !record {model: stock.move, id: incoming_shipment_move_1}:
+    company_id: base.main_company
+    picking_id: incoming_shipment
+    product_id: product_001
+    product_uom: product.product_uom_unit
+    product_qty: 130.0
+    product_uos_qty: 130.0
+    location_id: stock.stock_location_suppliers
+    location_dest_id: location_thru_in
+-
+  Then I confirm the incoming shipment
+-
+  !python {model: stock.picking}: |
+    self.draft_force_assign(cr, uid, [ref('incoming_shipment')])
+-
+  I check if the chained transfer is generated or not.
+-
+  !python {model: stock.move}: |
+    current_move = self.browse(cr, uid, ref('incoming_shipment_move_1'))
+    chained_move_id = current_move.move_dest_id
+    assert chained_move_id, 'Chained move has not been generated'
+-
+  Then I receive part of the incoming shipment
+-
+  !python {model: stock.partial.picking}: |
+    context.update({'active_model': 'stock.picking',
+                    'active_id': ref('incoming_shipment'),
+                    'active_ids': [ref('incoming_shipment')],
+                    'partial_no_confirm': True})
+-
+  !record {model: stock.partial.picking, id: partial_receive}:
+    move_ids:
+        - quantity: 40
+          product_id: product_001
+          product_uom: product.product_uom_unit
+          move_id: incoming_shipment_move_1
+          location_id: stock.stock_location_suppliers
+          location_dest_id: location_thru_in
+-
+  !python {model: stock.partial.picking }: |
+    self.do_partial(cr, uid, [ref('partial_receive')], context=context)
+-
+  I check if the chained move has been split as well and check the states of the stock moves
+-
+  !python {model: stock.picking}: |
+    shipment = self.browse(cr, uid, ref("incoming_shipment"))
+    backorder = shipment.backorder_id
+    assert backorder, "Backorder of first picking should be created after partial receive."
+
+    for move_line in shipment.move_lines:
+        assert move_line.move_dest_id, "The chained move does not split well!"
+        assert move_line.move_dest_id.product_qty == 90, "The chained move: Qty does not correspond."
+        assert move_line.state == 'confirmed', 'The state should be confirmed!'
+        assert move_line.move_dest_id.state == 'waiting', 'The split chained move should be waiting another move!'
+
+    for bko_move_line in backorder.move_lines:
+        assert bko_move_line.move_dest_id, "The chained move does not split well!"
+        assert bko_move_line.move_dest_id.picking_id, "The Chained picking has not generate"
+        assert bko_move_line.move_dest_id.product_qty == 40, "The chained move: Qty does not correspond."
+        assert bko_move_line.state == 'done', 'The backorder should be done!'
+        assert bko_move_line.move_dest_id.state == 'assigned', 'The split chained move should be available!'
+-
+  I test the partial receive on stock move level!
+-
+  !python {model: stock.partial.move}: |
+    context.update({'active_model': 'stock.move',
+                    'active_id': ref('incoming_shipment_move_1'),
+                    'active_ids': [ref('incoming_shipment_move_1')]})
+-
+  !record {model: stock.partial.move, id: partial_receive_move}:
+    move_ids:
+        - quantity: 10
+          product_id: product_001
+          product_uom: product.product_uom_unit
+          move_id: incoming_shipment_move_1
+          location_id: stock.stock_location_suppliers
+          location_dest_id: location_thru_in
+-
+  Then I receive the stock move.
+-
+  !python {model: stock.partial.move}: |
+    self.do_partial(cr, uid, [ref("partial_receive_move")], context=context)
+-
+  I check if the move has been split well.
+-
+  !python {model: stock.move}: |
+    move = self.browse(cr, uid, ref("incoming_shipment_move_1"), context=context)
+    assert move.move_dest_id, "There is no chained move generated"
+    move_2rd_id = move.move_dest_id
+    assert move_2rd_id.product_qty == 80, 'Qty does not correspond!'
+    assert move_2rd_id.state == 'waiting', 'The state of 2rd chained move should be waiting another move!'
+    assert move_2rd_id.move_dest_id, "The 2rd chained move has not been generated!"
+    assert move_2rd_id.move_dest_id.product_qty == 80, 'Qty does not correspond!'
+    assert move_2rd_id.move_dest_id.state == 'waiting', 'The state of 3th chained move should be waiting another move!'
