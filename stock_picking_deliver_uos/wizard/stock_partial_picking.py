@@ -58,3 +58,37 @@ class StockPartialPicking(orm.TransientModel):
             'product_uos_qty': move.product_uos_qty
         })
         return partial_move
+
+    def do_partial(self, cr, uid, ids, context=None):
+        res = super(StockPartialPicking, self).do_partial(
+            cr, uid, ids, context=context)
+        if (
+            res.get('res_id') and res.get('context')
+            and res['context'].get('active_id')
+        ):
+            wizard = self.browse(cr, uid, ids[0], context=context)
+            picking_pool = self.pool['stock.picking']
+            delivered_picking_id = res['res_id']
+            delivered_picking = picking_pool.browse(
+                cr, uid, delivered_picking_id, context=context)
+            for delivered_line in delivered_picking.move_lines:
+                for wizard_line in wizard.move_ids:
+                    if (
+                        wizard_line.product_id.id
+                        == delivered_line.product_id.id
+                        and
+                        wizard_line.quantity == delivered_line.product_qty
+                        and
+                        wizard_line.product_uom.id
+                        == delivered_line.product_uom.id
+                    ):
+                        delivered_line.write(
+                            {'product_uos_qty': wizard_line.product_uos_qty},
+                            context=context)
+                        wizard_line.move_id.write(
+                            {'product_uos_qty': wizard_line.product_uos_qty * (
+                                wizard_line.move_id.product_qty
+                                / delivered_line.product_qty)},
+                            context=context)
+                        break
+        return res
