@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- stock.picking -->
+        <record id="view_picking_form" model="ir.ui.view">
+            <field name="name">stock_picking_invoice_link.stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Invoices" groups="account.group_account_invoice">
+                        <field name="invoice_ids" nolabel="1" context="{'tree_view_ref': 'account.invoice_tree', 'form_view_ref': 'invoice_form'}"/>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+        <!-- stock.move -->
+        <record id="view_move_form" model="ir.ui.view">
+            <field name="name">stock_picking_invoice_link.stock.move.form</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_form"/>
+            <field name="arch" type="xml">
+                <group name="moved_quants_grp" position="after">
+                    <group name="invoice_line_ids" string="Invoice Lines" colspan="4" groups="account.group_account_invoice">
+                        <field name="invoice_line_ids" nolabel="1"/>
+                    </group>
+                </group>
+            </field>
+        </record>
+
+    </data>
+</openerp>
