@@ -98,33 +98,37 @@ class StockPickingPackagePreparation(models.Model):
         string='All Content',
     )
 
-    @api.one
+    @api.multi
     @api.depends('package_id',
                  'package_id.children_ids')
     def _compute_quant_ids(self):
-        package = self.package_id
-        quants = self.env['stock.quant'].browse(package.get_content())
-        self.quant_ids = quants
+        for preparation in self:
+            package = preparation.package_id
+            quants = preparation.env['stock.quant'].browse(package.get_content())
+            preparation.quant_ids = quants
 
-    @api.one
+    @api.multi
     @api.depends('package_id',
                  'package_id.children_ids',
                  'package_id.quant_ids')
     def _compute_weight(self):
-        package = self.package_id
-        if not package:
-            return
-        quant_model = self.env['stock.quant']
-        quants = quant_model.browse(package.get_content())
-        # weight of the products only
-        weight = sum(l.product_id.weight * l.qty for l in quants)
-        self.weight = weight
+        for preparation in self:
+            package = preparation.package_id
+            if not package:
+                return
+            quant_model = preparation.env['stock.quant']
+            quants = quant_model.browse(package.get_content())
+            # weight of the products only
+            weight = sum(l.product_id.weight * l.qty for l in quants)
+            preparation.weight = weight
 
-    @api.one
+    @api.multi
     @api.depends('picking_ids',
                  'picking_ids.pack_operation_ids')
     def _compute_pack_operation_ids(self):
-        self.pack_operation_ids = self.mapped('picking_ids.pack_operation_ids')
+        for preparation in self:
+            preparation.pack_operation_ids = preparation.mapped(
+                'picking_ids.pack_operation_ids')
 
     @api.multi
     def action_done(self):
