@@ -137,7 +137,8 @@ class StockPickingPackagePreparation(models.Model):
             raise exceptions.Warning(
                 _('The package has not been generated.')
             )
-        self.picking_ids.do_transfer()
+        for picking in self.picking_ids:
+            picking.do_transfer()
         self.write({'state': 'done', 'date_done': fields.Datetime.now()})
 
     @api.multi
