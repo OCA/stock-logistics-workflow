@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-<data noupdate="0">
+<odoo noupdate="0">
 
     <record id="sppp_line_stock_picking_package_preparation_form" model="ir.ui.view">
         <field name="name">sppp.line.stock.picking.package.preparation.form</field>
@@ -46,5 +45,4 @@
         </field>
     </record>
 
-</data>
-</openerp>
+</odoo>

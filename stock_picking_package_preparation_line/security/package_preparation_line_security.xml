@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-<data noupdate="1">
+<odoo noupdate="1">
 
     <record model="ir.rule" id="pack_preparation_line_comp_rule">
         <field name="name">Package Preparation line multi-company</field>
@@ -8,5 +7,4 @@
         <field name="domain_force">['|',('package_preparation_id.company_id','=',False),('package_preparation_id.company_id','child_of',[user.company_id.id])]</field>
     </record>
 
-</data>
-</openerp>
+</odoo>
