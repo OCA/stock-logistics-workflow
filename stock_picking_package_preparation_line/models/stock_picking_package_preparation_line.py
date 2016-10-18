@@ -23,10 +23,11 @@ class StockPickingPackagePreparationLine(models.Model):
     product_id = fields.Many2one('product.product', string='Product')
     product_uom_qty = fields.Float(
         digits_compute=dp.get_precision('Product Unit of Measure'),
+        string="Quantity",
         help="If you change this quantity for a 'ready' picking, the system "
              "will not generate a back order, but will just deliver the new "
              "quantity")
-    product_uom = fields.Many2one('product.uom')
+    product_uom_id = fields.Many2one('product.uom', string="UoM")
     lot_id = fields.Many2one('stock.production.lot', 'Lot')
     sequence = fields.Integer(default=10)
     note = fields.Text()
@@ -49,7 +50,7 @@ class StockPickingPackagePreparationLine(models.Model):
             name = self.product_id.name_get()
             if name:
                 self.name = name[0][1]
-            self.product_uom = self.product_id.uom_id.id
+            self.product_uom_id = self.product_id.uom_id.id
 
     def _prepare_lines_from_pickings(self, picking_ids):
         lines = []
@@ -71,7 +72,7 @@ class StockPickingPackagePreparationLine(models.Model):
                         'name': move_line.name,
                         'product_id': move_line.product_id.id,
                         'product_uom_qty': move_line.product_uom_qty,
-                        'product_uom': move_line.product_uom.id,
+                        'product_uom_id': move_line.product_uom.id,
                         'lot_id': move_line.restrict_lot_id.id
                         if move_line.restrict_lot_id else False,
                         })
@@ -84,7 +85,7 @@ class StockPickingPackagePreparationLine(models.Model):
             'name': self.name,
             'product_id': self.product_id.id,
             'product_uom_qty': self.product_uom_qty,
-            'product_uom': self.product_uom.id,
+            'product_uom': self.product_uom_id.id,
             'restrict_lot_id': self.lot_id.id
             if self.lot_id else False,
             }
