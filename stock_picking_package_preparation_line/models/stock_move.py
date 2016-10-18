@@ -9,6 +9,7 @@ class StockMove(models.Model):
     _inherit = 'stock.move'
 
     def get_packs(self):
+        self.ensure_one()
         pack_line_model = self.env['stock.picking.package.preparation.line']
         pack_lines = pack_line_model.search([
             ('move_id', '=', self.id),
