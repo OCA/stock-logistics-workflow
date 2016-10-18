@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="trans_wait_ship_done_auto_move" model="workflow.transition">
+            <field name="act_from" ref="sale.act_ship"/>
+            <field name="act_to" ref="sale.act_ship_end"/>
+            <field name="condition">test_procurements_done()</field>
+        </record>
+    </data>
+</openerp>
