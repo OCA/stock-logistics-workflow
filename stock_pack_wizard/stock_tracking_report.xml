@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- pact list report webkeit -->
+        <report id="webkit_strock_tracking" 
+                name="webkit_stock_tracking" 
+                model="stock.tracking" 
+                auto="False" 
+                file="stock_pack_wizard/report/stock_trackling_list.mako" 
+                string="Pack List webkit" 
+                report_type="webkit"/>
+                
+        <!-- pact list report rml -->
+        <report id="report_stock_tracking" 
+                name="rml_stock_tracking" 
+                model="stock.tracking" 
+                auto="False" 
+                file="stock_pack_wizard/report/stock_trackling_list.rml" 
+                string="Pack List rml" 
+                report_type="pdf"/>
+    </data>
+</openerp>

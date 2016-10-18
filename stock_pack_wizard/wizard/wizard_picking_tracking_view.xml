@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+  <!-- wizard picking tracking form view -->
+  <record id="wizard_picking_tracking_form" model="ir.ui.view">
+      <field name="name">wizard_picking_tracking</field>
+      <field name="model">wizard.picking.tracking</field>
+      <field name="arch" type="xml">
+        <form string="Pack Split" version="7.0">
+          <group string="Customer Info" col="6">
+            <field name="picking_id" colspan="2" invisible="1"/>
+            <field name="pack_address" colspan="2" readonly="1"/>
+            <field name="pack_note" colspan="2"/>
+          </group>
+          <group  col="6" string="Measurements">
+             <field name="ul_id" colspan="3"/>
+             <field name="gross_weight" colspan="3"/>
+           </group >
+           <group  col="6" string='Stock Moves'>
+              <field name="lines" colspan="6" context="{'picking_id':picking_id}" nolabel="1">
+              <tree editable="top" create="0">
+                <field name="stock_move_id" on_change="onchange_stock_move_id(stock_move_id)" domain="[('picking_id','=',context.get('picking_id'))]" groups="base.group_system"/>
+                <field name="product_id"/>
+                <field name="product_qty"/>
+                <field name="qty"/>
+                <field name="tracking_id"/>                        
+              </tree>
+             </field>
+           </group>
+
+           <footer>
+              <button name="action_split" string="Save &amp; Close" type="object" class="oe_button oe_abstractformpopup-form-save oe_highlight"/>
+              <button name="action_split_and_new" string="Save &amp; New" type="object" class="oe_button oe_abstractformpopup-form-save oe_highlight"/>
+              or
+              <button string="Discard" class="oe_abstractformpopup-form-close oe_bold oe_form_button_cancel" special="cancel"/>
+           </footer>
+          </form>
+      </field>
+  </record>
+        
+  <!-- wizard action -->
+  <act_window id="action_wizard_picking_tracking" 
+      name="Pack Split" 
+      multi="True"
+      key2="client_action_multi"
+      res_model="wizard.picking.tracking" 
+      src_model="stock.picking.out" 
+      view_mode="form" 
+      view_type="form" 
+      target="new"/>
+</data>
+</openerp>

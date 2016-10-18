@@ -1,0 +1,116 @@
+-
+  Test the pack wizard
+-
+  First create one sale order for the delivery order to give the customer info for pack
+-
+  !record {model: sale.order, id: sale_order_001}:
+    date_order: !eval time.strftime('%Y-%m-%d')
+    invoice_quantity: order
+    name: Test_SO011
+    order_policy: manual
+    partner_id: base.res_partner_4
+    partner_invoice_id: base.res_partner_address_7
+    partner_shipping_id: base.res_partner_address_7
+    pricelist_id: product.list0
+    shop_id: sale.sale_shop_1
+-
+  prepare the Delivery order with two stock moves
+-
+  !record {model: stock.picking, id: shipment_tracking}:
+    type: out
+    location_dest_id: stock.stock_location_output
+    sale_id: sale_order_001
+-
+  !record {model: stock.move, id: shipment_pack_wizard_move1}:
+    picking_id: shipment_tracking
+    product_id: product.product_product_6
+    product_uom: product.product_uom_unit
+    product_qty: 10.0
+    location_id: stock.stock_location_14
+    location_dest_id: stock.stock_location_output
+-
+  !record {model: stock.move, id: shipment_pack_wizard_move2}:
+    picking_id: shipment_tracking
+    product_id: product.product_product_6
+    product_uom: product.product_uom_unit
+    product_qty: 10.0
+    location_id: stock.stock_location_14
+    location_dest_id: stock.stock_location_output
+-
+  create a pack template
+-
+  !record {model: product.ul, id: product_ul_001}:
+    name: 'Test Pack Template'
+    type: 'pack'
+-
+  trigger the pack wizard
+-
+  !context
+    active_id: shipment_tracking
+    active_model: 'stock.picking.out'
+-
+  !record {model: wizard.picking.tracking, id: wizard_pack_001, context: "{'active_id': ref('shipment_tracking')}"}:
+    ul_id: product_ul_001
+-
+  check default value of note is the name of customer
+-
+  check the default stock moves are the same as the ones in delivery order
+-
+  !python {model: wizard.picking.tracking}: |
+    pack_wizard = self.browse(cr, uid, ref('wizard_pack_001'))
+    partner_id = self.pool['res.partner'].browse(cr, uid, ref('base.res_partner_4'))
+    delivery_id = self.pool['stock.picking.out'].browse(cr, uid, ref('shipment_tracking'))
+    assert pack_wizard.pack_note == partner_id.name, 'The default pack name is not right.'
+    # check the stock moves of the wizard.
+    assert len(pack_wizard.lines) == 2, 'There should be 2 stock moves in the wizard. '
+-
+  pack part of the delivery order
+-
+  !python {model: wizard.picking.tracking}: |
+    pack_wizard = self.browse(cr, uid, ref('wizard_pack_001'))
+    for m in pack_wizard.lines:
+      m.write({'qty': 1})
+    # do the packing
+    self.action_split(cr, uid, [ref('wizard_pack_001')])
+-
+  check the state of the new packed stock moves, should be the same as the original ones.
+  check that we have new packs created for both newly created stock moves.
+-
+  !python {model: stock.picking.out}: |
+    delivery = self.browse(cr, uid, ref('shipment_tracking'))
+    # check the state of the stock moves
+    for m in delivery.move_lines:
+      assert m.state == 'draft', 'The stock moves(packed or unpacked) should all be in new state.'
+-
+  trigger the pack wizard again
+-
+  !record {model: wizard.picking.tracking, id: wizard_pack_002, context: "{'active_id': ref('shipment_tracking')}"}:
+-
+  check the default value of the template, should be the one we used last time.
+-
+  !assert {model: wizard.picking.tracking, id: wizard_pack_002, string: The default template should be the one latest used.}:
+    - ul_id.id == ref('product_ul_001')
+-
+  !python {model: wizard.picking.tracking}: |
+    pack_wizard = self.browse(cr, uid, ref('wizard_pack_001'))
+    partner_id = self.pool['res.partner'].browse(cr, uid, ref('base.res_partner_4'))
+    delivery_id = self.pool['stock.picking.out'].browse(cr, uid, ref('shipment_tracking'))
+    assert pack_wizard.pack_note == partner_id.name, 'The default pack name is not right.'
+    # check the stock moves of the wizard.
+    assert len(pack_wizard.lines) == 2, 'There should be 2 stock moves in the wizard. '
+-
+  pack all of the delivery order
+-
+  !python {model: wizard.picking.tracking}: |
+    pack_wizard = self.browse(cr, uid, ref('wizard_pack_002'))
+    # do the packing
+    self.action_split(cr, uid, [ref('wizard_pack_002')])
+-
+  check if all the stock moves are packed
+-
+  !python {model: stock.picking.out}: |
+    delivery = self.browse(cr, uid, ref('shipment_tracking'))
+    # check the state of the stock moves
+    for m in delivery.move_lines:
+      assert m.state == 'draft', 'The stock moves(packed or unpacked) should all be in new state.'
+      assert m.tracking_id, 'All stock moves shold be packed already!'
