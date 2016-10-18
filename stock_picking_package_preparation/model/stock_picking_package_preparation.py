@@ -104,7 +104,8 @@ class StockPickingPackagePreparation(models.Model):
     def _compute_quant_ids(self):
         for preparation in self:
             package = preparation.package_id
-            quants = preparation.env['stock.quant'].browse(package.get_content())
+            quants = preparation.env['stock.quant'].browse(
+                package.get_content())
             preparation.quant_ids = quants
 
     @api.multi
