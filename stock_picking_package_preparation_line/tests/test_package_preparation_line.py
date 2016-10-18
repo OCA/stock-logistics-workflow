@@ -33,7 +33,7 @@ class TestPackagePreparationLine(TransactionCase):
             'name': 'test',
             'product_id': product and product.id or False,
             'product_uom_qty': quantity,
-            'product_uom': product and product.uom_id.id or False,
+            'product_uom_id': product and product.uom_id.id or False,
             'package_preparation_id': preparation.id,
             })
 
