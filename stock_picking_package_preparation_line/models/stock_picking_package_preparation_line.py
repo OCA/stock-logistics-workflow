@@ -15,8 +15,8 @@ class StockPickingPackagePreparationLine(models.Model):
     _order = 'sequence asc'
 
     package_preparation_id = fields.Many2one(
-        'stock.picking.package.preparation', string='Stock Move',
-        ondelete='cascade')
+        'stock.picking.package.preparation', string='Package Preparation',
+        ondelete='cascade', required=True)
     name = fields.Text(string='Description', required=True)
     move_id = fields.Many2one('stock.move', string='Stock Move',
                               ondelete='cascade')
