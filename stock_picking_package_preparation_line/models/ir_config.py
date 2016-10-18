@@ -5,16 +5,7 @@
 from openerp import models, fields, api
 
 
-class ResCompany(models.Model):
-
-    _inherit = 'res.company'
-
-    default_picking_type_for_package_preparation_id = fields.Many2one(
-        'stock.picking.type',
-        string='Default Picking Type used in package preparation')
-
-
-class StockPickingPackagePreparationLineSettings(models.TransientModel):
+class StockConfigSettings(models.TransientModel):
 
     _inherit = 'stock.config.settings'
 
