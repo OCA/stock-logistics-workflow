@@ -52,6 +52,7 @@ class StockPickingPackagePreparationLine(models.Model):
                 self.name = name[0][1]
             self.product_uom_id = self.product_id.uom_id.id
 
+    @api.model
     def _prepare_lines_from_pickings(self, picking_ids):
         lines = []
         if not picking_ids:
@@ -59,12 +60,12 @@ class StockPickingPackagePreparationLine(models.Model):
         picking_model = self.env['stock.picking']
         for picking in picking_model.browse(picking_ids):
             for move_line in picking.move_lines:
-                # ----- If stock move is cancel, don't create package
-                #       preparation line
+                # If stock move is cancel, don't create package
+                # preparation line
                 if move_line.state == 'cancel':
                     continue
-                # ----- search if the move is related with a
-                #       PackagePreparationLine, yet. If not, create a new line
+                # search if the move is related with a
+                # PackagePreparationLine, yet. If not, create a new line
                 if not self.search([('move_id', '=', move_line.id)],
                                    count=True):
                     lines.append({
