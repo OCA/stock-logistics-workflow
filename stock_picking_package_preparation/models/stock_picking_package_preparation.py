@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-# Author: Guewen Baconnier
-# Copyright 2015 Camptocamp SA
+# Copyright 2015 Guewen Baconnier
 # Copyright 2016 Lorenzo Battistini - Agile Business Group
+# Copyright 2016 Alessio Gerace - Agile Business Group
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api, exceptions, _
+from odoo import models, fields, api, _
+from odoo.exceptions import Warning
 
 
 class StockPickingPackagePreparation(models.Model):
@@ -104,9 +105,7 @@ class StockPickingPackagePreparation(models.Model):
     def _compute_quant_ids(self):
         for preparation in self:
             package = preparation.package_id
-            quants = preparation.env['stock.quant'].browse(
-                package.get_content())
-            preparation.quant_ids = quants
+            preparation.quant_ids = package.get_content()
 
     @api.multi
     @api.depends('package_id',
@@ -117,8 +116,7 @@ class StockPickingPackagePreparation(models.Model):
             package = preparation.package_id
             if not package:
                 return
-            quant_model = preparation.env['stock.quant']
-            quants = quant_model.browse(package.get_content())
+            quants = package.get_content()
             # weight of the products only
             weight = sum(l.product_id.weight * l.qty for l in quants)
             preparation.weight = weight
@@ -134,7 +132,7 @@ class StockPickingPackagePreparation(models.Model):
     @api.multi
     def action_done(self):
         if not self.mapped('package_id'):
-            raise exceptions.Warning(
+            raise Warning(
                 _('The package has not been generated.')
             )
         for picking in self.picking_ids:
@@ -144,7 +142,7 @@ class StockPickingPackagePreparation(models.Model):
     @api.multi
     def action_cancel(self):
         if any(prep.state == 'done' for prep in self):
-            raise exceptions.Warning(
+            raise Warning(
                 _('Cannot cancel a done package preparation.')
             )
         package_ids = self.mapped('package_id')
@@ -155,7 +153,7 @@ class StockPickingPackagePreparation(models.Model):
     @api.multi
     def action_draft(self):
         if any(prep.state != 'cancel' for prep in self):
-            raise exceptions.Warning(
+            raise Warning(
                 _('Only canceled package preparations can be reset to draft.')
             )
         self.write({'state': 'draft'})
@@ -170,12 +168,12 @@ class StockPickingPackagePreparation(models.Model):
     def _prepare_package(self):
         self.ensure_one()
         if not self.picking_ids:
-            raise exceptions.Warning(
+            raise Warning(
                 _('No transfer selected for this preparation.')
             )
         location = self.mapped('picking_ids.location_dest_id')
         if len(location) > 1:
-            raise exceptions.Warning(
+            raise Warning(
                 _('All the transfers must have the same destination location')
             )
         values = {
@@ -192,7 +190,7 @@ class StockPickingPackagePreparation(models.Model):
         operation_model = self.env['stock.pack.operation']
 
         if any(picking.state != 'assigned' for picking in self.picking_ids):
-            raise exceptions.Warning(
+            raise Warning(
                 _('All the transfers must be "Ready to Transfer".')
             )
 
@@ -206,7 +204,7 @@ class StockPickingPackagePreparation(models.Model):
             for record in operation.linked_move_operation_ids:
                 moves |= record.move_id
             for move in moves:
-                moves.check_tracking(move, operation)
+                moves.check_tracking(operation)
 
             operation.qty_done = operation.product_qty
 

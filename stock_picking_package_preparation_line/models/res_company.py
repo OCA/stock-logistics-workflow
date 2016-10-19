@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
-# © 2015 - Francesco Apruzzese <f.apruzzese@apuliasoftware.it>
-# Copyright 2016 Lorenzo Battistini - Agile Business Group
+#    Author: Francesco Apruzzese
+#    Copyright 2015 Apulia Software srl
+#    Copyright 2015 Lorenzo Battistini - Agile Business Group
+#    Copyright 2016 Alessio Gerace - Agile Business Group
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import models, fields
+from odoo import models, fields
 
 
 class ResCompany(models.Model):
