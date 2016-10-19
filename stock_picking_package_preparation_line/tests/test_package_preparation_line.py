@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 #    Author: Francesco Apruzzese
 #    Copyright 2015 Apulia Software srl
+#    Copyright 2015 Lorenzo Battistini - Agile Business Group
+#    Copyright 2016 Alessio Gerace - Agile Business Group
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp.tests.common import TransactionCase
+from odoo.tests.common import TransactionCase
 
 
 class TestPackagePreparationLine(TransactionCase):
@@ -48,8 +50,8 @@ class TestPackagePreparationLine(TransactionCase):
         self.src_location = self.env.ref('stock.stock_location_stock')
         self.dest_location = self.env.ref('stock.stock_location_customers')
         self.partner = self.env.ref('base.res_partner_2')
-        self.product1 = self.env.ref('product.product_product_33')
-        self.product2 = self.env.ref('product.product_product_6')
+        self.product1 = self.env.ref('product.product_product_16')
+        self.product2 = self.env.ref('product.product_product_17')
         self.picking_type_out = self.env.ref('stock.picking_type_out')
         self.picking_type_out.default_location_dest_id = self.dest_location.id
         self.picking = self._create_picking()

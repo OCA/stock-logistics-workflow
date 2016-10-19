@@ -2,12 +2,14 @@
 #    Author: Francesco Apruzzese
 #    Copyright 2015 Apulia Software srl
 #    Copyright 2015 Lorenzo Battistini - Agile Business Group
+#    Copyright 2016 Alessio Gerace - Agile Business Group
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 {
     'name': 'Stock Picking Package Preparation Line',
-    'version': '9.0.1.0.0',
-    'author': 'Apulia Software srl,Odoo Community Association (OCA)',
+    'version': '10.0.1.0.0',
+    'author': 'Apulia Software srl, Odoo Italia Network,'
+    'Odoo Community Association (OCA)',
     'maintainer': 'Odoo Community Association (OCA)',
     'license': 'AGPL-3',
     'category': 'Warehouse Management',
