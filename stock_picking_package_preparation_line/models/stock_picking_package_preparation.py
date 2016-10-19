@@ -2,11 +2,12 @@
 #    Author: Francesco Apruzzese
 #    Copyright 2015 Apulia Software srl
 #    Copyright 2015 Lorenzo Battistini - Agile Business Group
+#    Copyright 2016 Alessio Gerace - Agile Business Group
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import models, fields, api, _
+from odoo import models, fields, api, _
 from datetime import datetime
-from openerp.exceptions import Warning as UserError
+from odoo.exceptions import UserError
 
 
 class StockPickingPackagePreparation(models.Model):
@@ -67,8 +68,13 @@ class StockPickingPackagePreparation(models.Model):
                 'stock.picking.package.preparation.line'
                 ]._prepare_lines_from_pickings(picking_ids)
             if package_preparation_lines:
+                origin_lines = []
+                if 'line_ids' in values:
+                    origin_lines = values.get('line_ids', [])
+                origin_lines += [
+                    (0, 0, v) for v in package_preparation_lines]
                 values.update({
-                    'line_ids': [(0, 0, v) for v in package_preparation_lines]
+                    'line_ids': origin_lines
                 })
         return values
 
@@ -131,6 +137,15 @@ class StockPickingPackagePreparation(models.Model):
                         })
                     moves.append((line, move_data))
             if moves:
+                if not (
+                    picking_type.default_location_src_id and
+                    picking_type.default_location_dest_id
+                ):
+                    msg = _(
+                        'Cannot find a location for %s ' %
+                        picking_type.name
+                    )
+                    raise UserError(msg)
                 picking_data = {
                     'move_type': 'direct',
                     'partner_id': package.partner_id.id,
