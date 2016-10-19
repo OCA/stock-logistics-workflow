@@ -3,7 +3,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from openerp import api, fields, models
-from openerp.tools.safe_eval import safe_eval as eval
+from openerp.tools.float_utils import float_round
+from openerp.models import expression
 
 
 class ProductTemplate(models.Model):
@@ -21,7 +22,7 @@ class ProductTemplate(models.Model):
     )
 
     def _exclude_deposit_location_action(self, res_action):
-        ctx = eval(res_action['context'])
+        ctx = res_action['context'].copy()
         ctx.update({'search_default_deposit_loc_exclude': 1})
         res_action['context'] = ctx
         return res_action
@@ -42,9 +43,15 @@ class ProductProduct(models.Model):
 
     @api.multi
     def _compute_deposit_available(self):
+        domain_quant_loc = self.with_context(
+            deposit_locations=True)._get_domain_locations()[0]
+        domain_quant = domain_quant_loc + [('product_id', 'in', self.ids)]
+        quants = self.env['stock.quant'].read_group(
+            domain_quant, ['product_id', 'qty'], ['product_id'])
         for product in self:
-            product.deposit_available = product.with_context(
-                deposit_locations=True).qty_available
+            product.deposit_available = float_round(
+                quants.get(product.id, 0.0),
+                precision_rounding=product.uom_id.rounding)
 
     deposit_available = fields.Float(
         compute='_compute_deposit_available',
@@ -53,11 +60,11 @@ class ProductProduct(models.Model):
 
     @api.multi
     def _get_domain_locations(self):
-        domain = super(ProductProduct, self)._get_domain_locations()
+        domains = super(ProductProduct, self)._get_domain_locations()
         deposit_locations = self.env.context.get('deposit_locations', False)
-        if domain:
-            domain[0].insert(
-                0, ('location_id.deposit_location', '=', deposit_locations)
-            )
-            domain[0].insert(0, '&')
-        return domain
+        if domains:
+            quant_domain = expression.AND([[
+                ('location_id.deposit_location', '=', deposit_locations),
+            ], domains[0]])
+            return quant_domain, domains[1], domains[2]
+        return domains
