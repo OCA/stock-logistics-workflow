@@ -27,6 +27,7 @@ addon | version | summary
 [picking_dispatch](picking_dispatch/) | 8.0.1.2.3 | Picking dispatch
 [procurement_jit_assign_move](procurement_jit_assign_move/) | 8.0.1.0.0 | Change the behavior of procurement_jit to assign stock moves
 [product_unique_serial](product_unique_serial/) | 8.0.1.0.1 | Product Serial Unique Number
+[sale_stock_auto_move](sale_stock_auto_move/) | 8.0.1.0.0 | Automatic Move Processing For Sale Delivery
 [sale_stock_picking_back2draft](sale_stock_picking_back2draft/) | 8.0.1.0.0 | Pickings back to draft - Sale integration
 [stock_auto_move](stock_auto_move/) | 8.0.1.0.0 | Automatic Move Processing
 [stock_disable_force_availability_button](stock_disable_force_availability_button/) | 8.0.1.0.0 | Disable force availability button
