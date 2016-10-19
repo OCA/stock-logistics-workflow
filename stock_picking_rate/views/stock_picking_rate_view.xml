@@ -7,9 +7,9 @@
 
 <odoo>
 
-    <record id="stock_picking_dispatch_rate_view_form" model="ir.ui.view">
-        <field name="name">stock.picking.dispatch.rate.view.form</field>
-        <field name="model">stock.picking.dispatch.rate</field>
+    <record id="stock_picking_rate_view_form" model="ir.ui.view">
+        <field name="name">stock.picking.rate.view.form</field>
+        <field name="model">stock.picking.rate</field>
         <field name="arch" type="xml">
             <form string="Dispatch Rate">
                 <sheet>
@@ -46,9 +46,9 @@
         </field>
     </record>
 
-    <record id="stock_picking_dispatch_rate_view_tree" model="ir.ui.view">
-        <field name="name">stock.picking.dispatch.rate.view.tree</field>
-        <field name="model">stock.picking.dispatch.rate</field>
+    <record id="stock_picking_rate_view_tree" model="ir.ui.view">
+        <field name="name">stock.picking.rate.view.tree</field>
+        <field name="model">stock.picking.rate</field>
         <field name="arch" type="xml">
             <tree string="Dispatch Rates">
                 <field name="partner_id" />
@@ -61,9 +61,9 @@
         </field>
     </record>
 
-    <record id="stock_picking_dispatch_rate_view_search" model="ir.ui.view">
-        <field name="name">stock.picking.dispatch.rate.view.search</field>
-        <field name="model">stock.picking.dispatch.rate</field>
+    <record id="stock_picking_rate_view_search" model="ir.ui.view">
+        <field name="name">stock.picking.rate.view.search</field>
+        <field name="model">stock.picking.rate</field>
         <field name="arch" type="xml">
             <search string="Dispatch Rates">
                 
@@ -96,12 +96,12 @@
         </field>
     </record>
 
-    <record id="stock_picking_dispatch_rate_action" model="ir.actions.act_window">
+    <record id="stock_picking_rate_action" model="ir.actions.act_window">
         <field name="name">Dispatch Rates</field>
-        <field name="res_model">stock.picking.dispatch.rate</field>
+        <field name="res_model">stock.picking.rate</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="stock_picking_dispatch_rate_view_tree" />
+        <field name="view_id" ref="stock_picking_rate_view_tree" />
     </record>
 
 </odoo>

@@ -5,16 +5,16 @@
 from openerp import api, models, fields
 
 
-class StockPickingDispatchRatePurchase(models.TransientModel):
+class StockPickingRatePurchase(models.TransientModel):
     """ Purchase a set of stock rates """
-    _name = "stock.picking.dispatch.rate.purchase"
+    _name = "stock.picking.rate.purchase"
     _description = 'Stock Picking Dispatch Rate Purchase'
 
     rate_ids = fields.Many2many(
         string='Rates',
         readonly=True,
-        comodel_name='stock.picking.dispatch.rate',
-        relation='stock_picking_dispatch_rate_purchase_rel',
+        comodel_name='stock.picking.rate',
+        relation='stock_picking_rate_purchase_rel',
         default=lambda s: s._default_rate_ids(),
     )
     date_po = fields.Datetime(
@@ -36,7 +36,7 @@ class StockPickingDispatchRatePurchase(models.TransientModel):
 
     @api.model
     def _default_rate_ids(self):
-        model = 'stock.picking.dispatch.rate'
+        model = 'stock.picking.rate'
         if self.env.context.get('active_model') != model:
             return None
         return [(6, 0, self.env.context.get('active_ids'))]
@@ -105,7 +105,7 @@ class StockPickingDispatchRatePurchase(models.TransientModel):
         """
         self.ensure_one()
         model_obj = self.env['ir.model.data']
-        _prefix = 'stock_picking_rate.stock_picking_dispatch_rate_purchase'
+        _prefix = 'stock_picking_rate.stock_picking_rate_purchase'
         form_id = model_obj.xmlid_to_object(
             '%s_view_form' % _prefix,
         )

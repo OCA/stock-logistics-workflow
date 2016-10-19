@@ -29,4 +29,4 @@ class TestHelper(TransactionCase):
         }
 
     def new_record(self):
-        return self.env['stock.picking.dispatch.rate'].create(self.rate_vals)
+        return self.env['stock.picking.rate'].create(self.rate_vals)

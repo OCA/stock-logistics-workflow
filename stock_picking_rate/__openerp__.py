@@ -20,7 +20,7 @@
     "data": [
         "security/ir.model.access.csv",
         "views/stock_picking_view.xml",
-        "views/stock_picking_dispatch_rate_view.xml",
-        'wizards/stock_picking_dispatch_rate_purchase_view.xml',
+        "views/stock_picking_rate_view.xml",
+        'wizards/stock_picking_rate_purchase_view.xml',
     ],
 }

@@ -8,9 +8,9 @@
 
 <odoo>
 
-    <record id="stock_picking_dispatch_rate_purchase_view_form" model="ir.ui.view">
-        <field name="name">stock.picking.dispatch.rate.purchase.view.form</field>
-        <field name="model">stock.picking.dispatch.rate.purchase</field>
+    <record id="stock_picking_rate_purchase_view_form" model="ir.ui.view">
+        <field name="name">stock.picking.rate.purchase.view.form</field>
+        <field name="model">stock.picking.rate.purchase</field>
         <field name="arch" type="xml">
             <form>
                 <sheet>
@@ -35,12 +35,12 @@
         </field>
     </record>
 
-    <record id="stock_picking_dispatch_rate_purchase_action" model="ir.actions.act_window">
+    <record id="stock_picking_rate_purchase_action" model="ir.actions.act_window">
         <field name="name">Purchase Rate</field>
-        <field name="res_model">stock.picking.dispatch.rate.purchase</field>
+        <field name="res_model">stock.picking.rate.purchase</field>
         <field name="view_type">form</field>
         <field name="view_mode">form</field>
-        <field name="view_id" ref="stock_picking_dispatch_rate_purchase_view_form"/>
+        <field name="view_id" ref="stock_picking_rate_purchase_view_form"/>
     </record>
 
 </odoo>

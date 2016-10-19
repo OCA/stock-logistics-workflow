@@ -10,6 +10,6 @@ class StockPicking(models.Model):
 
     dispatch_rate_ids = fields.One2many(
         string='Dispatch Rates',
-        comodel_name='stock.picking.dispatch.rate',
+        comodel_name='stock.picking.rate',
         inverse_name='picking_id',
     )
