@@ -8,7 +8,7 @@
     "version": "9.0.1.0.0",
     "category": "Inventory",
     "website": "http://www.tecnativa.com",
-    "author": "Tecnativa S.L., "
+    "author": "Tecnativa, "
               "Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "application": False,

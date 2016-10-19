@@ -58,7 +58,7 @@ class StockWarehouse(models.Model):
         }
         return res
 
-    def _prepare_deposit_picking_type_values(self):
+    def _prepare_deposit_picking_type_values(self, picking_type_return=None):
         child_loc = self.lot_stock_id.child_ids
         res = {
             'name': _('Deposit Out'),
@@ -70,16 +70,17 @@ class StockWarehouse(models.Model):
                 'deposit_location')[:1].id,
             'code': 'internal',
             'warehouse_id': self.id,
+            'return_picking_type_id': picking_type_return.id or False,
         }
         return res
 
     def _create_deposit_values(self):
         self._create_deposit_location()
         PickingType = self.env['stock.picking.type']
-        vals = self._prepare_deposit_picking_type_values()
-        PickingType.create(vals)
         vals_return = self._prepare_deposit_picking_type_return_values()
-        PickingType.create(vals_return)
+        picking_type_return = PickingType.create(vals_return)
+        vals = self._prepare_deposit_picking_type_values(picking_type_return)
+        PickingType.create(vals)
 
     @api.model
     def create(self, vals):

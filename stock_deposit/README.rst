@@ -33,7 +33,7 @@ To use this module, you need to:
 
 #. Go to products and create one of type "Stockable".
 #. Update quantities on hand to have stock of it.
-#. Go to inventory dashboard and click on "Outgoing deposits" card to do a new
+#. Go to inventory dashboard and click on "Deposit out" card to do a new
    transfer.
 #. Create a picking with owner and select the product to do the transfer.
 
@@ -41,15 +41,20 @@ To track current deposits:
 
 #. After that process, you can view deposit quantities in product form view.
 #. You can also see the deposits for all your products in the menu entry
-   Inventory --> Reports --> Deposit location inventory.
+   Inventory --> Reports --> Deposited location inventory.
 
 For regularizing deposited quantities (this means to deliver deposited stock
 to the customer as a normal outgoing move.), you need:
 
-#. Go to deposit inventory, select quants that you want to regularize and click
-   on more actions and select "**Regularize deposit quants**". This process
-   creates delivery orders from deposit location to customer location.
+#. Go to Inventory --> Reports --> Deposited location inventory, select quants
+   that you want to regularize and click on more actions and select
+   "**Regularize deposit quants**". This process creates delivery orders from
+   deposit location to customer location.
 
+To give back deposit to you warehouse, you need:
+
+#. Just make standard process, go to deposit picking and click in buton
+   "Reverse".
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
