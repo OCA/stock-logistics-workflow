@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-# Author: Guewen Baconnier
-# Copyright 2015 Camptocamp SA
+# Copyright 2015 Guewen Baconnier
+# Copyright 2016 Lorenzo Battistini - Agile Business Group
+# Copyright 2016 Alessio Gerace - Agile Business Group
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp.tests.common import TransactionCase
+from odoo.tests.common import TransactionCase
 
 
 class TestPackagePreparation(TransactionCase):
@@ -41,8 +42,8 @@ class TestPackagePreparation(TransactionCase):
     def setUp(self):
         super(TestPackagePreparation, self).setUp()
         self.partner = self.env.ref('base.res_partner_2')
-        self.product1 = self.env.ref('product.product_product_33')
-        self.product2 = self.env.ref('product.product_product_36')
+        self.product1 = self.env.ref('product.product_product_16')
+        self.product2 = self.env.ref('product.product_product_17')
         packaging_tpl = self.env['product.template'].create({'name': 'Pallet'})
         self.packaging = self.env['product.packaging'].create({
             'name': 'Pallet',
@@ -91,15 +92,13 @@ class TestPackagePreparation(TransactionCase):
         pickings = self.picking_a + self.picking_b
         pickings.action_confirm()
         pickings.force_assign()
-
-        location = self.env.ref('stock.stock_location_customers')
         prep = self._create_preparation(pickings)
         prep.action_put_in_pack()
         package = prep.package_id
         self.assertEquals(package.packaging_id, self.packaging)
-        self.assertEquals(package.location_id, location)
 
     def test_weight(self):
+        location = self.env.ref('stock.stock_location_customers')
         self.product1.weight = 5  # * 5 units
         self.product2.weight = 2  # * 5 units
         pickings = self.picking_a + self.picking_b
@@ -108,4 +107,6 @@ class TestPackagePreparation(TransactionCase):
         prep = self._create_preparation(pickings)
         prep.action_put_in_pack()
         prep.action_done()
-        self.assertEquals(prep.weight, 60)
+        self.assertEquals(prep.weight, 60.0)
+        self.assertEquals(
+            prep.package_id.location_id, location)
