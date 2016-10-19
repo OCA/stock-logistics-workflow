@@ -5,12 +5,12 @@
 from .common import TestHelper
 
 
-class TestStockPickingDispatchRate(TestHelper):
+class TestStockPickingRate(TestHelper):
 
     def setUp(self):
-        super(TestStockPickingDispatchRate, self).setUp()
+        super(TestStockPickingRate, self).setUp()
         self.rate_ids = [self.new_record(), self.new_record()]
-        self.Wizard = self.env['stock.picking.dispatch.rate.purchase']
+        self.Wizard = self.env['stock.picking.rate.purchase']
         self.wizard_vals = {
             'rate_ids': [(6, 0, [r.id for r in self.rate_ids])],
         }

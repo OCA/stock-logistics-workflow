@@ -6,7 +6,7 @@ import mock
 from .common import TestHelper
 
 
-class TestStockPickingDispatchRate(TestHelper):
+class TestStockPickingRate(TestHelper):
 
     def test_compute_date_purchased(self):
         """ It should start out with no date, then have one after purchase """
@@ -49,7 +49,7 @@ class TestStockPickingDispatchRate(TestHelper):
         """ It should create new purchase wizard w/ rate """
         rec_id = self.new_record()
         with mock.patch.object(rec_id, 'env') as mk:
-            model_mk = mk['stock.picking.dispatch.rate.purchase']
+            model_mk = mk['stock.picking.rate.purchase']
             rec_id.action_purchase()
             model_mk.create.assert_called_once_with(
                 {'rate_ids': [(6, 0, [rec_id.id])]}
@@ -59,7 +59,7 @@ class TestStockPickingDispatchRate(TestHelper):
         """ It should return result of wizard view helper """
         rec_id = self.new_record()
         with mock.patch.object(rec_id, 'env') as mk:
-            model_mk = mk['stock.picking.dispatch.rate.purchase']
+            model_mk = mk['stock.picking.rate.purchase']
             res = rec_id.action_purchase()
             self.assertEqual(
                 model_mk.create().action_show_wizard(),

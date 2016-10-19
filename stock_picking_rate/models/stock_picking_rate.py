@@ -6,8 +6,8 @@ from openerp import models, fields, api
 import openerp.addons.decimal_precision as dp
 
 
-class StockPickingDispatchRate(models.Model):
-    _name = 'stock.picking.dispatch.rate'
+class StockPickingRate(models.Model):
+    _name = 'stock.picking.rate'
     _description = 'Stock Picking Dispatch Rate'
 
     picking_id = fields.Many2one(
@@ -100,7 +100,7 @@ class StockPickingDispatchRate(models.Model):
 
     @api.multi
     def action_purchase(self):
-        wizard_id = self.env['stock.picking.dispatch.rate.purchase'].create({
+        wizard_id = self.env['stock.picking.rate.purchase'].create({
             'rate_ids': [(6, 0, [r.id for r in self])],
         })
         return wizard_id.action_show_wizard()
