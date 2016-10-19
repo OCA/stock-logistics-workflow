@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-18 08:34+0200\n"
-"PO-Revision-Date: 2016-10-18 08:34+0200\n"
+"POT-Creation-Date: 2016-10-19 12:08+0200\n"
+"PO-Revision-Date: 2016-10-19 12:08+0200\n"
 "Last-Translator: Sergio Teruel <sergio.teruel@tecnativa.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Generator: Poedit 1.8.7.1\n"
 
 #. module: stock_deposit
-#: code:addons/stock_deposit/models/stock.py:75
+#: code:addons/stock_deposit/models/stock_warehouse.py:24
 #, python-format
 msgid " Sequence deposit %s"
 msgstr " Secuencia depósito %s"
@@ -41,7 +41,7 @@ msgstr ""
 "mercancías en depósito."
 
 #. module: stock_deposit
-#: code:addons/stock_deposit/wizards/stock_quant_wizard.py:79
+#: code:addons/stock_deposit/wizards/stock_quant_wizard.py:77
 #, python-format
 msgid ""
 "Could not reserve all requested products. Please you must handle the "
@@ -61,21 +61,22 @@ msgid "Created on"
 msgstr "Creado en"
 
 #. module: stock_deposit
-#: code:addons/stock_deposit/wizards/stock_quant_wizard.py:59
+#: code:addons/stock_deposit/wizards/stock_quant_wizard.py:56
 #, python-format
 msgid "Deposit %s"
 msgstr "Depósito %s"
 
 #. module: stock_deposit
-#: code:addons/stock_deposit/models/stock.py:99
+#: code:addons/stock_deposit/models/stock_warehouse.py:49
 #, python-format
 msgid "Deposit In"
 msgstr "Depósito devolución"
 
 #. module: stock_deposit
-#: model:ir.ui.menu,name:stock_deposit.menu_deposit_quants
-msgid "Deposit Inventory Valuation"
-msgstr "Valoración depósitos (Inventario)"
+#: code:addons/stock_deposit/models/stock_warehouse.py:16
+#, python-format
+msgid "Deposit Location"
+msgstr "¿Es una ubicación de depósito?"
 
 #. module: stock_deposit
 #: model:ir.ui.view,arch_db:stock_deposit.deposit_quant_search_view
@@ -91,7 +92,7 @@ msgid "Deposit Locations Excluded"
 msgstr "Ubicaciones depósito excluidas"
 
 #. module: stock_deposit
-#: code:addons/stock_deposit/models/stock.py:114
+#: code:addons/stock_deposit/models/stock_warehouse.py:64
 #, python-format
 msgid "Deposit Out"
 msgstr "Depósito"
@@ -103,8 +104,13 @@ msgid "Deposit Qty Available"
 msgstr "Ctdad en depósito"
 
 #. module: stock_deposit
-#: model:ir.actions.act_window,name:stock_deposit.deposit_quantsact
-msgid "Deposit Quants"
+#: model:ir.ui.menu,name:stock_deposit.menu_deposit_quants
+msgid "Deposited Inventory Valuation"
+msgstr "Valoración depósitos (Inventario)"
+
+#. module: stock_deposit
+#: model:ir.actions.act_window,name:stock_deposit.deposit_quants_act
+msgid "Deposited Quants"
 msgstr "Cantidad en depósito"
 
 #. module: stock_deposit
@@ -209,7 +215,7 @@ msgid "The picking type determines the picking view"
 msgstr "El tipo de albarán determina la vista de albarán"
 
 #. module: stock_deposit
-#: model:ir.actions.act_window,help:stock_deposit.deposit_quantsact
+#: model:ir.actions.act_window,help:stock_deposit.deposit_quants_act
 msgid ""
 "This analysis gives you a fast overview on the current stock level of\n"
 "        your products in deposit locations."
@@ -230,7 +236,7 @@ msgstr "Almacén"
 #. module: stock_deposit
 #: code:addons/stock_deposit/wizards/stock_quant_wizard.py:26
 #, python-format
-msgid "You can not regularize quants in a not deposit location"
+msgid "You can not regularize quants in a non deposit location"
 msgstr "No puedes regularizar movimientos que no estén en depósito"
 
 #. module: stock_deposit

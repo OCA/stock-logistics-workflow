@@ -7,20 +7,23 @@ Stock deposit
 =============
 
 This module extends standard WMS to manage customers deposit locations by
-warehouse
+warehouse.
+Deposited stocks can't be selected in regular delivery orders unless you have
+been returned it.
+Deposited stocks have been evaluated in inventory valuation.
 
 Installation
 ============
 
-The installation module process create a deposit location by each warehouse
-and two picking type, one for out deposits and other for return deposits.
+The installation module process create a deposit location per warehouse and
+two picking types, one for outgoing deposits and other for returned deposits.
 
 Configuration
 =============
 
 To configure this module, you need to:
 
-#. Go to *Inventory > Settings > Product* Owners and click
+#. Go to *Inventory > Settings > Product Owners* and click
    "**Manage consignee stocks (advanced)**".
 
 Usage
@@ -28,21 +31,24 @@ Usage
 
 To use this module, you need to:
 
-#. Go to products and create one of product type.
+#. Go to products and create one of type "Stockable".
 #. Update quantities on hand to have stock of it.
-#. Go to inventory dashboard and click on deposit out card to do a new
+#. Go to inventory dashboard and click on "Outgoing deposits" card to do a new
    transfer.
 #. Create a picking with owner and select the product to do the transfer.
 
-After that process you can view de deposit quantities in product form view,
-also in Inventory --> Reports menu the entry "Deposit location inventory"
-is created for view all quantities that you have in deposit locations.
+To track current deposits:
 
-For regularize deposit quantities, you need:
+#. After that process, you can view deposit quantities in product form view.
+#. You can also see the deposits for all your products in the menu entry
+   Inventory --> Reports --> Deposit location inventory.
 
-#. Go to deposit inventory, select quants that you want regularize and click
-   on more actions and select "**Regularize deposit quants**", this process create
-   out pickings from deposit location to customer location.
+For regularizing deposited quantities (this means to deliver deposited stock
+to the customer as a normal outgoing move.), you need:
+
+#. Go to deposit inventory, select quants that you want to regularize and click
+   on more actions and select "**Regularize deposit quants**". This process
+   creates delivery orders from deposit location to customer location.
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas

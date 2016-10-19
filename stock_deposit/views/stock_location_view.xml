@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- © 2016 Sergio Teruel <sergio.teruel@tecnativa.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl-3). -->
+<odoo>
+
+<record id="deposit_view_location_form" model="ir.ui.view">
+    <field name="name">deposit.stock.location.form</field>
+    <field name="model">stock.location</field>
+    <field name="inherit_id" ref="stock.view_location_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='return_location']" position="after">
+            <field name="deposit_location"/>
+        </xpath>
+    </field>
+</record>
+
+</odoo>

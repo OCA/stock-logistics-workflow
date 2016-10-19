@@ -23,7 +23,7 @@ class StockQuantWizard(models.TransientModel):
         forbidden_quants = quants.filtered(
             lambda x: not x.location_id.deposit_location)
         if forbidden_quants:
-            raise UserError(_('You can not regularize quants in a not deposit '
+            raise UserError(_('You can not regularize quants in a non deposit '
                               'location'))
 
     def _get_picking_type_out(self, wharehouse_id):
@@ -33,17 +33,14 @@ class StockQuantWizard(models.TransientModel):
         ])[:1]
         return picking_type.id
 
-    def _get_products_to_add(self, quants):
-        res = []
-        for quant in quants:
-            res.append((0, 0, {
-                'name': quant.product_id.name,
-                'product_id': quant.product_id.id,
-                'product_uom_qty': quant.qty,
-                'product_uom': quant.product_uom_id.id,
-                'restrict_partner_id': quant.owner_id.id,
-            }))
-        return res
+    def _prepare_product_quant(self, quant):
+        return {
+            'name': quant.product_id.name,
+            'product_id': quant.product_id.id,
+            'product_uom_qty': quant.qty,
+            'product_uom': quant.product_uom_id.id,
+            'restrict_partner_id': quant.owner_id.id,
+        }
 
     def _get_regularize_sequence(self):
         ir_sequence_obj = self.env['ir.sequence']
@@ -63,7 +60,8 @@ class StockQuantWizard(models.TransientModel):
             'location_dest_id': owner.property_stock_customer.id,
             'picking_type_id':
                 self._get_picking_type_out(warehouse),
-            'move_lines': self._get_products_to_add(quants),
+            'move_lines': [(0, 0,
+                            self._prepare_product_quant(x)) for x in quants],
         }
         return vals
 

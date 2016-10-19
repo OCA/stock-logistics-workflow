@@ -18,6 +18,9 @@
         "stock",
     ],
     "data": [
+        "views/stock_location_view.xml",
+        "views/stock_picking_view.xml",
+        "views/stock_quant_view.xml",
         "views/stock_view.xml",
         "views/product_view.xml",
         "views/stock_dashboard.xml",
