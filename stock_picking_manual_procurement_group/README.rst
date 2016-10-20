@@ -7,7 +7,40 @@ Picking List Manual Procurement Group Creation
 ==============================================
 
 This module give ability to create procurement group for
-manualy created picking list
+manualy created picking list.
+
+This would be helpful 
+
+Example Use Case
+----------------
+
+A company has 2 warehouse: (1) Main Warehouse, and (2) Chicago Warehouse.
+Chicago warehouse replenish it's stock from Main Warehouse.
+
+Replenish Routes:
+
+1. **Chicago Stock location**  pull from **Transit Location** using **internal transfer**
+2. **Transit location** pull from **Main Warehouse Stock** using **internal transfer**
+
+On 01-Jan-2016 (WH-02/INT/0001):
+
+Internal transfer manually created to replenish. Procurement method using **Apply procurement rule**.
+Source location **Transit Location**. Destination location **Chicago Stock Location**
+
+On 02-Jan-2016 (WH-02/INT/0002):
+
+Second internal transfer manually created to replenish. Procurement method using **Apply procurement rule**.
+Source location **Transit Location**. Destination location **Chicago Stock Location**
+
+Without **Create Procurement Group** activated:
+
+Odoo will create one internal transfer from **Main Warehouse Stock** to **Transit Location**.
+This internal transfer will be contained all items from WH-02/INT/0001 and WH-02/INT/0002.
+
+With **Create Procurement Group** activated:
+
+Odoo will create internal transfer from **Main Warehouse Stock** to **Transit Location**
+for each WH-02/INT/0001 and WH-02/INT/0002
 
 Installation
 ============
