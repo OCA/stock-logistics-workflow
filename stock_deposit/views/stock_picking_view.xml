@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- © 2016 Sergio Teruel <sergio.teruel@tecnativa.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl-3). -->
+<odoo>
+
+<record id="deposit_view_picking_internal_search" model="ir.ui.view">
+    <field name="name">deposit.stock.picking.internal.search</field>
+    <field name="model">stock.picking</field>
+    <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='partner_id']" position="after">
+            <separator/>
+            <filter name='deposit_loc'
+                    string="Deposit Locations"
+                    domain="[('location_dest_id.deposit_location', '=', True)]"/>
+        </xpath>
+    </field>
+</record>
+
+<record id="deposit_view_picking_form" model="ir.ui.view">
+    <field name="name">deposit.stock.picking.form</field>
+    <field name="model">stock.picking</field>
+    <field name="inherit_id" ref="stock.view_picking_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='picking_type_id']" position="after">
+            <field name="is_deposit" invisible="1"/>
+        </xpath>
+        <xpath expr="//field[@name='owner_id']" position="attributes">
+            <attribute name="attrs">
+                {'required': [
+                    ('picking_type_code', '=', 'internal'),
+                    ('is_deposit', '==', True),
+                ]}
+            </attribute>
+        </xpath>
+    </field>
+</record>
+
+</odoo>
