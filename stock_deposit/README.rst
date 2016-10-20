@@ -74,7 +74,11 @@ Credits
 Images
 ------
 
-* Odoo Community Association: `Icon <https://github.com/OCA/maintainer-tools/blob/master/template/module/static/description/icon.svg>`_.
+* Odoo Community Association: `Icon <https://github.com/OCA/maintainer-tools/
+  blob/master/template/module/static/description/icon.svg>`_.
+* https://openclipart.org/detail/168751/saving-up
+* https://openclipart.org/detail/171740/wooden-package
+
 
 Contributors
 ------------
