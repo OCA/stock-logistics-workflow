@@ -23,6 +23,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [stock_batch_picking](stock_batch_picking/) | 9.0.1.0.0 | Stock batch picking
+[stock_deposit](stock_deposit/) | 9.0.1.0.0 | Manage deposit locations in your warehouses
 [stock_picking_invoice_link](stock_picking_invoice_link/) | 9.0.1.0.0 | Adds link between pickings and invoices
 [stock_picking_mass_assign](stock_picking_mass_assign/) | 9.0.1.0.0 | Delivery Orders Mass Assign
 [stock_picking_package_preparation](stock_picking_package_preparation/) | 9.0.1.0.0 | Stock Picking Package Preparation
