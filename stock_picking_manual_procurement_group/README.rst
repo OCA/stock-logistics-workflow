@@ -17,8 +17,8 @@ Chicago warehouse replenish its stock from Main Warehouse.
 
 Replenish Routes:
 
-1. **Chicago Stock location**  pull from **Transit Location** using **internal transfer**
-2. **Transit location** pull from **Main Warehouse Stock** using **internal transfer**
+#. **Chicago Stock location**  pull from **Transit Location** using **internal transfer**
+#. **Transit location** pull from **Main Warehouse Stock** using **internal transfer**
 
 On 01-Jan-2016 (WH-02/INT/0001):
 
@@ -45,9 +45,9 @@ Installation
 
 To install this module, you need to:
 
-1.  Go to menu *Setting -> Modules -> Local Modules*
-2.  Search For *Picking List Manual Procurement Group Creation*
-3.  Install the module
+#.  Go to menu *Setting -> Modules -> Local Modules*
+#.  Search For *Picking List Manual Procurement Group Creation*
+#.  Install the module
 
 
 Usage
@@ -55,9 +55,9 @@ Usage
 
 To create procurement group for manually created picking, you need to:
 
-1. Create picking list manually
-2. Activate *Create Procurement Group* option on *Other Info* tab
-3. Confirm picking
+#. Create picking list manually
+#. Activate *Create Procurement Group* option on *Other Info* tab
+#. Confirm picking
 
 A procurement group will be created with name equal to picking name
 
