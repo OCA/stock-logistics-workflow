@@ -10,26 +10,23 @@ class StockMove(models.Model):
 
     @api.multi
     def action_confirm(self):
-        for res in self:
-            res._copy_group_from_picking()
+        self._copy_group_from_picking()
         return super(StockMove, self).action_confirm()
 
     @api.multi
     def force_assign(self):
-        for res in self:
-            res._copy_group_from_picking()
+        self._copy_group_from_picking()
         return super(StockMove, self).force_assign()
 
     @api.multi
     def _copy_group_from_picking(self):
-        self.ensure_one()
+        for move in self:
+            if not move.picking_id:
+                continue
 
-        if not self.picking_id:
-            return True
+            picking = move.picking_id
 
-        picking = self.picking_id
+            if not picking.create_procurement_group:
+                continue
 
-        if not picking.create_procurement_group:
-            return True
-
-        self.write({"group_id": picking.group_id.id})
+            move.write({"group_id": picking.group_id.id})

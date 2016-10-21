@@ -6,16 +6,14 @@
 Picking List Manual Procurement Group Creation
 ==============================================
 
-This module give ability to create procurement group for
-manualy created picking list.
-
-This would be helpful 
+This module gives ability to create procurement group for
+manually created picking list.
 
 Example Use Case
 ----------------
 
 A company has 2 warehouse: (1) Main Warehouse, and (2) Chicago Warehouse.
-Chicago warehouse replenish it's stock from Main Warehouse.
+Chicago warehouse replenish its stock from Main Warehouse.
 
 Replenish Routes:
 
@@ -47,12 +45,9 @@ Installation
 
 To install this module, you need to:
 
-1.  Clone the branch 8.0 of the repository https://github.com/OCA/stock-logistics-workflow
-2.  Add the path to this repository in your configuration (addons-path)
-3.  Update the module list
-4.  Go to menu *Setting -> Modules -> Local Modules*
-5.  Search For *Picking List Manual Procurement Group Creation*
-6.  Install the module
+1.  Go to menu *Setting -> Modules -> Local Modules*
+2.  Search For *Picking List Manual Procurement Group Creation*
+3.  Install the module
 
 
 Usage

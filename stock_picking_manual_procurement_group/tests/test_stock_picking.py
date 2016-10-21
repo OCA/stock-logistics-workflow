@@ -108,12 +108,18 @@ class StockPickingCase(TransactionCase):
 
         return new_moves
 
-    def test_1(self):
+    def test_picking_no_create_group(self):
+        """
+        Manually create picking without create proc. group
+        """
         picking = self._create_picking()
         picking.action_confirm()
         self.assertFalse(picking.group_id)
 
-    def test_2(self):
+    def test_picking_create_group(self):
+        """
+        Manually create picking with create proc. group
+        """
         picking2 = self._create_picking(True)
         picking2.action_confirm()
         self.assertTrue(picking2.group_id)
@@ -138,7 +144,10 @@ class StockPickingCase(TransactionCase):
                 new_move.picking_id.group_id,
                 picking2.group_id)
 
-    def test_3(self):
+    def test_2_simultaneous_picking_with_create_group(self):
+        """
+        Manually create 2 pickings with create proc. group
+        """
         picking1 = self._create_picking(True)
         picking2 = self._create_picking(True)
 

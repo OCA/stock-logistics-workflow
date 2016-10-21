@@ -9,7 +9,6 @@ class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     create_procurement_group = fields.Boolean(
-        string="Create Procurement Group",
         readonly=True,
         states={
             "draft": [
