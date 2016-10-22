@@ -12,8 +12,8 @@
     <field name="arch" type="xml">
         <xpath expr="//button[@name='%(stock.action_stock_level_forecast_report_product)d']"
                position="after">
-            <button type="action"
-                name="%(deposit_product_open_quants)d"
+            <button type="object"
+                name="deposit_action_open_quants"
                 attrs="{'invisible':[('type', '!=', 'product')]}"
                 class="oe_stat_button" icon="fa-building-o">
                 <field name="deposit_available"
@@ -32,8 +32,8 @@
            ref="stock.product_template_form_view_procurement_button"/>
     <field name="arch" type="xml">
         <xpath expr="//button[@name='action_view_stock_moves']" position="before">
-            <button type="action"
-                name="%(deposit_product_open_quants)d"
+            <button type="object"
+                name="deposit_action_open_quants"
                 attrs="{'invisible':[('type', '!=', 'product')]}"
                 class="oe_stat_button" icon="fa-building-o">
                 <field name="deposit_available"

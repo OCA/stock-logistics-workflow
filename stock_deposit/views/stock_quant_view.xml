@@ -21,16 +21,6 @@
     </field>
 </record>
 
-<record id="deposit_product_open_quants" model="ir.actions.act_window">
-    <field name="name">Stock In Deposit</field>
-    <field name="context">{'search_default_internal_loc': 1,
-                           'search_default_locationgroup':1,
-                           'search_default_deposit_loc': 1}
-    </field>
-    <field name="domain">[('product_id', '=', active_id)]</field>
-    <field name="res_model">stock.quant</field>
-</record>
-
 <record id="deposit_quants_act" model="ir.actions.act_window">
     <field name="name">Deposited Quants</field>
     <field name="res_model">stock.quant</field>

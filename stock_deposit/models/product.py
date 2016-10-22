@@ -5,6 +5,7 @@
 from openerp import api, fields, models
 from openerp.tools.float_utils import float_round
 from openerp.models import expression
+from openerp.tools.safe_eval import safe_eval
 
 
 class ProductTemplate(models.Model):
@@ -22,8 +23,14 @@ class ProductTemplate(models.Model):
     )
 
     def _exclude_deposit_location_action(self, res_action):
-        ctx = res_action['context'].copy()
+        ctx = safe_eval(res_action['context'])
         ctx.update({'search_default_deposit_loc_exclude': 1})
+        res_action['context'] = ctx
+        return res_action
+
+    def _only_deposit_location_action(self, res_action):
+        ctx = safe_eval(res_action['context'])
+        ctx.update({'search_default_deposit_loc': 1})
         res_action['context'] = ctx
         return res_action
 
@@ -36,6 +43,11 @@ class ProductTemplate(models.Model):
     def action_open_quants(self):
         res = super(ProductTemplate, self).action_open_quants()
         return self._exclude_deposit_location_action(res)
+
+    @api.multi
+    def deposit_action_open_quants(self):
+        res = super(ProductTemplate, self).action_open_quants()
+        return self._only_deposit_location_action(res)
 
 
 class ProductProduct(models.Model):
