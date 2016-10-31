@@ -13,9 +13,10 @@ class ProductTemplate(models.Model):
 
     @api.multi
     def _compute_deposit_available(self):
-        for product in self:
-            product.deposit_available = product.with_context(
-                deposit_locations=True).qty_available
+        for template in self:
+            template.deposit_available = sum(
+                template.mapped('product_variant_ids.deposit_available')
+            )
 
     deposit_available = fields.Float(
         compute='_compute_deposit_available',
@@ -60,6 +61,7 @@ class ProductProduct(models.Model):
         domain_quant = domain_quant_loc + [('product_id', 'in', self.ids)]
         quants = self.env['stock.quant'].read_group(
             domain_quant, ['product_id', 'qty'], ['product_id'])
+        quants = dict(map(lambda x: (x['product_id'][0], x['qty']), quants))
         for product in self:
             product.deposit_available = float_round(
                 quants.get(product.id, 0.0),
