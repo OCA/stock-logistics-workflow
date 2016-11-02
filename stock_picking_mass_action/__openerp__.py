@@ -21,7 +21,7 @@
 
 {
     'name': 'Stock Picking Mass Action',
-    'version': '1.0',
+    'version': '8.0.1.0.0',
     'author': 'Camptocamp,GRAP,Odoo Community Association (OCA)',
     'website': 'https://github.com/OCA/stock-logistics-workflow/',
     'license': 'AGPL-3',
