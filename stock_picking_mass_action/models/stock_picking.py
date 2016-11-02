@@ -18,35 +18,24 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 import logging
 
-from openerp.osv import orm
+from openerp import api
+from openerp.models import Model
 
 _logger = logging.getLogger(__name__)
 
 
-class stock_picking(orm.Model):
-
+class StockPicking(Model):
     _inherit = 'stock.picking'
 
-    def check_assign_all(self, cr, uid, ids=None, context=None):
+    @api.model
+    def check_assign_all(self):
         """ Try to assign confirmed pickings """
-        if isinstance(ids, (int, long)):
-            ids = [ids]
-        if ids is None:
-            domain = [('type', '=', 'out'),
-                      ('state', '=', 'confirmed')]
-            ids = self.search(cr, uid, domain,
-                              order='min_date',
-                              context=context)
-
-        for picking_id in ids:
-            try:
-                self.action_assign(cr, uid, [picking_id], context)
-            except orm.except_orm:
-                # ignore the error, the picking will just stay as confirmed
-                name = self.read(cr, uid, picking_id, ['name'],
-                                 context=context)['name']
-                _logger.info('error in action_assign for picking %s',
-                             name, exc_info=True)
-        return True
+        type_obj = self.env['stock.picking.type']
+        out_type_ids = type_obj.search([('code', '=', 'outgoing')]).ids
+        domain = [('picking_type_id', 'in', out_type_ids),
+                  ('state', '=', 'confirmed')]
+        records = self.search(domain, order='min_date')
+        records.action_assign()

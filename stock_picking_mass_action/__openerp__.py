@@ -19,5 +19,21 @@
 #
 ##############################################################################
 
-from . import stock
-from . import wizard
+{
+    'name': 'Stock Picking Mass Action',
+    'version': '8.0.1.0.0',
+    'author': 'Camptocamp,GRAP,Odoo Community Association (OCA)',
+    'website': 'https://github.com/OCA/stock-logistics-workflow/',
+    'license': 'AGPL-3',
+    'category': 'Warehouse Management',
+    'depends': [
+        'stock_account',
+    ],
+    'data': [
+        'wizard/mass_action_view.xml',
+        'data/ir_cron.xml',
+    ],
+    'test': [
+        'test/test_stock_picking_mass_action.yml',
+    ],
+}
