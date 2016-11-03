@@ -45,6 +45,7 @@ addon | version | summary
 [stock_picking_deliver_uos](stock_picking_deliver_uos/) | 8.0.1.0.0 | Adds fields uos and uos_quantity to Stock Transfer Details
 [stock_picking_invoice_link](stock_picking_invoice_link/) | 8.0.2.0.0 | Adds link between pickings and generated invoices
 [stock_picking_manual_procurement_group](stock_picking_manual_procurement_group/) | 8.0.1.0.0 | Picking List Manual Procurement Group Creation
+[stock_picking_mass_action](stock_picking_mass_action/) | 8.0.1.0.0 | Stock Picking Mass Action
 [stock_picking_package_preparation](stock_picking_package_preparation/) | 8.0.1.0.0 | Stock Picking Package Preparation
 [stock_picking_package_preparation_line](stock_picking_package_preparation_line/) | 8.0.1.0.0 | Stock Picking Package Preparation Line
 [stock_picking_reorder_lines](stock_picking_reorder_lines/) | 8.0.0.1.0 | Provide a new field on stock moves, allowing to manage the orders of moves in a picking.
@@ -67,7 +68,6 @@ addon | version | summary
 [stock_location_flow_creator](stock_location_flow_creator/) | 1.0 (unported) | Create configuration of stock location flow
 [stock_move_on_hold](stock_move_on_hold/) | 1.0 (unported) | Stock On Hold Status
 [stock_obsolete](stock_obsolete/) | 1.0 (unported) | Add product depreciation
-[stock_picking_mass_assign](stock_picking_mass_assign/) | 0.2 (unported) | Delivery Orders Mass Assign
 [stock_picking_priority](stock_picking_priority/) | 0.2 (unported) | Picking Priority
 [stock_sale_filters](stock_sale_filters/) | 1.3 (unported) | SO related filters on stock.picking and sale.order
 
