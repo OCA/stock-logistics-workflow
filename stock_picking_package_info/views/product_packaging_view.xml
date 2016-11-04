@@ -14,7 +14,7 @@
                 <field name="sequence" widget="handle"/>
                 <field name="product_tmpl_id"/>
                 <field name="ean"/>
-                <field name="qty"/>
+                <field name="layer_qty"/>
             </tree>
         </field>
     </record>
@@ -25,7 +25,7 @@
         <field name="arch" type="xml">
             <tree string="Packaging">
                 <field name="product_pack_tmpl_id"/>
-                <field name="qty"/>
+                <field name="layer_qty"/>
                 <field name="rows"/>
             </tree>
         </field>
@@ -41,7 +41,7 @@
                     <field name="product_pack_tmpl_id"
                            string="Packaging Template" />
                     <field name="sequence" invisible="1" />
-                    <field name="qty" />
+                    <field name="layer_qty" />
                     <field name="rows" />
                     <field name="weight" />
                 </group>

@@ -11,7 +11,7 @@ class ProductPackaging(models.Model):
     _inherit = 'product.packaging'
     _inherits = {'product.packaging.template': 'product_pack_tmpl_id'}
 
-    qty = fields.Integer(
+    layer_qty = fields.Integer(
         string='Package by Layer',
         help='The number of packages by layer',
     )
