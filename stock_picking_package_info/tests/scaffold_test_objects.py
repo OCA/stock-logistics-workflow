@@ -16,6 +16,8 @@ class ScaffoldTestObjects(TransactionCase):
 
     def setUp(self):
         super(ScaffoldTestObjects, self).setUp()
+        self.company = self.env.ref('base.main_company')
+        self.partner = self.env.ref('base.res_partner_1')
 
     def scaffold_stock_quant_package(self):
 
@@ -55,15 +57,10 @@ class ScaffoldTestObjects(TransactionCase):
             'product_id': product_product_obj.id,
         })
 
-        user_obj = self.create_user()
-        company_obj = self.create_company({
-            'partner_id': user_obj.id,
-        })
-
         stock_location_obj = self.create_stock_location()
 
         stock_quant_vals = {
-            'company_id': company_obj.id,
+            'company_id': self.company.id,
             'location_id': stock_location_obj.id,
             'product_id': product_product_obj.id,
             'name': product_product_obj['name'],
@@ -254,38 +251,6 @@ class ScaffoldTestObjects(TransactionCase):
         if update_vals:
             product_category_vals.update(update_vals)
         return product_category_model.create(product_category_vals)
-
-    def create_company(self, update_vals=None):
-        res_company_model = self.env['res.company']
-        eur = self.env.ref('base.EUR')
-        name = self.new_random_name()
-
-        res_company_vals = {
-            'name': name,
-            'currency_id': eur.id,
-            'partner_id': None,
-            'rml_header': 'header',
-            'rml_header2': 'header2',
-            'rml_header3': 'header3',
-            'rml_paper_format': 'a4',
-        }
-
-        if update_vals:
-            res_company_vals.update(update_vals)
-        return res_company_model.create(res_company_vals)
-
-    def create_user(self, update_vals=None):
-        res_partner_model = self.env['res.partner']
-        name = self.new_random_name()
-
-        res_partner_vals = {
-            'notify_email': 'none',
-            'name': name,
-        }
-
-        if update_vals:
-            res_partner_vals.update(update_vals)
-        return res_partner_model.create(res_partner_vals)
 
     def create_stock_location(self, update_vals=None):
         stock_location_model = self.env['stock.location']
