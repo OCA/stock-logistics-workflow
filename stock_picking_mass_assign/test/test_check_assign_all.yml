@@ -3,78 +3,54 @@
  M-Las (product.product_product_11)
  initial stock is 26 units in shelf 1 (stock.stock_location_components)
 -
- !record {model: stock.picking.out, id: ship_mlas_1}:
+ !record {model: stock.picking, id: ship_mlas_1}:
    name: mlas1_1
+   picking_type_id: stock.picking_type_out
    move_lines:
      - product_id: product.product_product_11
-       product_qty: 10
+       product_uom_qty: 10.0
        product_uom: product.product_uom_unit
        location_id: stock.stock_location_components
        location_dest_id: stock.stock_location_output
        date: 2013-12-20
        date_expected: 2013-12-20
-       procurements:
-         - name: mlas1_1
-           origin: test
-           date_planned: 2013-12-20
-           product_id: product.product_product_11
-           product_qty: 10
-           product_uom: product.product_uom_unit
-           location_id: stock.stock_location_components
-           procure_method: make_to_stock
+       procure_method: make_to_stock
 -
- !record {model: stock.picking.out, id: ship_mlas_2}:
+ !record {model: stock.picking, id: ship_mlas_2}:
    name: mlas1_2
+   picking_type_id: stock.picking_type_out
    move_lines:
      - product_id: product.product_product_11
-       product_qty: 10
+       product_uom_qty: 10.0
        product_uom: product.product_uom_unit
        location_id: stock.stock_location_components
        location_dest_id: stock.stock_location_output
        date: 2013-12-01
        date_expected: 2013-12-01
-       procurements:
-         - name: mlas1_2
-           origin: test
-           date_planned: 2013-12-01
-           product_id: product.product_product_11
-           product_qty: 10
-           product_uom: product.product_uom_unit
-           location_id: stock.stock_location_components
-           procure_method: make_to_stock
+       procure_method: make_to_stock
 -
- !record {model: stock.picking.out, id: ship_mlas_3}:
+ !record {model: stock.picking, id: ship_mlas_3}:
    name: mlas1_3
+   picking_type_id: stock.picking_type_out
    move_lines:
      - product_id: product.product_product_11
-       product_qty: 10
+       product_uom_qty: 10.0
        product_uom: product.product_uom_unit
        location_id: stock.stock_location_components
        location_dest_id: stock.stock_location_output
        date: 2013-12-10
        date_expected: 2013-12-10
-       procurements:
-         - name: mlas1_3
-           origin: test
-           date_planned: 2013-12-10
-           product_id: product.product_product_11
-           product_qty: 10
-           product_uom: product.product_uom_unit
-           location_id: stock.stock_location_components
-           procure_method: make_to_stock
+       procure_method: make_to_stock
 -
  Confirm the 3 pickings
 -
-  !workflow {model: stock.picking, action: button_confirm, ref: ship_mlas_1}
--
-  !workflow {model: stock.picking, action: button_confirm, ref: ship_mlas_2}
--
-  !workflow {model: stock.picking, action: button_confirm, ref: ship_mlas_3}
+ !python {model: stock.picking}: |
+   self.action_confirm(cr, uid, [ref("ship_mlas_1"), ref("ship_mlas_2"), ref("ship_mlas_3")], context=context)
 -
  I check availability of the pickings
 -
  !python {model: stock.picking}: |
-   self.check_assign_all(cr, uid, context=context)
+   self.check_assign_all(cr, uid, [], context=context)
 -
  Check the picking states
 -
@@ -83,7 +59,7 @@
    states = {}
    for pick in self.browse(cr, uid, picking_ids, context=context):
        states[pick.id] = pick.state
-   expected = {ref("ship_mlas_1"): 'confirmed',
+   expected = {ref("ship_mlas_1"): 'partially_available',
                ref("ship_mlas_2"): 'assigned',
                ref("ship_mlas_3"): 'assigned'}
    assert states == expected, 'wrong picking states %s (expected: %s)' % (states, expected)

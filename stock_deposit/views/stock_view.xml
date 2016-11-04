@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- © 2016 Sergio Teruel <sergio.teruel@tecnativa.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl-3). -->
+<odoo>
+
+<record id="deposit_view_move_search" model="ir.ui.view">
+    <field name="name">deposit.stock.move.search</field>
+    <field name="model">stock.move</field>
+    <field name="inherit_id" ref="stock.view_move_search"/>
+    <field name="arch" type="xml">
+        <xpath expr="//filter[@name='done']" position="after">
+            <!-- we need and operator -->
+            <separator/>
+            <filter name='deposit_loc'
+                    string="Deposit Locations"
+                    domain="[('location_dest_id.deposit_location', '=', True)]"/>
+            <filter name='deposit_loc_exclude'
+                    string="Deposit Locations Excluded"
+                    domain="[('location_dest_id.deposit_location', '!=', True)]"/>
+        </xpath>
+    </field>
+</record>
+
+<record id="deposit_act_product_stock_move_open" model="ir.actions.act_window">
+    <field name="context">{'search_default_product_id': active_id,
+                           'default_product_id': active_id
+                           'search_default_deposit_loc': 1}
+    </field>
+    <field name="name">Moves</field>
+    <field name="res_model">stock.move</field>
+    <field name="view_id" ref="stock.view_move_tree"/>
+</record>
+
+</odoo>
