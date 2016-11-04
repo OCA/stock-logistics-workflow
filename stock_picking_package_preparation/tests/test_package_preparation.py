@@ -29,6 +29,8 @@ class TestPackagePreparation(TransactionCase):
             'product_uom': product.uom_id.id,
             'location_id': src_location.id,
             'location_dest_id': dest_location.id,
+            'weight': 16.0,
+            'weight_uom_id': self.oz_id.id,
         })
 
     def _create_preparation(self, pickings):
@@ -43,10 +45,21 @@ class TestPackagePreparation(TransactionCase):
         self.partner = self.env.ref('base.res_partner_2')
         self.product1 = self.env.ref('product.product_product_33')
         self.product2 = self.env.ref('product.product_product_36')
-        packaging_tpl = self.env['product.template'].create({'name': 'Pallet'})
+        self.inch_id = self.env.ref('product.product_uom_inch')
+        self.oz_id = self.env.ref('product.product_uom_oz')
         self.packaging = self.env['product.packaging'].create({
             'name': 'Pallet',
-            'product_tmpl_id': packaging_tpl.id,
+            'packaging_template_name': 'Pallet',
+            'rows': 1,
+            'type': 'box',
+            'length': 1,
+            'height': 2,
+            'width': 3,
+            'weight': 4,
+            'length_uom_id': self.inch_id.id,
+            'height_uom_id': self.inch_id.id,
+            'width_uom_id': self.inch_id.id,
+            'weight_uom_id': self.oz_id.id,
         })
         self.picking_a = self._create_picking()
         self.move_a_1 = self._create_move(self.picking_a,
