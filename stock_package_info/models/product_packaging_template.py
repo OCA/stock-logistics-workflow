@@ -14,7 +14,7 @@ class ProductPackagingTemplate(models.Model):
     _rec_name = 'packaging_template_name'
 
     packaging_template_name = fields.Char(required=True)
-    type = fields.Selection([
+    package_type = fields.Selection([
         ('unit', 'Unit'),
         ('pack', 'Pack'),
         ('box', 'Box'),

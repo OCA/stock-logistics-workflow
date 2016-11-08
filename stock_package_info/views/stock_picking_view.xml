@@ -6,8 +6,8 @@
 -->
 
 <odoo>
-    <record model="ir.ui.view" id="stock_picking_package_info_form_view">
-        <field name="name">stock.picking.package.info.form</field>
+    <record model="ir.ui.view" id="stock_package_info_form_view">
+        <field name="name">stock.package.info.form</field>
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.view_picking_form" />
         <field name="arch" type="xml">

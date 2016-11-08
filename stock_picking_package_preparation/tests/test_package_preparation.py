@@ -51,7 +51,7 @@ class TestPackagePreparation(TransactionCase):
             'name': 'Pallet',
             'packaging_template_name': 'Pallet',
             'rows': 1,
-            'type': 'box',
+            'package_type': 'box',
             'length': 1,
             'height': 2,
             'width': 3,
