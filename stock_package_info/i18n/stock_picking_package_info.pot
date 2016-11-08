@@ -1,0 +1,304 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_picking_package_info
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-04-22 09:05+0000\n"
+"PO-Revision-Date: 2015-04-22 09:05+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_package_info
+#: view:stock.picking:stock_picking_package_info.view_picking_form_inh_pickingpackageinfo
+msgid "(Refresh)"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: view:website:stock_picking_package_info.label_creator_palet_report_document
+msgid "Address:"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: view:website:stock_picking_package_info.label_creator_palet_report_document
+msgid "Client:"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: view:stock.quant.package:stock_picking_package_info.view_quant_package_form_inh_pickingpackageinfo
+msgid "Content"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,create_uid:0
+#: field:stock.picking.package.total,create_uid:0
+msgid "Created by"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,create_date:0
+#: field:stock.picking.package.total,create_date:0
+msgid "Created on"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.quant.package,empty_weight:0
+msgid "Empty Package Weight"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: view:website:stock_picking_package_info.label_creator_palet_report_document
+msgid "Gross Weight:"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.quant.package,height:0
+msgid "Height"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,id:0
+#: field:stock.picking.package.total,id:0
+msgid "ID"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,gross_net:0
+msgid "Kg Gross"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,kg_net:0
+msgid "Kg Net"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,write_uid:0
+#: field:stock.picking.package.total,write_uid:0
+msgid "Last Updated by"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,write_date:0
+#: field:stock.picking.package.total,write_date:0
+msgid "Last Updated on"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.quant.package,length:0
+msgid "Length"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.total,ul:0
+msgid "Logistic Unit"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,lots:0
+msgid "Lots/Serial Numbers"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: view:website:stock_picking_package_info.label_creator_palet_report_document
+msgid "NET Weight:"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.picking,num_packages:0
+#: field:stock.picking.package.total,quantity:0
+msgid "Num. Packages"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: view:website:stock_picking_package_info.label_creator_palet_report_document
+msgid "Number of lots:"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: view:stock.picking:stock_picking_package_info.view_picking_form_inh_pickingpackageinfo
+msgid "Operations"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,package:0
+msgid "Package"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: view:website:stock_picking_package_info.label_creator_palet_report_document
+msgid "Package number:"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: view:website:stock_picking_package_info.label_creator_palet_report_document
+msgid "Package:"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: view:stock.picking:stock_picking_package_info.view_picking_form_inh_pickingpackageinfo
+#: field:stock.picking,packages:0
+msgid "Packages"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.picking,packages_info:0
+msgid "Packages Info"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.quant.package,permitted_volume:0
+msgid "Permitted volume"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: model:ir.model,name:stock_picking_package_info.model_stock_quant_package
+msgid "Physical Packages"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,picking:0
+#: field:stock.picking.package.total,picking:0
+msgid "Picking"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: model:ir.model,name:stock_picking_package_info.model_stock_picking
+msgid "Picking List"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: model:ir.actions.report.xml,name:stock_picking_package_info.label_creator_palet_report
+msgid "Picking palet label"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: model:ir.model,name:stock_picking_package_info.model_stock_transfer_details
+msgid "Picking wizard"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: view:website:stock_picking_package_info.label_creator_palet_report_document
+msgid "Picking:"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: view:stock.quant.package:stock_picking_package_info.view_quant_package_form_inh_pickingpackageinfo
+#: field:stock.quant.package,pickings:0
+msgid "Pickings"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: model:ir.model,name:stock_picking_package_info.model_stock_quant
+msgid "Quants"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.quant.package,real_weight:0
+msgid "Real weight"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: view:stock.transfer_details:stock_picking_package_info.view_stock_enter_transfer_details_inh_packageinfo
+msgid "Save for later"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.picking.package.kg.lot,sequence:0
+msgid "Sequence"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: model:ir.model,name:stock_picking_package_info.model_stock_picking_package_total
+msgid "Stock Picking Package Total"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: help:stock.quant.package,height:0
+msgid "The height of the package"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: help:stock.quant.package,length:0
+msgid "The length of the package"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: help:stock.quant.package,width:0
+msgid "The width of the package"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: view:stock.picking:stock_picking_package_info.view_picking_form_inh_pickingpackageinfo
+msgid "Total Kg. and Lots by package"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.quant,total_weight_net:0
+#: field:stock.quant.package,total_weight_net:0
+msgid "Total Net weight"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.picking,package_totals:0
+msgid "Total UL Packages Info"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.quant,total_volume:0
+#: field:stock.quant.package,total_volume:0
+msgid "Total Volume"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.quant.package,total_estim_weight_net:0
+msgid "Total estimated Net weight"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.quant.package,total_estim_weight:0
+msgid "Total estimated weight"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: view:stock.picking:stock_picking_package_info.view_picking_form_inh_pickingpackageinfo
+msgid "Total packages by logistic unit"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.quant.package,tvolume_charge:0
+msgid "Total volume charge"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.quant,total_weight:0
+#: field:stock.quant.package,total_weight:0
+msgid "Total weight"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: view:website:stock_picking_package_info.label_creator_palet_report_document
+msgid "Type:"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: field:stock.quant.package,width:0
+msgid "Width"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: view:stock.transfer_details:stock_picking_package_info.view_stock_enter_transfer_details_inh_packageinfo
+msgid "You are going to transfer. Are you sure?"
+msgstr ""
+
+#. module: stock_picking_package_info
+#: view:stock.transfer_details:stock_picking_package_info.view_stock_enter_transfer_details_inh_packageinfo
+msgid "or"
+msgstr ""
+
