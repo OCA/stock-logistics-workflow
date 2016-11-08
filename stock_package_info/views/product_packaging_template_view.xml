@@ -15,7 +15,7 @@
                     <group>
                         <field name="packaging_template_name" />
                         <field name="active" />
-                        <field name="type"/>
+                        <field name="package_type"/>
                     </group>
                     <group string="Physical">
                         <group>
@@ -42,7 +42,7 @@
         <field name="arch" type="xml">
             <tree string="Product Packaging Templates">
                 <field name="packaging_template_name"/>
-                <field name="type"/>
+                <field name="package_type"/>
                 <field name="length" />
                 <field name="length_uom_id" />
                 <field name="width" />
@@ -60,7 +60,7 @@
             <search string="Product Packaging Templates">
                 
                 <field name="packaging_template_name"/>
-                <field name="type"/>
+                <field name="package_type"/>
                 <field name="length" />
                 <field name="length_uom_id" />
                 <field name="width" />

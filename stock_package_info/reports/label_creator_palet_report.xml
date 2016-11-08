@@ -7,8 +7,8 @@
             model="stock.picking"
             string="Picking palet label"
             report_type="qweb-pdf"
-            name="stock_picking_package_info.label_creator_palet_report_document"
-            file="stock_picking_package_info.label_creator_palet"
+            name="stock_package_info.label_creator_palet_report_document"
+            file="stock_package_info.label_creator_palet"
             attachment_use="False"
         />
 

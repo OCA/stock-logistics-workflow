@@ -2,9 +2,9 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-============================
-Stock picking packaging info
-============================
+====================
+Stock Packaging Info
+====================
 
 This module displays in the picking_ids, all packages appearing in operations and
 the package provides the following information:
