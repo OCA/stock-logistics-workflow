@@ -39,7 +39,7 @@ This module check that can not move a product with quantity available negative
     ],
     "demo": [],
     "data": [
-        "view/product_view.xml"
+        "view/product_template.xml"
     ],
     "test": [],
     "js": [],
