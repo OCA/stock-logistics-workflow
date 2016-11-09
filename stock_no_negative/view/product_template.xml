@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_product_no_negative_form" model="ir.ui.view">
+            <field name="name">view.product.no.negative.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="stock.view_template_property_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='property_stock_inventory']" position="after">
+                    <field name='check_no_negative'/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
