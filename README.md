@@ -28,7 +28,6 @@ addon | version | summary
 [stock_batch_picking](stock_batch_picking/) | 9.0.1.0.0 (unported) | Stock batch picking
 [stock_cancel](stock_cancel/) | 1.2 (unported) | Stock Cancel
 [stock_dropshipping_dual_invoice](stock_dropshipping_dual_invoice/) | 8.0.0.1.0 (unported) | Create both Supplier and Customer Invoices from a Dropshipping Delivery
-[stock_filter_none_zero_qty](stock_filter_none_zero_qty/) | 1.0 (unported) | Filter products in stock
 [stock_inventory_retry_assign](stock_inventory_retry_assign/) | 1.0 (unported) | Check Availability after Inventories
 [stock_location_flow_creator](stock_location_flow_creator/) | 1.0 (unported) | Create configuration of stock location flow
 [stock_move_backdating](stock_move_backdating/) | 1.0 (unported) | Allows back-dating of stock moves
