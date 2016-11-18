@@ -14,6 +14,9 @@ class StockMove(models.Model):
     def action_back_to_draft(self):
         if self.filtered(lambda m: m.state != 'cancel'):
             raise UserError(_("You can set to draft cancelled moves only"))
+        if self.filtered(lambda m: m.procure_method == 'make_to_order'):
+            raise UserError(_(
+                "You can set to draft only move without chained picking"))
         self.write({'state': 'draft'})
 
 
@@ -22,7 +25,5 @@ class StockPicking(models.Model):
 
     @api.multi
     def action_back_to_draft(self):
-        if self.filtered(lambda p: p.state != 'cancel'):
-            raise UserError(_("You can set to draft cancelled pickings only"))
         moves = self.mapped('move_lines')
         moves.action_back_to_draft()

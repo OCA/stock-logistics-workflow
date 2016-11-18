@@ -4,9 +4,9 @@
 {
     "name": "Pickings back to draft",
     "summary": "Reopen cancelled pickings",
-    "version": "8.0.1.0.0",
+    "version": "9.0.1.0.0",
     "category": "Warehouse Management",
-    "website": "https://www.agilebg.com",
+    "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Agile Business Group, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "application": False,

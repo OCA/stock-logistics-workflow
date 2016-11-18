@@ -10,9 +10,14 @@ from openerp.osv import osv
 class TestPickingBackToDraft(TransactionCase):
 
     def _create_picking(self):
-        return self.env['stock.picking'].create({
+        stock_picking = self.env['stock.picking']
+        res = stock_picking.onchange_picking_type(
+            self.env.ref('stock.picking_type_out').id, self.partner.id)
+        return stock_picking.create({
             'partner_id': self.partner.id,
             'picking_type_id': self.env.ref('stock.picking_type_out').id,
+            'location_id': res['value']['location_id'],
+            'location_dest_id': res['value']['location_dest_id'],
         })
 
     def _create_move(self, picking, product, quantity=5.0):
