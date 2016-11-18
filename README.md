@@ -63,7 +63,6 @@ addon | version | summary
 [product_customer_code_picking](product_customer_code_picking/) | 1.0 (unported) | Product Customer code for stock picking
 [product_serial](product_serial/) | 1.0 (unported) | Enhance Serial Number management
 [stock_cancel](stock_cancel/) | 1.2 (unported) | Stock Cancel
-[stock_filter_none_zero_qty](stock_filter_none_zero_qty/) | 1.0 (unported) | Filter products in stock
 [stock_inventory_retry_assign](stock_inventory_retry_assign/) | 1.0 (unported) | Check Availability after Inventories
 [stock_location_flow_creator](stock_location_flow_creator/) | 1.0 (unported) | Create configuration of stock location flow
 [stock_move_on_hold](stock_move_on_hold/) | 1.0 (unported) | Stock On Hold Status
