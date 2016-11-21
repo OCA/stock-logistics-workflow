@@ -1,0 +1,26 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_disable_force_availability_button
+# 
+# Translators:
+# danimaribeiro <danimaribeiro@gmail.com>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: odoomrp-utils (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-10-08 08:46+0000\n"
+"PO-Revision-Date: 2015-10-09 01:22+0000\n"
+"Last-Translator: danimaribeiro <danimaribeiro@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/odoomrp-utils-8-0/language/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: stock_disable_force_availability_button
+#: view:stock.move:stock_disable_force_availability_button.stock_move_disable_button_form_view
+#: view:stock.move:stock_disable_force_availability_button.stock_move_picking_disable_button_form_view
+#: view:stock.picking:stock_disable_force_availability_button.stock_picking_disable_button_form_view
+msgid "stock.group_stock_force_availability"
+msgstr "stock.group_stock_force_availability"
