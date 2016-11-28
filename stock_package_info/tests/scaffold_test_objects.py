@@ -14,11 +14,6 @@ class ScaffoldTestObjects(TransactionCase):
         new_: Specific helper methods (e.g. new_random_name())
     """
 
-    def setUp(self):
-        super(ScaffoldTestObjects, self).setUp()
-        self.company = self.env.ref('base.main_company')
-        self.partner = self.env.ref('base.res_partner_1')
-
     def scaffold_stock_quant_package(self):
 
         packaging_template_1 = self.create_product_packaging_template()
@@ -51,20 +46,21 @@ class ScaffoldTestObjects(TransactionCase):
         }
 
     def scaffold_stock_quant(self, update_vals=None):
-        product_objects = self.scaffold_product()
-        product_product_obj = product_objects['product_product_obj']
-        production_lot_obj = self.create_stock_production_lot({
-            'product_id': product_product_obj.id,
+        product = self.env.ref('product.product_product_3')
+        production_lot = self.env.ref('stock.lot_icecream_0')
+        production_lot.update({
+            'product_id': product.id,
         })
 
-        stock_location_obj = self.create_stock_location()
+        stock_location = self.env.ref('stock.location_inventory')
+        company = self.env.ref('base.main_company')
 
         stock_quant_vals = {
-            'company_id': self.company.id,
-            'location_id': stock_location_obj.id,
-            'product_id': product_product_obj.id,
-            'name': product_product_obj['name'],
-            'lot_id': production_lot_obj.id,
+            'company_id': company.id,
+            'location_id': stock_location.id,
+            'product_id': product.id,
+            'name': product['name'],
+            'lot_id': production_lot.id,
             'package_id': None,
         }
 
@@ -72,78 +68,6 @@ class ScaffoldTestObjects(TransactionCase):
             stock_quant_vals.update(update_vals)
         stock_quant_obj = self.create_stock_quant(stock_quant_vals)
         return stock_quant_obj
-
-    def scaffold_product(self, update_vals=None):
-        product_product_model = self.env['product.product']
-        product_template_model = self.env['product.template']
-
-        kilogram = self.env.ref('product.product_uom_kgm')
-        name = self.new_random_name()
-        prod_categ_obj = self.create_product_category()
-
-        prod_variant_vals = [(
-            0, 0,
-            {
-                'name': name,
-                'color': 2,
-                'is_product_variant': True,
-            },
-        )]
-
-        product_template_vals = {
-            'name': name,
-            'color': 1,
-            'categ_id': prod_categ_obj.id,
-            'product_variant_ids': prod_variant_vals,
-            'packaging_ids': None,
-            'tracking': 'lot',
-            'uom_id': kilogram.id,
-            'uom_po_id': kilogram.id,
-            'weight': 20,
-            'weight_net': 10,
-        }
-
-        if update_vals:
-            product_template_vals.update(update_vals)
-            prod_variant_vals[0][2].update(update_vals)
-
-        product_template_obj = product_template_model.create(
-            product_template_vals
-        )
-        product_product_vals = {
-            'product_tmpl_id': product_template_obj.id,
-        }
-        product_product_obj = product_product_model.create(
-            product_product_vals
-        )
-        self.inch_id = self.env.ref('product.product_uom_inch')
-        self.oz_id = self.env.ref('product.product_uom_oz')
-        product_packaging_vals = {
-            'name': name,
-            'packaging_template_name': name,
-            'product_tmpl_id': product_template_obj.id,
-            'rows': 1,
-            'package_type': 'box',
-            'length': 1,
-            'height': 2,
-            'width': 3,
-            'weight': 4,
-            'length_uom_id': self.inch_id.id,
-            'height_uom_id': self.inch_id.id,
-            'width_uom_id': self.inch_id.id,
-            'weight_uom_id': self.oz_id.id,
-        }
-        product_template_obj.write({
-            'packaging_ids': [(
-                0, 0,
-                product_packaging_vals,
-            )]
-        })
-
-        return {
-            'product_product_obj': product_product_obj,
-            'product_template_obj': product_template_obj,
-        }
 
     def create_stock_quant_package(self, update_vals=None):
         quant_package_model = self.env['stock.quant.package']
@@ -181,19 +105,6 @@ class ScaffoldTestObjects(TransactionCase):
         if update_vals:
             stock_quant_vals.update(update_vals)
         return stock_quant_model.create(stock_quant_vals)
-
-    def create_stock_production_lot(self, update_vals=None):
-        lot_model = self.env['stock.production.lot']
-        name = self.new_random_name()
-
-        lot_vals = {
-            'name': name,
-            'product_id': None,
-        }
-
-        if update_vals:
-            lot_vals.update(update_vals)
-        return lot_model.create(lot_vals)
 
     def create_product_packaging(self, update_vals=None):
         product_packaging_model = self.env['product.packaging']
@@ -239,30 +150,6 @@ class ScaffoldTestObjects(TransactionCase):
         if update_vals:
             pack_tmpl_vals.update(update_vals)
         return packaging_tmpl.create(pack_tmpl_vals)
-
-    def create_product_category(self, update_vals=None):
-        product_category_model = self.env['product.category']
-        name = self.new_random_name()
-        product_category_vals = {
-            'name': name,
-        }
-
-        if update_vals:
-            product_category_vals.update(update_vals)
-        return product_category_model.create(product_category_vals)
-
-    def create_stock_location(self, update_vals=None):
-        stock_location_model = self.env['stock.location']
-        name = self.new_random_name()
-
-        stock_location_vals = {
-            'name': name,
-            'usage': 'internal',
-        }
-
-        if update_vals:
-            stock_location_vals.update(update_vals)
-        return stock_location_model.create(stock_location_vals)
 
     def new_random_name(self, length=10):
         letters = ['a', 'b', 'c', 'd', 'd', 'e', 'f']

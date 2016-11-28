@@ -42,7 +42,7 @@ class StockPicking(models.Model):
                  'pack_operation_ids.package_id')
     def _compute_picking_packages(self):
         for rec_id in self:
-            rec_id.packages = (rec_id.pack_operation_ids.mapped(
+            rec_id.package_ids = (rec_id.pack_operation_ids.mapped(
                 'result_package_id') | rec_id.pack_operation_ids.mapped(
                 'package_id'))
 
@@ -69,8 +69,8 @@ class StockPicking(models.Model):
                 lots = (package.quant_ids.mapped('lot_id').ids or [])
                 vals = {
                     'sequence': sequence,
-                    'package': package.id,
-                    'lots': [(6, 0, lots)],
+                    'package_id': package.id,
+                    'lot_ids': [(6, 0, lots)],
                     'net_weight': total_weight,
                     'gross_weight': total_weight + package.empty_weight,
                 }
@@ -80,7 +80,7 @@ class StockPicking(models.Model):
                     cont = len(packages.filtered(
                         lambda x: x.product_pack_tmpl_id.id == tmpl.id))
                     vals = {
-                        'ul': tmpl.id,
+                        'product_pack_tmpl_id': tmpl.id,
                         'quantity': cont,
                     }
                     pack_total += pack_total_obj.create(vals)
