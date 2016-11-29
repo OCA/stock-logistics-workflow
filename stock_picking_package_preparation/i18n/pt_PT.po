@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-13 22:02+0000\n"
+"POT-Creation-Date: 2016-11-18 01:44+0000\n"
 "PO-Revision-Date: 2015-10-21 16:34+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: Portuguese (Portugal) (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/pt_PT/)\n"
@@ -87,7 +87,7 @@ msgstr "Data da última mensagem registada."
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Nome a Apresentar"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,date:0
@@ -152,7 +152,7 @@ msgstr "Data da Última Mensagem"
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Última Modificação Em"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,write_uid:0

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-13 22:02+0000\n"
-"PO-Revision-Date: 2016-09-17 19:03+0000\n"
+"POT-Creation-Date: 2016-11-18 01:44+0000\n"
+"PO-Revision-Date: 2016-11-25 14:55+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: French (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -82,7 +82,7 @@ msgstr "Created on"
 #. module: stock_picking_package_preparation
 #: help:stock.picking.package.preparation,message_last_post:0
 msgid "Date of the last message posted on the record."
-msgstr ""
+msgstr "Date du dernier message publié sur cet enregistrement"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,display_name:0
@@ -107,14 +107,14 @@ msgstr "Brouillon"
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_follower_ids:0
 msgid "Followers"
-msgstr ""
+msgstr "Abonnés"
 
 #. module: stock_picking_package_preparation
 #: help:stock.picking.package.preparation,message_summary:0
 msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
-msgstr ""
+msgstr "Contient le résumé de la discussion (nombre de messages, ...). Ce résumé est au format HTML pour permettre son utilisation dans la vue kanban."
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,id:0
@@ -124,7 +124,7 @@ msgstr "ID"
 #. module: stock_picking_package_preparation
 #: help:stock.picking.package.preparation,message_unread:0
 msgid "If checked new messages require your attention."
-msgstr ""
+msgstr "Si coché, les nouveaux messages seront portés à votre attention."
 
 #. module: stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
@@ -142,12 +142,12 @@ msgstr "Dans un colis"
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_is_follower:0
 msgid "Is a Follower"
-msgstr ""
+msgstr "Est un abonné"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_last_post:0
 msgid "Last Message Date"
-msgstr ""
+msgstr "Date du dernier message"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,__last_update:0
@@ -172,12 +172,12 @@ msgstr "Unité logistique"
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_ids:0
 msgid "Messages"
-msgstr ""
+msgstr "Messages"
 
 #. module: stock_picking_package_preparation
 #: help:stock.picking.package.preparation,message_ids:0
 msgid "Messages and communication history"
-msgstr ""
+msgstr "Historique des messages et communications"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,net_weight:0
@@ -272,7 +272,7 @@ msgstr "État"
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_summary:0
 msgid "Summary"
-msgstr ""
+msgstr "Résumé"
 
 #. module: stock_picking_package_preparation
 #: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:162
@@ -295,7 +295,7 @@ msgstr "Transferts"
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_unread:0
 msgid "Unread Messages"
-msgstr ""
+msgstr "Messages non-lus"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,weight:0

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-13 22:02+0000\n"
-"PO-Revision-Date: 2016-09-17 18:43+0000\n"
+"POT-Creation-Date: 2016-11-18 01:44+0000\n"
+"PO-Revision-Date: 2016-11-22 12:24+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Dutch (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -25,12 +25,12 @@ msgstr ""
 #. module: stock_picking_package_preparation_line
 #: field:stock.picking.package.preparation.line,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Aangemaakt door"
 
 #. module: stock_picking_package_preparation_line
 #: field:stock.picking.package.preparation.line,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Aangemaakt op"
 
 #. module: stock_picking_package_preparation_line
 #: field:res.company,default_picking_type_for_package_preparation_id:0
@@ -58,7 +58,7 @@ msgstr "Te tonen naam"
 #. module: stock_picking_package_preparation_line
 #: field:stock.picking.package.preparation.line,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_picking_package_preparation_line
 #: help:stock.picking.package.preparation.line,product_uom_qty:0
@@ -83,12 +83,12 @@ msgstr "Laatst bijgewerkt op"
 #. module: stock_picking_package_preparation_line
 #: field:stock.picking.package.preparation.line,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Laatst bijgewerkt door"
 
 #. module: stock_picking_package_preparation_line
 #: field:stock.picking.package.preparation.line,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Laatst bijgewerkt op"
 
 #. module: stock_picking_package_preparation_line
 #: field:stock.picking.package.preparation.line,lot_id:0

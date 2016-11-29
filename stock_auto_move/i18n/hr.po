@@ -1,0 +1,84 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_auto_move
+# 
+# Translators:
+# Bole <bole@dajmi5.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-18 01:44+0000\n"
+"PO-Revision-Date: 2016-11-18 01:44+0000\n"
+"Last-Translator: Bole <bole@dajmi5.com>, 2016\n"
+"Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: hr\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#. module: stock_auto_move
+#: model:procurement.rule,name:stock_auto_move.procurement_rule_a_to_b
+msgid "1 => 2 with auto_move"
+msgstr ""
+
+#. module: stock_auto_move
+#: field:procurement.rule,auto_move:0 field:stock.move,auto_move:0
+msgid "Automatic move"
+msgstr ""
+
+#. module: stock_auto_move
+#: help:procurement.rule,auto_move:0
+msgid ""
+"If this option is selected, the generated move will be automatically "
+"processed as soon as the products are available. This can be useful for "
+"situations with chained moves where we do not want an operator action."
+msgstr ""
+
+#. module: stock_auto_move
+#: help:stock.move,auto_move:0
+msgid ""
+"If this option is selected, the move will be automatically processed as soon"
+" as the products are available."
+msgstr ""
+
+#. module: stock_auto_move
+#: model:stock.location,name:stock_auto_move.stock_location_a
+msgid "Location 1"
+msgstr ""
+
+#. module: stock_auto_move
+#: model:stock.location,name:stock_auto_move.stock_location_b
+msgid "Location 2"
+msgstr ""
+
+#. module: stock_auto_move
+#: model:stock.location,name:stock_auto_move.stock_location_c
+msgid "Location 3"
+msgstr ""
+
+#. module: stock_auto_move
+#: model:ir.model,name:stock_auto_move.model_procurement_order
+msgid "Procurement"
+msgstr "Nabava"
+
+#. module: stock_auto_move
+#: model:ir.model,name:stock_auto_move.model_procurement_rule
+msgid "Procurement Rule"
+msgstr ""
+
+#. module: stock_auto_move
+#: model:ir.model,name:stock_auto_move.model_stock_location_path
+msgid "Pushed Flows"
+msgstr ""
+
+#. module: stock_auto_move
+#: model:ir.model,name:stock_auto_move.model_stock_move
+msgid "Stock Move"
+msgstr "Skladišni prenos"
+
+#. module: stock_auto_move
+#: model:stock.location.route,name:stock_auto_move.test_route
+msgid "Test route"
+msgstr ""

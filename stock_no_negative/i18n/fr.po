@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-22 09:31+0000\n"
+"POT-Creation-Date: 2016-11-18 01:44+0000\n"
 "PO-Revision-Date: 2015-10-21 16:33+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: French (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/fr/)\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: stock_no_negative
-#: code:addons/stock_no_negative/models/stock_move.py:165
+#: code:addons/stock_no_negative/models/stock_move.py:162
 #, python-format
 msgid " with the lot/serial '%s' "
 msgstr ""
@@ -36,7 +36,7 @@ msgid ""
 msgstr ""
 
 #. module: stock_no_negative
-#: code:addons/stock_no_negative/models/stock_move.py:168
+#: code:addons/stock_no_negative/models/stock_move.py:165
 #, python-format
 msgid ""
 "Product '%s' has active 'check no negative' \n"
@@ -48,7 +48,7 @@ msgstr ""
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_product_template
 msgid "Product Template"
-msgstr ""
+msgstr "Modèle d'article"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_stock_move

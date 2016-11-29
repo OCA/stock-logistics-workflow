@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-13 22:02+0000\n"
+"POT-Creation-Date: 2016-11-17 16:34+0000\n"
 "PO-Revision-Date: 2015-10-21 16:34+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: Vietnamese (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/vi/)\n"
@@ -25,37 +25,37 @@ msgstr "Hủy bỏ"
 #. module: stock_transfer_split_multi
 #: field:stock.transfer.split.multi,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Được tạo bởi"
 
 #. module: stock_transfer_split_multi
 #: field:stock.transfer.split.multi,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Được tạo vào"
 
 #. module: stock_transfer_split_multi
 #: field:stock.transfer.split.multi,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Tên hiển thị"
 
 #. module: stock_transfer_split_multi
 #: field:stock.transfer.split.multi,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_transfer_split_multi
 #: field:stock.transfer.split.multi,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Sửa lần cuối vào"
 
 #. module: stock_transfer_split_multi
 #: field:stock.transfer.split.multi,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Last Updated by"
 
 #. module: stock_transfer_split_multi
 #: field:stock.transfer.split.multi,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Cập nhật lần cuối vào"
 
 #. module: stock_transfer_split_multi
 #: field:stock.transfer.split.multi,split_qty:0

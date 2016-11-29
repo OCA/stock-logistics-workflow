@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-13 22:02+0000\n"
+"POT-Creation-Date: 2016-11-18 01:44+0000\n"
 "PO-Revision-Date: 2015-10-21 16:34+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: Spanish (Ecuador) (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/es_EC/)\n"
@@ -72,22 +72,22 @@ msgstr ""
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Creado por"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Creado en"
 
 #. module: stock_picking_package_preparation
 #: help:stock.picking.package.preparation,message_last_post:0
 msgid "Date of the last message posted on the record."
-msgstr ""
+msgstr "Fecha del último mensaje publicado en el registro."
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Nombre mostrado"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,date:0
@@ -107,7 +107,7 @@ msgstr ""
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_follower_ids:0
 msgid "Followers"
-msgstr ""
+msgstr "Seguidores"
 
 #. module: stock_picking_package_preparation
 #: help:stock.picking.package.preparation,message_summary:0
@@ -119,12 +119,12 @@ msgstr ""
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID (identificación)"
 
 #. module: stock_picking_package_preparation
 #: help:stock.picking.package.preparation,message_unread:0
 msgid "If checked new messages require your attention."
-msgstr ""
+msgstr "Si está marcado, hay nuevos mensajes que requieren su atención"
 
 #. module: stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
@@ -147,22 +147,22 @@ msgstr ""
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_last_post:0
 msgid "Last Message Date"
-msgstr ""
+msgstr "Fecha del último mensaje"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Última modificación en"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última actualización de"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última actualización en"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,ul_id:0
@@ -172,12 +172,12 @@ msgstr ""
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_ids:0
 msgid "Messages"
-msgstr ""
+msgstr "Mensajes"
 
 #. module: stock_picking_package_preparation
 #: help:stock.picking.package.preparation,message_ids:0
 msgid "Messages and communication history"
-msgstr ""
+msgstr "Mensajes e historial de comunicación"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,net_weight:0
@@ -295,7 +295,7 @@ msgstr ""
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_unread:0
 msgid "Unread Messages"
-msgstr ""
+msgstr "Mensajes sin leer"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,weight:0

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-13 22:02+0000\n"
-"PO-Revision-Date: 2016-09-13 22:02+0000\n"
+"POT-Creation-Date: 2016-11-18 01:44+0000\n"
+"PO-Revision-Date: 2016-11-18 01:44+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Dutch (https://www.transifex.com/oca/teams/23907/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -159,7 +159,7 @@ msgid ""
 msgstr ""
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:499
+#: code:addons/stock_scanner/hardware/sentinel.py:507
 #, python-format
 msgid ""
 "An error occured\n"
@@ -173,7 +173,7 @@ msgid "Appear on barcode reader screen."
 msgstr ""
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:129
+#: code:addons/stock_scanner/hardware/sentinel.py:137
 #, python-format
 msgid ""
 "Autoconfiguration failed !\n"
@@ -330,7 +330,7 @@ msgstr ""
 #: field:scanner.scenario.step,create_uid:0
 #: field:scanner.scenario.transition,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Aangemaakt door"
 
 #. module: stock_scanner
 #: field:scanner.hardware,create_date:0
@@ -340,7 +340,7 @@ msgstr ""
 #: field:scanner.scenario.step,create_date:0
 #: field:scanner.scenario.transition,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Aangemaakt op"
 
 #. module: stock_scanner
 #: field:scanner.hardware,step_id:0
@@ -545,7 +545,7 @@ msgstr ""
 #: field:scanner.scenario,id:0 field:scanner.scenario.custom,id:0
 #: field:scanner.scenario.step,id:0 field:scanner.scenario.transition,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_scanner
 #: help:scanner.scenario.custom,res_id:0
@@ -633,7 +633,7 @@ msgstr "Laatst bijgewerkt op"
 #: field:scanner.scenario.step,write_uid:0
 #: field:scanner.scenario.transition,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Laatst bijgewerkt door"
 
 #. module: stock_scanner
 #: field:scanner.hardware,write_date:0
@@ -643,7 +643,7 @@ msgstr ""
 #: field:scanner.scenario.step,write_date:0
 #: field:scanner.scenario.transition,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Laatst bijgewerkt op"
 
 #. module: stock_scanner
 #: field:scanner.hardware,last_call_dt:0
@@ -776,7 +776,7 @@ msgid "Name of the transition."
 msgstr ""
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:564
+#: code:addons/stock_scanner/hardware/sentinel.py:572
 #, python-format
 msgid "No"
 msgstr ""
@@ -787,13 +787,13 @@ msgid "No back"
 msgstr ""
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:533
+#: code:addons/stock_scanner/hardware/sentinel.py:541
 #, python-format
 msgid "No scenario available !"
 msgstr ""
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:445
+#: code:addons/stock_scanner/hardware/sentinel.py:453
 #, python-format
 msgid "No value available"
 msgstr ""
@@ -956,7 +956,7 @@ msgid "Scenario used for this hardware."
 msgstr ""
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:536
+#: code:addons/stock_scanner/hardware/sentinel.py:544
 #, python-format
 msgid "Scenarios"
 msgstr ""
@@ -993,13 +993,13 @@ msgid "Security"
 msgstr ""
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:846
+#: code:addons/stock_scanner/hardware/sentinel.py:854
 #, python-format
 msgid "Selected : %d"
 msgstr ""
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:667
+#: code:addons/stock_scanner/hardware/sentinel.py:675
 #, python-format
 msgid "Selected : %s"
 msgstr ""
@@ -1413,7 +1413,7 @@ msgid "Yellow"
 msgstr ""
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:561
+#: code:addons/stock_scanner/hardware/sentinel.py:569
 #, python-format
 msgid "Yes"
 msgstr ""

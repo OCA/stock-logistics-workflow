@@ -3,14 +3,14 @@
 # * stock_scanner
 # 
 # Translators:
-# Matjaž Mozetič <m.mozetic@matmoz.si>, 2016
+# OCA Transbot <transbot@odoo-community.org>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 10:12+0000\n"
-"PO-Revision-Date: 2016-06-29 10:12+0000\n"
-"Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>, 2016\n"
+"POT-Creation-Date: 2016-11-18 01:44+0000\n"
+"PO-Revision-Date: 2016-11-18 01:44+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -179,7 +179,7 @@ msgstr ""
 "skladišču."
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:499
+#: code:addons/stock_scanner/hardware/sentinel.py:507
 #, python-format
 msgid ""
 "An error occured\n"
@@ -196,7 +196,7 @@ msgid "Appear on barcode reader screen."
 msgstr "Prikaži na zaslonu čitalnika črtne kode"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:129
+#: code:addons/stock_scanner/hardware/sentinel.py:137
 #, python-format
 msgid ""
 "Autoconfiguration failed !\n"
@@ -819,7 +819,7 @@ msgid "Name of the transition."
 msgstr "Naziv tranzicije"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:564
+#: code:addons/stock_scanner/hardware/sentinel.py:572
 #, python-format
 msgid "No"
 msgstr "Brez"
@@ -830,13 +830,13 @@ msgid "No back"
 msgstr "Brez vračanja"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:533
+#: code:addons/stock_scanner/hardware/sentinel.py:541
 #, python-format
 msgid "No scenario available !"
 msgstr "Brez razpoložljivega scenarija!"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:445
+#: code:addons/stock_scanner/hardware/sentinel.py:453
 #, python-format
 msgid "No value available"
 msgstr "Brez razpoložljive vrednosti"
@@ -999,7 +999,7 @@ msgid "Scenario used for this hardware."
 msgstr "Scenarij uporabljen za to napravo."
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:536
+#: code:addons/stock_scanner/hardware/sentinel.py:544
 #, python-format
 msgid "Scenarios"
 msgstr "Scenariji"
@@ -1036,13 +1036,13 @@ msgid "Security"
 msgstr "Varnost"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:846
+#: code:addons/stock_scanner/hardware/sentinel.py:854
 #, python-format
 msgid "Selected : %d"
 msgstr "Izbrano: %d"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:667
+#: code:addons/stock_scanner/hardware/sentinel.py:675
 #, python-format
 msgid "Selected : %s"
 msgstr "Izbrano: %s"
@@ -1459,7 +1459,7 @@ msgid "Yellow"
 msgstr "Rumena"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:561
+#: code:addons/stock_scanner/hardware/sentinel.py:569
 #, python-format
 msgid "Yes"
 msgstr "Da"

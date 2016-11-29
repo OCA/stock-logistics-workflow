@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-13 22:02+0000\n"
-"PO-Revision-Date: 2016-09-13 22:02+0000\n"
+"POT-Creation-Date: 2016-11-18 01:44+0000\n"
+"PO-Revision-Date: 2016-11-18 01:44+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -182,7 +182,7 @@ msgstr ""
 "même entrepôt."
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:499
+#: code:addons/stock_scanner/hardware/sentinel.py:507
 #, python-format
 msgid ""
 "An error occured\n"
@@ -199,7 +199,7 @@ msgid "Appear on barcode reader screen."
 msgstr "Apparaît sur l'écran du lecteur de codes barres."
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:129
+#: code:addons/stock_scanner/hardware/sentinel.py:137
 #, python-format
 msgid ""
 "Autoconfiguration failed !\n"
@@ -829,7 +829,7 @@ msgid "Name of the transition."
 msgstr "Nom de la transition."
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:564
+#: code:addons/stock_scanner/hardware/sentinel.py:572
 #, python-format
 msgid "No"
 msgstr "No"
@@ -840,13 +840,13 @@ msgid "No back"
 msgstr "Étape retour"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:533
+#: code:addons/stock_scanner/hardware/sentinel.py:541
 #, python-format
 msgid "No scenario available !"
 msgstr "Aucun scénario disponible !"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:445
+#: code:addons/stock_scanner/hardware/sentinel.py:453
 #, python-format
 msgid "No value available"
 msgstr "Pas de valeur disponible"
@@ -1009,7 +1009,7 @@ msgid "Scenario used for this hardware."
 msgstr "Scenario utilisé pour ce matériel."
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:536
+#: code:addons/stock_scanner/hardware/sentinel.py:544
 #, python-format
 msgid "Scenarios"
 msgstr "Scénarios"
@@ -1046,13 +1046,13 @@ msgid "Security"
 msgstr "Sécurité"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:846
+#: code:addons/stock_scanner/hardware/sentinel.py:854
 #, python-format
 msgid "Selected : %d"
 msgstr "Selectionné : %d"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:667
+#: code:addons/stock_scanner/hardware/sentinel.py:675
 #, python-format
 msgid "Selected : %s"
 msgstr "Selectionné : %s"
@@ -1474,7 +1474,7 @@ msgid "Yellow"
 msgstr "Jaune"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:561
+#: code:addons/stock_scanner/hardware/sentinel.py:569
 #, python-format
 msgid "Yes"
 msgstr "Yes"

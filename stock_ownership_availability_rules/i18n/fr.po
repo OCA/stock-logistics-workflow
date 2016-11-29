@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-09 09:36+0000\n"
-"PO-Revision-Date: 2015-10-21 16:33+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2016-11-18 01:44+0000\n"
+"PO-Revision-Date: 2016-11-11 18:07+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: French (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,15 +23,20 @@ msgid "Available (without reservation)"
 msgstr ""
 
 #. module: stock_ownership_availability_rules
+#: model:ir.model,name:stock_ownership_availability_rules.model_stock_change_product_qty
+msgid "Change Product Quantity"
+msgstr ""
+
+#. module: stock_ownership_availability_rules
 #: view:stock.move:stock_ownership_availability_rules.view_move_search
 #: view:stock.quant:stock_ownership_availability_rules.quant_search_view
 msgid "Owner"
-msgstr ""
+msgstr "Propriétaire"
 
 #. module: stock_ownership_availability_rules
 #: model:ir.model,name:stock_ownership_availability_rules.model_product_template
 msgid "Product Template"
-msgstr ""
+msgstr "Modèle d'article"
 
 #. module: stock_ownership_availability_rules
 #: model:ir.model,name:stock_ownership_availability_rules.model_stock_quant

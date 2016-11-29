@@ -1,24 +1,29 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_picking_mass_action
-#
+# * stock_picking_mass_action
+# 
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2016
+# Rudolf Schnapka <rs@techno-flex.de>, 2016
+# Ermin Trevisan <trevi@twanda.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-21 14:40+0000\n"
-"PO-Revision-Date: 2015-07-21 14:40+0000\n"
-"Last-Translator: <>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2016-11-18 01:44+0000\n"
+"PO-Revision-Date: 2016-11-18 01:44+0000\n"
+"Last-Translator: Ermin Trevisan <trevi@twanda.com>, 2016\n"
+"Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_picking_mass_action
 #: view:stock.picking.mass.action:stock_picking_mass_action.view_stock_picking_mass_action_form
 msgid "Apply"
-msgstr ""
+msgstr "Übernehmen"
 
 #. module: stock_picking_mass_action
 #: view:stock.picking.mass.action:stock_picking_mass_action.view_stock_picking_mass_action_form
@@ -40,12 +45,17 @@ msgstr "Erstelle Rechnung / Gutschrift"
 #. module: stock_picking_mass_action
 #: field:stock.picking.mass.action,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "erstellt von"
 
 #. module: stock_picking_mass_action
 #: field:stock.picking.mass.action,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "erstellt am"
+
+#. module: stock_picking_mass_action
+#: field:stock.picking.mass.action,display_name:0
+msgid "Display Name"
+msgstr "Anzeigename"
 
 #. module: stock_picking_mass_action
 #: model:ir.actions.act_window,name:stock_picking_mass_action.action_force_availability
@@ -59,14 +69,19 @@ msgid "ID"
 msgstr "ID"
 
 #. module: stock_picking_mass_action
+#: field:stock.picking.mass.action,__last_update:0
+msgid "Last Modified on"
+msgstr "Zuletzt geändert am"
+
+#. module: stock_picking_mass_action
 #: field:stock.picking.mass.action,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "zuletzt aktualisiert von"
 
 #. module: stock_picking_mass_action
 #: field:stock.picking.mass.action,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "zuletzt aktualisiert am"
 
 #. module: stock_picking_mass_action
 #: model:ir.actions.act_window,name:stock_picking_mass_action.action_confirm
@@ -88,7 +103,7 @@ msgstr "Pickliste"
 #: code:addons/stock_picking_mass_action/wizard/mass_action.py:121
 #, python-format
 msgid "Stock Invoice Onshipping"
-msgstr ""
+msgstr "Abrechnung bei Versand"
 
 #. module: stock_picking_mass_action
 #: model:ir.model,name:stock_picking_mass_action.model_stock_picking_mass_action
@@ -99,31 +114,38 @@ msgstr ""
 #: model:ir.actions.act_window,name:stock_picking_mass_action.action_transfer
 #: field:stock.picking.mass.action,transfer:0
 msgid "Transfer"
-msgstr ""
+msgstr "Transfer"
 
 #. module: stock_picking_mass_action
 #: help:stock.picking.mass.action,check_availability:0
-msgid "check this box if you want to check the availability of the selected Pickings."
+msgid ""
+"check this box if you want to check the availability of the selected "
+"Pickings."
 msgstr ""
 
 #. module: stock_picking_mass_action
 #: help:stock.picking.mass.action,create_invoice:0
-msgid "check this box if you want to create Invoices or Refunds for all the selected Pickings."
+msgid ""
+"check this box if you want to create Invoices or Refunds for all the "
+"selected Pickings."
 msgstr ""
 
 #. module: stock_picking_mass_action
 #: help:stock.picking.mass.action,force_availability:0
-msgid "check this box if you want to force the availability of the selected Pickings."
+msgid ""
+"check this box if you want to force the availability of the selected "
+"Pickings."
 msgstr ""
 
 #. module: stock_picking_mass_action
 #: help:stock.picking.mass.action,confirm:0
-msgid "check this box if you want to mark as Todo the the selected Pickings."
+msgid "check this box if you want to mark as Todo the selected Pickings."
 msgstr ""
 
 #. module: stock_picking_mass_action
 #: help:stock.picking.mass.action,transfer:0
-msgid "check this box if you want to transfer all the selected pickings.\n"
+msgid ""
+"check this box if you want to transfer all the selected pickings.\n"
 " You'll not have the possibility to realize a partial transfer.\n"
 " If you want  to do that, please do it manually on the picking form."
 msgstr ""

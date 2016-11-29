@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-16 02:39+0000\n"
-"PO-Revision-Date: 2016-06-06 07:24+0000\n"
+"POT-Creation-Date: 2016-11-18 01:44+0000\n"
+"PO-Revision-Date: 2016-11-25 14:57+0000\n"
 "Last-Translator: Paolo Valier\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -466,7 +466,7 @@ msgstr ""
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form
 #: view:picking.dispatch.start:picking_dispatch.view_picking_dispatch_start
 msgid "Start"
-msgstr ""
+msgstr "Avvia"
 
 #. module: picking_dispatch
 #: model:ir.actions.act_window,name:picking_dispatch.action_picking_dispatch_start
@@ -493,7 +493,7 @@ msgstr "Movimento di magazzino"
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form
 msgid "Stock Moves"
-msgstr ""
+msgstr "Movimenti di Magazzino"
 
 #. module: picking_dispatch
 #: help:picking.dispatch.creator,picker_id:0

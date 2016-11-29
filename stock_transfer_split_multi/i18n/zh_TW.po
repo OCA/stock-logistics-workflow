@@ -1,0 +1,91 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_transfer_split_multi
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: stock-logistics-workflow (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-17 16:34+0000\n"
+"PO-Revision-Date: 2015-10-21 16:34+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: Chinese (Taiwan) (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/zh_TW/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: zh_TW\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. module: stock_transfer_split_multi
+#: view:stock.transfer.split.multi:stock_transfer_split_multi.stock_transfer_split_multi_form
+msgid "Cancel"
+msgstr "刪除"
+
+#. module: stock_transfer_split_multi
+#: field:stock.transfer.split.multi,create_uid:0
+msgid "Created by"
+msgstr "建立者"
+
+#. module: stock_transfer_split_multi
+#: field:stock.transfer.split.multi,create_date:0
+msgid "Created on"
+msgstr "建立於"
+
+#. module: stock_transfer_split_multi
+#: field:stock.transfer.split.multi,display_name:0
+msgid "Display Name"
+msgstr "顯示名稱"
+
+#. module: stock_transfer_split_multi
+#: field:stock.transfer.split.multi,id:0
+msgid "ID"
+msgstr "編號"
+
+#. module: stock_transfer_split_multi
+#: field:stock.transfer.split.multi,__last_update:0
+msgid "Last Modified on"
+msgstr "最後修改:"
+
+#. module: stock_transfer_split_multi
+#: field:stock.transfer.split.multi,write_uid:0
+msgid "Last Updated by"
+msgstr "最後更新："
+
+#. module: stock_transfer_split_multi
+#: field:stock.transfer.split.multi,write_date:0
+msgid "Last Updated on"
+msgstr "最後更新於"
+
+#. module: stock_transfer_split_multi
+#: field:stock.transfer.split.multi,split_qty:0
+msgid "Quantity to Extract"
+msgstr ""
+
+#. module: stock_transfer_split_multi
+#: model:ir.actions.act_window,name:stock_transfer_split_multi.stock_transfer_split_multi_action
+msgid "Split Configurable Quantity"
+msgstr ""
+
+#. module: stock_transfer_split_multi
+#: view:stock.transfer.split.multi:stock_transfer_split_multi.stock_transfer_split_multi_form
+msgid "Split Line"
+msgstr ""
+
+#. module: stock_transfer_split_multi
+#: view:stock.transfer_details:stock_transfer_split_multi.view_stock_enter_transfer_details
+msgid "Split Multi"
+msgstr ""
+
+#. module: stock_transfer_split_multi
+#: model:ir.model,name:stock_transfer_split_multi.model_stock_transfer_split_multi
+msgid "Split by multi units on stock transfer wizard"
+msgstr ""
+
+#. module: stock_transfer_split_multi
+#: code:addons/stock_transfer_split_multi/wizard/stock_transfer_split_multi.py:47
+#, python-format
+msgid ""
+"The Quantity to extract (%s) cannot be superior or equal to the quantity of "
+"the line (%s)"
+msgstr ""

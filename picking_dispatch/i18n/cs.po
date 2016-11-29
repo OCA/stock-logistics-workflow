@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-13 22:01+0000\n"
-"PO-Revision-Date: 2016-09-09 12:24+0000\n"
+"POT-Creation-Date: 2016-11-18 01:44+0000\n"
+"PO-Revision-Date: 2016-11-25 14:55+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Czech (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/cs/)\n"
 "MIME-Version: 1.0\n"
@@ -134,7 +134,7 @@ msgstr ""
 #: field:picking.dispatch.creator,create_uid:0
 #: field:picking.dispatch.start,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Vytvořil(a)"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,create_date:0
@@ -143,7 +143,7 @@ msgstr ""
 #: field:picking.dispatch.creator,create_date:0
 #: field:picking.dispatch.start,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Vytvořeno"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,date:0 field:picking.dispatch.creator,date:0
@@ -210,7 +210,7 @@ msgstr ""
 #: field:picking.dispatch.start,display_name:0
 #: field:report.picking_dispatch.report_picking_dispatch,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Zobrazovaný název"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form
@@ -250,7 +250,7 @@ msgstr ""
 #: field:picking.dispatch.creator,id:0 field:picking.dispatch.start,id:0
 #: field:report.picking_dispatch.report_picking_dispatch,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
@@ -271,7 +271,7 @@ msgstr ""
 #: field:picking.dispatch.start,__last_update:0
 #: field:report.picking_dispatch.report_picking_dispatch,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Naposled upraveno"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,write_uid:0
@@ -280,7 +280,7 @@ msgstr ""
 #: field:picking.dispatch.creator,write_uid:0
 #: field:picking.dispatch.start,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Naposled upraveno"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,write_date:0
@@ -289,7 +289,7 @@ msgstr ""
 #: field:picking.dispatch.creator,write_date:0
 #: field:picking.dispatch.start,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Naposled upraveno"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,move_ids:0
@@ -310,7 +310,7 @@ msgstr ""
 #. module: picking_dispatch
 #: field:picking.dispatch,name:0 field:picking.dispatch.creator,name:0
 msgid "Name"
-msgstr ""
+msgstr "Název"
 
 #. module: picking_dispatch
 #: help:picking.dispatch,name:0 help:picking.dispatch.creator,name:0
@@ -559,7 +559,7 @@ msgstr ""
 #: view:picking.dispatch.creator:picking_dispatch.view_create_picking_dispatch
 #: view:picking.dispatch.start:picking_dispatch.view_picking_dispatch_start
 msgid "or"
-msgstr ""
+msgstr "nebo"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search

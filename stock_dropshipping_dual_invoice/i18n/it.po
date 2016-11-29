@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-22 18:05+0000\n"
-"PO-Revision-Date: 2016-06-06 07:19+0000\n"
+"POT-Creation-Date: 2016-11-18 01:44+0000\n"
+"PO-Revision-Date: 2016-11-16 13:33+0000\n"
 "Last-Translator: Paolo Valier\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -54,7 +54,7 @@ msgstr ""
 #. module: stock_dropshipping_dual_invoice
 #: model:ir.model,name:stock_dropshipping_dual_invoice.model_stock_invoice_onshipping
 msgid "Stock Invoice Onshipping"
-msgstr ""
+msgstr "Fattura su spedizioni"
 
 #. module: stock_dropshipping_dual_invoice
 #: model:ir.model,name:stock_dropshipping_dual_invoice.model_stock_move

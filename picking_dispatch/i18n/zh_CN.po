@@ -1,0 +1,599 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * picking_dispatch
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: stock-logistics-workflow (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-18 01:44+0000\n"
+"PO-Revision-Date: 2016-11-25 14:56+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"Language-Team: Chinese (China) (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/zh_CN/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. module: picking_dispatch
+#: code:addons/picking_dispatch/wizard/create_dispatch.py:97
+#, python-format
+msgid ""
+"(Only move that are not part of a dispatch order and in confirm, waiting or "
+"assigned state can be used)"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:stock.picking:picking_dispatch.view_picking_form
+msgid "Additional Info"
+msgstr ""
+
+#. module: picking_dispatch
+#: code:addons/picking_dispatch/wizard/dispatch_start.py:47
+#, python-format
+msgid "All the picking dispatches must be assigned to be started."
+msgstr ""
+
+#. module: picking_dispatch
+#: view:picking.dispatch:picking_dispatch.picking_dispatch_form
+msgid "Assign"
+msgstr ""
+
+#. module: picking_dispatch
+#: model:ir.actions.act_window,name:picking_dispatch.action_picking_dispatch_assign_picker
+msgid "Assign Picker"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:picking.dispatch.assign.picker:picking_dispatch.view_picking_dispatch_assign_picker
+msgid "Assign a picker on dispatches"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:picking.dispatch.creator:picking_dispatch.view_create_picking_dispatch
+msgid "Assign picking operations to an employee."
+msgstr ""
+
+#. module: picking_dispatch
+#: view:picking.dispatch.assign.picker:picking_dispatch.view_picking_dispatch_assign_picker
+msgid "Assign the picker"
+msgstr ""
+
+#. module: picking_dispatch
+#: selection:picking.dispatch,state:0
+msgid "Assigned"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:picking.dispatch:picking_dispatch.picking_dispatch_search
+msgid "Assigned and Valid Dispatch order"
+msgstr ""
+
+#. module: picking_dispatch
+#: field:picking.dispatch,backorder_id:0
+msgid "Back Order of"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:picking.dispatch:picking_dispatch.picking_dispatch_search
+msgid "Back Orders"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:picking.dispatch:picking_dispatch.picking_dispatch_form
+#: view:picking.dispatch.assign.picker:picking_dispatch.view_picking_dispatch_assign_picker
+#: view:picking.dispatch.check.assign.all:picking_dispatch.view_dispatch_check_assign_all
+#: view:picking.dispatch.creator:picking_dispatch.view_create_picking_dispatch
+#: view:picking.dispatch.start:picking_dispatch.view_picking_dispatch_start
+msgid "Cancel"
+msgstr "取消"
+
+#. module: picking_dispatch
+#: selection:picking.dispatch,state:0
+msgid "Cancelled"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:website:picking_dispatch.report_picking_dispatch
+msgid "Carrier"
+msgstr ""
+
+#. module: picking_dispatch
+#: model:ir.actions.act_window,name:picking_dispatch.action_dispatch_check_assign_all
+#: view:picking.dispatch:picking_dispatch.picking_dispatch_form
+#: view:picking.dispatch.check.assign.all:picking_dispatch.view_dispatch_check_assign_all
+msgid "Check Availability"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:picking.dispatch.check.assign.all:picking_dispatch.view_dispatch_check_assign_all
+msgid "Check the availability of the selected dispatches"
+msgstr ""
+
+#. module: picking_dispatch
+#: model:ir.model,name:picking_dispatch.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: picking_dispatch
+#: field:picking.dispatch,company_id:0
+msgid "Company"
+msgstr ""
+
+#. module: picking_dispatch
+#: model:ir.actions.act_window,name:picking_dispatch.picking_dispatch_create_act_window
+msgid "Create Picking Dispatch"
+msgstr ""
+
+#. module: picking_dispatch
+#: field:picking.dispatch,create_uid:0
+#: field:picking.dispatch.assign.picker,create_uid:0
+#: field:picking.dispatch.check.assign.all,create_uid:0
+#: field:picking.dispatch.creator,create_uid:0
+#: field:picking.dispatch.start,create_uid:0
+msgid "Created by"
+msgstr "创建者"
+
+#. module: picking_dispatch
+#: field:picking.dispatch,create_date:0
+#: field:picking.dispatch.assign.picker,create_date:0
+#: field:picking.dispatch.check.assign.all,create_date:0
+#: field:picking.dispatch.creator,create_date:0
+#: field:picking.dispatch.start,create_date:0
+msgid "Created on"
+msgstr "创建时间"
+
+#. module: picking_dispatch
+#: field:picking.dispatch,date:0 field:picking.dispatch.creator,date:0
+msgid "Date"
+msgstr ""
+
+#. module: picking_dispatch
+#: help:picking.dispatch.creator,date:0
+msgid "Date on which the picking dispatched is to be processed"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:website:picking_dispatch.report_picking_dispatch
+msgid "Date:"
+msgstr ""
+
+#. module: picking_dispatch
+#: field:res.company,default_picker_id:0
+msgid "Default Picker"
+msgstr ""
+
+#. module: picking_dispatch
+#: field:stock.move,dispatch_id:0
+msgid "Dispatch"
+msgstr ""
+
+#. module: picking_dispatch
+#: code:addons/picking_dispatch/wizard/create_dispatch.py:104
+#, python-format
+msgid "Dispatch %s already covers moves %s"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:website:picking_dispatch.report_picking_dispatch
+msgid "Dispatch Order"
+msgstr ""
+
+#. module: picking_dispatch
+#: model:ir.model,name:picking_dispatch.model_picking_dispatch
+#: view:picking.dispatch:picking_dispatch.picking_dispatch_search
+msgid "Dispatch Picking Order"
+msgstr ""
+
+#. module: picking_dispatch
+#: field:picking.dispatch,state:0
+msgid "Dispatch State"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:picking.dispatch:picking_dispatch.picking_dispatch_search
+msgid "Dispatch order In Progress"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:picking.dispatch:picking_dispatch.picking_dispatch_search
+msgid "Dispatch order already processed"
+msgstr ""
+
+#. module: picking_dispatch
+#: field:picking.dispatch,display_name:0
+#: field:picking.dispatch.assign.picker,display_name:0
+#: field:picking.dispatch.check.assign.all,display_name:0
+#: field:picking.dispatch.creator,display_name:0
+#: field:picking.dispatch.start,display_name:0
+#: field:report.picking_dispatch.report_picking_dispatch,display_name:0
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: picking_dispatch
+#: view:picking.dispatch:picking_dispatch.picking_dispatch_form
+#: view:picking.dispatch:picking_dispatch.picking_dispatch_search
+#: selection:picking.dispatch,state:0
+msgid "Done"
+msgstr ""
+
+#. module: picking_dispatch
+#: selection:picking.dispatch,state:0
+msgid "Draft"
+msgstr ""
+
+#. module: picking_dispatch
+#: code:addons/picking_dispatch/picking_dispatch.py:187
+#: code:addons/picking_dispatch/wizard/check_assign_all.py:36
+#: code:addons/picking_dispatch/wizard/dispatch_assign_picker.py:44
+#: code:addons/picking_dispatch/wizard/dispatch_start.py:37
+#: code:addons/picking_dispatch/wizard/dispatch_start.py:46
+#, python-format
+msgid "Error"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:website:picking_dispatch.report_picking_dispatch
+msgid "Explanation"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:picking.dispatch:picking_dispatch.picking_dispatch_search
+msgid "Group By..."
+msgstr ""
+
+#. module: picking_dispatch
+#: field:picking.dispatch,id:0 field:picking.dispatch.assign.picker,id:0
+#: field:picking.dispatch.check.assign.all,id:0
+#: field:picking.dispatch.creator,id:0 field:picking.dispatch.start,id:0
+#: field:report.picking_dispatch.report_picking_dispatch,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: picking_dispatch
+#: view:picking.dispatch:picking_dispatch.picking_dispatch_search
+#: selection:picking.dispatch,state:0
+msgid "In Progress"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:picking.dispatch:picking_dispatch.picking_dispatch_search
+msgid "Is a Back Order"
+msgstr ""
+
+#. module: picking_dispatch
+#: field:picking.dispatch,__last_update:0
+#: field:picking.dispatch.assign.picker,__last_update:0
+#: field:picking.dispatch.check.assign.all,__last_update:0
+#: field:picking.dispatch.creator,__last_update:0
+#: field:picking.dispatch.start,__last_update:0
+#: field:report.picking_dispatch.report_picking_dispatch,__last_update:0
+msgid "Last Modified on"
+msgstr "最后修改时间"
+
+#. module: picking_dispatch
+#: field:picking.dispatch,write_uid:0
+#: field:picking.dispatch.assign.picker,write_uid:0
+#: field:picking.dispatch.check.assign.all,write_uid:0
+#: field:picking.dispatch.creator,write_uid:0
+#: field:picking.dispatch.start,write_uid:0
+msgid "Last Updated by"
+msgstr "最后更新者"
+
+#. module: picking_dispatch
+#: field:picking.dispatch,write_date:0
+#: field:picking.dispatch.assign.picker,write_date:0
+#: field:picking.dispatch.check.assign.all,write_date:0
+#: field:picking.dispatch.creator,write_date:0
+#: field:picking.dispatch.start,write_date:0
+msgid "Last Updated on"
+msgstr "上次更新日期"
+
+#. module: picking_dispatch
+#: field:picking.dispatch,move_ids:0
+msgid "Moves"
+msgstr ""
+
+#. module: picking_dispatch
+#: code:addons/picking_dispatch/wizard/create_dispatch.py:111
+#, python-format
+msgid "Moves %s from picking %s are in state %s"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:picking.dispatch:picking_dispatch.picking_dispatch_search
+msgid "My Dispatch Order"
+msgstr ""
+
+#. module: picking_dispatch
+#: field:picking.dispatch,name:0 field:picking.dispatch.creator,name:0
+msgid "Name"
+msgstr "名称"
+
+#. module: picking_dispatch
+#: help:picking.dispatch,name:0 help:picking.dispatch.creator,name:0
+msgid "Name of the picking dispatch"
+msgstr ""
+
+#. module: picking_dispatch
+#: code:addons/picking_dispatch/wizard/check_assign_all.py:36
+#, python-format
+msgid "No selected dispatch"
+msgstr ""
+
+#. module: picking_dispatch
+#: code:addons/picking_dispatch/wizard/dispatch_assign_picker.py:45
+#: code:addons/picking_dispatch/wizard/dispatch_start.py:38
+#, python-format
+msgid "No selected picking dispatch"
+msgstr ""
+
+#. module: picking_dispatch
+#: code:addons/picking_dispatch/wizard/create_dispatch.py:96
+#, python-format
+msgid "No valid stock moves found to create the dispatch!"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:picking.dispatch:picking_dispatch.picking_dispatch_form
+#: field:picking.dispatch,notes:0 field:picking.dispatch.creator,notes:0
+msgid "Notes"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:picking.dispatch:picking_dispatch.picking_dispatch_search
+msgid "Order Date"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:website:picking_dispatch.report_picking_dispatch
+msgid "Picked By"
+msgstr ""
+
+#. module: picking_dispatch
+#: field:picking.dispatch,picker_id:0
+#: field:picking.dispatch.assign.picker,picker_id:0
+#: field:picking.dispatch.creator,picker_id:0
+msgid "Picker"
+msgstr ""
+
+#. module: picking_dispatch
+#: model:ir.actions.act_window,name:picking_dispatch.action_picking_dispatch_tree
+#: model:ir.ui.menu,name:picking_dispatch.menu_action_picking_dispatch
+#: view:picking.dispatch:picking_dispatch.picking_dispatch_form
+#: view:picking.dispatch:picking_dispatch.picking_dispatch_tree
+#: view:picking.dispatch.creator:picking_dispatch.view_create_picking_dispatch
+msgid "Picking Dispatch"
+msgstr ""
+
+#. module: picking_dispatch
+#: model:ir.model,name:picking_dispatch.model_picking_dispatch_assign_picker
+msgid "Picking Dispatch Assign Picker"
+msgstr ""
+
+#. module: picking_dispatch
+#: model:ir.model,name:picking_dispatch.model_picking_dispatch_check_assign_all
+msgid "Picking Dispatch Check Availability"
+msgstr ""
+
+#. module: picking_dispatch
+#: model:ir.model,name:picking_dispatch.model_picking_dispatch_creator
+msgid "Picking Dispatch Creator"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:picking.dispatch:picking_dispatch.picking_dispatch_form
+msgid "Picking Dispatch Name"
+msgstr ""
+
+#. module: picking_dispatch
+#: model:ir.model,name:picking_dispatch.model_picking_dispatch_start
+msgid "Picking Dispatch Start"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:picking.dispatch.creator:picking_dispatch.view_create_picking_dispatch
+msgid "Picking Dispatch properties"
+msgstr ""
+
+#. module: picking_dispatch
+#: model:ir.model,name:picking_dispatch.model_stock_picking
+msgid "Picking List"
+msgstr ""
+
+#. module: picking_dispatch
+#: model:ir.actions.report.xml,name:picking_dispatch.action_report_picking_dispatch
+msgid "Picking dispatch"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:res.company:picking_dispatch.view_company_form_inherit
+msgid "Pickings"
+msgstr ""
+
+#. module: picking_dispatch
+#: constraint:picking.dispatch:0
+msgid "Please select a picker."
+msgstr ""
+
+#. module: picking_dispatch
+#: view:website:picking_dispatch.report_picking_dispatch
+msgid "Printed by:"
+msgstr ""
+
+#. module: picking_dispatch
+#: model:ir.model,name:picking_dispatch.model_product_product
+#: view:website:picking_dispatch.report_picking_dispatch
+msgid "Product"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:website:picking_dispatch.report_picking_dispatch
+msgid "Product Code"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:website:picking_dispatch.report_picking_dispatch
+msgid "QTY"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:picking.dispatch:picking_dispatch.picking_dispatch_search
+msgid "Ready to Process"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:stock.picking:picking_dispatch.view_picking_form
+msgid "Related Dispatch"
+msgstr ""
+
+#. module: picking_dispatch
+#: field:picking.dispatch,related_picking_ids:0
+#: field:stock.picking,related_dispatch_ids:0
+msgid "Related Dispatch Picking"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:picking.dispatch:picking_dispatch.picking_dispatch_form
+msgid "Related Picking"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:picking.dispatch:picking_dispatch.picking_dispatch_form
+#: view:picking.dispatch.start:picking_dispatch.view_picking_dispatch_start
+msgid "Start"
+msgstr ""
+
+#. module: picking_dispatch
+#: model:ir.actions.act_window,name:picking_dispatch.action_picking_dispatch_start
+#: view:picking.dispatch.start:picking_dispatch.view_picking_dispatch_start
+msgid "Start Dispatches"
+msgstr ""
+
+#. module: picking_dispatch
+#: code:addons/picking_dispatch/wizard/dispatch_start.py:53
+#, python-format
+msgid "Started Picking Dispatch"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:picking.dispatch:picking_dispatch.picking_dispatch_search
+msgid "State"
+msgstr ""
+
+#. module: picking_dispatch
+#: model:ir.model,name:picking_dispatch.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:picking.dispatch:picking_dispatch.picking_dispatch_form
+msgid "Stock Moves"
+msgstr ""
+
+#. module: picking_dispatch
+#: help:picking.dispatch.creator,picker_id:0
+msgid "The user to which the pickings are assigned"
+msgstr ""
+
+#. module: picking_dispatch
+#: code:addons/picking_dispatch/picking_dispatch.py:188
+#, python-format
+msgid "This dispatch cannot be processed until %s"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:website:picking_dispatch.report_picking_dispatch
+msgid "Variant"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:website:picking_dispatch.report_picking_dispatch
+msgid "Visa:_________________"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:product.product:picking_dispatch.product_normal_form_view
+#: field:product.product,description_warehouse:0
+msgid "Warehouse Description"
+msgstr ""
+
+#. module: picking_dispatch
+#: code:addons/picking_dispatch/wizard/create_dispatch.py:113
+#, python-format
+msgid "Warning !"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:picking.dispatch.creator:picking_dispatch.view_create_picking_dispatch
+msgid "_Create"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:website:picking_dispatch.report_picking_dispatch
+msgid "breakage"
+msgstr ""
+
+#. module: picking_dispatch
+#: help:picking.dispatch,date:0
+msgid "date on which the picking dispatched is to be processed"
+msgstr ""
+
+#. module: picking_dispatch
+#: help:picking.dispatch,notes:0 help:picking.dispatch.creator,notes:0
+msgid "free form remarks"
+msgstr ""
+
+#. module: picking_dispatch
+#: help:picking.dispatch,backorder_id:0
+msgid ""
+"if this dispatch was split, this links to the dispatch order containing the "
+"other part which was processed"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:picking.dispatch.assign.picker:picking_dispatch.view_picking_dispatch_assign_picker
+#: view:picking.dispatch.check.assign.all:picking_dispatch.view_dispatch_check_assign_all
+#: view:picking.dispatch.creator:picking_dispatch.view_create_picking_dispatch
+#: view:picking.dispatch.start:picking_dispatch.view_picking_dispatch_start
+msgid "or"
+msgstr "或"
+
+#. module: picking_dispatch
+#: view:picking.dispatch:picking_dispatch.picking_dispatch_search
+msgid "picker_id"
+msgstr ""
+
+#. module: picking_dispatch
+#: view:website:picking_dispatch.report_picking_dispatch
+msgid "stock error"
+msgstr ""
+
+#. module: picking_dispatch
+#: help:picking.dispatch,move_ids:0
+msgid "the list of moves to be processed"
+msgstr ""
+
+#. module: picking_dispatch
+#: help:picking.dispatch,state:0
+msgid ""
+"the state of the picking. Workflow is draft -> assigned -> progress -> done "
+"or cancel"
+msgstr ""
+
+#. module: picking_dispatch
+#: help:picking.dispatch,picker_id:0
+msgid "the user to which the pickings are assigned"
+msgstr ""
+
+#. module: picking_dispatch
+#: help:res.company,default_picker_id:0
+msgid "the user to which the pickings are assigned by default"
+msgstr ""
+
+#. module: picking_dispatch
+#: help:stock.move,dispatch_id:0
+msgid "who this move is dispatched to"
+msgstr ""
