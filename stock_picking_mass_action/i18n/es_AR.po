@@ -4,64 +4,62 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2016
-# Rudolf Schnapka <rs@techno-flex.de>, 2016
-# Ermin Trevisan <trevi@twanda.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-18 01:44+0000\n"
-"PO-Revision-Date: 2016-11-18 01:44+0000\n"
-"Last-Translator: Ermin Trevisan <trevi@twanda.com>, 2016\n"
-"Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
+"POT-Creation-Date: 2017-05-31 02:51+0000\n"
+"PO-Revision-Date: 2017-05-31 02:51+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
+"Language-Team: Spanish (Argentina) (https://www.transifex.com/oca/teams/23907/es_AR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: de\n"
+"Language: es_AR\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_picking_mass_action
 #: view:stock.picking.mass.action:stock_picking_mass_action.view_stock_picking_mass_action_form
 msgid "Apply"
-msgstr "Übernehmen"
+msgstr "Aplicar"
 
 #. module: stock_picking_mass_action
 #: view:stock.picking.mass.action:stock_picking_mass_action.view_stock_picking_mass_action_form
 msgid "Cancel"
-msgstr "Abbrechen"
+msgstr "Cancelar"
 
 #. module: stock_picking_mass_action
 #: model:ir.actions.act_window,name:stock_picking_mass_action.action_check_availability
 #: field:stock.picking.mass.action,check_availability:0
 msgid "Check Availability"
-msgstr "Verfügbarkeit prüfen"
+msgstr ""
 
 #. module: stock_picking_mass_action
 #: model:ir.actions.act_window,name:stock_picking_mass_action.action_create_invoice
 #: field:stock.picking.mass.action,create_invoice:0
 msgid "Create Invoices/Refunds"
-msgstr "Erstelle Rechnung / Gutschrift"
+msgstr ""
 
 #. module: stock_picking_mass_action
 #: field:stock.picking.mass.action,create_uid:0
 msgid "Created by"
-msgstr "erstellt von"
+msgstr "Creado por"
 
 #. module: stock_picking_mass_action
 #: field:stock.picking.mass.action,create_date:0
 msgid "Created on"
-msgstr "erstellt am"
+msgstr "Creado en"
 
 #. module: stock_picking_mass_action
 #: field:stock.picking.mass.action,display_name:0
 msgid "Display Name"
-msgstr "Anzeigename"
+msgstr "Mostrar Nombre"
 
 #. module: stock_picking_mass_action
 #: model:ir.actions.act_window,name:stock_picking_mass_action.action_force_availability
 #: field:stock.picking.mass.action,force_availability:0
 msgid "Force Availability"
-msgstr "Erzwinge Verfügbarkeit"
+msgstr ""
 
 #. module: stock_picking_mass_action
 #: field:stock.picking.mass.action,id:0
@@ -71,17 +69,17 @@ msgstr "ID"
 #. module: stock_picking_mass_action
 #: field:stock.picking.mass.action,__last_update:0
 msgid "Last Modified on"
-msgstr "Zuletzt geändert am"
+msgstr "Última modificación en"
 
 #. module: stock_picking_mass_action
 #: field:stock.picking.mass.action,write_uid:0
 msgid "Last Updated by"
-msgstr "zuletzt aktualisiert von"
+msgstr "Última actualización realizada por"
 
 #. module: stock_picking_mass_action
 #: field:stock.picking.mass.action,write_date:0
 msgid "Last Updated on"
-msgstr "zuletzt aktualisiert am"
+msgstr "Última actualización el"
 
 #. module: stock_picking_mass_action
 #: model:ir.actions.act_window,name:stock_picking_mass_action.action_confirm
@@ -97,13 +95,13 @@ msgstr ""
 #. module: stock_picking_mass_action
 #: model:ir.model,name:stock_picking_mass_action.model_stock_picking
 msgid "Picking List"
-msgstr "Pickliste"
+msgstr "Remitos"
 
 #. module: stock_picking_mass_action
 #: code:addons/stock_picking_mass_action/wizard/mass_action.py:121
 #, python-format
 msgid "Stock Invoice Onshipping"
-msgstr "Abrechnung bei Versand"
+msgstr ""
 
 #. module: stock_picking_mass_action
 #: model:ir.model,name:stock_picking_mass_action.model_stock_picking_mass_action
@@ -114,7 +112,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:stock_picking_mass_action.action_transfer
 #: field:stock.picking.mass.action,transfer:0
 msgid "Transfer"
-msgstr "Transfer"
+msgstr ""
 
 #. module: stock_picking_mass_action
 #: help:stock.picking.mass.action,check_availability:0
@@ -153,4 +151,4 @@ msgstr ""
 #. module: stock_picking_mass_action
 #: view:stock.picking.mass.action:stock_picking_mass_action.view_stock_picking_mass_action_form
 msgid "or"
-msgstr "oder"
+msgstr "o"
