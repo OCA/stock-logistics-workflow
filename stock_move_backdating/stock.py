@@ -22,6 +22,7 @@
 
 from openerp.osv import fields, orm
 from datetime import datetime
+from dateutil import tz
 from openerp.tools.translate import _
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
@@ -107,6 +108,15 @@ class stock_move(orm.Model):
     def _create_account_move_line(self, cr, uid, move, src_account_id,
                                   dest_account_id, reference_amount,
                                   reference_currency_id, context=None):
+        def _convert_date(from_date):
+            from_zone = tz.tzutc()
+            to_zone = tz.gettz(context.get('tz'))
+            utc = datetime.strptime(from_date, DEFAULT_SERVER_DATETIME_FORMAT)
+            utc = utc.replace(tzinfo=from_zone)
+            to_date = utc.astimezone(to_zone)
+            to_date = to_date.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
+            return to_date[:10]
+
         if context is None:
             context = {}
         res = super(stock_move, self)._create_account_move_line(
@@ -117,9 +127,9 @@ class stock_move(orm.Model):
         for o2m_tuple in res:
             date = False
             if move.date_backdating:
-                date = move.date_backdating[:10]
+                date = _convert_date(move.date_backdating)
             elif move.date:
-                date = move.date[:10]
+                date = _convert_date(move.date)
             o2m_tuple[2]['date'] = date
             if 'move_date' not in context:
                 context['move_date'] = date
