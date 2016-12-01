@@ -106,6 +106,10 @@ class StockPickingRate(models.Model):
         return wizard_id.action_show_wizard()
 
     @api.multi
+    def buy(self):
+        self.state = 'purchase'
+
+    @api.multi
     def _expire_other_rates(self):
         """ Expires rates in picking that are not record """
         for rec_id in self:
