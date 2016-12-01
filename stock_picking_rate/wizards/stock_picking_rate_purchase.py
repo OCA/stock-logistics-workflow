@@ -60,6 +60,7 @@ class StockPickingRatePurchase(models.TransientModel):
                 purchase_rates[po_id].append(rate_id)
             except KeyError:
                 purchase_rates[po_id] = [rate_id]
+            rate_id.buy()
 
         po_id_ints = []
         for rate_ids in purchase_rates.values():

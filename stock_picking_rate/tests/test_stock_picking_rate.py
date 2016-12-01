@@ -30,6 +30,15 @@ class TestStockPickingRate(TestHelper):
         })
         self.assertTrue(rec_id.is_purchased)
 
+    def test_buy(self):
+        """ It should mark the rate as `purchase` """
+        rec_id = self.new_record()
+        rec_id.buy()
+        self.assertEqual(
+            'purchase', rec_id.state,
+            'Did not mark rate as `purchase` - Got %s' % rec_id.state
+        )
+
     def test_name_get(self):
         """ It should return proper display_name & syntax """
         rec_id = self.new_record()
