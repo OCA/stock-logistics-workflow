@@ -21,7 +21,7 @@ class StockQuantPackage(models.Model):
     )
     product_pack_tmpl_id = fields.Many2one(
         comodel_name='product.packaging.template',
-        string='Logistic Unit',
+        string='Packaging Template',
     )
     length = fields.Float(
         digits=dp.get_precision('Stock Weight'),
