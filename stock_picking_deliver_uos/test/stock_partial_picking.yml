@@ -3,13 +3,34 @@
 -
   !record {model: stock.picking.out, id: partial_picking_out}:
     partner_id: base.res_partner_2
-    move_lines:
-      - product_id: product.product_product_24
-        product_qty: 4
-        product_uos_qty: 5
-      - product_id: product.product_product_20
-        product_qty: 4
-        product_uos_qty: 5
+-
+  I add lines
+-
+  !python {model: stock.picking}: |
+    self.write(cr, uid, [ref('partial_picking_out')], {
+      'move_lines': [
+        (0, 0, {
+          'name': 'product_product_24',
+          'product_id': ref("product.product_product_24"),
+          'product_qty': 4,
+          'product_uos_qty': 5,
+          'product_uom': ref("product.product_uom_unit"),
+          'product_uos': ref("product.product_uom_dozen"),
+          'location_id': ref("stock.stock_location_stock"),
+          'location_dest_id': ref("stock.stock_location_customers"),
+          }),
+        (0, 0, {
+          'name': 'product_product_20',
+          'product_id': ref("product.product_product_20"),
+          'product_qty': 4,
+          'product_uos_qty': 5,
+          'product_uom': ref("product.product_uom_unit"),
+          'product_uos': ref("product.product_uom_dozen"),
+          'location_id': ref("stock.stock_location_stock"),
+          'location_dest_id': ref("stock.stock_location_customers"),
+          }),
+        ],
+      })
 -
   Then I confirm the picking
 -
@@ -20,6 +41,11 @@
 -
   !python {model: stock.picking}: |
     self.force_assign(cr, uid, [ref("partial_picking_out")])
+-
+  I select for this file a user that is not admin
+-
+  !context
+    uid: 'base.user_demo'
 -
   I create a stock.partial picking, check default values, Onchange method and i deliver the picking
 -
@@ -33,9 +59,14 @@
     for wiz_line in wizard.move_ids:
       assert wiz_line.move_id.product_uos_qty == wiz_line.product_uos_qty, "Default Product UOS QTY not correspond"
       assert wiz_line.move_id.product_uos.id == wiz_line.product_uos.id, "Default Product UOS not correspond"
-      result = wiz_line.on_change_product_uos_qty((wiz_line.product_uos_qty/2), wiz_line.move_id.id, context=None)
+      product_uos_qty = wiz_line.product_uos_qty/2
+      result = wiz_line.on_change_product_uos_qty((product_uos_qty), wiz_line.move_id.id, context=None)
       assert result['value']['quantity'] == (wiz_line.quantity/2), "On change method return wrong value"
-      wiz_line_obj.write(cr, uid, [wiz_line.id],result['value'],context)
+      quantity = result['value']['quantity']
+      wiz_line_obj.write(cr, uid, [wiz_line.id], {
+        'quantity': quantity,
+        'product_uos_qty': product_uos_qty,
+        }, context)
     self.do_partial(cr, uid, [wizard_id], context=context)
 -
   Finally i check picking line after deliver
@@ -45,6 +76,8 @@
     assert len(picking.move_lines) == 2, "Wrong line's quantity"
     for line in picking.move_lines:
       if line.product_id.id == ref('product.product_product_20'):
-        assert line.product_qty == 2.0, "Wrong Value on line on product_20"
+        assert line.product_qty == 2.0, "Wrong product_qty on line on product_20"
+        assert line.product_uos_qty == 2.5, "Wrong product_uos_qty on line on product_20: %s" % line.product_uos_qty
       elif line.product_id.id == ref('product.product_product_24'):
         assert line.product_qty == 2.0, "Wrong Value on line on product_24"
+        assert line.product_uos_qty == 2.5, "Wrong product_uos_qty on line on product_24: %s" % line.product_uos_qty
