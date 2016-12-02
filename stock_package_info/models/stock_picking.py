@@ -14,32 +14,26 @@ class StockPicking(models.Model):
     package_ids = fields.Many2many(
         comodel_name='stock.quant.package',
         string='Packages',
-        store=True,
         compute='_compute_picking_packages',
     )
     package_info_ids = fields.Many2many(
         comodel_name='stock.picking.package.weight.lot',
         relation='stock_picking_package_info_ids',
         string='Packages Info',
-        store=True,
         compute='_compute_picking_package_info_ids',
     )
     package_total_ids = fields.Many2many(
         comodel_name='stock.picking.package.total',
         relation='stock_picking_packages_total',
         string='Total UL Packages Info',
-        store=True,
         compute='_compute_picking_package_info_ids'
     )
     num_packages = fields.Integer(
         string='Number of Packages',
-        store=True,
         compute='_compute_picking_package_info_ids',
     )
 
     @api.multi
-    @api.depends('pack_operation_ids', 'pack_operation_ids.result_package_id',
-                 'pack_operation_ids.package_id')
     def _compute_picking_packages(self):
         for rec_id in self:
             rec_id.package_ids = (rec_id.pack_operation_ids.mapped(
@@ -47,10 +41,6 @@ class StockPicking(models.Model):
                 'package_id'))
 
     @api.multi
-    @api.depends('pack_operation_ids', 'pack_operation_ids.result_package_id',
-                 'pack_operation_ids.result_package_id.product_pack_tmpl_id',
-                 'pack_operation_ids.package_id',
-                 'pack_operation_ids.result_package_id')
     def _compute_picking_package_info_ids(self):
         pack_weight_obj = self.env['stock.picking.package.weight.lot']
         pack_total_obj = self.env['stock.picking.package.total']

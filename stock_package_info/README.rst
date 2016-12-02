@@ -38,6 +38,12 @@ unit, and kg. and lots by package.
 
 You can print labels of pallets.
 
+Known issues / Roadmap
+======================
+
+* Computed fields in `stock.picking` are not stored because the dependant field
+is an O2M relation that is never implicitly set via ORM or views.
+
 Bug Tracker
 ===========
 
@@ -62,6 +68,7 @@ Contributors
 * Alfredo de la Fuente <alfredodelafuente@avanzosc.es>
 * Brett Wood <bwood@laslabs.com>
 * Dave Lasley <dave@laslabs.com>
+* Ted Salmon <tsalmon@laslabs.com>
 
 Maintainer
 ----------
