@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-18 01:44+0000\n"
-"PO-Revision-Date: 2016-11-22 16:25+0000\n"
+"POT-Creation-Date: 2016-11-29 18:56+0000\n"
+"PO-Revision-Date: 2016-12-02 13:53+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Norwegian Bokmål (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/nb/)\n"
 "MIME-Version: 1.0\n"
@@ -242,7 +242,7 @@ msgstr ""
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 msgid "Group By..."
-msgstr ""
+msgstr "Grupper etter ..."
 
 #. module: picking_dispatch
 #: field:picking.dispatch,id:0 field:picking.dispatch.assign.picker,id:0

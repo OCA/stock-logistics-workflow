@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-18 01:44+0000\n"
-"PO-Revision-Date: 2016-11-25 14:57+0000\n"
+"POT-Creation-Date: 2016-11-29 18:56+0000\n"
+"PO-Revision-Date: 2016-12-01 10:15+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: French (Switzerland) (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/fr_CH/)\n"
 "MIME-Version: 1.0\n"
@@ -210,7 +210,7 @@ msgstr ""
 #: field:picking.dispatch.start,display_name:0
 #: field:report.picking_dispatch.report_picking_dispatch,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Nom affiché"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form
@@ -271,7 +271,7 @@ msgstr ""
 #: field:picking.dispatch.start,__last_update:0
 #: field:report.picking_dispatch.report_picking_dispatch,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Dernière modification le"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,write_uid:0
@@ -427,7 +427,7 @@ msgstr ""
 #: model:ir.model,name:picking_dispatch.model_product_product
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Product"
-msgstr ""
+msgstr "Produit"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch

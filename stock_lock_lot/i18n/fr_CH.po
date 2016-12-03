@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-18 01:44+0000\n"
-"PO-Revision-Date: 2016-11-25 14:57+0000\n"
+"POT-Creation-Date: 2016-11-29 18:56+0000\n"
+"PO-Revision-Date: 2016-12-01 10:15+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: French (Switzerland) (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/fr_CH/)\n"
 "MIME-Version: 1.0\n"
@@ -78,7 +78,7 @@ msgstr ""
 #. module: stock_lock_lot
 #: field:wiz.lock.lot,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Nom affiché"
 
 #. module: stock_lock_lot
 #: field:wiz.lock.lot,id:0
@@ -101,7 +101,7 @@ msgstr ""
 #. module: stock_lock_lot
 #: field:wiz.lock.lot,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Dernière modification le"
 
 #. module: stock_lock_lot
 #: field:wiz.lock.lot,write_uid:0
@@ -136,7 +136,7 @@ msgstr ""
 #. module: stock_lock_lot
 #: view:stock.production.lot:stock_lock_lot.search_product_lot_filter_inh_locklot
 msgid "Product"
-msgstr ""
+msgstr "Produit"
 
 #. module: stock_lock_lot
 #: model:ir.model,name:stock_lock_lot.model_product_category
