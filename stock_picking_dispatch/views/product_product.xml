@@ -1,0 +1,14 @@
+<odoo>
+    <!-- Product View: add description_warehouse -->
+    <record id="product_normal_form_view" model="ir.ui.view">
+        <field name="name">product.normal.form</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <field name="description_purchase" position="after">
+                <separator string="Warehouse Description"/>
+                <field colspan="4" name="description_warehouse" nolabel="1"/>
+            </field>
+        </field>
+    </record>
+</odoo>
