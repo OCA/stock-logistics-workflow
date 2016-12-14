@@ -1,0 +1,39 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* procurement_select_route
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-29 20:16+0000\n"
+"PO-Revision-Date: 2016-11-29 20:16+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: procurement_select_route
+#: model:ir.model,name:procurement_select_route.model_procurement_order
+msgid "Procurement"
+msgstr "Approvisionnement"
+
+#. module: procurement_select_route
+#: code:addons/procurement_select_route/models/procurement_order.py:35
+#, python-format
+msgid "The product %s has more than one possible procurement route. "
+"Please specify the route to use in the field 'Product Route'."
+msgstr "Le produit %s a plus d'une route d'approvisionnement possible. "
+"S.v.p. sélectionner la route à utiliser via le champ 'Route du produit'."
+
+#. module: procurement_select_route
+#: model:ir.model.fields,field_description:procurement_select_route.field_procurement_order_product_categ_id
+msgid "Product Category"
+msgstr "Catégorie de produit"
+
+#. module: procurement_select_route
+#: model:ir.model.fields,field_description:procurement_select_route.field_procurement_order_product_route_id
+msgid "Product Route"
+msgstr "Route du produit"
