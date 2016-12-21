@@ -207,7 +207,8 @@ class StockPickingPackagePreparation(models.Model):
                 # ----- If line has 'move_id' this means we don't need to
                 #       recreate picking and move again
                 if (line.product_id and
-                        line.product_id.type != 'service' and not line.move_id):
+                        line.product_id.type != 'service' and not
+                        line.move_id):
                     move_data = line.get_move_data()
                     move_data.update({
                         'partner_id': package.partner_id.id,
