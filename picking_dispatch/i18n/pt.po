@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-03 06:08+0000\n"
-"PO-Revision-Date: 2016-12-12 11:41+0000\n"
+"POT-Creation-Date: 2016-12-17 06:25+0000\n"
+"PO-Revision-Date: 2016-12-22 14:05+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Portuguese (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/pt/)\n"
 "MIME-Version: 1.0\n"
@@ -427,7 +427,7 @@ msgstr ""
 #: model:ir.model,name:picking_dispatch.model_product_product
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Product"
-msgstr ""
+msgstr "Produto"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch

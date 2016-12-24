@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-24 02:43+0000\n"
-"PO-Revision-Date: 2016-04-18 09:13+0000\n"
-"Last-Translator: Antonio Trueba\n"
+"POT-Creation-Date: 2016-12-17 06:25+0000\n"
+"PO-Revision-Date: 2016-12-22 09:28+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Spanish (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,6 +23,11 @@ msgstr ""
 #: view:stock.quant:stock_ownership_availability_rules.quant_search_view
 msgid "Available (without reservation)"
 msgstr "Disponible (sin reserva)"
+
+#. module: stock_ownership_availability_rules
+#: model:ir.model,name:stock_ownership_availability_rules.model_stock_change_product_qty
+msgid "Change Product Quantity"
+msgstr "Cambiar cantidad de producto"
 
 #. module: stock_ownership_availability_rules
 #: view:stock.move:stock_ownership_availability_rules.view_move_search
