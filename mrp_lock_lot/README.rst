@@ -7,7 +7,8 @@ Block Serial Numbers/lots on manufacturing orders
 =================================================
 
 Using this module, Manufacturing Orders are not allowed to select a
-blocked Serial Number/lot.
+blocked Serial Number/lot when the destination location has not "Allow locked"
+active.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
@@ -32,6 +33,7 @@ Contributors
 * Alfredo de la Fuente <alfredodelafuente@avanzosc.es>
 * Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>
 * Lionel Sausin <ls@numerigraphe.com>
+* Ainara Galdona <ainaragaldona@avanzosc.es>
 
 Maintainer
 ----------

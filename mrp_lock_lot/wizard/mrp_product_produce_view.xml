@@ -6,11 +6,17 @@
             <field name="model">mrp.product.produce</field>
             <field name="inherit_id" ref="mrp.view_mrp_product_produce_wizard"/>
             <field name="arch" type="xml">
+                <xpath expr="//group[@string='Produce']/field[@name='lot_id']" position="before">
+                    <field name="allow_locked" invisible="1"/>
+                </xpath>
                 <xpath expr="//group[@string='Produce']/field[@name='lot_id']" position="attributes">
-                    <attribute name="domain">[('product_id','=',product_id),('locked','=',False)]</attribute>
+                    <attribute name="domain">[('product_id','=',product_id),'|', ('locked', '=', allow_locked), ('locked','=',False)]</attribute>
+                </xpath>
+                <xpath expr="//tree[@string='Consume Lines']/field[@name='lot_id']" position="before">
+                    <field name="allow_locked" invisible="1"/>
                 </xpath>
                 <xpath expr="//tree[@string='Consume Lines']/field[@name='lot_id']" position="attributes">
-                    <attribute name="domain">[('product_id','=',product_id),('locked','=',False)]</attribute>
+                    <attribute name="domain">[('product_id','=',product_id),'|', ('locked', '=', allow_locked), ('locked','=',False)]</attribute>
                 </xpath>
             </field>
         </record>

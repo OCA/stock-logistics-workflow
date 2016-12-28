@@ -117,3 +117,10 @@ class TestLockingUnlocking(TestStockCommon):
 
         wizard.action_unlock_lots()
         self.assertFalse(self.lot.locked, 'Wizard failed to unlock the lot')
+
+    def test_allow_lock(self):
+        self.lot.button_lock()
+        self.picking_out.location_dest_id.allow_locked = True
+        self.picking_out.action_assign()
+        for move in self.picking_out.move_lines:
+            self.assertEqual(move.state, 'assigned')
