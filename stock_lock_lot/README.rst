@@ -10,6 +10,7 @@ This module allows you to define whether a Serial Number/lot is blocked
 or not.
 The default value can be set on the Product Category, in the
 field "Block new Serial Numbers/lots".
+Is possible to specify in a location if locked lots are allowed to move there.
 
 Configuration
 =============
@@ -19,6 +20,10 @@ To allow a user to block or unblock a Lot:
 #. open the user settings (menu "Configuration > Users")
 #. in the "Warehouse" section, check the box
    "Allow to block/unblock Serial Numbers/Lots"
+
+To allow move locked lots to a location:
+#. open the locations (menu "Warehouse > Configuration > Locations")
+#. check the box "Allow Locked"
 
 Optional: enforce strict blocking
 ---------------------------------
@@ -65,6 +70,7 @@ Contributors
 * Alfredo de la Fuente <alfredodelafuente@avanzosc.es>
 * Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>
 * Lionel Sausin <ls@numerigraphe.com>
+* Ainara Galdona <ainaragaldona@avanzosc.es>
 
 Maintainer
 ----------
