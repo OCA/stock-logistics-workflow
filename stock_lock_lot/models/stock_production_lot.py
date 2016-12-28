@@ -70,7 +70,8 @@ class StockProductionLot(models.Model):
         reserved_quants = self.env['stock.quant'].search(
             [('lot_id', 'in', self.ids),
              ('reservation_id', '!=', False),
-             ('reservation_id.state', 'not in', ('cancel', 'done'))])
+             ('reservation_id.state', 'not in', ('cancel', 'done')),
+             ('reservation_id.location_dest_id.allow_locked', '=', False)])
         reserved_quants.mapped("reservation_id").do_unreserve()
         # Block the lot
         return self.write({'locked': True})
