@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-18 01:44+0000\n"
-"PO-Revision-Date: 2016-11-18 01:44+0000\n"
+"POT-Creation-Date: 2016-12-24 06:44+0000\n"
+"PO-Revision-Date: 2016-12-24 06:44+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: French (Canada) (https://www.transifex.com/oca/teams/23907/fr_CA/)\n"
 "MIME-Version: 1.0\n"
@@ -330,7 +330,7 @@ msgstr ""
 #: field:scanner.scenario.step,create_uid:0
 #: field:scanner.scenario.transition,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Créé par"
 
 #. module: stock_scanner
 #: field:scanner.hardware,create_date:0
@@ -340,7 +340,7 @@ msgstr ""
 #: field:scanner.scenario.step,create_date:0
 #: field:scanner.scenario.transition,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Créé le"
 
 #. module: stock_scanner
 #: field:scanner.hardware,step_id:0
@@ -396,7 +396,7 @@ msgstr ""
 #: field:scanner.scenario.step,display_name:0
 #: field:scanner.scenario.transition,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Afficher le nom"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/data/scenarios/Logout/stock_scanner.scanner_scenario_logout_step_confirm.py:11
@@ -545,7 +545,7 @@ msgstr ""
 #: field:scanner.scenario,id:0 field:scanner.scenario.custom,id:0
 #: field:scanner.scenario.step,id:0 field:scanner.scenario.transition,id:0
 msgid "ID"
-msgstr ""
+msgstr "Identifiant"
 
 #. module: stock_scanner
 #: help:scanner.scenario.custom,res_id:0
@@ -633,7 +633,7 @@ msgstr ""
 #: field:scanner.scenario.step,write_uid:0
 #: field:scanner.scenario.transition,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Dernière mise à jour par"
 
 #. module: stock_scanner
 #: field:scanner.hardware,write_date:0
@@ -643,7 +643,7 @@ msgstr ""
 #: field:scanner.scenario.step,write_date:0
 #: field:scanner.scenario.transition,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Dernière mise à jour le"
 
 #. module: stock_scanner
 #: field:scanner.hardware,last_call_dt:0

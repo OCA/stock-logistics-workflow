@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-18 01:44+0000\n"
-"PO-Revision-Date: 2016-11-14 13:11+0000\n"
+"POT-Creation-Date: 2016-12-24 06:44+0000\n"
+"PO-Revision-Date: 2016-12-27 16:50+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: French (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr ""
 #: code:addons/stock_dropshipping_dual_invoice/wizard/stock_invoice_onshipping.py:76
 #, python-format
 msgid "Invoices"
-msgstr ""
+msgstr "Factures"
 
 #. module: stock_dropshipping_dual_invoice
 #: field:stock.invoice.onshipping,need_two_invoices:0

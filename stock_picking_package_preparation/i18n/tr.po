@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-18 01:44+0000\n"
-"PO-Revision-Date: 2015-10-21 16:34+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2016-12-24 06:44+0000\n"
+"PO-Revision-Date: 2016-12-30 22:08+0000\n"
+"Last-Translator: Ahmet Altinisik <aaltinisik@altinkaya.com.tr>\n"
 "Language-Team: Turkish (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -67,7 +67,7 @@ msgstr ""
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,company_id:0
 msgid "Company"
-msgstr ""
+msgstr "Şirket"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,create_uid:0
@@ -87,7 +87,7 @@ msgstr "Kayıda eklenen son mesajın tarihi."
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Görünen İsim"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,date:0
@@ -114,7 +114,7 @@ msgstr "Takipçiler"
 msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
-msgstr ""
+msgstr "Sohbet özetini tutar (kaç mesa vs) Bu özet kanban görünümleri gibi yerlerde kullanılmak için doğrudan HTML formatındadır. "
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,id:0
@@ -152,7 +152,7 @@ msgstr "Son mesaj tarihi"
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Son değişiklik"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,write_uid:0
@@ -177,7 +177,7 @@ msgstr "Mesajlar"
 #. module: stock_picking_package_preparation
 #: help:stock.picking.package.preparation,message_ids:0
 msgid "Messages and communication history"
-msgstr ""
+msgstr "Mesaj ve iletişim geçmişi"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,net_weight:0
@@ -247,7 +247,7 @@ msgstr ""
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,partner_id:0
 msgid "Partner"
-msgstr ""
+msgstr "İş Ortağı"
 
 #. module: stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
@@ -300,4 +300,4 @@ msgstr "Okunmamış mesajlar"
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,weight:0
 msgid "Weight"
-msgstr ""
+msgstr "Ağırlık"

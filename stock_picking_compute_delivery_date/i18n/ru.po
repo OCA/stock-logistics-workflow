@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-18 01:44+0000\n"
+"POT-Creation-Date: 2016-12-24 06:44+0000\n"
 "PO-Revision-Date: 2015-10-21 16:34+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: Russian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/ru/)\n"
@@ -58,13 +58,13 @@ msgstr ""
 #: field:compute.all.delivery.dates.wizard,create_uid:0
 #: field:compute.delivery.date.by.product.wizard,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Создано"
 
 #. module: stock_picking_compute_delivery_date
 #: field:compute.all.delivery.dates.wizard,create_date:0
 #: field:compute.delivery.date.by.product.wizard,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Создан"
 
 #. module: stock_picking_compute_delivery_date
 #: field:compute.all.delivery.dates.wizard,display_name:0
@@ -76,7 +76,7 @@ msgstr ""
 #: field:compute.all.delivery.dates.wizard,id:0
 #: field:compute.delivery.date.by.product.wizard,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_picking_compute_delivery_date
 #: field:compute.all.delivery.dates.wizard,__last_update:0
@@ -88,13 +88,13 @@ msgstr ""
 #: field:compute.all.delivery.dates.wizard,write_uid:0
 #: field:compute.delivery.date.by.product.wizard,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Последний раз обновлено"
 
 #. module: stock_picking_compute_delivery_date
 #: field:compute.all.delivery.dates.wizard,write_date:0
 #: field:compute.delivery.date.by.product.wizard,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Последний раз обновлено"
 
 #. module: stock_picking_compute_delivery_date
 #: model:ir.model,name:stock_picking_compute_delivery_date.model_stock_picking
