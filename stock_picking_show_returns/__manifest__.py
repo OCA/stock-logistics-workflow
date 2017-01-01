@@ -23,7 +23,7 @@
 
 {
     "name": "Show returns on stock pickings",
-    "version": "1.0",
+    "version": "1.1",
     "author": "Serv. Tecnol. Avanzados - Pedro M. Baeza,"
               "Odoo Community Association (OCA)",
     "category": "Warehouse Management",
@@ -39,6 +39,5 @@
     "data": [
         'stock_picking_view.xml',
     ],
-    "installable": False,
-    "active": False,
+    "installable": True,
 }
