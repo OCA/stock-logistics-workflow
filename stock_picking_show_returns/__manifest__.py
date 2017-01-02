@@ -22,23 +22,20 @@
 ##############################################################################
 
 {
-    "name": "Show returns on stock pickings",
-    "version": "1.0",
-    "author": "Serv. Tecnol. Avanzados - Pedro M. Baeza,"
-              "Odoo Community Association (OCA)",
-    "category": "Warehouse Management",
-    "description": """
-    Show in pickings one tab that contains returns made for that picking.
-    """,
-    "website": "www.serviciosbaeza.com",
-    "license": "AGPL-3",
-    "depends": [
-        "stock",
+    'name': 'Show returns on stock pickings',
+    'version': '1.0',
+    'author': 'Serv. Tecnol. Avanzados - Pedro M. Baeza,'
+              'Odoo Community Association (OCA)',
+    'category': 'Warehouse Management',
+    'website': 'www.serviciosbaeza.com',
+    'license': 'AGPL-3',
+    'depends': [
+        'stock',
     ],
-    "demo": [],
-    "data": [
+    'demo': [],
+    'data': [
         'stock_picking_view.xml',
     ],
-    "installable": False,
-    "active": False,
+    'installable': False,
+    'active': False,
 }
