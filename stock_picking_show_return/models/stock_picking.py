@@ -15,5 +15,5 @@ class StockPicking(models.Model):
     @api.multi
     def _compute_returned_ids(self):
         for picking in self:
-            picking.returned_ids = self.mapped(
+            picking.returned_ids = picking.mapped(
                 'move_lines.returned_move_ids.picking_id')
