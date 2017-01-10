@@ -97,6 +97,6 @@
   <menuitem
     action="action_stock_picking_package_preparation"
     id="menu_stock_picking_package_preparation"
-    parent="stock.menu_stock_inventory_control" sequence="3"/>
+    parent="stock.menu_stock_warehouse_mgmt" sequence="3"/>
 
 </odoo>
