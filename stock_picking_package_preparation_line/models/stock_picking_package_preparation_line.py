@@ -23,7 +23,7 @@ class StockPickingPackagePreparationLine(models.Model):
                               ondelete='cascade')
     product_id = fields.Many2one('product.product', string='Product')
     product_uom_qty = fields.Float(
-        digits_compute=dp.get_precision('Product Unit of Measure'),
+        digits=dp.get_precision('Product Unit of Measure'),
         string="Quantity",
         help="If you change this quantity for a 'ready' picking, the system "
              "will not generate a back order, but will just deliver the new "
