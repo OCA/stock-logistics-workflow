@@ -24,7 +24,7 @@ class StockPickingPackagePreparation(models.Model):
     name = fields.Char(
         related='package_id.name',
         readonly=True,
-        select=True,
+        index=True,
         store=True,
     )
     state = fields.Selection(
@@ -71,7 +71,7 @@ class StockPickingPackagePreparation(models.Model):
         comodel_name='res.company',
         string='Company',
         required=True,
-        select=True,
+        index=True,
         states=FIELDS_STATES,
         default=_default_company_id,
     )
