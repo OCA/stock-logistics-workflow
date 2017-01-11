@@ -2,15 +2,15 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-====================================
-Auto-assignation of lots on pickings
-====================================
+===================================
+Auto-assignment of lots on pickings
+===================================
 
 When working with lots, it's very uncomfortable to introduce the quantity,
 lot by lot, when transferring pickings from your warehouse (outgoing or
 internal).
 
-This module assigns automatically the reserved quantity as the done one, so
+This module automatically assigns the reserved quantity as the done one, so
 that you only have to change it in case of divergence, but having the
 possibility of transferring directly.
 
