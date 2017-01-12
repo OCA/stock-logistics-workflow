@@ -46,3 +46,8 @@ class StockPicking(models.Model):
             for rec in res:
                 rec['owner_id'] = picking.owner_id.id
         return res
+
+    @api.onchange('owner_id')
+    def _onchange_owner_id(self):
+        if self.picking_type_id.is_deposit:
+            self.partner_id = self.owner_id.id
