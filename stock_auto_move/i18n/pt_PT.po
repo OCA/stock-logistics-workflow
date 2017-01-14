@@ -3,20 +3,20 @@
 # * stock_auto_move
 # 
 # Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2016
+# Pedro Castro Silva <pedrocs@sossia.pt>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-07 07:49+0000\n"
 "PO-Revision-Date: 2017-01-07 07:49+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/23907/pt_BR/)\n"
+"Last-Translator: Pedro Castro Silva <pedrocs@sossia.pt>, 2017\n"
+"Language-Team: Portuguese (Portugal) (https://www.transifex.com/oca/teams/23907/pt_PT/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: pt_BR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: pt_PT\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_auto_move
 #: model:procurement.rule,name:stock_auto_move.procurement_rule_a_to_b
@@ -61,7 +61,7 @@ msgstr ""
 #. module: stock_auto_move
 #: model:ir.model,name:stock_auto_move.model_procurement_order
 msgid "Procurement"
-msgstr "Aprovisionamento"
+msgstr "Aquisições"
 
 #. module: stock_auto_move
 #: model:ir.model,name:stock_auto_move.model_procurement_rule
@@ -76,7 +76,7 @@ msgstr ""
 #. module: stock_auto_move
 #: model:ir.model,name:stock_auto_move.model_stock_move
 msgid "Stock Move"
-msgstr "Movimentação de estoque"
+msgstr ""
 
 #. module: stock_auto_move
 #: model:stock.location.route,name:stock_auto_move.test_route
