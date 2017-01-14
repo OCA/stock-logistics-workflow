@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-18 01:44+0000\n"
+"POT-Creation-Date: 2017-01-07 07:49+0000\n"
 "PO-Revision-Date: 2015-10-21 16:33+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/pt_BR/)\n"
@@ -57,7 +57,7 @@ msgstr ""
 #. module: stock_dropshipping_dual_invoice
 #: model:ir.model,name:stock_dropshipping_dual_invoice.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimentação de estoque"
 
 #. module: stock_dropshipping_dual_invoice
 #: field:stock.invoice.onshipping,wizard_title:0

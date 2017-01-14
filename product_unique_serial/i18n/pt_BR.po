@@ -1,0 +1,83 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * product_unique_serial
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: stock-logistics-workflow (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-01-07 07:49+0000\n"
+"PO-Revision-Date: 2015-10-21 16:33+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: product_unique_serial
+#: help:product.template,lot_unique_ok:0
+msgid "Forces set qty=1 to specify a Unique Serial Number for all moves"
+msgstr ""
+
+#. module: product_unique_serial
+#: model:product.template,name:product_unique_serial.product_demo_1_product_template
+msgid "Huawei Ascend"
+msgstr ""
+
+#. module: product_unique_serial
+#: field:stock.production.lot,last_location_id:0
+msgid "Last location"
+msgstr ""
+
+#. module: product_unique_serial
+#: model:ir.model,name:product_unique_serial.model_stock_production_lot
+msgid "Lot/Serial"
+msgstr ""
+
+#. module: product_unique_serial
+#: model:product.template,name:product_unique_serial.product_demo_2_product_template
+msgid "Nokia 2630"
+msgstr ""
+
+#. module: product_unique_serial
+#: model:ir.model,name:product_unique_serial.model_stock_transfer_details
+msgid "Picking wizard"
+msgstr ""
+
+#. module: product_unique_serial
+#: code:addons/product_unique_serial/models/stock_move.py:82
+#, python-format
+msgid ""
+"Product '%s' has active 'unique lot'\n"
+"but with this move you will have a quantity of '%s' in lot '%s'"
+msgstr ""
+
+#. module: product_unique_serial
+#: code:addons/product_unique_serial/models/stock_move.py:65
+#, python-format
+msgid "Product '%s' has active 'unique lot' but has qty > 1"
+msgstr ""
+
+#. module: product_unique_serial
+#: model:ir.model,name:product_unique_serial.model_product_template
+msgid "Product Template"
+msgstr ""
+
+#. module: product_unique_serial
+#: code:addons/product_unique_serial/models/stock_move.py:49
+#, python-format
+msgid "Same lot with product unique in multiple operations"
+msgstr ""
+
+#. module: product_unique_serial
+#: model:ir.model,name:product_unique_serial.model_stock_move
+msgid "Stock Move"
+msgstr "Movimentação de estoque"
+
+#. module: product_unique_serial
+#: field:product.template,lot_unique_ok:0
+msgid "Unique lot"
+msgstr ""

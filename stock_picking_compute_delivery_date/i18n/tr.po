@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-24 06:44+0000\n"
-"PO-Revision-Date: 2016-12-30 20:43+0000\n"
+"POT-Creation-Date: 2016-12-31 09:53+0000\n"
+"PO-Revision-Date: 2017-01-13 09:22+0000\n"
 "Last-Translator: Ahmet Altinisik <aaltinisik@altinkaya.com.tr>\n"
 "Language-Team: Turkish (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/tr/)\n"
 "MIME-Version: 1.0\n"
@@ -99,7 +99,7 @@ msgstr "Son güncelleme"
 #. module: stock_picking_compute_delivery_date
 #: model:ir.model,name:stock_picking_compute_delivery_date.model_stock_picking
 msgid "Picking List"
-msgstr ""
+msgstr "Toplama Listesi"
 
 #. module: stock_picking_compute_delivery_date
 #: code:addons/stock_picking_compute_delivery_date/model/picking.py:112

@@ -3,14 +3,13 @@
 # * stock_scanner
 # 
 # Translators:
-# Bole <bole@dajmi5.com>, 2016
 # OCA Transbot <transbot@odoo-community.org>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-18 01:44+0000\n"
-"PO-Revision-Date: 2016-11-18 01:44+0000\n"
+"POT-Creation-Date: 2016-12-31 09:53+0000\n"
+"PO-Revision-Date: 2016-12-31 09:53+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
 "MIME-Version: 1.0\n"
@@ -1346,7 +1345,7 @@ msgstr ""
 #. module: stock_scanner
 #: field:scanner.hardware,user_id:0
 msgid "User"
-msgstr ""
+msgstr "Korisnik"
 
 #. module: stock_scanner
 #: field:scanner.scenario.custom,res_id:0

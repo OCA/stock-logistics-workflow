@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-18 01:44+0000\n"
-"PO-Revision-Date: 2016-11-25 14:57+0000\n"
+"POT-Creation-Date: 2017-01-07 07:49+0000\n"
+"PO-Revision-Date: 2017-01-13 09:22+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Catalan (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/ca/)\n"
 "MIME-Version: 1.0\n"
@@ -148,7 +148,7 @@ msgstr "Creat el"
 #. module: picking_dispatch
 #: field:picking.dispatch,date:0 field:picking.dispatch.creator,date:0
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #. module: picking_dispatch
 #: help:picking.dispatch.creator,date:0
@@ -210,7 +210,7 @@ msgstr ""
 #: field:picking.dispatch.start,display_name:0
 #: field:report.picking_dispatch.report_picking_dispatch,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Veure el nom"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form
@@ -232,7 +232,7 @@ msgstr ""
 #: code:addons/picking_dispatch/wizard/dispatch_start.py:46
 #, python-format
 msgid "Error"
-msgstr ""
+msgstr "Error"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
@@ -271,7 +271,7 @@ msgstr ""
 #: field:picking.dispatch.start,__last_update:0
 #: field:report.picking_dispatch.report_picking_dispatch,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Darrera modificació el"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,write_uid:0
@@ -481,7 +481,7 @@ msgstr ""
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 msgid "State"
-msgstr ""
+msgstr "Estat"
 
 #. module: picking_dispatch
 #: model:ir.model,name:picking_dispatch.model_stock_move

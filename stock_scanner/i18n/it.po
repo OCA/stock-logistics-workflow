@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-18 01:44+0000\n"
-"PO-Revision-Date: 2016-11-18 01:44+0000\n"
+"POT-Creation-Date: 2016-12-31 09:53+0000\n"
+"PO-Revision-Date: 2016-12-31 09:53+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "MIME-Version: 1.0\n"
@@ -858,7 +858,7 @@ msgstr ""
 #. module: stock_scanner
 #: field:scanner.hardware,reference_document:0
 msgid "Reference"
-msgstr ""
+msgstr "Riferimento"
 
 #. module: stock_scanner
 #: view:scanner.hardware:stock_scanner.view_scanner_hardware_form
