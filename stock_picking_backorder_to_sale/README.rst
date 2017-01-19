@@ -14,8 +14,8 @@ Usage
 To use this module:
 #. Go to *Warehouse > All Operations*
 #. Select a operation don't done with partner
-    * Press *Print > Price List*
 #. Press *Create Sale* button
+
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
