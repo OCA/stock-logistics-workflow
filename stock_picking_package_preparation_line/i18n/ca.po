@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-31 09:53+0000\n"
-"PO-Revision-Date: 2017-01-13 09:22+0000\n"
+"POT-Creation-Date: 2017-01-14 08:48+0000\n"
+"PO-Revision-Date: 2017-01-17 18:57+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Catalan (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/ca/)\n"
 "MIME-Version: 1.0\n"
@@ -120,7 +120,7 @@ msgstr ""
 #. module: stock_picking_package_preparation_line
 #: field:stock.picking.package.preparation.line,product_id:0
 msgid "Product"
-msgstr ""
+msgstr "Producte"
 
 #. module: stock_picking_package_preparation_line
 #: field:stock.picking.package.preparation.line,product_uom:0
@@ -142,7 +142,7 @@ msgstr "Seqüència"
 #: field:stock.picking.package.preparation.line,move_id:0
 #: field:stock.picking.package.preparation.line,package_preparation_id:0
 msgid "Stock Move"
-msgstr ""
+msgstr "Moure l'estoc"
 
 #. module: stock_picking_package_preparation_line
 #: view:stock.picking.package.preparation:stock_picking_package_preparation_line.sppp_line_stock_picking_package_preparation_form

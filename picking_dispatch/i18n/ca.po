@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-07 07:49+0000\n"
-"PO-Revision-Date: 2017-01-13 09:22+0000\n"
+"POT-Creation-Date: 2017-01-14 08:48+0000\n"
+"PO-Revision-Date: 2017-01-17 19:17+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Catalan (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/ca/)\n"
 "MIME-Version: 1.0\n"
@@ -120,7 +120,7 @@ msgstr ""
 #. module: picking_dispatch
 #: field:picking.dispatch,company_id:0
 msgid "Company"
-msgstr ""
+msgstr "Empresa"
 
 #. module: picking_dispatch
 #: model:ir.actions.act_window,name:picking_dispatch.picking_dispatch_create_act_window
@@ -310,7 +310,7 @@ msgstr ""
 #. module: picking_dispatch
 #: field:picking.dispatch,name:0 field:picking.dispatch.creator,name:0
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #. module: picking_dispatch
 #: help:picking.dispatch,name:0 help:picking.dispatch.creator,name:0
@@ -427,7 +427,7 @@ msgstr ""
 #: model:ir.model,name:picking_dispatch.model_product_product
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Product"
-msgstr ""
+msgstr "Producte"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
@@ -486,7 +486,7 @@ msgstr "Estat"
 #. module: picking_dispatch
 #: model:ir.model,name:picking_dispatch.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Moure l'estoc"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form

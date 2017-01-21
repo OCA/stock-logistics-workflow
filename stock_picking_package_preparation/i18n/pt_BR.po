@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-31 09:53+0000\n"
+"POT-Creation-Date: 2017-01-14 08:48+0000\n"
 "PO-Revision-Date: 2015-10-21 16:34+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/pt_BR/)\n"
@@ -82,7 +82,7 @@ msgstr "Criado em"
 #. module: stock_picking_package_preparation
 #: help:stock.picking.package.preparation,message_last_post:0
 msgid "Date of the last message posted on the record."
-msgstr ""
+msgstr "Data da última mensagem postada no registro"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,display_name:0
@@ -107,7 +107,7 @@ msgstr "Rascunho"
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_follower_ids:0
 msgid "Followers"
-msgstr ""
+msgstr "Seguidores"
 
 #. module: stock_picking_package_preparation
 #: help:stock.picking.package.preparation,message_summary:0
@@ -124,7 +124,7 @@ msgstr "Identificação"
 #. module: stock_picking_package_preparation
 #: help:stock.picking.package.preparation,message_unread:0
 msgid "If checked new messages require your attention."
-msgstr ""
+msgstr "Se marcado novas mensagens requerem sua atenção."
 
 #. module: stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
@@ -147,7 +147,7 @@ msgstr ""
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_last_post:0
 msgid "Last Message Date"
-msgstr ""
+msgstr "Última data de mensagem"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,__last_update:0
@@ -172,7 +172,7 @@ msgstr ""
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_ids:0
 msgid "Messages"
-msgstr ""
+msgstr "Mensagens"
 
 #. module: stock_picking_package_preparation
 #: help:stock.picking.package.preparation,message_ids:0
@@ -295,7 +295,7 @@ msgstr ""
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_unread:0
 msgid "Unread Messages"
-msgstr ""
+msgstr "Mensagens não lidas"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,weight:0

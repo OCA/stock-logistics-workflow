@@ -3,12 +3,13 @@
 # * stock_picking_invoice_link
 # 
 # Translators:
+# Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-31 09:53+0000\n"
-"PO-Revision-Date: 2017-01-12 19:55+0000\n"
+"POT-Creation-Date: 2017-01-14 08:48+0000\n"
+"PO-Revision-Date: 2017-01-16 19:30+0000\n"
 "Last-Translator: Ahmet Altinisik <aaltinisik@altinkaya.com.tr>\n"
 "Language-Team: Turkish (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/tr/)\n"
 "MIME-Version: 1.0\n"
@@ -77,4 +78,4 @@ msgstr ""
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_stock_move
 msgid "Stock Move"
-msgstr "Stok Taşı"
+msgstr "Stok hareketi"
