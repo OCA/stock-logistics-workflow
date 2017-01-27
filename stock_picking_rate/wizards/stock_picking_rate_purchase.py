@@ -36,7 +36,7 @@ class StockPickingRatePurchase(models.TransientModel):
 
     @api.model
     def _default_rate_ids(self):
-        model = 'stock.picking.rate'
+        model = 'stock.picking.rate.purchase'
         if self.env.context.get('active_model') != model:
             return None
         return [(6, 0, self.env.context.get('active_ids'))]

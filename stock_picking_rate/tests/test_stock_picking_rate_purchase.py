@@ -178,7 +178,10 @@ class TestStockPickingRate(TestHelper):
             'date_planned': rec_id.date_po,
             'state': 'purchase',
             'order_line': [
-                (0, 0, rec_id._get_purchase_line_vals(r)) for r in self.rate_ids
+                (
+                    0, 0,
+                    rec_id._get_purchase_line_vals(r)
+                ) for r in self.rate_ids
             ]
         }
         for key in exp_keys:
