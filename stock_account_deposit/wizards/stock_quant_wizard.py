@@ -48,6 +48,13 @@ class StockQuantWizard(models.TransientModel):
         invoice._onchange_partner_id()
         return invoice._convert_to_write(invoice._cache)
 
+    def _get_price(self, product, partner):
+        price = product.with_context(
+            partner=partner.id,
+            pricelist=partner.property_product_pricelist.id
+        ).price
+        return price
+
     @api.model
     def _prepare_invoice_line(self, move, invoice):
         invoice_line = self.env['account.invoice.line'].new({
@@ -55,10 +62,11 @@ class StockQuantWizard(models.TransientModel):
             'product_id': move.product_id.id,
             'quantity': move.product_qty,
             'uom_id': move.product_uom.id,
-            'price_unit': move.price_unit,
         })
         # Get other invoice line values from product onchange
         invoice_line._onchange_product_id()
+        invoice_line.price_unit = self._get_price(
+            move.product_id, invoice.partner_id)
         invoice_line_vals = invoice_line._convert_to_write(invoice_line._cache)
         return invoice_line_vals
 
