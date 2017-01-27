@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright 2017 LasLabs Inc.
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+
+<odoo>
+    <record id="demo_stockable_product" model="product.product">
+        <field name="name">Demo Stockable Product</field>
+        <field name="product_tmpl_id" ref="demo_stockable_template"/>
+        <field name="uom_id" ref="product.product_uom_kgm"/>
+        <field name="uom_po_id" ref="product.product_uom_kgm"/>
+    </record>
+</odoo>

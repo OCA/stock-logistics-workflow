@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright 2017 LasLabs Inc.
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+
+<odoo>
+    <record id="demo_picking_1" model="stock.picking">
+        <field name="company_id" ref="base.main_company"/>
+        <field name="location_dest_id" ref="stock.location_inventory"/>
+        <field name="location_id" ref="stock.location_inventory"/>
+        <field name="move_type">direct</field>
+        <field name="picking_type_id" ref="stock.picking_type_out"/>
+        <field name="weight_uom_id" ref="product.product_uom_kgm"/>
+    </record>
+
+    <record id="demo_picking_2" model="stock.picking">
+        <field name="company_id" ref="base.main_company"/>
+        <field name="location_dest_id" ref="stock.location_inventory"/>
+        <field name="location_id" ref="stock.location_inventory"/>
+        <field name="move_type">direct</field>
+        <field name="picking_type_id" ref="stock.picking_type_out"/>
+        <field name="weight_uom_id" ref="product.product_uom_kgm"/>
+    </record>
+</odoo>

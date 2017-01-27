@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright 2017 LasLabs Inc.
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+
+<odoo>
+    <record id="demo_picking_rate" model="stock.picking.rate">
+        <field name="date_generated">2017-01-01</field>
+        <field name="picking_id" ref="demo_picking_1"/>
+        <field name="rate" eval="9.00"/>
+        <field name="retail_rate" eval="14.00"/>
+        <field name="rate_currency_id" ref="base.USD"/>
+        <field name="service_id" ref="demo_carrier_1"/>
+    </record>
+</odoo>
