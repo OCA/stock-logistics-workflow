@@ -11,85 +11,85 @@ msgstr ""
 "POT-Creation-Date: 2017-01-23 11:56+0000\n"
 "PO-Revision-Date: 2017-01-23 11:56+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
-"Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
+"Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: de\n"
+"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_picking_mass_assign
 #: model:ir.ui.view,arch_db:stock_picking_mass_assign.view_check_assign_all
 msgid "Apply"
-msgstr ""
+msgstr "Aplicar"
 
 #. module: stock_picking_mass_assign
 #: model:ir.ui.view,arch_db:stock_picking_mass_assign.view_check_assign_all
 msgid "Cancel"
-msgstr "Abbrechen"
+msgstr "Cancelar"
 
 #. module: stock_picking_mass_assign
 #: model:ir.actions.act_window,name:stock_picking_mass_assign.action_check_assign_all
 #: model:ir.model.fields,field_description:stock_picking_mass_assign.field_stock_picking_check_assign_all_check_availability
 msgid "Check Availability"
-msgstr "Verfügbarkeit prüfen"
+msgstr ""
 
 #. module: stock_picking_mass_assign
 #: model:ir.ui.view,arch_db:stock_picking_mass_assign.view_check_assign_all
 msgid "Check the availability of the selected delivery orders"
-msgstr "Verfügbarkeit für ausgewählte Lieferaufträge prüfen"
+msgstr ""
 
 #. module: stock_picking_mass_assign
 #: model:ir.model.fields,field_description:stock_picking_mass_assign.field_stock_picking_check_assign_all_create_uid
 msgid "Created by"
-msgstr "Angelegt von"
+msgstr "Creado por"
 
 #. module: stock_picking_mass_assign
 #: model:ir.model.fields,field_description:stock_picking_mass_assign.field_stock_picking_check_assign_all_create_date
 msgid "Created on"
-msgstr "Angelegt am"
+msgstr "Creado en"
 
 #. module: stock_picking_mass_assign
 #: model:ir.actions.act_window,name:stock_picking_mass_assign.action_deliver_all
 #: model:ir.model.fields,field_description:stock_picking_mass_assign.field_stock_picking_check_assign_all_process_picking
 msgid "Deliver"
-msgstr "Ausliefern"
+msgstr ""
 
 #. module: stock_picking_mass_assign
 #: model:ir.model,name:stock_picking_mass_assign.model_stock_picking_check_assign_all
 msgid "Delivery Orders Check Availability"
-msgstr "Verfügbarkeitsprüfung zur Lieferung"
+msgstr ""
 
 #. module: stock_picking_mass_assign
 #: model:ir.model.fields,field_description:stock_picking_mass_assign.field_stock_picking_check_assign_all_display_name
 msgid "Display Name"
-msgstr "Angezeigter Name"
+msgstr "Nombre mostrado"
 
 #. module: stock_picking_mass_assign
 #: model:ir.actions.act_window,name:stock_picking_mass_assign.action_force_availability_all
 #: model:ir.model.fields,field_description:stock_picking_mass_assign.field_stock_picking_check_assign_all_force_availability
 msgid "Force Availability"
-msgstr "Erzwinge Verfügbarkeit"
+msgstr ""
 
 #. module: stock_picking_mass_assign
 #: model:ir.model.fields,field_description:stock_picking_mass_assign.field_stock_picking_check_assign_all_id
 msgid "ID"
-msgstr "ID"
+msgstr "ID (identificación)"
 
 #. module: stock_picking_mass_assign
 #: model:ir.model.fields,field_description:stock_picking_mass_assign.field_stock_picking_check_assign_all___last_update
 msgid "Last Modified on"
-msgstr "Zuletzt geändert am"
+msgstr "Última modificación en"
 
 #. module: stock_picking_mass_assign
 #: model:ir.model.fields,field_description:stock_picking_mass_assign.field_stock_picking_check_assign_all_write_uid
 msgid "Last Updated by"
-msgstr "Zuletzt aktualisiert durch"
+msgstr "Última actualización de"
 
 #. module: stock_picking_mass_assign
 #: model:ir.model.fields,field_description:stock_picking_mass_assign.field_stock_picking_check_assign_all_write_date
 msgid "Last Updated on"
-msgstr "Zuletzt aktualisiert am"
+msgstr "Última actualización en"
 
 #. module: stock_picking_mass_assign
 #: code:addons/stock_picking_mass_assign/wizard/check_assign_all.py:47
@@ -100,7 +100,7 @@ msgstr ""
 #. module: stock_picking_mass_assign
 #: model:ir.model,name:stock_picking_mass_assign.model_stock_picking
 msgid "Transfer"
-msgstr "Lieferung vornehmen"
+msgstr "Transferir"
 
 #. module: stock_picking_mass_assign
 #: model:ir.model.fields,help:stock_picking_mass_assign.field_stock_picking_check_assign_all_check_availability
@@ -133,4 +133,4 @@ msgstr ""
 #. module: stock_picking_mass_assign
 #: model:ir.ui.view,arch_db:stock_picking_mass_assign.view_check_assign_all
 msgid "or"
-msgstr "oder"
+msgstr "o"

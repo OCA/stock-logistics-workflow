@@ -1,19 +1,22 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_batch_picking
-#
+# * stock_batch_picking
+# 
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-26 08:47+0000\n"
-"PO-Revision-Date: 2016-07-26 08:47+0000\n"
-"Last-Translator: <>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2017-01-23 11:56+0000\n"
+"PO-Revision-Date: 2017-01-23 11:56+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: stock_batch_picking
 #: model:ir.ui.view,arch_db:stock_batch_picking.report_batch_picking
@@ -26,10 +29,14 @@ msgid "<strong>Printed by:</strong>"
 msgstr "<strong>Printed by:</strong>"
 
 #. module: stock_batch_picking
-#: code:addons/stock_batch_picking/wizard/batch_picking_creator.py:48
+#: code:addons/stock_batch_picking/wizard/batch_picking_creator.py:62
 #, python-format
-msgid "All selected pickings are already in a batch picking or are in a wrong state."
-msgstr "Tous les transferts sélectionnés sont déjà dans un bon de préparation ou ont un statut invalide."
+msgid ""
+"All selected pickings are already in a batch picking or are in a wrong "
+"state."
+msgstr ""
+"Tous les transferts sélectionnés sont déjà dans un bon de préparation ou ont"
+" un statut invalide."
 
 #. module: stock_batch_picking
 #: model:ir.ui.view,arch_db:stock_batch_picking.view_create_batch_picking
@@ -92,11 +99,6 @@ msgid "Carrier"
 msgstr "Transporteur"
 
 #. module: stock_batch_picking
-#: model:ir.model,name:stock_batch_picking.model_res_company
-msgid "Companies"
-msgstr "Sociétés"
-
-#. module: stock_batch_picking
 #: model:ir.actions.act_window,name:stock_batch_picking.batch_picking_create_act_window
 msgid "Create Batch Pickings"
 msgstr "Créer un bon de préparation"
@@ -125,7 +127,7 @@ msgid "Date on which the batch picking is to be processed"
 msgstr "Date on which the batch picking is to be processed"
 
 #. module: stock_batch_picking
-#: model:ir.model.fields,field_description:stock_batch_picking.field_res_company_default_picker_id
+#: model:ir.model.fields,field_description:stock_batch_picking.field_stock_warehouse_default_picker_id
 msgid "Default Picker"
 msgstr "Default Picker"
 
@@ -342,6 +344,11 @@ msgid "Visa:_________________"
 msgstr "Visa:_________________"
 
 #. module: stock_batch_picking
+#: model:ir.model,name:stock_batch_picking.model_stock_warehouse
+msgid "Warehouse"
+msgstr ""
+
+#. module: stock_batch_picking
 #: model:ir.model.fields,field_description:stock_batch_picking.field_product_product_description_warehouse
 #: model:ir.ui.view,arch_db:stock_batch_picking.product_normal_form_view
 msgid "Warehouse Description"
@@ -380,17 +387,19 @@ msgstr "stock.batch.picking"
 
 #. module: stock_batch_picking
 #: model:ir.model.fields,help:stock_batch_picking.field_stock_batch_picking_state
-msgid "the state of the batch picking. Workflow is draft -> assigned -> done or cancel"
-msgstr "L'état du bon de préparation. Les états sont Brouillon -> Assigné ->\n"
+msgid ""
+"the state of the batch picking. Workflow is draft -> assigned -> done or "
+"cancel"
+msgstr ""
+"L'état du bon de préparation. Les états sont Brouillon -> Assigné ->\n"
 "Fait ou Annulé"
+
+#. module: stock_batch_picking
+#: model:ir.model.fields,help:stock_batch_picking.field_stock_warehouse_default_picker_id
+msgid "the user to which the batch pickings are assigned by default"
+msgstr ""
 
 #. module: stock_batch_picking
 #: model:ir.model.fields,help:stock_batch_picking.field_stock_batch_picking_picker_id
 msgid "the user to which the pickings are assigned"
 msgstr "L'utilisateur en charge du traitement du bon de préparation"
-
-#. module: stock_batch_picking
-#: model:ir.model.fields,help:stock_batch_picking.field_res_company_default_picker_id
-msgid "the user to which the pickings are assigned by default"
-msgstr "the user to which the pickings are assigned by default"
-

@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * stock_picking_show_return
+# * stock_picking_transfer_lot_autoassign
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
@@ -18,17 +18,7 @@ msgstr ""
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. module: stock_picking_show_return
-#: model:ir.model.fields,field_description:stock_picking_show_return.field_stock_picking_returned_ids
-msgid "Returned pickings"
-msgstr ""
-
-#. module: stock_picking_show_return
-#: model:ir.ui.view,arch_db:stock_picking_show_return.view_picking_form
-msgid "Returns"
-msgstr ""
-
-#. module: stock_picking_show_return
-#: model:ir.model,name:stock_picking_show_return.model_stock_picking
+#. module: stock_picking_transfer_lot_autoassign
+#: model:ir.model,name:stock_picking_transfer_lot_autoassign.model_stock_picking
 msgid "Transfer"
 msgstr "Lieferung vornehmen"
