@@ -4,63 +4,64 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
+# Paolo Valier <paolo.valier@hotmail.it>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-23 11:56+0000\n"
 "PO-Revision-Date: 2017-01-23 11:56+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/23907/pt_BR/)\n"
+"Last-Translator: Paolo Valier <paolo.valier@hotmail.it>, 2017\n"
+"Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: pt_BR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_invoice
 msgid "Invoice"
-msgstr "Fatura"
+msgstr "Fattura"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_invoice_line
 msgid "Invoice Line"
-msgstr "Linha da Fatura"
+msgstr "Riga Fattura"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move_invoice_line_ids
 #: model:ir.ui.view,arch_db:stock_picking_invoice_link.view_move_form
 msgid "Invoice Lines"
-msgstr "Linhas da Fatura"
+msgstr "Righe Fattura"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking_invoice_ids
 #: model:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
 msgid "Invoices"
-msgstr "Faturas"
+msgstr "Fatture"
 
 #. module: stock_picking_invoice_link
 #: model:ir.ui.view,arch_db:stock_picking_invoice_link.invoice_form
 msgid "Pickings"
-msgstr "Separações"
+msgstr "Pickings"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_invoice_picking_ids
 msgid "Related Pickings"
-msgstr "Separações Relacionadas"
+msgstr "Picking Correlati"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_invoice_line_move_line_ids
 msgid "Related Stock Moves"
-msgstr "Movimentações de Estoque Relacionadas"
+msgstr "Movimenti di Magazzino Correlati"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_stock_move
 msgid "Stock Move"
-msgstr "Movimentação do Estoque"
+msgstr "Movimento di magazzino"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_stock_picking
 msgid "Transfer"
-msgstr "Transferir"
+msgstr "Trasferisci"
