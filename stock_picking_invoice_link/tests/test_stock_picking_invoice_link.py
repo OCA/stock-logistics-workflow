@@ -8,7 +8,7 @@ from openerp.addons.sale.tests.test_sale_common import TestSale
 
 
 class TestStockPickingInvoiceLink(TestSale):
-    def test_00_sale_stock_invoice(self):
+    def test_00_sale_stock_invoice_link(self):
         inv_obj = self.env['account.invoice']
         self.so = self.env['sale.order'].create({
             'partner_id': self.partner.id,
@@ -33,7 +33,9 @@ class TestStockPickingInvoiceLink(TestSale):
         self.assertEqual(self.so.invoice_status, 'no',
                          'Sale Stock: so invoice_status should be '
                          '"nothing to invoice" after invoicing')
-        pick_1 = self.so.picking_ids
+        pick_1 = self.so.picking_ids.filtered(
+            lambda x: x.picking_type_code == 'outgoing' and
+            x.state in ('confirmed', 'partially_available'))
         pick_1.force_assign()
         pick_1.pack_operation_product_ids.write({'qty_done': 1})
         wiz_act = pick_1.do_new_transfer()
@@ -52,7 +54,9 @@ class TestStockPickingInvoiceLink(TestSale):
                          'and invoicing')
         self.assertEqual(len(self.so.picking_ids), 2,
                          'Sale Stock: number of pickings should be 2')
-        pick_2 = self.so.picking_ids[0]
+        pick_2 = self.so.picking_ids.filtered(
+            lambda x: x.picking_type_code == 'outgoing' and
+            x.state in ('confirmed', 'partially_available'))
         pick_2.force_assign()
         pick_2.pack_operation_product_ids.write({'qty_done': 1})
         self.assertIsNone(pick_2.do_new_transfer(),
