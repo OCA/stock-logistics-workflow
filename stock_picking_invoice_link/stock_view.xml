@@ -6,10 +6,10 @@
         <record id="view_picking_form" model="ir.ui.view">
             <field name="name">stock_picking_invoice_link.stock.picking.form</field>
             <field name="model">stock.picking</field>
-            <field name="inherit_id" ref="stock_account.view_picking_inherit_form2"/>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
-                <field name="invoice_state" position="after">
-                    <field name="invoice_id" string="Invoice" groups="account.group_account_invoice" attrs="{'invisible':[('invoice_state', '=', 'none')]}" context="{'form_view_ref': invoice_view_xmlid}"/>
+                <field name="picking_type_id" position="after">
+                    <field name="invoice_id" string="Invoice" groups="account.group_account_invoice" attrs="{'invisible':[('invoice_id', '=', False)]}" context="{'form_view_ref': invoice_view_xmlid}"/>
                     <field name="invoice_view_xmlid" invisible="1"/>
                 </field>
             </field>
@@ -19,9 +19,9 @@
         <record id="view_move_form" model="ir.ui.view">
             <field name="name">stock_picking_invoice_link.stock.move.form</field>
             <field name="model">stock.move</field>
-            <field name="inherit_id" ref="stock_account.view_move_form_inherit"/>
+            <field name="inherit_id" ref="stock.view_move_form"/>
             <field name="arch" type="xml">
-                <field name="invoice_state" position="after">
+                <field name="name" position="after">
                     <field name="invoice_line_id" groups="account.group_account_invoice"/>
                 </field>
             </field>
@@ -30,9 +30,9 @@
         <record id="view_move_picking_form" model="ir.ui.view">
             <field name="name">stock_picking_invoice_link.stock.move.picking.form</field>
             <field name="model">stock.move</field>
-            <field name="inherit_id" ref="stock_account.view_move_picking_from_stockaccount_inherit"/>
+            <field name="inherit_id" ref="stock.view_move_picking_form"/>
             <field name="arch" type="xml">
-                <field name="invoice_state" position="after">
+                <field name="name" position="after">
                     <field name="invoice_line_id" groups="account.group_account_invoice"/>
                 </field>
             </field>

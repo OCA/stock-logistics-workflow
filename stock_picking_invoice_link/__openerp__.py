@@ -2,6 +2,7 @@
 ##############################################################################
 #
 #    Copyright (C) 2013-15 Agile Business Group sagl (<http://www.agilebg.com>)
+#    Copyright (C) 2017 BCIM (<http://www.bcim.be>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -20,18 +21,20 @@
 
 {
     'name': 'Stock Picking Invoice Link',
-    'version': '8.0.1.0.0',
+    'version': '9.0.1.0.0',
     'category': 'Warehouse Management',
     'summary': 'Adds link between pickings and generated invoices',
-    'author': 'Agile Business Group, Odoo Community Association (OCA)',
+    'author': 'Agile Business Group, '
+              'BCIM sprl, '
+              'Odoo Community Association (OCA)',
     'website': 'http://www.agilebg.com',
     'license': 'AGPL-3',
-    'depends': ['stock_account'],
+    'depends': ['sale_stock'],
     'data': [
         'stock_view.xml',
         'account_invoice_view.xml',
     ],
     'demo': [],
     'test': [],
-    'installable': False,
+    'installable': True,
 }
