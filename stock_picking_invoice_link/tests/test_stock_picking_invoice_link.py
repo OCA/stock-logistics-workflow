@@ -18,11 +18,16 @@ class TestStockPickingInvoiceLink(TestSale):
                 'name': p.name, 'product_id': p.id, 'product_uom_qty': 2,
                 'product_uom': p.uom_id.id, 'price_unit': p.list_price
             }) for (_, p) in self.products.iteritems()],
+            'pricelist_id': self.env.ref('product.list0').id,
+            'picking_policy': 'direct',
         })
         self.so.action_confirm()
         self.assertTrue(self.so.picking_ids,
                         'Sale Stock: no picking created for '
                         '"invoice on delivery" stockable products')
+
+        # invoice on order
+        self.so.action_invoice_create()
 
         # deliver partially
         self.assertEqual(self.so.invoice_status, 'no',
