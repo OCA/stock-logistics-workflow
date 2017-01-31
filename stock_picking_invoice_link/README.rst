@@ -2,17 +2,15 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-==================================
-Link between invoices and pickings
-==================================
+========================================
+Link between invoices and their pickings
+========================================
 
 This module adds a link between pickings and invoices.
 So that user can easily reach the invoices related to the picking
 and see the pickings related to the invoice.
 
-As the invoincing flow has changed in odoo version 9,
-invoices linked to pickings (and vice versa), are shown independently from
-the invoicing method
+This only applies on the invoices generated from pickings.
 
 Usage
 =====
@@ -44,6 +42,7 @@ Contributors
 * Unai Alkorta
 * Iñaki Zabala
 * Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>
+* Jacques-Etienne Baudoux <je@bcim.be>
 
 Maintainer
 ----------

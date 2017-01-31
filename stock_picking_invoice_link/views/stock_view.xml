@@ -8,11 +8,12 @@
             <field name="model">stock.picking</field>
             <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
-                <notebook position="inside">
-                    <page string="Invoices" groups="account.group_account_invoice">
-                        <field name="invoice_ids" nolabel="1" context="{'tree_view_ref': 'account.invoice_tree', 'form_view_ref': 'stock_picking_invoice_link.invoice_form'}"/>
-                    </page>
-                </notebook>
+                <field name="picking_type_id" position="after">
+                    <field name="invoice_id" string="Invoice"
+                        groups="account.group_account_invoice"
+                        attrs="{'invisible':[('invoice_id', '=', False)]}"
+                        context="{'tree_view_ref': 'account.invoice_tree', 'form_view_ref': 'invoice_form'}"/>
+                </field>
             </field>
         </record>
 
@@ -22,11 +23,20 @@
             <field name="model">stock.move</field>
             <field name="inherit_id" ref="stock.view_move_form"/>
             <field name="arch" type="xml">
-                <group name="moved_quants_grp" position="after">
-                    <group name="invoice_line_ids" string="Invoice Lines" colspan="4" groups="account.group_account_invoice">
-                        <field name="invoice_line_ids" nolabel="1"/>
-                    </group>
-                </group>
+                <field name="name" position="after">
+                    <field name="invoice_line_id" groups="account.group_account_invoice"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_move_picking_form" model="ir.ui.view">
+            <field name="name">stock_picking_invoice_link.stock.move.picking.form</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_picking_form"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="invoice_line_id" groups="account.group_account_invoice"/>
+                </field>
             </field>
         </record>
 
