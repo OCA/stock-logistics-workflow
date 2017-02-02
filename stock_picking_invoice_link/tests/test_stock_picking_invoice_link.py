@@ -73,13 +73,19 @@ class TestStockPickingInvoiceLink(TestSale):
                          'invoicing')
 
         # Check links
-        self.assertEqual(inv_1.picking_ids, pick_1,
-                         "Invoice 1 must link to only First Partial Delivery")
-        self.assertEqual(inv_1.invoice_line_ids, pick_1.move_lines,
-                         "Invoice 1 lines must link to only "
-                         "First Partial Delivery lines")
-        self.assertEqual(inv_2.picking_ids, pick_2,
-                         "Invoice 2 must link to only Second Delivery")
-        self.assertEqual(inv_1.invoice_line_ids, pick_1.move_lines,
-                         "Invoice 2 lines must link to only "
-                         "Second Delivery lines")
+        self.assertEqual(
+            inv_1.picking_ids, pick_1,
+            "Invoice 1 must link to only First Partial Delivery")
+        self.assertEqual(
+            inv_1.invoice_line_ids.mapped('move_line_ids'),
+            pick_1.move_lines.filtered(
+                lambda x: x.product_id.invoice_policy=="delivery"),
+            "Invoice 1 lines must link to only First Partial Delivery lines")
+        self.assertEqual(
+            inv_2.picking_ids, pick_2,
+            "Invoice 2 must link to only Second Delivery")
+        self.assertEqual(
+            inv_2.invoice_line_ids.mapped('move_line_ids'),
+            pick_2.move_lines.filtered(
+                lambda x: x.product_id.invoice_policy=="delivery"),
+            "Invoice 2 lines must link to only Second Delivery lines")

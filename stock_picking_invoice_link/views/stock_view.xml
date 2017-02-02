@@ -9,9 +9,10 @@
             <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
                 <field name="picking_type_id" position="after">
-                    <field name="invoice_id" string="Invoice"
+                    <field name="invoice_ids" string="Invoice"
                         groups="account.group_account_invoice"
-                        attrs="{'invisible':[('invoice_id', '=', False)]}"
+                        attrs="{'invisible':[('invoice_ids', '=', False)]}"
+                        widget="many2many_tags"
                         context="{'tree_view_ref': 'account.invoice_tree', 'form_view_ref': 'invoice_form'}"/>
                 </field>
             </field>
@@ -24,7 +25,7 @@
             <field name="inherit_id" ref="stock.view_move_form"/>
             <field name="arch" type="xml">
                 <field name="name" position="after">
-                    <field name="invoice_line_id" groups="account.group_account_invoice"/>
+                    <field name="invoice_line_ids" widget="many2many_tags" groups="account.group_account_invoice"/>
                 </field>
             </field>
         </record>
@@ -35,7 +36,7 @@
             <field name="inherit_id" ref="stock.view_move_picking_form"/>
             <field name="arch" type="xml">
                 <field name="name" position="after">
-                    <field name="invoice_line_id" groups="account.group_account_invoice"/>
+                    <field name="invoice_line_ids" widget="many2many_tags" groups="account.group_account_invoice"/>
                 </field>
             </field>
         </record>
