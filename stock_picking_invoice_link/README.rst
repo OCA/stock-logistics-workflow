@@ -6,11 +6,19 @@
 Link between invoices and their pickings
 ========================================
 
-This module adds a link between pickings and invoices.
-So that user can easily reach the invoices related to the picking
-and see the pickings related to the invoice.
+This module adds a link between pickings and invoices as well as on the lines.
+Invoices are generated from sales orders. With this module, you can find back
+which deliveries an invoice relates to.
 
-This only applies on the invoices generated from pickings.
+In standard, if you make a partial delivery and invoice it, then make remaining
+delivery and invoice it, it is impossible to known to what delivery the
+invoices relate to. You only have the quantity.
+
+This module is also useful if you want to present data on the invoice report
+grouped by deliveries.
+
+Note that the links are only for products with an invoicing policy set on
+delivery.
 
 Usage
 =====
@@ -29,6 +37,11 @@ help us smashing it by providing a detailed and welcomed feedback.
 
 Credits
 =======
+
+Images
+------
+
+* Odoo Community Association: `Icon <https://github.com/OCA/maintainer-tools/blob/master/template/module/static/description/icon.svg>`_.
 
 Contributors
 ------------
