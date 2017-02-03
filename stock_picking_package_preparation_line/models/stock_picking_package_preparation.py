@@ -137,14 +137,13 @@ class StockPickingPackagePreparation(models.Model):
                         })
                     moves.append((line, move_data))
             if moves:
-                if not (
-                    picking_type.default_location_src_id and
-                    picking_type.default_location_dest_id
+                if (
+                    not picking_type.default_location_src_id or
+                    not picking_type.default_location_dest_id
                 ):
                     msg = _(
-                        'Cannot find a location for %s ' %
-                        picking_type.name
-                    )
+                        'Cannot find a default location for picking type: %s'
+                        % picking_type.name)
                     raise UserError(msg)
                 picking_data = {
                     'move_type': 'direct',
