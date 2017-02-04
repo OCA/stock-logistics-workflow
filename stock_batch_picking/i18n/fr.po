@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-23 11:56+0000\n"
-"PO-Revision-Date: 2017-01-23 11:56+0000\n"
+"POT-Creation-Date: 2017-01-31 14:20+0000\n"
+"PO-Revision-Date: 2017-01-31 14:20+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -243,11 +243,6 @@ msgstr "Picked By"
 #: model:ir.ui.view,arch_db:stock_batch_picking.stock_batch_picking_search
 msgid "Picker"
 msgstr "Picker"
-
-#. module: stock_batch_picking
-#: model:ir.ui.view,arch_db:stock_batch_picking.vpicktree
-msgid "Picking list"
-msgstr "Bon de transfert"
 
 #. module: stock_batch_picking
 #: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_active_picking_ids
