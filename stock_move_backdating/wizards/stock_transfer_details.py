@@ -40,6 +40,12 @@ class StockTransferDetails(models.TransientModel):
             packop['date'] = now
         return res
 
+    @api.one
+    def do_detailed_transfer(self):
+        res = super(StockTransferDetails, self.with_context(
+            {'move_date': self.date_backdating})).do_detailed_transfer()
+        return res
+
 
 class StockTransferDetailsItems(models.TransientModel):
     _inherit = 'stock.transfer_details_items'

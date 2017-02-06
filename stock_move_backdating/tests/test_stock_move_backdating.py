@@ -31,6 +31,12 @@ class TestStockMoveBackdating(TransactionCase):
         date_backdating_2 = self._get_date_backdating(2)
         self._transfer_picking_with_dates(date_backdating_1, date_backdating_2)
 
+    def test_account_move_creation(self):
+        date_backdating = self._get_date_backdating(1)
+        self._transfer_picking_with_date(date_backdating)
+        self.assertEqual(
+            self.picking.move_lines[0].date[0:10], date_backdating)
+
     def _move_factory(self, product, qty):
         return self.env['stock.move'].create({
             'name': '/',
