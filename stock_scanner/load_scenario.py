@@ -228,6 +228,7 @@ def scenario_convert_file(cr, module, filename, idref,
                      mode=mode, noupdate=noupdate,
                      kind=kind, report=report, pathname=pathname)
 
+
 # Monkey patch Odoo's module file loading
 # To be able to load scenarios from manifest file
 openerp.tools.convert_file = scenario_convert_file
