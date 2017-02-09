@@ -871,5 +871,6 @@ class SentinelException (Exception):
 class SentinelBackException (SentinelException):
     pass
 
+
 if __name__ == '__main__':
     curses.wrapper(Sentinel)
