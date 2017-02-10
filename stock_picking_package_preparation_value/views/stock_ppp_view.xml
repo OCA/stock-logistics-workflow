@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="view_picking_package_form_value">
+            <field name="name">stock.picking.package.preparation.value</field>
+            <field name="model">stock.picking.package.preparation</field>
+            <field name="inherit_id"
+                   ref="stock_picking_package_preparation.stock_picking_package_preparation_form"/>
+            <field name="arch" type="xml">
+                <field name="picking_ids" position="after">
+                    <group colspan="4" col="7">
+                        <field name="amount_untaxed" sum="Untaxed amount"/>
+                        <field name="amount_tax"/>
+                        <field name="amount_total" sum="Total amount"/>
+                    </group>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_picking_package_tree_value">
+            <field name="name">stock.picking.package.preparation.tree.value</field>
+            <field name="model">stock.picking.package.preparation</field>
+            <field name="inherit_id"
+                   ref="stock_picking_package_preparation.stock_picking_package_preparation_tree"/>
+            <field name="arch" type="xml">
+                <field name="state" position="after">
+                    <field name="amount_untaxed" sum="Untaxed amount"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>
