@@ -4,7 +4,7 @@
 
 {
     "name": "Stock picking package preparation value",
-    "version": "8.0.1.0",
+    "version": "8.0.1.0.0",
     "author": "Apulia Software srl",
     'website': 'http://www.apuliasoftware.it/',
     "category": "Stock",
