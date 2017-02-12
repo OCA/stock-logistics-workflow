@@ -6,7 +6,7 @@
 Stock Picking Value
 ===================
 
- * Adds value to pickings and stock move from sale order.
+ * Adds sales price value to pickings and stock move from sale order.
 
 Usage
 =====
@@ -36,4 +36,4 @@ Credits
 Contributors
 ------------
 
-* Andrea Cometa <a.cometa@apuliasfotware.it>
+* Andrea Cometa <a.cometa@apuliasoftware.it>

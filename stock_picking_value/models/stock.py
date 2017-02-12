@@ -53,15 +53,16 @@ class StockMove(models.Model):
     def _compute_sale_prices(self):
         if self.procurement_id.sale_line_id:
             sale_line = self.procurement_id.sale_line_id
-            self.sale_taxes = round(
-                (sale_line.order_id._amount_line_tax(sale_line) /
-                 sale_line.product_uom_qty) * self.product_qty, 2
-            ) if sale_line.product_uom_qty else 0.00
+            self.sale_taxes = sale_line.product_uom_qty and round(
+                ((sale_line.order_id._amount_line_tax(sale_line) /
+                  sale_line.product_uom_qty) * self.product_qty),
+                dp.get_precision('Account')(self._cr)[1]) or 0.00
             self.sale_price_untaxed = sale_line.price_reduce
             self.sale_price_unit = sale_line.price_unit
             self.sale_discount = sale_line.discount
-            self.sale_subtotal = round(sale_line.price_reduce *
-                                       self.product_qty, 2)
+            self.sale_subtotal = round(
+                sale_line.price_reduce * self.product_qty,
+                dp.get_precision('Account')(self._cr)[1])
         else:
             self.sale_taxes = 0
             self.sale_price_untaxed = 0
@@ -104,13 +105,15 @@ class StockPackOperation(models.Model):
         if self.linked_move_operation_ids:
             move = self.linked_move_operation_ids[0].move_id
             if move.procurement_id.sale_line_id:
-                self.sale_taxes = round((move.sale_taxes / move.product_qty) *
-                                        self.product_qty, 2)
+                self.sale_taxes = round(
+                    (move.sale_taxes / move.product_qty) * self.product_qty,
+                    dp.get_precision('Account')(self._cr)[1])
                 self.sale_price_untaxed = move.sale_price_untaxed
                 self.sale_price_unit = move.sale_price_unit
                 self.sale_discount = move.sale_discount
-                self.sale_subtotal = round(self.sale_price_untaxed *
-                                           self.product_qty, 2)
+                self.sale_subtotal = round(
+                    self.sale_price_untaxed * self.product_qty,
+                    dp.get_precision('Account')(self._cr)[1])
 
     sale_subtotal = fields.Float(
         compute='_compute_sale_prices',
