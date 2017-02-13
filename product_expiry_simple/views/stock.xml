@@ -77,7 +77,7 @@
     <field name="model">stock.quant</field>
     <field name="inherit_id" ref="stock.quant_search_view"/>
     <field name="arch" type="xml">
-        <filter name="internal_loc" position="after">
+        <filter name="positive" position="after">
             <separator/>
             <filter string="Expired" name="expired"
                 domain="[('expiry_date', '&lt;', context_today().strftime('%Y-%m-%d'))]"
