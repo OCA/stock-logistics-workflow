@@ -15,10 +15,6 @@ class TestStockPickingRate(TestHelper):
             'rate_ids': [(6, 0, [r.id for r in self.rate_ids])],
         }
 
-    def new_wizard(self, vals=None):
-        vals = self.wizard_vals if vals is None else {}
-        return self.Wizard.create(vals)
-
     def test_default_rate_ids(self):
         """ It should default to active rate ids """
         exp = [r.id for r in self.rate_ids]

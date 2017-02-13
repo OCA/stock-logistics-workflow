@@ -82,6 +82,7 @@ class StockPickingRate(models.Model):
                 rec_id.date_purchased = fields.Datetime.now()
 
     @api.multi
+    @api.depends('date_purchased')
     def _compute_is_purchased(self):
         for rec_id in self:
             rec_id.is_purchased = bool(rec_id.date_purchased)
