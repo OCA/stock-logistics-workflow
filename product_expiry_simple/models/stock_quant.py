@@ -14,11 +14,9 @@ class StockQuant(models.Model):
     # method copy/pasted from the official product_expiry module
     # © Odoo SA
     @api.model
-    def apply_removal_strategy(
-            self, location, product, qty, domain, removal_strategy):
+    def _quants_removal_get_order(
+            self, removal_strategy):
         if removal_strategy == 'fefo':
-            order = 'expiry_date, location_id, package_id, lot_id, in_date, id'
-            return self._quants_get_order(
-                location, product, qty, domain, order)
-        return super(StockQuant, self).apply_removal_strategy(
-            location, product, qty, domain, removal_strategy)
+            return 'expiry_date, in_date, id'
+        return super(StockQuant, self)._quants_removal_get_order(
+            removal_strategy)
