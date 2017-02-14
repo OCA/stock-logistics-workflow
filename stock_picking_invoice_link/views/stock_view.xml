@@ -8,12 +8,13 @@
             <field name="model">stock.picking</field>
             <field name="inherit_id" ref="stock_account.view_picking_inherit_form2"/>
             <field name="arch" type="xml">
-                <field name="invoice_state" position="after">
-                    <field name="invoice_ids"
-                           groups="account.group_account_invoice"
-                           attrs="{'invisible': [('invoice_state', '=', 'none')]}"
-                    />
-                </field>
+                <notebook position="inside">
+                    <page string="Invoices" name="invoice"
+                            groups="account.group_account_invoice"
+                            attrs="{'invisible': [('invoice_state', '!=', 'invoiced')]}">
+                        <field name="invoice_ids"/>
+                    </page>
+                </notebook>
             </field>
         </record>
 
