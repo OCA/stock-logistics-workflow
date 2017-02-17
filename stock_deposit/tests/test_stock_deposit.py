@@ -32,6 +32,10 @@ class TestStockDeposit(TransactionCase):
             'name': 'Customer - test',
             'customer': True,
         })
+        self.customer2 = self.env['res.partner'].create({
+            'name': 'Customer - test - 2',
+            'customer': True,
+        })
 
     def qty_on_hand(self):
         stock_change_obj = self.env['stock.change.product.qty']
@@ -87,6 +91,12 @@ class TestStockDeposit(TransactionCase):
         ])
         self.assertEqual(len(picking_type), 1)
         self.assertTrue(picking_type.sequence_id)
+
+    def test_picking_onchange_owner(self):
+        picking = self._prepare_picking()
+        picking.owner_id = self.customer2.id
+        picking._onchange_owner_id()
+        self.assertEqual(picking.partner_id.id, self.customer2.id)
 
     def test_picking_transfer_deposit(self):
         # Check qty after create inventory on hand
