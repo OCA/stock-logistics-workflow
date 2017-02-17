@@ -71,7 +71,7 @@ class TestStockMoveBackdating(TransactionCase):
         wizard.date_backdating = date_backdating
         wizard.onchange_date_backdating()
         self.assertEqual(wizard.item_ids[0].date[0:10], date_backdating)
-        self.assertEqual(wizard.item_ids[0].date[0:10], date_backdating)
+        self.assertEqual(wizard.item_ids[1].date[0:10], date_backdating)
         wizard.do_detailed_transfer()
         self.assertEqual(self.picking.state, 'done')
         self.assertEqual(
