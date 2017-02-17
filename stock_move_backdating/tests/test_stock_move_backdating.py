@@ -33,9 +33,22 @@ class TestStockMoveBackdating(TransactionCase):
 
     def test_account_move_creation(self):
         date_backdating = self._get_date_backdating(1)
+        product_8 = self.env.ref('product.product_product_8')
+        product_9 = self.env.ref('product.product_product_9')
+        product_8.categ_id.property_stock_account_output_categ = self.env.ref(
+            'account.stk')
+        product_8.categ_id.property_stock_valutation_account_id = self.env.ref(
+            'account.cas')
+        product_8.valutation = 'real_time'
+        product_9.categ_id.property_stock_account_output_categ = self.env.ref(
+            'account.stk')
+        product_9.categ_id.property_stock_valutation_account_id = self.env.ref(
+            'account.cas')
+        product_9.valutation = 'real_time'
         self._transfer_picking_with_date(date_backdating)
-        self.assertEqual(
-            self.picking.move_lines[0].date[0:10], date_backdating)
+        account_move = self.env['account.move'].search(
+            [('ref', '=', self.picking.name)])
+        self.assertEqual(account_move.date[0:10], date_backdating)
 
     def _move_factory(self, product, qty):
         return self.env['stock.move'].create({

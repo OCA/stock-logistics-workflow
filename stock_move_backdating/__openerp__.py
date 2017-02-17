@@ -16,5 +16,6 @@
         'wizards/stock_transfer_details_view.xml',
     ],
     'installable': True,
+    "license": "AGPL-3",
     'auto_install': False,
 }
