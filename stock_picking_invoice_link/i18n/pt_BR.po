@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-31 09:53+0000\n"
-"PO-Revision-Date: 2017-01-10 08:59+0000\n"
+"POT-Creation-Date: 2017-02-09 18:12+0000\n"
+"PO-Revision-Date: 2017-02-17 15:35+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr "Fatura"
 #: model:ir.model,name:stock_picking_invoice_link.model_account_invoice_line
 #: field:stock.move,invoice_line_id:0
 msgid "Invoice Line"
-msgstr ""
+msgstr "LInha da fatura"
 
 #. module: stock_picking_invoice_link
 #: field:stock.move,invoice_line_ids:0
