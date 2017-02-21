@@ -9,22 +9,26 @@ from openerp.addons.decimal_precision import decimal_precision as dp
 class StockPickingPackagePreparation(models.Model):
     _inherit = 'stock.picking.package.preparation'
 
-    @api.one
+    @api.multi
     def _compute_amount(self):
-        self.amount_untaxed = 0.0
-        self.amount_tax = 0.0
-        self.amount_total = 0.0
-        for picking in self.picking_ids:
-            self.amount_untaxed += picking.amount_untaxed
-            self.amount_tax += picking.amount_tax
-            self.amount_total += picking.amount_total
+        for pack in self:
+            pack.amount_untaxed = 0.0
+            pack.amount_tax = 0.0
+            pack.amount_total = 0.0
+            for pack_line in pack.line_ids:
+                if pack_line.move_id.procurement_id and\
+                        pack_line.move_id.procurement_id.sale_line_id:
+                    pack.amount_untaxed += pack_line.move_id.procurement_id.\
+                        sale_line_id.price_subtotal
+                    pack.amount_tax += pack_line.move_id.sale_taxes
+            pack.amount_total += pack.amount_untaxed + pack.amount_tax
 
     amount_untaxed = fields.Float(
         compute='_compute_amount', digits_compute=dp.get_precision('Account'),
-        string='Untaxed Amount')
+        string='Sale Untaxed Amount')
     amount_tax = fields.Float(
         compute='_compute_amount', digits_compute=dp.get_precision('Account'),
-        string='Taxes')
+        string='Sale Taxes')
     amount_total = fields.Float(
         compute='_compute_amount', digits_compute=dp.get_precision('Account'),
-        string='Total')
+        string='Sale Total')

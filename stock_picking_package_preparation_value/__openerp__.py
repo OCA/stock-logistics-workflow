@@ -10,7 +10,7 @@
     "category": "Stock",
     "summary": "Adds value to pickings.",
     "license": "AGPL-3",
-    "depends": ["stock_picking_value", ],
+    "depends": ["stock_picking_package_preparation_line", ],
     "data": ['views/stock_ppp_view.xml', ],
     "active": False,
     "installable": True,

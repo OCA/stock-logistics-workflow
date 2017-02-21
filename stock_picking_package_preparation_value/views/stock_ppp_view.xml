@@ -11,7 +11,7 @@
                 <field name="picking_ids" position="after">
                     <group colspan="4" col="7">
                         <field name="amount_untaxed" sum="Untaxed amount"/>
-                        <field name="amount_tax"/>
+                        <field name="amount_tax" sum="Tax amount"/>
                         <field name="amount_total" sum="Total amount"/>
                     </group>
                 </field>
