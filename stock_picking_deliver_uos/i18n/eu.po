@@ -10,22 +10,22 @@ msgstr ""
 "POT-Creation-Date: 2017-02-18 08:44+0000\n"
 "PO-Revision-Date: 2015-10-21 16:34+0000\n"
 "Last-Translator: <>\n"
-"Language-Team: French (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/fr/)\n"
+"Language-Team: Basque (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/eu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: fr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: eu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_picking_deliver_uos
 #: model:ir.model,name:stock_picking_deliver_uos.model_stock_transfer_details
 msgid "Picking wizard"
-msgstr "Assistant de sélection"
+msgstr ""
 
 #. module: stock_picking_deliver_uos
 #: model:ir.model,name:stock_picking_deliver_uos.model_stock_transfer_details_items
 msgid "Picking wizard items"
-msgstr "Ligne d'assistant de préparation"
+msgstr ""
 
 #. module: stock_picking_deliver_uos
 #: field:stock.transfer_details,product_uos:0
@@ -51,4 +51,4 @@ msgstr ""
 #: code:addons/stock_picking_deliver_uos/wizard/stock_transfer_details.py:77
 #, python-format
 msgid "Warning"
-msgstr ""
+msgstr "Kontuz"

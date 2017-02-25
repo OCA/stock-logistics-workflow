@@ -3,13 +3,14 @@
 # * picking_dispatch
 # 
 # Translators:
+# Hosni Hadj Taher <hajhasni@hotmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-18 01:44+0000\n"
-"PO-Revision-Date: 2016-11-25 14:55+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"POT-Creation-Date: 2017-02-18 08:44+0000\n"
+"PO-Revision-Date: 2017-02-21 11:36+0000\n"
+"Last-Translator: Hosni Hadj Taher <hajhasni@hotmail.com>\n"
 "Language-Team: French (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,7 +24,7 @@ msgstr ""
 msgid ""
 "(Only move that are not part of a dispatch order and in confirm, waiting or "
 "assigned state can be used)"
-msgstr ""
+msgstr "(Seulement déplacer qui ne font pas partie d'un ordre de livraison et en confirmation, état en attente ou assigné peut être utilisé)"
 
 #. module: picking_dispatch
 #: view:stock.picking:picking_dispatch.view_picking_form
@@ -98,7 +99,7 @@ msgstr "Annulé"
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Carrier"
-msgstr ""
+msgstr "Transporteur"
 
 #. module: picking_dispatch
 #: model:ir.actions.act_window,name:picking_dispatch.action_dispatch_check_assign_all
@@ -158,7 +159,7 @@ msgstr "Date à laquelle le bon de préparation doit être traité"
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Date:"
-msgstr ""
+msgstr "Date:"
 
 #. module: picking_dispatch
 #: field:res.company,default_picker_id:0
@@ -174,12 +175,12 @@ msgstr "Bon de Préparation"
 #: code:addons/picking_dispatch/wizard/create_dispatch.py:104
 #, python-format
 msgid "Dispatch %s already covers moves %s"
-msgstr ""
+msgstr "Dispatcher %s les déplacements déjà couverts %s"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Dispatch Order"
-msgstr ""
+msgstr "Ordre de Livraison"
 
 #. module: picking_dispatch
 #: model:ir.model,name:picking_dispatch.model_picking_dispatch
@@ -237,7 +238,7 @@ msgstr "Erreur"
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Explanation"
-msgstr ""
+msgstr "Explication"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
@@ -300,7 +301,7 @@ msgstr "Mouvements"
 #: code:addons/picking_dispatch/wizard/create_dispatch.py:111
 #, python-format
 msgid "Moves %s from picking %s are in state %s"
-msgstr ""
+msgstr "Les déplacements %s de la sélection %s sont dans l'état %s"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
@@ -328,13 +329,13 @@ msgstr "Pas de bon de préparation sélectionné"
 #: code:addons/picking_dispatch/wizard/dispatch_start.py:38
 #, python-format
 msgid "No selected picking dispatch"
-msgstr ""
+msgstr "Aucun bon de préparation sélectionné"
 
 #. module: picking_dispatch
 #: code:addons/picking_dispatch/wizard/create_dispatch.py:96
 #, python-format
 msgid "No valid stock moves found to create the dispatch!"
-msgstr ""
+msgstr "Aucun mouvement de stock valide n'a été trouvé pour créer l'envoi!"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form
@@ -350,7 +351,7 @@ msgstr "Date"
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Picked By"
-msgstr ""
+msgstr "Choisis par"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,picker_id:0
@@ -406,7 +407,7 @@ msgstr "Bon de livraison"
 #. module: picking_dispatch
 #: model:ir.actions.report.xml,name:picking_dispatch.action_report_picking_dispatch
 msgid "Picking dispatch"
-msgstr ""
+msgstr "Bon de préparation"
 
 #. module: picking_dispatch
 #: view:res.company:picking_dispatch.view_company_form_inherit
@@ -421,7 +422,7 @@ msgstr "Please select a picker."
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Printed by:"
-msgstr ""
+msgstr "Imprimé par:"
 
 #. module: picking_dispatch
 #: model:ir.model,name:picking_dispatch.model_product_product
@@ -437,7 +438,7 @@ msgstr "Code produit"
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "QTY"
-msgstr ""
+msgstr "QTE"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
@@ -476,7 +477,7 @@ msgstr "Débuter des bons de préparation"
 #: code:addons/picking_dispatch/wizard/dispatch_start.py:53
 #, python-format
 msgid "Started Picking Dispatch"
-msgstr ""
+msgstr "Bon de préparation débuté"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
@@ -502,17 +503,17 @@ msgstr "L'utilisateur en charge du traitement du bon de préparation"
 #: code:addons/picking_dispatch/picking_dispatch.py:188
 #, python-format
 msgid "This dispatch cannot be processed until %s"
-msgstr ""
+msgstr "Cette expédition ne peut pas être traitée jusqu'à %s"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Variant"
-msgstr ""
+msgstr "Divers"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Visa:_________________"
-msgstr ""
+msgstr "Visa:_________________"
 
 #. module: picking_dispatch
 #: view:product.product:picking_dispatch.product_normal_form_view
@@ -524,7 +525,7 @@ msgstr "Description pour l'entrepôt"
 #: code:addons/picking_dispatch/wizard/create_dispatch.py:113
 #, python-format
 msgid "Warning !"
-msgstr ""
+msgstr "Attention !"
 
 #. module: picking_dispatch
 #: view:picking.dispatch.creator:picking_dispatch.view_create_picking_dispatch
@@ -534,7 +535,7 @@ msgstr "_Create"
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "breakage"
-msgstr ""
+msgstr "Rupture"
 
 #. module: picking_dispatch
 #: help:picking.dispatch,date:0
@@ -569,7 +570,7 @@ msgstr "Préparateur"
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "stock error"
-msgstr ""
+msgstr "Erreur de stock"
 
 #. module: picking_dispatch
 #: help:picking.dispatch,move_ids:0

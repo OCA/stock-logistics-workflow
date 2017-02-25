@@ -4,13 +4,14 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2016
+# Esther Martín Menéndez <esthermartin001@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-18 01:44+0000\n"
-"PO-Revision-Date: 2016-11-18 01:44+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
+"POT-Creation-Date: 2017-02-18 08:45+0000\n"
+"PO-Revision-Date: 2017-02-18 08:45+0000\n"
+"Last-Translator: Esther Martín Menéndez <esthermartin001@gmail.com>, 2017\n"
 "Language-Team: Basque (https://www.transifex.com/oca/teams/23907/eu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -275,7 +276,7 @@ msgstr ""
 #: view:scanner.scenario:stock_scanner.view_scanner_scenario_form
 #: view:scanner.scenario.step:stock_scanner.view_scanner_scenario_step_form
 msgid "Code"
-msgstr ""
+msgstr "Kodea"
 
 #. module: stock_scanner
 #: help:scanner.hardware,code:0
@@ -305,7 +306,7 @@ msgstr ""
 #. module: stock_scanner
 #: field:scanner.scenario,company_id:0
 msgid "Company"
-msgstr ""
+msgstr "Enpresa"
 
 #. module: stock_scanner
 #: help:scanner.scenario,company_id:0
@@ -742,7 +743,7 @@ msgstr ""
 #. module: stock_scanner
 #: field:scanner.scenario,model_id:0 field:scanner.scenario.custom,model:0
 msgid "Model"
-msgstr ""
+msgstr "Model"
 
 #. module: stock_scanner
 #: help:scanner.scenario.custom,model:0

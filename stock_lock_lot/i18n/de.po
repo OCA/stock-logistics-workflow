@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-18 01:44+0000\n"
-"PO-Revision-Date: 2016-11-25 14:55+0000\n"
+"POT-Creation-Date: 2017-02-18 08:44+0000\n"
+"PO-Revision-Date: 2017-02-25 00:44+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: German (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -116,7 +116,7 @@ msgstr "Zuletzt aktualisiert am"
 #. module: stock_lock_lot
 #: view:stock.quant:stock_lock_lot.quant_search_view_inh_locklot
 msgid "Lot"
-msgstr ""
+msgstr "Los"
 
 #. module: stock_lock_lot
 #: view:stock.config.settings:stock_lock_lot.view_stock_configuration
@@ -131,7 +131,7 @@ msgstr "Los/Serie"
 #. module: stock_lock_lot
 #: selection:stock.production.lot,lock_reason:0
 msgid "None"
-msgstr ""
+msgstr "Keine"
 
 #. module: stock_lock_lot
 #: view:stock.production.lot:stock_lock_lot.search_product_lot_filter_inh_locklot

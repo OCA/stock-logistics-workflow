@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-24 06:44+0000\n"
-"PO-Revision-Date: 2016-12-27 08:26+0000\n"
+"POT-Creation-Date: 2017-02-18 08:44+0000\n"
+"PO-Revision-Date: 2017-02-23 15:58+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Basque (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/eu/)\n"
 "MIME-Version: 1.0\n"
@@ -115,12 +115,12 @@ msgstr ""
 #. module: picking_dispatch
 #: model:ir.model,name:picking_dispatch.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Enpresak"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,company_id:0
 msgid "Company"
-msgstr ""
+msgstr "Enpresa"
 
 #. module: picking_dispatch
 #: model:ir.actions.act_window,name:picking_dispatch.picking_dispatch_create_act_window
@@ -232,7 +232,7 @@ msgstr ""
 #: code:addons/picking_dispatch/wizard/dispatch_start.py:46
 #, python-format
 msgid "Error"
-msgstr ""
+msgstr "Errorea"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
@@ -427,7 +427,7 @@ msgstr ""
 #: model:ir.model,name:picking_dispatch.model_product_product
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Product"
-msgstr ""
+msgstr "Produktua"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
