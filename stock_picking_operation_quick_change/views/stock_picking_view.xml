@@ -9,8 +9,9 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='pack_operation_product_ids']" position="before">
                 <button name="%(action_stock_picking_operation_change_location)d"
-                    type="action"
-                    string="Change Location">
+                        type="action"
+                        string="Change Location"
+                        groups="stock.group_stock_user">
                 </button>
             </xpath>
         </field>
