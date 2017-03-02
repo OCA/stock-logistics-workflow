@@ -4,7 +4,7 @@
 
 {
     'name': 'Show returns on stock pickings',
-    'version': '10.0.1.0',
+    'version': '10.0.1.0.0',
     'author': 'Tecnativa, '
               'Odoo Community Association (OCA)',
     'category': 'Warehouse Management',
