@@ -16,66 +16,45 @@
 -
   I add some stock for the product
 -
- !python {model: stock.change.product.qty}: |
+  !python {model: stock.change.product.qty}: |
     data = {'product_id': ref('product_gameboy2'),
             'new_quantity': 130,
             'location_id': ref('stock.stock_location_stock'),
             }
-    id = self.create(cr, uid, data, context=context)
-    self.change_product_qty(cr, uid, [id], context=context)
+    self.create(data).change_product_qty()
 -
   I create a manual stock picking out
 -
- !record {model: stock.picking, id: outgoing_shipment_gameboy2}:
+  !record {model: stock.picking, id: outgoing_shipment_gameboy2}:
     picking_type_id: stock.picking_type_out
     origin: 'outgoing shipment main_warehouse'
-    partner_id: base.res_partner_6
+    partner_id: base.res_partner_4
     move_lines:
       - product_id: product_gameboy2
         product_uom: product.product_uom_unit
         product_uom_qty: 130.0
-        product_uos_qty: 130.0
         picking_type_id: stock.picking_type_out
         location_id: stock.stock_location_stock
         location_dest_id: stock.stock_location_7
 -
-  I reserve  the picking
--
- !python {model: stock.picking, id: outgoing_shipment_gameboy2}: |
-     self.action_assign()
--
-  Then I split my shippement in two 40/90
--
-  !python {model: stock.transfer_details}: |
-    context.update({'active_model': 'stock.picking',
-                    'active_id': ref('outgoing_shipment_gameboy2'),
-                    'active_ids': [ref('outgoing_shipment_gameboy2')]})
--
-  !record {model: stock.transfer_details, id: partial_pick2}:
-    picking_id: outgoing_shipment_gameboy2
-    item_ids:
-        - quantity: 40
-          product_id: product_gameboy2
-          product_uom_id: product.product_uom_unit
-          sourceloc_id: stock.stock_location_stock
-          destinationloc_id: stock.stock_location_7
--
-  !python {model: stock.transfer_details}: |
-    wiz = self.browse(cr, uid, ref("partial_pick2"))
-    wiz.with_context(do_only_split=True).do_detailed_transfer()
--
-  I check that the backorder has 40 units with state set to assigned not done
+  I reserve  the picking and split my shippement in two 40/90
 -
   !python {model: stock.picking, id: outgoing_shipment_gameboy2}: |
-    # we switch self and backorder to mimick what Odoo is doing
-    # When creating a backorder
-    self = self.search([('backorder_id', '=', self.id)])
-    backorder = self.backorder_id
-    assert backorder, "Backorder should be created after partial split."
-    assert backorder.state == 'assigned', "Backorder should be assigned, not %r." % backorder.state
-    for move_line in backorder.move_lines:
-        assert move_line.product_qty == 40, "Qty in backorder does not correspond."
-        assert move_line.state == 'assigned', "Move line of backorder should be assigned, not %r." % move_line.state
-    for move_line in self.move_lines:
-        assert move_line.product_qty == 90, "Qty in backorder does not correspond."
-        assert move_line.state == 'assigned', "Move line of backorder should be assigned, not %r." % move_line.state
+    self.action_assign()
+    assert self.state == 'assigned', "Picking should have been assigned"
+    assert len(self.pack_operation_ids) == 1, "There should be exactly one pack operation line"
+    olds = self.search([])
+    self.pack_operation_ids.qty_done = 40
+    self.do_split()
+    assert len(self.pack_operation_ids) == 1, "There should be exactly one pack operation line after the split"
+    assert len(self.move_lines) == 1, "There should be exactly one move after the split"
+    assert self.state == 'assigned', "The picking should be assigned after splitting"
+    assert self.pack_operation_ids.qty_done == 40, "The pack operation on the original picking should have 40 done"
+    assert self.pack_operation_ids.product_qty == 40, "The pack operation on the original picking should have 40 to do"
+    assert self.move_lines.product_qty == 40, "The move line on the original should have a quantity of 40"
+    news = self.search([])
+    new_picking = news - olds
+    assert new_picking.state == 'assigned', "The new picking should be assigned"
+    assert len(new_picking.pack_operation_ids) == 1, "There should be exactly one pack operation on the new picking"
+    assert new_picking.pack_operation_ids.qty_done == 0, "There shouldn't be any amount done on the new picking"
+    assert new_picking.pack_operation_ids.product_qty == 90, "There should be 90 Pcs to do on the new picking"

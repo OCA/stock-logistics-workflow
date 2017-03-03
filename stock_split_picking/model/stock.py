@@ -20,60 +20,56 @@
 #
 """Adds a split button on stock picking out to enable partial picking without
    passing backorder state to done"""
-from openerp import models, api, _
+from odoo import models, api, _
+from odoo.exceptions import UserError
 
 
-class stock_picking(models.Model):
+class StockPicking(models.Model):
     """Adds picking split without done state."""
 
     _inherit = "stock.picking"
 
     @api.multi
-    def split_process(self):
-        """Use to trigger the wizard from button with
-           correct context"""
-        ctx = {
-            'active_model': self._name,
-            'active_ids': self.ids,
-            'active_id': len(self.ids) and self.ids[0] or False,
-            'do_only_split': True,
-        }
+    def do_split(self):
+        reset_to_zero = self.env['stock.pack.operation']
+        remove_if_any_non_zeros = self.env['stock.pack.operation']
+        for picking in self:
+            picking_zeros = self.env['stock.pack.operation']
+            if picking.state not in ('partially_available', 'assigned'):
+                raise UserError(_("You can only split pickings that are partially or fully available."))
+            all_zeros = True
+            for operation in picking.pack_operation_ids:
+                if operation.qty_done < 0:
+                    raise UserError(_('No negative quantities allowed'))
+                if operation.qty_done > 0:
+                    operation.write({'product_qty': operation.qty_done})
+                    all_zeros = False
+                else:
+                    picking_zeros |= operation
+            if all_zeros:
+                if picking.state != 'partially_available':
+                    raise UserError(_("You should partially collect the picking to show what amounts are to be left on this picking"))
+                else:
+                    # Since the picking is partially available, we can assume the user wants to leave the
+                    # current ungathered pack operations on this picking and split the rest off. Compare with
+                    # the normal picking logic which processes all operations if they are all at 0 gathered.
+                    for pack_op in picking.pack_operation_ids:
+                        pack_op.qty_done = pack_op.product_qty
+                    reset_to_zero += picking.pack_operation_ids
+            else:
+                # If there are non-zero ops in the picking, then any zero-ops need to be removed,
+                # because the do_transfer function assumes it will not receive any
+                remove_if_any_non_zeros |= picking_zeros
+        remove_if_any_non_zeros.unlink()
+        result = self.with_context(do_only_split=True).do_transfer()
+        # These are not backorders we've created, only splits from the original picking
+        new_pickings = self.search([('backorder_id', 'in', self.ids)])
+        new_pickings.write(dict(backorder_id=False))
+        self.write(dict(date_done=False))  # Not actually done
+        # We've changed the lines on the picking(s), so recheck availability
+        self.action_assign()
+        new_pickings.action_assign()
+        if reset_to_zero:
+            reset_to_zero.write(dict(qty_done=0))
+        return result
 
-        wiz = self.env['stock.transfer_details'].with_context(**ctx).create(
-            {'picking_id': len(self.ids) and self.ids[0] or False,
-             })
-        view_dict = wiz.wizard_view()
-        view_dict['name'] = _('Enter quantities to split')
-        return view_dict
-
-
-class StockMove(models.Model):
-
-    _inherit = 'stock.move'
-
-    @api.model
-    def split(self, move, qty,
-              restrict_lot_id=False, restrict_partner_id=False):
-        new_move_id = super(StockMove, self).split(
-            move, qty,
-            restrict_lot_id=restrict_lot_id,
-            restrict_partner_id=restrict_partner_id,
-        )
-        new_move = self.browse(new_move_id)
-        move_assigned = move.state == 'assigned'
-        moves = move + new_move
-        if move.reserved_availability > move.product_qty:
-            moves.do_unreserve()
-        if move.picking_id:
-            move.picking_id.pack_operation_ids.unlink()
-        if move_assigned:
-            moves.action_assign()
-        else:
-            moves.action_confirm()
-        if move.procurement_id:
-            defaults = {'product_qty': qty,
-                        'state': 'running'}
-            new_procurement = move.procurement_id.copy(default=defaults)
-            new_move.procurement_id = new_procurement
-            move.procurement_id.product_qty = move.product_qty
-        return new_move.id

@@ -6,9 +6,9 @@ Split picking
 
 This module adds a "Split" button on the outgoing pickings form.
 
-It works like the classical picking Transfer but it leaves both
-pickings (picking and its backorder) as confirmed without
-processing the transfer.
+It will split the current picking so that any amounts you've selected on the picking operations will remain on this picking, while the rest are transferred to the new picking.
+
+If the current picking is Partially Available, the split will work even if no amounts are processed, by leaving the current unprocessed operations on this picking and moving the rest to a new picking.
 
 Installation
 ============
@@ -18,8 +18,10 @@ This module only needs `stock` module.
 Known issues / Roadmap
 ======================
 
-* When splitting a picking in an unassigned state, wizard won't
-  be auto completed with picking lines.
+* This code relies on the context flag `do_only_split` to work properly. Comments in the code suggest Odoo SA may remove it in future, as the core Odoo funtionality does not make use of it
+* Not possible currently to split a picking that is Awaiting Availability
+* Tests are in yml, and should be ported to pure Python, since yml support is planned to be dropped in future Odoo versions
+* German translations not updated for version 10.0
 
 Credits
 =======
@@ -30,6 +32,7 @@ Contributors
 * Nicolas Bessi <nicolas.bessi@camptocamp.com>
 * Guewen Baconnier <guewen.baconnier@camptocamp.com>
 * Yannick Vaucher <yannick.vaucher@camptocamp.com>
+* Atte Isopuro <atte.isopuro@avoin.systems>
 
 Maintainer
 ----------
