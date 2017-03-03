@@ -9,7 +9,7 @@ from openerp.exceptions import UserError
 class StockPickingOperationWizard(models.TransientModel):
     _name = 'stock.picking.operation.wizard'
 
-    def _prepare_deafault_values(self, picking):
+    def _prepare_default_values(self, picking):
         return {'location_dest_id': picking.location_dest_id.id}
 
     @api.model
@@ -18,7 +18,7 @@ class StockPickingOperationWizard(models.TransientModel):
         active_model = self.env.context['active_model']
         active_ids = self.env.context['active_ids'] or []
         picking = self.env[active_model].browse(active_ids)
-        res.update(self._prepare_deafault_values(picking))
+        res.update(self._prepare_default_values(picking))
         return res
 
     def _default_old_dest_location_id(self):
