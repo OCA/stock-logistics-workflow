@@ -3,8 +3,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import time
-from openerp import pooler
-from openerp.report import report_sxw
+from odoo import pooler
+from odoo.report import report_sxw
 
 from . batch_aggregation import BatchAggregation
 
