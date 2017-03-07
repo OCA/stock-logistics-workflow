@@ -62,7 +62,6 @@
                                            groups="stock.group_locations,stock.group_tracking_lot"/>
                                     <field name="to_loc" readonly="True"
                                            groups="stock.group_locations,stock.group_tracking_lot"/>
-                                    <field name="processed_boolean"/>
                                     <field name="lots_visible" invisible="1"/>
                                     <field name="qty_done" attrs="{'readonly': [('lots_visible', '=', True)]}"/>
                                     <field name="state" invisible="1"/>
