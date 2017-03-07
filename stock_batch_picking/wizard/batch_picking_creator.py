@@ -21,7 +21,7 @@ class StockBatchPickingCreator(models.TransientModel):
         help='Name of the batch picking'
     )
     date = fields.Date(
-        'Date', required=True, select=True, default=fields.Date.context_today,
+        'Date', required=True, index=True, default=fields.Date.context_today,
         help='Date on which the batch picking is to be processed'
     )
 
