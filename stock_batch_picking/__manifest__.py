@@ -23,7 +23,7 @@
         'wizard/batch_picking_creator_view.xml',
         'security/ir.model.access.csv',
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'license': 'AGPL-3',
     'application': False
