@@ -46,6 +46,7 @@
                                     <field name="product_uom_id" readonly="True" groups="product.group_uom"/>
                                     <field name="from_loc" groups="stock.group_locations,stock.group_tracking_lot"/>
                                     <field name="to_loc" groups="stock.group_locations,stock.group_tracking_lot"/>
+                                    <field name="is_done"/>
                                     <field name="lots_visible" invisible="1"/>
                                     <field name="product_qty" readonly="True"/>
                                     <field name="qty_done" attrs="{'readonly': [('lots_visible', '=', True)]}"/>
