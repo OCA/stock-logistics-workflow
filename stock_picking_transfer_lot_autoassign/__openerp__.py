@@ -13,5 +13,8 @@
     'depends': [
         'stock',
     ],
+    'data': [
+        'wizards/stock_backorder_confirmation.xml',
+    ],
     'installable': True,
 }
