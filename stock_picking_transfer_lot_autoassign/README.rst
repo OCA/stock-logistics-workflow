@@ -14,6 +14,9 @@ This module automatically assigns the reserved quantity as the done one, so
 that you only have to change it in case of divergence, but having the
 possibility of transferring directly.
 
+Also this module adds a button in backorder confirmation wizard to auto
+complete to do quantities for products without lots.
+
 Configuration
 =============
 
@@ -43,6 +46,7 @@ Contributors
 ------------
 
 * Pedro M. Baeza <pedro.baeza@tecnativa.com>
+* Sergio Teruel <sergio.teruel@tecnativa.com>
 
 Maintainer
 ----------
