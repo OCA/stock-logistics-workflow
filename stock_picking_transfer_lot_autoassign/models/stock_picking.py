@@ -14,6 +14,8 @@ class StockPicking(models.Model):
         res = super(StockPicking, self)._prepare_pack_ops(
             picking, quants, forced_qties,
         )
+        if picking.picking_type_id.avoid_internal_assignment:
+            return res
         for pack_op_vals in res:
             qty_done = 0
             for pack_lot_vals in pack_op_vals.get('pack_lot_ids', []):

@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * stock_picking_transfer_lot_autoassign
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
@@ -17,6 +17,12 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+#. module: stock_picking_transfer_lot_autoassign
+#: model:ir.model.fields,field_description:stock_picking_transfer_lot_autoassign.field_stock_picking_type_avoid_internal_assignment
+msgid "Avoid auto-assignment of lots"
+msgstr "Evitar la asignación de lotes"
 
 #. module: stock_picking_transfer_lot_autoassign
 #: model:ir.model,name:stock_picking_transfer_lot_autoassign.model_stock_picking
