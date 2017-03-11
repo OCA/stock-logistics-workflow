@@ -828,8 +828,9 @@ class Sentinel(object):
         # First line to be displayed
         first_line = 0
         nb_lines = self.window_height - 1
+        if len(entries) > nb_lines:
+            nb_lines -= 1
         middle = int(math.floor((nb_lines - 1) / 2))
-
         # Change the first line if there is too much lines for the screen
         if len(entries) > nb_lines and highlighted >= middle:
             first_line = min(highlighted - middle, len(entries) - nb_lines)
@@ -851,7 +852,7 @@ class Sentinel(object):
                 nb_lines - 1, self.window_width - 1, curses.ACS_DARROW)
 
         # Diplays number of the selected entry
-        self._display(_('Selected : %d') % highlighted, y=nb_lines,
+        self._display(_('Selected : %d') % highlighted, y=self.window_height-1,
                       color='info', modifier=curses.A_BOLD)
 
         # Set the cursor position
