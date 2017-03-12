@@ -10,7 +10,7 @@
     'category': 'Stock Logistics',
     'author': 'Marco Dieckhoff, BREMSKERL, Agile Business Group,'
     ' Odoo Community Association (OCA)',
-    'website': 'www.bremskerl.com',
+    'website': 'http://www.bremskerl.com/',
     'depends': ['stock_account'],
     'data': [
         'wizards/stock_transfer_details_view.xml',
