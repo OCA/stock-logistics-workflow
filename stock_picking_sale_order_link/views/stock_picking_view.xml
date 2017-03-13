@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Sergio Teruel <sergio.teruel@tecnativa.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <field name="sale_id" invisible="1"/>
+                <button name="action_view_sale_order"
+                        class="oe_stat_button"
+                        icon="fa-dollar"
+                        string="Sales Order"
+                        type="object"
+                        attrs="{'invisible': [('sale_id', '=', False)]}"
+                        groups="stock.group_stock_user">
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
