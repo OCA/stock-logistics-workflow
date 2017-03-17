@@ -20,6 +20,6 @@ class TestStockPicking(ScaffoldTestObjects):
             item.qty_done = 1.0
         pack_id = picking.put_in_pack()
         self.assertIn(
-            pack_id,
+            pack_id.id,
             picking.package_ids.ids
         )
