@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--
-    Copyright 2016 LasLabs Inc.
+    Copyright 2016-2017 LasLabs Inc.
     @license AGPL-3 or later (http://www.gnu.org/licenses/agpl.html).
 -->
 
@@ -66,7 +66,7 @@
         <field name="model">stock.picking.rate</field>
         <field name="arch" type="xml">
             <search string="Dispatch Rates">
-                
+
                 <field name="picking_id"/>
                 <field name="date_generated" />
                 <field name="date_purchased" />
@@ -91,7 +91,7 @@
                 <filter string="Currency"
                         domain=""
                         context="{'group_by': 'rate_currency_id'}" />
-                
+
             </search>
         </field>
     </record>
