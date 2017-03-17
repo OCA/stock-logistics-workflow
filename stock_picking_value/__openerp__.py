@@ -5,13 +5,12 @@
 {
     "name": "Stock picking value",
     "version": "8.0.1.0.0",
-    "author": "Apulia Software srl",
+    "author": "Apulia Software srl, Odoo Community Association (OCA)",
     'website': 'http://www.apuliasoftware.it/',
     "category": "Stock",
     "summary": "Adds value to pickings.",
     "license": "AGPL-3",
     "depends": ["base", "sale", "sale_stock", ],
     "data": ['views/stock_view.xml', ],
-    "active": False,
     "installable": True,
 }

@@ -9,10 +9,11 @@ from openerp.addons.decimal_precision import decimal_precision as dp
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
-    @api.one
+    @api.multi
     @api.depends('sale_id.amount_untaxed', 'sale_id.amount_tax',
                  'sale_id.amount_total')
     def _compute_amount(self):
+        self.ensure_one()
         if self.sale_id:
             if self.pack_operation_ids:
                 for operation in self.pack_operation_ids:
@@ -43,7 +44,7 @@ class StockPicking(models.Model):
 class StockMove(models.Model):
     _inherit = 'stock.move'
 
-    @api.one
+    @api.multi
     @api.depends('procurement_id.sale_line_id',
                  'procurement_id.sale_line_id.price_unit',
                  'procurement_id.sale_line_id.discount',
@@ -51,24 +52,25 @@ class StockMove(models.Model):
                  'procurement_id.sale_line_id.price_reduce',
                  'procurement_id.sale_line_id.order_id')
     def _compute_sale_prices(self):
-        if self.procurement_id.sale_line_id:
-            sale_line = self.procurement_id.sale_line_id
-            self.sale_taxes = sale_line.product_uom_qty and round(
-                ((sale_line.order_id._amount_line_tax(sale_line) /
-                  sale_line.product_uom_qty) * self.product_qty),
-                dp.get_precision('Account')(self._cr)[1]) or 0.00
-            self.sale_price_untaxed = sale_line.price_reduce
-            self.sale_price_unit = sale_line.price_unit
-            self.sale_discount = sale_line.discount
-            self.sale_subtotal = round(
-                sale_line.price_reduce * self.product_qty,
-                dp.get_precision('Account')(self._cr)[1])
-        else:
-            self.sale_taxes = 0
-            self.sale_price_untaxed = 0
-            self.sale_subtotal = 0
-            self.sale_price_unit = 0
-            self.sale_discount = 0
+        for move in self:
+            if move.procurement_id.sale_line_id:
+                sale_line = move.procurement_id.sale_line_id
+                move.sale_taxes = sale_line.product_uom_qty and round(
+                    ((sale_line.order_id._amount_line_tax(sale_line) /
+                      sale_line.product_uom_qty) * move.product_qty),
+                    dp.get_precision('Account')(move._cr)[1]) or 0.00
+                move.sale_price_untaxed = sale_line.price_reduce
+                move.sale_price_unit = sale_line.price_unit
+                move.sale_discount = sale_line.discount
+                move.sale_subtotal = round(
+                    sale_line.price_reduce * move.product_qty,
+                    dp.get_precision('Account')(move._cr)[1])
+            else:
+                move.sale_taxes = 0
+                move.sale_price_untaxed = 0
+                move.sale_subtotal = 0
+                move.sale_price_unit = 0
+                move.sale_discount = 0
 
     sale_subtotal = fields.Float(
         compute='_compute_sale_prices',
@@ -95,8 +97,9 @@ class StockMove(models.Model):
 class StockPackOperation(models.Model):
     _inherit = "stock.pack.operation"
 
-    @api.one
+    @api.multi
     def _compute_sale_prices(self):
+        self.ensure_one()
         self.sale_taxes = 0
         self.sale_price_untaxed = 0
         self.sale_subtotal = 0
@@ -135,4 +138,3 @@ class StockPackOperation(models.Model):
         compute='_compute_sale_prices',
         digits_compute=dp.get_precision('Account'),
         string='Discount (%)')
-
