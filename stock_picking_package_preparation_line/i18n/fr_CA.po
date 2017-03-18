@@ -8,29 +8,29 @@ msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-17 02:02+0000\n"
-"PO-Revision-Date: 2017-03-14 18:27+0000\n"
+"PO-Revision-Date: 2017-03-13 12:52+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Catalan (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/ca/)\n"
+"Language-Team: French (Canada) (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/fr_CA/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: ca\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model,name:stock_picking_package_preparation_line.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Entreprises"
 
 #. module: stock_picking_package_preparation_line
 #: field:stock.picking.package.preparation.line,create_uid:0
 msgid "Created by"
-msgstr "Creat per"
+msgstr "Créé par"
 
 #. module: stock_picking_package_preparation_line
 #: field:stock.picking.package.preparation.line,create_date:0
 msgid "Created on"
-msgstr "Creat el"
+msgstr "Créé le"
 
 #. module: stock_picking_package_preparation_line
 #: field:res.company,default_picking_type_for_package_preparation_id:0
@@ -42,7 +42,7 @@ msgstr ""
 #: view:stock.picking.package.preparation:stock_picking_package_preparation_line.sppp_line_stock_picking_package_preparation_form
 #: field:stock.picking.package.preparation.line,name:0
 msgid "Description"
-msgstr "Descripció"
+msgstr ""
 
 #. module: stock_picking_package_preparation_line
 #: view:stock.picking.package.preparation:stock_picking_package_preparation_line.sppp_line_stock_picking_package_preparation_form
@@ -53,12 +53,12 @@ msgstr ""
 #. module: stock_picking_package_preparation_line
 #: field:stock.picking.package.preparation.line,display_name:0
 msgid "Display Name"
-msgstr "Veure el nom"
+msgstr "Afficher le nom"
 
 #. module: stock_picking_package_preparation_line
 #: field:stock.picking.package.preparation.line,id:0
 msgid "ID"
-msgstr "ID"
+msgstr "Identifiant"
 
 #. module: stock_picking_package_preparation_line
 #: help:stock.picking.package.preparation.line,product_uom_qty:0
@@ -78,17 +78,17 @@ msgstr ""
 #. module: stock_picking_package_preparation_line
 #: field:stock.picking.package.preparation.line,__last_update:0
 msgid "Last Modified on"
-msgstr "Darrera modificació el"
+msgstr ""
 
 #. module: stock_picking_package_preparation_line
 #: field:stock.picking.package.preparation.line,write_uid:0
 msgid "Last Updated by"
-msgstr "Darrera Actualització per"
+msgstr "Dernière mise à jour par"
 
 #. module: stock_picking_package_preparation_line
 #: field:stock.picking.package.preparation.line,write_date:0
 msgid "Last Updated on"
-msgstr "Darrera Actualització el"
+msgstr "Dernière mise à jour le"
 
 #. module: stock_picking_package_preparation_line
 #: field:stock.picking.package.preparation.line,lot_id:0
@@ -120,7 +120,7 @@ msgstr ""
 #. module: stock_picking_package_preparation_line
 #: field:stock.picking.package.preparation.line,product_id:0
 msgid "Product"
-msgstr "Producte"
+msgstr ""
 
 #. module: stock_picking_package_preparation_line
 #: field:stock.picking.package.preparation.line,product_uom:0
@@ -135,14 +135,14 @@ msgstr ""
 #. module: stock_picking_package_preparation_line
 #: field:stock.picking.package.preparation.line,sequence:0
 msgid "Sequence"
-msgstr "Seqüència"
+msgstr ""
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model,name:stock_picking_package_preparation_line.model_stock_move
 #: field:stock.picking.package.preparation.line,move_id:0
 #: field:stock.picking.package.preparation.line,package_preparation_id:0
 msgid "Stock Move"
-msgstr "Moure l'estoc"
+msgstr ""
 
 #. module: stock_picking_package_preparation_line
 #: view:stock.picking.package.preparation:stock_picking_package_preparation_line.sppp_line_stock_picking_package_preparation_form
