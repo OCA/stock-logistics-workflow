@@ -2,7 +2,7 @@
 # Copyright 2014-2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import api, fields, models
+from odoo import api, fields, models
 
 
 class StockPicking(models.Model):
@@ -15,5 +15,5 @@ class StockPicking(models.Model):
     @api.multi
     def _compute_returned_ids(self):
         for picking in self:
-            picking.returned_ids = self.mapped(
+            picking.returned_ids = picking.mapped(
                 'move_lines.returned_move_ids.picking_id')

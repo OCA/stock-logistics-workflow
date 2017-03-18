@@ -1,42 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
 
-<<<<<<< 9cd4d8f9c060331c8b827c95e03fdf62be241793
-        <record id="view_picking_out_form_returns" model="ir.ui.view">
-            <field name="name">stock.picking.out.form.returns</field>
-            <field name="model">stock.picking.out</field>
-            <field name="inherit_id" ref="stock.view_picking_out_form"></field>
-            <field name="arch" type="xml">
-                <notebook position="inside">
-                    <page string="Returns">
-                        <field name="return_ids"/>
-                    </page>
-                </notebook>
-            </field>
-        </record>
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Returns" attrs="{'invisible': [('returned_ids', '=', [])]}">
+                    <field name="returned_ids"/>
+                </page>
+            </notebook>
+        </field>
+    </record>
 
-        <record id="view_picking_in_form_returns" model="ir.ui.view">
-            <field name="name">stock.picking.in.form.returns</field>
-            <field name="model">stock.picking.in</field>
-            <field name="inherit_id" ref="stock.view_picking_in_form"></field>
-            <field name="arch" type="xml">
-                <notebook position="inside">
-                    <page string="Returns">
-                        <field name="return_ids"/>
-=======
-        <record id="view_picking_form" model="ir.ui.view">
-            <field name="model">stock.picking</field>
-            <field name="inherit_id" ref="stock.view_picking_form"/>
-            <field name="arch" type="xml">
-                <notebook position="inside">
-                    <page string="Returns" attrs="{'invisible': [('returned_ids', '=', [(6, False, [])])]}">
-                        <field name="returned_ids"/>
->>>>>>> stock_picking_show_return
-                    </page>
-                </notebook>
-            </field>
-        </record>
-
-    </data>
-</openerp>
+</odoo>
