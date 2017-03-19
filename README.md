@@ -29,6 +29,7 @@ addon | version | summary
 [stock_picking_mass_assign](stock_picking_mass_assign/) | 9.0.1.0.0 | Delivery Orders Mass Assign
 [stock_picking_package_preparation](stock_picking_package_preparation/) | 9.0.1.0.0 | Stock Picking Package Preparation
 [stock_picking_package_preparation_line](stock_picking_package_preparation_line/) | 9.0.1.0.0 | Stock Picking Package Preparation Line
+[stock_picking_sale_order_link](stock_picking_sale_order_link/) | 9.0.1.0.0 | Link between picking and sale order
 [stock_picking_show_return](stock_picking_show_return/) | 9.0.1.0.0 | Show returns on stock pickings
 [stock_picking_transfer_lot_autoassign](stock_picking_transfer_lot_autoassign/) | 9.0.1.0.0 | Auto-assignation of lots on pickings
 
