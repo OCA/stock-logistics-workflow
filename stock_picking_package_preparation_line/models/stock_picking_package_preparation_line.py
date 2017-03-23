@@ -29,7 +29,13 @@ class StockPickingPackagePreparationLine(models.Model):
              "will not generate a back order, but will just deliver the new "
              "quantity")
     product_uom_id = fields.Many2one('product.uom', string="UoM")
-    lot_id = fields.Many2one('stock.production.lot', 'Lot')
+    lot_id = fields.Many2one(
+        'stock.production.lot', 'Lot',
+        help="Used to specify lot when line is created using package "
+             "preparation")
+    lot_ids = fields.Many2many(
+        'stock.production.lot', related='move_id.lot_ids', readonly=True,
+        string="Moved lots", help="Lots effectively linked to stock move")
     sequence = fields.Integer(default=10)
     note = fields.Text()
 
@@ -75,8 +81,8 @@ class StockPickingPackagePreparationLine(models.Model):
                         'product_id': move_line.product_id.id,
                         'product_uom_qty': move_line.product_uom_qty,
                         'product_uom_id': move_line.product_uom.id,
-                        'lot_id': move_line.restrict_lot_id.id
-                        if move_line.restrict_lot_id else False,
+                        'lot_id': move_line.lot_ids[0].id
+                        if len(move_line.lot_ids) == 1 else False,
                         })
         return lines
 
