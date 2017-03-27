@@ -4,7 +4,7 @@
 
 {
     'name': 'Auto-assignation of lots on pickings',
-    'version': '9.0.1.0.0',
+    'version': '9.0.1.1.0',
     'author': 'Tecnativa,'
               'Odoo Community Association (OCA)',
     'category': 'Inventory, Logistics, Warehousing',
@@ -15,6 +15,7 @@
     ],
     'data': [
         'views/stock_picking_type_view.xml',
+        'wizards/stock_backorder_confirmation.xml',
     ],
     'installable': True,
 }
