@@ -18,6 +18,7 @@ Please don't hesitate to suggest one of your module to this project. Also, you m
  - https://github.com/OCA/stock-logistics-warehouse
 
 [//]: # (addons)
+
 Unported addons
 ---------------
 addon | version | summary
