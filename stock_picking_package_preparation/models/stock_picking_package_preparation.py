@@ -1,25 +1,11 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Author: Guewen Baconnier
-#    Copyright 2015 Camptocamp SA
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# Copyright 2015 Guewen Baconnier
+# Copyright 2016 Lorenzo Battistini - Agile Business Group
+# Copyright 2016 Alessio Gerace - Agile Business Group
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api, exceptions, _
+from odoo import models, fields, api, _
+from odoo.exceptions import Warning
 
 
 class StockPickingPackagePreparation(models.Model):
@@ -38,7 +24,7 @@ class StockPickingPackagePreparation(models.Model):
     name = fields.Char(
         related='package_id.name',
         readonly=True,
-        select=True,
+        index=True,
         store=True,
     )
     state = fields.Selection(
@@ -67,11 +53,6 @@ class StockPickingPackagePreparation(models.Model):
         copy=False,
         states=FIELDS_STATES,
     )
-    ul_id = fields.Many2one(
-        comodel_name='product.ul',
-        string='Logistic Unit',
-        states=FIELDS_STATES,
-    )
     packaging_id = fields.Many2one(
         comodel_name='product.packaging',
         string='Packaging',
@@ -90,7 +71,7 @@ class StockPickingPackagePreparation(models.Model):
         comodel_name='res.company',
         string='Company',
         required=True,
-        select=True,
+        index=True,
         states=FIELDS_STATES,
         default=_default_company_id,
     )
@@ -107,67 +88,61 @@ class StockPickingPackagePreparation(models.Model):
     )
     note = fields.Text()
     weight = fields.Float(compute='_compute_weight',
-                          help="The weight is computed when the preparation "
-                               "is done.")
-    net_weight = fields.Float(compute='_compute_weight',
-                              help="The weight is computed when the "
-                                   "preparation is done.")
+                          help="The weight is computed when the "
+                               "preparation is done.")
     quant_ids = fields.Many2many(
         compute='_compute_quant_ids',
         comodel_name='stock.quant',
         relation='stock_quant_pack_prepare_rel',
         column1='stock_picking_package_preparation_id',
         column2='stock_quant_id',
-        name='All Content',
+        string='All Content',
     )
 
-    @api.one
+    @api.multi
     @api.depends('package_id',
                  'package_id.children_ids')
     def _compute_quant_ids(self):
-        package = self.package_id
-        quants = self.env['stock.quant'].browse(package.get_content())
-        self.quant_ids = quants
+        for preparation in self:
+            package = preparation.package_id
+            preparation.quant_ids = package.get_content()
 
-    @api.one
+    @api.multi
     @api.depends('package_id',
                  'package_id.children_ids',
-                 'package_id.ul_id',
                  'package_id.quant_ids')
     def _compute_weight(self):
-        package = self.package_id
-        if not package:
-            return
-        quant_model = self.env['stock.quant']
-        package_model = self.env['stock.quant.package']
-        quants = quant_model.browse(package.get_content())
-        # weight of the products only
-        net_weight = sum(l.product_id.weight * l.qty for l in quants)
-        # weight of the empty packages + products
-        child_packages = package_model.search([('id', 'child_of', package.id)])
-        weight = sum(child_packages.mapped('ul_id.weight')) + net_weight
-        self.net_weight = net_weight
-        self.weight = weight
+        for preparation in self:
+            package = preparation.package_id
+            if not package:
+                return
+            quants = package.get_content()
+            # weight of the products only
+            weight = sum(l.product_id.weight * l.qty for l in quants)
+            preparation.weight = weight
 
-    @api.one
+    @api.multi
     @api.depends('picking_ids',
                  'picking_ids.pack_operation_ids')
     def _compute_pack_operation_ids(self):
-        self.pack_operation_ids = self.mapped('picking_ids.pack_operation_ids')
+        for preparation in self:
+            preparation.pack_operation_ids = preparation.mapped(
+                'picking_ids.pack_operation_ids')
 
     @api.multi
     def action_done(self):
         if not self.mapped('package_id'):
-            raise exceptions.Warning(
+            raise Warning(
                 _('The package has not been generated.')
             )
-        self.picking_ids.do_transfer()
+        for picking in self.picking_ids:
+            picking.do_transfer()
         self.write({'state': 'done', 'date_done': fields.Datetime.now()})
 
     @api.multi
     def action_cancel(self):
         if any(prep.state == 'done' for prep in self):
-            raise exceptions.Warning(
+            raise Warning(
                 _('Cannot cancel a done package preparation.')
             )
         package_ids = self.mapped('package_id')
@@ -178,7 +153,7 @@ class StockPickingPackagePreparation(models.Model):
     @api.multi
     def action_draft(self):
         if any(prep.state != 'cancel' for prep in self):
-            raise exceptions.Warning(
+            raise Warning(
                 _('Only canceled package preparations can be reset to draft.')
             )
         self.write({'state': 'draft'})
@@ -193,17 +168,16 @@ class StockPickingPackagePreparation(models.Model):
     def _prepare_package(self):
         self.ensure_one()
         if not self.picking_ids:
-            raise exceptions.Warning(
+            raise Warning(
                 _('No transfer selected for this preparation.')
             )
         location = self.mapped('picking_ids.location_dest_id')
         if len(location) > 1:
-            raise exceptions.Warning(
+            raise Warning(
                 _('All the transfers must have the same destination location')
             )
         values = {
             'packaging_id': self.packaging_id.id,
-            'ul_id': self.ul_id.id,
             'location_id': location.id,
         }
         return values
@@ -212,11 +186,11 @@ class StockPickingPackagePreparation(models.Model):
     def _generate_pack(self):
         self.ensure_one()
         pack_model = self.env['stock.quant.package']
-        move_model = self.env['stock.move']
+        moves = self.env['stock.move']
         operation_model = self.env['stock.pack.operation']
 
         if any(picking.state != 'assigned' for picking in self.picking_ids):
-            raise exceptions.Warning(
+            raise Warning(
                 _('All the transfers must be "Ready to Transfer".')
             )
 
@@ -227,15 +201,11 @@ class StockPickingPackagePreparation(models.Model):
             operations |= picking.pack_operation_ids
 
         for operation in operations:
-            if (operation.product_id and
-                    operation.location_id and
-                    operation.location_dest_id):
-                move_model.check_tracking_product(
-                    operation.product_id,
-                    operation.lot_id.id,
-                    operation.location_id,
-                    operation.location_dest_id
-                )
+            for record in operation.linked_move_operation_ids:
+                moves |= record.move_id
+            for move in moves:
+                moves.check_tracking(operation)
+
             operation.qty_done = operation.product_qty
 
         pack = pack_model.create(self._prepare_package())
