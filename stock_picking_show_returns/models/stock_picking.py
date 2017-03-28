@@ -4,7 +4,6 @@
 # OpenERP, Open Source Management Solution
 # Copyright (c) 2013 Serv. Tecnol. Avanzados (http://www.serviciosbaeza.com)
 #                    Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>
-# $Id$
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -20,4 +19,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import models
+from odoo import api, fields, models
+
+
+class StockPicking(models.Model):
+    _inherit = 'stock.picking'
+
+    @api.multi
+    def _get_return_ids(self):
+        for picking in self:
+            picking.return_ids = picking.move_lines.mapped('returned_move_ids.picking_id')
+
+    return_ids = fields.Many2many('stock.picking', compute="_get_return_ids",
+                                  string="Return pickings", readonly=True,
+                                  )
