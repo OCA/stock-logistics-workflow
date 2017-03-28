@@ -19,62 +19,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import fields, orm
+from odoo import api, fields, models
 
 
-class stock_picking(orm.Model):
+class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
-    def _get_return_ids(self, cr, uid, ids, name, arg, context=None):
-        result = {}
-        for picking in self.browse(cr, uid, ids, context=context):
-            for line in picking.move_lines:
-                return_ids = []
-                if line.state == 'done':
-                    for rec in line.move_history_ids2:
-                        if (
-                            rec.location_dest_id.id == line.location_id.id and
-                            rec.location_id.id == line.location_dest_id.id
-                        ):
-                            return_ids.append(rec.picking_id.id)
-                result[picking.id] = return_ids
-        return result
+    @api.multi
+    def _get_return_ids(self):
+        for picking in self:
+            picking.return_ids = picking.move_lines.mapped('returned_move_ids.picking_id')
 
-    _columns = {
-        'return_ids': fields.function(_get_return_ids,
-                                      relation='stock.picking',
-                                      string="Return pickings",
-                                      type='many2many'),
-    }
-
-
-class stock_picking_out(orm.Model):
-    _inherit = 'stock.picking.out'
-
-    def _get_return_ids(self, cr, uid, ids, name, arg, context=None):
-        return super(stock_picking_out, self)._get_return_ids(cr, uid, ids,
-                                                              name, arg,
-                                                              context=context)
-
-    _columns = {
-        'return_ids': fields.function(_get_return_ids,
-                                      relation='stock.picking',
-                                      string="Return pickings",
-                                      type='many2many'),
-    }
-
-
-class stock_picking_in(orm.Model):
-    _inherit = 'stock.picking.in'
-
-    def _get_return_ids(self, cr, uid, ids, name, arg, context=None):
-        return super(stock_picking_out, self)._get_return_ids(cr, uid, ids,
-                                                              name, arg,
-                                                              context=context)
-
-    _columns = {
-        'return_ids': fields.function(_get_return_ids,
-                                      relation='stock.picking',
-                                      string="Return pickings",
-                                      type='many2many'),
-    }
+    return_ids = fields.Many2many('stock.picking', compute="_get_return_ids",
+                                  string="Return pickings", readonly=True,
+                                  )
