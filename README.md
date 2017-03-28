@@ -35,6 +35,7 @@ addon | version | summary
 [stock_picking_show_return](stock_picking_show_return/) | 9.0.1.0.0 | Show returns on stock pickings
 [stock_picking_transfer_lot_autoassign](stock_picking_transfer_lot_autoassign/) | 9.0.1.0.0 | Auto-assignation of lots on pickings
 
+
 Unported addons
 ---------------
 addon | version | summary
