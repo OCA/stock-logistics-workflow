@@ -29,6 +29,12 @@ msgstr "Asignar unidades pedidas"
 msgid "Backorder Confirmation"
 msgstr "Confirmación de entrega parcial"
 
+
+#. module: stock_picking_transfer_lot_autoassign
+#: model:ir.model.fields,field_description:stock_picking_transfer_lot_autoassign.field_stock_picking_type_avoid_internal_assignment
+msgid "Avoid auto-assignment of lots"
+msgstr "Evitar la auto-asignación de lotes"
+
 #. module: stock_picking_transfer_lot_autoassign
 #: model:ir.model,name:stock_picking_transfer_lot_autoassign.model_stock_picking
 msgid "Transfer"
