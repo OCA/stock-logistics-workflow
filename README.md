@@ -56,6 +56,7 @@ addon | version | summary
 [stock_split_picking](stock_split_picking/) | 8.0.1.0.0 | Split a picking in two unconfirmed pickings
 [stock_transfer_split_multi](stock_transfer_split_multi/) | 8.0.1.0.0 | In the stock transfer wizard, you can split by multiple units
 
+
 Unported addons
 ---------------
 addon | version | summary
