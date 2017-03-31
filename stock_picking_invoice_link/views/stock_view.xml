@@ -10,7 +10,7 @@
             <field name="arch" type="xml">
                 <notebook position="inside">
                     <page string="Invoices" groups="account.group_account_invoice">
-                        <field name="invoice_ids" nolabel="1" context="{'tree_view_ref': 'account.invoice_tree', 'form_view_ref': 'invoice_form'}"/>
+                        <field name="invoice_ids" nolabel="1" context="{'tree_view_ref': 'account.invoice_tree', 'form_view_ref': 'stock_picking_invoice_link.invoice_form'}"/>
                     </page>
                 </notebook>
             </field>
