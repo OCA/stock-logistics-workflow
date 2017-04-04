@@ -76,5 +76,4 @@ class StockPicking(models.Model):
                         else:
                             pack.product_qty = pack.qty_done
 
-
             pick.do_transfer()
