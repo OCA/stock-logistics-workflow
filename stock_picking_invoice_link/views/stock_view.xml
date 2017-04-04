@@ -13,7 +13,7 @@
                         groups="account.group_account_invoice"
                         attrs="{'invisible':[('invoice_ids', '=', False)]}"
                         widget="many2many_tags"
-                        context="{'tree_view_ref': 'account.invoice_tree', 'form_view_ref': 'invoice_form'}"/>
+                        context="{'tree_view_ref': 'account.invoice_tree', 'form_view_ref': 'account.invoice_form'}"/>
                 </field>
             </field>
         </record>
