@@ -27,7 +27,7 @@ addon | version | summary
 [stock_deposit](stock_deposit/) | 9.0.1.0.0 | Manage deposit locations in your warehouses
 [stock_disable_force_availability_button](stock_disable_force_availability_button/) | 9.0.1.0.0 | Disable force availability button
 [stock_lot_scrap](stock_lot_scrap/) | 9.0.1.0.0 | This module adds a button in Production Lot/Serial Number view form to Scrap all products contained.
-[stock_picking_invoice_link](stock_picking_invoice_link/) | 9.0.1.0.0 | Adds link between pickings and invoices
+[stock_picking_invoice_link](stock_picking_invoice_link/) | 9.0.1.1.0 | Adds link between pickings and invoices
 [stock_picking_mass_assign](stock_picking_mass_assign/) | 9.0.1.0.0 | Delivery Orders Mass Assign
 [stock_picking_operation_quick_change](stock_picking_operation_quick_change/) | 9.0.1.0.0 | Change location of all picking operations
 [stock_picking_package_preparation](stock_picking_package_preparation/) | 9.0.1.0.0 | Stock Picking Package Preparation
