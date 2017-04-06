@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+    <!-- picking dispatch : hides stock moves tab if dispatch is done -->
+    <record id="view_dispatch_picking_oriented_form" model="ir.ui.view">
+      <field name="name">picking.dispatch.form.picking.oriented</field>
+      <field name="model">picking.dispatch</field>
+      <field name="inherit_id" ref="picking_dispatch.picking_dispatch_form"/>
+      <field name="arch" type="xml">
+        <page string="Stock Moves" position="attributes">
+          <attribute name="attrs">{'invisible':[('state','=','done')]}</attribute>
+        </page>
+        <button name="action_assign_moves" position="after">
+         <button name="%(stock.action_picking_tree)d"
+                 string="Deliver Pickings"
+                 type="action"
+                 states="done"
+                 class="oe_highlight"
+                 context="{'search_default_related_dispatch_ids': [active_id], 'default_related_dispatch_ids': active_id}"/>
+         </button>
+      </field>
+    </record>
+
+    <!-- stock picking : up dispatch infos -->
+    <record id="view_picking_form_dispatch_picking_oriented" model="ir.ui.view">
+      <field name="name">stock.picking.form.dispatch.int.picking.oriented</field>
+      <field name="model">stock.picking</field>
+      <field name="inherit_id" ref="picking_dispatch.view_picking_form_int"/>
+      <field name="arch" type="xml">
+        <xpath expr="//form/sheet/group" position="after">
+          <field name="related_dispatch_ids"/>
+        </xpath>
+        <page string="Related Dispatch" position="replace">
+        </page>
+      </field>
+    </record>
+
+    <!-- stock move : add dispatch state on tree view -->
+    <record id="view_move_picking_tree_dispatch_picking_oriented" model="ir.ui.view">
+      <field name="name">stock.move.picking.tree.picking.oriented</field>
+      <field name="model">stock.move</field>
+      <field name="inherit_id" ref="stock.view_move_picking_tree"/>
+      <field name="arch" type="xml">
+        <field name="product_qty" position="after">
+          <field name="dispatch_id"/>
+          <field name="dispatch_state"/>
+        </field>
+      </field>
+    </record>
+
+    <!-- stock partial picking : add carrier_id on stock partial picking wizard -->
+    <record id="add_carrier_id_on_stock_partial_picking_form" model="ir.ui.view">
+      <field name="name">add.carrier.id.on.stock.partial.picking.form</field>
+      <field name="model">stock.partial.picking</field>
+      <field name="inherit_id" ref="stock.stock_partial_picking_form"/>
+      <field name="arch" type="xml">
+        <field name="move_ids" position="before">
+         <group>
+          <field name="carrier_id"/>
+         </group>
+        </field>
+      </field>
+    </record>
+
+  </data>
+</openerp>

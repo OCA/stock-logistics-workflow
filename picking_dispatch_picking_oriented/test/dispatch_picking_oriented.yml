@@ -1,0 +1,97 @@
+-
+ I create an outgoing picking with 2 moves.
+-
+ !record {model: stock.picking.out, id: ship_out_1}:
+   name: OUT_001
+-
+ !record {model: stock.move, id: move_out_a}:
+   product_id: product.product_product_11
+   product_qty: 4
+   product_uom: product.product_uom_unit
+   location_id: stock.stock_location_components
+   location_dest_id: stock.stock_location_output
+   picking_id: ship_out_1
+-
+ !record {model: stock.move, id: move_out_b}:
+   product_id: product.product_product_10
+   product_qty: 4
+   product_uom: product.product_uom_unit
+   location_id: stock.stock_location_components
+   location_dest_id: stock.stock_location_output
+   picking_id: ship_out_1
+-
+  I confirm the outgoing picking and force assign it.
+-
+  !workflow {model: stock.picking, action: button_confirm, ref: ship_out_1}
+-
+  !python {model: stock.picking}: |
+    self.force_assign(cr, uid, [ref("ship_out_1")])
+-
+  I create a dispatch and I link it with the 2 moves.
+-
+ !record {model: picking.dispatch, id: dispatch_1}:
+   name: Dispatch_1
+   picker_id: base.user_demo
+-
+  !python {model: stock.move}: |
+    self.write(cr, uid, [ref("move_out_a"),ref("move_out_b")], {'dispatch_id':ref("dispatch_1")})
+-
+  I assign the dispatch
+-
+  !python {model: picking.dispatch}: |
+    self.action_assign(cr, uid, [ref("dispatch_1")])
+-
+  I confirm the dispatch
+-
+  !python {model: picking.dispatch}: |
+    self.action_progress(cr, uid, [ref("dispatch_1")])
+-
+  I process the dispatch, it displays a wizard where I choose quantities that I pick.
+-
+  !python {model: stock.partial.move}: |
+    context.update({'active_model': 'stock.move', 'active_id': ref('dispatch_1'), 'active_ids': [ref('move_out_a'),ref('move_out_b')], 'partial_via_dispatch': True})
+-
+  !record {model: stock.partial.move, id: partial_move_dispatch}:
+    move_ids:
+        - quantity: 1
+          product_id: product.product_product_11
+          product_uom: product.product_uom_unit
+          move_id: move_out_a
+          location_id: stock.stock_location_components
+          location_dest_id: stock.stock_location_output
+        - quantity: 3
+          product_id: product.product_product_10
+          product_uom: product.product_uom_unit
+          move_id: move_out_b
+          location_id: stock.stock_location_components
+          location_dest_id: stock.stock_location_output
+-
+  !python {model: stock.partial.move }: |
+    self.do_partial(cr, uid, [ref('partial_move_dispatch')], context=context)
+-
+  I deliver outgoing shipment linked to the dispatch, only moves with 
+-
+  !python {model: stock.partial.picking}: |
+    context.update({'active_model': 'stock.picking', 'active_id': ref('ship_out_1'), 'active_ids': [ref('ship_out_1')]})
+-
+  !record {model: stock.partial.picking, id: partial_outgoing}:
+    picking_id: ship_out_1
+-
+  !python {model: stock.partial.picking }: |
+    self.do_partial(cr, uid, [ref('partial_outgoing')], context=context)
+-
+  I check outgoing shipment backorder.
+-
+  !python {model: stock.picking}: |
+    shipment = self.browse(cr, uid, ref("ship_out_1"), context=context)
+    for move_line in shipment.move_lines:
+        if move_line.id == ref("move_out_a"):
+            assert move_line.product_qty == 3.0, "Move Quantity from a should be 3"
+        if move_line.id == ref("move_out_b"):
+            assert move_line.product_qty == 1.0, "Move Quantity from b should be 1"
+-
+  I check if the picking dispatch backorder exists
+-
+  !python {model: picking.dispatch}: |
+    backorder = self.search(cr, uid, [('backorder_id','=',ref("dispatch_1"))], context=context)
+    assert backorder, "the backorder exists"
