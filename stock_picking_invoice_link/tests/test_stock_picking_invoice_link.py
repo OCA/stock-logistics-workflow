@@ -10,14 +10,30 @@ from openerp.addons.sale.tests.test_sale_common import TestSale
 class TestStockPickingInvoiceLink(TestSale):
     def test_00_sale_stock_invoice_link(self):
         inv_obj = self.env['account.invoice']
+        prod_order = self.products['prod_order']
+        prod_del = self.products['prod_del']
+        serv_order = self.products['serv_order']
         self.so = self.env['sale.order'].create({
             'partner_id': self.partner.id,
             'partner_invoice_id': self.partner.id,
             'partner_shipping_id': self.partner.id,
-            'order_line': [(0, 0, {
-                'name': p.name, 'product_id': p.id, 'product_uom_qty': 2,
-                'product_uom': p.uom_id.id, 'price_unit': p.list_price
-            }) for (_, p) in self.products.iteritems()],
+            'order_line': [
+                (0, 0, {
+                    'name': prod_order.name, 'product_id': prod_order.id,
+                    'product_uom_qty': 2, 'product_uom': prod_order.uom_id.id,
+                    'price_unit': prod_order.list_price
+                }),
+                (0, 0, {
+                    'name': prod_del.name, 'product_id': prod_del.id,
+                    'product_uom_qty': 2, 'product_uom': prod_del.uom_id.id,
+                    'price_unit': prod_del.list_price
+                }),
+                (0, 0, {
+                    'name': serv_order.name, 'product_id': serv_order.id,
+                    'product_uom_qty': 2, 'product_uom': serv_order.uom_id.id,
+                    'price_unit': serv_order.list_price
+                }),
+            ],
             'pricelist_id': self.env.ref('product.list0').id,
             'picking_policy': 'direct',
         })

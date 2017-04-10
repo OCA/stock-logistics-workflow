@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# © 2013-15 Agile Business Group sagl (<http://www.agilebg.com>)
+# © 2013-17 Agile Business Group (<http://www.agilebg.com>)
 # © 2016 AvanzOSC (<http://www.avanzosc.es>)
 # © 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # © 2017 Jacques-Etienne Baudoux <je@bcim.be>
@@ -7,7 +7,7 @@
 
 {
     'name': 'Stock Picking Invoice Link',
-    'version': '9.0.2.0.0',
+    'version': '10.0.0.1.0',
     'category': 'Warehouse Management',
     'summary': 'Adds link between pickings and invoices',
     'author': 'Agile Business Group, '
