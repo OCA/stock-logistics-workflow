@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Copyright 2017 LasLabs Inc.
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<odoo>
+
+    <record id="stock_pickup_request_view_form" model="ir.ui.view">
+        <field name="name">stock.pickup.request.view.form</field>
+        <field name="model">stock.pickup.request</field>
+        <field name="arch" type="xml">
+            <form string="Request For Pickup">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" readonly="True" />
+                            <field name="company_id" />
+                            <field name="state" readonly="True" />
+                            <field name="picking_id" />
+                        </group>
+                        <group>
+                            <field name="in_picking_id" readonly="True" />
+                            <field name="out_picking_id" readonly="True" />
+                            <field name="cash_in_picking_id" readonly="True" />
+                            <field name="cash_in_picking_id" readonly="True"  />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="stock_pickup_request_view_tree" model="ir.ui.view">
+        <field name="name">stock.pickup.request.view.tree</field>
+        <field name="model">stock.pickup.request</field>
+        <field name="arch" type="xml">
+            <tree string="Request For Pickup">
+                <field name="name" />
+                <field name="state" />
+                <field name="company_id" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="stock_pickup_request_view_search" model="ir.ui.view">
+        <field name="name">stock.pickup.request.view.search</field>
+        <field name="model">stock.pickup.request</field>
+        <field name="arch" type="xml">
+            <search string="Request For Pickup">
+                <field name="name" />
+                <field name="picking_id"/>
+                <field name="company_id" />
+
+                <filter string="Picking"
+                        domain=""
+                        context="{'group_by': 'picking_id'}" />
+            </search>
+        </field>
+    </record>
+
+    <record id="stock_pickup_request_action" model="ir.actions.act_window">
+        <field name="name">Requests For Pickup</field>
+        <field name="res_model">stock.pickup.request</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="stock_pickup_request_view_tree" />
+    </record>
+
+    <menuitem id="menu_stock_pickup_request"
+              parent="stock.menu_stock_inventory_control"
+              name="Stock Pickup Requests"
+              sequence="10"
+              action="stock_pickup_request_action"
+              groups="stock.group_stock_user" />
+
+</odoo>
