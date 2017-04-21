@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sale_order_credit_view" model="ir.ui.view">
+        <field name="name">sale.order.credit.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="client_order_ref" position="after">
+                <field name="sales_hold" />
+                <field name="credit_hold" />
+                <field name="credit_override" groups="base.group_sale_manager" />
+            </field>
+        </field>
+    </record>
+
+</odoo>

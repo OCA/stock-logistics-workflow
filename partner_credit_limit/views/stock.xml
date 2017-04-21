@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="picking_credit_view" model="ir.ui.view">
+        <field name="name">picking.credit.form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <field name="origin" position="after">
+                <field name="dont_allow_transfer" string="Hold Shipment"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
