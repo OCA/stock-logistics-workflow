@@ -3,13 +3,13 @@
 
 {
     "name": "Disable force availability button",
-    "version": "9.0.1.0.0",
+    "version": "10.0.1.0.0",
     "depends": ["stock"],
-    "author": "OdooMRP team,"
-              "AvanzOSC,"
-              "Tecnativa - Pedro M. Baeza,"
+    "author": "AvanzOSC,"
+              "Tecnativa,"
               "Odoo Community Association (OCA),"
-              "Agile Business Group",
+              "Agile Business Group,"
+              "Fanha Giang",
     "website": "http://www.odoomrp.com",
     "category": "Warehouse Management",
     "license": "AGPL-3",

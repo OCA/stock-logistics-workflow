@@ -13,7 +13,7 @@ Usage
 =====
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/154/9.0
+   :target: https://runbot.odoo-community.org/runbot/154/10.0
 
 
 Bug Tracker
@@ -32,9 +32,11 @@ Contributors
 ------------
 
 * Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>
-* Pedro M. Baeza <pedro.baeza@serviciobaeza.com>
+* Pedro M. Baeza <pedro.baeza@tecnativa.com>
 * Ana Juaristi <anajuaristi@avanzosc.es>
 * Alessio Gerace <alessio.gerace@agilebg.com>
+* Fanha Giang <fanha99@hotmail.com>
+* Denis Roussel <denis.roussel@acsone.eu>
 
 Maintainer
 ----------
