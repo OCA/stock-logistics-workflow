@@ -10,7 +10,7 @@
     <field name="arch" type="xml">
         <xpath expr="//button[@name='do_unreserve']" position="after">
             <button name="button_create_sale" string="Create Sale" type="object" groups="base.group_user"
-                    attrs="{'invisible': [('state', '=', 'done')]}"/>
+                    attrs="{'invisible': [('state', '=', 'done'), ('picking_type_code','!=','outgoing')]}"/>
         </xpath>
     </field>
 </record>

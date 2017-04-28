@@ -12,6 +12,7 @@ Usage
 =====
 
 To use this module:
+
 #. Go to *Warehouse > All Operations*
 #. Select a operation don't done with partner
 #. Press *Create Sale* button

@@ -43,7 +43,7 @@ class StockPicking(models.Model):
                         line_vals['product_id'],
                         qty=line_vals['product_uom_qty'],
                         partner_id=order_vals['partner_id'],
-                        fiscal_position=False,
+                        fiscal_position=order.fiscal_position.id,
                     ).get('value', {}))
                 if line_vals.get('tax_id'):
                     line_vals['tax_id'] = [(6, 0, line_vals['tax_id'])]
