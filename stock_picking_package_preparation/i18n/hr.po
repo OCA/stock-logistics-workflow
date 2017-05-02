@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-18 01:44+0000\n"
+"POT-Creation-Date: 2017-04-19 14:00+0000\n"
 "PO-Revision-Date: 2015-10-21 16:34+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: Croatian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/hr/)\n"
@@ -102,7 +102,7 @@ msgstr "Izvršeno"
 #. module: stock_picking_package_preparation
 #: selection:stock.picking.package.preparation,state:0
 msgid "Draft"
-msgstr ""
+msgstr "Skica"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_follower_ids:0

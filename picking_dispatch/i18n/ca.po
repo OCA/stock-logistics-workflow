@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-17 02:02+0000\n"
-"PO-Revision-Date: 2017-03-14 18:29+0000\n"
+"POT-Creation-Date: 2017-04-19 14:00+0000\n"
+"PO-Revision-Date: 2017-04-25 10:39+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Catalan (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/ca/)\n"
 "MIME-Version: 1.0\n"
@@ -93,7 +93,7 @@ msgstr "Cancel·la"
 #. module: picking_dispatch
 #: selection:picking.dispatch,state:0
 msgid "Cancelled"
-msgstr ""
+msgstr "Cancel·lat "
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
@@ -115,7 +115,7 @@ msgstr ""
 #. module: picking_dispatch
 #: model:ir.model,name:picking_dispatch.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Empreses"
 
 #. module: picking_dispatch
 #: field:picking.dispatch,company_id:0
@@ -222,7 +222,7 @@ msgstr ""
 #. module: picking_dispatch
 #: selection:picking.dispatch,state:0
 msgid "Draft"
-msgstr ""
+msgstr "Esborrany"
 
 #. module: picking_dispatch
 #: code:addons/picking_dispatch/picking_dispatch.py:187

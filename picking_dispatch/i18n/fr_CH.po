@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-29 18:56+0000\n"
-"PO-Revision-Date: 2016-12-01 10:15+0000\n"
+"POT-Creation-Date: 2017-04-19 14:00+0000\n"
+"PO-Revision-Date: 2017-04-25 10:42+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: French (Switzerland) (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/fr_CH/)\n"
 "MIME-Version: 1.0\n"
@@ -222,7 +222,7 @@ msgstr ""
 #. module: picking_dispatch
 #: selection:picking.dispatch,state:0
 msgid "Draft"
-msgstr ""
+msgstr "Brouillon"
 
 #. module: picking_dispatch
 #: code:addons/picking_dispatch/picking_dispatch.py:187

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-13 22:02+0000\n"
-"PO-Revision-Date: 2016-09-18 08:13+0000\n"
+"POT-Creation-Date: 2017-04-19 14:00+0000\n"
+"PO-Revision-Date: 2017-04-19 11:44+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: German (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -182,7 +182,7 @@ msgstr "Mitteilungs- und Kommunikations-Verlauf"
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,net_weight:0
 msgid "Net weight"
-msgstr ""
+msgstr "Nettogewicht"
 
 #. module: stock_picking_package_preparation
 #: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:197
@@ -300,4 +300,4 @@ msgstr "Ungelesene Meldungen"
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,weight:0
 msgid "Weight"
-msgstr ""
+msgstr "Gewicht"

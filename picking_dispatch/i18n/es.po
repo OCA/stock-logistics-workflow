@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-17 06:25+0000\n"
-"PO-Revision-Date: 2016-12-23 08:32+0000\n"
+"POT-Creation-Date: 2017-04-19 14:00+0000\n"
+"PO-Revision-Date: 2017-04-28 09:21+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Spanish (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -100,7 +100,7 @@ msgstr "CanceladoCancelado"
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Carrier"
-msgstr ""
+msgstr "Transportista"
 
 #. module: picking_dispatch
 #: model:ir.actions.act_window,name:picking_dispatch.action_dispatch_check_assign_all
@@ -347,7 +347,7 @@ msgstr "Notas"
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 msgid "Order Date"
-msgstr ""
+msgstr "Fecha de pedido"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch

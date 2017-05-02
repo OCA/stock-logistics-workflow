@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-31 09:53+0000\n"
-"PO-Revision-Date: 2016-12-31 09:53+0000\n"
+"POT-Creation-Date: 2017-04-19 14:00+0000\n"
+"PO-Revision-Date: 2017-04-19 14:00+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Spanish (Costa Rica) (https://www.transifex.com/oca/teams/23907/es_CR/)\n"
 "MIME-Version: 1.0\n"
@@ -305,7 +305,7 @@ msgstr ""
 #. module: stock_scanner
 #: field:scanner.scenario,company_id:0
 msgid "Company"
-msgstr ""
+msgstr "Compañía"
 
 #. module: stock_scanner
 #: help:scanner.scenario,company_id:0
@@ -858,7 +858,7 @@ msgstr ""
 #. module: stock_scanner
 #: field:scanner.hardware,reference_document:0
 msgid "Reference"
-msgstr ""
+msgstr "Referencia"
 
 #. module: stock_scanner
 #: view:scanner.hardware:stock_scanner.view_scanner_hardware_form
@@ -993,7 +993,7 @@ msgid "Security"
 msgstr "Seguridad"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:854
+#: code:addons/stock_scanner/hardware/sentinel.py:855
 #, python-format
 msgid "Selected : %d"
 msgstr ""

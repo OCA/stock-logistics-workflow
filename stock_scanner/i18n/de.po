@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-04 08:41+0000\n"
-"PO-Revision-Date: 2017-03-04 08:41+0000\n"
+"POT-Creation-Date: 2017-04-19 14:00+0000\n"
+"PO-Revision-Date: 2017-04-19 14:00+0000\n"
 "Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2017\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
 "MIME-Version: 1.0\n"
@@ -139,13 +139,13 @@ msgstr ""
 #. module: stock_scanner
 #: field:scanner.scenario,group_ids:0
 msgid "Allowed Groups"
-msgstr ""
+msgstr "Erlaubte Gruppen"
 
 #. module: stock_scanner
 #: view:scanner.scenario:stock_scanner.view_scanner_scenario_form
 #: field:scanner.scenario,user_ids:0
 msgid "Allowed Users"
-msgstr ""
+msgstr "Erlaubte Benutzer"
 
 #. module: stock_scanner
 #: view:scanner.scenario:stock_scanner.view_scanner_scenario_form
@@ -316,7 +316,7 @@ msgstr ""
 #. module: stock_scanner
 #: field:scanner.scenario.transition,condition:0
 msgid "Condition"
-msgstr ""
+msgstr "Bedingung"
 
 #. module: stock_scanner
 #: view:stock.config.settings:stock_scanner.stock_config_setting_view_form_inherit_stock_scanner
@@ -994,7 +994,7 @@ msgid "Security"
 msgstr "Sicherheit"
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:854
+#: code:addons/stock_scanner/hardware/sentinel.py:855
 #, python-format
 msgid "Selected : %d"
 msgstr ""
@@ -1186,7 +1186,7 @@ msgstr ""
 #: view:scanner.scenario.custom:stock_scanner.view_scanner_scenario_custom_form
 #: field:scanner.scenario.custom,text_val:0
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Sentinel/scanner_scenario_step_sentinel_return_values.py:17
