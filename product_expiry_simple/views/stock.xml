@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  © 2017 Akretion (Alexis de Lattre <alexis.delattre@akretion.com>)
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+
+<odoo>
+
+<!-- LOTS -->
+<record id="view_production_lot_form" model="ir.ui.view">
+    <field name="name">product_expiry_simple.stock.production.lot.form</field>
+    <field name="model">stock.production.lot</field>
+    <field name="inherit_id" ref="stock.view_production_lot_form"/>
+    <field name="arch" type="xml">
+        <field name="ref" position="after">
+            <field name="expiry_date"/>
+        </field>
+    </field>
+</record>
+
+<record id="view_production_lot_tree" model="ir.ui.view">
+    <field name="name">product_expiry_simple.stock.production.lot.tree</field>
+    <field name="model">stock.production.lot</field>
+    <field name="inherit_id" ref="stock.view_production_lot_tree"/>
+    <field name="arch" type="xml">
+        <field name="product_id" position="after">
+            <field name="expiry_date"/>
+        </field>
+        <xpath expr="/tree" position="attributes">
+            <attribute name="decoration-danger">expiry_date and expiry_date &lt; current_date</attribute>
+            <attribute name="decoration-success">expiry_date and expiry_date &gt;= current_date</attribute>
+        </xpath>
+    </field>
+</record>
+
+<record id="search_product_lot_filter" model="ir.ui.view">
+    <field name="name">product_expiry_simple.stock.production.lot.search</field>
+    <field name="model">stock.production.lot</field>
+    <field name="inherit_id" ref="stock.search_product_lot_filter"/>
+    <field name="arch" type="xml">
+        <field name="product_id" position="after">
+            <filter string="Expired" name="expired"
+                domain="[('expiry_date', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>
+            <filter string="Not Expired" name="no-expired"
+                domain="[('expiry_date', '&gt;=', context_today().strftime('%Y-%m-%d'))]"/>
+        </field>
+        <group expand="0" position="inside">
+            <filter name="expiry_date_groupby" string="Expiry Date"
+                context="{'group_by': 'expiry_date:month'}"/>
+        </group>
+    </field>
+</record>
+
+<!-- QUANTS -->
+
+<!-- No need to inherit the form view, because the expiry date is shown in the lot_id via name_get() field -->
+
+<record id="view_stock_quant_tree" model="ir.ui.view">
+    <field name="name">product_expiry_simple.stock.quant.tree</field>
+    <field name="model">stock.quant</field>
+    <field name="inherit_id" ref="stock.view_stock_quant_tree"/>
+    <field name="arch" type="xml">
+        <field name="lot_id" position="after">
+            <!-- We show expiry_date in tree view in order to do an "order by" on this column via the interface
+            But the information is already in the lot_id column via name_get() -->
+            <field name="expiry_date"/>
+        </field>
+        <xpath expr="/tree" position="attributes">
+            <attribute name="decoration-danger">expiry_date and expiry_date &lt; current_date</attribute>
+            <attribute name="decoration-success">expiry_date and expiry_date &gt;= current_date</attribute>
+        </xpath>
+    </field>
+</record>
+
+<record id="quant_search_view" model="ir.ui.view">
+    <field name="name">product_expiry_simple.stock.quant.search</field>
+    <field name="model">stock.quant</field>
+    <field name="inherit_id" ref="stock.quant_search_view"/>
+    <field name="arch" type="xml">
+        <filter name="positive" position="after">
+            <separator/>
+            <filter string="Expired" name="expired"
+                domain="[('expiry_date', '&lt;', context_today().strftime('%Y-%m-%d'))]"
+                groups="stock.group_production_lot"/>
+            <filter string="Not Expired" name="no-expired"
+                domain="[('expiry_date', '&gt;=', context_today().strftime('%Y-%m-%d'))]"
+                groups="stock.group_production_lot"/>
+        </filter>
+        <filter context="{'group_by': 'lot_id'}" position="after">
+            <filter name="expiry_date_groupby" string="Expiry Date"
+                context="{'group_by': 'expiry_date:month'}" groups="stock.group_production_lot"/>
+        </filter>
+    </field>
+</record>
+
+</odoo>
