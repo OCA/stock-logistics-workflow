@@ -19,6 +19,13 @@ Please don't hesitate to suggest one of your module to this project. Also, you m
 
 [//]: # (addons)
 
+Available addons
+----------------
+addon | version | summary
+--- | --- | ---
+[product_expiry_simple](product_expiry_simple/) | 10.0.1.0.0 | Simpler and better alternative to the official product_expiry module
+
+
 Unported addons
 ---------------
 addon | version | summary
