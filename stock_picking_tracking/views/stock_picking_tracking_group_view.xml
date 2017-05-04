@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--
-    Copyright 2016 LasLabs Inc.
+    Copyright 2016-2017 LasLabs Inc.
     @license LGPL-3 or later (http://www.gnu.org/licenses/lgpl.html).
 -->
 
@@ -61,7 +61,7 @@
         <field name="model">stock.picking.tracking.group</field>
         <field name="arch" type="xml">
             <search string="Stock Picking Trackers">
-                
+
                 <field name="picking_id"/>
                 <field name="state" />
 
@@ -73,7 +73,7 @@
                         domain=""
                         context="{'group_by': 'state'}"
                         />
-                
+
             </search>
         </field>
     </record>

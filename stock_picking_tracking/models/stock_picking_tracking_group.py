@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-# Copyright 2016 LasLabs Inc.
+# Copyright 2016-2017 LasLabs Inc.
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-from openerp import models, fields, api
+from odoo import models, fields, api
+from .stock_picking_tracking_event import OPERATION_STATES
 
 
 class StockPickingTrackingGroup(models.Model):
@@ -27,7 +28,7 @@ class StockPickingTrackingGroup(models.Model):
         related='last_event_id.date_created',
     )
     state = fields.Selection(
-        selection='_get_selection_state',
+        OPERATION_STATES,
         related='last_event_id.state',
         default='unknown',
         readonly=True,
@@ -50,13 +51,6 @@ class StockPickingTrackingGroup(models.Model):
         compute='_compute_last_event_id',
         readonly=True,
     )
-
-    @api.model
-    def _get_selection_state(self):
-        field = self.env['stock.picking.tracking.event'].fields_get(
-            allfields=['state'],
-        )
-        return field['state']['selection']
 
     @api.multi
     @api.depends('event_ids')
@@ -87,7 +81,7 @@ class StockPickingTrackingGroup(models.Model):
 
     @api.multi
     def _process_event(self, **kwargs):
-        """ Receive & process event, returning values for event creation.
+        """ Receive & process event, handing back vals for creation
 
         Params:
             message: str describing event
@@ -97,8 +91,7 @@ class StockPickingTrackingGroup(models.Model):
             source: str Source of event, usually carrier
 
         Returns:
-            dict: Values to use during the creation of an event for this
-                group.
+            stock.picking.tracking.event Recordset of new events
         """
         self.ensure_one()
         location_id = kwargs.get('location_id', 0)
@@ -129,14 +122,13 @@ class StockPickingTrackingGroup(models.Model):
             source: str Source of event, usually carrier
 
         Returns:
-            StockPickingTrackingEvent: Recordset of new events that were
-                created.
+            stock.picking.tracking.event Recordset of new events
         """
         event_obj = self.env['stock.picking.tracking.event']
         res = event_obj.browse()
-        for record in self:
+        for rec_id in self:
             res += event_obj.create(
-                record._process_event(
+                self._process_event(
                     message=message,
                     state=state,
                     location_id=location_id,

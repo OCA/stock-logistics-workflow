@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-# Copyright 2016 LasLabs Inc.
+# Copyright 2016-2017 LasLabs Inc.
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-from openerp import models, fields, api
+from odoo import models, fields, api
 
 
 class StockPickingTrackingLocation(models.Model):
@@ -15,7 +15,7 @@ class StockPickingTrackingLocation(models.Model):
         inverse_name='location_id',
     )
     city = fields.Char(required=True)
-    zip_code = fields.Char(required=True)
+    zip = fields.Char(required=True)
     state_id = fields.Many2one(
         string='State',
         comodel_name='res.country.state',
@@ -31,11 +31,11 @@ class StockPickingTrackingLocation(models.Model):
     @api.multi
     def name_get(self):
         res = []
-        for record in self:
-            name = '{city} {state} {zip_code}'.format(
-                city=record.city,
-                state=record.state_id.code,
-                zip_code=record.zip_code,
+        for rec_id in self:
+            name = '{city} {state} {zip}'.format(
+                city=rec_id.city,
+                state=rec_id.state_id.code,
+                zip=rec_id.zip,
             )
-            res.append((record.id, name))
+            res.append((rec_id.id, name))
         return res

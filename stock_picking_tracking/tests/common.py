@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-# Copyright 2016 LasLabs Inc.
+# Copyright 2016-2017 LasLabs Inc.
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-from openerp.tests.common import TransactionCase
+from odoo.tests.common import TransactionCase
 
 
 class TestHelper(TransactionCase):
@@ -25,7 +25,7 @@ class TestHelper(TransactionCase):
         self.state_id = self.env['res.country.state'].browse(1)
         return self.env['stock.picking.tracking.location'].create({
             'city': 'Test City',
-            'zip_code': '12345-6789',
+            'zip': '12345-6789',
             'state_id': self.state_id.id,
             'country_id': self.state_id.country_id.id,
         })

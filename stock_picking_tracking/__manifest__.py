@@ -5,7 +5,7 @@
 {
     "name": "Stock Picking Tracking",
     "summary": "Adds a concept of event tracking for stock pickings",
-    "version": "9.0.1.0.0",
+    "version": "10.0.1.0.0",
     "category": "Inventory, Logistics, Warehousing",
     "website": "https://laslabs.com/",
     "author": "LasLabs",
@@ -19,11 +19,10 @@
         "security/ir.model.access.csv",
         "views/stock_picking_view.xml",
         "views/stock_picking_tracking_group_view.xml",
-        "views/stock_picking_tracking_event_view.xml",
-        "views/stock_picking_tracking_location_view.xml",
-        "views/stock_menu.xml",
+        'views/stock_picking_tracking_event_view.xml',
+        'views/stock_picking_tracking_location_view.xml',
     ],
-    "demo": [
-        "demo/stock_tracking_demo.xml",
+    'demo': [
+        'demo/stock_tracking_demo.xml',
     ]
 }

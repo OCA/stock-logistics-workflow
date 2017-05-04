@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--
-    Copyright 2016 LasLabs Inc.
+    Copyright 2016-2017 LasLabs Inc.
     @license LGPL-3 or later (http://www.gnu.org/licenses/lgpl.html).
 -->
 
@@ -50,7 +50,7 @@
         <field name="model">stock.picking.tracking.event</field>
         <field name="arch" type="xml">
             <search string="Stock Picking Events">
-                
+
                 <field name="group_id"/>
                 <field name="location_id" />
                 <field name="date_created" />
@@ -68,7 +68,7 @@
                        domain=""
                        context="{'group_by': 'location_id'}"
                        />
-                
+
             </search>
         </field>
     </record>

@@ -1,8 +1,22 @@
 # -*- coding: utf-8 -*-
-# Copyright 2016 LasLabs Inc.
+# Copyright 2016-2017 LasLabs Inc.
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-from openerp import models, fields, api
+from odoo import models, fields, api
+
+
+OPERATION_STATES = [
+    ('unknown', 'Unknown'),
+    ('pre_transit', 'Pre Transit'),
+    ('in_transit', 'In Transit'),
+    ('out_for_delivery', 'Out For Delivery'),
+    ('delivered', 'Delivered'),
+    ('available_for_pickup', 'Available For Pickup'),
+    ('return_to_sender', 'Return To Sender'),
+    ('fail', 'Failure'),
+    ('cancel', 'Cancelled'),
+    ('error', 'Error'),
+]
 
 
 class StockPickingTrackingEvent(models.Model):
@@ -16,18 +30,7 @@ class StockPickingTrackingEvent(models.Model):
         required=True,
     )
     state = fields.Selection(
-        [
-            ('unknown', 'Unknown'),
-            ('pre_transit', 'Pre Transit'),
-            ('in_transit', 'In Transit'),
-            ('out_for_delivery', 'Out For Delivery'),
-            ('delivered', 'Delivered'),
-            ('available_for_pickup', 'Available For Pickup'),
-            ('return_to_sender', 'Return To Sender'),
-            ('fail', 'Failure'),
-            ('cancel', 'Cancelled'),
-            ('error', 'Error'),
-        ],
+        OPERATION_STATES,
         required=True,
         default='unknown',
         help="Status of the dispatch at time of event",
