@@ -42,6 +42,7 @@ addon | version | summary
 [stock_ownership_by_move](stock_ownership_by_move/) | 8.0.0.1.0 | Preserve Ownership of moves (not pickings) on reception.
 [stock_picking_back2draft](stock_picking_back2draft/) | 8.0.1.0.0 | Reopen cancelled pickings
 [stock_picking_backorder_strategy](stock_picking_backorder_strategy/) | 8.0.0.1.0 | Picking backordering strategies
+[stock_picking_backorder_to_sale](stock_picking_backorder_to_sale/) | 8.0.1.0.0 | Create sale order from backorder an cancel backorder
 [stock_picking_compute_delivery_date](stock_picking_compute_delivery_date/) | 8.0.1.1.0 | Stock Picking Compute Delivery Date
 [stock_picking_deliver_uos](stock_picking_deliver_uos/) | 8.0.1.0.0 | Adds fields uos and uos_quantity to Stock Transfer Details
 [stock_picking_invoice_link](stock_picking_invoice_link/) | 8.0.2.0.0 | Adds link between pickings and generated invoices
