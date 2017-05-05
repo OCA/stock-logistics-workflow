@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-# Copyright 2016 LasLabs Inc.
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# Copyright 2016-2017 LasLabs Inc.
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 {
     "name": "Stock Picking Tracking",
@@ -9,7 +9,7 @@
     "category": "Inventory, Logistics, Warehousing",
     "website": "https://laslabs.com/",
     "author": "LasLabs",
-    "license": "AGPL-3",
+    "license": "LGPL-3",
     "application": False,
     "installable": True,
     "depends": [
@@ -19,10 +19,11 @@
         "security/ir.model.access.csv",
         "views/stock_picking_view.xml",
         "views/stock_picking_tracking_group_view.xml",
-        'views/stock_picking_tracking_event_view.xml',
-        'views/stock_picking_tracking_location_view.xml',
+        "views/stock_picking_tracking_event_view.xml",
+        "views/stock_picking_tracking_location_view.xml",
+        "views/stock_menu.xml",
     ],
-    'demo': [
-        'demo/stock_tracking_demo.xml',
+    "demo": [
+        "demo/stock_tracking_demo.xml",
     ]
 }
