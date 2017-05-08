@@ -88,10 +88,10 @@
                                             </td>
                                             <td>stock error<br/>breakage
                                             </td>
-                                            <tr align="left">
+                                            <tr align="left" t-if="product.description_warehouse">
                                                 <td colspan="4">
                                                     <pre class="description ">
-                                                        <span t-esc="product.description_warehouse and product.description_warehouse or ''"></span>
+                                                        <span t-esc="product.description_warehouse"></span>
                                                     </pre>
                                                 </td>
                                             </tr>
