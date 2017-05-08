@@ -61,7 +61,6 @@
                                     </b>
                                 </caption>
                                 <thead>
-                                    <th>Product Code</th>
                                     <th>Product</th>
                                     <th>Carrier</th>
                                     <th class="text-right">QTY</th>
@@ -75,10 +74,7 @@
 
                                         <tr>
                                             <td>
-                                                <span t-field="product.default_code"/>
-                                            </td>
-                                            <td>
-                                                <span t-field="product.name"/>
+                                                <span t-field="product.display_name"/>
                                             </td>
                                             <td>
                                                 <span t-esc="carrier"/>
