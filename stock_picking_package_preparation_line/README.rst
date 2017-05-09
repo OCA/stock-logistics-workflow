@@ -6,16 +6,13 @@
 Stock Picking Package Preparation
 =================================
 
-This module adds a new document in the Warehouse menu: **Package
-Preparation**. It works on a selection of pickings and allows to add
-them all in the same package, then to transfer all the pickings at once.
-
-A possible use case is to put all the selected pickings on a pallet.
+This module adds a new class on **Package Preparation** to manage details
+related with stock move or not
 
 Installation
 ============
 
- * This module depends only on the **stock** module.
+ * This module depends only on the **stock_picking_package_preparation** module.
 
 Configuration
 =============
@@ -25,30 +22,11 @@ Configuration
 Usage
 =====
 
-To use this module, you need to:
-
- * Go to Warehouse > Package Preparation
-
-From there, you can create a new preparation.
-Choose a partner then the selection of pickings you want in the package.
-You can choose a logistic unit or a packaging, they will be set on the
-generated package.
-
-When you click on **Put in pack**, it generates the pack, which is not
-finalized yet (no quants), but you can verify the operations in the
-**Operations** tab.
-Eventually, when you click on **Done**, all the pickings will be
-transfered and the package operations will be performed.
-
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
    :target: https://runbot.odoo-community.org/runbot/154/10.0
-
-Known issues / Roadmap
-======================
-
- * No printed document for the preparation
-
+.. repo_id is available in https://github.com/OCA/maintainer-tools/blob/master/tools/repos_with_ids.txt
+.. branch is "10.0" for example
 
 Bug Tracker
 ===========
@@ -58,18 +36,13 @@ Bugs are tracked on `GitHub Issues
 check there if your issue has already been reported. If you spotted it first,
 help us smashing it by providing a detailed and welcomed feedback.
 
-
 Credits
 =======
-Images
-------
-
-* Odoo Community Association: `Icon <https://github.com/OCA/maintainer-tools/blob/master/template/module/static/description/icon.svg>`_.
 
 Contributors
 ------------
 
-* Guewen Baconnier <guewen.baconnier@camptocamp.com>
+* Francesco Apruzzese <f.apruzzese@apuliasoftware.it>
 * Lorenzo Battistini <lorenzo.battistini@agilebg.com>
 * Alessio Gerace <alessio.gerace@agilebg.com>
 
