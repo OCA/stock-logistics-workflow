@@ -5,7 +5,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import models, fields, api, _
-from odoo.exceptions import Warning
+from odoo.exceptions import Warning as UserError
 
 
 class StockPickingPackagePreparation(models.Model):
@@ -132,7 +132,7 @@ class StockPickingPackagePreparation(models.Model):
     @api.multi
     def action_done(self):
         if not self.mapped('package_id'):
-            raise Warning(
+            raise UserError(
                 _('The package has not been generated.')
             )
         for picking in self.picking_ids:
@@ -142,7 +142,7 @@ class StockPickingPackagePreparation(models.Model):
     @api.multi
     def action_cancel(self):
         if any(prep.state == 'done' for prep in self):
-            raise Warning(
+            raise UserError(
                 _('Cannot cancel a done package preparation.')
             )
         package_ids = self.mapped('package_id')
@@ -153,7 +153,7 @@ class StockPickingPackagePreparation(models.Model):
     @api.multi
     def action_draft(self):
         if any(prep.state != 'cancel' for prep in self):
-            raise Warning(
+            raise UserError(
                 _('Only canceled package preparations can be reset to draft.')
             )
         self.write({'state': 'draft'})
@@ -168,12 +168,12 @@ class StockPickingPackagePreparation(models.Model):
     def _prepare_package(self):
         self.ensure_one()
         if not self.picking_ids:
-            raise Warning(
+            raise UserError(
                 _('No transfer selected for this preparation.')
             )
         location = self.mapped('picking_ids.location_dest_id')
         if len(location) > 1:
-            raise Warning(
+            raise UserError(
                 _('All the transfers must have the same destination location')
             )
         values = {
@@ -190,7 +190,7 @@ class StockPickingPackagePreparation(models.Model):
         operation_model = self.env['stock.pack.operation']
 
         if any(picking.state != 'assigned' for picking in self.picking_ids):
-            raise Warning(
+            raise UserError(
                 _('All the transfers must be "Ready to Transfer".')
             )
 
