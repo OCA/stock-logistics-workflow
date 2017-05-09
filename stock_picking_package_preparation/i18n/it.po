@@ -98,7 +98,7 @@ msgstr "ID"
 #. module: stock_picking_package_preparation
 #: model:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "If there is no product but a source package, this means the source package was moved entirely.  If there is a product and a source package, the product was taken from the source package."
-msgstr "If there is no product but a source package, this means the source package was moved entirely.  If there is a product and a source package, the product was taken from the source package."
+msgstr "Se non è presente un prodotto ma è presente una confezione sorgente, vuol dire che la confezione sorgente è stata trasferita interamente. Se è presente un prodotto e una confezione sorgente, il prodotto prodotto è stato prelevato dalla confezione sorgente"
 
 #. module: stock_picking_package_preparation
 #: selection:stock.picking.package.preparation,state:0
@@ -168,7 +168,7 @@ msgstr "Preparazione pacco"
 #: model:ir.ui.menu,name:stock_picking_package_preparation.menu_stock_picking_package_preparation
 #: model:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_tree
 msgid "Package Preparations"
-msgstr "Package Preparations"
+msgstr "Preparazione Pacchi"
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_name
