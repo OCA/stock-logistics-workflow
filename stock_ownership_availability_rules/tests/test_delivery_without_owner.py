@@ -13,14 +13,14 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from openerp.tests.common import TransactionCase
+from odoo.tests.common import TransactionCase
 
 
 class TestDeliveryWithoutOwner(TransactionCase):
 
     def setUp(self):
         super(TestDeliveryWithoutOwner, self).setUp()
-        self.product = self.env.ref('product.product_product_36')
+        self.product = self.env.ref('product.product_product_8')
         self.quant = self.env['stock.quant'].create({
             'qty': 100,
             'location_id': self.env.ref('stock.stock_location_stock').id,
@@ -28,6 +28,9 @@ class TestDeliveryWithoutOwner(TransactionCase):
         })
         self.picking = self.env['stock.picking'].create({
             'picking_type_id': self.env.ref('stock.picking_type_out').id,
+            'location_id': self.env.ref('stock.stock_location_stock').id,
+            'location_dest_id':
+                self.env.ref('stock.stock_location_customers').id,
         })
         self.move = self.env['stock.move'].create({
             'name': '/',

@@ -15,14 +15,15 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from openerp import models
+from odoo import models, api
 
 
 class Product(models.Model):
     _inherit = 'product.template'
 
-    def action_open_quants(self, cr, uid, ids, context=None):
-        result = super(Product, self).action_open_quants(cr, uid, ids, context)
+    @api.multi
+    def action_open_quants(self):
+        result = super(Product, self).action_open_quants()
         result['context'] = (
             "{'search_default_locationgroup': 1, "
             "'search_default_ownergroup': 1, "

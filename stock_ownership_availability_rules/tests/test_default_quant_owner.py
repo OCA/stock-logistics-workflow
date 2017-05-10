@@ -13,7 +13,7 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from openerp.tests.common import TransactionCase
+from odoo.tests.common import TransactionCase
 
 
 class TestDefaultQuantOwner(TransactionCase):
@@ -32,6 +32,9 @@ class TestDefaultQuantOwner(TransactionCase):
 
         picking = self.env['stock.picking'].create({
             'picking_type_id': self.env.ref('stock.picking_type_in').id,
+            'location_id': self.env.ref('stock.stock_location_suppliers').id,
+            'location_dest_id':
+                self.env.ref('stock.stock_location_stock').id,
         })
         self.env['stock.move'].create({
             'name': '/',
@@ -51,4 +54,4 @@ class TestDefaultQuantOwner(TransactionCase):
     def setUp(self):
         super(TestDefaultQuantOwner, self).setUp()
         self.Quant = self.env['stock.quant']
-        self.product = self.env.ref('product.product_product_36')
+        self.product = self.env.ref('product.product_product_8')
