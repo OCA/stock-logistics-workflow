@@ -51,6 +51,25 @@ class TestDefaultQuantOwner(TransactionCase):
         self.assertEqual(self.env.user.company_id.partner_id,
                          created_quant.owner_id)
 
+    def test_it_sets_owner_on_inventory_line(self):
+
+        location_id = self.browse_ref('stock.warehouse0').lot_stock_id.id
+        inventory = self.env['stock.inventory'].create({
+            'name': 'Test inventory',
+            'location_id': location_id,
+            'filter': 'partial'
+        })
+        inventory.prepare_inventory()
+
+        inventory_line = self.env['stock.inventory.line'].create({
+            'inventory_id': inventory.id,
+            'product_id': self.ref('product.product_product_9'),
+            'location_id': location_id,
+            'product_qty': 3
+        })
+        self.assertEqual(self.env.user.company_id.partner_id.id,
+                         inventory_line.partner_id.id)
+
     def setUp(self):
         super(TestDefaultQuantOwner, self).setUp()
         self.Quant = self.env['stock.quant']
