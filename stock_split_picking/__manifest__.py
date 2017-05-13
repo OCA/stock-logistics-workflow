@@ -18,20 +18,23 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-{'name': 'Split picking',
- 'summary': 'Split a picking in two unconfirmed pickings',
- 'version': '8.0.1.0.0',
- 'author': "Camptocamp,Odoo Community Association (OCA)",
- 'maintainer': 'Camptocamp',
- 'license': 'AGPL-3',
- 'category': 'Warehouse Management',
- 'complexity': "normal",  # easy, normal, expert
- 'depends': ['stock'],
- 'website': 'http://www.camptocamp.com',
- 'data': ['view/stock_partial_picking.xml'],
- 'demo': [],
- 'test': ['test/test_picking_split.yml',
-          'test/test_assigned_picking_split.yml'],
- 'installable': False,
- 'auto_install': False,
+{
+    'name': 'Split picking',
+    'summary': 'Split a picking as though you were creating a backorder without actually validating the picking',
+    'version': '1.0.0',
+    'author': "Camptocamp,Odoo Community Association (OCA), Avoin.Systems",
+    'maintainer': 'Camptocamp',
+    'license': 'AGPL-3',
+    'category': 'Warehouse Management',
+    'complexity': "normal",  # easy, normal, expert
+    'depends': ['stock'],
+    'website': 'http://www.camptocamp.com',
+    'data': ['view/stock_split_picking.xml'],
+    'demo': [],
+    'test': [
+        'test/test_picking_split.yml',
+        'test/test_assigned_picking_split.yml'
+    ],
+    'installable': True,
+    'auto_install': False,
  }
