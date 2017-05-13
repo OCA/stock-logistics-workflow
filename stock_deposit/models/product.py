@@ -82,3 +82,18 @@ class ProductProduct(models.Model):
             ], domains[0]])
             return quant_domain, domains[1], domains[2]
         return domains
+
+    @api.multi
+    def deposit_action_open_quants(self):
+        result = self.env['product.template']._get_act_window_dict(
+            'stock_deposit.deposit_quants_act',
+        )
+        templates = [product.product_tmpl_id.id for product in self]
+        context = {
+            'search_default_product_tmpl_id': templates[0],
+            'search_default_deposit_loc': 1,
+            'search_default_locationgroup': 1,
+            'search_default_internal_loc': 1,
+        }
+        result['context'] = str(context)
+        return result
