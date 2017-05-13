@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-19 14:00+0000\n"
-"PO-Revision-Date: 2017-04-25 10:41+0000\n"
+"POT-Creation-Date: 2017-05-05 02:57+0000\n"
+"PO-Revision-Date: 2017-05-11 14:11+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Russian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -93,7 +93,7 @@ msgstr "Отменена"
 #. module: picking_dispatch
 #: selection:picking.dispatch,state:0
 msgid "Cancelled"
-msgstr ""
+msgstr "Отменен"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
@@ -158,7 +158,7 @@ msgstr ""
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Date:"
-msgstr ""
+msgstr "Дата:"
 
 #. module: picking_dispatch
 #: field:res.company,default_picker_id:0
@@ -217,7 +217,7 @@ msgstr ""
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 #: selection:picking.dispatch,state:0
 msgid "Done"
-msgstr ""
+msgstr "Завершен"
 
 #. module: picking_dispatch
 #: selection:picking.dispatch,state:0
@@ -427,7 +427,7 @@ msgstr ""
 #: model:ir.model,name:picking_dispatch.model_product_product
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Product"
-msgstr ""
+msgstr "Товар/Услуга"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch

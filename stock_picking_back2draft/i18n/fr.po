@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-04 02:49+0000\n"
+"POT-Creation-Date: 2017-05-05 02:58+0000\n"
 "PO-Revision-Date: 2016-05-03 14:10+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: French (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/fr/)\n"
@@ -20,7 +20,7 @@ msgstr ""
 #. module: stock_picking_back2draft
 #: view:stock.picking:stock_picking_back2draft.view_picking_form_reopen
 msgid "Back to draft"
-msgstr ""
+msgstr "Back to draft"
 
 #. module: stock_picking_back2draft
 #: model:ir.model,name:stock_picking_back2draft.model_stock_picking
