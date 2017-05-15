@@ -13,8 +13,8 @@ class StockMove(models.Model):
         "processed as soon as the products are available.")
 
     @api.multi
-    def action_assign(self):
-        super(StockMove, self).action_assign()
+    def action_assign(self, no_prepare=False):
+        super(StockMove, self).action_assign(no_prepare=no_prepare)
         # Transfer all pickings which have an auto move assigned
         moves = self.filtered(lambda m: m.state == 'assigned' and m.auto_move)
         todo_pickings = moves.mapped('picking_id')
