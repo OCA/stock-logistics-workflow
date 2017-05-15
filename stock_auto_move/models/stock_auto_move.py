@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # © 2014-2015 NDP Systèmes (<http://www.ndp-systemes.fr>)
 
-from openerp import api, fields, models
+from odoo import api, fields, models
 
 
 class StockMove(models.Model):
@@ -15,7 +15,6 @@ class StockMove(models.Model):
     @api.multi
     def action_assign(self):
         super(StockMove, self).action_assign()
-        # picking_env = self.env['stock.picking']
         # Transfer all pickings which have an auto move assigned
         moves = self.filtered(lambda m: m.state == 'assigned' and m.auto_move)
         todo_pickings = moves.mapped('picking_id')
@@ -26,9 +25,9 @@ class StockMove(models.Model):
     @api.multi
     def _change_procurement_group(self):
         automatic_group = self.env.ref('stock_auto_move.automatic_group')
-        for move in self:
-            if move.auto_move and move.group_id != automatic_group:
-                move.group_id = automatic_group
+        moves = self.filtered(
+            lambda m: m.auto_move and m.group_id != automatic_group)
+        moves.write({'group_id': automatic_group.id})
 
     @api.multi
     def action_confirm(self):
@@ -50,11 +49,10 @@ class ProcurementRule(models.Model):
 class ProcurementOrder(models.Model):
     _inherit = 'procurement.order'
 
-    @api.model
-    def _run_move_create(self, procurement):
-        res = super(ProcurementOrder, self)._run_move_create(
-            procurement)
-        res.update({'auto_move': procurement.rule_id.auto_move})
+    def _get_stock_move_values(self):
+        res = super(ProcurementOrder, self)._get_stock_move_values()
+        if self.rule_id:
+            res.update({'auto_move': self.rule_id.auto_move})
         return res
 
 
@@ -62,11 +60,7 @@ class StockLocationPath(models.Model):
     _inherit = 'stock.location.path'
 
     @api.model
-    def _prepare_push_apply(self, rule, move):
+    def _apply(self, move):
         """Set auto move to the new move created by push rule."""
-        res = super(StockLocationPath, self)._prepare_push_apply(
-            rule, move)
-        res.update({
-            'auto_move': (rule.auto == 'auto'),
-        })
-        return res
+        move.auto_move = self.auto == 'transparent'
+        return super(StockLocationPath, self)._apply(move)
