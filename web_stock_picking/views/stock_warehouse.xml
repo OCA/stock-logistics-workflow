@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright 2016 LasLabs Inc.
+    @author Dave Lasley <dave@laslabs.com>
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+
+<odoo>
+    <template id="view_warehouse"
+              inherit_id="stock.view_warehouse"
+              name="Add Nomenclature">
+        <xpath expr="//field[@name='partner_id']" position="after">
+            <field name="barcode_nomenclature_id" groups="base.group_no_one" />
+        </xpath>
+    </template>
+</odoo>
