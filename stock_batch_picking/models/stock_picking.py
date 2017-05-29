@@ -71,6 +71,9 @@ class StockPicking(models.Model):
                     continue
                 else:
                     for pack in pick.pack_operation_ids:
-                        pack.product_qty = pack.qty_done
+                        if not pack.qty_done:
+                            pack.unlink()
+                        else:
+                            pack.product_qty = pack.qty_done
 
             pick.do_transfer()
