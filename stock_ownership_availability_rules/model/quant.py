@@ -1,25 +1,18 @@
 # -*- coding: utf-8 -*-
-#    Author: Leonardo Pistone
-#    Copyright 2014 Camptocamp SA
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# Copyright 2014 ALeonardo Pistone, Camptocamp SA
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo import models, api, fields
 
 
 class Quant(models.Model):
     _inherit = 'stock.quant'
+
+    owner_id = fields.Many2one('res.partner', 'Owner',
+                               help="This is the owner of the quant",
+                               readonly=True,
+                               index=True,
+                               required=True)
 
     @api.model
     def create(self, vals):
@@ -38,12 +31,6 @@ class Quant(models.Model):
                 Company._company_default_get('stock.quant').partner_id.id)
 
         return super(Quant, self).create(vals)
-
-    owner_id = fields.Many2one('res.partner', 'Owner',
-                               help="This is the owner of the quant",
-                               readonly=True,
-                               index=True,
-                               required=True)
 
     @api.model
     def _quants_get_reservation_domain(self, move, pack_operation_id=False,
