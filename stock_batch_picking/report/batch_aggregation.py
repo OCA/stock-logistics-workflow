@@ -63,26 +63,38 @@ class BatchAggregation(object):
 
         locations: a tuple (source_location, dest_location)
         """
-        products = OrderedDict()
+        products = {}
         product_qty = {}
         carrier = {}
 
-        # sort operations by product default_code
-        operations = sorted(
-            self.operations_by_loc[locations],
-            key=lambda op: (op.product_id.default_code, op.product_id.id)
-        )
-        for operation in operations:
-            product_id = operation.product_id.id
-            products[product_id] = operation.product_id
-            carrier[product_id] = (
-                operation.picking_id.carrier_id and
-                operation.picking_id.carrier_id.partner_id.name or ''
-            )
-            if product_id not in product_qty:
-                product_qty[product_id] = operation.product_qty
-            else:
-                product_qty[product_id] += operation.product_qty
+        for operation in self.operations_by_loc[locations]:
+            if operation.product_id:
+                product_id = operation.product_id.id
+                products[product_id] = operation.product_id
+                carrier[product_id] = (
+                    operation.picking_id.carrier_id and
+                    operation.picking_id.carrier_id.partner_id.name or ''
+                )
+                qty = product_qty.setdefault(product_id, 0.0)
+                product_qty[product_id] = qty + operation.product_qty
+            elif operation.package_id:
+                package = operation.package_id
+                quants = package.quant_ids
+                for quant in quants:
+                    product_id = quant.product_id.id
+                    products[product_id] = quant.product_id
+                    carrier[product_id] = (
+                        operation.picking_id.carrier_id and
+                        operation.picking_id.carrier_id.partner_id.name or ''
+                    )
+                    qty = product_qty.setdefault(product_id, 0.0)
+                    product_qty[product_id] = qty + operation.product_qty
+
+        # sort product by default_code
+        products = OrderedDict(sorted(
+            products.items(),
+            key=lambda product: (product[1].default_code, product[1].id)
+        ))
 
         for product_id in products:
             yield (
