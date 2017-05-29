@@ -1,19 +1,7 @@
-#    Author: Leonardo Pistone
-#    Copyright 2015 Camptocamp SA
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from openerp.tests.common import TransactionCase
+# -*- coding: utf-8 -*-
+# © 2015 Leonardo Pistone, Camptocamp SA
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+from odoo.tests.common import TransactionCase
 import operator
 
 
@@ -25,7 +13,8 @@ class TestPickingToPackOps(TransactionCase):
                                              owner=self.partner2)
 
         pick.action_confirm()
-        result = pick._prepare_pack_ops(pick, [], {self.product1: 5.0})
+        result = pick._prepare_pack_ops(self.env['stock.quant'],
+                                        {self.product1: 5.0})
 
         self.assertEqual(1, len(result))
         self.assertEqual(self.partner2.id, result[0]['owner_id'])
@@ -39,7 +28,8 @@ class TestPickingToPackOps(TransactionCase):
         )
 
         pick.action_confirm()
-        result = pick._prepare_pack_ops(pick, [], {self.product1: 7.0})
+        result = pick._prepare_pack_ops(self.env['stock.quant'],
+                                        {self.product1: 7.0})
 
         self.assertEqual(1, len(result))
         self.assertEqual(self.partner2.id, result[0]['owner_id'])
@@ -54,7 +44,8 @@ class TestPickingToPackOps(TransactionCase):
         )
 
         pick.action_confirm()
-        result = pick._prepare_pack_ops(pick, [], {self.product1: 12.0})
+        result = pick._prepare_pack_ops(self.env['stock.quant'],
+                                        {self.product1: 12.0})
 
         self.assertEqual(2, len(result))
         result.sort(key=operator.itemgetter('product_qty'))
@@ -97,6 +88,8 @@ class TestPickingToPackOps(TransactionCase):
     def _picking_factory(self, owner):
         return self.env['stock.picking'].create({
             'picking_type_id': self.env.ref('stock.picking_type_in').id,
+            'location_id': self.env.ref('stock.stock_location_suppliers').id,
+            'location_dest_id': self.env.ref('stock.stock_location_14').id,
             'owner_id': owner.id,
         })
 
@@ -113,8 +106,8 @@ class TestPickingToPackOps(TransactionCase):
 
     def setUp(self):
         super(TestPickingToPackOps, self).setUp()
-        self.product1 = self.env.ref('product.product_product_33')
-        self.product2 = self.env.ref('product.product_product_36')
+        self.product1 = self.env.ref('product.product_product_4')
+        self.product2 = self.env.ref('product.product_product_8')
         self.partner1 = self.env.ref('base.res_partner_1')
         self.partner2 = self.env.ref('base.res_partner_2')
 

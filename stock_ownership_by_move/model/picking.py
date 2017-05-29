@@ -1,21 +1,8 @@
 # -*- coding: utf-8 -*-
-#    Author: Leonardo Pistone
-#    Copyright 2015 Camptocamp SA
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# © 2015 Leonardo Pistone, Camptocamp SA
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import models, api
+from odoo import models, api
 
 from collections import defaultdict
 
@@ -24,7 +11,7 @@ class Picking(models.Model):
     _inherit = 'stock.picking'
 
     @api.model
-    def _prepare_pack_ops(self, picking, quants, forced_qties):
+    def _prepare_pack_ops(self, quants, forced_qties):
         """Get the owner from the moves instead of the picking.
 
         The only case we need to fix is the one of receptions. In that case, we
@@ -35,20 +22,19 @@ class Picking(models.Model):
         """
 
         if quants:
-            return super(Picking, self)._prepare_pack_ops(picking, quants,
-                                                          forced_qties)
+            return super(Picking, self)._prepare_pack_ops(quants, forced_qties)
 
         grouped = defaultdict(list)
         ops_data = []
 
-        for move in picking.move_lines:
+        for move in self.move_lines:
             if move.state not in ('assigned', 'confirmed'):
                 continue
             grouped[(move.product_id, move.restrict_partner_id)].append(move)
 
         for product, owner in grouped:
             qty = sum(m.product_qty for m in grouped[(product, owner)])
-            op_data = super(Picking, self)._prepare_pack_ops(picking, quants,
+            op_data = super(Picking, self)._prepare_pack_ops(quants,
                                                              {product: qty})
             for x in op_data:
                 x['owner_id'] = owner.id

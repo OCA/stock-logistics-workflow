@@ -50,6 +50,7 @@ Contributors
 ------------
 
 * Leonardo Pistone <leonardo.pistone@camptocamp.com>
+* Cédric Pigeon <cedric.pigeon@acsone.eu>
 
 Maintainer
 ----------
