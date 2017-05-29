@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright 2016 LasLabs Inc.
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+
+<odoo>
+    <record model="ir.ui.view" id="stock_package_info_form_view">
+        <field name="name">stock.package.info.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//page" position="after">
+                <page string="Packages" groups="stock.group_tracking_lot"
+                      attrs="{'invisible': [('package_ids','=',False)]}">
+                    <group name="group_packages"
+                           string="Packages">
+                        <field name="package_ids" nolabel="1">
+                            <tree>
+                                <field name="name" />
+                                <field name="product_pack_tmpl_id" />
+                                <field name="width" />
+                                <field name="height" />
+                                <field name="length" />
+                                <field name="permitted_volume" />
+                                <field name="total_volume_charge" sum="sum_total_volume_charge"/>
+                                <field name="total_est_weight" sum="sum_total_est_weight"/>
+                                <field name="total_est_weight_net" sum="sum_estim_weight_net"/>
+                                <field name="empty_weight" sum="sum_empty_weight"/>
+                                <field name="real_weight" sum="sum_real_weight"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group name="group_package_total_ids" string="Total packages by logistic unit">
+                        <field name="package_total_ids" nolabel="1">
+                            <tree >
+                                <field name="product_pack_tmpl_id" />
+                                <field name="quantity" sum="sum_quantity"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group name="group_package_info_ids" string="Total Weight and Lots by package">
+                        <field name="package_info_ids" nolabel="1">
+                            <tree>
+                                <field name="package_id" />
+                                <field name="net_weight" sum="sum_net_weight"/>
+                                <field name="lot_ids" widget="many2many_tags" />
+                                <field name="gross_weight" sum="sum_gross_weight"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <field name="num_packages" invisible="1"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="stock_picking_package_weight_lot_form_view">
+        <field name="name">stock.picking.package.weight.lot.form</field>
+        <field name="model">stock.picking.package.weight.lot</field>
+        <field name="arch" type="xml">
+            <form string="Stock Picking Package Weight Total">
+                <group>
+                    <group>
+                        <field name="sequence" />
+                        <field name="package_id" />
+                    </group>
+                    <group>
+                        <field name="gross_weight" />
+                        <field name="net_weight" />
+                    </group>
+                    <group string="Lots" colspan="2">
+                        <field name="lot_ids" nolabel="1" />
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+</odoo>
