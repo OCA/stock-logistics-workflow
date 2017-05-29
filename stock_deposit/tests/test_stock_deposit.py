@@ -112,6 +112,11 @@ class TestStockDeposit(TransactionCase):
         self.assertEqual(qty_available, 180.00)
         self.assertEqual(self.product.with_context(
             location=self.deposit_location.id).deposit_available, 20.0)
+        product = self.product.product_variant_ids[:1]
+        result = product.deposit_action_open_quants()
+        self.assertTrue(
+            "'search_default_product_tmpl_id': %s" % self.product.id
+            in result['context'])
 
     def test_deposit_regularize(self):
         picking = self._prepare_picking()
