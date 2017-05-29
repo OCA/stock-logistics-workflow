@@ -53,11 +53,7 @@ class TestStockSplitPicking(SavepointCase):
             [('picking_id', '=', self.picking.id)], limit=1)
         pack_opt.qty_done = 4.0
         # Split picking: 4 and 6
-        wizard = self.env['stock.backorder.confirmation'].with_context(
-            active_id=self.picking.id,
-            do_only_split=True,
-        ).create({})
-        wizard.process()
+        self.picking.split_process()
         # We have a picking with 4 units in state assigned
         self.assertAlmostEqual(pack_opt.qty_done, 4.0)
         self.assertAlmostEqual(pack_opt.product_qty, 4.0)
