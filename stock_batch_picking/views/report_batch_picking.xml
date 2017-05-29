@@ -61,7 +61,6 @@
                                     </b>
                                 </caption>
                                 <thead>
-                                    <th>Product Code</th>
                                     <th>Product</th>
                                     <th>Carrier</th>
                                     <th class="text-right">QTY</th>
@@ -75,10 +74,7 @@
 
                                         <tr>
                                             <td>
-                                                <span t-field="product.default_code"/>
-                                            </td>
-                                            <td>
-                                                <span t-field="product.name"/>
+                                                <span t-field="product.display_name"/>
                                             </td>
                                             <td>
                                                 <span t-esc="carrier"/>
@@ -88,10 +84,10 @@
                                             </td>
                                             <td>stock error<br/>breakage
                                             </td>
-                                            <tr align="left">
+                                            <tr align="left" t-if="product.description_warehouse">
                                                 <td colspan="4">
                                                     <pre class="description ">
-                                                        <span t-esc="product.description_warehouse and product.description_warehouse or ''"></span>
+                                                        <span t-esc="product.description_warehouse"></span>
                                                     </pre>
                                                 </td>
                                             </tr>
