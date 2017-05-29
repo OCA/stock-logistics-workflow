@@ -11,6 +11,8 @@ from . batch_aggregation import BatchAggregation
 
 class PrintBatch(report_sxw.rml_parse):
 
+    _aggregation_class = BatchAggregation
+
     def __init__(self, cursor, uid, name, context):
         super(PrintBatch, self).__init__(cursor, uid, name, context=context)
         self.pool = pooler.get_pool(self.cr.dbname)
@@ -44,6 +46,6 @@ class PrintBatch(report_sxw.rml_parse):
 
                 key = key_dict[id1], key_dict[id2]
                 pack_operations.setdefault(key, []).append(op)
-            new_objects.append(BatchAggregation(batch, pack_operations))
+            new_objects.append(self._aggregation_class(batch, pack_operations))
         return super(PrintBatch, self).set_context(new_objects, data, ids,
                                                    report_type=report_type)
