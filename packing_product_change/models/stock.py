@@ -2,18 +2,19 @@
 # Copyright 2017 Camptocamp
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import api, fields, models, _
+from odoo import api, fields, models
 from odoo.exceptions import UserError
+
 
 class stock_move(models.Model):
 
     _inherit = "stock.move"
 
     old_product_id = fields.Many2one(
-    'product.product', 'Ordered Product', readonly=True,
-    help="The field will be fullfilled by the system with the "
-         "customer ordered product when you choose to replace it "
-         "during the packing operation.")
+        'product.product', 'Ordered Product', readonly=True,
+        help="The field will be fullfilled by the system with the "
+        "customer ordered product when you choose to replace it "
+        "during the packing operation.")
 
     product_id = fields.Many2one(
         'product.product', 'Product',
@@ -22,7 +23,7 @@ class stock_move(models.Model):
         states={'draft': [('readonly', False)]})
 
     def _prepare_replace_product_move(self, replace_by_product_id):
-        product=self.env['product.product']
+        product = self.env['product.product']
         line_name = product.browse(replace_by_product_id).name_get()[0][1]
         data = {'product_id': replace_by_product_id,
                 'name': line_name}
@@ -50,9 +51,8 @@ class stock_move(models.Model):
                 # TODO check workflow
         return True
 
-
-
-#???????????? ported this method but was unable to find similar method in stock.picking
+# ???????????? ported this method but was unable to find similar
+# method in stock.picking
 # class stock_picking(models.Model):
 #
 #     _inherit = "stock.picking"  #??????????
@@ -73,8 +73,11 @@ class stock_move(models.Model):
 #             prod_obj = self.env['product.product']
 #             ctx = context.copy()
 #             if move_line.picking_id.partner_id:
-#                 lang = partner_obj.browse(move_line.picking_id.partner_id.id)
+#                 lang = partner_obj.browse(
+#                       move_line.picking_id.partner_id.id)
 #                 ctx = {'lang': lang.lang}
-#             product_note = prod_obj.name_get([move_line.old_product_id.id], context=ctx)[0][1]
-#             vals['name'] = '\n'.join([vals['name'],self.BASE_TEXT_FOR_OLD_PRD_REPLACE,
+#             product_note = prod_obj.name_get(
+#                     [move_line.old_product_id.id], context=ctx)[0][1]
+#             vals['name'] = '\n'.join([
+#                         vals['name'],self.BASE_TEXT_FOR_OLD_PRD_REPLACE,
 #                                                   product_note])

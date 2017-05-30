@@ -4,6 +4,7 @@
 
 from odoo import models, api
 
+
 class stock_move(models.Model):
     _inherit = 'stock.move'
 

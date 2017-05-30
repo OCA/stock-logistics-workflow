@@ -5,6 +5,7 @@
 from odoo import models, fields
 # from openerp.osv import orm, fields
 
+
 class replace_product(models.TransientModel):
 
     _name = "replace.product"
@@ -22,5 +23,3 @@ class replace_product(models.TransientModel):
         move = self.env['stock.move'].browse(rec_id)
         move.replace_product(replacement_product.id)
         return{'type': 'ir.actions.act_window_close'}
-
-
