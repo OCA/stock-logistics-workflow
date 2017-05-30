@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright 2016 LasLabs Inc.
+    @license LGPL-3 or later (http://www.gnu.org/licenses/lgpl.html).
+-->
+
+<odoo>
+
+    <record id="stock_picking_tracking_group_view_form" model="ir.ui.view">
+        <field name="name">stock.picking.tracking.group.view.form</field>
+        <field name="model">stock.picking.tracking.group</field>
+        <field name="arch" type="xml">
+            <form string="Stock Picking Tracker">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="picking_id" />
+                            <field name="ref" />
+                            <field name="date_created" />
+                            <field name="date_updated" />
+                        </group>
+                        <group>
+                            <field name="state" />
+                            <field name="location_id" />
+                            <field name="last_event_id" />
+                        </group>
+                    </group>
+                    <group>
+                        <field name="id" invisible="True" />
+                        <field name="event_ids"
+                               context="{'default_group_id': id}">
+                            <tree>
+                                <field name="date_created" />
+                                <field name="location_id" />
+                                <field name="state" />
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="stock_picking_tracking_group_view_tree" model="ir.ui.view">
+        <field name="name">stock.picking.tracking.group.view.tree</field>
+        <field name="model">stock.picking.tracking.group</field>
+        <field name="arch" type="xml">
+            <tree string="Stock Picking Trackers">
+                <field name="picking_id" />
+                <field name="location_id" />
+                <field name="date_created" />
+                <field name="date_updated" />
+                <field name="state" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="stock_picking_tracking_group_view_search" model="ir.ui.view">
+        <field name="name">stock.picking.tracking.group.view.search</field>
+        <field name="model">stock.picking.tracking.group</field>
+        <field name="arch" type="xml">
+            <search string="Stock Picking Trackers">
+                
+                <field name="picking_id"/>
+                <field name="state" />
+
+                <filter string="Picking"
+                        domain=""
+                        context="{'group_by': 'picking_id'}"
+                        />
+                <filter string="State"
+                        domain=""
+                        context="{'group_by': 'state'}"
+                        />
+                
+            </search>
+        </field>
+    </record>
+
+    <record id="stock_picking_tracking_group_action" model="ir.actions.act_window">
+        <field name="name">Stock Picking Trackers</field>
+        <field name="res_model">stock.picking.tracking.group</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="stock_picking_tracking_group_view_tree" />
+    </record>
+
+</odoo>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright 2016 LasLabs Inc.
+    @license LGPL-3 or later (http://www.gnu.org/licenses/lgpl.html).
+-->
+
+<odoo>
+
+    <record id="stock_picking_tracking_location_view_form" model="ir.ui.view">
+        <field name="name">stock.picking.tracking.location.view.form</field>
+        <field name="model">stock.picking.tracking.location</field>
+        <field name="arch" type="xml">
+            <form string="Stock Picking Location">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="city" />
+                            <field name="zip_code" />
+                        </group>
+                        <location>
+                            <field name="state_id" />
+                            <field name="country_id" />
+                        </location>
+                    </group>
+                    <group>
+                        <field name="event_ids" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="stock_picking_tracking_location_view_tree" model="ir.ui.view">
+        <field name="name">stock.picking.tracking.location.view.tree</field>
+        <field name="model">stock.picking.tracking.location</field>
+        <field name="arch" type="xml">
+            <tree string="Stock Picking Locations">
+                <field name="city" />
+                <field name="state_id" />
+                <field name="zip_code" />
+                <field name="country_id" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="stock_picking_tracking_location_view_search" model="ir.ui.view">
+        <field name="name">stock.picking.tracking.location.view.search</field>
+        <field name="model">stock.picking.tracking.location</field>
+        <field name="arch" type="xml">
+            <search string="Stock Picking Locations">
+                
+                <field name="city"/>
+                <field name="state_id" />
+                <field name="zip_code" />
+                <field name="country_id" />
+
+                <filter string="State"
+                        domain=""
+                        context="{'group_by': 'state_id'}"
+                        />
+                <filter string="Country"
+                        domain=""
+                        context="{'group_by': 'country_id'}"
+                        />
+                
+            </search>
+        </field>
+    </record>
+
+    <record id="stock_picking_tracking_location_action" model="ir.actions.act_window">
+        <field name="name">Stock Picking Locations</field>
+        <field name="res_model">stock.picking.tracking.location</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="stock_picking_tracking_location_view_tree" />
+    </record>
+
+</odoo>

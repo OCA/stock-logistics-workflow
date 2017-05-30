@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright 2017 LasLabs Inc.
+    @license LGPL-3 or later (http://www.gnu.org/licenses/lgpl.html).
+-->
+
+<odoo>
+
+    <menuitem id="stock_picking_tracking_location_menu"
+              name="Tracking Locations"
+              parent="stock.menu_stock_config_settings"
+              action="stock_picking_tracking_location_action"
+              sequence="50"
+              />
+
+</odoo>

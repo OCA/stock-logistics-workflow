@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright 2016 LasLabs Inc.
+    @license LGPL-3 or later (http://www.gnu.org/licenses/lgpl.html).
+-->
+
+<odoo>
+
+    <record id="tracking_location_1" model="stock.picking.tracking.location">
+        <field name="city">Las Vegas</field>
+        <field name="state_id" ref="base.state_us_23" />
+        <field name="country_id" ref="base.us" />
+        <field name="zip_code">89123</field>
+    </record>
+
+    <record id="tracking_location_2" model="stock.picking.tracking.location">
+        <field name="city">Oakland</field>
+        <field name="state_id" ref="base.state_us_5" />
+        <field name="country_id" ref="base.us" />
+        <field name="zip_code">12345</field>
+    </record>
+
+    <record id="tracking_location_3" model="stock.picking.tracking.location">
+        <field name="city">San Jose</field>
+        <field name="state_id" ref="base.state_us_5" />
+        <field name="country_id" ref="base.us" />
+        <field name="zip_code">98765</field>
+    </record>
+
+    <record id="tracking_group_1" model="stock.picking.tracking.group">
+        <field name="picking_id" ref="stock.outgoing_shipment_main_warehouse" />
+        <field name="ref">1Z9999999999999999</field>
+        <field name="date_created">2016-01-12 01:23:45</field>
+    </record>
+
+    <record id="tracking_event_1" model="stock.picking.tracking.event">
+        <field name="group_id" ref="stock_picking_tracking.tracking_group_1" />
+        <field name="state">pre_transit</field>
+        <field name="date_created">2016-01-12 05:12:23</field>
+        <field name="location_id" ref="stock_picking_tracking.tracking_location_1" />
+        <field name="message">Origin Scan</field>
+        <field name="source">UPS</field>
+    </record>
+
+    <record id="tracking_event_2" model="stock.picking.tracking.event">
+        <field name="group_id" ref="stock_picking_tracking.tracking_group_1" />
+        <field name="state">in_transit</field>
+        <field name="date_created">2016-01-12 12:34:56</field>
+        <field name="location_id" ref="stock_picking_tracking.tracking_location_1" />
+        <field name="message">Departure Scan</field>
+        <field name="source">UPS</field>
+    </record>
+
+    <record id="tracking_event_3" model="stock.picking.tracking.event">
+        <field name="group_id" ref="stock_picking_tracking.tracking_group_1" />
+        <field name="state">in_transit</field>
+        <field name="date_created">2016-01-12 23:34:56</field>
+        <field name="location_id" ref="stock_picking_tracking.tracking_location_2" />
+        <field name="message">Arrival Scan</field>
+        <field name="source">UPS</field>
+    </record>
+
+    <record id="tracking_event_4" model="stock.picking.tracking.event">
+        <field name="group_id" ref="stock_picking_tracking.tracking_group_1" />
+        <field name="state">in_transit</field>
+        <field name="date_created">2016-01-13 01:23:34</field>
+        <field name="location_id" ref="stock_picking_tracking.tracking_location_2" />
+        <field name="message">Departure Scan</field>
+        <field name="source">UPS</field>
+    </record>
+
+    <record id="tracking_event_5" model="stock.picking.tracking.event">
+        <field name="group_id" ref="stock_picking_tracking.tracking_group_1" />
+        <field name="state">in_transit</field>
+        <field name="date_created">2016-01-13 07:12:00</field>
+        <field name="location_id" ref="stock_picking_tracking.tracking_location_3" />
+        <field name="message">Arrival Scan</field>
+        <field name="source">UPS</field>
+    </record>
+
+    <record id="tracking_event_6" model="stock.picking.tracking.event">
+        <field name="group_id" ref="stock_picking_tracking.tracking_group_1" />
+        <field name="state">out_for_delivery</field>
+        <field name="date_created">2016-01-13 10:00:00</field>
+        <field name="location_id" ref="stock_picking_tracking.tracking_location_3" />
+        <field name="message">Departure Scan</field>
+        <field name="source">UPS</field>
+    </record>
+
+    <record id="tracking_event_7" model="stock.picking.tracking.event">
+        <field name="group_id" ref="stock_picking_tracking.tracking_group_1" />
+        <field name="state">delivered</field>
+        <field name="date_created">2016-01-13 12:12:00</field>
+        <field name="location_id" ref="stock_picking_tracking.tracking_location_3" />
+        <field name="message">Delivered</field>
+        <field name="source">USPS</field>
+    </record>
+
+</odoo>
