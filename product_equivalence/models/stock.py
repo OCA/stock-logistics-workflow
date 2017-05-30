@@ -26,13 +26,11 @@ from odoo import models, api
 class stock_move(models.Model):
     _inherit = 'stock.move'
 
-    def replace_equivalence(self, vals):
+    def replace_equivalence(self):
         """ If a product with an equivalence is found on a
-#             move line, it is replaced by its equivalence."""
-        if isinstance(vals, (int,long)):
-            vals = [vals]
-        for move in self.browse(vals):
-            if move.picking_id and move.picking_id.type == 'out':
+            move line, it is replaced by its equivalence."""
+        for move in self:
+            if move.picking_id and move.picking_id.picking_type_id.code == 'outgoing':
                 if move.product_id.equivalent_id:
                     # replace_product is provided by the module
                     # packing_product_change
@@ -43,13 +41,13 @@ class stock_move(models.Model):
     @api.model
     def create(self, vals):
         move_id = super(stock_move, self).create(vals)
-        self.replace_equivalence(move_id)
+        move_id.replace_equivalence()
         return move_id
 
     @api.multi
     def write(self, vals):
         res = super(stock_move, self).write(vals)
-        self.replace_equivalence(vals)
+        self.replace_equivalence()
         return res
 
 # class stock_move(orm.Model):
