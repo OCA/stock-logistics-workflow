@@ -38,16 +38,28 @@ class TestPackagePreparation(TransactionCase):
             'packaging_id': self.packaging.id,
         })
 
+    def _update_product_qty(self, product):
+        product_qty = self.env['stock.change.product.qty'].create({
+            'location_id': self.location.id,
+            'product_id': product.id,
+            'new_quantity': 200,
+        })
+        product_qty.change_product_qty()
+        return product_qty
+
     def setUp(self):
         super(TestPackagePreparation, self).setUp()
         self.partner = self.env.ref('base.res_partner_2')
         self.product1 = self.env.ref('product.product_product_33')
         self.product2 = self.env.ref('product.product_product_36')
+        self.location = self.env.ref('stock.stock_location_stock')
         packaging_tpl = self.env['product.template'].create({'name': 'Pallet'})
         self.packaging = self.env['product.packaging'].create({
             'name': 'Pallet',
             'product_tmpl_id': packaging_tpl.id,
         })
+        self._update_product_qty(self.product1)
+        self._update_product_qty(self.product2)
         self.picking_a = self._create_picking()
         self.move_a_1 = self._create_move(self.picking_a,
                                           self.product1)

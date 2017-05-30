@@ -43,6 +43,15 @@ class TestPackagePreparationLine(TransactionCase):
             values.update({'picking_ids': [(6, 0, pickings.ids)], })
         return self.env['stock.picking.package.preparation'].create(values)
 
+    def _update_product_qty(self, product):
+        product_qty = self.env['stock.change.product.qty'].create({
+            'location_id': self.location.id,
+            'product_id': product.id,
+            'new_quantity': 200,
+        })
+        product_qty.change_product_qty()
+        return product_qty
+
     def setUp(self):
         super(TestPackagePreparationLine, self).setUp()
         self.src_location = self.env.ref('stock.stock_location_stock')
@@ -50,6 +59,9 @@ class TestPackagePreparationLine(TransactionCase):
         self.partner = self.env.ref('base.res_partner_2')
         self.product1 = self.env.ref('product.product_product_33')
         self.product2 = self.env.ref('product.product_product_6')
+        self.location = self.env.ref('stock.stock_location_stock')
+        self._update_product_qty(self.product1)
+        self._update_product_qty(self.product2)
         self.picking_type_out = self.env.ref('stock.picking_type_out')
         self.picking_type_out.default_location_dest_id = self.dest_location.id
         self.picking = self._create_picking()
@@ -165,8 +177,4 @@ class TestPackagePreparationLine(TransactionCase):
         self.assertEqual(
             self.preparation.picking_ids[0].move_lines[0].
             quant_ids[0].lot_id.id,
-            lot.id)
-        self.assertEqual(
-            self.preparation.picking_ids[0].move_lines[0].
-            quant_ids[1].lot_id.id,
             lot.id)
