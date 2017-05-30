@@ -6,8 +6,11 @@
             <field name="model">stock.transfer_details</field>
             <field name="inherit_id" ref="stock.view_stock_enter_transfer_details"/>
             <field name="arch" type="xml">
+                 <field name="lot_id" position="before">
+                    <field name="allow_locked" invisible="1"/>
+                 </field>
                  <field name="lot_id" position="attributes">
-                    <attribute name="domain">[('product_id','=?',product_id),('locked','=',False)]</attribute>
+                    <attribute name="domain">[('product_id','=?',product_id), '|', ('locked', '=', allow_locked), ('locked','=',False)]</attribute>
                  </field>
             </field>
         </record>
