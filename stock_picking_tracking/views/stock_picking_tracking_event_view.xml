@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright 2016 LasLabs Inc.
+    @license LGPL-3 or later (http://www.gnu.org/licenses/lgpl.html).
+-->
+
+<odoo>
+
+    <record id="stock_picking_tracking_event_view_form" model="ir.ui.view">
+        <field name="name">stock.picking.tracking.event.view.form</field>
+        <field name="model">stock.picking.tracking.event</field>
+        <field name="arch" type="xml">
+            <form string="Stock Picking Event">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="group_id" />
+                            <field name="date_created" />
+                        </group>
+                        <group>
+                            <field name="state" />
+                            <field name="location_id" />
+                        </group>
+                    </group>
+                    <group>
+                        <field name="source" />
+                        <field name="message" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="stock_picking_tracking_event_view_tree" model="ir.ui.view">
+        <field name="name">stock.picking.tracking.event.view.tree</field>
+        <field name="model">stock.picking.tracking.event</field>
+        <field name="arch" type="xml">
+            <tree string="Stock Picking Events">
+                <field name="group_id" />
+                <field name="location_id" />
+                <field name="date_created" />
+                <field name="state" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="stock_picking_tracking_event_view_search" model="ir.ui.view">
+        <field name="name">stock.picking.tracking.event.view.search</field>
+        <field name="model">stock.picking.tracking.event</field>
+        <field name="arch" type="xml">
+            <search string="Stock Picking Events">
+                
+                <field name="group_id"/>
+                <field name="location_id" />
+                <field name="date_created" />
+                <field name="state" />
+
+                <filter string="Group"
+                        domain=""
+                        context="{'group_by': 'group_id'}"
+                        />
+                <filter string="State"
+                        domain=""
+                        context="{'group_by': 'state'}"
+                        />
+                <field string="Location"
+                       domain=""
+                       context="{'group_by': 'location_id'}"
+                       />
+                
+            </search>
+        </field>
+    </record>
+
+    <record id="stock_picking_tracking_event_action" model="ir.actions.act_window">
+        <field name="name">Stock Picking Events</field>
+        <field name="res_model">stock.picking.tracking.event</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="stock_picking_tracking_event_view_tree" />
+    </record>
+
+</odoo>
