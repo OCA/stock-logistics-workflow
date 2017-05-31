@@ -24,7 +24,7 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
-[mrp_lock_lot](mrp_lock_lot/) | 8.0.2.0.0 | MRP Lock Lot
+[mrp_lock_lot](mrp_lock_lot/) | 8.0.3.0.0 | MRP Lock Lot
 [picking_dispatch](picking_dispatch/) | 8.0.1.2.3 | Picking dispatch
 [procurement_jit_assign_move](procurement_jit_assign_move/) | 8.0.1.0.0 | Change the behavior of procurement_jit to assign stock moves
 [product_unique_serial](product_unique_serial/) | 8.0.1.0.1 | Product Serial Unique Number
@@ -33,7 +33,7 @@ addon | version | summary
 [stock_auto_move](stock_auto_move/) | 8.0.1.0.0 | Automatic Move Processing
 [stock_disable_force_availability_button](stock_disable_force_availability_button/) | 8.0.1.0.0 | Disable force availability button
 [stock_dropshipping_dual_invoice](stock_dropshipping_dual_invoice/) | 8.0.0.1.0 | Create both Supplier and Customer Invoices from a Dropshipping Delivery
-[stock_lock_lot](stock_lock_lot/) | 8.0.1.1.0 | Stock Lock Lot
+[stock_lock_lot](stock_lock_lot/) | 8.0.2.0.0 | Stock Lock Lot
 [stock_lot_scrap](stock_lot_scrap/) | 8.0.1.0.0 | This module adds a button in Production Lot/Serial Number view form to Scrap all products contained.
 [stock_move_backdating](stock_move_backdating/) | 8.0.1.0.0 | Stock Move Backdating
 [stock_move_description](stock_move_description/) | 8.0.1.0.0 | Stock move description
