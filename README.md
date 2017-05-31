@@ -24,9 +24,12 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [product_expiry_simple](product_expiry_simple/) | 10.0.1.0.0 | Simpler and better alternative to the official product_expiry module
+[stock_ownership_availability_rules](stock_ownership_availability_rules/) | 10.0.1.0.0 | Enforce ownership on stock availability
+[stock_ownership_by_move](stock_ownership_by_move/) | 10.0.0.1.0 | Preserve Ownership of moves (not pickings) on reception.
 [stock_picking_package_preparation](stock_picking_package_preparation/) | 10.0.1.0.1 | Stock Picking Package Preparation
 [stock_picking_package_preparation_line](stock_picking_package_preparation_line/) | 10.0.1.0.1 | Stock Picking Package Preparation Line
 [stock_picking_show_return](stock_picking_show_return/) | 10.0.1.0.0 | Show returns on stock pickings
+[stock_split_picking](stock_split_picking/) | 10.0.1.0.0 | Split a picking in two not transferred pickings
 
 
 Unported addons
@@ -45,8 +48,6 @@ addon | version | summary
 [stock_move_description](stock_move_description/) | 8.0.1.0.0 (unported) | Stock move description
 [stock_move_on_hold](stock_move_on_hold/) | 1.0 (unported) | Stock On Hold Status
 [stock_obsolete](stock_obsolete/) | 1.0 (unported) | Add product depreciation
-[stock_ownership_availability_rules](stock_ownership_availability_rules/) | 8.0.0.2.0 (unported) | Enforce ownership on stock availability
-[stock_ownership_by_move](stock_ownership_by_move/) | 8.0.0.1.0 (unported) | Preserve Ownership of moves (not pickings) on reception.
 [stock_picking_backorder_strategy](stock_picking_backorder_strategy/) | 8.0.0.1.0 (unported) | Picking backordering strategies
 [stock_picking_compute_delivery_date](stock_picking_compute_delivery_date/) | 8.0.1.1.0 (unported) | Stock Picking Compute Delivery Date
 [stock_picking_deliver_uos](stock_picking_deliver_uos/) | 8.0.1.0.0 (unported) | Adds fields uos and uos_quantity to Stock Transfer Details
@@ -55,7 +56,6 @@ addon | version | summary
 [stock_picking_priority](stock_picking_priority/) | 0.2 (unported) | Picking Priority
 [stock_picking_reorder_lines](stock_picking_reorder_lines/) | 8.0.0.1.0 (unported) | Provide a new field on stock moves, allowing to manage the orders of moves in a picking.
 [stock_sale_filters](stock_sale_filters/) | 1.3 (unported) | SO related filters on stock.picking and sale.order
-[stock_split_picking](stock_split_picking/) | 8.0.1.0.0 (unported) | Split a picking in two unconfirmed pickings
 [stock_transfer_split_multi](stock_transfer_split_multi/) | 8.0.1.0.0 (unported) | In the stock transfer wizard, you can split by multiple units
 
 [//]: # (end addons)
