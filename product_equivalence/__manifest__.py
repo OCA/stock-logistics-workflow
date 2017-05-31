@@ -8,11 +8,10 @@
            "Serv. Tecnol. Avanzados - Pedro M. Baeza, "
            "Odoo Community Association (OCA)",
  'category': 'Hidden',
- 'summary': 'Quotation, Sale Orders, Delivery & Invoicing Control',
+ 'summary': 'Adds equivalent product link in product',
  'depends': ['base',
-                'product',
-                'packing_product_change', ],
+             'product',
+             'packing_product_change', ],
  'data': ['views/product_view.xml', ],
  'installable': True,
- 'auto_install': True,
-}
+ 'auto_install': True, }
