@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="procurement.group" id="automatic_group">
+        <field name="name">Automatic</field>
+        <field name="move_type">direct</field>
+    </record>
+</odoo>
+

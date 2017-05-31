@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- #### Procurements ###### -->
+    <record id="stock_location_a" model="stock.location">
+        <field name="name">Location 1</field>
+        <field name="location_id" ref="stock.stock_location_locations"/>
+        <field name="active">1</field>
+        <field name="usage">internal</field>
+    </record>
+
+    <record id="stock_location_b" model="stock.location">
+        <field name="name">Location 2</field>
+        <field name="location_id" ref="stock.stock_location_locations"/>
+        <field name="active">1</field>
+        <field name="usage">internal</field>
+    </record>
+
+    <record id="stock_location_c" model="stock.location">
+        <field name="name">Location 3</field>
+        <field name="location_id" ref="stock.stock_location_locations"/>
+        <field name="active">1</field>
+        <field name="usage">internal</field>
+    </record>
+
+    <record model="stock.location.route" id="test_route">
+        <field name="name">Test route</field>
+        <field name="active">1</field>
+        <field name="sequence">20</field>
+        <field name="product_categ_selectable"/>
+        <field name="product_selectable">1</field>
+        <field name="company_id"/>
+    </record>
+
+    <record model="procurement.rule" id="procurement_rule_a_to_b">
+        <field name="name">1 => 2 with auto_move</field>
+        <field name="active">1</field>
+        <field name="action">move</field>
+        <field name="location_id" ref="stock_location_b"/>
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="route_id" ref="test_route"/>
+        <field name="group_propagation_option">propagate</field>
+        <field name="propagate">1</field>
+        <field name="picking_type_id" ref="stock.picking_type_internal"/>
+        <field name="procure_method">make_to_stock</field>
+        <field name="delay">0</field>
+        <field name="auto_move" eval="True"/>
+        <field name="location_src_id" ref="stock_location_a"/>
+    </record>
+
+    <record model="stock.location.path" id="auto_location_path">
+        <field name="name">Test push route 3=>1</field>
+        <field name="location_from_id" ref="stock_location_c"/>
+        <field name="location_dest_id" ref="stock_location_a"/>
+        <field name="picking_type_id" ref="stock.picking_type_internal"/>
+        <field name="auto">transparent</field>
+        <field name="route_id" ref="test_route"/>
+    </record>
+</odoo>
+
