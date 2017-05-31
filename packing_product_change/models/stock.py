@@ -2,11 +2,11 @@
 # Copyright 2017 Camptocamp
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
 
-class stock_move(models.Model):
+class StockMove(models.Model):
 
     _inherit = "stock.move"
 
@@ -41,8 +41,8 @@ class stock_move(models.Model):
     def replace_product(self, replace_by_product_id):
         for move in self:
             if move.state in ('done', 'cancel'):
-                raise UserError('Error! You cannot replace a product'
-                                ' on a delivered or canceled move!')
+                raise UserError(_('Error! You cannot replace a product'
+                                ' on a delivered or canceled move!'))
             data = self._prepare_replace_product_move(replace_by_product_id)
             self.write(data)
             if move.state == 'assigned':
@@ -53,7 +53,7 @@ class stock_move(models.Model):
 
 # ???????????? ported this method but was unable to find similar
 # method in stock.picking
-# class stock_picking(models.Model):
+# class StockPicking(models.Model):
 #
 #     _inherit = "stock.picking"  #??????????
 #

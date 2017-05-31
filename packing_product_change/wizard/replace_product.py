@@ -6,7 +6,7 @@ from odoo import models, fields
 # from openerp.osv import orm, fields
 
 
-class replace_product(models.TransientModel):
+class ReplaceProduct(models.TransientModel):
 
     _name = "replace.product"
     _description = "Replace Product"

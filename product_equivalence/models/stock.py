@@ -5,7 +5,7 @@
 from odoo import models, api
 
 
-class stock_move(models.Model):
+class StockMove(models.Model):
     _inherit = 'stock.move'
 
     def replace_equivalence(self):
@@ -22,12 +22,12 @@ class stock_move(models.Model):
 
     @api.model
     def create(self, vals):
-        move = super(stock_move, self).create(vals)
+        move = super(StockMove, self).create(vals)
         move.replace_equivalence()
         return move
 
     @api.multi
     def write(self, vals):
-        res = super(stock_move, self).write(vals)
+        res = super(StockMove, self).write(vals)
         self.replace_equivalence()
         return res

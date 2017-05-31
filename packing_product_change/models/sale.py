@@ -6,7 +6,7 @@ from odoo import models, _
 from odoo.exceptions import UserError
 
 
-class sale_order_line(models.Model):
+class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
 # class sale_order_line(orm.Model):
@@ -39,8 +39,8 @@ class sale_order_line(models.Model):
                     account_id = product.categ_id.\
                         property_account_income_categ.id
                 if not account_id:
-                    raise UserError('Error! Please define income'
-                                    'account for this product: "%s" (id:%d).',
+                    raise UserError(_('Error! Please define income'
+                                    'account for this product: "%s" (id:%d).'),
                                     product.name, product.id)
             else:
                 prop = self.env['ir.property'].get(
@@ -55,9 +55,9 @@ class sale_order_line(models.Model):
             product=product_changed, account_id=account_id)
         if not account_id:
             raise UserError(
-                'Error! There is no Fiscal Position defined'
+                _('Error! There is no Fiscal Position defined'
                 'or Income category account defined for default properties of'
-                'Product categories.')
+                'Product categories.'))
 
         new_name = '\n'.join([
             product_name,
@@ -70,7 +70,7 @@ class sale_order_line(models.Model):
 
     def _prepare_invoice_line(self, qty):
 
-        vals = super(sale_order_line)._prepare_invoice_line(
+        vals = super(SaleOrderLine, self)._prepare_invoice_line(
             self, qty=qty)
 
         if not vals:
