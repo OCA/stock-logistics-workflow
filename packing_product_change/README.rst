@@ -2,7 +2,7 @@
     :alt: License: AGPL-3
 
 Packing product change
-============
+======================
 
 This module allows you to change product in packing
 

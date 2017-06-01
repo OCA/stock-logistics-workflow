@@ -54,8 +54,8 @@ class SaleOrderLine(models.Model):
         if not account_id:
             raise UserError(
                 _('Error! There is no Fiscal Position defined'
-                  'or Income category account defined for default properties of'
-                  'Product categories.'))
+                  'or Income category account defined for '
+                  'default properties of Product categories.'))
 
         new_name = '\n'.join([
             product_name,
@@ -79,7 +79,7 @@ class SaleOrderLine(models.Model):
         for picking in self.order_id.picking_ids:
             for move in picking.move_lines:
                 if move.old_product_id and \
-                                move.old_product_id != move.product_id:
+                      move.old_product_id != move.product_id:
                     product_changed = move.product_id
                     break
 

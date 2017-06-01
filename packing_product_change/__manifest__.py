@@ -12,8 +12,8 @@
  'website': 'http://www.camptocamp.com',
  'depends': ['sale_stock'],
  'data': [
-        "wizard/replace_product_view.xml",
-        "views/stock_view.xml",
+    "wizard/replace_product_view.xml",
+    "views/stock_view.xml",
         ],
  'installable': True,
  'auto_install': True, }

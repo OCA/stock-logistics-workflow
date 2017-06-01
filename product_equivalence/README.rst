@@ -2,7 +2,7 @@
     :alt: License: AGPL-3
 
 Product equivalence
-============
+===================
 
 This module adds equivalent product link in product
 
