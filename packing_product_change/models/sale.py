@@ -85,6 +85,7 @@ class SaleOrderLine(models.Model):
         # but keep the price of the original product
         if product_changed:
             cur_lang = self.order_id.partner_id.lang
-            vals.update(self.with_context(lang=cur_lang)._prepare_product_changed(
+            vals.update(self.with_context(
+                lang=cur_lang)._prepare_product_changed(
                 vals, product_changed))
         return vals
