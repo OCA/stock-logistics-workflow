@@ -5,15 +5,14 @@
  'version': '10.0.1.0.0',
  'license': 'AGPL-3',
  'author': "Camptocamp, "
-           "Serv. Tecnol. Avanzados - Pedro M. Baeza, "
            "Odoo Community Association (OCA)",
  'category': 'Hidden',
  'summary': 'change product in packing',
  'website': 'http://www.camptocamp.com',
  'depends': ['sale_stock'],
  'data': [
-    "wizard/replace_product_view.xml",
-    "views/stock_view.xml",
-        ],
+     "wizard/replace_product_view.xml",
+     "views/stock_view.xml",
+         ],
  'installable': True,
  'auto_install': True, }

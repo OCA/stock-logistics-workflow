@@ -1,30 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
-        <record id="view_replace_product_wizard" model="ir.ui.view">
-            <field name="name">Replace product</field>
-            <field name="model">replace.product</field>
-            <field name="arch" type="xml">
-            <form string="Replace Product" version="7.0">
-                    <group string="Choose the product that will replace the current one.">
-                      <field name="product_id"/>
-                    </group>
-                    <footer>
-                        <button name="replace" string="Replace" type="object"  default_focus="1" class="oe_highlight"/>
-                        or
-                        <button string="Cancel" class="oe_link" special="cancel"/>
-                    </footer>
+<odoo>
+    <record id="view_replace_product_wizard" model="ir.ui.view">
+        <field name="name">Replace product</field>
+        <field name="model">replace.product</field>
+        <field name="arch" type="xml">
+            <form string="Replace Product">
+                <group string="Choose the product that will replace the current one.">
+                    <field name="product_id"/>
+                </group>
+                <footer>
+                    <button name="replace" string="Replace" type="object"  default_focus="1" class="oe_highlight"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
             </form>
-            </field>
-        </record>
-        <record id="replace_product" model="ir.actions.act_window">
-            <field name="name">Replace product</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">replace.product</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">form</field>
-            <field name="target">new</field>
-        </record>
-
-    </data>
-</openerp>
+        </field>
+    </record>
+    <record id="replace_product" model="ir.actions.act_window">
+        <field name="name">Replace product</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">replace.product</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

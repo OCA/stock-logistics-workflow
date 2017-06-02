@@ -1,21 +1,18 @@
-<openerp>
-    <data>
-
-        <record id="view_move_picking_form" model="ir.ui.view">
-            <field name="name">stock.move.form</field>
-            <field name="model">stock.move</field>
-            <field eval="2" name="priority"/>
-            <field name="inherit_id" ref="stock.view_move_picking_form"/>
-            <field name="arch" type="xml">
-                <field name="product_id" position="after">
-                    <label string=""/>
-                    <button name="%(replace_product)d"
-                      string="Replace the product" type="action"
-                      class="oe_link"/>
-                    <field name="old_product_id"
-                      attrs="{'invisible': [('old_product_id', '=', False)]}"/>
-                </field>
+<odoo>
+    <record id="view_move_picking_form" model="ir.ui.view">
+        <field name="name">stock.move.form</field>
+        <field name="model">stock.move</field>
+        <field eval="2" name="priority"/>
+        <field name="inherit_id" ref="stock.view_move_picking_form"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <label string=""/>
+                <button name="replace_product"
+                        string="Replace the product" type="object"
+                        class="oe_link"/>
+                <field name="old_product_id"
+                       attrs="{'invisible': [('old_product_id', '=', False)]}"/>
             </field>
-        </record>
-    </data>
-</openerp>
+        </field>
+    </record>
+</odoo>

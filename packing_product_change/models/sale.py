@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2017 Camptocamp
+# Copyright 2010-2012, 2017 Camptocamp
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo import models, _
@@ -7,10 +7,8 @@ from odoo.exceptions import UserError
 
 
 class SaleOrderLine(models.Model):
-    _inherit = 'sale.order.line'
 
-# class sale_order_line(orm.Model):
-#     _inherit = 'sale.order.line'
+    _inherit = 'sale.order.line'
 
     BASE_TEXT_FOR_OLD_PRD_REPLACE = _(
         "This product replaces partially or completely the ordered product:")
@@ -78,20 +76,15 @@ class SaleOrderLine(models.Model):
         # a product replaced
         for picking in self.order_id.picking_ids:
             for move in picking.move_lines:
-                if move.old_product_id and \
-                      move.old_product_id != move.product_id:
+                if (move.old_product_id and
+                        move.old_product_id != move.product_id):
                     product_changed = move.product_id
                     break
 
         # we replace the product on the invoice
         # but keep the price of the original product
         if product_changed:
-            partner_obj = self.env['res.partner']
-            ctx = self.env.context.copy()
-            lang = partner_obj.browse(self.order_id.partner_id.id,).lang
-            ctx.update({'lang': lang})
-            self.env.context = ctx
-            vals.update(self._prepare_product_changed(
+            cur_lang = self.order_id.partner_id.lang
+            vals.update(self.with_context(lang=cur_lang)._prepare_product_changed(
                 vals, product_changed))
-
         return vals

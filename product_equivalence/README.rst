@@ -15,8 +15,11 @@ If product have equivalent it will be replaced in delivery order
 Contributors
 ------------
 
+ * Nicolas Bessi <nicolas.bessi@camptocamp.com>
+ * Yannick Vaucher <yannick.vaucher@camptocamp.com>
+ * Guewen Baconnier <guewen.baconnier@camptocamp.com>
+ * Anar Baghirli
 * "Camptocamp, "
-* "Serv. Tecnol. Avanzados - Pedro M. Baeza, "
 * "Odoo Community Association (OCA)",
 
 Maintainer

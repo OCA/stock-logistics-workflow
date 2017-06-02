@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2017 Camptocamp
+# Copyright 2010-2012, 2017 Camptocamp
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo import api, fields, models, _
@@ -42,42 +42,11 @@ class StockMove(models.Model):
         for move in self:
             if move.state in ('done', 'cancel'):
                 raise UserError(_('Error! You cannot replace a product'
-                                ' on a delivered or canceled move!'))
-            data = self._prepare_replace_product_move(replace_by_product_id)
-            self.write(data)
+                                  ' on a delivered or canceled move!'))
+            data = move._prepare_replace_product_move(replace_by_product_id)
+            move.write(data)
             if move.state == 'assigned':
-                self.action_cancel()
-                self.action_assign()
+                move.action_cancel()
+                move.action_assign()
                 # TODO check workflow
         return True
-
-# ???????????? ported this method but was unable to find similar
-# method in stock.picking
-# class StockPicking(models.Model):
-#
-#     _inherit = "stock.picking"  #??????????
-#
-#     BASE_TEXT_FOR_OLD_PRD_REPLACE = \
-#         _("This product replaces partially or"
-#           " completely the ordered product:")
-#
-#     def _prepare_invoice_line(self, picking, move_line,
-#                               invoice_id, invoice_vals):
-#         context = self._context or {}
-#
-#         vals = super(stock_picking, self)._prepare_invoice_line(
-#             picking, move_line, invoice_id, invoice_vals)
-#
-#         if move_line.old_product_id:
-#             partner_obj = self.env['res.partner']
-#             prod_obj = self.env['product.product']
-#             ctx = context.copy()
-#             if move_line.picking_id.partner_id:
-#                 lang = partner_obj.browse(
-#                       move_line.picking_id.partner_id.id)
-#                 ctx = {'lang': lang.lang}
-#             product_note = prod_obj.name_get(
-#                     [move_line.old_product_id.id], context=ctx)[0][1]
-#             vals['name'] = '\n'.join([
-#                         vals['name'],self.BASE_TEXT_FOR_OLD_PRD_REPLACE,
-#                                                   product_note])
