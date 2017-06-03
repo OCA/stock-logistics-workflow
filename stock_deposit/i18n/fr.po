@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-23 11:56+0000\n"
-"PO-Revision-Date: 2017-01-23 11:56+0000\n"
+"POT-Creation-Date: 2017-05-31 02:58+0000\n"
+"PO-Revision-Date: 2017-05-31 02:58+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -174,12 +174,12 @@ msgstr "Article"
 #. module: stock_deposit
 #: model:ir.model,name:stock_deposit.model_product_template
 msgid "Product Template"
-msgstr ""
+msgstr "Modèle d'article"
 
 #. module: stock_deposit
 #: model:ir.model,name:stock_deposit.model_stock_quant
 msgid "Quants"
-msgstr ""
+msgstr "Quants"
 
 #. module: stock_deposit
 #: model:ir.model.fields,field_description:stock_deposit.field_deposit_stock_quant_wizard_quants_action
@@ -194,6 +194,11 @@ msgstr ""
 #. module: stock_deposit
 #: model:ir.actions.act_window,name:stock_deposit.deposit_stock_quant_wizard_action
 msgid "Regularize Deposit Quants"
+msgstr ""
+
+#. module: stock_deposit
+#: selection:deposit.stock.quant.wizard,quants_action:0
+msgid "Regularize and invoice pickings"
 msgstr ""
 
 #. module: stock_deposit
