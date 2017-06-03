@@ -6,14 +6,14 @@
         <record id="view_picking_form" model="ir.ui.view">
             <field name="name">stock_picking_invoice_link.stock.picking.form</field>
             <field name="model">stock.picking</field>
-            <field name="inherit_id" ref="stock_account.view_picking_inherit_form2"/>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
-                <field name="invoice_state" position="after">
-                    <field name="invoice_ids"
-                           groups="account.group_account_invoice"
-                           attrs="{'invisible': [('invoice_state', '=', 'none')]}"
-                    />
-                </field>
+                <xpath expr="//group[@string='General Informations']" position="after">
+                    <group string="Invoices" colspan="4" groups="account.group_account_invoice"
+                           attrs="{'invisible': [('invoice_state', '=', 'none')]}">
+                        <field name="invoice_ids" nolabel="1"/>
+                    </group>
+                </xpath>
             </field>
         </record>
 
@@ -21,22 +21,26 @@
         <record id="view_move_form" model="ir.ui.view">
             <field name="name">stock_picking_invoice_link.stock.move.form</field>
             <field name="model">stock.move</field>
-            <field name="inherit_id" ref="stock_account.view_move_form_inherit"/>
+            <field name="inherit_id" ref="stock.view_move_form"/>
             <field name="arch" type="xml">
-                <field name="invoice_state" position="after">
-                    <field name="invoice_line_ids" groups="account.group_account_invoice"/>
-                </field>
+                <xpath expr="//group[@name='main_grp']" position="after">
+                    <group string="Invoices" colspan="4" groups="account.group_account_invoice">
+                        <field name="invoice_line_ids" nolabel="1"/>
+                    </group>
+                </xpath>
             </field>
         </record>
 
         <record id="view_move_picking_form" model="ir.ui.view">
             <field name="name">stock_picking_invoice_link.stock.move.picking.form</field>
             <field name="model">stock.move</field>
-            <field name="inherit_id" ref="stock_account.view_move_picking_from_stockaccount_inherit"/>
+            <field name="inherit_id" ref="stock.view_move_picking_form"/>
             <field name="arch" type="xml">
-                <field name="invoice_state" position="after">
-                    <field name="invoice_line_ids" groups="account.group_account_invoice"/>
-                </field>
+               <xpath expr="//group[@string='Locations']" position="before">
+                    <group string="Invoices" colspan="4" groups="account.group_account_invoice">
+                        <field name="invoice_line_ids" nolabel="1"/>
+                    </group>
+                </xpath>
             </field>
         </record>
 
