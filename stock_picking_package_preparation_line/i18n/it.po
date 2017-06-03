@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-08 17:05+0000\n"
-"PO-Revision-Date: 2016-05-13 13:07+0000\n"
+"POT-Creation-Date: 2017-05-31 02:51+0000\n"
+"PO-Revision-Date: 2017-05-13 18:16+0000\n"
 "Last-Translator: Paolo Valier\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -70,8 +70,8 @@ msgid ""
 msgstr ""
 
 #. module: stock_picking_package_preparation_line
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:250
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:259
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:252
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:261
 #, python-format
 msgid ""
 "Impossible to create confirmed picking. Please Check products availability!"

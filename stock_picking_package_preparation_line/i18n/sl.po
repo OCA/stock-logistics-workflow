@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-04 02:49+0000\n"
-"PO-Revision-Date: 2016-05-03 15:01+0000\n"
+"POT-Creation-Date: 2017-05-31 02:51+0000\n"
+"PO-Revision-Date: 2017-06-01 07:03+0000\n"
 "Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/sl/)\n"
 "MIME-Version: 1.0\n"
@@ -69,8 +69,8 @@ msgid ""
 msgstr "Če spremenite to količino za 'pripravljen' zbirnik, sistem ne bo ustvaril čakajočega naloga, ampak bo enostavno dobavil novo količino."
 
 #. module: stock_picking_package_preparation_line
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:250
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:259
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:252
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:261
 #, python-format
 msgid ""
 "Impossible to create confirmed picking. Please Check products availability!"

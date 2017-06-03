@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-19 14:00+0000\n"
-"PO-Revision-Date: 2017-04-19 11:44+0000\n"
+"POT-Creation-Date: 2017-05-31 02:51+0000\n"
+"PO-Revision-Date: 2017-05-13 18:19+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: German (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -69,8 +69,8 @@ msgid ""
 msgstr "Wenn Sie diese Menge, bei einer Kommissionierung die 'Bereit' ist, ändern, erstellt das System keinen Rückstand, sondern liefert die neue Menge einfach aus."
 
 #. module: stock_picking_package_preparation_line
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:250
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:259
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:252
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:261
 #, python-format
 msgid ""
 "Impossible to create confirmed picking. Please Check products availability!"

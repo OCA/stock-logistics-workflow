@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-18 01:44+0000\n"
-"PO-Revision-Date: 2016-10-11 09:49+0000\n"
+"POT-Creation-Date: 2017-05-31 02:51+0000\n"
+"PO-Revision-Date: 2017-05-30 00:26+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Spanish (Argentina) (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/es_AR/)\n"
 "MIME-Version: 1.0\n"
@@ -68,8 +68,8 @@ msgid ""
 msgstr ""
 
 #. module: stock_picking_package_preparation_line
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:250
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:259
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:252
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:261
 #, python-format
 msgid ""
 "Impossible to create confirmed picking. Please Check products availability!"
@@ -142,7 +142,7 @@ msgstr "Secuencia"
 #: field:stock.picking.package.preparation.line,move_id:0
 #: field:stock.picking.package.preparation.line,package_preparation_id:0
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimiento de stock"
 
 #. module: stock_picking_package_preparation_line
 #: view:stock.picking.package.preparation:stock_picking_package_preparation_line.sppp_line_stock_picking_package_preparation_form
