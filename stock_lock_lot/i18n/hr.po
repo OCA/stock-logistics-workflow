@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-18 01:44+0000\n"
-"PO-Revision-Date: 2016-11-25 14:56+0000\n"
+"POT-Creation-Date: 2017-05-31 02:51+0000\n"
+"PO-Revision-Date: 2017-05-30 18:20+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Croatian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/hr/)\n"
 "MIME-Version: 1.0\n"
@@ -16,6 +16,12 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Language: hr\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#. module: stock_lock_lot
+#: field:stock.location,allow_locked:0
+#: field:stock.transfer_details_items,allow_locked:0
+msgid "Allow Locked"
+msgstr ""
 
 #. module: stock_lock_lot
 #: model:res.groups,name:stock_lock_lot.group_lock_lot
@@ -99,6 +105,16 @@ msgid ""
 msgstr ""
 
 #. module: stock_lock_lot
+#: model:ir.model,name:stock_lock_lot.model_stock_inventory_line
+msgid "Inventory Line"
+msgstr ""
+
+#. module: stock_lock_lot
+#: model:ir.model,name:stock_lock_lot.model_stock_location
+msgid "Inventory Locations"
+msgstr ""
+
+#. module: stock_lock_lot
 #: field:wiz.lock.lot,__last_update:0
 msgid "Last Modified on"
 msgstr "Zadnje modificirano"
@@ -131,6 +147,11 @@ msgstr ""
 #. module: stock_lock_lot
 #: selection:stock.production.lot,lock_reason:0
 msgid "None"
+msgstr ""
+
+#. module: stock_lock_lot
+#: model:ir.model,name:stock_lock_lot.model_stock_transfer_details_items
+msgid "Picking wizard items"
 msgstr ""
 
 #. module: stock_lock_lot
@@ -171,12 +192,17 @@ msgid "Serial Nunber/lot blocking"
 msgstr ""
 
 #. module: stock_lock_lot
+#: model:ir.model,name:stock_lock_lot.model_stock_move
+msgid "Stock Move"
+msgstr "Skladišni prenos"
+
+#. module: stock_lock_lot
 #: field:stock.config.settings,stock_lock_lot_strict:0
 msgid "Strictly forbid moves on blocked Serial Numbers/lots."
 msgstr ""
 
 #. module: stock_lock_lot
-#: code:addons/stock_lock_lot/models/stock_quant.py:37
+#: code:addons/stock_lock_lot/models/stock_quant.py:38
 #, python-format
 msgid ""
 "The following lots/serial number is blocked and cannot be moved:\n"
@@ -212,14 +238,16 @@ msgid "You are not allowed to block Serial Numbers/Lots"
 msgstr ""
 
 #. module: stock_lock_lot
-#: code:addons/stock_lock_lot/models/stock_production_lot.py:83
+#: code:addons/stock_lock_lot/models/stock_production_lot.py:84
 #, python-format
 msgid "You are not allowed to unblock Serial Numbers/Lots"
 msgstr ""
 
 #. module: stock_lock_lot
 #: view:stock.transfer_details:stock_lock_lot.view_stock_enter_transfer_details_inh_locklot
-msgid "[('product_id','=?',product_id),('locked','=',False)]"
+msgid ""
+"[('product_id','=?',product_id), '|', ('locked', '=', allow_locked), "
+"('locked','=',False)]"
 msgstr ""
 
 #. module: stock_lock_lot
