@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright 2016-2017 LasLabs Inc.
+    @license AGPL-3 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+
+<odoo>
+
+    <record id="stock_picking_view_form" model="ir.ui.view">
+        <field name="name">stock.picking.view.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='extra']" position="inside">
+                <group>
+                    <field name="dispatch_rate_ids"
+                           context="{'default_picking_id': id,
+                                     'default_service_id': carrier_id,
+                                     }"
+                            >
+                        <tree>
+                            <field name="partner_id" />
+                            <field name="service_id" />
+                            <field name="rate"
+                                   widget="monetary"
+                                   options="{'currency_field': 'rate_currency_id'}"
+                                   />
+                            <button name="action_purchase"
+                                    type="object"
+                                    icon="kanban-apply"
+                                    string="Purchase"
+                                    />
+                        </tree>
+                    </field>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

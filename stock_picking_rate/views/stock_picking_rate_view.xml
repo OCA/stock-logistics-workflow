@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright 2016-2017 LasLabs Inc.
+    @license AGPL-3 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+
+<odoo>
+
+    <record id="stock_picking_rate_view_form" model="ir.ui.view">
+        <field name="name">stock.picking.rate.view.form</field>
+        <field name="model">stock.picking.rate</field>
+        <field name="arch" type="xml">
+            <form string="Dispatch Rate">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="service_id" />
+                            <field name="delivery_days" />
+                            <field name="date_delivery" />
+                            <field name="is_guaranteed" />
+                        </group>
+                        <group>
+                            <field name="partner_id" readonly="True" />
+                            <field name="date_generated" />
+                            <field name="date_purchased" />
+                            <field name="picking_id" />
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="rate" widget="monetary" options="{'currency_field': 'rate_currency_id'}" />
+                            <field name="rate_currency_id" />
+                        </group>
+                        <group>
+                            <field name="retail_rate" widget="monetary" options="{'currency_field': 'retail_rate_currency_id'}" />
+                            <field name="retail_rate_currency_id" />
+                        </group>
+                        <group>
+                            <field name="list_rate" widget="monetary" options="{'currency_field': 'list_rate_currency_id'}" />
+                            <field name="list_rate_currency_id" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="stock_picking_rate_view_tree" model="ir.ui.view">
+        <field name="name">stock.picking.rate.view.tree</field>
+        <field name="model">stock.picking.rate</field>
+        <field name="arch" type="xml">
+            <tree string="Dispatch Rates">
+                <field name="partner_id" />
+                <field name="service_id" />
+                <field name="picking_id" />
+                <field name="date_generated" />
+                <field name="date_purchased" />
+                <field name="rate" widget="monetary" options="{'currency_field': 'rate_currency_id'}" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="stock_picking_rate_view_search" model="ir.ui.view">
+        <field name="name">stock.picking.rate.view.search</field>
+        <field name="model">stock.picking.rate</field>
+        <field name="arch" type="xml">
+            <search string="Dispatch Rates">
+
+                <field name="picking_id"/>
+                <field name="date_generated" />
+                <field name="date_purchased" />
+                <field name="rate" />
+                <field name="rate_currency_id" />
+
+                <filter string="Picking"
+                        domain=""
+                        context="{'group_by': 'picking_id'}" />
+                <filter string="Date Generated"
+                        domain=""
+                        context="{'group_by': 'date_generated'}" />
+                <filter string="Date Purchased"
+                        domain=""
+                        context="{'group_by': 'date_purchased'}" />
+                <filter string="Purchased"
+                        domain=""
+                        context="{'group_by': 'is_purchased'}" />
+                <filter string="Rate"
+                        domain=""
+                        context="{'group_by': 'rate'}" />
+                <filter string="Currency"
+                        domain=""
+                        context="{'group_by': 'rate_currency_id'}" />
+
+            </search>
+        </field>
+    </record>
+
+    <record id="stock_picking_rate_action" model="ir.actions.act_window">
+        <field name="name">Dispatch Rates</field>
+        <field name="res_model">stock.picking.rate</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="stock_picking_rate_view_tree" />
+    </record>
+
+</odoo>
