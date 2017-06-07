@@ -8,6 +8,12 @@
             <field name="model">stock.picking</field>
             <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
+                <field name="state" position="before">
+                    <button name="action_view_invoice" type="object"
+                        string="View Invoice" class="oe_highlight"
+                        attrs="{'invisible': [('invoice_ids', '=', [])]}"
+                        groups="base.group_user"/>
+                </field>
                 <field name="picking_type_id" position="after">
                     <field name="invoice_ids" string="Invoice"
                         groups="account.group_account_invoice"
