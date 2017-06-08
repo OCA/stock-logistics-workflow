@@ -109,3 +109,10 @@ class TestStockPickingInvoiceLink(TestSale):
             pick_2.move_lines.filtered(
                 lambda x: x.product_id.invoice_policy == "delivery"),
             "Invoice 2 lines must link to only Second Delivery lines")
+
+    def test_01_action_view_invoice(self):
+        self.so.action_invoice_create()
+        result = self.so.picking_ids.action_view_invoice()
+        self.assertEqual(result['views'][0][1], 'form')
+        invoice = self.so.picking_ids.invoice_ids
+        self.assertEqual(result['res_id'], invoice.id)
