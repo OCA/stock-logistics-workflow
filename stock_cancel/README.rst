@@ -7,6 +7,25 @@ Stock Cancel
 This module allows you to bring back a full stock picking to draft state
 
 
+Usage
+=====
+
+.. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
+   :alt: Try me on Runbot
+   :target: https://runbot.odoo-community.org/runbot/154/8.0
+
+
+For further information, please visit:
+
+* https://www.odoo.com/forum/help-1
+
+
+Known issues / Roadmap
+======================
+
+* Split quants are not reverted to its previous state.
+
+
 Bug Tracker
 ===========
 
@@ -29,6 +48,7 @@ Contributors
 * Pedro M. Baeza <pedro.baeza@gmail.com>
 * Yannick Vaucher <yannick.vaucher@camptocamp.com>
 * Rudolf Schnapka <rs@techno-flex.de>
+* Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>
 
 
 Maintainer

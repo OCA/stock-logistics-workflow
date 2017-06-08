@@ -21,20 +21,4 @@
 #
 ##############################################################################
 
-{
-    "name": "Stock Cancel",
-    "version": "8.0.1.3.0",
-    "category": "Stock",
-    "author": "www.andreacometa.it, Odoo Community Association (OCA)",
-    "website": "http://www.andreacometa.it",
-    "depends": [
-        "stock_picking_invoice_link"
-    ],
-    "data": [
-        "views/stock_view.xml",
-    ],
-    "installable": True,
-    "images": [
-        "images/stock_picking.jpg"
-    ],
-}
+from . import stock
