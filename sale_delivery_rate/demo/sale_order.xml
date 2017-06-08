@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright 2017 LasLabs Inc.
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+
+<odoo>
+    <record id="demo_order_1" model="sale.order">
+        <field name="currency_id" ref="base.USD"/>
+        <field name="date_order">2017-01-01</field>
+        <field name="name">Demo Order 1</field>
+        <field name="partner_id" ref="demo_customer"/>
+        <field name="picking_policy">direct</field>
+        <field name="pricelist_id" ref="product.list0"/>
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="carrier_id" ref="demo_carrier_1"/>
+        <field name="state">draft</field>
+    </record>
+
+    <record id="demo_order_2" model="sale.order">
+        <field name="currency_id" ref="base.USD"/>
+        <field name="date_order">2017-01-01</field>
+        <field name="name">Demo Order 2</field>
+        <field name="partner_id" ref="demo_customer"/>
+        <field name="picking_policy">direct</field>
+        <field name="pricelist_id" ref="product.list0"/>
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="carrier_id" ref="demo_carrier_1"/>
+        <field name="state">draft</field>
+    </record>
+</odoo>

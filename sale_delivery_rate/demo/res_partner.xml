@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright 2017 LasLabs Inc.
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+
+<odoo>
+    <record id="demo_customer" model="res.partner">
+        <field name="name">Demo Customer</field>
+        <field name="customer" eval="True"/>
+    </record>
+</odoo>
