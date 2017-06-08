@@ -11,7 +11,7 @@
                 <field name="state" position="before">
                     <button name="action_view_invoice" type="object"
                         string="View Invoice" class="oe_highlight"
-                        attrs="{'invisible': [('invoice_exists', '=', False)]}"
+                        attrs="{'invisible': [('invoice_state', '!=', 'invoiced')]}"
                         groups="base.group_user"/>
                 </field>
                 <field name="invoice_state" position="after">
@@ -19,7 +19,6 @@
                            groups="account.group_account_invoice"
                            attrs="{'invisible': [('invoice_state', '=', 'none')]}"
                     />
-                    <field name="invoice_exists" invisible="1"/>
                 </field>
             </field>
         </record>

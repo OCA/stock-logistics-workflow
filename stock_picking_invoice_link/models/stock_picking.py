@@ -17,20 +17,12 @@ class StockPicking(models.Model):
     invoice_id = fields.Many2one(
         comodel_name='account.invoice', string='Invoice',
         compute="_compute_invoice_id")
-    invoice_exists = fields.Boolean(
-        u"Invoiced", compute='_compute_invoice_exists')
 
     @api.multi
     @api.depends('invoice_ids')
     def _compute_invoice_id(self):
         for picking in self:
             picking.invoice_id = picking.invoice_ids[:1]
-
-    @api.multi
-    @api.depends('invoice_ids')
-    def _compute_invoice_exists(self):
-        for picking in self:
-            picking.invoice_exists = bool(picking.invoice_ids)
 
     @api.multi
     def action_view_invoice(self):
