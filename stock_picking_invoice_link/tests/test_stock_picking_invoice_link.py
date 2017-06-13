@@ -108,3 +108,10 @@ class TestStockPickingInvoiceLink(TestStockCommon):
     def test_invoice_unlink_not_draft_nor_cancel(self):
         self.wizard.open_invoice()
         self.assertEqual(self.picking_in.invoice_state, 'invoiced')
+
+    def test_action_view_invoice(self):
+        self.wizard.open_invoice()
+        result = self.picking_in.action_view_invoice()
+        self.assertEqual(result['views'][0][1], 'form')
+        invoice = self.picking_in.invoice_ids
+        self.assertEqual(result['res_id'], invoice.id)

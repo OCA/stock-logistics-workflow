@@ -23,3 +23,21 @@ class StockPicking(models.Model):
     def _compute_invoice_id(self):
         for picking in self:
             picking.invoice_id = picking.invoice_ids[:1]
+
+    @api.multi
+    def action_view_invoice(self):
+        """This function returns an action that display existing invoices
+        of given stock pickings.
+        It can either be a in a list or in a form view, if there is only
+        one invoice to show.
+        """
+        self.ensure_one()
+        action = self.env.ref('account.action_invoice_tree1')
+        result = action.read()[0]
+        if len(self.invoice_ids) > 1:
+            result['domain'] = "[('id', 'in', %s)]" % self.invoice_ids.ids
+        else:
+            form_view = self.env.ref('account.invoice_form')
+            result['views'] = [(form_view.id, 'form')]
+            result['res_id'] = self.invoice_ids.id
+        return result
