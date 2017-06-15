@@ -10,18 +10,16 @@ from openerp import api, fields, models
 class StockMove(models.Model):
     _inherit = "stock.move"
 
+    # Provide this field for backwards compatibility
     invoice_line_ids = fields.Many2many(
         comodel_name='account.invoice.line', string='Invoice Lines',
         compute="_compute_invoice_line_ids")
+    invoice_line_id = fields.Many2one(
+        comodel_name='account.invoice.line', string='Invoice Line',
+        copy=False, readonly=True)
 
     @api.multi
+    @api.depends('invoice_line_id')
     def _compute_invoice_line_ids(self):
         for move in self:
-            if (
-                move.procurement_id and move.procurement_id.sale_line_id and
-                move.procurement_id.sale_line_id.invoice_lines
-            ):
-                move.invoice_line_ids = (
-                    move.procurement_id.sale_line_id.invoice_lines)
-            else:
-                move.invoice_line_ids = []
+            move.invoice_line_ids = move.invoice_line_id
