@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <record model="ir.ui.view" id="stock_picking_disable_button_form_view">
+            <field name="name">stock.picking.disable_button.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form" />
+            <field name="arch" type="xml">
+                <button name="force_assign" position="attributes">
+                    <attribute name="groups">stock_disable_force_availability_button.group_stock_force_availability</attribute>
+                </button>
+            </field>
+        </record>
+</odoo>

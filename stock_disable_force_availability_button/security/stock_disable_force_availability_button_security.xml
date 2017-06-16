@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="group_stock_force_availability" model="res.groups">
+            <field name="name">Allow to force availability on stock operations</field>
+            <field name="category_id" ref="base.module_category_hidden" />
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+    </data>
+</odoo>
