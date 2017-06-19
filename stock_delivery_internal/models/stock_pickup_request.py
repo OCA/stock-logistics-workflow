@@ -6,6 +6,7 @@ from odoo import api, fields, models
 
 
 class StockPickupRequest(models.Model):
+
     _name = 'stock.pickup.request'
     _description = 'Stock Pickup Request'
 
@@ -17,6 +18,7 @@ class StockPickupRequest(models.Model):
         string='Responsible Company',
         comodel_name='res.company',
         required=True,
+        index=True,
     )
     cash_on_delivery = fields.Boolean()
     state = fields.Selection(
@@ -63,7 +65,7 @@ class StockPickupRequest(models.Model):
             'internal_delivery_%s_picking_type_id' % op_type
         )
 
-    def _create_move_lines(self, picking):
+    def _prepare_move_lines(self, picking):
         """ It will create move lines based on the given picking
         Args:
             picking (stock.picking): The picking to copy from
@@ -82,7 +84,7 @@ class StockPickupRequest(models.Model):
         return move_lines
 
     @api.multi
-    @api.depends('in_picking_id.state', 'in_picking_id.state')
+    @api.depends('in_picking_id.state', 'out_picking_id.state')
     def _compute_state(self):
         """ It will compute the status of the pickup based on the delivery
          pickings
@@ -95,7 +97,7 @@ class StockPickupRequest(models.Model):
                 state = in_state
             rec.state = state
 
-    @api.multi
+    @api.model
     def _default_name(self):
         """ It should return the next sequence for the model to use as a
         name
@@ -104,7 +106,7 @@ class StockPickupRequest(models.Model):
         """
         return self.env['ir.sequence'].next_by_code('stock.pickup.request')
 
-    @api.model
+    @api.multi
     def write(self, vals):
         """ It will create CoD pickings when CoD is selected in the RFP """
         picking_ids = (
@@ -138,7 +140,7 @@ class StockPickupRequest(models.Model):
         picking = self.env['stock.picking'].browse(vals.get('picking_id'))
         company = self.env['res.company'].browse(vals.get('company_id'))
         pick_type = self._get_pick_type(picking, 'stock')
-        move_lines = self._create_move_lines(picking)
+        move_lines = self._prepare_move_lines(picking)
         in_picking_id = self.env['stock.picking'].create({
             'location_id': pick_type.default_location_src_id.id,
             'location_dest_id': picking.location_dest_id.id,

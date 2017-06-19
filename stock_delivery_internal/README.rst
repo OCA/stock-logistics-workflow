@@ -2,9 +2,9 @@
    :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
    :alt: License: LGPL-3
 
-=================
-Delivery Internal
-=================
+=======================
+Stock Delivery Internal
+=======================
 
 This module adds the concept of an internal delivery carrier to `delivery
 .carrier`. When the `delivery_type` of a carrier is set to `Internal`, any

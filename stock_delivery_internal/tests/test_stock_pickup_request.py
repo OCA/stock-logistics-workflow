@@ -18,7 +18,7 @@ class TestStockPickupRequest(TestCommon):
         """ It should create two pickings on create """
         obj = self._new_record()
         pickings = [obj.in_picking_id.id, obj.out_picking_id.id]
-        self.assertTrue(False not in pickings)
+        self.assertTrue(all(pickings))
 
     def test_creates_cod_pickings(self):
         """ It should create pickings on CoD True"""
@@ -41,5 +41,4 @@ class TestStockPickupRequest(TestCommon):
         # Confirm the child pickings
         obj.in_picking_id.action_confirm()
         obj.out_picking_id.action_confirm()
-        obj._compute_state()
         self.assertEquals(obj.state, 'confirmed')
