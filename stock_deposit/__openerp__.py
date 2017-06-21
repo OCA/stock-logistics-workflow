@@ -5,7 +5,7 @@
 {
     "name": "Stock Deposit",
     "summary": "Manage deposit locations in your warehouses",
-    "version": "9.0.1.0.0",
+    "version": "9.0.1.0.1",
     "category": "Inventory",
     "website": "http://www.tecnativa.com",
     "author": "Tecnativa, "

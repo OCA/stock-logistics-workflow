@@ -3,11 +3,26 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from openerp import _, api, fields, models
-from openerp.exceptions import UserError
+from openerp.exceptions import UserError, ValidationError
 
 
 class StockQuantWizard(models.TransientModel):
     _name = 'deposit.stock.quant.wizard'
+
+    @api.model
+    def default_get(self, fields_list):
+        res = super(StockQuantWizard, self).default_get(fields_list)
+        quant_ids = self.env.context.get('active_ids', False)
+        if quant_ids:
+            quants = self.env['stock.quant'].browse(quant_ids)
+            res['line_ids'] = [(0, 0, {
+                'quant_id': x.id,
+                'product_id': x.product_id.id,
+                'location_id': x.location_id.id,
+                'owner_id': x.owner_id.id,
+                'new_qty': x.qty,
+            }) for x in quants]
+        return res
 
     def _default_old_dest_location_id(self):
         stock_picking_obj = self.env['stock.picking']
@@ -18,6 +33,10 @@ class StockQuantWizard(models.TransientModel):
     quants_action = fields.Selection([
         ('regularize', 'Regularize')
     ], string='Quants Action', default='regularize')
+    line_ids = fields.One2many(
+        comodel_name='deposit.stock.quant.wizard.line',
+        inverse_name='stock_quant_wizard_id',
+    )
 
     def check_forbbiden_quants(self, quants):
         forbidden_quants = quants.filtered(
@@ -37,8 +56,8 @@ class StockQuantWizard(models.TransientModel):
         return {
             'name': quant.product_id.name,
             'product_id': quant.product_id.id,
-            'product_uom_qty': quant.qty,
-            'product_uom': quant.product_uom_id.id,
+            'product_uom_qty': quant.new_qty,
+            'product_uom': quant.product_id.uom_id.id,
             'restrict_partner_id': quant.owner_id.id,
         }
 
@@ -78,9 +97,9 @@ class StockQuantWizard(models.TransientModel):
                   "Please you must handle the reservation manually."))
         pickings.do_transfer()
 
-    def _regularize_quants(self, quant_ids):
+    def _regularize_quants(self):
         picking_obj = self.env['stock.picking']
-        quants = self.env['stock.quant'].browse(quant_ids)
+        quants = self.line_ids.filtered(lambda q: q.new_qty > 0)
         self.check_forbbiden_quants(quants)
         # Make new stock picking by each stock quant location
         new_picking_ids = []
@@ -98,5 +117,43 @@ class StockQuantWizard(models.TransientModel):
     @api.multi
     def action_apply(self):
         if self.quants_action == 'regularize':
-            return self._regularize_quants(self.env.context['active_ids'])
+            return self._regularize_quants()
         return False
+
+
+class StockQuantWizardLine(models.TransientModel):
+    _name = 'deposit.stock.quant.wizard.line'
+
+    stock_quant_wizard_id = fields.Many2one(
+        comodel_name='deposit.stock.quant.wizard',
+    )
+    quant_id = fields.Many2one(
+        comodel_name='stock.quant',
+        readonly=True,
+        string='Quant',
+    )
+    product_id = fields.Many2one(
+        comodel_name='product.product',
+        readonly=True,
+        string='Product',
+    )
+    location_id = fields.Many2one(
+        comodel_name='stock.location',
+        readonly=True,
+        string='Location',
+    )
+    owner_id = fields.Many2one(
+        comodel_name='res.partner',
+        readonly=True,
+        string='Owner',
+    )
+    new_qty = fields.Float(string='Qty to process')
+
+    @api.multi
+    @api.constrains('new_qty')
+    def _check_new_qty(self):
+        if self.filtered(lambda x: x.new_qty > x.quant_id.qty):
+            raise ValidationError(
+                _('There is any line with new quantity greater than quant '
+                  'quantity.\n'
+                  'Please, fix it before continuing'))

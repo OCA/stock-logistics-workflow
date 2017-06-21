@@ -48,8 +48,10 @@ to the customer as a normal outgoing move.), you need:
 
 #. Go to Inventory --> Reports --> Deposited location inventory, select quants
    that you want to regularize and click on more actions and select
-   "**Regularize deposit quants**". This process creates delivery orders from
-   deposit location to customer location.
+   "**Regularize deposit quants**".
+#. On wizard you can modify the quantities that you want regularize. You can
+   not regularize it more than initial quantities. This process creates
+   delivery orders from deposit location to customer location.
 
 To give back deposit to you warehouse, you need:
 
