@@ -16,11 +16,9 @@ be in invoice but with the price of ogiginal product.
 Contributors
 ------------
 
-* Joël Grand-Guillaume joel.grandguillaume@camptocamp.com
-* Guewen Baconnier guewen.baconnier@camptocamp.com
-* Anar Baghirli a.baghirli@mobilunity.com
-* "Camptocamp, "
-* "Odoo Community Association (OCA)",
+* Joël Grand-Guillaume <joel.grandguillaume@camptocamp.com>
+* Guewen Baconnier <guewen.baconnier@camptocamp.com>
+* Anar Baghirli <a.baghirli@mobilunity.com>
 
 Maintainer
 ----------

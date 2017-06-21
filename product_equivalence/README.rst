@@ -18,9 +18,7 @@ Contributors
 * Nicolas Bessi <nicolas.bessi@camptocamp.com>
 * Yannick Vaucher <yannick.vaucher@camptocamp.com>
 * Guewen Baconnier <guewen.baconnier@camptocamp.com>
-* Anar Baghirli
-* "Camptocamp, "
-* "Odoo Community Association (OCA)",
+* Anar Baghirli <a.baghirli@mobilunity.com>
 
 Maintainer
 ----------

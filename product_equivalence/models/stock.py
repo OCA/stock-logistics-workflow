@@ -12,8 +12,7 @@ class StockMove(models.Model):
         """ If a product with an equivalence is found on a
             move line, it is replaced by its equivalence."""
         for move in self:
-            if move.picking_id and \
-                    move.picking_id.picking_type_id.code == 'outgoing':
+            if move.picking_type_id.code == 'outgoing':
                 if move.product_id.equivalent_id:
                     # replace_product is provided by the module
                     # packing_product_change

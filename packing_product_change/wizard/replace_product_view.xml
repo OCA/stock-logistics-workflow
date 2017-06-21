@@ -15,6 +15,7 @@
             </form>
         </field>
     </record>
+
     <record id="replace_product" model="ir.actions.act_window">
         <field name="name">Replace product</field>
         <field name="type">ir.actions.act_window</field>
