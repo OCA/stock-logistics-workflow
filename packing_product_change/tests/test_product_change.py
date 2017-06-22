@@ -11,7 +11,7 @@ class TestProductChange(common.TransactionCase):
         self.product = self.env['product.product'].create({
             'name': 'Bread',
             'list_price': 5,
-            'type': 'consu',})
+            'type': 'consu', })
         self.replproduct = self.env['product.product'].create({
             'name': 'Meat',
             'list_price': 5,
@@ -40,9 +40,9 @@ class TestProductChange(common.TransactionCase):
         replwizard.with_context(active_id=move_line.id).replace()
         # check that first product was moved to old product
         # and replacement put in product_id field
-        self.assertEqual(move_line.product_id,self.replproduct)
-        self.assertEqual(move_line.old_product_id,self.product)
+        self.assertEqual(move_line.product_id, self.replproduct)
+        self.assertEqual(move_line.old_product_id, self.product)
         self.sale_ord.action_invoice_create()
-        inv_prod=self.sale_ord.invoice_ids.invoice_line_ids.product_id
+        inv_prod = self.sale_ord.invoice_ids.invoice_line_ids.product_id
         # check that invoice line have replaced product
         self.assertEqual(inv_prod, self.replproduct)

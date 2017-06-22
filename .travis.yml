@@ -25,6 +25,10 @@ env:
     - TRANSIFEX="1"
     - TESTS="1" ODOO_REPO="odoo/odoo"
     - TESTS="1" ODOO_REPO="OCA/OCB"
+    - TESTS="1" ODOO_REPO="odoo/odoo" EXCLUDE=stock_auto_move
+    - TESTS="1" ODOO_REPO="OCA/OCB" EXCLUDE=stock_auto_move
+    - TESTS="1" ODOO_REPO="odoo/odoo" INCLUDE=stock_auto_move
+    - TESTS="1" ODOO_REPO="OCA/OCB" INCLUDE=stock_auto_move
 
 virtualenv:
   system_site_packages: true

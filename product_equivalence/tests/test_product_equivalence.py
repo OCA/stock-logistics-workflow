@@ -11,12 +11,12 @@ class TestProductChange(common.TransactionCase):
         self.replproduct = self.env['product.product'].create({
             'name': 'Bread',
             'list_price': 5,
-            'type': 'consu',})
+            'type': 'consu', })
         self.product = self.env['product.product'].create({
             'name': 'Meat',
             'list_price': 5,
             'type': 'consu',
-            'equivalent_id': self.replproduct.id})
+            'equivalent_id': self.replproduct.id, })
         self.product_uom_unit = self.env.ref('product.product_uom_unit')
         self.partner = self.env['res.partner'].create(
             {'name': 'Imperator Caius Julius Caesar Divus'})
@@ -36,8 +36,5 @@ class TestProductChange(common.TransactionCase):
         self.sale_ord.action_confirm()
         pickings = self.sale_ord.picking_ids
         move_line = pickings.move_lines
-        replwizard = self.env['replace.product'].create(
-            {'product_id': self.replproduct.id})
         # check that meat in move line was replaced by bread
-        self.assertEqual(move_line.product_id,self.replproduct)
-
+        self.assertEqual(move_line.product_id, self.replproduct)
