@@ -11,6 +11,7 @@
     'summary': 'change product in packing',
     'website': 'http://www.camptocamp.com',
     'depends': ['sale_stock'],
+    'conflicts': ['stock_auto_move'],
     'data': [
         "wizard/replace_product_view.xml",
         "views/stock_view.xml",
