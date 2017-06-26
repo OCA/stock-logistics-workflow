@@ -35,6 +35,10 @@ class TestProductChange(common.TransactionCase):
         self.sale_ord.action_confirm()
         pickings = self.sale_ord.picking_ids
         move_line = pickings.move_lines
+        if 'auto_move' in move_line._fields:
+            # stock_auto_move installed
+            for line in move_line:
+                line.update({'auto_move': False})
         replwizard = self.env['replace.product'].create(
             {'product_id': self.replproduct.id})
         replwizard.with_context(active_id=move_line.id).replace()
