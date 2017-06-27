@@ -30,8 +30,9 @@ class StockQuant(models.Model):
                     lot_id=False, owner_id=False, src_package_id=False,
                     dest_package_id=False):
         """Refuse to move a blocked lot if strict locking is demanded"""
-        if lot_id and self.env['stock.config.settings']._get_parameter(
-                'stock.lock.lot.strict', False):
+        param = self.env['stock.config.settings']._get_parameter(
+            'stock.lock.lot.strict', False)
+        if lot_id and param and param.value != 'False':
             lot = self.env['stock.production.lot'].browse(lot_id)
             if lot.locked:
                 raise exceptions.ValidationError(

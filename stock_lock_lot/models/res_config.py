@@ -23,18 +23,15 @@ class StockConfig(models.TransientModel):
         param_obj = self.env['ir.config_parameter']
         rec = self._get_parameter(key)
         if rec:
-            if not value:
-                rec.unlink()
-            else:
-                rec.value = value
-        elif value:
-            param_obj.create({'key': key, 'value': value})
+            rec.value = str(value)
+        else:
+            param_obj.create({'key': key, 'value': str(value)})
 
     @api.multi
     def get_default_parameter_stock_lock_lot_strict(self):
         def get_value(key, default=''):
             rec = self._get_parameter(key)
-            return rec and rec.value or default
+            return rec and rec.value and rec.value != 'False' or default
         return {'stock_lock_lot_strict': get_value('stock.lock.lot.strict',
                                                    False)}
 
