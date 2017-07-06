@@ -1,0 +1,6 @@
+---Fields in module 'stock_disable_force_availability_button'---
+---XML records in module 'stock_disable_force_availability_button'---
+NEW res.groups: stock_disable_force_availability_button.group_stock_force_availability
+# Done: Rename XML-IDs
+DEL res.groups: stock.group_stock_force_availability
+# Nothing to do: noupdate=0 records
