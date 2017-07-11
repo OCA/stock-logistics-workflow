@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <!-- Copyright 2017 LasLabs Inc.
+      License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
+
+<odoo>
+
+    <record id="seq_stock_pickup_request" model="ir.sequence">
+        <field name="name">Stock Pickup Request</field>
+        <field name="code">stock.pickup.request</field>
+        <field name="prefix">PKUP</field>
+        <field name="padding">8</field>
+    </record>
+
+</odoo>
