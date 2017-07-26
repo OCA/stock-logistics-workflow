@@ -62,10 +62,12 @@ class StockPickingPackagePreparation(models.Model):
         string='Document Date',
         default=fields.Datetime.now,
         states=FIELDS_STATES,
+        copy=False
     )
     date_done = fields.Datetime(
         string='Shipping Date',
         readonly=True,
+        copy=False,
     )
     company_id = fields.Many2one(
         comodel_name='res.company',
