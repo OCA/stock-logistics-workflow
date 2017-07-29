@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-31 09:53+0000\n"
+"POT-Creation-Date: 2017-07-15 11:03+0000\n"
 "PO-Revision-Date: 2015-10-21 16:34+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/pt_BR/)\n"
@@ -26,7 +26,7 @@ msgstr ""
 #. module: stock_split_picking
 #: model:ir.model,name:stock_split_picking.model_stock_picking
 msgid "Picking List"
-msgstr ""
+msgstr "Lista de separação"
 
 #. module: stock_split_picking
 #: view:stock.picking:stock_split_picking.view_picking_form
