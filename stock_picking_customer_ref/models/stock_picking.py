@@ -1,23 +1,22 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-# For copyright and license notices, see __openerp__.py file in root directory
-##############################################################################
-from openerp import fields, models, api
+# Copyright 2015 AvanzOSC - Alfredo de la Fuente
+# Copyright 2017 Tecnativa - David Vidal
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
+from odoo import api, fields, models
 
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    @api.one
-    @api.depends('group_id')
-    def _calculate_client_order_ref(self):
-        sale_obj = self.env['sale.order']
-        self.client_order_ref = ''
-        if self.group_id:
-            cond = [('procurement_group_id', '=', self.group_id.id)]
-            sale = sale_obj.search(cond, limit=1)
-            self.client_order_ref = sale.client_order_ref
+    @api.depends('group_id', 'sale_id.client_order_ref')
+    def _compute_client_order_ref(self):
+        for picking in self:
+            if picking.group_id:
+                cond = [('procurement_group_id', '=', picking.group_id.id)]
+                sale = self.env['sale.order'].search(cond, limit=1)
+                picking.client_order_ref = sale.client_order_ref
 
-    client_order_ref = fields.Char(
-        string="Sale Reference/Description",
-        compute="_calculate_client_order_ref", store=True)
+    client_order_ref = fields.Char(string="Sale Reference/Description",
+                                   compute="_compute_client_order_ref",
+                                   store=True)
