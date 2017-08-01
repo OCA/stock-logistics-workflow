@@ -22,6 +22,12 @@ msgid "<strong>Customer acceptance:</strong>"
 msgstr "<strong>Aceptación de cliente:</strong>"
 
 #. module: stock_picking_digitized_signature
+#: model:ir.ui.view,arch_db:stock_picking_digitized_signature.report_delivery_document
+#: model:ir.ui.view,arch_db:stock_picking_digitized_signature.report_picking
+msgid "<strong>Responsible</strong>"
+msgstr "<strong>Responsable</strong>"
+
+#. module: stock_picking_digitized_signature
 #: model:ir.model.fields,field_description:stock_picking_digitized_signature.field_stock_picking_customer_signature
 msgid "Customer acceptance"
 msgstr "Aceptación de cliente"
