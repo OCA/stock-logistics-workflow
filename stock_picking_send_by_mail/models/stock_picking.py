@@ -3,12 +3,18 @@
 # Copyright 2017 Tecnativa - Vicent Cubells
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import _, api, models
+from openerp import _, api, fields, models
 
 
 class StockPicking(models.Model):
-    _name = "stock.picking"
-    _inherit = ['stock.picking', 'mail.thread']
+    _inherit = 'stock.picking'
+
+    user_id = fields.Many2one(
+        comodel_name='res.users',
+        string='Responsible',
+        index=True,
+        default=lambda self: self.env.user,
+    )
 
     @api.multi
     def action_picking_send(self):

@@ -16,8 +16,7 @@ To use this module, you need to:
 
 * Go to a Delivery Order.
 * Click on the button Send by Email.
-* Select the template: Stock Picking - Send by Email.
-* And click on the button Send by Email.
+* And finally click on the button Send.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
@@ -27,7 +26,7 @@ Bug Tracker
 ===========
 
 Bugs are tracked on `GitHub Issues
-<https://github.com/OCA/{project_repo}/issues>`_. In case of
+<https://github.com/OCA/stock-logistics-warehouse/issues>`_. In case of
 trouble, please check there if your issue has already been reported. If you
 spotted it first, help us smash it by providing detailed and welcomed feedback.
 
