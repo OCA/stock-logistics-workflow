@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-24 06:44+0000\n"
-"PO-Revision-Date: 2016-12-24 06:44+0000\n"
+"POT-Creation-Date: 2017-07-29 11:07+0000\n"
+"PO-Revision-Date: 2017-07-29 11:07+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Vietnamese (Viet Nam) (https://www.transifex.com/oca/teams/23907/vi_VN/)\n"
 "MIME-Version: 1.0\n"
@@ -758,7 +758,7 @@ msgstr ""
 #: field:scanner.hardware,name:0 field:scanner.scenario,name:0
 #: field:scanner.scenario.step,name:0 field:scanner.scenario.transition,name:0
 msgid "Name"
-msgstr ""
+msgstr "Tên"
 
 #. module: stock_scanner
 #: help:scanner.hardware,name:0
@@ -993,7 +993,7 @@ msgid "Security"
 msgstr ""
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:854
+#: code:addons/stock_scanner/hardware/sentinel.py:855
 #, python-format
 msgid "Selected : %d"
 msgstr ""

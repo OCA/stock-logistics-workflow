@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-19 14:00+0000\n"
-"PO-Revision-Date: 2017-04-25 10:41+0000\n"
+"POT-Creation-Date: 2017-07-29 11:06+0000\n"
+"PO-Revision-Date: 2017-08-11 11:57+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Croatian (Croatia) (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/hr_HR/)\n"
 "MIME-Version: 1.0\n"
@@ -310,7 +310,7 @@ msgstr ""
 #. module: picking_dispatch
 #: field:picking.dispatch,name:0 field:picking.dispatch.creator,name:0
 msgid "Name"
-msgstr ""
+msgstr "Naziv"
 
 #. module: picking_dispatch
 #: help:picking.dispatch,name:0 help:picking.dispatch.creator,name:0
@@ -481,7 +481,7 @@ msgstr ""
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 msgid "State"
-msgstr ""
+msgstr "Oblast/Županija"
 
 #. module: picking_dispatch
 #: model:ir.model,name:picking_dispatch.model_stock_move
