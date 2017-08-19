@@ -1,0 +1,81 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_no_negative
+# 
+# Translators:
+# Rudolf Schnapka <rs@techno-flex.de>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-06-24 10:54+0000\n"
+"PO-Revision-Date: 2017-06-24 10:54+0000\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2017\n"
+"Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: stock_no_negative
+#: code:addons/stock_no_negative/models/stock_quant.py:27
+#, python-format
+msgid " lot '%s'"
+msgstr " Los '%s'"
+
+#. module: stock_no_negative
+#: model:ir.model.fields,field_description:stock_no_negative.field_product_category_allow_negative_stock
+#: model:ir.model.fields,field_description:stock_no_negative.field_product_template_allow_negative_stock
+msgid "Allow Negative Stock"
+msgstr "Erlaube negativen Bestand"
+
+#. module: stock_no_negative
+#: model:ir.model.fields,help:stock_no_negative.field_product_category_allow_negative_stock
+msgid ""
+"Allow negative stock levels for the stockable products attached to this "
+"category. The options doesn't apply to products attached to sub-categories "
+"of this category."
+msgstr ""
+"Erlaube negativen Bestand für lagernde Produkte dieser Kategorie. Die "
+"Auswahl schließt Unterkategorien dieser Kategorie nicht ein."
+
+#. module: stock_no_negative
+#: model:ir.model.fields,help:stock_no_negative.field_product_template_allow_negative_stock
+msgid ""
+"If this option is not active on this product nor on its product category and"
+" that this product is a stockable product, then the validation of the "
+"related stock moves will be blocked if the stock level becomes negative with"
+" the stock move."
+msgstr ""
+"Wenn diese Option weder für dieses Produkt noch die Produktkategorie aktiv "
+"ist und dieses Produkt ein Lagerprodukt ist, dann wird die Validierung "
+"diesbezüglicher Warenbewegungen eine Sperre auslösen, wenn der Bestand "
+"negativ werden würde. "
+
+#. module: stock_no_negative
+#: model:ir.model,name:stock_no_negative.model_product_category
+msgid "Product Category"
+msgstr "Produktkategorie"
+
+#. module: stock_no_negative
+#: model:ir.model,name:stock_no_negative.model_product_template
+msgid "Product Template"
+msgstr "Produktvorlage"
+
+#. module: stock_no_negative
+#: model:ir.model,name:stock_no_negative.model_stock_quant
+msgid "Quants"
+msgstr "Quanten"
+
+#. module: stock_no_negative
+#: code:addons/stock_no_negative/models/stock_quant.py:28
+#, python-format
+msgid ""
+"You cannot validate this stock operation because the stock level of the "
+"product '%s'%s would become negative on the stock location '%s' and negative"
+" stock is not allowed for this product."
+msgstr ""
+"Sie können diese Warenbewegung nicht ausführen, da der Bestand des Produkts "
+"'%s'%s am Lagerplatz '%s' negativ werden würde und dies für dieses Produkt "
+"nicht zulässig ist."

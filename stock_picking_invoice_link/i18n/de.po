@@ -4,13 +4,14 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
+# Rudolf Schnapka <rs@techno-flex.de>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-23 11:56+0000\n"
-"PO-Revision-Date: 2017-01-23 11:56+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"POT-Creation-Date: 2017-06-24 10:54+0000\n"
+"PO-Revision-Date: 2017-06-24 10:54+0000\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2017\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,25 +21,26 @@ msgstr ""
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_invoice
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking_invoice_id
+#: model:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
 msgid "Invoice"
-msgstr ""
+msgstr "Rechnung"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_invoice_line
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move_invoice_line_id
 msgid "Invoice Line"
-msgstr ""
+msgstr "Rechnungsposition"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move_invoice_line_ids
-#: model:ir.ui.view,arch_db:stock_picking_invoice_link.view_move_form
 msgid "Invoice Lines"
-msgstr ""
+msgstr "Rechnungspositionen"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking_invoice_ids
-#: model:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
 msgid "Invoices"
-msgstr ""
+msgstr "Rechnungen"
 
 #. module: stock_picking_invoice_link
 #: model:ir.ui.view,arch_db:stock_picking_invoice_link.invoice_form
@@ -48,12 +50,35 @@ msgstr "Pickaufträge"
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_invoice_picking_ids
 msgid "Related Pickings"
-msgstr ""
+msgstr "Diesbezügliche Kommissionen"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_invoice_line_move_line_ids
 msgid "Related Stock Moves"
+msgstr "Diesbezügliche Lagerbuchungen"
+
+#. module: stock_picking_invoice_link
+#: model:ir.model.fields,help:stock_picking_invoice_link.field_account_invoice_picking_ids
+msgid ""
+"Related pickings (only when the invoice has been generated from a sale "
+"order)."
 msgstr ""
+"Diesbezügliche Kommissionen (nur wenn Rechnung aus Auftrag abgeleitet. "
+"wurde)."
+
+#. module: stock_picking_invoice_link
+#: model:ir.model.fields,help:stock_picking_invoice_link.field_account_invoice_line_move_line_ids
+msgid ""
+"Related stock moves (only when the invoice has been generated from a sale "
+"order)."
+msgstr ""
+"Diesbezügliche Lagerbuchungen (nur wenn Rechnung aus Auftrag abgeleitet. "
+"wurde)."
+
+#. module: stock_picking_invoice_link
+#: model:ir.model,name:stock_picking_invoice_link.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Auftragsposition"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_stock_move
