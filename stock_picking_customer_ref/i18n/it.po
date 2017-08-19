@@ -11,24 +11,24 @@ msgstr ""
 "POT-Creation-Date: 2017-08-08 02:47+0000\n"
 "PO-Revision-Date: 2017-08-08 02:47+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/23907/pt_BR/)\n"
+"Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: pt_BR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_picking_customer_ref
 #: model:ir.ui.view,arch_db:stock_picking_customer_ref.view_picking_internal_search_inh_customerinfo
 msgid "Client order reference"
-msgstr "Referência de pedido do cliente"
+msgstr ""
 
 #. module: stock_picking_customer_ref
 #: model:ir.model.fields,field_description:stock_picking_customer_ref.field_stock_picking_client_order_ref
 msgid "Sale Reference/Description"
-msgstr "Referência de venda/Descrição"
+msgstr ""
 
 #. module: stock_picking_customer_ref
 #: model:ir.model,name:stock_picking_customer_ref.model_stock_picking
 msgid "Transfer"
-msgstr "Transferir"
+msgstr "Trasferisci"

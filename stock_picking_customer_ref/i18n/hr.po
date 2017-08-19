@@ -3,32 +3,32 @@
 # * stock_picking_customer_ref
 # 
 # Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2017
+# Bole <bole@dajmi5.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-08 02:47+0000\n"
-"PO-Revision-Date: 2017-08-08 02:47+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/23907/pt_BR/)\n"
+"POT-Creation-Date: 2018-02-28 03:51+0000\n"
+"PO-Revision-Date: 2018-02-28 03:51+0000\n"
+"Last-Translator: Bole <bole@dajmi5.com>, 2018\n"
+"Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: pt_BR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: hr\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #. module: stock_picking_customer_ref
 #: model:ir.ui.view,arch_db:stock_picking_customer_ref.view_picking_internal_search_inh_customerinfo
 msgid "Client order reference"
-msgstr "Referência de pedido do cliente"
+msgstr "Referenca narudžbe kupca"
 
 #. module: stock_picking_customer_ref
 #: model:ir.model.fields,field_description:stock_picking_customer_ref.field_stock_picking_client_order_ref
 msgid "Sale Reference/Description"
-msgstr "Referência de venda/Descrição"
+msgstr "Referenca prodaje / opis"
 
 #. module: stock_picking_customer_ref
 #: model:ir.model,name:stock_picking_customer_ref.model_stock_picking
 msgid "Transfer"
-msgstr "Transferir"
+msgstr "Prenos"
