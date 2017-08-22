@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<odoo>
+
+    <template id="report_picking" inherit_id="stock.report_picking" priority="9999">
+        <xpath expr="//th[@name='td_sched_date_h']" position="after">
+            <th name="td_responsible_h"><strong>Responsible</strong></th>
+        </xpath>
+        <xpath expr="//td[@name='td_sched_date']" position="after">
+            <td name="td_responsible">
+                <span t-field="o.user_id"/>
+            </td>
+        </xpath>
+        <xpath expr="//table[@t-if='o.pack_operation_ids']" position="after">
+            <p t-if="o.pack_operation_ids">
+                <span t-if="o.customer_signature">
+                    <strong>Customer acceptance:</strong>
+                    <img class="image" t-att-src="'data:image/png;base64,%s' % o.customer_signature" style="border:auto;"/>
+                </span>
+            </p>
+        </xpath>
+    </template>
+
+</odoo>
