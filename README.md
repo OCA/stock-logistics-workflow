@@ -29,12 +29,14 @@ addon | version | summary
 [stock_disable_force_availability_button](stock_disable_force_availability_button/) | 9.0.1.0.0 | Disable force availability button
 [stock_lot_scrap](stock_lot_scrap/) | 9.0.1.0.0 | This module adds a button in Production Lot/Serial Number view form to Scrap all products contained.
 [stock_no_negative](stock_no_negative/) | 9.0.1.0.0 | Disallow negative stock levels by default
+[stock_picking_digitized_signature](stock_picking_digitized_signature/) | 9.0.1.0.0 | Stock Picking Digitized Signature
 [stock_picking_invoice_link](stock_picking_invoice_link/) | 9.0.2.0.0 | Adds link between pickings and invoices
 [stock_picking_mass_assign](stock_picking_mass_assign/) | 9.0.1.0.0 | Delivery Orders Mass Assign
 [stock_picking_operation_quick_change](stock_picking_operation_quick_change/) | 9.0.1.0.0 | Change location of all picking operations
 [stock_picking_package_preparation](stock_picking_package_preparation/) | 9.0.1.0.0 | Stock Picking Package Preparation
 [stock_picking_package_preparation_line](stock_picking_package_preparation_line/) | 9.0.1.0.0 | Stock Picking Package Preparation Line
 [stock_picking_sale_order_link](stock_picking_sale_order_link/) | 9.0.1.0.0 | Link between picking and sale order
+[stock_picking_send_by_mail](stock_picking_send_by_mail/) | 9.0.1.0.0 | Send stock picking by email
 [stock_picking_show_backorder](stock_picking_show_backorder/) | 9.0.1.0.0 | Provides a new field on stock pickings, allowing to display the corresponding backorders.
 [stock_picking_show_return](stock_picking_show_return/) | 9.0.1.0.0 | Show returns on stock pickings
 [stock_picking_tracking](stock_picking_tracking/) | 9.0.1.0.0 | Adds a concept of event tracking for stock pickings
