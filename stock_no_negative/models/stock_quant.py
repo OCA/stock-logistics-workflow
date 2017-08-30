@@ -5,7 +5,7 @@
 
 from openerp import api, models, _
 from openerp.exceptions import ValidationError
-from openerp.tools import float_compare
+from openerp.tools import config, float_compare
 
 
 class StockQuant(models.Model):
@@ -16,9 +16,14 @@ class StockQuant(models.Model):
     def check_negative_qty(self):
         p = self.env['decimal.precision'].precision_get(
             'Product Unit of Measure')
+        check_negative_qty = (
+            config['test_enable'] and self.env.context.get(
+                'test_stock_no_negative')) or (
+            'test_enable' not in config.options)
+        if not check_negative_qty:
+            return
         for quant in self:
-            if (
-                    float_compare(quant.qty, 0, precision_digits=p) == -1 and
+            if (float_compare(quant.qty, 0, precision_digits=p) == -1 and
                     quant.product_id.type == 'product' and
                     not quant.product_id.allow_negative_stock and
                     not quant.product_id.categ_id.allow_negative_stock):
