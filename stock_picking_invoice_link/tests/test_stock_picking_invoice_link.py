@@ -8,8 +8,25 @@ from openerp.addons.sale.tests.test_sale_common import TestSale
 
 
 class TestStockPickingInvoiceLink(TestSale):
-    def test_00_sale_stock_invoice_link(self):
-        inv_obj = self.env['account.invoice']
+
+    def _update_product_qty(self, product, location):
+        product_qty = self.env['stock.change.product.qty'].create({
+            'location_id': location.id,
+            'product_id': product.id,
+            'new_quantity': 100.0,
+        })
+        product_qty.change_product_qty()
+        return product_qty
+
+    def setUp(self):
+        super(TestStockPickingInvoiceLink, self).setUp()
+        company = self.env.ref('base.main_company')
+        warehouse = self.env['stock.warehouse'].search(
+            [('company_id', '=', company.id)], limit=1)
+        stock_location = warehouse.lot_stock_id
+        for (_, p) in self.products.iteritems():
+            if p.type == 'product':
+                self._update_product_qty(p, stock_location)
         self.so = self.env['sale.order'].create({
             'partner_id': self.partner.id,
             'partner_invoice_id': self.partner.id,
@@ -22,6 +39,9 @@ class TestStockPickingInvoiceLink(TestSale):
             'picking_policy': 'direct',
         })
         self.so.action_confirm()
+
+    def test_00_sale_stock_invoice_link(self):
+        inv_obj = self.env['account.invoice']
         self.assertTrue(self.so.picking_ids,
                         'Sale Stock: no picking created for '
                         '"invoice on delivery" stockable products')
@@ -35,8 +55,8 @@ class TestStockPickingInvoiceLink(TestSale):
                          '"nothing to invoice" after invoicing')
         pick_1 = self.so.picking_ids.filtered(
             lambda x: x.picking_type_code == 'outgoing' and
-            x.state in ('confirmed', 'partially_available'))
-        pick_1.force_assign()
+            x.state in ('confirmed', 'assigned', 'partially_available'))
+        pick_1.action_assign()
         pick_1.pack_operation_product_ids.write({'qty_done': 1})
         wiz_act = pick_1.do_new_transfer()
         wiz = self.env[wiz_act['res_model']].browse(wiz_act['res_id'])
@@ -56,8 +76,8 @@ class TestStockPickingInvoiceLink(TestSale):
                          'Sale Stock: number of pickings should be 2')
         pick_2 = self.so.picking_ids.filtered(
             lambda x: x.picking_type_code == 'outgoing' and
-            x.state in ('confirmed', 'partially_available'))
-        pick_2.force_assign()
+            x.state in ('confirmed', 'assigned', 'partially_available'))
+        pick_2.action_assign()
         pick_2.pack_operation_product_ids.write({'qty_done': 1})
         self.assertIsNone(pick_2.do_new_transfer(),
                           'Sale Stock: second picking should be '
