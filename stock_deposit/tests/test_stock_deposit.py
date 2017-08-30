@@ -64,7 +64,6 @@ class TestStockDeposit(TransactionCase):
                 'product_id': self.product.product_variant_ids[:1].id,
                 'product_uom_qty': 20.0,
                 'product_uom': self.product.uom_id.id,
-                'restrict_partner_id': self.customer.id,
             })]
         })
         return picking
