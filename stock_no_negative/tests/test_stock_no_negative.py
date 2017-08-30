@@ -70,7 +70,8 @@ class TestStockNoNegative(TransactionCase):
         self.stock_immediate_transfer = self.env['stock.immediate.transfer'].\
             create({'pick_id': self.stock_picking.id})
         with self.assertRaises(ValidationError):
-            self.stock_immediate_transfer.process()
+            self.stock_immediate_transfer.with_context(
+                test_stock_no_negative=True).process()
 
     def test_true_allow_negative_stock(self):
         """Assert that negative stock levels are allowed when
@@ -82,7 +83,8 @@ class TestStockNoNegative(TransactionCase):
         self.stock_picking.do_new_transfer()
         self.stock_immediate_transfer = self.env['stock.immediate.transfer'].\
             create({'pick_id': self.stock_picking.id})
-        self.stock_immediate_transfer.process()
+        self.stock_immediate_transfer.with_context(
+            test_stock_no_negative=True).process()
         quant = self.env['stock.quant'].search([('product_id', '=',
                                                  self.product.id),
                                                 ('location_id', '=',
