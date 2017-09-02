@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-24 10:54+0000\n"
-"PO-Revision-Date: 2017-06-24 10:54+0000\n"
+"POT-Creation-Date: 2017-09-02 02:50+0000\n"
+"PO-Revision-Date: 2017-09-02 02:50+0000\n"
 "Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2017\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
 "MIME-Version: 1.0\n"
@@ -39,6 +39,8 @@ msgstr "Abbrechen"
 #: model:ir.model.fields,help:stock_deposit.field_stock_location_deposit_location
 msgid "Check this box to allow using this location to put deposit goods."
 msgstr ""
+"Wählen Sie diese Checkbox an, wenn Sie diesen Lagerplatz für Konsignation "
+"nutzen möchten."
 
 #. module: stock_deposit
 #: code:addons/stock_deposit/wizards/stock_quant_wizard.py:77
@@ -245,7 +247,7 @@ msgstr ""
 #. module: stock_deposit
 #: model:ir.model,name:stock_deposit.model_deposit_stock_quant_wizard
 msgid "deposit.stock.quant.wizard"
-msgstr ""
+msgstr "deposit.stock.quant.wizard"
 
 #. module: stock_deposit
 #: model:ir.ui.view,arch_db:stock_deposit.deposit_stock_quant_wizard_view

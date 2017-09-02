@@ -1,0 +1,41 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_account_deposit
+# 
+# Translators:
+# Rudolf Schnapka <rs@techno-flex.de>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-09-02 02:49+0000\n"
+"PO-Revision-Date: 2017-09-02 02:49+0000\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2017\n"
+"Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: stock_account_deposit
+#: code:addons/stock_account_deposit/wizards/stock_quant_wizard.py:82
+#, python-format
+msgid "Deposit Invoices"
+msgstr "Konsignationsabrechnungen"
+
+#. module: stock_account_deposit
+#: model:ir.model.fields,field_description:stock_account_deposit.field_deposit_stock_quant_wizard_journal_id
+msgid "Journal"
+msgstr "Journal"
+
+#. module: stock_account_deposit
+#: code:addons/stock_account_deposit/wizards/stock_quant_wizard.py:76
+#, python-format
+msgid "You can not invoice deposit pickings which not has an owner"
+msgstr "Sie können Konsignationsentnahmen ohne Eigentümer nicht abrechnen"
+
+#. module: stock_account_deposit
+#: model:ir.model,name:stock_account_deposit.model_deposit_stock_quant_wizard
+msgid "deposit.stock.quant.wizard"
+msgstr "deposit.stock.quant.wizard"
