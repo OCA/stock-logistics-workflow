@@ -3,19 +3,19 @@
 # * stock_picking_send_by_mail
 # 
 # Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2017
+# Rudolf Schnapka <rs@techno-flex.de>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-09-02 02:50+0000\n"
 "PO-Revision-Date: 2017-09-02 02:50+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
-"Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2017\n"
+"Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
+"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_picking_send_by_mail
@@ -81,25 +81,25 @@ msgstr ""
 #. module: stock_picking_send_by_mail
 #: model:mail.template,report_name:stock_picking_send_by_mail.email_template_stock_picking
 msgid "${(object.name or '').replace('/','_')}"
-msgstr "${(object.name or '').replace('/','_')}"
+msgstr ""
 
 #. module: stock_picking_send_by_mail
 #: model:mail.template,subject:stock_picking_send_by_mail.email_template_stock_picking
 msgid "${object.company_id.name|safe} Picking (Ref ${object.name or 'n/a' })"
-msgstr "${object.company_id.name|safe} Albarán (Ref ${object.name or 'n/a' })"
+msgstr ""
 
 #. module: stock_picking_send_by_mail
 #: code:addons/stock_picking_send_by_mail/models/stock_picking.py:33
 #, python-format
 msgid "Compose Email"
-msgstr "Compose Email"
+msgstr ""
 
 #. module: stock_picking_send_by_mail
 #: model:ir.ui.view,arch_db:stock_picking_send_by_mail.view_picking_form
 msgid "Send by Email"
-msgstr "Enviar por correo electrónico"
+msgstr ""
 
 #. module: stock_picking_send_by_mail
 #: model:ir.model,name:stock_picking_send_by_mail.model_stock_picking
 msgid "Transfer"
-msgstr "Transferencia"
+msgstr "Umlagern"
