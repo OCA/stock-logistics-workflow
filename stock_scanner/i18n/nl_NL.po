@@ -3,13 +3,14 @@
 # * stock_scanner
 # 
 # Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
 # Peter Hageman <hageman.p@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-24 10:45+0000\n"
-"PO-Revision-Date: 2017-06-24 10:45+0000\n"
+"POT-Creation-Date: 2017-08-19 11:08+0000\n"
+"PO-Revision-Date: 2017-08-19 11:08+0000\n"
 "Last-Translator: Peter Hageman <hageman.p@gmail.com>, 2017\n"
 "Language-Team: Dutch (Netherlands) (https://www.transifex.com/oca/teams/23907/nl_NL/)\n"
 "MIME-Version: 1.0\n"
@@ -330,7 +331,7 @@ msgstr ""
 #: field:scanner.scenario.step,create_uid:0
 #: field:scanner.scenario.transition,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Aangemaakt door"
 
 #. module: stock_scanner
 #: field:scanner.hardware,create_date:0
@@ -340,7 +341,7 @@ msgstr ""
 #: field:scanner.scenario.step,create_date:0
 #: field:scanner.scenario.transition,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Aangemaakt op"
 
 #. module: stock_scanner
 #: field:scanner.hardware,step_id:0
@@ -633,7 +634,7 @@ msgstr "Laatst gewijzigd op"
 #: field:scanner.scenario.step,write_uid:0
 #: field:scanner.scenario.transition,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Laatst bijgewerkt door"
 
 #. module: stock_scanner
 #: field:scanner.hardware,write_date:0
@@ -643,7 +644,7 @@ msgstr ""
 #: field:scanner.scenario.step,write_date:0
 #: field:scanner.scenario.transition,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Laatst bijgewerkt op"
 
 #. module: stock_scanner
 #: field:scanner.hardware,last_call_dt:0
@@ -858,7 +859,7 @@ msgstr ""
 #. module: stock_scanner
 #: field:scanner.hardware,reference_document:0
 msgid "Reference"
-msgstr ""
+msgstr "Referentie"
 
 #. module: stock_scanner
 #: view:scanner.hardware:stock_scanner.view_scanner_hardware_form

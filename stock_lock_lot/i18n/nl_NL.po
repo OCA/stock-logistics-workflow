@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-24 10:44+0000\n"
-"PO-Revision-Date: 2017-06-30 08:53+0000\n"
+"POT-Creation-Date: 2017-08-19 11:08+0000\n"
+"PO-Revision-Date: 2017-08-29 08:01+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Dutch (Netherlands) (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/nl_NL/)\n"
 "MIME-Version: 1.0\n"
@@ -64,17 +64,17 @@ msgstr ""
 #. module: stock_lock_lot
 #: view:wiz.lock.lot:stock_lock_lot.view_wiz_lock_lot_form
 msgid "Cancel"
-msgstr ""
+msgstr "Verwijderen"
 
 #. module: stock_lock_lot
 #: field:wiz.lock.lot,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Aangemaakt door"
 
 #. module: stock_lock_lot
 #: field:wiz.lock.lot,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Aangemaakt op"
 
 #. module: stock_lock_lot
 #: selection:stock.production.lot,lock_reason:0
@@ -122,12 +122,12 @@ msgstr "Laatst gewijzigd op"
 #. module: stock_lock_lot
 #: field:wiz.lock.lot,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Laatst bijgewerkt door"
 
 #. module: stock_lock_lot
 #: field:wiz.lock.lot,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Laatst bijgewerkt op"
 
 #. module: stock_lock_lot
 #: view:stock.quant:stock_lock_lot.quant_search_view_inh_locklot
@@ -147,7 +147,7 @@ msgstr ""
 #. module: stock_lock_lot
 #: selection:stock.production.lot,lock_reason:0
 msgid "None"
-msgstr ""
+msgstr "Geen"
 
 #. module: stock_lock_lot
 #: model:ir.model,name:stock_lock_lot.model_stock_transfer_details_items

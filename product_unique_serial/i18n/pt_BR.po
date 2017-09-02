@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-07 07:49+0000\n"
+"POT-Creation-Date: 2017-08-19 11:08+0000\n"
 "PO-Revision-Date: 2015-10-21 16:33+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/pt_BR/)\n"
@@ -64,7 +64,7 @@ msgstr ""
 #. module: product_unique_serial
 #: model:ir.model,name:product_unique_serial.model_product_template
 msgid "Product Template"
-msgstr ""
+msgstr "Modelo Produto"
 
 #. module: product_unique_serial
 #: code:addons/product_unique_serial/models/stock_move.py:49

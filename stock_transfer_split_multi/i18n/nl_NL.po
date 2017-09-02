@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-24 10:45+0000\n"
+"POT-Creation-Date: 2017-08-19 11:08+0000\n"
 "PO-Revision-Date: 2015-10-21 16:34+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: Dutch (Netherlands) (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/nl_NL/)\n"
@@ -20,17 +20,17 @@ msgstr ""
 #. module: stock_transfer_split_multi
 #: view:stock.transfer.split.multi:stock_transfer_split_multi.stock_transfer_split_multi_form
 msgid "Cancel"
-msgstr ""
+msgstr "Verwijderen"
 
 #. module: stock_transfer_split_multi
 #: field:stock.transfer.split.multi,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Aangemaakt door"
 
 #. module: stock_transfer_split_multi
 #: field:stock.transfer.split.multi,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Aangemaakt op"
 
 #. module: stock_transfer_split_multi
 #: field:stock.transfer.split.multi,display_name:0
@@ -50,12 +50,12 @@ msgstr "Laatst gewijzigd op"
 #. module: stock_transfer_split_multi
 #: field:stock.transfer.split.multi,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Laatst bijgewerkt door"
 
 #. module: stock_transfer_split_multi
 #: field:stock.transfer.split.multi,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Laatst bijgewerkt op"
 
 #. module: stock_transfer_split_multi
 #: field:stock.transfer.split.multi,split_qty:0

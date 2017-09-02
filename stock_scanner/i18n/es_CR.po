@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-19 14:00+0000\n"
-"PO-Revision-Date: 2017-04-19 14:00+0000\n"
+"POT-Creation-Date: 2017-08-19 11:08+0000\n"
+"PO-Revision-Date: 2017-08-19 11:08+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Spanish (Costa Rica) (https://www.transifex.com/oca/teams/23907/es_CR/)\n"
 "MIME-Version: 1.0\n"
@@ -94,7 +94,7 @@ msgstr ""
 #. module: stock_scanner
 #: field:scanner.scenario,active:0
 msgid "Active"
-msgstr ""
+msgstr "Activo"
 
 #. module: stock_scanner
 #: view:scanner.scenario:stock_scanner.view_scanner_scenario_form
@@ -806,7 +806,7 @@ msgstr ""
 #. module: stock_scanner
 #: field:scanner.scenario,notes:0
 msgid "Notes"
-msgstr ""
+msgstr "Notas"
 
 #. module: stock_scanner
 #: view:scanner.scenario:stock_scanner.view_scanner_scenario_form
