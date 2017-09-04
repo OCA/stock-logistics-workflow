@@ -108,6 +108,8 @@ class StockQuantWizard(models.TransientModel):
 
     @api.multi
     def action_apply(self):
+        if self.quants_action == 'regularize':
+            return super(StockQuantWizard, self).action_apply()
         if self.quants_action == 'invoice':
             picking_ids = self._regularize_quants(
                 self.env.context['active_ids'])
