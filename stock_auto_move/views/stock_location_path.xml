@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record model="ir.ui.view" id="stock_location_path_form_view">
+        <field name="name">stock.location.path.form (in stock_auto_move)</field>
+        <field name="model">stock.location.path</field>
+        <field name="inherit_id" ref="stock.stock_location_path_form"/>
+        <field name="arch" type="xml">
+            <field name="auto" position="after">
+                <field name="auto_confirm"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
