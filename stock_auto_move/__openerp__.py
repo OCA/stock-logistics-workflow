@@ -28,7 +28,7 @@
         'data/stock_auto_move_data.xml',
         'views/stock_move.xml',
         'views/procurement_rule.xml',
-
+        'views/stock_location_path.xml',
     ],
     'demo': [
         'demo/stock_auto_move_demo.xml',
