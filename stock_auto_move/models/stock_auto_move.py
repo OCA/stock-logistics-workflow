@@ -54,13 +54,3 @@ class ProcurementOrder(models.Model):
         if self.rule_id:
             res.update({'auto_move': self.rule_id.auto_move})
         return res
-
-
-class StockLocationPath(models.Model):
-    _inherit = 'stock.location.path'
-
-    @api.model
-    def _apply(self, move):
-        """Set auto move to the new move created by push rule."""
-        move.auto_move = self.auto == 'transparent'
-        return super(StockLocationPath, self)._apply(move)
