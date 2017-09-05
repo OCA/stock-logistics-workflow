@@ -19,14 +19,16 @@
 
 {
     'name': 'Automatic Move Processing',
-    'version': '8.0.1.0.0',
+    'version': '9.0.1.0.0',
     'author': 'NDP Systèmes, Odoo Community Association (OCA)',
     'category': 'Warehouse',
     'website': 'http://www.ndp-systemes.fr',
     'depends': ['stock'],
     'data': [
         'data/stock_auto_move_data.xml',
-        'views/stock_auto_move_view.xml',
+        'views/stock_move.xml',
+        'views/procurement_rule.xml',
+
     ],
     'demo': [
         'demo/stock_auto_move_demo.xml',
