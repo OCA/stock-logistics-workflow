@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record model="ir.ui.view" id="stock_picking_form_view">
+        <field name="name">stock.picking.form (in stock_pack_operation_auto_fill)</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <field name="recompute_pack_op" position="before">
+                <group>
+                    <button name="action_pack_operation_auto_fill"
+                            type="object"
+                            class="btn btn-primary"
+                            string="Auto fill operations"
+                            attrs="{'invisible': [('action_pack_op_auto_fill_allowed','=', False)]}"
+                            help="This button will automatically fill all operations that have no tracking set on the product, no processed qty and no selected package."/>
+                    <field name="action_pack_op_auto_fill_allowed" invisible="1"/>
+                </group>
+            </field>
+        </field>
+    </record>
+
+</odoo>
