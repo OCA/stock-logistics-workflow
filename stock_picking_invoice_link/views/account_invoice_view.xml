@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!--
-        Stock Picking Invoice Link module for Odoo
-        Copyright (C) 2013-2014 Akretion (http://www.akretion.com/)
-        @author: Alexis de Lattre <alexis.delattre@akretion.com>
-        The licence is in the file __openerp__.py
-    -->
+    <!-- Copyright 2013-2014 Alexis de Lattre <alexis.delattre@akretion.com>
+         License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 
     <record id="invoice_form" model="ir.ui.view">
         <field name="name">related.pickings.account.invoice.form</field>
