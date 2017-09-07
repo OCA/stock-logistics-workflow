@@ -23,6 +23,12 @@ delivery.
 Usage
 =====
 
+* Create a Sales Order and confirm.
+* Deliver its pickings totally or partially.
+* Create an invoice of the goods delivered.
+* If you open invoice form, you must see a new Pickings tab with information
+  about them.
+
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
    :target: https://runbot.odoo-community.org/runbot/154/10.0
