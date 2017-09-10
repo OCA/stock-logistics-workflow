@@ -25,9 +25,15 @@ class StockMove(models.Model):
 
     @api.multi
     def _change_procurement_group(self):
+        """
+        Add automatic procurement group to moves that aren't related to any
+        procurement group and are auto moves. The reason behind it, is we
+        want to group those automatic moves into a same picking rather than
+        creating a picking for each move.
+        """
         automatic_group = self.env.ref('stock_auto_move.automatic_group')
         moves = self.filtered(
-            lambda m: m.auto_move and m.group_id != automatic_group)
+            lambda m: m.auto_move and not m.group_id)
         moves.write({'group_id': automatic_group.id})
 
     @api.multi
