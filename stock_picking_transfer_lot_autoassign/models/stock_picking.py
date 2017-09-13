@@ -2,19 +2,19 @@
 # Copyright 2017 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import api, models
+from odoo import models
 
 
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
-    @api.model
-    def _prepare_pack_ops(self, picking, quants, forced_qties):
+    def _prepare_pack_ops(self, quants, forced_qties):
         """Auto-assign as done the quantity proposed for the lots"""
+        self.ensure_one()
         res = super(StockPicking, self)._prepare_pack_ops(
-            picking, quants, forced_qties,
+            quants, forced_qties,
         )
-        if picking.picking_type_id.avoid_internal_assignment:
+        if self.picking_type_id.avoid_internal_assignment:
             return res
         for pack_op_vals in res:
             qty_done = 0

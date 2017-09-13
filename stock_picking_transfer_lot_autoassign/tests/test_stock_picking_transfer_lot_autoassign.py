@@ -2,7 +2,7 @@
 # Copyright 2017 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp.tests import common
+from odoo.tests import common
 
 
 @common.at_install(False)
@@ -54,23 +54,14 @@ class TestStockPickingTransferLotAutoAssign(common.SavepointCase):
             'qty': 10,
             'lot_id': cls.lot2.id,
         })
-        cls.quant_no_lot = cls.env['stock.quant'].create({
-            'product_id': cls.product_no_lot.id,
-            'location_id': cls.picking.location_id.id,
-            'qty': 10,
-        })
-        move_vals = cls.Move.onchange_product_id(
-            prod_id=cls.product.id,
-            loc_id=cls.picking.location_id.id,
-            loc_dest_id=cls.picking.location_dest_id.id,
-            partner_id=cls.picking.partner_id.id,
-        ).get('value', {})
-        move_vals.update({
+        cls.Move.create({
+            'name': cls.product.name,
             'product_id': cls.product.id,
-            'picking_id': cls.picking.id,
             'product_uom_qty': 10,
-        })
-        cls.move = cls.Move.create(move_vals)
+            'product_uom': cls.product.uom_id.id,
+            'picking_id': cls.picking.id,
+            'location_id': cls.picking.location_id.id,
+            'location_dest_id': cls.picking.location_dest_id.id})
 
     def test_transfer(self):
         self.picking.action_confirm()
@@ -81,28 +72,3 @@ class TestStockPickingTransferLotAutoAssign(common.SavepointCase):
         self.assertEqual(pack_ops.pack_lot_ids[0].qty, 6)
         self.assertEqual(pack_ops.pack_lot_ids[1].qty, 4)
         self.assertEqual(pack_ops.qty_done, 10)
-
-    def test_autocomplete_backorder(self):
-        """Adds move with a product with 'none' lot track"""
-        move_vals = self.Move.onchange_product_id(
-            prod_id=self.product_no_lot.id,
-            loc_id=self.picking.location_id.id,
-            loc_dest_id=self.picking.location_dest_id.id,
-            partner_id=self.picking.partner_id.id,
-        ).get('value', {})
-        move_vals.update({
-            'product_id': self.product_no_lot.id,
-            'picking_id': self.picking.id,
-            'product_uom_qty': 10,
-        })
-        self.move = self.Move.create(move_vals)
-        self.picking.action_confirm()
-        self.picking.action_assign()
-        backorder_wiz_view = self.picking.do_new_transfer()
-        backorder_wiz = self.env['stock.backorder.confirmation'].browse(
-            backorder_wiz_view.get('res_id'))
-        backorder_wiz.process_assign_ordered_qty()
-        pack_ops = self.picking.pack_operation_ids
-
-        self.assertEqual(len(pack_ops), 2)
-        self.assertEqual(pack_ops[1].qty_done, 10)
