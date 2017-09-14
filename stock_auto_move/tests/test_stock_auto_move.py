@@ -144,3 +144,54 @@ class TestStockAutoMove(common.TransactionCase):
              ('location_id', '=', self.location_1.id)])
         self.assertEqual(len(quants_in_3), 0)
         self.assertGreater(len(quants_in_1), 0)
+
+    def test_40_chained_auto_move(self):
+        """
+        Test case:
+            - product with tracking set to serial.
+            - warehouse reception steps set to two steps.
+            - the push rule on the reception route set to auto move.
+            - create movement using the reception picking type.
+        Expected Result:
+            The second step movement should be processed automatically
+            after processing the first movement.
+        """
+        warehouse = self.env.ref('stock.warehouse0')
+        warehouse.reception_steps = 'two_steps'
+        self.product_a1232.tracking = 'serial'
+        warehouse.reception_route_id.push_ids.auto_confirm = True
+        warehouse.int_type_id.use_create_lots = False
+        warehouse.int_type_id.use_existing_lots = True
+
+        picking = self.env['stock.picking'].with_context(
+            default_picking_type_id=warehouse.in_type_id.id).create({
+                'partner_id': self.env.ref('base.res_partner_1').id,
+                'picking_type_id': warehouse.in_type_id.id,
+                'group_id': self.auto_group_id,
+                'location_id':
+                self.env.ref('stock.stock_location_suppliers').id})
+
+        move1 = self.env["stock.move"].create({
+            'name': "Supply source location for test",
+            'product_id': self.product_a1232.id,
+            'product_uom': self.product_uom_unit_id,
+            'product_uom_qty': 2,
+            'picking_id': picking.id,
+            'location_id': self.env.ref('stock.stock_location_suppliers').id,
+            'location_dest_id': warehouse.wh_input_stock_loc_id.id,
+            'picking_type_id': warehouse.in_type_id.id,
+        })
+        picking.action_confirm()
+        self.assertTrue(picking.pack_operation_ids)
+        self.assertEqual(len(picking.pack_operation_ids), 1)
+        picking.pack_operation_ids.write({
+            'pack_lot_ids': [
+                (0, 0, {'lot_name': 'Test 1', 'qty': 1.0, }),
+                (0, 0, {'lot_name': 'Test 2', 'qty': 1.0, })],
+            'qty_done': picking.pack_operation_ids.product_qty,
+        })
+        picking.do_new_transfer()
+        self.assertTrue(move1.move_dest_id)
+
+        self.assertTrue(move1.move_dest_id.auto_move)
+        self.assertEqual(move1.move_dest_id.state, 'done')

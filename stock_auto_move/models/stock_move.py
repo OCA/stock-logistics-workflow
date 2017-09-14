@@ -24,6 +24,20 @@ class StockMove(models.Model):
         moves.action_done()
 
     @api.multi
+    def action_done(self):
+        """
+        Override this method, to automatically fill the quatities
+        of lots used in operations linked to the automatic movements.
+        """
+        auto_moves = self.filtered(
+            lambda m: m.state == 'assigned' and m.auto_move and
+            m.product_id.tracking != 'none')
+        auto_moves_operations = auto_moves.mapped(
+            'linked_move_operation_ids.operation_id')
+        auto_moves_operations._auto_fill_pack_lot_ids_qty()
+        return super(StockMove, self).action_done()
+
+    @api.multi
     def _change_procurement_group(self):
         """
         Add automatic procurement group to moves that aren't related to any
