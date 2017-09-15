@@ -111,8 +111,7 @@ class StockQuantWizard(models.TransientModel):
         if self.quants_action == 'regularize':
             return super(StockQuantWizard, self).action_apply()
         if self.quants_action == 'invoice':
-            picking_ids = self._regularize_quants(
-                self.env.context['active_ids'])
+            picking_ids = self._regularize_quants()
             # Invoice regularized pickings
             invoice_ids = self._invoice_regularized_pickings(
                 self.env['stock.picking'].browse(picking_ids))

@@ -78,11 +78,11 @@ class TestStockAccountDeposit(common.TransactionCase):
         vals = {
             'quants_action': 'invoice',
         }
-        regularize = regularize_obj.create(vals)
-        invoice_view = regularize.with_context(
+        regularize = regularize_obj.with_context(
             active_ids=quants_to_regularize.ids,
             warehouse=self.warehouse.id
-        ).action_apply()
+        ).create(vals)
+        invoice_view = regularize.action_apply()
         self.assertTrue(invoice_view)
         Invoice = self.env['account.invoice']
         invoice = Invoice.search(invoice_view['domain'])
