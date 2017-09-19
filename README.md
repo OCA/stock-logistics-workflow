@@ -29,6 +29,7 @@ addon | version | summary
 [stock_disable_force_availability_button](stock_disable_force_availability_button/) | 9.0.1.0.0 | Disable force availability button
 [stock_lot_scrap](stock_lot_scrap/) | 9.0.1.0.0 | This module adds a button in Production Lot/Serial Number view form to Scrap all products contained.
 [stock_no_negative](stock_no_negative/) | 9.0.1.0.1 | Disallow negative stock levels by default
+[stock_pack_operation_auto_fill](stock_pack_operation_auto_fill/) | 9.0.1.0.0 | Stock pack operation auto fill
 [stock_picking_digitized_signature](stock_picking_digitized_signature/) | 9.0.1.0.0 | Stock Picking Digitized Signature
 [stock_picking_invoice_link](stock_picking_invoice_link/) | 9.0.2.1.0 | Adds link between pickings and invoices
 [stock_picking_mass_assign](stock_picking_mass_assign/) | 9.0.1.0.0 | Delivery Orders Mass Assign
