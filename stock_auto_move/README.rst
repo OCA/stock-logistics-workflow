@@ -6,7 +6,7 @@
 Automatic Move Processing
 =========================
 
-This modules adds the possibility to have move automatically processed as soon
+This module adds the possibility to have move automatically processed as soon
 as the products are available in the move source location.
 
 It also adds the possibility to define the move as being automatic in
@@ -37,7 +37,7 @@ Usage
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/154/8.0
+   :target: https://runbot.odoo-community.org/runbot/154/9.0
 
 Bug Tracker
 ===========
@@ -63,6 +63,7 @@ Contributors
 ------------
 
 * Nicolas Piganeau <nicolas.piganeau@ndp-systemes.fr>
+* Zakaria Makrelouf (ACSONE SA/NV) <z.makrelouf@gmail.com>
 
 Maintainer
 ----------
