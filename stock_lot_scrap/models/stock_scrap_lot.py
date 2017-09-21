@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-# © 2016 Carlos Dauden <carlos.dauden@tecnativa.com>
-# © 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
+# Copyright 2016 Carlos Dauden <carlos.dauden@tecnativa.com>
+# Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
+# Copyright 2017 David Vidal <david.vidal@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import api, models, _
-from openerp.exceptions import Warning as UserError
+from odoo import _, api, models
+from odoo.exceptions import ValidationError
 from lxml import etree
 
 
@@ -34,40 +35,26 @@ class StockProductionLot(models.Model):
         button_element = etree.Element(
             'button', {'type': 'object',
                        'name': 'action_scrap_lot',
+                       'confirm': _('This will scrap the whole lot. Are you'
+                                    ' sure you want to continue?'),
                        'string': _('Scrap')})
         header_element.append(button_element)
         res['arch'] = etree.tostring(eview)
         return res
 
-    @api.multi
-    def _prepare_picking_vals(self, quant, scrap_location_id):
-        warehouse = (
-            quant.history_ids[-1:].picking_id.picking_type_id.warehouse_id
-        )
-        return {
-            'origin': _('Lot: %s') % self.name,
-            'picking_type_id': warehouse.int_type_id.id or self.env.ref(
-                'stock.picking_type_internal').id,
-            'location_id': quant.location_id.id,
-            'location_dest_id': scrap_location_id,
-        }
-
-    @api.multi
-    def _prepare_move_vals(self, picking, quant, scrap_location_id):
+    def _prepare_scrap_vals(self, quant, scrap_location_id):
         self.ensure_one()
-        move_obj = self.env['stock.move']
-        product = quant.product_id
-        res = move_obj.onchange_product_id(
-            prod_id=product.id, loc_id=quant.location_id.id,
-            loc_dest_id=scrap_location_id,
-        )['value']
-        res.update({
-            'product_id': product.id,
-            'product_uom_qty': quant.qty,
-            'picking_id': picking.id,
-            'scrapped': True,
-        })
-        return res
+        return {
+            'origin': quant.lot_id.name,
+            'product_id': quant.product_id.id,
+            'product_uom_id': quant.product_id.uom_id.id,
+            'scrap_qty': quant.qty,
+            'location_id': quant.location_id.id,
+            'scrap_location_id': scrap_location_id,
+            'lot_id': self.id,
+            'picking_id': quant.history_ids[-1:].picking_id.id,
+            'package_id': quant.package_id.id,
+        }
 
     @api.multi
     def action_scrap_lot(self):
@@ -76,34 +63,24 @@ class StockProductionLot(models.Model):
             lambda x: x.location_id.usage == 'internal',
         )
         if not quants:
-            raise UserError(
+            raise ValidationError(
                 _("This lot doesn't contain any quant in internal location."),
             )
-        move_obj = self.env['stock.move']
-        picking_obj = self.env['stock.picking']
-        pickings = picking_obj.browse()
+        scrap_obj = self.env['stock.scrap']
+        scraps = scrap_obj.browse()
         scrap_location_id = self.env.ref('stock.stock_location_scrapped').id
-        location_ids = []
         for quant in quants.sorted(key=lambda x: x.history_ids[-1:].
                                    picking_id.picking_type_id.warehouse_id.id):
-            if quant.location_id.id not in location_ids:
-                location_ids.append(quant.location_id.id)
-                picking = picking_obj.create(
-                    self._prepare_picking_vals(quant, scrap_location_id),
-                )
-                pickings |= picking
-            move = move_obj.create(
-                self._prepare_move_vals(picking, quant, scrap_location_id),
+            scrap = scrap_obj.create(
+                self._prepare_scrap_vals(quant, scrap_location_id),
             )
-            quant.reservation_id = move.id
-            move.action_confirm()
-            move.action_assign()
-        result = self.env.ref('stock.action_picking_tree').read()[0]
+            scraps |= scrap
+        result = self.env.ref('stock.action_stock_scrap').read()[0]
         result['context'] = self.env.context
-        if len(pickings) != 1:  # pragma: no cover
-            result['domain'] = "[('id', 'in', %s)]" % pickings.ids
-        else:
-            res = self.env.ref('stock.view_picking_form', False)
+        if len(scraps) != 1:
+            result['domain'] = "[('id', 'in', %s)]" % scraps.ids
+        else:  # pragma: no cover
+            res = self.env.ref('stock.stock_scrap_form_view', False)
             result['views'] = [(res and res.id or False, 'form')]
-            result['res_id'] = pickings.id
+            result['res_id'] = scraps.id
         return result
