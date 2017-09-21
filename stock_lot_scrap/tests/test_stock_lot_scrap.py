@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
-# © 2016 Carlos Dauden <carlos.dauden@tecnativa.com>
-# © 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
+# Copyright 2016 Carlos Dauden <carlos.dauden@tecnativa.com>
+# Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
+# Copyright 2017 David Vidal <david.vidal@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp.exceptions import UserError
-from openerp.tests import common
+from odoo.exceptions import ValidationError
+from odoo.tests import common
+from odoo.tools.safe_eval import safe_eval
 
 
 @common.at_install(False)
@@ -35,13 +37,11 @@ class TestStockLotScrap(common.SavepointCase):
 
     def test_picking_created(self):
         res = self.lot010.action_scrap_lot()
-        self.assertTrue('res_id' in res)
-        picking = self.env['stock.picking'].browse(res['res_id'])
-        self.assertEqual(len(picking.move_lines), 2)
-        self.assertAlmostEqual(
-            sum(picking.move_lines.mapped('product_qty')), 5325)
+        self.assertTrue('domain' in res)
+        scrap = self.env['stock.scrap'].search(safe_eval(res['domain']))
+        self.assertAlmostEqual(sum(scrap.mapped('scrap_qty')), 5325)
         self.assertTrue(
-            all(picking.move_lines.mapped(lambda x: x.state == 'assigned')))
+            all(scrap.mapped('move_id').mapped(lambda x: x.state == 'done')))
 
     def test_warning(self):
         product_new = self.product.create({
@@ -51,5 +51,5 @@ class TestStockLotScrap(common.SavepointCase):
             'name': "0000040",
             'product_id': product_new.id,
         })
-        with self.assertRaises(UserError):
+        with self.assertRaises(ValidationError):
             self.lot040.action_scrap_lot()
