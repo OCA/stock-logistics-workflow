@@ -99,24 +99,24 @@ class StockPackOperation(models.Model):
 
     @api.multi
     def _compute_sale_prices(self):
-        self.ensure_one()
-        self.sale_taxes = 0
-        self.sale_price_untaxed = 0
-        self.sale_subtotal = 0
-        self.sale_price_unit = 0
-        self.sale_discount = 0
-        if self.linked_move_operation_ids:
-            move = self.linked_move_operation_ids[0].move_id
-            if move.procurement_id.sale_line_id:
-                self.sale_taxes = round(
-                    (move.sale_taxes / move.product_qty) * self.product_qty,
-                    dp.get_precision('Account')(self._cr)[1])
-                self.sale_price_untaxed = move.sale_price_untaxed
-                self.sale_price_unit = move.sale_price_unit
-                self.sale_discount = move.sale_discount
-                self.sale_subtotal = round(
-                    self.sale_price_untaxed * self.product_qty,
-                    dp.get_precision('Account')(self._cr)[1])
+        for prep in self:
+            prep.sale_taxes = 0
+            prep.sale_price_untaxed = 0
+            prep.sale_subtotal = 0
+            prep.sale_price_unit = 0
+            prep.sale_discount = 0
+            if prep.linked_move_operation_ids:
+                move = prep.linked_move_operation_ids[0].move_id
+                if move.procurement_id.sale_line_id:
+                    prep.sale_taxes = round(
+                        (move.sale_taxes / move.product_qty) * prep.product_qty,
+                        dp.get_precision('Account')(prep._cr)[1])
+                    prep.sale_price_untaxed = move.sale_price_untaxed
+                    prep.sale_price_unit = move.sale_price_unit
+                    prep.sale_discount = move.sale_discount
+                    prep.sale_subtotal = round(
+                        prep.sale_price_untaxed * prep.product_qty,
+                        dp.get_precision('Account')(prep._cr)[1])
 
     sale_subtotal = fields.Float(
         compute='_compute_sale_prices',
