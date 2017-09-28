@@ -1,0 +1,56 @@
+# -*- coding: utf-8 -*-
+# © 2014-2015 NDP Systèmes (<http://www.ndp-systemes.fr>)
+
+from openerp import api, fields, models
+
+
+class StockMove(models.Model):
+
+    _inherit = 'stock.move'
+
+    auto_move = fields.Boolean(
+        "Automatic move",
+        help="If this option is selected, the move will be automatically "
+        "processed as soon as the products are available.")
+
+    @api.multi
+    def action_assign(self, no_prepare=False):
+        super(StockMove, self).action_assign(no_prepare=no_prepare)
+        # Transfer all pickings which have an auto move assigned
+        moves = self.filtered(lambda m: m.state == 'assigned' and m.auto_move)
+        todo_pickings = moves.mapped('picking_id')
+        # We create packing operations to keep packing if any
+        todo_pickings.do_prepare_partial()
+        moves.action_done()
+
+    @api.multi
+    def action_done(self):
+        """
+        Override this method, to automatically fill the quatities
+        of lots used in operations linked to the automatic movements.
+        """
+        auto_moves = self.filtered(
+            lambda m: m.state == 'assigned' and m.auto_move and
+            m.product_id.tracking != 'none')
+        auto_moves_operations = auto_moves.mapped(
+            'linked_move_operation_ids.operation_id')
+        auto_moves_operations._auto_fill_pack_lot_ids_qty()
+        return super(StockMove, self).action_done()
+
+    @api.multi
+    def _change_procurement_group(self):
+        """
+        Add automatic procurement group to moves that aren't related to any
+        procurement group and are auto moves. The reason behind it, is we
+        want to group those automatic moves into a same picking rather than
+        creating a picking for each move.
+        """
+        automatic_group = self.env.ref('stock_auto_move.automatic_group')
+        moves = self.filtered(
+            lambda m: m.auto_move and not m.group_id)
+        moves.write({'group_id': automatic_group.id})
+
+    @api.multi
+    def action_confirm(self):
+        self._change_procurement_group()
+        return super(StockMove, self).action_confirm()
