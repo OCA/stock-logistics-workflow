@@ -16,12 +16,6 @@ class StockLocationPath(models.Model):
     )
 
     @api.model
-    def _apply(self, rule, move):
-        """Set auto move to the new move created by push rule."""
-        move.auto_move = rule.auto_confirm
-        return super(StockLocationPath, self)._apply(rule, move)
-
-    @api.model
     def _prepare_push_apply(self, rule, move):
         new_move_vals = super(StockLocationPath, self)._prepare_push_apply(
             rule, move)
