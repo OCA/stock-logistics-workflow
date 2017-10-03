@@ -4,12 +4,11 @@
 
 {
     'name': 'Automatic serial generation',
-    'description': """
-        Automatic serial generation""",
     'version': '9.0.1.0.0',
     'license': 'AGPL-3',
-    'author': 'ACSONE SA/NV',
-    'website': 'https://acsone.eu/',
+    'author': 'ACSONE SA/NV,'
+              'Odoo Community Association (OCA)',
+    'website': 'https://www.acsone.eu/',
     'depends': [
         'stock',
     ],
@@ -17,4 +16,5 @@
         'views/product_template.xml',
         'views/stock_picking_type.xml',
     ],
+    'installable': True,
 }
