@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record model="ir.ui.view" id="stock_picking_type_form_view">
+        <field name="name">stock.picking.type.form (in stock_picking_type_auto_serial)</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form"/>
+        <field name="arch" type="xml">
+            <field name="use_create_lots" groups="stock.group_production_lot" position="after">
+                <field name="automatic_serial_generation" groups="stock.group_production_lot"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="stock_picking_type_search_view">
+        <field name="name">stock.picking.type.search (in stock_picking_type_auto_serial)</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_pickingtype_filter"/>
+        <field name="arch" type="xml">
+            <field name="warehouse_id" position="after">
+                <field name="automatic_serial_generation" groups="stock.group_production_lot"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
