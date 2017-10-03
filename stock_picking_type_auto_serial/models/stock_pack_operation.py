@@ -36,6 +36,17 @@ class StockPackOperation(models.Model):
         ),
     }
 
+    @api.model
+    def _generate_new_serial_name(self):
+        """
+        This method generate a new serial number each time
+        it's called. This method is meant to be overridden in case
+        a different sequence applied for automatically generated
+        serials or a different sequence is applied by product.
+        @ return str: new serial number
+        """
+        return self.env['ir.sequence'].next_by_code('stock.lot.serial')
+
     @api.multi
     def _prepare_pack_ops_serials(self):
         """
@@ -44,15 +55,11 @@ class StockPackOperation(models.Model):
         stock.pack.operation record.
         :return: [(0, 0, {qty:1, name: 'new generated serial}), (0, 0 , ...)]
         """
-        sequence_model = self.env['ir.sequence']
         for rec in self:
-            int_qty = int(rec.qty_done)
             pack_ops_lots = []
-            while int_qty != 0:
-                int_qty -= 1
-                new_lot_name = sequence_model.next_by_code('stock.lot.serial')
+            for i in range(int(rec.qty_done)):
                 vals = {
-                    'lot_name': new_lot_name,
+                    'lot_name': self._generate_new_serial_name(),
                     'qty': 1,
                 }
                 pack_ops_lots.append((0, 0, vals))
