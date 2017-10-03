@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from openerp import api, models
+# pylint: disable=deprecated-module
 from openerp.osv import fields as osv_fields
 
 
@@ -43,7 +44,7 @@ class StockPackOperation(models.Model):
         it's called. This method is meant to be overridden in case
         a different sequence applied for automatically generated
         serials or a different sequence is applied by product.
-        @ return str: new serial number
+        @return str: new serial number
         """
         return self.env['ir.sequence'].next_by_code('stock.lot.serial')
 
