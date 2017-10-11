@@ -30,10 +30,17 @@ class StockMove(models.Model):
 
     @api.multi
     def action_assign(self, no_prepare=False):
-        res = super(StockMove, self).action_assign(no_prepare=no_prepare)
 
-        # Select auto moves that are assigned
-        auto_moves = self.filtered(
+        already_assigned_moves = self.filtered(
+            lambda m: m.state == 'assigned')
+
+        not_assigned_auto_move = self - already_assigned_moves
+
+        res = super(StockMove, self).action_assign(
+            no_prepare=no_prepare)
+
+        # Process only moves that have been processed recently
+        auto_moves = not_assigned_auto_move.filtered(
             lambda m: m.state == 'assigned' and m.auto_move)
 
         # group the moves by pickings
