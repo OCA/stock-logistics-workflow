@@ -1,22 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * stock_deposit
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-23 11:56+0000\n"
-"PO-Revision-Date: 2017-01-23 11:56+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"POT-Creation-Date: 2017-06-21 10:18+0200\n"
+"PO-Revision-Date: 2017-06-21 10:22+0200\n"
+"Last-Translator: Sergio Teruel <sergio.teruel@tecnativa.com>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Language: es\n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #. module: stock_deposit
 #: code:addons/stock_deposit/models/stock_warehouse.py:24
@@ -42,7 +43,7 @@ msgstr ""
 "mercancías en depósito."
 
 #. module: stock_deposit
-#: code:addons/stock_deposit/wizards/stock_quant_wizard.py:77
+#: code:addons/stock_deposit/wizards/stock_quant_wizard.py:96
 #, python-format
 msgid ""
 "Could not reserve all requested products. Please you must handle the "
@@ -53,16 +54,18 @@ msgstr ""
 
 #. module: stock_deposit
 #: model:ir.model.fields,field_description:stock_deposit.field_deposit_stock_quant_wizard_create_uid
+#: model:ir.model.fields,field_description:stock_deposit.field_deposit_stock_quant_wizard_line_create_uid
 msgid "Created by"
 msgstr "Creado por"
 
 #. module: stock_deposit
 #: model:ir.model.fields,field_description:stock_deposit.field_deposit_stock_quant_wizard_create_date
+#: model:ir.model.fields,field_description:stock_deposit.field_deposit_stock_quant_wizard_line_create_date
 msgid "Created on"
 msgstr "Creado en"
 
 #. module: stock_deposit
-#: code:addons/stock_deposit/wizards/stock_quant_wizard.py:56
+#: code:addons/stock_deposit/wizards/stock_quant_wizard.py:75
 #, python-format
 msgid "Deposit %s"
 msgstr "Depósito %s"
@@ -116,11 +119,13 @@ msgstr "Cantidad en depósito"
 
 #. module: stock_deposit
 #: model:ir.model.fields,field_description:stock_deposit.field_deposit_stock_quant_wizard_display_name
+#: model:ir.model.fields,field_description:stock_deposit.field_deposit_stock_quant_wizard_line_display_name
 msgid "Display Name"
 msgstr "Nombre mostrado"
 
 #. module: stock_deposit
 #: model:ir.model.fields,field_description:stock_deposit.field_deposit_stock_quant_wizard_id
+#: model:ir.model.fields,field_description:stock_deposit.field_deposit_stock_quant_wizard_line_id
 msgid "ID"
 msgstr "ID (identificación)"
 
@@ -152,18 +157,31 @@ msgstr "Es un depósito"
 
 #. module: stock_deposit
 #: model:ir.model.fields,field_description:stock_deposit.field_deposit_stock_quant_wizard___last_update
+#: model:ir.model.fields,field_description:stock_deposit.field_deposit_stock_quant_wizard_line___last_update
 msgid "Last Modified on"
 msgstr "Última modificación en"
 
 #. module: stock_deposit
+#: model:ir.model.fields,field_description:stock_deposit.field_deposit_stock_quant_wizard_line_write_uid
 #: model:ir.model.fields,field_description:stock_deposit.field_deposit_stock_quant_wizard_write_uid
 msgid "Last Updated by"
 msgstr "Última actualización de"
 
 #. module: stock_deposit
+#: model:ir.model.fields,field_description:stock_deposit.field_deposit_stock_quant_wizard_line_write_date
 #: model:ir.model.fields,field_description:stock_deposit.field_deposit_stock_quant_wizard_write_date
 msgid "Last Updated on"
 msgstr "Última actualización en"
+
+#. module: stock_deposit
+#: model:ir.model.fields,field_description:stock_deposit.field_deposit_stock_quant_wizard_line_ids
+msgid "Line ids"
+msgstr "Líneas"
+
+#. module: stock_deposit
+#: model:ir.model.fields,field_description:stock_deposit.field_deposit_stock_quant_wizard_line_location_id
+msgid "Location"
+msgstr "Ubicación"
 
 #. module: stock_deposit
 #: model:ir.actions.act_window,name:stock_deposit.deposit_act_product_stock_move_open
@@ -171,7 +189,13 @@ msgid "Moves"
 msgstr "Movimientos"
 
 #. module: stock_deposit
+#: model:ir.model.fields,field_description:stock_deposit.field_deposit_stock_quant_wizard_line_owner_id
+msgid "Owner"
+msgstr "Propietario"
+
+#. module: stock_deposit
 #: model:ir.model,name:stock_deposit.model_product_product
+#: model:ir.model.fields,field_description:stock_deposit.field_deposit_stock_quant_wizard_line_product_id
 msgid "Product"
 msgstr "Producto"
 
@@ -181,7 +205,18 @@ msgid "Product Template"
 msgstr "Plantilla producto"
 
 #. module: stock_deposit
+#: model:ir.model.fields,field_description:stock_deposit.field_deposit_stock_quant_wizard_line_new_qty
+msgid "Qty to process"
+msgstr "Cant. a procesar"
+
+#. module: stock_deposit
+#: model:ir.model.fields,field_description:stock_deposit.field_deposit_stock_quant_wizard_line_quant_id
+msgid "Quant"
+msgstr "Quant."
+
+#. module: stock_deposit
 #: model:ir.model,name:stock_deposit.model_stock_quant
+#: model:ir.ui.view,arch_db:stock_deposit.deposit_stock_quant_wizard_view
 msgid "Quants"
 msgstr "Quants"
 
@@ -189,6 +224,16 @@ msgstr "Quants"
 #: model:ir.model.fields,field_description:stock_deposit.field_deposit_stock_quant_wizard_quants_action
 msgid "Quants Action"
 msgstr "Quants"
+
+#. module: stock_deposit
+#: model:ir.ui.view,arch_db:stock_deposit.deposit_stock_quant_wizard_view
+msgid "Quants to process"
+msgstr "Quants a procesar"
+
+#. module: stock_deposit
+#: model:ir.ui.view,arch_db:stock_deposit.deposit_stock_quant_wizard_view
+msgid "Regularization options for deposits"
+msgstr "Opciones de regularización para los depósitos"
 
 #. module: stock_deposit
 #: selection:deposit.stock.quant.wizard,quants_action:0
@@ -201,14 +246,35 @@ msgid "Regularize Deposit Quants"
 msgstr "Regularizar cantidades en depósito"
 
 #. module: stock_deposit
+#: selection:deposit.stock.quant.wizard,quants_action:0
+msgid "Regularize and invoice pickings"
+msgstr "Regularizar y facturar los albaranes"
+
+#. module: stock_deposit
 #: model:ir.ui.view,arch_db:stock_deposit.deposit_stock_quant_wizard_view
 msgid "Stock Quant"
+msgstr "Éste es el propietario del quant"
+
+#. module: stock_deposit
+#: model:ir.model.fields,field_description:stock_deposit.field_deposit_stock_quant_wizard_line_stock_quant_wizard_id
+#, fuzzy
+msgid "Stock quant wizard id"
 msgstr "Éste es el propietario del quant"
 
 #. module: stock_deposit
 #: model:ir.model,name:stock_deposit.model_stock_picking_type
 msgid "The picking type determines the picking view"
 msgstr "El tipo de albarán determina la vista de albarán"
+
+#. module: stock_deposit
+#: code:addons/stock_deposit/wizards/stock_quant_wizard.py:158
+#, python-format
+msgid ""
+"There is any line with new quantity greater than quant quantity.\n"
+"Please, fix it before continuing"
+msgstr ""
+"Hay alguna línea con \"Cant. a procesar\" mayor que la cantidad del quant. "
+"Por favor corrígela antes de continuar"
 
 #. module: stock_deposit
 #: model:ir.actions.act_window,help:stock_deposit.deposit_quants_act
@@ -230,10 +296,23 @@ msgid "Warehouse"
 msgstr "Almacén"
 
 #. module: stock_deposit
-#: code:addons/stock_deposit/wizards/stock_quant_wizard.py:26
+#: code:addons/stock_deposit/wizards/stock_quant_wizard.py:45
 #, python-format
 msgid "You can not regularize quants in a non deposit location"
 msgstr "No puedes regularizar movimientos que no estén en depósito"
+
+#. module: stock_deposit
+#: model:ir.ui.view,arch_db:stock_deposit.deposit_stock_quant_wizard_view
+msgid ""
+"You can select the units to regularize writing it in \"Qty to process\" "
+"column. <br/>\n"
+"                        If yo do not want to regularize any line you must "
+"write in \"Qty to process\" column zero quantities"
+msgstr ""
+"Puedes modificar las unidades a regularizar escribiendo la nueva cantidad "
+"en la columna \"Cant. a procesar\". <br/>\n"
+"Si no quieres regularizar alguna de las líneas debes de escribir en la "
+"columna \"Cant. a procesar\" cero unidades."
 
 #. module: stock_deposit
 #: model:ir.ui.view,arch_db:stock_deposit.deposit_stock_quant_wizard_view
@@ -247,6 +326,11 @@ msgstr ""
 #. module: stock_deposit
 #: model:ir.model,name:stock_deposit.model_deposit_stock_quant_wizard
 msgid "deposit.stock.quant.wizard"
+msgstr ""
+
+#. module: stock_deposit
+#: model:ir.model,name:stock_deposit.model_deposit_stock_quant_wizard_line
+msgid "deposit.stock.quant.wizard.line"
 msgstr ""
 
 #. module: stock_deposit

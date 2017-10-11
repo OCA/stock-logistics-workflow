@@ -78,7 +78,10 @@ class TestStockAccountDeposit(common.TransactionCase):
         vals = {
             'quants_action': 'invoice',
         }
-        regularize = regularize_obj.create(vals)
+        regularize = regularize_obj.with_context(
+            active_ids=quants_to_regularize.ids,
+            warehouse=self.warehouse.id
+        ).create(vals)
         invoice_view = regularize.with_context(
             active_ids=quants_to_regularize.ids,
             warehouse=self.warehouse.id

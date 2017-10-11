@@ -2,10 +2,11 @@
 # © 2016 Sergio Teruel <sergio.teruel@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp.tests.common import TransactionCase
+from openerp.tests import common
+from openerp.exceptions import ValidationError
 
 
-class TestStockDeposit(TransactionCase):
+class TestStockDeposit(common.SavepointCase):
 
     def setUp(self):
         super(TestStockDeposit, self).setUp()
@@ -131,9 +132,14 @@ class TestStockDeposit(TransactionCase):
         vals = {
             'quants_action': 'regularize',
         }
-        regularize = regularize_obj.create(vals)
-        regularize.with_context(
+        regularize = regularize_obj.with_context(
             active_ids=quants_to_regularize.ids,
+        ).create(vals)
+        # Check wizard lines
+        self.assertEqual(len(regularize.line_ids), 1)
+        self.assertEqual(regularize.line_ids.new_qty, 20)
+        regularize.with_context(
+            active_ids=regularize.line_ids.quant_id,
             warehouse=self.warehouse.id
         ).action_apply()
         qty_available = self.product.with_context(
@@ -141,6 +147,31 @@ class TestStockDeposit(TransactionCase):
         self.assertEqual(qty_available, 180.00)
         self.assertEqual(self.product.with_context(
             location=self.deposit_location.id).deposit_available, 0.0)
+
+    def test_deposit_regularize_more_qty(self):
+        picking = self._prepare_picking()
+        picking.action_assign()
+        picking.do_transfer()
+
+        stock_moves = self.env['stock.move'].search([
+            ('picking_id', '=', picking.id)
+        ])
+        quants_to_regularize = stock_moves.quant_ids.filtered(
+            lambda x: x.location_id.deposit_location)
+        regularize_obj = self.env['deposit.stock.quant.wizard']
+        vals = {
+            'quants_action': 'regularize',
+        }
+        regularize = regularize_obj.with_context(
+            active_ids=quants_to_regularize.ids,
+        ).create(vals)
+        # Entry more units than allowed
+        with self.assertRaises(ValidationError):
+            regularize.line_ids.new_qty = 90.0
+            regularize.with_context(
+                active_ids=regularize.line_ids.quant_id,
+                warehouse=self.warehouse.id
+            ).action_apply()
 
     def _prepare_return_picking(self):
         picking_type = self.PickingType.search([
