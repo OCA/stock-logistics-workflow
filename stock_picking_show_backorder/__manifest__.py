@@ -4,7 +4,7 @@
 
 {
     'name': 'Stock Picking Show Backorder',
-    'version': '9.0.1.0.0',
+    'version': '10.0.1.0.0',
     'category': 'Warehouse Management',
     'summary': "Provides a new field on stock pickings, allowing to display "
                "the corresponding backorders.",
@@ -16,7 +16,5 @@
         'views/stock_view.xml',
     ],
     'installable': True,
-    'auto_install': False,
-    'application': False,
     'license': "AGPL-3",
 }
