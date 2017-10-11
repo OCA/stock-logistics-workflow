@@ -3,7 +3,6 @@
   product customer code picking for OpenERP
   Copyright (C) 2013 Agile Business Group sagl (<http://www.agilebg.com>).
     Authors, Nicola Malcontenti, nicola.malcontenti@agilebg.com
-  The licence is in the file __openerp__.py
 -->
 <odoo>
 
