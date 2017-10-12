@@ -13,18 +13,18 @@ class StockPicking(models.Model):
     @api.depends('sale_id.amount_untaxed', 'sale_id.amount_tax',
                  'sale_id.amount_total')
     def _compute_amount(self):
-        self.ensure_one()
-        if self.sale_id:
-            if self.pack_operation_ids:
-                for operation in self.pack_operation_ids:
-                    self.amount_untaxed += operation.sale_subtotal
-                    self.amount_tax += operation.sale_taxes
-                self.amount_total = self.amount_untaxed + self.amount_tax
-            else:
-                for move in self.move_lines:
-                    self.amount_untaxed += move.sale_subtotal
-                    self.amount_tax += move.sale_taxes
-                self.amount_total = self.amount_untaxed + self.amount_tax
+        for pick in self:
+            if pick.sale_id:
+                if pick.pack_operation_ids:
+                    for operation in pick.pack_operation_ids:
+                        pick.amount_untaxed += operation.sale_subtotal
+                        pick.amount_tax += operation.sale_taxes
+                    pick.amount_total = pick.amount_untaxed + pick.amount_tax
+                else:
+                    for move in pick.move_lines:
+                        pick.amount_untaxed += move.sale_subtotal
+                        pick.amount_tax += move.sale_taxes
+                    pick.amount_total = pick.amount_untaxed + pick.amount_tax
 
     amount_untaxed = fields.Float(
         compute='_compute_amount',
