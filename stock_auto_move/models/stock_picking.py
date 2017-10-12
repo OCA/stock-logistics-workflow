@@ -27,6 +27,7 @@ class StockPicking(models.Model):
 
             # Create immediate transfer wizard so it will fill the qty_done
             # on the auto move linked operation
+            picking.do_prepare_partial()
             wizard = self.env['stock.immediate.transfer'].create(
                 {'pick_id': picking.id})
             wizard.process()
