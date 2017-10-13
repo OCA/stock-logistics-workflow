@@ -23,7 +23,7 @@
 from openerp import models, api, _
 
 
-class stock_picking(models.Model):
+class StockPicking(models.Model):
     """Adds picking split without done state."""
 
     _inherit = "stock.picking"
@@ -52,6 +52,12 @@ class stock_picking(models.Model):
             'target': 'new',
             'context': ctx,
         }
+
+    @api.multi
+    def write(self, values):
+        if self.env.context.get('do_only_split') and 'date_done' in values:
+            del values['date_done']
+        return super(StockPicking, self).write(values)
 
 
 class StockMove(models.Model):

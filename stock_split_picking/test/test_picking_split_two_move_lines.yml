@@ -103,6 +103,8 @@
     backorder = self.backorder_id
     assert backorder, "Backorder should be created after partial split."
     assert backorder.state == 'assigned', "Backorder should be assigned, not %r." % backorder.state
+    assert not backorder.date_done, "Backorder should not have date done"
+    assert not self.date_done, "Date done should be empty"
     for move_line in backorder.move_lines:
         assert move_line.product_qty == 40, "Qty in backorder does not correspond."
         assert move_line.state == 'assigned', "Move line of backorder should be assigned, not %r." % move_line.state
