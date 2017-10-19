@@ -2,8 +2,8 @@
 # Copyright 2017 Tecnativa - Vicent Cubells <vicent.cubells@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import SavepointCase
-from odoo.exceptions import UserError
+from openerp.tests.common import SavepointCase
+from openerp.exceptions import UserError
 
 
 class TestStockSplitPicking(SavepointCase):
