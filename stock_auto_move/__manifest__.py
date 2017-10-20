@@ -12,6 +12,7 @@
     'data': [
         'data/stock_auto_move_data.xml',
         'views/stock_auto_move_view.xml',
+        'views/stock_location_path.xml',
     ],
     'demo': [
         'demo/stock_auto_move_demo.xml',
