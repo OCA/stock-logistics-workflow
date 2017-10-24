@@ -4,13 +4,13 @@
 # Copyright 2015 AvanzOsc
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import models, api
+from odoo import api, models
 
 
 class StockImmediateTransfer(models.TransientModel):
     _inherit = 'stock.immediate.transfer'
 
-    @api.model
+    @api.multi
     def process(self):
         self.ensure_one()
         if self.pick_id.pack_operation_ids:

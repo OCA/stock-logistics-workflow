@@ -17,11 +17,15 @@
               "Odoo Community Association (OCA)",
     "website": "https://odoo-community.org/",
     "category": "Inventory, Logistic, Storage",
+    "post_init_hook": "post_init_hook",
+    "uninstall_hook": "uninstall_hook",
     "depends": [
+        "base_locale_uom_default",
         "sale",
         "stock",
     ],
     "data": [
+        "data/ir_sequence_data.xml",
         "views/product_packaging_view.xml",
         "views/product_template_view.xml",
         "views/product_packaging_template_view.xml",

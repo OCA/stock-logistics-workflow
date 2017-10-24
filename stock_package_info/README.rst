@@ -42,7 +42,7 @@ Known issues / Roadmap
 ======================
 
 * Computed fields in `stock.picking` are not stored because the dependant field
-is an O2M relation that is never implicitly set via ORM or views.
+  is an O2M relation that is never implicitly set via ORM or views.
 
 Bug Tracker
 ===========

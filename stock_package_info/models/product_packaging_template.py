@@ -11,9 +11,13 @@ from odoo.addons import decimal_precision as dp
 class ProductPackagingTemplate(models.Model):
     _name = 'product.packaging.template'
     _description = 'Product Packaging Template'
-    _rec_name = 'packaging_template_name'
 
-    packaging_template_name = fields.Char(required=True)
+    # These fields will not be synced to the contract
+    NO_SYNC = [
+        'name',
+    ]
+
+    name = fields.Char(required=True)
     package_type = fields.Selection([
         ('unit', 'Unit'),
         ('pack', 'Pack'),
@@ -21,6 +25,7 @@ class ProductPackagingTemplate(models.Model):
         ('pallet', 'Pallet'),
     ],
         required=True,
+        default='unit',
     )
     product_tmpl_id = fields.Many2one(
         comodel_name='product.template',
@@ -28,7 +33,7 @@ class ProductPackagingTemplate(models.Model):
         index=True,
         ondelete='cascade',
     )
-    length = fields.Float(
+    length_float = fields.Float(
         digits=dp.get_precision('Stock Weight'),
     )
     length_uom_id = fields.Many2one(
@@ -39,8 +44,11 @@ class ProductPackagingTemplate(models.Model):
             ('category_id', '=',
              s.env.ref('product.uom_categ_length').id)
         ],
+        default=lambda s: s.env['res.lang'].default_uom_by_category(
+            'Length / Distance',
+        ),
     )
-    width = fields.Float(
+    width_float = fields.Float(
         digits=dp.get_precision('Stock Weight'),
     )
     width_uom_id = fields.Many2one(
@@ -51,8 +59,11 @@ class ProductPackagingTemplate(models.Model):
             ('category_id', '=',
              s.env.ref('product.uom_categ_length').id)
         ],
+        default=lambda s: s.env['res.lang'].default_uom_by_category(
+            'Length / Distance',
+        ),
     )
-    height = fields.Float(
+    height_float = fields.Float(
         digits=dp.get_precision('Stock Weight'),
     )
     height_uom_id = fields.Many2one(
@@ -63,6 +74,9 @@ class ProductPackagingTemplate(models.Model):
             ('category_id', '=',
              s.env.ref('product.uom_categ_length').id)
         ],
+        default=lambda s: s.env['res.lang'].default_uom_by_category(
+            'Length / Distance',
+        ),
     )
     weight = fields.Float(
         string='Empty Package Weight',
@@ -76,6 +90,7 @@ class ProductPackagingTemplate(models.Model):
             ('category_id', '=',
              s.env.ref('product.product_uom_categ_kgm').id)
         ],
+        default=lambda s: s.env['res.lang'].default_uom_by_category('Weight'),
     )
     active = fields.Boolean(
         default=True,
@@ -91,7 +106,7 @@ class ProductPackagingTemplate(models.Model):
         names = []
         for rec in self:
             name = '%s [%s x %s x %s]' % (
-                rec.packaging_template_name,
+                rec.name,
                 rec.length,
                 rec.width,
                 rec.height,

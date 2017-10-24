@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright 2017 LasLabs Inc.
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+-->
+
+<odoo noupdate="1">
+
+    <record id="ir_sequence_product_packaging_template" model="ir.sequence">
+        <field name="name">Product Packaging Template Names</field>
+        <field name="code">product.packaging.template</field>
+        <field name="prefix">PPT/</field>
+        <field name="padding">3</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+</odoo>

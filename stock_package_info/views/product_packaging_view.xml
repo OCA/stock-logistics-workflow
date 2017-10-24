@@ -12,9 +12,8 @@
         <field name="arch" type="xml">
             <tree string="Packaging">
                 <field name="sequence" widget="handle"/>
-                <field name="product_tmpl_id"/>
-                <field name="ean"/>
-                <field name="layer_qty"/>
+                <field name="name"/>
+                <field name="barcode"/>
             </tree>
         </field>
     </record>
@@ -24,7 +23,7 @@
         <field name="model">product.packaging</field>
         <field name="arch" type="xml">
             <tree string="Packaging">
-                <field name="product_pack_tmpl_id"/>
+                <field name="name"/>
                 <field name="layer_qty"/>
                 <field name="rows"/>
             </tree>

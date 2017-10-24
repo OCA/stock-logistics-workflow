@@ -14,7 +14,7 @@ class StockPickingPackageTotal(models.Model):
     quantity = fields.Integer(
         string='Number of Packages',
     )
-    product_pack_tmpl_id = fields.Many2one(
-        comodel_name='product.packaging.template',
+    product_packaging_id = fields.Many2one(
+        comodel_name='product.packaging',
         string='Logistic Unit',
     )

@@ -21,7 +21,6 @@ class StockPickingPackageWeightLot(models.Model):
     lot_ids = fields.Many2many(
         comodel_name='stock.production.lot',
         string='Lots/Serial Numbers',
-        relation='rel_package_weight_lot',
     )
     net_weight = fields.Float(
         digits=dp.get_precision('Stock Weight'),

@@ -12,14 +12,14 @@
         <field name="inherit_id" ref="stock.view_picking_form" />
         <field name="arch" type="xml">
             <xpath expr="//page" position="after">
-                <page string="Packages" groups="stock.group_tracking_lot"
+                <page string="Packages"
+                      groups="stock.group_tracking_lot"
                       attrs="{'invisible': [('package_ids','=',False)]}">
                     <group name="group_packages"
                            string="Packages">
                         <field name="package_ids" nolabel="1">
                             <tree>
                                 <field name="name" />
-                                <field name="product_pack_tmpl_id" />
                                 <field name="width" />
                                 <field name="height" />
                                 <field name="length" />
@@ -32,15 +32,17 @@
                             </tree>
                         </field>
                     </group>
-                    <group name="group_package_total_ids" string="Total packages by logistic unit">
+                    <group name="group_package_total_ids"
+                           string="Total Weight and Lots by package" >
                         <field name="package_total_ids" nolabel="1">
                             <tree >
-                                <field name="product_pack_tmpl_id" />
+                                <field name="product_packaging_id" />
                                 <field name="quantity" sum="sum_quantity"/>
                             </tree>
                         </field>
                     </group>
-                    <group name="group_package_info_ids" string="Total Weight and Lots by package">
+                    <group name="group_package_info_ids"
+                           string="Total packages by logistic unit" >
                         <field name="package_info_ids" nolabel="1">
                             <tree>
                                 <field name="package_id" />
