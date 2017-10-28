@@ -3,14 +3,14 @@
 # * stock_auto_move
 # 
 # Translators:
-# Matjaž Mozetič <m.mozetic@matmoz.si>, 2016
+# OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 10:12+0000\n"
-"PO-Revision-Date: 2016-06-29 10:12+0000\n"
-"Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>, 2016\n"
+"POT-Creation-Date: 2017-10-20 11:37+0000\n"
+"PO-Revision-Date: 2017-10-20 11:37+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,12 +24,13 @@ msgid "1 => 2 with auto_move"
 msgstr "1 => 2 z auto_move"
 
 #. module: stock_auto_move
-#: field:procurement.rule,auto_move:0 field:stock.move,auto_move:0
+#: model:ir.model.fields,field_description:stock_auto_move.field_procurement_rule_auto_move
+#: model:ir.model.fields,field_description:stock_auto_move.field_stock_move_auto_move
 msgid "Automatic move"
 msgstr "Samodejni premik"
 
 #. module: stock_auto_move
-#: help:procurement.rule,auto_move:0
+#: model:ir.model.fields,help:stock_auto_move.field_procurement_rule_auto_move
 msgid ""
 "If this option is selected, the generated move will be automatically "
 "processed as soon as the products are available. This can be useful for "
@@ -40,7 +41,7 @@ msgstr ""
 "premiki, kjer ne želimo ukrepov operaterja."
 
 #. module: stock_auto_move
-#: help:stock.move,auto_move:0
+#: model:ir.model.fields,help:stock_auto_move.field_stock_move_auto_move
 msgid ""
 "If this option is selected, the move will be automatically processed as soon"
 " as the products are available."

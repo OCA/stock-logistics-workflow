@@ -1,23 +1,22 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * stock_deposit
-#
+# 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-21 10:18+0200\n"
-"PO-Revision-Date: 2017-06-21 10:22+0200\n"
-"Last-Translator: Sergio Teruel <sergio.teruel@tecnativa.com>\n"
+"POT-Creation-Date: 2017-10-20 11:37+0000\n"
+"PO-Revision-Date: 2017-10-20 11:37+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
-"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.7.1\n"
 
 #. module: stock_deposit
 #: code:addons/stock_deposit/models/stock_warehouse.py:24
@@ -257,9 +256,8 @@ msgstr "Éste es el propietario del quant"
 
 #. module: stock_deposit
 #: model:ir.model.fields,field_description:stock_deposit.field_deposit_stock_quant_wizard_line_stock_quant_wizard_id
-#, fuzzy
 msgid "Stock quant wizard id"
-msgstr "Éste es el propietario del quant"
+msgstr ""
 
 #. module: stock_deposit
 #: model:ir.model,name:stock_deposit.model_stock_picking_type
@@ -267,7 +265,7 @@ msgid "The picking type determines the picking view"
 msgstr "El tipo de albarán determina la vista de albarán"
 
 #. module: stock_deposit
-#: code:addons/stock_deposit/wizards/stock_quant_wizard.py:158
+#: code:addons/stock_deposit/wizards/stock_quant_wizard.py:157
 #, python-format
 msgid ""
 "There is any line with new quantity greater than quant quantity.\n"
@@ -304,15 +302,11 @@ msgstr "No puedes regularizar movimientos que no estén en depósito"
 #. module: stock_deposit
 #: model:ir.ui.view,arch_db:stock_deposit.deposit_stock_quant_wizard_view
 msgid ""
-"You can select the units to regularize writing it in \"Qty to process\" "
-"column. <br/>\n"
-"                        If yo do not want to regularize any line you must "
-"write in \"Qty to process\" column zero quantities"
+"You can select the units to regularize writing it in \"Qty to process\" column. <br/>\n"
+"                        If yo do not want to regularize any line you must write in \"Qty to process\" column zero quantities"
 msgstr ""
-"Puedes modificar las unidades a regularizar escribiendo la nueva cantidad "
-"en la columna \"Cant. a procesar\". <br/>\n"
-"Si no quieres regularizar alguna de las líneas debes de escribir en la "
-"columna \"Cant. a procesar\" cero unidades."
+"Puedes modificar las unidades a regularizar escribiendo la nueva cantidad en la columna \"Cant. a procesar\". <br/>\n"
+"Si no quieres regularizar alguna de las líneas debes de escribir en la columna \"Cant. a procesar\" cero unidades."
 
 #. module: stock_deposit
 #: model:ir.ui.view,arch_db:stock_deposit.deposit_stock_quant_wizard_view
