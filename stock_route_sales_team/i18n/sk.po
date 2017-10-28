@@ -1,0 +1,45 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_route_sales_team
+# 
+# Translators:
+# Jan Prokop <jprokop@creativehome.sk>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-09-02 15:07+0000\n"
+"PO-Revision-Date: 2017-09-02 15:07+0000\n"
+"Last-Translator: Jan Prokop <jprokop@creativehome.sk>, 2017\n"
+"Language-Team: Slovak (https://www.transifex.com/oca/teams/23907/sk/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: sk\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#. module: stock_route_sales_team
+#: field:stock.location.route,section_selectable:0
+msgid "Applicable in Sales Teams"
+msgstr ""
+
+#. module: stock_route_sales_team
+#: model:ir.model,name:stock_route_sales_team.model_stock_location_route
+msgid "Inventory Routes"
+msgstr ""
+
+#. module: stock_route_sales_team
+#: field:crm.case.section,route_id:0
+msgid "Route"
+msgstr ""
+
+#. module: stock_route_sales_team
+#: model:ir.model,name:stock_route_sales_team.model_sale_order
+msgid "Sales Order"
+msgstr "Objednávka predaja"
+
+#. module: stock_route_sales_team
+#: model:ir.model,name:stock_route_sales_team.model_crm_case_section
+#: view:stock.location.route:stock_route_sales_team.stock_location_route_form_view
+msgid "Sales Teams"
+msgstr ""

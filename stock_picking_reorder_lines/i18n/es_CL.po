@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-09-02 15:07+0000\n"
-"PO-Revision-Date: 2017-10-16 18:32+0000\n"
+"PO-Revision-Date: 2017-09-22 16:44+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Slovak (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/sk/)\n"
+"Language-Team: Spanish (Chile) (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/es_CL/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: sk\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Language: es_CL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_picking_reorder_lines
 #: field:stock.picking,max_line_sequence:0
@@ -30,12 +30,12 @@ msgstr ""
 #. module: stock_picking_reorder_lines
 #: model:ir.model,name:stock_picking_reorder_lines.model_procurement_order
 msgid "Procurement"
-msgstr "Obstarávanie"
+msgstr ""
 
 #. module: stock_picking_reorder_lines
 #: field:stock.move,sequence:0
 msgid "Sequence"
-msgstr "Postupnosť"
+msgstr "Secuencia"
 
 #. module: stock_picking_reorder_lines
 #: model:ir.model,name:stock_picking_reorder_lines.model_stock_move

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-24 06:44+0000\n"
+"POT-Creation-Date: 2017-09-02 15:06+0000\n"
 "PO-Revision-Date: 2015-10-21 16:33+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: Slovak (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/sk/)\n"
@@ -34,7 +34,7 @@ msgstr "Zrušiť"
 #: selection:stock.picking.type,backorder_strategy:0
 #, python-format
 msgid "Create"
-msgstr ""
+msgstr "Vytvoriť"
 
 #. module: stock_picking_backorder_strategy
 #: help:stock.picking.type,backorder_strategy:0

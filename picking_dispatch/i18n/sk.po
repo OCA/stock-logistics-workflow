@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-19 14:00+0000\n"
-"PO-Revision-Date: 2017-04-25 10:42+0000\n"
+"POT-Creation-Date: 2017-09-02 15:06+0000\n"
+"PO-Revision-Date: 2017-10-16 18:32+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Slovak (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/sk/)\n"
 "MIME-Version: 1.0\n"
@@ -93,7 +93,7 @@ msgstr "Zrušiť"
 #. module: picking_dispatch
 #: selection:picking.dispatch,state:0
 msgid "Cancelled"
-msgstr ""
+msgstr "Zrušené"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
@@ -427,7 +427,7 @@ msgstr ""
 #: model:ir.model,name:picking_dispatch.model_product_product
 #: view:website:picking_dispatch.report_picking_dispatch
 msgid "Product"
-msgstr ""
+msgstr "Produkt"
 
 #. module: picking_dispatch
 #: view:website:picking_dispatch.report_picking_dispatch
@@ -481,7 +481,7 @@ msgstr ""
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 msgid "State"
-msgstr ""
+msgstr "Stav"
 
 #. module: picking_dispatch
 #: model:ir.model,name:picking_dispatch.model_stock_move
