@@ -13,7 +13,7 @@ class StockMove(models.Model):
     # re-defines the field to change the default
     sequence = fields.Integer(default=9999)
 
-    # displays sequence on the purchase order line
+    # displays sequence on the stock moves
     sequence2 = fields.Integer(help="Shows the sequence in the Stock Move.",
                                related='sequence', readonly=True, store=True)
 
