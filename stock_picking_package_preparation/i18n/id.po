@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-04 08:41+0000\n"
+"POT-Creation-Date: 2017-10-28 12:03+0000\n"
 "PO-Revision-Date: 2015-10-21 16:34+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: Indonesian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/id/)\n"
@@ -56,7 +56,7 @@ msgstr "Batalkan"
 #. module: stock_picking_package_preparation
 #: selection:stock.picking.package.preparation,state:0
 msgid "Cancelled"
-msgstr ""
+msgstr "Dibatalkan"
 
 #. module: stock_picking_package_preparation
 #: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:171
@@ -102,7 +102,7 @@ msgstr ""
 #. module: stock_picking_package_preparation
 #: selection:stock.picking.package.preparation,state:0
 msgid "Draft"
-msgstr ""
+msgstr "Draf"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_follower_ids:0
@@ -114,7 +114,7 @@ msgstr "Pengikut"
 msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
-msgstr ""
+msgstr "Memegang ringkasan Chatter (jumlah pesan, ...). Ringkasan ini langsung dalam format html agar bisa dimasukkan dalam pandangan kanban."
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,id:0
@@ -142,7 +142,7 @@ msgstr ""
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_is_follower:0
 msgid "Is a Follower"
-msgstr ""
+msgstr "Ini Adalah Pengikut"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_last_post:0
@@ -267,12 +267,12 @@ msgstr ""
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,state:0
 msgid "State"
-msgstr ""
+msgstr "Bagian"
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,message_summary:0
 msgid "Summary"
-msgstr ""
+msgstr "Ringkasan"
 
 #. module: stock_picking_package_preparation
 #: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:162
@@ -300,4 +300,4 @@ msgstr "Pesan Belum Dibaca"
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,weight:0
 msgid "Weight"
-msgstr ""
+msgstr "Berat"

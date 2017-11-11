@@ -4,13 +4,14 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2016
+# Wahyu Setiawan <wahyusetiaaa@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-19 11:08+0000\n"
-"PO-Revision-Date: 2017-08-19 11:08+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
+"POT-Creation-Date: 2017-10-28 12:03+0000\n"
+"PO-Revision-Date: 2017-10-28 12:03+0000\n"
+"Last-Translator: Wahyu Setiawan <wahyusetiaaa@gmail.com>, 2017\n"
 "Language-Team: Indonesian (https://www.transifex.com/oca/teams/23907/id/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -275,7 +276,7 @@ msgstr ""
 #: view:scanner.scenario:stock_scanner.view_scanner_scenario_form
 #: view:scanner.scenario.step:stock_scanner.view_scanner_scenario_step_form
 msgid "Code"
-msgstr ""
+msgstr "Kode"
 
 #. module: stock_scanner
 #: help:scanner.hardware,code:0
@@ -819,7 +820,7 @@ msgstr ""
 #: view:scanner.scenario:stock_scanner.view_scanner_scenario_search
 #: field:scanner.scenario,parent_id:0
 msgid "Parent"
-msgstr ""
+msgstr "Induk"
 
 #. module: stock_scanner
 #: help:scanner.scenario,parent_id:0
@@ -1345,7 +1346,7 @@ msgstr ""
 #. module: stock_scanner
 #: field:scanner.hardware,user_id:0
 msgid "User"
-msgstr ""
+msgstr "Pengguna"
 
 #. module: stock_scanner
 #: field:scanner.scenario.custom,res_id:0
