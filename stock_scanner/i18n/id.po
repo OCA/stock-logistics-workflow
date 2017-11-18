@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-28 12:03+0000\n"
-"PO-Revision-Date: 2017-10-28 12:03+0000\n"
+"POT-Creation-Date: 2017-11-11 10:47+0000\n"
+"PO-Revision-Date: 2017-11-11 10:47+0000\n"
 "Last-Translator: Wahyu Setiawan <wahyusetiaaa@gmail.com>, 2017\n"
 "Language-Team: Indonesian (https://www.transifex.com/oca/teams/23907/id/)\n"
 "MIME-Version: 1.0\n"
@@ -518,7 +518,7 @@ msgstr ""
 #. module: stock_scanner
 #: view:scanner.scenario:stock_scanner.view_scanner_scenario_search
 msgid "Group By..."
-msgstr ""
+msgstr "Dikelompokan berdasarkan .."
 
 #. module: stock_scanner
 #: field:scanner.hardware.step.history,hardware_id:0
