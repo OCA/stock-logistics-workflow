@@ -1,0 +1,27 @@
+- !record {id: ps_salad_bowl, model: product.supplierinfo}:
+    name: rp_vendor
+    product_tmpl_id: pt_salad_bowl
+    min_qty: 1
+    price: 340
+    exwork_price: 325
+
+- !record {id: ps_fish_knife, model: product.supplierinfo}:
+    name: rp_vendor
+    product_tmpl_id: pt_fish_knife
+    min_qty: 1
+    price: 555
+    exwork_price: 530
+
+- !record {id: ps_robot_coupe, model: product.supplierinfo}:
+    name: rp_vendor
+    product_tmpl_id: pt_robot_coupe
+    min_qty: 1
+    price: 1248
+    exwork_price: 1200
+
+- !record {id: ps_spatula, model: product.supplierinfo}:
+    name: rp_vendor
+    product_tmpl_id: pt_spatula
+    min_qty: 1
+    price: 353
+    exwork_price: 330

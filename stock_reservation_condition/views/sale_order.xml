@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Copyright 2017 Komit <http://komit-consulting.com>
+ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="view_sale_order_form_mapyr10_all" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="confirmation_date" position="after">
+                <field name="reservation_date"/>
+            </field>
+            <notebook>
+                <page string="Related POs" name="mapyr">
+                    <group>
+                        <field name="reservation_po_ids" nolabel="1">
+                            <tree>
+                                <field name="state" invisible="1"/>
+                                <field name="name"/>
+                                <field name="partner_id"/>
+                                <field name="reservation_date"/>
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+</odoo>
