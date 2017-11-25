@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-29 11:07+0000\n"
-"PO-Revision-Date: 2017-07-29 11:07+0000\n"
+"POT-Creation-Date: 2017-11-18 10:50+0000\n"
+"PO-Revision-Date: 2017-11-18 10:50+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Vietnamese (Viet Nam) (https://www.transifex.com/oca/teams/23907/vi_VN/)\n"
 "MIME-Version: 1.0\n"
@@ -94,7 +94,7 @@ msgstr ""
 #. module: stock_scanner
 #: field:scanner.scenario,active:0
 msgid "Active"
-msgstr ""
+msgstr "Có hiệu lực"
 
 #. module: stock_scanner
 #: view:scanner.scenario:stock_scanner.view_scanner_scenario_form
