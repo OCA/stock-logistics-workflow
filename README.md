@@ -33,6 +33,7 @@ addon | version | summary
 [stock_pack_operation_auto_fill](stock_pack_operation_auto_fill/) | 9.0.1.0.0 | Stock pack operation auto fill
 [stock_picking_digitized_signature](stock_picking_digitized_signature/) | 9.0.1.0.0 | Stock Picking Digitized Signature
 [stock_picking_invoice_link](stock_picking_invoice_link/) | 9.0.2.1.0 | Adds link between pickings and invoices
+[stock_picking_line_sequence](stock_picking_line_sequence/) | 9.0.1.0.0 | Stock picking lines with sequence number
 [stock_picking_mass_assign](stock_picking_mass_assign/) | 9.0.1.0.0 | Delivery Orders Mass Assign
 [stock_picking_operation_quick_change](stock_picking_operation_quick_change/) | 9.0.1.0.0 | Change location of all picking operations
 [stock_picking_package_preparation](stock_picking_package_preparation/) | 9.0.1.0.0 | Stock Picking Package Preparation
@@ -66,7 +67,6 @@ addon | version | summary
 [stock_picking_compute_delivery_date](stock_picking_compute_delivery_date/) | 8.0.1.1.0 (unported) | Stock Picking Compute Delivery Date
 [stock_picking_deliver_uos](stock_picking_deliver_uos/) | 8.0.1.0.0 (unported) | Adds fields uos and uos_quantity to Stock Transfer Details
 [stock_picking_priority](stock_picking_priority/) | 0.2 (unported) | Picking Priority
-[stock_picking_reorder_lines](stock_picking_reorder_lines/) | 8.0.0.1.0 (unported) | Provide a new field on stock moves, allowing to manage the orders of moves in a picking.
 [stock_sale_filters](stock_sale_filters/) | 1.3 (unported) | SO related filters on stock.picking and sale.order
 [stock_split_picking](stock_split_picking/) | 8.0.1.0.0 (unported) | Split a picking in two unconfirmed pickings
 [stock_transfer_split_multi](stock_transfer_split_multi/) | 8.0.1.0.0 (unported) | In the stock transfer wizard, you can split by multiple units
