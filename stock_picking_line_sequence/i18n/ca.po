@@ -1,53 +1,44 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * stock_picking_reorder_lines
+# * stock_picking_line_sequence
 # 
 # Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: stock-logistics-workflow (8.0)\n"
+"Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-14 08:48+0000\n"
-"PO-Revision-Date: 2017-01-17 18:57+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Catalan (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/ca/)\n"
+"POT-Creation-Date: 2017-12-01 03:58+0000\n"
+"PO-Revision-Date: 2017-12-01 03:58+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"Language-Team: Catalan (https://www.transifex.com/oca/teams/23907/ca/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: ca\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. module: stock_picking_reorder_lines
-#: field:stock.picking,max_line_sequence:0
+#. module: stock_picking_line_sequence
+#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_picking_max_line_sequence
 msgid "Max sequence in lines"
 msgstr ""
 
-#. module: stock_picking_reorder_lines
-#: model:ir.model,name:stock_picking_reorder_lines.model_stock_picking
-msgid "Picking List"
-msgstr ""
-
-#. module: stock_picking_reorder_lines
-#: model:ir.model,name:stock_picking_reorder_lines.model_procurement_order
-msgid "Procurement"
-msgstr ""
-
-#. module: stock_picking_reorder_lines
-#: field:stock.move,sequence:0
+#. module: stock_picking_line_sequence
+#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move_sequence2
 msgid "Sequence"
 msgstr "Seqüència"
 
-#. module: stock_picking_reorder_lines
-#: model:ir.model,name:stock_picking_reorder_lines.model_stock_move
+#. module: stock_picking_line_sequence
+#: model:ir.model.fields,help:stock_picking_line_sequence.field_stock_move_sequence2
+msgid "Shows the sequence in the Stock Move."
+msgstr ""
+
+#. module: stock_picking_line_sequence
+#: model:ir.model,name:stock_picking_line_sequence.model_stock_move
 msgid "Stock Move"
 msgstr "Moure l'estoc"
 
-#. module: stock_picking_reorder_lines
-#: view:stock.picking:stock_picking_reorder_lines.view_picking_form
-msgid ""
-"{'address_in_id': partner_id, "
-"'form_view_ref':'stock.view_move_picking_form', "
-"'tree_view_ref':'stock.view_move_picking_tree', 'default_picking_type_id': "
-"picking_type_id,'default_picking_id': active_id, 'default_sequence': "
-"max_line_sequence}"
+#. module: stock_picking_line_sequence
+#: model:ir.model,name:stock_picking_line_sequence.model_stock_picking
+msgid "Transfer"
 msgstr ""
