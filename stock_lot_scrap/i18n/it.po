@@ -1,0 +1,42 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_lot_scrap
+# 
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-04-04 01:08+0000\n"
+"PO-Revision-Date: 2017-04-04 01:08+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: stock_lot_scrap
+#: model:ir.model,name:stock_lot_scrap.model_stock_production_lot
+msgid "Lot/Serial"
+msgstr "Lotto/Numero di serie"
+
+#. module: stock_lot_scrap
+#: code:addons/stock_lot_scrap/models/stock_scrap_lot.py:48
+#, python-format
+msgid "Lot: %s"
+msgstr "Lotto: %s"
+
+#. module: stock_lot_scrap
+#: code:addons/stock_lot_scrap/models/stock_scrap_lot.py:37
+#, python-format
+msgid "Scrap"
+msgstr "Scarta"
+
+#. module: stock_lot_scrap
+#: code:addons/stock_lot_scrap/models/stock_scrap_lot.py:80
+#, python-format
+msgid "This lot doesn't contain any quant in internal location."
+msgstr ""
