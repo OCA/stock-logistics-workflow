@@ -2,6 +2,12 @@
 # Copyright 2017 LasLabs Inc.
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-from . import res_users
-from . import res_users_authenticator
-from . import res_users_device
+from . import cannabis_cannabinoid
+from . import cannabis_strain
+from . import cannabis_terpene
+from . import cannabis_test
+from . import cannabis_test_cannabinoid
+from . import cannabis_test_result
+from . import cannabis_test_terpene
+from . import product_template
+from . import stock_production_lot
