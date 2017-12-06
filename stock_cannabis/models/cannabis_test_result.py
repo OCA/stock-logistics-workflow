@@ -2,7 +2,7 @@
 # Copyright 2017 LasLabs Inc.
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class CannabisTestResult(models.Abstract):
@@ -43,6 +43,7 @@ class CannabisTestResult(models.Abstract):
              '(93.8mg / 7g) == (13.4mg / 1g)',
     )
 
+    @api.multi
     def _compute_quantity_reduced(self):
         for record in self:
             record.quantity_reduced = record.quantity / record.test_quantity

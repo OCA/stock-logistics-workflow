@@ -30,6 +30,7 @@ Known Issues
 Roadmap
 -------
 
+* More in depth test results
 
 Bug Tracker
 ===========
