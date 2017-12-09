@@ -4,19 +4,20 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
+# Pedro Castro Silva <pedrocs@exo.pt>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-03 03:56+0000\n"
-"PO-Revision-Date: 2017-12-03 03:56+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
-"Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
+"POT-Creation-Date: 2017-12-18 03:48+0000\n"
+"PO-Revision-Date: 2017-12-18 03:48+0000\n"
+"Last-Translator: Pedro Castro Silva <pedrocs@exo.pt>, 2017\n"
+"Language-Team: Portuguese (https://www.transifex.com/oca/teams/23907/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: fr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: pt\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_picking_line_sequence
 #: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_picking_max_line_sequence
@@ -26,7 +27,7 @@ msgstr ""
 #. module: stock_picking_line_sequence
 #: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move_sequence2
 msgid "Sequence"
-msgstr "Séquence"
+msgstr ""
 
 #. module: stock_picking_line_sequence
 #: model:ir.model.fields,help:stock_picking_line_sequence.field_stock_move_sequence2
@@ -36,9 +37,9 @@ msgstr ""
 #. module: stock_picking_line_sequence
 #: model:ir.model,name:stock_picking_line_sequence.model_stock_move
 msgid "Stock Move"
-msgstr "Mouvement de stock"
+msgstr "Movimento Stock"
 
 #. module: stock_picking_line_sequence
 #: model:ir.model,name:stock_picking_line_sequence.model_stock_picking
 msgid "Transfer"
-msgstr "Transfert"
+msgstr "Transferência"
