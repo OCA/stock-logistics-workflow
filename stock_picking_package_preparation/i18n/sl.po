@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-10 02:42+0000\n"
-"PO-Revision-Date: 2017-05-10 02:42+0000\n"
+"POT-Creation-Date: 2017-12-03 03:56+0000\n"
+"PO-Revision-Date: 2017-12-03 03:56+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
 "MIME-Version: 1.0\n"
@@ -29,13 +29,13 @@ msgid "All Content"
 msgstr "Vsa vsebina"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:194
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:196
 #, python-format
 msgid "All the transfers must be \"Ready to Transfer\"."
 msgstr "Vse premestitve morajo biti \"Pripravljene za premestitev\"."
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:177
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:179
 #, python-format
 msgid "All the transfers must have the same destination location"
 msgstr "Vse premestitve morajo imeti isto ciljno lokacijo"
@@ -51,7 +51,7 @@ msgid "Cancelled"
 msgstr "Preklicano"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:146
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:148
 #, python-format
 msgid "Cannot cancel a done package preparation."
 msgstr "Ne morete preklicati opravljene priprave pakiranja."
@@ -133,7 +133,7 @@ msgid "Last Updated on"
 msgstr "Zadnjič posodobljeno"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:172
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:174
 #, python-format
 msgid "No transfer selected for this preparation."
 msgstr "Za to pripravo ni izbrane premestitve."
@@ -144,7 +144,7 @@ msgid "Note"
 msgstr "Opomba"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:157
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:159
 #, python-format
 msgid "Only canceled package preparations can be reset to draft."
 msgstr "Le preklicane priprave pakiranj se lahko ponastavi v osnutek."
@@ -218,7 +218,7 @@ msgid "State"
 msgstr "Stanje"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:136
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:138
 #, python-format
 msgid "The package has not been generated."
 msgstr "Pakiranje ni bilo ustvarjeno."
