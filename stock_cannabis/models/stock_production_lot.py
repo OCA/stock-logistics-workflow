@@ -20,6 +20,6 @@ class StockProductionLot(models.Model):
     date_production = fields.Datetime(
         string='Production Date',
     )
-    date_use = fields.Datetime(
-        string='Use By Date',
+    date_test_expire = fields.Datetime(
+        related='cannabis_test_id.date_expire',
     )

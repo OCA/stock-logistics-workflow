@@ -15,9 +15,22 @@ class CannabisTest(models.Model):
         help='This is the lab that performed the test.',
         comodel_name='res.partner',
     )
-    certification_id = fields.Many2one(
-        string='Certification',
-        comodel_name='cannabis.certification',
+    result_file = fields.Binary(
+        help='The raw lab results that were received (typically PDF).',
+        attachment=True,
+    )
+    certification_number = fields.String()
+    thc = fields.Float(
+        'Amount of THC in the test sample.'
+    )
+    cbd = fields.Float(
+        'Amount of CBD in the test sample.'
+    )
+    cannabis = fields.Float(
+        'Amount of cannabis present in the test sample.',
+    )
+    hash_oil = fields.Float(
+        'Amount of hash oil that was present in the test sample.',
     )
     cannabinoid_result_ids = fields.One2many(
         string='Cannabinoid Results',
@@ -73,7 +86,7 @@ class CannabisTest(models.Model):
         default=fields.Datetime.now,
     )
     date_expire = fields.Datetime(
-        string='Expiration Date',
+        string='Test Expiration Date',
         help='This is the expiration date of the test results, not of the '
              'item tested.',
     )
