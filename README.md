@@ -33,6 +33,7 @@ addon | version | summary
 [stock_ownership_by_move](stock_ownership_by_move/) | 10.0.0.1.0 | Preserve Ownership of moves (not pickings) on reception.
 [stock_pack_operation_auto_fill](stock_pack_operation_auto_fill/) | 10.0.1.0.1 | Stock pack operation auto fill
 [stock_picking_customer_ref](stock_picking_customer_ref/) | 10.0.1.0.0 | This module displays the sale reference/description in the pickings
+[stock_picking_invoice_link](stock_picking_invoice_link/) | 10.0.1.0.0 | Adds link between pickings and invoices
 [stock_picking_line_sequence](stock_picking_line_sequence/) | 10.0.1.0.0 | Manages the order of stock moves by displaying its sequence
 [stock_picking_package_preparation](stock_picking_package_preparation/) | 10.0.1.0.1 | Stock Picking Package Preparation
 [stock_picking_package_preparation_line](stock_picking_package_preparation_line/) | 10.0.1.0.1 | Stock Picking Package Preparation Line
@@ -60,7 +61,6 @@ addon | version | summary
 [stock_picking_backorder_strategy](stock_picking_backorder_strategy/) | 8.0.0.1.0 (unported) | Picking backordering strategies
 [stock_picking_compute_delivery_date](stock_picking_compute_delivery_date/) | 8.0.1.1.0 (unported) | Stock Picking Compute Delivery Date
 [stock_picking_deliver_uos](stock_picking_deliver_uos/) | 8.0.1.0.0 (unported) | Adds fields uos and uos_quantity to Stock Transfer Details
-[stock_picking_invoice_link](stock_picking_invoice_link/) | 8.0.1.0.0 (unported) | Adds link between pickings and generated invoices
 [stock_picking_mass_assign](stock_picking_mass_assign/) | 9.0.1.0.0 (unported) | Delivery Orders Mass Assign
 [stock_picking_priority](stock_picking_priority/) | 0.2 (unported) | Picking Priority
 [stock_sale_filters](stock_sale_filters/) | 1.3 (unported) | SO related filters on stock.picking and sale.order
