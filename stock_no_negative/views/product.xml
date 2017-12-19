@@ -25,8 +25,7 @@
         <field name="inherit_id" ref="stock.product_category_form_view_inherit"/>
         <field name="arch" type="xml">
             <field name="removal_strategy_id" position="after">
-                <field name="allow_negative_stock"
-                    attrs="{'invisible': [('type', '=', 'view')]}"/>
+                <field name="allow_negative_stock"/>
             </field>
         </field>
     </record>
