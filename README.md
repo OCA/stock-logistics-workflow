@@ -44,6 +44,7 @@ addon | version | summary
 [stock_picking_show_return](stock_picking_show_return/) | 9.0.1.0.0 | Show returns on stock pickings
 [stock_picking_tracking](stock_picking_tracking/) | 9.0.1.0.0 | Adds a concept of event tracking for stock pickings
 [stock_picking_transfer_lot_autoassign](stock_picking_transfer_lot_autoassign/) | 9.0.1.1.0 | Auto-assignation of lots on pickings
+[stock_scrap](stock_scrap/) | 9.0.1.0.0 | Adds the ability to scrap products easily.
 
 
 Unported addons
