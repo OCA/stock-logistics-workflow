@@ -66,9 +66,10 @@ class TestStockNoNegative(TransactionCase):
         self.stock_picking.action_confirm()
         self.stock_picking.action_assign()
         self.stock_picking.force_assign()
-        self.stock_picking.do_new_transfer()
-        self.stock_immediate_transfer = self.env['stock.immediate.transfer'].\
-            create({'pick_id': self.stock_picking.id})
+        res = self.stock_picking.button_validate()
+        self.stock_immediate_transfer = self.env[
+            'stock.immediate.transfer'
+        ].browse(res['res_id'])
         with self.assertRaises(ValidationError):
             self.stock_immediate_transfer.with_context(
                 test_stock_no_negative=True).process()
@@ -80,14 +81,13 @@ class TestStockNoNegative(TransactionCase):
         self.stock_picking.action_confirm()
         self.stock_picking.action_assign()
         self.stock_picking.force_assign()
-        self.stock_picking.do_new_transfer()
-        self.stock_immediate_transfer = self.env['stock.immediate.transfer'].\
-            create({'pick_id': self.stock_picking.id})
+        res = self.stock_picking.button_validate()
+        self.stock_immediate_transfer = self.env[
+            'stock.immediate.transfer'
+        ].browse(res['res_id'])
         self.stock_immediate_transfer.with_context(
             test_stock_no_negative=True).process()
-        quant = self.env['stock.quant'].search([('product_id', '=',
-                                                 self.product.id),
-                                                ('location_id', '=',
-                                                 self.location_id.id)])
-        self.assertEqual(quant.qty,
-                         -self.stock_move.product_uom_qty)
+        quant = self.env['stock.quant'].search([
+            ('product_id', '=', self.product.id),
+            ('location_id', '=', self.location_id.id)])
+        self.assertEqual(quant.quantity, -self.stock_move.product_uom_qty)
