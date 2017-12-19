@@ -12,7 +12,7 @@ class StockQuant(models.Model):
     _inherit = 'stock.quant'
 
     @api.multi
-    @api.constrains('product_id', 'qty')
+    @api.constrains('product_id', 'quantity')
     def check_negative_qty(self):
         p = self.env['decimal.precision'].precision_get(
             'Product Unit of Measure')
@@ -23,7 +23,7 @@ class StockQuant(models.Model):
         if not check_negative_qty:
             return
         for quant in self:
-            if (float_compare(quant.qty, 0, precision_digits=p) == -1 and
+            if (float_compare(quant.quantity, 0, precision_digits=p) == -1 and
                     quant.product_id.type == 'product' and
                     not quant.product_id.allow_negative_stock and
                     not quant.product_id.categ_id.allow_negative_stock):
@@ -35,5 +35,5 @@ class StockQuant(models.Model):
                     "stock level of the product '%s'%s would become negative "
                     "(%s) on the stock location '%s' and negative stock is "
                     "not allowed for this product.") % (
-                        quant.product_id.name, msg_add, quant.qty,
+                        quant.product_id.name, msg_add, quant.quantity,
                         quant.location_id.complete_name))
