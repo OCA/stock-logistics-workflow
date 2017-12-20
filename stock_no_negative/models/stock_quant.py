@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ?? 2015-2017 Akretion (http://www.akretion.com)
 # @author Alexis de Lattre <alexis.delattre@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -18,8 +17,8 @@ class StockQuant(models.Model):
             'Product Unit of Measure')
         check_negative_qty = (
             config['test_enable'] and self.env.context.get(
-                'test_stock_no_negative')) or (
-            'test_enable' not in config.options)
+                'test_stock_no_negative')) or not config.options.get(
+            'test_enable')
         if not check_negative_qty:
             return
         for quant in self:
