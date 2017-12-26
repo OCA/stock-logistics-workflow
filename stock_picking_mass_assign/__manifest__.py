@@ -1,10 +1,10 @@
-# -*- coding: utf-8 -*-
 # © 2014-2016 Camptocamp SA (Guewen Baconnier)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 {
     'name': 'Delivery Orders Mass Assign',
-    'version': '9.0.1.0.0',
-    'author': "Camptocamp,GRAP,Odoo Community Association (OCA)",
+    'version': '11.0.1.0.0',
+    'author': ("Camptocamp,GRAP,Odoo Community Association (OCA),"
+               "JARSA Sistemas S.A. de C.V."),
     'license': 'AGPL-3',
     'category': 'Warehouse Management',
     'depends': ['stock'],
@@ -16,5 +16,5 @@
     "test": [
         'test/test_check_assign_all.yml',
     ],
-    'installable': False,
+    'installable': True,
 }

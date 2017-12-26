@@ -36,7 +36,7 @@ Credits
 =======
 
 Images
-------
+-----
 
 * Odoo Community Association: `Icon <https://github.com/OCA/maintainer-tools/blob/master/template/module/static/description/icon.svg>`_.
 
@@ -46,6 +46,7 @@ Contributors
 * Guewen Baconnier <guewen.baconnier@camptocamp.com>
 * Sylvain Le Gal <sylvain.legal@grap.coop>
 * Matthieu Dietrich <matthieu.dietrich@camptocamp.com>
+* Oscar Garza <oscar.garza@jarsa.com.mx
 
 Maintainer
 ----------
