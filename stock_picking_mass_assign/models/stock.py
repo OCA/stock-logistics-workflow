@@ -1,4 +1,5 @@
 # © 2014-2016 Camptocamp SA (Guewen Baconnier)
+# © 2017 JARSA Sistemas S.A. de C.V.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 import logging
 from odoo import api, models
@@ -15,9 +16,8 @@ class StockPicking(models.Model):
         """ Try to assign confirmed pickings """
         pickings = self
         if not pickings:
-            domain = [('picking_type_code', '=', 'outgoing'),
-                      ('state', '=', 'confirmed')]
-            pickings = self.search(domain, order='min_date')
+            domain = [('state', '=', 'confirmed')]
+            pickings = self.search(domain, order='name')
 
         for picking in pickings:
             try:

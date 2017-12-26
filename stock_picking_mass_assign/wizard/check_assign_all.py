@@ -11,10 +11,6 @@ class CheckAssignAll(models.TransientModel):
     _name = 'stock.picking.check.assign.all'
     _description = 'Delivery Orders Check Availability'
 
-    @api.multi
-    def _default_process_picking(self):
-        return self.env.context.get('process_picking', False)
-
     check_availability = fields.Boolean(
         'Check Availability',
         default=True,
@@ -28,6 +24,12 @@ class CheckAssignAll(models.TransientModel):
         """partial delivery.\n If you want to do that, please do it """
         """manually on the Delivery Order form.""")
 
+    @api.model
+    def default_get(self, default_fields):
+        res = super(CheckAssignAll, self).default_get(default_fields)
+        res['process_picking'] = self.env.context.get('process_picking', False)
+        return res
+
     @api.multi
     def check(self):
         self.ensure_one()
@@ -40,7 +42,7 @@ class CheckAssignAll(models.TransientModel):
 
         # Get confirmed pickings
         domain = [('state', '=', 'confirmed'), ('id', 'in', picking_ids)]
-        confirmed_pickings = picking_obj.search(domain)
+        confirmed_pickings = picking_obj.search(domain, order='name')
 
         # Assign all picking if asked
         if self.check_availability and confirmed_pickings:
@@ -48,7 +50,7 @@ class CheckAssignAll(models.TransientModel):
 
         # Get all pickings ready to deliver
         domain = [('state', '=', 'assigned'), ('id', 'in', picking_ids)]
-        assigned_pickings = picking_obj.search(domain)
+        assigned_pickings = picking_obj.search(domain, order='name')
 
         # Process all pickings if asked
         if self.process_picking and assigned_pickings:

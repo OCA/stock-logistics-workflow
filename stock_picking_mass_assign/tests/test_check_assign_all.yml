@@ -45,7 +45,7 @@
  Confirm the 3 pickings
 -
  !python {model: stock.picking}: |
-   self.action_confirm(cr, uid, [ref("ship_mlas_1"), ref("ship_mlas_2"), ref("ship_mlas_3")], context=context)
+   self.action_confirm([ref("ship_mlas_1"), ref("ship_mlas_2"), ref("ship_mlas_3")])
 -
  I check availability of the pickings
 -
