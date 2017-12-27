@@ -22,10 +22,13 @@ class StockQuant(models.Model):
         if not check_negative_qty:
             return
         for quant in self:
-            if (float_compare(quant.quantity, 0, precision_digits=p) == -1 and
-                    quant.product_id.type == 'product' and
-                    not quant.product_id.allow_negative_stock and
-                    not quant.product_id.categ_id.allow_negative_stock):
+            if (
+                float_compare(quant.quantity, 0, precision_digits=p) == -1 and
+                quant.product_id.type == 'product' and
+                not quant.product_id.allow_negative_stock and
+                not quant.product_id.categ_id.allow_negative_stock and
+                quant.location_id.usage in ['internal', 'transit']
+            ):
                 msg_add = ''
                 if quant.lot_id:
                     msg_add = _(" lot '%s'") % quant.lot_id.name_get()[0][1]
