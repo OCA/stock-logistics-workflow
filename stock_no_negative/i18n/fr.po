@@ -1,35 +1,61 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_no_negative
-#
+# * stock_no_negative
+# 
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
+# guillaume bauer <guillaume.bauer@syentys.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-07 09:43+0000\n"
-"PO-Revision-Date: 2015-10-07 09:43+0000\n"
-"Last-Translator: Alexis de Lattre <alexis.delattre@akretion.com>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2017-12-23 03:52+0000\n"
+"PO-Revision-Date: 2017-12-23 03:52+0000\n"
+"Last-Translator: guillaume bauer <guillaume.bauer@syentys.com>, 2017\n"
+"Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: stock_no_negative
-#: field:product.category,allow_negative_stock:0
-#: field:product.template,allow_negative_stock:0
+#: code:addons/stock_no_negative/models/stock_quant.py:31
+#, python-format
+msgid " lot '%s'"
+msgstr "lot%s"
+
+#. module: stock_no_negative
+#: model:ir.model.fields,field_description:stock_no_negative.field_product_category_allow_negative_stock
+#: model:ir.model.fields,field_description:stock_no_negative.field_product_product_allow_negative_stock
+#: model:ir.model.fields,field_description:stock_no_negative.field_product_template_allow_negative_stock
 msgid "Allow Negative Stock"
 msgstr "Autoriser le stock négatif"
 
 #. module: stock_no_negative
-#: help:product.category,allow_negative_stock:0
-msgid "Allow negative stock levels for the stockable products attached to this category. The options doesn't apply to products attached to sub-categories of this category."
-msgstr "Autorise les niveaux de stock négatif pour les articles stockables attachés à cette catégorie. Cette option ne s'applique pas aux articles attachés à des sous-catégories de cette catégorie."
+#: model:ir.model.fields,help:stock_no_negative.field_product_category_allow_negative_stock
+msgid ""
+"Allow negative stock levels for the stockable products attached to this "
+"category. The options doesn't apply to products attached to sub-categories "
+"of this category."
+msgstr ""
+"Autorise les niveaux de stock négatif pour les articles stockables attachés "
+"à cette catégorie. Cette option ne s'applique pas aux articles attachés à "
+"des sous-catégories de cette catégorie."
 
 #. module: stock_no_negative
-#: help:product.template,allow_negative_stock:0
-msgid "If this option is not active on this product nor on its product category and that this product is a stockable product, then the validation of the related stock moves will be blocked if the stock level becomes negative with the stock move."
-msgstr "Si cette option n'est pas activée sur cet article ni sur la catégorie à laquelle il est rattaché et que cet article est un produit stockable, alors la validation des mouvements de stock sera bloquée si le niveau de stock devient négatif avec ce mouvement de stock."
+#: model:ir.model.fields,help:stock_no_negative.field_product_product_allow_negative_stock
+#: model:ir.model.fields,help:stock_no_negative.field_product_template_allow_negative_stock
+msgid ""
+"If this option is not active on this product nor on its product category and"
+" that this product is a stockable product, then the validation of the "
+"related stock moves will be blocked if the stock level becomes negative with"
+" the stock move."
+msgstr ""
+"Si cette option n'est pas activée sur cet article ni sur la catégorie à "
+"laquelle il est rattaché et que cet article est un produit stockable, alors "
+"la validation des mouvements de stock sera bloquée si le niveau de stock "
+"devient négatif avec ce mouvement de stock."
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_product_category
@@ -47,13 +73,13 @@ msgid "Quants"
 msgstr "Quants"
 
 #. module: stock_no_negative
-#: view:product.template:stock_no_negative.product_template_form_view
-msgid "Stock and Expected Variations"
-msgstr "Stock et variations prévues"
-
-#. module: stock_no_negative
-#: code:addons/stock_no_negative/stock_no_negative.py:60
+#: code:addons/stock_no_negative/models/stock_quant.py:32
 #, python-format
-msgid "You cannot valide this stock operation because the stock level of the product '%s' would become negative on the stock location '%s' and negative stock is not allowed for this product."
-msgstr "Vous ne pouvez pas valider cette opération de stock car le niveau de stock de l'article '%s' deviendrait négatif sur l'emplacement de stock '%s' et le stock négatif n'est pas autorisé pour cet article."
-
+msgid ""
+"You cannot validate this stock operation because the stock level of the "
+"product '%s'%s would become negative (%s) on the stock location '%s' and "
+"negative stock is not allowed for this product."
+msgstr ""
+"Impossible de valider cette opération car le niveau de stock de ce produit "
+"%s'%s deviendrait négative(%s) dans l'emplacement du stock '%s'. Un stock "
+"négatif n'est pas permis pour ce produit."
