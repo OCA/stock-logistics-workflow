@@ -4,13 +4,14 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
+# Rudolf Schnapka <rs@techno-flex.de>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-23 11:56+0000\n"
-"PO-Revision-Date: 2017-01-23 11:56+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"POT-Creation-Date: 2017-12-19 03:55+0000\n"
+"PO-Revision-Date: 2017-12-19 03:55+0000\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2017\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -37,7 +38,7 @@ msgstr "Angelegt am"
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_res_company_default_picking_type_for_package_preparation_id
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_config_settings_default_picking_type_for_package_preparation_id
 msgid "Default Picking Type used in package preparation"
-msgstr ""
+msgstr "Vorgabe-Entnahmeart in Packvorbereitung"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line_name
@@ -99,7 +100,7 @@ msgstr "Zuletzt aktualisiert am"
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line_lot_id
 msgid "Lot"
-msgstr ""
+msgstr "Los"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line_note
@@ -122,7 +123,7 @@ msgstr "Packungs-Vorbereitungs-Position"
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_picking_type_id
 msgid "Picking Type"
-msgstr ""
+msgstr "Entnahmeart"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line_product_id
@@ -132,7 +133,7 @@ msgstr "Produkt"
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line_product_uom_qty
 msgid "Quantity"
-msgstr ""
+msgstr "Menge"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line_sequence
@@ -148,9 +149,9 @@ msgstr "Lagerbuchung"
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line_product_uom_id
 msgid "UoM"
-msgstr ""
+msgstr "ME"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model,name:stock_picking_package_preparation_line.model_stock_config_settings
 msgid "stock.config.settings"
-msgstr ""
+msgstr "stock.config.settings"

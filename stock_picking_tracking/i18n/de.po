@@ -4,13 +4,14 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
+# Rudolf Schnapka <rs@techno-flex.de>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-31 02:59+0000\n"
-"PO-Revision-Date: 2017-05-31 02:59+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"POT-Creation-Date: 2017-12-19 03:56+0000\n"
+"PO-Revision-Date: 2017-12-19 03:56+0000\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2017\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,12 +22,12 @@ msgstr ""
 #. module: stock_picking_tracking
 #: model:ir.model.fields,field_description:stock_picking_tracking.field_stock_picking_tracking_group_message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Aktion erforderlich"
 
 #. module: stock_picking_tracking
 #: selection:stock.picking.tracking.event,state:0
 msgid "Available For Pickup"
-msgstr ""
+msgstr "Verfügbar zur Abholung"
 
 #. module: stock_picking_tracking
 #: selection:stock.picking.tracking.event,state:0
@@ -36,13 +37,13 @@ msgstr "Storniert"
 #. module: stock_picking_tracking
 #: model:ir.model.fields,field_description:stock_picking_tracking.field_stock_picking_tracking_location_city
 msgid "City"
-msgstr ""
+msgstr "Stadt"
 
 #. module: stock_picking_tracking
 #: model:ir.model.fields,field_description:stock_picking_tracking.field_stock_picking_tracking_location_country_id
 #: model:ir.ui.view,arch_db:stock_picking_tracking.stock_picking_tracking_location_view_search
 msgid "Country"
-msgstr ""
+msgstr "Land"
 
 #. module: stock_picking_tracking
 #: model:ir.model.fields,field_description:stock_picking_tracking.field_stock_picking_tracking_event_create_uid
@@ -66,7 +67,7 @@ msgstr "Datum"
 #. module: stock_picking_tracking
 #: model:ir.model.fields,field_description:stock_picking_tracking.field_stock_picking_tracking_group_date_created
 msgid "Date created"
-msgstr ""
+msgstr "Anlagedatum"
 
 #. module: stock_picking_tracking
 #: model:ir.model.fields,help:stock_picking_tracking.field_stock_picking_tracking_group_message_last_post
@@ -76,17 +77,17 @@ msgstr "Datum der letzten gebuchten Meldung dieses Satzes."
 #. module: stock_picking_tracking
 #: model:ir.model.fields,field_description:stock_picking_tracking.field_stock_picking_tracking_group_date_updated
 msgid "Date updated"
-msgstr ""
+msgstr "Aktualisierungsdatum"
 
 #. module: stock_picking_tracking
 #: selection:stock.picking.tracking.event,state:0
 msgid "Delivered"
-msgstr ""
+msgstr "Zugestellt"
 
 #. module: stock_picking_tracking
 #: model:ir.model.fields,help:stock_picking_tracking.field_stock_picking_tracking_event_message
 msgid "Description of the tracking event"
-msgstr ""
+msgstr "Beschreibung des Vorfalls"
 
 #. module: stock_picking_tracking
 #: model:ir.model.fields,field_description:stock_picking_tracking.field_stock_picking_tracking_event_display_name
@@ -98,18 +99,18 @@ msgstr "Angezeigter Name"
 #. module: stock_picking_tracking
 #: selection:stock.picking.tracking.event,state:0
 msgid "Error"
-msgstr ""
+msgstr "Fehler"
 
 #. module: stock_picking_tracking
 #: model:ir.model.fields,field_description:stock_picking_tracking.field_stock_picking_tracking_group_event_ids
 #: model:ir.model.fields,field_description:stock_picking_tracking.field_stock_picking_tracking_location_event_ids
 msgid "Events"
-msgstr ""
+msgstr "Vorfälle"
 
 #. module: stock_picking_tracking
 #: selection:stock.picking.tracking.event,state:0
 msgid "Failure"
-msgstr ""
+msgstr "Versagen"
 
 #. module: stock_picking_tracking
 #: model:ir.model.fields,field_description:stock_picking_tracking.field_stock_picking_tracking_group_message_follower_ids
@@ -119,17 +120,17 @@ msgstr "Follower"
 #. module: stock_picking_tracking
 #: model:ir.model.fields,field_description:stock_picking_tracking.field_stock_picking_tracking_group_message_channel_ids
 msgid "Followers (Channels)"
-msgstr ""
+msgstr "Follower (Kanäle)"
 
 #. module: stock_picking_tracking
 #: model:ir.model.fields,field_description:stock_picking_tracking.field_stock_picking_tracking_group_message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Follower (Partner)"
 
 #. module: stock_picking_tracking
 #: model:ir.ui.view,arch_db:stock_picking_tracking.stock_picking_tracking_event_view_search
 msgid "Group"
-msgstr ""
+msgstr "Gruppe"
 
 #. module: stock_picking_tracking
 #: model:ir.model.fields,field_description:stock_picking_tracking.field_stock_picking_tracking_event_id
@@ -146,22 +147,22 @@ msgstr "Wenn angewählt erfordern neue Nachrichten Ihre Aufmerksamkeit."
 #. module: stock_picking_tracking
 #: model:ir.model.fields,help:stock_picking_tracking.field_stock_picking_tracking_group_message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Wenn angewählt erfordern neue Nachrichten Ihre Aufmerksamkeit."
 
 #. module: stock_picking_tracking
 #: selection:stock.picking.tracking.event,state:0
 msgid "In Transit"
-msgstr ""
+msgstr "In Transit"
 
 #. module: stock_picking_tracking
 #: model:ir.model.fields,field_description:stock_picking_tracking.field_stock_picking_tracking_group_message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Ist Follower"
 
 #. module: stock_picking_tracking
 #: model:ir.model.fields,field_description:stock_picking_tracking.field_stock_picking_tracking_group_last_event_id
 msgid "Last Event"
-msgstr ""
+msgstr "Letzter Vorfall"
 
 #. module: stock_picking_tracking
 #: model:ir.model.fields,field_description:stock_picking_tracking.field_stock_picking_tracking_group_message_last_post
@@ -194,12 +195,12 @@ msgstr "Zuletzt aktualisiert am"
 #: model:ir.model.fields,field_description:stock_picking_tracking.field_stock_picking_tracking_group_location_id
 #: model:ir.ui.view,arch_db:stock_picking_tracking.stock_picking_tracking_event_view_search
 msgid "Location"
-msgstr ""
+msgstr "Lagerort"
 
 #. module: stock_picking_tracking
 #: model:ir.model.fields,field_description:stock_picking_tracking.field_stock_picking_tracking_event_message
 msgid "Message"
-msgstr ""
+msgstr "Meldung"
 
 #. module: stock_picking_tracking
 #: model:ir.model.fields,field_description:stock_picking_tracking.field_stock_picking_tracking_group_message_ids
@@ -209,52 +210,52 @@ msgstr "Meldungen"
 #. module: stock_picking_tracking
 #: model:ir.model.fields,field_description:stock_picking_tracking.field_stock_picking_tracking_group_message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Anzahl Aktionen"
 
 #. module: stock_picking_tracking
 #: model:ir.model.fields,help:stock_picking_tracking.field_stock_picking_tracking_group_message_needaction_counter
 msgid "Number of messages which requires an action"
-msgstr ""
+msgstr "Meldungen, die Aktionen erfordern"
 
 #. module: stock_picking_tracking
 #: model:ir.model.fields,help:stock_picking_tracking.field_stock_picking_tracking_group_message_unread_counter
 msgid "Number of unread messages"
-msgstr ""
+msgstr "Ungelesene Meldungen"
 
 #. module: stock_picking_tracking
 #: model:ir.model.fields,help:stock_picking_tracking.field_stock_picking_tracking_event_source
 msgid "Original source of the tracking event"
-msgstr ""
+msgstr "Ursprung des Vorfalls"
 
 #. module: stock_picking_tracking
 #: selection:stock.picking.tracking.event,state:0
 msgid "Out For Delivery"
-msgstr ""
+msgstr "Abgang zur Auslieferung"
 
 #. module: stock_picking_tracking
 #: model:ir.ui.view,arch_db:stock_picking_tracking.stock_picking_tracking_group_view_search
 msgid "Picking"
-msgstr ""
+msgstr "Kommissionierung"
 
 #. module: stock_picking_tracking
 #: selection:stock.picking.tracking.event,state:0
 msgid "Pre Transit"
-msgstr ""
+msgstr "Vor Transit"
 
 #. module: stock_picking_tracking
 #: model:ir.model.fields,field_description:stock_picking_tracking.field_stock_picking_tracking_group_ref
 msgid "Ref"
-msgstr ""
+msgstr "Ref"
 
 #. module: stock_picking_tracking
 #: selection:stock.picking.tracking.event,state:0
 msgid "Return To Sender"
-msgstr ""
+msgstr "Zurück zum Versender"
 
 #. module: stock_picking_tracking
 #: model:ir.model.fields,field_description:stock_picking_tracking.field_stock_picking_tracking_event_source
 msgid "Source"
-msgstr ""
+msgstr "Herkunft"
 
 #. module: stock_picking_tracking
 #: model:ir.model.fields,field_description:stock_picking_tracking.field_stock_picking_tracking_event_state
@@ -269,98 +270,98 @@ msgstr "Status"
 #. module: stock_picking_tracking
 #: model:ir.model.fields,help:stock_picking_tracking.field_stock_picking_tracking_event_state
 msgid "Status of the dispatch at time of event"
-msgstr ""
+msgstr "Status der Zustellung zum Zeitpunkt des Vorfalls"
 
 #. module: stock_picking_tracking
 #: model:ir.model.fields,help:stock_picking_tracking.field_stock_picking_tracking_group_state
 msgid "Status of the dispatch at time of latest event"
-msgstr ""
+msgstr "Status der Zustellung zum Zeitpunkt des Vorfalls"
 
 #. module: stock_picking_tracking
 #: model:ir.model.fields,field_description:stock_picking_tracking.field_stock_picking_tracking_group_picking_id
 msgid "Stock Picking"
-msgstr ""
+msgstr "Lagerentnahme"
 
 #. module: stock_picking_tracking
 #: model:ir.ui.view,arch_db:stock_picking_tracking.stock_picking_tracking_event_view_form
 msgid "Stock Picking Event"
-msgstr ""
+msgstr "Vorfall bei Lagerentnahme"
 
 #. module: stock_picking_tracking
 #: model:ir.actions.act_window,name:stock_picking_tracking.stock_picking_tracking_event_action
 #: model:ir.ui.view,arch_db:stock_picking_tracking.stock_picking_tracking_event_view_search
 #: model:ir.ui.view,arch_db:stock_picking_tracking.stock_picking_tracking_event_view_tree
 msgid "Stock Picking Events"
-msgstr ""
+msgstr "Vorfälle bei Lagerentnahme"
 
 #. module: stock_picking_tracking
 #: model:ir.ui.view,arch_db:stock_picking_tracking.stock_picking_tracking_location_view_form
 msgid "Stock Picking Location"
-msgstr ""
+msgstr "Lagerentnahmeort"
 
 #. module: stock_picking_tracking
 #: model:ir.actions.act_window,name:stock_picking_tracking.stock_picking_tracking_location_action
 #: model:ir.ui.view,arch_db:stock_picking_tracking.stock_picking_tracking_location_view_search
 #: model:ir.ui.view,arch_db:stock_picking_tracking.stock_picking_tracking_location_view_tree
 msgid "Stock Picking Locations"
-msgstr ""
+msgstr "Lagerentnahmeorte"
 
 #. module: stock_picking_tracking
 #: model:ir.ui.view,arch_db:stock_picking_tracking.stock_picking_tracking_group_view_form
 msgid "Stock Picking Tracker"
-msgstr ""
+msgstr "Lagerentnahme-Tracker"
 
 #. module: stock_picking_tracking
 #: model:ir.actions.act_window,name:stock_picking_tracking.stock_picking_tracking_group_action
 #: model:ir.ui.view,arch_db:stock_picking_tracking.stock_picking_tracking_group_view_search
 #: model:ir.ui.view,arch_db:stock_picking_tracking.stock_picking_tracking_group_view_tree
 msgid "Stock Picking Trackers"
-msgstr ""
+msgstr "Lagerentnahme-Tracker"
 
 #. module: stock_picking_tracking
 #: model:ir.model,name:stock_picking_tracking.model_stock_picking_tracking_event
 msgid "Stock Picking Tracking Event"
-msgstr ""
+msgstr "Lagerentnahme-Trackingvorfall"
 
 #. module: stock_picking_tracking
 #: model:ir.model,name:stock_picking_tracking.model_stock_picking_tracking_group
 msgid "Stock Picking Tracking Group"
-msgstr ""
+msgstr "Lagerentnahme-Trackergruppe"
 
 #. module: stock_picking_tracking
 #: model:ir.model,name:stock_picking_tracking.model_stock_picking_tracking_location
 msgid "Stock Picking Tracking Location"
-msgstr ""
+msgstr "Lagerentnahme-Trackingort"
 
 #. module: stock_picking_tracking
 #: model:ir.ui.view,arch_db:stock_picking_tracking.stock_picking_view_form
 msgid "Tracking"
-msgstr ""
+msgstr "Tracking"
 
 #. module: stock_picking_tracking
 #: model:ir.model.fields,field_description:stock_picking_tracking.field_stock_picking_tracking_event_group_id
 msgid "Tracking Group"
-msgstr ""
+msgstr "Trackinggruppe"
 
 #. module: stock_picking_tracking
 #: model:ir.model.fields,field_description:stock_picking_tracking.field_stock_picking_tracking_group_ids
 msgid "Tracking Groups"
-msgstr ""
+msgstr "Trackinggruppen"
 
 #. module: stock_picking_tracking
 #: model:ir.ui.menu,name:stock_picking_tracking.stock_picking_tracking_location_menu
 msgid "Tracking Locations"
-msgstr ""
+msgstr "Trackingorte"
 
 #. module: stock_picking_tracking
 #: model:ir.model,name:stock_picking_tracking.model_stock_picking
 msgid "Transfer"
-msgstr "Lieferung vornehmen"
+msgstr "Umlagern"
 
 #. module: stock_picking_tracking
 #: selection:stock.picking.tracking.event,state:0
 msgid "Unknown"
-msgstr ""
+msgstr "Unbekannt"
 
 #. module: stock_picking_tracking
 #: model:ir.model.fields,field_description:stock_picking_tracking.field_stock_picking_tracking_group_message_unread
@@ -370,9 +371,9 @@ msgstr "Ungelesene Meldungen"
 #. module: stock_picking_tracking
 #: model:ir.model.fields,field_description:stock_picking_tracking.field_stock_picking_tracking_group_message_unread_counter
 msgid "Unread Messages Counter"
-msgstr ""
+msgstr "Ungelesene Meldungen"
 
 #. module: stock_picking_tracking
 #: model:ir.model.fields,field_description:stock_picking_tracking.field_stock_picking_tracking_location_zip_code
 msgid "Zip code"
-msgstr ""
+msgstr "PLZ"

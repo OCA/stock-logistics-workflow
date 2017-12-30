@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-24 10:54+0000\n"
-"PO-Revision-Date: 2017-06-24 10:54+0000\n"
+"POT-Creation-Date: 2017-12-19 03:55+0000\n"
+"PO-Revision-Date: 2017-12-19 03:55+0000\n"
 "Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2017\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
 "MIME-Version: 1.0\n"
@@ -89,3 +89,8 @@ msgstr "Lagerbuchung"
 #: model:ir.model,name:stock_picking_invoice_link.model_stock_picking
 msgid "Transfer"
 msgstr "Lieferung vornehmen"
+
+#. module: stock_picking_invoice_link
+#: model:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
+msgid "View Invoice"
+msgstr "Rechnung sichten"

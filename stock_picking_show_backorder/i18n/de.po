@@ -4,13 +4,14 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
+# Rudolf Schnapka <rs@techno-flex.de>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-05 02:50+0000\n"
-"PO-Revision-Date: 2017-05-05 02:50+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"POT-Creation-Date: 2017-12-19 03:56+0000\n"
+"PO-Revision-Date: 2017-12-19 03:56+0000\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2017\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,7 +23,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_picking_show_backorder.field_stock_picking_backorder_ids
 #: model:ir.ui.view,arch_db:stock_picking_show_backorder.view_picking_form
 msgid "Backorders"
-msgstr ""
+msgstr "Rückstände"
 
 #. module: stock_picking_show_backorder
 #: model:ir.model,name:stock_picking_show_backorder.model_stock_picking
