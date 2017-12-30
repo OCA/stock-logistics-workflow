@@ -3,20 +3,20 @@
 # * stock_no_negative
 # 
 # Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2017
+# Peter Hageman <hageman.p@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-18 03:48+0000\n"
 "PO-Revision-Date: 2017-12-18 03:48+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
-"Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
+"Last-Translator: Peter Hageman <hageman.p@gmail.com>, 2017\n"
+"Language-Team: Dutch (Netherlands) (https://www.transifex.com/oca/teams/23907/nl_NL/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: fr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: nl_NL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_no_negative
 #: code:addons/stock_no_negative/models/stock_quant.py:32
@@ -29,7 +29,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_no_negative.field_product_product_allow_negative_stock
 #: model:ir.model.fields,field_description:stock_no_negative.field_product_template_allow_negative_stock
 msgid "Allow Negative Stock"
-msgstr "Autoriser le stock négatif"
+msgstr ""
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_product_category_allow_negative_stock
@@ -38,9 +38,6 @@ msgid ""
 "category. The options doesn't apply to products attached to sub-categories "
 "of this category."
 msgstr ""
-"Autorise les niveaux de stock négatif pour les articles stockables attachés "
-"à cette catégorie. Cette option ne s'applique pas aux articles attachés à "
-"des sous-catégories de cette catégorie."
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_product_product_allow_negative_stock
@@ -51,25 +48,21 @@ msgid ""
 "related stock moves will be blocked if the stock level becomes negative with"
 " the stock move."
 msgstr ""
-"Si cette option n'est pas activée sur cet article ni sur la catégorie à "
-"laquelle il est rattaché et que cet article est un produit stockable, alors "
-"la validation des mouvements de stock sera bloquée si le niveau de stock "
-"devient négatif avec ce mouvement de stock."
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_product_category
 msgid "Product Category"
-msgstr "Catégorie d'articles"
+msgstr ""
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_product_template
 msgid "Product Template"
-msgstr "Modèle d'article"
+msgstr "Productsjabloon"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_stock_quant
 msgid "Quants"
-msgstr "Quants"
+msgstr ""
 
 #. module: stock_no_negative
 #: code:addons/stock_no_negative/models/stock_quant.py:33
