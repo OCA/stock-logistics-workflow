@@ -6,7 +6,7 @@
 Product Expiry Simple
 =====================
 
-This module is similar to the official `product_expiry <https://www.odoo.com/apps/modules/10.0/product_expiry/>`_ module that adds support for *Expiry Dates* on products, but it is both simpler and better:
+This module is similar to the official `product_expiry <https://www.odoo.com/apps/modules/11.0/product_expiry/>`_ module that adds support for *Expiry Dates* on products, but it is both simpler and better:
 
 * Only one *Expiry Date* field instead of 4 fields (End of Life Date, Best before Date, Removal Date, Alert Date)!
 * Use date field instead of datetime field for *Expiry Date*
@@ -28,7 +28,7 @@ Usage
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/154/10.0
+   :target: https://runbot.odoo-community.org/runbot/154/11.0
 
 Bug Tracker
 ===========
@@ -45,6 +45,7 @@ Contributors
 ------------
 
 * Alexis de Lattre <alexis.delattre@akretion.com>
+* Alan Ramos <alan.ramos@jarsa.com.mx>
 
 Maintainer
 ----------
