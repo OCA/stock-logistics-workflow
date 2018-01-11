@@ -17,7 +17,7 @@ To use this module, you need to:
 
 #. Go to products and create one of type "Stockable".
 #. Update quantities on hand to have stock of it.
-#. Go to inventory dashboard and click on "Delivery Out" card to do a new
+#. Go to inventory dashboard and click on "Delivery Orders" card to do a new
    transfer.
 #. Create a picking and select the product to do the transfer.
 #. Reserve the picking.
@@ -26,7 +26,7 @@ To use this module, you need to:
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/154/9.0
+   :target: https://runbot.odoo-community.org/runbot/154/10.0
 
 Bug Tracker
 ===========
@@ -44,13 +44,14 @@ Images
 
 * Odoo Community Association: `Icon <https://github.com/OCA/maintainer-tools/
   blob/master/template/module/static/description/icon.svg>`_.
-* Open Clipart: `Icon <https://openclipart.org/detail/260861/warehouse15>`_.
+* Open Clipart: `Icon <https://openclipart.org/detail/260861/warehouse15>`__.
 
 
 Contributors
 ------------
 
 * Sergio Teruel <sergio.teruel@tecnativa.com>
+* Lois Rilo <lois.rilo@eficent.com>
 
 Maintainer
 ----------

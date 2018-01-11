@@ -2,8 +2,8 @@
 # © 2017 Sergio Teruel <sergio.teruel@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import _, api, fields, models
-from openerp.exceptions import UserError
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 
 
 class StockPickingOperationWizard(models.TransientModel):
@@ -30,7 +30,10 @@ class StockPickingOperationWizard(models.TransientModel):
     def _get_allowed_locations(self):
         return ['internal']
 
-    def _get_allowed_picking(self):
+    def _get_allowed_location_domain(self):
+        return [('usage', 'in', self._get_allowed_locations())]
+
+    def _get_allowed_picking_states(self):
         return ['assigned']
 
     location_dest_id = fields.Many2one(
@@ -43,13 +46,13 @@ class StockPickingOperationWizard(models.TransientModel):
         comodel_name='stock.location',
         string='Old destination location',
         default=_default_old_dest_location_id,
-        domain=lambda self: [('usage', 'in', self._get_allowed_locations())],
+        domain=lambda self: self._get_allowed_location_domain(),
     )
     new_location_dest_id = fields.Many2one(
         comodel_name='stock.location',
         string='New destination location',
         required=True,
-        domain=lambda self: [('usage', 'in', self._get_allowed_locations())],
+        domain=lambda self: self._get_allowed_location_domain(),
     )
     change_all = fields.Boolean(
         string='Change All',
@@ -58,12 +61,18 @@ class StockPickingOperationWizard(models.TransientModel):
 
     def check_forbbiden_pickings(self, pickings):
         forbidden_pickings = pickings.filtered(
-            lambda x: x.state not in self._get_allowed_picking())
+            lambda x: x.state not in self._get_allowed_picking_states())
         if forbidden_pickings:
             raise UserError(_(
                 'You can not change operations destination location if '
                 'picking state not is in %s') % ','.join(
-                self._get_allowed_picking()))
+                self._get_allowed_picking_states()))
+        pikings_with_chained_moves = pickings.filtered(
+            lambda x: x.move_lines.mapped('move_dest_id'))
+        if pikings_with_chained_moves:
+            raise UserError(_(
+                'You cannot change destination location if any move has a '
+                'destination move.'))
 
     @api.multi
     def action_apply(self):
