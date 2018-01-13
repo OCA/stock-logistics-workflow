@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014-2017 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -22,12 +21,15 @@ class TestStockPickingShowReturn(common.TransactionCase):
                 'name': self.product.name,
                 'product_id': self.product.id,
                 'product_uom': self.product.uom_id.id,
+                'product_uom_qty': 1,
             })],
         })
 
     def test_returned_ids_field(self):
+        self.picking.action_assign()
         self.picking.force_assign()
-        self.picking.do_transfer()
+        self.picking.move_line_ids.qty_done = 1
+        self.picking.action_done()
         wizard = self.env['stock.return.picking'].with_context(
             active_ids=self.picking.ids, active_id=self.picking.id).create({})
         wizard.create_returns()
