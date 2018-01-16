@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-19 03:55+0000\n"
-"PO-Revision-Date: 2017-12-19 03:55+0000\n"
+"POT-Creation-Date: 2017-12-30 14:38+0000\n"
+"PO-Revision-Date: 2017-12-30 14:38+0000\n"
 "Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2017\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
 "MIME-Version: 1.0\n"
@@ -326,7 +326,7 @@ msgstr "deposit.stock.quant.wizard"
 #. module: stock_deposit
 #: model:ir.model,name:stock_deposit.model_deposit_stock_quant_wizard_line
 msgid "deposit.stock.quant.wizard.line"
-msgstr ""
+msgstr "deposit.stock.quant.wizard.line"
 
 #. module: stock_deposit
 #: model:ir.ui.view,arch_db:stock_deposit.deposit_stock_quant_wizard_view
