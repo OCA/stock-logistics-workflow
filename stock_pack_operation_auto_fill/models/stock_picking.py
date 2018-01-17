@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models, _
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -15,7 +14,7 @@ class StockPicking(models.Model):
         readonly=True,
     )
 
-    @api.depends('state', 'pack_operation_ids')
+    @api.depends('state', 'move_line_ids')
     def _compute_action_pack_operation_auto_fill_allowed(self):
         """ The auto fill button is allowed only in availabe or partially
         available state, and the picking have pack operations.
@@ -23,7 +22,7 @@ class StockPicking(models.Model):
         for rec in self:
             rec.action_pack_op_auto_fill_allowed = \
                 rec.state in ['partially_available', 'assigned'] and \
-                rec.pack_operation_ids
+                rec.move_line_ids
 
     @api.multi
     def _check_action_pack_operation_auto_fill_allowed(self):
@@ -45,7 +44,7 @@ class StockPicking(models.Model):
             - the operation has no qty_done yet.
         """
         self._check_action_pack_operation_auto_fill_allowed()
-        operations = self.mapped('pack_operation_ids')
+        operations = self.mapped('move_line_ids')
         operations_to_auto_fill = operations.filtered(
             lambda op: not op.lots_visible and op.product_id and
             not op.qty_done)

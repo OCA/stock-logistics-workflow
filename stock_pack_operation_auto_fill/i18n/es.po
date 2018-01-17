@@ -21,12 +21,12 @@ msgstr ""
 #. module: stock_pack_operation_auto_fill
 #: model:ir.model.fields,field_description:stock_pack_operation_auto_fill.field_stock_picking_action_pack_op_auto_fill_allowed
 msgid "Action pack op auto fill allowed"
-msgstr ""
+msgstr "Acción de auto-relleno disponible"
 
 #. module: stock_pack_operation_auto_fill
 #: model:ir.ui.view,arch_db:stock_pack_operation_auto_fill.stock_picking_form_view
 msgid "Auto fill operations"
-msgstr ""
+msgstr "Auto rellenar operaciones"
 
 #. module: stock_pack_operation_auto_fill
 #: code:addons/stock_pack_operation_auto_fill/models/stock_picking.py:32
@@ -35,6 +35,8 @@ msgid ""
 "Filling the operations automatically is not possible, perhaps the pickings "
 "aren't in the right state (Partially available or available)."
 msgstr ""
+"Llenar las operaciosn de forma automática no es posible, posiblemente los movimientos "
+"no están en el estado correcto (Parcialmente disponible o Disponible)."
 
 #. module: stock_pack_operation_auto_fill
 #: model:ir.ui.view,arch_db:stock_pack_operation_auto_fill.stock_picking_form_view
@@ -42,6 +44,8 @@ msgid ""
 "This button will automatically fill all operations that have no tracking set"
 " on the product, no processed qty and no selected package."
 msgstr ""
+"Este botón va a llenar todas las operaciones de forma automática, si no tienen activada la trazabilidad"
+" en el producto, ninguna cantidad procesada y ningún paquete seleccionado."
 
 #. module: stock_pack_operation_auto_fill
 #: model:ir.model,name:stock_pack_operation_auto_fill.model_stock_picking

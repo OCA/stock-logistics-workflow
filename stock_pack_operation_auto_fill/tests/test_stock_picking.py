@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -149,18 +148,18 @@ class TestStockPicking(TransactionCase):
 
         self.picking.action_confirm()
         self.assertEqual(self.picking.state, 'assigned')
-        self.assertEqual(len(self.picking.pack_operation_ids), 4)
+        self.assertEqual(len(self.picking.move_line_ids), 4)
 
         # At this point for each move we have an operation created.
-        product_8_op = self.picking.pack_operation_ids.filtered(
+        product_8_op = self.picking.move_line_ids.filtered(
             lambda p: p.product_id == self.product_8)
         self.assertTrue(product_8_op)
 
-        product_9_op = self.picking.pack_operation_ids.filtered(
+        product_9_op = self.picking.move_line_ids.filtered(
             lambda p: p.product_id == self.product_9)
         self.assertTrue(product_9_op)
 
-        product_11_op = self.picking.pack_operation_ids.filtered(
+        product_11_op = self.picking.move_line_ids.filtered(
             lambda p: p.product_id == self.product_11)
         self.assertTrue(product_11_op)
 
@@ -169,15 +168,14 @@ class TestStockPicking(TransactionCase):
         pack = self.env['stock.quant.package'].create({
             'quant_ids': [(0, 0, {
                 'product_id': self.product_11.id,
-                'qty': 1,
+                'quantity': 1,
                 'location_id': self.supplier_location.id,
                 'product_uom_id': self.product_11.uom_id.id})]})
 
         product_11_op.write(
-            {'product_id': False,
-             'package_id': pack.id})
+            {'package_id': pack.id})
 
-        product_10_op = self.picking.pack_operation_ids.filtered(
+        product_10_op = self.picking.move_line_ids.filtered(
             lambda p: p.product_id == self.product_10)
         self.assertTrue(product_10_op)
 
@@ -187,5 +185,5 @@ class TestStockPicking(TransactionCase):
         self.picking.action_pack_operation_auto_fill()
         self.assertFalse(product_8_op.qty_done)
         self.assertTrue(product_9_op.qty_done)
-        self.assertFalse(product_11_op.qty_done)
+        self.assertTrue(product_11_op.qty_done)
         self.assertFalse(product_10_op.qty_done)

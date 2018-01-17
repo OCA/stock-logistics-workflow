@@ -29,7 +29,7 @@ matching the following conditions will be filled automatically:
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/154/9.0
+   :target: https://runbot.odoo-community.org/runbot/154/11.0
 
 Bug Tracker
 ===========
@@ -45,12 +45,22 @@ Credits
 Images
 ------
 
-* Odoo Community Association: `Icon <https://github.com/OCA/maintainer-tools/blob/master/template/module/static/description/icon.svg>`_.
+* Odoo Community Association: `Icon <https://odoo-community.org/logo.png>`_.
 
 Contributors
 ------------
 
 * Zakaria Makrelouf (ACSONE SA/NV) <z.makrelouf@gmail.com>
+* Luis Triana (Jarsa Sistemas de S.A. de C.V.) <luis.triana@jarsa.com.mx>
+
+Do not contact contributors directly about support or help with technical issues.
+
+Funders
+-------
+
+The development of this module has been financially supported by:
+
+* ACSONE SA/NV
 
 Maintainer
 ----------
