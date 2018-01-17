@@ -39,7 +39,7 @@ class StockPicking(models.Model):
     def _compute_picking_packages(self):
         for record in self:
             package_ids = set(
-                record.pack_operation_ids.mapped('result_package_id.id'),
+                record.pack_operation_ids.mapped('result_package_id.id') +
                 record.pack_operation_ids.mapped('package_id.id'),
             )
             record.package_ids = [(6, 0, package_ids)]

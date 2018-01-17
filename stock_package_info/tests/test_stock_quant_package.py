@@ -75,7 +75,7 @@ class TestStockQuantPackage(ScaffoldTestObjects):
 
     def test_dimensions(self):
         """ It should inherit dimensions from onchange_product_pack_tmpl_id """
-        self.parent_package.onchange_product_pack_tmpl_id()
+        self.parent_package.onchange_product_packaging_id()
         self.assertListEqual(
             [1, 3, 2, 4],
             [

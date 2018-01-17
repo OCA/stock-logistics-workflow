@@ -97,7 +97,7 @@ class ProductPackagingTemplate(models.Model):
     )
 
     _sql_constraints = [
-        ('packaging_template_name_uniq', 'UNIQUE(packaging_template_name)',
+        ('packaging_template_name_uniq', 'UNIQUE(name)',
          'Template name must be unique.')
     ]
 

@@ -17,8 +17,11 @@ class ScaffoldTestObjects(TransactionCase):
     def scaffold_stock_quant_package(self):
 
         packaging_template_1 = self.create_product_packaging_template()
-        stock_quant_package_parent = self.create_stock_quant_package({
+        product_package_1 = self.create_product_packaging({
             'product_pack_tmpl_id': packaging_template_1.id,
+        })
+        stock_quant_package_parent = self.create_stock_quant_package({
+            'packaging_id': product_package_1.id,
         })
         self.scaffold_stock_quant({
             'package_id': stock_quant_package_parent.id,
@@ -28,8 +31,11 @@ class ScaffoldTestObjects(TransactionCase):
         })
 
         packaging_template_2 = self.create_product_packaging_template()
-        stock_quant_package_child = self.create_stock_quant_package({
+        product_package_2 = self.create_product_packaging({
             'product_pack_tmpl_id': packaging_template_2.id,
+        })
+        stock_quant_package_child = self.create_stock_quant_package({
+            'packaging_id': product_package_2.id,
             'parent_id': stock_quant_package_parent.id,
         })
 
@@ -72,10 +78,8 @@ class ScaffoldTestObjects(TransactionCase):
     def create_stock_quant_package(self, update_vals=None):
         quant_package_model = self.env['stock.quant.package']
         name = self.new_random_name()
-        pack_template = self.create_product_packaging_template()
-
         quant_package_vals = {
-            'product_pack_tmpl_id': pack_template.id,
+            'packaging_id': None,
             'quant_ids': None,
             'children_ids': None,
             'name': name,
@@ -123,7 +127,7 @@ class ScaffoldTestObjects(TransactionCase):
             'product_tmpl_id': None,
             'rows': 1,
             'name': self.new_random_name(),
-            'packaging_template_name': self.new_random_name(),
+            'product_pack_tmpl_id': None,
         }
 
         if update_vals:
@@ -135,16 +139,16 @@ class ScaffoldTestObjects(TransactionCase):
         self.inch_id = self.env.ref('product.product_uom_inch')
         self.oz_id = self.env.ref('product.product_uom_oz')
         pack_tmpl_vals = {
-            'length': 1,
-            'height': 2,
-            'width': 3,
+            'name': self.new_random_name(),
+            'length_float': 1,
+            'height_float': 2,
+            'width_float': 3,
             'weight': 4,
             'length_uom_id': self.inch_id.id,
             'height_uom_id': self.inch_id.id,
             'width_uom_id': self.inch_id.id,
             'weight_uom_id': self.oz_id.id,
             'package_type': 'box',
-            'packaging_template_name': self.new_random_name(),
         }
 
         if update_vals:

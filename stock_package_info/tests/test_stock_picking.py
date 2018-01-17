@@ -9,7 +9,9 @@ class TestStockPicking(ScaffoldTestObjects):
 
     def setUp(self):
         super(TestStockPicking, self).setUp()
-        self.picking = self.scaffold_stock_quant()
+        packages = self.scaffold_stock_quant_package()
+        self.parent_p = packages['stock_quant_package_parent']
+        self.child_p = packages['stock_quant_package_child']
 
     def test_compute_package_ids(self):
         """ Test and package_ids correct """
@@ -18,8 +20,13 @@ class TestStockPicking(ScaffoldTestObjects):
         picking.force_assign()
         for item in picking.pack_operation_product_ids:
             item.qty_done = 1.0
-        pack_id = picking.put_in_pack()
+            item.package_id = self.parent_p
+            item.result_package_id = self.child_p
         self.assertIn(
-            pack_id.id,
-            picking.package_ids.ids
+            self.parent_p.id,
+            picking.package_ids.ids,
+        )
+        self.assertIn(
+            self.child_p.id,
+            picking.package_ids.ids,
         )

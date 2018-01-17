@@ -5,7 +5,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo import api, fields, models
-from odoo.addons import decimal_precision as dp
 
 
 class ProductPackaging(models.Model):
@@ -117,4 +116,3 @@ class ProductPackaging(models.Model):
     @api.model
     def _search_dimension(self, attribute, operator, value):
         return [('%s_float' % attribute, operator, value)]
-

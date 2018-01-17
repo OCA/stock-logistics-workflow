@@ -7,9 +7,6 @@
 from odoo import api, fields, models
 from odoo.addons import decimal_precision as dp
 
-import logging
-_logger = logging.getLogger(__name__)
-
 
 class StockQuantPackage(models.Model):
     _inherit = 'stock.quant.package'
