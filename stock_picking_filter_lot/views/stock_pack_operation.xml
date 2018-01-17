@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 Simone Rubino - Agile Business Group
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="pack_operation_lot_filter_form" model="ir.ui.view">
+        <field name="name">Add filter to stock pack operation lot form</field>
+        <field name="model">stock.pack.operation</field>
+        <field name="inherit_id" ref="stock.view_pack_operation_lot_form"/>
+        <field name="arch" type="xml">
+            <field name="pack_lot_ids" position="before">
+                <field name="filter_location_id" invisible="context.get('only_create', False)"/>
+            </field>
+            <field name="pack_lot_ids" position="attributes">
+                <attribute name="colspan">2</attribute>
+                <attribute name="attrs">{'readonly': ['|', ('state', '=', 'done'), ('filter_location_id', '=', False)]}</attribute>
+            </field>
+            <field name="lot_id" position="attributes">
+                <attribute name="domain">[('product_id','=', parent.product_id),('location_ids', 'child_of', parent.filter_location_id)]</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>
