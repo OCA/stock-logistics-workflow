@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -23,7 +23,7 @@
 #
 ##############################################################################
 
-from openerp import models, api, _, workflow, exceptions
+from odoo import models, api, exceptions, _
 
 
 class stock_picking(models.Model):
@@ -48,14 +48,10 @@ class stock_picking(models.Model):
                 raise exceptions.Warning(
                     _('Picking %s has invoices!') % (picking.name))
             picking.move_lines.write({'state': 'draft'})
+            # remove quants done
+            for move in picking.move_lines:
+                move.quant_ids.with_context(force_unlink=True).unlink()
             picking.state = 'draft'
-            if picking.invoice_state == 'invoiced' and not picking.invoice_id:
-                picking.invoice_state = '2binvoiced'
-            # Deleting the existing instance of workflow
-            workflow.trg_delete(
-                self._uid, 'stock.picking', picking.id, self._cr)
-            workflow.trg_create(
-                self._uid, 'stock.picking', picking.id, self._cr)
             picking.message_post(
                 _("The picking has been re-opened and set to draft state"))
         return
