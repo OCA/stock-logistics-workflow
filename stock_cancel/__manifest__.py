@@ -23,7 +23,7 @@
 
 {
     'name': 'Stock Cancel',
-    'version': '1.2',
+    'version': '10.0.0.1.0',
     'category': 'Stock',
     'description': """This module allows you to bring back a completed stock
 picking to draft state""",

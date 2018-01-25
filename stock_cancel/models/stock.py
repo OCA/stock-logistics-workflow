@@ -26,7 +26,7 @@
 from odoo import models, api, exceptions, _
 
 
-class stock_picking(models.Model):
+class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
     @api.multi
