@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+     <record id="stock_location_route_lend" model='stock.location.route'>
+        <field name="name">Items Lend</field>
+        <field name="product_categ_selectable" eval="True"/>
+        <field name="product_selectable" eval="False"/>
+        <field name="show_reserved" eval="True"/>
+        <field name="sequence" eval="12"/>
+     </record>
+
+     <record id="stock_location_path_lend" model="stock.location.path">
+     	<field name="name">Lend Return</field>
+		<field name="sequence" eval="1"/>
+		<field name="location_from_id" ref="stock_items_lend.stock_lend_location"/>
+		<field name="location_dest_id" ref="stock.stock_location_stock"/>
+		<field name="auto">manual</field>
+		<field name="picking_type_id" ref="stock_items_lend.stock_picking_type_lend_return"/>
+		<field name="delay" eval="0"/>
+		<field name="route_id" ref="stock_items_lend.stock_location_route_lend"/>
+     </record>
+</odoo>

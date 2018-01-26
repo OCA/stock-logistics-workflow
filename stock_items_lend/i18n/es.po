@@ -1,0 +1,36 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_items_lend
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-26 00:04+0000\n"
+"PO-Revision-Date: 2018-01-26 00:04+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_items_lend
+#: model:stock.location.route,name:stock_items_lend.stock_location_route_lend
+msgid "Items Lend"
+msgstr "Prestámo de Articulos"
+
+#. module: stock_items_lend
+#: model:stock.location,name:stock_items_lend.stock_lend_location
+msgid "Lend"
+msgstr "Préstamo"
+
+#. module: stock_items_lend
+#: model:stock.picking.type,name:stock_items_lend.stock_picking_type_lend_return
+msgid "Lend Returns"
+msgstr "Devolución de Prestámos de Articulos"
+
+#. module: stock_items_lend
+#: model:stock.picking.type,name:stock_items_lend.stock_picking_type_lend
+msgid "Lends"
+msgstr "Prestámos de Articulos"

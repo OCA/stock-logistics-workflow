@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <record model="ir.sequence" id="stock_lend_return_sequence">
+        <field name="name">Lend Return Sequence</field>
+        <field name="implementation">no_gap</field>
+        <field name="code">Return</field>
+        <field name="prefix">WH/LEND/DEV/</field>
+        <field name="padding">4</field>
+        <field name="number_increment">1</field>
+    </record>
+    <record model="ir.sequence" id="stock_lend_sequence">
+        <field name="name">Lend Sequence</field>
+        <field name="implementation">no_gap</field>
+        <field name="code">truck</field>
+        <field name="prefix">WH/LEND/</field>
+        <field name="padding">4</field>
+        <field name="number_increment">1</field>
+    </record>
+</odoo>
