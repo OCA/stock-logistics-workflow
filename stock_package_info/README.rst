@@ -6,7 +6,7 @@
 Stock Packaging Info
 ====================
 
-This module displays in the picking_ids, all packages appearing in operations and
+This module displays in the pickings, all packages appearing in operations and
 the package provides the following information:
 
 * Width
@@ -32,7 +32,7 @@ The value of this field can be changed.
 In the transfer wizard picking_ids, you have a new button "Save for later", that
 allows only modify datas of operations of the picking.
 
-Also, this module displays in the picking_ids, the number of packages per logistic
+Also, this module displays in the pickings, the number of packages per logistic
 unit, and kg. and lots by package.
 
 
@@ -48,7 +48,7 @@ Bug Tracker
 ===========
 
 Bugs are tracked on `GitHub Issues
-<https://github.com/OCA/{project_repo}/issues>`_. In case of trouble, please
+<https://github.com/OCA/stock-logistics-workflow/issues>`_. In case of trouble, please
 check there if your issue has already been reported. If you spotted it first,
 help us smashing it by providing a detailed and welcomed feedback.
 

@@ -20,22 +20,26 @@ class StockQuantPackage(models.Model):
         digits=dp.get_precision('Stock Weight'),
         help='The length of the package',
         related='packaging_id.length_float',
+        readonly=True,
     )
     width = fields.Float(
         digits=dp.get_precision('Stock Weight'),
         help='The width of the package',
         related='packaging_id.width_float',
+        readonly=True,
     )
     height = fields.Float(
         digits=dp.get_precision('Stock Weight'),
         help='The height of the package',
         related='packaging_id.height_float',
+        readonly=True,
     )
     empty_weight = fields.Float(
         string='Empty Package Weight',
         digits=dp.get_precision('Stock Weight'),
         help='Weight of the empty package',
         related='packaging_id.weight',
+        readonly=True,
     )
     permitted_volume = fields.Float(
         store=True,
@@ -85,21 +89,25 @@ class StockQuantPackage(models.Model):
         string='Length Unit',
         comodel_name='product.uom',
         related='packaging_id.length_uom_id',
+        readonly=True,
     )
     width_uom_id = fields.Many2one(
         string='Width Unit',
         comodel_name='product.uom',
         related='packaging_id.width_uom_id',
+        readonly=True,
     )
     height_uom_id = fields.Many2one(
         string='Height Unit',
         comodel_name='product.uom',
         related='packaging_id.height_uom_id',
+        readonly=True,
     )
     weight_uom_id = fields.Many2one(
         string='Weight Unit',
         comodel_name='product.uom',
         related='packaging_id.weight_uom_id',
+        readonly=True,
     )
 
     @api.multi

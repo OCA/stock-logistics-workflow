@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2016 LasLabs Inc.
+    Copyright 2018 Tecnativa - Pedro M. Baeza
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<odoo>
+
+    <record id="product_variant_easy_edit_view" model="ir.ui.view">
+        <field name="name">product.product.view.form.easy - Add weight net</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='weight']/.." position="after">
+                <label for="weight_net"/>
+                <div class="o_row">
+                    <field name="weight_net"/>
+                    <span>kg</span>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

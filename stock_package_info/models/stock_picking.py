@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright 2016-2017 LasLabs Inc.
-# Copyright 2015 Serv. Tec. Avanzados - Pedro M. Baeza
+# Copyright 2015-2018 Tecnativa - Pedro M. Baeza
 # Copyright 2015 AvanzOsc
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
@@ -121,3 +121,10 @@ class StockPicking(models.Model):
                         continue
                 ops |= pack_op_obj.create(pack_op_vals)
         return ops
+
+    @api.multi
+    def do_transfer(self):
+        res = super(StockPicking, self).do_transfer()
+        for picking in self.filtered('pack_operation_ids'):
+            picking.create_all_move_packages()
+        return res

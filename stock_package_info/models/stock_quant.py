@@ -15,12 +15,14 @@ class StockQuant(models.Model):
         related='product_id.weight',
         help='Weight of contents including package weight',
         digits=dp.get_precision('Stock Weight'),
+        readonly=True,
     )
     weight_net = fields.Float(
         string='Net Weight',
         related='product_id.weight_net',
         help='Weight of contents excluding package weight',
         digits=dp.get_precision('Stock Weight'),
+        readonly=True,
     )
     total_weight = fields.Float(
         store=True,
@@ -36,6 +38,7 @@ class StockQuant(models.Model):
     volume = fields.Float(
         related='product_id.volume',
         digits=dp.get_precision('Stock Weight'),
+        readonly=True,
     )
     total_volume = fields.Float(
         store=True,
