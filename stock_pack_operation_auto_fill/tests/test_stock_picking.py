@@ -21,10 +21,11 @@ class TestStockPicking(TransactionCase):
         self.supplier_location = self.env.ref('stock.stock_location_suppliers')
 
         # products
-        self.product_9 = self.env.ref('product.product_product_9')
         self.product_8 = self.env.ref('product.product_product_8')
+        self.product_9 = self.env.ref('product.product_product_9')
         self.product_10 = self.env.ref('product.product_product_10')
         self.product_11 = self.env.ref('product.product_product_11')
+        self.product_12 = self.env.ref('product.product_product_12')
 
         # supplier
         self.supplier = self.env.ref('base.res_partner_1')
@@ -34,6 +35,7 @@ class TestStockPicking(TransactionCase):
                 'partner_id': self.supplier.id,
                 'picking_type_id': self.picking_type_in.id,
                 'location_id': self.supplier_location.id})
+        self.dozen = self.env.ref('product.product_uom_dozen')
 
     def test_compute_action_pack_operation_auto_fill_allowed(self):
 
@@ -97,10 +99,10 @@ class TestStockPicking(TransactionCase):
 
         # set tracking on the products
         self.picking_type_in.use_create_lots = True
-        self.product_9.tracking = 'none'
-        self.product_11.tracking = 'none'
         self.product_8.tracking = 'lot'
+        self.product_9.tracking = 'none'
         self.product_10.tracking = 'serial'
+        self.product_11.tracking = 'none'
 
         self.move_model.create(
             dict(product_id=self.product_8.id,
@@ -125,6 +127,17 @@ class TestStockPicking(TransactionCase):
                  product_uom=self.product_9.uom_id.id))
 
         self.move_model.create(
+            dict(product_id=self.product_10.id,
+                 picking_id=self.picking.id,
+                 name=self.product_10.display_name,
+                 picking_type_id=self.picking_type_in.id,
+                 product_uom_qty=1.0,
+                 location_id=self.supplier_location.id,
+                 location_dest_id=self.picking_type_in.
+                 default_location_dest_id.id,
+                 product_uom=self.product_10.uom_id.id))
+
+        self.move_model.create(
             dict(product_id=self.product_11.id,
                  picking_id=self.picking.id,
                  name=self.product_11.display_name + ' pack',
@@ -136,19 +149,19 @@ class TestStockPicking(TransactionCase):
                  product_uom=self.product_11.uom_id.id))
 
         self.move_model.create(
-            dict(product_id=self.product_10.id,
+            dict(product_id=self.product_12.id,
                  picking_id=self.picking.id,
-                 name=self.product_10.display_name,
+                 name=self.product_12.display_name,
                  picking_type_id=self.picking_type_in.id,
                  product_uom_qty=1.0,
                  location_id=self.supplier_location.id,
                  location_dest_id=self.picking_type_in.
                  default_location_dest_id.id,
-                 product_uom=self.product_10.uom_id.id))
+                 product_uom=self.dozen.id))
 
         self.picking.action_confirm()
         self.assertEqual(self.picking.state, 'assigned')
-        self.assertEqual(len(self.picking.move_line_ids), 4)
+        self.assertEqual(len(self.picking.move_line_ids), 5)
 
         # At this point for each move we have an operation created.
         product_8_op = self.picking.move_line_ids.filtered(
@@ -162,6 +175,9 @@ class TestStockPicking(TransactionCase):
         product_11_op = self.picking.move_line_ids.filtered(
             lambda p: p.product_id == self.product_11)
         self.assertTrue(product_11_op)
+
+        product_12_op = self.picking.move_line_ids.filtered(
+            lambda p: p.product_id == self.product_12)
 
         # replace the product_id with a pack in for the product_11_op
         # operation
@@ -185,5 +201,6 @@ class TestStockPicking(TransactionCase):
         self.picking.action_pack_operation_auto_fill()
         self.assertFalse(product_8_op.qty_done)
         self.assertTrue(product_9_op.qty_done)
-        self.assertTrue(product_11_op.qty_done)
         self.assertFalse(product_10_op.qty_done)
+        self.assertTrue(product_11_op.qty_done)
+        self.assertEqual(product_12_op.product_uom_qty, product_12_op.qty_done)
