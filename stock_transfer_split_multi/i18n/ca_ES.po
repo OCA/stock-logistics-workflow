@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-17 16:34+0000\n"
+"POT-Creation-Date: 2018-02-27 01:53+0000\n"
 "PO-Revision-Date: 2015-10-21 16:34+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: Catalan (Spain) (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/ca_ES/)\n"
@@ -25,17 +25,17 @@ msgstr "Cancel·la"
 #. module: stock_transfer_split_multi
 #: field:stock.transfer.split.multi,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Creat per"
 
 #. module: stock_transfer_split_multi
 #: field:stock.transfer.split.multi,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Creat a"
 
 #. module: stock_transfer_split_multi
 #: field:stock.transfer.split.multi,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Nom visible"
 
 #. module: stock_transfer_split_multi
 #: field:stock.transfer.split.multi,id:0
@@ -45,17 +45,17 @@ msgstr ""
 #. module: stock_transfer_split_multi
 #: field:stock.transfer.split.multi,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Darrera modificació en"
 
 #. module: stock_transfer_split_multi
 #: field:stock.transfer.split.multi,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Darrera actualització per"
 
 #. module: stock_transfer_split_multi
 #: field:stock.transfer.split.multi,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Darrera actualització el"
 
 #. module: stock_transfer_split_multi
 #: field:stock.transfer.split.multi,split_qty:0

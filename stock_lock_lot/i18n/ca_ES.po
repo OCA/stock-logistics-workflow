@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-18 01:44+0000\n"
-"PO-Revision-Date: 2016-11-22 16:25+0000\n"
+"POT-Creation-Date: 2018-02-27 01:52+0000\n"
+"PO-Revision-Date: 2018-02-02 14:11+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Catalan (Spain) (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/ca_ES/)\n"
 "MIME-Version: 1.0\n"
@@ -16,6 +16,12 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Language: ca_ES\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: stock_lock_lot
+#: field:stock.location,allow_locked:0
+#: field:stock.transfer_details_items,allow_locked:0
+msgid "Allow Locked"
+msgstr ""
 
 #. module: stock_lock_lot
 #: model:res.groups,name:stock_lock_lot.group_lock_lot
@@ -63,12 +69,12 @@ msgstr "Cancel·la"
 #. module: stock_lock_lot
 #: field:wiz.lock.lot,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Creat per"
 
 #. module: stock_lock_lot
 #: field:wiz.lock.lot,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Creat a"
 
 #. module: stock_lock_lot
 #: selection:stock.production.lot,lock_reason:0
@@ -78,7 +84,7 @@ msgstr ""
 #. module: stock_lock_lot
 #: field:wiz.lock.lot,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Nom visible"
 
 #. module: stock_lock_lot
 #: field:wiz.lock.lot,id:0
@@ -99,19 +105,29 @@ msgid ""
 msgstr ""
 
 #. module: stock_lock_lot
+#: model:ir.model,name:stock_lock_lot.model_stock_inventory_line
+msgid "Inventory Line"
+msgstr ""
+
+#. module: stock_lock_lot
+#: model:ir.model,name:stock_lock_lot.model_stock_location
+msgid "Inventory Locations"
+msgstr ""
+
+#. module: stock_lock_lot
 #: field:wiz.lock.lot,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Darrera modificació en"
 
 #. module: stock_lock_lot
 #: field:wiz.lock.lot,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Darrera actualització per"
 
 #. module: stock_lock_lot
 #: field:wiz.lock.lot,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Darrera actualització el"
 
 #. module: stock_lock_lot
 #: view:stock.quant:stock_lock_lot.quant_search_view_inh_locklot
@@ -131,6 +147,11 @@ msgstr ""
 #. module: stock_lock_lot
 #: selection:stock.production.lot,lock_reason:0
 msgid "None"
+msgstr ""
+
+#. module: stock_lock_lot
+#: model:ir.model,name:stock_lock_lot.model_stock_transfer_details_items
+msgid "Picking wizard items"
 msgstr ""
 
 #. module: stock_lock_lot
@@ -171,12 +192,17 @@ msgid "Serial Nunber/lot blocking"
 msgstr ""
 
 #. module: stock_lock_lot
+#: model:ir.model,name:stock_lock_lot.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_lock_lot
 #: field:stock.config.settings,stock_lock_lot_strict:0
 msgid "Strictly forbid moves on blocked Serial Numbers/lots."
 msgstr ""
 
 #. module: stock_lock_lot
-#: code:addons/stock_lock_lot/models/stock_quant.py:37
+#: code:addons/stock_lock_lot/models/stock_quant.py:39
 #, python-format
 msgid ""
 "The following lots/serial number is blocked and cannot be moved:\n"
@@ -212,14 +238,16 @@ msgid "You are not allowed to block Serial Numbers/Lots"
 msgstr ""
 
 #. module: stock_lock_lot
-#: code:addons/stock_lock_lot/models/stock_production_lot.py:83
+#: code:addons/stock_lock_lot/models/stock_production_lot.py:84
 #, python-format
 msgid "You are not allowed to unblock Serial Numbers/Lots"
 msgstr ""
 
 #. module: stock_lock_lot
 #: view:stock.transfer_details:stock_lock_lot.view_stock_enter_transfer_details_inh_locklot
-msgid "[('product_id','=?',product_id),('locked','=',False)]"
+msgid ""
+"[('product_id','=?',product_id), '|', ('locked', '=', allow_locked), "
+"('locked','=',False)]"
 msgstr ""
 
 #. module: stock_lock_lot
