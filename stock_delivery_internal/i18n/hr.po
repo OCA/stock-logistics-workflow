@@ -3,26 +3,25 @@
 # * stock_delivery_internal
 # 
 # Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2017
-# enjolras <yo@miguelrevilla.com>, 2018
+# Bole <bole@dajmi5.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-28 03:51+0000\n"
 "PO-Revision-Date: 2018-02-28 03:51+0000\n"
-"Last-Translator: enjolras <yo@miguelrevilla.com>, 2018\n"
-"Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
+"Last-Translator: Bole <bole@dajmi5.com>, 2018\n"
+"Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: hr\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #. module: stock_delivery_internal
 #: model:ir.model,name:stock_delivery_internal.model_delivery_carrier
 msgid "Carrier"
-msgstr "Transportista"
+msgstr ""
 
 #. module: stock_delivery_internal
 #: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_out_picking_id
@@ -42,27 +41,27 @@ msgstr ""
 #. module: stock_delivery_internal
 #: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_cash_on_delivery
 msgid "Cash on delivery"
-msgstr "Contrarreembolso"
+msgstr ""
 
 #. module: stock_delivery_internal
 #: selection:stock.pickup.request,state:0
 msgid "Confirmed"
-msgstr "Confirmado"
+msgstr ""
 
 #. module: stock_delivery_internal
 #: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_create_uid
 msgid "Created by"
-msgstr "Creado por"
+msgstr ""
 
 #. module: stock_delivery_internal
 #: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_create_date
 msgid "Created on"
-msgstr "Creado el"
+msgstr ""
 
 #. module: stock_delivery_internal
 #: model:ir.model.fields,field_description:stock_delivery_internal.field_delivery_carrier_internal_delivery_company_id
 msgid "Delivery Company"
-msgstr "Compañía de reparto"
+msgstr ""
 
 #. module: stock_delivery_internal
 #: model:ir.model.fields,field_description:stock_delivery_internal.field_delivery_carrier_internal_delivery_money_picking_type_id
@@ -77,12 +76,12 @@ msgstr ""
 #. module: stock_delivery_internal
 #: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_display_name
 msgid "Display Name"
-msgstr "Nombre mostrado"
+msgstr ""
 
 #. module: stock_delivery_internal
 #: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: stock_delivery_internal
 #: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_in_picking_id
@@ -92,44 +91,44 @@ msgstr ""
 #. module: stock_delivery_internal
 #: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request___last_update
 msgid "Last Modified on"
-msgstr "Última modificación el"
+msgstr ""
 
 #. module: stock_delivery_internal
 #: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_write_uid
 msgid "Last Updated by"
-msgstr "Última actualización de"
+msgstr ""
 
 #. module: stock_delivery_internal
 #: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_write_date
 msgid "Last Updated on"
-msgstr "Última actualización en"
+msgstr ""
 
 #. module: stock_delivery_internal
 #: selection:stock.pickup.request,state:0
 msgid "New"
-msgstr "Nuevo"
+msgstr ""
 
 #. module: stock_delivery_internal
 #: model:ir.ui.view,arch_db:stock_delivery_internal.stock_pickup_request_view_search
 msgid "Picking"
-msgstr "Recogida"
+msgstr ""
 
 #. module: stock_delivery_internal
 #: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_name
 msgid "Pickup Name"
-msgstr "Nombre de la recogida"
+msgstr ""
 
 #. module: stock_delivery_internal
 #: model:ir.ui.view,arch_db:stock_delivery_internal.stock_pickup_request_view_form
 #: model:ir.ui.view,arch_db:stock_delivery_internal.stock_pickup_request_view_search
 #: model:ir.ui.view,arch_db:stock_delivery_internal.stock_pickup_request_view_tree
 msgid "Request For Pickup"
-msgstr "Solicitud de recogida"
+msgstr ""
 
 #. module: stock_delivery_internal
 #: model:ir.actions.act_window,name:stock_delivery_internal.stock_pickup_request_action
 msgid "Requests For Pickup"
-msgstr "Solicitudes de recogida"
+msgstr ""
 
 #. module: stock_delivery_internal
 #: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_company_id
@@ -144,7 +143,7 @@ msgstr ""
 #. module: stock_delivery_internal
 #: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_state
 msgid "State"
-msgstr "Estado"
+msgstr ""
 
 #. module: stock_delivery_internal
 #: model:ir.model,name:stock_delivery_internal.model_stock_pickup_request
@@ -159,9 +158,9 @@ msgstr ""
 #. module: stock_delivery_internal
 #: model:ir.model,name:stock_delivery_internal.model_stock_picking
 msgid "Transfer"
-msgstr "Transferir"
+msgstr "Prenos"
 
 #. module: stock_delivery_internal
 #: selection:stock.pickup.request,state:0
 msgid "done"
-msgstr "hecho"
+msgstr ""

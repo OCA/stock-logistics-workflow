@@ -3,33 +3,32 @@
 # * stock_picking_transfer_lot_autoassign
 # 
 # Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2018
-# enjolras <yo@miguelrevilla.com>, 2018
+# Pedro Castro Silva <pedrocs@exo.pt>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-28 03:51+0000\n"
 "PO-Revision-Date: 2018-02-28 03:51+0000\n"
-"Last-Translator: enjolras <yo@miguelrevilla.com>, 2018\n"
-"Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
+"Last-Translator: Pedro Castro Silva <pedrocs@exo.pt>, 2018\n"
+"Language-Team: Portuguese (https://www.transifex.com/oca/teams/23907/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
+"Language: pt\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_picking_transfer_lot_autoassign
 #: model:ir.model.fields,field_description:stock_picking_transfer_lot_autoassign.field_stock_picking_type_avoid_internal_assignment
 msgid "Avoid auto-assignment of lots"
-msgstr "Evitar asignación automática de lotes"
+msgstr ""
 
 #. module: stock_picking_transfer_lot_autoassign
 #: model:ir.model,name:stock_picking_transfer_lot_autoassign.model_stock_picking_type
 msgid "The picking type determines the picking view"
-msgstr "El tipo de albarán determina la vista de albarán"
+msgstr ""
 
 #. module: stock_picking_transfer_lot_autoassign
 #: model:ir.model,name:stock_picking_transfer_lot_autoassign.model_stock_picking
 msgid "Transfer"
-msgstr "Transferir"
+msgstr "Transferência"
