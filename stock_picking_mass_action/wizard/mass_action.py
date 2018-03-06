@@ -1,28 +1,10 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Author: Guewen Baconnier
-#    Copyright 2014 Camptocamp SA
-#    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
+# Copyright 2014 Camptocamp SA - Guewen Baconnier
+# Copyright 2018 Tecnativa - Vicent Cubells
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
-
-from openerp import fields, api
-from openerp.models import TransientModel
-from openerp.tools.translate import _
+from odoo import fields, api
+from odoo.models import TransientModel
 
 
 class StockPickingMassAction(TransientModel):
@@ -40,10 +22,6 @@ class StockPickingMassAction(TransientModel):
     @api.model
     def _default_transfer(self):
         return self.env.context.get('transfer', False)
-
-    @api.model
-    def _default_create_invoice(self):
-        return self.env.context.get('create_invoice', False)
 
     confirm = fields.Boolean(
         string='Mark as Todo', default=True,
@@ -67,16 +45,10 @@ class StockPickingMassAction(TransientModel):
         " partial transfer.\n If you want  to do that, please do it"
         " manually on the picking form.""")
 
-    create_invoice = fields.Boolean(
-        'Create Invoices/Refunds', default=_default_create_invoice,
-        help="check this box if you want to create Invoices or Refunds for"
-        " all the selected Pickings.")
-
     @api.multi
     def mass_action(self):
         self.ensure_one()
         picking_obj = self.env['stock.picking']
-        transfert_wizard_obj = self.env['stock.transfer_details']
         picking_ids = self.env.context.get('active_ids')
 
         # Get draft pickings and confirm them if asked
@@ -93,7 +65,10 @@ class StockPickingMassAction(TransientModel):
 
         # check availability if asked
         if self.check_availability:
-            confirmed_picking_lst.check_assign_all()
+            domain = [('state', 'not in', ['draft', 'cancel', 'done']),
+                      ('id', 'in', picking_ids)]
+            pickings_to_check = picking_obj.search(domain, order='min_date')
+            pickings_to_check.action_assign()
 
         # Force availability if asked
         if self.force_availability:
@@ -105,24 +80,4 @@ class StockPickingMassAction(TransientModel):
                       ('id', 'in', picking_ids)]
             assigned_picking_lst = picking_obj.search(domain, order='min_date')
             for picking in assigned_picking_lst:
-                transfert_wizard = transfert_wizard_obj.create(
-                    {'picking_id': picking.id})
-                transfert_wizard.do_detailed_transfer()
-
-        # Get all pickings ready to invoice and invoice them if asked
-        if self.create_invoice:
-            domain = [('invoice_state', '=', '2binvoiced'),
-                      ('id', 'in', picking_ids)]
-            to_invoice_pickings = picking_obj.search(domain, order='min_date')
-            ctx = self.env.context.copy()
-            ctx['active_ids'] = to_invoice_pickings.ids
-            ctx['active_model'] = 'stock.picking'
-            return {
-                'name': _('Stock Invoice Onshipping'),
-                'view_type': 'form',
-                'view_mode': 'form',
-                'res_model': 'stock.invoice.onshipping',
-                'type': 'ir.actions.act_window',
-                'target': 'new',
-                'context': ctx,
-            }
+                picking.do_transfer()
