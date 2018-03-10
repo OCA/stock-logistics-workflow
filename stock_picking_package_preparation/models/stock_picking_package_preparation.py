@@ -137,7 +137,8 @@ class StockPickingPackagePreparation(models.Model):
             raise UserError(
                 _('The package has not been generated.')
             )
-        for picking in self.picking_ids:
+        for picking in self.picking_ids.filtered(
+                lambda x: x.state not in ['done', 'cancel']):
             picking.do_transfer()
         self.write({'state': 'done', 'date_done': fields.Datetime.now()})
 
