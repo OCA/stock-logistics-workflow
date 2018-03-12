@@ -105,8 +105,10 @@ class StockPickingMassAction(TransientModel):
                       ('id', 'in', picking_ids)]
             assigned_picking_lst = picking_obj.search(domain, order='min_date')
             for picking in assigned_picking_lst:
-                transfert_wizard = transfert_wizard_obj.create(
-                    {'picking_id': picking.id})
+                transfert_wizard = transfert_wizard_obj.with_context(
+                    active_ids=picking.ids,
+                    active_id=picking.id).create(
+                        {'picking_id': picking.id})
                 transfert_wizard.do_detailed_transfer()
 
         # Get all pickings ready to invoice and invoice them if asked
