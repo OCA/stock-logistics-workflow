@@ -9,12 +9,15 @@
     <field name="model">stock.picking</field>
     <field name="inherit_id" ref="stock.view_picking_form"/>
     <field name="arch" type="xml">
+        <xpath expr="//field[@name='pack_operation_product_ids']" position="attributes">
+            <attribute name="context">{'life_date_invisible': picking_type_code != 'incoming'}</attribute>
+        </xpath>
         <xpath expr="//field[@name='pack_operation_product_ids']/tree//field[@name='owner_id']"
                position="after">
             <field name="lot_track_enabled" invisible="1"/>
             <field name="lot_name"
                    attrs="{'readonly': [('lot_track_enabled','=', False)]}"/>
-            <field name="life_date"
+            <field name="life_date" invisible="context.get('life_date_invisible', False)"
                    attrs="{'readonly': [('lot_track_enabled','=', False)]}"/>
         </xpath>
     </field>
