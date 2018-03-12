@@ -3,8 +3,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     'name': 'Stock Pack Operation Quick Lot',
-    'summary': 'This module allows set pack operation Lot Name and '
-               'End of Life Date directly on picking operations',
+    'summary': 'Set lot name and end date directly on picking operations',
     'version': '9.0.1.0.0',
     'category': 'Stock',
     'website': 'https://github.com/OCA/stock-logistics-workflow',
