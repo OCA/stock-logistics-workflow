@@ -66,3 +66,28 @@
                ref("ship_mlas_2"): 'assigned',
                ref("ship_mlas_3"): 'assigned'}
    assert states == expected, 'wrong picking states %s (expected: %s)' % (states, expected)
+
+-
+ Check the returned transfer
+-
+ !python {model: stock.picking}: |
+   picking_ids = [ref("ship_mlas_2"), ref("ship_mlas_3")]
+   returns = {}
+   states = {}
+   for picking in self.browse(cr, uid, picking_ids, context=context):
+       context.update({
+           'active_ids': picking.ids,
+           'active_id': picking.id,
+           'active_model': 'stock.picking'
+       })
+       transfert_wizard = self.pool.get('stock.transfer_details').create(cr, uid,
+           {'picking_id': picking.id}, context=context)
+       returns[picking.id] = self.pool.get('stock.transfer_details').do_detailed_transfer(
+           cr, uid, transfert_wizard, context=context)
+       states[picking.id] = picking.state
+   expected_returns = {ref("ship_mlas_2"): [True],
+                       ref("ship_mlas_3"): [True]}
+   expected_states = {ref("ship_mlas_2"): 'done',
+                      ref("ship_mlas_3"): 'done'}
+   assert returns == expected_returns, 'wrong transfer returns %s (expected: %s)' % (returns, expected_returns)
+   assert states == expected_states, 'wrong picking state after transfer %s (expected: %s)' % (states, expected_states)
