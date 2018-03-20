@@ -24,7 +24,7 @@ class TestStockPickingInvoiceLink(TestSale):
         warehouse = self.env['stock.warehouse'].search(
             [('company_id', '=', company.id)], limit=1)
         stock_location = warehouse.lot_stock_id
-        for (_, p) in self.products.iteritems():
+        for (_, p) in self.products.items():
             if p.type == 'product':
                 self._update_product_qty(p, stock_location)
         prod_order = self.products['prod_order']
@@ -73,7 +73,7 @@ class TestStockPickingInvoiceLink(TestSale):
             lambda x: x.picking_type_code == 'outgoing' and
             x.state in ('confirmed', 'assigned', 'partially_available'))
         pick_1.force_assign()
-        pick_1.pack_operation_product_ids.write({'qty_done': 1})
+        pick_1.move_line_ids.write({'qty_done': 1})
         wiz_act = pick_1.do_new_transfer()
         wiz = self.env[wiz_act['res_model']].browse(wiz_act['res_id'])
         wiz.process()
@@ -94,7 +94,7 @@ class TestStockPickingInvoiceLink(TestSale):
             lambda x: x.picking_type_code == 'outgoing' and
             x.state in ('confirmed', 'assigned', 'partially_available'))
         pick_2.force_assign()
-        pick_2.pack_operation_product_ids.write({'qty_done': 1})
+        pick_2.move_line_ids.write({'qty_done': 1})
         self.assertIsNone(pick_2.do_new_transfer(),
                           'Sale Stock: second picking should be '
                           'final without need for a backorder')

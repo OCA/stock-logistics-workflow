@@ -62,6 +62,7 @@ Contributors
 * Iñaki Zabala
 * Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>
 * Jacques-Etienne Baudoux <je@bcim.be>
+* Aitor Bouzas Naveira <abouzas@softdil.com>
 
 Maintainer
 ----------
