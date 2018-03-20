@@ -2,9 +2,10 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-====================================
-Product Customer Code For Stock Move
-====================================
+=========================================
+Product Supplierinfo For Customer Picking
+=========================================
+
 Based on product_supplierinfo_for_customer, this module loads in every Stock move the
 customer code defined in the product.
 
@@ -32,6 +33,7 @@ Contributors
 * Alex Comba <alex.comba@agilebg.com>
 * Lorenzo Battistini <lorenzo.battistini@agilebg.com>
 * Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>
+* Aaron Henriquez <ahenriquez@eficent.com>
 
 Maintainer
 ----------
