@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Copyright 2013-2014 Alexis de Lattre <alexis.delattre@akretion.com>
+         License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+    <record id="invoice_form" model="ir.ui.view">
+        <field name="name">related.pickings.account.invoice.form</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Pickings" name="pickings">
+                    <field name="picking_ids"/>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+</odoo>
