@@ -58,6 +58,7 @@ class TestStockPickingInvoiceLink(TestSale):
 
     def test_00_sale_stock_invoice_link(self):
         inv_obj = self.env['account.invoice']
+        pick_obj = self.env['stock.picking']
         self.assertTrue(self.so.picking_ids,
                         'Sale Stock: no picking created for '
                         '"invoice on delivery" stockable products')
@@ -74,9 +75,7 @@ class TestStockPickingInvoiceLink(TestSale):
             x.state in ('confirmed', 'assigned', 'partially_available'))
         pick_1.force_assign()
         pick_1.move_line_ids.write({'qty_done': 1})
-        wiz_act = pick_1.do_new_transfer()
-        wiz = self.env[wiz_act['res_model']].browse(wiz_act['res_id'])
-        wiz.process()
+        pick_1.action_done()
         self.assertEqual(self.so.invoice_status, 'to invoice',
                          'Sale Stock: so invoice_status should be '
                          '"to invoice" after partial delivery')
@@ -95,7 +94,9 @@ class TestStockPickingInvoiceLink(TestSale):
             x.state in ('confirmed', 'assigned', 'partially_available'))
         pick_2.force_assign()
         pick_2.move_line_ids.write({'qty_done': 1})
-        self.assertIsNone(pick_2.do_new_transfer(),
+        pick_2.action_done()
+        backorders = pick_obj.search([('backorder_id','=',pick_2.id)])
+        self.assertFalse(backorders,
                           'Sale Stock: second picking should be '
                           'final without need for a backorder')
         self.assertEqual(self.so.invoice_status, 'to invoice',
