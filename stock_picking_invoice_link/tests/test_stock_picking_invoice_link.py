@@ -95,10 +95,10 @@ class TestStockPickingInvoiceLink(TestSale):
         pick_2.force_assign()
         pick_2.move_line_ids.write({'qty_done': 1})
         pick_2.action_done()
-        backorders = pick_obj.search([('backorder_id','=',pick_2.id)])
+        backorders = pick_obj.search([('backorder_id', '=', pick_2.id)])
         self.assertFalse(backorders,
-                          'Sale Stock: second picking should be '
-                          'final without need for a backorder')
+                         'Sale Stock: second picking should be '
+                         'final without need for a backorder')
         self.assertEqual(self.so.invoice_status, 'to invoice',
                          'Sale Stock: so invoice_status should be '
                          '"to invoice" after complete delivery')
