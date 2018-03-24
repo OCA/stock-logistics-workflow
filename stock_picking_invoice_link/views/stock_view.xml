@@ -13,13 +13,13 @@
                         attrs="{'invisible': [('invoice_ids', '=', [])]}"
                         groups="base.group_user"/>
             </field>
-            <field name="picking_type_id" position="after">
+            <xpath expr="//group/field[@name='picking_type_id']" position="after">
                 <field name="invoice_ids" string="Invoice"
                     groups="account.group_account_invoice"
                     attrs="{'invisible':[('invoice_ids', '=', False)]}"
                     widget="many2many_tags"
                     context="{'tree_view_ref': 'account.invoice_tree', 'form_view_ref': 'account.invoice_form'}"/>
-            </field>
+            </xpath>
         </field>
     </record>
 
