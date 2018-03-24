@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2013-15 Agile Business Group sagl (<http://www.agilebg.com>)
 # Copyright 2017 Jacques-Etienne Baudoux <je@bcim.be>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
@@ -12,8 +11,6 @@ class SaleOrderLine(models.Model):
     @api.multi
     def invoice_line_create(self, invoice_id, qty):
         self.mapped(
-            'procurement_ids'
-        ).mapped(
             'move_ids'
         ).filtered(
             lambda x: x.state == 'done' and
@@ -28,7 +25,7 @@ class SaleOrderLine(models.Model):
     @api.multi
     def _prepare_invoice_line(self, qty):
         vals = super(SaleOrderLine, self)._prepare_invoice_line(qty)
-        move_ids = self.mapped('procurement_ids').mapped('move_ids').filtered(
+        move_ids = self.mapped('move_ids').filtered(
             lambda x: x.state == 'done' and
             not x.invoice_line_id and
             not x.location_dest_id.scrap_location and
