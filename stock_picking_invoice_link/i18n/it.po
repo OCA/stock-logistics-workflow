@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * stock_picking_invoice_link
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
@@ -12,15 +12,14 @@ msgstr ""
 "PO-Revision-Date: 2017-06-15 11:08+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: it\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_invoice
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking_invoice_id
 #: model:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
 msgid "Invoice"
 msgstr "Fattura"
@@ -30,11 +29,6 @@ msgstr "Fattura"
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move_invoice_line_id
 msgid "Invoice Line"
 msgstr "Riga Fattura"
-
-#. module: stock_picking_invoice_link
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move_invoice_line_ids
-msgid "Invoice Lines"
-msgstr "Righe Fattura"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking_invoice_ids
@@ -84,3 +78,12 @@ msgstr "Movimento di magazzino"
 #: model:ir.model,name:stock_picking_invoice_link.model_stock_picking
 msgid "Transfer"
 msgstr "Trasferisci"
+
+#. module: stock_picking_invoice_link
+#: model:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
+#, fuzzy
+msgid "View Invoice"
+msgstr "Fattura"
+
+#~ msgid "Invoice Lines"
+#~ msgstr "Righe Fattura"
