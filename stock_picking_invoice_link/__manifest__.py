@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2013-17 Agile Business Group (<http://www.agilebg.com>)
 # Copyright 2016 AvanzOSC (<http://www.avanzosc.es>)
 # Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
@@ -7,16 +6,19 @@
 
 {
     'name': 'Stock Picking Invoice Link',
-    'version': '10.0.1.0.0',
+    'version': '11.0.1.0.0',
     'category': 'Warehouse Management',
     'summary': 'Adds link between pickings and invoices',
     'author': 'Agile Business Group, '
               'Tecnativa, '
               'BCIM sprl, '
+              'Softdil S.L, '
               'Odoo Community Association (OCA)',
-    'website': 'http://www.agilebg.com',
+    'website': 'http://github.com/OCA/stock-logistics-workflow',
     'license': 'AGPL-3',
-    'depends': ['sale_stock'],
+    'depends': [
+        'sale_stock',
+    ],
     'data': [
         'views/stock_view.xml',
         'views/account_invoice_view.xml',
