@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2013-15 Agile Business Group sagl (<http://www.agilebg.com>)
 # Copyright 2015-2016 AvanzOSC
 # Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
@@ -12,18 +11,11 @@ class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     invoice_ids = fields.Many2many(
-        comodel_name='account.invoice', copy=False, string='Invoices',
-        readonly=True)
-    # Provide this field for backwards compatibility
-    invoice_id = fields.Many2one(
-        comodel_name='account.invoice', string='Invoice',
-        compute="_compute_invoice_id")
-
-    @api.multi
-    @api.depends('invoice_ids')
-    def _compute_invoice_id(self):
-        for picking in self:
-            picking.invoice_id = picking.invoice_ids[:1]
+        comodel_name='account.invoice',
+        copy=False,
+        string='Invoices',
+        readonly=True,
+    )
 
     @api.multi
     def action_view_invoice(self):
