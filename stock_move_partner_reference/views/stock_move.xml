@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record model="ir.ui.view" id="stock_move_form_view">
+        <field name="name">stock.move.form (in stock_move_partner_reference)</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_form"/>
+        <field name="arch" type="xml">
+             <field name="origin" position="after">
+                <field name="partner_reference" groups="stock_move_partner_reference.group_stock_use_partner_move_reference"/>
+            </field>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_move_picking_form">
+        <field name="name">stock.move.picking.form (in stock_move_partner_reference)</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_picking_form"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="partner_reference" groups="stock_move_partner_reference.group_stock_use_partner_move_reference"/>
+            </field>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="stock_move_search_view">
+        <field name="name">stock.move.search (in stock_move_partner_reference)</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_search"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="partner_reference" groups="stock_move_partner_reference.group_stock_use_partner_move_reference"/>
+            </field>
+            <filter name="groupby_picking_id" position="after">
+                <filter name="groupby_partner_reference" domain="[]"  context="{'group_by':'partner_reference'}" groups="stock_move_partner_reference.group_stock_use_partner_move_reference"/>
+            </filter>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="stock_move_tree_view">
+        <field name="name">stock.move.tree (in stock_move_partner_reference)</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.stock_move_tree"/>
+        <field name="arch" type="xml">
+            <field name="product_packaging" position="after">
+                <field name="partner_reference" groups="stock_move_partner_reference.group_stock_use_partner_move_reference"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

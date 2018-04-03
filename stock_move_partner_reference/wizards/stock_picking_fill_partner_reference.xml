@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record model="ir.ui.view" id="stock_picking_fill_partner_reference_form_view">
+        <field name="name">stock.picking.fill.partner.reference.form (in stock_move_partner_reference)</field>
+        <field name="model">stock.picking.fill.partner.reference</field>
+        <field name="arch" type="xml">
+            <form string="Stock Picking Fill Partner_reference">
+                <div class="oe_grey">
+                    Please
+                </div>
+                <group>
+                    <field name="same_ref"/>
+                    <field name="reference" attrs="{'invisible': [('same_ref', '=', False)]}"/>
+                </group>
+                <field name="move_line_ids" string="Moves">
+                    <tree editable="bottom">
+                        <field name="move_line_id" readonly="True"/>
+                        <field name="product_id"/>
+                        <field name="product_uom_qty"/>
+                        <field name="existing_reference"/>
+                        <field name="reference"/>
+                    </tree>
+                </field>
+                <footer>
+                    <button name="doit"
+                            string="OK"
+                            class="btn-primary"
+                            type="object"/>
+                    <button string="Cancel"
+                            class="btn-default"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="stock_picking_fill_partner_reference_act_window">
+        <field name="name">Stock Picking Fill Partner Reference</field>
+        <field name="res_model">stock.picking.fill.partner.reference</field>
+        <field name="view_mode">form</field>
+        <field name="context">{}</field>
+        <field name="target">new</field>
+    </record>
+
+
+
+</odoo>

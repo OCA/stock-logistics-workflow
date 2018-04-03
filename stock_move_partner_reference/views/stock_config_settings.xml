@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+    <record id="view_stock_config_settings" model="ir.ui.view">
+        <field name="name">stock settings (in stock_move_partner_reference)</field>
+        <field name="model">stock.config.settings</field>
+        <field name="inherit_id" ref="stock.view_stock_config_settings"/>
+        <field name="arch" type="xml">
+            <field name="group_stock_tracking_owner" position="after">
+                <field name="group_stock_use_partner_move_reference" widget="radio"/>
+            </field>
+        </field>
+    </record>
+</odoo>

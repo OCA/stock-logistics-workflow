@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+    <record id="group_stock_use_partner_move_reference" model="res.groups">
+        <field name="name">Use Partner Reference In Moves</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+</odoo>

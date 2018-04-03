@@ -1,0 +1,1 @@
+from . import stock_picking_fill_partner_reference
