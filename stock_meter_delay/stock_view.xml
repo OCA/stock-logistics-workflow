@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+        <record id="action_picking_tree_late_soon" model="ir.actions.act_window">
+            <field name="name">Late Soon Transfers</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain"></field>
+            <field name="context">{
+                    'search_default_picking_type_id': [active_id],
+                    'default_picking_type_id': active_id,
+                    'contact_display': 'partner_address',
+                    'search_default_late_soon': 1,
+                    'search_default_confirmed': 1,
+            }
+            </field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
+        <record id="stock_picking_type_kanban" model="ir.ui.view">
+            <field name="model">stock.picking.type</field>
+            <field name="inherit_id" ref="stock.stock_picking_type_kanban"/>
+            <field name="arch" type="xml">
+                <field name="count_picking_late" position="after">
+                    <field name="count_picking_late_soon"/>
+                </field>
+                <xpath expr="//div[@class='oe_items_list oe_kanban_ellipsis']/div[1]" position="before">
+                    <div>
+                        <a name="%(action_picking_tree_late_soon)d" type="action">
+                            <field name="count_picking_late_soon"/> Late Soon
+                        </a>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_picking_internal_search" model="ir.ui.view">
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='late']" position="after">
+                    <filter name="late_soon"
+                            string="Late Soon"
+                            domain="[('start_warning_date','&lt;=', time.strftime('%%Y-%%m-%%d')), ('max_date', '&gt;', time.strftime('%%Y-%%m-%%d'))]"
+                            help="Pickings that are late soon on requested time"/>
+                </xpath>
+            </field>
+        </record>
+
+</data>
+</openerp>
