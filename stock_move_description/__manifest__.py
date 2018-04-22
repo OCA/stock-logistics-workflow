@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright (C) 2014-15 Agile Business Group sagl
-#    (<http://www.agilebg.com>)
+#    Copyright (C) 2018-19
+#    (dvit.me>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -20,10 +20,10 @@
 ##############################################################################
 {
     'name': "Stock move description",
-    'version': '8.0.1.0.0',
+    'version': '10.0.1.0.0',
     'category': 'Warehouse Management',
-    'author': "Agile Business Group, Odoo Community Association (OCA)",
-    'website': 'http://www.agilebg.com',
+    'author': "abdulrhman Mohammed ",
+    'website': 'dvit.me',
     'license': 'AGPL-3',
     'depends': [
         'stock',
@@ -36,5 +36,5 @@
     'test': [
         'test/stock_move_description.yml',
     ],
-    'installable': False
+    'installable': True
 }

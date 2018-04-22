@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright (C) 2014-15 Agile Business Group sagl
-#    (<http://www.agilebg.com>)
+#    Copyright (C) 2018-19
+#    (dvit.me>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -19,18 +19,21 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, osv
+from odoo import fields, models,api
 
-
-class StockConfigSettings(osv.TransientModel):
+class StockConfigSettings(models.TransientModel):
     _inherit = 'stock.config.settings'
 
-    _columns = {
-        'group_use_product_description_per_stock_move': fields.boolean(
-            "Allow using only the product description on the stock moves",
-            implied_group="stock_move_description."
-            "group_use_product_description_per_stock_move",
-            help="Allows you to use only product description on the "
-            "stock moves."
-        ),
-    }
+
+    group_use_product_description_per_stock_move = fields.Boolean(
+        "Allow using only the product description on the stock moves",
+        help="Allows you to use only product description on the "
+        "stock moves."
+        )
+
+
+    @api.multi
+    def set_group_product_desc_values(self):
+        return self.env['ir.values'].sudo().set_default('stock.config.settings',
+                                                        'group_use_product_description_per_stock_move',
+                                                        self.group_use_product_description_per_stock_move)
