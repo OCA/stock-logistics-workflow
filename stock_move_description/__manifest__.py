@@ -33,8 +33,5 @@
         'stock_config_settings_view.xml',
         'stock_move_view.xml',
     ],
-    'test': [
-        'test/stock_move_description.yml',
-    ],
     'installable': True
 }
