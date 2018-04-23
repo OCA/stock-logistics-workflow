@@ -31,9 +31,3 @@ class StockConfigSettings(models.TransientModel):
         "stock moves."
         )
 
-
-    @api.multi
-    def set_group_product_desc_values(self):
-        return self.env['ir.values'].sudo().set_default('stock.config.settings',
-                                                        'group_use_product_description_per_stock_move',
-                                                        self.group_use_product_description_per_stock_move)

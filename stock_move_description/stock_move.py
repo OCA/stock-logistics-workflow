@@ -19,33 +19,32 @@
 #
 ##############################################################################
 
-from odoo import fields, models
+from odoo import fields, models, api
 
 
 class StockMove(models.Model):
     _inherit = "stock.move"
     name = fields.Text(string="Description", required=False, )
 
-
+    @api.onchange('product_id')
     def onchange_product_id(
             self, prod_id=False, loc_id=False,
-            loc_dest_id=False, partner_id=False, context=None
+            loc_dest_id=False, partner_id=False
     ):
-        context = dict(context or {})
+
         res = super(StockMove, self).onchange_product_id(
              prod_id=prod_id, loc_id=loc_id,
             loc_dest_id=loc_dest_id, partner_id=partner_id
         )
         if prod_id:
-            user = self.env['res.users'].browse(
-                 context=context)
+            user = self.env.user['res.users']
+
             lang = user and user.lang or False
             if partner_id:
-                addr_rec = self.env['res.partner'].browse(
-                     partner_id, context=context)
+                addr_rec = self.env['res.partner'].browse(partner_id)
                 if addr_rec:
                     lang = addr_rec and addr_rec.lang or False
-            context['lang'] = lang
+            self.env.lang = lang
             user_groups = [g.id for g in user.groups_id]
             group_ref = self.env['ir.model.data'].get_object_reference(
                  'stock_move_description',
@@ -53,8 +52,7 @@ class StockMove(models.Model):
             )
             if group_ref and group_ref[1] in user_groups:
                 product_obj = self.env['product.product']
-                product = product_obj.browse(
-                    prod_id, context=context)
+                product = product_obj.browse(  prod_id)
                 if product.description:
                     if 'value' not in res:
                         res['value'] = {}
