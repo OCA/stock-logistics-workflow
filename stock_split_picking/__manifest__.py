@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2013-2015 Camptocamp SA - Nicolas Bessi
 # Copyright 2013-2015 Camptocamp SA - Guewen Baconnier
 # Copyright 2013-2015 Camptocamp SA - Yannick Vaucher
@@ -7,18 +6,17 @@
 {
     'name': 'Split picking',
     'summary': 'Split a picking in two not transferred pickings',
-    'version': '10.0.1.0.0',
+    'version': '11.0.1.0.0',
     'category': 'Inventory',
     'author': "Camptocamp, "
               "Tecnativa, "
               "Odoo Community Association (OCA)",
     'license': 'AGPL-3',
-    'website': 'http://www.camptocamp.com',
+    'website': 'https://github.com/OCA/stock-logistics-workflow',
     'depends': [
         'stock',
     ],
     'data': [
         'views/stock_partial_picking.xml',
     ],
-    'installable': True,
 }
