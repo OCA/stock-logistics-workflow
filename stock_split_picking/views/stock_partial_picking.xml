@@ -10,7 +10,7 @@
                 <button name="split_process"
                         states="draft,assigned,partially_available"
                         string="Split"
-                        confirm="Are you sure you want to split current picking ?"
+                        confirm="Are you sure you want to split current picking?"
                         groups="stock.group_stock_user"
                         type="object"/>
             </field>
