@@ -49,6 +49,11 @@ To use this module, you need to:
    :alt: Try me on Runbot
    :target: https://runbot.odoo-community.org/runbot/154/8.0
 
+Known issues / Roadmap
+======================
+
+* You can't use this module with real time accounting valuation, because the entry generation gets disabled when having an owner.
+
 Bug Tracker
 ===========
 
