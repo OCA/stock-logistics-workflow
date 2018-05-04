@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="view_sale_line_form" model="ir.ui.view">
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="after">
+                        <field name="line_parent_id"/>
+                        <field name="line_child_ids"/>
+                        <field name="sequence"/>
+                    </xpath>
+                    <xpath expr="//field[@name='order_line']/form/div/field[@name='invoice_lines']" position="after">
+                        <group col='4' colspan="4">
+                            <field name="line_parent_id" domain="[('order_id', '=', parent.id)]"/>
+                        </group>
+                        <label for="line_child_ids"/>
+                        <field name="line_child_ids" colspan="4"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+    </data>
+</openerp>
