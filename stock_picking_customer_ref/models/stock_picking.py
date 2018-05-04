@@ -15,7 +15,8 @@ class StockPicking(models.Model):
             if picking.group_id:
                 cond = [('procurement_group_id', '=', picking.group_id.id)]
                 sale = self.env['sale.order'].search(cond, limit=1)
-                picking.client_order_ref = sale.client_order_ref
+                if sale:
+                    picking.client_order_ref = sale.client_order_ref
 
     client_order_ref = fields.Char(string="Sale Reference/Description",
                                    compute="_compute_client_order_ref",
