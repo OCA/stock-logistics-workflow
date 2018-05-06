@@ -28,7 +28,7 @@ addon | version | summary
 [stock_delivery_internal](stock_delivery_internal/) | 10.0.1.0.0 | Adds an internal carrier to delivery options
 [stock_disable_force_availability_button](stock_disable_force_availability_button/) | 10.0.1.0.0 | Disable force availability button
 [stock_lot_scrap](stock_lot_scrap/) | 10.0.1.0.0 | This module adds a button in Production Lot/Serial Number view form to Scrap all products contained.
-[stock_no_negative](stock_no_negative/) | 10.0.1.0.0 | Disallow negative stock levels by default
+[stock_no_negative](stock_no_negative/) | 10.0.1.0.1 | Disallow negative stock levels by default
 [stock_ownership_availability_rules](stock_ownership_availability_rules/) | 10.0.1.0.0 | Enforce ownership on stock availability
 [stock_ownership_by_move](stock_ownership_by_move/) | 10.0.0.1.0 | Preserve Ownership of moves (not pickings) on reception.
 [stock_pack_operation_auto_fill](stock_pack_operation_auto_fill/) | 10.0.1.0.1 | Stock pack operation auto fill
