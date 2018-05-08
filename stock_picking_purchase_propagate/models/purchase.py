@@ -17,4 +17,5 @@ class PurchaseOrderLine(models.Model):
         res = super(PurchaseOrderLine, self)._create_stock_moves(picking)
         for move in res:
             move._propagate_procurement_group(move.group_id)
+            move._propagate_quantity()
         return res

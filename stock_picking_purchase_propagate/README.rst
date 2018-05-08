@@ -2,12 +2,12 @@
    :target: https://www.gnu.org/licenses/agpl
    :alt: License: AGPL-3
 
-========================================
-Stock Picking Purchase Procurement Group
-========================================
+================================
+Stock Picking Purchase Propagate
+================================
 
-This module allows to propagate the procurement group of the purchase order to
-the ensuing stock.moves and its destination moves.
+This module allows to propagate the procurement group and the quantity of the
+purchase order to the ensuing stock.moves and its destination moves.
 
 Usage
 =====
