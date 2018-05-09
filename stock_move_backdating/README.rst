@@ -7,10 +7,9 @@ Allows back-dating of stock moves
 =================================
 
 This module allows to register old stock moves (with date != now).
-On picking transfer, user can specify the "Date", that will be
-used as movements date.
-Tha date can be set in the header of the wizard (so that it will be used for
-every movement) or at line level, having different dates for different moves.
+On each operation, user can specify the **Actual Movement Date**, that will be
+used as movements date. In addition, if *Perpetual inventory valuation* is enabled,
+the date of journal entries generated will be updated accordingly.
 
 Bug Tracker
 ===========
@@ -25,7 +24,7 @@ Usage
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/154/8.0
+   :target: https://runbot.odoo-community.org/runbot/154/10.0
 
 Credits
 =======
@@ -38,8 +37,8 @@ Images
 Contributors
 ------------
 
-* Marco Dieckhoff < marco.dieckhoff@bremskerl.de>
 * Alex Comba <alex.comba@agilebg.com>
+* Marco Dieckhoff < marco.dieckhoff@bremskerl.de>
 * Lorenzo Battistini <lorenzo.battistini@agilebg.com>
 * Alessio Gerace <alessio.gerace@agilebg.com>
 
