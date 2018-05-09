@@ -85,6 +85,7 @@ class TestPoPropagate(SavepointCase):
         # the new PG
         po_strings.button_confirm()
         receipt_picking = po_strings.picking_ids
+        self.assertEqual(receipt_picking.partner_id, po_strings.partner_id)
         self.assertEqual(receipt_picking.location_dest_id, self.input_loc)
         po_procurement_group = receipt_picking.group_id
         receipt_moves = receipt_picking.move_lines
