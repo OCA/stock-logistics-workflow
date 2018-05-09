@@ -14,8 +14,11 @@ class StockMove(models.Model):
         Goal is to have all moves related to a same PO with the same PG all
         along the chain, even if the PO has been generated from an OP.
         """
+        picking_partner = self.picking_id.partner_id
         res = self.write({'group_id': group.id, 'picking_id': False})
         self._assign_picking()
+        if picking_partner:
+            self.picking_id.partner_id = picking_partner
         to_propagate = self.filtered(
             lambda m: m.move_dest_ids and m.propagate
         ).mapped('move_dest_ids')
