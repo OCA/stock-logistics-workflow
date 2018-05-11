@@ -14,8 +14,11 @@ class PurchaseOrderLine(models.Model):
             and quantity from the PO lines to the destination moves, and
             reassign pickings.
         """
-        res = super(PurchaseOrderLine, self)._create_stock_moves(picking)
-        for move in res:
-            move._propagate_procurement_group(move.group_id)
-            move._propagate_quantity()
-        return res
+        moves = super(PurchaseOrderLine, self)._create_stock_moves(picking)
+        destination_moves_to_prop = moves.filtered(
+            lambda m: m.propagate).mapped('move_dest_ids').filtered(
+            lambda m: not m.group_id)
+        destination_moves_to_prop._propagate_procurement_group(
+            moves.mapped('group_id'))
+        moves._propagate_quantity_to_dest_moves()
+        return moves
