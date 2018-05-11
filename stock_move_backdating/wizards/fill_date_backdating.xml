@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 Alex Comba - Agile Business Group
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
+
+<odoo>
+    <data>
+        <record id="view_fill_backdating" model="ir.ui.view">
+            <field name="name">Fill Actual Movement Date</field>
+            <field name="model">fill.date.backdating</field>
+            <field name="arch" type="xml">
+              <form string="Fill Actual Movement Date">
+                  <group>
+                      <group>
+                          <field name="date_backdating"/>
+                      </group>
+                  </group>
+                  <footer>
+                      <button name="fill_date_backdating" string="_Apply" type="object" class="btn-primary"/>
+                      <button string="Cancel" class="btn-default" special="cancel" />
+                  </footer>
+              </form>
+            </field>
+        </record>
+
+        <record id="action_view_fill_backdating" model="ir.actions.act_window">
+            <field name="name">Fill Actual Movement Date</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">fill.date.backdating</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_fill_backdating"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>
