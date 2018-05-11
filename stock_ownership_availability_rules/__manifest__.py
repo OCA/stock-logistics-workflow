@@ -4,11 +4,10 @@
 
 {'name': 'Stock Ownership Availability Rules',
  'summary': 'Enforce ownership on stock availability',
- 'version': '10.0.1.0.0',
+ 'version': '10.0.1.0.1',
  'author': "Camptocamp,Odoo Community Association (OCA)",
  'category': 'Purchase Management',
  'license': 'AGPL-3',
- 'images': [],
  'depends': ['stock',
              ],
  'demo': [],

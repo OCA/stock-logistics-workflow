@@ -38,3 +38,4 @@ Contributors
 ------------
 
 * Leonardo Pistone <leonardo.pistone@camptocamp.com>
+* Alex Comba <alex.comba@agilebg.com>
