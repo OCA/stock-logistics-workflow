@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright 2014 ALeonardo Pistone, Camptocamp SA
+# Copyright 2018 Alex Comba - Agile Business Group
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo import models, api, fields
@@ -48,3 +49,15 @@ class Quant(models.Model):
                     move.location_id.company_id.partner_id.id)
                 domain += [('owner_id', '=', restrict_partner_id)]
         return domain
+
+    def _account_entry_move(self, move):
+        quant_owner_id = self.owner_id
+        if quant_owner_id:
+            # workaraound to get this module
+            # compatible with Perpetual inventory valuation
+            self.owner_id = False
+            res = super(Quant, self)._account_entry_move(move)
+            self.owner_id = quant_owner_id
+        else:
+            res = super(Quant, self)._account_entry_move(move)
+        return res
