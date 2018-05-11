@@ -10,11 +10,12 @@
     'version': '10.0.1.0.0',
     'category': 'Stock Logistics',
     'license': 'AGPL-3',
-    'author': 'Marco Dieckhoff, BREMSKERL, Agile Business Group,'
-              ' Odoo Community Association (OCA)',
+    'author': 'Marco Dieckhoff, BREMSKERL, Agile Business Group, '
+              'Odoo Community Association (OCA)',
     'website': 'https://github.com/OCA/stock-logistics-workflow',
     'depends': ['stock_account'],
     'data': [
+        'wizards/fill_date_backdating.xml',
         'views/stock_picking.xml',
     ],
     'installable': True,
