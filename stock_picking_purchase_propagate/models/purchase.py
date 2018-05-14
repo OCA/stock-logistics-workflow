@@ -15,9 +15,7 @@ class PurchaseOrderLine(models.Model):
             reassign pickings.
         """
         moves = super(PurchaseOrderLine, self)._create_stock_moves(picking)
-        destination_moves_to_prop = moves.filtered(
-            lambda m: m.propagate).mapped('move_dest_ids').filtered(
-            lambda m: not m.group_id)
+        destination_moves_to_prop = moves.get_next_moves_to_propagate()
         destination_moves_to_prop._propagate_procurement_group(
             moves.mapped('group_id'))
         moves._propagate_quantity_to_dest_moves()
