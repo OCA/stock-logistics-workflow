@@ -31,7 +31,9 @@ class StockMove(models.Model):
     @api.multi
     def _propagate_quantity_to_dest_moves(self):
         """Propagate the quantity to all dest moves where propagate is True."""
-        for move in self.filtered(lambda m: m.propagate):
+        for move in self:
+            if not move.propagate:
+                continue
             for dest_move in move.move_dest_ids:
                 # Convert qty in dest move uom if needed
                 if move.product_uom != dest_move.product_uom:
