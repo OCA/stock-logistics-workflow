@@ -11,16 +11,17 @@ class TestPoPropagate(SavepointCase):
 
         def _create_product(name, supplier):
             product_tmpl_model = cls.env['product.template']
-            return product_tmpl_model.create({
-                'name': name,
-                'type': 'product',
-                'purchase_ok': True,
-                'seller_ids': [(0, 0, {
-                    'name': supplier.id,
-                    'min_qty': 1,
-                    'price': 1.0,
-                })],
-            }).product_variant_ids
+            return product_tmpl_model.with_context(
+                tracking_disable=True).create({
+                    'name': name,
+                    'type': 'product',
+                    'purchase_ok': True,
+                    'seller_ids': [(0, 0, {
+                        'name': supplier.id,
+                        'min_qty': 1,
+                        'price': 1.0,
+                    })],
+                }).product_variant_ids
 
         def _create_orderpoint(product, qty_min, qty_max):
             orderpoint_model = cls.env['stock.warehouse.orderpoint']
