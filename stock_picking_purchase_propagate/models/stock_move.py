@@ -8,6 +8,24 @@ class StockMove(models.Model):
     _inherit = 'stock.move'
 
     @api.multi
+    def get_next_moves_to_propagate(self):
+        """Get the destination moves of self, if self is to propagate and no
+        group_id is defined on the dest moves."""
+        sql = """
+            SELECT dest_mov.id
+            FROM stock_move dest_mov
+            INNER JOIN stock_move_move_rel rel
+                ON rel.move_dest_id = dest_mov.id
+            INNER JOIN stock_move orig_mov ON rel.move_orig_id = orig_mov.id
+            WHERE orig_mov.propagate = TRUE
+            AND dest_mov.group_id IS NULL
+            AND orig_mov.id IN %s;
+            """
+        self.env.cr.execute(sql, [tuple(self.ids)])
+        dest_moves_ids = [x[0] for x in self.env.cr.fetchall()]
+        return self.browse(dest_moves_ids)
+
+    @api.multi
     def _propagate_procurement_group(self, group):
         """Write group to self and propagate group to dest moves where
         propagate is True.
@@ -20,9 +38,7 @@ class StockMove(models.Model):
         res = self.write({'group_id': group.id, 'picking_id': False})
         self._assign_picking()
         # If there are destination move to propagate, propagate proc group
-        to_propagate = self.filtered(
-            lambda m: m.move_dest_ids and m.propagate
-        ).mapped('move_dest_ids').filtered(lambda m: not m.group_id)
+        to_propagate = self.get_next_moves_to_propagate()
         if to_propagate:
             # Recursive call on destination moves
             to_propagate._propagate_procurement_group(group)
