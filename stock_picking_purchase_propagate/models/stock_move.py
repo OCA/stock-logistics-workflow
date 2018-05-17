@@ -48,6 +48,9 @@ class StockMove(models.Model):
     def _propagate_quantity_to_dest_moves(self):
         """Propagate the quantity to all dest moves where propagate is True."""
         for move in self:
+            # TODO Check if dest stock of dest move is not in PO's WH
+            # through purchase_order.picking_id.default_location_dest_id
+            # get the WH and WH.lot_stock_id
             if not move.propagate:
                 continue
             for dest_move in move.move_dest_ids:
