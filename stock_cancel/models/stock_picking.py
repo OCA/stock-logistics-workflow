@@ -45,12 +45,6 @@ class StockPicking(models.Model):
                 'sale_line_id')
             for line in sale_lines:
                 line.qty_delivered = line._get_delivered_qty()
-            if sale_lines:
-                order = sale_lines[0].order_id
-                delivery_line = order.with_context(
-                    reopen_picking=True).order_line.filtered(
-                    lambda s: s.is_delivery)
-                delivery_line.unlink()
             picking.state = 'draft'
             picking.action_confirm()
             picking.do_prepare_partial()
