@@ -39,6 +39,8 @@ class TestPoPropagate(SavepointCase):
         cls.input_loc = cls.warehouse.wh_input_stock_loc_id
         cls.qc_loc = cls.warehouse.wh_qc_stock_loc_id
 
+        cls.internal_picking_type = cls.env.ref('stock.picking_type_internal')
+
         # Create suppliers
         partner_model = cls.env['res.partner'].with_context(
             tracking_disable=True)
@@ -50,14 +52,20 @@ class TestPoPropagate(SavepointCase):
             'name': 'Drummers Friend',
             'company_type': 'company'
         })
+        cls.piano_store = partner_model.create({
+            'name': 'Piano store',
+            'company_type': 'company'
+        })
         # Create basic products
         cls.guitar = _create_product('Guitar', cls.strings_inc)
         cls.bass = _create_product('Bass', cls.strings_inc)
         cls.drumset = _create_product('Drumset', cls.drummers_friend)
+        cls.piano = _create_product('Piano', cls.piano_store)
         # Create orderpoints
         cls.guitar_op = _create_orderpoint(cls.guitar, 20, 30)
         cls.bass_op = _create_orderpoint(cls.bass, 10, 15)
         cls.drumset_op = _create_orderpoint(cls.drumset, 5, 10)
+        cls.piano_op = _create_orderpoint(cls.piano, 5, 10)
 
     def test_two_steps(self):
         self.warehouse.write({'reception_steps': 'two_steps'})
@@ -192,3 +200,69 @@ class TestPoPropagate(SavepointCase):
         self.assertEqual(qc_to_stock_move.picking_id.group_id,
                          po_procurement_group)
         self.assertAlmostEqual(qc_to_stock_move.product_uom_qty, 3.0)
+
+    def test_two_warehouses_orderpoints(self):
+        self.warehouse.write({'reception_steps': 'three_steps'})
+        # Create second warehouse
+        wh2 = self.env['stock.warehouse'].create({
+            'name': 'WH2',
+            'code': 'WH2',
+            'partner_id': False
+        })
+        # Create WH > WH2 PG and route
+        wh_wh2_pg = self.env['procurement.group'].create({
+            'name': 'WH > WH2',
+            'move_type': 'direct'
+        })
+        wh_wh2_route = self.env['stock.location.route'].create({
+            'name': 'WH > WH2',
+            'product_selectable': True,
+            'pull_ids': [(0, 0, {
+                'name': 'WH>WH2',
+                'action': 'move',
+                'location_id': wh2.lot_stock_id.id,
+                'location_src_id': self.stock_loc.id,
+                'procure_method': 'make_to_order',
+                'picking_type_id': self.internal_picking_type.id,
+                'group_propagation_option': 'fixed',
+                'group_id': wh_wh2_pg.id,
+                'propagate': True
+            })]
+        })
+        # Add the new route to piano product
+        self.piano.write({
+            'route_ids': [(4, wh_wh2_route.id)]
+        })
+        piano_op_wh2 = self.piano_op.copy({
+            'name': 'OP/%s-2' % self.piano.name,
+            'location_id': wh2.lot_stock_id.id
+        })
+        self.env['procurement.group'].run_scheduler()
+        # Ensure we get two internal moves to WH/Stock, one for each OP
+        piano_moves_to_wh = self.env['stock.move'].search([
+            ('product_id', '=', self.piano.id),
+            ('location_dest_id', '=', self.stock_loc.id)
+        ])
+        self.assertEqual(len(piano_moves_to_wh), 2)
+        for move in piano_moves_to_wh:
+            self.assertAlmostEqual(move.product_uom_qty, 10.0)
+            if move.picking_id.origin == 'WH > WH2':
+                self.assertEqual(move.picking_id.group_id, wh_wh2_pg)
+            else:
+                self.assertFalse(move.picking_id.group_id)
+
+        # Ensure PO was generated with the quantity from both OP
+        po_pianos = self.env['purchase.order'].search(
+            [('partner_id', '=', self.piano_store.id)])
+        self.assertEqual(len(po_pianos.order_line), 1)
+        self.assertAlmostEqual(po_pianos.order_line.product_qty, 20.0)
+        po_pianos.order_line.write({
+            'product_qty': 15.0
+        })
+        po_pianos.button_confirm()
+        for move in piano_moves_to_wh:
+            # TODO FIXME :
+            # actually the quantity reduction doesn't work as both
+            # transfers get the new qty (15.0) which is bigger than
+            # what we're supposed to receive
+            self.assertAlmostEqual(move.product_uom_qty, 10.0)
