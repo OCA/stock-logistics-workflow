@@ -4,12 +4,12 @@
 
 {
     'name': 'Auto-assignation of lots on pickings',
-    'version': '10.0.1.0.0',
+    'version': '11.0.1.0.0',
     'author': 'Tecnativa,'
               'Odoo Community Association (OCA)',
     'category': 'Inventory, Logistics, Warehousing',
     'license': 'AGPL-3',
-    'website': 'https://www.tecnativa.com',
+    'website': 'https://github.com/OCA/stock-logistics-workflow',
     'depends': [
         'stock',
     ],

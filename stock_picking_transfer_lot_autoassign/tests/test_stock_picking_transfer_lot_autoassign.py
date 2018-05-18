@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 Pedro M. Baeza <pedro.baeza@tecnativa.com>
+# Copyright 2018 David Vidal <david.vidal@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.tests import common
@@ -41,7 +41,7 @@ class TestStockPickingTransferLotAutoAssign(common.SavepointCase):
         cls.quant1 = cls.env['stock.quant'].create({
             'product_id': cls.product.id,
             'location_id': cls.picking.location_id.id,
-            'qty': 6,
+            'quantity': 6,
             'lot_id': cls.lot1.id,
         })
         cls.lot2 = cls.env['stock.production.lot'].create({
@@ -51,10 +51,10 @@ class TestStockPickingTransferLotAutoAssign(common.SavepointCase):
         cls.quant2 = cls.env['stock.quant'].create({
             'product_id': cls.product.id,
             'location_id': cls.picking.location_id.id,
-            'qty': 10,
+            'quantity': 10,
             'lot_id': cls.lot2.id,
         })
-        cls.Move.create({
+        cls.move = cls.Move.create({
             'name': cls.product.name,
             'product_id': cls.product.id,
             'product_uom_qty': 10,
@@ -66,9 +66,9 @@ class TestStockPickingTransferLotAutoAssign(common.SavepointCase):
     def test_transfer(self):
         self.picking.action_confirm()
         self.picking.action_assign()
-        pack_ops = self.picking.pack_operation_ids
-        self.assertEqual(len(pack_ops), 1)
-        self.assertEqual(len(pack_ops.pack_lot_ids), 2)
-        self.assertEqual(pack_ops.pack_lot_ids[0].qty, 6)
-        self.assertEqual(pack_ops.pack_lot_ids[1].qty, 4)
-        self.assertEqual(pack_ops.qty_done, 10)
+        pack_ops = self.picking.move_line_ids
+        self.assertEqual(len(pack_ops), 2)
+        self.assertEqual(len(pack_ops.mapped('lot_id')), 2)
+        self.assertEqual(pack_ops[0].product_uom_qty, 6)
+        self.assertEqual(pack_ops[1].product_uom_qty, 4)
+        self.assertEqual(self.move.quantity_done, 10)
