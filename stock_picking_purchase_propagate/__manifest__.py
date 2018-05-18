@@ -9,7 +9,6 @@
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "depends": [
-        "purchase",
-        "stock",
+        "purchase_line_procurement_group"
     ],
 }
