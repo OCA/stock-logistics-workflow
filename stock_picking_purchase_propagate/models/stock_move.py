@@ -46,23 +46,24 @@ class StockMove(models.Model):
 
     @api.multi
     def _propagate_quantity_to_dest_moves(self):
-        """Propagate the quantity to all dest moves where propagate is True."""
+        """Propagate the quantity if propagate and only one dest move."""
         for move in self:
-            # TODO Check if dest stock of dest move is not in PO's WH
-            # through purchase_order.picking_id.default_location_dest_id
-            # get the WH and WH.lot_stock_id
             if not move.propagate:
                 continue
-            for dest_move in move.move_dest_ids:
-                # Convert qty in dest move uom if needed
-                if move.product_uom != dest_move.product_uom:
-                    new_qty = move.product_uom._compute_quantity(
-                        move.product_uom_qty, dest_move.product_uom)
-                else:
-                    new_qty = move.product_uom_qty
-                dest_move.write({
-                    'product_uom_qty': new_qty
-                })
-                # Recursive call on destination moves
-                dest_move._propagate_quantity_to_dest_moves()
+            dest_move = move.move_dest_ids
+            # Stop propagation of qty if multiple dest moves
+            if len(dest_move) != 1:
+                continue
+            # If there's only one dest move, there's no risk to propagate
+            # Convert qty in dest move uom if needed
+            if move.product_uom != dest_move.product_uom:
+                dest_qty = move.product_uom._compute_quantity(
+                    move.product_uom_qty, dest_move.product_uom)
+            else:
+                dest_qty = move.product_uom_qty
+            dest_move.write({
+                'product_uom_qty': dest_qty
+            })
+            # Recursive call on destination moves
+            dest_move._propagate_quantity_to_dest_moves()
         return True
