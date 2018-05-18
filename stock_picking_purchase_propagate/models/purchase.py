@@ -20,11 +20,3 @@ class PurchaseOrderLine(models.Model):
             moves.mapped('group_id'))
         moves._propagate_quantity_to_dest_moves()
         return moves
-
-    def _merge_in_existing_line(self, product_id, product_qty, product_uom, location_id, name, origin, values):
-        """ This function purpose is to be override with the purpose to forbide _run_buy  method
-        to merge a new po line in an existing one.
-        """
-        # TODO Do not merge if coming from different procurement group
-        # Cf purchase.py line 922-932
-        pass
