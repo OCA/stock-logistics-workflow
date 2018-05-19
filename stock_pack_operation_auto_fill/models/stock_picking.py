@@ -1,4 +1,5 @@
 # Copyright 2017 ACSONE SA/NV
+# Copyright 2018 JARSA Sistemas S.A. de C.V.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import _, api, fields, models
@@ -49,4 +50,4 @@ class StockPicking(models.Model):
             lambda op: not op.lots_visible and op.product_id and
             not op.qty_done)
         for op in operations_to_auto_fill:
-            op.qty_done = op.product_qty
+            op.qty_done = op.product_uom_qty
