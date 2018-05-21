@@ -14,6 +14,7 @@ setuptools.setup(
         'odoo11-addon-stock_picking_restrict_cancel_with_orig_move',
         'odoo11-addon-stock_picking_show_backorder',
         'odoo11-addon-stock_picking_show_return',
+        'odoo11-addon-stock_split_picking',
     ],
     classifiers=[
         'Programming Language :: Python',
