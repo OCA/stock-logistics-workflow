@@ -209,6 +209,9 @@ class TestPoPropagate(SavepointCase):
             'code': 'WH2',
             'partner_id': False
         })
+        # Force parent store computation after creation of WH2 because location
+        # quantities are computed using parent_left _right in domain
+        self.env['stock.location']._parent_store_compute()
         # Create WH > WH2 PG and route
         wh_wh2_pg = self.env['procurement.group'].create({
             'name': 'WH > WH2',
