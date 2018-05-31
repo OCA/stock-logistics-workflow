@@ -37,6 +37,7 @@ class TestPackagePreparationLine(TransactionCase):
             'product_uom_qty': quantity,
             'product_uom_id': product and product.uom_id.id or False,
             'package_preparation_id': preparation.id,
+            'note': 'note',
             })
 
     def _create_preparation(self, pickings=None):
@@ -130,6 +131,8 @@ class TestPackagePreparationLine(TransactionCase):
         self.assertEqual(
             self.preparation.picking_ids[0].move_lines[0].product_id,
             self.product2)
+        for line in self.preparation.line_ids:
+            self.assertEqual(line.note, 'note')
 
     def test_remove_picking_from_package_preparation(self):
         # Remove picking from package preparation to test what happens
