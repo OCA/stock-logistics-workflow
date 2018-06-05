@@ -38,7 +38,7 @@ addon | version | summary
 [stock_picking_line_sequence](stock_picking_line_sequence/) | 10.0.1.0.0 | Manages the order of stock moves by displaying its sequence
 [stock_picking_mass_action](stock_picking_mass_action/) | 10.0.1.0.0 | Stock Picking Mass Action
 [stock_picking_package_preparation](stock_picking_package_preparation/) | 10.0.1.0.1 | Stock Picking Package Preparation
-[stock_picking_package_preparation_line](stock_picking_package_preparation_line/) | 10.0.1.0.1 | Stock Picking Package Preparation Line
+[stock_picking_package_preparation_line](stock_picking_package_preparation_line/) | 10.0.1.0.2 | Stock Picking Package Preparation Line
 [stock_picking_show_backorder](stock_picking_show_backorder/) | 10.0.1.0.0 | Provides a new field on stock pickings, allowing to display the corresponding backorders.
 [stock_picking_show_return](stock_picking_show_return/) | 10.0.1.0.0 | Show returns on stock pickings
 [stock_picking_transfer_lot_autoassign](stock_picking_transfer_lot_autoassign/) | 10.0.1.0.0 | Auto-assignation of lots on pickings
