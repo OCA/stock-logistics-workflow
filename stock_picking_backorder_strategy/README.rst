@@ -9,7 +9,8 @@ backorder or to avoid to create a backorder.
 
 Possible strategies are:
 
-* Create: it is the default behaviour, backorder is created as usual
+* Manual (Default): Let the backorder wizard to be launched as usual
+* Create: Backorder is created if it exists some remaining quantities
 * No Create: no backorder are created
 * Cancel: backorder is cancelled
 
@@ -32,7 +33,7 @@ Usage
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/154/8.0
+   :target: https://runbot.odoo-community.org/runbot/154/10.0
 
 For further information, please visit:
 
@@ -53,6 +54,7 @@ Contributors
 ------------
 
 * Laetitia Gangloff <laetitia.gangloff@acsone.eu>
+* Denis Roussel <denis.roussel@acsone.eu>
 
 Maintainer
 ----------
