@@ -1,10 +1,10 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
     :alt: License: AGPL-3
 
-Stock Cancel
-============
+Stock Cancel Delivery
+=====================
 
-This module allows you to bring back a full stock picking to draft state
+Makes the stock_cancel module to be consistent when delivery is installed.
 
 
 Bug Tracker
@@ -14,12 +14,6 @@ Bugs are tracked on `GitHub Issues <https://github.com/OCA/stock-logistics-workf
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed feedback
 `here <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_cancel%0Aversion:%208.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
-
-Known issues / Roadmap
-======================
-
-* Only allow to reopen pickings that have not backorder and it is not part of
-  a chain
 
 
 Credits

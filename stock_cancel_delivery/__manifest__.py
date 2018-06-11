@@ -4,18 +4,18 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 {
-    'name': 'Stock Cancel',
+    'name': 'Stock Cancel delivery',
     'version': '10.0.0.1.0',
     'category': 'Stock',
-    'summary': """This module allows you to bring back a completed stock
-picking to draft state""",
+    'summary': """""",
     'author': "www.andreacometa.it,Odoo Community Association (OCA)",
     'website': 'http://www.andreacometa.it',
     'license': 'AGPL-3',
-    'depends': ['stock_picking_invoice_link'],
+    'depends': ['stock_cancel',
+                'delivery',
+                ],
     'data': [
-        'view/stock_view.xml',
         ],
     'installable': True,
-    'images': ['images/stock_picking.jpg'],
+    'auto_install': True,
 }
