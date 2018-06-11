@@ -3,7 +3,7 @@
 # Copyright 2013 Agile Business Group sagl
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-from odoo import api, models, exceptions, _
+from odoo import api, models
 
 
 class StockPicking(models.Model):
