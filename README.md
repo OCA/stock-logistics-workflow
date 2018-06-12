@@ -25,6 +25,8 @@ addon | version | summary
 --- | --- | ---
 [product_expiry_simple](product_expiry_simple/) | 10.0.1.0.0 | Simpler and better alternative to the official product_expiry module
 [stock_auto_move](stock_auto_move/) | 10.0.1.0.0 | Automatic Move Processing
+[stock_cancel](stock_cancel/) | 10.0.0.1.0 | This module allows you to bring back a completed stock picking to draft state
+[stock_cancel_delivery](stock_cancel_delivery/) | 10.0.0.1.0 | Stock Cancel delivery
 [stock_delivery_internal](stock_delivery_internal/) | 10.0.1.0.0 | Adds an internal carrier to delivery options
 [stock_disable_force_availability_button](stock_disable_force_availability_button/) | 10.0.1.0.0 | Disable force availability button
 [stock_lot_scrap](stock_lot_scrap/) | 10.0.1.0.0 | This module adds a button in Production Lot/Serial Number view form to Scrap all products contained.
@@ -53,7 +55,6 @@ addon | version | summary
 [product_customer_code_picking](product_customer_code_picking/) | 1.0 (unported) | Product Customer code for stock picking
 [product_serial](product_serial/) | 1.0 (unported) | Enhance Serial Number management
 [stock_batch_picking](stock_batch_picking/) | 9.0.1.0.0 (unported) | Stock batch picking
-[stock_cancel](stock_cancel/) | 1.2 (unported) | Stock Cancel
 [stock_dropshipping_dual_invoice](stock_dropshipping_dual_invoice/) | 8.0.0.1.0 (unported) | Create both Supplier and Customer Invoices from a Dropshipping Delivery
 [stock_inventory_retry_assign](stock_inventory_retry_assign/) | 1.0 (unported) | Check Availability after Inventories
 [stock_location_flow_creator](stock_location_flow_creator/) | 1.0 (unported) | Create configuration of stock location flow
