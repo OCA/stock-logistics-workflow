@@ -10,6 +10,8 @@ setuptools.setup(
     install_requires=[
         'odoo10-addon-product_expiry_simple',
         'odoo10-addon-stock_auto_move',
+        'odoo10-addon-stock_cancel',
+        'odoo10-addon-stock_cancel_delivery',
         'odoo10-addon-stock_delivery_internal',
         'odoo10-addon-stock_disable_force_availability_button',
         'odoo10-addon-stock_lot_scrap',
