@@ -13,13 +13,16 @@ class StockPicking(models.Model):
         result = super(StockPicking, self).do_transfer()
         for picking in self:
             # set date_done as the youngest date among the moves
-            dates = picking.mapped('move_lines.date')
+            dates = picking.move_lines.filtered(
+                lambda m: m.state == 'done').mapped('date')
             picking.write({'date_done': max(dates)})
+            all_moves = self.env['account.move'].search(
+                [('ref', '=', picking.name),
+                 ('line_ids.name', 'in', picking.mapped('move_lines.name'))])
             for move in picking.move_lines:
-                # set date on account.move same as date on stock.move
-                account_moves = self.env['account.move'].search(
-                    [('ref', '=', picking.name),
-                     ('line_ids.name', '=', move.name)])
-                for account_move in account_moves:
+                for account_move in all_moves.filtered(
+                        lambda m, pm=move: pm.name in m.line_ids.mapped('name')
+                ):
+                    # set date on account.move same as date on stock.move
                     account_move.date = move.date
         return result
