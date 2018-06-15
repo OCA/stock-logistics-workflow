@@ -6,26 +6,25 @@
 Stock Pack Operation Auto Fill
 ==============================
 
-In Odoo, if you schedule to transfer 50 products and only receive 49 products,
-you have to change the quantity directly on the picking. As the quantity by
-default is 0 for each line, you have to write the received quantity on 49
-lines.
+For example, if you have an incoming picking with 50 products and you only
+receive 49 products, you have to manually set the *Quantity Done* field
+on each operation. As the quantity by default is 0 for
+each line, you have to write the received quantity on 49 lines.
 
-In this module we have added a button that helps users to fill automatically
-the scheduled quantities. Then, the user can just change back 
+This module provides a button that let users fill automatically
+the *Quantity Done*. Then, the user can just change back
 the quantities for the product that hasn't been received yet.
 
 Usage
 =====
 
-After confirming the picking, click on `Auto fill operations` button. The Operations
-matching the following conditions will be filled automatically:
-
-* The product has no tracking set (Technically `tracking` field should be equal to `none`).
+After confirming the picking, click on the button `Auto fill
+operations`. The operations matching the following conditions will be
+filled automatically:
 
 * The operation has not be processed (i.e `qty_done == 0`).
 
-* The operation has no package set (i.e `package_id` is empty).  
+* The operation has no package set (i.e `package_id` is empty).
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot

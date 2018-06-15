@@ -3,11 +3,11 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models, _
+from odoo.tools import float_compare, float_is_zero
 from odoo.exceptions import UserError
 
 
 class StockPicking(models.Model):
-
     _inherit = 'stock.picking'
 
     action_pack_op_auto_fill_allowed = fields.Boolean(
@@ -25,7 +25,6 @@ class StockPicking(models.Model):
                 rec.state in ['partially_available', 'assigned'] and \
                 rec.pack_operation_ids
 
-    @api.multi
     def _check_action_pack_operation_auto_fill_allowed(self):
         if any(not r.action_pack_op_auto_fill_allowed for r in self):
             raise UserError(
@@ -33,21 +32,32 @@ class StockPicking(models.Model):
                   "perhaps the pickings aren't in the right state "
                   "(Partially available or available)."))
 
-    @api.multi
     def action_pack_operation_auto_fill(self):
         """ Fill automatically pack operation for products with the following
         conditions:
-            - there is no tracking set on the product (i.e tracking is none).
-            this condition can be checked by the field `lots_visible` on the
-            pack operation model.
             - the package is not required, the package is required if the
             the no product is set on the operation.
             - the operation has no qty_done yet.
         """
+        self.ensure_one()
         self._check_action_pack_operation_auto_fill_allowed()
-        operations = self.mapped('pack_operation_ids')
-        operations_to_auto_fill = operations.filtered(
-            lambda op: not op.lots_visible and op.product_id and
-            not op.qty_done)
-        for op in operations_to_auto_fill:
-            op.qty_done = op.product_qty
+        prec = self.env['decimal.precision'].precision_get(
+            'Product Unit of Measure')
+        for op in self.pack_operation_ids:
+            if not float_is_zero(op.qty_done, precision_digits=prec):
+                continue
+            new_qty_done = 0
+            if op.product_id.tracking in ('lot', 'serial'):
+                if op.pack_lot_ids:
+                    for opl in op.pack_lot_ids:
+                        if float_compare(
+                                opl.qty, opl.qty_todo, precision_digits=prec):
+                            opl.qty = opl.qty_todo
+                        new_qty_done += opl.qty
+            else:
+                new_qty_done = op.product_qty
+            if (
+                    new_qty_done and
+                    float_compare(
+                    op.qty_done, new_qty_done, precision_digits=prec)):
+                op.qty_done = new_qty_done
