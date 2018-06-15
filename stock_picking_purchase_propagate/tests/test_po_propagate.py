@@ -1,6 +1,6 @@
 # Copyright 2018 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-
+from odoo import fields
 from odoo.tests import SavepointCase
 
 
@@ -61,6 +61,7 @@ class TestPoPropagate(SavepointCase):
         cls.bass = _create_product('Bass', cls.strings_inc)
         cls.drumset = _create_product('Drumset', cls.drummers_friend)
         cls.piano = _create_product('Piano', cls.piano_store)
+        cls.violin = _create_product('Violin', cls.strings_inc)
         # Create orderpoints
         cls.guitar_op = _create_orderpoint(cls.guitar, 20, 30)
         cls.bass_op = _create_orderpoint(cls.bass, 10, 15)
@@ -270,3 +271,18 @@ class TestPoPropagate(SavepointCase):
             else:
                 self.assertAlmostEqual(move.product_uom_qty, 6.0)
                 self.assertEqual(move.group_id.name, po_pianos.name)
+
+    def test_manual_po(self):
+        po = self.env['purchase.order'].create({
+            'partner_id': self.strings_inc.id,
+            'order_line': [
+                (0, 0, {
+                    'name': self.violin.name,
+                    'product_id': self.violin.id,
+                    'product_qty': 1.0,
+                    'product_uom': self.violin.uom_po_id.id,
+                    'price_unit': 10.0,
+                    'date_planned': fields.Date.today(),
+                })],
+        })
+        po.button_confirm()
