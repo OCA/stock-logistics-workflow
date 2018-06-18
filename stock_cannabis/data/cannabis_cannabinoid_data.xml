@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Copyright 2017 LasLabs Inc.
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+-->
+
+<odoo>
+
+    <record id="cannabis_cannabinoid_thc" model="cannabis.cannabinoid">
+        <field name="name">THC</field>
+    </record>
+
+    <record id="cannabis_cannabinoid_cbd" model="cannabis.cannabinoid">
+        <field name="name">CBD</field>
+    </record>
+
+</odoo>

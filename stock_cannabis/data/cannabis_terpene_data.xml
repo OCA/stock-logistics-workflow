@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Copyright 2017 LasLabs Inc.
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+-->
+
+<odoo>
+
+    <record id="cannabis_terpene_alpha_pinene" model="cannabis.terpene">
+        <field name="name">Alpha-Pinene</field>
+        <field name="effects">Alertness, memory retention, counteracts some THC effects.</field>
+        <field name="medical_value">Asthma, antiseptic</field>
+    </record>
+
+    <record id="cannabis_terpene_beta_pinene" model="cannabis.terpene">
+        <field name="name">Beta-Pinene</field>
+        <field name="effects">Alertness, memory retention, counteracts some THC effects.</field>
+        <field name="medical_value">Asthma, antiseptic</field>
+    </record>
+
+    <record id="cannabis_terpene_myrcene" model="cannabis.terpene">
+        <field name="name">Myrcene</field>
+        <field name="aroma">Musky, cloves, earthy, herbal with notes of citrus and tropical fruit.</field>
+        <field name="effects">Sedating “couchlock” effect, relaxing</field>
+        <field name="medical_value">Antioxidant, anti-carcinogenic; good for muscle tension, sleeplessness, pain, inflammation, depression</field>
+    </record>
+
+</odoo>
