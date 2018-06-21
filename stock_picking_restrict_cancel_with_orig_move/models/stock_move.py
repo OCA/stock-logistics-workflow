@@ -10,9 +10,17 @@ class StockMove(models.Model):
     _inherit = 'stock.move'
 
     def _action_cancel(self):
-        if (self.env.context.get('bypass_check_state') or
-                all(move.state in ('cancel', 'done')
-                    for move in self.mapped('move_orig_ids'))):
+
+        orig_moves = self.mapped('move_orig_ids')
+        all_om_canceled_or_done = all(
+            move.state in ('cancel', 'done') for move in orig_moves)
+        all_om_in_self = all(om in self for om in orig_moves)
+
+        if (
+                self.env.context.get('bypass_check_state') or
+                all_om_canceled_or_done or
+                all_om_in_self
+        ):
             return super(StockMove, self.with_context(
                 bypass_check_state=True))._action_cancel()
         else:
