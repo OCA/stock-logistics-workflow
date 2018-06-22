@@ -1,6 +1,7 @@
-# -*- coding: utf-8 -*-
-from openerp.exceptions import UserError
-from openerp.tests.common import TransactionCase
+# Copyright 2018 Tecnativa - Carlos Dauden
+
+from odoo.exceptions import UserError
+from odoo.tests.common import TransactionCase
 
 
 class TestBatchPicking(TransactionCase):
@@ -76,8 +77,8 @@ class TestBatchPicking(TransactionCase):
         self.assertEqual('confirmed', self.picking.state)
         self.assertEqual('confirmed', self.picking2.state)
 
-        self.assertEqual(0, len(self.batch.pack_operation_ids))
-        self.assertEqual(4, len(self.batch.move_ids))
+        self.assertEqual(0, len(self.batch.move_line_ids))
+        self.assertEqual(4, len(self.batch.move_lines))
 
         self.batch.action_assign()
 
@@ -85,8 +86,8 @@ class TestBatchPicking(TransactionCase):
         self.assertEqual('assigned', self.picking.state)
         self.assertEqual('assigned', self.picking2.state)
 
-        self.assertEqual(4, len(self.batch.pack_operation_ids))
-        self.assertEqual(4, len(self.batch.move_ids))
+        self.assertEqual(4, len(self.batch.move_line_ids))
+        self.assertEqual(4, len(self.batch.move_lines))
 
     def test_assign_with_cancel(self):
         self.picking2.action_cancel()
@@ -107,12 +108,12 @@ class TestBatchPicking(TransactionCase):
         self.assertEqual('assigned', self.picking.state)
         self.assertEqual('assigned', self.picking2.state)
 
-        self.assertEqual(4, len(self.batch.pack_operation_ids))
+        self.assertEqual(4, len(self.batch.move_line_ids))
 
         self.assertEqual(
             {(0, 1)},
             {(op.qty_done, op.product_qty)
-             for op in self.batch.pack_operation_ids}
+             for op in self.batch.move_line_ids}
         )
 
         self.batch.action_transfer()
@@ -121,12 +122,12 @@ class TestBatchPicking(TransactionCase):
         self.assertEqual('done', self.picking.state)
         self.assertEqual('done', self.picking2.state)
 
-        self.assertEqual(4, len(self.batch.pack_operation_ids))
+        self.assertEqual(4, len(self.batch.move_line_ids))
 
         self.assertEqual(
             {(1, 1)},
             {(op.qty_done, op.product_qty)
-             for op in self.batch.pack_operation_ids}
+             for op in self.batch.move_line_ids}
         )
 
     def test_action_transfer__unavailable(self):
@@ -277,7 +278,7 @@ class TestBatchPicking(TransactionCase):
 
     def test_backorder(self):
         # Change move lines quantities for product 6 and 7
-        for move in self.batch.move_ids:
+        for move in self.batch.move_lines:
             if move.product_id == self.product6:
                 move.product_uom_qty = 5
             elif move.product_id == self.product7:
@@ -286,7 +287,7 @@ class TestBatchPicking(TransactionCase):
         self.batch.action_assign()
 
         # Mark product 6 as partially processed and 7 and 9 as fully processed.
-        for operation in self.batch.pack_operation_ids:
+        for operation in self.batch.move_line_ids:
             if operation.product_id == self.product6:
                 operation.qty_done = 3
             elif operation.product_id == self.product7:
@@ -310,9 +311,9 @@ class TestBatchPicking(TransactionCase):
         self.assertEqual(1, len(backorder.move_lines))
         self.assertEqual(self.product6, backorder.move_lines[0].product_id)
         self.assertEqual(2, backorder.move_lines[0].product_uom_qty)
-        self.assertEqual(1, len(backorder.pack_operation_ids))
-        self.assertEqual(2, backorder.pack_operation_ids[0].product_qty)
-        self.assertEqual(0, backorder.pack_operation_ids[0].qty_done)
+        self.assertEqual(1, len(backorder.move_line_ids))
+        self.assertEqual(2, backorder.move_line_ids[0].product_qty)
+        self.assertEqual(0, backorder.move_line_ids[0].qty_done)
 
         backorder2 = self.picking_model.search([
             ('backorder_id', '=', self.picking2.id)
@@ -323,9 +324,9 @@ class TestBatchPicking(TransactionCase):
         self.assertEqual(1, len(backorder2.move_lines))
         self.assertEqual(self.product10, backorder2.move_lines.product_id)
         self.assertEqual(1, backorder2.move_lines.product_uom_qty)
-        self.assertEqual(1, len(backorder2.pack_operation_ids))
-        self.assertEqual(1, backorder2.pack_operation_ids.product_qty)
-        self.assertEqual(0, backorder2.pack_operation_ids.qty_done)
+        self.assertEqual(1, len(backorder2.move_line_ids))
+        self.assertEqual(1, backorder2.move_line_ids.product_qty)
+        self.assertEqual(0, backorder2.move_line_ids.qty_done)
 
     def test_assign_draft_pick(self):
         picking3 = self.create_simple_picking([
@@ -354,7 +355,7 @@ class TestBatchPicking(TransactionCase):
             'group_id': group.id,
             'warehouse_id': warehouse.id,
             'product_id': self.ref('product.product_product_11'),
-            'product_qty': 1,
+            'product_uom_qty': 1,
             'product_uom': self.ref('product.product_uom_unit'),
             'location_id': self.customer_loc.id,
         })
@@ -367,7 +368,7 @@ class TestBatchPicking(TransactionCase):
         picking = pickings.filtered(lambda p: p.state == 'confirmed')
         picking.action_assign()
 
-        picking.pack_operation_ids[0].qty_done = 1
+        picking.move_line_ids[0].qty_done = 1
         package_id = picking.put_in_pack()
         picking.do_transfer()
 
@@ -376,22 +377,13 @@ class TestBatchPicking(TransactionCase):
         other_picking = pickings.filtered(lambda p: p.id != picking.id)
         self.assertEqual('assigned', other_picking.state)
         self.assertEqual(
-            package, other_picking.pack_operation_ids.package_id,
+            package, other_picking.move_line_ids.package_id,
         )
 
         # We add the 'package' picking in batch
         other_picking.batch_picking_id = self.batch
 
         self.batch.action_assign()
-
-        # Check batch compute fields
-        self.assertEqual(4, len(self.batch.pack_operation_product_ids))
-        self.assertEqual(1, len(self.batch.pack_operation_pack_ids))
-
-        self.assertEqual(
-            other_picking.pack_operation_ids,
-            self.batch.pack_operation_pack_ids
-        )
 
         self.batch.action_transfer()
         self.assertEqual('done', self.batch.state)
@@ -437,7 +429,7 @@ class TestBatchPicking(TransactionCase):
         self.assertEqual('assigned', self.picking.state)
         self.assertEqual('assigned', self.picking2.state)
 
-        self.picking.pack_operation_ids[0].qty_done = 1
+        self.picking.move_line_ids[0].qty_done = 1
 
         self.batch.action_transfer()
 
