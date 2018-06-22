@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
-# © 2012-2016 Camptocamp SA
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# Copyright 2012-2016 Camptocamp SA
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from openerp import _, api, fields, models
-from openerp.exceptions import UserError
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 
 
 class StockBatchPickingCreator(models.TransientModel):
@@ -21,7 +20,7 @@ class StockBatchPickingCreator(models.TransientModel):
         help='Name of the batch picking'
     )
     date = fields.Date(
-        'Date', required=True, select=True, default=fields.Date.context_today,
+        'Date', required=True, index=True, default=fields.Date.context_today,
         help='Date on which the batch picking is to be processed'
     )
 
@@ -73,4 +72,4 @@ class StockBatchPickingCreator(models.TransientModel):
 
         pickings.write({'batch_picking_id': batch.id})
 
-        return batch.get_formview_action()[0]
+        return batch.get_formview_action()

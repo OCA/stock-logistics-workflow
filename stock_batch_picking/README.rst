@@ -58,6 +58,9 @@ picking_dispatch:
 
 stock_batch_picking:
 * Cyril Gaudin <cyril.gaudin@camptocamp.com>
+* `Tecnativa <https://www.tecnativa.com>`_:
+
+  * Carlos Dauden
 
 
 Maintainer
