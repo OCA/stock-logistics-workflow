@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*-
-# © 2012-2014 Alexandre Fayolle, Camptocamp SA
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from openerp import _, api, fields, models
+# Copyright 2012-2014 Alexandre Fayolle, Camptocamp SA
+# Copyright 2018 Tecnativa - Carlos Dauden
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+from odoo import _, api, fields, models
 
-from openerp.exceptions import UserError
+from odoo.exceptions import UserError
 
 
 class StockBatchPicking(models.Model):
@@ -69,63 +69,55 @@ class StockBatchPicking(models.Model):
 
     notes = fields.Text('Notes', help='free form remarks')
 
-    move_ids = fields.One2many(
+    move_lines = fields.One2many(
         'stock.move',
         readonly=True,
         string='Related stock moves',
-        compute='_compute_move_ids'
+        compute='_compute_move_lines'
     )
 
-    pack_operation_ids = fields.One2many(
-        'stock.pack.operation',
+    move_line_ids = fields.One2many(
+        'stock.move.line',
         readonly=True,
         string='Related pack operations',
-        compute='_compute_pack_operation_ids'
+        compute='_compute_move_line_ids'
     )
 
-    pack_operation_product_ids = fields.One2many(
-        'stock.pack.operation',
-        string='Related pack operations',
-        compute='_compute_pack_operation_product_ids',
-        # We need an inverse (even if empty lambda) so that pack operation
-        # can be saved (when modifying qty_done).
-        inverse=lambda *args, **kwargs: None,
-        states={'done': [('readonly', True)], 'cancel': [('readonly', True)]}
+    entire_package_ids = fields.One2many(
+        comodel_name='stock.quant.package',
+        compute='_compute_entire_package_ids',
+        help='Those are the entire packages of a picking shown in the view of '
+             'operations',
     )
 
-    pack_operation_pack_ids = fields.One2many(
-        'stock.pack.operation',
-        string='Related pack operations',
-        compute='_compute_pack_operation_pack_ids',
-        inverse=lambda *args, **kwargs: None,
-        states={'done': [('readonly', True)], 'cancel': [('readonly', True)]}
+    entire_package_detail_ids = fields.One2many(
+        comodel_name='stock.quant.package',
+        compute='_compute_entire_package_ids',
+        help='Those are the entire packages of a picking shown in the view of '
+             'detailed operations',
     )
 
     @api.depends('picking_ids')
-    def _compute_move_ids(self):
+    def _compute_move_lines(self):
         for batch in self:
-            batch.move_ids = batch.picking_ids.mapped("move_lines")
+            batch.move_lines = batch.picking_ids.mapped("move_lines")
 
     @api.depends('picking_ids')
-    def _compute_pack_operation_ids(self):
+    def _compute_move_line_ids(self):
         for batch in self:
-            batch.pack_operation_ids = batch.picking_ids.mapped(
-                'pack_operation_ids'
+            batch.move_line_ids = batch.picking_ids.mapped(
+                'move_line_ids'
             )
 
     @api.depends('picking_ids')
-    def _compute_pack_operation_product_ids(self):
+    def _compute_entire_package_ids(self):
         for batch in self:
-            batch.pack_operation_product_ids = batch.picking_ids.mapped(
-                'pack_operation_product_ids'
-            )
-
-    @api.depends('picking_ids')
-    def _compute_pack_operation_pack_ids(self):
-        for batch in self:
-            batch.pack_operation_pack_ids = batch.picking_ids.mapped(
-                'pack_operation_pack_ids'
-            )
+            batch.update({
+                'entire_package_ids': batch.picking_ids.mapped(
+                    'entire_package_ids'),
+                'entire_package_detail_ids': batch.picking_ids.mapped(
+                    'entire_package_detail_ids'),
+            })
 
     def get_not_empties(self):
         """ Return all batches in this recordset
@@ -204,7 +196,7 @@ class StockBatchPicking(models.Model):
                 batch.active_picking_ids.force_transfer(
                     force_qty=all(
                         operation.qty_done == 0
-                        for operation in batch.pack_operation_ids
+                        for operation in batch.move_line_ids
                     )
                 )
 

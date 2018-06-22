@@ -36,41 +36,56 @@
                                    domain="[('state', 'not in', ('done', 'cancel'))]"/>
                         </page>
                         <page string="Operations">
-                            <field name="pack_operation_ids" invisible="1"/>
-                            <field name="pack_operation_product_ids">
-                                <tree editable="bottom" create="false" delete="false"
-                                      decoration-muted="result_package_id" decoration-danger="qty_done&gt;product_qty"
-                                      decoration-success="qty_done==product_qty and state!='done' and not result_package_id">
-                                    <field name="package_id" groups="stock.group_tracking_lot" invisible="1"/>
-                                    <field name="product_id" readonly="True"/>
-                                    <field name="product_uom_id" readonly="True" groups="product.group_uom"/>
-                                    <field name="from_loc" groups="stock.group_locations,stock.group_tracking_lot"/>
-                                    <field name="to_loc" groups="stock.group_locations,stock.group_tracking_lot"/>
-                                    <field name="lots_visible" invisible="1"/>
-                                    <field name="product_qty" readonly="True"/>
-                                    <field name="qty_done" attrs="{'readonly': [('lots_visible', '=', True)]}"/>
-                                    <field name="result_package_id" invisible="1"/>
-                                    <field name="state" invisible="1"/>
-                                </tree>
-                            </field>
-                            <field name="pack_operation_pack_ids"
-                                   attrs="{'invisible': [('pack_operation_pack_ids', '=', [])]}"
-                                   groups="stock.group_tracking_lot">
-                                <tree editable="bottom" create="false" delete="false" decoration-muted="qty_done&gt;0">
-                                    <field name="package_id" readonly="True" string="Package To Move"/>
-                                    <field name="from_loc" readonly="True"
-                                           groups="stock.group_locations,stock.group_tracking_lot"/>
-                                    <field name="to_loc" readonly="True"
-                                           groups="stock.group_locations,stock.group_tracking_lot"/>
-                                    <field name="processed_boolean"/>
-                                    <field name="lots_visible" invisible="1"/>
-                                    <field name="qty_done" attrs="{'readonly': [('lots_visible', '=', True)]}"/>
-                                    <field name="state" invisible="1"/>
+                            <field name="id" invisible="1"/>
+                            <field name="move_lines" readonly="1" options="{'reload_on_button': true}">
+                                <tree decoration-danger="state != 'done' and quantity_done > reserved_availability and show_reserved_availability" decoration-muted="scrapped == True or state == 'cancel' or (state == 'done' and is_locked == True)" string="Stock Moves" editable="bottom">
+                                    <field name="name" invisible="1"/>
+                                    <field name="date_expected" invisible="1"/>
+                                    <field name="state" invisible="1" readonly="0"/>
+                                    <field name="picking_type_id" invisible="1"/>
+                                    <field name="location_id" invisible="1"/>
+                                    <field name="location_dest_id" invisible="1"/>
+                                    <field name="scrapped" invisible="1"/>
+                                    <field name="picking_code" invisible="1"/>
+                                    <field name="product_type" invisible="1"/>
+                                    <field name="show_details_visible" invisible="1"/>
+                                    <field name="show_reserved_availability" invisible="1"/>
+                                    <field name="additional" invisible="1"/>
+                                    <field name="has_move_lines" invisible="1"/>
+                                    <field name="is_locked" invisible="1"/>
+                                    <field name="product_id" required="1" attrs="{'readonly': ['|', '&amp;', ('state', '!=', 'draft'), ('additional', '=', False), ('has_move_lines', '=', True)]}"/>
+                                    <field name="is_initial_demand_editable" invisible="1"/>
+                                    <field name="is_quantity_done_editable" invisible="1"/>
+                                    <field name="product_uom_qty" string="Initial Demand" attrs="{'readonly': [('is_initial_demand_editable', '=', False)]}"/>
+                                    <field name="reserved_availability" string="Reserved"/>
+                                    <field name="quantity_done" string="Done" attrs="{'readonly': [('is_quantity_done_editable', '=', False)]}"/>
+                                    <field name="product_uom" attrs="{'readonly': [('state', '!=', 'draft'), ('additional', '=', False)]}" options="{'no_open': True, 'no_create': True}" string="Unit of Measure" groups="product.group_uom"/>
+                                    <button name="action_show_details" string="Register lots, packs, location" type="object" icon="fa-list" attrs="{'invisible': [('show_details_visible', '=', False)]}" options='{"warn": true}'/>
                                 </tree>
                             </field>
                         </page>
-                        <page string="Moves">
-                            <field name="move_ids" nolabel="1" colspan='4'/>
+                        <page string="Detailed Operations">
+                            <field name="move_line_ids" attrs="{'readonly': [('state', '=', 'done')]}">
+                                <tree editable="bottom" create="false" delete="false" decoration-muted="(state == 'done' and is_locked == True)" decoration-danger="qty_done&gt;product_uom_qty and state!='done'" decoration-success="qty_done==product_uom_qty and state!='done' and not result_package_id">
+                                    <field name="product_id" required="1" attrs="{'readonly': ['|', ('state', '=', 'done'), ('move_id', '!=', False)]}"/>
+                                    <field name="move_id" invisible="1"/>
+                                    <field name="in_entire_package" invisible="1"/>
+                                    <field name="product_uom_id" force_save="1" attrs="{'readonly': [('state', '!=', 'draft')]}" groups="product.group_uom"/>
+                                    <field name="package_id" attrs="{'readonly': [('in_entire_package', '=', True)]}" groups="stock.group_tracking_lot" domain="[('location_id', '=', location_id)]"/>
+                                    <field name="location_id" attrs="{'readonly': [('in_entire_package', '=', True)]}" groups="stock.group_stock_multi_locations,stock.group_tracking_lot"/>
+                                    <field name="location_dest_id" attrs="{'readonly': [('in_entire_package', '=', True)]}" groups="stock.group_stock_multi_locations,stock.group_tracking_lot"/>
+                                    <field name="result_package_id" attrs="{'readonly': [('in_entire_package', '=', True)]}" groups="stock.group_tracking_lot" domain="['|', '|', ('location_id', '=', False), ('location_id', '=', location_dest_id), ('id', '=', package_id)]"/>
+                                    <field name="lots_visible" invisible="1"/>
+                                    <field name="owner_id" groups="stock.group_tracking_owner"/>
+                                    <field name="state" invisible="1"/>
+                                    <field name="lot_id" groups="stock.group_production_lot" attrs="{'invisible': [('lots_visible', '=', False)], 'readonly': [('in_entire_package', '=', True)]}" domain="[('product_id', '=', product_id)]" context="{'default_product_id': product_id}"/>
+                                    <!--<field name="lot_name" groups="stock.group_production_lot" attrs="{'column_invisible': [('parent.show_lots_text', '=', False)], 'invisible': [('lots_visible', '=', False)], 'readonly': [('in_entire_package', '=', True)]}" context="{'default_product_id': product_id}"/>-->
+                                    <field name="is_initial_demand_editable" invisible="1"/>
+                                    <field name="product_uom_qty" readonly="1"/>
+                                    <field name="is_locked" invisible="1"/>
+                                    <field name="qty_done" attrs="{'readonly': ['|', ('state', 'in', ('done', 'cancel')), ('is_locked', '=', True), ('in_entire_package', '=', True)]}" force_save="1"/>
+                                </tree>
+                            </field>
                         </page>
                         <page string='Notes'>
                             <field name='notes' colspan='4' nolabel='1'/>
@@ -98,19 +113,11 @@
     <record model="ir.actions.server" id="action_stock_batch_picking_assign_all">
         <field name="name">Reserve All</field>
         <field name="model_id" ref="stock_batch_picking.model_stock_batch_picking"/>
+        <field name="binding_model_id" ref="stock_batch_picking.model_stock_batch_picking"/>
+        <field name="state">code</field>
         <field name="code">
-            if context.get('active_model') == 'stock.batch.picking' and context.get('active_ids'):
-            batches = self.pool['stock.batch.picking'].action_assign(cr, uid, context['active_ids'], context=context)
+            batches = records.action_assign()
         </field>
-    </record>
-
-    <record model="ir.values" id="stock_batch_picking_assign_all">
-        <field name="model_id" ref="stock_batch_picking.model_stock_batch_picking"/>
-        <field name="name">Reserve All</field>
-        <field name="key2">client_action_multi</field>
-        <field name="value" eval="'ir.actions.server,' +str(ref('action_stock_batch_picking_assign_all'))"/>
-        <field name="key">action</field>
-        <field name="model">stock.batch.picking</field>
     </record>
 
     <!-- stock.batch.picking search view -->

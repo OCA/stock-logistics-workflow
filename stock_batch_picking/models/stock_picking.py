@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
-# @2016 Cyril Gaudin, Camptocamp SA
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# Copyright 2016 Cyril Gaudin, Camptocamp SA
+# Copyright 2018 Tecnativa - Carlos Dauden
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from openerp import api, fields, models
+from odoo import api, fields, models
 
 
 class StockPicking(models.Model):
@@ -62,15 +62,15 @@ class StockPicking(models.Model):
                     continue
 
             if force_qty:
-                for pack in pick.pack_operation_ids:
+                for pack in pick.move_line_ids:
                     pack.qty_done = pack.product_qty
             else:
-                if all(pack.qty_done == 0 for pack in pick.pack_operation_ids):
+                if all(pack.qty_done == 0 for pack in pick.move_line_ids):
                     # No qties to process, release out of the batch
                     pick.batch_picking_id = False
                     continue
                 else:
-                    for pack in pick.pack_operation_ids:
+                    for pack in pick.move_line_ids:
                         if not pack.qty_done:
                             pack.unlink()
                         else:
