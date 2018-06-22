@@ -12,5 +12,5 @@
         "mrp",
         "stock_picking_restrict_cancel_with_orig_move",
     ],
-    'auto-install': True,
+    'auto_install': True,
 }
