@@ -1,0 +1,2 @@
+This module extends stock_picking_restrict_cancel_with_orig_move to consider
+blocking purchase orders.
