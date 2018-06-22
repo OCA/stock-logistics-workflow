@@ -5,11 +5,6 @@ from odoo import models, _
 from odoo.exceptions import UserError
 
 
-def format_link(object):
-    return '<a href=# data-oe-model=%s data-oe-id=%d>%s</a>' % (
-        object._name, object.id, object.name)
-
-
 class StockMove(models.Model):
 
     _inherit = 'stock.move'
@@ -34,10 +29,7 @@ class StockMove(models.Model):
             error_objects = ''
             for object_type, objects in blocking_objects.items():
                 error_objects += _('- %s : %s. \n' % (
-                    object_type, ','.join([format_link(o) for o in objects])))
-            # TODO Fix error message:
-            # We'd like the links to be clickable but they are interpreted as
-            # raw text
+                    object_type, ','.join([o.name for o in objects])))
             raise UserError(
                 _("Cancelation of destination move is restricted if any "
                   "previous move is not canceled or done."
