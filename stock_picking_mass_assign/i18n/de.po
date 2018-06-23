@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * stock_picking_mass_assign
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
 # Rudolf Schnapka <rs@techno-flex.de>, 2017
@@ -13,10 +13,10 @@ msgstr ""
 "PO-Revision-Date: 2017-06-24 10:54+0000\n"
 "Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2017\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_picking_mass_assign
@@ -109,8 +109,8 @@ msgid ""
 "check this box if you want to check the availability of the selected "
 "Delivery Orders."
 msgstr ""
-"Diese Box anwählen, wenn Sie die Verfügbarkeit der ausgwählten Lieferscheine"
-" prüfen möchten."
+"Diese Box anwählen, wenn Sie die Verfügbarkeit der ausgwählten Lieferscheine "
+"prüfen möchten."
 
 #. module: stock_picking_mass_assign
 #: model:ir.model.fields,help:stock_picking_mass_assign.field_stock_picking_check_assign_all_process_picking
@@ -121,7 +121,8 @@ msgid ""
 msgstr ""
 "Wählen Sie diese Box an, wenn Sie alle Lieferscheine ausliefern möchten.\n"
 "Sie werden keine Teillieferung vornehmen können.\n"
-"Wenn Sie dies möchten, führen Sie die Auslieferung bitte manuell im entsprechenden Lieferschein durch."
+"Wenn Sie dies möchten, führen Sie die Auslieferung bitte manuell im "
+"entsprechenden Lieferschein durch."
 
 #. module: stock_picking_mass_assign
 #: model:ir.model.fields,help:stock_picking_mass_assign.field_stock_picking_check_assign_all_force_availability
