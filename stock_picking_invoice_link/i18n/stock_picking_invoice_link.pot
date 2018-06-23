@@ -1,23 +1,17 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * stock_picking_invoice_link
+#	* stock_picking_invoice_link
 #
-# Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 9.0c\n"
+"Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-23 11:56+0000\n"
-"PO-Revision-Date: 2017-01-23 11:56+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
-"Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
-"Language: sl\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3);\n"
+"Plural-Forms: \n"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_invoice
@@ -59,16 +53,12 @@ msgstr ""
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,help:stock_picking_invoice_link.field_account_invoice_picking_ids
-msgid ""
-"Related pickings (only when the invoice has been generated from a sale "
-"order)."
+msgid "Related pickings (only when the invoice has been generated from a sale order)."
 msgstr ""
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,help:stock_picking_invoice_link.field_account_invoice_line_move_line_ids
-msgid ""
-"Related stock moves (only when the invoice has been generated from a sale "
-"order)."
+msgid "Related stock moves (only when the invoice has been generated from a sale order)."
 msgstr ""
 
 #. module: stock_picking_invoice_link
@@ -79,7 +69,7 @@ msgstr ""
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_stock_move
 msgid "Stock Move"
-msgstr "Premik zaloge"
+msgstr ""
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_stock_picking
@@ -90,3 +80,4 @@ msgstr ""
 #: model:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
 msgid "View Invoice"
 msgstr ""
+
