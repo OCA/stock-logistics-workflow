@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * stock_deposit
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
 # Rudolf Schnapka <rs@techno-flex.de>, 2017
@@ -13,10 +13,10 @@ msgstr ""
 "PO-Revision-Date: 2017-12-30 14:38+0000\n"
 "Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2017\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_deposit
@@ -303,11 +303,15 @@ msgstr "Sie können Quanten auf nicht-Konsignationslagern nicht regulieren"
 #. module: stock_deposit
 #: model:ir.ui.view,arch_db:stock_deposit.deposit_stock_quant_wizard_view
 msgid ""
-"You can select the units to regularize writing it in \"Qty to process\" column. <br/>\n"
-"                        If yo do not want to regularize any line you must write in \"Qty to process\" column zero quantities"
+"You can select the units to regularize writing it in \"Qty to process\" "
+"column. <br/>\n"
+"                        If yo do not want to regularize any line you must "
+"write in \"Qty to process\" column zero quantities"
 msgstr ""
-"Sie können die zu regulierenden Mengeneinheiten in der Spalte \"Zu bearb. Menge\" <br/> angeben\n"
-"                        Wenn Sie keine Position regulieren möchten, tragen Sie in Null in \"Zu bearb. Menge\" ein."
+"Sie können die zu regulierenden Mengeneinheiten in der Spalte \"Zu bearb. "
+"Menge\" <br/> angeben\n"
+"                        Wenn Sie keine Position regulieren möchten, tragen "
+"Sie in Null in \"Zu bearb. Menge\" ein."
 
 #. module: stock_deposit
 #: model:ir.ui.view,arch_db:stock_deposit.deposit_stock_quant_wizard_view
