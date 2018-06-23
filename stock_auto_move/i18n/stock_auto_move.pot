@@ -1,23 +1,17 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * stock_auto_move
+#	* stock_auto_move
 #
-# Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2017
-# enjolras <yo@miguelrevilla.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-28 03:51+0000\n"
-"PO-Revision-Date: 2018-02-28 03:51+0000\n"
-"Last-Translator: enjolras <yo@miguelrevilla.com>, 2018\n"
-"Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
-"Language: es\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: \n"
 
 #. module: stock_auto_move
 #: model:procurement.rule,name:stock_auto_move.procurement_rule_a_to_b
@@ -32,43 +26,38 @@ msgstr ""
 
 #. module: stock_auto_move
 #: model:ir.model.fields,help:stock_auto_move.field_procurement_rule_auto_move
-msgid ""
-"If this option is selected, the generated move will be automatically "
-"processed as soon as the products are available. This can be useful for "
-"situations with chained moves where we do not want an operator action."
+msgid "If this option is selected, the generated move will be automatically processed as soon as the products are available. This can be useful for situations with chained moves where we do not want an operator action."
 msgstr ""
 
 #. module: stock_auto_move
 #: model:ir.model.fields,help:stock_auto_move.field_stock_move_auto_move
-msgid ""
-"If this option is selected, the move will be automatically processed as soon "
-"as the products are available."
+msgid "If this option is selected, the move will be automatically processed as soon as the products are available."
 msgstr ""
 
 #. module: stock_auto_move
 #: model:stock.location,name:stock_auto_move.stock_location_a
 msgid "Location 1"
-msgstr "Ubicación 1"
+msgstr ""
 
 #. module: stock_auto_move
 #: model:stock.location,name:stock_auto_move.stock_location_b
 msgid "Location 2"
-msgstr "Ubicación 2"
+msgstr ""
 
 #. module: stock_auto_move
 #: model:stock.location,name:stock_auto_move.stock_location_c
 msgid "Location 3"
-msgstr "Ubicación 3"
+msgstr ""
 
 #. module: stock_auto_move
 #: model:ir.model,name:stock_auto_move.model_procurement_order
 msgid "Procurement"
-msgstr "Abastecimiento"
+msgstr ""
 
 #. module: stock_auto_move
 #: model:ir.model,name:stock_auto_move.model_procurement_rule
 msgid "Procurement Rule"
-msgstr "Regla de abastecimiento"
+msgstr ""
 
 #. module: stock_auto_move
 #: model:ir.model,name:stock_auto_move.model_stock_location_path
@@ -78,9 +67,10 @@ msgstr ""
 #. module: stock_auto_move
 #: model:ir.model,name:stock_auto_move.model_stock_move
 msgid "Stock Move"
-msgstr "Movimiento de existencias"
+msgstr ""
 
 #. module: stock_auto_move
 #: model:stock.location.route,name:stock_auto_move.test_route
 msgid "Test route"
-msgstr "Comprobar ruta"
+msgstr ""
+
