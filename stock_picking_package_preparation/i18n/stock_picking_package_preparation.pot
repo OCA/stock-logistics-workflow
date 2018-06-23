@@ -1,28 +1,22 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * stock_picking_package_preparation
+#	* stock_picking_package_preparation
 #
-# Translators:
-# Peter Hageman <hageman.p@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-17 01:29+0000\n"
-"PO-Revision-Date: 2017-06-17 01:29+0000\n"
-"Last-Translator: Peter Hageman <hageman.p@gmail.com>, 2017\n"
-"Language-Team: Dutch (Netherlands) (https://www.transifex.com/oca/"
-"teams/23907/nl_NL/)\n"
-"Language: nl_NL\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: \n"
 
 #. module: stock_picking_package_preparation
 #: model:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Add an internal note..."
-msgstr "Voeg een interne notitie toe..."
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_quant_ids
@@ -44,12 +38,12 @@ msgstr ""
 #. module: stock_picking_package_preparation
 #: model:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Cancel"
-msgstr "Annuleer"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: selection:stock.picking.package.preparation,state:0
 msgid "Cancelled"
-msgstr "Geannuleerd"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:148
@@ -65,49 +59,46 @@ msgstr ""
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_company_id
 msgid "Company"
-msgstr "Bedrijf"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_create_uid
 msgid "Created by"
-msgstr "Aangemaakt door"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_create_date
 msgid "Created on"
-msgstr "Aangemaakt op"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_display_name
 msgid "Display Name"
-msgstr "Weergavenaam"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_date
 msgid "Document Date"
-msgstr "Documentdatum"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: selection:stock.picking.package.preparation,state:0
 msgid "Done"
-msgstr "Gereed"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: selection:stock.picking.package.preparation,state:0
 msgid "Draft"
-msgstr "Concept"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: model:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
-msgid ""
-"If there is no product but a source package, this means the source package "
-"was moved entirely.  If there is a product and a source package, the product "
-"was taken from the source package."
+msgid "If there is no product but a source package, this means the source package was moved entirely.  If there is a product and a source package, the product was taken from the source package."
 msgstr ""
 
 #. module: stock_picking_package_preparation
@@ -118,17 +109,17 @@ msgstr ""
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation___last_update
 msgid "Last Modified on"
-msgstr "Laatst aangepast op"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_write_uid
 msgid "Last Updated by"
-msgstr "Laatst bijgewerkt door"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_write_date
 msgid "Last Updated on"
-msgstr "Laatst bijgewerkt op"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:174
@@ -139,7 +130,7 @@ msgstr ""
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_note
 msgid "Note"
-msgstr "Notitie"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:159
@@ -150,7 +141,7 @@ msgstr ""
 #. module: stock_picking_package_preparation
 #: model:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Operations"
-msgstr "Activiteiten"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_package_id
@@ -236,3 +227,4 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_weight
 msgid "Weight"
 msgstr ""
+
