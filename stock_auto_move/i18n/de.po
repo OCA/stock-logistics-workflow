@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * stock_auto_move
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
 # Rudolf Schnapka <rs@techno-flex.de>, 2017
@@ -13,16 +13,21 @@ msgstr ""
 "PO-Revision-Date: 2017-12-19 03:55+0000\n"
 "Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2017\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_auto_move
 #: model:procurement.rule,name:stock_auto_move.procurement_rule_a_to_b
 msgid "1 => 2 with auto_move"
 msgstr "1 => 2 mit auto_umlagerung"
+
+#. module: stock_auto_move
+#: model:ir.model.fields,field_description:stock_auto_move.field_stock_location_path_auto_confirm
+msgid "Auto confirm"
+msgstr ""
 
 #. module: stock_auto_move
 #: model:ir.model.fields,field_description:stock_auto_move.field_procurement_rule_auto_move
@@ -43,10 +48,23 @@ msgstr ""
 "ist."
 
 #. module: stock_auto_move
+#: model:ir.model.fields,help:stock_auto_move.field_stock_location_path_auto_confirm
+#, fuzzy
+msgid ""
+"If this option is selected, the generated moves will be automatically "
+"processed as soon as the products are available. This can be useful for "
+"situations with chained moves where we do not want an operator action."
+msgstr ""
+"Ist diese Option ausgewählt, wird die erzeugte Umlagerung automatisch "
+"durchgebucht, sobald die Produkte verfügbar sind. Dies kann bei verketteten "
+"Umlagerungen hilfreich sein, bei denen zusätzliches Eingreifen unerwünscht "
+"ist."
+
+#. module: stock_auto_move
 #: model:ir.model.fields,help:stock_auto_move.field_stock_move_auto_move
 msgid ""
-"If this option is selected, the move will be automatically processed as soon"
-" as the products are available."
+"If this option is selected, the move will be automatically processed as soon "
+"as the products are available."
 msgstr ""
 "Ist diese Option ausgewählt, wird die Umlagerung ausgeführt, sobald die "
 "Produkte verfügbar sind."

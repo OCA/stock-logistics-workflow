@@ -1,23 +1,17 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * stock_auto_move
+#	* stock_auto_move
 #
-# Translators:
-# Juan González <bifomania@protonmail.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-03 06:09+0000\n"
-"PO-Revision-Date: 2016-12-03 06:09+0000\n"
-"Last-Translator: Juan González <bifomania@protonmail.com>, 2016\n"
-"Language-Team: Spanish (Mexico) (https://www.transifex.com/oca/teams/23907/"
-"es_MX/)\n"
-"Language: es_MX\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: \n"
 
 #. module: stock_auto_move
 #: model:procurement.rule,name:stock_auto_move.procurement_rule_a_to_b
@@ -37,25 +31,17 @@ msgstr ""
 
 #. module: stock_auto_move
 #: model:ir.model.fields,help:stock_auto_move.field_procurement_rule_auto_move
-msgid ""
-"If this option is selected, the generated move will be automatically "
-"processed as soon as the products are available. This can be useful for "
-"situations with chained moves where we do not want an operator action."
+msgid "If this option is selected, the generated move will be automatically processed as soon as the products are available. This can be useful for situations with chained moves where we do not want an operator action."
 msgstr ""
 
 #. module: stock_auto_move
 #: model:ir.model.fields,help:stock_auto_move.field_stock_location_path_auto_confirm
-msgid ""
-"If this option is selected, the generated moves will be automatically "
-"processed as soon as the products are available. This can be useful for "
-"situations with chained moves where we do not want an operator action."
+msgid "If this option is selected, the generated moves will be automatically processed as soon as the products are available. This can be useful for situations with chained moves where we do not want an operator action."
 msgstr ""
 
 #. module: stock_auto_move
 #: model:ir.model.fields,help:stock_auto_move.field_stock_move_auto_move
-msgid ""
-"If this option is selected, the move will be automatically processed as soon "
-"as the products are available."
+msgid "If this option is selected, the move will be automatically processed as soon as the products are available."
 msgstr ""
 
 #. module: stock_auto_move
@@ -76,7 +62,7 @@ msgstr ""
 #. module: stock_auto_move
 #: model:ir.model,name:stock_auto_move.model_procurement_order
 msgid "Procurement"
-msgstr "Contratación"
+msgstr ""
 
 #. module: stock_auto_move
 #: model:ir.model,name:stock_auto_move.model_procurement_rule
@@ -91,9 +77,10 @@ msgstr ""
 #. module: stock_auto_move
 #: model:ir.model,name:stock_auto_move.model_stock_move
 msgid "Stock Move"
-msgstr "Movimiento bursátil"
+msgstr ""
 
 #. module: stock_auto_move
 #: model:stock.location.route,name:stock_auto_move.test_route
 msgid "Test route"
 msgstr ""
+
