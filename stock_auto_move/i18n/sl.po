@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * stock_auto_move
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
@@ -12,11 +12,12 @@ msgstr ""
 "PO-Revision-Date: 2017-06-01 02:08+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: sl\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3);\n"
 
 #. module: stock_auto_move
 #: model:procurement.rule,name:stock_auto_move.procurement_rule_a_to_b
@@ -43,8 +44,8 @@ msgstr ""
 #. module: stock_auto_move
 #: model:ir.model.fields,help:stock_auto_move.field_stock_move_auto_move
 msgid ""
-"If this option is selected, the move will be automatically processed as soon"
-" as the products are available."
+"If this option is selected, the move will be automatically processed as soon "
+"as the products are available."
 msgstr ""
 "Ko je ta opcija izbrana, se ustvarjeni premik samodejno obdela takoj, ko so "
 "proizvodi na voljo."
