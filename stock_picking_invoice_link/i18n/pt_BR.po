@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * stock_picking_invoice_link
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
@@ -11,11 +11,12 @@ msgstr ""
 "POT-Creation-Date: 2017-06-15 11:08+0000\n"
 "PO-Revision-Date: 2017-06-15 11:08+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/23907/pt_BR/)\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/"
+"teams/23907/pt_BR/)\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: stock_picking_invoice_link
@@ -84,3 +85,9 @@ msgstr "Movimentação do Estoque"
 #: model:ir.model,name:stock_picking_invoice_link.model_stock_picking
 msgid "Transfer"
 msgstr "Transferir"
+
+#. module: stock_picking_invoice_link
+#: model:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
+#, fuzzy
+msgid "View Invoice"
+msgstr "Fatura"
