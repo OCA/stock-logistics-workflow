@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * stock_auto_move
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
 # Lixon Jean-Yves <jy.lixon@ls-development.net>, 2017
@@ -13,10 +13,10 @@ msgstr ""
 "PO-Revision-Date: 2017-06-01 02:08+0000\n"
 "Last-Translator: Lixon Jean-Yves <jy.lixon@ls-development.net>, 2017\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: stock_auto_move
@@ -38,15 +38,15 @@ msgid ""
 "situations with chained moves where we do not want an operator action."
 msgstr ""
 "Si cette option est sélectionnée, le mouvement généré sera traité "
-"automatiquement dès que les articles seront disponible. Cela peut être utile"
-" dans des situations avec des mouvements chainés où l'on ne souhaite pas "
+"automatiquement dès que les articles seront disponible. Cela peut être utile "
+"dans des situations avec des mouvements chainés où l'on ne souhaite pas "
 "d'action de l'opérateur."
 
 #. module: stock_auto_move
 #: model:ir.model.fields,help:stock_auto_move.field_stock_move_auto_move
 msgid ""
-"If this option is selected, the move will be automatically processed as soon"
-" as the products are available."
+"If this option is selected, the move will be automatically processed as soon "
+"as the products are available."
 msgstr ""
 "Si cette option est sélectionnée, le mouvement sera traité automatiquement "
 "dès que les articles seront disponible"
