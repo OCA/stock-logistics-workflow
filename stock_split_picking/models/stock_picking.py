@@ -14,10 +14,9 @@ class StockPicking(models.Model):
 
     @api.multi
     def split_process(self):
-        """Use to trigger the wizard from button with correct context"""
         for picking in self:
 
-            # Check the picking state and condition before split
+            # Check the picking state and condition before splitting
             if picking.state == 'draft':
                 raise UserError(_('Mark as todo this picking please.'))
             if all([x.qty_done == 0.0 for x in picking.move_line_ids]):
@@ -27,6 +26,7 @@ class StockPicking(models.Model):
 
             # Split moves considering the qty_done on moves
             new_moves = self.env['stock.move']
+            product_qty_done = {}
             for move in picking.move_lines:
                 rounding = move.product_uom.rounding
                 qty_done = move.quantity_done
@@ -49,6 +49,8 @@ class StockPicking(models.Model):
                             try:
                                 move_line.write(
                                     {'product_uom_qty': move_line.qty_done})
+                                product_qty_done[move_line.product_id.id] = \
+                                    move_line.qty_done
                             except UserError:
                                 pass
                     new_moves |= self.env['stock.move'].browse(new_move_id)
@@ -78,3 +80,19 @@ class StockPicking(models.Model):
                     'picking_id': backorder_picking.id,
                 })
                 new_moves._action_assign()
+
+                # Propagate split to chained picking/moves
+                chained_moves = picking.move_lines.mapped('move_dest_ids')
+                for chained_move in chained_moves:
+                    # import pdb; pdb.set_trace()
+                    chained_picking = chained_move.picking_id
+                    chained_picking.action_assign()
+                    for move_line in chained_move.move_line_ids:
+                        # FIXME is it the right way to propagate done qty to
+                        # the chained moves?
+                        qty_done = product_qty_done[move_line.product_id.id]
+                        move_line.write({
+                            'qty_done': qty_done,
+                            'product_uom_qty': qty_done,
+                        })
+                    chained_picking.split_process()
