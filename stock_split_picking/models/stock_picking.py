@@ -26,7 +26,7 @@ class StockPicking(models.Model):
 
             # Split moves considering the qty_done on moves
             new_moves = self.env['stock.move']
-            product_qty_done = {}
+            qty_done_per_product = {}
             for move in picking.move_lines:
                 rounding = move.product_uom.rounding
                 qty_done = move.quantity_done
@@ -49,7 +49,8 @@ class StockPicking(models.Model):
                             try:
                                 move_line.write(
                                     {'product_uom_qty': move_line.qty_done})
-                                product_qty_done[move_line.product_id.id] = \
+                                product = move_line.product_id
+                                qty_done_per_product[product.id] = \
                                     move_line.qty_done
                             except UserError:
                                 pass
@@ -82,17 +83,24 @@ class StockPicking(models.Model):
                 new_moves._action_assign()
 
                 # Propagate split to chained picking/moves
+
                 chained_moves = picking.move_lines.mapped('move_dest_ids')
-                for chained_move in chained_moves:
-                    # import pdb; pdb.set_trace()
-                    chained_picking = chained_move.picking_id
+                chained_picking = chained_moves.mapped('picking_id') \
+                    if chained_moves else None
+
+                # The chained moves should be related to the same picking.
+                if chained_picking and len(chained_picking) == 1:
                     chained_picking.action_assign()
-                    for move_line in chained_move.move_line_ids:
-                        # FIXME is it the right way to propagate done qty to
-                        # the chained moves?
-                        qty_done = product_qty_done[move_line.product_id.id]
-                        move_line.write({
-                            'qty_done': qty_done,
-                            'product_uom_qty': qty_done,
-                        })
-                    chained_picking.split_process()
+                    need_split = False
+                    for chained_move in chained_moves:
+                        for move_line in chained_move.move_line_ids:
+                            product = move_line.product_id
+                            if product.id in qty_done_per_product:
+                                need_split = True
+                                qty_done = qty_done_per_product[product.id]
+                                move_line.write({
+                                    'qty_done': qty_done,
+                                    'product_uom_qty': qty_done,
+                                })
+                    if need_split:
+                        chained_picking.split_process()

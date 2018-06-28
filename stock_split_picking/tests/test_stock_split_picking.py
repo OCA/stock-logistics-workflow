@@ -19,6 +19,12 @@ class TestStockSplitPicking(SavepointCase):
         cls.product = cls.env['product.product'].create({
             'name': 'Test product',
         })
+        cls.product2 = cls.env['product.product'].create({
+            'name': 'Test product 2',
+        })
+        cls.product3 = cls.env['product.product'].create({
+            'name': 'Test product 3',
+        })
         cls.partner = cls.env['res.partner'].create({
             'name': 'Test partner',
         })
@@ -54,6 +60,25 @@ class TestStockSplitPicking(SavepointCase):
             'location_id': cls.src_location.id,
             'location_dest_id': cls.transit_location.id,
         })
+        cls.transit_move2 = cls.env['stock.move'].create({
+            'name': 'Transit 2',
+            'picking_id': cls.transit_picking.id,
+            'product_id': cls.product2.id,
+            'product_uom_qty': 20,
+            'product_uom': cls.product.uom_id.id,
+            'location_id': cls.src_location.id,
+            'location_dest_id': cls.transit_location.id,
+        })
+        cls.transit_move3 = cls.env['stock.move'].create({
+            'name': 'Transit 3',
+            'picking_id': cls.transit_picking.id,
+            'product_id': cls.product3.id,
+            'product_uom_qty': 30,
+            'product_uom': cls.product.uom_id.id,
+            'location_id': cls.src_location.id,
+            'location_dest_id': cls.transit_location.id,
+        })
+
         location_route = cls.env['stock.location.route'].create({
             'name': 'Unittest route',
         })
@@ -121,9 +146,16 @@ class TestStockSplitPicking(SavepointCase):
         self.transit_picking.action_confirm()
         self.transit_picking.action_assign()
 
-        # Check chained picking and move have been created
         chained_move = self.transit_move.move_dest_ids
         self.assertEqual(1, len(chained_move))
+        chained_move2 = self.transit_move.move_dest_ids
+        self.assertEqual(1, len(chained_move2))
+        chained_move3 = self.transit_move.move_dest_ids
+        self.assertEqual(1, len(chained_move3))
+
+        # Check only one chained picking has been created
+        self.assertEqual(chained_move.picking_id, chained_move2.picking_id)
+        self.assertEqual(chained_move.picking_id, chained_move3.picking_id)
         chained_picking = chained_move.picking_id
         self.assertEqual(1, len(chained_picking))
 
@@ -133,19 +165,43 @@ class TestStockSplitPicking(SavepointCase):
         self.assertEqual(chained_move.product_qty,
                          self.transit_move.product_qty)
 
-        move_line = self.env['stock.move.line'].search(
-            [('picking_id', '=', self.transit_picking.id)], limit=1)
+        # Mark 4 'product' as done out of 10 (remains 6 to do)
+        move_line = self.env['stock.move.line'].search([
+            ('picking_id', '=', self.transit_picking.id),
+            ('product_id', '=', self.product.id),
+        ])
         move_line.qty_done = 4
-        # Split picking: 4 and 6
+
+        # Mark all 'product2' as done out of 20 (remains 0 to do)
+        move_line2 = self.env['stock.move.line'].search([
+            ('picking_id', '=', self.transit_picking.id),
+            ('product_id', '=', self.product2.id),
+        ])
+        move_line2.qty_done = 20
+
+        # Do nothing for 'product3' (remains 30 to do)
+
+        # Make the split
         self.transit_picking.split_process()
 
+        # The initial picking now only contains "done" product moves
+        self.assertEqual(
+            self.transit_picking.move_lines.mapped('product_id.id'),
+            [self.product.id, self.product2.id])
+        self.assertEqual(
+            self.transit_picking.move_lines.mapped('product_qty'), [4, 20])
+
+        # A backorder is created for the remaining product moves
         transit_backorder = self.env['stock.picking'].search([
             ('backorder_id', '=', self.transit_picking.id)
         ])
         self.assertEqual(1, len(transit_backorder))
 
-        self.assertEqual(4, self.transit_picking.move_lines.product_qty)
-        self.assertEqual(6, transit_backorder.move_lines.product_qty)
+        self.assertEqual(
+            transit_backorder.move_lines.mapped('product_id.id'),
+            [self.product3.id, self.product.id])
+        self.assertEqual(
+            transit_backorder.move_lines.mapped('product_qty'), [30, 6])
 
         # Check that a backorder is also created for the chained picking
         chained_backorder = self.env['stock.picking'].search([
