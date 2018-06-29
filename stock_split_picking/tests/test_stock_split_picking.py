@@ -209,7 +209,15 @@ class TestStockSplitPicking(SavepointCase):
         ])
         self.assertEqual(1, len(chained_backorder))
 
-        self.assertEqual(self.transit_picking.move_lines.product_qty,
-                         chained_picking.move_lines.product_qty)
-        self.assertEqual(transit_backorder.move_lines.product_qty,
-                         chained_backorder.move_lines.product_qty)
+        # Check the chained picking/backorder are split accordingly
+        self.assertEqual(
+            chained_picking.move_lines.mapped('product_id.id'),
+            [self.product.id, self.product2.id])
+        self.assertEqual(
+            chained_picking.move_lines.mapped('product_qty'), [4, 20])
+
+        self.assertEqual(
+            chained_backorder.move_lines.mapped('product_id.id'),
+            [self.product3.id, self.product.id])
+        self.assertEqual(
+            chained_backorder.move_lines.mapped('product_qty'), [30, 6])

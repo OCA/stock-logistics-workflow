@@ -42,6 +42,8 @@ class StockPicking(models.Model):
                         rounding_method='HALF-UP'
                     )
                     new_move_id = move._split(qty_uom_split)
+                    new_moves |= self.env['stock.move'].browse(new_move_id)
+                if qty_done:
                     for move_line in move.move_line_ids:
                         if move_line.product_qty and move_line.qty_done:
                             # To avoid an error
@@ -54,7 +56,6 @@ class StockPicking(models.Model):
                                     move_line.qty_done
                             except UserError:
                                 pass
-                    new_moves |= self.env['stock.move'].browse(new_move_id)
 
             # If we have new moves to move, create the backorder picking
             if new_moves:
@@ -84,7 +85,12 @@ class StockPicking(models.Model):
 
                 # Propagate split to chained picking/moves
 
-                chained_moves = picking.move_lines.mapped('move_dest_ids')
+                chained_moves = self.env['stock.move']
+                for move in picking.move_lines:
+                    # Only take into account single chained moves
+                    if len(move.move_dest_ids) == 1:
+                        chained_moves |= move.move_dest_ids
+
                 chained_picking = chained_moves.mapped('picking_id') \
                     if chained_moves else None
 
