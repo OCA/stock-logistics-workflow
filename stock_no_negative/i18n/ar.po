@@ -6,7 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2018-06-30 05:01+0000\n"
+"Last-Translator: Osoul <baruni@osoul.ly>\n"
 "Language-Team: none\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
@@ -14,6 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 3.0.1\n"
 
 #. module: stock_no_negative
 #: code:addons/stock_no_negative/models/stock_quant.py:35
@@ -26,7 +28,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_no_negative.field_product_product_allow_negative_stock
 #: model:ir.model.fields,field_description:stock_no_negative.field_product_template_allow_negative_stock
 msgid "Allow Negative Stock"
-msgstr ""
+msgstr "السماح بكميات سالبة"
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_product_category_allow_negative_stock
@@ -42,12 +44,12 @@ msgstr ""
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_product_category
 msgid "Product Category"
-msgstr ""
+msgstr "فئة المنتج"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_product_template
 msgid "Product Template"
-msgstr ""
+msgstr "قالب المنتج"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_stock_quant
@@ -59,3 +61,5 @@ msgstr ""
 #, python-format
 msgid "You cannot validate this stock operation because the stock level of the product '%s'%s would become negative (%s) on the stock location '%s' and negative stock is not allowed for this product."
 msgstr ""
+"لا يمكنك تحقيق حركة المخازن لأن كمية المنتج '%s'%s ستصبح سالبة (%s) في "
+"المكان '%s' وهذا المنتج لا يمكن أن يكون سالباً."
