@@ -72,7 +72,7 @@ class TestStockPickingInvoiceLink(TestSale):
         pick_1 = self.so.picking_ids.filtered(
             lambda x: x.picking_type_code == 'outgoing' and
             x.state in ('confirmed', 'assigned', 'partially_available'))
-        pick_1.force_assign()
+        pick_1.action_assign()
         pick_1.pack_operation_product_ids.write({'qty_done': 1})
         wiz_act = pick_1.do_new_transfer()
         wiz = self.env[wiz_act['res_model']].browse(wiz_act['res_id'])
@@ -93,11 +93,11 @@ class TestStockPickingInvoiceLink(TestSale):
         pick_2 = self.so.picking_ids.filtered(
             lambda x: x.picking_type_code == 'outgoing' and
             x.state in ('confirmed', 'assigned', 'partially_available'))
-        pick_2.force_assign()
+        pick_2.action_assign()
         pick_2.pack_operation_product_ids.write({'qty_done': 1})
-        self.assertIsNone(pick_2.do_new_transfer(),
-                          'Sale Stock: second picking should be '
-                          'final without need for a backorder')
+        self.assertTrue(pick_2.do_new_transfer(),
+                        'Sale Stock: second picking should be '
+                        'final without need for a backorder')
         self.assertEqual(self.so.invoice_status, 'to invoice',
                          'Sale Stock: so invoice_status should be '
                          '"to invoice" after complete delivery')
