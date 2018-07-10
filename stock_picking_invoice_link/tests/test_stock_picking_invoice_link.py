@@ -95,9 +95,9 @@ class TestStockPickingInvoiceLink(TestSale):
             x.state in ('confirmed', 'assigned', 'partially_available'))
         pick_2.action_assign()
         pick_2.pack_operation_product_ids.write({'qty_done': 1})
-        self.assertTrue(pick_2.do_new_transfer(),
-                        'Sale Stock: second picking should be '
-                        'final without need for a backorder')
+        self.assertIsNone(pick_2.do_new_transfer(),
+                          'Sale Stock: second picking should be '
+                          'final without need for a backorder')
         self.assertEqual(self.so.invoice_status, 'to invoice',
                          'Sale Stock: so invoice_status should be '
                          '"to invoice" after complete delivery')
