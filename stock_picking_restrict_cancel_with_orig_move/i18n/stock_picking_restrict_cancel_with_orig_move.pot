@@ -14,9 +14,17 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_picking_restrict_cancel_with_orig_move
-#: code:addons/stock_picking_restrict_cancel_with_orig_move/models/stock_move.py:24
+#: code:addons/stock_picking_restrict_cancel_with_orig_move/models/stock_move.py:32
 #, python-format
-msgid "Cancelation of destination move is restricted if any previous move is not canceled or done.Original moves are not canceled or done on the following pickings : %s"
+msgid "- %s : %s. \n"
+""
+msgstr ""
+
+#. module: stock_picking_restrict_cancel_with_orig_move
+#: code:addons/stock_picking_restrict_cancel_with_orig_move/models/stock_move.py:34
+#, python-format
+msgid "Cancelation of destination move is restricted if any previous move is not canceled or done.Original moves are not canceled or done on the following objects : \n"
+"%s"
 msgstr ""
 
 #. module: stock_picking_restrict_cancel_with_orig_move
