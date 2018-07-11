@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="view_check_assign_all" model="ir.ui.view">
+      <field name="name">stock.picking.check.assign.all.form</field>
+      <field name="model">stock.picking.check.assign.all</field>
+      <field name="arch" type="xml">
+        <form string="Check the availability of the selected delivery orders">
+              <group>
+                  <field name="check_availability"/>
+                  <field name="process_picking"/>
+              </group>
+          <footer>
+            <button name="check" string="Apply" type="object" class="oe_highlight"/>
+            or
+            <button string="Cancel" class="oe_link" special="cancel"/>
+          </footer>
+        </form>
+      </field>
+    </record>
+
+<!-- Check Availability Action -->
+    <record id="action_check_assign_all" model="ir.actions.act_window">
+      <field name="name">Check Availability</field>
+      <field name="res_model">stock.picking.check.assign.all</field>
+      <field name="binding_model_id" ref="stock.model_stock_picking"/>
+      <field name="view_type">form</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+    </record>
+
+<!-- Transfer Action -->
+    <record id="action_deliver_all" model="ir.actions.act_window">
+      <field name="name">Transfer</field>
+      <field name="res_model">stock.picking.check.assign.all</field>
+      <field name="binding_model_id" ref="stock.model_stock_picking"/>
+      <field name="view_type">form</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+      <field name="context">{'force_availability': 1, 'process_picking': 1,}</field>
+    </record>
+  </data>
+</odoo> 
