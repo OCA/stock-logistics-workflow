@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * stock_move_backdating
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2016
 msgid ""
@@ -11,31 +11,75 @@ msgstr ""
 "POT-Creation-Date: 2016-11-18 01:44+0000\n"
 "PO-Revision-Date: 2016-11-18 01:44+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
-"Language-Team: Portuguese (Portugal) (https://www.transifex.com/oca/teams/23907/pt_PT/)\n"
+"Language-Team: Portuguese (Portugal) (https://www.transifex.com/oca/"
+"teams/23907/pt_PT/)\n"
+"Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: pt_PT\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_move_backdating
-#: model:ir.model,name:stock_move_backdating.model_account_move
-msgid "Account Entry"
-msgstr "Movimento de Conta"
-
-#. module: stock_move_backdating
-#: field:stock.transfer_details,date_backdating:0
+#: model:ir.model.fields,field_description:stock_move_backdating.field_fill_date_backdating_date_backdating
+#: model:ir.model.fields,field_description:stock_move_backdating.field_stock_pack_operation_date_backdating
 msgid "Actual Movement Date"
 msgstr ""
 
 #. module: stock_move_backdating
-#: model:ir.model,name:stock_move_backdating.model_stock_transfer_details
-msgid "Picking wizard"
+#: model:ir.ui.view,arch_db:stock_move_backdating.view_fill_backdating
+msgid "Cancel"
 msgstr ""
 
 #. module: stock_move_backdating
-#: model:ir.model,name:stock_move_backdating.model_stock_transfer_details_items
-msgid "Picking wizard items"
+#: model:ir.model.fields,field_description:stock_move_backdating.field_fill_date_backdating_create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: stock_move_backdating
+#: model:ir.model.fields,field_description:stock_move_backdating.field_fill_date_backdating_create_date
+msgid "Created on"
+msgstr ""
+
+#. module: stock_move_backdating
+#: model:ir.model.fields,field_description:stock_move_backdating.field_fill_date_backdating_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_move_backdating
+#: model:ir.actions.act_window,name:stock_move_backdating.action_view_fill_backdating
+#: model:ir.ui.view,arch_db:stock_move_backdating.stock_picking_view_form_inherit_backdating
+#: model:ir.ui.view,arch_db:stock_move_backdating.view_fill_backdating
+msgid "Fill Actual Movement Date"
+msgstr ""
+
+#. module: stock_move_backdating
+#: model:ir.ui.view,arch_db:stock_move_backdating.stock_picking_view_form_inherit_backdating
+msgid "Fill Actual Movement Date of all operations"
+msgstr ""
+
+#. module: stock_move_backdating
+#: model:ir.model.fields,field_description:stock_move_backdating.field_fill_date_backdating_id
+msgid "ID"
+msgstr ""
+
+#. module: stock_move_backdating
+#: model:ir.model.fields,field_description:stock_move_backdating.field_fill_date_backdating___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_move_backdating
+#: model:ir.model.fields,field_description:stock_move_backdating.field_fill_date_backdating_write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: stock_move_backdating
+#: model:ir.model.fields,field_description:stock_move_backdating.field_fill_date_backdating_write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: stock_move_backdating
+#: model:ir.model,name:stock_move_backdating.model_stock_pack_operation
+msgid "Packing Operation"
 msgstr ""
 
 #. module: stock_move_backdating
@@ -44,7 +88,25 @@ msgid "Stock Move"
 msgstr ""
 
 #. module: stock_move_backdating
-#: code:addons/stock_move_backdating/wizards/stock_transfer_details.py:15
+#: model:ir.model,name:stock_move_backdating.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: stock_move_backdating
+#: code:addons/stock_move_backdating/models/stock_pack_operation.py:13
 #, python-format
 msgid "You can not process an actual movement date in the future."
 msgstr ""
+
+#. module: stock_move_backdating
+#: model:ir.ui.view,arch_db:stock_move_backdating.view_fill_backdating
+msgid "_Apply"
+msgstr ""
+
+#. module: stock_move_backdating
+#: model:ir.model,name:stock_move_backdating.model_fill_date_backdating
+msgid "fill.date.backdating"
+msgstr ""
+
+#~ msgid "Account Entry"
+#~ msgstr "Movimento de Conta"
