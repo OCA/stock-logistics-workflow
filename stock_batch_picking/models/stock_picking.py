@@ -21,6 +21,10 @@ class StockPicking(models.Model):
         """In addition to what the method in the parent class does,
         cancel the batches for which all pickings are cancelled
         """
+        # we need to unreserve the picking before canceling it as other way
+        # it will still have the pack_operation_ids, which will be seen
+        # in the report, which is undesirable
+        self.do_unreserve()
         result = super(StockPicking, self).action_cancel()
         self.mapped('batch_picking_id').verify_state()
 
