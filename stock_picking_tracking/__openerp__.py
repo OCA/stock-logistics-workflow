@@ -8,7 +8,7 @@
     "version": "9.0.1.0.0",
     "category": "Inventory, Logistics, Warehousing",
     "website": "https://laslabs.com/",
-    "author": "LasLabs",
+    "author": "LasLabs,Odoo Community Association (OCA)",
     "license": "LGPL-3",
     "application": False,
     "installable": True,
