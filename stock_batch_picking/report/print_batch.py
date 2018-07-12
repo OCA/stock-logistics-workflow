@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import time
-from openerp import pooler
+from openerp import pooler, api
 from openerp.report import report_sxw
 
 from . batch_aggregation import BatchAggregation
@@ -13,6 +13,7 @@ class PrintBatch(report_sxw.rml_parse):
 
     _aggregation_class = BatchAggregation
 
+    @api.v7 # noqa
     def __init__(self, cursor, uid, name, context):
         super(PrintBatch, self).__init__(cursor, uid, name, context=context)
         self.pool = pooler.get_pool(self.cr.dbname)

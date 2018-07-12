@@ -43,8 +43,8 @@ Images
 ------
 
 * Odoo Community Association: `Icon <https://github.com/OCA/maintainer-tools/
-  blob/master/template/module/static/description/icon.svg>`_.
-* Open Clipart: `Icon <https://openclipart.org/detail/260861/warehouse15>`_.
+  blob/master/template/module/static/description/icon.svg>`__.
+* Open Clipart: `Icon <https://openclipart.org/detail/260861/warehouse15>`__.
 
 
 Contributors
