@@ -4,47 +4,48 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2016
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-18 01:44+0000\n"
 "PO-Revision-Date: 2016-11-18 01:44+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
-"Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
+"Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>, 2016\n"
+"Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: de\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: sl\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
 
 #. module: stock_move_backdating
 #: model:ir.model,name:stock_move_backdating.model_account_move
 msgid "Account Entry"
-msgstr "Buchungssatz"
+msgstr "Knjigovodski vnos"
 
 #. module: stock_move_backdating
 #: field:stock.transfer_details,date_backdating:0
 msgid "Actual Movement Date"
-msgstr ""
+msgstr "Datum dejanskega premika"
 
 #. module: stock_move_backdating
 #: model:ir.model,name:stock_move_backdating.model_stock_transfer_details
 msgid "Picking wizard"
-msgstr ""
+msgstr "Zbirni čarovnik"
 
 #. module: stock_move_backdating
 #: model:ir.model,name:stock_move_backdating.model_stock_transfer_details_items
 msgid "Picking wizard items"
-msgstr "Arttikel in Pickauftragsassistent"
+msgstr "Postavke čarovnika za zbirnike"
 
 #. module: stock_move_backdating
 #: model:ir.model,name:stock_move_backdating.model_stock_move
 msgid "Stock Move"
-msgstr "Bestandsbuchung"
+msgstr "Premik zaloge"
 
 #. module: stock_move_backdating
 #: code:addons/stock_move_backdating/wizards/stock_transfer_details.py:15
 #, python-format
 msgid "You can not process an actual movement date in the future."
-msgstr "Sie dürfen das tatsächliche Umlagerungsdatum künftig nicht ändern."
+msgstr "Dejanskega datuma premika, ki je v prihodnosti, ne morete obdelati."
