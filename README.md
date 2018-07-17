@@ -25,7 +25,7 @@ addon | version | summary
 --- | --- | ---
 [stock_account_deposit](stock_account_deposit/) | 9.0.1.0.0 | Create invoices from deposit locations
 [stock_auto_move](stock_auto_move/) | 9.0.1.0.0 | Automatic Move Processing
-[stock_batch_picking](stock_batch_picking/) | 9.0.1.0.0 | Stock batch picking
+[stock_batch_picking](stock_batch_picking/) | 9.0.1.0.1 | Stock batch picking
 [stock_deposit](stock_deposit/) | 9.0.1.0.1 | Manage deposit locations in your warehouses
 [stock_disable_force_availability_button](stock_disable_force_availability_button/) | 9.0.1.0.0 | Disable force availability button
 [stock_lot_scrap](stock_lot_scrap/) | 9.0.1.0.0 | This module adds a button in Production Lot/Serial Number view form to Scrap all products contained.
