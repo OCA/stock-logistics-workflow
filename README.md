@@ -24,12 +24,14 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [product_expiry_simple](product_expiry_simple/) | 10.0.1.0.0 | Simpler and better alternative to the official product_expiry module
+[product_supplierinfo_for_customer_picking](product_supplierinfo_for_customer_picking/) | 10.0.1.0.0 | This module makes the product customer code visible in the stock moves of a picking.
 [stock_auto_move](stock_auto_move/) | 10.0.1.0.0 | Automatic Move Processing
 [stock_cancel](stock_cancel/) | 10.0.0.1.0 | This module allows you to bring back a completed stock picking to draft state
 [stock_cancel_delivery](stock_cancel_delivery/) | 10.0.0.1.0 | Stock Cancel delivery
 [stock_delivery_internal](stock_delivery_internal/) | 10.0.1.0.0 | Adds an internal carrier to delivery options
 [stock_disable_force_availability_button](stock_disable_force_availability_button/) | 10.0.1.0.0 | Disable force availability button
 [stock_lot_scrap](stock_lot_scrap/) | 10.0.1.0.0 | This module adds a button in Production Lot/Serial Number view form to Scrap all products contained.
+[stock_move_backdating](stock_move_backdating/) | 10.0.1.0.0 | Stock Move Backdating
 [stock_no_negative](stock_no_negative/) | 10.0.1.0.1 | Disallow negative stock levels by default
 [stock_ownership_availability_rules](stock_ownership_availability_rules/) | 10.0.1.0.0 | Enforce ownership on stock availability
 [stock_ownership_by_move](stock_ownership_by_move/) | 10.0.0.1.0 | Preserve Ownership of moves (not pickings) on reception.
@@ -52,13 +54,11 @@ Unported addons
 addon | version | summary
 --- | --- | ---
 [picking_dispatch_wave](picking_dispatch_wave/) | 0.1 (unported) | Picking Dispatch Wave
-[product_customer_code_picking](product_customer_code_picking/) | 1.0 (unported) | Product Customer code for stock picking
 [product_serial](product_serial/) | 1.0 (unported) | Enhance Serial Number management
 [stock_batch_picking](stock_batch_picking/) | 9.0.1.0.0 (unported) | Stock batch picking
 [stock_dropshipping_dual_invoice](stock_dropshipping_dual_invoice/) | 8.0.0.1.0 (unported) | Create both Supplier and Customer Invoices from a Dropshipping Delivery
 [stock_inventory_retry_assign](stock_inventory_retry_assign/) | 1.0 (unported) | Check Availability after Inventories
 [stock_location_flow_creator](stock_location_flow_creator/) | 1.0 (unported) | Create configuration of stock location flow
-[stock_move_backdating](stock_move_backdating/) | 1.0 (unported) | Allows back-dating of stock moves
 [stock_move_description](stock_move_description/) | 8.0.1.0.0 (unported) | Stock move description
 [stock_move_on_hold](stock_move_on_hold/) | 1.0 (unported) | Stock On Hold Status
 [stock_obsolete](stock_obsolete/) | 1.0 (unported) | Add product depreciation
