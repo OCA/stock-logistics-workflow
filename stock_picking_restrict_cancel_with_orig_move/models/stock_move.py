@@ -51,3 +51,9 @@ class StockMove(models.Model):
             return {'pickings': pickings}
         else:
             return {}
+
+    def _push_apply(self):
+        """Allow cancellation on the application of push rules"""
+        return super(
+            StockMove, self.with_context(bypass_check_state=True)
+        )._push_apply()

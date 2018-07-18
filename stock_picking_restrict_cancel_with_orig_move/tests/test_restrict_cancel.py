@@ -51,3 +51,32 @@ class TestRestrictCancelStockMove(SavepointCase):
         self.input_to_qc_picking.action_cancel()
         self.assertEqual(qc_to_stock_move.state, 'cancel')
         self.assertEqual(self.input_to_qc_picking.move_lines.state, 'cancel')
+
+    def test_do_not_restrict(self):
+        # When this picking is created, odoo will apply push rules on each
+        # stock move to generate putaway moves. These putaway moves are created
+        # first by copying each input moves, before being merged together, thus
+        # trigger a move cancellation which should be allowed anyway.
+        self.env['stock.picking'].create({
+            'picking_type_id': self.internal_pt.id,
+            'location_id': self.input_loc.id,
+            'location_dest_id': self.qc_loc.id,
+            'move_lines': [(0, 0, {
+                'name': self.dummy_product.name,
+                'product_id': self.dummy_product.id,
+                'product_uom': self.env.ref('product.product_uom_unit').id,
+                'product_uom_qty': 1,
+            }), (0, 0, {
+                'name': self.dummy_product.name,
+                'product_id': self.dummy_product.id,
+                'product_uom': self.env.ref('product.product_uom_unit').id,
+                'product_uom_qty': 3,
+            })]
+        })
+        qc_to_stock_move = self.env['stock.move'].search([
+            ('product_id', '=', self.dummy_product.id),
+            ('location_id', '=', self.qc_loc.id),
+            ('location_dest_id', '=', self.stock_loc.id),
+        ])
+        # qc_to_stock_move has merged all the moves so its quantity is 5
+        self.assertEqual(qc_to_stock_move.product_uom_qty, 5)
