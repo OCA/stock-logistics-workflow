@@ -12,6 +12,7 @@ setuptools.setup(
         'odoo11-addon-purchase_stock_picking_restrict_cancel',
         'odoo11-addon-stock_no_negative',
         'odoo11-addon-stock_pack_operation_auto_fill',
+        'odoo11-addon-stock_picking_customer_ref',
         'odoo11-addon-stock_picking_invoice_link',
         'odoo11-addon-stock_picking_purchase_propagate',
         'odoo11-addon-stock_picking_restrict_cancel_with_orig_move',
