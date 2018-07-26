@@ -28,7 +28,10 @@ class SaleOrderLine(models.Model):
         move_ids = self.mapped('move_ids').filtered(
             lambda x: x.state == 'done' and
             not x.invoice_line_id and
-            not x.location_dest_id.scrap_location and
-            x.location_dest_id.usage == 'customer').ids
+            not x.scrapped and (
+                x.location_dest_id.usage == 'customer' or
+                (x.location_id.usage == 'customer' and
+                 x.to_refund)
+            )).ids
         vals['move_line_ids'] = [(6, 0, move_ids)]
         return vals
