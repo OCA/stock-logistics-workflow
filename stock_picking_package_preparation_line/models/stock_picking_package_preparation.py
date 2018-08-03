@@ -180,6 +180,9 @@ class StockPickingPackagePreparation(models.Model):
                         })
                 # Set the picking as "To DO" and try to set it as
                 # assigned
+                # skip_update_line_ids because picking is created based on
+                # preparation lines, updating lines would erase some fields
+                picking = picking.with_context(skip_update_line_ids=True)
                 picking.action_confirm()
                 # Show an error if a picking is not confirmed
                 if picking.state != 'confirmed':

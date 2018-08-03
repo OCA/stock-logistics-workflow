@@ -1,62 +1,70 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * stock_auto_move
-# 
+#
 # Translators:
-# Bole <bole@dajmi5.com>, 2016
+# OCA Transbot <transbot@odoo-community.org>, 2017
+# Bole <bole@dajmi5.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-18 01:44+0000\n"
-"PO-Revision-Date: 2016-11-18 01:44+0000\n"
-"Last-Translator: Bole <bole@dajmi5.com>, 2016\n"
+"POT-Creation-Date: 2018-02-28 03:51+0000\n"
+"PO-Revision-Date: 2018-02-28 03:51+0000\n"
+"Last-Translator: Bole <bole@dajmi5.com>, 2018\n"
 "Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
+"Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: hr\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #. module: stock_auto_move
 #: model:procurement.rule,name:stock_auto_move.procurement_rule_a_to_b
 msgid "1 => 2 with auto_move"
-msgstr ""
+msgstr "1 => 2 sa auto prenosom"
 
 #. module: stock_auto_move
-#: field:procurement.rule,auto_move:0 field:stock.move,auto_move:0
+#: model:ir.model.fields,field_description:stock_auto_move.field_procurement_rule_auto_move
+#: model:ir.model.fields,field_description:stock_auto_move.field_stock_move_auto_move
 msgid "Automatic move"
-msgstr ""
+msgstr "Automatski prenos"
 
 #. module: stock_auto_move
-#: help:procurement.rule,auto_move:0
+#: model:ir.model.fields,help:stock_auto_move.field_procurement_rule_auto_move
 msgid ""
 "If this option is selected, the generated move will be automatically "
 "processed as soon as the products are available. This can be useful for "
 "situations with chained moves where we do not want an operator action."
 msgstr ""
+"Ako je ova opcija uključena, generirani prenos će automatski biti obrađen "
+"čim proizvodi budu raspoloživi. Ovo je korisno u situacijama sa ulančanim "
+"kretanjima gdje ne želimo interakciju operatera."
 
 #. module: stock_auto_move
-#: help:stock.move,auto_move:0
+#: model:ir.model.fields,help:stock_auto_move.field_stock_move_auto_move
 msgid ""
-"If this option is selected, the move will be automatically processed as soon"
-" as the products are available."
+"If this option is selected, the move will be automatically processed as soon "
+"as the products are available."
 msgstr ""
+"Ako je opcija uključena, kretanje će automatski biti obrađeno čim proizvodi "
+"budu raspoloživi."
 
 #. module: stock_auto_move
 #: model:stock.location,name:stock_auto_move.stock_location_a
 msgid "Location 1"
-msgstr ""
+msgstr "Lokacija 1"
 
 #. module: stock_auto_move
 #: model:stock.location,name:stock_auto_move.stock_location_b
 msgid "Location 2"
-msgstr ""
+msgstr "Lokacija 2"
 
 #. module: stock_auto_move
 #: model:stock.location,name:stock_auto_move.stock_location_c
 msgid "Location 3"
-msgstr ""
+msgstr "Lokacija 3"
 
 #. module: stock_auto_move
 #: model:ir.model,name:stock_auto_move.model_procurement_order
@@ -66,12 +74,12 @@ msgstr "Nabava"
 #. module: stock_auto_move
 #: model:ir.model,name:stock_auto_move.model_procurement_rule
 msgid "Procurement Rule"
-msgstr ""
+msgstr "Pravilo nabave"
 
 #. module: stock_auto_move
 #: model:ir.model,name:stock_auto_move.model_stock_location_path
-msgid "Pushed Flows"
-msgstr ""
+msgid "Pushed Flow"
+msgstr "Tijek guranja"
 
 #. module: stock_auto_move
 #: model:ir.model,name:stock_auto_move.model_stock_move
@@ -81,4 +89,4 @@ msgstr "Skladišni prenos"
 #. module: stock_auto_move
 #: model:stock.location.route,name:stock_auto_move.test_route
 msgid "Test route"
-msgstr ""
+msgstr "Test rute"

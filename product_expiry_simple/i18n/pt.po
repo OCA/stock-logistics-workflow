@@ -1,0 +1,49 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * product_expiry_simple
+#
+# Translators:
+# Pedro Castro Silva <pedrocs@exo.pt>, 2018
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-30 14:28+0000\n"
+"PO-Revision-Date: 2017-12-30 14:28+0000\n"
+"Last-Translator: Pedro Castro Silva <pedrocs@exo.pt>, 2018\n"
+"Language-Team: Portuguese (https://www.transifex.com/oca/teams/23907/pt/)\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: product_expiry_simple
+#: model:ir.ui.view,arch_db:product_expiry_simple.quant_search_view
+#: model:ir.ui.view,arch_db:product_expiry_simple.search_product_lot_filter
+msgid "Expired"
+msgstr "Expirado"
+
+#. module: product_expiry_simple
+#: model:ir.model.fields,field_description:product_expiry_simple.field_stock_production_lot_expiry_date
+#: model:ir.model.fields,field_description:product_expiry_simple.field_stock_quant_expiry_date
+#: model:ir.ui.view,arch_db:product_expiry_simple.quant_search_view
+#: model:ir.ui.view,arch_db:product_expiry_simple.search_product_lot_filter
+msgid "Expiry Date"
+msgstr "Data de Validade"
+
+#. module: product_expiry_simple
+#: model:ir.model,name:product_expiry_simple.model_stock_production_lot
+msgid "Lot/Serial"
+msgstr "Lote/Nº de Série"
+
+#. module: product_expiry_simple
+#: model:ir.ui.view,arch_db:product_expiry_simple.quant_search_view
+#: model:ir.ui.view,arch_db:product_expiry_simple.search_product_lot_filter
+msgid "Not Expired"
+msgstr "Não Expirado"
+
+#. module: product_expiry_simple
+#: model:ir.model,name:product_expiry_simple.model_stock_quant
+msgid "Quants"
+msgstr "Quants"

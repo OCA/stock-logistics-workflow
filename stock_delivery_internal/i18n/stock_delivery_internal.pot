@@ -1,0 +1,162 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_delivery_internal
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_delivery_internal
+#: model:ir.model,name:stock_delivery_internal.model_delivery_carrier
+msgid "Carrier"
+msgstr ""
+
+#. module: stock_delivery_internal
+#: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_out_picking_id
+msgid "Carrier Pickup Picking"
+msgstr ""
+
+#. module: stock_delivery_internal
+#: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_cash_out_picking_id
+msgid "Cash Delivery From Carrier Picking"
+msgstr ""
+
+#. module: stock_delivery_internal
+#: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_cash_in_picking_id
+msgid "Cash Picking From Buyer Picking"
+msgstr ""
+
+#. module: stock_delivery_internal
+#: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_cash_on_delivery
+msgid "Cash on delivery"
+msgstr ""
+
+#. module: stock_delivery_internal
+#: selection:stock.pickup.request,state:0
+msgid "Confirmed"
+msgstr ""
+
+#. module: stock_delivery_internal
+#: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: stock_delivery_internal
+#: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_create_date
+msgid "Created on"
+msgstr ""
+
+#. module: stock_delivery_internal
+#: model:ir.model.fields,field_description:stock_delivery_internal.field_delivery_carrier_internal_delivery_company_id
+msgid "Delivery Company"
+msgstr ""
+
+#. module: stock_delivery_internal
+#: model:ir.model.fields,field_description:stock_delivery_internal.field_delivery_carrier_internal_delivery_money_picking_type_id
+msgid "Delivery Money Picking Type"
+msgstr ""
+
+#. module: stock_delivery_internal
+#: model:ir.model.fields,field_description:stock_delivery_internal.field_delivery_carrier_internal_delivery_stock_picking_type_id
+msgid "Delivery Stock Picking Type"
+msgstr ""
+
+#. module: stock_delivery_internal
+#: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_delivery_internal
+#: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_id
+msgid "ID"
+msgstr ""
+
+#. module: stock_delivery_internal
+#: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_in_picking_id
+msgid "Inbound Buyer Picking"
+msgstr ""
+
+#. module: stock_delivery_internal
+#: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_delivery_internal
+#: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: stock_delivery_internal
+#: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: stock_delivery_internal
+#: selection:stock.pickup.request,state:0
+msgid "New"
+msgstr ""
+
+#. module: stock_delivery_internal
+#: model:ir.ui.view,arch_db:stock_delivery_internal.stock_pickup_request_view_search
+msgid "Picking"
+msgstr ""
+
+#. module: stock_delivery_internal
+#: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_name
+msgid "Pickup Name"
+msgstr ""
+
+#. module: stock_delivery_internal
+#: model:ir.ui.view,arch_db:stock_delivery_internal.stock_pickup_request_view_form
+#: model:ir.ui.view,arch_db:stock_delivery_internal.stock_pickup_request_view_search
+#: model:ir.ui.view,arch_db:stock_delivery_internal.stock_pickup_request_view_tree
+msgid "Request For Pickup"
+msgstr ""
+
+#. module: stock_delivery_internal
+#: model:ir.actions.act_window,name:stock_delivery_internal.stock_pickup_request_action
+msgid "Requests For Pickup"
+msgstr ""
+
+#. module: stock_delivery_internal
+#: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_company_id
+msgid "Responsible Company"
+msgstr ""
+
+#. module: stock_delivery_internal
+#: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_picking_id
+msgid "Source Picking"
+msgstr ""
+
+#. module: stock_delivery_internal
+#: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_state
+msgid "State"
+msgstr ""
+
+#. module: stock_delivery_internal
+#: model:ir.model,name:stock_delivery_internal.model_stock_pickup_request
+msgid "Stock Pickup Request"
+msgstr ""
+
+#. module: stock_delivery_internal
+#: model:ir.ui.menu,name:stock_delivery_internal.menu_stock_pickup_request
+msgid "Stock Pickup Requests"
+msgstr ""
+
+#. module: stock_delivery_internal
+#: model:ir.model,name:stock_delivery_internal.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: stock_delivery_internal
+#: selection:stock.pickup.request,state:0
+msgid "done"
+msgstr ""
+

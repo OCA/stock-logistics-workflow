@@ -1,0 +1,84 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_no_negative
+#
+# Translators:
+# Pedro Castro Silva <pedrocs@exo.pt>, 2018
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-30 14:28+0000\n"
+"PO-Revision-Date: 2017-12-30 14:28+0000\n"
+"Last-Translator: Pedro Castro Silva <pedrocs@exo.pt>, 2018\n"
+"Language-Team: Portuguese (https://www.transifex.com/oca/teams/23907/pt/)\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: stock_no_negative
+#: code:addons/stock_no_negative/models/stock_quant.py:30
+#, python-format
+msgid " lot '%s'"
+msgstr " lote '%s'"
+
+#. module: stock_no_negative
+#: model:ir.model.fields,field_description:stock_no_negative.field_product_category_allow_negative_stock
+#: model:ir.model.fields,field_description:stock_no_negative.field_product_product_allow_negative_stock
+#: model:ir.model.fields,field_description:stock_no_negative.field_product_template_allow_negative_stock
+msgid "Allow Negative Stock"
+msgstr "Permitir Stock Negativo"
+
+#. module: stock_no_negative
+#: model:ir.model.fields,help:stock_no_negative.field_product_category_allow_negative_stock
+msgid ""
+"Allow negative stock levels for the stockable products attached to this "
+"category. The options doesn't apply to products attached to sub-categories "
+"of this category."
+msgstr ""
+"Permitir níveis de stock negativos para os produtos armazenáveis "
+"relacionados com esta categoria. A opção não é aplicável a produtos "
+"relacionados com uma sub-categoria desta."
+
+#. module: stock_no_negative
+#: model:ir.model.fields,help:stock_no_negative.field_product_product_allow_negative_stock
+#: model:ir.model.fields,help:stock_no_negative.field_product_template_allow_negative_stock
+msgid ""
+"If this option is not active on this product nor on its product category and "
+"that this product is a stockable product, then the validation of the related "
+"stock moves will be blocked if the stock level becomes negative with the "
+"stock move."
+msgstr ""
+"Se esta opção não estiver ativa neste produto nem na categoria deste produto "
+"e este produto for um produto armazenável, o registo dos movimentos de stock "
+"será bloqueado se os níveis de stock relacionados com o movimento ficarem "
+"negativos."
+
+#. module: stock_no_negative
+#: model:ir.model,name:stock_no_negative.model_product_category
+msgid "Product Category"
+msgstr "Categoria de Produto"
+
+#. module: stock_no_negative
+#: model:ir.model,name:stock_no_negative.model_product_template
+msgid "Product Template"
+msgstr "Modelo de Produto"
+
+#. module: stock_no_negative
+#: model:ir.model,name:stock_no_negative.model_stock_quant
+msgid "Quants"
+msgstr "Quants"
+
+#. module: stock_no_negative
+#: code:addons/stock_no_negative/models/stock_quant.py:31
+#, python-format
+msgid ""
+"You cannot validate this stock operation because the stock level of the "
+"product '%s'%s would become negative (%s) on the stock location '%s' and "
+"negative stock is not allowed for this product."
+msgstr ""
+"Não pode registar esta operação de stock porque o nível de stock do produto "
+"'%s'%s ficaria negativo (%s) na localização de stock '%s' e isso não é "
+"permitido neste produto."

@@ -4,10 +4,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-24 16:42+0000\n"
-"PO-Revision-Date: 2015-03-24 16:42+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,18 +14,29 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_split_picking
-#: code:addons/stock_split_picking/model/stock.py:48
+#: model:ir.ui.view,arch_db:stock_split_picking.view_picking_form
+msgid "Are you sure you want to split current picking ?"
+msgstr ""
+
+#. module: stock_split_picking
+#: code:addons/stock_split_picking/models/stock_picking.py:19
 #, python-format
-msgid "Enter quantities to split"
+msgid "Mark as todo this picking please."
+msgstr ""
+
+#. module: stock_split_picking
+#: model:ir.ui.view,arch_db:stock_split_picking.view_picking_form
+msgid "Split"
 msgstr ""
 
 #. module: stock_split_picking
 #: model:ir.model,name:stock_split_picking.model_stock_picking
-msgid "Picking List"
+msgid "Transfer"
 msgstr ""
 
 #. module: stock_split_picking
-#: view:stock.picking:stock_split_picking.view_picking_form
-msgid "Split"
+#: code:addons/stock_split_picking/models/stock_picking.py:22
+#, python-format
+msgid "You must enter done quantity in order to split your picking in several ones."
 msgstr ""
 

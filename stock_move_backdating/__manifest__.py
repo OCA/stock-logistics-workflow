@@ -1,41 +1,22 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Copyright (C) 2012+ BREMSKERL-REIBBELAGWERKE EMMERLING GmbH & Co. KG
+# Copyright 2015-2016 Agile Business Group (<http://www.agilebg.com>)
+# Copyright 2015 BREMSKERL-REIBBELAGWERKE EMMERLING GmbH & Co. KG
 #    Author Marco Dieckhoff
-#    Copyright (C) 2013 Agile Business Group sagl (<http://www.agilebg.com>)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# Copyright 2018 Alex Comba - Agile Business Group
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
 {
-    "name": "Stock Move Backdating",
-    "version": "1.0",
-    'author': ['Marco Dieckhoff, BREMSKERL', 'Agile Business Group'],
-    "category": "Stock Logistics",
-    'website': 'www.bremskerl.com',
+    'name': 'Stock Move Backdating',
+    'version': '10.0.1.0.0',
+    'category': 'Stock Logistics',
     'license': 'AGPL-3',
-    "depends": ["stock"],
-    "summary": "Allows back-dating of stock moves",
-    "description": """This module allows to register old stock moves
-    (with date != now).
-    On stock moves, user can specify the "Actual Movement Date", that will be
-    used as movement date""",
+    'author': 'Marco Dieckhoff, BREMSKERL, Agile Business Group, '
+              'Odoo Community Association (OCA)',
+    'website': 'https://github.com/OCA/stock-logistics-workflow',
+    'depends': ['stock_account'],
     'data': [
-        "view/stock_view.xml",
-        "wizard/stock_partial_picking_view.xml",
+        'wizards/fill_date_backdating.xml',
+        'views/stock_picking.xml',
     ],
-    'demo': [],
-    'installable': False,
+    'installable': True,
 }

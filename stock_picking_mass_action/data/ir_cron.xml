@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="ir_cron_check_assign_all" model="ir.cron">
+        <field name="name">Check Availability of Stock Picking</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall"/>
+        <field eval="False" name="active"/>
+        <field eval="'stock.picking'" name="model"/>
+        <field eval="'check_assign_all'" name="function"/>
+        <field eval="'()'" name="args"/>
+    </record>
+
+</odoo>

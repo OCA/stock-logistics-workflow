@@ -7,11 +7,13 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from odoo.tests.common import TransactionCase
+from odoo.tests import common
 from odoo.exceptions import ValidationError
 
 
-class TestStockNoNegative(TransactionCase):
+@common.at_install(False)
+@common.post_install(True)
+class TestStockNoNegative(common.TransactionCase):
 
     def setUp(self):
         super(TestStockNoNegative, self).setUp()

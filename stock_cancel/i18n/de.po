@@ -17,52 +17,87 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 
 #. module: stock_cancel
-#: model:ir.model,name:stock_cancel.model_stock_picking_in
+#: code:addons/stock_cancel/models/stock_move.py:18
+#, python-format
+msgid "Action not allowed. Chained move."
+msgstr ""
+
+#. module: stock_cancel
+#: code:addons/stock_cancel/models/stock_move.py:15
+#, python-format
+msgid "Action not allowed. Move splited / with returned moves."
+msgstr ""
+
+#. module: stock_cancel
+#: model:ir.ui.view,arch_db:stock_cancel.stock_picking_cancel_form
 #, fuzzy
-msgid "Incoming Shipments"
-msgstr "Wareneingang"
-
-#. module: stock_cancel
-#: code:addons/stock_cancel/stock.py:45
-#, fuzzy, python-format
-msgid "Error"
-msgstr "Fehler"
-
-#. module: stock_cancel
-#: view:stock.picking:0 view:stock.picking.in:0 view:stock.picking.out:0
-msgid "Are you sure you want to reopen this stock picking?"
+msgid "Are you sure you want to reopen this picking?"
 msgstr "Sind Sie sicher, dass Sie diese Lagerentnahme erneut öffnen möchten?"
 
 #. module: stock_cancel
-#: view:stock.picking:0 view:stock.picking.in:0 view:stock.picking.out:0
+#: code:addons/stock_cancel/models/stock_quant.py:18
+#, python-format
+msgid "Cannot cancel a picking with multiple operations"
+msgstr ""
+
+#. module: stock_cancel
+#: code:addons/stock_cancel/models/stock_picking.py:25
+#, python-format
+msgid "Not Allowed, picking has backorder."
+msgstr ""
+
+#. module: stock_cancel
+#: code:addons/stock_cancel/models/stock_picking.py:36
+#, python-format
+msgid "Picking %s has invoices"
+msgstr ""
+
+#. module: stock_cancel
+#: model:ir.model,name:stock_cancel.model_stock_quant
+msgid "Quants"
+msgstr ""
+
+#. module: stock_cancel
+#: model:ir.ui.view,arch_db:stock_cancel.stock_picking_cancel_form
 msgid "Reopen"
 msgstr "Wiedereröffnung"
 
 #. module: stock_cancel
-#: model:ir.model,name:stock_cancel.model_stock_picking
-msgid "Picking List"
-msgstr "Kommissionierschein"
+#: model:ir.model,name:stock_cancel.model_stock_move
+msgid "Stock Move"
+msgstr ""
 
 #. module: stock_cancel
-#: model:ir.model,name:stock_cancel.model_stock_picking_out
-#, fuzzy
-msgid "Delivery Orders"
-msgstr "Warenauslieferung"
-
-#. module: stock_cancel
-#: code:addons/stock_cancel/stock.py:59
-#, python-format
-msgid "The stock picking '%s' has been set in draft state."
+#: code:addons/stock_cancel/models/stock_picking.py:52
+#, fuzzy, python-format
+msgid "The picking has been re-opened and set to draft state"
 msgstr "Die Lagerentnahme '%s' wurde in den Entwurf versetzt."
 
 #. module: stock_cancel
-#: code:addons/stock_cancel/stock.py:46
-#, python-format
-msgid ""
-"Line %s has valuation moves (%s).                             Remove them "
-"first"
+#: model:ir.model,name:stock_cancel.model_stock_picking
+msgid "Transfer"
 msgstr ""
-"Zeile %s weist bewertete Buchungen (%s) aus. Entfernen Sie diese zuerst"
+
+#, fuzzy
+#~ msgid "Incoming Shipments"
+#~ msgstr "Wareneingang"
+
+#, fuzzy
+#~ msgid "Error"
+#~ msgstr "Fehler"
+
+#~ msgid "Picking List"
+#~ msgstr "Kommissionierschein"
+
+#, fuzzy
+#~ msgid "Delivery Orders"
+#~ msgstr "Warenauslieferung"
+
+#~ msgid ""
+#~ "Line %s has valuation moves (%s).                             Remove them "
+#~ "first"
+#~ msgstr ""
+#~ "Zeile %s weist bewertete Buchungen (%s) aus. Entfernen Sie diese zuerst"
 
 #~ msgid "Reference must be unique per Company!"
 #~ msgstr "Referenz muß je Unternehmen eindeutig sein!"

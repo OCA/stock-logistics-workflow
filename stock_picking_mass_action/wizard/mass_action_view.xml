@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_stock_picking_mass_action_form" model="ir.ui.view">
+        <field name="model">stock.picking.mass.action</field>
+        <field name="arch" type="xml">
+            <form string="Mass Action for the selected stock picking">
+                <group>
+                    <field name="confirm"/>
+                    <field name="check_availability"/>
+                    <field name="force_availability"/>
+                    <field name="transfer"/>
+                </group>
+                <footer>
+                    <button name="mass_action" string="Apply" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Confirm Action -->
+    <record id="action_confirm" model="ir.actions.act_window">
+        <field name="name">Mark as Todo</field>
+        <field name="res_model">stock.picking.mass.action</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="value_confirm" model="ir.values">
+        <field name="model_id" ref="stock.model_stock_picking" />
+        <field name="name">Mark as Todo</field>
+        <field name="key2">client_action_multi</field>
+        <field name="value" eval="'ir.actions.act_window,' + str(ref('action_confirm'))"/>
+        <field name="key">action</field>
+        <field name="model">stock.picking</field>
+    </record>
+
+    <!-- Check Availability Action -->
+    <record id="action_check_availability" model="ir.actions.act_window">
+        <field name="name">Check Availability</field>
+        <field name="res_model">stock.picking.mass.action</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'check_availability': 1}</field>
+    </record>
+
+    <record id="value_check_availability" model="ir.values">
+        <field name="model_id" ref="stock.model_stock_picking" />
+        <field name="name">Check Availability</field>
+        <field name="key2">client_action_multi</field>
+        <field name="value" eval="'ir.actions.act_window,' + str(ref('action_check_availability'))"/>
+        <field name="key">action</field>
+        <field name="model">stock.picking</field>
+    </record>
+
+    <!-- Force Availability Action -->
+    <record id="action_force_availability" model="ir.actions.act_window">
+        <field name="name">Force Availability</field>
+        <field name="res_model">stock.picking.mass.action</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'check_availability': 1, 'force_availability': 1}</field>
+    </record>
+
+    <record id="value_force_availability" model="ir.values">
+        <field name="model_id" ref="stock.model_stock_picking" />
+        <field name="name">Force Availability</field>
+        <field name="key2">client_action_multi</field>
+        <field name="value" eval="'ir.actions.act_window,' + str(ref('action_force_availability'))"/>
+        <field name="key">action</field>
+        <field name="model">stock.picking</field>
+    </record>
+
+    <!-- Transfer Action -->
+    <record id="action_transfer" model="ir.actions.act_window">
+        <field name="name">Transfer</field>
+        <field name="res_model">stock.picking.mass.action</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'check_availability': 1, 'force_availability': 1, 'transfer': 1,}</field>
+    </record>
+
+    <record id="value_transfer" model="ir.values">
+        <field name="model_id" ref="stock.model_stock_picking" />
+        <field name="name">Transfer</field>
+        <field name="key2">client_action_multi</field>
+        <field name="value" eval="'ir.actions.act_window,' + str(ref('action_transfer'))"/>
+        <field name="key">action</field>
+        <field name="model">stock.picking</field>
+    </record>
+
+</odoo>
