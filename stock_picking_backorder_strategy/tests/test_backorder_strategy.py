@@ -59,12 +59,22 @@ class TestBackorderStrategy(common.TransactionCase):
         """ Set strategy for stock.picking_type_in to no_create
             Receive picking
             Check there is no backorder
+            Check if there is one move done and one move cancelled
         """
         self.picking_type.backorder_strategy = 'no_create'
         self._process_picking()
         backorder = self.picking_obj.search(
             [('backorder_id', '=', self.picking.id)])
         self.assertFalse(backorder)
+        states = list(set(self.picking.move_lines.mapped('state')))
+        self.assertEquals(
+            'done',
+            self.picking.state,
+        )
+        self.assertListEqual(
+            ['cancel', 'done'],
+            states,
+        )
 
     def test_backorder_strategy_cancel(self):
         """ Set strategy for stock.picking_type_in to cancel
