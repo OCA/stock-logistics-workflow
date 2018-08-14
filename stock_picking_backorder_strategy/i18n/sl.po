@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * stock_picking_backorder_strategy
-# 
+#
 # Translators:
 # Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
 msgid ""
@@ -11,50 +11,68 @@ msgstr ""
 "POT-Creation-Date: 2015-10-22 09:31+0000\n"
 "PO-Revision-Date: 2015-10-22 04:17+0000\n"
 "Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
-"Language-Team: Slovenian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/sl/)\n"
+"Language-Team: Slovenian (http://www.transifex.com/oca/OCA-stock-logistics-"
+"workflow-8-0/language/sl/)\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: sl\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3);\n"
 
 #. module: stock_picking_backorder_strategy
-#: field:stock.picking.type,backorder_strategy:0
-msgid "Backorder Strategy"
+#: model:ir.model.fields,field_description:stock_picking_backorder_strategy.field_stock_picking_type_backorder_strategy
+#, fuzzy
+msgid "Backorder strategy"
 msgstr "Strategija odloženih naročil"
 
 #. module: stock_picking_backorder_strategy
-#: code:addons/stock_picking_backorder_strategy/models/stock.py:50
+#: code:addons/stock_picking_backorder_strategy/models/stock_picking_type.py:15
 #: selection:stock.picking.type,backorder_strategy:0
 #, python-format
 msgid "Cancel"
 msgstr "Preklic"
 
 #. module: stock_picking_backorder_strategy
-#: code:addons/stock_picking_backorder_strategy/models/stock.py:49
+#: code:addons/stock_picking_backorder_strategy/models/stock_picking_type.py:13
 #: selection:stock.picking.type,backorder_strategy:0
 #, python-format
 msgid "Create"
 msgstr "Ustvari"
 
 #. module: stock_picking_backorder_strategy
-#: help:stock.picking.type,backorder_strategy:0
+#: model:ir.model.fields,help:stock_picking_backorder_strategy.field_stock_picking_type_backorder_strategy
 msgid "Define what to do with backorder"
 msgstr "Določi, kaj naj se naredi z odloženimi naročili"
 
 #. module: stock_picking_backorder_strategy
-#: code:addons/stock_picking_backorder_strategy/models/stock.py:49
+#: code:addons/stock_picking_backorder_strategy/models/stock_picking_type.py:13
+#: selection:stock.picking.type,backorder_strategy:0
+#, python-format
+msgid "Manual"
+msgstr ""
+
+#. module: stock_picking_backorder_strategy
+#: code:addons/stock_picking_backorder_strategy/models/stock_picking_type.py:14
 #: selection:stock.picking.type,backorder_strategy:0
 #, python-format
 msgid "No create"
 msgstr "Ne ustvari"
 
 #. module: stock_picking_backorder_strategy
-#: model:ir.model,name:stock_picking_backorder_strategy.model_stock_picking
-msgid "Picking List"
-msgstr "Zbirnik"
+#: model:ir.model,name:stock_picking_backorder_strategy.model_stock_move
+msgid "Stock Move"
+msgstr ""
 
 #. module: stock_picking_backorder_strategy
 #: model:ir.model,name:stock_picking_backorder_strategy.model_stock_picking_type
 msgid "The picking type determines the picking view"
 msgstr "Tip zbirnika določi prikaz zbirnika"
+
+#. module: stock_picking_backorder_strategy
+#: model:ir.model,name:stock_picking_backorder_strategy.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#~ msgid "Picking List"
+#~ msgstr "Zbirnik"
