@@ -1,0 +1,59 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_disallow_negative
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-10-07 09:43+0000\n"
+"PO-Revision-Date: 2015-10-07 09:43+0000\n"
+"Last-Translator: Alexis de Lattre <alexis.delattre@akretion.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_disallow_negative
+#: field:product.category,allow_negative_stock:0
+#: field:product.template,allow_negative_stock:0
+msgid "Allow Negative Stock"
+msgstr "Autoriser le stock négatif"
+
+#. module: stock_disallow_negative
+#: help:product.category,allow_negative_stock:0
+msgid "Allow negative stock levels for the stockable products attached to this category. The options doesn't apply to products attached to sub-categories of this category."
+msgstr "Autorise les niveaux de stock négatif pour les articles stockables attachés à cette catégorie. Cette option ne s'applique pas aux articles attachés à des sous-catégories de cette catégorie."
+
+#. module: stock_disallow_negative
+#: help:product.template,allow_negative_stock:0
+msgid "If this option is not active on this product nor on its product category and that this product is a stockable product, then the validation of the related stock moves will be blocked if the stock level becomes negative with the stock move."
+msgstr "Si cette option n'est pas activée sur cet article ni sur la catégorie à laquelle il est rattaché et que cet article est un produit stockable, alors la validation des mouvements de stock sera bloquée si le niveau de stock devient négatif avec ce mouvement de stock."
+
+#. module: stock_disallow_negative
+#: model:ir.model,name:stock_disallow_negative.model_product_category
+msgid "Product Category"
+msgstr "Catégorie d'articles"
+
+#. module: stock_disallow_negative
+#: model:ir.model,name:stock_disallow_negative.model_product_template
+msgid "Product Template"
+msgstr "Modèle d'article"
+
+#. module: stock_disallow_negative
+#: model:ir.model,name:stock_disallow_negative.model_stock_quant
+msgid "Quants"
+msgstr "Quants"
+
+#. module: stock_disallow_negative
+#: view:product.template:stock_disallow_negative.product_template_form_view
+msgid "Stock and Expected Variations"
+msgstr "Stock et variations prévues"
+
+#. module: stock_disallow_negative
+#: code:addons/stock_disallow_negative/stock_disallow_negative.py:60
+#, python-format
+msgid "You cannot valide this stock operation because the stock level of the product '%s' would become negative on the stock location '%s' and negative stock is not allowed for this product."
+msgstr "Vous ne pouvez pas valider cette opération de stock car le niveau de stock de l'article '%s' deviendrait négatif sur l'emplacement de stock '%s' et le stock négatif n'est pas autorisé pour cet article."
+
