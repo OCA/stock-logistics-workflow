@@ -35,7 +35,7 @@ msgid "All the transfers must be \"Ready to Transfer\"."
 msgstr "Tutti i trasferimenti devono essere \"Pronti per il Trasferimento\"."
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:179
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:180
 #, python-format
 msgid "All the transfers must have the same destination location"
 msgstr "Tutti i trasferimenti devono avere lo stesso luogo di destinazione"
@@ -51,7 +51,7 @@ msgid "Cancelled"
 msgstr "Annullato"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:148
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:147
 #, python-format
 msgid "Cannot cancel a done package preparation."
 msgstr "Non è possibile annullare una preparazione pacco già completata."
@@ -134,7 +134,12 @@ msgid "Last Updated on"
 msgstr "Ultimo aggiornamento il"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:174
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_move_line_ids
+msgid "Move Line"
+msgstr ""
+
+#. module: stock_picking_package_preparation
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:175
 #, python-format
 msgid "No transfer selected for this preparation."
 msgstr "Nessun trasferimento selezionato per questa preparazione."
@@ -145,7 +150,7 @@ msgid "Note"
 msgstr "Nota"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:159
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:160
 #, python-format
 msgid "Only canceled package preparations can be reset to draft."
 msgstr ""
@@ -160,11 +165,6 @@ msgstr "Operazioni"
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_package_id
 msgid "Pack"
 msgstr "Pacco"
-
-#. module: stock_picking_package_preparation
-#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_pack_operation_ids
-msgid "Pack operation ids"
-msgstr "ID operazione pacco"
 
 #. module: stock_picking_package_preparation
 #: model:ir.model,name:stock_picking_package_preparation.model_stock_picking_package_preparation
@@ -220,7 +220,7 @@ msgid "State"
 msgstr "Stato"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:138
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:137
 #, python-format
 msgid "The package has not been generated."
 msgstr "Il pacco non è stato generato."
@@ -240,3 +240,6 @@ msgstr "Trasferimenti"
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_weight
 msgid "Weight"
 msgstr "Peso"
+
+#~ msgid "Pack operation ids"
+#~ msgstr "ID operazione pacco"
