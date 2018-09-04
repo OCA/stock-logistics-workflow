@@ -54,7 +54,7 @@
               <field name="note" placeholder="Add an internal note..." class="oe_inline"/>
             </page>
             <page string="Operations">
-              <field name="pack_operation_ids">
+              <field name="move_line_ids">
                 <tree>
                   <field name="package_id" groups="stock.group_tracking_lot"/>
                   <field name="product_id"/>

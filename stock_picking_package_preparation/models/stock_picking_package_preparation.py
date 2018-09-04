@@ -1,11 +1,11 @@
-# -*- coding: utf-8 -*-
 # Copyright 2015 Guewen Baconnier
 # Copyright 2016 Lorenzo Battistini - Agile Business Group
 # Copyright 2016 Alessio Gerace - Agile Business Group
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import models, fields, api, _
-from odoo.exceptions import Warning as UserError
+from odoo.exceptions import UserError
+from odoo.tools import float_is_zero
 
 
 class StockPickingPackagePreparation(models.Model):
@@ -77,10 +77,11 @@ class StockPickingPackagePreparation(models.Model):
         states=FIELDS_STATES,
         default=_default_company_id,
     )
-    pack_operation_ids = fields.One2many(
-        comodel_name='stock.pack.operation',
-        compute='_compute_pack_operation_ids',
+    move_line_ids = fields.One2many(
+        comodel_name='stock.move.line',
+        compute='_compute_move_line_ids',
         readonly=True,
+        oldname='pack_operation_ids'
     )
     package_id = fields.Many2one(
         comodel_name='stock.quant.package',
@@ -102,34 +103,32 @@ class StockPickingPackagePreparation(models.Model):
     )
 
     @api.multi
-    @api.depends('package_id',
-                 'package_id.children_ids')
+    @api.depends('package_id')
     def _compute_quant_ids(self):
         for preparation in self:
             package = preparation.package_id
-            preparation.quant_ids = package.get_content()
+            preparation.quant_ids = package._get_contained_quants()
 
     @api.multi
     @api.depends('package_id',
-                 'package_id.children_ids',
                  'package_id.quant_ids')
     def _compute_weight(self):
         for preparation in self:
             package = preparation.package_id
             if not package:
-                return
-            quants = package.get_content()
+                continue
+            quants = package._get_contained_quants()
             # weight of the products only
-            weight = sum(l.product_id.weight * l.qty for l in quants)
+            weight = sum(l.product_id.weight * l.quantity for l in quants)
             preparation.weight = weight
 
     @api.multi
     @api.depends('picking_ids',
-                 'picking_ids.pack_operation_ids')
-    def _compute_pack_operation_ids(self):
+                 'picking_ids.move_line_ids')
+    def _compute_move_line_ids(self):
         for preparation in self:
-            preparation.pack_operation_ids = preparation.mapped(
-                'picking_ids.pack_operation_ids')
+            preparation.move_line_ids = preparation.mapped(
+                'picking_ids.move_line_ids')
 
     @api.multi
     def action_done(self):
@@ -138,7 +137,7 @@ class StockPickingPackagePreparation(models.Model):
                 _('The package has not been generated.')
             )
         for picking in self.picking_ids:
-            picking.do_transfer()
+            picking.action_done()
         self.write({'state': 'done', 'date_done': fields.Datetime.now()})
 
     @api.multi
@@ -149,6 +148,8 @@ class StockPickingPackagePreparation(models.Model):
             )
         package_ids = self.mapped('package_id')
         if package_ids:
+            package_ids.mapped('move_line_ids').write(
+                {'result_package_id': False})
             package_ids.unlink()
         self.write({'state': 'cancel'})
 
@@ -188,29 +189,28 @@ class StockPickingPackagePreparation(models.Model):
     def _generate_pack(self):
         self.ensure_one()
         pack_model = self.env['stock.quant.package']
-        moves = self.env['stock.move']
-        operation_model = self.env['stock.pack.operation']
+        move_line_model = self.env['stock.move.line']
 
         if any(picking.state != 'assigned' for picking in self.picking_ids):
             raise UserError(
                 _('All the transfers must be "Ready to Transfer".')
             )
 
-        operations = operation_model.browse()
+        move_lines = move_line_model.browse()
         for picking in self.picking_ids:
-            if not picking.pack_operation_ids:
-                picking.do_prepare_partial()
-            operations |= picking.pack_operation_ids
+            if not picking.move_line_ids:
+                picking.action_assign()
+            move_lines |= picking.move_line_ids
 
-        for operation in operations:
-            for record in operation.linked_move_operation_ids:
-                moves |= record.move_id
-            for move in moves:
-                moves.check_tracking(operation)
-
-            operation.qty_done = operation.product_qty
+        # If the stock.move.line has no processed quantity,
+        # set it equal to the initial demand
+        for move_line in move_lines:
+            if float_is_zero(
+                    move_line.qty_done,
+                    precision_rounding=move_line.product_uom_id.rounding):
+                move_line.qty_done = move_line.product_qty
 
         pack = pack_model.create(self._prepare_package())
 
-        operations.write({'result_package_id': pack.id})
+        move_lines.write({'result_package_id': pack.id})
         self.package_id = pack.id
