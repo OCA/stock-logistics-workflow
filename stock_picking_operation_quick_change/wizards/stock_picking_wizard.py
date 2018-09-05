@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # © 2017 Sergio Teruel <sergio.teruel@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -24,8 +23,8 @@ class StockPickingOperationWizard(models.TransientModel):
     def _default_old_dest_location_id(self):
         stock_picking_obj = self.env['stock.picking']
         pickings = stock_picking_obj.browse(self.env.context['active_ids'])
-        first_operation = pickings.mapped('pack_operation_product_ids')[:1]
-        return first_operation.location_dest_id.id
+        first_move_line = pickings.mapped('move_line_ids')[:1]
+        return first_move_line.location_dest_id.id
 
     def _get_allowed_locations(self):
         return ['internal']
@@ -59,36 +58,36 @@ class StockPickingOperationWizard(models.TransientModel):
         help='Check if you want change all operations without filter '
              'by old location')
 
-    def check_forbbiden_pickings(self, pickings):
+    def check_allowed_pickings(self, pickings):
         forbidden_pickings = pickings.filtered(
             lambda x: x.state not in self._get_allowed_picking_states())
         if forbidden_pickings:
             raise UserError(_(
                 'You can not change operations destination location if '
-                'picking state not is in %s') % ','.join(
+                'picking state is not in %s') % ','.join(
                 self._get_allowed_picking_states()))
-        pikings_with_chained_moves = pickings.filtered(
-            lambda x: x.move_lines.mapped('move_dest_id'))
-        if pikings_with_chained_moves:
+        pickings_with_chained_moves = pickings.filtered(
+            lambda x: x.move_lines.mapped('move_dest_ids'))
+        if pickings_with_chained_moves:
             raise UserError(_(
-                'You cannot change destination location if any move has a '
-                'destination move.'))
+                'You cannot change destination location if any of the moves '
+                'has a destination move.'))
 
     @api.multi
     def action_apply(self):
         stock_picking_obj = self.env['stock.picking']
         pickings = stock_picking_obj.browse(self.env.context['active_ids'])
-        self.check_forbbiden_pickings(pickings)
-        operations = pickings.mapped('pack_operation_product_ids')
+        self.check_allowed_pickings(pickings)
+        move_lines = pickings.mapped('move_line_ids')
 
         vals = {'location_dest_id': self.new_location_dest_id.id}
         if self.change_all:
             # Write all operations destination location
-            operations.write(vals)
+            move_lines.write(vals)
         else:
             # Only write operations destination location if the location is
             # the same that old location value
-            matched_op = operations.filtered(
+            matched_op = move_lines.filtered(
                 lambda x: x.location_dest_id == self.old_location_dest_id)
             matched_op.write(vals)
         return {'type': 'ir.actions.act_window_close'}

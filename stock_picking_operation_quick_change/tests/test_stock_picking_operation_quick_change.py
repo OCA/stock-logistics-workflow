@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # © 2017 Sergio Teruel <sergio.teruel@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -84,14 +83,14 @@ class TestOperationQuickChange(TransactionCase):
             'new_location_dest_id': new_location_dest_id.id,
             'change_all': True,
         })
-        operations = self.picking.mapped('pack_operation_product_ids')
+        move_lines = self.picking.mapped('move_line_ids')
         self.assertEqual(wiz.location_dest_id, self.picking.location_dest_id)
         self.assertEqual(wiz.old_location_dest_id,
-                         operations[:1].location_dest_id)
+                         move_lines[:1].location_dest_id)
         wiz.action_apply()
-        operations = self.picking.mapped(
-            'pack_operation_product_ids.location_dest_id')
-        self.assertEqual(len(operations), 1)
+        move_lines = self.picking.mapped(
+            'move_line_ids.location_dest_id')
+        self.assertEqual(len(move_lines), 1)
 
     def test_picking_operation_change_location_dest(self):
         new_location_dest_id = self.Location.create({
@@ -103,8 +102,8 @@ class TestOperationQuickChange(TransactionCase):
             'location_id': self.picking.location_dest_id.location_id.id
         })
         self.picking.action_assign()
-        operations = self.picking.mapped('pack_operation_product_ids')
-        operations[:1].write({'location_dest_id': other_location_dest_id.id})
+        move_lines = self.picking.mapped('move_line_ids')
+        move_lines[:1].write({'location_dest_id': other_location_dest_id.id})
         wiz = self.Wizard.with_context(
             active_model=self.picking._name,
             active_ids=self.picking.ids,
@@ -113,12 +112,14 @@ class TestOperationQuickChange(TransactionCase):
             'new_location_dest_id': new_location_dest_id.id,
         })
         wiz.action_apply()
-        operations = self.picking.mapped(
-            'pack_operation_product_ids.location_dest_id')
-        self.assertEqual(len(operations), 2)
+        move_lines = self.picking.mapped(
+            'move_line_ids.location_dest_id')
+        self.assertEqual(len(move_lines), 2)
 
     def test_picking_operation_change_location_dest_failed(self):
         self.picking.action_assign()
+        for move in self.picking.move_lines:
+            move.quantity_done = 1
         self.picking.action_done()
         new_location_dest_id = self.Location.create({
             'name': 'New Test Customer Location',
