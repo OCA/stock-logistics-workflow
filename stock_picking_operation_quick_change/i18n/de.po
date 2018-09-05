@@ -50,6 +50,16 @@ msgid "Change Operation Destination Location"
 msgstr "Vorgangs-Ziellagerort ändern"
 
 #. module: stock_picking_operation_quick_change
+#: model:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
+#, fuzzy
+msgid ""
+"Change the destination location.\n"
+"                    <br/>"
+msgstr ""
+"Sie können den Ziellagerort in allen Vorgängen ändern.\n"
+"                    <br/>"
+
+#. module: stock_picking_operation_quick_change
 #: model:ir.model.fields,help:stock_picking_operation_quick_change.field_stock_picking_operation_wizard_change_all
 msgid "Check if you want change all operations without filter by old location"
 msgstr ""
@@ -107,29 +117,21 @@ msgid "Stock Picking"
 msgstr "Lagerentnahme"
 
 #. module: stock_picking_operation_quick_change
-#: model:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
+#: code:addons/stock_picking_operation_quick_change/wizards/stock_picking_wizard.py:65
+#, fuzzy, python-format
 msgid ""
-"You can change destination location in operations.\n"
-"                    <br/>"
-msgstr ""
-"Sie können den Ziellagerort in allen Vorgängen ändern.\n"
-"                    <br/>"
-
-#. module: stock_picking_operation_quick_change
-#: code:addons/stock_picking_operation_quick_change/wizards/stock_picking_wizard.py:66
-#, python-format
-msgid ""
-"You can not change operations destination location if picking state not is "
+"You can not change operations destination location if picking state is not "
 "in %s"
 msgstr ""
 "Sie dürfen den Vorgangs-Ziellagerort, wenn der Status der Umlagerung nicht "
 "%s ist."
 
 #. module: stock_picking_operation_quick_change
-#: code:addons/stock_picking_operation_quick_change/wizards/stock_picking_wizard.py:73
+#: code:addons/stock_picking_operation_quick_change/wizards/stock_picking_wizard.py:72
 #, fuzzy, python-format
 msgid ""
-"You cannot change destination location if any move has a destination move."
+"You cannot change destination location if any of the moves has a destination "
+"move."
 msgstr ""
 "Sie dürfen den Vorgangs-Ziellagerort, wenn der Status der Umlagerung nicht "
 "%s ist."
