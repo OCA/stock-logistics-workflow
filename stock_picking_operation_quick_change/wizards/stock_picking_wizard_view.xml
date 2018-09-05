@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Sergio Teruel <sergio.teruel@tecnativa.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
 
     <!-- wizard view -->
@@ -8,7 +10,7 @@
         <field name="arch" type="xml">
             <form string="Stock Picking">
                 <div>
-                    You can change destination location in operations.
+                    Change the destination location.
                     <br/>
                 </div>
                 <group>

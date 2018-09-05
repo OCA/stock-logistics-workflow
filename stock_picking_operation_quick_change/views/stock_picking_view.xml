@@ -7,7 +7,7 @@
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.view_picking_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='pack_operation_product_ids']" position="before">
+            <xpath expr="//field[@name='move_lines']" position="before">
                 <button name="%(action_stock_picking_operation_change_location)d"
                         type="action"
                         string="Change Location"
