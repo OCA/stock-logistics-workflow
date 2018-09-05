@@ -1,6 +1,6 @@
-.. image:: https://img.shields.io/badge/licence-LGPL--3-blue.svg
-   :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
-   :alt: License: LGPL-3
+.. image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+   :target: https://www.gnu.org/licenses/agpl
+   :alt: License: AGPL-3
 
 ====================================
 Stock Picking Operation Quick Change
@@ -17,22 +17,21 @@ To use this module, you need to:
 
 #. Go to products and create one of type "Stockable".
 #. Update quantities on hand to have stock of it.
-#. Go to inventory dashboard and click on "Delivery Orders" card to do a new
+#. Go to inventory dashboard and click on "Delivery Orders" card to create a new
    transfer.
-#. Create a picking and select the product to do the transfer.
-#. Reserve the picking.
+#. Create a picking and select the product to do the transfer and save it.
 #. Click on button *Change Location*, select in wizard the old location and
    new location.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/154/10.0
+   :target: https://runbot.odoo-community.org/runbot/154/11.0
 
 Bug Tracker
 ===========
 
 Bugs are tracked on `GitHub Issues
-<https://github.com/OCA/154/issues>`_. In case of trouble, please
+<https://github.com/OCA/stock-logistics-workflow/issues>`_. In case of trouble, please
 check there if your issue has already been reported. If you spotted it first,
 help us smashing it by providing a detailed and welcomed feedback.
 
@@ -42,8 +41,7 @@ Credits
 Images
 ------
 
-* Odoo Community Association: `Icon <https://github.com/OCA/maintainer-tools/
-  blob/master/template/module/static/description/icon.svg>`_.
+* Odoo Community Association: `Icon <https://odoo-community.org/logo.png>`_.
 * Open Clipart: `Icon <https://openclipart.org/detail/260861/warehouse15>`__.
 
 
