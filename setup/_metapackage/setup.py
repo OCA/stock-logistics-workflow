@@ -27,6 +27,7 @@ setuptools.setup(
         'odoo10-addon-stock_picking_invoice_link',
         'odoo10-addon-stock_picking_line_sequence',
         'odoo10-addon-stock_picking_mass_action',
+        'odoo10-addon-stock_picking_operation_quick_change',
         'odoo10-addon-stock_picking_package_preparation',
         'odoo10-addon-stock_picking_package_preparation_line',
         'odoo10-addon-stock_picking_show_backorder',
