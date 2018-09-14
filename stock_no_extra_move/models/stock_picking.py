@@ -13,17 +13,9 @@ class StockPicking(models.Model):
     @api.model
     def _create_extra_moves(self, picking):
         User = self.pool['res.users']
-        can_create = (
-            User.has_group(
+        if not User.has_group(
                 self.env.cr, self.env.user.id,
-                'stock_no_extra_move.group_no_quantity_check'
-            ) or
-            User.has_group(
-                self.env.cr, self.env.user.id,
-                'stock_no_extra_move.group_can_increase_quantity'
-            )
-        )
-        if not can_create:
+                'stock_no_extra_move.group_can_increase_quantity'):
             if picking.picking_type_id.code != 'incoming':
                 raise exceptions.Warning(
                     _('Forbidden operation'),

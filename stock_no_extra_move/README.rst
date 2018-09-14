@@ -2,37 +2,19 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-==============
-{module_title}
-==============
+===================
+Stock no extra move
+===================
 
-This module extends the functionality of ... to support ...
-and to allow you to ...
+This module extends the functionality of stock to adding two groups with permissions related to _create_extra_move function
 
-Installation
-============
-
-To install this module, you need to:
-
-#. Do this ...
-
-Configuration
-=============
-
-To configure this module, you need to:
-
-#. Go to ...
-
-.. figure:: path/to/local/image.png
-   :alt: alternative description
-   :width: 600 px
 
 Usage
 =====
 
 To use this module, you need to:
 
-#. Go to ...
+#. Go to user permission and set if "Can Increase Quantity" or "No quantity check"
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
@@ -41,16 +23,12 @@ To use this module, you need to:
 .. repo_id is available in https://github.com/OCA/maintainer-tools/blob/master/tools/repos_with_ids.txt
 .. branch is "8.0" for example
 
-Known issues / Roadmap
-======================
-
-* ...
 
 Bug Tracker
 ===========
 
 Bugs are tracked on `GitHub Issues
-<https://github.com/OCA/{project_repo}/issues>`_. In case of trouble, please
+<https://github.com/OCA/stock-logistics-workflow/issues>`_. In case of trouble, please
 check there if your issue has already been reported. If you spotted it first,
 help us smashing it by providing a detailed and welcomed feedback.
 
@@ -65,8 +43,8 @@ Images
 Contributors
 ------------
 
-* Firstname Lastname <email.address@example.org>
-* Second Person <second.person@example.org>
+* Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
+* Andrea Cometa <a.cometa@apuliasoftware.it>
 
 Maintainer
 ----------
