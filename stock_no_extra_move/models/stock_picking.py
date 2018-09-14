@@ -16,11 +16,11 @@ class StockPicking(models.Model):
         can_create = (
             User.has_group(
                 self.env.cr, self.env.user.id,
-                'specific_stock.group_utb_no_quantity_check'
+                'stock_no_extra_move.group_no_quantity_check'
             ) or
             User.has_group(
                 self.env.cr, self.env.user.id,
-                'specific_stock.group_utb_can_increase_quantity'
+                'stock_no_extra_move.group_can_increase_quantity'
             )
         )
         if not can_create:

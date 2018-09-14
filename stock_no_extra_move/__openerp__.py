@@ -12,6 +12,9 @@
     "application": False,
     "installable": True,
     "depends": [
-        'specific_stock',
+        'stock',
+    ],
+    "data": [
+        'security/groups.xml',
     ],
 }
