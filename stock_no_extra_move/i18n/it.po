@@ -1,0 +1,39 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_no_extra_move
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-09-14 12:49+0000\n"
+"PO-Revision-Date: 2018-09-14 12:49+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_no_extra_move
+#: model:res.groups,name:stock_no_extra_move.group_can_increase_quantity
+msgid "Can Increase Quantity"
+msgstr "Può incrementare le quantità"
+
+#. module: stock_no_extra_move
+#: code:addons/stock_no_extra_move/models/stock_picking.py:29
+#, python-format
+msgid "Forbidden operation"
+msgstr "Operazione vietata"
+
+#. module: stock_no_extra_move
+#: model:ir.model,name:stock_no_extra_move.model_stock_picking
+msgid "Picking List"
+msgstr "Lista Picking"
+
+#. module: stock_no_extra_move
+#: code:addons/stock_no_extra_move/models/stock_picking.py:30
+#, python-format
+msgid "You are not allowed to process the specified quantities as they would create extra moves. This can cause stock corruption. Someone maybe already processed the picking, or you increased the quantities beyond what was originally scheduled."
+msgstr "Non sei abilitato ad elaborare queste specifiche quantità, perhè creeranno movimenti extra. Questo può causare incongruenze. Qaulcun'altro potrebbe aver elaborato il picking oppure hai incrementato le quantità originariamente pianificate"
+

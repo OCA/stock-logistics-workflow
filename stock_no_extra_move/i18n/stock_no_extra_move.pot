@@ -1,0 +1,24 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_no_extra_move
+#
+msgid ""
+msgstr ""
+
+#. module: stock_no_extra_move
+#: code:addons/stock_no_extra_move/models/stock_picking.py:18
+#, python-format
+msgid "Forbidden operation"
+msgstr ""
+
+#. module: stock_no_extra_move
+#: model:ir.model,name:stock_no_extra_move.model_stock_picking
+msgid "Picking List"
+msgstr ""
+
+#. module: stock_no_extra_move
+#: code:addons/stock_no_extra_move/models/stock_picking.py:19
+#, python-format
+msgid "You are not allowed to process the specified quantities as they would create extra moves. This can cause stock corruption. Someone maybe already processed the picking, or you increased the quantities beyond what was originally scheduled."
+msgstr ""
+
