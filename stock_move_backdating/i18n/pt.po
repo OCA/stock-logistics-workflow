@@ -9,52 +9,53 @@ msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-07 07:49+0000\n"
-"PO-Revision-Date: 2017-01-07 07:49+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
+"PO-Revision-Date: 2018-09-20 14:45+0000\n"
+"Last-Translator: Pedro Castro Silva <pedrocs@exo.pt>\n"
 "Language-Team: Portuguese (https://www.transifex.com/oca/teams/23907/pt/)\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Weblate 3.1.1\n"
 
 #. module: stock_move_backdating
 #: model:ir.model.fields,field_description:stock_move_backdating.field_fill_date_backdating_date_backdating
 #: model:ir.model.fields,field_description:stock_move_backdating.field_stock_pack_operation_date_backdating
 msgid "Actual Movement Date"
-msgstr ""
+msgstr "Data Efetiva de Movimento"
 
 #. module: stock_move_backdating
 #: model:ir.ui.view,arch_db:stock_move_backdating.view_fill_backdating
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. module: stock_move_backdating
 #: model:ir.model.fields,field_description:stock_move_backdating.field_fill_date_backdating_create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Criado por"
 
 #. module: stock_move_backdating
 #: model:ir.model.fields,field_description:stock_move_backdating.field_fill_date_backdating_create_date
 msgid "Created on"
-msgstr ""
+msgstr "Criado em"
 
 #. module: stock_move_backdating
 #: model:ir.model.fields,field_description:stock_move_backdating.field_fill_date_backdating_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome a Apresentar"
 
 #. module: stock_move_backdating
 #: model:ir.actions.act_window,name:stock_move_backdating.action_view_fill_backdating
 #: model:ir.ui.view,arch_db:stock_move_backdating.stock_picking_view_form_inherit_backdating
 #: model:ir.ui.view,arch_db:stock_move_backdating.view_fill_backdating
 msgid "Fill Actual Movement Date"
-msgstr ""
+msgstr "Preencher Data Efetiva de Movimento"
 
 #. module: stock_move_backdating
 #: model:ir.ui.view,arch_db:stock_move_backdating.stock_picking_view_form_inherit_backdating
 msgid "Fill Actual Movement Date of all operations"
-msgstr ""
+msgstr "Preencher Data Efetiva de Movimento de todas as operações"
 
 #. module: stock_move_backdating
 #: model:ir.model.fields,field_description:stock_move_backdating.field_fill_date_backdating_id
@@ -64,43 +65,43 @@ msgstr ""
 #. module: stock_move_backdating
 #: model:ir.model.fields,field_description:stock_move_backdating.field_fill_date_backdating___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Última Modificação em"
 
 #. module: stock_move_backdating
 #: model:ir.model.fields,field_description:stock_move_backdating.field_fill_date_backdating_write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última Modificação por"
 
 #. module: stock_move_backdating
 #: model:ir.model.fields,field_description:stock_move_backdating.field_fill_date_backdating_write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Atualizado pela última vez em"
 
 #. module: stock_move_backdating
 #: model:ir.model,name:stock_move_backdating.model_stock_pack_operation
 msgid "Packing Operation"
-msgstr ""
+msgstr "Operação de Empacotamento"
 
 #. module: stock_move_backdating
 #: model:ir.model,name:stock_move_backdating.model_stock_move
 msgid "Stock Move"
-msgstr "Movimento Stock"
+msgstr "Movimento de Stock"
 
 #. module: stock_move_backdating
 #: model:ir.model,name:stock_move_backdating.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Transferir"
 
 #. module: stock_move_backdating
 #: code:addons/stock_move_backdating/models/stock_pack_operation.py:13
 #, python-format
 msgid "You can not process an actual movement date in the future."
-msgstr ""
+msgstr "Não pode definir uma data efetiva de movimento no futuro."
 
 #. module: stock_move_backdating
 #: model:ir.ui.view,arch_db:stock_move_backdating.view_fill_backdating
 msgid "_Apply"
-msgstr ""
+msgstr "_Aplicar"
 
 #. module: stock_move_backdating
 #: model:ir.model,name:stock_move_backdating.model_fill_date_backdating
