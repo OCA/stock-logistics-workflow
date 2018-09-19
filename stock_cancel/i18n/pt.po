@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2018-09-19 13:21+0000\n"
+"PO-Revision-Date: 2018-09-20 13:41+0000\n"
 "Last-Translator: Pedro Castro Silva <pedrocs@exo.pt>\n"
 "Language-Team: none\n"
 "Language: pt\n"
@@ -54,7 +54,7 @@ msgstr "A operação %s tem faturas associadas"
 #. module: stock_cancel
 #: model:ir.model,name:stock_cancel.model_stock_quant
 msgid "Quants"
-msgstr "Quants"
+msgstr ""
 
 #. module: stock_cancel
 #: model:ir.ui.view,arch_db:stock_cancel.stock_picking_cancel_form
