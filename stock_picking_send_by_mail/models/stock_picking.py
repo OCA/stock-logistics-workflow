@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2015 - Sandra Figueroa Varela
 # Copyright 2017 Tecnativa - Vicent Cubells
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import _, api, models
+from odoo import _, api, models
 
 
 class StockPicking(models.Model):
@@ -26,7 +25,6 @@ class StockPicking(models.Model):
             default_use_template=bool(template),
             default_template_id=template and template.id or False,
             default_composition_mode='comment',
-            mark_invoice_as_sent=True,
             user_id=self.env.user.id,
         )
         return {
