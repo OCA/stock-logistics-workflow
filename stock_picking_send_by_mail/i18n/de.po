@@ -172,7 +172,7 @@ msgstr ""
 "${object.company_id.name|safe} Umlagerung (Ref ${object.name or 'n/a' })"
 
 #. module: stock_picking_send_by_mail
-#: code:addons/stock_picking_send_by_mail/models/stock_picking.py:33
+#: code:addons/stock_picking_send_by_mail/models/stock_picking.py:31
 #, python-format
 msgid "Compose Email"
 msgstr "Email verfassen"
