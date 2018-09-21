@@ -16,6 +16,7 @@ setuptools.setup(
         'odoo11-addon-stock_picking_invoice_link',
         'odoo11-addon-stock_picking_purchase_propagate',
         'odoo11-addon-stock_picking_restrict_cancel_with_orig_move',
+        'odoo11-addon-stock_picking_send_by_mail',
         'odoo11-addon-stock_picking_show_backorder',
         'odoo11-addon-stock_picking_show_return',
         'odoo11-addon-stock_split_picking',
