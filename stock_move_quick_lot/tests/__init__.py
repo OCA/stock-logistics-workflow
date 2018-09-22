@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from . import stock_pack_operation
+from . import test_stock_move_quick_lot

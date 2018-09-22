@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* stock_pack_operation_quick_lot
+# 	* stock_move_quick_lot
 #
 msgid ""
 msgstr ""
@@ -17,40 +17,40 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#. module: stock_pack_operation_quick_lot
-#: model:ir.model.fields,field_description:stock_pack_operation_quick_lot.field_stock_pack_operation_life_date
+#. module: stock_move_quick_lot
+#: model:ir.model.fields,field_description:stock_move_quick_lot.field_stock_pack_operation_life_date
 msgid "End of Life Date"
 msgstr "Fecha de caducidad"
 
-#. module: stock_pack_operation_quick_lot
-#: code:addons/stock_pack_operation_quick_lot/models/stock_pack_operation.py:87
+#. module: stock_move_quick_lot
+#: code:addons/stock_move_quick_lot/models/stock_pack_operation.py:87
 #, python-format
 msgid "Go to lots to change data"
 msgstr "Vaya a lotes para cambiar datos"
 
-#. module: stock_pack_operation_quick_lot
-#: model:ir.model.fields,field_description:stock_pack_operation_quick_lot.field_stock_pack_operation_lot_name
+#. module: stock_move_quick_lot
+#: model:ir.model.fields,field_description:stock_move_quick_lot.field_stock_pack_operation_line_lot_name
 msgid "Lot Name"
 msgstr "Lote/Nº de serie"
 
-#. module: stock_pack_operation_quick_lot
-#: model:ir.model.fields,field_description:stock_pack_operation_quick_lot.field_stock_pack_operation_lot_track_enabled
+#. module: stock_move_quick_lot
+#: model:ir.model.fields,field_description:stock_move_quick_lot.field_stock_pack_operation_lot_track_enabled
 msgid "Lot track enabled"
 msgstr "Seguimiento lote habilitado"
 
-#. module: stock_pack_operation_quick_lot
-#: code:addons/stock_pack_operation_quick_lot/models/stock_pack_operation.py:83
+#. module: stock_move_quick_lot
+#: code:addons/stock_move_quick_lot/models/stock_pack_operation.py:83
 #, python-format
 msgid "Open detail to remove lot"
 msgstr "Abra el detalle de lotes para eliminar"
 
-#. module: stock_pack_operation_quick_lot
-#: model:ir.model,name:stock_pack_operation_quick_lot.model_stock_pack_operation
+#. module: stock_move_quick_lot
+#: model:ir.model,name:stock_move_quick_lot.model_stock_pack_operation
 msgid "Packing Operation"
 msgstr "Operación de empaquetado"
 
-#. module: stock_pack_operation_quick_lot
-#: model:ir.model.fields,help:stock_pack_operation_quick_lot.field_stock_pack_operation_life_date
+#. module: stock_move_quick_lot
+#: model:ir.model.fields,help:stock_move_quick_lot.field_stock_pack_operation_life_date
 msgid ""
 "This is the date on which the goods with this Serial Number may become "
 "dangerous and must not be consumed."

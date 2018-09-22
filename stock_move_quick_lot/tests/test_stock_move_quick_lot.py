@@ -1,14 +1,14 @@
-# -*- coding: utf-8 -*-
-# Copyright 2018 Carlos Dauden - Tecnativa <carlos.dauden@tecnativa.com>
+# Copyright 2018 Tecnativa - Carlos Dauden
+# Copyright 2018 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from openerp.tests.common import SavepointCase
+from odoo.tests.common import SavepointCase
 
 
-class PackOperationQuickLotCase(SavepointCase):
+class TestStockMoveQuickLot(SavepointCase):
     @classmethod
     def setUpClass(cls):
-        super(PackOperationQuickLotCase, cls).setUpClass()
+        super(TestStockMoveQuickLot, cls).setUpClass()
         cls.supplier_location = cls.env.ref('stock.stock_location_suppliers')
         cls.stock_location = cls.env.ref('stock.stock_location_stock')
         cls.picking_type_in = cls.env.ref('stock.picking_type_in')
@@ -32,19 +32,18 @@ class PackOperationQuickLotCase(SavepointCase):
             'location_dest_id': cls.stock_location.id,
         })
         cls.picking.action_assign()
-        cls.operation = cls.picking.pack_operation_ids[:1]
+        cls.move_line = cls.picking.move_lines[:1]
 
     def test_quick_input(self):
-        self.assertTrue(self.operation)
-        self.operation.write({
-            'lot_name': 'SN99999999999',
+        self.assertTrue(self.move_line)
+        self.move_line.write({
+            'line_lot_name': 'SN99999999999',
             'life_date': '2030-12-31',
         })
-        lot = self.operation.pack_lot_ids[:1].lot_id
+        lot = self.move_line.move_line_ids[:1].lot_id
         self.assertTrue(lot)
-        self.operation.lot_name = 'SN99999999998'
-        lot2 = self.operation.pack_lot_ids[:1].lot_id
+        self.move_line.line_lot_name = 'SN99999999998'
+        lot2 = self.move_line.move_line_ids[:1].lot_id
         self.assertNotEqual(lot, lot2)
-        self.operation.life_date = '2030-12-28'
+        self.move_line.life_date = '2030-12-28'
         self.assertEqual(lot2.life_date, '2030-12-28 00:00:00')
-        self.assertAlmostEqual(self.operation.qty_done, 5.0)
