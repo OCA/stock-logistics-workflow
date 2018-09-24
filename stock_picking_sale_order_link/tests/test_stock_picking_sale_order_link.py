@@ -1,11 +1,12 @@
-# -*- coding: utf-8 -*-
 # © 2017 Sergio Teruel <sergio.teruel@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp.tests.common import TransactionCase
+from odoo.tests.common import TransactionCase
 
 
 class TestStockPickingSaleOrderLink(TransactionCase):
+    post_install = True
+    at_install = False
 
     def setUp(self):
         super(TestStockPickingSaleOrderLink, self).setUp()
