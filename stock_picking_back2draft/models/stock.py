@@ -2,9 +2,8 @@
 # © 2016 Lorenzo Battistini - Agile Business Group
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, api
-from openerp.exceptions import Warning as UserError
-from openerp.tools.translate import _
+from odoo import _, models, api
+from odoo.exceptions import Warning as UserError
 
 
 class StockMove(models.Model):
@@ -22,7 +21,5 @@ class StockPicking(models.Model):
 
     @api.multi
     def action_back_to_draft(self):
-        if self.filtered(lambda p: p.state != 'cancel'):
-            raise UserError(_("You can set to draft cancelled pickings only"))
         moves = self.mapped('move_lines')
         moves.action_back_to_draft()
