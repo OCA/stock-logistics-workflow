@@ -4,7 +4,7 @@
 {
     "name": "Pickings back to draft",
     "summary": "Reopen cancelled pickings",
-    "version": "8.0.1.0.0",
+    "version": "10.0.1.0.0",
     "category": "Warehouse Management",
     "website": "https://www.agilebg.com",
     "author": "Agile Business Group, Odoo Community Association (OCA)",
