@@ -2,18 +2,20 @@
 # © 2016 Lorenzo Battistini - Agile Business Group
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp.tests.common import TransactionCase
-from openerp.exceptions import Warning as UserError
-from openerp.osv import osv
+from odoo.tests.common import TransactionCase
+from odoo.exceptions import Warning as UserError
 
 
 class TestPickingBackToDraft(TransactionCase):
 
-    def _create_picking(self):
-        return self.env['stock.picking'].create({
-            'partner_id': self.partner.id,
-            'picking_type_id': self.env.ref('stock.picking_type_out').id,
+    def _create_picking(self, partner, p_type, src=None, dest=None):
+        picking = self.env['stock.picking'].create({
+            'partner_id': partner.id,
+            'picking_type_id': p_type.id,
+            'location_id': src or self.src_location.id,
+            'location_dest_id': dest or self.cust_location.id,
         })
+        return picking
 
     def _create_move(self, picking, product, quantity=5.0):
         src_location = self.env.ref('stock.stock_location_stock')
@@ -30,10 +32,15 @@ class TestPickingBackToDraft(TransactionCase):
 
     def setUp(self, *args, **kwargs):
         super(TestPickingBackToDraft, self).setUp(*args, **kwargs)
+        self.src_location = self.env.ref('stock.stock_location_stock')
+        self.cust_location = self.env.ref('stock.stock_location_customers')
         self.partner = self.env.ref('base.res_partner_2')
-        self.product1 = self.env.ref('product.product_product_33')
-        self.product2 = self.env.ref('product.product_product_36')
-        self.picking_a = self._create_picking()
+        self.product1 = self.env.ref('product.product_product_25')
+        self.product2 = self.env.ref('product.product_product_27')
+        self.picking_a = self._create_picking(
+            self.partner,
+            self.env.ref('stock.picking_type_out')
+        )
         self.move_a_1 = self._create_move(
             self.picking_a, self.product1, quantity=1)
         self.move_a_2 = self._create_move(
@@ -47,7 +54,7 @@ class TestPickingBackToDraft(TransactionCase):
         self.assertEqual(self.picking_a.state, 'cancel')
         self.picking_a.action_back_to_draft()
         self.assertEqual(self.picking_a.state, 'draft')
-        self.picking_a.action_assign()
+        self.picking_a.action_confirm()
         self.assertEqual(self.picking_a.state, 'confirmed')
         with self.assertRaises(UserError):
             self.picking_a.action_back_to_draft()
@@ -55,17 +62,5 @@ class TestPickingBackToDraft(TransactionCase):
         self.assertEqual(self.picking_a.state, 'cancel')
         self.picking_a.action_back_to_draft()
         self.assertEqual(self.picking_a.state, 'draft')
-        self.picking_a.action_confirm()
-        self.assertEqual(self.picking_a.state, 'confirmed')
-        self.picking_a.action_cancel()
-        self.assertEqual(self.picking_a.state, 'cancel')
-        self.picking_a.action_back_to_draft()
-        self.assertEqual(self.picking_a.state, 'draft')
-        self.picking_a.action_assign()
-        self.assertEqual(self.picking_a.state, 'confirmed')
-        self.picking_a.action_done()
-        self.assertEqual(self.picking_a.state, 'done')
-        with self.assertRaises(osv.except_osv):
-            self.picking_a.action_cancel()
         with self.assertRaises(UserError):
             self.picking_a.action_back_to_draft()

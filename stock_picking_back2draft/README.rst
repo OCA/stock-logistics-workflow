@@ -15,7 +15,7 @@ Just open a cancelled picking and click on 'back to draft' button
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/154/8.0
+   :target: https://runbot.odoo-community.org/runbot/154/9.0
 
 Bug Tracker
 ===========
@@ -37,6 +37,7 @@ Contributors
 ------------
 
 * Lorenzo Battistini <lorenzo.battistini@agilebg.com>
+* Iván Montagud <ivan@studio73.es>
 
 Maintainer
 ----------
