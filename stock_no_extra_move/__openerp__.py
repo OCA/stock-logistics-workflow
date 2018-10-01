@@ -17,5 +17,6 @@
     "data": [
         'security/groups.xml',
         'views/stock_config_settings.xml',
+        'views/stock_picking_type.xml',
     ],
 }

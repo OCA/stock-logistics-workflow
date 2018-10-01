@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2016-2018 Camptocamp
+# Copyright 2016-2018 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from openerp import models, api
@@ -16,7 +16,7 @@ class StockPicking(models.Model):
         if not User.has_group(
                 self.env.cr, self.env.user.id,
                 'stock_no_extra_move.group_can_increase_quantity'):
-            if picking.picking_type_id.code != 'incoming':
+            if not picking.picking_type_id.allow_process_qty:
                 raise exceptions.Warning(
                     _('Forbidden operation'),
                     _('You are not allowed to process the specified '
