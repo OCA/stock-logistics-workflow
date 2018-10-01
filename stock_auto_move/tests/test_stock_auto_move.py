@@ -130,7 +130,7 @@ class TestStockAutoMove(common.TransactionCase):
              ('location_id', '=', self.location_1.id)])
         self.assertEqual(len(quants_in_3), 0)
         self.assertGreater(len(quants_in_1), 0)
-    
+
     def test_40_chained_auto_move(self):
         """
         Test case:
