@@ -7,7 +7,7 @@
     "version": "8.0.1.0.0",
     "category": "Logistics",
     "website": "https://camptocamp.com/",
-    "author": "Odoo Community Association (OCA),Camptocamp",
+    "author": "Odoo Community Association (OCA),Camptocamp SA",
     "license": "AGPL-3",
     "application": False,
     "installable": True,
@@ -16,5 +16,6 @@
     ],
     "data": [
         'security/groups.xml',
+        'views/stock_config_settings.xml',
     ],
 }

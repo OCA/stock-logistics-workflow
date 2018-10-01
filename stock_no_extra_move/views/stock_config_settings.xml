@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_stock_configuration" model="ir.ui.view">
+            <field name="name">Stock settings: Percent allowed to increase quantity transfer</field>
+            <field name="model">stock.config.settings</field>
+            <field name="inherit_id" ref="stock.view_stock_config_settings" />
+            <field name="priority">100</field>
+            <field name="arch" type="xml">
+                <data>
+
+                    <form position="inside">
+
+                        <separator string="Transfer"/>
+                        <group name="transfer">
+                            <field name="percent_increase_quantity_allowed"/>
+                        </group>
+
+                    </form>
+                </data>
+            </field>
+        </record>
+    </data>
+</openerp>

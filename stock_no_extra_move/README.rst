@@ -45,6 +45,8 @@ Contributors
 
 * Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
 * Andrea Cometa <a.cometa@apuliasoftware.it>
+* Julien Coux <julien.coux@camptocamp.com>
+* Denis Leemann <denis.leemann@camptocamp.com>
 
 Maintainer
 ----------
