@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016 Carlos Dauden <carlos.dauden@tecnativa.com>
 # Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # Copyright 2017 David Vidal <david.vidal@tecnativa.com>
@@ -7,6 +6,17 @@
 from odoo import _, api, models
 from odoo.exceptions import ValidationError
 from lxml import etree
+
+
+class StockScrap(models.Model):
+    _inherit = 'stock.scrap'
+
+    @api.multi
+    def action_validate(self):
+        self.ensure_one()
+        self.lot_id.message_post(
+            body=_("Lot was scrapped by <b>%s</b>.") % self.env.user.name)
+        return super(StockScrap, self).action_validate()
 
 
 class StockProductionLot(models.Model):
@@ -48,11 +58,10 @@ class StockProductionLot(models.Model):
             'origin': quant.lot_id.name,
             'product_id': quant.product_id.id,
             'product_uom_id': quant.product_id.uom_id.id,
-            'scrap_qty': quant.qty,
+            'scrap_qty': quant.quantity,
             'location_id': quant.location_id.id,
             'scrap_location_id': scrap_location_id,
             'lot_id': self.id,
-            'picking_id': quant.history_ids[-1:].picking_id.id,
             'package_id': quant.package_id.id,
         }
 
@@ -69,8 +78,7 @@ class StockProductionLot(models.Model):
         scrap_obj = self.env['stock.scrap']
         scraps = scrap_obj.browse()
         scrap_location_id = self.env.ref('stock.stock_location_scrapped').id
-        for quant in quants.sorted(key=lambda x: x.history_ids[-1:].
-                                   picking_id.picking_type_id.warehouse_id.id):
+        for quant in quants:
             scrap = scrap_obj.create(
                 self._prepare_scrap_vals(quant, scrap_location_id),
             )
