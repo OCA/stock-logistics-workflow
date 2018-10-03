@@ -21,6 +21,7 @@ setuptools.setup(
         'odoo10-addon-stock_ownership_availability_rules',
         'odoo10-addon-stock_ownership_by_move',
         'odoo10-addon-stock_pack_operation_auto_fill',
+        'odoo10-addon-stock_picking_back2draft',
         'odoo10-addon-stock_picking_backorder_strategy',
         'odoo10-addon-stock_picking_customer_ref',
         'odoo10-addon-stock_picking_filter_lot',
