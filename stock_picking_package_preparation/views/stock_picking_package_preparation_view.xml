@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+  <record id="stock_picking_package_preparation_tree" model="ir.ui.view">
+    <field name="name">stock.picking.package.preparation.tree</field>
+    <field name="model">stock.picking.package.preparation</field>
+    <field name="arch" type="xml">
+      <tree colors="grey:state == 'cancel';" string="Package Preparations">
+        <field name="name"/>
+        <field name="partner_id"/>
+        <field name="date"/>
+        <field name="date_done"/>
+        <field name="package_id"/>
+        <field name="state"/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="stock_picking_package_preparation_form" model="ir.ui.view">
+    <field name="name">stock.picking.package.preparation.form</field>
+    <field name="model">stock.picking.package.preparation</field>
+    <field name="arch" type="xml">
+      <form string="Package Preparation">
+        <header>
+          <button name="action_put_in_pack" states="draft" string="Put in pack" type="object" class="oe_highlight" groups="base.group_user"/>
+          <button name="action_done" states="in_pack" string="Package done" type="object" class="oe_highlight" groups="base.group_user"/>
+          <button name="action_cancel" states="draft,in_pack" string="Cancel" groups="base.group_user" type="object"/>
+          <button name="action_draft" states="cancel" string="Reset to draft" type="object" class="oe_highlight" groups="base.group_user"/>
+          <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,partially_available,assigned,done" statusbar_colors='{"shipping_except":"red","invoice_except":"red","waiting_date":"blue"}'/>
+        </header>
+        <sheet>
+          <div class="oe_right oe_button_box">
+          </div>
+          <h1>
+            <field name="name" class="oe_inline" attrs="{'invisible': [('name','=','/')]}" readonly="1"/>
+          </h1>
+          <group>
+            <group>
+              <field name="partner_id"/>
+              <field name="date"/>
+              <field name="date_done" attrs="{'invisible': [('state', '!=', 'done')]}"/>
+              <field name="package_id" attrs="{'invisible': [('package_id', '=', False)]}"/>
+            </group>
+            <group>
+              <field name="packaging_id"/>
+              <field name="company_id"/>
+            </group>
+          </group>
+          <notebook>
+            <page string="Transfers">
+              <field name="picking_ids"
+                options="{'no_create': True}"
+                domain="[('partner_id', '=', partner_id)]"
+                context="{'search_default_available': 1,}"/>
+              <field name="note" placeholder="Add an internal note..." class="oe_inline"/>
+            </page>
+            <page string="Operations">
+              <field name="move_line_ids">
+                <tree>
+                  <field name="package_id" groups="stock.group_tracking_lot"/>
+                  <field name="product_id"/>
+                  <field name="product_uom_id" groups="product.group_uom"/>
+                  <field name="picking_id" invisible="1"/>
+                  <field name="owner_id" groups="stock.group_tracking_owner"/>
+                  <field name="product_qty"/>
+                  <field name="location_id"/>
+                  <field name="location_dest_id"/>
+                  <field name="result_package_id" groups="stock.group_tracking_lot" context="{'location_id': location_dest_id}"/>
+                </tree>
+              </field>
+              <p class="oe_grey" groups="stock.group_tracking_lot">
+                If there is no product but a source package, this means the source package was moved entirely.  If there is a product and a source package, the product was taken from the source package.
+              </p>
+            </page>
+          </notebook>
+        </sheet>
+        <div class="oe_chatter">
+          <field name="message_follower_ids" widget="mail_followers"/>
+          <field name="message_ids" widget="mail_thread"/>
+        </div>
+      </form>
+    </field>
+  </record>
+
+  <record id="action_stock_picking_package_preparation" model="ir.actions.act_window">
+    <field name="name">Package Preparations</field>
+    <field name="res_model">stock.picking.package.preparation</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        Click to prepare a new package preparation.
+      </p>
+    </field>
+  </record>
+
+  <menuitem
+    action="action_stock_picking_package_preparation"
+    id="menu_stock_picking_package_preparation"
+    parent="stock.menu_stock_warehouse_mgmt" sequence="3"/>
+
+</odoo>
