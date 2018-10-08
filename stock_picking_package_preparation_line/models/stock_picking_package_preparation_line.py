@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#    Author: Francesco Apruzzese
-#    Copyright 2015 Apulia Software srl
-#    Copyright 2015 Lorenzo Battistini - Agile Business Group
-#    Copyright 2016 Alessio Gerace - Agile Business Group
+# Copyright 2015 Francesco Apruzzese - Apulia Software srl
+# Copyright 2015-2018 Lorenzo Battistini - Agile Business Group
+# Copyright 2016 Alessio Gerace - Agile Business Group
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo import models, fields, api
@@ -34,10 +32,16 @@ class StockPickingPackagePreparationLine(models.Model):
         help="Used to specify lot when line is created using package "
              "preparation")
     lot_ids = fields.Many2many(
-        'stock.production.lot', related='move_id.lot_ids', readonly=True,
+        'stock.production.lot', compute='_compute_lot_ids', readonly=True,
         string="Moved lots", help="Lots effectively linked to stock move")
     sequence = fields.Integer(default=10)
     note = fields.Text()
+
+    @api.multi
+    @api.depends('move_id.move_line_ids.lot_id')
+    def _compute_lot_ids(self):
+        for line in self:
+            line.lot_ids = line.move_id.move_line_ids.mapped('lot_id')
 
     @api.multi
     def write(self, values):
@@ -54,10 +58,8 @@ class StockPickingPackagePreparationLine(models.Model):
     @api.onchange('product_id')
     def _onchange_product_id(self):
         if self.product_id:
-            name = self.product_id.name_get()
-            if name:
-                self.name = name[0][1]
-            self.product_uom_id = self.product_id.uom_id.id
+            self.name = self.product_id.display_name
+            self.product_uom_id = self.product_id.uom_id
 
     @api.model
     def _prepare_lines_from_pickings(self, picking_ids):
@@ -75,14 +77,14 @@ class StockPickingPackagePreparationLine(models.Model):
                 # PackagePreparationLine, yet. If not, create a new line
                 if not self.search([('move_id', '=', move_line.id)],
                                    count=True):
+                    lot_id = move_line.move_line_ids.mapped('lot_id')
                     lines.append({
                         'move_id': move_line.id,
                         'name': move_line.name,
                         'product_id': move_line.product_id.id,
                         'product_uom_qty': move_line.product_uom_qty,
                         'product_uom_id': move_line.product_uom.id,
-                        'lot_id': move_line.lot_ids[0].id
-                        if len(move_line.lot_ids) == 1 else False,
+                        'lot_id': lot_id[0].id if lot_id else False,
                         })
         return lines
 
@@ -93,7 +95,5 @@ class StockPickingPackagePreparationLine(models.Model):
             'name': self.name,
             'product_id': self.product_id.id,
             'product_uom_qty': self.product_uom_qty,
-            'product_uom': self.product_uom_id.id,
-            'restrict_lot_id': self.lot_id.id
-            if self.lot_id else False,
+            'product_uom': self.product_uom_id.id
             }

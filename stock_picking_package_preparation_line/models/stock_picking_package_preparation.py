@@ -1,13 +1,12 @@
-# -*- coding: utf-8 -*-
-#    Author: Francesco Apruzzese
-#    Copyright 2015 Apulia Software srl
-#    Copyright 2015 Lorenzo Battistini - Agile Business Group
-#    Copyright 2016 Alessio Gerace - Agile Business Group
+# Copyright 2015 Francesco Apruzzese - Apulia Software srl
+# Copyright 2015-2018 Lorenzo Battistini - Agile Business Group
+# Copyright 2016 Alessio Gerace - Agile Business Group
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo import models, fields, api, _
 from datetime import datetime
 from odoo.exceptions import UserError
+from odoo.tools import float_compare
 
 
 class StockPickingPackagePreparation(models.Model):
@@ -18,7 +17,8 @@ class StockPickingPackagePreparation(models.Model):
                      'in_pack': [('readonly', True)],
                      'cancel': [('readonly', True)]}
 
-    picking_type_id = fields.Many2one(related='picking_ids.picking_type_id')
+    picking_type_id = fields.Many2one(
+        related='picking_ids.picking_type_id', readonly=True)
     line_ids = fields.One2many(
         'stock.picking.package.preparation.line',
         'package_preparation_id',
@@ -118,8 +118,7 @@ class StockPickingPackagePreparation(models.Model):
         default_picking_type = self.env.user.company_id.\
             default_picking_type_for_package_preparation_id or \
             self.env.ref('stock.picking_type_out')
-        pack_model = self.env['stock.pack.operation']
-        operation_lot = self.env['stock.pack.operation.lot']
+        move_line_model = self.env['stock.move.line']
         for package in self:
             picking_type = package.picking_type_id or default_picking_type
             moves = []
@@ -161,23 +160,9 @@ class StockPickingPackagePreparation(models.Model):
                     move_data.update({'picking_id': picking.id})
                     move = move_model.create(move_data)
                     line.move_id = move.id
-                    # Create pack to force lot
+                    # Create move line
                     if line.lot_id:
-                        operation = pack_model.create({
-                            'product_id': line.product_id.id,
-                            'product_uom_id': line.product_uom_id.id,
-                            'product_qty': line.product_uom_qty,
-                            'qty_done': line.product_uom_qty,
-                            'location_id': move_data['location_id'],
-                            'location_dest_id': move_data['location_dest_id'],
-                            'date': datetime.now(),
-                            'picking_id': picking.id,
-                            })
-                        operation_lot.create({
-                            'operation_id': operation.id,
-                            'qty': line.product_uom_qty,
-                            'lot_id': line.lot_id.id,
-                        })
+                        self.create_move_line(move_line_model, line, move)
                 # Set the picking as "To DO" and try to set it as
                 # assigned
                 # skip_update_line_ids because picking is created based on
@@ -188,7 +173,7 @@ class StockPickingPackagePreparation(models.Model):
                 if picking.state != 'confirmed':
                     raise UserError(
                         _('Impossible to create confirmed picking. '
-                          'Please Check products availability!'))
+                          'Please check products availability!'))
                 picking.action_assign()
                 # Force assign if a picking is not assigned
                 if picking.state != 'assigned':
@@ -197,8 +182,35 @@ class StockPickingPackagePreparation(models.Model):
                 if picking.state != 'assigned':
                     raise UserError(
                         _('Impossible to create confirmed picking. '
-                          'Please Check products availability!'))
+                          'Please check products availability!'))
                 # Add the relation between the new picking
                 # and PackagePreparation
                 package.picking_ids = [(4, picking.id)]
         return super(StockPickingPackagePreparation, self).action_put_in_pack()
+
+    def create_move_line(self, move_line_model, line, move):
+        # Check that quants of the lot have enough reserved quantity
+        quants = self.env['stock.quant']._gather(
+            product_id=line.product_id,
+            location_id=move.location_id,
+            lot_id=line.lot_id)
+        if float_compare(
+                sum(quants.mapped('reserved_quantity')),
+                line.product_uom_qty,
+                precision_rounding=line.product_uom_id.rounding) < 0:
+            reserved_quants = self.env['stock.quant'] \
+                ._update_reserved_quantity(
+                    line.product_id,
+                    move.location_id,
+                    line.product_uom_qty,
+                    lot_id=line.lot_id)
+            quants = [quant for quant, __ in reserved_quants]
+
+        move_line_vals = move._prepare_move_line_vals(
+            quantity=line.product_uom_qty,
+            reserved_quant=quants[0])
+        move_line_vals = dict(
+            move_line_vals,
+            date=datetime.now(),
+            qty_done=line.product_uom_qty)
+        move_line_model.create(move_line_vals)
