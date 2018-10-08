@@ -46,6 +46,7 @@ addon | version | summary
 [stock_picking_tracking](stock_picking_tracking/) | 9.0.1.0.0 | Adds a concept of event tracking for stock pickings
 [stock_picking_transfer_lot_autoassign](stock_picking_transfer_lot_autoassign/) | 9.0.1.1.0 | Auto-assignation of lots on pickings
 [stock_scrap](stock_scrap/) | 9.0.1.0.0 | Adds the ability to scrap products easily.
+[stock_split_picking](stock_split_picking/) | 9.0.1.0.0 | Split a picking in two not transferred pickings
 
 
 Unported addons
@@ -70,7 +71,6 @@ addon | version | summary
 [stock_picking_deliver_uos](stock_picking_deliver_uos/) | 8.0.1.0.0 (unported) | Adds fields uos and uos_quantity to Stock Transfer Details
 [stock_picking_priority](stock_picking_priority/) | 0.2 (unported) | Picking Priority
 [stock_sale_filters](stock_sale_filters/) | 1.3 (unported) | SO related filters on stock.picking and sale.order
-[stock_split_picking](stock_split_picking/) | 8.0.1.0.0 (unported) | Split a picking in two unconfirmed pickings
 [stock_transfer_split_multi](stock_transfer_split_multi/) | 8.0.1.0.0 (unported) | In the stock transfer wizard, you can split by multiple units
 
 [//]: # (end addons)
