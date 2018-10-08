@@ -31,6 +31,7 @@ setuptools.setup(
         'odoo9-addon-stock_picking_tracking',
         'odoo9-addon-stock_picking_transfer_lot_autoassign',
         'odoo9-addon-stock_scrap',
+        'odoo9-addon-stock_split_picking',
     ],
     classifiers=[
         'Programming Language :: Python',
