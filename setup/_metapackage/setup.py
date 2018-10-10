@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo11-addon-mrp_stock_picking_restrict_cancel',
         'odoo11-addon-purchase_stock_picking_restrict_cancel',
+        'odoo11-addon-stock_lot_scrap',
         'odoo11-addon-stock_no_negative',
         'odoo11-addon-stock_pack_operation_auto_fill',
         'odoo11-addon-stock_picking_customer_ref',
