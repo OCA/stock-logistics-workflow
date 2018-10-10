@@ -34,6 +34,8 @@ class TestStockLotScrap(common.SavepointCase):
             'product_id': cls.product.id,
             'lot_id': cls.lot010.id,
         })
+        # Make sure the user is in English
+        cls.env.user.lang = 'en_US'
 
     def test_picking_created(self):
         res = self.lot010.action_scrap_lot()
@@ -42,6 +44,8 @@ class TestStockLotScrap(common.SavepointCase):
         self.assertAlmostEqual(sum(scrap.mapped('scrap_qty')), 5325)
         self.assertTrue(
             all(scrap.mapped('move_id').mapped(lambda x: x.state == 'done')))
+        scrap[:1].action_validate()
+        self.assertIn("Lot was scrapped by", self.lot010.message_ids[:1].body)
 
     def test_warning(self):
         product_new = self.product.create({
