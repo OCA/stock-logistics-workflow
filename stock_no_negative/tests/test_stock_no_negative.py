@@ -10,6 +10,8 @@ from odoo.exceptions import ValidationError
 
 
 class TestStockNoNegative(TransactionCase):
+    at_install = False
+    post_install = True
 
     def setUp(self):
         super(TestStockNoNegative, self).setUp()
