@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014 Camptocamp SA - Guewen Baconnier
 # Copyright 2018 Tecnativa - Vicent Cubells
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import api
+from odoo import _, api
 from odoo.models import Model
 
 
@@ -17,5 +16,22 @@ class StockPicking(Model):
         out_type_ids = type_obj.search([('code', '=', 'outgoing')]).ids
         domain = [('picking_type_id', 'in', out_type_ids),
                   ('state', '=', 'confirmed')]
-        records = self.search(domain, order='min_date')
+        records = self.search(domain, order='scheduled_date')
         records.action_assign()
+
+    def action_immediate_transfer_wizard(self):
+        view = self.env.ref('stock.view_immediate_transfer')
+        wiz = self.env['stock.immediate.transfer'].create(
+            {'pick_ids': [(4, p.id) for p in self]})
+        return {
+            'name': _('Immediate Transfer?'),
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'stock.immediate.transfer',
+            'views': [(view.id, 'form')],
+            'view_id': view.id,
+            'target': 'new',
+            'res_id': wiz.id,
+            'context': self.env.context,
+        }
