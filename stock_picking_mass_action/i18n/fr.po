@@ -36,6 +36,14 @@ msgid "Check Availability"
 msgstr "Vérifier la disponibilité"
 
 #. module: stock_picking_mass_action
+#: model:ir.actions.server,name:stock_picking_mass_action.ir_cron_check_assign_all_ir_actions_server
+#: model:ir.cron,cron_name:stock_picking_mass_action.ir_cron_check_assign_all
+#: model:ir.cron,name:stock_picking_mass_action.ir_cron_check_assign_all
+#, fuzzy
+msgid "Check Availability of Stock Picking"
+msgstr "Vérifier la disponibilité"
+
+#. module: stock_picking_mass_action
 #: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_create_uid
 msgid "Created by"
 msgstr "Créé par"
@@ -86,6 +94,12 @@ msgstr "Marquer \"A faire\""
 #: model:ir.ui.view,arch_db:stock_picking_mass_action.view_stock_picking_mass_action_form
 msgid "Mass Action for the selected stock picking"
 msgstr "Action Globale pour les opérations de manutention sélectionnées"
+
+#. module: stock_picking_mass_action
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_picking_ids
+#, fuzzy
+msgid "Pickings"
+msgstr "Opération de manutention"
 
 #. module: stock_picking_mass_action
 #: model:ir.model,name:stock_picking_mass_action.model_stock_picking_mass_action
@@ -144,9 +158,6 @@ msgstr "ou"
 
 #~ msgid "Create Invoices/Refunds"
 #~ msgstr "Créer factures/avoirs"
-
-#~ msgid "Picking List"
-#~ msgstr "Opération de manutention"
 
 #~ msgid "Stock Invoice Onshipping"
 #~ msgstr "Créer les factures brouillons"
