@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014 Camptocamp SA - Guewen Baconnier
 # Copyright 2018 Tecnativa - Vicent Cubells
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     'name': 'Stock Picking Mass Action',
-    'version': '10.0.1.0.0',
+    'version': '11.0.1.0.0',
     'author': 'Camptocamp, '
               'GRAP,'
               'Tecnativa,'
@@ -19,5 +18,4 @@
         'wizard/mass_action_view.xml',
         'data/ir_cron.xml',
     ],
-    'installable': True,
 }
