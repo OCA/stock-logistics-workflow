@@ -33,6 +33,14 @@ msgid "Check Availability"
 msgstr "Comprobar disponibilidad"
 
 #. module: stock_picking_mass_action
+#: model:ir.actions.server,name:stock_picking_mass_action.ir_cron_check_assign_all_ir_actions_server
+#: model:ir.cron,cron_name:stock_picking_mass_action.ir_cron_check_assign_all
+#: model:ir.cron,name:stock_picking_mass_action.ir_cron_check_assign_all
+#, fuzzy
+msgid "Check Availability of Stock Picking"
+msgstr "Comprobar disponibilidad"
+
+#. module: stock_picking_mass_action
 #: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_create_uid
 msgid "Created by"
 msgstr "Creado por"
@@ -83,6 +91,11 @@ msgstr "Marcar 'Por realizar'"
 #: model:ir.ui.view,arch_db:stock_picking_mass_action.view_stock_picking_mass_action_form
 msgid "Mass Action for the selected stock picking"
 msgstr "Acción en masa para el albarán seleccionado"
+
+#. module: stock_picking_mass_action
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_picking_ids
+msgid "Pickings"
+msgstr ""
 
 #. module: stock_picking_mass_action
 #: model:ir.model,name:stock_picking_mass_action.model_stock_picking_mass_action
