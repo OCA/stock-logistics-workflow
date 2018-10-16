@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014 Camptocamp SA - Guewen Baconnier
 # Copyright 2018 Tecnativa - Vicent Cubells
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
@@ -17,5 +16,5 @@ class StockPicking(Model):
         out_type_ids = type_obj.search([('code', '=', 'outgoing')]).ids
         domain = [('picking_type_id', 'in', out_type_ids),
                   ('state', '=', 'confirmed')]
-        records = self.search(domain, order='min_date')
+        records = self.search(domain, order='scheduled_date')
         records.action_assign()

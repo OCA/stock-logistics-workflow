@@ -36,6 +36,13 @@ msgid "Check Availability"
 msgstr ""
 
 #. module: stock_picking_mass_action
+#: model:ir.actions.server,name:stock_picking_mass_action.ir_cron_check_assign_all_ir_actions_server
+#: model:ir.cron,cron_name:stock_picking_mass_action.ir_cron_check_assign_all
+#: model:ir.cron,name:stock_picking_mass_action.ir_cron_check_assign_all
+msgid "Check Availability of Stock Picking"
+msgstr ""
+
+#. module: stock_picking_mass_action
 #: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_create_uid
 msgid "Created by"
 msgstr "Kreirao"
@@ -85,6 +92,11 @@ msgstr ""
 #. module: stock_picking_mass_action
 #: model:ir.ui.view,arch_db:stock_picking_mass_action.view_stock_picking_mass_action_form
 msgid "Mass Action for the selected stock picking"
+msgstr ""
+
+#. module: stock_picking_mass_action
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_picking_ids
+msgid "Pickings"
 msgstr ""
 
 #. module: stock_picking_mass_action
