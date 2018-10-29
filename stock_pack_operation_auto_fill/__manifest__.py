@@ -5,7 +5,7 @@
 {
     'name': 'Stock Pack Operation Auto Fill',
     'summary': "Stock pack operation auto fill",
-    'version': '11.0.2.0.0',
+    'version': '11.0.2.0.1',
     'license': 'AGPL-3',
     'author': 'ACSONE SA/NV,'
               'Tecnativa,'

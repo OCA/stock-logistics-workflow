@@ -3,6 +3,7 @@
     <record model="ir.ui.view" id="stock_picking_form_view">
         <field name="name">stock.picking.form (in stock_pack_operation_auto_fill)</field>
         <field name="model">stock.picking</field>
+        <field name="groups_id" eval="[(4,ref('stock.group_stock_user'))]"/>
         <field name="inherit_id" ref="stock.view_picking_form"/>
         <field name="arch" type="xml">
             <button name="button_validate" position="before">
