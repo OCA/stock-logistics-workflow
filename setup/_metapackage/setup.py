@@ -11,6 +11,7 @@ setuptools.setup(
         'odoo8-addon-mrp_lock_lot',
         'odoo8-addon-picking_dispatch',
         'odoo8-addon-procurement_jit_assign_move',
+        'odoo8-addon-product_serial',
         'odoo8-addon-product_unique_serial',
         'odoo8-addon-sale_stock_auto_move',
         'odoo8-addon-sale_stock_picking_back2draft',
