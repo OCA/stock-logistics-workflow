@@ -14,6 +14,7 @@ setuptools.setup(
         'odoo11-addon-stock_lot_scrap',
         'odoo11-addon-stock_no_negative',
         'odoo11-addon-stock_pack_operation_auto_fill',
+        'odoo11-addon-stock_picking_auto_create_lot',
         'odoo11-addon-stock_picking_customer_ref',
         'odoo11-addon-stock_picking_invoice_link',
         'odoo11-addon-stock_picking_mass_action',
