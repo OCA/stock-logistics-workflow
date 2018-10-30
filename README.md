@@ -27,6 +27,7 @@ addon | version | summary
 [mrp_lock_lot](mrp_lock_lot/) | 8.0.3.0.0 | MRP Lock Lot
 [picking_dispatch](picking_dispatch/) | 8.0.1.2.3 | Picking dispatch
 [procurement_jit_assign_move](procurement_jit_assign_move/) | 8.0.1.0.0 | Change the behavior of procurement_jit to assign stock moves
+[product_serial](product_serial/) | 8.0.1.0.0 | Enhance Serial Number management
 [product_unique_serial](product_unique_serial/) | 8.0.1.0.1 | Product Serial Unique Number
 [sale_stock_auto_move](sale_stock_auto_move/) | 8.0.1.0.0 | Automatic Move Processing For Sale Delivery
 [sale_stock_picking_back2draft](sale_stock_picking_back2draft/) | 8.0.1.0.0 | Pickings back to draft - Sale integration
@@ -64,7 +65,6 @@ addon | version | summary
 --- | --- | ---
 [picking_dispatch_wave](picking_dispatch_wave/) | 0.1 (unported) | Picking Dispatch Wave
 [product_customer_code_picking](product_customer_code_picking/) | 1.0 (unported) | Product Customer code for stock picking
-[product_serial](product_serial/) | 1.0 (unported) | Enhance Serial Number management
 [stock_cancel](stock_cancel/) | 1.2 (unported) | Stock Cancel
 [stock_inventory_retry_assign](stock_inventory_retry_assign/) | 1.0 (unported) | Check Availability after Inventories
 [stock_location_flow_creator](stock_location_flow_creator/) | 1.0 (unported) | Create configuration of stock location flow
