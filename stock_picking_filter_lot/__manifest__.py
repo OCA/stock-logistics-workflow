@@ -5,10 +5,10 @@
     "name": "Stock picking filter lot",
     "summary": "In picking out lots' selection, "
                "filter lots based on their location",
-    "version": "10.0.1.0.0",
+    "version": "11.0.1.0.0",
     "category": "Warehouse",
     "website": "https://github.com/OCA/stock-logistics-workflow/tree/"
-               "10.0/stock_filter_lots",
+               "11.0/stock_filter_lot",
     "author": "Agile Business Group, "
               "Odoo Community Association (OCA)",
     "license": "AGPL-3",
@@ -18,6 +18,7 @@
         "stock"
     ],
     "data": [
-        "views/stock_pack_operation.xml"
+        "views/stock_move_line_view.xml",
+        "views/stock_picking_view.xml",
     ]
 }
