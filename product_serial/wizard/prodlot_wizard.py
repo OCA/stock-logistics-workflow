@@ -1,137 +1,153 @@
-# -*- encoding: utf-8 -*-
-##############################################################################
-#
-#    Product serial module for OpenERP
-#    Copyright (C) 2010 NaN Projectes de Programari Lliure, S.L.
-#                       http://www.NaN-tic.com
-#    Copyright (C) 2013 Akretion (http://www.akretion.com)
-#    @author Alexis de Lattre <alexis.delattre@akretion.com>
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# -*- coding: utf-8 -*-
+# © 2010 NaN Projectes de Programari Lliure, S.L. http://www.NaN-tic.com
+# © 2013-2015 Akretion (http://www.akretion.com/) - Alexis de Lattre
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp.osv import orm, fields
-from openerp.tools.translate import _
+from openerp import models, fields, api, _
+from openerp.exceptions import Warning as UserError
+import base64
 
 
-class stock_picking_prodlot_selection_wizard(orm.TransientModel):
-    _name = 'stock.picking.prodlot.selection'
+class StockProdlotSelection(models.TransientModel):
+    _name = 'stock.prodlot.selection'
+    _description = "Select or Create Production Lots"
 
-    _columns = {
-        'product_id': fields.many2one(
-            'product.product', 'Product', required=True),
-        'prefix': fields.char('Prefix', size=256),
-        'suffix': fields.char('Suffix', size=256),
-        'first_number': fields.char('First Number', size=256, required=True),
-        'last_number': fields.char('Last Number', size=256, required=True),
-        'create_prodlots': fields.boolean('Create New Serial Numbers'),
-    }
+    product_id = fields.Many2one(
+        'product.product', string='Product', required=True)
+    prefix = fields.Char(string='Prefix')
+    suffix = fields.Char(string='Suffix')
+    first_number = fields.Char(string='First Number')
+    last_number = fields.Char(string='Last Number')
+    prodlot_file = fields.Binary(
+        string='Serial Numbers File',
+        help="The serial numbers file should be a text file with one serial "
+        "number per line and without any field separator "
+        "(one file per product).")
+    create_prodlots = fields.Boolean(string='Create New Serial Numbers')
 
-    _defaults = {
-        'create_prodlots': False,
-    }
+    @api.model
+    def default_get(self, fields):
+        res = super(StockProdlotSelection, self).default_get(fields)
+        trf = self._get_transfer()
+        if trf.picking_id.picking_type_id.code == 'incoming':
+            res['create_prodlots'] = True
+        return res
 
-    def select_or_create_prodlots(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
-        if not ids:
-            return {}
-        if 'active_id' not in context:
-            return {}
+    @api.model
+    def _get_transfer(self):
+        assert ('active_id' in self._context),\
+            "Missing 'active_id' key in context"
+        assert self._context['active_model'] == 'stock.transfer_details',\
+            "Active model should be stock.transfer_details"
+        transfer = self.env['stock.transfer_details'].browse(
+            self._context['active_id'])
+        return transfer
 
-        prodlot_obj = self.pool['stock.production.lot']
-        record = self.browse(cr, uid, ids[0], context)
-        prefix = record.prefix or ''
-        suffix = record.suffix or ''
+    @api.multi
+    def select_or_create_prodlots_from_file(self):
+        self.ensure_one()
+
+        if not self.prodlot_file:
+            raise UserError(_(
+                "You should upload a text file containing the serial "
+                "numbers."))
+        full_prodlot_str = base64.decodestring(self.prodlot_file)
+        full_prodlot_seq = full_prodlot_str.splitlines()
+        # Remove empty lines
+        prodlot_seq = [prodlot for prodlot in full_prodlot_seq if prodlot]
+        transfer = self._get_transfer()
+        return self._select_or_create_prodlots(
+            transfer, self.product_id, prodlot_seq, self.create_prodlots)
+
+    @api.multi
+    def select_or_create_prodlots_from_interval(self):
+        self.ensure_one()
+        prefix = self.prefix or ''
+        suffix = self.suffix or ''
+        if not self.first_number or not self.last_number:
+            raise UserError(_(
+                "You should enter a value for the First Number and the "
+                "Last Number"))
         try:
-            first_number = int(record.first_number)
+            first_number = int(self.first_number)
         except:
-            raise orm.except_orm(_('Invalid First Number'), _(
+            raise UserError(_(
                 "The field 'First Number' should only contain digits."))
 
         try:
-            last_number = int(record.last_number)
+            last_number = int(self.last_number)
         except:
-            raise orm.except_orm(_('Invalid Last Number'), _(
+            raise UserError(_(
                 "The field 'Last Number' should only contain digits."))
 
+        if int(self.first_number) <= 0 or int(self.last_number) <= 0:
+            raise UserError(_(
+                "The First and Last Numbers should be strictly positive."))
+
         if last_number < first_number:
-            raise orm.except_orm(_('Invalid Numbers'), _(
+            raise UserError(_(
                 'The First Number must be lower than the Last Number.'))
 
-        if len(record.first_number) != len(record.last_number):
-            raise orm.except_orm(_('Invalid Lot Numbers'), _(
+        if len(self.first_number) != len(self.last_number):
+            raise UserError(_(
                 'First and Last Numbers must have the same length.'))
 
-        number_length = len(record.first_number)
+        number_length = len(self.first_number)
+        prodlot_seq = [
+            '%s%0*d%s' % (prefix, number_length, current_number, suffix)
+            for current_number in range(first_number, last_number+1)
+            ]
+        transfer = self._get_transfer()
+        return self._select_or_create_prodlots(
+            transfer, self.product_id, prodlot_seq, self.create_prodlots)
 
-        picking_id = context['active_id']
-        current_number = first_number
-        picking = self.pool['stock.picking'].browse(
-            cr, uid, picking_id, context=context)
-        company_id = picking.company_id.id
-        for move in picking.move_lines:
-            if move.prodlot_id or move.product_id != record.product_id:
+    @api.model
+    def _prepare_prodlot(self, product, lot_name):
+        '''This method is designed to be inherited'''
+        return {
+            'product_id': product.id,
+            'name': lot_name,
+        }
+
+    @api.model
+    def _select_or_create_prodlots(
+            self, transfer, product, prodlot_seq, create_prodlots):
+        assert prodlot_seq and isinstance(prodlot_seq, list),\
+            'wrong prodlot_seq'
+        splo = self.env['stock.production.lot']
+        for transfer_item in transfer.item_ids:
+            if transfer_item.product_id != product:
                 continue
-
-            current_lot = '%%s%%0%dd%%s' % number_length % (
-                prefix, current_number, suffix)
-            if record.create_prodlots:
+            try:
+                current_lot = prodlot_seq.pop(0)
+            except:
+                break
+            if create_prodlots:
                 # Create new prodlot
-                lot_id_on_move = prodlot_obj.create(cr, uid, {
-                    'product_id': record.product_id.id,
-                    'name': current_lot,
-                    'company_id': company_id,
-                }, context=context)
+                lot = splo.create(self._prepare_prodlot(product, current_lot))
             else:
                 # Search existing prodlots
-                lot_ids = prodlot_obj.search(
-                    cr,
-                    uid,
-                    [('name', '=', current_lot)],
-                    limit=1,
-                    context=context)
-                if not lot_ids:
-                    raise orm.except_orm(
-                        _('Invalid lot numbers'),
-                        _('Production lot %s not found.') % current_lot)
+                lots = splo.search([
+                    ('name', '=', current_lot),
+                    ('product_id', '=', product.id),
+                    ], limit=1)
+                if not lots:
+                    raise UserError(_(
+                        "Serial Number '%s' not found for product '%s'.")
+                        % (current_lot,
+                           transfer_item.product_id.name_get()[0][1]))
+                lot = lots[0]
 
-                ctx = context.copy()
-                ctx['location_id'] = move.location_id.id
-                prodlot = self.pool.get('stock.production.lot').browse(
-                    cr, uid, lot_ids[0], ctx)
+            transfer_item.lot_id = lot.id
+        return transfer.wizard_view()
 
-                if prodlot.product_id != record.product_id:
-                    raise orm.except_orm(
-                        _('Invalid lot numbers'),
-                        _('Production lot %s exists but not for product %s.') %
-                        (current_lot, record.product_id.name))
-
-                if prodlot.stock_available < move.product_qty:
-                    raise orm.except_orm(
-                        _('Invalid lot numbers'),
-                        _('Not enough stock available of production lot %s.') %
-                        current_lot)
-                lot_id_on_move = lot_ids[0]
-
-            self.pool.get('stock.move').write(cr, uid, [move.id], {
-                'prodlot_id': lot_id_on_move,
-            }, context=context)
-
-            current_number += 1
-            if current_number > last_number:
-                break
-
-        return True
+    @api.multi
+    def cancel(self):
+        """The wizard is re-called when the user clicks on Cancel"""
+        self.ensure_one()
+        assert self.env.context.get('active_model') == \
+            'stock.transfer_details', 'Wrong underlying model'
+        trf = self.env['stock.transfer_details'].browse(
+            self.env.context['active_id'])
+        action = trf.wizard_view()
+        return action

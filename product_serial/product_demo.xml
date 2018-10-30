@@ -1,21 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--
-  Product serial module for OpenERP
-  Copyright (C) 2013 Akretion (http://www.akretion.com/)
+  Copyright (C) 2013-2016 Akretion (http://www.akretion.com/)
   @author: Alexis de Lattre <alexis.delattre@akretion.com>
-  The licence is in the file __openerp__.py
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 -->
 
 <openerp>
 <data noupdate="1">
 
-<!-- Laptop E5023  -->
-<record id="product.product_product_25" model="product.product">
+<record id="product_serial_1" model="product.product">
+    <field name="name">Laptop X5042-SN</field>
+    <field name="default_code">LAP-X5-SN</field>
+    <field name="categ_id" ref="product.product_category_4"/>
+    <field name="standard_price">1270.0</field>
+    <field name="list_price">1499.0</field>
+    <field name="type">consu</field>
+    <field name="uom_id" ref="product.product_uom_unit"/>
+    <field name="uom_po_id" ref="product.product_uom_unit"/>
     <field name="lot_split_type">single</field>
-    <field name="track_production">True</field>
-    <field name="track_incoming">True</field>
-    <field name="track_outgoing">True</field>
+    <field name="track_all">True</field>
+</record>
+
+<record id="product_serial_2" model="product.product">
+    <field name="name">Laptop X6012-SN</field>
+    <field name="default_code">LAP-X6-SN</field>
+    <field name="categ_id" ref="product.product_category_4"/>
+    <field name="standard_price">1390.0</field>
+    <field name="list_price">1599.0</field>
+    <field name="type">consu</field>
+    <field name="uom_id" ref="product.product_uom_unit"/>
+    <field name="uom_po_id" ref="product.product_uom_unit"/>
+    <field name="lot_split_type">single</field>
+    <field name="track_all">True</field>
 </record>
 
 </data>

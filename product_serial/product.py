@@ -1,46 +1,22 @@
-# -*- encoding: utf-8 -*-
-##############################################################################
-#
-#    Product serial module for OpenERP
-#    Copyright (C) 2008 Raphaël Valyi
-#    Copyright (C) 2013 Akretion (http://www.akretion.com/)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# -*- coding: utf-8 -*-
+# © 2008 Raphaël Valyi
+# © 2013-2015 Akretion (http://www.akretion.com/) - Alexis de Lattre
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp.osv import fields, orm
+from openerp import fields, models
 
 
-class product_product(orm.Model):
-    _inherit = "product.product"
+class ProductTemplate(models.Model):
+    _inherit = "product.template"
 
-    _columns = {
-        'lot_split_type': fields.selection([
-            ('none', 'None'),
-            ('single', 'Single'),
-            ('lu', 'Logistical Unit')
-        ], 'Lot split type', required=True,
-            help="None: no split ; single: 1 line/product unit ; "
-            "Logistical Unit: split using the first Logistical Unit quantity "
-            "of the product form packaging tab "
-            "(to be improved to take into account all LU)"),
-        'track_internal': fields.boolean(
-            'Track Lots internally',
-            help="Forces to specify a Serial Number for all internal moves"),
-    }
-
-    _defaults = {
-        'lot_split_type': 'none',
-    }
+    lot_split_type = fields.Selection([
+        ('none', 'None'),
+        ('single', 'Single'),
+        # ('lu', 'Logistical Unit')  # TODO : restore if someone needs it
+        # and implement it properly ('lu' was not fully implemented in v7)
+        ], string='Lot split type', default='none',
+        help="You should select 'Single' if you have one serial number per "
+        "item. In this case, the Transfer pop-up on the picking will "
+        "display one line per unit for this product. "
+        "The default value is 'None': for those product, the native "
+        "process is not modified.")

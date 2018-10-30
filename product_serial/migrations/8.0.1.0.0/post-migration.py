@@ -1,10 +1,7 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Product serial module for OpenERP
-#    Copyright (C) 2010-2011 Anevia. All Rights Reserved
-#    Copyright (C) 2013 Akretion
-#    @author: Sebastien Beau <sebastien.beau@akretion.com>
+#    Copyright (C) 2015 Akretion (http://www.akretion.com/)
 #    @author: Alexis de Lattre <alexis.delattre@akretion.com>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -22,24 +19,27 @@
 #
 ##############################################################################
 
-from openerp.osv import orm, fields
+from openerp import pooler, SUPERUSER_ID
 
 
-class company(orm.Model):
-    _inherit = 'res.company'
+def migrate(cr, version):
+    if not version:
+        return
 
-    _columns = {
-        'autosplit_is_active': fields.boolean(
-            'Active auto split',
-            help="Active the automatic split of move lines on the pickings."),
-        'is_group_invoice_line': fields.boolean(
-            'Group invoice lines',
-            help="If active, OpenERP will group the identical invoice lines "
-            "when generating an invoice from a picking. If inactive, each "
-            "move line will generate one invoice line."),
-    }
+    pool = pooler.get_pool(cr.dbname)
+    pto = pool['product.template']
 
-    _defaults = {
-        'autosplit_is_active': True,
-        'is_group_invoice_line': True,
-    }
+    pt_ids = pto.search(
+        cr, SUPERUSER_ID, ['|', ('active', '=', True), ('active', '=', False)])
+    for pt in pto.browse(cr, SUPERUSER_ID, pt_ids):
+        single = False
+        for pp in pt.product_variant_ids:
+            cr.execute(
+                'select lot_split_type from product_product where id=%s',
+                (pp.id, ))
+            res = cr.fetchall()
+            if res[0][0] == 'single':
+                single = True
+                break
+        if single:
+            pto.write(cr, SUPERUSER_ID, pt.id, {'lot_split_type': 'single'})
