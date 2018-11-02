@@ -60,12 +60,10 @@ class TestStockSplitPicking(SavepointCase):
         self.assertAlmostEqual(move_line.qty_done, 4.0)
         self.assertAlmostEqual(move_line.product_qty, 4.0)
         self.assertAlmostEqual(move_line.product_uom_qty, 4.0)
-        self.assertAlmostEqual(move_line.ordered_qty, 10.0)
 
         self.assertAlmostEqual(self.move.quantity_done, 4.0)
         self.assertAlmostEqual(self.move.product_qty, 4.0)
         self.assertAlmostEqual(self.move.product_uom_qty, 4.0)
-        self.assertAlmostEqual(self.move.ordered_qty, 10.0)
 
         self.assertEqual(self.picking.state, 'assigned')
         # An another one with 6 units in state assigned
@@ -77,11 +75,9 @@ class TestStockSplitPicking(SavepointCase):
         self.assertAlmostEqual(move_line.qty_done, 0.0)
         self.assertAlmostEqual(move_line.product_qty, 6.0)
         self.assertAlmostEqual(move_line.product_uom_qty, 6.0)
-        self.assertAlmostEqual(move_line.ordered_qty, 6.0)
 
         self.assertAlmostEqual(new_picking.move_lines.quantity_done, 0.0)
         self.assertAlmostEqual(new_picking.move_lines.product_qty, 6.0)
         self.assertAlmostEqual(new_picking.move_lines.product_uom_qty, 6.0)
-        self.assertAlmostEqual(new_picking.move_lines.ordered_qty, 6.0)
 
         self.assertEqual(new_picking.state, 'assigned')
