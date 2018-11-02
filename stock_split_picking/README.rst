@@ -62,6 +62,7 @@ Contributors
 * Yannick Vaucher <yannick.vaucher@camptocamp.com>
 * Vicent Cubells <vicent.cubells@tecnativa.com>
 * Julien Coux <julien.coux@camptocamp.com>
+* Andrius Preimantas <andrius@versada.eu>
 
 Do not contact contributors directly about support or help with technical issues.
 
