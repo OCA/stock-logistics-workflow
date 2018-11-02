@@ -62,7 +62,7 @@ class StockPicking(models.Model):
                     'backorder_id': picking.id,
                 })
                 picking.message_post(
-                    _(
+                    body=_(
                         'The backorder <a href="#" '
                         'data-oe-model="stock.picking" '
                         'data-oe-id="%d">%s</a> has been created.'
