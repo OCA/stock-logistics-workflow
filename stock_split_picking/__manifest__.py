@@ -6,11 +6,11 @@
 {
     'name': 'Split picking',
     'summary': 'Split a picking in two not transferred pickings',
-    'version': '11.0.1.0.0',
+    'version': '12.0.1.0.0',
     'category': 'Inventory',
     'author': "Camptocamp, "
               "Tecnativa, "
-              "Odoo Community Association (OCA)",
+              "Odoo Community Association (OCA),",
     'license': 'AGPL-3',
     'website': 'https://github.com/OCA/stock-logistics-workflow',
     'depends': [
