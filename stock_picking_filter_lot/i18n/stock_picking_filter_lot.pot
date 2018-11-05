@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0\n"
+"Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
@@ -14,22 +14,12 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_picking_filter_lot
-#: model:ir.model.fields,field_description:stock_picking_filter_lot.field_stock_pack_operation_filter_location_id
-msgid "Filter location id"
-msgstr ""
-
-#. module: stock_picking_filter_lot
 #: model:ir.model.fields,field_description:stock_picking_filter_lot.field_stock_production_lot_location_ids
-msgid "Location ids"
+msgid "Location"
 msgstr ""
 
 #. module: stock_picking_filter_lot
 #: model:ir.model,name:stock_picking_filter_lot.model_stock_production_lot
 msgid "Lot/Serial"
-msgstr ""
-
-#. module: stock_picking_filter_lot
-#: model:ir.model,name:stock_picking_filter_lot.model_stock_pack_operation
-msgid "Packing Operation"
 msgstr ""
 
