@@ -1,168 +1,165 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* stock_picking_whole_scrap
+#	* stock_picking_whole_scrap
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-24 10:17+0000\n"
-"PO-Revision-Date: 2018-10-24 12:21+0200\n"
-"Last-Translator: \n"
+"Last-Translator: <>\n"
 "Language-Team: \n"
-"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.6\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
 
 #. module: stock_picking_whole_scrap
 #: model:ir.ui.view,arch_db:stock_picking_whole_scrap.view_stock_picking_scrap_form
 msgid "Cancel"
-msgstr "Cancelar"
+msgstr ""
 
 #. module: stock_picking_whole_scrap
 #: model:ir.model.fields,field_description:stock_picking_whole_scrap.field_wiz_stock_picking_scrap_create_uid
 #: model:ir.model.fields,field_description:stock_picking_whole_scrap.field_wiz_stock_picking_scrap_line_create_uid
 msgid "Created by"
-msgstr "Creado por"
+msgstr ""
 
 #. module: stock_picking_whole_scrap
 #: model:ir.model.fields,field_description:stock_picking_whole_scrap.field_wiz_stock_picking_scrap_create_date
 #: model:ir.model.fields,field_description:stock_picking_whole_scrap.field_wiz_stock_picking_scrap_line_create_date
 msgid "Created on"
-msgstr "Creado el"
+msgstr ""
 
 #. module: stock_picking_whole_scrap
 #: model:ir.ui.view,arch_db:stock_picking_whole_scrap.view_stock_picking_scrap_form
 msgid "Detailed Operations"
-msgstr "Operaciones detalladas"
+msgstr ""
 
 #. module: stock_picking_whole_scrap
 #: model:ir.model.fields,field_description:stock_picking_whole_scrap.field_wiz_stock_picking_scrap_display_name
 #: model:ir.model.fields,field_description:stock_picking_whole_scrap.field_wiz_stock_picking_scrap_line_display_name
 msgid "Display Name"
-msgstr "Nombre a mostrar"
+msgstr ""
 
 #. module: stock_picking_whole_scrap
 #: model:ir.model.fields,field_description:stock_picking_whole_scrap.field_wiz_stock_picking_scrap_id
 #: model:ir.model.fields,field_description:stock_picking_whole_scrap.field_wiz_stock_picking_scrap_line_id
 msgid "ID"
-msgstr "ID (identificación)"
+msgstr ""
 
 #. module: stock_picking_whole_scrap
 #: model:ir.model.fields,field_description:stock_picking_whole_scrap.field_wiz_stock_picking_scrap___last_update
 #: model:ir.model.fields,field_description:stock_picking_whole_scrap.field_wiz_stock_picking_scrap_line___last_update
 msgid "Last Modified on"
-msgstr "Última modificación el"
+msgstr ""
 
 #. module: stock_picking_whole_scrap
 #: model:ir.model.fields,field_description:stock_picking_whole_scrap.field_wiz_stock_picking_scrap_line_write_uid
 #: model:ir.model.fields,field_description:stock_picking_whole_scrap.field_wiz_stock_picking_scrap_write_uid
 msgid "Last Updated by"
-msgstr "Última modificación por"
+msgstr ""
 
 #. module: stock_picking_whole_scrap
 #: model:ir.model.fields,field_description:stock_picking_whole_scrap.field_wiz_stock_picking_scrap_line_write_date
 #: model:ir.model.fields,field_description:stock_picking_whole_scrap.field_wiz_stock_picking_scrap_write_date
 msgid "Last Updated on"
-msgstr "Última actualización el"
+msgstr ""
 
 #. module: stock_picking_whole_scrap
 #: model:ir.model.fields,field_description:stock_picking_whole_scrap.field_wiz_stock_picking_scrap_line_lot_id
 msgid "Lot"
-msgstr "Lote"
+msgstr ""
 
 #. module: stock_picking_whole_scrap
 #: model:ir.model.fields,field_description:stock_picking_whole_scrap.field_wiz_stock_picking_scrap_line_move_line_id
 msgid "Move Line"
-msgstr "Línea de movimiento"
+msgstr ""
 
 #. module: stock_picking_whole_scrap
 #: model:ir.model.fields,field_description:stock_picking_whole_scrap.field_wiz_stock_picking_scrap_line_ids
 msgid "Moves"
-msgstr "Movimientos"
+msgstr ""
 
 #. module: stock_picking_whole_scrap
 #: model:ir.model.fields,field_description:stock_picking_whole_scrap.field_wiz_stock_picking_scrap_line_owner_id
 msgid "Owner"
-msgstr "Propietario"
+msgstr ""
 
 #. module: stock_picking_whole_scrap
 #: model:ir.model.fields,field_description:stock_picking_whole_scrap.field_wiz_stock_picking_scrap_line_package_id
 msgid "Package"
-msgstr "Paquete"
+msgstr ""
 
 #. module: stock_picking_whole_scrap
 #: model:ir.model.fields,field_description:stock_picking_whole_scrap.field_wiz_stock_picking_scrap_picking_id
 msgid "Picking"
-msgstr "Albarán"
+msgstr ""
 
 #. module: stock_picking_whole_scrap
 #: model:ir.model,name:stock_picking_whole_scrap.model_wiz_stock_picking_scrap
 msgid "Picking Whole Scrap"
-msgstr "Desecho completo"
+msgstr ""
 
 #. module: stock_picking_whole_scrap
 #: model:ir.model.fields,field_description:stock_picking_whole_scrap.field_wiz_stock_picking_scrap_line_product_id
 msgid "Product"
-msgstr "Producto"
+msgstr ""
 
 #. module: stock_picking_whole_scrap
 #: model:ir.model.fields,field_description:stock_picking_whole_scrap.field_wiz_stock_picking_scrap_line_quantity
 msgid "Quantity"
-msgstr "Ctd."
+msgstr ""
 
 #. module: stock_picking_whole_scrap
 #: model:ir.ui.view,arch_db:stock_picking_whole_scrap.view_stock_picking_scrap_form
 msgid "Scrap"
-msgstr "Desecho"
+msgstr ""
 
 #. module: stock_picking_whole_scrap
 #: model:ir.ui.view,arch_db:stock_picking_whole_scrap.view_picking_form
 msgid "Scrap All"
-msgstr "Desechar todo"
+msgstr ""
 
 #. module: stock_picking_whole_scrap
 #: model:ir.model.fields,field_description:stock_picking_whole_scrap.field_wiz_stock_picking_scrap_scrap_location_id
 msgid "Scrap Location"
-msgstr "Ubicación desecho"
+msgstr ""
 
 #. module: stock_picking_whole_scrap
 #: model:ir.model,name:stock_picking_whole_scrap.model_stock_picking
 msgid "Transfer"
-msgstr "Transferir"
+msgstr ""
 
 #. module: stock_picking_whole_scrap
 #: model:ir.model.fields,field_description:stock_picking_whole_scrap.field_wiz_stock_picking_scrap_line_uom_id
 msgid "Unit of Measure"
-msgstr "Unidad de medida"
+msgstr ""
 
 #. module: stock_picking_whole_scrap
 #: code:addons/stock_picking_whole_scrap/models/stock_picking.py:12
 #, python-format
 msgid "Whole Scrap"
-msgstr "Desechar completo"
+msgstr ""
 
 #. module: stock_picking_whole_scrap
 #: model:ir.model.fields,field_description:stock_picking_whole_scrap.field_wiz_stock_picking_scrap_line_wizard_id
 msgid "Wizard"
-msgstr "Asistente"
+msgstr ""
 
 #. module: stock_picking_whole_scrap
 #: code:addons/stock_picking_whole_scrap/wizards/stock_picking_whole_scrap.py:128
 #, python-format
 msgid "You can't scrap more quantity that done it"
-msgstr "No puedes desechar mas unidades que las realizadas"
+msgstr ""
 
 #. module: stock_picking_whole_scrap
 #: code:addons/stock_picking_whole_scrap/wizards/stock_picking_whole_scrap.py:80
-#, fuzzy, python-format
+#, python-format
 msgid "You may only scrap pickings in done state"
-msgstr "Sólo puede desechar albaranes que estén ya realizados."
+msgstr ""
 
 #. module: stock_picking_whole_scrap
 #: model:ir.model,name:stock_picking_whole_scrap.model_wiz_stock_picking_scrap_line
 msgid "wiz.stock.picking.scrap.line"
 msgstr ""
+
