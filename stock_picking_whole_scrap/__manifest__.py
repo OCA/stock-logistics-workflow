@@ -5,7 +5,7 @@
     'summary': 'Create whole scrap from a picking for move lines',
     'version': '11.0.1.0.0',
     'development_status': 'Beta',
-    'category': 'stock',
+    'category': 'Warehouse',
     'website': 'https://github.com/OCA/stock-logistics-workflow',
     'author': 'Tecnativa, Odoo Community Association (OCA)',
     'license': 'AGPL-3',
