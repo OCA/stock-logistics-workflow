@@ -45,7 +45,9 @@ class TestBatchPicking(TransactionCase):
         })
 
     def create_simple_picking(self, product_ids, batch_id=False):
-        return self.picking_model.create({
+        # The 'planned_picking' context key ensures that the picking
+        # will be created in the 'draft' state (no autoconfirm)
+        return self.picking_model.with_context(planned_picking=True).create({
             'picking_type_id': self.ref('stock.picking_type_out'),
             'location_id': self.stock_loc.id,
             'location_dest_id': self.customer_loc.id,
@@ -112,7 +114,7 @@ class TestBatchPicking(TransactionCase):
 
         self.assertEqual(
             {(0, 1)},
-            {(op.qty_done, op.product_qty)
+            {(op.qty_done, op.ordered_qty)
              for op in self.batch.move_line_ids}
         )
 
@@ -126,7 +128,7 @@ class TestBatchPicking(TransactionCase):
 
         self.assertEqual(
             {(1, 1)},
-            {(op.qty_done, op.product_qty)
+            {(op.qty_done, op.ordered_qty)
              for op in self.batch.move_line_ids}
         )
 
@@ -191,15 +193,19 @@ class TestBatchPicking(TransactionCase):
         self.assertEqual('cancel', batch.state)
 
     def test_all_cancel_or_done__on_cancel(self):
-        self.picking.do_transfer()
+        self.picking.force_transfer()
         self.picking2.action_cancel()
 
+        self.assertEqual('done', self.picking.state)
+        self.assertEqual('cancel', self.picking2.state)
         self.assertEqual('done', self.batch.state)
 
     def test_all_cancel_or_done__on_done(self):
         self.picking2.action_cancel()
-        self.picking.do_transfer()
+        self.picking.force_transfer()
 
+        self.assertEqual('done', self.picking.state)
+        self.assertEqual('cancel', self.picking2.state)
         self.assertEqual('done', self.batch.state)
 
     def test_stock_picking_copy(self):
@@ -312,7 +318,7 @@ class TestBatchPicking(TransactionCase):
         self.assertEqual(self.product6, backorder.move_lines[0].product_id)
         self.assertEqual(2, backorder.move_lines[0].product_uom_qty)
         self.assertEqual(1, len(backorder.move_line_ids))
-        self.assertEqual(2, backorder.move_line_ids[0].product_qty)
+        self.assertEqual(2, backorder.move_line_ids[0].product_uom_qty)
         self.assertEqual(0, backorder.move_line_ids[0].qty_done)
 
         backorder2 = self.picking_model.search([
@@ -325,7 +331,7 @@ class TestBatchPicking(TransactionCase):
         self.assertEqual(self.product10, backorder2.move_lines.product_id)
         self.assertEqual(1, backorder2.move_lines.product_uom_qty)
         self.assertEqual(1, len(backorder2.move_line_ids))
-        self.assertEqual(1, backorder2.move_line_ids.product_qty)
+        self.assertEqual(1, backorder2.move_line_ids.product_uom_qty)
         self.assertEqual(0, backorder2.move_line_ids.qty_done)
 
     def test_assign_draft_pick(self):
@@ -350,16 +356,20 @@ class TestBatchPicking(TransactionCase):
             'move_type': 'direct',
         })
 
-        procurement = self.env['procurement.order'].create({
-            'name': 'test',
-            'group_id': group.id,
-            'warehouse_id': warehouse.id,
-            'product_id': self.ref('product.product_product_11'),
-            'product_uom_qty': 1,
-            'product_uom': self.ref('product.product_uom_unit'),
-            'location_id': self.customer_loc.id,
-        })
-        procurement.run()
+        values = {
+            'company_id': warehouse.company_id,
+            'group_id': group,
+            'date_planned': '2018-11-13 12:12:59',
+            'warehouse_id': warehouse,
+        }
+        group.run(
+            product_id=self.env.ref('product.product_product_11'),
+            product_qty=1,
+            product_uom=self.env.ref('product.product_uom_unit'),
+            location_id=self.customer_loc,
+            name='test',
+            origin='TEST',
+            values=values)
 
         pickings = self.picking_model.search([
             ('group_id', '=', group.id)
@@ -369,10 +379,8 @@ class TestBatchPicking(TransactionCase):
         picking.action_assign()
 
         picking.move_line_ids[0].qty_done = 1
-        package_id = picking.put_in_pack()
-        picking.do_transfer()
-
-        package = self.env['stock.quant.package'].browse(package_id)
+        package = picking.put_in_pack()
+        picking.action_done()
 
         other_picking = pickings.filtered(lambda p: p.id != picking.id)
         self.assertEqual('assigned', other_picking.state)
@@ -399,7 +407,7 @@ class TestBatchPicking(TransactionCase):
         picking3 = self.create_simple_picking([
             self.ref('product.product_product_11')
         ], batch_id=self.batch.id)
-        picking3.do_transfer()
+        picking3.force_transfer()
 
         picking4 = self.create_simple_picking([
             self.ref('product.product_product_11')
