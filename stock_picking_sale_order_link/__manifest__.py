@@ -4,7 +4,7 @@
 {
     "name": "Stock Picking Sale Order Link",
     "summary": "Link between picking and sale order",
-    "version": "11.0.1.0.0",
+    "version": "12.0.1.0.0",
     "category": "Inventory",
     "website": "http://github.com/OCA/stock-logistics-workflow",
     "author": "Tecnativa, "
