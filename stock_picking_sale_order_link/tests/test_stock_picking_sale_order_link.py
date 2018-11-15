@@ -2,11 +2,11 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.tests.common import TransactionCase
+from odoo.tests import tagged
 
 
+@tagged('post_install', '-at_install')
 class TestStockPickingSaleOrderLink(TransactionCase):
-    post_install = True
-    at_install = False
 
     def setUp(self):
         super(TestStockPickingSaleOrderLink, self).setUp()
