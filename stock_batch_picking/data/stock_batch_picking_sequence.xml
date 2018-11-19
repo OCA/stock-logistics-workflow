@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Sequences for stock.batch.picking -->
+    <record id="seq_stock_batch_picking" model="ir.sequence">
+        <field name="name">Batch Picking</field>
+        <field name="code">stock.batch.picking</field>
+        <field name="prefix">Prep</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>
+
