@@ -9,6 +9,7 @@
     'author': "Camptocamp, "
               "Tecnativa, "
               "Odoo Community Association (OCA)",
+    'development_status': 'Mature',
     'maintainers': [
         'Camptocamp',
         'Tecnativa',
