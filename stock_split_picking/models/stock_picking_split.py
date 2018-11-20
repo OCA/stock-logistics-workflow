@@ -15,7 +15,7 @@ class StockPickingSplit(models.TransientModel):
         required=True,
         default=lambda s: s.env.context.get('active_id', False)
     )
-    line_ids = fields.Many2many(
+    line_ids = fields.One2many(
         'stock.picking.split.line',
         'split_id',
         string='Split Operations',
