@@ -8,7 +8,7 @@
         <field name="arch" type="xml">
             <field name ="state" position="before">
                 <button name="split_process"
-                        states="draft,assigned,partially_available"
+                        states="draft,assigned,waiting,confirmed,partially_available"
                         string="Split"
                         confirm="Are you sure you want to split current picking ?"
                         groups="stock.group_stock_user"

@@ -7,7 +7,7 @@
 {
     'name': 'Split picking',
     'summary': 'Split a picking in two not transferred pickings',
-    'version': '10.0.1.0.0',
+    'version': '10.0.2.0.0',
     'category': 'Inventory',
     'author': "Camptocamp, "
               "Tecnativa, "
@@ -19,6 +19,7 @@
     ],
     'data': [
         'views/stock_partial_picking.xml',
+        'views/stock_picking_split.xml',
     ],
     'installable': True,
 }
