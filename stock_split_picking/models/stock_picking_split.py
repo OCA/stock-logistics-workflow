@@ -24,7 +24,7 @@ class StockPickingSplit(models.TransientModel):
     @api.model
     def create(self, vals):
         rec = super(StockPickingSplit, self).create(vals)
-        rec.compute_lines()
+        rec._generate_lines()
         return rec
 
     @api.multi
@@ -70,7 +70,8 @@ class StockPickingSplit(models.TransientModel):
             split_picking.action_assign()
         return True
 
-    def compute_lines(self):
+    def _generate_lines(self):
+        self.ensure_one()
         line_ids = self.env['stock.picking.split.line']
         product_qty = {}
         product_availability = {}
@@ -81,8 +82,9 @@ class StockPickingSplit(models.TransientModel):
             if product not in product_qty:
                 product_qty[product] = move.product_uom_qty
                 product_availability[product] = move.reserved_availability
-            product_qty[product] += move.product_uom_qty
-            product_availability[product] += move.reserved_availability
+            else:
+                product_qty[product] += move.product_uom_qty
+                product_availability[product] += move.reserved_availability
         for product, qty in product_qty.items():
             vals = {'picking_id': self.picking_id.id,
                     'product_qty': qty,
