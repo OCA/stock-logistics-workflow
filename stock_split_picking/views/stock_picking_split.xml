@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="stock_picking_split_form" model="ir.ui.view">
+    <field name="name">stock picking split form view</field>
+    <field name="model">stock.picking.split</field>
+    <field name="arch" type="xml">
+      <form string="Split picking">
+          <field name="picking_id" groups="base.group_noone"/>
+          <field name="line_ids" mode="tree" nolabel="1">
+            <tree decoration-success="split_qty &gt; 0"
+                  decoration-info="split_qty == 0"
+                  decoration-danger="split_qty &lt; 0 or split_qty &gt; product_qty"
+                  edit="1" create="0" delete="0" editable="top"
+              >
+              <field name="product_id" />
+              <field name="product_uom_id" groups="product.group_uom"/>
+              <field name="product_qty" readonly="1" attrs="{'required': [('product_id', '!=', False)]}"/>
+              <field name="split_qty" />
+            </tree>
+
+          </field>
+        <footer>
+          <button name="process" string="Split" type="object"
+                  class="oe_highlight"/>
+          <button string="_Cancel" class="btn-default" special="cancel"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+</odoo>

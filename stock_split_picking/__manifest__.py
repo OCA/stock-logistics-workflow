@@ -19,6 +19,7 @@
     ],
     'data': [
         'views/stock_partial_picking.xml',
+        'views/stock_picking_split.xml',
     ],
     'installable': True,
 }
