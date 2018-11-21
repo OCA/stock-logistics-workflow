@@ -144,6 +144,19 @@ class TestPackagePreparationLine(TransactionCase):
         self.preparation.picking_ids = [(3, self.picking.id)]
         self.assertEquals(len(self.preparation.line_ids), 1)
 
+    def test_edit_picking_from_package_preparation(self):
+        # Edit picking in package preparation to test what happens
+        # to package preparation line
+        self.picking2 = self._create_picking()
+        self._create_move(self.picking2, self.product2)
+        self.preparation.write({
+            'picking_ids': [
+                (6, 0, [self.picking.id, self.picking2.id])]})
+        self.preparation.write({
+            'picking_ids': [
+                (1, self.picking.id, {'name': 'Test change name'})]})
+        self.assertEquals(len(self.preparation.line_ids), 1)
+
     def test_standard_flow_with_detail_with_lot(self):
         # Test a standard flow of a package preparation but add a lot
         # on detail
