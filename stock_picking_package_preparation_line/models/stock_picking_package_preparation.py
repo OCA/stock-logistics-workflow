@@ -90,6 +90,8 @@ class StockPickingPackagePreparation(models.Model):
             # Collect new pickings to read the change
             changed_picking_ids = []
             for picking_ids in values['picking_ids']:
+                if picking_ids[0] == 1:
+                    changed_picking_ids.append(picking_ids[1])
                 if picking_ids[0] == 6:
                     changed_picking_ids.extend(picking_ids[2])
             for pack in self:
