@@ -128,6 +128,6 @@ class StockPickingSplitLine(models.TransientModel):
                 )
             if rec.split_qty < 0:
                 raise ValidationError(
-                    _('Split quantity for product %s must be greater than 0') %
+                    _('Split quantity for product %s must be greater than or equal to 0') %
                     (rec.product_id.name)
                 )
