@@ -19,17 +19,22 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: stock_picking_line_sequence
-#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_picking_max_line_sequence
+#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move__sequence
+msgid "HiddenSequence"
+msgstr ""
+
+#. module: stock_picking_line_sequence
+#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_picking__max_line_sequence
 msgid "Max sequence in lines"
 msgstr ""
 
 #. module: stock_picking_line_sequence
-#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move_sequence2
+#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move__sequence2
 msgid "Sequence"
 msgstr ""
 
 #. module: stock_picking_line_sequence
-#: model:ir.model.fields,help:stock_picking_line_sequence.field_stock_move_sequence2
+#: model:ir.model.fields,help:stock_picking_line_sequence.field_stock_move__sequence2
 msgid "Shows the sequence in the Stock Move."
 msgstr ""
 
