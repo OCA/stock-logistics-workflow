@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 Camptocamp SA - Damien Crier, Alexandre Fayolle
 # Copyright 2017 Eficent Business and IT Consulting Services S.L.
 # Copyright 2017 Serpent Consulting Services Pvt. Ltd.
@@ -11,10 +10,12 @@ class StockMove(models.Model):
     _inherit = 'stock.move'
 
     # re-defines the field to change the default
-    sequence = fields.Integer(default=9999)
+    sequence = fields.Integer('HiddenSequence',
+                              default=9999)
 
     # displays sequence on the stock moves
-    sequence2 = fields.Integer(help="Shows the sequence in the Stock Move.",
+    sequence2 = fields.Integer('Sequence',
+                               help="Shows the sequence in the Stock Move.",
                                related='sequence', readonly=True, store=True)
 
     @api.model
@@ -30,7 +31,7 @@ class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
     @api.multi
-    @api.depends('move_lines')
+    @api.depends('move_ids_without_package')
     def _compute_max_line_sequence(self):
         """Allow to know the highest sequence entered in move lines.
         Then we add 1 to this value for the next sequence, this value is
@@ -40,7 +41,8 @@ class StockPicking(models.Model):
         """
         for picking in self:
             picking.max_line_sequence = (
-                max(picking.mapped('move_lines.sequence') or [0]) + 1
+                max(picking.mapped('move_ids_without_package.sequence') or
+                    [0]) + 1
                 )
 
     max_line_sequence = fields.Integer(string='Max sequence in lines',
@@ -50,7 +52,7 @@ class StockPicking(models.Model):
     def _reset_sequence(self):
         for rec in self:
             current_sequence = 1
-            for line in rec.move_lines:
+            for line in rec.move_ids_without_package:
                 line.sequence = current_sequence
                 current_sequence += 1
 
