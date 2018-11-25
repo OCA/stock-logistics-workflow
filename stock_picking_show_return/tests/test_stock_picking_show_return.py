@@ -27,7 +27,6 @@ class TestStockPickingShowReturn(common.TransactionCase):
 
     def test_returned_ids_field(self):
         self.picking.action_assign()
-        self.picking.force_assign()
         self.picking.move_line_ids.qty_done = 1
         self.picking.action_done()
         wizard = self.env['stock.return.picking'].with_context(
