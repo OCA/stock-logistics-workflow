@@ -18,9 +18,7 @@
             <field name="inherit_id" ref="stock.view_picking_form" />
             <field name="arch" type="xml">
                 <field name="group_id" position="after">
-                    <field name="client_order_ref"
-                           attrs="{'invisible':
-                           [('client_order_ref', '=', False)]}" />
+                    <field name="client_order_ref"/>
                 </field>
             </field>
         </record>
@@ -39,8 +37,9 @@
                 </field>
                 <filter name="picking_type" position="before">
                     <filter string="Client order reference"
-                            domain="[]"
-                            context="{'group_by':'client_order_ref'}"/>
+                        domain="[]"
+                        name="client_ref"
+                        context="{'group_by':'client_order_ref'}"/>
                 </filter>
             </field>
         </record>
