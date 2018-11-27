@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_picking_package_preparation_line
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:143
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:145
 #, python-format
 msgid "Cannot find a default location for picking type: %s"
 msgstr ""
@@ -68,8 +68,8 @@ msgid "If you change this quantity for a 'ready' picking, the system will not ge
 msgstr ""
 
 #. module: stock_picking_package_preparation_line
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:175
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:184
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:177
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:186
 #, python-format
 msgid "Impossible to create confirmed picking. Please check products availability!"
 msgstr ""
