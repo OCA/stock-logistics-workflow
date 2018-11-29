@@ -16,10 +16,8 @@
 
 * `Tecnativa <https://www.tecnativa.com>`_
 
-  * Pedro M. Baeza
-  * David Vidal
-  * Sergio Teruel
-  * João Marques
+  * Pedro M. Baeza <pedro.baeza@tecnativa.com>
+  * David Vidal <david.vidal@tecnativa.com>
 
 * Unai Alkorta
 * Iñaki Zabala
