@@ -71,8 +71,8 @@ class TestStockNoNegative(TransactionCase):
             self.stock_picking.button_validate()
 
     def test_check_constrains_scrap_location(self):
-        """Assert that constraint is raised when user
-        tries to validate the stock operation which would
+        """Assert that constraint is not raised when user
+        tries to validate the stock operation on a scrap location which would
         make the stock level of the product negative """
 
         self.location_id.scrap_location = True
