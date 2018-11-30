@@ -28,7 +28,7 @@ class StockQuant(models.Model):
                 quant.product_id.type == 'product' and
                 not quant.product_id.allow_negative_stock and
                 not quant.product_id.categ_id.allow_negative_stock and
-                quant.location_id.usage in ['internal', 'transit']
+                not quant.location_id.should_bypass_reservation()
             ):
                 msg_add = ''
                 if quant.lot_id:
