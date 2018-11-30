@@ -70,6 +70,19 @@ class TestStockNoNegative(TransactionCase):
         with self.assertRaises(ValidationError):
             self.stock_picking.button_validate()
 
+    def test_check_constrains_scrap_location(self):
+        """Assert that constraint is raised when user
+        tries to validate the stock operation which would
+        make the stock level of the product negative """
+
+        self.location_id.scrap_location = True
+        self.stock_picking.action_confirm()
+        self.stock_picking.button_validate()
+        quant = self.env['stock.quant'].search([
+            ('product_id', '=', self.product.id),
+            ('location_id', '=', self.location_id.id)])
+        self.assertEqual(quant.quantity, -100)
+
     def test_true_allow_negative_stock(self):
         """Assert that negative stock levels are allowed when
         the allow_negative_stock is set active in the product"""
