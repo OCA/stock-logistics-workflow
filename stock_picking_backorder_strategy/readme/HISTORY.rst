@@ -1,3 +1,11 @@
+11.0.1.0.0 (2018-12-06)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [11.0][MIG] stock_picking_backorder_strategy
+  Migration to v11.0
+  Field pack_operation_ids removed in v11
+  Method do_new_transfer changed to button_validate
+
 10.0.1.0.0 (2018-06-06)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -14,3 +22,4 @@
   create: default behavior
   no_create: no backorder created
   cancel: backorder is cancelled
+  
