@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -10,11 +9,11 @@ class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     @api.multi
-    def check_backorder(self):
+    def _check_backorder(self):
         self.ensure_one()
         # If strategy == 'manual', let the normal process going on
         if self.picking_type_id.backorder_strategy == 'manual':
-            return super(StockPicking, self).check_backorder()
+            return super(StockPicking, self)._check_backorder()
         return False
 
     @api.multi
