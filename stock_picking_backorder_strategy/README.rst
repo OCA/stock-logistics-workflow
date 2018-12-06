@@ -47,7 +47,7 @@ Your preferred way to install addons will work with Stock Picking Backorder Stra
 
 An easy way to install it with all its dependencies is using pip:
 
-pip install --pre odoo10-addon-stock-picking-backorder-strategy
+pip install --pre odoo11-addon-stock-picking-backorder-strategy
 then restart Odoo, update the addons list in your database, and install the Stock Picking Backorder Strategy application.
 
 Usage
@@ -59,6 +59,13 @@ To configure this module, you need to:
 
 Changelog
 =========
+11.0.1.0.0 (2018-12-06)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [11.0][MIG] stock_picking_backorder_strategy
+  Migration to v11.0
+  Field pack_operation_ids removed in v11
+  Method do_new_transfer changed to button_validate
 
 10.0.1.0.0 (2018-06-06)
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -94,12 +101,14 @@ Authors
 ~~~~~~~
 
 * ACSONE SA/NV
+* Open Source Integrators (OSI)
 
 Contributors
 ~~~~~~~~~~~~
 
 * Laetitia Gangloff <laetitia.gangloff@acsone.eu>
 * Denis Roussel <denis.roussel@acsone.eu>
+* Mayank Gosai <mgosai@opensourceintegrators.com>
 
 Maintainers
 ~~~~~~~~~~~
