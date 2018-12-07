@@ -1,0 +1,72 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_picking_backorder_strategy
+#
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: stock-logistics-workflow (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-18 01:44+0000\n"
+"PO-Revision-Date: 2015-10-21 16:33+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: Chinese (Taiwan) (http://www.transifex.com/oca/OCA-stock-"
+"logistics-workflow-8-0/language/zh_TW/)\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. module: stock_picking_backorder_strategy
+#: model:ir.model.fields,field_description:stock_picking_backorder_strategy.field_stock_picking_type_backorder_strategy
+msgid "Backorder strategy"
+msgstr ""
+
+#. module: stock_picking_backorder_strategy
+#: code:addons/stock_picking_backorder_strategy/models/stock_picking_type.py:15
+#: selection:stock.picking.type,backorder_strategy:0
+#, python-format
+msgid "Cancel"
+msgstr "刪除"
+
+#. module: stock_picking_backorder_strategy
+#: code:addons/stock_picking_backorder_strategy/models/stock_picking_type.py:13
+#: selection:stock.picking.type,backorder_strategy:0
+#, python-format
+msgid "Create"
+msgstr ""
+
+#. module: stock_picking_backorder_strategy
+#: model:ir.model.fields,help:stock_picking_backorder_strategy.field_stock_picking_type_backorder_strategy
+msgid "Define what to do with backorder"
+msgstr ""
+
+#. module: stock_picking_backorder_strategy
+#: code:addons/stock_picking_backorder_strategy/models/stock_picking_type.py:13
+#: selection:stock.picking.type,backorder_strategy:0
+#, python-format
+msgid "Manual"
+msgstr ""
+
+#. module: stock_picking_backorder_strategy
+#: code:addons/stock_picking_backorder_strategy/models/stock_picking_type.py:14
+#: selection:stock.picking.type,backorder_strategy:0
+#, python-format
+msgid "No create"
+msgstr ""
+
+#. module: stock_picking_backorder_strategy
+#: model:ir.model,name:stock_picking_backorder_strategy.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_picking_backorder_strategy
+#: model:ir.model,name:stock_picking_backorder_strategy.model_stock_picking_type
+msgid "The picking type determines the picking view"
+msgstr ""
+
+#. module: stock_picking_backorder_strategy
+#: model:ir.model,name:stock_picking_backorder_strategy.model_stock_picking
+msgid "Transfer"
+msgstr ""
