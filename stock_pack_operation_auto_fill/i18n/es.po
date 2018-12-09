@@ -41,7 +41,7 @@ msgid "Avoid auto-assignment of lots"
 msgstr "Evitar asignación automática de lotes"
 
 #. module: stock_pack_operation_auto_fill
-#: code:addons/stock_pack_operation_auto_fill/models/stock_picking.py:37
+#: code:addons/stock_pack_operation_auto_fill/models/stock_picking.py:36
 #, python-format
 msgid ""
 "Filling the operations automatically is not possible, perhaps the pickings "
