@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_picking_package_preparation_line
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:144
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:145
 #, python-format
 msgid "Cannot find a default location for picking type: %s"
 msgstr ""
@@ -41,7 +41,7 @@ msgstr "Created on"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_res_company_default_picking_type_for_package_preparation_id
-#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_config_settings_default_picking_type_for_package_preparation_id
+#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_res_config_settings_default_picking_type_for_package_preparation_id
 msgid "Default Picking Type used in package preparation"
 msgstr "Default Picking Type used in package preparation"
 
@@ -77,11 +77,11 @@ msgstr ""
 "generate a back order, but will just deliver the new quantity"
 
 #. module: stock_picking_package_preparation_line
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:190
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:199
-#, python-format
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:177
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:186
+#, fuzzy, python-format
 msgid ""
-"Impossible to create confirmed picking. Please Check products availability!"
+"Impossible to create confirmed picking. Please check products availability!"
 msgstr ""
 "Impossible to create confirmed picking. Please Check products availability!"
 
@@ -122,6 +122,11 @@ msgid "Note"
 msgstr "Note"
 
 #. module: stock_picking_package_preparation_line
+#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_picking_type_id
+msgid "Operation Type"
+msgstr ""
+
+#. module: stock_picking_package_preparation_line
 #: model:ir.model,name:stock_picking_package_preparation_line.model_stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line_package_preparation_id
 #: model:ir.ui.view,arch_db:stock_picking_package_preparation_line.view_stock_picking_package_preparation_line_setting
@@ -132,11 +137,6 @@ msgstr "Package Preparation"
 #: model:ir.model,name:stock_picking_package_preparation_line.model_stock_picking_package_preparation_line
 msgid "Package Preparation Line"
 msgstr "Package Preparation Line"
-
-#. module: stock_picking_package_preparation_line
-#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_picking_type_id
-msgid "Picking Type"
-msgstr "Picking Type"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line_product_id
@@ -171,9 +171,12 @@ msgid "Used to specify lot when line is created using package preparation"
 msgstr "Default Picking Type used in package preparation"
 
 #. module: stock_picking_package_preparation_line
-#: model:ir.model,name:stock_picking_package_preparation_line.model_stock_config_settings
-msgid "stock.config.settings"
+#: model:ir.model,name:stock_picking_package_preparation_line.model_res_config_settings
+msgid "res.config.settings"
 msgstr ""
+
+#~ msgid "Picking Type"
+#~ msgstr "Picking Type"
 
 #~ msgid "Product uom"
 #~ msgstr "Product uom"
