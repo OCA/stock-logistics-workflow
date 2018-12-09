@@ -37,6 +37,14 @@ msgid "Check Availability"
 msgstr "Verfügbarkeit prüfen"
 
 #. module: stock_picking_mass_action
+#: model:ir.actions.server,name:stock_picking_mass_action.ir_cron_check_assign_all_ir_actions_server
+#: model:ir.cron,cron_name:stock_picking_mass_action.ir_cron_check_assign_all
+#: model:ir.cron,name:stock_picking_mass_action.ir_cron_check_assign_all
+#, fuzzy
+msgid "Check Availability of Stock Picking"
+msgstr "Verfügbarkeit prüfen"
+
+#. module: stock_picking_mass_action
 #: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_create_uid
 msgid "Created by"
 msgstr "erstellt von"
@@ -89,6 +97,12 @@ msgid "Mass Action for the selected stock picking"
 msgstr ""
 
 #. module: stock_picking_mass_action
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_picking_ids
+#, fuzzy
+msgid "Pickings"
+msgstr "Pickliste"
+
+#. module: stock_picking_mass_action
 #: model:ir.model,name:stock_picking_mass_action.model_stock_picking_mass_action
 msgid "Stock Picking Mass Action"
 msgstr ""
@@ -134,9 +148,6 @@ msgstr "oder"
 
 #~ msgid "Create Invoices/Refunds"
 #~ msgstr "Erstelle Rechnung / Gutschrift"
-
-#~ msgid "Picking List"
-#~ msgstr "Pickliste"
 
 #~ msgid "Stock Invoice Onshipping"
 #~ msgstr "Abrechnung bei Versand"
