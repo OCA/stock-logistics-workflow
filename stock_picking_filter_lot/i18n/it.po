@@ -17,13 +17,9 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_picking_filter_lot
-#: model:ir.model.fields,field_description:stock_picking_filter_lot.field_stock_pack_operation_filter_location_id
-msgid "Filter location id"
-msgstr "Filtra per punto di stoccaggio"
-
-#. module: stock_picking_filter_lot
 #: model:ir.model.fields,field_description:stock_picking_filter_lot.field_stock_production_lot_location_ids
-msgid "Location ids"
+#, fuzzy
+msgid "Location"
 msgstr "Punti di stoccaggio"
 
 #. module: stock_picking_filter_lot
@@ -31,7 +27,8 @@ msgstr "Punti di stoccaggio"
 msgid "Lot/Serial"
 msgstr "Lotto/Seriale"
 
-#. module: stock_picking_filter_lot
-#: model:ir.model,name:stock_picking_filter_lot.model_stock_pack_operation
-msgid "Packing Operation"
-msgstr "Impacchettamento"
+#~ msgid "Filter location id"
+#~ msgstr "Filtra per punto di stoccaggio"
+
+#~ msgid "Packing Operation"
+#~ msgstr "Impacchettamento"
