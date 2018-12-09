@@ -25,12 +25,23 @@ msgid "Action Pack Op Auto Fill Allowed"
 msgstr "Možnost automatického vyplnění akce pack op"
 
 #. module: stock_pack_operation_auto_fill
+#: model:ir.model.fields,field_description:stock_pack_operation_auto_fill.field_stock_picking_auto_fill_operation
+#: model:ir.model.fields,field_description:stock_pack_operation_auto_fill.field_stock_picking_type_auto_fill_operation
+msgid "Auto fill operations"
+msgstr ""
+
+#. module: stock_pack_operation_auto_fill
 #: model:ir.ui.view,arch_db:stock_pack_operation_auto_fill.stock_picking_form_view
 msgid "AutoFill"
 msgstr "Automatické vyplňování"
 
 #. module: stock_pack_operation_auto_fill
-#: code:addons/stock_pack_operation_auto_fill/models/stock_picking.py:32
+#: model:ir.model.fields,field_description:stock_pack_operation_auto_fill.field_stock_picking_type_avoid_lot_assignment
+msgid "Avoid auto-assignment of lots"
+msgstr ""
+
+#. module: stock_pack_operation_auto_fill
+#: code:addons/stock_pack_operation_auto_fill/models/stock_picking.py:36
 #, python-format
 msgid ""
 "Filling the operations automatically is not possible, perhaps the pickings "
@@ -38,6 +49,16 @@ msgid ""
 msgstr ""
 "Automatické vyplňování operací není možné, sběrnice pravděpodobně nejsou ve "
 "správném stavu (částečně dostupné nebo dostupné)."
+
+#. module: stock_pack_operation_auto_fill
+#: model:ir.model,name:stock_pack_operation_auto_fill.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_pack_operation_auto_fill
+#: model:ir.model,name:stock_pack_operation_auto_fill.model_stock_picking_type
+msgid "The operation type determines the picking view"
+msgstr ""
 
 #. module: stock_pack_operation_auto_fill
 #: model:ir.ui.view,arch_db:stock_pack_operation_auto_fill.stock_picking_form_view
