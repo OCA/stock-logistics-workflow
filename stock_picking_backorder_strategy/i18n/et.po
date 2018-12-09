@@ -20,18 +20,18 @@ msgstr ""
 
 #. module: stock_picking_backorder_strategy
 #: model:ir.model.fields,field_description:stock_picking_backorder_strategy.field_stock_picking_type_backorder_strategy
-msgid "Backorder strategy"
+msgid "Backorder Strategy"
 msgstr ""
 
 #. module: stock_picking_backorder_strategy
-#: code:addons/stock_picking_backorder_strategy/models/stock_picking_type.py:15
+#: code:addons/stock_picking_backorder_strategy/models/stock_picking_type.py:13
 #: selection:stock.picking.type,backorder_strategy:0
 #, python-format
 msgid "Cancel"
 msgstr "Loobu"
 
 #. module: stock_picking_backorder_strategy
-#: code:addons/stock_picking_backorder_strategy/models/stock_picking_type.py:13
+#: code:addons/stock_picking_backorder_strategy/models/stock_picking_type.py:11
 #: selection:stock.picking.type,backorder_strategy:0
 #, python-format
 msgid "Create"
@@ -43,14 +43,14 @@ msgid "Define what to do with backorder"
 msgstr ""
 
 #. module: stock_picking_backorder_strategy
-#: code:addons/stock_picking_backorder_strategy/models/stock_picking_type.py:13
+#: code:addons/stock_picking_backorder_strategy/models/stock_picking_type.py:11
 #: selection:stock.picking.type,backorder_strategy:0
 #, python-format
 msgid "Manual"
 msgstr ""
 
 #. module: stock_picking_backorder_strategy
-#: code:addons/stock_picking_backorder_strategy/models/stock_picking_type.py:14
+#: code:addons/stock_picking_backorder_strategy/models/stock_picking_type.py:12
 #: selection:stock.picking.type,backorder_strategy:0
 #, python-format
 msgid "No create"
@@ -63,7 +63,7 @@ msgstr ""
 
 #. module: stock_picking_backorder_strategy
 #: model:ir.model,name:stock_picking_backorder_strategy.model_stock_picking_type
-msgid "The picking type determines the picking view"
+msgid "The operation type determines the picking view"
 msgstr ""
 
 #. module: stock_picking_backorder_strategy
