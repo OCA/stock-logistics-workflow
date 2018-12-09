@@ -108,3 +108,8 @@ msgstr "Lagerbuchung"
 #: model:stock.location.route,name:stock_auto_move.test_route
 msgid "Test route"
 msgstr "Testroute"
+
+#. module: stock_auto_move
+#: model:ir.model,name:stock_auto_move.model_stock_picking
+msgid "Transfer"
+msgstr ""
