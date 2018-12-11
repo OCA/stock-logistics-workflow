@@ -1,0 +1,47 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_move_quick_lot
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_move_quick_lot
+#: model:ir.model.fields,field_description:stock_move_quick_lot.field_stock_move_life_date
+msgid "End of Life Date"
+msgstr ""
+
+#. module: stock_move_quick_lot
+#: code:addons/stock_move_quick_lot/models/stock_move.py:68
+#, python-format
+msgid "Go to lots to change data"
+msgstr ""
+
+#. module: stock_move_quick_lot
+#: model:ir.model.fields,field_description:stock_move_quick_lot.field_stock_move_line_lot_name_5709
+msgid "Lot Name"
+msgstr ""
+
+#. module: stock_move_quick_lot
+#: code:addons/stock_move_quick_lot/models/stock_move.py:64
+#, python-format
+msgid "Open detail to remove lot"
+msgstr ""
+
+#. module: stock_move_quick_lot
+#: model:ir.model,name:stock_move_quick_lot.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_move_quick_lot
+#: model:ir.model.fields,help:stock_move_quick_lot.field_stock_move_life_date
+msgid "This is the date on which the goods with this Serial Number may become dangerous and must not be consumed."
+msgstr ""
+
