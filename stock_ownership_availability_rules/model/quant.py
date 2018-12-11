@@ -45,6 +45,7 @@ class Quant(models.Model):
             if not move.restrict_partner_id:
                 restrict_partner_id = (
                     move.location_id.partner_id.id or
-                    move.location_id.company_id.partner_id.id)
+                    move.location_id.company_id.partner_id.id or
+                    move.company_id.partner_id.id)
                 domain += [('owner_id', '=', restrict_partner_id)]
         return domain

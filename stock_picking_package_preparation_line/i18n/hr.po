@@ -20,7 +20,7 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #. module: stock_picking_package_preparation_line
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:144
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:146
 #, python-format
 msgid "Cannot find a default location for picking type: %s"
 msgstr ""
@@ -76,8 +76,8 @@ msgid ""
 msgstr ""
 
 #. module: stock_picking_package_preparation_line
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:190
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:199
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:192
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:201
 #, python-format
 msgid ""
 "Impossible to create confirmed picking. Please Check products availability!"

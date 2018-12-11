@@ -1,0 +1,128 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_picking_operation_quick_change
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard_location_dest_id
+msgid "Actual destination location"
+msgstr ""
+
+#. module: stock_picking_operation_quick_change
+#: model:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
+msgid "Apply"
+msgstr ""
+
+#. module: stock_picking_operation_quick_change
+#: model:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
+msgid "Cancel"
+msgstr ""
+
+#. module: stock_picking_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard_change_all
+msgid "Change All"
+msgstr ""
+
+#. module: stock_picking_operation_quick_change
+#: model:ir.ui.view,arch_db:stock_picking_operation_quick_change.view_picking_form
+msgid "Change Location"
+msgstr ""
+
+#. module: stock_picking_operation_quick_change
+#: model:ir.actions.act_window,name:stock_picking_operation_quick_change.action_stock_picking_operation_change_location
+msgid "Change Operation Destination Location"
+msgstr ""
+
+#. module: stock_picking_operation_quick_change
+#: model:ir.model.fields,help:stock_picking_operation_quick_change.field_stock_picking_operation_wizard_change_all
+msgid "Check if you want change all operations without filter by old location"
+msgstr ""
+
+#. module: stock_picking_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard_create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: stock_picking_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard_create_date
+msgid "Created on"
+msgstr ""
+
+#. module: stock_picking_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_picking_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard_id
+msgid "ID"
+msgstr ""
+
+#. module: stock_picking_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_picking_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard_write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: stock_picking_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard_write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: stock_picking_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard_new_location_dest_id
+msgid "New destination location"
+msgstr ""
+
+#. module: stock_picking_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard_old_location_dest_id
+msgid "Old destination location"
+msgstr ""
+
+#. module: stock_picking_operation_quick_change
+#: model:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
+msgid "Stock Picking"
+msgstr ""
+
+#. module: stock_picking_operation_quick_change
+#: model:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
+msgid "You can change destination location in operations.\n"
+"                    <br/>"
+msgstr ""
+
+#. module: stock_picking_operation_quick_change
+#: code:addons/stock_picking_operation_quick_change/wizards/stock_picking_wizard.py:66
+#, python-format
+msgid "You can not change operations destination location if picking state not is in %s"
+msgstr ""
+
+#. module: stock_picking_operation_quick_change
+#: code:addons/stock_picking_operation_quick_change/wizards/stock_picking_wizard.py:73
+#, python-format
+msgid "You cannot change destination location if any move has a destination move."
+msgstr ""
+
+#. module: stock_picking_operation_quick_change
+#: model:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
+msgid "or"
+msgstr ""
+
+#. module: stock_picking_operation_quick_change
+#: model:ir.model,name:stock_picking_operation_quick_change.model_stock_picking_operation_wizard
+msgid "stock.picking.operation.wizard"
+msgstr ""
+

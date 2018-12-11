@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: stock_picking_package_preparation_line
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:144
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:146
 #, python-format
 msgid "Cannot find a default location for picking type: %s"
 msgstr "Impossible de trouver un emplacement par défaut pour choisir: %s"
@@ -79,8 +79,8 @@ msgstr ""
 "quantité"
 
 #. module: stock_picking_package_preparation_line
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:190
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:199
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:192
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:201
 #, python-format
 msgid ""
 "Impossible to create confirmed picking. Please Check products availability!"
