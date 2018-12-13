@@ -72,10 +72,22 @@ class TestStockNoNegative(TransactionCase):
         with self.assertRaises(ValidationError):
             self.stock_picking.button_validate()
 
-    def test_true_allow_negative_stock(self):
+    def test_true_allow_negative_stock_product(self):
         """Assert that negative stock levels are allowed when
         the allow_negative_stock is set active in the product"""
         self.product.allow_negative_stock = True
+        self.stock_picking.action_confirm()
+        self.stock_picking.button_validate()
+        quant = self.env['stock.quant'].search([
+            ('product_id', '=', self.product.id),
+            ('location_id', '=', self.location_id.id)])
+        self.assertEqual(quant.quantity, -100)
+
+    def test_true_allow_negative_stock_location(self):
+        """Assert that negative stock levels are allowed when
+        the allow_negative_stock is set active in the product"""
+        self.product.allow_negative_stock = False
+        self.location_id.allow_negative_stock = True
         self.stock_picking.action_confirm()
         self.stock_picking.button_validate()
         quant = self.env['stock.quant'].search([
