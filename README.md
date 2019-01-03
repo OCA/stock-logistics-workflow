@@ -28,6 +28,7 @@ addon | version | summary
 [stock_auto_move](stock_auto_move/) | 10.0.1.0.0 | Automatic Move Processing
 [stock_cancel](stock_cancel/) | 10.0.0.1.0 | This module allows you to bring back a completed stock picking to draft state
 [stock_cancel_delivery](stock_cancel_delivery/) | 10.0.0.1.0 | Stock Cancel delivery
+[stock_change_price_at_date](stock_change_price_at_date/) | 10.0.1.0.0 | This module allows to fill in a date in the standard wizard that changes product price. That helps accountant to add some product past values
 [stock_delivery_internal](stock_delivery_internal/) | 10.0.1.0.0 | Adds an internal carrier to delivery options
 [stock_disable_force_availability_button](stock_disable_force_availability_button/) | 10.0.1.0.0 | Disable force availability button
 [stock_lot_scrap](stock_lot_scrap/) | 10.0.1.0.0 | This module adds a button in Production Lot/Serial Number view form to Scrap all products contained.
