@@ -9,7 +9,71 @@
         }
         </field>
     </record>
+    <record id="stock.action_picking_tree_late" model="ir.actions.act_window">
+        <field name="context">{
+                'search_default_picking_type_id': [active_id],
+                'default_picking_type_id': active_id,
+                'contact_display': 'partner_address',
+                'search_default_late': 1,
+                'search_default_confirmed': 1,
+                'planned_picking': True,
+        }
+        </field>
+    </record>
 
+    <record id="stock.action_picking_tree_waiting" model="ir.actions.act_window">
+        <field name="context">{
+                'search_default_picking_type_id': [active_id],
+                'default_picking_type_id': active_id,
+                'contact_display': 'partner_address',
+                'search_default_waiting': 1,
+                'planned_picking': True,
+        }
+        </field>
+    </record>
+
+    <record id="stock.action_picking_tree_ready" model="ir.actions.act_window">
+        <field name="context">{
+                'search_default_picking_type_id': [active_id],
+                'default_picking_type_id': active_id,
+                'contact_display': 'partner_address',
+                'search_default_available': 1,
+                'planned_picking': True,
+        }
+        </field>
+    </record>
+
+    <record id="stock.action_picking_tree_done" model="ir.actions.act_window">
+        <field name="context">{
+                'search_default_picking_type_id': [active_id],
+                'default_picking_type_id': active_id,
+                'contact_display': 'partner_address',
+                'search_default_done': 1,
+                'planned_picking': True,
+        }
+        </field>
+    </record>
+    <record id="stock.stock_picking_action_picking_type" model="ir.actions.act_window">
+            <field name="context">{
+                    'search_default_picking_type_id': [active_id],
+                    'default_picking_type_id': active_id,
+                    'contact_display': 'partner_address',
+                    'planned_picking': True,
+            }
+            </field>
+    </record>
+
+    <record id="stock.action_picking_tree_done_grouped" model="ir.actions.act_window">
+        <field name="context">{
+                'search_default_picking_type_id': [active_id],
+                'default_picking_type_id': active_id,
+                'contact_display': 'partner_address',
+                'search_default_done': 1,
+                'group_by': ['date'],
+                'planned_picking': True,
+        }
+        </field>
+    </record>
     <record id="stock_picking_type_kanban" model="ir.ui.view">
         <field name="name">stock.picking.type.kanban</field>
         <field name="model">stock.picking.type</field>
@@ -20,4 +84,5 @@
             </xpath>
         </field>
     </record>
+
 </odoo>
