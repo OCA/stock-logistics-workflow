@@ -38,7 +38,7 @@ class TestPackagePreparation(TransactionCase):
         super(TestPackagePreparation, self).setUp()
         self.partner = self.env.ref('base.res_partner_2')
         self.product1 = self.env.ref('product.product_product_16')
-        self.product2 = self.env.ref('product.product_product_17')
+        self.product2 = self.env.ref('product.product_product_13')
         self.product3 = self.env.ref('product.product_product_20')
         packaging_prod = self.env['product.product'].create({'name': 'Pallet'})
         self.packaging = self.env['product.packaging'].create({
@@ -98,6 +98,18 @@ class TestPackagePreparation(TransactionCase):
         self.assertTrue(
             all(picking.state == 'done' for picking in pickings)
         )
+        self.assertEqual(
+            prep.quant_ids.mapped('location_id').id,
+            self.env.ref('stock.stock_location_customers').id
+        )
+        self.assertEqual(
+            prep.quant_ids.mapped('product_id'),
+            self.product2 | self.product1)
+        for quant in prep.quant_ids:
+            if quant.product_id.id == self.product1.id:
+                self.assertEqual(quant.quantity, 10)
+            if quant.product_id.id == self.product2.id:
+                self.assertEqual(quant.quantity, 5)
 
     def test_pack_values(self):
         pickings = self.picking_a + self.picking_b

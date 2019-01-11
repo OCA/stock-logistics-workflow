@@ -23,7 +23,6 @@ class StockPickingPackagePreparation(models.Model):
 
     name = fields.Char(
         related='package_id.name',
-        readonly=True,
         index=True,
         store=True,
     )
@@ -148,8 +147,9 @@ class StockPickingPackagePreparation(models.Model):
             )
         package_ids = self.mapped('package_id')
         if package_ids:
-            package_ids.mapped('move_line_ids').write(
-                {'result_package_id': False})
+            move_lines = self.env['stock.move.line'].search(
+                [('result_package_id', 'in', package_ids.ids)])
+            move_lines.write({'result_package_id': False})
             package_ids.unlink()
         self.write({'state': 'cancel'})
 
