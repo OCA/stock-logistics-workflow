@@ -17,8 +17,7 @@ class StockPickingPackagePreparation(models.Model):
                      'in_pack': [('readonly', True)],
                      'cancel': [('readonly', True)]}
 
-    picking_type_id = fields.Many2one(
-        related='picking_ids.picking_type_id', readonly=True)
+    picking_type_id = fields.Many2one(related='picking_ids.picking_type_id')
     line_ids = fields.One2many(
         'stock.picking.package.preparation.line',
         'package_preparation_id',
@@ -48,8 +47,7 @@ class StockPickingPackagePreparation(models.Model):
     @api.returns('self', lambda value: value.id)
     def create(self, values):
         values = self._update_line_vals(values)
-        pack = super(StockPickingPackagePreparation, self).create(values)
-        return pack
+        return super(StockPickingPackagePreparation, self).create(values)
 
     @api.model
     def _update_line_vals(self, values):
@@ -177,9 +175,6 @@ class StockPickingPackagePreparation(models.Model):
                         _('Impossible to create confirmed picking. '
                           'Please check products availability!'))
                 picking.action_assign()
-                # Force assign if a picking is not assigned
-                if picking.state != 'assigned':
-                    picking.force_assign()
                 # Show an error if a picking is not assigned
                 if picking.state != 'assigned':
                     raise UserError(

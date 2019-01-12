@@ -26,7 +26,7 @@ class StockPickingPackagePreparationLine(models.Model):
         help="If you change this quantity for a 'ready' picking, the system "
              "will not generate a back order, but will just deliver the new "
              "quantity")
-    product_uom_id = fields.Many2one('product.uom', string="UoM")
+    product_uom_id = fields.Many2one('uom.uom', string="UoM")
     lot_id = fields.Many2one(
         'stock.production.lot', 'Lot',
         help="Used to specify lot when line is created using package "

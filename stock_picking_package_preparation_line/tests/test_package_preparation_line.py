@@ -4,6 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo.tests.common import TransactionCase
+from odoo.exceptions import UserError
 
 
 class TestPackagePreparationLine(TransactionCase):
@@ -56,7 +57,8 @@ class TestPackagePreparationLine(TransactionCase):
         self.dest_location = self.env.ref('stock.stock_location_customers')
         self.partner = self.env.ref('base.res_partner_2')
         self.product1 = self.env.ref('product.product_product_16')
-        self.product2 = self.env.ref('product.product_product_17')
+        self.product2 = self.env.ref('product.product_product_13')
+        self.product3_not_available = self.env.ref('product.product_product_3')
         self.picking_type_out = self.env.ref('stock.picking_type_out')
         self.picking_type_out.default_location_dest_id = self.dest_location.id
         self.picking = self._create_picking()
@@ -81,6 +83,12 @@ class TestPackagePreparationLine(TransactionCase):
         line._onchange_product_id()
         self.assertEqual(self.product2.display_name, line.name)
         self.assertEqual(self.product2.uom_id, line.product_uom_id)
+
+    def test_not_available_product(self):
+        self._create_line(self.preparation, self.product3_not_available, 1.0)
+        with self.assertRaises(UserError):
+            # picking not confirmed nor assigned
+            self.preparation.action_put_in_pack()
 
     def test_move_and_picking_create_from_line(self):
         # Add a line in preparation
@@ -195,7 +203,7 @@ class TestPackagePreparationLine(TransactionCase):
             product_id=self.product1,
             location_id=self.src_location,
             lot_id=lot)
-        self.assertTrue(src_quant.exists())
+        self.assertEqual(src_quant.quantity, 2)
         self.assertEqual(src_quant.quantity, quantity)
         self.preparation.action_done()
         # Check lot of stock move line
@@ -207,5 +215,5 @@ class TestPackagePreparationLine(TransactionCase):
             location_id=self.dest_location,
             lot_id=lot)
         # Check quant has moved
-        self.assertFalse(src_quant.exists())
+        self.assertEqual(src_quant.quantity, 0)
         self.assertEqual(dst_quant.quantity, quantity)
