@@ -24,10 +24,11 @@ class Quant(models.Model):
         if not vals.get('owner_id'):
             Company = self.env['res.company']
             location = self.env['stock.location'].browse(vals['location_id'])
-
+            vals_company = Company.browse(vals.get('company_id', False))
             vals['owner_id'] = (
                 location.partner_id.id or
                 location.company_id.partner_id.id or
+                vals_company.partner_id.id or  # Default value
                 Company._company_default_get('stock.quant').partner_id.id)
 
         return super(Quant, self).create(vals)
