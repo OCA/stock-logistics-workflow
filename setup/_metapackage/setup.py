@@ -17,6 +17,7 @@ setuptools.setup(
         'odoo9-addon-stock_no_negative',
         'odoo9-addon-stock_pack_operation_auto_fill',
         'odoo9-addon-stock_pack_operation_quick_lot',
+        'odoo9-addon-stock_picking_back2draft',
         'odoo9-addon-stock_picking_digitized_signature',
         'odoo9-addon-stock_picking_invoice_link',
         'odoo9-addon-stock_picking_line_sequence',
