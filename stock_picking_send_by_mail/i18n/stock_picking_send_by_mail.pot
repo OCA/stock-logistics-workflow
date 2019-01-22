@@ -1,0 +1,99 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_picking_send_by_mail
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-01-15 09:55+0000\n"
+"PO-Revision-Date: 2019-01-15 09:55+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_send_by_mail
+#: model:email.template,body_html:stock_picking_send_by_mail.email_template_stock_picking
+msgid "\n"
+"<div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <p>Hello ${object.partner_id.name},</p>\n"
+"    <p>Here is your picking from ${object.company_id.name}: </p>\n"
+"    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
+"       &nbsp;&nbsp;<strong>REFERENCES</strong><br />\n"
+"       &nbsp;&nbsp;Picking number: <strong>${object.name}</strong><br />\n"
+"       &nbsp;&nbsp;Picking date: ${format_tz(object.date, tz=user.tz, context={'lang':object.partner_id.lang})} <br />\n"
+"       % if object.origin:\n"
+"           &nbsp;&nbsp;Picking reference: ${object.origin}<br />\n"
+"       % endif\n"
+"       % if object.user_id:\n"
+"           &nbsp;&nbsp;Your contact: <a href=\"mailto:${object.user_id.email or ''}?subject=Picking%20${object.name}\">${object.user_id.name}</a>\n"
+"       % endif\n"
+"    </p>\n"
+"    <p>If you have any question, do not hesitate to contact us.</p>\n"
+"    <p>Thank you for choosing ${object.company_id.name or 'us'}!</p>\n"
+"    <br/>\n"
+"    <br/>\n"
+"    <div style=\"width: 375px; margin: 0px; padding: 0px; background-color: #8E0000; border-top-left-radius: 5px 5px; border-top-right-radius: 5px 5px; background-repeat: repeat no-repeat;\">\n"
+"        <h3 style=\"margin: 0px; padding: 2px 14px; font-size: 12px; color: #DDD;\">\n"
+"            <strong style=\"text-transform:uppercase;\">${object.company_id.name}</strong></h3>\n"
+"    </div>\n"
+"    <div style=\"width: 347px; margin: 0px; padding: 5px 14px; line-height: 16px; background-color: #F2F2F2;\">\n"
+"        <span style=\"color: #222; margin-bottom: 5px; display: block; \">\n"
+"        % if object.company_id.street:\n"
+"            ${object.company_id.street}<br/>\n"
+"        % endif\n"
+"        % if object.company_id.street2:\n"
+"            ${object.company_id.street2}<br/>\n"
+"        % endif\n"
+"        % if object.company_id.city or object.company_id.zip:\n"
+"            ${object.company_id.zip} ${object.company_id.city}<br/>\n"
+"        % endif\n"
+"        % if object.company_id.country_id:\n"
+"            ${object.company_id.state_id and ('%s, ' % object.company_id.state_id.name) or ''} ${object.company_id.country_id.name or ''}<br/>\n"
+"        % endif\n"
+"        </span>\n"
+"        % if object.company_id.phone:\n"
+"            <div style=\"margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; \">\n"
+"                Phone:&nbsp; ${object.company_id.phone}\n"
+"            </div>\n"
+"        % endif\n"
+"        % if object.company_id.website:\n"
+"            <div>\n"
+"                Web :&nbsp;<a href=\"${object.company_id.website}\">${object.company_id.website}</a>\n"
+"            </div>\n"
+"        %endif\n"
+"        <p></p>\n"
+"    </div>\n"
+"</div>\n"
+"            "
+msgstr ""
+
+#. module: stock_picking_send_by_mail
+#: model:email.template,report_name:stock_picking_send_by_mail.email_template_stock_picking
+msgid "${(object.name or '').replace('/','_')}"
+msgstr ""
+
+#. module: stock_picking_send_by_mail
+#: model:email.template,subject:stock_picking_send_by_mail.email_template_stock_picking
+msgid "${object.company_id.name|safe} Picking (Ref ${object.name or 'n/a' })"
+msgstr ""
+
+#. module: stock_picking_send_by_mail
+#: code:addons/stock_picking_send_by_mail/models/stock_picking.py:33
+#, python-format
+msgid "Compose Email"
+msgstr ""
+
+#. module: stock_picking_send_by_mail
+#: model:ir.model,name:stock_picking_send_by_mail.model_stock_picking
+msgid "Picking List"
+msgstr ""
+
+#. module: stock_picking_send_by_mail
+#: view:stock.picking:stock_picking_send_by_mail.view_picking_form
+msgid "Send by Email"
+msgstr ""
+
