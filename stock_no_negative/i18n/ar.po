@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_no_negative
+# 	* stock_no_negative
 #
 msgid ""
 msgstr ""
@@ -18,7 +18,7 @@ msgstr ""
 "X-Generator: Weblate 3.0.1\n"
 
 #. module: stock_no_negative
-#: code:addons/stock_no_negative/models/stock_quant.py:35
+#: code:addons/stock_no_negative/models/stock_quant.py:39
 #, python-format
 msgid " lot '%s'"
 msgstr ""
@@ -27,18 +27,38 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_no_negative.field_product_category_allow_negative_stock
 #: model:ir.model.fields,field_description:stock_no_negative.field_product_product_allow_negative_stock
 #: model:ir.model.fields,field_description:stock_no_negative.field_product_template_allow_negative_stock
+#: model:ir.model.fields,field_description:stock_no_negative.field_stock_location_allow_negative_stock
 msgid "Allow Negative Stock"
 msgstr "السماح بكميات سالبة"
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_product_category_allow_negative_stock
-msgid "Allow negative stock levels for the stockable products attached to this category. The options doesn't apply to products attached to sub-categories of this category."
+msgid ""
+"Allow negative stock levels for the stockable products attached to this "
+"category. The options doesn't apply to products attached to sub-categories "
+"of this category."
+msgstr ""
+
+#. module: stock_no_negative
+#: model:ir.model.fields,help:stock_no_negative.field_stock_location_allow_negative_stock
+msgid ""
+"Allow negative stock levels for the stockable products attached to this "
+"location."
 msgstr ""
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_product_product_allow_negative_stock
 #: model:ir.model.fields,help:stock_no_negative.field_product_template_allow_negative_stock
-msgid "If this option is not active on this product nor on its product category and that this product is a stockable product, then the validation of the related stock moves will be blocked if the stock level becomes negative with the stock move."
+msgid ""
+"If this option is not active on this product nor on its product category and "
+"that this product is a stockable product, then the validation of the related "
+"stock moves will be blocked if the stock level becomes negative with the "
+"stock move."
+msgstr ""
+
+#. module: stock_no_negative
+#: model:ir.model,name:stock_no_negative.model_stock_location
+msgid "Inventory Locations"
 msgstr ""
 
 #. module: stock_no_negative
@@ -57,9 +77,12 @@ msgid "Quants"
 msgstr ""
 
 #. module: stock_no_negative
-#: code:addons/stock_no_negative/models/stock_quant.py:36
-#, python-format
-msgid "You cannot validate this stock operation because the stock level of the product '%s'%s would become negative (%s) on the stock location '%s' and negative stock is not allowed for this product."
+#: code:addons/stock_no_negative/models/stock_quant.py:40
+#, fuzzy, python-format
+msgid ""
+"You cannot validate this stock operation because the stock level of the "
+"product '%s'%s would become negative (%s) on the stock location '%s' and "
+"negative stock is not allowed for this product and/or location."
 msgstr ""
 "لا يمكنك تحقيق حركة المخازن لأن كمية المنتج '%s'%s ستصبح سالبة (%s) في "
 "المكان '%s' وهذا المنتج لا يمكن أن يكون سالباً."
