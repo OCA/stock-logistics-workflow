@@ -1,0 +1,295 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_picking_package_preparation
+#
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: stock-logistics-workflow (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-05-04 02:49+0000\n"
+"PO-Revision-Date: 2016-05-03 14:11+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"Language-Team: English (http://www.transifex.com/oca/OCA-stock-logistics-"
+"workflow-8-0/language/en/)\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: stock_picking_package_preparation
+#: model:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
+msgid "Add an internal note..."
+msgstr "Add an internal note..."
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_quant_ids
+msgid "All Content"
+msgstr "All Content"
+
+#. module: stock_picking_package_preparation
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:196
+#, python-format
+msgid "All the transfers must be \"Ready to Transfer\"."
+msgstr "All the transfers must be \"Ready to Transfer\"."
+
+#. module: stock_picking_package_preparation
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:180
+#, python-format
+msgid "All the transfers must have the same destination location"
+msgstr "All the transfers must have the same destination location"
+
+#. module: stock_picking_package_preparation
+#: model:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
+msgid "Cancel"
+msgstr "Cancel"
+
+#. module: stock_picking_package_preparation
+#: selection:stock.picking.package.preparation,state:0
+msgid "Cancelled"
+msgstr "Cancelled"
+
+#. module: stock_picking_package_preparation
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:147
+#, python-format
+msgid "Cannot cancel a done package preparation."
+msgstr "Cannot cancel a done package preparation."
+
+#. module: stock_picking_package_preparation
+#: model:ir.actions.act_window,help:stock_picking_package_preparation.action_stock_picking_package_preparation
+#, fuzzy
+msgid "Click to prepare a new package preparation."
+msgstr "Cannot cancel a done package preparation."
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_company_id
+msgid "Company"
+msgstr "Company"
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_create_uid
+msgid "Created by"
+msgstr "Created by"
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_create_date
+msgid "Created on"
+msgstr "Created on"
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_display_name
+msgid "Display Name"
+msgstr "Display Name"
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_date
+msgid "Document Date"
+msgstr "Document Date"
+
+#. module: stock_picking_package_preparation
+#: selection:stock.picking.package.preparation,state:0
+msgid "Done"
+msgstr "Done"
+
+#. module: stock_picking_package_preparation
+#: selection:stock.picking.package.preparation,state:0
+msgid "Draft"
+msgstr "Draft"
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_picking_package_preparation
+#: model:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
+msgid ""
+"If there is no product but a source package, this means the source package "
+"was moved entirely.  If there is a product and a source package, the product "
+"was taken from the source package."
+msgstr ""
+"If there is no product but a source package, this means the source package "
+"was moved entirely.  If there is a product and a source package, the product "
+"was taken from the source package."
+
+#. module: stock_picking_package_preparation
+#: selection:stock.picking.package.preparation,state:0
+msgid "In Pack"
+msgstr "In Pack"
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation___last_update
+msgid "Last Modified on"
+msgstr "Last Modified on"
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_write_uid
+msgid "Last Updated by"
+msgstr "Last Updated by"
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_write_date
+msgid "Last Updated on"
+msgstr "Last Updated on"
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_move_line_ids
+msgid "Move Line"
+msgstr ""
+
+#. module: stock_picking_package_preparation
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:175
+#, python-format
+msgid "No transfer selected for this preparation."
+msgstr "No transfer selected for this preparation."
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_note
+msgid "Note"
+msgstr "Note"
+
+#. module: stock_picking_package_preparation
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:160
+#, python-format
+msgid "Only canceled package preparations can be reset to draft."
+msgstr "Only canceled package preparations can be reset to draft."
+
+#. module: stock_picking_package_preparation
+#: model:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
+msgid "Operations"
+msgstr "Operations"
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_package_id
+msgid "Pack"
+msgstr "Pack"
+
+#. module: stock_picking_package_preparation
+#: model:ir.model,name:stock_picking_package_preparation.model_stock_picking_package_preparation
+#: model:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
+msgid "Package Preparation"
+msgstr "Package Preparation"
+
+#. module: stock_picking_package_preparation
+#: model:ir.actions.act_window,name:stock_picking_package_preparation.action_stock_picking_package_preparation
+#: model:ir.ui.menu,name:stock_picking_package_preparation.menu_stock_picking_package_preparation
+#: model:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_tree
+msgid "Package Preparations"
+msgstr "Package Preparations"
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_name
+msgid "Package Reference"
+msgstr "Package Reference"
+
+#. module: stock_picking_package_preparation
+#: model:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
+msgid "Package done"
+msgstr "Package done"
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_packaging_id
+msgid "Packaging"
+msgstr "Packaging"
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_partner_id
+msgid "Partner"
+msgstr "Partner"
+
+#. module: stock_picking_package_preparation
+#: model:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
+msgid "Put in pack"
+msgstr "Put in pack"
+
+#. module: stock_picking_package_preparation
+#: model:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
+msgid "Reset to draft"
+msgstr "Reset to draft"
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_date_done
+msgid "Shipping Date"
+msgstr "Shipping Date"
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_state
+msgid "State"
+msgstr "State"
+
+#. module: stock_picking_package_preparation
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:137
+#, python-format
+msgid "The package has not been generated."
+msgstr "The package has not been generated."
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,help:stock_picking_package_preparation.field_stock_picking_package_preparation_weight
+msgid "The weight is computed when the preparation is done."
+msgstr "The weight is computed when the preparation is done."
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_picking_ids
+#: model:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
+msgid "Transfers"
+msgstr "Transfers"
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_weight
+msgid "Weight"
+msgstr "Weight"
+
+#~ msgid "Pack operation ids"
+#~ msgstr "Pack operation ids"
+
+#~ msgid ""
+#~ "<p class=\"oe_view_nocontent_create\">\n"
+#~ "          Click to prepare a new package preparation.\n"
+#~ "        </p>\n"
+#~ "      "
+#~ msgstr ""
+#~ "<p class=\"oe_view_nocontent_create\">\n"
+#~ "          Click to prepare a new package preparation.\n"
+#~ "        </p>\n"
+#~ "      "
+
+#~ msgid "Date of the last message posted on the record."
+#~ msgstr "Date of the last message posted on the record."
+
+#~ msgid "Followers"
+#~ msgstr "Followers"
+
+#~ msgid ""
+#~ "Holds the Chatter summary (number of messages, ...). This summary is "
+#~ "directly in html format in order to be inserted in kanban views."
+#~ msgstr ""
+#~ "Holds the Chatter summary (number of messages, ...). This summary is "
+#~ "directly in html format in order to be inserted in kanban views."
+
+#~ msgid "If checked new messages require your attention."
+#~ msgstr "If checked new messages require your attention."
+
+#~ msgid "Is a Follower"
+#~ msgstr "Is a Follower"
+
+#~ msgid "Last Message Date"
+#~ msgstr "Last Message Date"
+
+#~ msgid "Logistic Unit"
+#~ msgstr "Logistic Unit"
+
+#~ msgid "Messages"
+#~ msgstr "Messages"
+
+#~ msgid "Messages and communication history"
+#~ msgstr "Messages and communication history"
+
+#~ msgid "Net weight"
+#~ msgstr "Net weight"
+
+#~ msgid "Summary"
+#~ msgstr "Summary"
+
+#~ msgid "Unread Messages"
+#~ msgstr "Unread Messages"
