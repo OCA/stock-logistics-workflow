@@ -8,6 +8,7 @@ setuptools.setup(
     description="Meta package for oca-stock-logistics-workflow Odoo addons",
     version=version,
     install_requires=[
+        'odoo12-addon-stock_picking_package_preparation',
         'odoo12-addon-stock_split_picking',
     ],
     classifiers=[
