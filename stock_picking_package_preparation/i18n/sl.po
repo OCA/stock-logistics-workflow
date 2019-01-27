@@ -20,12 +20,17 @@ msgstr ""
 "%100==4 ? 2 : 3);\n"
 
 #. module: stock_picking_package_preparation
-#: model:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: stock_picking_package_preparation
+#: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Add an internal note..."
 msgstr "Dodaj interno opombo..."
 
 #. module: stock_picking_package_preparation
-#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_quant_ids
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__quant_ids
 msgid "All Content"
 msgstr "Vsa vsebina"
 
@@ -42,7 +47,12 @@ msgid "All the transfers must have the same destination location"
 msgstr "Vse premestitve morajo imeti isto ciljno lokacijo"
 
 #. module: stock_picking_package_preparation
-#: model:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: stock_picking_package_preparation
+#: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Cancel"
 msgstr "Preklic"
 
@@ -52,38 +62,38 @@ msgid "Cancelled"
 msgstr "Preklicano"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:147
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:146
 #, python-format
 msgid "Cannot cancel a done package preparation."
 msgstr "Ne morete preklicati opravljene priprave pakiranja."
 
 #. module: stock_picking_package_preparation
-#: model:ir.actions.act_window,help:stock_picking_package_preparation.action_stock_picking_package_preparation
+#: model_terms:ir.actions.act_window,help:stock_picking_package_preparation.action_stock_picking_package_preparation
 msgid "Click to prepare a new package preparation."
 msgstr ""
 
 #. module: stock_picking_package_preparation
-#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_company_id
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__company_id
 msgid "Company"
 msgstr "Družba"
 
 #. module: stock_picking_package_preparation
-#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_create_uid
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__create_uid
 msgid "Created by"
 msgstr "Ustvaril"
 
 #. module: stock_picking_package_preparation
-#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_create_date
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__create_date
 msgid "Created on"
 msgstr "Ustvarjeno"
 
 #. module: stock_picking_package_preparation
-#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_display_name
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__display_name
 msgid "Display Name"
 msgstr "Prikazni naziv"
 
 #. module: stock_picking_package_preparation
-#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_date
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__date
 msgid "Document Date"
 msgstr "Datum dokumenta"
 
@@ -98,12 +108,42 @@ msgid "Draft"
 msgstr "Osnutek"
 
 #. module: stock_picking_package_preparation
-#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_id
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__message_channel_ids
+msgid "Followers (Channels)"
+msgstr ""
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__id
 msgid "ID"
 msgstr "ID"
 
 #. module: stock_picking_package_preparation
-#: model:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
+#: model:ir.model.fields,help:stock_picking_package_preparation.field_stock_picking_package_preparation__message_unread
+msgid "If checked new messages require your attention."
+msgstr ""
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,help:stock_picking_package_preparation.field_stock_picking_package_preparation__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,help:stock_picking_package_preparation.field_stock_picking_package_preparation__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: stock_picking_package_preparation
+#: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid ""
 "If there is no product but a source package, this means the source package "
 "was moved entirely.  If there is a product and a source package, the product "
@@ -119,22 +159,42 @@ msgid "In Pack"
 msgstr "V pakiranju"
 
 #. module: stock_picking_package_preparation
-#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation___last_update
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation____last_update
 msgid "Last Modified on"
 msgstr "Zadnjič spremenjeno"
 
 #. module: stock_picking_package_preparation
-#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_write_uid
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__write_uid
 msgid "Last Updated by"
 msgstr "Zadnji posodobil"
 
 #. module: stock_picking_package_preparation
-#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_write_date
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__write_date
 msgid "Last Updated on"
 msgstr "Zadnjič posodobljeno"
 
 #. module: stock_picking_package_preparation
-#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_move_line_ids
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__message_main_attachment_id
+msgid "Main Attachment"
+msgstr ""
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__move_line_ids
 msgid "Move Line"
 msgstr ""
 
@@ -145,9 +205,34 @@ msgid "No transfer selected for this preparation."
 msgstr "Za to pripravo ni izbrane premestitve."
 
 #. module: stock_picking_package_preparation
-#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_note
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__note
 msgid "Note"
 msgstr "Opomba"
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__message_has_error_counter
+msgid "Number of error"
+msgstr ""
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,help:stock_picking_package_preparation.field_stock_picking_package_preparation__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr ""
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,help:stock_picking_package_preparation.field_stock_picking_package_preparation__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,help:stock_picking_package_preparation.field_stock_picking_package_preparation__message_unread_counter
+msgid "Number of unread messages"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:160
@@ -156,87 +241,97 @@ msgid "Only canceled package preparations can be reset to draft."
 msgstr "Le preklicane priprave pakiranj se lahko ponastavi v osnutek."
 
 #. module: stock_picking_package_preparation
-#: model:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
+#: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Operations"
 msgstr "Operacije"
 
 #. module: stock_picking_package_preparation
-#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_package_id
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__package_id
 msgid "Pack"
 msgstr "Pakiranje"
 
 #. module: stock_picking_package_preparation
 #: model:ir.model,name:stock_picking_package_preparation.model_stock_picking_package_preparation
-#: model:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
+#: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Package Preparation"
 msgstr "Priprava pakiranja"
 
 #. module: stock_picking_package_preparation
 #: model:ir.actions.act_window,name:stock_picking_package_preparation.action_stock_picking_package_preparation
 #: model:ir.ui.menu,name:stock_picking_package_preparation.menu_stock_picking_package_preparation
-#: model:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_tree
+#: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_tree
 msgid "Package Preparations"
 msgstr "Priprave pakiranj"
 
 #. module: stock_picking_package_preparation
-#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_name
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__name
 msgid "Package Reference"
 msgstr "Sklic pakiranja"
 
 #. module: stock_picking_package_preparation
-#: model:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
+#: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Package done"
 msgstr "Pakiranje opravljeno"
 
 #. module: stock_picking_package_preparation
-#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_packaging_id
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__packaging_id
 msgid "Packaging"
 msgstr "Pakiranje"
 
 #. module: stock_picking_package_preparation
-#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_partner_id
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__partner_id
 msgid "Partner"
 msgstr "Partner"
 
 #. module: stock_picking_package_preparation
-#: model:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
+#: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Put in pack"
 msgstr "Vključi v pakiranje"
 
 #. module: stock_picking_package_preparation
-#: model:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
+#: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Reset to draft"
 msgstr "Ponastavi v osnutek"
 
 #. module: stock_picking_package_preparation
-#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_date_done
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__date_done
 msgid "Shipping Date"
 msgstr "Datum odpreme"
 
 #. module: stock_picking_package_preparation
-#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_state
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__state
 msgid "State"
 msgstr "Stanje"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:137
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:136
 #, python-format
 msgid "The package has not been generated."
 msgstr "Pakiranje ni bilo ustvarjeno."
 
 #. module: stock_picking_package_preparation
-#: model:ir.model.fields,help:stock_picking_package_preparation.field_stock_picking_package_preparation_weight
+#: model:ir.model.fields,help:stock_picking_package_preparation.field_stock_picking_package_preparation__weight
 msgid "The weight is computed when the preparation is done."
 msgstr "Masa se izračuna potem, ko se priprava opravi."
 
 #. module: stock_picking_package_preparation
-#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_picking_ids
-#: model:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__picking_ids
+#: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Transfers"
 msgstr "Premestitve"
 
 #. module: stock_picking_package_preparation
-#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation_weight
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__message_unread
+msgid "Unread Messages"
+msgstr ""
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr ""
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__weight
 msgid "Weight"
 msgstr "Masa"
 
