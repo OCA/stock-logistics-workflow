@@ -206,3 +206,14 @@ class StockBatchPicking(models.Model):
         """
         self.mapped('active_picking_ids').write({'batch_picking_id': False})
         self.verify_state()
+
+    @api.multi
+    def action_view_stock_picking(self):
+        """This function returns an action that display existing pickings of
+        given batch picking.
+        """
+        self.ensure_one()
+        pickings = self.mapped('picking_ids')
+        action = self.env.ref('stock.action_picking_tree_all').read([])[0]
+        action['domain'] = [('id', 'in', pickings.ids)]
+        return action
