@@ -25,17 +25,4 @@ action = env.ref('stock.action_report_delivery').report_action(pickings)
         </field>
     </record>
 
-    <!-- Stock Batch Picking - Return picking view -->
-    <record id="action_batch_show_picking" model="ir.actions.server">
-        <field name="name">Show Pickings</field>
-        <field name="model_id" ref="stock_batch_picking.model_stock_batch_picking"/>
-        <field name="binding_model_id" ref="stock_batch_picking.model_stock_batch_picking"/>
-        <field name="state">code</field>
-        <field name="code">pickings = records.mapped('picking_ids')
-res = env.ref('stock.action_picking_tree_all').read([])[0]
-res['domain'] = [('id', 'in', pickings.ids)]
-action = res
-        </field>
-    </record>
-
 </odoo>
