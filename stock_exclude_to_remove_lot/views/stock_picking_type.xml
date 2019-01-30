@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record model="ir.ui.view" id="view_picking_type_form">
+        <field name="name">stock.picking.type.form (in stock_exclude_to_remove_lots)</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='use_existing_lots']" position="after">
+                <field name="exclude_to_remove_lots" groups="stock.group_production_lot"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
