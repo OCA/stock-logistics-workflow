@@ -73,7 +73,5 @@ class StockPicking(models.Model):
                     for pack in pick.move_line_ids:
                         if not pack.qty_done:
                             pack.unlink()
-                        else:
-                            pack.product_uom_qty = pack.qty_done
 
             pick.action_done()
