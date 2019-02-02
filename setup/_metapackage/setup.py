@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo12-addon-stock_picking_package_preparation',
+        'odoo12-addon-stock_picking_show_return',
         'odoo12-addon-stock_split_picking',
     ],
     classifiers=[
