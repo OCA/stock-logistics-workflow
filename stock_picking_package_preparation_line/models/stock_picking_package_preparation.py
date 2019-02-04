@@ -121,6 +121,13 @@ class StockPickingPackagePreparation(models.Model):
         move_line_model = self.env['stock.move.line']
         for package in self:
             picking_type = package.picking_type_id or default_picking_type
+            location_dest_id = picking_type.default_location_dest_id.id
+            if not location_dest_id:
+                location_dest_id = (
+                    package.partner_id.property_stock_customer.id)
+            if not location_dest_id:
+                location_dest_id = self.env[
+                    'stock.warehouse']._get_partner_locations()[0]
             moves = []
             for line in package.line_ids:
                 # If line has 'move_id' this means we don't need to
@@ -131,14 +138,13 @@ class StockPickingPackagePreparation(models.Model):
                         'partner_id': package.partner_id.id,
                         'location_id':
                             picking_type.default_location_src_id.id,
-                        'location_dest_id':
-                            picking_type.default_location_dest_id.id,
+                        'location_dest_id': location_dest_id,
                         })
                     moves.append((line, move_data))
             if moves:
                 if (
                     not picking_type.default_location_src_id or
-                    not picking_type.default_location_dest_id
+                    not location_dest_id
                 ):
                     msg = _(
                         'Cannot find a default location for picking type: %s'
@@ -152,8 +158,7 @@ class StockPickingPackagePreparation(models.Model):
                     'picking_type_id': picking_type.id,
                     'location_id':
                         picking_type.default_location_src_id.id,
-                    'location_dest_id':
-                        picking_type.default_location_dest_id.id,
+                    'location_dest_id': location_dest_id,
                     }
                 picking = picking_model.create(picking_data)
                 for line, move_data in moves:
