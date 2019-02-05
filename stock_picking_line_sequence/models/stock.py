@@ -4,18 +4,26 @@
 # Copyright 2017 Serpent Consulting Services Pvt. Ltd.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from openerp import api, fields, models
+from openerp import _, api, fields, models
 
 
 class StockMove(models.Model):
     _inherit = 'stock.move'
 
     # re-defines the field to change the default
-    sequence = fields.Integer(default=9999)
+    sequence = fields.Integer(
+        string=_('Sequence'),
+        default=9999,
+    )
 
     # displays sequence on the stock moves
-    sequence2 = fields.Integer(help="Shows the sequence in the Stock Move.",
-                               related='sequence', readonly=True, store=True)
+    sequence2 = fields.Integer(
+        string=_('Sequence'),
+        help=_("Shows the sequence in the Stock Move."),
+        related='sequence',
+        readonly=True,
+        store=True,
+    )
 
     @api.model
     def create(self, values):
