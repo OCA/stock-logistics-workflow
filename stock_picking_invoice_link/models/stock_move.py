@@ -28,6 +28,7 @@ class StockMove(models.Model):
     def _create_invoice_line_from_vals(self, move, invoice_line_vals):
         inv_line_id = super(StockMove, self)._create_invoice_line_from_vals(
             move, invoice_line_vals)
-        move.invoice_line_ids = [(4, inv_line_id)]
+        move.with_context(skip_update_line_ids=True).invoice_line_ids = [
+            (4, inv_line_id)]
         move.picking_id.invoice_ids = [(4, invoice_line_vals['invoice_id'])]
         return inv_line_id
