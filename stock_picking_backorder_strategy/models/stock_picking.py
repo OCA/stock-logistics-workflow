@@ -26,9 +26,9 @@ class StockPicking(models.Model):
             lambda p: p.picking_type_id.backorder_strategy != 'no_create')
         pickings_no_create = self - pickings
         pickings_no_create.mapped('move_lines')._cancel_remaining_quantities()
-        backorders = super(StockPicking, pickings)._create_backorder(
+        res = super(StockPicking, pickings)._create_backorder(
             backorder_moves=backorder_moves)
-        to_cancel = backorders.filtered(
+        to_cancel = res.filtered(
             lambda b: b.backorder_id.picking_type_id.backorder_strategy ==
             'cancel')
         to_cancel.action_cancel()
