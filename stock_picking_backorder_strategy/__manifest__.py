@@ -4,7 +4,7 @@
 
 {
     'name': 'Picking backordering strategies',
-    'version': '10.0.0.1.0',
+    'version': '10.0.0.1.1',
     'author': 'ACSONE SA/NV, Odoo Community Association (OCA)',
     'category': 'Warehouse Management',
     'website': 'http://www.acsone.eu',
