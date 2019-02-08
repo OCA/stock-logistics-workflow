@@ -38,7 +38,7 @@ addon | version | summary
 [stock_ownership_by_move](stock_ownership_by_move/) | 10.0.0.1.0 | Preserve Ownership of moves (not pickings) on reception.
 [stock_pack_operation_auto_fill](stock_pack_operation_auto_fill/) | 10.0.1.0.1 | Stock pack operation auto fill
 [stock_picking_back2draft](stock_picking_back2draft/) | 10.0.1.0.0 | Reopen cancelled pickings
-[stock_picking_backorder_strategy](stock_picking_backorder_strategy/) | 10.0.0.1.0 | Picking backordering strategies
+[stock_picking_backorder_strategy](stock_picking_backorder_strategy/) | 10.0.0.1.1 | Picking backordering strategies
 [stock_picking_customer_ref](stock_picking_customer_ref/) | 10.0.1.0.0 | This module displays the sale reference/description in the pickings
 [stock_picking_filter_lot](stock_picking_filter_lot/) | 10.0.1.0.0 | In picking out lots' selection, filter lots based on their location
 [stock_picking_invoice_link](stock_picking_invoice_link/) | 10.0.1.0.0 | Adds link between pickings and invoices
