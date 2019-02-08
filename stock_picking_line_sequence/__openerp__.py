@@ -13,7 +13,7 @@
               "Eficent, "
               "Serpent CS, "
               "Odoo Community Association (OCA)",
-    'website': 'http://www.camptocamp.com',
+    'website': 'https://github.com/OCA/stock-logistics-workflow',
     'depends': [
         'stock',
         'sale',
