@@ -21,7 +21,6 @@ class StockPicking(models.Model):
     def _create_backorder(self, backorder_moves=None):
         if backorder_moves is None:
             backorder_moves = []
-        res = False
         # Do nothing with pickings 'no_create'
         pickings = self.filtered(
             lambda p: p.picking_type_id.backorder_strategy != 'no_create')
@@ -33,4 +32,4 @@ class StockPicking(models.Model):
             lambda b: b.backorder_id.picking_type_id.backorder_strategy ==
             'cancel')
         to_cancel.action_cancel()
-        return res
+        return backorders
