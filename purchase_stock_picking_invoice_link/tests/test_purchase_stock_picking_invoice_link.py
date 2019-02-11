@@ -34,10 +34,10 @@ class TestPurchaseSTockPickingInvoiceLink(common.SavepointCase):
         self.po.button_confirm()
         # Validate shipment
         picking = self.po.picking_ids[0]
-        picking.force_assign()
-        for ml in picking.move_line_ids:
-            ml.qty_done = ml.product_uom_qty
-        picking.action_done()
+        # Process pickings
+        picking.action_confirm()
+        picking.move_lines.quantity_done = 1.0
+        picking.button_validate()
         # Invoice purchase
         self.invoice = self.env['account.invoice'].create({
             'partner_id': self.supplier.id,
