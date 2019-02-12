@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_stock_picking_package_preparation_line_setting">
+        <field name="name">view.stock.picking.package.preparation.line.setting</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='group_stock_packaging']/ancestor::div[hasclass('o_setting_box')]" position="after">
+                <div class="col-xs-12 col-md-6 o_setting_box" title="Package Preparation">
+                    <div class="o_setting_right_pane">
+                        <label for="default_picking_type_for_package_preparation_id"/>
+                        <span class="fa fa-lg fa-building-o" title="Values set here are company-specific."
+                              groups="base.group_multi_company"/>
+                        <field name="default_picking_type_for_package_preparation_id"/>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
