@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo12-addon-stock_picking_customer_ref',
         'odoo12-addon-stock_picking_package_preparation',
+        'odoo12-addon-stock_picking_package_preparation_line',
         'odoo12-addon-stock_picking_show_return',
         'odoo12-addon-stock_split_picking',
     ],
