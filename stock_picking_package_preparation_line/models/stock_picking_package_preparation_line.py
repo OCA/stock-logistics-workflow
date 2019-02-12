@@ -247,7 +247,9 @@ class StockPickingPackagePreparation(models.Model):
                 #       assigned
                 picking.action_confirm()
                 # ----- Show an error if a picking is not confirmed
-                if picking.state != 'confirmed':
+                # FIX: not show error if picking is already assigned, it is
+                # a subsequent state
+                if picking.state not in ['confirmed', 'assigned']:
                     raise exceptions.Warning(
                         _('Impossible to create confirmed picking. '
                           'Please Check products availability!'))
@@ -258,7 +260,7 @@ class StockPickingPackagePreparation(models.Model):
                 # ----- Show an error if a picking is not assigned
                 if picking.state != 'assigned':
                     raise exceptions.Warning(
-                        _('Impossible to create confirmed picking. '
+                        _('Impossible to create assigned picking. '
                           'Please Check products availability!'))
                 # ----- Add the relation between the new picking
                 #       and PackagePreparation
