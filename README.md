@@ -49,8 +49,8 @@ addon | version | summary
 [stock_picking_invoice_link](stock_picking_invoice_link/) | 8.0.2.1.0 | Adds link between pickings and generated invoices
 [stock_picking_manual_procurement_group](stock_picking_manual_procurement_group/) | 8.0.1.0.0 | Picking List Manual Procurement Group Creation
 [stock_picking_mass_action](stock_picking_mass_action/) | 8.0.1.0.0 | Stock Picking Mass Action
-[stock_picking_package_preparation](stock_picking_package_preparation/) | 8.0.1.0.0 | Stock Picking Package Preparation
-[stock_picking_package_preparation_line](stock_picking_package_preparation_line/) | 8.0.1.0.0 | Stock Picking Package Preparation Line
+[stock_picking_package_preparation](stock_picking_package_preparation/) | 8.0.1.0.1 | Stock Picking Package Preparation
+[stock_picking_package_preparation_line](stock_picking_package_preparation_line/) | 8.0.1.0.1 | Stock Picking Package Preparation Line
 [stock_picking_reorder_lines](stock_picking_reorder_lines/) | 8.0.0.1.0 | Provide a new field on stock moves, allowing to manage the orders of moves in a picking.
 [stock_picking_show_return](stock_picking_show_return/) | 8.0.1.0.0 | Show returns on stock pickings
 [stock_route_sales_team](stock_route_sales_team/) | 8.0.1.0.0 | Stock Route Sales Teams
