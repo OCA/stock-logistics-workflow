@@ -319,6 +319,16 @@ msgid "Unread Messages Counter"
 msgstr ""
 
 #. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,help:stock_picking_package_preparation.field_stock_picking_package_preparation__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__weight
 msgid "Weight"
 msgstr ""
