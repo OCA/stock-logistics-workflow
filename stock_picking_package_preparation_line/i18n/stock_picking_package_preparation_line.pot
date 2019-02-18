@@ -46,7 +46,7 @@ msgstr ""
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_res_company__default_picking_type_for_package_preparation_id
-#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_res_config_settings__default_picking_type_for_package_preparation_id
+#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_res_config_settings__picking_type_for_package_preparation_id
 msgid "Default Picking Type used in package preparation"
 msgstr ""
 
