@@ -10,6 +10,7 @@ class ResConfigSettings(models.TransientModel):
 
     _inherit = 'res.config.settings'
 
-    default_picking_type_for_package_preparation_id = fields.Many2one(
+    picking_type_for_package_preparation_id = fields.Many2one(
         'stock.picking.type',
-        related='company_id.default_picking_type_for_package_preparation_id')
+        related='company_id.default_picking_type_for_package_preparation_id',
+        readonly=False)
