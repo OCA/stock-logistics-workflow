@@ -4,8 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0\n"
+"Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-02-25 13:28+0000\n"
+"PO-Revision-Date: 2019-02-25 13:28+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -14,14 +16,19 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_picking_auto_create_lot
-#: model:ir.model.fields,field_description:stock_picking_auto_create_lot.field_stock_picking_type_auto_create_lot
+#: model:ir.model.fields,field_description:stock_picking_auto_create_lot.field_stock_picking_type__auto_create_lot
 msgid "Auto Create Lot"
 msgstr ""
 
 #. module: stock_picking_auto_create_lot
-#: model:ir.model.fields,field_description:stock_picking_auto_create_lot.field_product_product_auto_create_lot
-#: model:ir.model.fields,field_description:stock_picking_auto_create_lot.field_product_template_auto_create_lot
+#: model:ir.model.fields,field_description:stock_picking_auto_create_lot.field_product_product__auto_create_lot
+#: model:ir.model.fields,field_description:stock_picking_auto_create_lot.field_product_template__auto_create_lot
 msgid "Auto create lot"
+msgstr ""
+
+#. module: stock_picking_auto_create_lot
+#: model:ir.model,name:stock_picking_auto_create_lot.model_stock_picking_type
+msgid "Picking Type"
 msgstr ""
 
 #. module: stock_picking_auto_create_lot
@@ -30,12 +37,6 @@ msgid "Product Template"
 msgstr ""
 
 #. module: stock_picking_auto_create_lot
-#: model:ir.model,name:stock_picking_auto_create_lot.model_stock_picking_type
-msgid "The operation type determines the picking view"
-msgstr ""
-
-#. module: stock_picking_auto_create_lot
 #: model:ir.model,name:stock_picking_auto_create_lot.model_stock_picking
 msgid "Transfer"
 msgstr ""
-
