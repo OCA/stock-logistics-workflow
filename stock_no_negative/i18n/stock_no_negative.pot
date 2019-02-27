@@ -4,8 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0\n"
+"Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-02-26 09:52+0000\n"
+"PO-Revision-Date: 2019-02-26 09:52+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -20,26 +22,26 @@ msgid " lot '%s'"
 msgstr ""
 
 #. module: stock_no_negative
-#: model:ir.model.fields,field_description:stock_no_negative.field_product_category_allow_negative_stock
-#: model:ir.model.fields,field_description:stock_no_negative.field_product_product_allow_negative_stock
-#: model:ir.model.fields,field_description:stock_no_negative.field_product_template_allow_negative_stock
-#: model:ir.model.fields,field_description:stock_no_negative.field_stock_location_allow_negative_stock
+#: model:ir.model.fields,field_description:stock_no_negative.field_product_category__allow_negative_stock
+#: model:ir.model.fields,field_description:stock_no_negative.field_product_product__allow_negative_stock
+#: model:ir.model.fields,field_description:stock_no_negative.field_product_template__allow_negative_stock
+#: model:ir.model.fields,field_description:stock_no_negative.field_stock_location__allow_negative_stock
 msgid "Allow Negative Stock"
 msgstr ""
 
 #. module: stock_no_negative
-#: model:ir.model.fields,help:stock_no_negative.field_product_category_allow_negative_stock
+#: model:ir.model.fields,help:stock_no_negative.field_product_category__allow_negative_stock
 msgid "Allow negative stock levels for the stockable products attached to this category. The options doesn't apply to products attached to sub-categories of this category."
 msgstr ""
 
 #. module: stock_no_negative
-#: model:ir.model.fields,help:stock_no_negative.field_stock_location_allow_negative_stock
+#: model:ir.model.fields,help:stock_no_negative.field_stock_location__allow_negative_stock
 msgid "Allow negative stock levels for the stockable products attached to this location."
 msgstr ""
 
 #. module: stock_no_negative
-#: model:ir.model.fields,help:stock_no_negative.field_product_product_allow_negative_stock
-#: model:ir.model.fields,help:stock_no_negative.field_product_template_allow_negative_stock
+#: model:ir.model.fields,help:stock_no_negative.field_product_product__allow_negative_stock
+#: model:ir.model.fields,help:stock_no_negative.field_product_template__allow_negative_stock
 msgid "If this option is not active on this product nor on its product category and that this product is a stockable product, then the validation of the related stock moves will be blocked if the stock level becomes negative with the stock move."
 msgstr ""
 
@@ -68,4 +70,3 @@ msgstr ""
 #, python-format
 msgid "You cannot validate this stock operation because the stock level of the product '%s'%s would become negative (%s) on the stock location '%s' and negative stock is not allowed for this product and/or location."
 msgstr ""
-
