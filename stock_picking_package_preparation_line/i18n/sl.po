@@ -20,7 +20,14 @@ msgstr ""
 "%100==4 ? 2 : 3);\n"
 
 #. module: stock_picking_package_preparation_line
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:145
+#: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation_line.view_stock_picking_package_preparation_line_setting
+msgid ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
+"specific.\" groups=\"base.group_multi_company\"/>"
+msgstr ""
+
+#. module: stock_picking_package_preparation_line
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:149
 #, python-format
 msgid "Cannot find a default location for picking type: %s"
 msgstr ""
@@ -31,45 +38,50 @@ msgid "Companies"
 msgstr "Družbe"
 
 #. module: stock_picking_package_preparation_line
-#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line_create_uid
+#: model:ir.model,name:stock_picking_package_preparation_line.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: stock_picking_package_preparation_line
+#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__create_uid
 msgid "Created by"
 msgstr "Ustvaril"
 
 #. module: stock_picking_package_preparation_line
-#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line_create_date
+#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__create_date
 msgid "Created on"
 msgstr "Ustvarjeno"
 
 #. module: stock_picking_package_preparation_line
-#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_res_company_default_picking_type_for_package_preparation_id
-#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_res_config_settings_default_picking_type_for_package_preparation_id
+#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_res_company__default_picking_type_for_package_preparation_id
+#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_res_config_settings__picking_type_for_package_preparation_id
 msgid "Default Picking Type used in package preparation"
 msgstr "Privzeti tip zbirnika uporabljen pri pripravi pakiranja"
 
 #. module: stock_picking_package_preparation_line
-#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line_name
-#: model:ir.ui.view,arch_db:stock_picking_package_preparation_line.sppp_line_stock_picking_package_preparation_form
+#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__name
+#: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation_line.sppp_line_stock_picking_package_preparation_form
 msgid "Description"
 msgstr "Opis"
 
 #. module: stock_picking_package_preparation_line
-#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line_ids
-#: model:ir.ui.view,arch_db:stock_picking_package_preparation_line.sppp_line_stock_picking_package_preparation_form
+#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation__line_ids
+#: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation_line.sppp_line_stock_picking_package_preparation_form
 msgid "Details"
 msgstr "Podrobnosti"
 
 #. module: stock_picking_package_preparation_line
-#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line_display_name
+#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__display_name
 msgid "Display Name"
 msgstr "Prikazni naziv"
 
 #. module: stock_picking_package_preparation_line
-#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line_id
+#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__id
 msgid "ID"
 msgstr "ID"
 
 #. module: stock_picking_package_preparation_line
-#: model:ir.model.fields,help:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line_product_uom_qty
+#: model:ir.model.fields,help:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__product_uom_qty
 msgid ""
 "If you change this quantity for a 'ready' picking, the system will not "
 "generate a back order, but will just deliver the new quantity"
@@ -78,7 +90,7 @@ msgstr ""
 "čakajočega naloga, ampak bo enostavno dobavil novo količino."
 
 #. module: stock_picking_package_preparation_line
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:177
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:180
 #: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:186
 #, fuzzy, python-format
 msgid ""
@@ -87,50 +99,50 @@ msgstr ""
 "Potrjen zbirnik je nemogoče ustvariti. Preverite razpoložljivost proizvodov!"
 
 #. module: stock_picking_package_preparation_line
-#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line___last_update
+#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line____last_update
 msgid "Last Modified on"
 msgstr "Zadnjič spremenjeno"
 
 #. module: stock_picking_package_preparation_line
-#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line_write_uid
+#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__write_uid
 msgid "Last Updated by"
 msgstr "Zadnji posodobil"
 
 #. module: stock_picking_package_preparation_line
-#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line_write_date
+#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__write_date
 msgid "Last Updated on"
 msgstr "Zadnjič posodobljeno"
 
 #. module: stock_picking_package_preparation_line
-#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line_lot_id
+#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__lot_id
 msgid "Lot"
 msgstr "Lot"
 
 #. module: stock_picking_package_preparation_line
-#: model:ir.model.fields,help:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line_lot_ids
+#: model:ir.model.fields,help:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__lot_ids
 msgid "Lots effectively linked to stock move"
 msgstr ""
 
 #. module: stock_picking_package_preparation_line
-#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line_lot_ids
+#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__lot_ids
 msgid "Moved lots"
 msgstr ""
 
 #. module: stock_picking_package_preparation_line
-#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line_note
-#: model:ir.ui.view,arch_db:stock_picking_package_preparation_line.sppp_line_stock_picking_package_preparation_form
+#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__note
+#: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation_line.sppp_line_stock_picking_package_preparation_form
 msgid "Note"
 msgstr "Opomba"
 
 #. module: stock_picking_package_preparation_line
-#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_picking_type_id
+#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation__picking_type_id
 msgid "Operation Type"
 msgstr ""
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model,name:stock_picking_package_preparation_line.model_stock_picking_package_preparation
-#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line_package_preparation_id
-#: model:ir.ui.view,arch_db:stock_picking_package_preparation_line.view_stock_picking_package_preparation_line_setting
+#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__package_preparation_id
+#: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation_line.view_stock_picking_package_preparation_line_setting
 msgid "Package Preparation"
 msgstr "Priprava pakiranja"
 
@@ -140,39 +152,34 @@ msgid "Package Preparation Line"
 msgstr "Postavka priprave pakiranja"
 
 #. module: stock_picking_package_preparation_line
-#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line_product_id
+#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__product_id
 msgid "Product"
 msgstr "Proizvod"
 
 #. module: stock_picking_package_preparation_line
-#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line_product_uom_qty
+#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__product_uom_qty
 msgid "Quantity"
 msgstr ""
 
 #. module: stock_picking_package_preparation_line
-#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line_sequence
+#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__sequence
 msgid "Sequence"
 msgstr "Zaporedje"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model,name:stock_picking_package_preparation_line.model_stock_move
-#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line_move_id
+#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__move_id
 msgid "Stock Move"
 msgstr "Premik zaloge"
 
 #. module: stock_picking_package_preparation_line
-#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line_product_uom_id
+#: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__product_uom_id
 msgid "UoM"
 msgstr ""
 
 #. module: stock_picking_package_preparation_line
-#: model:ir.model.fields,help:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line_lot_id
+#: model:ir.model.fields,help:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__lot_id
 msgid "Used to specify lot when line is created using package preparation"
-msgstr ""
-
-#. module: stock_picking_package_preparation_line
-#: model:ir.model,name:stock_picking_package_preparation_line.model_res_config_settings
-msgid "res.config.settings"
 msgstr ""
 
 #~ msgid "Picking Type"
