@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_picking_sale_order_link
-#: model:ir.ui.view,arch_db:stock_picking_sale_order_link.view_picking_form
+#: model_terms:ir.ui.view,arch_db:stock_picking_sale_order_link.view_picking_form
 msgid "Sales Order"
 msgstr ""
 
