@@ -332,6 +332,17 @@ msgid "Unread Messages Counter"
 msgstr "Contatore messaggi non letti"
 
 #. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__website_message_ids
+#, fuzzy
+msgid "Website Messages"
+msgstr "Messaggi"
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,help:stock_picking_package_preparation.field_stock_picking_package_preparation__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__weight
 msgid "Weight"
 msgstr "Peso"

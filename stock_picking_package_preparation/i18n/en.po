@@ -338,6 +338,18 @@ msgid "Unread Messages Counter"
 msgstr "Unread Messages"
 
 #. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__website_message_ids
+#, fuzzy
+msgid "Website Messages"
+msgstr "Messages"
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,help:stock_picking_package_preparation.field_stock_picking_package_preparation__website_message_ids
+#, fuzzy
+msgid "Website communication history"
+msgstr "Messages and communication history"
+
+#. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__weight
 msgid "Weight"
 msgstr "Weight"
@@ -371,9 +383,6 @@ msgstr "Weight"
 
 #~ msgid "Logistic Unit"
 #~ msgstr "Logistic Unit"
-
-#~ msgid "Messages and communication history"
-#~ msgstr "Messages and communication history"
 
 #~ msgid "Net weight"
 #~ msgstr "Net weight"
