@@ -26,38 +26,38 @@ msgid " lot '%s'"
 msgstr "lot%s"
 
 #. module: stock_no_negative
-#: model:ir.model.fields,field_description:stock_no_negative.field_product_category_allow_negative_stock
-#: model:ir.model.fields,field_description:stock_no_negative.field_product_product_allow_negative_stock
-#: model:ir.model.fields,field_description:stock_no_negative.field_product_template_allow_negative_stock
-#: model:ir.model.fields,field_description:stock_no_negative.field_stock_location_allow_negative_stock
+#: model:ir.model.fields,field_description:stock_no_negative.field_product_category__allow_negative_stock
+#: model:ir.model.fields,field_description:stock_no_negative.field_product_product__allow_negative_stock
+#: model:ir.model.fields,field_description:stock_no_negative.field_product_template__allow_negative_stock
+#: model:ir.model.fields,field_description:stock_no_negative.field_stock_location__allow_negative_stock
 msgid "Allow Negative Stock"
 msgstr "Autoriser le stock n??gatif"
 
 #. module: stock_no_negative
-#: model:ir.model.fields,help:stock_no_negative.field_product_category_allow_negative_stock
+#: model:ir.model.fields,help:stock_no_negative.field_product_category__allow_negative_stock
 msgid ""
 "Allow negative stock levels for the stockable products attached to this "
 "category. The options doesn't apply to products attached to sub-categories "
 "of this category."
 msgstr ""
-"Autorise les niveaux de stock n??gatif pour les articles stockables attach??s "
-"?? cette cat??gorie. Cette option ne s'applique pas aux articles attach??s ?? "
-"des sous-cat??gories de cette cat??gorie."
+"Autorise les niveaux de stock n??gatif pour les articles stockables attach??"
+"s ?? cette cat??gorie. Cette option ne s'applique pas aux articles attach??"
+"s ?? des sous-cat??gories de cette cat??gorie."
 
 #. module: stock_no_negative
-#: model:ir.model.fields,help:stock_no_negative.field_stock_location_allow_negative_stock
+#: model:ir.model.fields,help:stock_no_negative.field_stock_location__allow_negative_stock
 #, fuzzy
 msgid ""
 "Allow negative stock levels for the stockable products attached to this "
 "location."
 msgstr ""
-"Autorise les niveaux de stock n??gatif pour les articles stockables attach??s "
-"?? cette cat??gorie. Cette option ne s'applique pas aux articles attach??s ?? "
-"des sous-cat??gories de cette cat??gorie."
+"Autorise les niveaux de stock n??gatif pour les articles stockables attach??"
+"s ?? cette cat??gorie. Cette option ne s'applique pas aux articles attach??"
+"s ?? des sous-cat??gories de cette cat??gorie."
 
 #. module: stock_no_negative
-#: model:ir.model.fields,help:stock_no_negative.field_product_product_allow_negative_stock
-#: model:ir.model.fields,help:stock_no_negative.field_product_template_allow_negative_stock
+#: model:ir.model.fields,help:stock_no_negative.field_product_product__allow_negative_stock
+#: model:ir.model.fields,help:stock_no_negative.field_product_template__allow_negative_stock
 msgid ""
 "If this option is not active on this product nor on its product category and "
 "that this product is a stockable product, then the validation of the related "
