@@ -54,7 +54,7 @@ class ReportPrintBatchPicking(models.AbstractModel):
     @api.model
     def sort_level_1(self, rec_list):
         return sorted(rec_list, key=lambda rec: (
-            rec['product'].default_code, rec['product'].id))
+            rec['product'].default_code or '', rec['product'].id))
 
     @api.model
     def _get_grouped_data(self, batch):
