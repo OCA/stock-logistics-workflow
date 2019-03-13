@@ -30,6 +30,7 @@ addon | version | summary
 [stock_cancel_delivery](stock_cancel_delivery/) | 10.0.0.1.0 | Stock Cancel delivery
 [stock_change_price_at_date](stock_change_price_at_date/) | 10.0.1.0.0 | This module allows to fill in a date in the standard wizard that changes product price. That helps accountant to add some product past values
 [stock_delivery_internal](stock_delivery_internal/) | 10.0.1.0.0 | Adds an internal carrier to delivery options
+[stock_delivery_note](stock_delivery_note/) | 10.0.1.0.0 | This module allows to fill in a delivery note that will be displayed on delivery report
 [stock_disable_force_availability_button](stock_disable_force_availability_button/) | 10.0.1.0.0 | Disable force availability button
 [stock_lot_scrap](stock_lot_scrap/) | 10.0.1.0.0 | This module adds a button in Production Lot/Serial Number view form to Scrap all products contained.
 [stock_move_backdating](stock_move_backdating/) | 10.0.1.0.0 | Stock Move Backdating
