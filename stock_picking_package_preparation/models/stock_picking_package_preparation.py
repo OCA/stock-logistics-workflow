@@ -206,7 +206,7 @@ class StockPickingPackagePreparation(models.Model):
             for record in operation.linked_move_operation_ids:
                 moves |= record.move_id
             for move in moves:
-                moves.check_tracking(operation)
+                move.check_tracking(operation)
 
             operation.qty_done = operation.product_qty
 
