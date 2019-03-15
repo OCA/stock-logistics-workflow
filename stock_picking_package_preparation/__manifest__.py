@@ -5,7 +5,7 @@
 
 {
     'name': 'Stock Picking Package Preparation',
-    'version': '10.0.1.0.1',
+    'version': '10.0.1.0.2',
     'author': 'Camptocamp,Odoo Community Association (OCA)',
     'maintainer': 'Camptocamp',
     'license': 'AGPL-3',
