@@ -6,7 +6,7 @@
 
 {
     'name': 'Stock Picking Invoice Link',
-    'version': '11.0.1.0.1',
+    'version': '12.0.1.0.0',
     'category': 'Warehouse Management',
     'summary': 'Adds link between pickings and invoices',
     'author': 'Agile Business Group, '
