@@ -9,7 +9,7 @@ class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
     @api.multi
-    def invoice_line_create(self, invoice_id, qty):
+    def invoice_line_create_vals(self, invoice_id, qty):
         self.mapped(
             'move_ids'
         ).filtered(
@@ -20,7 +20,8 @@ class SaleOrderLine(models.Model):
         ).mapped(
             'picking_id'
         ).write({'invoice_ids': [(4, invoice_id)]})
-        return super(SaleOrderLine, self).invoice_line_create(invoice_id, qty)
+        return super(SaleOrderLine, self).invoice_line_create_vals(invoice_id,
+                                                                   qty)
 
     @api.multi
     def _prepare_invoice_line(self, qty):
