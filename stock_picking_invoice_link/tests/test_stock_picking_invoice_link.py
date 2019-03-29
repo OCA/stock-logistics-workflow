@@ -70,7 +70,6 @@ class TestStockPickingInvoiceLink(TestSale):
         pick_1 = self.so.picking_ids.filtered(
             lambda x: x.picking_type_code == 'outgoing' and
             x.state in ('confirmed', 'assigned', 'partially_available'))
-        pick_1.force_assign()
         pick_1.move_line_ids.write({'qty_done': 1})
         pick_1.action_done()
         self.assertEqual(self.so.invoice_status, 'to invoice',
@@ -88,7 +87,6 @@ class TestStockPickingInvoiceLink(TestSale):
         pick_2 = self.so.picking_ids.filtered(
             lambda x: x.picking_type_code == 'outgoing' and
             x.state in ('confirmed', 'assigned', 'partially_available'))
-        pick_2.force_assign()
         pick_2.move_line_ids.write({'qty_done': 1})
         pick_2.action_done()
         backorders = pick_obj.search([('backorder_id', '=', pick_2.id)])
