@@ -31,10 +31,11 @@ class TestRestrictCancelStockMove(SavepointCase):
             'move_lines': [(0, 0, {
                 'name': cls.dummy_product.name,
                 'product_id': cls.dummy_product.id,
-                'product_uom': cls.env.ref('product.product_uom_unit').id,
+                'product_uom': cls.env.ref('uom.product_uom_unit').id,
                 'product_uom_qty': 1,
             })]
         })
+        cls.input_to_qc_picking.action_confirm()
 
     def test_restrict(self):
         qc_to_stock_move = self.env['stock.move'].search([
@@ -57,22 +58,23 @@ class TestRestrictCancelStockMove(SavepointCase):
         # stock move to generate putaway moves. These putaway moves are created
         # first by copying each input moves, before being merged together, thus
         # trigger a move cancellation which should be allowed anyway.
-        self.env['stock.picking'].create({
+        pick = self.env['stock.picking'].create({
             'picking_type_id': self.internal_pt.id,
             'location_id': self.input_loc.id,
             'location_dest_id': self.qc_loc.id,
             'move_lines': [(0, 0, {
                 'name': self.dummy_product.name,
                 'product_id': self.dummy_product.id,
-                'product_uom': self.env.ref('product.product_uom_unit').id,
+                'product_uom': self.env.ref('uom.product_uom_unit').id,
                 'product_uom_qty': 1,
             }), (0, 0, {
                 'name': self.dummy_product.name,
                 'product_id': self.dummy_product.id,
-                'product_uom': self.env.ref('product.product_uom_unit').id,
+                'product_uom': self.env.ref('uom.product_uom_unit').id,
                 'product_uom_qty': 3,
             })]
         })
+        pick.action_confirm()
         qc_to_stock_move = self.env['stock.move'].search([
             ('product_id', '=', self.dummy_product.id),
             ('location_id', '=', self.qc_loc.id),
