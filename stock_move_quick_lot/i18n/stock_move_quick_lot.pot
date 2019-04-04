@@ -25,7 +25,7 @@ msgid "Go to lots to change data"
 msgstr ""
 
 #. module: stock_move_quick_lot
-#: model:ir.model.fields,field_description:stock_move_quick_lot.field_stock_move_line_lot_name_5707
+#: model:ir.model.fields,field_description:stock_move_quick_lot.field_stock_move_line_lot_name_5709
 msgid "Lot Name"
 msgstr ""
 
