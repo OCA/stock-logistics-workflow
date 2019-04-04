@@ -3,7 +3,7 @@
 {
     "name": "Purchase Stock Picking Restrict Cancel",
     "summary": "Restrict cancellation with Purchase.",
-    "version": "11.0.1.0.1",
+    "version": "12.0.1.0.0",
     "category": "Warehouse",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Camptocamp, Odoo Community Association (OCA)",
