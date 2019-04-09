@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo.tests.common import SavepointCase
+from odoo.exceptions import ValidationError
 
 
 class TestStockMoveQuickLot(SavepointCase):
@@ -36,14 +37,18 @@ class TestStockMoveQuickLot(SavepointCase):
 
     def test_quick_input(self):
         self.assertTrue(self.move_line)
-        self.move_line.write({
-            'line_lot_name': 'SN99999999999',
-            'life_date': '2030-12-31',
-        })
+        with self.assertRaises(ValidationError):
+            self.move_line.onchange_line_lot_name()
+        self.move_line.line_lot_name = 'SN99999999999'
+        self.move_line._compute_line_lot_name()
+        self.move_line.onchange_line_lot_name()  # Try again
+        self.move_line.life_date = '2030-12-31'
         lot = self.move_line.move_line_ids[:1].lot_id
         self.assertTrue(lot)
+        self.move_line.line_lot_name = False
         self.move_line.line_lot_name = 'SN99999999998'
         lot2 = self.move_line.move_line_ids[:1].lot_id
         self.assertNotEqual(lot, lot2)
+        self.move_line.life_date = False
         self.move_line.life_date = '2030-12-28'
-        self.assertEqual(lot2.life_date, '2030-12-28 00:00:00')
+        self.assertEqual(str(lot2.life_date), '2030-12-28 00:00:00')
