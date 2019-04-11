@@ -21,7 +21,7 @@ class StockMove(models.Model):
     def create(self, values):
         move = super(StockMove, self).create(values)
         # We do not reset the sequence if we are copying a complete picking
-        if self.env.context.get('keep_line_sequence'):
+        if not self.env.context.get('keep_line_sequence', False):
             move.picking_id._reset_sequence()
         return move
 
@@ -53,12 +53,6 @@ class StockPicking(models.Model):
             for line in rec.move_lines:
                 line.sequence = current_sequence
                 current_sequence += 1
-
-    @api.multi
-    def write(self, values):
-        res = super(StockPicking, self).write(values)
-        self._reset_sequence()
-        return res
 
     @api.multi
     def copy(self, default=None):
