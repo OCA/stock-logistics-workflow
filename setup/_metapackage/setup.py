@@ -13,6 +13,7 @@ setuptools.setup(
         'odoo12-addon-stock_picking_invoice_link',
         'odoo12-addon-stock_picking_package_preparation',
         'odoo12-addon-stock_picking_package_preparation_line',
+        'odoo12-addon-stock_picking_restrict_cancel_with_orig_move',
         'odoo12-addon-stock_picking_sale_order_link',
         'odoo12-addon-stock_picking_show_backorder',
         'odoo12-addon-stock_picking_show_return',
