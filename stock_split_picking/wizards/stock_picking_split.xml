@@ -15,6 +15,7 @@
               >
               <field name="product_id" />
               <field name="product_uom_id" groups="product.group_uom"/>
+              <field name="restrict_lot_id" groups="stock.group_production_lot"/>
               <field name="product_qty" readonly="1" attrs="{'required': [('product_id', '!=', False)]}"/>
               <field name="split_qty" />
             </tree>
