@@ -25,6 +25,11 @@ msgid "Max sequence in lines"
 msgstr ""
 
 #. module: stock_picking_line_sequence
+#: model:ir.model,name:stock_picking_line_sequence.model_procurement_order
+msgid "Procurement"
+msgstr ""
+
+#. module: stock_picking_line_sequence
 #: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move_sequence2
 msgid "Sequence"
 msgstr ""
