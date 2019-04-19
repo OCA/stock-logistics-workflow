@@ -36,6 +36,7 @@ setuptools.setup(
         'odoo8-addon-stock_picking_package_preparation',
         'odoo8-addon-stock_picking_package_preparation_line',
         'odoo8-addon-stock_picking_reorder_lines',
+        'odoo8-addon-stock_picking_send_by_mail',
         'odoo8-addon-stock_picking_show_return',
         'odoo8-addon-stock_route_sales_team',
         'odoo8-addon-stock_scanner',
