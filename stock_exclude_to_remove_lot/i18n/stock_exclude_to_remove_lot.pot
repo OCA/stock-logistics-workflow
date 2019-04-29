@@ -1,0 +1,35 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_exclude_to_remove_lot
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_exclude_to_remove_lot
+#: model:ir.model.fields,help:stock_exclude_to_remove_lot.field_stock_picking_type_exclude_to_remove_lots
+msgid "By default, lots with expired removal date can be selectedin pickings.Check this to restrict them."
+msgstr ""
+
+#. module: stock_exclude_to_remove_lot
+#: model:ir.model.fields,field_description:stock_exclude_to_remove_lot.field_stock_picking_type_exclude_to_remove_lots
+msgid "Exclude to remove lots"
+msgstr ""
+
+#. module: stock_exclude_to_remove_lot
+#: model:ir.model,name:stock_exclude_to_remove_lot.model_stock_production_lot
+msgid "Lot/Serial"
+msgstr ""
+
+#. module: stock_exclude_to_remove_lot
+#: model:ir.model,name:stock_exclude_to_remove_lot.model_stock_picking_type
+msgid "The picking type determines the picking view"
+msgstr ""
+
