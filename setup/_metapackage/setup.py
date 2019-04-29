@@ -17,6 +17,7 @@ setuptools.setup(
         'odoo10-addon-stock_delivery_internal',
         'odoo10-addon-stock_delivery_note',
         'odoo10-addon-stock_disable_force_availability_button',
+        'odoo10-addon-stock_exclude_to_remove_lot',
         'odoo10-addon-stock_lot_scrap',
         'odoo10-addon-stock_move_backdating',
         'odoo10-addon-stock_no_negative',
