@@ -32,6 +32,7 @@ addon | version | summary
 [stock_delivery_internal](stock_delivery_internal/) | 10.0.1.0.0 | Adds an internal carrier to delivery options
 [stock_delivery_note](stock_delivery_note/) | 10.0.1.0.0 | This module allows to fill in a delivery note that will be displayed on delivery report
 [stock_disable_force_availability_button](stock_disable_force_availability_button/) | 10.0.1.0.0 | Disable force availability button
+[stock_exclude_to_remove_lot](stock_exclude_to_remove_lot/) | 10.0.1.0.0 | This modules allows to exclude lots based on their removal date
 [stock_lot_scrap](stock_lot_scrap/) | 10.0.1.0.0 | This module adds a button in Production Lot/Serial Number view form to Scrap all products contained.
 [stock_move_backdating](stock_move_backdating/) | 10.0.1.0.0 | Stock Move Backdating
 [stock_no_negative](stock_no_negative/) | 10.0.1.0.1 | Disallow negative stock levels by default
