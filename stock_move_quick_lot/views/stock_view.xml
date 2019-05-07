@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 Carlos Dauden - Tecnativa <carlos.dauden@tecnativa.com>
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+<record id="view_picking_form" model="ir.ui.view">
+    <field name="name">stock.picking.form</field>
+    <field name="model">stock.picking</field>
+    <field name="inherit_id" ref="stock.view_picking_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='move_ids_without_package']/tree//field[@name='product_id']"
+               position="after">
+            <field name="has_tracking" invisible="1"/>
+            <field name="has_move_lines" invisible="1"/>
+            <field name="line_lot_name"
+                   attrs="{'readonly': ['|', ('has_tracking', '=', 'none'), ('has_move_lines', '=', False)]}"/>
+            <field name="life_date"
+                   attrs="{'column_invisible': [('parent.picking_type_code', '!=', 'incoming')], 'readonly': ['|', ('has_tracking','=', 'none'), ('has_move_lines', '=', False)]}"/>
+        </xpath>
+    </field>
+</record>
+
+</odoo>
