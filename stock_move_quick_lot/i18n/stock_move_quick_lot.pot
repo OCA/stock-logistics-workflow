@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0\n"
+"Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_move_quick_lot
-#: model:ir.model.fields,field_description:stock_move_quick_lot.field_stock_move_life_date
+#: model:ir.model.fields,field_description:stock_move_quick_lot.field_stock_move__life_date
 msgid "End of Life Date"
 msgstr ""
 
@@ -25,7 +25,7 @@ msgid "Go to lots to change data"
 msgstr ""
 
 #. module: stock_move_quick_lot
-#: model:ir.model.fields,field_description:stock_move_quick_lot.field_stock_move_line_lot_name_5709
+#: model:ir.model.fields,field_description:stock_move_quick_lot.field_stock_move__line_lot_name
 msgid "Lot Name"
 msgstr ""
 
@@ -41,7 +41,7 @@ msgid "Stock Move"
 msgstr ""
 
 #. module: stock_move_quick_lot
-#: model:ir.model.fields,help:stock_move_quick_lot.field_stock_move_life_date
+#: model:ir.model.fields,help:stock_move_quick_lot.field_stock_move__life_date
 msgid "This is the date on which the goods with this Serial Number may become dangerous and must not be consumed."
 msgstr ""
 
