@@ -21,5 +21,6 @@
         'views/stock_view.xml',
         'views/account_invoice_view.xml',
     ],
+    "post_init_hook": 'link_existing_invoices',
     'installable': True,
 }
