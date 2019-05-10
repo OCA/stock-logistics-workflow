@@ -1,0 +1,1 @@
+This glue module copy the delivery note from the sale order to related pickings.

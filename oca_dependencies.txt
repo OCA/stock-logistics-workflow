@@ -1,3 +1,7 @@
 product-attribute
 stock-logistics-warehouse
 webkit-tools
+sale-workflow
+
+# TODO remove me when the PR is merged https://github.com/OCA/sale-workflow/pull/843
+sale-workflow https://github.com/acsone/sale-workflow 10.0-sale_delivery_note
