@@ -29,6 +29,7 @@ addon | version | summary
 [stock_cancel](stock_cancel/) | 10.0.0.1.0 | This module allows you to bring back a completed stock picking to draft state
 [stock_cancel_delivery](stock_cancel_delivery/) | 10.0.0.1.0 | Stock Cancel delivery
 [stock_change_price_at_date](stock_change_price_at_date/) | 10.0.1.0.0 | This module allows to fill in a date in the standard wizard that changes product price. That helps accountant to add some product past values
+[stock_cost_method_last](stock_cost_method_last/) | 10.0.1.0.0 | Add a new Costing Method 'Last Price'
 [stock_delivery_internal](stock_delivery_internal/) | 10.0.1.0.0 | Adds an internal carrier to delivery options
 [stock_delivery_note](stock_delivery_note/) | 10.0.1.0.0 | This module allows to fill in a delivery note that will be displayed on delivery report
 [stock_disable_force_availability_button](stock_disable_force_availability_button/) | 10.0.1.0.0 | Disable force availability button
