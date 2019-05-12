@@ -1,0 +1,36 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_cost_method_last
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_cost_method_last
+#: model:ir.ui.view,arch_db:stock_cost_method_last.product_variant_easy_edit_view_inherit
+#: model:ir.ui.view,arch_db:stock_cost_method_last.view_template_property_form
+msgid "Force Cost Update"
+msgstr ""
+
+#. module: stock_cost_method_last
+#: model:ir.model,name:stock_cost_method_last.model_product_category
+msgid "Product Category"
+msgstr ""
+
+#. module: stock_cost_method_last
+#: model:ir.model,name:stock_cost_method_last.model_product_template
+msgid "Product Template"
+msgstr ""
+
+#. module: stock_cost_method_last
+#: model:ir.model,name:stock_cost_method_last.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
