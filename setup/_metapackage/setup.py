@@ -14,6 +14,7 @@ setuptools.setup(
         'odoo10-addon-stock_cancel',
         'odoo10-addon-stock_cancel_delivery',
         'odoo10-addon-stock_change_price_at_date',
+        'odoo10-addon-stock_cost_method_last',
         'odoo10-addon-stock_delivery_internal',
         'odoo10-addon-stock_delivery_note',
         'odoo10-addon-stock_disable_force_availability_button',
