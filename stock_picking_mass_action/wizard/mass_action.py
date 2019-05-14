@@ -1,5 +1,6 @@
 # Copyright 2014 Camptocamp SA - Guewen Baconnier
 # Copyright 2018 Tecnativa - Vicent Cubells
+# Copyright 2019 Tecnativa - Carlos Dauden
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import fields, api
@@ -23,9 +24,8 @@ class StockPickingMassAction(TransientModel):
         return self.env.context.get('transfer', False)
 
     def _default_picking_ids(self):
-        self.update({
-            'picking_ids': [(4, self.env.context.get('active_ids'))],
-        })
+        return self.env['stock.picking'].browse(
+            self.env.context.get('active_ids'))
 
     confirm = fields.Boolean(
         string='Mark as Todo',
@@ -99,5 +99,12 @@ class StockPickingMassAction(TransientModel):
             assigned_picking_lst = self.picking_ids.\
                 filtered(lambda x: x.state == 'assigned').\
                 sorted(key=lambda r: r.scheduled_date)
-            for picking in assigned_picking_lst:
-                picking.do_transfer()
+            quantities_done = sum(
+                move_line.qty_done for move_line in
+                assigned_picking_lst.mapped('move_line_ids').filtered(
+                    lambda m: m.state not in ('done', 'cancel')))
+            if not quantities_done:
+                return assigned_picking_lst.action_immediate_transfer_wizard()
+            if assigned_picking_lst._check_backorder():
+                return assigned_picking_lst.action_generate_backorder_wizard()
+            assigned_picking_lst.action_done()
