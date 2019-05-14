@@ -98,3 +98,23 @@ class TestMassAction(common.SavepointCase):
         pickings.check_assign_all()
         self.assertEqual(pick1.state, 'assigned')
         self.assertEqual(pick2.state, 'assigned')
+
+    def test_mass_action_inmediate_transfer(self):
+        wiz_tranfer = self.env['stock.picking.mass.action'].create({
+            'picking_ids': [(4, self.picking.id)],
+            'confirm': True,
+            'transfer': True,
+        })
+        res = wiz_tranfer.mass_action()
+        self.assertEqual(res['res_model'], 'stock.immediate.transfer')
+
+    def test_mass_action_backorder(self):
+        wiz_tranfer = self.env['stock.picking.mass.action'].create({
+            'picking_ids': [(4, self.picking.id)],
+            'confirm': True,
+            'transfer': True,
+        })
+        self.picking.action_assign()
+        self.picking.move_lines[0].quantity_done = 30
+        res = wiz_tranfer.mass_action()
+        self.assertEqual(res['res_model'], 'stock.backorder.confirmation')
