@@ -187,7 +187,7 @@ class StockPickingPackagePreparation(models.Model):
                 picking = picking.with_context(skip_update_line_ids=True)
                 picking.action_confirm()
                 # Show an error if a picking is not confirmed
-                if picking.state != 'confirmed':
+                if picking.state not in ['confirmed', 'assigned']:
                     raise UserError(
                         _('Impossible to create confirmed picking. '
                           'Please Check products availability!'))
