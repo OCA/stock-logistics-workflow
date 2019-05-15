@@ -29,13 +29,13 @@ msgid "All Content"
 msgstr "All Content"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:196
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:197
 #, python-format
 msgid "All the transfers must be \"Ready to Transfer\"."
 msgstr "All the transfers must be \"Ready to Transfer\"."
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:179
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:180
 #, python-format
 msgid "All the transfers must have the same destination location"
 msgstr "All the transfers must have the same destination location"
@@ -51,7 +51,7 @@ msgid "Cancelled"
 msgstr "Cancelled"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:148
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:149
 #, python-format
 msgid "Cannot cancel a done package preparation."
 msgstr "Cannot cancel a done package preparation."
@@ -134,7 +134,7 @@ msgid "Last Updated on"
 msgstr "Last Updated on"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:174
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:175
 #, python-format
 msgid "No transfer selected for this preparation."
 msgstr "No transfer selected for this preparation."
@@ -145,7 +145,7 @@ msgid "Note"
 msgstr "Note"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:159
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:160
 #, python-format
 msgid "Only canceled package preparations can be reset to draft."
 msgstr "Only canceled package preparations can be reset to draft."

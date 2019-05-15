@@ -30,13 +30,13 @@ msgid "All Content"
 msgstr "Vsa vsebina"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:196
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:197
 #, python-format
 msgid "All the transfers must be \"Ready to Transfer\"."
 msgstr "Vse premestitve morajo biti \"Pripravljene za premestitev\"."
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:179
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:180
 #, python-format
 msgid "All the transfers must have the same destination location"
 msgstr "Vse premestitve morajo imeti isto ciljno lokacijo"
@@ -52,7 +52,7 @@ msgid "Cancelled"
 msgstr "Preklicano"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:148
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:149
 #, python-format
 msgid "Cannot cancel a done package preparation."
 msgstr "Ne morete preklicati opravljene priprave pakiranja."
@@ -134,7 +134,7 @@ msgid "Last Updated on"
 msgstr "Zadnjič posodobljeno"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:174
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:175
 #, python-format
 msgid "No transfer selected for this preparation."
 msgstr "Za to pripravo ni izbrane premestitve."
@@ -145,7 +145,7 @@ msgid "Note"
 msgstr "Opomba"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:159
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:160
 #, python-format
 msgid "Only canceled package preparations can be reset to draft."
 msgstr "Le preklicane priprave pakiranj se lahko ponastavi v osnutek."
