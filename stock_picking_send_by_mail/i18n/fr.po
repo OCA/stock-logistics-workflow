@@ -180,7 +180,7 @@ msgid "Compose Email"
 msgstr "Écrire le courriel"
 
 #. module: stock_picking_send_by_mail
-#: model:ir.ui.view,arch_db:stock_picking_send_by_mail.view_picking_form
+#: model_terms:ir.ui.view,arch_db:stock_picking_send_by_mail.view_picking_form
 msgid "Send by Email"
 msgstr "Envoyé par courriel"
 
