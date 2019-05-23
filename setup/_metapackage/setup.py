@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo12-addon-purchase_stock_picking_restrict_cancel',
+        'odoo12-addon-stock_landed_costs_currency',
         'odoo12-addon-stock_move_quick_lot',
         'odoo12-addon-stock_no_negative',
         'odoo12-addon-stock_picking_customer_ref',
