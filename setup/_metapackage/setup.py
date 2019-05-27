@@ -8,6 +8,7 @@ setuptools.setup(
     description="Meta package for oca-stock-logistics-workflow Odoo addons",
     version=version,
     install_requires=[
+        'odoo9-addon-delivery_weight_uom_not_required',
         'odoo9-addon-stock_account_deposit',
         'odoo9-addon-stock_auto_move',
         'odoo9-addon-stock_batch_picking',
