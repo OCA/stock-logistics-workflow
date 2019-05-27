@@ -23,6 +23,7 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
+[delivery_weight_uom_not_required](delivery_weight_uom_not_required/) | 9.0.1.0.0 | This module defines the Weight's UoM as not required.
 [stock_account_deposit](stock_account_deposit/) | 9.0.1.0.0 | Create invoices from deposit locations
 [stock_auto_move](stock_auto_move/) | 9.0.1.0.0 | Automatic Move Processing
 [stock_batch_picking](stock_batch_picking/) | 9.0.1.0.1 | Stock batch picking
