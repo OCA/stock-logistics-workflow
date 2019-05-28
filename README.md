@@ -56,7 +56,7 @@ addon | version | summary
 [stock_picking_show_return](stock_picking_show_return/) | 8.0.1.0.0 | Show returns on stock pickings
 [stock_route_sales_team](stock_route_sales_team/) | 8.0.1.0.0 | Stock Route Sales Teams
 [stock_scanner](stock_scanner/) | 8.0.1.0.0 | Allows managing barcode readers with simple scenarios
-[stock_split_picking](stock_split_picking/) | 8.0.1.0.0 | Split a picking in two unconfirmed pickings
+[stock_split_picking](stock_split_picking/) | 8.0.1.1.0 | Split a picking in two unconfirmed pickings
 [stock_transfer_split_multi](stock_transfer_split_multi/) | 8.0.1.0.0 | In the stock transfer wizard, you can split by multiple units
 
 
