@@ -53,7 +53,7 @@ addon | version | summary
 [stock_picking_show_backorder](stock_picking_show_backorder/) | 10.0.1.0.0 | Provides a new field on stock pickings, allowing to display the corresponding backorders.
 [stock_picking_show_return](stock_picking_show_return/) | 10.0.1.0.0 | Show returns on stock pickings
 [stock_picking_transfer_lot_autoassign](stock_picking_transfer_lot_autoassign/) | 10.0.1.0.0 | Auto-assignation of lots on pickings
-[stock_split_picking](stock_split_picking/) | 10.0.1.0.0 | Split a picking in two not transferred pickings
+[stock_split_picking](stock_split_picking/) | 10.0.2.0.0 | Split a picking in two not transferred pickings
 
 
 Unported addons
