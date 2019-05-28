@@ -6,14 +6,12 @@
     'version': '10.0.1.0.0',
     'author': "Akretion, "
               "Odoo Community Association (OCA)",
-    'website': 'http://www.akretion.com',
+    'website': 'https://github.com/OCA/stock-logistics-workflow',
     'category': 'Stock',
     'license': 'AGPL-3',
     'installable': True,
     'depends': [
         'stock',
         'partner_address_version',
-    ],
-    'data': [
     ],
 }

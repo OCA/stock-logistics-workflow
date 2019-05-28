@@ -10,6 +10,6 @@ class StockPicking(models.Model):
 
     @api.multi
     def action_confirm(self):
-        for picking in self:
+        for picking in self.filtered('partner_id'):
             picking.partner_id = picking.partner_id.get_address_version()
         return super(StockPicking, self).action_confirm()
