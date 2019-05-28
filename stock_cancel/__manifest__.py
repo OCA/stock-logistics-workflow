@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # Copyright 2012 Andrea Cometa
 # Copyright 2013 Agile Business Group sagl
-# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 {
     'name': 'Stock Cancel',
-    'version': '10.0.0.1.0',
+    'version': '10.0.0.1.1',
     'category': 'Stock',
     'summary': """This module allows you to bring back a completed stock
 picking to draft state""",
