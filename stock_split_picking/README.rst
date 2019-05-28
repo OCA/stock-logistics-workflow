@@ -22,11 +22,13 @@ Usage
 To use this module, you need to:
 
 #. Go to **Inventory** dashboard and open any picking.
-#. If picking state is **available** you can see an split button.
-#. On the "Operations" tab, fill the field "Done" to the quantity you want to
-   split for each line.
-#. If you click on **Split** button, wizard will split current picking into
-   two different pickings depends on quantity done you entered above.
+#. If picking state is not **done** or **cancelled** you can see an split
+   button.
+#. Clicking the button will display a wizard in which you can fill in the
+   quantities you want to split for each line.
+#. If you click on **Split** button, the wizard will split current picking into
+   two different pickings depending on quantity you entered in the
+   previous step.
 #. Both pickings remain confirmed.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
@@ -36,8 +38,9 @@ To use this module, you need to:
 Known issues / Roadmap
 ======================
 
-* When splitting a picking in an unassigned state, wizard won't
-  be auto completed with picking lines.
+* add tests with moves having destination moves + propagate enabled:
+    - splitting the original move should split the destination move too
+    - splitting the destination move is allowed only if all the qty is splitted
 
 Bug Tracker
 ===========
@@ -60,6 +63,7 @@ Contributors
 * Nicolas Bessi <nicolas.bessi@camptocamp.com>
 * Guewen Baconnier <guewen.baconnier@camptocamp.com>
 * Yannick Vaucher <yannick.vaucher@camptocamp.com>
+* Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
 * Vicent Cubells <vicent.cubells@tecnativa.com>
 
 Maintainer
