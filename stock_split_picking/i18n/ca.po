@@ -19,19 +19,128 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_split_picking
-#: model:ir.ui.view,arch_db:stock_split_picking.view_picking_form
-msgid "Are you sure you want to split current picking ?"
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_picking_split_create_uid
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_picking_split_line_create_uid
+msgid "Created by"
 msgstr ""
 
 #. module: stock_split_picking
-#: code:addons/stock_split_picking/models/stock_picking.py:19
-#, python-format
-msgid "Mark as todo this picking please."
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_picking_split_create_date
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_picking_split_line_create_date
+msgid "Created on"
 msgstr ""
 
 #. module: stock_split_picking
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_picking_split_display_name
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_picking_split_line_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_split_picking
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_picking_split_line_full_split
+msgid "Full split"
+msgstr ""
+
+#. module: stock_split_picking
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_picking_split_id
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_picking_split_line_id
+msgid "ID"
+msgstr ""
+
+#. module: stock_split_picking
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_picking_split___last_update
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_picking_split_line___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_split_picking
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_picking_split_line_write_uid
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_picking_split_write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: stock_split_picking
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_picking_split_line_write_date
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_picking_split_write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: stock_split_picking
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_picking_split_line_restrict_lot_id
+msgid "Lot/Serial Number"
+msgstr ""
+
+#. module: stock_split_picking
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_picking_split_picking_id
+msgid "Picking"
+msgstr ""
+
+#. module: stock_split_picking
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_picking_split_line_product_id
+msgid "Product"
+msgstr ""
+
+#. module: stock_split_picking
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_picking_split_line_split_qty
+#: model:ir.ui.view,arch_db:stock_split_picking.stock_picking_split_form
 #: model:ir.ui.view,arch_db:stock_split_picking.view_picking_form
 msgid "Split"
+msgstr ""
+
+#. module: stock_split_picking
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_picking_split_line_ids
+msgid "Split Operations"
+msgstr ""
+
+#. module: stock_split_picking
+#: code:addons/stock_split_picking/models/stock_picking.py:20
+#, python-format
+msgid "Split Picking"
+msgstr ""
+
+#. module: stock_split_picking
+#: code:addons/stock_split_picking/wizards/stock_picking_split.py:114
+#, python-format
+msgid "Split from picking <em>%s</em> <b>created</b>."
+msgstr ""
+
+#. module: stock_split_picking
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_picking_split_line_split_id
+msgid "Split id"
+msgstr ""
+
+#. module: stock_split_picking
+#: model:ir.ui.view,arch_db:stock_split_picking.stock_picking_split_form
+msgid "Split picking"
+msgstr ""
+
+#. module: stock_split_picking
+#: code:addons/stock_split_picking/wizards/stock_picking_split.py:110
+#, python-format
+msgid "Split picking <em>%s</em> <b>created</b>."
+msgstr ""
+
+#. module: stock_split_picking
+#: code:addons/stock_split_picking/wizards/stock_picking_split.py:216
+#, python-format
+msgid "Split quantity for product %s (%s) must be greater than or equal to 0"
+msgstr ""
+
+#. module: stock_split_picking
+#: code:addons/stock_split_picking/wizards/stock_picking_split.py:206
+#, python-format
+msgid "Split quantity for product %s (%s) must be less than %.3f"
+msgstr ""
+
+#. module: stock_split_picking
+#: code:addons/stock_split_picking/wizards/stock_picking_split.py:229
+#, python-format
+msgid "Split quantity for product %s (%s) should be 0 or %s: full split only"
+msgstr ""
+
+#. module: stock_split_picking
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_picking_split_line_product_qty
+msgid "Total"
 msgstr ""
 
 #. module: stock_split_picking
@@ -40,10 +149,38 @@ msgid "Transfer"
 msgstr ""
 
 #. module: stock_split_picking
-#: code:addons/stock_split_picking/models/stock_picking.py:22
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_picking_split_line_product_uom_id
+msgid "Unit of Measure"
+msgstr ""
+
+#. module: stock_split_picking
+#: model:ir.model.fields,help:stock_split_picking.field_stock_picking_split_line_full_split
+msgid ""
+"Used to disallow a partial split of a move if another one is depending on it "
+"(ancestor)."
+msgstr ""
+
+#. module: stock_split_picking
+#: code:addons/stock_split_picking/wizards/stock_picking_split.py:241
 #, python-format
 msgid ""
-"You must enter done quantity in order to split your picking in several ones."
+"You can only split a whole quantity for product %s  (%s) as it is tracked by "
+"serial numbers."
+msgstr ""
+
+#. module: stock_split_picking
+#: model:ir.ui.view,arch_db:stock_split_picking.stock_picking_split_form
+msgid "_Cancel"
+msgstr ""
+
+#. module: stock_split_picking
+#: model:ir.model,name:stock_split_picking.model_stock_picking_split
+msgid "stock.picking.split"
+msgstr ""
+
+#. module: stock_split_picking
+#: model:ir.model,name:stock_split_picking.model_stock_picking_split_line
+msgid "stock.picking.split.line"
 msgstr ""
 
 #~ msgid "Stock Move"
