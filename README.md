@@ -23,7 +23,7 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
-[product_expiry_simple](product_expiry_simple/) | 10.0.1.0.0 | Simpler and better alternative to the official product_expiry module
+[product_expiry_simple](product_expiry_simple/) | 10.0.1.0.1 | Simpler and better alternative to the official product_expiry module
 [product_supplierinfo_for_customer_picking](product_supplierinfo_for_customer_picking/) | 10.0.1.0.0 | This module makes the product customer code visible in the stock moves of a picking.
 [stock_auto_move](stock_auto_move/) | 10.0.1.0.0 | Automatic Move Processing
 [stock_cancel](stock_cancel/) | 10.0.0.1.0 | This module allows you to bring back a completed stock picking to draft state
