@@ -36,7 +36,15 @@ class StockQuant(models.Model):
             ):
                 msg_add = ''
                 if quant.lot_id:
-                    msg_add = _(" lot '%s'") % quant.lot_id.name_get()[0][1]
+                    # Now find a quant we can compensate the negative quants
+                    #  with some untracked quants.
+                    untracked_qty = quant._get_available_quantity(
+                        quant.product_id, quant.location_id, lot_id=False,
+                        strict=True)
+                    if float_compare(abs(quant.quantity),
+                                     untracked_qty, precision_digits=p) < 1:
+                        return True
+                    msg_add = _(" lot '%s'") % quant.lot_id.display_name
                 raise ValidationError(_(
                     "You cannot validate this stock operation because the "
                     "stock level of the product '%s'%s would become negative "
