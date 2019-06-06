@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 Kitti U. - Ecosoft <carlos.dauden@tecnativa.com>
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+<record id="view_picking_form" model="ir.ui.view">
+    <field name="name">stock.picking.form</field>
+    <field name="model">stock.picking</field>
+    <field name="inherit_id" ref="stock.view_picking_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="/form/sheet/notebook/page[@name='extra']" position="before">
+            <page string="Product Kit Helper" attrs="{'invisible': [('has_product_kit', '=', False)]}">
+                <p class="oe_grey">
+                    To deliver partial product kits, you can use this tab to help calculate
+                    quantity and auto fill in "Done" column in Operations tab.<br/>
+                    <ol>
+                        <li>Click => Show Product Kit</li>
+                        <li>Edit and fill in required quantity</li>
+                        <li>Click Assign Operation Quantity</li>
+                        <li>Check result in Operations tab</li>
+                    </ol>
+                </p>
+                <field name="has_product_kit" invisible="1"/>
+                <button name="show_product_kit" type="object" string="⇒ Show Product Kit" class="oe_link"
+                    attrs="{'invisible': ['|', ('product_kit_helper_ids', '!=', []), ('state', 'in', ['done', 'cancel'])]}"/>
+                <button name="action_product_kit_helper" type="object" string="Assign Operation Quantity"
+                    class="oe_highlight" attrs="{'invisible': ['|', ('product_kit_helper_ids', '=', []), ('state', 'in', ['done', 'cancel'])]}"/>
+                <field name="product_kit_helper_ids" attrs="{'invisible': [('product_kit_helper_ids', '=', [])]}">
+                    <tree editable="bottom" create="0" delete="0">
+                        <field name="product_id"/>
+                        <field name="product_uom_qty"/>
+                        <field name="product_uom" groups="uom.group_uom"/>
+                    </tree>
+                </field>
+            </page>
+        </xpath>
+    </field>
+</record>
+
+</odoo>
