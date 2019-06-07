@@ -16,10 +16,6 @@ class StockPickingMassAction(TransientModel):
         return self.env.context.get('check_availability', False)
 
     @api.model
-    def _default_force_availability(self):
-        return self.env.context.get('force_availability', False)
-
-    @api.model
     def _default_transfer(self):
         return self.env.context.get('transfer', False)
 
@@ -38,12 +34,6 @@ class StockPickingMassAction(TransientModel):
         default=lambda self: self._default_check_availability(),
         help="check this box if you want to check the availability of"
         " the selected Pickings.",
-    )
-    force_availability = fields.Boolean(
-        string='Force Availability',
-        default=lambda self: self._default_force_availability(),
-        help="check this box if you want to force the availability"
-        " of the selected Pickings.",
     )
     transfer = fields.Boolean(
         string='Transfer',
@@ -71,14 +61,6 @@ class StockPickingMassAction(TransientModel):
                 sorted(key=lambda r: r.scheduled_date)
             draft_picking_lst.action_confirm()
 
-        # Get confirmed pickings
-        confirmed_picking_lst = self.picking_ids.\
-            filtered(lambda x: x.state in [
-                'confirmed',
-                'partially_available',
-            ]).\
-            sorted(key=lambda r: r.scheduled_date)
-
         # check availability if asked
         if self.check_availability:
             pickings_to_check = self.picking_ids.\
@@ -89,10 +71,6 @@ class StockPickingMassAction(TransientModel):
                 ]).\
                 sorted(key=lambda r: r.scheduled_date)
             pickings_to_check.action_assign()
-
-        # Force availability if asked
-        if self.force_availability:
-            confirmed_picking_lst.force_assign()
 
         # Get all pickings ready to transfer and transfer them if asked
         if self.transfer:

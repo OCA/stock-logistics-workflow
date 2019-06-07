@@ -9,6 +9,7 @@
         <field eval="False" name="doall"/>
         <field eval="False" name="active"/>
         <field name="model_id" ref="stock.model_stock_picking" />
+        <field name="state">code</field>
         <field name="code">model.check_assign_all()</field>
     </record>
 

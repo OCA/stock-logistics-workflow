@@ -20,18 +20,18 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_picking_mass_action
-#: model:ir.ui.view,arch_db:stock_picking_mass_action.view_stock_picking_mass_action_form
+#: model_terms:ir.ui.view,arch_db:stock_picking_mass_action.view_stock_picking_mass_action_form
 msgid "Apply"
 msgstr "Aplicar"
 
 #. module: stock_picking_mass_action
-#: model:ir.ui.view,arch_db:stock_picking_mass_action.view_stock_picking_mass_action_form
+#: model_terms:ir.ui.view,arch_db:stock_picking_mass_action.view_stock_picking_mass_action_form
 msgid "Cancel"
 msgstr "Cancelar"
 
 #. module: stock_picking_mass_action
 #: model:ir.actions.act_window,name:stock_picking_mass_action.action_check_availability
-#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_check_availability
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action__check_availability
 msgid "Check Availability"
 msgstr ""
 
@@ -43,59 +43,59 @@ msgid "Check Availability of Stock Picking"
 msgstr ""
 
 #. module: stock_picking_mass_action
-#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_create_uid
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action__create_uid
 msgid "Created by"
 msgstr "Creado por"
 
 #. module: stock_picking_mass_action
-#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_create_date
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action__create_date
 msgid "Created on"
 msgstr "Creado en"
 
 #. module: stock_picking_mass_action
-#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_display_name
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action__display_name
 msgid "Display Name"
 msgstr "Mostrar Nombre"
 
 #. module: stock_picking_mass_action
-#: model:ir.actions.act_window,name:stock_picking_mass_action.action_force_availability
-#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_force_availability
-msgid "Force Availability"
-msgstr ""
-
-#. module: stock_picking_mass_action
-#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_id
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action__id
 msgid "ID"
 msgstr "ID"
 
 #. module: stock_picking_mass_action
-#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action___last_update
+#: code:addons/stock_picking_mass_action/models/stock_picking.py:25
+#, python-format
+msgid "Immediate Transfer?"
+msgstr ""
+
+#. module: stock_picking_mass_action
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action____last_update
 msgid "Last Modified on"
 msgstr "Última modificación en"
 
 #. module: stock_picking_mass_action
-#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_write_uid
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action__write_uid
 msgid "Last Updated by"
 msgstr "Última actualización realizada por"
 
 #. module: stock_picking_mass_action
-#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_write_date
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action__write_date
 msgid "Last Updated on"
 msgstr "Última actualización el"
 
 #. module: stock_picking_mass_action
 #: model:ir.actions.act_window,name:stock_picking_mass_action.action_confirm
-#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_confirm
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action__confirm
 msgid "Mark as Todo"
 msgstr ""
 
 #. module: stock_picking_mass_action
-#: model:ir.ui.view,arch_db:stock_picking_mass_action.view_stock_picking_mass_action_form
+#: model_terms:ir.ui.view,arch_db:stock_picking_mass_action.view_stock_picking_mass_action_form
 msgid "Mass Action for the selected stock picking"
 msgstr ""
 
 #. module: stock_picking_mass_action
-#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_picking_ids
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action__picking_ids
 #, fuzzy
 msgid "Pickings"
 msgstr "Remitos"
@@ -108,31 +108,24 @@ msgstr ""
 #. module: stock_picking_mass_action
 #: model:ir.actions.act_window,name:stock_picking_mass_action.action_transfer
 #: model:ir.model,name:stock_picking_mass_action.model_stock_picking
-#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_transfer
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action__transfer
 msgid "Transfer"
 msgstr ""
 
 #. module: stock_picking_mass_action
-#: model:ir.model.fields,help:stock_picking_mass_action.field_stock_picking_mass_action_check_availability
+#: model:ir.model.fields,help:stock_picking_mass_action.field_stock_picking_mass_action__check_availability
 msgid ""
 "check this box if you want to check the availability of the selected "
 "Pickings."
 msgstr ""
 
 #. module: stock_picking_mass_action
-#: model:ir.model.fields,help:stock_picking_mass_action.field_stock_picking_mass_action_force_availability
-msgid ""
-"check this box if you want to force the availability of the selected "
-"Pickings."
-msgstr ""
-
-#. module: stock_picking_mass_action
-#: model:ir.model.fields,help:stock_picking_mass_action.field_stock_picking_mass_action_confirm
+#: model:ir.model.fields,help:stock_picking_mass_action.field_stock_picking_mass_action__confirm
 msgid "check this box if you want to mark as Todo the selected Pickings."
 msgstr ""
 
 #. module: stock_picking_mass_action
-#: model:ir.model.fields,help:stock_picking_mass_action.field_stock_picking_mass_action_transfer
+#: model:ir.model.fields,help:stock_picking_mass_action.field_stock_picking_mass_action__transfer
 msgid ""
 "check this box if you want to transfer all the selected pickings.\n"
 " You'll not have the possibility to realize a partial transfer.\n"
@@ -140,6 +133,6 @@ msgid ""
 msgstr ""
 
 #. module: stock_picking_mass_action
-#: model:ir.ui.view,arch_db:stock_picking_mass_action.view_stock_picking_mass_action_form
+#: model_terms:ir.ui.view,arch_db:stock_picking_mass_action.view_stock_picking_mass_action_form
 msgid "or"
 msgstr "o"
