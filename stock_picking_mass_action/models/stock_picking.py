@@ -12,9 +12,7 @@ class StockPicking(Model):
     @api.model
     def check_assign_all(self):
         """ Try to assign confirmed pickings """
-        type_obj = self.env['stock.picking.type']
-        out_type_ids = type_obj.search([('code', '=', 'outgoing')]).ids
-        domain = [('picking_type_id', 'in', out_type_ids),
+        domain = [('picking_type_code', '=', 'outgoing'),
                   ('state', '=', 'confirmed')]
         records = self.search(domain, order='scheduled_date')
         records.action_assign()
