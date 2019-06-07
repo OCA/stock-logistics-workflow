@@ -31,7 +31,7 @@ class TestMassAction(common.SavepointCase):
                 'product_uom_id': product.uom_id.id,
             })],
         })
-        inventory.action_done()
+        inventory.action_validate()
         # We create a picking out
         cls.picking = cls.env['stock.picking'].create({
             'partner_id': partner.id,
@@ -49,7 +49,7 @@ class TestMassAction(common.SavepointCase):
         })
 
     def test_mass_action(self):
-        self.assertEqual(self.picking.state, 'confirmed')
+        self.assertEqual(self.picking.state, 'draft')
         wiz = self.env['stock.picking.mass.action']
         # We test confirming a picking
         wiz_confirm = wiz.create({
@@ -64,14 +64,6 @@ class TestMassAction(common.SavepointCase):
         })
         wiz_check.confirm = True
         wiz_check.mass_action()
-        self.assertEqual(self.picking.state, 'assigned')
-        # We test forcing availability
-        self.picking.do_unreserve()
-        wiz_force = wiz.with_context(force_availability=True).create({
-            "picking_ids": [(4, self.picking.id)],
-        })
-        wiz_force.confirm = True
-        wiz_force.mass_action()
         self.assertEqual(self.picking.state, 'assigned')
         # We test transferring picking
         wiz_tranfer = wiz.with_context(transfer=True).create({
@@ -88,13 +80,15 @@ class TestMassAction(common.SavepointCase):
         pickings |= pick1
         pick2 = self.picking.copy()
         pickings |= pick2
-        self.assertEqual(pick1.state, 'confirmed')
-        self.assertEqual(pick2.state, 'confirmed')
+        self.assertEqual(pick1.state, 'draft')
+        self.assertEqual(pick2.state, 'draft')
         wiz_confirm = wiz.create({
-            "picking_ids": [(4, self.picking.id)],
+            "picking_ids": [(6, 0, [pick1.id, pick2.id])],
         })
         wiz_confirm.confirm = True
-        wiz_confirm.with_context(active_ids=pickings.ids).mass_action()
+        wiz_confirm.mass_action()
+        self.assertEqual(pick1.state, 'confirmed')
+        self.assertEqual(pick2.state, 'confirmed')
         pickings.check_assign_all()
         self.assertEqual(pick1.state, 'assigned')
         self.assertEqual(pick2.state, 'assigned')
