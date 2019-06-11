@@ -15,6 +15,7 @@ setuptools.setup(
         'odoo12-addon-stock_picking_customer_ref',
         'odoo12-addon-stock_picking_invoice_link',
         'odoo12-addon-stock_picking_line_sequence',
+        'odoo12-addon-stock_picking_mass_action',
         'odoo12-addon-stock_picking_package_preparation',
         'odoo12-addon-stock_picking_package_preparation_line',
         'odoo12-addon-stock_picking_quick',
