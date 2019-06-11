@@ -1,0 +1,144 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_picking_mass_action
+#
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-18 01:44+0000\n"
+"PO-Revision-Date: 2016-11-18 01:44+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
+"Language-Team: Spanish (Peru) (https://www.transifex.com/oca/teams/23907/"
+"es_PE/)\n"
+"Language: es_PE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: stock_picking_mass_action
+#: model:ir.ui.view,arch_db:stock_picking_mass_action.view_stock_picking_mass_action_form
+msgid "Apply"
+msgstr ""
+
+#. module: stock_picking_mass_action
+#: model:ir.ui.view,arch_db:stock_picking_mass_action.view_stock_picking_mass_action_form
+msgid "Cancel"
+msgstr ""
+
+#. module: stock_picking_mass_action
+#: model:ir.actions.act_window,name:stock_picking_mass_action.action_check_availability
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_check_availability
+msgid "Check Availability"
+msgstr ""
+
+#. module: stock_picking_mass_action
+#: model:ir.actions.server,name:stock_picking_mass_action.ir_cron_check_assign_all_ir_actions_server
+#: model:ir.cron,cron_name:stock_picking_mass_action.ir_cron_check_assign_all
+#: model:ir.cron,name:stock_picking_mass_action.ir_cron_check_assign_all
+msgid "Check Availability of Stock Picking"
+msgstr ""
+
+#. module: stock_picking_mass_action
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: stock_picking_mass_action
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_create_date
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: stock_picking_mass_action
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_display_name
+msgid "Display Name"
+msgstr "Nombre a Mostrar"
+
+#. module: stock_picking_mass_action
+#: model:ir.actions.act_window,name:stock_picking_mass_action.action_force_availability
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_force_availability
+msgid "Force Availability"
+msgstr ""
+
+#. module: stock_picking_mass_action
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_picking_mass_action
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action___last_update
+msgid "Last Modified on"
+msgstr "Ultima Modificación en"
+
+#. module: stock_picking_mass_action
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_write_uid
+msgid "Last Updated by"
+msgstr "Actualizado última vez por"
+
+#. module: stock_picking_mass_action
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_write_date
+msgid "Last Updated on"
+msgstr "Ultima Actualización"
+
+#. module: stock_picking_mass_action
+#: model:ir.actions.act_window,name:stock_picking_mass_action.action_confirm
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_confirm
+msgid "Mark as Todo"
+msgstr ""
+
+#. module: stock_picking_mass_action
+#: model:ir.ui.view,arch_db:stock_picking_mass_action.view_stock_picking_mass_action_form
+msgid "Mass Action for the selected stock picking"
+msgstr ""
+
+#. module: stock_picking_mass_action
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_picking_ids
+msgid "Pickings"
+msgstr ""
+
+#. module: stock_picking_mass_action
+#: model:ir.model,name:stock_picking_mass_action.model_stock_picking_mass_action
+msgid "Stock Picking Mass Action"
+msgstr ""
+
+#. module: stock_picking_mass_action
+#: model:ir.actions.act_window,name:stock_picking_mass_action.action_transfer
+#: model:ir.model,name:stock_picking_mass_action.model_stock_picking
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action_transfer
+msgid "Transfer"
+msgstr ""
+
+#. module: stock_picking_mass_action
+#: model:ir.model.fields,help:stock_picking_mass_action.field_stock_picking_mass_action_check_availability
+msgid ""
+"check this box if you want to check the availability of the selected "
+"Pickings."
+msgstr ""
+
+#. module: stock_picking_mass_action
+#: model:ir.model.fields,help:stock_picking_mass_action.field_stock_picking_mass_action_force_availability
+msgid ""
+"check this box if you want to force the availability of the selected "
+"Pickings."
+msgstr ""
+
+#. module: stock_picking_mass_action
+#: model:ir.model.fields,help:stock_picking_mass_action.field_stock_picking_mass_action_confirm
+msgid "check this box if you want to mark as Todo the selected Pickings."
+msgstr ""
+
+#. module: stock_picking_mass_action
+#: model:ir.model.fields,help:stock_picking_mass_action.field_stock_picking_mass_action_transfer
+msgid ""
+"check this box if you want to transfer all the selected pickings.\n"
+" You'll not have the possibility to realize a partial transfer.\n"
+" If you want  to do that, please do it manually on the picking form."
+msgstr ""
+
+#. module: stock_picking_mass_action
+#: model:ir.ui.view,arch_db:stock_picking_mass_action.view_stock_picking_mass_action_form
+msgid "or"
+msgstr "o"
