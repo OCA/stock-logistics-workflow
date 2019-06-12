@@ -1,9 +1,9 @@
 # Copyright 2012-2014 Alexandre Fayolle, Camptocamp SA
 # Copyright 2018 Tecnativa - Carlos Dauden
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import _, api, fields, models
+from odoo import _, api, fields, models, _
 
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 
 class StockBatchPicking(models.Model):
@@ -73,29 +73,47 @@ class StockBatchPicking(models.Model):
         'stock.move',
         readonly=True,
         string='Related stock moves',
-        compute='_compute_move_lines'
+        compute='_compute_move_lines',
     )
 
     move_line_ids = fields.One2many(
         'stock.move.line',
         readonly=True,
-        string='Related pack operations',
+        string='Related operations',
         compute='_compute_move_line_ids'
     )
 
-    entire_package_ids = fields.One2many(
-        comodel_name='stock.quant.package',
-        compute='_compute_entire_package_ids',
-        help='Those are the entire packages of a picking shown in the view of '
-             'operations',
-    )
+    picking_type_code = fields.Char(
+        compute='_compute_batch_picking_type_code', readonly=True)
 
-    entire_package_detail_ids = fields.One2many(
-        comodel_name='stock.quant.package',
-        compute='_compute_entire_package_ids',
-        help='Those are the entire packages of a picking shown in the view of '
-             'detailed operations',
-    )
+    show_lots_text = fields.Boolean(compute='_compute_show_lots_text')
+
+    @api.depends('picking_ids')
+    def _compute_batch_picking_type_code(self):
+        if self.picking_ids:
+            picking_type_code = self.picking_ids.mapped('picking_type_code')
+            if len(set(picking_type_code)) > 1:
+                raise ValidationError(
+                    _("All pickings contained in the Batch Picking should be "
+                      "from the same type (incoming, outgoing, internal)")
+                )
+            self.picking_type_code = picking_type_code[0]
+
+    @api.depends('picking_ids')
+    def _compute_show_lots_text(self):
+        if self.picking_ids:
+            group_production_lot_enabled = self.user_has_groups(
+                'stock.group_production_lot')
+            for picking in self.picking_ids:
+                if not picking.move_line_ids:
+                    picking.show_lots_text = False
+                elif group_production_lot_enabled and \
+                        picking.picking_type_id.use_create_lots \
+                        and not picking.picking_type_id.use_existing_lots \
+                        and picking.state != 'done':
+                    picking.show_lots_text = True
+                else:
+                    picking.show_lots_text = False
 
     @api.depends('picking_ids')
     def _compute_move_lines(self):
@@ -108,16 +126,6 @@ class StockBatchPicking(models.Model):
             batch.move_line_ids = batch.picking_ids.mapped(
                 'move_line_ids'
             )
-
-    @api.depends('picking_ids')
-    def _compute_entire_package_ids(self):
-        for batch in self:
-            batch.update({
-                'entire_package_ids': batch.picking_ids.mapped(
-                    'entire_package_ids'),
-                'entire_package_detail_ids': batch.picking_ids.mapped(
-                    'entire_package_detail_ids'),
-            })
 
     def get_not_empties(self):
         """ Return all batches in this recordset

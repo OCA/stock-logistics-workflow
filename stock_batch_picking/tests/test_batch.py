@@ -56,7 +56,7 @@ class TestBatchPicking(TransactionCase):
                 (0, 0, {
                     'name': 'Test move',
                     'product_id': product_id,
-                    'product_uom': self.ref('product.product_uom_unit'),
+                    'product_uom': self.ref('uom.product_uom_unit'),
                     'product_uom_qty': 1,
                     'location_id': self.stock_loc.id,
                     'location_dest_id': self.customer_loc.id
@@ -83,6 +83,10 @@ class TestBatchPicking(TransactionCase):
         self.assertEqual(4, len(self.batch.move_lines))
 
         self.batch.action_assign()
+
+        # Needed compute the stock move lines
+        self.batch._compute_move_lines()
+        self.batch._compute_move_line_ids()
 
         self.assertEqual('assigned', self.batch.state)
         self.assertEqual('assigned', self.picking.state)
@@ -112,11 +116,7 @@ class TestBatchPicking(TransactionCase):
 
         self.assertEqual(4, len(self.batch.move_line_ids))
 
-        self.assertEqual(
-            {(0, 1)},
-            {(op.qty_done, op.ordered_qty)
-             for op in self.batch.move_line_ids}
-        )
+        self.assertEqual({0}, {op.qty_done for op in self.batch.move_line_ids})
 
         self.batch.action_transfer()
 
@@ -126,11 +126,7 @@ class TestBatchPicking(TransactionCase):
 
         self.assertEqual(4, len(self.batch.move_line_ids))
 
-        self.assertEqual(
-            {(1, 1)},
-            {(op.qty_done, op.ordered_qty)
-             for op in self.batch.move_line_ids}
-        )
+        self.assertEqual({1}, {op.qty_done for op in self.batch.move_line_ids})
 
     def test_action_transfer__unavailable(self):
 
@@ -365,7 +361,7 @@ class TestBatchPicking(TransactionCase):
         group.run(
             product_id=self.env.ref('product.product_product_11'),
             product_qty=1,
-            product_uom=self.env.ref('product.product_uom_unit'),
+            product_uom=self.env.ref('uom.product_uom_unit'),
             location_id=self.customer_loc,
             name='test',
             origin='TEST',
