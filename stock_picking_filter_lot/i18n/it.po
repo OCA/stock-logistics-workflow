@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_picking_filter_lot
-#: model:ir.model.fields,field_description:stock_picking_filter_lot.field_stock_production_lot_location_ids
+#: model:ir.model.fields,field_description:stock_picking_filter_lot.field_stock_production_lot__location_ids
 #, fuzzy
 msgid "Location"
 msgstr "Punti di stoccaggio"
