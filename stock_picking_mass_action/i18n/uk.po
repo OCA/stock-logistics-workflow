@@ -69,6 +69,12 @@ msgid "ID"
 msgstr "ID"
 
 #. module: stock_picking_mass_action
+#: code:addons/stock_picking_mass_action/models/stock_picking.py:27
+#, python-format
+msgid "Immediate Transfer?"
+msgstr ""
+
+#. module: stock_picking_mass_action
 #: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action___last_update
 msgid "Last Modified on"
 msgstr "Остання модифікація"
