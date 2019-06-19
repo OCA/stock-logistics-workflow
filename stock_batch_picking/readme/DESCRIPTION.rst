@@ -2,6 +2,9 @@ This module is based on `picking_dispatch <https://github.com/OCA/stock-logistic
 but reworked for matching Odoo new picking system (with pack operations).
 
 Batch picking allows you to manage several pickings at the same time.
+You can create a batch with all pickings selected or multiple batch depends on
+a group field selected in wizard.
+
 After having created a batch with a list of stock picking, you can:
 
 * Check availability and reserve quants for all pickings
