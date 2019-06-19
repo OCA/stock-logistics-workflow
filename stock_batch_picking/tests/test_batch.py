@@ -451,3 +451,44 @@ class TestBatchPicking(TransactionCase):
             ('backorder_id', '=', self.picking.id)
         ])
         self.assertEqual(1, len(picking_backorder.move_lines))
+
+    def test_wizard_batch_grouped_by_field(self):
+        Wiz = self.env['stock.batch.picking.creator']
+        self.picking.origin = 'A'
+        self.picking2.origin = 'B'
+        pickings = self.picking + self.picking2
+
+        wiz = Wiz.with_context(active_ids=pickings.ids).create({
+            'name': 'Unittest wizard',
+        })
+        # Read values from config parameters, before first execution there
+        # are no values
+        self.assertFalse(wiz.batch_by_group)
+        self.assertFalse(wiz.group_field_ids)
+
+        # Add fields no to do one batch picking per grouped picking
+        # create_date field
+        origin_field = self.env.ref('stock.field_stock_picking_origin')
+        wiz.batch_by_group = True
+        wiz.group_field_ids = [(0, 0, {
+            'sequence': 1,
+            'field_id': origin_field.id,
+        })]
+        # Raise error if any picking already is in other batch picking
+        with self.assertRaises(UserError):
+            wiz.action_create_batch()
+
+        # Two picking has distinct origin so two batch pickings must be created
+        pickings.write({'batch_picking_id': False})
+        res = wiz.action_create_batch()
+        self.assertTrue(res['domain'])
+
+        # Two picking has same origin so only one batch picking must be created
+        pickings.write({'batch_picking_id': False})
+        self.picking2.origin = 'A'
+        res = wiz.action_create_batch()
+        self.assertTrue(res['res_id'])
+
+        # Test if group field create_date has been stored into config
+        # parameters
+        self.assertEqual(origin_field, wiz.load_store_fields())
