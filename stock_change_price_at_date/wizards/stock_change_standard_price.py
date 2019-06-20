@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -38,6 +37,6 @@ class StockChangeStandardPrice(models.TransientModel):
     @api.constrains('date')
     def _constrains_date(self):
         for wizard in self:
-            if wizard.date > fields.Date.today():
+            if wizard.date and wizard.date > fields.Date.today():
                 raise ValidationError(
                     _('The chosen date should be today or in the past!'))

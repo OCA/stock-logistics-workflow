@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -15,27 +14,32 @@ class TestChangePriceAtDate(common.TransactionCase):
         super(TestChangePriceAtDate, self).setUp()
         self.wizard_obj = self.env['stock.change.standard.price']
         self.move_line_obj = self.env['account.move.line']
-        self.product = self.env.ref('stock.product_icecream')
+        self.account_obj = self.env['account.account']
+        self.product_obj = self.env['product.product']
+        self.product = self.product_obj.create(
+            {'name': 'Ice Cream',
+             'type': 'product',
+             'standard_price': 70.0})
         self.product.categ_id.property_stock_journal = self.env[
             'account.journal'].create({
                 'name': 'Stock journal',
                 'type': 'sale',
                 'code': 'STK00'})
         # Defining accounts
-        self.account = self.env['account.account'].create({
+        self.account = self.account_obj.create({
             'name': 'TEST ACCOUNT',
             'code': 'TEST',
             'user_type_id': self.env.ref(
                 'account.data_account_type_expenses').id,
         })
 
-        self.loc_account = self.env['account.account'].create({
+        self.loc_account = self.account_obj.create({
             'name': 'STOCK LOC ACCOUNT',
             'code': 'STOCK',
             'user_type_id': self.env.ref(
                 'account.data_account_type_expenses').id,
         })
-        self.inventory_account = self.env['account.account'].create({
+        self.inventory_account = self.account_obj.create({
             'name': 'Inventory ACCOUNT',
             'code': 'INV',
             'user_type_id': self.env.ref(
@@ -68,13 +72,13 @@ class TestChangePriceAtDate(common.TransactionCase):
                 force_period_date=fields.Date.to_string(date_time)
             )
         inventory = inventory_obj.create(vals)
-        inventory.prepare_inventory()
+        inventory.action_start()
         self.env['stock.inventory.line'].create({
             'inventory_id': inventory.id,
             'product_id': product.id,
             'location_id': self.location.id,
             'product_qty': 10.0})
-        inventory.action_done()
+        inventory._action_done()
 
     def _change_price(self, new_price, move_date=None, template=False):
         """
@@ -124,7 +128,7 @@ class TestChangePriceAtDate(common.TransactionCase):
             'product_tmpl_id': self.product.product_tmpl_id.id,
             'standard_price': 75.0,
         }
-        return self.env['product.product'].create(vals)
+        return self.product_obj.create(vals)
 
     def test_change_price(self):
         # Change Price to 80.0 (standard one)
@@ -143,8 +147,7 @@ class TestChangePriceAtDate(common.TransactionCase):
             80.0,
             self.product.standard_price,
         )
-        move_date = fields.Date.from_string(
-            fields.Date.today()) - timedelta(days=3)
+        move_date = fields.Date.today() - timedelta(days=3)
 
         self._change_price(60.0, move_date)
 
@@ -185,8 +188,7 @@ class TestChangePriceAtDate(common.TransactionCase):
             80.0,
             product_2.standard_price,
         )
-        move_date = fields.Date.from_string(
-            fields.Date.today()) - timedelta(days=3)
+        move_date = fields.Date.today() - timedelta(days=3)
 
         self._change_price(60.0, move_date, template=True)
 
@@ -242,14 +244,12 @@ class TestChangePriceAtDate(common.TransactionCase):
         # Product price before tests was 70.0
 
         product_2 = self._create_variant()
-        now_value = fields.Datetime.from_string(
-            fields.Datetime.now()) - timedelta(days=3)
+        now_value = fields.Datetime.now() - timedelta(days=3)
         self._set_inventory(
             product_2, date_time=now_value)
 
         # Change prices
-        move_date = fields.Date.from_string(
-            fields.Date.today()) - timedelta(days=2)
+        move_date = fields.Date.today() - timedelta(days=2)
         self._change_price(80.0, move_date=move_date, template=True)
 
         # Just product 2 standard price should have been changed
@@ -264,7 +264,6 @@ class TestChangePriceAtDate(common.TransactionCase):
 
     def test_change_future_price(self):
         # Try to change price to future date
-        move_date = fields.Date.from_string(
-            fields.Date.today()) + timedelta(days=3)
+        move_date = fields.Date.today() + timedelta(days=3)
         with self.assertRaises(ValidationError):
             self._change_price(60.0, move_date, template=True)
