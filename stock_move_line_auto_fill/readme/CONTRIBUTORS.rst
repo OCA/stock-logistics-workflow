@@ -5,3 +5,4 @@
     * Vicent Cubells <vicent.cubells@tecnativa.com>
     * Sergio Teruel <sergio.teruel@tecnativa.com>
     * David Vidal <david.vidal@tecnativa.com>
+* Jaime Arroyo (Creu Blanca) <jaime.arroyo@creublanca.es>
