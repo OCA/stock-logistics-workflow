@@ -46,7 +46,7 @@ class TestStockPicking(TransactionCase):
             'location_id': self.picking_type_out.default_location_src_id.id,
             'location_dest_id': self.customer_location.id,
         })
-        self.dozen = self.env.ref('product.product_uom_dozen')
+        self.dozen = self.env.ref('uom.product_uom_dozen')
 
     def test_compute_action_pack_operation_auto_fill_allowed(self):
 

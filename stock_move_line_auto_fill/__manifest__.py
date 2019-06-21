@@ -3,14 +3,14 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    'name': 'Stock Pack Operation Auto Fill',
-    'summary': "Stock pack operation auto fill",
-    'version': '11.0.2.0.1',
+    'name': 'Stock Move Line Auto Fill',
+    'summary': "Stock Move Line auto fill",
+    'version': '12.0.2.0.1',
     'license': 'AGPL-3',
     'author': 'ACSONE SA/NV,'
               'Tecnativa,'
               'Odoo Community Association (OCA)',
-    'website': 'https://github.com/stock-logistics-workflow/',
+    'website': 'https://github.com/OCA/stock-logistics-workflow/',
     'depends': [
         'stock',
     ],

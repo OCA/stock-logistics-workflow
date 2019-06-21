@@ -1,8 +1,8 @@
-This module alow auto fill quantities in picking operations and autoassignment
+This module alows to auto fill quantities in picking operations and autoassignment
 lots quantities.
 
-In Odoo, if you schedule to transfer 50 product quantities and only receive 49
-quantities, you have to change the quantity directly on the picking.
+In Odoo, if you schedule to transfer 50 products and only receive 49, you have
+to change the quantity directly on the picking.
 As the quantity by default is 0 for each line, you have to write the received
 quantity on 49 lines.
 
@@ -19,6 +19,3 @@ internal).
 This module automatically assigns the reserved quantity as the done one, so
 that you only have to change it in case of divergence, but having the
 possibility of transferring directly.
-
-Also this module adds a button in backorder confirmation wizard to auto
-complete to do quantities for products without lots.
