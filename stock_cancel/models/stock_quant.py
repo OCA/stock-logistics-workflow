@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Copyright 2012 Andrea Cometa
 # Copyright 2013 Agile Business Group sagl
-# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo import _, api, exceptions, models
 
@@ -11,7 +11,7 @@ class StockQuant(models.Model):
 
     @api.multi
     def _revert(self):
-        for quant in self:
+        for quant in self.sudo():
             previous_move = quant.history_ids[-1]
             if len(previous_move.linked_move_operation_ids) != 1:
                 raise exceptions.ValidationError(
