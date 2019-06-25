@@ -136,14 +136,12 @@ class StockBatchPickingCreator(models.TransientModel):
         else:
             batchs = self.create_simple_batch(domain)
 
-        # Store as system parameter the fields used to be load in the next
+        # Store as system parameter the fields used to be loaded in the next
         # execution keeping the order.
         if self.batch_by_group:
             group_fields = [f.field_id.id for f in self.group_field_ids]
-        else:
-            group_fields = []
-        self.env["ir.config_parameter"].set_param(
-            self._group_field_param, group_fields)
+            self.env["ir.config_parameter"].sudo().set_param(
+                self._group_field_param, group_fields)
         return self.action_view_batch_picking(batchs)
 
     @api.multi
