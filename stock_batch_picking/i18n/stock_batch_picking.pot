@@ -381,13 +381,13 @@ msgid "The user to which the pickings are assigned"
 msgstr ""
 
 #. module: stock_batch_picking
-#: code:addons/stock_batch_picking/models/stock_batch_picking.py:132
+#: code:addons/stock_batch_picking/models/stock_batch_picking.py:133
 #, python-format
 msgid "These Batches have no pickings"
 msgstr ""
 
 #. module: stock_batch_picking
-#: code:addons/stock_batch_picking/models/stock_batch_picking.py:130
+#: code:addons/stock_batch_picking/models/stock_batch_picking.py:131
 #, python-format
 msgid "This Batch has no pickings"
 msgstr ""
