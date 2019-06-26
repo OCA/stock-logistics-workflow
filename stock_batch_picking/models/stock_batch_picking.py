@@ -69,28 +69,29 @@ class StockBatchPicking(models.Model):
 
     notes = fields.Text('Notes', help='free form remarks')
 
-    move_lines = fields.One2many(
+    move_lines = fields.Many2many(
         'stock.move',
         readonly=True,
         string='Related stock moves',
         compute='_compute_move_lines'
     )
 
-    move_line_ids = fields.One2many(
+    move_line_ids = fields.Many2many(
         'stock.move.line',
-        readonly=True,
         string='Related pack operations',
-        compute='_compute_move_line_ids'
+        compute='_compute_move_line_ids',
+        # HACK: Allow to write sml fields from this model
+        inverse=lambda self: self,
     )
 
-    entire_package_ids = fields.One2many(
+    entire_package_ids = fields.Many2many(
         comodel_name='stock.quant.package',
         compute='_compute_entire_package_ids',
         help='Those are the entire packages of a picking shown in the view of '
              'operations',
     )
 
-    entire_package_detail_ids = fields.One2many(
+    entire_package_detail_ids = fields.Many2many(
         comodel_name='stock.quant.package',
         compute='_compute_entire_package_ids',
         help='Those are the entire packages of a picking shown in the view of '
