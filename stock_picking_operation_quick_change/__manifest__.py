@@ -4,8 +4,8 @@
 {
     "name": "Stock Picking Operation Quick Change",
     "summary": "Change location of all picking operations",
-    "version": "11.0.1.0.0",
-    "category": "Inventory",
+    "version": "12.0.1.0.0",
+    "category": "Warehouse",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Tecnativa, "
               "Odoo Community Association (OCA)",
