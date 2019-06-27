@@ -5,7 +5,7 @@
 {
     'name': 'Stock batch picking',
     'summary': 'Allows manage a lot of pickings in batch',
-    'version': '11.0.1.3.0',
+    'version': '11.0.1.3.1',
     'author': "Camptocamp, "
               "Tecnativa, "
               "Odoo Community Association (OCA)",
