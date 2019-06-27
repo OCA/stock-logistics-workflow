@@ -5,7 +5,7 @@
     'name': 'Stock Picking Deactivate Immediate Transfer',
     'summary': "Deactivates immediate transfers"
                "sticking only to planned ones",
-    'version': '11.0.1.0.0',
+    'version': '12.0.1.0.0',
     'category': 'Warehouse Management',
     'author': "Eficent, "
               "Odoo Community Association (OCA)",
