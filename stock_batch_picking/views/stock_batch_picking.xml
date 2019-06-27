@@ -11,10 +11,18 @@
                             states="draft" type="object"/>
                     <button name="action_transfer" states="draft" string="Validate" type="object"/>
                     <button name="action_transfer" states="assigned" string="Validate" class="oe_highlight" type="object"/>
-                    <button name="action_cancel" states="draft,assigned" string="Cancel" type="object"/>
+                    <button name="action_cancel" states="draft,assigned" confirm="All pickings will be cancelled, Are you sure?" string="Cancel" type="object"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
                 </header>
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_stock_picking"
+                                class="oe_stat_button"
+                                icon="fa-truck"
+                                string="Pickings"
+                                type="object">
+                        </button>
+                    </div>
                     <div class="oe_title">
                         <div class="oe_edit_only">
                             <label for="name" string="Batch Name"/>

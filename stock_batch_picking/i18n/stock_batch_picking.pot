@@ -29,6 +29,11 @@ msgid "<strong>Total:</strong>"
 msgstr ""
 
 #. module: stock_batch_picking
+#: model:ir.ui.view,arch_db:stock_batch_picking.stock_batch_picking_form
+msgid "All pickings will be cancelled, Are you sure?"
+msgstr ""
+
+#. module: stock_batch_picking
 #: code:addons/stock_batch_picking/wizard/batch_picking_creator.py:93
 #, python-format
 msgid "All selected pickings are already in a batch picking or are in a wrong state."
@@ -357,11 +362,6 @@ msgstr ""
 #. module: stock_batch_picking
 #: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_creator_group_field_sequence
 msgid "Sequence"
-msgstr ""
-
-#. module: stock_batch_picking
-#: model:ir.actions.server,name:stock_batch_picking.action_batch_show_picking
-msgid "Show Pickings"
 msgstr ""
 
 #. module: stock_batch_picking
