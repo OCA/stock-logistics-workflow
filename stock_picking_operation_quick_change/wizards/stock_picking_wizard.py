@@ -7,6 +7,7 @@ from odoo.exceptions import UserError
 
 class StockPickingOperationWizard(models.TransientModel):
     _name = 'stock.picking.operation.wizard'
+    _description = 'Stock Picking Operation Wizard'
 
     def _prepare_default_values(self, picking):
         return {'location_dest_id': picking.location_dest_id.id}
