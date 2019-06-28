@@ -7,8 +7,8 @@
     'name': 'Stock Cancel',
     'version': '10.0.0.1.1',
     'category': 'Stock',
-    'summary': """This module allows you to bring back a completed stock
-picking to draft state""",
+    'summary': "This module allows you to bring back a completed stock "
+               "picking to draft state",
     'author': "www.andreacometa.it,Odoo Community Association (OCA)",
     'website': 'http://www.andreacometa.it',
     'license': 'AGPL-3',
