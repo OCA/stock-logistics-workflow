@@ -35,7 +35,12 @@ msgid "<strong>Total:</strong>"
 msgstr "<strong>Date:</strong>"
 
 #. module: stock_batch_picking
-#: code:addons/stock_batch_picking/wizard/batch_picking_creator.py:61
+#: model:ir.ui.view,arch_db:stock_batch_picking.stock_batch_picking_form
+msgid "All pickings will be cancelled, Are you sure?"
+msgstr ""
+
+#. module: stock_batch_picking
+#: code:addons/stock_batch_picking/wizard/batch_picking_creator.py:93
 #, python-format
 msgid ""
 "All selected pickings are already in a batch picking or are in a wrong state."
@@ -73,7 +78,15 @@ msgstr "Bon de préparation"
 
 #. module: stock_batch_picking
 #: model:ir.model,name:stock_batch_picking.model_stock_batch_picking_creator
+#: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_creator_group_field_batch_picking_creator_id
 msgid "Batch Picking Creator"
+msgstr "Batch Picking Creator"
+
+#. module: stock_batch_picking
+#: model:ir.model,name:stock_batch_picking.model_stock_batch_picking_creator_group_field
+#, fuzzy
+#| msgid "Batch Picking Creator"
+msgid "Batch Picking Creator Group Field"
 msgstr "Batch Picking Creator"
 
 #. module: stock_batch_picking
@@ -109,14 +122,28 @@ msgid "Create Batch Pickings"
 msgstr "Créer un bon de préparation"
 
 #. module: stock_batch_picking
+#: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_creator_batch_by_group
+#, fuzzy
+#| msgid "Create Batch Pickings"
+msgid "Create batch pickings grouped by fields"
+msgstr "Créer un bon de préparation"
+
+#. module: stock_batch_picking
+#: model:ir.ui.view,arch_db:stock_batch_picking.view_create_batch_picking
+msgid "Create multiple batch picking grouped by..."
+msgstr ""
+
+#. module: stock_batch_picking
 #: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_create_uid
 #: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_creator_create_uid
+#: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_creator_group_field_create_uid
 msgid "Created by"
 msgstr "Créé par"
 
 #. module: stock_batch_picking
 #: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_create_date
 #: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_creator_create_date
+#: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_creator_group_field_create_date
 msgid "Created on"
 msgstr "Créé le"
 
@@ -145,6 +172,7 @@ msgstr "Operations"
 #. module: stock_batch_picking
 #: model:ir.model.fields,field_description:stock_batch_picking.field_report_stock_batch_picking_report_batch_picking_display_name
 #: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_creator_display_name
+#: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_creator_group_field_display_name
 #: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_display_name
 msgid "Display Name"
 msgstr "Nom affiché"
@@ -171,16 +199,38 @@ msgid "Entire Package Detail"
 msgstr ""
 
 #. module: stock_batch_picking
+#: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_creator_group_field_field_id
+msgid "Field to group"
+msgstr ""
+
+#. module: stock_batch_picking
 #: model:ir.ui.view,arch_db:stock_batch_picking.stock_batch_picking_search
 msgid "Group By..."
 msgstr "Regrouper par..."
 
 #. module: stock_batch_picking
+#: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_creator_group_field_ids
+#: model:ir.ui.view,arch_db:stock_batch_picking.view_create_batch_picking
+msgid "Group by field"
+msgstr ""
+
+#. module: stock_batch_picking
+#: model:ir.model.fields,help:stock_batch_picking.field_stock_batch_picking_creator_group_field_sequence
+msgid "Group by picking field"
+msgstr ""
+
+#. module: stock_batch_picking
 #: model:ir.model.fields,field_description:stock_batch_picking.field_report_stock_batch_picking_report_batch_picking_id
+#: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_creator_group_field_id
 #: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_creator_id
 #: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_id
 msgid "ID"
 msgstr "ID"
+
+#. module: stock_batch_picking
+#: model:ir.model.fields,help:stock_batch_picking.field_stock_batch_picking_creator_group_field_ids
+msgid "If set any, multiple batch picking will be created, one per group field"
+msgstr ""
 
 #. module: stock_batch_picking
 #: model:ir.model.fields,help:stock_batch_picking.field_stock_picking_batch_picking_id
@@ -196,16 +246,19 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_batch_picking.field_report_stock_batch_picking_report_batch_picking___last_update
 #: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking___last_update
 #: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_creator___last_update
+#: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_creator_group_field___last_update
 msgid "Last Modified on"
 msgstr "Dernière modification le"
 
 #. module: stock_batch_picking
+#: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_creator_group_field_write_uid
 #: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_creator_write_uid
 #: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_write_uid
 msgid "Last Updated by"
 msgstr "Mis à jour par"
 
 #. module: stock_batch_picking
+#: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_creator_group_field_write_date
 #: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_creator_write_date
 #: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_write_date
 msgid "Last Updated on"
@@ -324,10 +377,9 @@ msgid "Reserved"
 msgstr "Reserve All"
 
 #. module: stock_batch_picking
-#: model:ir.actions.server,name:stock_batch_picking.action_batch_show_picking
-#, fuzzy
-msgid "Show Pickings"
-msgstr "Préparations"
+#: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_creator_group_field_sequence
+msgid "Sequence"
+msgstr ""
 
 #. module: stock_batch_picking
 #: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_state
@@ -347,13 +399,13 @@ msgid "The user to which the pickings are assigned"
 msgstr "L'utilisateur en charge du traitement du bon de préparation"
 
 #. module: stock_batch_picking
-#: code:addons/stock_batch_picking/models/stock_batch_picking.py:132
+#: code:addons/stock_batch_picking/models/stock_batch_picking.py:133
 #, python-format
 msgid "These Batches have no pickings"
 msgstr "Ces bons de préparation n'ont pas de transferts"
 
 #. module: stock_batch_picking
-#: code:addons/stock_batch_picking/models/stock_batch_picking.py:130
+#: code:addons/stock_batch_picking/models/stock_batch_picking.py:131
 #, python-format
 msgid "This Batch has no pickings"
 msgstr "Ce bon de préparation n'a pas de transfert"
@@ -451,6 +503,10 @@ msgstr ""
 #: model:ir.model.fields,help:stock_batch_picking.field_stock_batch_picking_picker_id
 msgid "the user to which the pickings are assigned"
 msgstr "L'utilisateur en charge du traitement du bon de préparation"
+
+#, fuzzy
+#~ msgid "Show Pickings"
+#~ msgstr "Préparations"
 
 #~ msgid "Explanation"
 #~ msgstr "Explication"
