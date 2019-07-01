@@ -322,3 +322,38 @@ class TestStockPicking(TransactionCase):
         # The expected result is only opertions with product_id set and
         self.assertFalse(product_8_op.qty_done)
         self.assertTrue(product_9_op.qty_done)
+
+    def test_receipt_more_qty_than_demand(self):
+        # Active auto fill operations although they have assigned lots
+        self.picking_type_in.write({
+            'auto_fill_operation': True,
+            'avoid_lot_assignment': False,
+        })
+        picking_in = self.picking_model.create({
+            'partner_id': self.supplier.id,
+            'picking_type_id': self.picking_type_in.id,
+            'location_id': self.supplier_location.id,
+            'location_dest_id': self.warehouse.wh_input_stock_loc_id.id,
+            'move_lines': [(0, 0, {
+                'name': self.product_8.display_name,
+                'product_id': self.product_8.id,
+                'product_uom_qty': 10.0,
+                'product_uom': self.product_8.uom_id.id,
+                'partner_id': self.supplier.id,
+                'location_id': self.supplier_location.id,
+                'location_dest_id': self.warehouse.wh_input_stock_loc_id.id,
+            })]
+        })
+        lot = self.env['stock.production.lot'].create({
+            'product_id': self.product_8.id,
+            'name': 'test-lot-0001',
+        })
+        # Receipt more than initial demand and assign a lot to force create an
+        # extra stock move line which must be deleted.
+        picking_in.move_line_ids.write({
+            'lot_id': lot.id,
+            'qty_done': 50.0,
+        })
+        picking_in.action_done()
+        # The move should only have a one stock move line.
+        self.assertEqual(len(picking_in.move_line_ids), 1)
