@@ -8,13 +8,27 @@ from odoo import models
 class StockMove(models.Model):
     _inherit = 'stock.move'
 
+    def _create_extra_move(self):
+        """
+        When user set on stock move line done a quantity greater than initial
+        demand Odoo creates an extra stock move with the difference and it is
+        posible to create an extra stock move line with qty_done = 0 which will
+        be deleted in _action_done method.
+        This method set a context variable to prevent set qty_done for these
+        cases.
+        """
+        my_self = self
+        if self.picking_id.auto_fill_operation:
+            my_self = self.with_context(skip_auto_fill_operation=True)
+        return super(StockMove, my_self)._create_extra_move()
+
     def _prepare_move_line_vals(self, quantity=None, reserved_quant=None):
         """Auto-assign as done the quantity proposed for the lots"""
-        self.ensure_one()
         res = super(StockMove, self)._prepare_move_line_vals(
             quantity, reserved_quant,
         )
-        if not self.picking_id.auto_fill_operation:
+        if (self.env.context.get('skip_auto_fill_operation') or
+                not self.picking_id.auto_fill_operation):
             return res
         elif (self.picking_id.picking_type_id.avoid_lot_assignment and
               res.get('lot_id')):
