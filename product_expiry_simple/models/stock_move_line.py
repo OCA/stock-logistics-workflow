@@ -12,8 +12,8 @@ class StockMoveLine(models.Model):
 
     @api.model
     def _action_done(self):
-        super(StockMoveLine, self)._action_done()
-        for rec in self:
+        res = super(StockMoveLine, self)._action_done()
+        for rec in res:
             if rec.move_id.picking_type_id.use_create_lots:
                 if rec.lot_id:
                     rec.lot_id.write({'expiry_date': rec.expiry_date})
