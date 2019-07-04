@@ -13,6 +13,7 @@ setuptools.setup(
         'odoo12-addon-stock_move_quick_lot',
         'odoo12-addon-stock_no_negative',
         'odoo12-addon-stock_picking_customer_ref',
+        'odoo12-addon-stock_picking_filter_lot',
         'odoo12-addon-stock_picking_invoice_link',
         'odoo12-addon-stock_picking_line_sequence',
         'odoo12-addon-stock_picking_mass_action',
