@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Sergio Teruel <sergio.teruel@tecnativa.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <!-- wizard view -->
+    <record id="stock_picking_operation_change_location_view" model="ir.ui.view">
+        <field name="name">Change Operation Destination Location</field>
+        <field name="model">stock.picking.operation.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Stock Picking">
+                <div>
+                    Change the destination location.
+                    <br/>
+                </div>
+                <group>
+                    <group>
+                        <field name="location_dest_id" invisible="1"/>
+                        <field name="change_all"/>
+                        <field name="old_location_dest_id"
+                               attrs="{'invisible': [('change_all', '=', True)]}"
+                               options="{'no_create': True, 'no_open': True}"
+                        />
+                        <field name="new_location_dest_id"
+                               domain="[('id', 'child_of', location_dest_id)]"
+                               options="{'no_create': True}"
+                        />
+                    </group>
+                </group>
+                <footer>
+                    <button string="Apply" name="action_apply"
+                            type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_stock_picking_operation_change_location" model="ir.actions.act_window">
+        <field name="name">Change Operation Destination Location</field>
+        <field name="res_model">stock.picking.operation.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_type">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>
