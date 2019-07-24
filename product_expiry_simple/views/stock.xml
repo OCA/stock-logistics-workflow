@@ -43,6 +43,16 @@
             </group>
         </field>
     </record>
+    <record id="view_production_lot_inherit_form_simple" model="ir.ui.view">
+        <field name="name">product_expiry_simple.stock.production.lot.form.simple</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form_simple"/>
+        <field name="arch" type="xml">
+            <field name="ref" position="after">
+                <field name="expiry_date"/>
+            </field>
+        </field>
+    </record>
     <!-- QUANTS -->
     <!-- No need to inherit the form view, because the expiry date is shown in the lot_id via name_get() field -->
     <record id="view_stock_quant_tree" model="ir.ui.view">
