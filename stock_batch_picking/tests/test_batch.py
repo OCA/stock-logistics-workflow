@@ -12,6 +12,7 @@ class TestBatchPicking(TransactionCase):
 
         self.stock_loc = self.browse_ref('stock.stock_location_stock')
         self.customer_loc = self.browse_ref('stock.stock_location_customers')
+        self.uom_unit = self.env.ref('uom.product_uom_unit')
 
         self.batch_model = self.env['stock.batch.picking']
         # Delete (in transaction) all batches for simplify tests.
@@ -118,7 +119,9 @@ class TestBatchPicking(TransactionCase):
              for op in self.batch.move_line_ids}
         )
 
-        self.batch.action_transfer()
+        action = self.batch.action_transfer()
+        # when no qty setup we get wizard to apply them all
+        self.env['stock.immediate.transfer'].browse(action['res_id']).process()
 
         self.assertEqual('done', self.batch.state)
         self.assertEqual('done', self.picking.state)
@@ -145,10 +148,11 @@ class TestBatchPicking(TransactionCase):
                 (4, picking3.id),
             ]
         })
-
         self.assertEqual('draft', picking3.state)
         self.assertEqual('confirmed', self.picking.state)
-        self.batch.action_transfer()
+        self.batch.action_assign()
+        action = self.batch.action_transfer()
+        self.env['stock.immediate.transfer'].browse(action['res_id']).process()
         self.assertEqual('confirmed', picking3.state)
         self.assertEqual('done', self.picking.state)
 
@@ -282,6 +286,13 @@ class TestBatchPicking(TransactionCase):
         })
         self.assertEqual(user2, wizard.picker_id)
 
+    def perform_action(self, action):
+        model = action['res_model']
+        res_id = action['res_id']
+        res = self.env[model].browse(res_id)
+        res = res.process()
+        return res
+
     def test_backorder(self):
         # Change move lines quantities for product 6 and 7
         for move in self.batch.move_lines:
@@ -294,6 +305,7 @@ class TestBatchPicking(TransactionCase):
 
         # Mark product 6 as partially processed and 7 and 9 as fully processed.
         for operation in self.batch.move_line_ids:
+            # stock_move_line.qty_done
             if operation.product_id == self.product6:
                 operation.qty_done = 3
             elif operation.product_id == self.product7:
@@ -301,7 +313,9 @@ class TestBatchPicking(TransactionCase):
             elif operation.product_id == self.product9:
                 operation.qty_done = 1
 
-        self.batch.action_transfer()
+        # confirm transfer action creation
+        self.batch.action_assign()
+        action = self.perform_action(self.batch.action_transfer())
 
         self.assertEqual('done', self.picking.state)
         self.assertEqual('done', self.picking2.state)
@@ -340,7 +354,9 @@ class TestBatchPicking(TransactionCase):
         ], batch_id=self.batch.id)
         self.assertEqual('draft', picking3.state)
 
-        self.batch.action_transfer()
+        self.batch.action_assign()
+        action = self.batch.action_transfer()
+        self.env['stock.immediate.transfer'].browse(action['res_id']).process()
         self.assertEqual('done', self.batch.state)
         self.assertEqual('done', self.picking.state)
         self.assertEqual('done', self.picking2.state)
@@ -393,7 +409,8 @@ class TestBatchPicking(TransactionCase):
 
         self.batch.action_assign()
 
-        self.batch.action_transfer()
+        action = self.batch.action_transfer()
+        self.env['stock.immediate.transfer'].browse(action['res_id']).process()
         self.assertEqual('done', self.batch.state)
         self.assertEqual('done', self.picking.state)
         self.assertEqual('done', self.picking2.state)
@@ -428,7 +445,7 @@ class TestBatchPicking(TransactionCase):
         self.assertEqual(self.picking2 | picking3, self.batch.picking_ids)
 
     def test_partial_done(self):
-        # If user filled some qty_done manually in operations tab,
+        # If user filled some quantity_done manually in operations tab,
         # we want only these qties to be processed.
         # So picking with no qties processed are release and backorder are
         # created for picking partially processed.
@@ -439,7 +456,12 @@ class TestBatchPicking(TransactionCase):
 
         self.picking.move_line_ids[0].qty_done = 1
 
-        self.batch.action_transfer()
+        action = self.batch.action_transfer()
+        # confirm transfer action creation
+        self.env['stock.backorder.confirmation'].browse(
+            action['res_id']
+        ).process()
+        self.batch.remove_undone_pickings()
 
         self.assertEqual(self.picking, self.batch.picking_ids)
         self.assertEqual('done', self.picking.state)
