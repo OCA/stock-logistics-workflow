@@ -15,7 +15,10 @@
               "Odoo Community Association (OCA)",
     'website': 'http://www.camptocamp.com',
     'depends': ['stock', 'sale', 'sale_stock'],
-    'data': ['views/stock_view.xml'],
+    'data': [
+        'views/stock_view.xml',
+        'report/report_deliveryslip.xml',
+    ],
     'post_init_hook': 'post_init_hook',
     'installable': True,
     'auto_install': False,
