@@ -18,7 +18,9 @@
 
   * Pedro M. Baeza <pedro.baeza@tecnativa.com>
   * David Vidal <david.vidal@tecnativa.com>
+* `Domatix <https://www.domatix.com>`_
 
+  * Catalin Airimitoaie <catalin@domaitx.com>
 * Unai Alkorta
 * Iñaki Zabala
 * Jacques-Etienne Baudoux <je@bcim.be>
