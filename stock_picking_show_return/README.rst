@@ -36,12 +36,26 @@ pickings related to the current one.
 Usage
 =====
 
+To display returned pickings from this one
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 #. Go to any picking that has a return
 #. See the new tab "Returns" appears.
 
-.. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
-   :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/154/11.0
+To display origin picking from any returned picking
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#. Go to any returned picking
+#. See the new smart button "Origin picking" appears.
+#. Click on button to open origin picking.
+
+Changelog
+=========
+
+12.0.1.0.1 (2020-01-30)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [ADD] Display source picking from any returned picking.
 
 Bug Tracker
 ===========
@@ -64,9 +78,15 @@ Authors
 Contributors
 ~~~~~~~~~~~~
 
-* Pedro M. Baeza <pedro.baeza@tecnativa.com>
-* Shruti Singh <shruti.singh@bizzappdev.com>
-* Ruchir Shukla <ruchir@bizzappdev.com>
+* `Tecnativa <https://www.tecnativa.com>`_:
+
+    * Pedro M. Baeza <pedro.baeza@tecnativa.com>
+    * Sergio Teruel <sergio.teruel@tecnativa.com>
+
+* `BizzAppDev <https://www.bizzappdev.com>`_:
+
+    * Shruti Singh <shruti.singh@bizzappdev.com>
+    * Ruchir Shukla <ruchir@bizzappdev.com>
 
 Maintainers
 ~~~~~~~~~~~
