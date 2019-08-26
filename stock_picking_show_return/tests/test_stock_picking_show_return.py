@@ -34,3 +34,19 @@ class TestStockPickingShowReturn(common.TransactionCase):
             active_ids=self.picking.ids, active_id=self.picking.id).create({})
         wizard.create_returns()
         self.assertTrue(self.picking.returned_ids)
+
+    def test_source_picking_id_field(self):
+        self.picking.action_assign()
+        self.picking.force_assign()
+        self.picking.move_line_ids.qty_done = 1
+        self.picking.action_done()
+        wizard = self.env['stock.return.picking'].with_context(
+            active_ids=self.picking.ids, active_id=self.picking.id).create({})
+        wizard.create_returns()
+        picking_returned = self.picking.returned_ids[0]
+        # Get first picking returned to check if origin is self.picking
+        picking_origin = picking_returned.source_picking_id
+        self.assertEqual(picking_origin, self.picking)
+        # Open origin returned picking form view
+        action = picking_returned.action_show_source_picking()
+        self.assertEqual(action['res_id'], self.picking.id)
