@@ -91,3 +91,15 @@ msgstr "Ver factura"
 
 #~ msgid "Invoice Lines"
 #~ msgstr "Líneas de factura"
+
+
+#. module: stock_picking_invoice_link
+#: model:ir.ui.view,arch_db:stock_picking_invoice_link.res_config_settings_view_form_inherit
+msgid "Picking reports as email attachments"
+msgstr "Informes de Trasnferencias como adjuntos en correos electrónicos"
+
+#. module: stock_picking_invoice_link
+#: model:ir.ui.view,arch_db:stock_picking_invoice_link.res_config_settings_view_form_inherit
+msgid "Set Picking Operations reports as attachments to the email created by the `Send by Email` button."
+msgstr "Informes de Transferencias como adjuntos en el email creado por "
+"el botón `Enviar por correo electrónico`"

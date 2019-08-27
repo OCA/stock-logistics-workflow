@@ -68,8 +68,8 @@ class TestStockPickingInvoiceLink(TestSale):
                          'Sale Stock: so invoice_status should be '
                          '"nothing to invoice" after invoicing')
         pick_1 = self.so.picking_ids.filtered(
-            lambda x: x.picking_type_code == 'outgoing' and
-                      x.state in ('confirmed', 'assigned', 'partially_available'))
+            lambda x: x.picking_type_code == 'outgoing'
+            and x.state in ('confirmed', 'assigned', 'partially_available'))
         pick_1.force_assign()
         pick_1.move_line_ids.write({'qty_done': 1})
         pick_1.action_done()
@@ -86,8 +86,8 @@ class TestStockPickingInvoiceLink(TestSale):
         self.assertEqual(len(self.so.picking_ids), 2,
                          'Sale Stock: number of pickings should be 2')
         pick_2 = self.so.picking_ids.filtered(
-            lambda x: x.picking_type_code == 'outgoing' and
-                      x.state in ('confirmed', 'assigned', 'partially_available'))
+            lambda x: x.picking_type_code == 'outgoing'
+            and x.state in ('confirmed', 'assigned', 'partially_available'))
         pick_2.force_assign()
         pick_2.move_line_ids.write({'qty_done': 1})
         pick_2.action_done()
