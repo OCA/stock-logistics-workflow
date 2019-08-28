@@ -1,22 +1,17 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * stock_lock_lot
+#	* stock_lock_lot
 #
-# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: stock-logistics-workflow (8.0)\n"
+"Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-24 06:44+0000\n"
-"PO-Revision-Date: 2016-12-27 08:21+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Spanish (Paraguay) (http://www.transifex.com/oca/OCA-stock-"
-"logistics-workflow-8-0/language/es_PY/)\n"
-"Language: es_PY\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: \n"
 
 #. module: stock_lock_lot
 #: field:stock.location,allow_locked:0
@@ -65,17 +60,17 @@ msgstr ""
 #. module: stock_lock_lot
 #: view:wiz.lock.lot:stock_lock_lot.view_wiz_lock_lot_form
 msgid "Cancel"
-msgstr "Cancelar"
+msgstr ""
 
 #. module: stock_lock_lot
 #: field:wiz.lock.lot,create_uid:0
 msgid "Created by"
-msgstr "Creado por"
+msgstr ""
 
 #. module: stock_lock_lot
 #: field:wiz.lock.lot,create_date:0
 msgid "Created on"
-msgstr "Creado en"
+msgstr ""
 
 #. module: stock_lock_lot
 #: selection:stock.production.lot,lock_reason:0
@@ -90,19 +85,16 @@ msgstr ""
 #. module: stock_lock_lot
 #: field:wiz.lock.lot,id:0
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: stock_lock_lot
 #: help:product.category,lot_default_locked:0
-msgid ""
-"If checked, future Serial Numbers/lots will be created blocked by default"
+msgid "If checked, future Serial Numbers/lots will be created blocked by default"
 msgstr ""
 
 #. module: stock_lock_lot
 #: view:stock.production.lot:stock_lock_lot.view_production_lot_form_inh_locklot
-msgid ""
-"If you block this Serial Number/Lot, all its reservations will be removed, "
-"and the pending stock moves will be marked 'unavailable'."
+msgid "If you block this Serial Number/Lot, all its reservations will be removed, and the pending stock moves will be marked 'unavailable'."
 msgstr ""
 
 #. module: stock_lock_lot
@@ -123,12 +115,12 @@ msgstr ""
 #. module: stock_lock_lot
 #: field:wiz.lock.lot,write_uid:0
 msgid "Last Updated by"
-msgstr "Ultima actualización por"
+msgstr ""
 
 #. module: stock_lock_lot
 #: field:wiz.lock.lot,write_date:0
 msgid "Last Updated on"
-msgstr "Ultima actualización en"
+msgstr ""
 
 #. module: stock_lock_lot
 #: view:stock.quant:stock_lock_lot.quant_search_view_inh_locklot
@@ -205,8 +197,7 @@ msgstr ""
 #. module: stock_lock_lot
 #: code:addons/stock_lock_lot/models/stock_quant.py:39
 #, python-format
-msgid ""
-"The following lots/serial number is blocked and cannot be moved:\n"
+msgid "The following lots/serial number is blocked and cannot be moved:\n"
 "%s"
 msgstr ""
 
@@ -227,9 +218,7 @@ msgstr ""
 
 #. module: stock_lock_lot
 #: help:stock.config.settings,stock_lock_lot_strict:0
-msgid ""
-"When this box is checked, users are not allowed to force theavailability on "
-"blocked Serial Numbers/lots."
+msgid "When this box is checked, users are not allowed to force theavailability on blocked Serial Numbers/lots."
 msgstr ""
 
 #. module: stock_lock_lot
@@ -246,12 +235,11 @@ msgstr ""
 
 #. module: stock_lock_lot
 #: view:stock.transfer_details:stock_lock_lot.view_stock_enter_transfer_details_inh_locklot
-msgid ""
-"[('product_id','=?',product_id), '|', ('locked', '=', allow_locked), "
-"('locked','=',False)]"
+msgid "[('product_id','=?',product_id), '|', ('locked', '=', allow_locked), ('locked','=',False)]"
 msgstr ""
 
 #. module: stock_lock_lot
 #: view:wiz.lock.lot:stock_lock_lot.view_wiz_lock_lot_form
 msgid "or"
 msgstr ""
+
