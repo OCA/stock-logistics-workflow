@@ -90,7 +90,7 @@ class StockProductionLot(models.Model):
         product = self.env['product.product'].browse(
             vals.get('product_id',
                      # Web quick-create provide in context
-                     self.env.context.get('product_id', False)))
+                     self.env.context.get('default_product_id', False)))
         vals['locked'] = self._get_product_locked(product)
         vals['lock_reason'] = self._get_lock_reason(product)
         return super(StockProductionLot, self).create(vals)
