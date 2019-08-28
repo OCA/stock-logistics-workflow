@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * stock_lock_lot
-# 
+#
 # Translators:
 # Hosni Hadj-Taher <inactive+hajhasni@transifex.com>, 2017
 # Hosni Hadj-Taher <inactive+hajhasni@transifex.com>, 2017
@@ -12,11 +12,12 @@ msgstr ""
 "POT-Creation-Date: 2018-02-27 01:52+0000\n"
 "PO-Revision-Date: 2018-02-02 11:23+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: French (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/fr/)\n"
+"Language-Team: French (http://www.transifex.com/oca/OCA-stock-logistics-"
+"workflow-8-0/language/fr/)\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: stock_lock_lot
@@ -104,7 +105,9 @@ msgstr "Si coché, les lots de production seront créés verrouillés par défau
 msgid ""
 "If you block this Serial Number/Lot, all its reservations will be removed, "
 "and the pending stock moves will be marked 'unavailable'."
-msgstr "Si vous bloquez ce lot, toutes les réservations seront supprimées, et les mouvements de stock à venir seront marqués \"Indisponibles\"."
+msgstr ""
+"Si vous bloquez ce lot, toutes les réservations seront supprimées, et les "
+"mouvements de stock à venir seront marqués \"Indisponibles\"."
 
 #. module: stock_lock_lot
 #: model:ir.model,name:stock_lock_lot.model_stock_inventory_line
@@ -201,7 +204,8 @@ msgstr "Mouvement de stock"
 #. module: stock_lock_lot
 #: field:stock.config.settings,stock_lock_lot_strict:0
 msgid "Strictly forbid moves on blocked Serial Numbers/lots."
-msgstr "Interdire strictement les mouvements sur les numéros de série / lots bloqués."
+msgstr ""
+"Interdire strictement les mouvements sur les numéros de série / lots bloqués."
 
 #. module: stock_lock_lot
 #: code:addons/stock_lock_lot/models/stock_quant.py:39
@@ -209,7 +213,10 @@ msgstr "Interdire strictement les mouvements sur les numéros de série / lots b
 msgid ""
 "The following lots/serial number is blocked and cannot be moved:\n"
 "%s"
-msgstr "Les numéros de lots / série suivants sont bloqués et ne peuvent pas être déplacés:\n%s"
+msgstr ""
+"Les numéros de lots / série suivants sont bloqués et ne peuvent pas être "
+"déplacés:\n"
+"%s"
 
 #. module: stock_lock_lot
 #: view:stock.production.lot:stock_lock_lot.view_production_lot_form_inh_locklot
@@ -231,7 +238,9 @@ msgstr "Que souhaitez-vous faire sur les n° de série/lots sélectionnés ?"
 msgid ""
 "When this box is checked, users are not allowed to force theavailability on "
 "blocked Serial Numbers/lots."
-msgstr "Lorsque cette case est cochée, les utilisateurs ne seront pas autorisés à forcer la disponibilité sur les numéros de série / lots bloqués."
+msgstr ""
+"Lorsque cette case est cochée, les utilisateurs ne seront pas autorisés à "
+"forcer la disponibilité sur les numéros de série / lots bloqués."
 
 #. module: stock_lock_lot
 #: code:addons/stock_lock_lot/models/stock_production_lot.py:69
