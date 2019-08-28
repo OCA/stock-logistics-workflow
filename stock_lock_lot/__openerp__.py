@@ -6,7 +6,7 @@
 {
     "name": "Stock Lock Lot",
     "Summary": "Restrict blocked lots in Stock Moves and reservations",
-    "version": "8.0.2.1.0",
+    "version": "8.0.2.1.1",
     "author": "OdooMRP team,"
               "Avanzosc,"
               "Serv. Tecnol. Avanzados - Pedro M. Baeza,"
