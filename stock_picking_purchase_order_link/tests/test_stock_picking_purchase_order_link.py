@@ -1,13 +1,11 @@
 # Copyright 2019 Eficent Business and IT Consulting Services S.L.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import fields
+from datetime import date
 from odoo.tests.common import TransactionCase
 
 
 class TestStockPickingPurchaseOrderLink(TransactionCase):
-    post_install = True
-    at_install = False
 
     def setUp(self):
         super(TestStockPickingPurchaseOrderLink, self).setUp()
@@ -42,7 +40,7 @@ class TestStockPickingPurchaseOrderLink(TransactionCase):
                     'product_qty': 1.0,
                     'product_uom': self.product.uom_po_id.id,
                     'price_unit': 10.0,
-                    'date_planned': fields.Date.today(),
+                    'date_planned': date.today(),
                 })],
         })
         purchase_order.button_confirm()
