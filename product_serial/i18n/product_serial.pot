@@ -1,21 +1,17 @@
-# Translation of OpenERP Server.
+# Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* mrp_prodlot_autosplit
+#	* product_serial
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.14\n"
+"Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-09 09:30+0000\n"
-"PO-Revision-Date: 2014-02-03 21:32+0000\n"
-"Last-Translator: Alexis de Lattre <alexis@via.ecp.fr>\n"
+"Last-Translator: <>\n"
 "Language-Team: \n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-06-25 06:09+0000\n"
-"X-Generator: Launchpad (build 17065)\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
 
 #. module: product_serial
 #: view:stock.prodlot.selection:product_serial.view_stock_prodlot_selection
@@ -201,9 +197,7 @@ msgstr ""
 
 #. module: product_serial
 #: help:stock.prodlot.selection,prodlot_file:0
-msgid ""
-"The serial numbers file should be a text file with one serial number per "
-"line and without any field separator (one file per product)."
+msgid "The serial numbers file should be a text file with one serial number per line and without any field separator (one file per product)."
 msgstr ""
 
 #. module: product_serial
@@ -214,11 +208,7 @@ msgstr ""
 
 #. module: product_serial
 #: help:product.template,lot_split_type:0
-msgid ""
-"You should select 'Single' if you have one serial number per item. In this "
-"case, the Transfer pop-up on the picking will display one line per unit for "
-"this product. The default value is 'None': for those product, the native "
-"process is not modified."
+msgid "You should select 'Single' if you have one serial number per item. In this case, the Transfer pop-up on the picking will display one line per unit for this product. The default value is 'None': for those product, the native process is not modified."
 msgstr ""
 
 #. module: product_serial
@@ -226,3 +216,4 @@ msgstr ""
 #, python-format
 msgid "You should upload a text file containing the serial numbers."
 msgstr ""
+
