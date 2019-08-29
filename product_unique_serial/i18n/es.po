@@ -50,8 +50,8 @@ msgstr "Asistente de albarán"
 #, python-format
 msgid "Product '%s' has active 'unique lot'\n"
 "but with this move you will have a quantity of '%s' in lot '%s'"
-msgstr "El Producto '%s' tiene activa la restricción 'Lote Único'
-pero con este movimiento tendrá una cantidad de '%s' en el lote '%s'"
+msgstr "El Producto '%s' tiene activa la restricción 'Lote Único'"
+"pero con este movimiento tendrá una cantidad de '%s' en el lote '%s'"
 
 #. module: product_unique_serial
 #: code:addons/product_unique_serial/models/stock_move.py:50
