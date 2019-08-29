@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * stock_move_description
-# 
+#
 # Translators:
 # Hosni Hadj Taher <hajhasni@hotmail.com>, 2017
 msgid ""
@@ -11,22 +11,27 @@ msgstr ""
 "POT-Creation-Date: 2017-02-18 08:44+0000\n"
 "PO-Revision-Date: 2017-02-21 17:42+0000\n"
 "Last-Translator: Hosni Hadj Taher <hajhasni@hotmail.com>\n"
-"Language-Team: French (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/fr/)\n"
+"Language-Team: French (http://www.transifex.com/oca/OCA-stock-logistics-"
+"workflow-8-0/language/fr/)\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: stock_move_description
 #: field:stock.config.settings,group_use_product_description_per_stock_move:0
 msgid "Allow using only the product description on the stock moves"
-msgstr "Autoriser l'utilisation uniquement de la description du produit sur les mouvements de stock"
+msgstr ""
+"Autoriser l'utilisation uniquement de la description du produit sur les "
+"mouvements de stock"
 
 #. module: stock_move_description
 #: help:stock.config.settings,group_use_product_description_per_stock_move:0
 msgid "Allows you to use only product description on the stock moves."
-msgstr "Vous permet d'utiliser uniquement la description du produit sur les mouvements de stock."
+msgstr ""
+"Vous permet d'utiliser uniquement la description du produit sur les "
+"mouvements de stock."
 
 #. module: stock_move_description
 #: model:ir.model,name:stock_move_description.model_stock_move
@@ -36,4 +41,5 @@ msgstr "Mouvement de stock"
 #. module: stock_move_description
 #: model:res.groups,name:stock_move_description.group_use_product_description_per_stock_move
 msgid "Use only product description on stock moves"
-msgstr "Utiliser uniquement la description du produit sur les mouvements de stock."
+msgstr ""
+"Utiliser uniquement la description du produit sur les mouvements de stock."
