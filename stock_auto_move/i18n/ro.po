@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * stock_auto_move
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
@@ -12,11 +12,12 @@ msgstr ""
 "PO-Revision-Date: 2017-07-01 10:53+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
 "Language-Team: Romanian (https://www.transifex.com/oca/teams/23907/ro/)\n"
+"Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: ro\n"
-"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?"
+"2:1));\n"
 
 #. module: stock_auto_move
 #: model:procurement.rule,name:stock_auto_move.procurement_rule_a_to_b
@@ -39,8 +40,8 @@ msgstr ""
 #. module: stock_auto_move
 #: help:stock.move,auto_move:0
 msgid ""
-"If this option is selected, the move will be automatically processed as soon"
-" as the products are available."
+"If this option is selected, the move will be automatically processed as soon "
+"as the products are available."
 msgstr ""
 
 #. module: stock_auto_move
