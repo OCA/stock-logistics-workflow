@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * stock_picking_package_preparation
-# 
+#
 # Translators:
 # Matjaž Mozetič <m.mozetic@matmoz.si>, 2015-2016
 # Rudolf Schnapka <rs@techno-flex.de>, 2016
@@ -12,12 +12,14 @@ msgstr ""
 "POT-Creation-Date: 2016-05-04 02:49+0000\n"
 "PO-Revision-Date: 2016-05-03 15:00+0000\n"
 "Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
-"Language-Team: Slovenian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/sl/)\n"
+"Language-Team: Slovenian (http://www.transifex.com/oca/OCA-stock-logistics-"
+"workflow-8-0/language/sl/)\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: sl\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3);\n"
 
 #. module: stock_picking_package_preparation
 #: model:ir.actions.act_window,help:stock_picking_package_preparation.action_stock_picking_package_preparation
@@ -26,7 +28,11 @@ msgid ""
 "          Click to prepare a new package preparation.\n"
 "        </p>\n"
 "      "
-msgstr "<p class=\"oe_view_nocontent_create\">\n          Priprava pakiranja.\n        </p>\n      "
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"          Priprava pakiranja.\n"
+"        </p>\n"
+"      "
 
 #. module: stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
@@ -39,13 +45,13 @@ msgid "All Content"
 msgstr "Vsa vsebina"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:220
+#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:221
 #, python-format
 msgid "All the transfers must be \"Ready to Transfer\"."
 msgstr "Vse premestitve morajo biti \"Pripravljene za premestitev\"."
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:202
+#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:203
 #, python-format
 msgid "All the transfers must have the same destination location"
 msgstr "Vse premestitve morajo imeti isto ciljno lokacijo"
@@ -61,7 +67,7 @@ msgid "Cancelled"
 msgstr "Preklicano"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:171
+#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:172
 #, python-format
 msgid "Cannot cancel a done package preparation."
 msgstr "Ne morete preklicati opravljene priprave pakiranja."
@@ -116,7 +122,9 @@ msgstr "Sledilci"
 msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
-msgstr "Povzetek pogovorov (število sporočil,..). Povzetek je neposredno v html formatu, da se lahko neposredno vstavi v prikaze tipa kanban."
+msgstr ""
+"Povzetek pogovorov (število sporočil,..). Povzetek je neposredno v html "
+"formatu, da se lahko neposredno vstavi v prikaze tipa kanban."
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,id:0
@@ -132,9 +140,12 @@ msgstr "Če označeno, zahtevajo nova sporočila vašo pozornost."
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid ""
 "If there is no product but a source package, this means the source package "
-"was moved entirely.  If there is a product and a source package, the product"
-" was taken from the source package."
-msgstr "Če v izvornem pakiranju ni proizvoda, pomeni, da je bilo izvorno pakiranje v celoti premaknjeno. Če obstajata tako proizvod, kot izvorno pakiranje, je proizvod bil vzet iz izvornega pakiranja."
+"was moved entirely.  If there is a product and a source package, the product "
+"was taken from the source package."
+msgstr ""
+"Če v izvornem pakiranju ni proizvoda, pomeni, da je bilo izvorno pakiranje v "
+"celoti premaknjeno. Če obstajata tako proizvod, kot izvorno pakiranje, je "
+"proizvod bil vzet iz izvornega pakiranja."
 
 #. module: stock_picking_package_preparation
 #: selection:stock.picking.package.preparation,state:0
@@ -187,7 +198,7 @@ msgid "Net weight"
 msgstr "Neto masa"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:197
+#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:198
 #, python-format
 msgid "No transfer selected for this preparation."
 msgstr "Za to pripravo ni izbrane premestitve."
@@ -198,7 +209,7 @@ msgid "Note"
 msgstr "Opomba"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:182
+#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:183
 #, python-format
 msgid "Only canceled package preparations can be reset to draft."
 msgstr "Le preklicane priprave pakiranj se lahko ponastavi v osnutek."

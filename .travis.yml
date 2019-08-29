@@ -7,6 +7,7 @@ cache:
     - $HOME/.pip-cache/
 
 addons:
+  postgresql: "9.6"
   apt:
     packages:
       - expect-dev

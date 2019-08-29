@@ -1,0 +1,219 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* product_serial
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: product_serial
+#: view:stock.prodlot.selection:product_serial.view_stock_prodlot_selection
+msgid "Cancel"
+msgstr ""
+
+#. module: product_serial
+#: field:stock.prodlot.selection,create_prodlots:0
+msgid "Create New Serial Numbers"
+msgstr ""
+
+#. module: product_serial
+#: field:stock.prodlot.selection,create_uid:0
+msgid "Created by"
+msgstr ""
+
+#. module: product_serial
+#: field:stock.prodlot.selection,create_date:0
+msgid "Created on"
+msgstr ""
+
+#. module: product_serial
+#: field:stock.prodlot.selection,display_name:0
+msgid "Display Name"
+msgstr ""
+
+#. module: product_serial
+#: field:stock.prodlot.selection,first_number:0
+msgid "First Number"
+msgstr ""
+
+#. module: product_serial
+#: code:addons/product_serial/wizard/prodlot_wizard.py:92
+#, python-format
+msgid "First and Last Numbers must have the same length."
+msgstr ""
+
+#. module: product_serial
+#: view:stock.prodlot.selection:product_serial.view_stock_prodlot_selection
+msgid "From File"
+msgstr ""
+
+#. module: product_serial
+#: view:stock.prodlot.selection:product_serial.view_stock_prodlot_selection
+msgid "From Interval"
+msgstr ""
+
+#. module: product_serial
+#: field:stock.prodlot.selection,id:0
+msgid "ID"
+msgstr ""
+
+#. module: product_serial
+#: model:product.template,name:product_serial.product_serial_1_product_template
+msgid "Laptop X5042-SN"
+msgstr ""
+
+#. module: product_serial
+#: model:product.template,name:product_serial.product_serial_2_product_template
+msgid "Laptop X6012-SN"
+msgstr ""
+
+#. module: product_serial
+#: field:stock.prodlot.selection,__last_update:0
+msgid "Last Modified on"
+msgstr ""
+
+#. module: product_serial
+#: field:stock.prodlot.selection,last_number:0
+msgid "Last Number"
+msgstr ""
+
+#. module: product_serial
+#: field:stock.prodlot.selection,write_uid:0
+msgid "Last Updated by"
+msgstr ""
+
+#. module: product_serial
+#: field:stock.prodlot.selection,write_date:0
+msgid "Last Updated on"
+msgstr ""
+
+#. module: product_serial
+#: field:product.template,lot_split_type:0
+msgid "Lot split type"
+msgstr ""
+
+#. module: product_serial
+#: selection:product.template,lot_split_type:0
+msgid "None"
+msgstr ""
+
+#. module: product_serial
+#: model:ir.model,name:product_serial.model_stock_transfer_details
+msgid "Picking wizard"
+msgstr ""
+
+#. module: product_serial
+#: field:stock.prodlot.selection,prefix:0
+msgid "Prefix"
+msgstr ""
+
+#. module: product_serial
+#: field:stock.prodlot.selection,product_id:0
+msgid "Product"
+msgstr ""
+
+#. module: product_serial
+#: model:ir.model,name:product_serial.model_product_template
+msgid "Product Template"
+msgstr ""
+
+#. module: product_serial
+#: view:stock.prodlot.selection:product_serial.view_stock_prodlot_selection
+msgid "Run From File"
+msgstr ""
+
+#. module: product_serial
+#: view:stock.prodlot.selection:product_serial.view_stock_prodlot_selection
+msgid "Run From Interval"
+msgstr ""
+
+#. module: product_serial
+#: model:ir.model,name:product_serial.model_stock_prodlot_selection
+#: view:stock.prodlot.selection:product_serial.view_stock_prodlot_selection
+msgid "Select or Create Production Lots"
+msgstr ""
+
+#. module: product_serial
+#: model:ir.actions.act_window,name:product_serial.action_prodlot_selection
+msgid "Select or Create Serial Numbers"
+msgstr ""
+
+#. module: product_serial
+#: code:addons/product_serial/wizard/prodlot_wizard.py:135
+#, python-format
+msgid "Serial Number '%s' not found for product '%s'."
+msgstr ""
+
+#. module: product_serial
+#: field:stock.prodlot.selection,prodlot_file:0
+msgid "Serial Numbers File"
+msgstr ""
+
+#. module: product_serial
+#: selection:product.template,lot_split_type:0
+msgid "Single"
+msgstr ""
+
+#. module: product_serial
+#: view:stock.transfer_details:product_serial.view_stock_enter_transfer_details
+msgid "Spread Serial Numbers"
+msgstr ""
+
+#. module: product_serial
+#: field:stock.prodlot.selection,suffix:0
+msgid "Suffix"
+msgstr ""
+
+#. module: product_serial
+#: code:addons/product_serial/wizard/prodlot_wizard.py:88
+#, python-format
+msgid "The First Number must be lower than the Last Number."
+msgstr ""
+
+#. module: product_serial
+#: code:addons/product_serial/wizard/prodlot_wizard.py:84
+#, python-format
+msgid "The First and Last Numbers should be strictly positive."
+msgstr ""
+
+#. module: product_serial
+#: code:addons/product_serial/wizard/prodlot_wizard.py:74
+#, python-format
+msgid "The field 'First Number' should only contain digits."
+msgstr ""
+
+#. module: product_serial
+#: code:addons/product_serial/wizard/prodlot_wizard.py:80
+#, python-format
+msgid "The field 'Last Number' should only contain digits."
+msgstr ""
+
+#. module: product_serial
+#: help:stock.prodlot.selection,prodlot_file:0
+msgid "The serial numbers file should be a text file with one serial number per line and without any field separator (one file per product)."
+msgstr ""
+
+#. module: product_serial
+#: code:addons/product_serial/wizard/prodlot_wizard.py:68
+#, python-format
+msgid "You should enter a value for the First Number and the Last Number"
+msgstr ""
+
+#. module: product_serial
+#: help:product.template,lot_split_type:0
+msgid "You should select 'Single' if you have one serial number per item. In this case, the Transfer pop-up on the picking will display one line per unit for this product. The default value is 'None': for those product, the native process is not modified."
+msgstr ""
+
+#. module: product_serial
+#: code:addons/product_serial/wizard/prodlot_wizard.py:51
+#, python-format
+msgid "You should upload a text file containing the serial numbers."
+msgstr ""
+

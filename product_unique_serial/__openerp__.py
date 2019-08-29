@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': "Product Serial Unique Number",
-    'version': '8.0.1.0.1',
+    'version': '8.0.1.0.2',
     'author': "Vauxoo,Odoo Community Association (OCA)",
     'website': "http://www.vauxoo.com",
     'category': 'stock',

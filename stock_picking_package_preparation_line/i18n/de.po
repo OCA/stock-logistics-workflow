@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * stock_picking_package_preparation_line
-# 
+#
 # Translators:
 # Rudolf Schnapka <rs@techno-flex.de>, 2016
 msgid ""
@@ -11,11 +11,12 @@ msgstr ""
 "POT-Creation-Date: 2017-05-31 02:51+0000\n"
 "PO-Revision-Date: 2017-05-13 18:19+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: German (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/de/)\n"
+"Language-Team: German (http://www.transifex.com/oca/OCA-stock-logistics-"
+"workflow-8-0/language/de/)\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_picking_package_preparation_line
@@ -66,15 +67,28 @@ msgstr "ID"
 msgid ""
 "If you change this quantity for a 'ready' picking, the system will not "
 "generate a back order, but will just deliver the new quantity"
-msgstr "Wenn Sie diese Menge, bei einer Kommissionierung die 'Bereit' ist, ändern, erstellt das System keinen Rückstand, sondern liefert die neue Menge einfach aus."
+msgstr ""
+"Wenn Sie diese Menge, bei einer Kommissionierung die 'Bereit' ist, ändern, "
+"erstellt das System keinen Rückstand, sondern liefert die neue Menge einfach "
+"aus."
 
 #. module: stock_picking_package_preparation_line
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:252
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:261
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:263
+#, fuzzy, python-format
+msgid ""
+"Impossible to create assigned picking. Please Check products availability!"
+msgstr ""
+"Es ist unmöglich eine bestätigte Kommissionierung anzulegen. Prüfen Sie "
+"bitte die Produktverfügbarkeit."
+
+#. module: stock_picking_package_preparation_line
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:254
 #, python-format
 msgid ""
 "Impossible to create confirmed picking. Please Check products availability!"
-msgstr "Es ist unmöglich eine bestätigte Kommissionierung anzulegen. Prüfen Sie bitte die Produktverfügbarkeit."
+msgstr ""
+"Es ist unmöglich eine bestätigte Kommissionierung anzulegen. Prüfen Sie "
+"bitte die Produktverfügbarkeit."
 
 #. module: stock_picking_package_preparation_line
 #: field:stock.picking.package.preparation.line,__last_update:0

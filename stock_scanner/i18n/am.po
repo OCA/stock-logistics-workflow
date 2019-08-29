@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * stock_scanner
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2016
 msgid ""
@@ -12,10 +12,10 @@ msgstr ""
 "PO-Revision-Date: 2016-09-13 22:02+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Amharic (https://www.transifex.com/oca/teams/23907/am/)\n"
+"Language: am\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: am\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: stock_scanner
@@ -55,8 +55,8 @@ msgstr ""
 #: code:addons/stock_scanner/demo/Tutorial/Sentinel/scanner_scenario_step_sentinel_return_values.py:25
 #, python-format
 msgid ""
-"- A single value (all step types). The type of the value depends on the type"
-" of step (float, integer, boolean...)."
+"- A single value (all step types). The type of the value depends on the type "
+"of step (float, integer, boolean...)."
 msgstr ""
 
 #. module: stock_scanner
@@ -159,7 +159,7 @@ msgid ""
 msgstr ""
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:499
+#: code:addons/stock_scanner/hardware/sentinel.py:507
 #, python-format
 msgid ""
 "An error occured\n"
@@ -173,7 +173,7 @@ msgid "Appear on barcode reader screen."
 msgstr ""
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:129
+#: code:addons/stock_scanner/hardware/sentinel.py:137
 #, python-format
 msgid ""
 "Autoconfiguration failed !\n"
@@ -628,8 +628,7 @@ msgstr ""
 #. module: stock_scanner
 #: field:scanner.hardware,write_uid:0
 #: field:scanner.hardware.step.history,write_uid:0
-#: field:scanner.scenario,write_uid:0
-#: field:scanner.scenario.custom,write_uid:0
+#: field:scanner.scenario,write_uid:0 field:scanner.scenario.custom,write_uid:0
 #: field:scanner.scenario.step,write_uid:0
 #: field:scanner.scenario.transition,write_uid:0
 msgid "Last Updated by"
@@ -706,16 +705,16 @@ msgstr ""
 #: code:addons/stock_scanner/demo/Tutorial/Sentinel/scanner_scenario_step_sentinel_scrolling.py:16
 #, python-format
 msgid ""
-"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nibh lorem,"
-" volutpat sit amet faucibus ut, adipiscing vitae lacus. Vestibulum "
-"hendrerit, sapien a porta posuere, augue ipsum mattis neque, sit amet "
-"sagittis felis lectus ut risus. Sed aliquam felis ut orci adipiscing auctor."
-" Donec malesuada lorem eu nunc vestibulum elementum. Quisque orci quam, "
-"lobortis at mattis sit amet, gravida semper quam. Curabitur lobortis, eros "
-"ut porttitor rutrum, erat sem tincidunt augue, sed accumsan felis magna at "
-"purus. Sed laoreet consectetur viverra. Aliquam a odio sapien. Suspendisse "
-"potenti. Donec dignissim sagittis lacus, a auctor leo ultricies vel. "
-"Pellentesque eleifend porta nulla elementum faucibus."
+"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nibh lorem, "
+"volutpat sit amet faucibus ut, adipiscing vitae lacus. Vestibulum hendrerit, "
+"sapien a porta posuere, augue ipsum mattis neque, sit amet sagittis felis "
+"lectus ut risus. Sed aliquam felis ut orci adipiscing auctor. Donec "
+"malesuada lorem eu nunc vestibulum elementum. Quisque orci quam, lobortis at "
+"mattis sit amet, gravida semper quam. Curabitur lobortis, eros ut porttitor "
+"rutrum, erat sem tincidunt augue, sed accumsan felis magna at purus. Sed "
+"laoreet consectetur viverra. Aliquam a odio sapien. Suspendisse potenti. "
+"Donec dignissim sagittis lacus, a auctor leo ultricies vel. Pellentesque "
+"eleifend porta nulla elementum faucibus."
 msgstr ""
 
 #. module: stock_scanner
@@ -776,7 +775,7 @@ msgid "Name of the transition."
 msgstr ""
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:564
+#: code:addons/stock_scanner/hardware/sentinel.py:572
 #, python-format
 msgid "No"
 msgstr ""
@@ -787,13 +786,13 @@ msgid "No back"
 msgstr ""
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:533
+#: code:addons/stock_scanner/hardware/sentinel.py:541
 #, python-format
 msgid "No scenario available !"
 msgstr ""
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:445
+#: code:addons/stock_scanner/hardware/sentinel.py:453
 #, python-format
 msgid "No value available"
 msgstr ""
@@ -956,7 +955,7 @@ msgid "Scenario used for this hardware."
 msgstr ""
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:536
+#: code:addons/stock_scanner/hardware/sentinel.py:544
 #, python-format
 msgid "Scenarios"
 msgstr ""
@@ -993,13 +992,13 @@ msgid "Security"
 msgstr ""
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:846
+#: code:addons/stock_scanner/hardware/sentinel.py:855
 #, python-format
 msgid "Selected : %d"
 msgstr ""
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:667
+#: code:addons/stock_scanner/hardware/sentinel.py:675
 #, python-format
 msgid "Selected : %s"
 msgstr ""
@@ -1021,8 +1020,7 @@ msgid "Sequence"
 msgstr ""
 
 #. module: stock_scanner
-#: help:scanner.scenario,sequence:0
-#: help:scanner.scenario.transition,sequence:0
+#: help:scanner.scenario,sequence:0 help:scanner.scenario.transition,sequence:0
 msgid "Sequence order."
 msgstr ""
 
@@ -1213,8 +1211,7 @@ msgstr ""
 
 #. module: stock_scanner
 #: help:scanner.scenario.transition,condition:0
-msgid ""
-"The transition is followed only if this condition is evaluated as True."
+msgid "The transition is followed only if this condition is evaluated as True."
 msgstr ""
 
 #. module: stock_scanner
@@ -1413,7 +1410,7 @@ msgid "Yellow"
 msgstr ""
 
 #. module: stock_scanner
-#: code:addons/stock_scanner/hardware/sentinel.py:561
+#: code:addons/stock_scanner/hardware/sentinel.py:569
 #, python-format
 msgid "Yes"
 msgstr ""
