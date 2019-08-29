@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_picking_send_by_mail
-#: model:mail.template,body_html:stock_picking_send_by_mail.email_template_stock_picking
+#: model:email.template,body_html:stock_picking_send_by_mail.email_template_stock_picking
 #, fuzzy
 #| msgid ""
 #| "\n"
@@ -95,11 +95,8 @@ msgid ""
 "\n"
 "<div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-"
 "serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
-"\n"
 "    <p>Hello ${object.partner_id.name},</p>\n"
-"\n"
 "    <p>Here is your picking from ${object.company_id.name}: </p>\n"
-"\n"
 "    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
 "       &nbsp;&nbsp;<strong>REFERENCES</strong><br />\n"
 "       &nbsp;&nbsp;Picking number: <strong>${object.name}</strong><br />\n"
@@ -226,12 +223,12 @@ msgstr ""
 "            "
 
 #. module: stock_picking_send_by_mail
-#: model:mail.template,report_name:stock_picking_send_by_mail.email_template_stock_picking
+#: model:email.template,report_name:stock_picking_send_by_mail.email_template_stock_picking
 msgid "${(object.name or '').replace('/','_')}"
 msgstr "${(object.name or '').replace('/','_')}"
 
 #. module: stock_picking_send_by_mail
-#: model:mail.template,subject:stock_picking_send_by_mail.email_template_stock_picking
+#: model:email.template,subject:stock_picking_send_by_mail.email_template_stock_picking
 msgid "${object.company_id.name|safe} Picking (Ref ${object.name or 'n/a' })"
 msgstr "${object.company_id.name|safe} Picking (Ref ${object.name or 'n/a' })"
 
@@ -242,14 +239,11 @@ msgid "Compose Email"
 msgstr "Écrire le courriel"
 
 #. module: stock_picking_send_by_mail
-#: model:ir.ui.view,arch_db:stock_picking_send_by_mail.view_picking_form
-msgid "Send by Email"
-msgstr "Envoyer par courriel"
+#: model:ir.model,name:stock_picking_send_by_mail.model_stock_picking
+msgid "Picking List"
+msgstr "Liste de colisage"
 
 #. module: stock_picking_send_by_mail
-#: model:ir.model,name:stock_picking_send_by_mail.model_stock_picking
-msgid "Transfer"
-msgstr ""
-
-#~ msgid "Picking List"
-#~ msgstr "Liste de colisage"
+#: view:stock.picking:stock_picking_send_by_mail.view_picking_form
+msgid "Send by Email"
+msgstr "Envoyer par courriel"
