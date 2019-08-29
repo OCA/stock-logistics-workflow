@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * picking_dispatch
-# 
+#
 # Translators:
 # Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
 msgid ""
@@ -11,12 +11,14 @@ msgstr ""
 "POT-Creation-Date: 2016-08-16 02:39+0000\n"
 "PO-Revision-Date: 2016-06-20 10:20+0000\n"
 "Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
-"Language-Team: Slovenian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/sl/)\n"
+"Language-Team: Slovenian (http://www.transifex.com/oca/OCA-stock-logistics-"
+"workflow-8-0/language/sl/)\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: sl\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3);\n"
 
 #. module: picking_dispatch
 #: code:addons/picking_dispatch/wizard/create_dispatch.py:97
@@ -24,7 +26,9 @@ msgstr ""
 msgid ""
 "(Only move that are not part of a dispatch order and in confirm, waiting or "
 "assigned state can be used)"
-msgstr "(uporabljajo se lahko le premiki, ki niso del odpremnih nalogov in so potrjeni, na čakanju ali dodeljeni)"
+msgstr ""
+"(uporabljajo se lahko le premiki, ki niso del odpremnih nalogov in so "
+"potrjeni, na čakanju ali dodeljeni)"
 
 #. module: picking_dispatch
 #: view:stock.picking:picking_dispatch.view_picking_form
@@ -552,7 +556,9 @@ msgstr "prosti komentarji"
 msgid ""
 "if this dispatch was split, this links to the dispatch order containing the "
 "other part which was processed"
-msgstr "če je ta odprema bila razdeljena, se poveže z odpremnim nalogom, ki vsebuje drugi del, ki je bil obdelan"
+msgstr ""
+"če je ta odprema bila razdeljena, se poveže z odpremnim nalogom, ki vsebuje "
+"drugi del, ki je bil obdelan"
 
 #. module: picking_dispatch
 #: view:picking.dispatch.assign.picker:picking_dispatch.view_picking_dispatch_assign_picker
@@ -582,7 +588,9 @@ msgstr "seznam premikov za obdelavo"
 msgid ""
 "the state of the picking. Workflow is draft -> assigned -> progress -> done "
 "or cancel"
-msgstr "stanje zbirnika. Procesni tok je osnutek -> dodeljeno -> v teku -> opravljeno ali preklicano"
+msgstr ""
+"stanje zbirnika. Procesni tok je osnutek -> dodeljeno -> v teku -> "
+"opravljeno ali preklicano"
 
 #. module: picking_dispatch
 #: help:picking.dispatch,picker_id:0

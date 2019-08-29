@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * picking_dispatch
-# 
+#
 # Translators:
 # Rudolf Schnapka <rs@techno-flex.de>, 2016
 msgid ""
@@ -11,11 +11,12 @@ msgstr ""
 "POT-Creation-Date: 2016-09-13 22:01+0000\n"
 "PO-Revision-Date: 2016-09-18 08:13+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: German (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/de/)\n"
+"Language-Team: German (http://www.transifex.com/oca/OCA-stock-logistics-"
+"workflow-8-0/language/de/)\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: picking_dispatch
@@ -24,7 +25,9 @@ msgstr ""
 msgid ""
 "(Only move that are not part of a dispatch order and in confirm, waiting or "
 "assigned state can be used)"
-msgstr "(Nur Bewegungen, die nicht Teil eines Lieferauftrags sind und den Status entweder bestätigt, wartend oder zugewiesen haben können Verwendung finden)"
+msgstr ""
+"(Nur Bewegungen, die nicht Teil eines Lieferauftrags sind und den Status "
+"entweder bestätigt, wartend oder zugewiesen haben können Verwendung finden)"
 
 #. module: picking_dispatch
 #: view:stock.picking:picking_dispatch.view_picking_form
@@ -35,7 +38,9 @@ msgstr "Zusatzinfo"
 #: code:addons/picking_dispatch/wizard/dispatch_start.py:47
 #, python-format
 msgid "All the picking dispatches must be assigned to be started."
-msgstr "Alle Kommissionierungen müssen zugewiesen sein, bevor sie bearbeitet werden können."
+msgstr ""
+"Alle Kommissionierungen müssen zugewiesen sein, bevor sie bearbeitet werden "
+"können."
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form
@@ -335,7 +340,8 @@ msgstr "Keine Versand-Kommissionierung ausgewählt"
 #: code:addons/picking_dispatch/wizard/create_dispatch.py:96
 #, python-format
 msgid "No valid stock moves found to create the dispatch!"
-msgstr "Keine zulässigen Lagerbuchungen zum Erstellen der Auslieferung gefunden."
+msgstr ""
+"Keine zulässigen Lagerbuchungen zum Erstellen der Auslieferung gefunden."
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form
@@ -552,7 +558,9 @@ msgstr "Freiform-Vermerke"
 msgid ""
 "if this dispatch was split, this links to the dispatch order containing the "
 "other part which was processed"
-msgstr "Wenn diese Kommissionierung gesplittet wurde, verweist dies auf den anderen Teil der bearbeitet wurde"
+msgstr ""
+"Wenn diese Kommissionierung gesplittet wurde, verweist dies auf den anderen "
+"Teil der bearbeitet wurde"
 
 #. module: picking_dispatch
 #: view:picking.dispatch.assign.picker:picking_dispatch.view_picking_dispatch_assign_picker
@@ -582,7 +590,9 @@ msgstr "Die Liste der durchzuführenden Bewegungen"
 msgid ""
 "the state of the picking. Workflow is draft -> assigned -> progress -> done "
 "or cancel"
-msgstr "Der Status der Kommissionierung. Prozesskette ist Entwurf -> Zugewiesen -> Bearbeitung -> Erledigt bzw. Storniert"
+msgstr ""
+"Der Status der Kommissionierung. Prozesskette ist Entwurf -> Zugewiesen -> "
+"Bearbeitung -> Erledigt bzw. Storniert"
 
 #. module: picking_dispatch
 #: help:picking.dispatch,picker_id:0

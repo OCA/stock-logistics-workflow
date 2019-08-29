@@ -1,29 +1,22 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * picking_dispatch
+#	* picking_dispatch
 #
-# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: stock-logistics-workflow (8.0)\n"
+"Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-27 01:52+0000\n"
-"PO-Revision-Date: 2018-02-02 14:11+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Catalan (Spain) (http://www.transifex.com/oca/OCA-stock-"
-"logistics-workflow-8-0/language/ca_ES/)\n"
-"Language: ca_ES\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: \n"
 
 #. module: picking_dispatch
 #: code:addons/picking_dispatch/wizard/create_dispatch.py:97
 #, python-format
-msgid ""
-"(Only move that are not part of a dispatch order and in confirm, waiting or "
-"assigned state can be used)"
+msgid "(Only move that are not part of a dispatch order and in confirm, waiting or assigned state can be used)"
 msgstr ""
 
 #. module: picking_dispatch
@@ -89,7 +82,7 @@ msgstr ""
 #: view:picking.dispatch.creator:picking_dispatch.view_create_picking_dispatch
 #: view:picking.dispatch.start:picking_dispatch.view_picking_dispatch_start
 msgid "Cancel"
-msgstr "Cancel·la"
+msgstr ""
 
 #. module: picking_dispatch
 #: selection:picking.dispatch,state:0
@@ -121,7 +114,7 @@ msgstr ""
 #. module: picking_dispatch
 #: field:picking.dispatch,company_id:0
 msgid "Company"
-msgstr "Companyia"
+msgstr ""
 
 #. module: picking_dispatch
 #: model:ir.actions.act_window,name:picking_dispatch.picking_dispatch_create_act_window
@@ -135,7 +128,7 @@ msgstr ""
 #: field:picking.dispatch.creator,create_uid:0
 #: field:picking.dispatch.start,create_uid:0
 msgid "Created by"
-msgstr "Creat per"
+msgstr ""
 
 #. module: picking_dispatch
 #: field:picking.dispatch,create_date:0
@@ -144,10 +137,11 @@ msgstr "Creat per"
 #: field:picking.dispatch.creator,create_date:0
 #: field:picking.dispatch.start,create_date:0
 msgid "Created on"
-msgstr "Creat a"
+msgstr ""
 
 #. module: picking_dispatch
-#: field:picking.dispatch,date:0 field:picking.dispatch.creator,date:0
+#: field:picking.dispatch,date:0
+#: field:picking.dispatch.creator,date:0
 msgid "Date"
 msgstr ""
 
@@ -211,7 +205,7 @@ msgstr ""
 #: field:picking.dispatch.start,display_name:0
 #: field:report.picking_dispatch.report_picking_dispatch,display_name:0
 msgid "Display Name"
-msgstr "Nom visible"
+msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form
@@ -246,9 +240,11 @@ msgid "Group By..."
 msgstr ""
 
 #. module: picking_dispatch
-#: field:picking.dispatch,id:0 field:picking.dispatch.assign.picker,id:0
+#: field:picking.dispatch,id:0
+#: field:picking.dispatch.assign.picker,id:0
 #: field:picking.dispatch.check.assign.all,id:0
-#: field:picking.dispatch.creator,id:0 field:picking.dispatch.start,id:0
+#: field:picking.dispatch.creator,id:0
+#: field:picking.dispatch.start,id:0
 #: field:report.picking_dispatch.report_picking_dispatch,id:0
 msgid "ID"
 msgstr ""
@@ -272,7 +268,7 @@ msgstr ""
 #: field:picking.dispatch.start,__last_update:0
 #: field:report.picking_dispatch.report_picking_dispatch,__last_update:0
 msgid "Last Modified on"
-msgstr "Darrera modificació en"
+msgstr ""
 
 #. module: picking_dispatch
 #: field:picking.dispatch,write_uid:0
@@ -281,7 +277,7 @@ msgstr "Darrera modificació en"
 #: field:picking.dispatch.creator,write_uid:0
 #: field:picking.dispatch.start,write_uid:0
 msgid "Last Updated by"
-msgstr "Darrera actualització per"
+msgstr ""
 
 #. module: picking_dispatch
 #: field:picking.dispatch,write_date:0
@@ -290,7 +286,7 @@ msgstr "Darrera actualització per"
 #: field:picking.dispatch.creator,write_date:0
 #: field:picking.dispatch.start,write_date:0
 msgid "Last Updated on"
-msgstr "Darrera actualització el"
+msgstr ""
 
 #. module: picking_dispatch
 #: field:picking.dispatch,move_ids:0
@@ -309,12 +305,14 @@ msgid "My Dispatch Order"
 msgstr ""
 
 #. module: picking_dispatch
-#: field:picking.dispatch,name:0 field:picking.dispatch.creator,name:0
+#: field:picking.dispatch,name:0
+#: field:picking.dispatch.creator,name:0
 msgid "Name"
-msgstr "Nom"
+msgstr ""
 
 #. module: picking_dispatch
-#: help:picking.dispatch,name:0 help:picking.dispatch.creator,name:0
+#: help:picking.dispatch,name:0
+#: help:picking.dispatch.creator,name:0
 msgid "Name of the picking dispatch"
 msgstr ""
 
@@ -339,9 +337,10 @@ msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form
-#: field:picking.dispatch,notes:0 field:picking.dispatch.creator,notes:0
+#: field:picking.dispatch,notes:0
+#: field:picking.dispatch.creator,notes:0
 msgid "Notes"
-msgstr "Notes"
+msgstr ""
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
@@ -543,15 +542,14 @@ msgid "date on which the picking dispatched is to be processed"
 msgstr ""
 
 #. module: picking_dispatch
-#: help:picking.dispatch,notes:0 help:picking.dispatch.creator,notes:0
+#: help:picking.dispatch,notes:0
+#: help:picking.dispatch.creator,notes:0
 msgid "free form remarks"
 msgstr ""
 
 #. module: picking_dispatch
 #: help:picking.dispatch,backorder_id:0
-msgid ""
-"if this dispatch was split, this links to the dispatch order containing the "
-"other part which was processed"
+msgid "if this dispatch was split, this links to the dispatch order containing the other part which was processed"
 msgstr ""
 
 #. module: picking_dispatch
@@ -579,9 +577,7 @@ msgstr ""
 
 #. module: picking_dispatch
 #: help:picking.dispatch,state:0
-msgid ""
-"the state of the picking. Workflow is draft -> assigned -> progress -> done "
-"or cancel"
+msgid "the state of the picking. Workflow is draft -> assigned -> progress -> done or cancel"
 msgstr ""
 
 #. module: picking_dispatch
@@ -598,3 +594,4 @@ msgstr ""
 #: help:stock.move,dispatch_id:0
 msgid "who this move is dispatched to"
 msgstr ""
+
