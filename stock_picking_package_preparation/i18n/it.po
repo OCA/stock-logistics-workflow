@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * stock_picking_package_preparation
-# 
+#
 # Translators:
 # Matjaž Mozetič <m.mozetic@matmoz.si>, 2016
 # Paolo Valier, 2016
@@ -13,11 +13,12 @@ msgstr ""
 "POT-Creation-Date: 2016-05-08 17:05+0000\n"
 "PO-Revision-Date: 2016-05-13 13:22+0000\n"
 "Last-Translator: Paolo Valier\n"
-"Language-Team: Italian (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/it/)\n"
+"Language-Team: Italian (http://www.transifex.com/oca/OCA-stock-logistics-"
+"workflow-8-0/language/it/)\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: it\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_picking_package_preparation
@@ -27,7 +28,10 @@ msgid ""
 "          Click to prepare a new package preparation.\n"
 "        </p>\n"
 "      "
-msgstr "<p class=\"oe_view_nocontent_create\">\nClicca per generare una nuova preparazione pacco.\n</p>"
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"Clicca per generare una nuova preparazione pacco.\n"
+"</p>"
 
 #. module: stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
@@ -40,13 +44,13 @@ msgid "All Content"
 msgstr "Tutto il Contenuto"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:220
+#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:221
 #, python-format
 msgid "All the transfers must be \"Ready to Transfer\"."
 msgstr "Tutti i trasferimenti devono essere \"Pronti per il Trasferimento\"."
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:202
+#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:203
 #, python-format
 msgid "All the transfers must have the same destination location"
 msgstr "Tutti i trasferimenti devono avere lo stesso luogo di destinazione"
@@ -62,7 +66,7 @@ msgid "Cancelled"
 msgstr "Annullato"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:171
+#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:172
 #, python-format
 msgid "Cannot cancel a done package preparation."
 msgstr "Non è possibile annullare una preparazione pacco già completata."
@@ -133,8 +137,8 @@ msgstr "Se selezionato i nuovi messaggi richiederanno la tua attenzione."
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid ""
 "If there is no product but a source package, this means the source package "
-"was moved entirely.  If there is a product and a source package, the product"
-" was taken from the source package."
+"was moved entirely.  If there is a product and a source package, the product "
+"was taken from the source package."
 msgstr ""
 
 #. module: stock_picking_package_preparation
@@ -188,7 +192,7 @@ msgid "Net weight"
 msgstr "Peso netto"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:197
+#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:198
 #, python-format
 msgid "No transfer selected for this preparation."
 msgstr "Nessun trasferimento selezionato per questa preparazione."
@@ -199,10 +203,11 @@ msgid "Note"
 msgstr "Nota"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:182
+#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:183
 #, python-format
 msgid "Only canceled package preparations can be reset to draft."
-msgstr "Solo le preparazioni di pacchi annullate possono essere reimpostate a bozza."
+msgstr ""
+"Solo le preparazioni di pacchi annullate possono essere reimpostate a bozza."
 
 #. module: stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form

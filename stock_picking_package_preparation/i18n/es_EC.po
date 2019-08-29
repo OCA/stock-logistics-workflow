@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * stock_picking_package_preparation
-# 
+#
 # Translators:
 msgid ""
 msgstr ""
@@ -10,11 +10,12 @@ msgstr ""
 "POT-Creation-Date: 2017-04-19 14:00+0000\n"
 "PO-Revision-Date: 2015-10-21 16:34+0000\n"
 "Last-Translator: <>\n"
-"Language-Team: Spanish (Ecuador) (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/es_EC/)\n"
+"Language-Team: Spanish (Ecuador) (http://www.transifex.com/oca/OCA-stock-"
+"logistics-workflow-8-0/language/es_EC/)\n"
+"Language: es_EC\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es_EC\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_picking_package_preparation
@@ -37,13 +38,13 @@ msgid "All Content"
 msgstr ""
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:220
+#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:221
 #, python-format
 msgid "All the transfers must be \"Ready to Transfer\"."
 msgstr ""
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:202
+#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:203
 #, python-format
 msgid "All the transfers must have the same destination location"
 msgstr ""
@@ -59,7 +60,7 @@ msgid "Cancelled"
 msgstr ""
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:171
+#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:172
 #, python-format
 msgid "Cannot cancel a done package preparation."
 msgstr ""
@@ -130,8 +131,8 @@ msgstr "Si está marcado, hay nuevos mensajes que requieren su atención"
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid ""
 "If there is no product but a source package, this means the source package "
-"was moved entirely.  If there is a product and a source package, the product"
-" was taken from the source package."
+"was moved entirely.  If there is a product and a source package, the product "
+"was taken from the source package."
 msgstr ""
 
 #. module: stock_picking_package_preparation
@@ -185,7 +186,7 @@ msgid "Net weight"
 msgstr ""
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:197
+#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:198
 #, python-format
 msgid "No transfer selected for this preparation."
 msgstr ""
@@ -196,7 +197,7 @@ msgid "Note"
 msgstr ""
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:182
+#: code:addons/stock_picking_package_preparation/model/stock_picking_package_preparation.py:183
 #, python-format
 msgid "Only canceled package preparations can be reset to draft."
 msgstr ""
