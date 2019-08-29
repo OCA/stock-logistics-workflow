@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * stock_picking_invoice_link
-# 
+#
 # Translators:
 # Antonio Trueba, 2016
 # Antonio Trueba, 2016
@@ -14,11 +14,12 @@ msgstr ""
 "POT-Creation-Date: 2017-06-14 00:57+0000\n"
 "PO-Revision-Date: 2017-06-23 11:54+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Spanish (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/es/)\n"
+"Language-Team: Spanish (http://www.transifex.com/oca/OCA-stock-logistics-"
+"workflow-8-0/language/es/)\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_picking_invoice_link
@@ -67,16 +68,19 @@ msgstr "Movimientos de existencias relacionados"
 #. module: stock_picking_invoice_link
 #: help:account.invoice,picking_ids:0
 msgid ""
-"Related pickings (only when the invoice has been generated from the "
-"picking)."
-msgstr "Albaranes relacionados (sólo cuando la factura ha sido generada desde el albarán)."
+"Related pickings (only when the invoice has been generated from the picking)."
+msgstr ""
+"Albaranes relacionados (sólo cuando la factura ha sido generada desde el "
+"albarán)."
 
 #. module: stock_picking_invoice_link
 #: help:account.invoice.line,move_line_ids:0
 msgid ""
 "Related stock moves (only when the invoice has been generated from the "
 "picking)."
-msgstr "Movimientos de existencias relacionados (sólo cuando la factura ha sido generada desde el albarán)."
+msgstr ""
+"Movimientos de existencias relacionados (sólo cuando la factura ha sido "
+"generada desde el albarán)."
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_stock_move
