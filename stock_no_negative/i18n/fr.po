@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * stock_no_negative
-# 
+#
 # Translators:
 # Hosni Hadj Taher <hajhasni@hotmail.com>, 2017
 msgid ""
@@ -11,11 +11,12 @@ msgstr ""
 "POT-Creation-Date: 2017-02-18 08:44+0000\n"
 "PO-Revision-Date: 2017-02-21 17:47+0000\n"
 "Last-Translator: Hosni Hadj Taher <hajhasni@hotmail.com>\n"
-"Language-Team: French (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/fr/)\n"
+"Language-Team: French (http://www.transifex.com/oca/OCA-stock-logistics-"
+"workflow-8-0/language/fr/)\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: stock_no_negative
@@ -34,7 +35,9 @@ msgstr "Vérifier pas de négatif"
 msgid ""
 "If this field is True can not move this product in negative quantity "
 "available in the internal location source"
-msgstr "Si ce champ est Vrai, il est impossible de déplacer ce produit en quantité négative disponible dans la source de localisation interne"
+msgstr ""
+"Si ce champ est Vrai, il est impossible de déplacer ce produit en quantité "
+"négative disponible dans la source de localisation interne"
 
 #. module: stock_no_negative
 #: code:addons/stock_no_negative/models/stock_move.py:165
@@ -44,7 +47,11 @@ msgid ""
 "but with this move you will have a quantity of '%s' \n"
 "%sin location \n"
 "'%s'"
-msgstr "Le produit '%s' a activé 'vérifier pas de négatif'\nmais avec ce mouvement vous aurez une quantité de '%s'\n%sin emplacement\n'%s'"
+msgstr ""
+"Le produit '%s' a activé 'vérifier pas de négatif'\n"
+"mais avec ce mouvement vous aurez une quantité de '%s'\n"
+"%sin emplacement\n"
+"'%s'"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_product_template
