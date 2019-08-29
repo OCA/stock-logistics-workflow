@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * stock_scanner
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2016
 msgid ""
@@ -12,10 +12,10 @@ msgstr ""
 "PO-Revision-Date: 2017-08-19 11:08+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Estonian (https://www.transifex.com/oca/teams/23907/et/)\n"
+"Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: et\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_scanner
@@ -55,8 +55,8 @@ msgstr ""
 #: code:addons/stock_scanner/demo/Tutorial/Sentinel/scanner_scenario_step_sentinel_return_values.py:25
 #, python-format
 msgid ""
-"- A single value (all step types). The type of the value depends on the type"
-" of step (float, integer, boolean...)."
+"- A single value (all step types). The type of the value depends on the type "
+"of step (float, integer, boolean...)."
 msgstr ""
 
 #. module: stock_scanner
@@ -628,8 +628,7 @@ msgstr "Viimati muudetud"
 #. module: stock_scanner
 #: field:scanner.hardware,write_uid:0
 #: field:scanner.hardware.step.history,write_uid:0
-#: field:scanner.scenario,write_uid:0
-#: field:scanner.scenario.custom,write_uid:0
+#: field:scanner.scenario,write_uid:0 field:scanner.scenario.custom,write_uid:0
 #: field:scanner.scenario.step,write_uid:0
 #: field:scanner.scenario.transition,write_uid:0
 msgid "Last Updated by"
@@ -706,16 +705,16 @@ msgstr ""
 #: code:addons/stock_scanner/demo/Tutorial/Sentinel/scanner_scenario_step_sentinel_scrolling.py:16
 #, python-format
 msgid ""
-"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nibh lorem,"
-" volutpat sit amet faucibus ut, adipiscing vitae lacus. Vestibulum "
-"hendrerit, sapien a porta posuere, augue ipsum mattis neque, sit amet "
-"sagittis felis lectus ut risus. Sed aliquam felis ut orci adipiscing auctor."
-" Donec malesuada lorem eu nunc vestibulum elementum. Quisque orci quam, "
-"lobortis at mattis sit amet, gravida semper quam. Curabitur lobortis, eros "
-"ut porttitor rutrum, erat sem tincidunt augue, sed accumsan felis magna at "
-"purus. Sed laoreet consectetur viverra. Aliquam a odio sapien. Suspendisse "
-"potenti. Donec dignissim sagittis lacus, a auctor leo ultricies vel. "
-"Pellentesque eleifend porta nulla elementum faucibus."
+"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nibh lorem, "
+"volutpat sit amet faucibus ut, adipiscing vitae lacus. Vestibulum hendrerit, "
+"sapien a porta posuere, augue ipsum mattis neque, sit amet sagittis felis "
+"lectus ut risus. Sed aliquam felis ut orci adipiscing auctor. Donec "
+"malesuada lorem eu nunc vestibulum elementum. Quisque orci quam, lobortis at "
+"mattis sit amet, gravida semper quam. Curabitur lobortis, eros ut porttitor "
+"rutrum, erat sem tincidunt augue, sed accumsan felis magna at purus. Sed "
+"laoreet consectetur viverra. Aliquam a odio sapien. Suspendisse potenti. "
+"Donec dignissim sagittis lacus, a auctor leo ultricies vel. Pellentesque "
+"eleifend porta nulla elementum faucibus."
 msgstr ""
 
 #. module: stock_scanner
@@ -1021,8 +1020,7 @@ msgid "Sequence"
 msgstr "Jada"
 
 #. module: stock_scanner
-#: help:scanner.scenario,sequence:0
-#: help:scanner.scenario.transition,sequence:0
+#: help:scanner.scenario,sequence:0 help:scanner.scenario.transition,sequence:0
 msgid "Sequence order."
 msgstr ""
 
@@ -1213,8 +1211,7 @@ msgstr ""
 
 #. module: stock_scanner
 #: help:scanner.scenario.transition,condition:0
-msgid ""
-"The transition is followed only if this condition is evaluated as True."
+msgid "The transition is followed only if this condition is evaluated as True."
 msgstr ""
 
 #. module: stock_scanner
