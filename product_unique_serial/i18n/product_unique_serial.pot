@@ -1,22 +1,17 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * product_unique_serial
+#	* product_unique_serial
 #
-# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: stock-logistics-workflow (8.0)\n"
+"Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-07 07:49+0000\n"
-"PO-Revision-Date: 2015-10-21 16:33+0000\n"
 "Last-Translator: <>\n"
-"Language-Team: Portuguese (http://www.transifex.com/oca/OCA-stock-logistics-"
-"workflow-8-0/language/pt/)\n"
-"Language: pt\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: \n"
 
 #. module: product_unique_serial
 #: help:product.template,lot_unique_ok:0
@@ -51,8 +46,7 @@ msgstr ""
 #. module: product_unique_serial
 #: code:addons/product_unique_serial/models/stock_move.py:82
 #, python-format
-msgid ""
-"Product '%s' has active 'unique lot'\n"
+msgid "Product '%s' has active 'unique lot'\n"
 "but with this move you will have a quantity of '%s' in lot '%s'"
 msgstr ""
 
@@ -76,9 +70,10 @@ msgstr ""
 #. module: product_unique_serial
 #: model:ir.model,name:product_unique_serial.model_stock_move
 msgid "Stock Move"
-msgstr "Movimento Stock"
+msgstr ""
 
 #. module: product_unique_serial
 #: field:product.template,lot_unique_ok:0
 msgid "Unique lot"
 msgstr ""
+
