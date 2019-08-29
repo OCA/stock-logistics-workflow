@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * stock_picking_package_preparation_line
-# 
+#
 # Translators:
 # Hosni Hadj-Taher <inactive+hajhasni@transifex.com>, 2017
 msgid ""
@@ -11,11 +11,12 @@ msgstr ""
 "POT-Creation-Date: 2017-05-31 02:51+0000\n"
 "PO-Revision-Date: 2017-05-31 21:52+0000\n"
 "Last-Translator: Hosni Hadj-Taher <inactive+hajhasni@transifex.com>\n"
-"Language-Team: French (http://www.transifex.com/oca/OCA-stock-logistics-workflow-8-0/language/fr/)\n"
+"Language-Team: French (http://www.transifex.com/oca/OCA-stock-logistics-"
+"workflow-8-0/language/fr/)\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: stock_picking_package_preparation_line
@@ -37,7 +38,8 @@ msgstr "Created on"
 #: field:res.company,default_picking_type_for_package_preparation_id:0
 #: field:stock.config.settings,default_picking_type_for_package_preparation_id:0
 msgid "Default Picking Type used in package preparation"
-msgstr "Type de prélèvement par défaut utilisé dans la préparation du conditionnement"
+msgstr ""
+"Type de prélèvement par défaut utilisé dans la préparation du conditionnement"
 
 #. module: stock_picking_package_preparation_line
 #: view:stock.picking.package.preparation:stock_picking_package_preparation_line.sppp_line_stock_picking_package_preparation_form
@@ -66,15 +68,28 @@ msgstr "ID"
 msgid ""
 "If you change this quantity for a 'ready' picking, the system will not "
 "generate a back order, but will just deliver the new quantity"
-msgstr "Si vous changez cette quantité pour une cueillette «prête», le système ne générera pas de commande en attente, mais livrera seulement la nouvelle quantité"
+msgstr ""
+"Si vous changez cette quantité pour une cueillette «prête», le système ne "
+"générera pas de commande en attente, mais livrera seulement la nouvelle "
+"quantité"
 
 #. module: stock_picking_package_preparation_line
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:252
-#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:261
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:263
+#, fuzzy, python-format
+msgid ""
+"Impossible to create assigned picking. Please Check products availability!"
+msgstr ""
+"Impossible de créer une cueillette confirmée. Veuillez vérifier la "
+"disponibilité des produits!"
+
+#. module: stock_picking_package_preparation_line
+#: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation_line.py:254
 #, python-format
 msgid ""
 "Impossible to create confirmed picking. Please Check products availability!"
-msgstr "Impossible de créer une cueillette confirmée. Veuillez vérifier la disponibilité des produits!"
+msgstr ""
+"Impossible de créer une cueillette confirmée. Veuillez vérifier la "
+"disponibilité des produits!"
 
 #. module: stock_picking_package_preparation_line
 #: field:stock.picking.package.preparation.line,__last_update:0
