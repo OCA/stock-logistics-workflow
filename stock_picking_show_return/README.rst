@@ -55,7 +55,7 @@ Changelog
 11.0.1.0.1 (2019-08-26)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-* [ADD] Display picking origin from any returned picking.
+* [ADD] Display source picking from any returned picking.
 
 Bug Tracker
 ===========
@@ -79,6 +79,7 @@ Contributors
 ~~~~~~~~~~~~
 
 * `Tecnativa <https://www.tecnativa.com>`_:
+
     * Pedro M. Baeza <pedro.baeza@tecnativa.com>
     * Sergio Teruel <sergio.teruel@tecnativa.com>
 
