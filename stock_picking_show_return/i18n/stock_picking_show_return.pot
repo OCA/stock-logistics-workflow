@@ -6,8 +6,6 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-26 08:42+0000\n"
-"PO-Revision-Date: 2019-08-26 08:42+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,11 +19,6 @@ msgid "<span class=\"o_stat_text\">Source picking</span>"
 msgstr ""
 
 #. module: stock_picking_show_return
-#: model:ir.model.fields,field_description:stock_picking_show_return.field_stock_picking_source_picking_id
-msgid "Source picking"
-msgstr ""
-
-#. module: stock_picking_show_return
 #: model:ir.model.fields,field_description:stock_picking_show_return.field_stock_picking_returned_ids
 msgid "Returned pickings"
 msgstr ""
@@ -33,6 +26,11 @@ msgstr ""
 #. module: stock_picking_show_return
 #: model:ir.ui.view,arch_db:stock_picking_show_return.view_picking_form
 msgid "Returns"
+msgstr ""
+
+#. module: stock_picking_show_return
+#: model:ir.model.fields,field_description:stock_picking_show_return.field_stock_picking_source_picking_id
+msgid "Source picking"
 msgstr ""
 
 #. module: stock_picking_show_return
