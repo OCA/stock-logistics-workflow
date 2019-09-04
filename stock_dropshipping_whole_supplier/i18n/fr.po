@@ -1,0 +1,33 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_dropshipping_whole_supplier
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-17 11:26+0000\n"
+"PO-Revision-Date: 2018-01-17 11:26+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_dropshipping_whole_supplier
+#: model:ir.model.fields,field_description:stock_dropshipping_whole_supplier.field_res_partner_allow_whole_order_dropshipping
+#: field:res.partner,allow_whole_order_dropshipping:0
+msgid "Allow whole order dropshipping"
+msgstr "Forcer le passage en LDD"
+
+#. module: stock_dropshipping_whole_supplier
+#: help:res.partner,allow_whole_order_dropshipping:0
+msgid "In this cas, if at least one product is configured withdrop shipping route in a sale order for this supplier, all the other products of the sale order will be delivered in drop shipping"
+msgstr " Dans le cas ou un article de la commande est LDD, on passe l’ensemble des articles du fournisseur en LDD."
+
+#. module: stock_dropshipping_whole_supplier
+#: model:ir.model,name:stock_dropshipping_whole_supplier.model_res_partner
+msgid "Partner"
+msgstr "Partenaire"
+

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+    <record id="view_partner_wholde_sale_dropshipping_form" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="date" position="after">
+                <field name="allow_whole_order_dropshipping"/>
+            </field>
+        </field>
+    </record>
+
+    </data>
+</openerp>
