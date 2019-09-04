@@ -12,7 +12,7 @@ class StockBatchPicking(models.Model):
     _name = 'stock.batch.picking'
 
     name = fields.Char(
-        'Name',
+        string='Name',
         required=True, index=True,
         copy=False, unique=True,
         states={'draft': [('readonly', False)]},
@@ -21,48 +21,55 @@ class StockBatchPicking(models.Model):
         ),
     )
 
-    state = fields.Selection([
-        ('draft', 'Draft'),
-        ('assigned', 'Available'),
-        ('done', 'Done'),
-        ('cancel', 'Cancelled')],
+    state = fields.Selection(
+        selection=[
+            ('draft', 'Draft'),
+            ('assigned', 'Available'),
+            ('done', 'Done'),
+            ('cancel', 'Cancelled'),
+        ],
         string='State',
         readonly=True, index=True, copy=False,
         default='draft',
         help='the state of the batch picking. '
-        'Workflow is draft -> assigned -> done or cancel'
+             'Workflow is draft -> assigned -> done or cancel',
     )
 
     date = fields.Date(
-        'Date',
+        string='Date',
         required=True, readonly=True, index=True,
         states={
             'draft': [('readonly', False)],
             'assigned': [('readonly', False)]
         },
         default=fields.Date.context_today,
-        help='date on which the batch picking is to be processed'
+        help='date on which the batch picking is to be processed',
     )
 
     picker_id = fields.Many2one(
-        'res.users', 'Picker',
+        comodel_name='res.users',
+        string='Picker',
         readonly=True, index=True,
         states={
             'draft': [('readonly', False)],
             'assigned': [('readonly', False)]
         },
-        help='the user to which the pickings are assigned'
+        help='the user to which the pickings are assigned',
     )
 
     picking_ids = fields.One2many(
-        'stock.picking', 'batch_picking_id', 'Pickings',
+        comodel_name='stock.picking',
+        inverse_name='batch_picking_id',
+        string='Pickings',
         readonly=True,
         states={'draft': [('readonly', False)]},
-        help='List of picking managed by this batch.'
+        help='List of picking managed by this batch.',
     )
 
     active_picking_ids = fields.One2many(
-        'stock.picking', 'batch_picking_id', 'Pickings',
+        comodel_name='stock.picking',
+        inverse_name='batch_picking_id',
+        string='Pickings',
         readonly=True,
         domain=[('state', 'not in', ('cancel', 'done'))],
     )
@@ -70,15 +77,15 @@ class StockBatchPicking(models.Model):
     notes = fields.Text('Notes', help='free form remarks')
 
     move_lines = fields.Many2many(
-        'stock.move',
+        comodel_name='stock.move',
         readonly=True,
-        string='Related stock moves',
-        compute='_compute_move_lines'
+        string='Operations',
+        compute='_compute_move_lines',
     )
 
     move_line_ids = fields.Many2many(
-        'stock.move.line',
-        string='Related pack operations',
+        comodel_name='stock.move.line',
+        string='Detailed operations',
         compute='_compute_move_line_ids',
         # HACK: Allow to write sml fields from this model
         inverse=lambda self: self,
@@ -184,7 +191,11 @@ class StockBatchPicking(models.Model):
         """
         batches = self.get_not_empties()
         if not batches.verify_state('assigned'):
-            batches.mapped('active_picking_ids').action_assign()
+            mass_wiz = self.env['stock.picking.mass.action'].create({
+                'check_availability': True,
+                'picking_ids': batches.mapped('active_picking_ids').ids,
+            })
+            return mass_wiz.mass_action()
 
     @api.multi
     def action_transfer(self):
@@ -192,14 +203,12 @@ class StockBatchPicking(models.Model):
         and set state to done all picking are done.
         """
         batches = self.get_not_empties()
-        for batch in batches:
-            if not batch.verify_state():
-                batch.active_picking_ids.force_transfer(
-                    force_qty=all(
-                        operation.qty_done == 0
-                        for operation in batch.move_line_ids
-                    )
-                )
+        if not batches.verify_state():
+            mass_wiz = self.env['stock.picking.mass.action'].create({
+                'transfer': True,
+                'picking_ids': batches.mapped('active_picking_ids').ids,
+            })
+            return mass_wiz.mass_action()
 
     @api.multi
     def remove_undone_pickings(self):
