@@ -6,7 +6,7 @@
         <field name="arch" type="xml">
             <form string="Batch Picking properties">
                 <separator string="Batch Picking"/>
-                <label string="Assign picking operations to an employee."/>
+                <label for="" string="Assign picking operations to an employee."/>
                 <br/>
                 <br/>
                 <label for="name"/>

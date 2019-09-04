@@ -56,7 +56,7 @@ class TestBatchPicking(TransactionCase):
                 (0, 0, {
                     'name': 'Test move',
                     'product_id': product_id,
-                    'product_uom': self.ref('product.product_uom_unit'),
+                    'product_uom': self.ref('uom.product_uom_unit'),
                     'product_uom_qty': 1,
                     'location_id': self.stock_loc.id,
                     'location_dest_id': self.customer_loc.id
@@ -114,7 +114,7 @@ class TestBatchPicking(TransactionCase):
 
         self.assertEqual(
             {(0, 1)},
-            {(op.qty_done, op.ordered_qty)
+            {(op.qty_done, op.move_id.product_uom_qty)
              for op in self.batch.move_line_ids}
         )
 
@@ -128,7 +128,7 @@ class TestBatchPicking(TransactionCase):
 
         self.assertEqual(
             {(1, 1)},
-            {(op.qty_done, op.ordered_qty)
+            {(op.qty_done, op.move_id.product_uom_qty)
              for op in self.batch.move_line_ids}
         )
 
@@ -365,7 +365,7 @@ class TestBatchPicking(TransactionCase):
         group.run(
             product_id=self.env.ref('product.product_product_11'),
             product_qty=1,
-            product_uom=self.env.ref('product.product_uom_unit'),
+            product_uom=self.env.ref('uom.product_uom_unit'),
             location_id=self.customer_loc,
             name='test',
             origin='TEST',
@@ -468,7 +468,7 @@ class TestBatchPicking(TransactionCase):
 
         # Add fields no to do one batch picking per grouped picking
         # create_date field
-        origin_field = self.env.ref('stock.field_stock_picking_origin')
+        origin_field = self.env.ref('stock.field_stock_picking__origin')
         wiz.batch_by_group = True
         wiz.group_field_ids = [(0, 0, {
             'sequence': 1,
