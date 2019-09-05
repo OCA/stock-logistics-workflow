@@ -28,6 +28,11 @@ Stock Exclude To Remove Lot
 This module allows to restrict, on some operations (through 'Operation Types'),
 the list of lots to select depending on the removal date.
 
+.. IMPORTANT::
+   This is an alpha version, the data model and design can change at any time without warning.
+   Only for development or testing purpose, do not use in production.
+   `More details on development status <https://odoo-community.org/page/development-status>`_
+
 **Table of contents**
 
 .. contents::
