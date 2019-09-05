@@ -77,7 +77,10 @@ class StockMove(models.Model):
         lot = operation_or_move.lot_id
         if operation_or_move.product_id.lot_unique_ok and lot:
             qty = sum([x.qty + x.propagated_from_id.qty
-                       for x in operation_or_move.lot_id.quant_ids])
+                       for x in operation_or_move.lot_id.quant_ids.filtered(
+                           lambda q: q.location_id.usage not in [
+                               'inventory', 'production', 'supplier'])
+                       ])
             if qty != 1 or operation_or_move.product_qty != 1:
                 raise exceptions.ValidationError(_(
                     "Product '%s' has active "
