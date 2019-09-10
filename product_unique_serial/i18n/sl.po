@@ -53,6 +53,7 @@ msgstr "Čarovnik za zbirnike"
 
 #. module: product_unique_serial
 #: code:addons/product_unique_serial/models/stock_move.py:82
+#: code:addons/product_unique_serial/models/stock_move.py:85
 #, python-format
 msgid ""
 "Product '%s' has active 'unique lot'\n"
