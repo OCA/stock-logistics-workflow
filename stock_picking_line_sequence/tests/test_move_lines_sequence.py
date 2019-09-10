@@ -65,3 +65,21 @@ class TestStockMove(common.TransactionCase):
         self.assertEqual(self.picking2[0].move_lines[2].sequence,
                          self.picking.move_lines[2].sequence,
                          'The Sequence is not copied properly')
+
+    def test_backorder(self):
+        picking = self._create_picking()
+        picking._compute_max_line_sequence()
+        picking.action_confirm()
+        picking.action_assign()
+        picking.pack_operation_product_ids[1].write({'qty_done': 5})
+        backorder_wiz_id = picking.do_new_transfer()['res_id']
+        backorder_wiz = self.env['stock.backorder.confirmation'].browse(
+            [backorder_wiz_id])
+        backorder_wiz.process()
+        picking_backorder = self.Picking.search([
+            ('backorder_id', '=', picking.id)
+        ])
+        self.assertEqual(picking_backorder[0].move_lines[1].sequence,
+                         3, 'Backorder wrong sequence')
+        self.assertEqual(picking_backorder[0].move_lines[0].sequence,
+                         1, 'Backorder wrong sequence')
