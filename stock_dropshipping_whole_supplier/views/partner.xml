@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <record id="dropshipping_whole_partner_form" model="ir.ui.view">
+    <record id="view_partner_form" model="ir.ui.view">
         <field name="model">res.partner</field>
-        <field name="inherit_id" ref="purchase.view_partner_property_form"/>
+        <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <field name="property_purchase_currency_id" position="after">
+            <xpath expr="//group[@name='purchase']" position="inside">
                 <field name="allow_whole_order_dropshipping"/>
-            </field>
+            </xpath>
         </field>
     </record>
 

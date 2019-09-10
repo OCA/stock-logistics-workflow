@@ -5,6 +5,7 @@
 
 {
     "name": "Stock DropShipping Whole Supplier",
+    "summary": "When sale order with a dropship product, dropship all goods",
     "version": "12.0.1.0.0",
     "author": "Akretion,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
@@ -12,7 +13,6 @@
     "category": "Warehouse",
     "depends": [
         "stock_dropshipping",
-        "sale_stock",
         "sale_management",
     ],
     "data": [

@@ -19,12 +19,14 @@ class SaleOrder(models.Model):
         """
         self.ensure_one()
         vendor_dropsh, vendor_line = self._get_dropship_info()
+        to_write_sale_lines = self.env["sale.order.line"]
         for vendor, line in vendor_dropsh.items():
             lines_to_dropshipping = vendor_line.get(vendor)
             if lines_to_dropshipping:
-                lines_to_dropshipping.write(
-                    {"route_id": self.env.ref(
-                     "stock_dropshipping.route_drop_shipping").id})
+                to_write_sale_lines |= lines_to_dropshipping
+        to_write_sale_lines.write(
+            {"route_id": self.env.ref(
+             "stock_dropshipping.route_drop_shipping").id})
         products = []
         for __, val in vendor_line.items():
             for x in val:
@@ -50,7 +52,8 @@ class SaleOrder(models.Model):
         vendor_dropsh = {}
         vendor_line = {}
         for line in self.order_line:
-            vendor = line.product_id._select_seller().name
+            vendor = line.product_id._select_seller(
+                quantity=line.product_uom_qty).name
             if not vendor or not vendor.allow_whole_order_dropshipping:
                 continue
             product_route_ids = line.product_id.route_ids.ids + \
