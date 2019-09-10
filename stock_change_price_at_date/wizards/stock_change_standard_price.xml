@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record model="ir.ui.view" id="stock_change_standard_price_form_view">
+        <field name="name">stock.change.standard.price.form (in stock_change_price_at_date)</field>
+        <field name="model">stock.change.standard.price</field>
+        <field name="inherit_id" ref="stock_account.view_change_standard_price"/>
+        <field name="arch" type="xml">
+            <field name="new_price" position="after">
+                <field name="date"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
