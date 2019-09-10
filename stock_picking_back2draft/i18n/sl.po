@@ -1,0 +1,48 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_picking_back2draft
+#
+# Translators:
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: stock-logistics-workflow (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-05-04 02:49+0000\n"
+"PO-Revision-Date: 2016-05-03 14:59+0000\n"
+"Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
+"Language-Team: Slovenian (http://www.transifex.com/oca/OCA-stock-logistics-"
+"workflow-8-0/language/sl/)\n"
+"Language: sl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3);\n"
+
+#. module: stock_picking_back2draft
+#: model:ir.ui.view,arch_db:stock_picking_back2draft.view_picking_form_reopen
+msgid "Back to draft"
+msgstr "Vrni v osnutek"
+
+#. module: stock_picking_back2draft
+#: model:ir.model,name:stock_picking_back2draft.model_stock_move
+msgid "Stock Move"
+msgstr "Premik zaloge"
+
+#. module: stock_picking_back2draft
+#: model:ir.model,name:stock_picking_back2draft.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: stock_picking_back2draft
+#: code:addons/stock_picking_back2draft/models/stock.py:15
+#, python-format
+msgid "You can set to draft cancelled moves only"
+msgstr "V osnutek lahko vrnete le preklicane premike"
+
+#~ msgid "Picking List"
+#~ msgstr "Zbirnik"
+
+#~ msgid "You can set to draft cancelled pickings only"
+#~ msgstr "V osnutek lahko vrnete le preklicane zbirnike"
