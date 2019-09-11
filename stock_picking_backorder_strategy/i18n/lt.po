@@ -20,7 +20,7 @@ msgstr ""
 "%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #. module: stock_picking_backorder_strategy
-#: model:ir.model.fields,field_description:stock_picking_backorder_strategy.field_stock_picking_type_backorder_strategy
+#: model:ir.model.fields,field_description:stock_picking_backorder_strategy.field_stock_picking_type__backorder_strategy
 msgid "Backorder Strategy"
 msgstr ""
 
@@ -39,7 +39,7 @@ msgid "Create"
 msgstr ""
 
 #. module: stock_picking_backorder_strategy
-#: model:ir.model.fields,help:stock_picking_backorder_strategy.field_stock_picking_type_backorder_strategy
+#: model:ir.model.fields,help:stock_picking_backorder_strategy.field_stock_picking_type__backorder_strategy
 msgid "Define what to do with backorder"
 msgstr ""
 
