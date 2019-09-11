@@ -12,7 +12,7 @@ class StockPicking(models.Model):
     def _check_backorder(self):
         self.ensure_one()
         # If strategy == 'manual', let the normal process going on
-        if self.picking_type_id.backorder_strategy == 'manual':
+        if self.picking_type_id.backorder_strategy == "manual":
             return super(StockPicking, self)._check_backorder()
         return False
 
@@ -23,13 +23,15 @@ class StockPicking(models.Model):
         res = False
         # Do nothing with pickings 'no_create'
         pickings = self.filtered(
-            lambda p: p.picking_type_id.backorder_strategy != 'no_create')
+            lambda p: p.picking_type_id.backorder_strategy != "no_create"
+        )
         pickings_no_create = self - pickings
-        pickings_no_create.mapped('move_lines')._cancel_remaining_quantities()
+        pickings_no_create.mapped("move_lines")._cancel_remaining_quantities()
         res = super(StockPicking, pickings)._create_backorder(
-            backorder_moves=backorder_moves)
+            backorder_moves=backorder_moves
+        )
         to_cancel = res.filtered(
-            lambda b: b.backorder_id.picking_type_id.backorder_strategy ==
-            'cancel')
+            lambda b: b.backorder_id.picking_type_id.backorder_strategy == "cancel"
+        )
         to_cancel.action_cancel()
         return res

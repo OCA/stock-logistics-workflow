@@ -22,4 +22,3 @@
   create: default behavior
   no_create: no backorder created
   cancel: backorder is cancelled
-  
