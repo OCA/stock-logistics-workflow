@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: stock_picking_back2draft
-#: model:ir.ui.view,arch_db:stock_picking_back2draft.view_picking_form_reopen
+#: model_terms:ir.ui.view,arch_db:stock_picking_back2draft.view_picking_form_reopen
 msgid "Back to draft"
 msgstr "Back to draft"
 
@@ -34,7 +34,7 @@ msgid "Transfer"
 msgstr ""
 
 #. module: stock_picking_back2draft
-#: code:addons/stock_picking_back2draft/models/stock.py:15
+#: code:addons/stock_picking_back2draft/models/stock.py:14
 #, python-format
 msgid "You can set to draft cancelled moves only"
 msgstr ""
