@@ -14,13 +14,13 @@ Picking backordering strategies
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
-    :target: https://github.com/OCA/stock-logistics-workflow/tree/11.0/stock_picking_backorder_strategy
+    :target: https://github.com/OCA/stock-logistics-workflow/tree/12.0/stock_picking_backorder_strategy
     :alt: OCA/stock-logistics-workflow
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-11-0/stock-logistics-workflow-11-0-stock_picking_backorder_strategy
+    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-12-0/stock-logistics-workflow-12-0-stock_picking_backorder_strategy
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/154/11.0
+    :target: https://runbot.odoo-community.org/runbot/154/12.0
     :alt: Try me on Runbot
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
@@ -39,6 +39,16 @@ Possible strategies are:
 
 .. contents::
    :local:
+
+Installation
+============
+
+Your preferred way to install addons will work with Stock Picking Backorder Strategy.
+
+An easy way to install it with all its dependencies is using pip:
+
+pip install --pre odoo11-addon-stock-picking-backorder-strategy
+then restart Odoo, update the addons list in your database, and install the Stock Picking Backorder Strategy application.
 
 Usage
 =====
@@ -126,6 +136,6 @@ Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-rousseldenis| |maintainer-mgosai| 
 
-This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/11.0/stock_picking_backorder_strategy>`_ project on GitHub.
+This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/12.0/stock_picking_backorder_strategy>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
