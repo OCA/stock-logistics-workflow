@@ -21,6 +21,7 @@ class StockMove(models.Model):
     def create(self, values):
         move = super(StockMove, self).create(values)
         # We do not reset the sequence if we are copying a complete picking
+        # or creating a backorder
         if not self.env.context.get('keep_line_sequence', False):
             move.picking_id._reset_sequence()
         return move
@@ -58,3 +59,9 @@ class StockPicking(models.Model):
     def copy(self, default=None):
         return super(StockPicking,
                      self.with_context(keep_line_sequence=True)).copy(default)
+
+    @api.multi
+    def do_new_transfer(self):
+        return super(StockPicking,
+                     self.with_context(keep_line_sequence=True)
+                     ).do_new_transfer()
