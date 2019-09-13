@@ -45,7 +45,7 @@ addon | version | summary
 [stock_picking_customer_ref](stock_picking_customer_ref/) | 10.0.1.0.0 | This module displays the sale reference/description in the pickings
 [stock_picking_filter_lot](stock_picking_filter_lot/) | 10.0.1.0.0 | In picking out lots' selection, filter lots based on their location
 [stock_picking_invoice_link](stock_picking_invoice_link/) | 10.0.1.0.0 | Adds link between pickings and invoices
-[stock_picking_line_sequence](stock_picking_line_sequence/) | 10.0.1.1.0 | Manages the order of stock moves by displaying its sequence
+[stock_picking_line_sequence](stock_picking_line_sequence/) | 10.0.1.1.1 | Manages the order of stock moves by displaying its sequence
 [stock_picking_mass_action](stock_picking_mass_action/) | 10.0.1.0.0 | Stock Picking Mass Action
 [stock_picking_operation_quick_change](stock_picking_operation_quick_change/) | 10.0.1.0.0 | Change location of all picking operations
 [stock_picking_package_preparation](stock_picking_package_preparation/) | 10.0.1.0.2 | Stock Picking Package Preparation
