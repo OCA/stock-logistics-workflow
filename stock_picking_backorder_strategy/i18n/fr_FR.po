@@ -24,16 +24,12 @@ msgid "Backorder Strategy"
 msgstr ""
 
 #. module: stock_picking_backorder_strategy
-#: code:addons/stock_picking_backorder_strategy/models/stock_picking_type.py:13
 #: selection:stock.picking.type,backorder_strategy:0
-#, python-format
 msgid "Cancel"
 msgstr "Annuler"
 
 #. module: stock_picking_backorder_strategy
-#: code:addons/stock_picking_backorder_strategy/models/stock_picking_type.py:11
 #: selection:stock.picking.type,backorder_strategy:0
-#, python-format
 msgid "Create"
 msgstr ""
 
@@ -43,27 +39,23 @@ msgid "Define what to do with backorder"
 msgstr ""
 
 #. module: stock_picking_backorder_strategy
-#: code:addons/stock_picking_backorder_strategy/models/stock_picking_type.py:11
 #: selection:stock.picking.type,backorder_strategy:0
-#, python-format
 msgid "Manual"
 msgstr ""
 
 #. module: stock_picking_backorder_strategy
-#: code:addons/stock_picking_backorder_strategy/models/stock_picking_type.py:12
 #: selection:stock.picking.type,backorder_strategy:0
-#, python-format
 msgid "No create"
+msgstr ""
+
+#. module: stock_picking_backorder_strategy
+#: model:ir.model,name:stock_picking_backorder_strategy.model_stock_picking_type
+msgid "Picking Type"
 msgstr ""
 
 #. module: stock_picking_backorder_strategy
 #: model:ir.model,name:stock_picking_backorder_strategy.model_stock_move
 msgid "Stock Move"
-msgstr ""
-
-#. module: stock_picking_backorder_strategy
-#: model:ir.model,name:stock_picking_backorder_strategy.model_stock_picking_type
-msgid "The operation type determines the picking view"
 msgstr ""
 
 #. module: stock_picking_backorder_strategy

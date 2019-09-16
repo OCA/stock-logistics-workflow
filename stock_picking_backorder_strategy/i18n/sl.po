@@ -27,16 +27,12 @@ msgid "Backorder Strategy"
 msgstr "Strategija odloženih naročil"
 
 #. module: stock_picking_backorder_strategy
-#: code:addons/stock_picking_backorder_strategy/models/stock_picking_type.py:13
 #: selection:stock.picking.type,backorder_strategy:0
-#, python-format
 msgid "Cancel"
 msgstr "Preklic"
 
 #. module: stock_picking_backorder_strategy
-#: code:addons/stock_picking_backorder_strategy/models/stock_picking_type.py:11
 #: selection:stock.picking.type,backorder_strategy:0
-#, python-format
 msgid "Create"
 msgstr "Ustvari"
 
@@ -46,18 +42,21 @@ msgid "Define what to do with backorder"
 msgstr "Določi, kaj naj se naredi z odloženimi naročili"
 
 #. module: stock_picking_backorder_strategy
-#: code:addons/stock_picking_backorder_strategy/models/stock_picking_type.py:11
 #: selection:stock.picking.type,backorder_strategy:0
-#, python-format
 msgid "Manual"
 msgstr ""
 
 #. module: stock_picking_backorder_strategy
-#: code:addons/stock_picking_backorder_strategy/models/stock_picking_type.py:12
 #: selection:stock.picking.type,backorder_strategy:0
-#, python-format
 msgid "No create"
 msgstr "Ne ustvari"
+
+#. module: stock_picking_backorder_strategy
+#: model:ir.model,name:stock_picking_backorder_strategy.model_stock_picking_type
+#, fuzzy
+#| msgid "Picking List"
+msgid "Picking Type"
+msgstr "Zbirnik"
 
 #. module: stock_picking_backorder_strategy
 #: model:ir.model,name:stock_picking_backorder_strategy.model_stock_move
@@ -65,15 +64,10 @@ msgid "Stock Move"
 msgstr ""
 
 #. module: stock_picking_backorder_strategy
-#: model:ir.model,name:stock_picking_backorder_strategy.model_stock_picking_type
-#, fuzzy
-msgid "The operation type determines the picking view"
-msgstr "Tip zbirnika določi prikaz zbirnika"
-
-#. module: stock_picking_backorder_strategy
 #: model:ir.model,name:stock_picking_backorder_strategy.model_stock_picking
 msgid "Transfer"
 msgstr ""
 
-#~ msgid "Picking List"
-#~ msgstr "Zbirnik"
+#, fuzzy
+#~ msgid "The operation type determines the picking view"
+#~ msgstr "Tip zbirnika določi prikaz zbirnika"
