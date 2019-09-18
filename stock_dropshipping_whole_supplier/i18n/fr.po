@@ -1,0 +1,78 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_dropshipping_whole_supplier
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-09-06 13:29+0000\n"
+"PO-Revision-Date: 2019-09-06 15:38+0200\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: fr\n"
+"X-Generator: Poedit 2.0.6\n"
+
+#. module: stock_dropshipping_whole_supplier
+#: model:ir.model,name:stock_dropshipping_whole_supplier.model_res_partner
+msgid "Contact"
+msgstr "Contact"
+
+#. module: stock_dropshipping_whole_supplier
+#: model:product.product,name:stock_dropshipping_whole_supplier.dropship_prd
+#: model:product.template,name:stock_dropshipping_whole_supplier.dropship_prd_product_template
+msgid "Dropshipped Product"
+msgstr "Produit livré directement"
+
+#. module: stock_dropshipping_whole_supplier
+#: model:ir.model.fields,help:stock_dropshipping_whole_supplier.field_res_partner__allow_whole_order_dropshipping
+#: model:ir.model.fields,help:stock_dropshipping_whole_supplier.field_res_users__allow_whole_order_dropshipping
+msgid ""
+"If checked and at least one dropshipping product required for a sale,\n"
+"whole furnitures of this vendor will be delivered in dropshipping flow whether routes defined in product."
+msgstr ""
+"SI coché et qu'au moins un produit en livrasion directe et requis dans la vente,\n"
+"l'ensemble des fournitures de ce founisseur sera livré en flux direct quelque soit la route défini sur le produit."
+
+#. module: stock_dropshipping_whole_supplier
+#: model:ir.model.fields,field_description:stock_dropshipping_whole_supplier.field_res_partner__allow_whole_order_dropshipping
+#: model:ir.model.fields,field_description:stock_dropshipping_whole_supplier.field_res_users__allow_whole_order_dropshipping
+msgid "Overall Dropshipping"
+msgstr "Livraison directe globale"
+
+#. module: stock_dropshipping_whole_supplier
+#: code:addons/stock_dropshipping_whole_supplier/models/sale.py:34
+#, python-format
+msgid "Products '%s' are provided by a dropship order, "
+msgstr "Les produits '%s' sont fournis par ordre de livraison directe,"
+
+#. module: stock_dropshipping_whole_supplier
+#: model:product.product,name:stock_dropshipping_whole_supplier.purchase_prd
+#: model:product.template,name:stock_dropshipping_whole_supplier.purchase_prd_product_template
+msgid "Purchased Product"
+msgstr "Produit Acheté"
+
+#. module: stock_dropshipping_whole_supplier
+#: model:ir.model,name:stock_dropshipping_whole_supplier.model_sale_order
+msgid "Sale Order"
+msgstr "Bon de commande"
+
+#. module: stock_dropshipping_whole_supplier
+#: model:product.product,uom_name:stock_dropshipping_whole_supplier.dropship_prd
+#: model:product.product,uom_name:stock_dropshipping_whole_supplier.purchase_prd
+#: model:product.template,uom_name:stock_dropshipping_whole_supplier.dropship_prd_product_template
+#: model:product.template,uom_name:stock_dropshipping_whole_supplier.purchase_prd_product_template
+msgid "Unit(s)"
+msgstr "Unité(s)"
+
+#. module: stock_dropshipping_whole_supplier
+#: model:product.product,weight_uom_name:stock_dropshipping_whole_supplier.dropship_prd
+#: model:product.product,weight_uom_name:stock_dropshipping_whole_supplier.purchase_prd
+#: model:product.template,weight_uom_name:stock_dropshipping_whole_supplier.dropship_prd_product_template
+#: model:product.template,weight_uom_name:stock_dropshipping_whole_supplier.purchase_prd_product_template
+msgid "kg"
+msgstr "kg"
