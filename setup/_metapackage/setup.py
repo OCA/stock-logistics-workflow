@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo12-addon-purchase_stock_picking_restrict_cancel',
         'odoo12-addon-stock_change_price_at_date',
+        'odoo12-addon-stock_dropshipping_whole_supplier',
         'odoo12-addon-stock_landed_costs_currency',
         'odoo12-addon-stock_move_line_auto_fill',
         'odoo12-addon-stock_move_quick_lot',
