@@ -6,7 +6,7 @@
 {
     'name': 'Stock picking lines with sequence number',
     'summary': 'Manages the order of stock moves by displaying its sequence',
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.1.0',
     'category': 'Warehouse Management',
     'author': "Camptocamp, "
               "Eficent, "

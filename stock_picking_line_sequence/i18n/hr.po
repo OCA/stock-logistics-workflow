@@ -21,6 +21,11 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #. module: stock_picking_line_sequence
+#: model_terms:ir.ui.view,arch_db:stock_picking_line_sequence.report_delivery_document
+msgid "<strong>Seq.</strong>"
+msgstr ""
+
+#. module: stock_picking_line_sequence
 #: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move__sequence
 #, fuzzy
 #| msgid "Sequence"
