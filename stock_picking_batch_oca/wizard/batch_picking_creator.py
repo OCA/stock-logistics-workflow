@@ -6,17 +6,17 @@ from odoo.exceptions import UserError
 
 
 class StockBatchPickingCreator(models.TransientModel):
-    """Create a stock.batch.picking from stock.picking
+    """Create a stock.picking.batch from stock.picking
     """
 
-    _name = 'stock.batch.picking.creator'
+    _name = 'stock.picking.batch.creator'
     _description = 'Batch Picking Creator'
     _group_field_param = 'stock_batch_picking.group_field'
 
     name = fields.Char(
         'Name', required=True,
         default=lambda x: x.env['ir.sequence'].next_by_code(
-            'stock.batch.picking'
+            'stock.picking.batch'
         ),
         help='Name of the batch picking'
     )
@@ -24,10 +24,12 @@ class StockBatchPickingCreator(models.TransientModel):
         'Date', required=True, index=True, default=fields.Date.context_today,
         help='Date on which the batch picking is to be processed'
     )
-    picker_id = fields.Many2one(
+
+    user_id = fields.Many2one(
         'res.users', string='Picker',
-        default=lambda self: self._default_picker_id(),
-        help='The user to which the pickings are assigned'
+        oldname='picker_id',
+        default=lambda self: self._default_user_id(),
+        help='The user to which the pickings are assigned',
     )
     notes = fields.Text('Notes', help='free form remarks')
     batch_by_group = fields.Boolean(
@@ -68,8 +70,8 @@ class StockBatchPickingCreator(models.TransientModel):
         res['batch_by_group'] = group_fields and True or False
         return res
 
-    def _default_picker_id(self):
-        """ Return default_picker_id from the main company warehouse
+    def _default_user_id(self):
+        """ Return default_user_id from the main company warehouse
         except if a warehouse_id is specified in context.
         """
         warehouse_id = self.env.context.get('warehouse_id')
@@ -79,7 +81,8 @@ class StockBatchPickingCreator(models.TransientModel):
             warehouse = self.env['stock.warehouse'].search([
                 ('company_id', '=', self.env.user.company_id.id)
             ], limit=1)
-        return warehouse.default_picker_id
+
+        return warehouse.default_user_id
 
     def _prepare_stock_batch_picking(self):
         return {
@@ -128,7 +131,7 @@ class StockBatchPickingCreator(models.TransientModel):
         """
         domain = [
             ('id', 'in', self.env.context['active_ids']),
-            ('batch_picking_id', '=', False),
+            ('batch_id', '=', False),
             ('state', 'not in', ('cancel', 'done')),
         ]
         if self.batch_by_group and self.group_field_ids:

@@ -2,10 +2,10 @@
 <odoo>
     <report string="Batch picking"
             id="action_report_batch_picking"
-            model="stock.batch.picking"
+            model="stock.picking.batch"
             report_type="qweb-pdf"
-            name="stock_batch_picking.report_batch_picking"
-            file="stock_batch_picking.report_batch_picking"/>
+            name="  "
+            file="stock_picking_batch_oca.report_batch_picking"/>
 
     <template id="report_batch_picking">
         <t t-call="web.html_container">
@@ -37,7 +37,7 @@
                                     </td>
                                     <td>Visa:_________________</td>
                                     <td>
-                                        <span t-esc="doc.picker_id.name"/>
+                                        <span t-esc="doc.user_id.name"/>
                                     </td>
                                 </tr>
                             </tbody>

@@ -4,7 +4,7 @@
         <field name="model">stock.warehouse</field>
         <field name="arch" type="xml">
             <field name="reception_steps" position="before">
-                <field name="default_picker_id"/>
+                <field name="default_user_id"/>
             </field>
         </field>
     </record>

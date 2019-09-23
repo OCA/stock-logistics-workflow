@@ -8,12 +8,10 @@ from odoo import api, fields, models
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    batch_picking_id = fields.Many2one(
-        comodel_name='stock.batch.picking',
+    batch_id = fields.Many2one(
+        old_name='batch_picking_id',
         string='Batch',
-        copy=False,
         domain="[('state', '=', 'draft')]",
-        help='In which batch picking this picking will be processed.'
     )
 
     @api.multi
@@ -22,7 +20,7 @@ class StockPicking(models.Model):
         cancel the batches for which all pickings are cancelled
         """
         result = super(StockPicking, self).action_cancel()
-        self.mapped('batch_picking_id').verify_state()
+        self.mapped('batch_id').verify_state()
 
         return result
 
@@ -32,7 +30,7 @@ class StockPicking(models.Model):
         Changed batches states to assigned if all picking are assigned.
         """
         result = super(StockPicking, self).action_assign()
-        self.mapped('batch_picking_id').verify_state('assigned')
+        self.mapped('batch_id').verify_state('assigned')
 
         return result
 
@@ -42,7 +40,7 @@ class StockPicking(models.Model):
         Changed batches states to done if all picking are done.
         """
         result = super(StockPicking, self).action_done()
-        self.mapped('batch_picking_id').verify_state()
+        self.mapped('batch_id').verify_state()
 
         return result
 
@@ -67,7 +65,7 @@ class StockPicking(models.Model):
             else:
                 if all(pack.qty_done == 0 for pack in pick.move_line_ids):
                     # No qties to process, release out of the batch
-                    pick.batch_picking_id = False
+                    pick.batch_id = False
                     continue
                 else:
                     for pack in pick.move_line_ids:

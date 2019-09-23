@@ -1,6 +1,8 @@
 This module is based on `picking_dispatch <https://github.com/OCA/stock-logistics-workflow/tree/8.0/picking_dispatch>`_
 but reworked for matching Odoo new picking system (with pack operations).
 
+Since v12 is compatible with odoo addon https://github.com/odoo/odoo/blob/12.0/addons/stock_picking_batch/models/stock_picking_batch.py
+
 Batch picking allows you to manage several pickings at the same time.
 You can create a batch with all pickings selected or multiple batch depends on
 a group field selected in wizard.

@@ -1,18 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- stock.batch.picking form view -->
+    <!-- stock.picking.batch form view -->
     <record model="ir.ui.view" id="stock_batch_picking_form">
-        <field name="name">stock.batch.picking.form</field>
-        <field name="model">stock.batch.picking</field>
+        <field name="name">stock.picking.batch.form</field>
+        <field name="model">stock.picking.batch</field>
         <field name="arch" type="xml">
             <form string="Batch picking">
                 <header>
-                    <button name="action_assign" class="oe_highlight" string="Reserve All"
-                            states="draft" type="object"/>
-                    <button name="action_transfer" states="draft" string="Validate" type="object"/>
-                    <button name="action_transfer" states="assigned" string="Validate" class="oe_highlight" type="object"/>
-                    <button name="action_cancel" states="draft,assigned" confirm="All pickings will be cancelled, Are you sure?" string="Cancel" type="object"/>
-                    <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
+                    <field name="state" widget="statusbar"/>
+                    <button name="action_assign" string="Reserve All" class="oe_highlight" type="object"
+                        attrs="{'invisible': ['|',('use_oca_batch_validation', '!=', True),('state', '!=', 'draft')]}"/>
+                    <button name="action_transfer" string="Validate" type="object"
+                        attrs="{'invisible': ['|',('use_oca_batch_validation', '!=', True),('state', '!=', 'draft')]}"/>
+                    <button name="action_transfer" string="Validate" class="oe_highlight" type="object"
+                        attrs="{'invisible': ['|',('use_oca_batch_validation', '!=', True), ('state', 'not in', ['in_progress','assigned'])]}"/>
+                    <button name="remove_undone_pickings" string="Remove Undone" type="object"
+                        attrs="{'invisible': ['|',('active_picking_ids', '=', []),('use_oca_batch_validation', '!=', True)]}" />
+                    <button name="action_cancel" string="Cancel" type="object"
+                        attrs="{'invisible': ['|',('use_oca_batch_validation', '!=', True),('state', 'not in', ['in_progress','draft','assigned'])]}"/>
+                    <button name="action_print_picking" string="Print" type="object" class="oe_highlight"
+                        attrs="{'invisible': [('use_oca_batch_validation', '!=', True)]}"/>
+                    <!-- Buutons to call Odoo default functional -->
+                    <button name="confirm_picking"  string="Confirm" type="object" class="oe_highlight"
+                        attrs="{'invisible': ['|',('use_oca_batch_validation', '=', True),('state', '!=', 'draft')]}"/>
+                    <button name="print_picking" string="Print" type="object" class="oe_highlight"
+                        attrs="{'invisible': [('use_oca_batch_validation', '=', True)]}"/>
+                    <button name="done" string="Done" type="object" class="oe_highlight"
+                        attrs="{'invisible': ['|',('use_oca_batch_validation', '=', True), ('state', 'not in', ['in_progress','assigned'])]}"/>
+                    <button name="cancel_picking" string="Cancel" type="object"
+                        attrs="{'invisible': ['|',('use_oca_batch_validation', '=', True), ('state', 'in', ['draft','in_progress','assigned'])]}"/>
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
@@ -32,7 +48,8 @@
                         </h1>
                     </div>
                     <group>
-                        <field name="picker_id"/>
+                        <field name="use_oca_batch_validation" invisible="1"/>
+                        <field name="user_id"/>
                         <field name="date"/>
                     </group>
                     <notebook colspan="4">
@@ -103,14 +120,14 @@
         </field>
     </record>
 
-    <!-- stock.batch.picking tree view -->
+    <!-- stock.picking.batch tree view -->
     <record model="ir.ui.view" id="stock_batch_picking_tree">
-        <field name="name">stock.batch.picking.tree</field>
-        <field name="model">stock.batch.picking</field>
+        <field name="name">stock.picking.batch.tree</field>
+        <field name="model">stock.picking.batch</field>
         <field name="arch" type="xml">
             <tree string="Batch Picking">
                 <field name="name"/>
-                <field name="picker_id"/>
+                <field name="user_id"/>
                 <field name="date"/>
                 <field name="state"/>
             </tree>
@@ -119,30 +136,30 @@
 
     <record model="ir.actions.server" id="action_stock_batch_picking_assign_all">
         <field name="name">Reserve All</field>
-        <field name="model_id" ref="stock_batch_picking.model_stock_batch_picking"/>
-        <field name="binding_model_id" ref="stock_batch_picking.model_stock_batch_picking"/>
+        <field name="model_id" ref="stock_picking_batch.model_stock_picking_batch"/>
+        <field name="binding_model_id" ref="stock_picking_batch.model_stock_picking_batch"/>
         <field name="state">code</field>
         <field name="code">
             batches = records.action_assign()
         </field>
     </record>
 
-    <!-- stock.batch.picking search view -->
+    <!-- stock.picking.batch search view -->
     <record id="stock_batch_picking_search" model="ir.ui.view">
         <field name="name">batch.picking.search</field>
-        <field name="model">stock.batch.picking</field>
+        <field name="model">stock.picking.batch</field>
         <field name="arch" type="xml">
             <search>
                 <field name="name"/>
-                <field name="picker_id"/>
+                <field name="user_id"/>
                 <field name="state"/>
                 <field name="date"/>
                 <group expand="0" string="Group By...">
-                    <filter name="picker_id" string="Picker" context="{'group_by':'picker_id'}"/>
+                    <filter name="user_id" string="Picker" context="{'group_by':'user_id'}"/>
                     <filter name="state" string="State" context="{'group_by':'state'}"/>
                     <filter name="date" string="Order Date" context="{'group_by':'date'}"/>
                 </group>
-                <filter name="no_picker_id" string="Unassigned" domain="[('picker_id','=', False)]"/>
+                <filter name="no_user_id" string="Unassigned" domain="[('user_id','=', False)]"/>
             </search>
         </field>
     </record>
@@ -150,13 +167,24 @@
     <record id="action_stock_batch_picking_tree"
             model="ir.actions.act_window">
         <field name="name">Batch Picking</field>
-        <field name="res_model">stock.batch.picking</field>
+        <field name="res_model">stock.picking.batch</field>
         <field name="view_mode">tree,form</field>
+         <field name="view_id" ref="stock_batch_picking_tree"/>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('stock_batch_picking_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('stock_batch_picking_form')})]"/>
+            <field name="search_view_id" ref="stock_batch_picking_search"/>
     </record>
 
-    <!-- stock.batch.picking menuitem in Inventory main menu -->
+    <!-- stock.picking.batch menuitem in Inventory main menu -->
     <menuitem action='action_stock_batch_picking_tree'
               parent='stock.menu_stock_root'
               id='menu_action_stoch_batch_picking'
               sequence='3'/>
+
+
+    <!-- Remove odoo menuitem
+    <function model="ir.ui.menu" name="unlink">
+        <value model="ir.ui.menu" eval="ref('stock_picking_batch.stock_picking_batch_menu')"/>
+    </function> -->
 </odoo>

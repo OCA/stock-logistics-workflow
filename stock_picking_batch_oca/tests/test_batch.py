@@ -14,7 +14,7 @@ class TestBatchPicking(TransactionCase):
         self.customer_loc = self.browse_ref('stock.stock_location_customers')
         self.uom_unit = self.env.ref('uom.product_uom_unit')
 
-        self.batch_model = self.env['stock.batch.picking']
+        self.batch_model = self.env['stock.picking.batch']
         # Delete (in transaction) all batches for simplify tests.
         self.batch_model.search([]).unlink()
 
@@ -38,7 +38,7 @@ class TestBatchPicking(TransactionCase):
         self.picking2.action_confirm()
 
         self.batch = self.batch_model.create({
-            'picker_id': self.env.uid,
+            'user_id': self.env.uid,
             'picking_ids': [
                 (4, self.picking.id),
                 (4, self.picking2.id),
@@ -52,7 +52,7 @@ class TestBatchPicking(TransactionCase):
             'picking_type_id': self.ref('stock.picking_type_out'),
             'location_id': self.stock_loc.id,
             'location_dest_id': self.customer_loc.id,
-            'batch_picking_id': batch_id,
+            'batch_id': batch_id,
             'move_lines': [
                 (0, 0, {
                     'name': 'Test move',
@@ -142,7 +142,7 @@ class TestBatchPicking(TransactionCase):
         ])
 
         self.batch = self.batch_model.create({
-            'picker_id': self.env.uid,
+            'user_id': self.env.uid,
             'picking_ids': [
                 (4, self.picking.id),
                 (4, picking3.id),
@@ -173,7 +173,7 @@ class TestBatchPicking(TransactionCase):
         ])
 
         batch2 = self.batch_model.create({
-            'picker_id': self.env.uid,
+            'user_id': self.env.uid,
             'picking_ids': [
                 (4, picking3.id),
             ]
@@ -214,12 +214,12 @@ class TestBatchPicking(TransactionCase):
 
     def test_stock_picking_copy(self):
         picking = self.batch.picking_ids[0]
-        self.assertEqual(self.batch, picking.batch_picking_id)
+        self.assertEqual(self.batch, picking.batch_id)
         copy = picking.copy()
-        self.assertFalse(copy.batch_picking_id)
+        self.assertFalse(copy.batch_id)
 
     def test_create_wizard(self):
-        wizard = self.env['stock.batch.picking.creator'].create({
+        wizard = self.env['stock.picking.batch.creator'].create({
             'name': 'Unittest wizard',
         })
 
@@ -248,23 +248,23 @@ class TestBatchPicking(TransactionCase):
 
         # Only picking3 because self.picking is already in another batch.
         self.assertEqual(picking3, batch.picking_ids)
-        self.assertEqual(batch, picking3.batch_picking_id)
+        self.assertEqual(batch, picking3.batch_id)
 
-    def test_wizard_picker_id(self):
+    def test_wizard_user_id(self):
         wh_main = self.browse_ref("stock.warehouse0")
 
-        wizard_model = self.env['stock.batch.picking.creator']
+        wizard_model = self.env['stock.picking.batch.creator']
         wizard = wizard_model.create({
             'name': 'Unittest wizard',
         })
-        self.assertFalse(wizard.picker_id)
+        self.assertFalse(wizard.user_id)
 
-        wh_main.default_picker_id = self.env.user
+        wh_main.default_user_id = self.env.user
 
         wizard = wizard_model.create({
             'name': 'Unittest wizard',
         })
-        self.assertEqual(self.env.user, wizard.picker_id)
+        self.assertEqual(self.env.user, wizard.user_id)
 
         other_wh = self.env['stock.warehouse'].create({
             'name': 'Unittest other warehouse',
@@ -274,17 +274,17 @@ class TestBatchPicking(TransactionCase):
         wizard = wizard_model.with_context(warehouse_id=other_wh.id).create({
             'name': 'Unittest wizard',
         })
-        self.assertFalse(wizard.picker_id)
+        self.assertFalse(wizard.user_id)
 
         user2 = self.env['res.users'].create({
             'name': 'Unittest user',
             'login': 'unittest_user'
         })
-        other_wh.default_picker_id = user2
+        other_wh.default_user_id = user2
         wizard = wizard_model.with_context(warehouse_id=other_wh.id).create({
             'name': 'Unittest wizard',
         })
-        self.assertEqual(user2, wizard.picker_id)
+        self.assertEqual(user2, wizard.user_id)
 
     def perform_action(self, action):
         model = action['res_model']
@@ -315,7 +315,6 @@ class TestBatchPicking(TransactionCase):
 
         # confirm transfer action creation
         self.batch.action_assign()
-        action = self.perform_action(self.batch.action_transfer())
 
         self.assertEqual('done', self.picking.state)
         self.assertEqual('done', self.picking2.state)
@@ -405,7 +404,7 @@ class TestBatchPicking(TransactionCase):
         )
 
         # We add the 'package' picking in batch
-        other_picking.batch_picking_id = self.batch
+        other_picking.batch_id = self.batch
 
         self.batch.action_assign()
 
@@ -467,7 +466,7 @@ class TestBatchPicking(TransactionCase):
         self.assertEqual('done', self.picking.state)
         # Second picking is released (and still confirmed)
         self.assertEqual('assigned', self.picking2.state)
-        self.assertFalse(self.picking2.batch_picking_id)
+        self.assertFalse(self.picking2.batch_id)
 
         picking_backorder = self.picking_model.search([
             ('backorder_id', '=', self.picking.id)

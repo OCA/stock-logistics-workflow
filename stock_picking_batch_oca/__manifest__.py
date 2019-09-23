@@ -16,6 +16,7 @@
     ],
     'category': 'Inventory',
     'depends': [
+        'stock_picking_batch',
         'delivery',
         'stock_picking_mass_action',
     ],
@@ -28,8 +29,8 @@
         'views/report_batch_picking.xml',
         'views/stock_picking.xml',
         'views/stock_warehouse.xml',
+        'views/res_config_settings_views.xml',
         'wizard/batch_picking_creator_view.xml',
-        'security/ir.model.access.csv',
     ],
     'installable': True,
     'license': 'AGPL-3',

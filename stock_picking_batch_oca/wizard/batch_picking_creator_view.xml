@@ -2,7 +2,7 @@
 <odoo>
     <record id="view_create_batch_picking" model="ir.ui.view">
         <field name="name">batch_picking_create_form</field>
-        <field name="model">stock.batch.picking.creator</field>
+        <field name="model">stock.picking.batch.creator</field>
         <field name="arch" type="xml">
             <form string="Batch Picking properties">
                 <separator string="Batch Picking"/>
@@ -13,7 +13,7 @@
                 <field name="name"/>
                 <group>
                     <field name="date"/>
-                    <field name="picker_id"/>
+                    <field name="user_id"/>
                 </group>
                 <label for="notes"/>
                 <field name="notes"/>
@@ -36,12 +36,11 @@
         </field>
     </record>
 
-    <act_window name="Create Batch Pickings"
-                res_model="stock.batch.picking.creator"
+    <act_window name="Add to new Batch"
+                res_model="stock.picking.batch.creator"
                 src_model="stock.picking"
                 view_mode="form"
                 target="new"
                 key2="client_action_multi"
                 id="batch_picking_create_act_window"/>
-
 </odoo>

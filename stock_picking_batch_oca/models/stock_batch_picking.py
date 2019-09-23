@@ -9,30 +9,28 @@ from odoo.exceptions import UserError
 class StockBatchPicking(models.Model):
     """ This object allow to manage multiple stock.picking at the same time.
     """
-    _name = 'stock.batch.picking'
+    # renamed stock.batch.picking -> stock.picking.batch
+    _inherit = 'stock.picking.batch'
 
     name = fields.Char(
         string='Name',
-        required=True, index=True,
-        copy=False, unique=True,
+        index=True,
+        unique=True,
         states={'draft': [('readonly', False)]},
         default=lambda self: self.env['ir.sequence'].next_by_code(
-            'stock.batch.picking'
+            'stock.picking.batch'
         ),
     )
 
+    # added state to be compatible with picking_ids
     state = fields.Selection(
-        selection=[
-            ('draft', 'Draft'),
+        selection_add=[
             ('assigned', 'Available'),
-            ('done', 'Done'),
-            ('cancel', 'Cancelled'),
         ],
         string='State',
-        readonly=True, index=True, copy=False,
-        default='draft',
+        readonly=True, index=True,
         help='the state of the batch picking. '
-             'Workflow is draft -> assigned -> done or cancel',
+             'Workflow is draft -> in_progress -> done or cancel',
     )
 
     date = fields.Date(
@@ -40,27 +38,32 @@ class StockBatchPicking(models.Model):
         required=True, readonly=True, index=True,
         states={
             'draft': [('readonly', False)],
-            'assigned': [('readonly', False)]
+            'in_progress': [('readonly', False)]
         },
         default=fields.Date.context_today,
         help='date on which the batch picking is to be processed',
     )
 
-    picker_id = fields.Many2one(
+    user_id = fields.Many2one(
         comodel_name='res.users',
         string='Picker',
         readonly=True, index=True,
         states={
             'draft': [('readonly', False)],
-            'assigned': [('readonly', False)]
+            'in_progress': [('readonly', False)]
         },
         help='the user to which the pickings are assigned',
+        old_name='picker_id',
+    )
+
+    use_oca_batch_validation = fields.Boolean(
+        default=lambda self: self.env.user.company_id.use_oca_batch_validation,
+        copy=False,
     )
 
     picking_ids = fields.One2many(
-        comodel_name='stock.picking',
-        inverse_name='batch_picking_id',
         string='Pickings',
+        # 'stock.picking', 'batch_picking_id', 'Pickings',
         readonly=True,
         states={'draft': [('readonly', False)]},
         help='List of picking managed by this batch.',
@@ -68,7 +71,7 @@ class StockBatchPicking(models.Model):
     # TODO add comment to this field
     active_picking_ids = fields.One2many(
         comodel_name='stock.picking',
-        inverse_name='batch_picking_id',
+        inverse_name='batch_id',
         string='Pickings',
         readonly=True,
         domain=[('state', 'not in', ('cancel', 'done'))],
@@ -190,7 +193,7 @@ class StockBatchPicking(models.Model):
         """ Check if batches pickings are available.
         """
         batches = self.get_not_empties()
-        if not batches.verify_state('assigned'):
+        if not batches.verify_state('in_progress'):
             mass_wiz = self.env['stock.picking.mass.action'].create({
                 'check_availability': True,
                 'picking_ids': batches.mapped('active_picking_ids').ids,
@@ -199,8 +202,7 @@ class StockBatchPicking(models.Model):
 
     @api.multi
     def action_transfer(self):
-        """ Make the transfer for all active pickings in these batches
-        and set state to done all picking are done.
+        """ Create wizard to process all active pickings in these batches
         """
         batches = self.get_not_empties()
         if not batches.verify_state():
@@ -211,10 +213,19 @@ class StockBatchPicking(models.Model):
             return mass_wiz.mass_action()
 
     @api.multi
+    def action_print_picking(self):
+        pickings = self.mapped('picking_ids')
+        if not pickings:
+            raise UserError(_('Nothing to print.'))
+        return self.env.ref(
+            'stock_picking_batch_oca.action_report_batch_picking'
+        ).report_action(self)
+
+    @api.multi
     def remove_undone_pickings(self):
         """ Remove of this batch all pickings which state is not done / cancel.
         """
-        self.mapped('active_picking_ids').write({'batch_picking_id': False})
+        self.mapped('active_picking_ids').write({'batch_id': False})
         self.verify_state()
 
     @api.multi
