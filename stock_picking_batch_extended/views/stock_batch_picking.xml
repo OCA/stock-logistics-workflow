@@ -4,6 +4,7 @@
     <record model="ir.ui.view" id="stock_batch_picking_form">
         <field name="name">stock.picking.batch.form</field>
         <field name="model">stock.picking.batch</field>
+        <field name="priority" eval="10"/>
         <field name="arch" type="xml">
             <form string="Batch picking">
                 <header>
