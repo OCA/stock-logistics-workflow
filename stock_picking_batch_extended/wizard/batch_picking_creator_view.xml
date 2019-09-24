@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_create_batch_picking" model="ir.ui.view">
+        <field name="name">batch_picking_create_form</field>
+        <field name="model">stock.picking.batch.creator</field>
+        <field name="arch" type="xml">
+            <form string="Batch Picking properties">
+                <separator string="Batch Picking"/>
+                <label for="" string="Assign picking operations to an employee."/>
+                <br/>
+                <br/>
+                <label for="name"/>
+                <field name="name"/>
+                <group>
+                    <field name="date"/>
+                    <field name="user_id"/>
+                </group>
+                <label for="notes"/>
+                <field name="notes"/>
+                <group>
+                    <field name="batch_by_group"/>
+                </group>
+                <group string="Create multiple batch picking grouped by..." attrs="{'invisible': [('batch_by_group', '=', False)]}">
+                    <field name="group_field_ids" nolabel="1">
+                        <tree string="Group by field" editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="field_id" options="{'no_create': True}"/>
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button name="action_create_batch" string="_Create" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window name="Add to new Batch"
+                res_model="stock.picking.batch.creator"
+                src_model="stock.picking"
+                view_mode="form"
+                target="new"
+                key2="client_action_multi"
+                id="batch_picking_create_act_window"/>
+</odoo>
