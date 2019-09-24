@@ -36,7 +36,7 @@ class StockBatchPickingCreator(models.TransientModel):
         string='Create batch pickings grouped by fields',
     )
     group_field_ids = fields.One2many(
-        comodel_name='stock.batch.picking.creator.group.field',
+        comodel_name='stock.picking.batch.creator.group.field',
         inverse_name='batch_picking_creator_id',
         string='Group by field',
         help='If set any, multiple batch picking will be created, one per '
@@ -89,7 +89,7 @@ class StockBatchPickingCreator(models.TransientModel):
             'name': self.name,
             'date': self.date,
             'notes': self.notes,
-            'picker_id': self.picker_id.id,
+            'user_id': self.user_id.id,
         }
 
     def _raise_message_error(self):
@@ -103,9 +103,9 @@ class StockBatchPickingCreator(models.TransientModel):
         pickings = self.env['stock.picking'].search(domain)
         if not pickings:
             raise UserError(self._raise_message_error())
-        batch = self.env['stock.batch.picking'].create(
+        batch = self.env['stock.picking.batch'].create(
             self._prepare_stock_batch_picking())
-        pickings.write({'batch_picking_id': batch.id})
+        pickings.write({'batch_id': batch.id})
         return batch
 
     def create_multiple_batch(self, domain):
@@ -115,12 +115,12 @@ class StockBatchPickingCreator(models.TransientModel):
         pickings_grouped = StockPicking.read_group(domain, groupby, groupby)
         if not pickings_grouped:
             raise UserError(self._raise_message_error())
-        batchs = self.env['stock.batch.picking'].browse()
+        batchs = self.env['stock.picking.batch'].browse()
         for group in pickings_grouped:
-            batchs += self.env['stock.batch.picking'].create(
+            batchs += self.env['stock.picking.batch'].create(
                 self._prepare_stock_batch_picking())
             StockPicking.search(group['__domain']).write({
-                'batch_picking_id': batchs[-1:].id,
+                'batch_id': batchs[-1:].id,
             })
         return batchs
 
@@ -151,8 +151,8 @@ class StockBatchPickingCreator(models.TransientModel):
     def action_view_batch_picking(self, batch_pickings):
         if len(batch_pickings) > 1:
             action = self.env.ref(
-                'stock_batch_picking.action_stock_batch_picking_tree').read()[
-                0]
+                'stock_picking_batch_oca.action_stock_batch_picking_tree'
+            ).read()[0]
             action['domain'] = [('id', 'in', batch_pickings.ids)]
         else:
             action = batch_pickings.get_formview_action()
@@ -161,12 +161,12 @@ class StockBatchPickingCreator(models.TransientModel):
 
 class StockBatchPickingCreatorGroupField(models.TransientModel):
     """ Make mass batch pickings from grouped fields """
-    _name = 'stock.batch.picking.creator.group.field'
+    _name = 'stock.picking.batch.creator.group.field'
     _description = 'Batch Picking Creator Group Field'
     _order = 'sequence, id'
 
     batch_picking_creator_id = fields.Many2one(
-        comodel_name='stock.batch.picking.creator',
+        comodel_name='stock.picking.batch.creator',
         ondelete="cascade",
         required=True,
     )

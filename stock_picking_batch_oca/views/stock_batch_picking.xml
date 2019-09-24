@@ -183,8 +183,11 @@
               sequence='3'/>
 
 
-    <!-- Remove odoo menuitem
-    <function model="ir.ui.menu" name="unlink">
+    <!-- Remove odoo menuitem -->
+    <function model="ir.ui.menu" name="write">
         <value model="ir.ui.menu" eval="ref('stock_picking_batch.stock_picking_batch_menu')"/>
-    </function> -->
+        <value eval="{
+            'parent_id': False
+        }"/>
+    </function>
 </odoo>

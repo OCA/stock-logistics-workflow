@@ -196,7 +196,9 @@ class StockBatchPicking(models.Model):
         if not batches.verify_state('in_progress'):
             mass_wiz = self.env['stock.picking.mass.action'].create({
                 'check_availability': True,
-                'picking_ids': batches.mapped('active_picking_ids').ids,
+                'picking_ids': [
+                    (6, 0, batches.mapped('active_picking_ids').ids)
+                ]
             })
             return mass_wiz.mass_action()
 
@@ -208,7 +210,9 @@ class StockBatchPicking(models.Model):
         if not batches.verify_state():
             mass_wiz = self.env['stock.picking.mass.action'].create({
                 'transfer': True,
-                'picking_ids': batches.mapped('active_picking_ids').ids,
+                'picking_ids': [
+                    (6, 0, batches.mapped('active_picking_ids').ids)
+                ],
             })
             return mass_wiz.mass_action()
 

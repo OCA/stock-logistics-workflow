@@ -1,10 +1,12 @@
 # Copyright 2018 Tecnativa - Carlos Dauden
 
 from odoo.exceptions import UserError
-from odoo.tests.common import TransactionCase
+from odoo.tests.common import SavepointCase
 
 
-class TestBatchPicking(TransactionCase):
+class TestBatchPicking(SavepointCase):
+    at_install = False
+    post_install = True
 
     def setUp(self):
         super(TestBatchPicking, self).setUp()
@@ -84,6 +86,10 @@ class TestBatchPicking(TransactionCase):
         self.assertEqual(4, len(self.batch.move_lines))
 
         self.batch.action_assign()
+
+        # Needed compute the stock move lines
+        self.batch._compute_move_lines()
+        self.batch._compute_move_line_ids()
 
         self.assertEqual('assigned', self.batch.state)
         self.assertEqual('assigned', self.picking.state)
@@ -315,6 +321,11 @@ class TestBatchPicking(TransactionCase):
 
         # confirm transfer action creation
         self.batch.action_assign()
+        action = self.batch.action_transfer()
+        # confirm transfer action creation
+        self.env['stock.backorder.confirmation'].browse(
+            action['res_id']
+        ).process()
 
         self.assertEqual('done', self.picking.state)
         self.assertEqual('done', self.picking2.state)
@@ -474,7 +485,7 @@ class TestBatchPicking(TransactionCase):
         self.assertEqual(1, len(picking_backorder.move_lines))
 
     def test_wizard_batch_grouped_by_field(self):
-        Wiz = self.env['stock.batch.picking.creator']
+        Wiz = self.env['stock.picking.batch.creator']
         self.picking.origin = 'A'
         self.picking2.origin = 'B'
         pickings = self.picking + self.picking2
@@ -500,12 +511,12 @@ class TestBatchPicking(TransactionCase):
             wiz.action_create_batch()
 
         # Two picking has distinct origin so two batch pickings must be created
-        pickings.write({'batch_picking_id': False})
+        pickings.write({'batch_id': False})
         res = wiz.action_create_batch()
         self.assertTrue(res['domain'])
 
         # Two picking has same origin so only one batch picking must be created
-        pickings.write({'batch_picking_id': False})
+        pickings.write({'batch_id': False})
         self.picking2.origin = 'A'
         res = wiz.action_create_batch()
         self.assertTrue(res['res_id'])
