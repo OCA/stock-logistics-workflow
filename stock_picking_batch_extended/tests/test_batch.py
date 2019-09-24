@@ -41,6 +41,7 @@ class TestBatchPicking(SavepointCase):
 
         self.batch = self.batch_model.create({
             'user_id': self.env.uid,
+            'use_oca_batch_validation': True,
             'picking_ids': [
                 (4, self.picking.id),
                 (4, self.picking2.id),

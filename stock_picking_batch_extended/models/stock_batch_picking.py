@@ -13,7 +13,6 @@ class StockBatchPicking(models.Model):
     _inherit = 'stock.picking.batch'
 
     name = fields.Char(
-        string='Name',
         index=True,
         unique=True,
         states={'draft': [('readonly', False)]},
@@ -27,10 +26,9 @@ class StockBatchPicking(models.Model):
         selection_add=[
             ('assigned', 'Available'),
         ],
-        string='State',
         readonly=True, index=True,
         help='the state of the batch picking. '
-             'Workflow is draft -> in_progress -> done or cancel',
+             'Workflow is draft -> in_progress/assigned -> done or cancel',
     )
 
     date = fields.Date(
@@ -63,16 +61,15 @@ class StockBatchPicking(models.Model):
 
     picking_ids = fields.One2many(
         string='Pickings',
-        # 'stock.picking', 'batch_picking_id', 'Pickings',
         readonly=True,
         states={'draft': [('readonly', False)]},
         help='List of picking managed by this batch.',
     )
     # TODO add comment to this field
     active_picking_ids = fields.One2many(
+        string="Active Pickings",
         comodel_name='stock.picking',
         inverse_name='batch_id',
-        string='Pickings',
         readonly=True,
         domain=[('state', 'not in', ('cancel', 'done'))],
     )
@@ -111,24 +108,27 @@ class StockBatchPicking(models.Model):
     @api.depends('picking_ids')
     def _compute_move_lines(self):
         for batch in self:
-            batch.move_lines = batch.picking_ids.mapped("move_lines")
+            if batch.use_oca_batch_validation:
+                batch.move_lines = batch.picking_ids.mapped("move_lines")
 
     @api.depends('picking_ids')
     def _compute_move_line_ids(self):
         for batch in self:
-            batch.move_line_ids = batch.picking_ids.mapped(
-                'move_line_ids'
-            )
+            if batch.use_oca_batch_validation:
+                batch.move_line_ids = batch.picking_ids.mapped(
+                    'move_line_ids'
+                )
 
     @api.depends('picking_ids')
     def _compute_entire_package_ids(self):
         for batch in self:
-            batch.update({
-                'entire_package_ids': batch.picking_ids.mapped(
-                    'entire_package_ids'),
-                'entire_package_detail_ids': batch.picking_ids.mapped(
-                    'entire_package_detail_ids'),
-            })
+            if batch.use_oca_batch_validation:
+                batch.update({
+                    'entire_package_ids': batch.picking_ids.mapped(
+                        'entire_package_ids'),
+                    'entire_package_detail_ids': batch.picking_ids.mapped(
+                        'entire_package_detail_ids'),
+                })
 
     def get_not_empties(self):
         """ Return all batches in this recordset
@@ -222,7 +222,7 @@ class StockBatchPicking(models.Model):
         if not pickings:
             raise UserError(_('Nothing to print.'))
         return self.env.ref(
-            'stock_picking_batch_oca.action_report_batch_picking'
+            'stock_picking_batch_extended.action_report_batch_picking'
         ).report_action(self)
 
     @api.multi

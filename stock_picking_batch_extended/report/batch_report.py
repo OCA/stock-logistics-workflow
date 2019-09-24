@@ -9,7 +9,8 @@ _logger = logging.getLogger(__name__)
 
 
 class ReportPrintBatchPicking(models.AbstractModel):
-    _name = 'report.stock_picking_batch_oca.report_batch_picking'
+    _name = 'report.stock_picking_batch_extended.report_batch_picking'
+    _description = 'Report for Batch Picking'
 
     @api.model
     def key_level_0(self, operation):
@@ -86,17 +87,3 @@ class ReportPrintBatchPicking(models.AbstractModel):
             'get_grouped_data': self._get_grouped_data,
             'now': fields.Datetime.now,
         }
-
-    # @api.multi
-    # def render_html(self, data=None):
-    #     report_name = 'stock_picking_batch_oca.report_batch_picking'
-    #     report_obj = self.env['report']
-    #     report = report_obj._get_report_from_name(report_name)
-    #     docargs = {
-    #         'doc_ids': self.ids,
-    #         'doc_model': report.model,
-    #         'docs': self.env[report.model].browse(self.ids),
-    #         'get_grouped_data': self._get_grouped_data,
-    #         'now': fields.Datetime.now,
-    #     }
-    #     return report_obj.render(report_name, docargs)

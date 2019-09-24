@@ -170,7 +170,7 @@
         <field name="res_model">stock.picking.batch</field>
         <field name="view_mode">tree,form</field>
          <field name="view_id" ref="stock_batch_picking_tree"/>
-            <field name="view_ids" eval="[(5, 0, 0),
+            <field name="view_ids" eval="[
                 (0, 0, {'view_mode': 'tree', 'view_id': ref('stock_batch_picking_tree')}),
                 (0, 0, {'view_mode': 'form', 'view_id': ref('stock_batch_picking_form')})]"/>
             <field name="search_view_id" ref="stock_batch_picking_search"/>
@@ -179,15 +179,6 @@
     <!-- stock.picking.batch menuitem in Inventory main menu -->
     <menuitem action='action_stock_batch_picking_tree'
               parent='stock.menu_stock_root'
-              id='menu_action_stoch_batch_picking'
+              id='stock_picking_batch.stock_picking_batch_menu'
               sequence='3'/>
-
-
-    <!-- Remove odoo menuitem -->
-    <function model="ir.ui.menu" name="write">
-        <value model="ir.ui.menu" eval="ref('stock_picking_batch.stock_picking_batch_menu')"/>
-        <value eval="{
-            'parent_id': False
-        }"/>
-    </function>
 </odoo>

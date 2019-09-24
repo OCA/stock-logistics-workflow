@@ -151,7 +151,7 @@ class StockBatchPickingCreator(models.TransientModel):
     def action_view_batch_picking(self, batch_pickings):
         if len(batch_pickings) > 1:
             action = self.env.ref(
-                'stock_picking_batch_oca.action_stock_batch_picking_tree'
+                'stock_picking_batch_extended.action_stock_batch_picking_tree'
             ).read()[0]
             action['domain'] = [('id', 'in', batch_pickings.ids)]
         else:
