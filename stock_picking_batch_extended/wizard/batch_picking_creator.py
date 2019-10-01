@@ -31,7 +31,7 @@ class StockBatchPickingCreator(models.TransientModel):
         default=lambda self: self._default_user_id(),
         help='The user to which the pickings are assigned',
     )
-    notes = fields.Text('Notes', help='free form remarks')
+    notes = fields.Text('Notes', help='Free form remarks')
     batch_by_group = fields.Boolean(
         string='Create batch pickings grouped by fields',
     )
@@ -170,7 +170,7 @@ class StockBatchPickingCreatorGroupField(models.TransientModel):
         ondelete="cascade",
         required=True,
     )
-    sequence = fields.Integer(help='Group by picking field')
+    sequence = fields.Integer(help='Group by picking field', default=0)
     field_id = fields.Many2one(
         comodel_name='ir.model.fields',
         string='Field to group',

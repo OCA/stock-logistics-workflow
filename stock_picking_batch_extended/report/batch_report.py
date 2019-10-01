@@ -3,6 +3,7 @@
 import logging
 
 from odoo import api, fields, models
+from odoo.tools import float_is_zero
 
 
 _logger = logging.getLogger(__name__)
@@ -22,7 +23,7 @@ class ReportPrintBatchPicking(models.AbstractModel):
 
     @api.model
     def new_level_0(self, operation):
-        level_0_name = u'{} \u21E8 {}'.format(
+        level_0_name = '{} \u21E8 {}'.format(
             operation.location_id.name_get()[0][1],
             operation.location_dest_id.name_get()[0][1])
         return {
@@ -36,14 +37,16 @@ class ReportPrintBatchPicking(models.AbstractModel):
     def new_level_1(self, operation):
         return {
             'product': operation.product_id,
-            'product_qty': operation.product_qty or operation.qty_done,
+            'product_qty': not float_is_zero(operation.product_qty)
+            or operation.qty_done,
             'operations': operation,
         }
 
     @api.model
     def update_level_1(self, group_dict, operation):
         group_dict['product_qty'] += (
-            operation.product_qty or operation.qty_done)
+            not float_is_zero(operation.product_qty) or operation.qty_done
+        )
         group_dict['operations'] += operation
 
     @api.model

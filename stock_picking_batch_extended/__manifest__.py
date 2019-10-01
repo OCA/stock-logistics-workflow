@@ -14,7 +14,7 @@
         'Camptocamp',
         'Tecnativa',
     ],
-    'category': 'Inventory',
+    'category': 'Warehouse Management',
     'depends': [
         'stock_picking_batch',
         'delivery',
