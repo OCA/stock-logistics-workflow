@@ -1,4 +1,4 @@
 product-attribute
 stock-logistics-warehouse
 webkit-tools
-partner-contact https://github.com/akretion/partner-contact 10-partner-history
+partner-contact
