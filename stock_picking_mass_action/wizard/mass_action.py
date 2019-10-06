@@ -83,6 +83,6 @@ class StockPickingMassAction(TransientModel):
                     lambda m: m.state not in ('done', 'cancel')))
             if not quantities_done:
                 return assigned_picking_lst.action_immediate_transfer_wizard()
-            if assigned_picking_lst._check_backorder():
+            if any([pick._check_backorder() for pick in assigned_picking_lst]):
                 return assigned_picking_lst.action_generate_backorder_wizard()
             assigned_picking_lst.action_done()
