@@ -14,19 +14,22 @@ Stock batch picking
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
-    :target: https://github.com/OCA/stock-logistics-workflow/tree/12.0/stock_batch_picking
+    :target: https://github.com/OCA/stock-logistics-workflow/tree/12.0/stock_picking_batch_extended
     :alt: OCA/stock-logistics-workflow
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-12-0/stock-logistics-workflow-12-0-stock_batch_picking
+    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-12-0/stock-logistics-workflow-12-0-stock_picking_batch_extended
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
     :target: https://runbot.odoo-community.org/runbot/154/12.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5|
+|badge1| |badge2| |badge3| |badge4| |badge5| 
 
 This module is based on `picking_dispatch <https://github.com/OCA/stock-logistics-workflow/tree/8.0/picking_dispatch>`_
 but reworked for matching Odoo new picking system (with pack operations).
+
+Since v12 it is compatible with odoo addon https://github.com/odoo/odoo/blob/12.0/addons/stock_picking_batch/models/stock_picking_batch.py
+It allows to define which approach for batch handling will be used per company.
 
 Batch picking allows you to manage several pickings at the same time.
 You can create a batch with all pickings selected or multiple batch depends on
@@ -39,22 +42,22 @@ After having created a batch with a list of stock picking, you can:
 * Make partial delivery by filling done quantities in pack operations tab.
 * Print a report to pick the proper goods at once
 
-.. figure:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/12.0/stock_batch_picking/static/stock_picking_list.png
+.. figure:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/11.0/stock_batch_picking/static/stock_picking_list.png
    :alt: Sample report template
    :width: 80 %
    :align: center
 
-.. figure:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/12.0/stock_batch_picking/static/batch_wizard.png
+.. figure:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/11.0/stock_batch_picking/static/batch_wizard.png
    :alt: Sample report template
    :width: 80 %
    :align: center
 
-.. figure:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/12.0/stock_batch_picking/static/batch_form.png
+.. figure:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/11.0/stock_batch_picking/static/batch_form.png
    :alt: Sample report template
    :width: 80 %
    :align: center
 
-.. figure:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/12.0/stock_batch_picking/static/batch_form_operation.png
+.. figure:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/11.0/stock_batch_picking/static/batch_form_operation.png
    :alt: Sample report template
    :width: 80 %
    :align: center
@@ -70,7 +73,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/stock-logistics-workflow/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_batch_picking%0Aversion:%2012.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_picking_batch_extended%0Aversion:%2012.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -97,10 +100,14 @@ Contributors
 * Yannick Vaucher <yannick.vaucher@camptocamp.com>
 * Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
 * Joël Grand-Guillaume <joel.grandguillaume@camptocamp.com>
+* Cyril Gaudin <cyril.gaudin@camptocamp.com>
+* Iryna Vyshnevska <i.vyshnevska@mobilunity.com>
 
 **stock_batch_picking**
 
-* Cyril Gaudin <cyril.gaudin@camptocamp.com>
+* `Camptocamp <https://www.camptocamp.com>`_:
+  * Cyril Gaudin
+  
 * `Tecnativa <https://www.tecnativa.com>`_:
 
   * Carlos Dauden
@@ -128,8 +135,8 @@ promote its widespread use.
 
 Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-Camptocamp| |maintainer-Tecnativa|
+|maintainer-Camptocamp| |maintainer-Tecnativa| 
 
-This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/12.0/stock_batch_picking>`_ project on GitHub.
+This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/12.0/stock_picking_batch_extended>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
