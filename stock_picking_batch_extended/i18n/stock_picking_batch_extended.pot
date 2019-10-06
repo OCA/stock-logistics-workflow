@@ -1,45 +1,37 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * stock_batch_picking
+#	* stock_picking_batch_extended
 #
-# Translators:
-# Rudolf Schnapka <rs@techno-flex.de>, 2017
-# OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 9.0c\n"
+"Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-24 10:53+0000\n"
-"PO-Revision-Date: 2017-06-24 10:53+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
-"Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
-"Language: de\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: \n"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
 msgid "<strong>Date:</strong>"
-msgstr "<strong>Datum:</strong>"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
 msgid "<strong>Printed by:</strong>"
-msgstr "<strong>Druck durch:</strong>"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
-#, fuzzy
 msgid "<strong>Total:</strong>"
-msgstr "<strong>Datum:</strong>"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__active_picking_ids
-#, fuzzy
 msgid "Active Pickings"
-msgstr "Kommissionierscheine"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.actions.act_window,name:stock_picking_batch_extended.batch_picking_create_act_window
@@ -49,11 +41,8 @@ msgstr ""
 #. module: stock_picking_batch_extended
 #: code:addons/stock_picking_batch_extended/wizard/batch_picking_creator.py:96
 #, python-format
-msgid ""
-"All selected pickings are already in a batch picking or are in a wrong state."
+msgid "All selected pickings are already in a batch picking or are in a wrong state."
 msgstr ""
-"Ausgewählte Kommissionierungen sind bereits in einem Stapel oder haben den "
-"falschen Status."
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.res_config_settings_view_form
@@ -63,22 +52,22 @@ msgstr ""
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.view_create_batch_picking
 msgid "Assign picking operations to an employee."
-msgstr "Kommissionierungen einem Mitarbeiter zuweisen."
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: selection:stock.picking.batch,state:0
 msgid "Available"
-msgstr "Verfügbar"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking__batch_id
 msgid "Batch"
-msgstr "Stapel"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
 msgid "Batch Name"
-msgstr "Stapelbezeichnung"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.actions.act_window,name:stock_picking_batch_extended.action_stock_batch_picking_tree
@@ -86,58 +75,55 @@ msgstr "Stapelbezeichnung"
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_tree
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.view_create_batch_picking
 msgid "Batch Picking"
-msgstr "Stapelkommissionierung"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model,name:stock_picking_batch_extended.model_stock_picking_batch_creator
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__batch_picking_creator_id
 msgid "Batch Picking Creator"
-msgstr "Ersteller der Stapelkommissionierung"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model,name:stock_picking_batch_extended.model_stock_picking_batch_creator_group_field
-#, fuzzy
 msgid "Batch Picking Creator Group Field"
-msgstr "Ersteller der Stapelkommissionierung"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__name
-#, fuzzy
 msgid "Batch Picking Name"
-msgstr "Stapelkommissionierung"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.view_create_batch_picking
 msgid "Batch Picking properties"
-msgstr "Eigenschaften Stapelkommissionierung"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking__batch_id
-#, fuzzy
 msgid "Batch associated to this picking"
-msgstr "Dieser Stapel hat keine Kommissionierungen"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.actions.report,name:stock_picking_batch_extended.action_report_batch_picking
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
 msgid "Batch picking"
-msgstr "Stapelkommissionierung"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.view_create_batch_picking
 msgid "Cancel"
-msgstr "Abbrechen"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: selection:stock.picking.batch,state:0
 msgid "Cancelled"
-msgstr "Storniert"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
 msgid "Carrier"
-msgstr "Frachtführer"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model,name:stock_picking_batch_extended.model_res_company
@@ -156,9 +142,8 @@ msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator__batch_by_group
-#, fuzzy
 msgid "Create batch pickings grouped by fields"
-msgstr "Stapelkommissionierungen anlegen"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.view_create_batch_picking
@@ -169,59 +154,57 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator__create_uid
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__create_uid
 msgid "Created by"
-msgstr "Angelegt von"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator__create_date
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__create_date
 msgid "Created on"
-msgstr "Angelegt am"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__date
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator__date
 msgid "Date"
-msgstr "Datum"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch_creator__date
 msgid "Date on which the batch picking is to be processed"
-msgstr "Datum an dem die Stapelkommissionierung durchgeführt werden soll"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_warehouse__default_user_id
 msgid "Default Picker"
-msgstr "Vorgabe-Kommissionierer"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
-#, fuzzy
 msgid "Detailed Operations"
-msgstr "Vorgänge"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__move_line_ids
-#, fuzzy
 msgid "Detailed operations"
-msgstr "Vorgänge"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_report_stock_picking_batch_extended_report_batch_picking__display_name
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator__display_name
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__display_name
 msgid "Display Name"
-msgstr "Angezeigter Name"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
 #: selection:stock.picking.batch,state:0
 msgid "Done"
-msgstr "Erledigt"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: selection:stock.picking.batch,state:0
 msgid "Draft"
-msgstr "Entwurf"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__entire_package_ids
@@ -240,14 +223,13 @@ msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch_creator__notes
-#, fuzzy
 msgid "Free form remarks"
-msgstr "Freitext-Bemerkungen"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_search
 msgid "Group By..."
-msgstr "Gruppieren nach ..."
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator__group_field_ids
@@ -265,7 +247,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator__id
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch_creator__group_field_ids
@@ -282,42 +264,42 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator____last_update
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field____last_update
 msgid "Last Modified on"
-msgstr "Zuletzt geändert am"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator__write_uid
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__write_uid
 msgid "Last Updated by"
-msgstr "Zuletzt aktualisiert durch"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator__write_date
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__write_date
 msgid "Last Updated on"
-msgstr "Zuletzt aktualisiert am"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__picking_ids
 msgid "List of picking managed by this batch."
-msgstr "Liste der Kommissionierungen, die in diesem Stapel geführt werden."
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator__name
 msgid "Name"
-msgstr "Bezeichnung"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__name
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch_creator__name
 msgid "Name of the batch picking"
-msgstr "Bezeichnung des Stapels"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__notes
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator__notes
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
 msgid "Notes"
-msgstr "Notizen"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:223
@@ -329,41 +311,40 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__move_lines
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
 msgid "Operations"
-msgstr "Vorgänge"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_search
 msgid "Order Date"
-msgstr "Auftragsdatum"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
 msgid "Picked By"
-msgstr "Kommissioniert durch"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__user_id
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator__user_id
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_search
 msgid "Picker"
-msgstr "Kommissionierer"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.res_config_settings_view_form
-#, fuzzy
 msgid "Picking Batch"
-msgstr "Kommissionierscheine"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__picking_ids
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
 msgid "Pickings"
-msgstr "Kommissionierscheine"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
 msgid "Pickings Order"
-msgstr "Kommissionierauftrag"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
@@ -377,49 +358,45 @@ msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.actions.server,name:stock_picking_batch_extended.action_print_batch_picking_operations
-#, fuzzy
 msgid "Print Picking Operations"
-msgstr "Eigenschaften Stapelkommissionierung"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model,name:stock_picking_batch_extended.model_product_product
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
 msgid "Product"
-msgstr "Produkt"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
 msgid "QTY"
-msgstr "Menge"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
-#, fuzzy
 msgid "Register lots, packs, location"
-msgstr "Zugeordnete Packvorgänge"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
 msgid "Remove Undone"
-msgstr "Entferne unfertige"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model,name:stock_picking_batch_extended.model_report_stock_picking_batch_extended_report_batch_picking
-#, fuzzy
 msgid "Report for Batch Picking"
-msgstr "Stapelkommissionierungen anlegen"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.actions.server,name:stock_picking_batch_extended.action_stock_batch_picking_assign_all
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
 msgid "Reserve All"
-msgstr "Reserviere Alle"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
-#, fuzzy
 msgid "Reserved"
-msgstr "Reserviere Alle"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: selection:stock.picking.batch,state:0
@@ -435,13 +412,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__state
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_search
 msgid "State"
-msgstr "Status"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
-#, fuzzy
 msgid "Stock Moves"
-msgstr "Bewegungen"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.res_config_settings_view_form
@@ -451,42 +427,39 @@ msgstr ""
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch_creator__user_id
 msgid "The user to which the pickings are assigned"
-msgstr "Der Anwender, dem diese Kommissionierungen zugewiesen sind"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:143
 #, python-format
 msgid "These Batches have no pickings"
-msgstr "Diese Stapel haben keine Kommissionierungen"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:141
 #, python-format
 msgid "This Batch has no pickings"
-msgstr "Dieser Stapel hat keine Kommissionierungen"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__entire_package_detail_ids
-msgid ""
-"Those are the entire packages of a picking shown in the view of detailed "
-"operations"
+msgid "Those are the entire packages of a picking shown in the view of detailed operations"
 msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__entire_package_ids
-msgid ""
-"Those are the entire packages of a picking shown in the view of operations"
+msgid "Those are the entire packages of a picking shown in the view of operations"
 msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model,name:stock_picking_batch_extended.model_stock_picking
 msgid "Transfer"
-msgstr "Umlagern"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_search
 msgid "Unassigned"
-msgstr "Nicht zugeordnet"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
@@ -507,83 +480,51 @@ msgstr ""
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
 msgid "Validate"
-msgstr "Freigeben"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
 msgid "Visa:_________________"
-msgstr "Visa:_________________"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model,name:stock_picking_batch_extended.model_stock_warehouse
 msgid "Warehouse"
-msgstr "Warenlager"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_product_product__description_warehouse
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.product_normal_form_view
 msgid "Warehouse Description"
-msgstr "Warenlager-Beschreibung"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.view_create_batch_picking
 msgid "_Create"
-msgstr "_Anlegen"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__date
 msgid "date on which the batch picking is to be processed"
-msgstr "Datum, an dem der Stapel abgearbeitet sein soll"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__notes
 msgid "free form remarks"
-msgstr "Freitext-Bemerkungen"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__state
-#, fuzzy
-msgid ""
-"the state of the batch picking. Workflow is draft -> in_progress/assigned -> "
-"done or cancel"
+msgid "the state of the batch picking. Workflow is draft -> in_progress/assigned -> done or cancel"
 msgstr ""
-"Der Status des Stapel. Workflow ist Entwurf -> Zugewiesen -> Erledigt or "
-"Storniert"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_warehouse__default_user_id
 msgid "the user to which the batch pickings are assigned by default"
-msgstr "Der Anwender, dem die Stapel per Vorgabe zugeordnet werden"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__user_id
 msgid "the user to which the pickings are assigned"
-msgstr "Der Anwender, dem die Stapel zugewiesen sind"
+msgstr ""
 
-#~ msgid "In which batch picking this picking will be processed."
-#~ msgstr "In welchem Stapel diese Kommissionierung ausgeführt wird.."
-
-#~ msgid "Related pack operations"
-#~ msgstr "Zugeordnete Packvorgänge"
-
-#~ msgid "Related stock moves"
-#~ msgstr "Zugeordnete Lagerbewegungen"
-
-#~ msgid "report.stock_batch_picking.report_batch_picking"
-#~ msgstr "report.stock_batch_picking.report_batch_picking"
-
-#~ msgid "stock.batch.picking"
-#~ msgstr "stock.batch.picking"
-
-#, fuzzy
-#~ msgid "Show Pickings"
-#~ msgstr "Kommissionierscheine"
-
-#~ msgid "Explanation"
-#~ msgstr "Erläuterung"
-
-#~ msgid "Package To Move"
-#~ msgstr "Zu buchendes Paket"
-
-#~ msgid "stock error<br/>breakage"
-#~ msgstr "Fehl-Bestand<br/>Bruchschaden"
