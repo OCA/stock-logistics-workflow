@@ -38,6 +38,11 @@ msgstr ""
 "un statut invalide."
 
 #. module: stock_batch_picking
+#: model:ir.model.fields,field_description:stock_batch_picking.field_product_product_allow_negative_stock
+msgid "Allow Negative Stock"
+msgstr ""
+
+#. module: stock_batch_picking
 #: model:ir.ui.view,arch_db:stock_batch_picking.view_create_batch_picking
 msgid "Assign picking operations to an employee."
 msgstr "Assign picking operations to an employee."
@@ -163,6 +168,15 @@ msgstr "Regrouper par..."
 #: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_id
 msgid "ID"
 msgstr "ID"
+
+#. module: stock_batch_picking
+#: model:ir.model.fields,help:stock_batch_picking.field_product_product_allow_negative_stock
+msgid ""
+"If this option is not active on this product nor on its product category and "
+"that this product is a stockable product, then the validation of the related "
+"stock moves will be blocked if the stock level becomes negative with the "
+"stock move."
+msgstr ""
 
 #. module: stock_batch_picking
 #: model:ir.model.fields,help:stock_batch_picking.field_stock_picking_batch_picking_id
