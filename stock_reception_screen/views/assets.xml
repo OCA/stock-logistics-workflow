@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="stock_reception_screen_assets" name="stock.reception.screen.assets" inherit_id="web.assets_backend">
+    <xpath expr="." position="inside">
+      <link rel="stylesheet" type="text/scss" href="/stock_reception_screen/static/src/scss/screen.scss"/>
+    </xpath>
+  </template>
+
+</odoo>

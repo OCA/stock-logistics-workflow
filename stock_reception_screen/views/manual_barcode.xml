@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 Camptocamp SA
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+  <record id="stock_picking_manual_barcode_form" model="ir.ui.view">
+    <field name="name">stock.picking.manual.barcode.view.form</field>
+    <field name="model">stock.picking.manual.barcode</field>
+    <field name="arch" type="xml">
+      <form string="Manual Barcode Input">
+        <div class="row">
+          <div class="col-8">
+            <field name="barcode" style="padding: 1em; font-size: 2em;"/>
+          </div>
+          <div class="col-2">
+            <button name="button_save"
+                    string="Confirm"
+                    type="object"
+                    class="btn-primary"
+                    style="padding: 1em; font-size: 2em; text-transform: uppercase;"/>
+          </div>
+        </div>
+        <footer></footer>
+      </form>
+    </field>
+  </record>
+
+</odoo>
