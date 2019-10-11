@@ -9,27 +9,38 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-18 03:48+0000\n"
-"PO-Revision-Date: 2017-12-18 03:48+0000\n"
+"POT-Creation-Date: 2019-10-15 08:30+0000\n"
+"PO-Revision-Date: 2019-10-15 10:31+0200\n"
 "Last-Translator: Pedro M. Baeza <pedro.baeza@gmail.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.6\n"
+
+#. module: stock_picking_invoice_link
+#: model:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
+msgid "<span class=\"o_stat_text\">Invoices</span>"
+msgstr "<span class=\"o_stat_text\">Facturas</span>"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_invoice
-#: model:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
 msgid "Invoice"
 msgstr "Factura"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_invoice_line
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move_invoice_line_id
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move_invoice_line_ids
 msgid "Invoice Line"
 msgstr "Línea de factura"
+
+#. module: stock_picking_invoice_link
+#: model:ir.ui.view,arch_db:stock_picking_invoice_link.view_move_form
+#: model:ir.ui.view,arch_db:stock_picking_invoice_link.view_move_picking_form
+msgid "Invoice Lines"
+msgstr "Líneas de factura"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking_invoice_ids
@@ -85,9 +96,10 @@ msgid "Transfer"
 msgstr "Transferir"
 
 #. module: stock_picking_invoice_link
-#: model:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
-msgid "View Invoice"
-msgstr "Ver factura"
+#: code:addons/stock_picking_invoice_link/models/stock_move.py:34
+#, python-format
+msgid "You can not modify an invoiced stock move"
+msgstr "No puede modificar un movimiento de almacén facturado"
 
-#~ msgid "Invoice Lines"
-#~ msgstr "Líneas de factura"
+#~ msgid "View Invoice"
+#~ msgstr "Ver factura"
