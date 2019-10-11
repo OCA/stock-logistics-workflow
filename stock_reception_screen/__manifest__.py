@@ -11,11 +11,15 @@
     "depends": [
         "stock",
         "product_expiry",
+        # OCA/web
+        "web_notify",
     ],
     "data": [
+        "security/ir.model.access.csv",
         "views/assets.xml",
         "views/stock_move_line.xml",
         "views/stock_picking.xml",
+        "views/stock_reception_screen.xml",
         "views/manual_barcode.xml",
     ],
     "installable": True,
