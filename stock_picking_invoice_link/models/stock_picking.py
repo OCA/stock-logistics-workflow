@@ -25,12 +25,21 @@ class StockPicking(models.Model):
         one invoice to show.
         """
         self.ensure_one()
-        action = self.env.ref('account.action_invoice_tree1')
+        # Determine display out invoices views or in invoices views
+        if (self.location_dest_id.usage == 'customer'
+                or self.location_id.usage == 'customer'):
+            action_name = 'account.action_invoice_tree1'
+            form_view_name = 'account.invoice_form'
+        else:
+            action_name = 'account.action_invoice_tree2'
+            form_view_name = 'account.invoice_supplier_form'
+
+        action = self.env.ref(action_name)
         result = action.read()[0]
         if len(self.invoice_ids) > 1:
             result['domain'] = "[('id', 'in', %s)]" % self.invoice_ids.ids
         else:
-            form_view = self.env.ref('account.invoice_form')
+            form_view = self.env.ref(form_view_name)
             result['views'] = [(form_view.id, 'form')]
             result['res_id'] = self.invoice_ids.id
         return result
