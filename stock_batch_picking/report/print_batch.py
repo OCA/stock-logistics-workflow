@@ -37,7 +37,7 @@ class PrintBatch(report_sxw.rml_parse):
         location_obj = self.pool.get('stock.location')
         for batch in objects:
             pack_operations = {}
-            for op in batch.pack_operation_ids:
+            for op in self.get_sorted_batch_pickings(batch.pack_operation_ids):
                 id1, id2 = op.location_id.id, op.location_dest_id.id
                 key_dict = dict(
                     location_obj.name_get(
@@ -50,3 +50,9 @@ class PrintBatch(report_sxw.rml_parse):
             new_objects.append(self._aggregation_class(batch, pack_operations))
         return super(PrintBatch, self).set_context(new_objects, data, ids,
                                                    report_type=report_type)
+
+    @api.model
+    def get_sorted_batch_pickings(self, pickings):
+        """By default will be used order from model
+        this place to customize sorting if needed"""
+        return pickings
