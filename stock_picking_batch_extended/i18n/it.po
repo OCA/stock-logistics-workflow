@@ -453,6 +453,11 @@ msgid "This Batch has no pickings"
 msgstr ""
 
 #. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.product_normal_form_view
+msgid "This note will show up on the batch picking printout."
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__entire_package_detail_ids
 msgid ""
 "Those are the entire packages of a picking shown in the view of detailed "
