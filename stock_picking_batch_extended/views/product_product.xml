@@ -6,10 +6,11 @@
         <field name="inherit_id" ref="product.product_normal_form_view"/>
         <field name="arch" type="xml">
             <!-- TODO: Integrate in existent field -->
-            <field name="description_picking" position="after">
-                <separator string="Warehouse Description"/>
-                <field colspan="4" name="description_warehouse" nolabel="1"/>
-            </field>
+            <xpath expr="//page[@name='inventory']" position="inside">
+                <group string="Warehouse Description">
+                    <field name="description_warehouse" placeholder="This note will show up on the batch picking printout." nolabel="1"/>
+                </group>
+            </xpath>
         </field>
     </record>
 </odoo>
