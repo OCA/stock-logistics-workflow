@@ -51,7 +51,6 @@ class PrintBatch(report_sxw.rml_parse):
         return super(PrintBatch, self).set_context(new_objects, data, ids,
                                                    report_type=report_type)
 
-    @api.model
     def get_sorted_batch_pickings(self, pickings):
         """By default will be used order from model
         this place to customize sorting if needed"""
