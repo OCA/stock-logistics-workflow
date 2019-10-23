@@ -9,9 +9,18 @@ class StockReceptionScreen(models.Model):
     _inherit = "barcodes.barcode_events_mixin"
     _description = "Stock Reception Screen"
 
+    _step_start = "select_product"
     _steps = {
-        "select_move": {
+        "select_product": {
             "label": _("Select Product"),
+            "next_steps": [
+                {
+                    "next": "select_move",
+                },
+            ],
+        },
+        "select_move": {
+            "label": _("Select Move"),
             "next_steps": [
                 {
                     # Only if the product is managed by lots
@@ -36,8 +45,13 @@ class StockReceptionScreen(models.Model):
             "next_steps": [
                 {
                     # Loop until all moves are processed
-                    "before": "_before_step_select_move",
+                    "before": "_before_set_quantity_to_select_move",
                     "next": "select_move",
+                },
+                {
+                    # Only if there are remaining moves to process}
+                    "before": "_before_set_quantity_to_select_product",
+                    "next": "select_product",
                 },
                 {
                     "next": "done",
@@ -62,13 +76,18 @@ class StockReceptionScreen(models.Model):
     picking_partner_id = fields.Many2one(related="picking_id.partner_id")
     picking_state = fields.Selection(related="picking_id.state")
     picking_move_lines = fields.One2many(related="picking_id.move_lines")
-    current_step = fields.Char(default="select_move", copy=False)
+    picking_filtered_move_lines = fields.One2many(
+        comodel_name="stock.move",
+        compute="_compute_picking_filtered_move_lines"
+    )
+    current_step = fields.Char(default="select_product", copy=False)
     current_step_descr = fields.Char(
         string="Operation",
         compute="_compute_current_step_descr",
     )
+    current_filter_product = fields.Char(string="Filter product", copy=False)
     # current move
-    current_move_id = fields.Many2one(comodel_name='stock.move', copy=False)
+    current_move_id = fields.Many2one(comodel_name="stock.move", copy=False)
     current_move_product_display_name = fields.Char(
         related="current_move_id.product_id.display_name", string="Product")
     current_move_product_uom_qty = fields.Float(
@@ -100,6 +119,24 @@ class StockReceptionScreen(models.Model):
     current_move_line_qty_status = fields.Char(
         string="Qty Status",
         compute="_compute_current_move_line_qty_status")
+
+    @api.depends("picking_id.move_lines", "current_filter_product")
+    def _compute_picking_filtered_move_lines(self):
+        for screen in self:
+            moves = screen.picking_id.move_lines
+            screen.picking_filtered_move_lines = moves
+            if screen.current_filter_product:
+                filter_ = screen.current_filter_product
+                search_args = [
+                    ("id", "in", moves.ids),
+                    '|', '|',
+                    ("product_id.barcode", "=", filter_),
+                    ("product_id.default_code", "=", filter_),
+                    ("product_id.name", "ilike", filter_),
+                ]
+                moves = moves.search(search_args)
+                screen.picking_filtered_move_lines = moves
+
 
     @api.depends("current_step")
     def _compute_current_step_descr(self):
@@ -171,6 +208,24 @@ class StockReceptionScreen(models.Model):
             'target': 'new',
         }
 
+    def next_step(self):
+        """Evaluate the next step for the operator."""
+        if self.current_step:
+            print("CURRENT STEP", self.current_step)
+            steps = self.get_reception_screen_steps()
+            step = steps[self.current_step]
+            for next_step in step["next_steps"]:
+                print("\tNEXT STEP", next_step)
+                if next_step.get("before"):
+                    check = getattr(self, next_step["before"])()
+                    if not check:
+                        # This step can be skipped
+                        continue
+                self.current_step = next_step["next"]
+                if next_step.get("after"):
+                    getattr(self, next_step["after"])()
+                break
+
     def on_barcode_scanned(self, barcode):
         """Dispatch the barcode event to the right method (if any)."""
         self.ensure_one()
@@ -178,27 +233,58 @@ class StockReceptionScreen(models.Model):
         if hasattr(self, method):
             getattr(self, method)(barcode)
 
-    def on_barcode_scanned_select_move(self, barcode):
-        """Try to find the corresponding move based on the barcode."""
-        # First find a product/move corresponding to the barcode
-        move = self.picking_id.move_lines.filtered(
-            lambda o: o.product_id.barcode == barcode)
+    def on_barcode_scanned_select_product(self, barcode):
+        """Try to find the corresponding product based on the barcode."""
+        moves = self.picking_id.move_lines
+        # First find a moves corresponding to the barcode
+        move = moves.filtered(lambda o: o.product_id.barcode == barcode)
         # Then try on the product code
         if not move:
-            move = self.picking_id.move_lines.filtered(
+            move = moves.filtered(
                 lambda o: o.product_id.default_code == barcode)
         # And on the name
         if not move:
-            move = self.picking_id.move_lines.filtered(
-                lambda o: barcode in o.product_id.name)
+            move = moves.filtered(lambda o: barcode in o.product_id.name)
         if not move:
             self.env.user.notify_warning(
                 message="",
                 title=_("Product '{}' not found.").format(barcode),
             )
             return
-        self.current_move_id = move
-        self.process_select_move()
+        # If there are several moves/products corresponding to the search
+        # criteria we want to propose the user to choose the right one
+        # by filtering them
+        if len(move) > 1:
+            # product = move.mapped("product_id")[0]
+            self.current_filter_product = barcode
+            # return True
+        # Otherwise we select directly the available move
+        else:
+            self.current_move_id = move
+        # self.current_product_id = move.product_id
+        self.process_select_product()
+
+    # def on_barcode_scanned_select_move(self, barcode):
+    #     """Try to find the corresponding move based on the barcode."""
+    #     # First find a product/move corresponding to the barcode
+    #     move = self.picking_id.move_lines.filtered(
+    #         lambda o: o.product_id.barcode == barcode)
+    #     # Then try on the product code
+    #     if not move:
+    #         move = self.picking_id.move_lines.filtered(
+    #             lambda o: o.product_id.default_code == barcode)
+    #     # And on the name
+    #     if not move:
+    #         move = self.picking_id.move_lines.filtered(
+    #             lambda o: barcode in o.product_id.name)
+    #     if not move:
+    #         self.env.user.notify_warning(
+    #             message="",
+    #             title=_("Product '{}' not found.").format(barcode),
+    #         )
+    #         return
+    #     self.current_move_id = move
+    #     self.process_select_move()
 
     def on_barcode_scanned_set_lot_number(self, barcode):
         """Set the lot number on a move line."""
@@ -219,8 +305,45 @@ class StockReceptionScreen(models.Model):
         self.current_move_line_id.lot_name = barcode
         self.process_set_lot_number()
 
+    def process_select_product(self):
+        self.next_step()
+        if self.current_move_id:
+            # Go to the next step automatically if only one move has been found
+            self.next_step()
+
+    def _before_set_quantity_to_select_move(self):
+        """Check if there is remaining moves to process for the
+        selected product.
+        """
+        moves_to_process_ok = any(
+            move.quantity_done < move.product_uom_qty
+            for move in self.picking_filtered_move_lines)
+        if moves_to_process_ok:
+            self.current_move_id = False
+            self.current_move_line_id = False
+        return moves_to_process_ok
+
+
+    def _before_set_quantity_to_select_product(self):
+        """Check if there is remaining products/moves to process."""
+        moves_to_process_ok = any(
+            move.quantity_done < move.product_uom_qty
+            for move in self.picking_id.move_lines)
+        if moves_to_process_ok:
+            self.current_filter_product = False
+            self.current_move_id = False
+            self.current_move_line_id = False
+        return moves_to_process_ok
+
     def process_select_move(self):
         self.next_step()
+
+    def _before_step_set_lot_number(self):
+        """Decide if we have to handle lots on the current move."""
+        has_tracking = self.current_move_id.has_tracking != "none"
+        if not has_tracking:
+            self.current_move_line_id = self.current_move_id.move_line_ids[0]
+        return has_tracking
 
     def process_set_lot_number(self):
         if not self.current_move_line_id.lot_name:
@@ -250,6 +373,13 @@ class StockReceptionScreen(models.Model):
             return
         self.next_step()
 
+    def _after_step_done(self):
+        """Reset the current selected move line."""
+        self.current_filter_product = False
+        self.current_move_id = False
+        self.current_move_line_id = False
+        return True
+
     def button_save_step(self):
         """Save the current step."""
         self.ensure_one()
@@ -261,48 +391,10 @@ class StockReceptionScreen(models.Model):
     def button_cancel_step(self):
         """Reset the current step.
 
-        This allows the user to choose another move to process.
+        This allows the user to choose another product to process.
         """
         self.ensure_one()
-        self.current_step = "select_move"
+        self.current_step = self._step_start
+        self.current_filter_product = False
         self.current_move_id = self.current_move_line_id = False
-        return True
-
-    def next_step(self):
-        """Evaluate the next step for the operator."""
-        if self.current_step:
-            steps = self.get_reception_screen_steps()
-            step = steps[self.current_step]
-            for next_step in step["next_steps"]:
-                if next_step.get("before"):
-                    check = getattr(self, next_step["before"])()
-                    if not check:
-                        # This step can be skipped
-                        continue
-                self.current_step = next_step["next"]
-                if next_step.get("after"):
-                    getattr(self, next_step["after"])()
-                break
-
-    def _before_step_set_lot_number(self):
-        """Decide if we have to handle lots on the current move."""
-        has_tracking = self.current_move_id.has_tracking != "none"
-        if not has_tracking:
-            self.current_move_line_id = self.current_move_id.move_line_ids[0]
-        return has_tracking
-
-    def _before_step_select_move(self):
-        """Check if there is remaining moves to process."""
-        move_to_process_ok = any(
-            move.quantity_done < move.product_uom_qty
-            for move in self.picking_id.move_lines)
-        if move_to_process_ok:
-            self.current_move_id = False
-            self.current_move_line_id = False
-        return move_to_process_ok
-
-    def _after_step_done(self):
-        """Reset the current selected move line."""
-        self.current_move_id = False
-        self.current_move_line_id = False
         return True

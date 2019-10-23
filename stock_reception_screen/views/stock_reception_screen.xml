@@ -43,14 +43,14 @@
                     icon="fa-check"
                     class="btn-primary"
                     barcode_trigger="save"
-                    attrs="{'invisible': [('current_step', 'in', ('select_move', 'done'))]}"/>
+                    attrs="{'invisible': [('current_step', 'in', ('select_product', 'select_move', 'done'))]}"/>
             <button name="button_cancel_step"
                     type="object"
                     string="Cancel"
                     icon="fa-undo"
                     class="btn-danger"
                     barcode_trigger="save"
-                    attrs="{'invisible': [('current_step', 'in', ('select_move', 'done'))]}"/>
+                    attrs="{'invisible': [('current_step', 'in', ('select_product', 'done'))]}"/>
             <button name="action_reception_screen_close" type="object"
               string="" class="btn-secondary" icon="fa-sign-out"
               aria-label="Exit" title="Exit"/>
@@ -112,16 +112,25 @@
               </div>
               <hr colspan="2"/>
             </group>
-            <group attrs="{'invisible': [('current_step', 'not in', ('select_move', 'done'))]}">
-              <field name="picking_move_lines" nolabel="1" readonly="1">
-                <tree create="0" edit="0" delete="0" decoration-danger="quantity_done &lt; product_uom_qty" decoration-success="quantity_done == product_uom_qty" decoration-info="quantity_done &gt; product_uom_qty">
+            <group attrs="{'invisible': [('current_step', 'not in', ('select_product', 'select_move', 'done'))]}">
+              <field name="current_filter_product"/>
+              <field name="picking_filtered_move_lines" nolabel="1" readonly="1" colspan="2">
+                <tree create="0" edit="0" delete="0"
+                    decoration-danger="quantity_done &lt; product_uom_qty"
+                    decoration-success="quantity_done == product_uom_qty"
+                    decoration-info="quantity_done &gt; product_uom_qty"
+                    default_order="quantity_done">
                   <field name="product_id"/>
-                  <field name="date_expected"/>
                   <field name="product_uom_qty" invisible="1"/>
                   <field name="quantity_done"/>
                   <field name="product_uom"/>
+                  <field name="reception_screen_current_step" invisible="1"/>
+                  <button name="action_select_product" type="object"
+                    string="Select" class="btn-primary" style="padding: 0.2em;"
+                    attrs="{'invisible': [('reception_screen_current_step', '!=', 'select_product')]}"/>
                   <button name="action_select_move" type="object"
-                    string="Select" class="btn-primary" style="padding: 0.2em;"/>
+                    string="Select" class="btn-primary" style="padding: 0.2em;"
+                    attrs="{'invisible': [('reception_screen_current_step', '!=', 'select_move')]}"/>
                   <field name="state" invisible="1"/>
                 </tree>
                 <form>
