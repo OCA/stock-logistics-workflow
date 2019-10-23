@@ -44,7 +44,7 @@
                     class="btn-primary"
                     barcode_trigger="save"
                     attrs="{'invisible': [('current_step', 'in', ('select_product', 'select_move', 'done'))]}"/>
-            <button name="button_cancel_step"
+            <button name="button_reset"
                     type="object"
                     string="Cancel"
                     icon="fa-undo"
@@ -78,18 +78,19 @@
               <hr colspan="2"/>
             </group>
             <group attrs="{'invisible': [('current_move_line_id', '=', False)]}" name="step_in_progress">
-              <label for="current_move_line_lot_name"/>
+              <label for="current_move_line_lot_id"/>
               <div>
-                <field name="current_move_line_lot_name"
+                <field name="current_move_line_lot_id"
                   class="mr8"
                   style="width: 15em;"
-                  attrs="{'readonly': [('current_step', '!=', 'set_lot_number')]}"/>
+                  options="{'no_open': True}"/>
               </div>
               <label for="current_move_line_lot_life_date"/>
               <div>
                 <field name="current_move_line_lot_life_date"
                   class="mr8"
                   style="width: 15em;"
+                  widget="date"
                   attrs="{'readonly': [('current_step', '!=', 'set_expiry_date')]}"/>
               </div>
               <label for="current_move_line_qty_done"/>
@@ -113,7 +114,8 @@
               <hr colspan="2"/>
             </group>
             <group attrs="{'invisible': [('current_step', 'not in', ('select_product', 'select_move', 'done'))]}">
-              <field name="current_filter_product"/>
+              <field name="current_filter_product"
+                attrs="{'invisible': [('current_step', '=', 'done')]}"/>
               <field name="picking_filtered_move_lines" nolabel="1" readonly="1" colspan="2">
                 <tree create="0" edit="0" delete="0"
                     decoration-danger="quantity_done &lt; product_uom_qty"
@@ -130,7 +132,7 @@
                     attrs="{'invisible': [('reception_screen_current_step', '!=', 'select_product')]}"/>
                   <button name="action_select_move" type="object"
                     string="Select" class="btn-primary" style="padding: 0.2em;"
-                    attrs="{'invisible': [('reception_screen_current_step', '!=', 'select_move')]}"/>
+                    attrs="{'invisible': [('reception_screen_current_step', 'not in', ('select_move', 'done'))]}"/>
                   <field name="state" invisible="1"/>
                 </tree>
                 <form>
@@ -138,7 +140,7 @@
                     <field name="move_line_ids" nolabel="1" readonly="1">
                       <tree create="0" edit="0" delete="0" decoration-success="qty_done > 0">
                         <field name="product_id"/>
-                        <field name="lot_name"/>
+                        <field name="lot_id"/>
                         <field name="lot_life_date"/>
                         <field name="qty_done"/>
                         <field name="product_uom_id"/>
@@ -148,7 +150,7 @@
                       <form>
                         <group>
                           <field name="product_id" options="{'no_open': True}"/>
-                          <field name="lot_name"/>
+                          <field name="lot_id" options="{'no_open': True}"/>
                           <field name="lot_life_date"/>
                           <field name="qty_done"/>
                           <field name="product_uom_id" options="{'no_open': True}"/>

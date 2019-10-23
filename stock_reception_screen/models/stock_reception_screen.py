@@ -24,7 +24,7 @@ class StockReceptionScreen(models.Model):
             "next_steps": [
                 {
                     # Only if the product is managed by lots
-                    "before": "_before_step_set_lot_number",
+                    "before": "_before_select_move_to_set_lot_number",
                     "next": "set_lot_number",
                 },
                 {
@@ -97,13 +97,12 @@ class StockReceptionScreen(models.Model):
     # current move line
     current_move_line_id = fields.Many2one(
         comodel_name='stock.move.line', copy=False)
-    current_move_line_lot_name = fields.Char(
-        related="current_move_line_id.lot_name",
+    current_move_line_lot_id = fields.Many2one(
+        related="current_move_line_id.lot_id",
         string="Lot NumBer",
-        readonly=False,
     )
     current_move_line_lot_life_date = fields.Datetime(
-        related="current_move_line_id.lot_life_date",
+        related="current_move_line_id.lot_id.life_date",
         string="End of Life Date",
         readonly=False,
     )
@@ -211,11 +210,9 @@ class StockReceptionScreen(models.Model):
     def next_step(self):
         """Evaluate the next step for the operator."""
         if self.current_step:
-            print("CURRENT STEP", self.current_step)
             steps = self.get_reception_screen_steps()
             step = steps[self.current_step]
             for next_step in step["next_steps"]:
-                print("\tNEXT STEP", next_step)
                 if next_step.get("before"):
                     check = getattr(self, next_step["before"])()
                     if not check:
@@ -255,66 +252,61 @@ class StockReceptionScreen(models.Model):
         # criteria we want to propose the user to choose the right one
         # by filtering them
         if len(move) > 1:
-            # product = move.mapped("product_id")[0]
             self.current_filter_product = barcode
-            # return True
         # Otherwise we select directly the available move
         else:
             self.current_move_id = move
-        # self.current_product_id = move.product_id
         self.process_select_product()
 
-    # def on_barcode_scanned_select_move(self, barcode):
-    #     """Try to find the corresponding move based on the barcode."""
-    #     # First find a product/move corresponding to the barcode
-    #     move = self.picking_id.move_lines.filtered(
-    #         lambda o: o.product_id.barcode == barcode)
-    #     # Then try on the product code
-    #     if not move:
-    #         move = self.picking_id.move_lines.filtered(
-    #             lambda o: o.product_id.default_code == barcode)
-    #     # And on the name
-    #     if not move:
-    #         move = self.picking_id.move_lines.filtered(
-    #             lambda o: barcode in o.product_id.name)
-    #     if not move:
-    #         self.env.user.notify_warning(
-    #             message="",
-    #             title=_("Product '{}' not found.").format(barcode),
-    #         )
-    #         return
-    #     self.current_move_id = move
-    #     self.process_select_move()
+    def _create_remaining_move_line(self, move):
+        """Create one move line with a remaining qty to process equals to the
+        difference between the planned qty and the already processed qty
+        of the move.
+        """
+        remaining_qty = move.product_uom_qty - move.quantity_done
+        vals = move._prepare_move_line_vals(quantity=remaining_qty)
+        return self.env['stock.move.line'].create(vals)
 
     def on_barcode_scanned_set_lot_number(self, barcode):
         """Set the lot number on a move line."""
-        # First check for an existing move line corresponding to the barcode
-        move_lines = self.current_move_id.move_line_ids.filtered(
-            lambda o: o.lot_name == barcode)
-        # Then check for an existing move line without lot name
-        # otherwise create one
-        if not move_lines:
-            move_lines = self.current_move_id.move_line_ids.filtered(
-                lambda o: not o.lot_name)
+        # First, check if the lot already exists
+        lot_model = self.env["stock.production.lot"]
+        lot = lot_model.search([("name", "=", barcode)])
+        if lot:
+            self.env.user.notify_info(
+                message="",
+                title=_("Reuse the existing lot {}.").format(barcode),
+            )
+        else:
+            lot_vals = {
+                "name": barcode,
+                "product_id": self.current_move_id.product_id.id,
+            }
+            lot = lot_model.create(lot_vals)
+        # Check for an existing move line without lot otherwise create one
+        move_lines = self.current_move_id.move_line_ids
         # Finally if there is no corresponding move line we create one
+        # with a remaining qty to process equals to the difference between
+        # the planned qty and the already processed qty.
         if not move_lines:
-            vals = self.current_move_id._prepare_move_line_vals(quantity=0)
-            move_lines = self.env['stock.move.line'].create(vals)
+            move_lines = self._create_remaining_move_line(self.current_move_id)
         self.current_move_line_id = move_lines[0]
-        # Set the lot number
-        self.current_move_line_id.lot_name = barcode
+        # Set the lot
+        self.current_move_line_id.lot_id = lot
         self.process_set_lot_number()
 
     def process_select_product(self):
         self.next_step()
         if self.current_move_id:
             # Go to the next step automatically if only one move has been found
-            self.next_step()
+            self.process_select_move()
 
     def _before_set_quantity_to_select_move(self):
         """Check if there is remaining moves to process for the
         selected product.
         """
+        if not self.current_filter_product:
+            return False
         moves_to_process_ok = any(
             move.quantity_done < move.product_uom_qty
             for move in self.picking_filtered_move_lines)
@@ -337,16 +329,20 @@ class StockReceptionScreen(models.Model):
 
     def process_select_move(self):
         self.next_step()
+        # Select the move line to process for the remaining qty
+        # (creating one if necessary)
+        move_line = self.current_move_id.move_line_ids.filtered(
+            lambda o: not o.qty_done)
+        if not move_line:
+            move_line = self._create_remaining_move_line(self.current_move_id)
+        self.current_move_line_id = move_line[0]
 
-    def _before_step_set_lot_number(self):
+    def _before_select_move_to_set_lot_number(self):
         """Decide if we have to handle lots on the current move."""
-        has_tracking = self.current_move_id.has_tracking != "none"
-        if not has_tracking:
-            self.current_move_line_id = self.current_move_id.move_line_ids[0]
-        return has_tracking
+        return self.current_move_id.has_tracking != "none"
 
     def process_set_lot_number(self):
-        if not self.current_move_line_id.lot_name:
+        if not self.current_move_line_id.lot_id:
             self.env.user.notify_warning(
                 message="",
                 title=_("You have to fill the lot number."),
@@ -356,7 +352,7 @@ class StockReceptionScreen(models.Model):
 
     def process_set_expiry_date(self):
         """Set the lot life date on a move line."""
-        if not self.current_move_line_id.lot_life_date:
+        if not self.current_move_line_id.lot_id.life_date:
             self.env.user.notify_warning(
                 message="",
                 title=_("You have to set an expiry date."),
@@ -388,7 +384,7 @@ class StockReceptionScreen(models.Model):
         method = 'process_{}'.format(self.current_step)
         getattr(self, method)()
 
-    def button_cancel_step(self):
+    def button_reset(self):
         """Reset the current step.
 
         This allows the user to choose another product to process.

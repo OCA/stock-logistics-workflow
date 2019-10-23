@@ -27,14 +27,11 @@ class StockPicking(models.Model):
             screen_model = self.env["stock.reception.screen"]
             self.reception_screen_id = screen_model.create(
                 {"picking_id": self.id})
-        # If we are in a final step
+        # Reset the screen if we are in a final step
         steps = self.reception_screen_id.get_reception_screen_steps()
         current_step = self.reception_screen_id.current_step
         if not steps[current_step].get("next_steps"):
-            # Check if moves have been added manually in the meantime,
-            # and reset the current step if necessary
-            if self.reception_screen_id._before_step_select_move():
-                self.reception_screen_id.current_step = "select_move"
+            self.reception_screen_id.button_reset()
         screen_xmlid = (
             "stock_reception_screen.stock_reception_screen_view_form"
         )
