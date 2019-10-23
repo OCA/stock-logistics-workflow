@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0\n"
+"Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: product_supplierinfo_for_customer_picking
-#: model:ir.model.fields,field_description:product_supplierinfo_for_customer_picking.field_stock_move_product_customer_code
+#: model:ir.model.fields,field_description:product_supplierinfo_for_customer_picking.field_stock_move__product_customer_code
 msgid "Product Customer Code"
 msgstr ""
 
