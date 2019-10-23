@@ -88,12 +88,22 @@ class StockReceptionScreen(models.Model):
     current_filter_product = fields.Char(string="Filter product", copy=False)
     # current move
     current_move_id = fields.Many2one(comodel_name="stock.move", copy=False)
+    current_move_location_dest_id = fields.Many2one(
+        string="Destination",
+        related="current_move_id.location_dest_id",
+    )
+    current_move_location_dest_id2 = fields.Many2one(
+        string="Destination",
+        compute="_compute_current_move_location_dest_id2"
+    )
     current_move_product_display_name = fields.Char(
         related="current_move_id.product_id.display_name", string="Product")
     current_move_product_uom_qty = fields.Float(
         related="current_move_id.product_uom_qty")
     current_move_product_uom_id = fields.Many2one(
         related="current_move_id.product_uom")
+    current_move_product_packaging_ids = fields.One2many(
+        related="current_move_id.product_id.packaging_ids")
     # current move line
     current_move_line_id = fields.Many2one(
         comodel_name='stock.move.line', copy=False)
@@ -145,6 +155,21 @@ class StockReceptionScreen(models.Model):
                 steps = self.get_reception_screen_steps()
                 step_descr = steps[self.current_step]["label"]
                 wiz.current_step_descr = step_descr
+
+    @api.depends("current_move_id.location_dest_id")
+    def _compute_current_move_location_dest_id2(self):
+        for wiz in self:
+            wiz.current_move_location_dest_id2 = False
+            move = wiz.current_move_id
+            rule = self.env["stock.putaway.rule"].search(
+                [
+                    ("product_id", "=", move.product_id.id),
+                    ("location_in_id", "=", move.location_dest_id.id),
+                ],
+                limit=1
+            )
+            if rule:
+                wiz.current_move_location_dest_id2 = rule.location_out_id
 
     @api.depends("current_move_line_id.qty_done")
     def _compute_current_move_line_qty_status(self):
