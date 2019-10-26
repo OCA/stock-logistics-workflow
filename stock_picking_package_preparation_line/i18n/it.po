@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-10 02:42+0000\n"
-"PO-Revision-Date: 2019-02-15 20:26+0000\n"
+"PO-Revision-Date: 2019-10-27 00:33+0000\n"
 "Last-Translator: Sergio Zanchetta <primes2h@gmail.com>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.4\n"
+"X-Generator: Weblate 3.8\n"
 
 #. module: stock_picking_package_preparation_line
 #: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation_line.view_stock_picking_package_preparation_line_setting
@@ -25,12 +25,15 @@ msgid ""
 "<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
 "specific.\" groups=\"base.group_multi_company\"/>"
 msgstr ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"I valori impostati qui sono "
+"specifici per azienda.\" groups=\"base.group_multi_company\"/>"
 
 #. module: stock_picking_package_preparation_line
 #: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:149
 #, python-format
 msgid "Cannot find a default location for picking type: %s"
-msgstr "Impossibile trovare un luogo predefinito per il tipo di prelievo: %s"
+msgstr ""
+"Impossibile trovare una ubicazione predefinita per il tipo di prelievo: %s"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model,name:stock_picking_package_preparation_line.model_res_company
@@ -39,9 +42,8 @@ msgstr "Aziende"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model,name:stock_picking_package_preparation_line.model_res_config_settings
-#, fuzzy
 msgid "Config Settings"
-msgstr "res.config.settings"
+msgstr "Impostazioni configurazione"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__create_uid
@@ -57,7 +59,7 @@ msgstr "Creato il"
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_res_company__default_picking_type_for_package_preparation_id
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_res_config_settings__picking_type_for_package_preparation_id
 msgid "Default Picking Type used in package preparation"
-msgstr "Tipo di prelievo predefinito usato nella preparazione del pacco"
+msgstr "Tipo di prelievo predefinito usato nella preparazione del collo"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__name
@@ -142,12 +144,12 @@ msgstr "Tipo di operazione"
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__package_preparation_id
 #: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation_line.view_stock_picking_package_preparation_line_setting
 msgid "Package Preparation"
-msgstr "Preparazione pacco"
+msgstr "Preparazione collo"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model,name:stock_picking_package_preparation_line.model_stock_picking_package_preparation_line
 msgid "Package Preparation Line"
-msgstr "Riga preparazione pacco"
+msgstr "Riga preparazione collo"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__product_id
@@ -179,5 +181,5 @@ msgstr "UdM"
 #: model:ir.model.fields,help:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__lot_id
 msgid "Used to specify lot when line is created using package preparation"
 msgstr ""
-"Usato per specificare il lotto quando la riga viene creata utilizzando la "
-"preparazione pacco"
+"Usato per specificare il lotto quando la riga viene creata con la "
+"preparazione del collo"
