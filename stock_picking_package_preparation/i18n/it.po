@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-03 03:56+0000\n"
-"PO-Revision-Date: 2019-02-15 20:26+0000\n"
+"PO-Revision-Date: 2019-10-27 00:33+0000\n"
 "Last-Translator: Sergio Zanchetta <primes2h@gmail.com>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.4\n"
+"X-Generator: Weblate 3.8\n"
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__message_needaction
@@ -65,12 +65,12 @@ msgstr "Annullato"
 #: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:146
 #, python-format
 msgid "Cannot cancel a done package preparation."
-msgstr "Impossibile annullare una preparazione pacco già completata."
+msgstr "Impossibile annullare una preparazione del collo già completata."
 
 #. module: stock_picking_package_preparation
 #: model_terms:ir.actions.act_window,help:stock_picking_package_preparation.action_stock_picking_package_preparation
 msgid "Click to prepare a new package preparation."
-msgstr "Fare clic per creare un nuova preparazione pacco."
+msgstr "Fare clic per creare un nuova preparazione del collo."
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__company_id
@@ -149,14 +149,14 @@ msgid ""
 "was moved entirely.  If there is a product and a source package, the product "
 "was taken from the source package."
 msgstr ""
-"Se non è presente alcun prodotto ma è presente un pacco origine, il pacco "
-"origine è stato interamente trasferito.  Se è presente un prodotto e un "
-"pacco origine, il prodotto è stato prelevato dal pacco origine."
+"Se non è presente alcun prodotto ma è presente un collo origine, "
+"quest'ultimo è stato interamente trasferito.  Se è presente un prodotto e un "
+"collo origine, il prodotto è stato prelevato dal collo origine."
 
 #. module: stock_picking_package_preparation
 #: selection:stock.picking.package.preparation,state:0
 msgid "In Pack"
-msgstr "Nel pacco"
+msgstr "Nel collo"
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__message_is_follower
@@ -196,7 +196,7 @@ msgstr "Messaggi"
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__move_line_ids
 msgid "Move Line"
-msgstr ""
+msgstr "Riga di movimento"
 
 #. module: stock_picking_package_preparation
 #: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:175
@@ -239,7 +239,7 @@ msgstr "Numero di messaggi non letti"
 #, python-format
 msgid "Only canceled package preparations can be reset to draft."
 msgstr ""
-"Possono essere reimpostate a bozza solo le preparazioni pacco annullate."
+"Possono essere reimpostate a bozza solo le preparazioni collo annullate."
 
 #. module: stock_picking_package_preparation
 #: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
@@ -249,35 +249,35 @@ msgstr "Operazioni"
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__package_id
 msgid "Pack"
-msgstr "Pacco"
+msgstr "Collo"
 
 #. module: stock_picking_package_preparation
 #: model:ir.model,name:stock_picking_package_preparation.model_stock_picking_package_preparation
 #: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Package Preparation"
-msgstr "Preparazione pacco"
+msgstr "Preparazione collo"
 
 #. module: stock_picking_package_preparation
 #: model:ir.actions.act_window,name:stock_picking_package_preparation.action_stock_picking_package_preparation
 #: model:ir.ui.menu,name:stock_picking_package_preparation.menu_stock_picking_package_preparation
 #: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_tree
 msgid "Package Preparations"
-msgstr "Preparazioni pacco"
+msgstr "Preparazioni collo"
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__name
 msgid "Package Reference"
-msgstr "Riferimento pacco"
+msgstr "Riferimento collo"
 
 #. module: stock_picking_package_preparation
 #: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Package done"
-msgstr "Pacco completato"
+msgstr "Collo completato"
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__packaging_id
 msgid "Packaging"
-msgstr "Confezionamento"
+msgstr "Imballaggio"
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__partner_id
@@ -287,7 +287,7 @@ msgstr "Partner"
 #. module: stock_picking_package_preparation
 #: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Put in pack"
-msgstr "Metti nel pacco"
+msgstr "Crea collo"
 
 #. module: stock_picking_package_preparation
 #: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
@@ -308,7 +308,7 @@ msgstr "Stato"
 #: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:136
 #, python-format
 msgid "The package has not been generated."
-msgstr "Il pacco non è stato generato."
+msgstr "Il collo non è stato creato."
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,help:stock_picking_package_preparation.field_stock_picking_package_preparation__weight
@@ -329,18 +329,17 @@ msgstr "Messaggi non letti"
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__message_unread_counter
 msgid "Unread Messages Counter"
-msgstr "Contatore messaggi non letti"
+msgstr "Numero messaggi non letti"
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__website_message_ids
-#, fuzzy
 msgid "Website Messages"
-msgstr "Messaggi"
+msgstr "Messaggi sito web"
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,help:stock_picking_package_preparation.field_stock_picking_package_preparation__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Cronologia comunicazioni sito web"
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__weight
