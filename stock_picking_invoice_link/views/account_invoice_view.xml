@@ -9,7 +9,7 @@
         <field name="inherit_id" ref="account.invoice_form"/>
         <field name="arch" type="xml">
             <notebook position="inside">
-                <page string="Pickings" name="pickings">
+                <page string="Pickings" name="pickings" attrs="{'invisible': [('picking_ids', '=', [])]}">
                     <field name="picking_ids"/>
                 </page>
             </notebook>

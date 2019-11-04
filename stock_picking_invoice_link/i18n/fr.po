@@ -19,15 +19,25 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: stock_picking_invoice_link
-#: model:ir.model,name:stock_picking_invoice_link.model_account_invoice
 #: model:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
+msgid "<span class=\"o_stat_text\">Invoices</span>"
+msgstr ""
+
+#. module: stock_picking_invoice_link
+#: model:ir.model,name:stock_picking_invoice_link.model_account_invoice
 msgid "Invoice"
 msgstr ""
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_invoice_line
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move_invoice_line_id
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move_invoice_line_ids
 msgid "Invoice Line"
+msgstr ""
+
+#. module: stock_picking_invoice_link
+#: model:ir.ui.view,arch_db:stock_picking_invoice_link.view_move_form
+#: model:ir.ui.view,arch_db:stock_picking_invoice_link.view_move_picking_form
+msgid "Invoice Lines"
 msgstr ""
 
 #. module: stock_picking_invoice_link
@@ -80,6 +90,7 @@ msgid "Transfer"
 msgstr "Transfert"
 
 #. module: stock_picking_invoice_link
-#: model:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
-msgid "View Invoice"
+#: code:addons/stock_picking_invoice_link/models/stock_move.py:34
+#, python-format
+msgid "You can not modify an invoiced stock move"
 msgstr ""
