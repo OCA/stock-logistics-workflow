@@ -75,8 +75,8 @@ class TestStockPickingInvoiceLink(TestSale):
                          'Sale Stock: so invoice_status should be '
                          '"nothing to invoice" after invoicing')
         pick_1 = self.so.picking_ids.filtered(
-            lambda x: x.picking_type_code == 'outgoing'
-            and x.state in ('confirmed', 'assigned', 'partially_available'))
+            lambda x: x.picking_type_code == 'outgoing' and
+            x.state in ('confirmed', 'assigned', 'partially_available'))
         pick_1.force_assign()
         pick_1.move_line_ids.write({'qty_done': 1})
         pick_1.action_done()
@@ -138,7 +138,6 @@ class TestStockPickingInvoiceLink(TestSale):
         result = pick_1.action_view_invoice()
         self.assertEqual(result['views'][0][1], 'tree')
 
-<<<<<<< HEAD
         # get email template
         template = self.env.ref(
             "account.email_template_edi_invoice",
@@ -193,7 +192,7 @@ class TestStockPickingInvoiceLink(TestSale):
             template.attachment_ids.filtered(
                 lambda attachment_id:
                 attachment_id.res_model == 'stock.picking'))
-=======
+
         # Cancel invoice and invoice
         inv_1.action_cancel()
         self.so.action_invoice_create()
@@ -283,4 +282,3 @@ class TestStockPickingInvoiceLink(TestSale):
             lambda l: l.product_id == self.prod_del)
         self.assertEqual(move_line_prod_del,
                          inv_line_refund_prod_del.move_line_ids)
->>>>>>> ac358818ec4a3028c1951802c12ad6e6954e0133
