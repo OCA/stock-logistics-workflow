@@ -11,6 +11,6 @@
     'license': 'AGPL-3',
     'installable': True,
     'depends': [
-        'purchase',
+        'stock_account',
     ],
 }
