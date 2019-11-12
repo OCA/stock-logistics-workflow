@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <record id="view_quant_package_weight_form_inherit" model="ir.ui.view">
-        <field name="name">stock.quant.package.weight.form.inherit</field>
+    <record id="delivery.view_quant_package_weight_form" model="ir.ui.view">
+        <field name="active" eval="False" />
+    </record>
+    <record id="view_quant_package_weight_form_without_packaging" model="ir.ui.view">
+        <field name="name">stock.quant.package.weight.form</field>
         <field name="model">stock.quant.package</field>
-        <field name="inherit_id" ref="delivery.view_quant_package_weight_form"/>
+        <field name="inherit_id" ref="stock_quant_package_product_packaging.view_quant_package_form_inherit"/>
         <field name="arch" type="xml">
-            <field name="packaging_id" position="attributes">
-                <attribute name="invisible">1</attribute>
+            <field name="packaging_id" position="after">
+                <field name="weight"/>
+                <field name="shipping_weight"/>
             </field>
         </field>
     </record>
