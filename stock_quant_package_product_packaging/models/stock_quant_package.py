@@ -23,3 +23,19 @@ class StockQuantPackage(models.Model):
             else:
                 pack.single_product_id = False
                 pack.single_product_qty = 0
+
+    def auto_assign_packaging(self):
+        for pack in self:
+            if (
+                not pack.packaging_id
+                and pack.single_product_id
+                and pack.single_product_qty
+            ):
+                packaging = self.env['product.packaging'].search(
+                    [
+                        ('product_id', '=', pack.single_product_id.id),
+                        ('qty', '=', pack.single_product_qty)
+                    ], limit=1
+                )
+                if packaging:
+                    pack.write({'packaging_id': packaging.id})
