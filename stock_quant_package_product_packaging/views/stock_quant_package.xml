@@ -8,7 +8,8 @@
             <field name="company_id" position="before">
                 <field name="single_product_id" invisible="1" />
                 <field name="single_product_qty" invisible="1" />
-                <field name="packaging_id" domain="['|', ('product_id', '=', False), ('product_id', '=', single_product_id), ('qty', '=', single_product_qty)]"/>
+                <field name="product_packaging_id"
+                       domain="[('product_id', '=', single_product_id), ('qty', '=', single_product_qty)]"/>
             </field>
         </field>
     </record>
