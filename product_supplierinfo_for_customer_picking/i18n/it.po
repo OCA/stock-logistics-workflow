@@ -18,7 +18,7 @@ msgstr ""
 "X-Generator: Poedit 1.6.2\n"
 
 #. module: product_supplierinfo_for_customer_picking
-#: model:ir.model.fields,field_description:product_supplierinfo_for_customer_picking.field_stock_move_product_customer_code
+#: model:ir.model.fields,field_description:product_supplierinfo_for_customer_picking.field_stock_move__product_customer_code
 msgid "Product Customer Code"
 msgstr "Codice Prodotto Cliente"
 
