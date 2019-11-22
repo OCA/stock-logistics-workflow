@@ -4,7 +4,7 @@
 
 {
     'name': 'Stock batch picking',
-    'version': '9.0.1.0.2',
+    'version': '9.0.1.0.3',
     'author': "Camptocamp, Odoo Community Association (OCA)",
     'maintainer': 'Camptocamp',
     'category': 'Inventory',
