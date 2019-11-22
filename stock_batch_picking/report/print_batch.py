@@ -2,7 +2,9 @@
 # © 2016 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+import collections
 import time
+
 from openerp import pooler, api
 from openerp.report import report_sxw
 
@@ -36,7 +38,7 @@ class PrintBatch(report_sxw.rml_parse):
         new_objects = []
         location_obj = self.pool.get('stock.location')
         for batch in objects:
-            pack_operations = {}
+            pack_operations = collections.OrderedDict()
             for op in self.get_sorted_batch_pickings(batch.pack_operation_ids):
                 id1, id2 = op.location_id.id, op.location_dest_id.id
                 key_dict = dict(
