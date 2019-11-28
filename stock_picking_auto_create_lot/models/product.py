@@ -7,5 +7,5 @@ class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
     auto_create_lot = fields.Boolean(
-        string='Auto create lot',
+        string='Auto Create Lot',
     )

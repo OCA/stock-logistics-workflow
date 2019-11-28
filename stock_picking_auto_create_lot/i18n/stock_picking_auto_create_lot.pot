@@ -17,13 +17,9 @@ msgstr ""
 
 #. module: stock_picking_auto_create_lot
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot.field_stock_picking_type__auto_create_lot
-msgid "Auto Create Lot"
-msgstr ""
-
-#. module: stock_picking_auto_create_lot
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot.field_product_product__auto_create_lot
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot.field_product_template__auto_create_lot
-msgid "Auto create lot"
+msgid "Auto Create Lot"
 msgstr ""
 
 #. module: stock_picking_auto_create_lot
