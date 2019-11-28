@@ -4,7 +4,7 @@
     'name': 'Stock Picking Auto Create Lot',
     'summary': 'Auto create lots for incoming pickings',
     'version': '12.0.1.0.0',
-    'development_status': 'Beta',
+    'development_status': 'Production/Stable',
     'category': 'stock',
     'website': 'https://github.com/OCA/stock-logistics-workflow',
     'author': 'Tecnativa, Odoo Community Association (OCA)',
@@ -17,4 +17,5 @@
         'views/product_views.xml',
         'views/stock_picking_type_views.xml',
     ],
+    'maintainers': ['sergio-teruel'],
 }
