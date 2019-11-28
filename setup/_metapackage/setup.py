@@ -16,6 +16,7 @@ setuptools.setup(
         'odoo12-addon-stock_move_line_auto_fill',
         'odoo12-addon-stock_move_quick_lot',
         'odoo12-addon-stock_no_negative',
+        'odoo12-addon-stock_picking_auto_create_lot',
         'odoo12-addon-stock_picking_back2draft',
         'odoo12-addon-stock_picking_backorder_strategy',
         'odoo12-addon-stock_picking_batch_extended',
