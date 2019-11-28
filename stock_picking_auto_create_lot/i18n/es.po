@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_picking_auto_create_lot
+# 	* stock_picking_auto_create_lot
 #
 msgid ""
 msgstr ""
@@ -10,15 +10,16 @@ msgstr ""
 "PO-Revision-Date: 2019-02-25 13:29+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
 #. module: stock_picking_auto_create_lot
-#: model:ir.model.fields,field_description:stock_picking_auto_create_lot.field_stock_picking_type__auto_create_lot
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot.field_product_product__auto_create_lot
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot.field_product_template__auto_create_lot
+#: model:ir.model.fields,field_description:stock_picking_auto_create_lot.field_stock_picking_type__auto_create_lot
 msgid "Auto Create Lot"
 msgstr "Auto crear lote"
 
