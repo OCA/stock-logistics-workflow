@@ -1,5 +1,5 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import api, fields, models, _
+from odoo import _, api, fields, models
 from odoo.addons import decimal_precision as dp
 from odoo.exceptions import UserError
 from odoo.tools.float_utils import float_round, float_compare
@@ -7,6 +7,7 @@ from odoo.tools.float_utils import float_round, float_compare
 
 class StockPickingScrapLine(models.TransientModel):
     _name = "wiz.stock.picking.scrap.line"
+    _description = "Wizard lines for picking whole scrap"
     _rec_name = 'product_id'
 
     product_id = fields.Many2one(
@@ -35,7 +36,7 @@ class StockPickingScrapLine(models.TransientModel):
         required=True,
     )
     uom_id = fields.Many2one(
-        comodel_name='product.uom',
+        comodel_name='uom.uom',
         string='Unit of Measure',
         readonly=True,
     )
@@ -68,7 +69,7 @@ class StockPickingScrap(models.TransientModel):
     @api.model
     def default_get(self, fields):
         if len(self.env.context.get('active_ids', list())) > 1:
-            raise UserError("You may only return one picking at a time!")
+            raise UserError(_("You may only scrap one picking at a time!"))
         res = super().default_get(fields)
         scrap_lines = []
         picking = self.env['stock.picking'].browse(
