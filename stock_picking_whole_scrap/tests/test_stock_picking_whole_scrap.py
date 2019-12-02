@@ -1,12 +1,11 @@
 # Copyright 2018 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo.tests import SavepointCase
+from odoo.tests.common import SavepointCase, tagged
 from odoo.exceptions import UserError
 
 
+@tagged('post_install', '-at_install')
 class TestStockPickingScrapQuick(SavepointCase):
-    at_install = False
-    post_install = True
 
     @classmethod
     def setUpClass(cls):
@@ -20,9 +19,9 @@ class TestStockPickingScrapQuick(SavepointCase):
         })
         cls.product = cls.env['product.product'].create({
             'name': 'test',
-            'type': 'consu',
+            'type': 'product',
         })
-        cls.quant = cls.env['stock.production.lot'].create({
+        cls.quant = cls.env['stock.quant'].create({
             'product_id': cls.product.id,
             'location_id': cls.picking_type_out.default_location_src_id.id,
             'quantity': 50.0,
