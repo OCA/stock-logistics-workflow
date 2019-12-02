@@ -16,7 +16,7 @@
                             <field name="package_id" force_save="1" groups="stock.group_tracking_lot"/>
                             <field name="owner_id" force_save="1" groups="stock.group_tracking_owner"/>
                             <field name="quantity"/>
-                            <field name="uom_id" force_save="1" groups="product.group_uom"/>
+                            <field name="uom_id" force_save="1" groups="uom.group_uom"/>
                         </tree>
                     </field>
                 </group>
