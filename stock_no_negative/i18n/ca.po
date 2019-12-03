@@ -6,13 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2019-12-03 18:04+0000\n"
+"Last-Translator: georginaf <georgina.fornes@qubiq.es>\n"
 "Language-Team: none\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.9.1\n"
 
 #. module: stock_no_negative
 #: code:addons/stock_no_negative/models/stock_quant.py:30
@@ -25,28 +27,35 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_no_negative.field_product_product_allow_negative_stock
 #: model:ir.model.fields,field_description:stock_no_negative.field_product_template_allow_negative_stock
 msgid "Allow Negative Stock"
-msgstr ""
+msgstr "Permetre estoc negatiu"
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_product_category_allow_negative_stock
 msgid "Allow negative stock levels for the stockable products attached to this category. The options doesn't apply to products attached to sub-categories of this category."
 msgstr ""
+"Permetre nivells d'estoc negatius pels productes estocables pertanyents a "
+"aquesta categoria. La opció no aplica als productes pertanyents a categories "
+"filles d'aquesta categoria."
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_product_product_allow_negative_stock
 #: model:ir.model.fields,help:stock_no_negative.field_product_template_allow_negative_stock
 msgid "If this option is not active on this product nor on its product category and that this product is a stockable product, then the validation of the related stock moves will be blocked if the stock level becomes negative with the stock move."
 msgstr ""
+"Si aquesta opció no està activa en aquest producte ni en la seva categoria "
+"de producte i si aquest producte és estocable, aleshores la validació dels "
+"moviments d'estoc es bloquejarà si els nivells d'estoc es converteixen en "
+"negatius amb el moviment d'estoc."
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_product_category
 msgid "Product Category"
-msgstr ""
+msgstr "Categoria de producte"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_product_template
 msgid "Product Template"
-msgstr ""
+msgstr "Plantilla de producte"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_stock_quant
