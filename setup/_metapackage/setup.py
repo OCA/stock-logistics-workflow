@@ -35,6 +35,7 @@ setuptools.setup(
         'odoo12-addon-stock_picking_send_by_mail',
         'odoo12-addon-stock_picking_show_backorder',
         'odoo12-addon-stock_picking_show_return',
+        'odoo12-addon-stock_picking_whole_scrap',
         'odoo12-addon-stock_split_picking',
     ],
     classifiers=[
