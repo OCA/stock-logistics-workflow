@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_quant_package_form_inherit" model="ir.ui.view">
+        <field name="name">stock.quant.package.form.inherit</field>
+        <field name="model">stock.quant.package</field>
+        <field name="inherit_id" ref="stock.view_quant_package_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[field[@name='company_id']]" position="after">
+                <group name="dimensions" string="Dimensions">
+                    <field name="length" />
+                    <field name="width" />
+                    <field name="height" />
+                    <field name="weight" />
+                    <field name="volume" />
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
