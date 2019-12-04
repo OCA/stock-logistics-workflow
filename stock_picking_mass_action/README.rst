@@ -31,7 +31,6 @@ Facilities to check the availability of stock picking list:
 
   * Confirm draft picking;
   * check availability of picking;
-  * force availability of picking;
   * transfer picking;
 
 * A scheduled action to check availability of all the stock picking.
