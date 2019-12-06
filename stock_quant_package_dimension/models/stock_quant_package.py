@@ -49,7 +49,7 @@ class StockQuantPackage(models.Model):
         #  is happening: https://github.com/odoo/odoo/issues/41353
         if self.product_packaging_id:
             vals = self.product_packaging_id.read(
-                fields=['length', 'width', 'height', 'weight']
+                fields=['length', 'width', 'height', 'max_weight']
             )[0]
             vals['weight'] = vals['max_weight']
             vals.pop('id')
