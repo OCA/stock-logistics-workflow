@@ -46,10 +46,12 @@ class StockQuantPackage(models.Model):
     def onchange_product_packaging_id(self):
         # FIXME somehow the values returned by this onchange are not handled
         #  correctly in basic_model.js on _.each at line 1594 where an overflow
-        #  is happening
+        #  is happening: https://github.com/odoo/odoo/issues/41353
         if self.product_packaging_id:
             vals = self.product_packaging_id.read(
                 fields=['length', 'width', 'height', 'weight']
             )[0]
+            vals['weight'] = vals['max_weight']
             vals.pop('id')
+            vals.pop('max_weight')
             self.update(vals)
