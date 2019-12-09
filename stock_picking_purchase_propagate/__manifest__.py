@@ -3,7 +3,7 @@
 {
     "name": "Stock Picking Purchase Propagate",
     "summary": "Propagate procurement group and quantity from purchase order",
-    "version": "11.0.1.0.0",
+    "version": "12.0.1.0.0",
     "category": "Warehouse",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Camptocamp, Odoo Community Association (OCA)",
