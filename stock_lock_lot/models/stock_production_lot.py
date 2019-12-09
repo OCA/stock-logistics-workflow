@@ -1,21 +1,14 @@
-# © 2015 Serv. Tec. Avanzados - Pedro M. Baeza (http://www.serviciosbaeza.com)
-# © 2015 AvanzOsc (http://www.avanzosc.es)
+# Copyright 2015 Serv. Tec. Avanzados - Pedro M. Baeza (http://www.serviciosbaeza.com)
+# Copyright 2015 AvanzOsc (http://www.avanzosc.es)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import _, api, exceptions, fields, models
+from odoo import _, api, exceptions, fields, models
 
 
 class StockProductionLot(models.Model):
     _name = "stock.production.lot"
     _inherit = ["stock.production.lot", "mail.thread"]
-
     _mail_post_access = "read"
-    _track = {
-        "locked": {
-            "stock_lock_lot.mt_lock_lot": lambda self, cr, uid, obj, ctx=None: obj.locked,
-            "stock_lock_lot.mt_unlock_lot": lambda self, cr, uid, obj, ctx=None: not obj.locked,
-        }
-    }
 
     def _get_product_locked(self, product):
         """Should create locked? (including categories and parents)
@@ -23,61 +16,46 @@ class StockProductionLot(models.Model):
         @param product: browse-record for product.product
         @return True when the category of the product or one of the parents
                 demand new lots to be locked"""
-        return self._get_lock_reason(product) != "none"
-
-    def _get_lock_reason(self, product):
-        """Reason to create locked
-
-        @param product: browse-record for product.product"""
         _locked = product.categ_id.lot_default_locked
         categ = product.categ_id.parent_id
         while categ and not _locked:
             _locked = categ.lot_default_locked
             categ = categ.parent_id
-        return _locked and "category" or "none"
+        return _locked
 
-    @api.one
     def _get_locked_value(self):
         return self._get_product_locked(self.product_id)
 
     locked = fields.Boolean(
-        string="Blocked", default=lambda x: x._get_locked_value(), readonly=True
-    )
-    lock_reason = fields.Selection(
-        selection=[("category", "Demanded by product category"), ("none", "None")],
-        string="Reason to block the lot",
-        track_visibility="onchange",
+        string="Blocked", default=lambda x: x._get_locked_value(), tracking=True
     )
     product_id = fields.Many2one(track_visibility="onchange")
 
-    @api.one
     @api.onchange("product_id")
     def onchange_product_id(self):
         """Instruct the client to lock/unlock a lot on product change"""
         self.locked = self._get_product_locked(self.product_id)
 
-    @api.multi
-    def button_lock(self):
-        """"Block the lot
-
-        If the lot has reservations, they will be undone to lock the lot."""
+    @api.constrains("locked")
+    def _check_lock_unlock(self):
         if not self.user_has_groups("stock_lock_lot.group_lock_lot"):
             raise exceptions.AccessError(
-                _("You are not allowed to block Serial Numbers/Lots")
+                _("You are not allowed to block/unblock Serial Numbers/Lots")
             )
         reserved_quants = self.env["stock.quant"].search(
             [
-                ("lot_id", "in", self.ids),
-                ("reservation_id", "!=", False),
-                ("reservation_id.state", "not in", ("cancel", "done")),
-                ("reservation_id.location_dest_id.allow_locked", "=", False),
+                ("lot_id", "in", self.filtered("locked").ids),
+                ("reserved_quantity", "!=", 0.0),
             ]
         )
-        reserved_quants.mapped("reservation_id").do_unreserve()
-        # Block the lot
-        return self.write({"locked": True})
+        if reserved_quants:
+            raise exceptions.ValidationError(
+                _(
+                    "You are not allowed to block/unblock, there are"
+                    " reserved quantities for these Serial Numbers/Lots"
+                )
+            )
 
-    @api.multi
     def button_unlock(self):
         """"Lock the lot if the permissions allow it"""
         if not self.user_has_groups("stock_lock_lot.group_lock_lot"):
@@ -99,14 +77,19 @@ class StockProductionLot(models.Model):
             )
         )
         vals["locked"] = self._get_product_locked(product)
-        vals["lock_reason"] = self._get_lock_reason(product)
         return super(StockProductionLot, self).create(vals)
 
-    @api.multi
     def write(self, values):
         """"Lock the lot if changing the product and locking is required"""
         if "product_id" in values:
             product = self.env["product.product"].browse(values["product_id"])
             values["locked"] = self._get_product_locked(product)
-            values["lock_reason"] = self._get_lock_reason(product)
         return super(StockProductionLot, self).write(values)
+
+    def _track_subtype(self, init_values):
+        self.ensure_one()
+        if "locked" in init_values:
+            if self.locked:
+                return self.env.ref("stock_lock_lot.mt_lock_lot")
+            return self.env.ref("stock_lock_lot.mt_unlock_lot")
+        return super()._track_subtype(init_values)
