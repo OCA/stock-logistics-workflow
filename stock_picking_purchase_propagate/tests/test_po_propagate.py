@@ -221,9 +221,9 @@ class TestPoPropagate(SavepointCase):
         wh_wh2_route = self.env['stock.location.route'].create({
             'name': 'WH > WH2',
             'product_selectable': True,
-            'pull_ids': [(0, 0, {
+            'rule_ids': [(0, 0, {
                 'name': 'WH>WH2',
-                'action': 'move',
+                'action': 'pull',
                 'location_id': wh2.lot_stock_id.id,
                 'location_src_id': self.stock_loc.id,
                 'procure_method': 'make_to_order',
