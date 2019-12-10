@@ -10,7 +10,6 @@ class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     batch_id = fields.Many2one(
-        old_name='batch_picking_id',
         string='Batch',
         domain="[('state', '=', 'draft')]",
     )
