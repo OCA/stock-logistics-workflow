@@ -38,7 +38,7 @@ class StockPicking(models.Model):
             # reassign quants done
             for move in picking.move_lines:
                 move._check_restrictions()
-                move.quant_ids._revert()
+                move.quant_ids._revert(move)
 
             picking.group_id.procurement_ids.reset_to_confirmed()
             sale_lines = picking.group_id.procurement_ids.mapped(
