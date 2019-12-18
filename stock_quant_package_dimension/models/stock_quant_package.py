@@ -7,7 +7,8 @@ class StockQuantPackage(models.Model):
     _inherit = 'stock.quant.package'
 
     weight = fields.Float('Weight (kg)')
-    length = fields.Integer('Length (mm)', help='length in millimeters')
+    # length cannot be used in onchange: https://github.com/odoo/odoo/issues/41353
+    length_alt = fields.Integer('Length (mm)', help='length in millimeters')
     width = fields.Integer('Width (mm)', help='width in millimeters')
     height = fields.Integer('Height (mm)', help='height in millimeters')
     volume = fields.Float(
@@ -19,11 +20,11 @@ class StockQuantPackage(models.Model):
         help='volume in cubic meters',
     )
 
-    @api.depends('length', 'width', 'height')
+    @api.depends('length_alt', 'width', 'height')
     def _compute_volume(self):
         for pack in self:
             pack.volume = (
-                pack.length * pack.width * pack.height
+                pack.length_alt * pack.width * pack.height
             ) / 1000.0 ** 3
 
     def auto_assign_packaging(self):
@@ -44,12 +45,9 @@ class StockQuantPackage(models.Model):
 
     @api.onchange('product_packaging_id')
     def onchange_product_packaging_id(self):
-        # FIXME somehow the values returned by this onchange are not handled
-        #  correctly in basic_model.js on _.each at line 1594 where an overflow
-        #  is happening: https://github.com/odoo/odoo/issues/41353
         if self.product_packaging_id:
             vals = self.product_packaging_id.read(
-                fields=['length', 'width', 'height', 'max_weight']
+                fields=['length_alt', 'width', 'height', 'max_weight']
             )[0]
             vals['weight'] = vals['max_weight']
             vals.pop('id')
