@@ -34,19 +34,23 @@ class ReportPrintBatchPicking(models.AbstractModel):
         }
 
     @api.model
+    def _get_operation_qty(self, operation):
+        return float_is_zero(
+            operation.product_qty,
+            precision_rounding=operation.product_uom_id.rounding
+        ) and operation.qty_done or operation.product_qty
+
+    @api.model
     def new_level_1(self, operation):
         return {
             'product': operation.product_id,
-            'product_qty': not float_is_zero(operation.product_qty)
-            or operation.qty_done,
+            'product_qty': self._get_operation_qty(operation),
             'operations': operation,
         }
 
     @api.model
     def update_level_1(self, group_dict, operation):
-        group_dict['product_qty'] += (
-            not float_is_zero(operation.product_qty) or operation.qty_done
-        )
+        group_dict['product_qty'] += self._get_operation_qty(operation)
         group_dict['operations'] += operation
 
     @api.model
