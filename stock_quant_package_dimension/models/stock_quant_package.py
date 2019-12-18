@@ -47,7 +47,7 @@ class StockQuantPackage(models.Model):
     def onchange_product_packaging_id(self):
         if self.product_packaging_id:
             vals = self.product_packaging_id.read(
-                fields=['length_alt', 'width', 'height', 'max_weight']
+                fields=['length', 'width', 'height', 'max_weight']
             )[0]
             vals['weight'] = vals['max_weight']
             vals.pop('id')
