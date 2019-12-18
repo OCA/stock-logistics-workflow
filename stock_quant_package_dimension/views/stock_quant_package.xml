@@ -10,7 +10,7 @@
                     <field name="length_alt" />
                     <field name="width" />
                     <field name="height" />
-                    <field name="weight" />
+                    <field name="pack_weight" />
                     <field name="volume" />
                 </group>
             </xpath>

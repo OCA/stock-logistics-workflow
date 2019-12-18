@@ -6,7 +6,7 @@ from odoo import api, fields, models
 class StockQuantPackage(models.Model):
     _inherit = 'stock.quant.package'
 
-    weight = fields.Float('Weight (kg)')
+    pack_weight = fields.Float('Weight (kg)')
     # length cannot be used in onchange: https://github.com/odoo/odoo/issues/41353
     length_alt = fields.Integer('Length (mm)', help='length in millimeters')
     width = fields.Integer('Width (mm)', help='width in millimeters')
@@ -49,7 +49,7 @@ class StockQuantPackage(models.Model):
             vals = self.product_packaging_id.read(
                 fields=['length', 'width', 'height', 'max_weight']
             )[0]
-            vals['weight'] = vals['max_weight']
+            vals['pack_weight'] = vals['max_weight']
             vals.pop('id')
             vals.pop('max_weight')
             self.update(vals)
