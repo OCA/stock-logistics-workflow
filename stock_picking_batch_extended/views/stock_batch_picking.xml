@@ -36,8 +36,8 @@
                         <button name="action_view_stock_picking"
                                 class="oe_stat_button"
                                 icon="fa-truck"
-                                string="Pickings"
                                 type="object">
+                            <field string="Pickings" name="picking_count" widget="statinfo"/>
                         </button>
                     </div>
                     <div class="oe_title">
@@ -171,9 +171,6 @@
         <field name="res_model">stock.picking.batch</field>
         <field name="view_mode">tree,form</field>
          <field name="view_id" ref="stock_batch_picking_tree"/>
-            <field name="view_ids" eval="[
-                (0, 0, {'view_mode': 'tree', 'view_id': ref('stock_batch_picking_tree')}),
-                (0, 0, {'view_mode': 'form', 'view_id': ref('stock_batch_picking_form')})]"/>
             <field name="search_view_id" ref="stock_batch_picking_search"/>
     </record>
 
