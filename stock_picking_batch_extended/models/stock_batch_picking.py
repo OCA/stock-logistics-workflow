@@ -105,6 +105,11 @@ class StockBatchPicking(models.Model):
              'detailed operations',
     )
 
+    picking_count = fields.Integer(
+        string='# Pickings',
+        compute='_compute_picking_count',
+    )
+
     @api.depends('picking_ids')
     def _compute_move_lines(self):
         for batch in self:
@@ -129,6 +134,17 @@ class StockBatchPicking(models.Model):
                     'entire_package_detail_ids': batch.picking_ids.mapped(
                         'entire_package_detail_ids'),
                 })
+
+    def _compute_picking_count(self):
+        """Calculate number of pickings."""
+        groups = self.env['stock.picking'].read_group(
+            domain=[('batch_id', 'in', self.ids)],
+            fields=['batch_id'],
+            groupby=['batch_id'],
+        )
+        counts = {g['batch_id'][0]: g['batch_id_count'] for g in groups}
+        for batch in self:
+            batch.picking_count = counts.get(batch.id, 0)
 
     def get_not_empties(self):
         """ Return all batches in this recordset
