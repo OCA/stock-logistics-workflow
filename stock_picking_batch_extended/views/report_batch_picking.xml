@@ -12,11 +12,11 @@
             <t t-call="web.external_layout">
                 <div class="page">
                     <div class="row mt32 mb32">
-                        <div class="col-xs-3">
+                        <div class="col-3">
                             <strong>Date:</strong>
                             <span t-esc="now()" t-options="{'widget': 'datetime'}"/>
                         </div>
-                        <div class="col-xs-3">
+                        <div class="col-3">
                             <strong>Printed by:</strong>
                             <span t-field="user.name"/>
                         </div>
@@ -25,19 +25,23 @@
                         <table class="table table-condensed">
                             <thead>
                                 <tr>
-                                    <th>Pickings Order</th>
-                                    <th></th>
-                                    <th>Picked By</th>
+                                    <th name="th_name">Pickings Order</th>
+                                    <th name="th_visa"></th>
+                                    <th name="th_picker">Picked By</th>
+                                    <th name="th_count" class="text-center"># Pickings</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>
+                                    <td name="td_name">
                                         <span t-esc="doc.name"/>
                                     </td>
-                                    <td>Visa:_________________</td>
-                                    <td>
+                                    <td name="td_visa">Visa:_________________</td>
+                                    <td name="td_picker">
                                         <span t-esc="doc.user_id.name"/>
+                                    </td>
+                                    <td name="td_count" class="text-center">
+                                        <span t-esc="doc.picking_count"/>
                                     </td>
                                 </tr>
                             </tbody>
