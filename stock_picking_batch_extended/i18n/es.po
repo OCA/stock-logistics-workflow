@@ -53,8 +53,11 @@ msgstr "Añadir a una nueva agrupación"
 #. module: stock_picking_batch_extended
 #: code:addons/stock_picking_batch_extended/wizard/batch_picking_creator.py:96
 #, python-format
-msgid "All selected pickings are already in a batch picking or are in a wrong state."
-msgstr "Todos los albaranes seleccionados están ya en un grupo de albaranes o en un estado incorrecto."
+msgid ""
+"All selected pickings are already in a batch picking or are in a wrong state."
+msgstr ""
+"Todos los albaranes seleccionados están ya en un grupo de albaranes o en un "
+"estado incorrecto."
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.res_config_settings_view_form
@@ -264,7 +267,9 @@ msgstr "ID (identificación)"
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch_creator__group_field_ids
 msgid "If set any, multiple batch picking will be created, one per group field"
-msgstr "Si establece cualquiera, se crearán múltiples agrupaciones de albaranes, una por campo de agrupación"
+msgstr ""
+"Si establece cualquiera, se crearán múltiples agrupaciones de albaranes, una "
+"por campo de agrupación"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
@@ -314,7 +319,7 @@ msgid "Notes"
 msgstr "Notas"
 
 #. module: stock_picking_batch_extended
-#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:234
+#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:239
 #, python-format
 msgid "Nothing to print."
 msgstr "Nada que imprimir."
@@ -434,7 +439,8 @@ msgstr "Movimientos de albarán"
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.res_config_settings_view_form
 msgid "Switch behaviour bettwen Odoo and OCA for batch validation"
-msgstr "Cambiar comportamiento entre Odoo y OCA para validar agrupación de albaranes"
+msgstr ""
+"Cambiar comportamiento entre Odoo y OCA para validar agrupación de albaranes"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch_creator__user_id
@@ -442,13 +448,13 @@ msgid "The user to which the pickings are assigned"
 msgstr "El usuario al que los albaranes están asignados"
 
 #. module: stock_picking_batch_extended
-#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:154
+#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:159
 #, python-format
 msgid "These Batches have no pickings"
 msgstr "Estos grupos no tienen albaranes"
 
 #. module: stock_picking_batch_extended
-#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:152
+#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:157
 #, python-format
 msgid "This Batch has no pickings"
 msgstr "Este grupo no tiene albaranes"
@@ -460,13 +466,20 @@ msgstr "Esta nota aparecerá en la impresión de la agrupación de albaranes"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__entire_package_detail_ids
-msgid "Those are the entire packages of a picking shown in the view of detailed operations"
-msgstr "Estos son los paquetes completos de un albarán mostrados en la vista de operaciones detalladas"
+msgid ""
+"Those are the entire packages of a picking shown in the view of detailed "
+"operations"
+msgstr ""
+"Estos son los paquetes completos de un albarán mostrados en la vista de "
+"operaciones detalladas"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__entire_package_ids
-msgid "Those are the entire packages of a picking shown in the view of operations"
-msgstr "Estos son los paquetes completos de un albarán mostrados en la vista de operaciones"
+msgid ""
+"Those are the entire packages of a picking shown in the view of operations"
+msgstr ""
+"Estos son los paquetes completos de un albarán mostrados en la vista de "
+"operaciones"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model,name:stock_picking_batch_extended.model_stock_picking
@@ -532,8 +545,12 @@ msgstr "libre de observaciones"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__state
-msgid "the state of the batch picking. Workflow is draft -> in_progress/assigned -> done or cancel"
-msgstr "el estado del grupo de albaranes. El flujo es borrador -> asignado -> realizado o cancelado"
+msgid ""
+"the state of the batch picking. Workflow is draft -> in_progress/assigned -> "
+"done or cancel"
+msgstr ""
+"el estado del grupo de albaranes. El flujo es borrador -> asignado -> "
+"realizado o cancelado"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_warehouse__default_user_id
