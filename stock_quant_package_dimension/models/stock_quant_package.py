@@ -49,7 +49,9 @@ class StockQuantPackage(models.Model):
             vals = self.product_packaging_id.read(
                 fields=['length', 'width', 'height', 'max_weight']
             )[0]
+            vals['length_alt'] = vals['length']
             vals['pack_weight'] = vals['max_weight']
             vals.pop('id')
+            vals.pop('length')
             vals.pop('max_weight')
             self.update(vals)
