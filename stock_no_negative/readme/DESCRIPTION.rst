@@ -12,4 +12,3 @@ when trying to validate a stock operation that will set the stock level of
 a product and/or location as negative. So you will have to fix the
 wrong stock level of that product without delay, in order to validate the
 stock operation in Odoo...you can't forget it anymore !
-
