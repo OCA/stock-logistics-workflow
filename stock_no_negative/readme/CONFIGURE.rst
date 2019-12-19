@@ -19,4 +19,3 @@ For individual locations:
 #. Go to *Inventory / Configuration / Warehouse Management / Locations* and
    activate the option the option *Allow Negative Stock* for the locations you
    choose.
-
