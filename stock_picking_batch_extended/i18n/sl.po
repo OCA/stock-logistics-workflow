@@ -20,6 +20,12 @@ msgstr ""
 "%100==4 ? 2 : 3);\n"
 
 #. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__picking_count
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
+msgid "# Pickings"
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
 msgid "<strong>Date:</strong>"
 msgstr ""
@@ -311,7 +317,7 @@ msgid "Notes"
 msgstr ""
 
 #. module: stock_picking_batch_extended
-#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:223
+#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:239
 #, python-format
 msgid "Nothing to print."
 msgstr ""
@@ -439,13 +445,13 @@ msgid "The user to which the pickings are assigned"
 msgstr ""
 
 #. module: stock_picking_batch_extended
-#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:143
+#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:159
 #, python-format
 msgid "These Batches have no pickings"
 msgstr ""
 
 #. module: stock_picking_batch_extended
-#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:141
+#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:157
 #, python-format
 msgid "This Batch has no pickings"
 msgstr ""
