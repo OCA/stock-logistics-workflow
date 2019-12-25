@@ -1,4 +1,4 @@
 To configure this module, you need to:
 
-#. Go to a *Inventory > Settings > Operation Types*.
+#. Go to a *Inventory > Configuration > Operation Types*.
 #. Set 'auto create lot' option for this operation type.
