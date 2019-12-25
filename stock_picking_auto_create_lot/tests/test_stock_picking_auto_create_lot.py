@@ -10,9 +10,7 @@ class TestStockPickingAutoCreateLot(SavepointCase):
         cls.warehouse = cls.env.ref("stock.warehouse0")
         cls.picking_type_in = cls.env.ref("stock.picking_type_in")
         cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
-        cls.supplier = cls.env["res.partner"].create(
-            {"name": "Supplier - test", "supplier": True}
-        )
+        cls.supplier = cls.env["res.partner"].create({"name": "Supplier - test"})
         cls.product = cls.env["product.product"].create(
             {
                 "name": "test",
