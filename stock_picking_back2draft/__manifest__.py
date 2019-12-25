@@ -3,18 +3,14 @@
 {
     "name": "Pickings back to draft",
     "summary": "Reopen cancelled pickings",
-    "version": "12.0.1.0.0",
+    "version": "13.0.1.0.0",
     "category": "Warehouse Management",
     "website": "https://www.agilebg.com",
     "author": "Agile Business Group, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "depends": [
-        "stock",
-    ],
-    "data": [
-        'views/picking_view.xml',
-    ],
-    'images': ['images/picking.png'],
+    "depends": ["stock"],
+    "data": ["views/picking_view.xml"],
+    "images": ["images/picking.png"],
 }
