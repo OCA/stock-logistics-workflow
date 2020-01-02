@@ -43,7 +43,5 @@ class StockMoveLine(models.Model):
     lot_use_date_name = fields.Datetime(string='Best before Date')
 
     def _action_done(self):
-        self = self.with_context(
-            copy_date_name_to_lot=True, copy_date_name_to_lot_mls=self.ids
-        )
+        self = self.with_context(copy_date_name_to_lot_mls=self.ids)
         return super()._action_done()

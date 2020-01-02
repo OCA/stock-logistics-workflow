@@ -1,25 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <record model="ir.ui.view" id="view_picking_type_form_inherit">
-        <field name="name">Operation Types Inherit</field>
-        <field name="model">stock.picking.type</field>
-        <field name="inherit_id" ref="stock.view_picking_type_form" />
-        <field name="arch" type="xml">
-            <field name="use_create_lots" position="after">
-                <field name="use_create_lots_with_use_date" attrs="{'invisible': [('use_create_lots', '=', False)]}" />
-            </field>
-        </field>
-    </record>
-
     <record id="view_picking_form_inherit" model="ir.ui.view">
         <field name="name">stock.picking.form.inherit</field>
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.view_picking_form" />
         <field name="arch" type="xml">
-            <field name="lot_name" position="after">
-                <field name="show_lots_use_date_text" invisible="1"/>
-                <field name="lot_name" groups="stock.group_production_lot" attrs="{'column_invisible': [('show_lots_use_date_text', '=', False)], 'invisible': [('lots_visible', '=', False)]}" context="{'default_product_id': product_id}"/>
+            <field name="show_lots_text" position="after">
+                <field name="has_use_date_text" invisible="1" />
             </field>
+            <xpath expr="//field[@name='move_line_ids_without_package']//field[@name='lot_name']" position="after">
+                <field name="lot_use_date_name" groups="stock.group_production_lot" attrs="{'column_invisible': [('parent.has_use_date_text', '=', False)], 'invisible': [('lots_visible', '=', False)]}" context="{'default_product_id': product_id}"/>
+            </xpath>
         </field>
     </record>
 </odoo>

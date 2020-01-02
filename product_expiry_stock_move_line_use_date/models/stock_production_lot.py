@@ -9,10 +9,16 @@ class StockProductionLot(models.Model):
 
     @api.model
     def create(self, vals):
-        if self.env.context.get('copy_date_name_to_lot'):
+        # copy_date_name_to_lot_mls is set by stock.move.line._action_done
+        # which is calling create in order to find the right move line whose
+        # stock.production.lot is being created, as no clean extension hook
+        # is available in Odoo
+        move_line_ids = self.env.context.get('copy_date_name_to_lot_mls')
+        if move_line_ids:
             move_line = self.env['stock.move.line'].search(
                 [
-                    ('id', 'in', self.env.context.get('copy_date_name_to_lot_mls')),
+                    ('id', 'in', move_line_ids),
+                    ('product_id', '=', vals.get('product_id')),
                     ('lot_name', '=', vals.get('name'))
                 ]
             )

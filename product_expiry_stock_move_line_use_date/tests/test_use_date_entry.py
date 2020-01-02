@@ -48,7 +48,9 @@ class TestUseDateEntry(SavepointCase):
         cable_box_move = self._create_stock_move(
             picking, self.product_cable_box, 10.0
         )
+        self.assertFalse(picking.has_use_date_text)
         picking.action_confirm()
+        self.assertTrue(picking.has_use_date_text)
         self.assertEqual(picking.state, 'assigned')
         self.assertTrue(quince_jam_move.show_lots_use_date_text)
         self.assertFalse(cable_box_move.show_lots_use_date_text)
