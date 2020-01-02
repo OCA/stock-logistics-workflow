@@ -170,8 +170,12 @@
         <field name="name">Batch Picking</field>
         <field name="res_model">stock.picking.batch</field>
         <field name="view_mode">tree,form</field>
-         <field name="view_id" ref="stock_batch_picking_tree"/>
-            <field name="search_view_id" ref="stock_batch_picking_search"/>
+        <field name="view_id" ref="stock_batch_picking_tree"/>
+        <field name="view_ids" eval="[
+            (5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('stock_batch_picking_tree')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('stock_batch_picking_form')})]"/>
+        <field name="search_view_id" ref="stock_batch_picking_search"/>
     </record>
 
     <!-- stock.picking.batch menuitem in Inventory main menu -->
