@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_move_line_form_inherit" model="ir.ui.view">
+        <field name="name">stock.move.line.form.inherit</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_move_line_form" />
+        <field name="arch" type="xml">
+            <field name="lot_name" position="after">
+                <field name="show_lots_use_date_text" invisible="1" />
+                <field name="lot_use_date_name" groups="stock.group_production_lot" attrs="{'invisible': ['|',('lot_id', '!=', False),('show_lots_use_date_text', '=', False)]}" />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_stock_move_line_kanban_inherit" model="ir.ui.view">
+        <field name="name">stock.move.line.kanban.inherit</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_stock_move_line_kanban" />
+        <field name="arch" type="xml">
+            <field name="lot_name" position="after">
+                <field name="lot_use_date_name" invisible="not context.get('show_lots_date_use')" groups="stock.group_production_lot" />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_stock_move_line_operation_tree_inherit" model="ir.ui.view">
+        <field name="name">stock.move.line.operations.tree.inherit</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_stock_move_line_operation_tree" />
+        <field name="arch" type="xml">
+            <field name="lot_name" position="after">
+                <field name="lot_use_date_name" attrs="{'readonly': ['&amp;', ('package_level_id', '!=', False), ('parent.picking_type_entire_packs', '=', True)]}" invisible="not context.get('show_lots_date_use')" groups="stock.group_production_lot"/>
+            </field>
+        </field>
+    </record>
+</odoo>

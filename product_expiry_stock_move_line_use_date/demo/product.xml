@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="product_quince_jam" model="product.product">
+        <field name="default_code">QUINCE-JAM</field>
+        <field name="name">Quince jam jar</field>
+        <field name="type">product</field>
+        <field name="categ_id" ref="product.product_category_5"/>
+        <field name="lst_price">1.0</field>
+        <field name="standard_price">0.7</field>
+        <field name="tracking">lot</field>
+        <field name="display_use_date_at_lot_creation" eval="True" />
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+</odoo>

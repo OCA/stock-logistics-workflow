@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_product_form_expiry_inherit" model="ir.ui.view">
+        <field name="name">product.template.inherit.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product_expiry.view_product_form_expiry" />
+        <field name="arch" type="xml">
+            <xpath expr="//label[@for='use_time']" position="before">
+                <field name="display_use_date_at_lot_creation" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
