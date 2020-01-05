@@ -102,7 +102,7 @@ class StockBatchPickingCreator(models.TransientModel):
         )
 
     def create_simple_batch(self, domain):
-        """ Create one batch picking with all pickings """
+        """Create one batch picking with all pickings"""
         pickings = self.env["stock.picking"].search(domain)
         if not pickings:
             raise UserError(self._raise_message_error())
@@ -113,7 +113,7 @@ class StockBatchPickingCreator(models.TransientModel):
         return batch
 
     def create_multiple_batch(self, domain):
-        """ Create n batch pickings by grouped fields selected """
+        """Create n batch pickings by grouped fields selected"""
         StockPicking = self.env["stock.picking"]
         groupby = [f.field_id.name for f in self.group_field_ids]
         pickings_grouped = StockPicking.read_group(domain, groupby, groupby)
@@ -162,7 +162,7 @@ class StockBatchPickingCreator(models.TransientModel):
 
 
 class StockBatchPickingCreatorGroupField(models.TransientModel):
-    """ Make mass batch pickings from grouped fields """
+    """Make mass batch pickings from grouped fields"""
 
     _name = "stock.picking.batch.creator.group.field"
     _description = "Batch Picking Creator Group Field"
