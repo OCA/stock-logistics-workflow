@@ -16,7 +16,5 @@
         "product_packaging_dimension",
         "stock_quant_package_product_packaging",
     ],
-    "data": [
-        "views/stock_quant_package.xml",
-    ],
+    "data": ["views/stock_quant_package.xml"],
 }
