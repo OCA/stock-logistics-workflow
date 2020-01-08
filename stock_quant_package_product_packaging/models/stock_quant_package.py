@@ -14,25 +14,25 @@ class StockQuantPackage(models.Model):
     #   using a GTIN) used for the internal logistics/reception. It
     #   has a product_id
     product_packaging_id = fields.Many2one(
-        'product.packaging',
-        'Product Packaging',
+        "product.packaging",
+        "Product Packaging",
         index=True,
         help="Packaging of the product, used for internal logistics"
-        "transfers, put-away rules, ..."
+        "transfers, put-away rules, ...",
     )
     single_product_id = fields.Many2one(
-        'product.product', compute='_compute_single_product'
+        "product.product", compute="_compute_single_product"
     )
-    single_product_qty = fields.Float(compute='_compute_single_product')
+    single_product_qty = fields.Float(compute="_compute_single_product")
 
-    @api.depends('quant_ids', 'quant_ids.product_id')
+    @api.depends("quant_ids", "quant_ids.product_id")
     def _compute_single_product(self):
         for pack in self:
-            pack_products = pack.quant_ids.mapped('product_id')
+            pack_products = pack.quant_ids.mapped("product_id")
             if len(pack_products) == 1:
                 pack.single_product_id = pack_products.id
                 # TODO handle uom
-                pack.single_product_qty = sum(pack.quant_ids.mapped('quantity'))
+                pack.single_product_qty = sum(pack.quant_ids.mapped("quantity"))
             else:
                 pack.single_product_id = False
                 pack.single_product_qty = 0
@@ -44,11 +44,12 @@ class StockQuantPackage(models.Model):
                 and pack.single_product_id
                 and pack.single_product_qty
             ):
-                packaging = self.env['product.packaging'].search(
+                packaging = self.env["product.packaging"].search(
                     [
-                        ('product_id', '=', pack.single_product_id.id),
-                        ('qty', '=', pack.single_product_qty)
-                    ], limit=1
+                        ("product_id", "=", pack.single_product_id.id),
+                        ("qty", "=", pack.single_product_qty),
+                    ],
+                    limit=1,
                 )
                 if packaging:
-                    pack.write({'product_packaging_id': packaging.id})
+                    pack.write({"product_packaging_id": packaging.id})

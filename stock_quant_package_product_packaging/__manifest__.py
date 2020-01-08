@@ -11,12 +11,7 @@
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "depends": [
-        "stock",
-    ],
-    "data": [
-        "views/stock_quant_package.xml",
-    ],
-    "demo": [
-    ],
+    "depends": ["stock"],
+    "data": ["views/stock_quant_package.xml"],
+    "demo": [],
 }
