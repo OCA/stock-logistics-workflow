@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <xpath expr="//group[field[@name='company_id']]" position="after">
                 <group name="dimensions" string="Dimensions">
-                    <field name="length_alt" />
+                    <field name="lngth" />
                     <field name="width" />
                     <field name="height" />
                     <field name="pack_weight" />

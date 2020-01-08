@@ -7,8 +7,8 @@ class StockQuantPackage(models.Model):
     _inherit = "stock.quant.package"
 
     pack_weight = fields.Float("Weight (kg)")
-    # length cannot be used in onchange: https://github.com/odoo/odoo/issues/41353
-    length_alt = fields.Integer("Length (mm)", help="length in millimeters")
+    # lngth IS NOT A TYPO: https://github.com/odoo/odoo/issues/41353
+    lngth = fields.Integer("Length (mm)", help="length in millimeters")
     width = fields.Integer("Width (mm)", help="width in millimeters")
     height = fields.Integer("Height (mm)", help="height in millimeters")
     volume = fields.Float(
@@ -20,17 +20,16 @@ class StockQuantPackage(models.Model):
         help="volume in cubic meters",
     )
 
-    @api.depends("length_alt", "width", "height")
+    @api.depends("lngth", "width", "height")
     def _compute_volume(self):
         for pack in self:
-            pack.volume = (pack.length_alt * pack.width * pack.height) / 1000.0 ** 3
+            pack.volume = (pack.lngth * pack.width * pack.height) / 1000.0 ** 3
 
     def auto_assign_packaging(self):
         self = self.with_context(_auto_assign_packaging=True)
         res = super().auto_assign_packaging()
         return res
 
-    @api.multi
     def write(self, vals):
         res = super().write(vals)
         if self.env.context.get("_auto_assign_packaging") and vals.get(
@@ -44,11 +43,9 @@ class StockQuantPackage(models.Model):
     def onchange_product_packaging_id(self):
         if self.product_packaging_id:
             vals = self.product_packaging_id.read(
-                fields=["length", "width", "height", "max_weight"]
+                fields=["lngth", "width", "height", "max_weight"]
             )[0]
-            vals["length_alt"] = vals["length"]
             vals["pack_weight"] = vals["max_weight"]
             vals.pop("id")
-            vals.pop("length")
             vals.pop("max_weight")
             self.update(vals)

@@ -3,7 +3,7 @@
 {
     "name": "Stock Quant Package Dimension",
     "summary": "Use dimensions on packages",
-    "version": "12.0.1.0.0",
+    "version": "13.0.1.0.0",
     "development_status": "Alpha",
     "category": "Warehouse Management",
     "website": "https://github.com/OCA/stock-logistics-workflow",
