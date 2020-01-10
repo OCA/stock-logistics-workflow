@@ -5,8 +5,8 @@ from openupgradelib import openupgrade
 
 
 _field_renames = [
-    'stock.warehouse', 'stock_warehouse', 'default_picker_id',
-    'default_user_id',
+    ('stock.warehouse', 'stock_warehouse', 'default_picker_id',
+     'default_user_id'),
 ]
 
 
