@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo11-addon-mrp_stock_picking_restrict_cancel',
+        'odoo11-addon-product_cost_price_avco_sync',
         'odoo11-addon-product_expiry_simple',
         'odoo11-addon-purchase_stock_picking_restrict_cancel',
         'odoo11-addon-stock_batch_picking',
