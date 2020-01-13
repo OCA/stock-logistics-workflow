@@ -10,6 +10,8 @@
     "website": "https://forgeflow.com",
     "license": "AGPL-3",
     "depends": ["sale_stock", ],
-    "data": ["view/stock_view.xml", ],
+    "data": ["security/stock_security.xml",
+             "view/stock_view.xml",
+    ],
     "installable": True,
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="group_stock_picking_auto_revert" model="res.groups">
+        <field name="name">Return and Recreate Pickings</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+
+</odoo>

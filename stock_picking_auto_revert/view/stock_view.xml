@@ -9,6 +9,7 @@
             <field name="state" position="before">
                 <button name="action_revert_recreate" string="Return and recreate"
                     states="done" type="object" icon="fa-ban"
+                    groups="stock_picking_auto_revert.group_stock_picking_auto_revert"
                     confirm="Are you sure you want to return a recreate this picking?"/>
             </field>
         </field>
