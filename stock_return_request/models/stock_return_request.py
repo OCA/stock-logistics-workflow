@@ -415,10 +415,9 @@ class StockReturnRequestLine(models.Model):
             ('origin_returned_move_id', '=', False),
             ('qty_returnable', '>', 0),
             ('product_id', '=', self.product_id.id),
-            ('picking_id.partner_id', 'child_of',
-                self.request_id.partner_id.commercial_partner_id.id),
-            ('move_line_ids.lot_id', '=', self.lot_id.id),
         ]
+        if not self.env.context.get('ignore_rr_lots'):
+            domain += [('move_line_ids.lot_id', '=', self.lot_id.id)]
         if self.request_id.from_date:
             domain += [('date', '>=', self.request_id.from_date)]
         if self.request_id.picking_types:
@@ -516,8 +515,8 @@ class StockReturnRequestLine(models.Model):
                 Please first validate the first return request with this
                 product before creating a new one.
                 """) % (res.product_id.display_name,
-                        res.return_from_location.display_name,
-                        res.return_to_location.display_name,
+                        res.request_id.return_from_location.display_name,
+                        res.request_id.return_to_location.display_name,
                         res.request_id.partner_id.name))
         return res
 
@@ -538,3 +537,13 @@ class StockReturnRequestLine(models.Model):
         res = self.env['stock.quant'].read_group(search_args, ['quantity'], [])
         max_quantity = res[0]['quantity']
         self.max_quantity = max_quantity
+
+    def action_lot_suggestion(self):
+        return {
+            'name': _('Suggest Lot'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'suggest.return.request.lot',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'target': 'new',
+        }
