@@ -30,3 +30,15 @@ class StockMove(models.Model):
             move.returned_move_ids._compute_qty_returnable()
             move.qty_returnable = move.quantity_done - sum(
                 move.returned_move_ids.mapped('qty_returnable'))
+
+    def _get_lot_returnable_qty(self, lot_id, qty=0):
+        """Looks for chained returned moves to compute how much quantity
+           from the original can be returned for a given lot"""
+        for move in self.filtered(lambda x: x.state not in ['draft', 'cancel']):
+            mls = move.move_line_ids.filtered(lambda x: x.lot_id == lot_id)
+            if move.state == 'done':
+                qty += sum(mls.mapped('qty_done'))
+            else:
+                qty += sum(mls.mapped('product_uom_qty'))
+            qty -= move.returned_move_ids._get_lot_returnable_qty(lot_id)
+        return qty

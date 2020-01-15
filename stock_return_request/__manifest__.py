@@ -18,6 +18,7 @@
         'data/stock_return_request_data.xml',
         'views/stock_return_request_views.xml',
         'report/stock_return_report.xml',
+        'wizard/suggest_return_request.xml',
     ],
     "pre_init_hook": "pre_init_hook",
     "post_init_hook": "post_init_hook",
