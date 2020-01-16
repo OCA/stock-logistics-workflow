@@ -19,14 +19,12 @@ class StockMove(models.Model):
         return res
 
     def _create_price_history(self, value):
-        PriceHistory = self.env['product.price.history']
-        for move in self:
-            PriceHistory.create({
-                'product_id': move.product_id.id,
-                'cost': value,
-                'datetime': move.date,
-                'company_id': move.company_id.id,
-            })
+        self.env['product.price.history'].create([{
+            'product_id': move.product_id.id,
+            'cost': value,
+            'datetime': move.date,
+            'company_id': move.company_id.id,
+        } for move in self])
 
     def _previous_instant_date(self):
         """ Returns previous instant before move was done"""
