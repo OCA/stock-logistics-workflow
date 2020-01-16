@@ -90,7 +90,7 @@ class TestProductCostPriceAvcoSync(SavepointCase):
                 'location_id': self.warehouse.lot_stock_id.id
             })]
         })
-        inventory.action_done()
+        inventory._action_done()
         inventory.move_ids.date = '2019-10-05 00:00:00'
 
         self.assertEqual(self.product.standard_price, 5.0)
