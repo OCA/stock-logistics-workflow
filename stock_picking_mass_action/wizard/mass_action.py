@@ -48,7 +48,6 @@ class StockPickingMassAction(TransientModel):
         help="",
     )
 
-    @api.multi
     def mass_action(self):
         self.ensure_one()
 
