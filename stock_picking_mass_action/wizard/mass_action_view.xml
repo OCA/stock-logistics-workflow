@@ -23,7 +23,6 @@
     <record id="action_confirm" model="ir.actions.act_window">
         <field name="name">Mark as Todo</field>
         <field name="res_model">stock.picking.mass.action</field>
-        <field name="view_type">form</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
         <field name="binding_model_id" ref="stock.model_stock_picking" />
@@ -33,7 +32,6 @@
     <record id="action_check_availability" model="ir.actions.act_window">
         <field name="name">Check Availability</field>
         <field name="res_model">stock.picking.mass.action</field>
-        <field name="view_type">form</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
         <field name="context">{'check_availability': 1}</field>
@@ -44,7 +42,6 @@
     <record id="action_transfer" model="ir.actions.act_window">
         <field name="name">Transfer</field>
         <field name="res_model">stock.picking.mass.action</field>
-        <field name="view_type">form</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
         <field name="context">{'check_availability': 1, 'transfer': 1,}</field>
