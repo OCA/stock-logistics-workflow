@@ -19,9 +19,8 @@ class TestMassAction(common.SavepointCase):
         inventory = cls.env["stock.inventory"].create(
             {
                 "name": "Test Inventory",
-                "filter": "product",
-                "product_id": product.id,
-                "location_id": stock_location.id,
+                "product_ids": [(6, 0, product.ids)],
+                "state": "confirm",
                 "line_ids": [
                     (
                         0,
