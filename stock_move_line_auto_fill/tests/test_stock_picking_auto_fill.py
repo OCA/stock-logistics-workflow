@@ -20,6 +20,12 @@ class TestStockPicking(TransactionCase):
         self.supplier_location = self.env.ref("stock.stock_location_suppliers")
         self.customer_location = self.env.ref("stock.stock_location_customers")
 
+        # Allow all companies for OdooBot user and set default user company
+        # to warehouse company
+        companies = self.env["res.company"].search([])
+        self.env.user.company_ids = [(6, 0, companies.ids)]
+        self.env.user.company_id = self.warehouse.company_id
+
         # products
         self.product_8 = self.env.ref("product.product_product_8")
         self.product_9 = self.env.ref("product.product_product_9")
@@ -309,7 +315,11 @@ class TestStockPicking(TransactionCase):
         self.product_8.tracking = "lot"
         self.product_9.tracking = "none"
         self.lot8 = self.env["stock.production.lot"].create(
-            {"product_id": self.product_8.id, "name": "Lot 1"}
+            {
+                "company_id": self.warehouse.company_id.id,
+                "product_id": self.product_8.id,
+                "name": "Lot 1",
+            }
         )
         self.quant8 = self.env["stock.quant"].create(
             {
