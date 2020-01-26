@@ -5,14 +5,14 @@ from odoo import fields, models
 
 
 class StockPickingType(models.Model):
-    _inherit = 'stock.picking.type'
+    _inherit = "stock.picking.type"
 
     auto_fill_operation = fields.Boolean(
         string="Auto fill operations",
         help="To auto fill done quantity in picking document.\n"
-             "- If checked, auto fill done quantity automatically\n"
-             "- If unchecked, show button AutoFill"
-             " for user to do the auto fill manually",
+        "- If checked, auto fill done quantity automatically\n"
+        "- If unchecked, show button AutoFill"
+        " for user to do the auto fill manually",
     )
     avoid_lot_assignment = fields.Boolean(
         string="Avoid auto-assignment of lots",
