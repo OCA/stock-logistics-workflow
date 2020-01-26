@@ -11,12 +11,10 @@ class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     action_pack_op_auto_fill_allowed = fields.Boolean(
-        compute="_compute_action_pack_operation_auto_fill_allowed", readonly=True
+        compute="_compute_action_pack_operation_auto_fill_allowed"
     )
     auto_fill_operation = fields.Boolean(
-        related="picking_type_id.auto_fill_operation",
-        string="Auto fill operations",
-        readonly=True,
+        related="picking_type_id.auto_fill_operation", string="Auto fill operations"
     )
 
     @api.depends("state", "move_line_ids")
@@ -29,7 +27,6 @@ class StockPicking(models.Model):
                 rec.state == "assigned" and rec.move_line_ids
             )
 
-    @api.multi
     def _check_action_pack_operation_auto_fill_allowed(self):
         if any(not r.action_pack_op_auto_fill_allowed for r in self):
             raise UserError(
@@ -40,7 +37,6 @@ class StockPicking(models.Model):
                 )
             )
 
-    @api.multi
     def action_pack_operation_auto_fill(self):
         """ Fill automatically pack operation for products with the following
         conditions:

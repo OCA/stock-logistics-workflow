@@ -5,7 +5,7 @@
 {
     "name": "Stock Move Line Auto Fill",
     "summary": "Stock Move Line auto fill",
-    "version": "12.0.2.0.1",
+    "version": "13.0.1.0.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV," "Tecnativa," "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow/",
