@@ -11,7 +11,7 @@ class StockMove(models.Model):
     def _prepare_move_line_vals(self, quantity=None, reserved_quant=None):
         """Auto-assign as done the quantity proposed for the lots"""
         self.ensure_one()
-        res = super(StockMove, self)._prepare_move_line_vals(quantity, reserved_quant)
+        res = super()._prepare_move_line_vals(quantity, reserved_quant)
         if not self.picking_id.auto_fill_operation:
             return res
         elif self.picking_id.picking_type_id.avoid_lot_assignment and res.get("lot_id"):
