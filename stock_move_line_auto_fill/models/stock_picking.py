@@ -8,34 +8,37 @@ from odoo.exceptions import UserError
 
 class StockPicking(models.Model):
 
-    _inherit = 'stock.picking'
+    _inherit = "stock.picking"
 
     action_pack_op_auto_fill_allowed = fields.Boolean(
-        compute='_compute_action_pack_operation_auto_fill_allowed',
-        readonly=True,
+        compute="_compute_action_pack_operation_auto_fill_allowed", readonly=True
     )
     auto_fill_operation = fields.Boolean(
-        related='picking_type_id.auto_fill_operation',
-        string='Auto fill operations',
+        related="picking_type_id.auto_fill_operation",
+        string="Auto fill operations",
         readonly=True,
     )
 
-    @api.depends('state', 'move_line_ids')
+    @api.depends("state", "move_line_ids")
     def _compute_action_pack_operation_auto_fill_allowed(self):
         """ The auto fill button is allowed only in ready state, and the
         picking have pack operations.
         """
         for rec in self:
             rec.action_pack_op_auto_fill_allowed = (
-                rec.state == 'assigned' and rec.move_line_ids)
+                rec.state == "assigned" and rec.move_line_ids
+            )
 
     @api.multi
     def _check_action_pack_operation_auto_fill_allowed(self):
         if any(not r.action_pack_op_auto_fill_allowed for r in self):
             raise UserError(
-                _("Filling the operations automatically is not possible, "
-                  "perhaps the pickings aren't in the right state "
-                  "(Partially available or available)."))
+                _(
+                    "Filling the operations automatically is not possible, "
+                    "perhaps the pickings aren't in the right state "
+                    "(Partially available or available)."
+                )
+            )
 
     @api.multi
     def action_pack_operation_auto_fill(self):
@@ -46,11 +49,16 @@ class StockPicking(models.Model):
             - the operation has no qty_done yet.
         """
         self._check_action_pack_operation_auto_fill_allowed()
-        operations = self.mapped('move_line_ids')
-        operations_to_auto_fill = operations.filtered(lambda op: (
-            op.product_id and not op.qty_done and
-            (not op.lots_visible or
-             not op.picking_id.picking_type_id.avoid_lot_assignment)
-        ))
+        operations = self.mapped("move_line_ids")
+        operations_to_auto_fill = operations.filtered(
+            lambda op: (
+                op.product_id
+                and not op.qty_done
+                and (
+                    not op.lots_visible
+                    or not op.picking_id.picking_type_id.avoid_lot_assignment
+                )
+            )
+        )
         for op in operations_to_auto_fill:
             op.qty_done = op.product_uom_qty
