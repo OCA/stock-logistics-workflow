@@ -19,5 +19,6 @@
     "data": [
         "views/stock_move_line_view.xml",
         "views/stock_picking_view.xml",
+        "views/stock_scrap_view.xml",
     ]
 }
