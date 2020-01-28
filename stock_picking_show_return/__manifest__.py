@@ -4,16 +4,11 @@
 {
     "name": "Show returns on stock pickings",
     "version": "12.0.1.0.0",
-    "author": "Tecnativa, "
-              "Odoo Community Association (OCA)",
+    "author": "Tecnativa, " "Odoo Community Association (OCA)",
     "category": "Warehouse Management",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "license": "AGPL-3",
-    "depends": [
-        "stock",
-    ],
-    "data": [
-        'views/stock_picking_view.xml',
-    ],
+    "depends": ["stock"],
+    "data": ["views/stock_picking_view.xml"],
     "installable": True,
 }
