@@ -22,8 +22,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_lock_lot
-#: field:stock.location,allow_locked:0
-#: field:stock.transfer_details_items,allow_locked:0
+#: model:ir.model.fields,field_description:stock_lock_lot.field_stock_location__allow_locked
 msgid "Allow Locked"
 msgstr ""
 
@@ -33,85 +32,21 @@ msgid "Allow to block/unblock Serial Numbers/Lots"
 msgstr ""
 
 #. module: stock_lock_lot
-#: view:stock.production.lot:stock_lock_lot.view_production_lot_form_inh_locklot
-msgid "Block"
-msgstr "Bloquear"
-
-#. module: stock_lock_lot
-#: view:wiz.lock.lot:stock_lock_lot.view_wiz_lock_lot_form
-msgid "Block Serial Numbers/Lots"
-msgstr ""
-
-#. module: stock_lock_lot
-#: field:product.category,lot_default_locked:0
+#: model:ir.model.fields,field_description:stock_lock_lot.field_product_category__lot_default_locked
 msgid "Block new Serial Numbers/lots"
 msgstr ""
 
 #. module: stock_lock_lot
-#: model:ir.actions.act_window,name:stock_lock_lot.action_lock_lot
-msgid "Block/Unblock Serial Number/lot"
-msgstr ""
-
-#. module: stock_lock_lot
-#: view:wiz.lock.lot:stock_lock_lot.view_wiz_lock_lot_form
-msgid "Block/Unblock Serial Numbers/lots"
-msgstr ""
-
-#. module: stock_lock_lot
-#: view:stock.production.lot:stock_lock_lot.search_product_lot_filter_inh_locklot
-#: field:stock.production.lot,locked:0
-#: view:stock.quant:stock_lock_lot.quant_search_view_inh_locklot
-#: field:stock.quant,locked:0
+#: model:ir.model.fields,field_description:stock_lock_lot.field_stock_production_lot__locked
+#: model_terms:ir.ui.view,arch_db:stock_lock_lot.search_product_lot_filter
 msgid "Blocked"
 msgstr "Bloqueado"
 
 #. module: stock_lock_lot
-#: view:wiz.lock.lot:stock_lock_lot.view_wiz_lock_lot_form
-msgid "Cancel"
-msgstr "Cancelar"
-
-#. module: stock_lock_lot
-#: field:wiz.lock.lot,create_uid:0
-msgid "Created by"
-msgstr "Creado por"
-
-#. module: stock_lock_lot
-#: field:wiz.lock.lot,create_date:0
-msgid "Created on"
-msgstr "Creado el"
-
-#. module: stock_lock_lot
-#: selection:stock.production.lot,lock_reason:0
-msgid "Demanded by product category"
-msgstr ""
-
-#. module: stock_lock_lot
-#: field:wiz.lock.lot,display_name:0
-msgid "Display Name"
-msgstr "Nombre mostrado"
-
-#. module: stock_lock_lot
-#: field:wiz.lock.lot,id:0
-msgid "ID"
-msgstr "ID"
-
-#. module: stock_lock_lot
-#: help:product.category,lot_default_locked:0
+#: model:ir.model.fields,help:stock_lock_lot.field_product_category__lot_default_locked
 msgid ""
 "If checked, future Serial Numbers/lots will be created blocked by default"
 msgstr ""
-
-#. module: stock_lock_lot
-#: view:stock.production.lot:stock_lock_lot.view_production_lot_form_inh_locklot
-msgid ""
-"If you block this Serial Number/Lot, all its reservations will be removed, "
-"and the pending stock moves will be marked 'unavailable'."
-msgstr ""
-
-#. module: stock_lock_lot
-#: model:ir.model,name:stock_lock_lot.model_stock_inventory_line
-msgid "Inventory Line"
-msgstr "Línea inventario"
 
 #. module: stock_lock_lot
 #: model:ir.model,name:stock_lock_lot.model_stock_location
@@ -119,29 +54,11 @@ msgid "Inventory Locations"
 msgstr "Ubicaciones de inventario"
 
 #. module: stock_lock_lot
-#: field:wiz.lock.lot,__last_update:0
-msgid "Last Modified on"
-msgstr "Última modificación el"
-
-#. module: stock_lock_lot
-#: field:wiz.lock.lot,write_uid:0
-msgid "Last Updated by"
-msgstr "Última actualización de"
-
-#. module: stock_lock_lot
-#: field:wiz.lock.lot,write_date:0
-msgid "Last Updated on"
-msgstr "Última actualización en"
-
-#. module: stock_lock_lot
-#: view:stock.quant:stock_lock_lot.quant_search_view_inh_locklot
-msgid "Lot"
-msgstr "Lote"
-
-#. module: stock_lock_lot
-#: view:stock.config.settings:stock_lock_lot.view_stock_configuration
-msgid "Lot blocking"
-msgstr ""
+#: model_terms:ir.ui.view,arch_db:stock_lock_lot.search_product_lot_filter
+#, fuzzy
+#| msgid "Blocked"
+msgid "Locked"
+msgstr "Bloqueado"
 
 #. module: stock_lock_lot
 #: model:ir.model,name:stock_lock_lot.model_stock_production_lot
@@ -149,17 +66,7 @@ msgid "Lot/Serial"
 msgstr "Lote/nº de serie"
 
 #. module: stock_lock_lot
-#: selection:stock.production.lot,lock_reason:0
-msgid "None"
-msgstr "Ninguno"
-
-#. module: stock_lock_lot
-#: model:ir.model,name:stock_lock_lot.model_stock_transfer_details_items
-msgid "Picking wizard items"
-msgstr "Elementos del asistente de albarán"
-
-#. module: stock_lock_lot
-#: view:stock.production.lot:stock_lock_lot.search_product_lot_filter_inh_locklot
+#: model:ir.model.fields,field_description:stock_lock_lot.field_stock_production_lot__product_id
 msgid "Product"
 msgstr "Producto"
 
@@ -169,13 +76,8 @@ msgid "Product Category"
 msgstr "Categoría de producto"
 
 #. module: stock_lock_lot
-#: model:ir.model,name:stock_lock_lot.model_stock_quant
-msgid "Quants"
-msgstr "Quants"
-
-#. module: stock_lock_lot
-#: field:stock.production.lot,lock_reason:0
-msgid "Reason to block the lot"
+#: model:ir.model,name:stock_lock_lot.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
 msgstr ""
 
 #. module: stock_lock_lot
@@ -191,22 +93,7 @@ msgid "Serial Number/lot unblocked"
 msgstr ""
 
 #. module: stock_lock_lot
-#: view:product.category:stock_lock_lot.product_category_form_view_inh_locklot
-msgid "Serial Nunber/lot blocking"
-msgstr ""
-
-#. module: stock_lock_lot
-#: model:ir.model,name:stock_lock_lot.model_stock_move
-msgid "Stock Move"
-msgstr "Movimiento de existencias"
-
-#. module: stock_lock_lot
-#: field:stock.config.settings,stock_lock_lot_strict:0
-msgid "Strictly forbid moves on blocked Serial Numbers/lots."
-msgstr "Prohibir estrictamente los movimientos de lote/nº de serie bloqueados."
-
-#. module: stock_lock_lot
-#: code:addons/stock_lock_lot/models/stock_quant.py:39
+#: code:addons/stock_lock_lot/models/stock_move_line.py:0
 #, python-format
 msgid ""
 "The following lots/serial number is blocked and cannot be moved:\n"
@@ -214,47 +101,67 @@ msgid ""
 msgstr ""
 
 #. module: stock_lock_lot
-#: view:stock.production.lot:stock_lock_lot.view_production_lot_form_inh_locklot
-msgid "Unblock"
-msgstr "Desbloquear"
+#: code:addons/stock_lock_lot/models/stock_production_lot.py:0
+#, fuzzy, python-format
+#| msgid "Strictly forbid moves on blocked Serial Numbers/lots."
+msgid "You are not allowed to block/unblock Serial Numbers/Lots"
+msgstr "Prohibir estrictamente los movimientos de lote/nº de serie bloqueados."
 
 #. module: stock_lock_lot
-#: view:wiz.lock.lot:stock_lock_lot.view_wiz_lock_lot_form
-msgid "Unblock Serial Numbers/Lots"
-msgstr ""
-
-#. module: stock_lock_lot
-#: view:wiz.lock.lot:stock_lock_lot.view_wiz_lock_lot_form
-msgid "What do you want to do with selected Serial Numbers/Lots?"
-msgstr ""
-
-#. module: stock_lock_lot
-#: help:stock.config.settings,stock_lock_lot_strict:0
-msgid ""
-"When this box is checked, users are not allowed to force theavailability on "
-"blocked Serial Numbers/lots."
-msgstr ""
-
-#. module: stock_lock_lot
-#: code:addons/stock_lock_lot/models/stock_production_lot.py:69
+#: code:addons/stock_lock_lot/models/stock_production_lot.py:0
 #, python-format
-msgid "You are not allowed to block Serial Numbers/Lots"
-msgstr ""
-
-#. module: stock_lock_lot
-#: code:addons/stock_lock_lot/models/stock_production_lot.py:84
-#, python-format
-msgid "You are not allowed to unblock Serial Numbers/Lots"
-msgstr ""
-
-#. module: stock_lock_lot
-#: view:stock.transfer_details:stock_lock_lot.view_stock_enter_transfer_details_inh_locklot
 msgid ""
-"[('product_id','=?',product_id), '|', ('locked', '=', allow_locked), "
-"('locked','=',False)]"
+"You are not allowed to block/unblock, there are reserved quantities for "
+"these Serial Numbers/Lots"
 msgstr ""
 
-#. module: stock_lock_lot
-#: view:wiz.lock.lot:stock_lock_lot.view_wiz_lock_lot_form
-msgid "or"
-msgstr "o"
+#~ msgid "Block"
+#~ msgstr "Bloquear"
+
+#~ msgid "Cancel"
+#~ msgstr "Cancelar"
+
+#~ msgid "Created by"
+#~ msgstr "Creado por"
+
+#~ msgid "Created on"
+#~ msgstr "Creado el"
+
+#~ msgid "Display Name"
+#~ msgstr "Nombre mostrado"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Inventory Line"
+#~ msgstr "Línea inventario"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Última modificación el"
+
+#~ msgid "Last Updated by"
+#~ msgstr "Última actualización de"
+
+#~ msgid "Last Updated on"
+#~ msgstr "Última actualización en"
+
+#~ msgid "Lot"
+#~ msgstr "Lote"
+
+#~ msgid "None"
+#~ msgstr "Ninguno"
+
+#~ msgid "Picking wizard items"
+#~ msgstr "Elementos del asistente de albarán"
+
+#~ msgid "Quants"
+#~ msgstr "Quants"
+
+#~ msgid "Stock Move"
+#~ msgstr "Movimiento de existencias"
+
+#~ msgid "Unblock"
+#~ msgstr "Desbloquear"
+
+#~ msgid "or"
+#~ msgstr "o"
