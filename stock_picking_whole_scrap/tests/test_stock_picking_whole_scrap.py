@@ -10,11 +10,16 @@ class TestStockPickingScrapQuick(SavepointCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.warehouse = cls.env.ref("stock.warehouse0")
-        cls.picking_type_out = cls.env.ref("stock.picking_type_out")
+        cls.picking_type_out = cls.warehouse.out_type_id
         cls.customer_location = cls.env.ref("stock.stock_location_customers")
-        cls.partner = cls.env["res.partner"].create(
-            {"name": "Partner - test", "customer": True}
+        cls.scrap_location_id = cls.env["stock.location"].create(
+            {
+                "name": "Scrap location for test",
+                "scrap_location": True,
+                "location_id": cls.env.ref("stock.stock_location_locations_virtual").id,
+            }
         )
+        cls.partner = cls.env["res.partner"].create({"name": "Partner - test"})
         cls.product = cls.env["product.product"].create(
             {"name": "test", "type": "product"}
         )
@@ -47,34 +52,31 @@ class TestStockPickingScrapQuick(SavepointCase):
             }
         )
 
+    def _create_scrap_wizard(self):
+        return (
+            self.env["wiz.stock.picking.scrap"]
+            .with_context(active_id=self.picking.id)
+            .create({"scrap_location_id": self.scrap_location_id.id})
+        )
+
     def test_scrap_load_view(self):
         self.picking.action_assign()
         self.picking.move_line_ids.qty_done = 2.0
         self.picking.button_validate()
-        wiz = (
-            self.env["wiz.stock.picking.scrap"]
-            .with_context(active_id=self.picking.id)
-            .create({})
-        )
+        wiz = self._create_scrap_wizard()
         self.assertEqual(len(wiz.line_ids), 1)
 
     def test_scrap_picking_not_done(self):
         self.picking.action_assign()
         self.picking.move_line_ids.qty_done = 2.0
         with self.assertRaises(UserError):
-            self.env["wiz.stock.picking.scrap"].with_context(
-                active_id=self.picking.id
-            ).create({})
+            self._create_scrap_wizard()
 
     def test_scrap_more_qty_that_done(self):
         self.picking.action_assign()
         self.picking.move_line_ids.qty_done = 2.0
         self.picking.button_validate()
-        wiz = (
-            self.env["wiz.stock.picking.scrap"]
-            .with_context(active_id=self.picking.id)
-            .create({})
-        )
+        wiz = self._create_scrap_wizard()
         wiz.line_ids.quantity = 10.0
         with self.assertRaises(UserError):
             wiz.create_scrap()
@@ -83,10 +85,6 @@ class TestStockPickingScrapQuick(SavepointCase):
         self.picking.action_assign()
         self.picking.move_line_ids.qty_done = 2.0
         self.picking.button_validate()
-        wiz = (
-            self.env["wiz.stock.picking.scrap"]
-            .with_context(active_id=self.picking.id)
-            .create({})
-        )
+        wiz = self._create_scrap_wizard()
         scraps = wiz.create_scrap()
         self.assertEqual(len(scraps), 1)

@@ -140,7 +140,7 @@ msgid "Unit of Measure"
 msgstr "Unidad de medida"
 
 #. module: stock_picking_whole_scrap
-#: code:addons/stock_picking_whole_scrap/models/stock_picking.py:12
+#: code:addons/stock_picking_whole_scrap/models/stock_picking.py:0
 #, python-format
 msgid "Whole Scrap"
 msgstr "Desechar completo"
@@ -156,19 +156,19 @@ msgid "Wizard lines for picking whole scrap"
 msgstr ""
 
 #. module: stock_picking_whole_scrap
-#: code:addons/stock_picking_whole_scrap/wizards/stock_picking_whole_scrap.py:129
+#: code:addons/stock_picking_whole_scrap/wizards/stock_picking_whole_scrap.py:0
 #, python-format
 msgid "You can't scrap more quantity that done it"
 msgstr "No puedes desechar mas unidades que las realizadas"
 
 #. module: stock_picking_whole_scrap
-#: code:addons/stock_picking_whole_scrap/wizards/stock_picking_whole_scrap.py:72
+#: code:addons/stock_picking_whole_scrap/wizards/stock_picking_whole_scrap.py:0
 #, python-format
 msgid "You may only scrap one picking at a time!"
 msgstr "Sólo puede desechar un albaranes al mismo tiempo!"
 
 #. module: stock_picking_whole_scrap
-#: code:addons/stock_picking_whole_scrap/wizards/stock_picking_whole_scrap.py:81
+#: code:addons/stock_picking_whole_scrap/wizards/stock_picking_whole_scrap.py:0
 #, python-format
 msgid "You may only scrap pickings in done state"
 msgstr "Sólo puede desechar albaranes que estén ya realizados"
