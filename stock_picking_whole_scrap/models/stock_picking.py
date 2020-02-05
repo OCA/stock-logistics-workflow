@@ -10,7 +10,6 @@ class StockPicking(models.Model):
         self.ensure_one()
         return {
             "name": _("Whole Scrap"),
-            "view_type": "form",
             "view_mode": "form",
             "res_model": "wiz.stock.picking.scrap",
             "type": "ir.actions.act_window",

@@ -3,8 +3,6 @@ from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools.float_utils import float_compare, float_round
 
-from odoo.addons import decimal_precision as dp
-
 
 class StockPickingScrapLine(models.TransientModel):
     _name = "wiz.stock.picking.scrap.line"
@@ -24,9 +22,7 @@ class StockPickingScrapLine(models.TransientModel):
         comodel_name="res.partner", string="Owner", readonly=True
     )
     quantity = fields.Float(
-        string="Quantity",
-        digits=dp.get_precision("Product Unit of Measure"),
-        required=True,
+        string="Quantity", digits="Product Unit of Measure", required=True
     )
     uom_id = fields.Many2one(
         comodel_name="uom.uom", string="Unit of Measure", readonly=True
