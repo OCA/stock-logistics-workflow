@@ -11,6 +11,7 @@ setuptools.setup(
         'odoo13-addon-stock_lock_lot',
         'odoo13-addon-stock_picking_auto_create_lot',
         'odoo13-addon-stock_picking_mass_action',
+        'odoo13-addon-stock_picking_whole_scrap',
     ],
     classifiers=[
         'Programming Language :: Python',
