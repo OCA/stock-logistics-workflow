@@ -1,12 +1,12 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_picking_whole_scrap
+# 	* stock_picking_whole_scrap
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: <>\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -136,7 +136,7 @@ msgid "Unit of Measure"
 msgstr ""
 
 #. module: stock_picking_whole_scrap
-#: code:addons/stock_picking_whole_scrap/models/stock_picking.py:12
+#: code:addons/stock_picking_whole_scrap/models/stock_picking.py:0
 #, python-format
 msgid "Whole Scrap"
 msgstr ""
@@ -152,20 +152,19 @@ msgid "Wizard lines for picking whole scrap"
 msgstr ""
 
 #. module: stock_picking_whole_scrap
-#: code:addons/stock_picking_whole_scrap/wizards/stock_picking_whole_scrap.py:129
+#: code:addons/stock_picking_whole_scrap/wizards/stock_picking_whole_scrap.py:0
 #, python-format
 msgid "You can't scrap more quantity that done it"
 msgstr ""
 
 #. module: stock_picking_whole_scrap
-#: code:addons/stock_picking_whole_scrap/wizards/stock_picking_whole_scrap.py:72
+#: code:addons/stock_picking_whole_scrap/wizards/stock_picking_whole_scrap.py:0
 #, python-format
 msgid "You may only scrap one picking at a time!"
 msgstr ""
 
 #. module: stock_picking_whole_scrap
-#: code:addons/stock_picking_whole_scrap/wizards/stock_picking_whole_scrap.py:81
+#: code:addons/stock_picking_whole_scrap/wizards/stock_picking_whole_scrap.py:0
 #, python-format
 msgid "You may only scrap pickings in done state"
 msgstr ""
-
