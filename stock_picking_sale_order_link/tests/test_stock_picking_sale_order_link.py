@@ -25,9 +25,7 @@ class TestStockPickingSaleOrderLink(TransactionCase):
                 "standard_price": 100.00,
             }
         )
-        self.partner = self.env["res.partner"].create(
-            {"name": "Customer - test", "customer": True}
-        )
+        self.partner = self.env["res.partner"].create({"name": "Customer - test"})
         self.picking_type = self.PickingType.search(
             [("warehouse_id", "=", self.warehouse.id), ("code", "=", "outgoing")]
         )
