@@ -8,7 +8,7 @@ from odoo.tests.common import TransactionCase
 @tagged("post_install", "-at_install")
 class TestStockPickingSaleOrderLink(TransactionCase):
     def setUp(self):
-        super().setUp()
+        super(TestStockPickingSaleOrderLink, self).setUp()
         self.Location = self.env["stock.location"]
         self.PickingType = self.env["stock.picking.type"]
         self.Picking = self.env["stock.picking"]
@@ -20,11 +20,14 @@ class TestStockPickingSaleOrderLink(TransactionCase):
         self.product = self.Product.create(
             {
                 "name": "Product - Test",
+                "type": "product",
                 "list_price": 100.00,
                 "standard_price": 100.00,
             }
         )
-        self.partner = self.env["res.partner"].create({"name": "Customer - test"})
+        self.partner = self.env["res.partner"].create(
+            {"name": "Customer - test", "customer": True}
+        )
         self.picking_type = self.PickingType.search(
             [("warehouse_id", "=", self.warehouse.id), ("code", "=", "outgoing")]
         )

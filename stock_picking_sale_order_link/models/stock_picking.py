@@ -1,20 +1,20 @@
 # © 2017 Sergio Teruel <sergio.teruel@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import models
+from odoo import api, models
 
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
+    @api.multi
     def action_view_sale_order(self):
         """This function returns an action that display existing sales order
         of given picking.
         """
         self.ensure_one()
-        # Remove default_picking_id to avoid defaults get
-        # https://github.com/odoo/odoo/blob/e4d22d390c8aa8edf757e36704a9e04b2b89f115/
-        # addons/stock/models/stock_move.py#L410
-        ctx = self.env.context.copy()
-        ctx.pop("default_picking_id", False)
-        return self.with_context(**ctx).sale_id.get_formview_action()
+        action = self.env.ref("sale.action_orders").read()[0]
+        form = self.env.ref("sale.view_order_form")
+        action["views"] = [(form.id, "form")]
+        action["res_id"] = self.sale_id.id
+        return action
