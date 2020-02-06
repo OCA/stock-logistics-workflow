@@ -5,7 +5,7 @@ from odoo import api, models
 
 
 class StockPicking(models.Model):
-    _inherit = 'stock.picking'
+    _inherit = "stock.picking"
 
     @api.multi
     def action_view_sale_order(self):
@@ -13,8 +13,8 @@ class StockPicking(models.Model):
         of given picking.
         """
         self.ensure_one()
-        action = self.env.ref('sale.action_orders').read()[0]
-        form = self.env.ref('sale.view_order_form')
-        action['views'] = [(form.id, 'form')]
-        action['res_id'] = self.sale_id.id
+        action = self.env.ref("sale.action_orders").read()[0]
+        form = self.env.ref("sale.view_order_form")
+        action["views"] = [(form.id, "form")]
+        action["res_id"] = self.sale_id.id
         return action
