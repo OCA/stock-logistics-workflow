@@ -1,15 +1,15 @@
 # Copyright 2016 Carlos Dauden <carlos.dauden@tecnativa.com>
 # Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # Copyright 2017 David Vidal <david.vidal@tecnativa.com>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import ValidationError
 from odoo.tests import common
+from odoo.tests import tagged
 from odoo.tools.safe_eval import safe_eval
 
 
-@common.at_install(False)
-@common.post_install(True)
+@tagged('post_install', '-at_install')
 class TestStockLotScrap(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
@@ -39,7 +39,7 @@ class TestStockLotScrap(common.SavepointCase):
 
     def test_picking_created(self):
         res = self.lot010.action_scrap_lot()
-        self.assertTrue('domain' in res)
+        self.assertIn('domain', res)
         scrap = self.env['stock.scrap'].search(safe_eval(res['domain']))
         self.assertAlmostEqual(sum(scrap.mapped('scrap_qty')), 5325)
         self.assertTrue(
