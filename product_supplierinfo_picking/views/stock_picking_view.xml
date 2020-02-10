@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2020 ForgeFlow S.L. (<https://www.forgeflow.com>)
+-->
+<odoo>
+
+    <record id="view_move_tree" model="ir.ui.view">
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_tree"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="product_supplier_name" />
+                <field name="product_supplier_code" />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_move_picking_form" model="ir.ui.view">
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_picking_form"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="product_supplier_name" />
+                <field name="product_supplier_code" />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_move_form" model="ir.ui.view">
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_form"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="product_supplier_name" />
+                <field name="product_supplier_code" />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_move_search" model="ir.ui.view">
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_search"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="product_supplier_name" filter_domain="['|', ('product_supplier_name', 'ilike', self), ('product_supplier_code', 'ilike', self)]" string="Product Vendor Reference"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
