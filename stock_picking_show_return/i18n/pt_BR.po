@@ -20,6 +20,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: stock_picking_show_return
+#: model_terms:ir.ui.view,arch_db:stock_picking_show_return.view_picking_form
+msgid "<span class=\"o_stat_text\">Source picking</span>"
+msgstr ""
+
+#. module: stock_picking_show_return
 #: model:ir.model.fields,field_description:stock_picking_show_return.field_stock_picking__returned_ids
 msgid "Returned pickings"
 msgstr ""
@@ -27,6 +32,11 @@ msgstr ""
 #. module: stock_picking_show_return
 #: model_terms:ir.ui.view,arch_db:stock_picking_show_return.view_picking_form
 msgid "Returns"
+msgstr ""
+
+#. module: stock_picking_show_return
+#: model:ir.model.fields,field_description:stock_picking_show_return.field_stock_picking__source_picking_id
+msgid "Source picking"
 msgstr ""
 
 #. module: stock_picking_show_return
