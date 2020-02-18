@@ -25,7 +25,7 @@ Stock picking filter lot
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
-This module extends the functionality of stock: in a picking out the user
+This module extends the functionality of stock: in a picking out or a scrap the user
 can only select the lots available in the origin location.
 
 **Table of contents**
@@ -38,7 +38,7 @@ Usage
 
 To use this module:
 
-#. Go to an open picking with products that are tracked by lots.
+#. Go to an open picking or a scrap with products that are tracked by lots.
 #. When you enter detailed operations you will notice that the lots available
    to select are filtered by the origin of the operation.
 
@@ -65,6 +65,7 @@ Contributors
 
 * Simone Rubino <simone.rubino@agilebg.com> (www.agilebg.com)
 * Lois Rilo <lois.rilo@eficent.com> (www.eficent.com)
+* Alan Ramos <alan.ramos@jarsa.com.mx> (www.jarsa.com.mx)
 
 Maintainers
 ~~~~~~~~~~~
