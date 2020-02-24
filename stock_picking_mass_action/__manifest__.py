@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     'name': 'Stock Picking Mass Action',
-    'version': '12.0.1.1.0',
+    'version': '12.0.1.1.1',
     'author': 'Camptocamp, '
               'GRAP,'
               'Tecnativa,'
