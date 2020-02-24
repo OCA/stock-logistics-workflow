@@ -64,7 +64,6 @@ msgid "ID"
 msgstr "ID"
 
 #. module: stock_picking_mass_action
-#: code:addons/stock_picking_mass_action/models/stock_picking.py:25
 #: code:addons/stock_picking_mass_action/models/stock_picking.py:40
 #, python-format
 msgid "Immediate Transfer?"
