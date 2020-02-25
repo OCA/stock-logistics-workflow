@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_return_request
-#: code:addons/stock_return_request/models/stock_return_request.py:513
+#: code:addons/stock_return_request/models/stock_return_request.py:512
 #, python-format
 msgid "\n"
 "                You cannot have two open Stock Return Requests with the same\n"
@@ -46,6 +46,11 @@ msgid "<strong>Quantity</strong>"
 msgstr ""
 
 #. module: stock_return_request
+#: model:ir.ui.view,arch_db:stock_return_request.stock_return_request_line_suggest_lot
+msgid "Accept"
+msgstr ""
+
+#. module: stock_return_request
 #: model:ir.ui.view,arch_db:stock_return_request.view_stock_return_request_form
 msgid "Add a note that will be printed on the Request report"
 msgstr ""
@@ -57,6 +62,7 @@ msgid "Add some products to return"
 msgstr ""
 
 #. module: stock_return_request
+#: model:ir.ui.view,arch_db:stock_return_request.stock_return_request_line_suggest_lot
 #: model:ir.ui.view,arch_db:stock_return_request.view_stock_return_request_form
 msgid "Cancel"
 msgstr ""
@@ -85,12 +91,14 @@ msgstr ""
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_create_uid
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line_create_uid
+#: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot_create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_create_date
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line_create_date
+#: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot_create_date
 msgid "Created on"
 msgstr ""
 
@@ -102,6 +110,7 @@ msgstr ""
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_display_name
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line_display_name
+#: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot_display_name
 msgid "Display Name"
 msgstr ""
 
@@ -113,6 +122,7 @@ msgstr ""
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_id
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line_id
+#: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot_id
 msgid "ID"
 msgstr ""
 
@@ -126,24 +136,32 @@ msgstr ""
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request___last_update
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line___last_update
+#: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot___last_update
 msgid "Last Modified on"
 msgstr ""
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line_write_uid
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_write_uid
+#: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot_write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line_write_date
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_write_date
+#: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot_write_date
 msgid "Last Updated on"
 msgstr ""
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line_lot_id
 msgid "Lot / Serial"
+msgstr ""
+
+#. module: stock_return_request
+#: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot_lot_suggestion_mode
+msgid "Lot Suggestion Mode"
 msgstr ""
 
 #. module: stock_return_request
@@ -170,7 +188,7 @@ msgid "Newer first"
 msgstr ""
 
 #. module: stock_return_request
-#: code:addons/stock_return_request/models/stock_return_request.py:493
+#: code:addons/stock_return_request/models/stock_return_request.py:492
 #, python-format
 msgid "Not enough moves to return this product.\n"
 "It wasn't possible to find enough moves to return %f %sof %s. A maximum of %f can be returned."
@@ -234,6 +252,11 @@ msgstr ""
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_name
 msgid "Reference"
+msgstr ""
+
+#. module: stock_return_request
+#: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot_request_line_id
+msgid "Request Line"
 msgstr ""
 
 #. module: stock_return_request
@@ -375,6 +398,28 @@ msgid "Stock Return Requests"
 msgstr ""
 
 #. module: stock_return_request
+#: code:addons/stock_return_request/models/stock_return_request.py:543
+#, python-format
+msgid "Suggest Lot"
+msgstr ""
+
+#. module: stock_return_request
+#: model:ir.model,name:stock_return_request.model_suggest_return_request_lot
+msgid "Suggest lots for the return request line"
+msgstr ""
+
+#. module: stock_return_request
+#: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot_suggested_lot
+#: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot_suggested_lot_detail
+msgid "Suggested Lots"
+msgstr ""
+
+#. module: stock_return_request
+#: model:ir.actions.act_window,name:stock_return_request.act_stock_return_request_line_suggest_lot
+msgid "Suggested Lots for this Return Request Line"
+msgstr ""
+
+#. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request_return_type
 msgid "Supplier - Search for incoming moves from this supplier\n"
 "Customer - Search for outgoing moves to this customer\n"
@@ -394,6 +439,16 @@ msgstr ""
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_to_refund
 msgid "To refund"
+msgstr ""
+
+#. module: stock_return_request
+#: selection:suggest.return.request.lot,lot_suggestion_mode:0
+msgid "Total by lot"
+msgstr ""
+
+#. module: stock_return_request
+#: selection:suggest.return.request.lot,lot_suggestion_mode:0
+msgid "Total by move"
 msgstr ""
 
 #. module: stock_return_request
@@ -419,5 +474,11 @@ msgstr ""
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request_show_to_refund
 msgid "Whether to show it or not depending on the availability ofthe stock_account module (so a bridge module is not necessary)"
+msgstr ""
+
+#. module: stock_return_request
+#: model:ir.model.fields,help:stock_return_request.field_suggest_return_request_lot_suggested_lot
+#: model:ir.model.fields,help:stock_return_request.field_suggest_return_request_lot_suggested_lot_detail
+msgid "You can return these lots"
 msgstr ""
 
