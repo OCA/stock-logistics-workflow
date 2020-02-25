@@ -50,7 +50,7 @@ msgid "Avoid auto-assignment of lots"
 msgstr ""
 
 #. module: stock_move_line_auto_fill
-#: code:addons/stock_move_line_auto_fill/models/stock_picking.py:36
+#: code:addons/stock_move_line_auto_fill/models/stock_picking.py:0
 #, python-format
 msgid ""
 "Filling the operations automatically is not possible, perhaps the pickings "
