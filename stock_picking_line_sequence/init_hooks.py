@@ -12,4 +12,4 @@ def post_init_hook(cr, pool):
     """
     env = Environment(cr, SUPERUSER_ID, {})
     stock = env['stock.picking'].search([])
-    stock._reset_sequence()
+    stock.with_context(skip_update_line_ids=True)._reset_sequence()
