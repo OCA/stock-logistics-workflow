@@ -12,6 +12,7 @@ setuptools.setup(
         'odoo13-addon-stock_move_line_auto_fill',
         'odoo13-addon-stock_picking_auto_create_lot',
         'odoo13-addon-stock_picking_mass_action',
+        'odoo13-addon-stock_picking_sale_order_link',
         'odoo13-addon-stock_picking_show_return',
         'odoo13-addon-stock_picking_whole_scrap',
     ],
