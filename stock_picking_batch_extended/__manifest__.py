@@ -1,5 +1,5 @@
 # Copyright 2012-2014 Alexandre Fayolle, Camptocamp SA
-# Copyright 2018 Tecnativa - Carlos Dauden
+# Copyright 2018-2020 Tecnativa - Carlos Dauden
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 {
@@ -11,8 +11,9 @@
               "Odoo Community Association (OCA)",
     'development_status': 'Mature',
     'maintainers': [
-        'Camptocamp',
-        'Tecnativa',
+        'gurneyalex',
+        'carlosdauden',
+        'i-vyshnevska',
     ],
     'category': 'Warehouse Management',
     'depends': [
