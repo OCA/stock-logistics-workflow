@@ -1,5 +1,5 @@
 # Copyright 2012-2014 Alexandre Fayolle, Camptocamp SA
-# Copyright 2018 Tecnativa - Carlos Dauden
+# Copyright 2018-2020 Tecnativa - Carlos Dauden
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo import _, api, fields, models
 
@@ -10,7 +10,8 @@ class StockBatchPicking(models.Model):
     """ This object allow to manage multiple stock.picking at the same time.
     """
     # renamed stock.batch.picking -> stock.picking.batch
-    _inherit = 'stock.picking.batch'
+    _inherit = ['stock.picking.batch', 'mail.thread', 'mail.activity.mixin']
+    _name = 'stock.picking.batch'
 
     name = fields.Char(
         index=True,

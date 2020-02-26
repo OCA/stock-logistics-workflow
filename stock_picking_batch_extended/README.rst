@@ -126,16 +126,19 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-.. |maintainer-Camptocamp| image:: https://github.com/Camptocamp.png?size=40px
-    :target: https://github.com/Camptocamp
-    :alt: Camptocamp
-.. |maintainer-Tecnativa| image:: https://github.com/Tecnativa.png?size=40px
-    :target: https://github.com/Tecnativa
-    :alt: Tecnativa
+.. |maintainer-gurneyalex| image:: https://github.com/gurneyalex.png?size=40px
+    :target: https://github.com/gurneyalex
+    :alt: gurneyalex
+.. |maintainer-carlosdauden| image:: https://github.com/carlosdauden.png?size=40px
+    :target: https://github.com/carlosdauden
+    :alt: carlosdauden
+.. |maintainer-i-vyshnevska| image:: https://github.com/i-vyshnevska.png?size=40px
+    :target: https://github.com/i-vyshnevska
+    :alt: i-vyshnevska
 
 Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-Camptocamp| |maintainer-Tecnativa| 
+|maintainer-gurneyalex| |maintainer-carlosdauden| |maintainer-i-vyshnevska| 
 
 This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/12.0/stock_picking_batch_extended>`_ project on GitHub.
 
