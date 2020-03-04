@@ -93,6 +93,13 @@ class TestProductCostPriceAvcoSync(SavepointCase):
         inventory._action_done()
         inventory.move_ids.date = '2019-10-05 00:00:00'
 
+        # Include this picking to delay next assertion (aleatory error)
+        picking_out_3 = self.picking_out.copy()
+        move_out_3 = picking_out_3.move_lines[:1]
+        move_out_3.quantity_done = move_out_2.product_uom_qty
+        picking_out_3.action_done()
+        move_out_3.date = '2019-10-04 00:00:00'
+
         self.assertEqual(self.product.standard_price, 5.0)
         move_in.price_unit = 2.0
         self.assertEqual(self.product.standard_price, 2.27)
