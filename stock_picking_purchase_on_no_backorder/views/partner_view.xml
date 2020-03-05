@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2020 PlanetaTIC - Marc Poch <mpoch@planetatic.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+<data>
+
+<record id="view_partner_optional_partial_form" model="ir.ui.view">
+    <field name="name">res.partner.form</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_form" />
+    <field name="arch" type="xml">
+        <xpath expr="//group[@name='purchase']" position="inside">
+            <field name="purchase_on_no_backorder" />
+        </xpath>
+    </field>
+</record>
+
+</data>
+</odoo>

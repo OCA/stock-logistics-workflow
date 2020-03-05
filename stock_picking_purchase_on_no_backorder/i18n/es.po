@@ -1,0 +1,45 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_picking_purchase_on_no_backorder
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-03-05 12:22+0000\n"
+"PO-Revision-Date: 2020-03-05 12:22+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_purchase_on_no_backorder
+#: model:ir.model,name:stock_picking_purchase_on_no_backorder.model_stock_backorder_confirmation
+msgid "Backorder Confirmation"
+msgstr "Confirmación de entrega parcial"
+
+#. module: stock_picking_purchase_on_no_backorder
+#: model:ir.model,name:stock_picking_purchase_on_no_backorder.model_res_partner
+msgid "Partner"
+msgstr "Empresa"
+
+#. module: stock_picking_purchase_on_no_backorder
+#: model:ir.model.fields,field_description:stock_picking_purchase_on_no_backorder.field_prestashop_address_purchase_on_no_backorder
+#: model:ir.model.fields,field_description:stock_picking_purchase_on_no_backorder.field_prestashop_res_partner_purchase_on_no_backorder
+#: model:ir.model.fields,field_description:stock_picking_purchase_on_no_backorder.field_prestashop_supplier_purchase_on_no_backorder
+#: model:ir.model.fields,field_description:stock_picking_purchase_on_no_backorder.field_res_partner_purchase_on_no_backorder
+#: model:ir.model.fields,field_description:stock_picking_purchase_on_no_backorder.field_res_users_purchase_on_no_backorder
+msgid "Purchase on No Backorder"
+msgstr "Compra en Entrega Parcial NO"
+
+#. module: stock_picking_purchase_on_no_backorder
+#: model:ir.model.fields,help:stock_picking_purchase_on_no_backorder.field_prestashop_address_purchase_on_no_backorder
+#: model:ir.model.fields,help:stock_picking_purchase_on_no_backorder.field_prestashop_res_partner_purchase_on_no_backorder
+#: model:ir.model.fields,help:stock_picking_purchase_on_no_backorder.field_prestashop_supplier_purchase_on_no_backorder
+#: model:ir.model.fields,help:stock_picking_purchase_on_no_backorder.field_res_partner_purchase_on_no_backorder
+#: model:ir.model.fields,help:stock_picking_purchase_on_no_backorder.field_res_users_purchase_on_no_backorder
+msgid "Requests quotation of cancelled stock picking on no backorder reception."
+msgstr "Solicita abastecimiento de recepciones canceladas por Entrega Parcial NO."
+
