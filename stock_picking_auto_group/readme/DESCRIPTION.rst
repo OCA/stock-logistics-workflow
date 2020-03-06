@@ -1,0 +1,1 @@
+This module allows for procurement groups to be created automatically on stock pickings. This allows for easy lookup of any picking in a picking chain, and prevents the picking from being merged with others.

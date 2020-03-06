@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 # Copyright 2020 Ryan Cole (www.ryanc.me)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
@@ -21,19 +19,28 @@ class StockPicking(models.Model):
 
 	@api.model
 	def create(self, values):
-		# copied from official Odoo code. we need the name field to generate a procurement group,
-		# but the default create() is not easily overridable in this case.
+		# copied from official Odoo code. we need the name field to generate a
+        # procurement group, but the default create() is not easily overridable
+        # in this case.
+
 		defaults = self.default_get(['name', 'picking_type_id'])
-		if values.get('name', '/') == '/' and defaults.get('name', '/') == '/' and values.get('picking_type_id', defaults.get('picking_type_id')):
-			values['name'] = self.env['stock.picking.type'].browse(values.get('picking_type_id', defaults.get('picking_type_id'))).sequence_id.next_by_id()
 
+		if (values.get('name', '/') == '/' and
+            defaults.get('name', '/') == '/' and
+            values.get('picking_type_id', defaults.get('picking_type_id'))):
 
-		#_logger.warn(str(values))
-		picking_type_id = self.env['stock.picking.type'].browse(values['picking_type_id'])
+            picking_type = self.env['stock.picking.type'].browse(
+                values.get('picking_type_id', defaults.get('picking_type_id')))
+
+			values['name'] = picking_type.sequence_id.next_by_id()
+
+		picking_type_id = self.env['stock.picking.type'].browse(
+            values['picking_type_id'])
+
 		if picking_type_id.create_procurement_group:
 			moves_nogroup = []
 
-			# this might not be strictly necessary - it is very unlikely (impossible?) 
+			# this might not be strictly necessary - it is very unlikely (impossible?)
 			# that _some_ moves have a group, and _some_ don't.
 			for stock_move_data in values.get('move_lines', []):
 
@@ -43,7 +50,9 @@ class StockPicking(models.Model):
 					moves_nogroup.append(stock_move_data)
 
 			if len(moves_nogroup) > 0:
-				procurement_group = self.env['procurement.group'].create({'name': values.get('name', False), 'move_type': 'direct'})
+				procurement_group = self.env['procurement.group'].create({
+                    'name': values.get('name', False), 
+                    'move_type': 'direct'})
 
 				# assign it
 				for move in moves_nogroup:
