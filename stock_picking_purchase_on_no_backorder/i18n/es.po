@@ -16,6 +16,12 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_picking_purchase_on_no_backorder
+#: code:addons/stock_picking_purchase_on_no_backorder/models/stock_picking.py:59
+#, python-format
+msgid "Back order <em>%s</em> <b>cancelled</b>."
+msgstr "Entrega parcial <em>%s</em> <b>cancelada</b>."
+
+#. module: stock_picking_purchase_on_no_backorder
 #: model:ir.model,name:stock_picking_purchase_on_no_backorder.model_stock_backorder_confirmation
 msgid "Backorder Confirmation"
 msgstr "Confirmación de entrega parcial"
@@ -42,4 +48,9 @@ msgstr "Compra en Entrega Parcial NO"
 #: model:ir.model.fields,help:stock_picking_purchase_on_no_backorder.field_res_users_purchase_on_no_backorder
 msgid "Requests quotation of cancelled stock picking on no backorder reception."
 msgstr "Solicita abastecimiento de recepciones canceladas por Entrega Parcial NO."
+
+#. module: stock_picking_purchase_on_no_backorder
+#: model:ir.model,name:stock_picking_purchase_on_no_backorder.model_stock_picking
+msgid "Transfer"
+msgstr "Transferir"
 
