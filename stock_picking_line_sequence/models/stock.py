@@ -44,7 +44,7 @@ class StockPicking(models.Model):
             picking.max_line_sequence = (
                 max(picking.mapped('move_ids_without_package.sequence') or
                     [0]) + 1
-                )
+            )
 
     max_line_sequence = fields.Integer(string='Max sequence in lines',
                                        compute='_compute_max_line_sequence')
@@ -56,6 +56,15 @@ class StockPicking(models.Model):
             for line in rec.move_ids_without_package:
                 line.sequence = current_sequence
                 current_sequence += 1
+
+    @api.model
+    def create(self, values):
+        picking = super(StockPicking, self).create(values)
+        # We do not reset the sequence if we are copying a complete picking
+        # or creating a backorder
+        if not self.env.context.get('keep_line_sequence', False):
+            picking._reset_sequence()
+        return picking
 
     @api.multi
     def copy(self, default=None):
