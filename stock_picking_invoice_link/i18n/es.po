@@ -9,32 +9,43 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-18 03:48+0000\n"
-"PO-Revision-Date: 2017-12-18 03:48+0000\n"
+"POT-Creation-Date: 2020-06-25 23:40+0000\n"
+"PO-Revision-Date: 2020-06-26 01:42+0200\n"
 "Last-Translator: Pedro M. Baeza <pedro.baeza@gmail.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.6\n"
 
 #. module: stock_picking_invoice_link
-#: model:ir.model,name:stock_picking_invoice_link.model_account_invoice
-#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
-msgid "Invoice"
-msgstr "Factura"
-
-#. module: stock_picking_invoice_link
-#: model:ir.model,name:stock_picking_invoice_link.model_account_invoice_line
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move__invoice_line_id
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move__invoice_line_ids
 msgid "Invoice Line"
 msgstr "Línea de factura"
 
 #. module: stock_picking_invoice_link
+#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_move_form
+#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_move_picking_form
+msgid "Invoice Lines"
+msgstr "Líneas de factura"
+
+#. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking__invoice_ids
+#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
 msgid "Invoices"
 msgstr "Facturas"
+
+#. module: stock_picking_invoice_link
+#: model:ir.model,name:stock_picking_invoice_link.model_account_move
+msgid "Journal Entries"
+msgstr "Asientos contables"
+
+#. module: stock_picking_invoice_link
+#: model:ir.model,name:stock_picking_invoice_link.model_account_move_line
+msgid "Journal Item"
+msgstr "Apunte contable"
 
 #. module: stock_picking_invoice_link
 #: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.invoice_form
@@ -42,17 +53,17 @@ msgid "Pickings"
 msgstr "Albaranes"
 
 #. module: stock_picking_invoice_link
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_invoice__picking_ids
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move__picking_ids
 msgid "Related Pickings"
 msgstr "Albaranes relacionados"
 
 #. module: stock_picking_invoice_link
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_invoice_line__move_line_ids
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move_line__move_line_ids
 msgid "Related Stock Moves"
 msgstr "Movimientos de existencias relacionados"
 
 #. module: stock_picking_invoice_link
-#: model:ir.model.fields,help:stock_picking_invoice_link.field_account_invoice__picking_ids
+#: model:ir.model.fields,help:stock_picking_invoice_link.field_account_move__picking_ids
 msgid ""
 "Related pickings (only when the invoice has been generated from a sale "
 "order)."
@@ -61,7 +72,7 @@ msgstr ""
 "pedido de venta)."
 
 #. module: stock_picking_invoice_link
-#: model:ir.model.fields,help:stock_picking_invoice_link.field_account_invoice_line__move_line_ids
+#: model:ir.model.fields,help:stock_picking_invoice_link.field_account_move_line__move_line_ids
 msgid ""
 "Related stock moves (only when the invoice has been generated from a sale "
 "order)."
@@ -85,9 +96,7 @@ msgid "Transfer"
 msgstr "Transferir"
 
 #. module: stock_picking_invoice_link
-#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
-msgid "View Invoice"
-msgstr "Ver factura"
-
-#~ msgid "Invoice Lines"
-#~ msgstr "Líneas de factura"
+#: code:addons/stock_picking_invoice_link/models/stock_move.py:0
+#, python-format
+msgid "You can not modify an invoiced stock move"
+msgstr "No puede modificar un movimiento de existencias facturado"
