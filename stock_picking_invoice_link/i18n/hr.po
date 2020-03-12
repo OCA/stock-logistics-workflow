@@ -21,21 +21,31 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #. module: stock_picking_invoice_link
-#: model:ir.model,name:stock_picking_invoice_link.model_account_invoice
-#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
-msgid "Invoice"
-msgstr "Račun"
-
-#. module: stock_picking_invoice_link
-#: model:ir.model,name:stock_picking_invoice_link.model_account_invoice_line
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move__invoice_line_id
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move__invoice_line_ids
 msgid "Invoice Line"
 msgstr "Stavka računa"
 
 #. module: stock_picking_invoice_link
+#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_move_form
+#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_move_picking_form
+msgid "Invoice Lines"
+msgstr "Stavke računa"
+
+#. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking__invoice_ids
+#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
 msgid "Invoices"
 msgstr "Računi"
+
+#. module: stock_picking_invoice_link
+#: model:ir.model,name:stock_picking_invoice_link.model_account_move
+msgid "Journal Entries"
+msgstr ""
+
+#. module: stock_picking_invoice_link
+#: model:ir.model,name:stock_picking_invoice_link.model_account_move_line
+msgid "Journal Item"
+msgstr ""
 
 #. module: stock_picking_invoice_link
 #: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.invoice_form
@@ -43,24 +53,24 @@ msgid "Pickings"
 msgstr "Otpreme"
 
 #. module: stock_picking_invoice_link
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_invoice__picking_ids
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move__picking_ids
 msgid "Related Pickings"
 msgstr "Povezane otpreme"
 
 #. module: stock_picking_invoice_link
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_invoice_line__move_line_ids
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move_line__move_line_ids
 msgid "Related Stock Moves"
 msgstr "Povezana skladišna kretanja"
 
 #. module: stock_picking_invoice_link
-#: model:ir.model.fields,help:stock_picking_invoice_link.field_account_invoice__picking_ids
+#: model:ir.model.fields,help:stock_picking_invoice_link.field_account_move__picking_ids
 msgid ""
 "Related pickings (only when the invoice has been generated from a sale "
 "order)."
 msgstr "Povezane otpreme (samo kad je račun napravljen iz prodajnog naloga)"
 
 #. module: stock_picking_invoice_link
-#: model:ir.model.fields,help:stock_picking_invoice_link.field_account_invoice_line__move_line_ids
+#: model:ir.model.fields,help:stock_picking_invoice_link.field_account_move_line__move_line_ids
 msgid ""
 "Related stock moves (only when the invoice has been generated from a sale "
 "order)."
@@ -84,9 +94,13 @@ msgid "Transfer"
 msgstr "Prenos"
 
 #. module: stock_picking_invoice_link
-#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
-msgid "View Invoice"
-msgstr "Vidi račun"
+#: code:addons/stock_picking_invoice_link/models/stock_move.py:0
+#, python-format
+msgid "You can not modify an invoiced stock move"
+msgstr ""
 
-#~ msgid "Invoice Lines"
-#~ msgstr "Stavke računa"
+#~ msgid "Invoice"
+#~ msgstr "Račun"
+
+#~ msgid "View Invoice"
+#~ msgstr "Vidi račun"
