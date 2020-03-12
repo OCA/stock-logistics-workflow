@@ -19,21 +19,31 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_picking_invoice_link
-#: model:ir.model,name:stock_picking_invoice_link.model_account_invoice
-#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
-msgid "Invoice"
-msgstr "Fatura"
-
-#. module: stock_picking_invoice_link
-#: model:ir.model,name:stock_picking_invoice_link.model_account_invoice_line
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move__invoice_line_id
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move__invoice_line_ids
 msgid "Invoice Line"
 msgstr "Linha de Fatura"
 
 #. module: stock_picking_invoice_link
+#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_move_form
+#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_move_picking_form
+msgid "Invoice Lines"
+msgstr "Linhas de Faturas"
+
+#. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking__invoice_ids
+#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
 msgid "Invoices"
 msgstr "Faturas"
+
+#. module: stock_picking_invoice_link
+#: model:ir.model,name:stock_picking_invoice_link.model_account_move
+msgid "Journal Entries"
+msgstr ""
+
+#. module: stock_picking_invoice_link
+#: model:ir.model,name:stock_picking_invoice_link.model_account_move_line
+msgid "Journal Item"
+msgstr ""
 
 #. module: stock_picking_invoice_link
 #: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.invoice_form
@@ -41,17 +51,17 @@ msgid "Pickings"
 msgstr "Operações de Stock"
 
 #. module: stock_picking_invoice_link
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_invoice__picking_ids
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move__picking_ids
 msgid "Related Pickings"
 msgstr "Operações de Stock Relacionadas"
 
 #. module: stock_picking_invoice_link
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_invoice_line__move_line_ids
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move_line__move_line_ids
 msgid "Related Stock Moves"
 msgstr "Movimentos de Stock Relacionados"
 
 #. module: stock_picking_invoice_link
-#: model:ir.model.fields,help:stock_picking_invoice_link.field_account_invoice__picking_ids
+#: model:ir.model.fields,help:stock_picking_invoice_link.field_account_move__picking_ids
 msgid ""
 "Related pickings (only when the invoice has been generated from a sale "
 "order)."
@@ -60,7 +70,7 @@ msgstr ""
 "de uma encomenda de venda)"
 
 #. module: stock_picking_invoice_link
-#: model:ir.model.fields,help:stock_picking_invoice_link.field_account_invoice_line__move_line_ids
+#: model:ir.model.fields,help:stock_picking_invoice_link.field_account_move_line__move_line_ids
 msgid ""
 "Related stock moves (only when the invoice has been generated from a sale "
 "order)."
@@ -84,9 +94,13 @@ msgid "Transfer"
 msgstr "Transferência"
 
 #. module: stock_picking_invoice_link
-#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
-msgid "View Invoice"
-msgstr "Ver Fatura"
+#: code:addons/stock_picking_invoice_link/models/stock_move.py:0
+#, python-format
+msgid "You can not modify an invoiced stock move"
+msgstr ""
 
-#~ msgid "Invoice Lines"
-#~ msgstr "Linhas de Faturas"
+#~ msgid "Invoice"
+#~ msgstr "Fatura"
+
+#~ msgid "View Invoice"
+#~ msgstr "Ver Fatura"
