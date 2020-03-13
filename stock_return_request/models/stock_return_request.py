@@ -378,7 +378,7 @@ class StockReturnRequestLine(models.Model):
         domain=[('type', '=', 'product')],
     )
     product_uom_id = fields.Many2one(
-        comodel_name='product.uom',
+        comodel_name='uom.uom',
         related='product_id.uom_id',
         readonly=True,
     )
