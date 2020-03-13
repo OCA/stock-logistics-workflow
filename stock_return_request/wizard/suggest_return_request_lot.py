@@ -28,7 +28,7 @@ class SuggestReturnRequestLot(models.TransientModel):
     )
     suggested_lot_detail = fields.Selection(
         selection="_get_suggested_lots_detail_selection",
-        string="Suggested Lots",
+        string="Suggested Lots Detailed",
         help="You can return these lots",
     )
 
@@ -90,10 +90,8 @@ class SuggestReturnRequestLot(models.TransientModel):
         ) for ml in suggested_lots_moves.keys()]
 
     def action_confirm(self):
-        # TODO: In v12, selection keys are forced to strings, so the should be
-        # converted to integers in order to write the into the register
         if self.lot_suggestion_mode == 'sum' and self.suggested_lot:
-            self.request_line_id.lot_id = self.suggested_lot
+            self.request_line_id.lot_id = int(self.suggested_lot)
         elif (self.lot_suggestion_mode == 'detail' and
               self.suggested_lot_detail):
-            self.request_line_id.lot_id = self.suggested_lot_detail
+            self.request_line_id.lot_id = int(self.suggested_lot_detail)
