@@ -1,8 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2018 Tecnativa - Sergio Teruel
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
-
     <record id="view_stock_picking_scrap_form" model="ir.ui.view">
         <field name="name">Picking Scrap</field>
         <field name="model">wiz.stock.picking.scrap</field>
@@ -11,24 +10,47 @@
                 <group string="Detailed Operations">
                     <field name="line_ids" nolabel="1">
                         <tree editable="top" create="0">
-                            <field name="product_id" force_save="1"/>
-                            <field name="lot_id" force_save="1" groups="stock.group_production_lot"/>
-                            <field name="package_id" force_save="1" groups="stock.group_tracking_lot"/>
-                            <field name="owner_id" force_save="1" groups="stock.group_tracking_owner"/>
-                            <field name="quantity"/>
-                            <field name="uom_id" force_save="1" groups="uom.group_uom"/>
+                            <field name="product_id" force_save="1" />
+                            <field
+                                name="lot_id"
+                                force_save="1"
+                                groups="stock.group_production_lot"
+                            />
+                            <field
+                                name="package_id"
+                                force_save="1"
+                                groups="stock.group_tracking_lot"
+                            />
+                            <field
+                                name="owner_id"
+                                force_save="1"
+                                groups="stock.group_tracking_owner"
+                            />
+                            <field name="quantity" />
+                            <field
+                                name="uom_id"
+                                force_save="1"
+                                groups="uom.group_uom"
+                            />
                         </tree>
                     </field>
                 </group>
                 <group>
-                    <field name="scrap_location_id" options="{'no_create': True, 'no_open': True}"/>
+                    <field
+                        name="scrap_location_id"
+                        options="{'no_create': True, 'no_open': True}"
+                    />
                 </group>
                 <footer>
-                    <button name="create_scrap" string="Scrap" type="object" class="btn-primary"/>
-                    <button string="Cancel" class="btn-default" special="cancel"/>
+                    <button
+                        name="create_scrap"
+                        string="Scrap"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" class="btn-default" special="cancel" />
                 </footer>
             </form>
         </field>
     </record>
-
 </odoo>
