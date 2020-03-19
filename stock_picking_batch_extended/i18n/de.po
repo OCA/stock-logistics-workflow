@@ -329,6 +329,7 @@ msgstr "Notizen"
 
 #. module: stock_picking_batch_extended
 #: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:239
+#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:240
 #, python-format
 msgid "Nothing to print."
 msgstr ""
@@ -463,12 +464,14 @@ msgstr "Der Anwender, dem diese Kommissionierungen zugewiesen sind"
 
 #. module: stock_picking_batch_extended
 #: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:159
+#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:160
 #, python-format
 msgid "These Batches have no pickings"
 msgstr "Diese Stapel haben keine Kommissionierungen"
 
 #. module: stock_picking_batch_extended
 #: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:157
+#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:158
 #, python-format
 msgid "This Batch has no pickings"
 msgstr "Dieser Stapel hat keine Kommissionierungen"

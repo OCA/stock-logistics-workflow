@@ -319,6 +319,7 @@ msgstr ""
 
 #. module: stock_picking_batch_extended
 #: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:239
+#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:240
 #, python-format
 msgid "Nothing to print."
 msgstr ""
@@ -448,12 +449,14 @@ msgstr ""
 
 #. module: stock_picking_batch_extended
 #: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:159
+#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:160
 #, python-format
 msgid "These Batches have no pickings"
 msgstr ""
 
 #. module: stock_picking_batch_extended
 #: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:157
+#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:158
 #, python-format
 msgid "This Batch has no pickings"
 msgstr ""
