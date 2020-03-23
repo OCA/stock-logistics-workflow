@@ -31,7 +31,6 @@ class StockQuantPackage(models.Model):
             pack_products = pack.quant_ids.mapped('product_id')
             if len(pack_products) == 1:
                 pack.single_product_id = pack_products.id
-                # TODO handle uom
                 pack.single_product_qty = sum(pack.quant_ids.mapped('quantity'))
             else:
                 pack.single_product_id = False
