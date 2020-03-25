@@ -11,6 +11,7 @@ setuptools.setup(
         'odoo12-addon-product_cost_price_avco_sync',
         'odoo12-addon-product_supplierinfo_for_customer_picking',
         'odoo12-addon-purchase_stock_picking_restrict_cancel',
+        'odoo12-addon-sale_order_global_stock_route',
         'odoo12-addon-stock_change_price_at_date',
         'odoo12-addon-stock_dropshipping_whole_supplier',
         'odoo12-addon-stock_landed_costs_currency',
