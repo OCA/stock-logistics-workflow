@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//page[@name='sales_purchases']//group[@name='sale']"
+                position="inside"
+            >
+                <field name="delivery_time_preference" />
+                <field name="delivery_time_window_ids" attrs="{'invisible': [('delivery_time_preference', '!=', 'fix_weekdays')]}">
+                    <tree editable="bottom">
+                        <field name="start" />
+                        <field name="end" />
+                        <field name="weekday_ids" widget="many2many_tags" />
+                    </tree>
+                </field>
+            </xpath>
+        </field>
+    </record>
+</odoo>
