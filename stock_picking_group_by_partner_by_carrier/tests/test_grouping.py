@@ -175,3 +175,150 @@ class TestSaleStock(TestSale):
         pick.with_context(cancel_backorder=False).action_done()
         self.assertTrue(so2.picking_ids & so1.picking_ids)
         self.assertEqual(so2.picking_ids.sale_ids, so1 + so2)
+
+    def test_cancelling_sale_order1(self):
+        """1st sale order is cancelled
+
+        -> picking is still todo with only 1 stock move todo"""
+        so1 = self._get_new_sale_order(carrier=self.carrier1)
+        so1.action_confirm()
+        so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
+        so2.action_confirm()
+        self.assertTrue(so1.picking_ids)
+        self.assertTrue(so2.picking_ids)
+        self.assertEqual(so1.picking_ids, so2.picking_ids)
+        so1.action_cancel()
+        self.assertNotEqual(so1.picking_ids.state, "cancel")
+        moves = so1.picking_ids.move_lines
+        so1_moves = moves.filtered(lambda m: m.sale_line_id.order_id == so1)
+        so2_moves = moves.filtered(lambda m: m.sale_line_id.order_id == so2)
+        self.assertEqual(so1_moves.mapped("state"), ["cancel"])
+        self.assertEqual(so2_moves.mapped("state"), ["confirmed"])
+        self.assertEqual(so1.state, "cancel")
+        self.assertEqual(so2.state, "sale")
+
+    def test_cancelling_sale_order1_before_create_order2(self):
+        """1st sale order is cancelled
+
+        -> picking is still todo with only 1 stock move todo"""
+        so1 = self._get_new_sale_order(carrier=self.carrier1)
+        so1.action_confirm()
+        so1.action_cancel()
+        so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
+        so2.action_confirm()
+        self.assertTrue(so1.picking_ids)
+        self.assertTrue(so2.picking_ids)
+        self.assertFalse(so1.picking_ids & so2.picking_ids)
+
+    def test_cancelling_sale_order2(self):
+        """2nd sale order is cancelled
+
+        -> picking is still todo with only 1 stock move todo"""
+        so1 = self._get_new_sale_order(carrier=self.carrier1)
+        so1.action_confirm()
+        so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
+        so2.action_confirm()
+        self.assertTrue(so1.picking_ids)
+        self.assertTrue(so2.picking_ids)
+        self.assertEqual(so1.picking_ids, so2.picking_ids)
+        so2.action_cancel()
+        self.assertNotEqual(so1.picking_ids.state, "cancel")
+        moves = so1.picking_ids.move_lines
+        so1_moves = moves.filtered(lambda m: m.sale_line_id.order_id == so1)
+        so2_moves = moves.filtered(lambda m: m.sale_line_id.order_id == so2)
+        self.assertEqual(so1_moves.mapped("state"), ["confirmed"])
+        self.assertEqual(so2_moves.mapped("state"), ["cancel"])
+        self.assertEqual(so1.state, "sale")
+        self.assertEqual(so2.state, "cancel")
+
+    def test_delivery_multi_step(self):
+        """the warehouse uses pick + ship
+
+        -> shippings are grouped, pickings are not"""
+        warehouse = self.env.ref("stock.warehouse0")
+        warehouse.delivery_steps = "pick_ship"
+        so1 = self._get_new_sale_order(carrier=self.carrier1)
+        so1.action_confirm()
+        so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
+        so2.action_confirm()
+        self.assertEqual(len(so1.picking_ids), 2)
+        self.assertEqual(len(so2.picking_ids), 2)
+        ships = so1.picking_ids & so2.picking_ids
+        self.assertEqual(len(ships), 1)
+        self.assertEqual(ships.picking_type_id, warehouse.out_type_id)
+        self.assertTrue(so1.picking_ids - so2.picking_ids)
+        self.assertTrue(so2.picking_ids - so1.picking_ids)
+        picks = (so1.picking_ids - so2.picking_ids) | (
+            so2.picking_ids - so1.picking_ids
+        )
+
+        self.assertEqual(len(picks), 2)
+        self.assertEqual(picks.mapped("picking_type_id"), warehouse.pick_type_id)
+
+    def test_delivery_multi_step_cancel_so1(self):
+        """the warehouse uses pick + ship. Cancel SO1
+
+        -> shippings are grouped, pickings are not"""
+        warehouse = self.env.ref("stock.warehouse0")
+        warehouse.delivery_steps = "pick_ship"
+        so1 = self._get_new_sale_order(carrier=self.carrier1)
+        so1.action_confirm()
+        so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
+        so2.action_confirm()
+        ships = so1.picking_ids & so2.picking_ids
+        so1.action_cancel()
+        self.assertEqual(ships.state, "waiting")
+        pick1 = so1.picking_ids - ships
+        self.assertEqual(pick1.state, "cancel")
+        pick2 = so2.picking_ids - ships
+        self.assertEqual(pick2.state, "confirmed")
+
+    def test_delivery_multi_step_cancel_so2(self):
+        """the warehouse uses pick + ship. Cancel SO2
+
+        -> shippings are grouped, pickings are not"""
+        warehouse = self.env.ref("stock.warehouse0")
+        warehouse.delivery_steps = "pick_ship"
+        so1 = self._get_new_sale_order(carrier=self.carrier1)
+        so1.action_confirm()
+        so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
+        so2.action_confirm()
+        ships = so1.picking_ids & so2.picking_ids
+        so2.action_cancel()
+        self.assertEqual(ships.state, "waiting")
+        pick1 = so1.picking_ids - ships
+        self.assertEqual(pick1.state, "confirmed")
+        pick2 = so2.picking_ids - ships
+        self.assertEqual(pick2.state, "cancel")
+
+    def test_delivery_multi_step_cancel_so1_create_so3(self):
+        """the warehouse uses pick + ship. Cancel SO1, create SO3
+
+        -> shippings are grouped, pickings are not"""
+        warehouse = self.env.ref("stock.warehouse0")
+        warehouse.delivery_steps = "pick_ship"
+        so1 = self._get_new_sale_order(carrier=self.carrier1)
+        so1.action_confirm()
+        so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
+        so2.action_confirm()
+        ships = so1.picking_ids & so2.picking_ids
+        so1.action_cancel()
+        so3 = self._get_new_sale_order(amount=12, carrier=self.carrier1)
+        so3.action_confirm()
+        self.assertTrue(ships in so3.picking_ids)
+        pick3 = so3.picking_ids - ships
+        self.assertEqual(len(pick3), 1)
+        self.assertEqual(pick3.state, "confirmed")
+
+    def test_delivery_mult_step_cancelling_sale_order1_before_create_order2(self):
+        """1st sale order is cancelled
+
+        -> picking is still todo with only 1 stock move todo"""
+        so1 = self._get_new_sale_order(carrier=self.carrier1)
+        so1.action_confirm()
+        so1.action_cancel()
+        so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
+        so2.action_confirm()
+        self.assertTrue(so1.picking_ids)
+        self.assertTrue(so2.picking_ids)
+        self.assertFalse(so1.picking_ids & so2.picking_ids)
