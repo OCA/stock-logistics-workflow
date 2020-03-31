@@ -6,6 +6,13 @@ class SaleOrder(models.Model):
 
     picking_ids = fields.Many2many("stock.picking", string="Transfers", copy=False)
 
+    def action_cancel(self):
+        for sale_order in self:
+            # change the context so we can intercept this in StockPicking.action_cancel
+            super(
+                SaleOrder, sale_order.with_context(cancel_sale_id=sale_order.id)
+            ).action_cancel()
+
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
