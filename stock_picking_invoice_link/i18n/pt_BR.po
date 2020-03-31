@@ -11,8 +11,8 @@ msgstr ""
 "POT-Creation-Date: 2017-06-15 11:08+0000\n"
 "PO-Revision-Date: 2019-08-30 15:23+0000\n"
 "Last-Translator: Rodrigo Macedo <rmsolucoeseminformatic4@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
-"23907/pt_BR/)\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/"
+"teams/23907/pt_BR/)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,16 +21,26 @@ msgstr ""
 "X-Generator: Weblate 3.8\n"
 
 #. module: stock_picking_invoice_link
-#: model:ir.model,name:stock_picking_invoice_link.model_account_invoice
 #: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
+msgid "<span class=\"o_stat_text\">Invoices</span>"
+msgstr ""
+
+#. module: stock_picking_invoice_link
+#: model:ir.model,name:stock_picking_invoice_link.model_account_invoice
 msgid "Invoice"
 msgstr "Fatura"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_invoice_line
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move__invoice_line_id
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move__invoice_line_ids
 msgid "Invoice Line"
 msgstr "Linha da Fatura"
+
+#. module: stock_picking_invoice_link
+#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_move_form
+#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_move_picking_form
+msgid "Invoice Lines"
+msgstr "Linhas da Fatura"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking__invoice_ids
@@ -86,9 +96,10 @@ msgid "Transfer"
 msgstr "Transferir"
 
 #. module: stock_picking_invoice_link
-#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
-msgid "View Invoice"
-msgstr "Ver Fatura"
+#: code:addons/stock_picking_invoice_link/models/stock_move.py:34
+#, python-format
+msgid "You can not modify an invoiced stock move"
+msgstr ""
 
-#~ msgid "Invoice Lines"
-#~ msgstr "Linhas da Fatura"
+#~ msgid "View Invoice"
+#~ msgstr "Ver Fatura"
