@@ -15,6 +15,7 @@
                         <field name="start" />
                         <field name="end" />
                         <field name="weekday_ids" widget="many2many_tags" />
+                        <field name="tz" />
                     </tree>
                 </field>
             </xpath>

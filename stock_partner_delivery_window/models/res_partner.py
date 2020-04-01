@@ -47,7 +47,7 @@ class ResPartner(models.Model):
 
     def is_in_delivery_window(self, date_time):
         self.ensure_one()
-        windows = self.get_delivery_windows(date_time.weekday())
+        windows = self.get_delivery_windows(date_time.weekday()).get(self.id)
         for w in windows:
             if w.get_start_time() <= date_time.time() <= w.get_end_time():
                 return True

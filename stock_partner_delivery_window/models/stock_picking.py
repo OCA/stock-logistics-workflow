@@ -27,7 +27,7 @@ class StockPicking(models.Model):
                         "The scheduled date is %s, but the partner is "
                         "set to prefer deliveries on following time windows:\n%s"
                         % (
-                            # FIXME handle date format + translation
+                            # TODO handle date format + tz + translation
                             self.scheduled_date,
                             '\n'.join(
                                 [
