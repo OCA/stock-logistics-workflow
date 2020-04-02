@@ -8,14 +8,14 @@ class ResPartner(models.Model):
     _inherit = "res.partner"
 
     delivery_time_preference = fields.Selection(
-        [("direct", "As soon as possible"), ("fix_weekdays", "Fixed week days")],
+        [("anytime", "Any time"), ("time_windows", "Fixed time windows")],
         string="Delivery time schedule preference",
-        default="direct",
+        default="anytime",
         required=True,
         help="Define the scheduling preference for delivery orders:\n\n"
-        "* As soon as possible: Do not postpone deliveries\n"
-        "* Fixed week days: Postpone deliveries to the next preferred "
-        "weekday",
+        "* Any time: Do not postpone deliveries\n"
+        "* Fixed time windows: Postpone deliveries to the next preferred "
+        "time window",
     )
 
     delivery_time_window_ids = fields.One2many(
@@ -48,7 +48,8 @@ class ResPartner(models.Model):
     def is_in_delivery_window(self, date_time):
         self.ensure_one()
         windows = self.get_delivery_windows(date_time.weekday()).get(self.id)
-        for w in windows:
-            if w.get_start_time() <= date_time.time() <= w.get_end_time():
-                return True
+        if windows:
+            for w in windows:
+                if w.get_start_time() <= date_time.time() <= w.get_end_time():
+                    return True
         return False
