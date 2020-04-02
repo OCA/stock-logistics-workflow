@@ -1,6 +1,7 @@
 # Copyright 2020 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class ResPartner(models.Model):
@@ -19,8 +20,22 @@ class ResPartner(models.Model):
     )
 
     delivery_time_window_ids = fields.One2many(
-        'partner.delivery.time.window', 'partner_id'
+        'partner.delivery.time.window',
+        'partner_id',
+        string="Delivery time windows",
     )
+
+    @api.constrains('delivery_time_preference', 'delivery_time_window_ids')
+    def _check_delivery_time_preference(self):
+        for partner in self:
+            if (
+                partner.delivery_time_preference == "time_windows" and
+                not partner.delivery_time_window_ids
+            ):
+                raise ValidationError(_(
+                    "Please define at least one delivery time window or change"
+                    " preference to Any time"
+                ))
 
     def get_delivery_windows(self, day_name=None):
         """

@@ -8,7 +8,7 @@
     "author": "Camptocamp, ACSONE SA/NV, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "website": "https://github.com/OCA/stock-logistics-workflow",
-    "depends": ["base_time_window", "stock"],
+    "depends": ["base_time_window", "partner_tz", "stock"],
     "data": [
         "security/ir.model.access.csv",
         "views/res_partner.xml",

@@ -18,9 +18,8 @@ class DeliveryTimeWindow(models.Model):
     partner_id = fields.Many2one(
         "res.partner", required=True, index=True, ondelete='cascade'
     )
-    # TODO Move to base_time_window?
     tz = fields.Selection(
-        _tz_get, string='Timezone', default=lambda p: p.env.user.company_id.partner_id.tz
+        _tz_get, related="partner_id.tz", readonly=True,
     )
 
     @api.constrains("partner_id")
