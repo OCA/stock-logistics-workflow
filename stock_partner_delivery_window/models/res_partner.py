@@ -50,7 +50,7 @@ class ResPartner(models.Model):
             week_day_id = self.env["time.weekday"]._get_id_by_name(
                 day_name
             )
-            domain.append(("weekday_ids", "in", week_day_id))
+            domain.append(("time_window_weekday_ids", "in", week_day_id))
         windows = self.env["partner.delivery.time.window"].search(
             domain
         )
@@ -65,6 +65,6 @@ class ResPartner(models.Model):
         windows = self.get_delivery_windows(date_time.weekday()).get(self.id)
         if windows:
             for w in windows:
-                if w.get_start_time() <= date_time.time() <= w.get_end_time():
+                if w.get_time_window_start_time() <= date_time.time() <= w.get_time_window_end_time():
                     return True
         return False

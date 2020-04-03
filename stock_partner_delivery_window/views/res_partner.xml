@@ -14,9 +14,9 @@
                     <label for="delivery_time_window_ids" />
                     <field name="delivery_time_window_ids" >
                         <tree editable="bottom">
-                            <field name="start" widget="float_time"/>
-                            <field name="end" widget="float_time"/>
-                            <field name="weekday_ids" widget="many2many_tags" />
+                            <field name="time_window_start" widget="float_time"/>
+                            <field name="time_window_end" widget="float_time"/>
+                            <field name="time_window_weekday_ids" widget="many2many_tags" />
                         </tree>
                     </field>
                 </div>

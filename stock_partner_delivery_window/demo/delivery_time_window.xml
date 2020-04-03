@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="demo_partner_delivery_window_1" model="partner.delivery.time.window">
+        <field name="partner_id" ref="base.res_partner_1" />
+        <field name="time_window_start">10.0</field>
+        <field name="time_window_end">18.0</field>
+        <field name="time_window_weekday_ids" eval="[(4, ref('base_time_window.time_weekday_monday'))]" />
+    </record>
+    <record id="base.res_partner_1" model="res.partner">
+        <field name="delivery_time_preference">time_windows</field>
+    </record>
+</odoo>
