@@ -1,6 +1,7 @@
 # Copyright 2019 Tecnativa - Carlos Dauden
 # Copyright 2019 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+from time import sleep
 from odoo.tests.common import SavepointCase
 
 
@@ -59,6 +60,14 @@ class TestProductCostPriceAvcoSync(SavepointCase):
         move_in.quantity_done = move_in.product_uom_qty
         self.picking_in.action_done()
         move_in.date = '2019-10-01 00:00:00'
+        # Why do we a sleep during 1 second after avery move validation?
+        # The cost_price_avco_sync method remove future product price history
+        # from 1 second before that the move date which has been upadated.
+        # If we do not apply sleep for test all price history have the same
+        # second so test crashes.
+        # In a real scenario, the product price history are created with more
+        # difference than 1 second.
+        sleep(1)
 
         picking_in_2 = self.picking_in.copy()
         move_in_2 = picking_in_2.move_lines[:1]
@@ -66,6 +75,7 @@ class TestProductCostPriceAvcoSync(SavepointCase):
         move_in_2.quantity_done = move_in_2.product_uom_qty
         picking_in_2.action_done()
         move_in_2.date = '2019-10-02 00:00:00'
+        sleep(1)
 
         move_out = self.picking_out.move_lines[:1]
         move_out.quantity_done = move_out.product_uom_qty
@@ -92,13 +102,7 @@ class TestProductCostPriceAvcoSync(SavepointCase):
         })
         inventory._action_done()
         inventory.move_ids.date = '2019-10-05 00:00:00'
-
-        # Include this picking to delay next assertion (aleatory error)
-        picking_out_3 = self.picking_out.copy()
-        move_out_3 = picking_out_3.move_lines[:1]
-        move_out_3.quantity_done = move_out_2.product_uom_qty
-        picking_out_3.action_done()
-        move_out_3.date = '2019-10-04 00:00:00'
+        sleep(1)
 
         self.assertEqual(self.product.standard_price, 5.0)
         move_in.price_unit = 2.0
