@@ -12,7 +12,7 @@ class StockPicking(models.Model):
         self.ensure_one()
         if (
             not self.partner_id or
-            self.partner_id.delivery_time_preference != 'fix_weekdays' or
+            self.partner_id.delivery_time_preference != 'time_windows' or
             self.picking_type_id.code != 'outgoing'
         ):
             return
