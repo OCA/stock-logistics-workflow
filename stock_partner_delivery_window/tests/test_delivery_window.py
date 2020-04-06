@@ -92,3 +92,4 @@ class TestPartnerDeliveryWindow(SavepointCase):
         picking.scheduled_date = "2020-04-02 14:01:01"
         onchange_res = picking._onchange_scheduled_date()
         self.assertTrue("warning" in onchange_res.keys())
+        # TODO add test with winter time
