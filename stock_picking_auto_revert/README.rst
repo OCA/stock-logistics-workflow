@@ -23,9 +23,9 @@ Stock Picking Auto Revert
     :target: https://runbot.odoo-community.org/runbot/154/10.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
-Corrrect mistakes in pickings. Instead of cancel this module will create a
+Correct mistakes in pickings. Instead of cancel this module will create a
 return and then will recreate the issued picking.
 
 **Table of contents**
