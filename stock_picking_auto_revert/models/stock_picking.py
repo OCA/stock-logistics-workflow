@@ -31,21 +31,22 @@ class StockPicking(models.Model):
         )
         for rm in default_data["product_return_moves"]:
             if len(rm) > 2 and isinstance(rm[2], dict):
-                sm = pick.move_lines.filtered(
+                move_lines = pick.move_lines.filtered(
                     lambda x: x.product_id.id == rm[2]["product_id"]
                 )
                 precision = self.env["decimal.precision"].precision_get(
                     "Product Unit of Measure"
                 )
-                if (
-                    float_compare(
-                        rm[2]["quantity"],
-                        sm.product_uom_qty,
-                        precision_digits=precision,
-                    )
-                    < 0
-                ):
-                    raise exceptions.UserError(msg)
+                for move_line in move_lines:
+                    if (
+                        float_compare(
+                            rm[2]["quantity"],
+                            move_line.product_uom_qty,
+                            precision_digits=precision,
+                        )
+                        < 0
+                    ):
+                        raise exceptions.UserError(msg)
             else:
                 raise exceptions.UserError(msg)
         return_wiz = StockReturnPicking.with_context(

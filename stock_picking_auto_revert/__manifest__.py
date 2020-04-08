@@ -12,6 +12,6 @@
     "depends": ["sale_stock", ],
     "data": ["security/stock_security.xml",
              "view/stock_view.xml",
-    ],
+             ],
     "installable": True,
 }
