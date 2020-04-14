@@ -64,7 +64,7 @@ class TestPartnerDeliveryWindow(SavepointCase):
         onchange_res = cust_ship_picking._onchange_scheduled_date()
         self.assertTrue("warning" in onchange_res.keys())
 
-    @freeze_time("2020-04-02 09:00:00")  # Thursday
+    @freeze_time("2020-04-02 07:59:59")  # Thursday
     def test_with_timezone_dst(self):
         # Define customer to allow shipping only between 10.00am and 4.00pm
         # in tz 'Europe/Brussels' (GMT+1 or GMT+2 during DST)
@@ -77,24 +77,28 @@ class TestPartnerDeliveryWindow(SavepointCase):
         )
         # Test DST
         #
-        # Frozen time is in UTC so 2020-04-02 09:00:00 == 2020-04-02 11:00:00
+        # Frozen time is in UTC so 2020-04-02 07:59:59 == 2020-04-02 09:59:59
         #  in Brussels which is preferred
         picking = self._create_delivery_picking(self.customer_shipping)
         onchange_res = picking._onchange_scheduled_date()
-        # No warning since we're in the timeframe
+        self.assertTrue(isinstance(onchange_res, dict) and "warning" in onchange_res.keys())
+        # Scheduled date is in UTC so 2020-04-02 08:00:00 == 2020-04-02 10:00:00
+        #  in Brussels which is preferred
+        picking.scheduled_date = "2020-04-02 08:00:00"
+        onchange_res = picking._onchange_scheduled_date()
         self.assertIsNone(onchange_res)
-        # Scheduled date is in UTC so 2020-04-02 07:59:59 == 2020-04-02 09:59:59
-        #  in Brussels which is not preferred
-        picking.scheduled_date = "2020-04-02 07:59:59"
+        # Scheduled date is in UTC so 2020-04-02 13:59:59 == 2020-04-02 15:59:59
+        #  in Brussels which is preferred
+        picking.scheduled_date = "2020-04-02 13:59:59"
         onchange_res = picking._onchange_scheduled_date()
-        self.assertTrue("warning" in onchange_res.keys())
-        # Scheduled date is in UTC so 2020-04-02 15:01:01 == 2020-04-02 17:01:01
+        self.assertIsNone(onchange_res)
+        # Scheduled date is in UTC so 2020-04-02 14:00:00 == 2020-04-02 16:00:00
         #  in Brussels which is not preferred
-        picking.scheduled_date = "2020-04-02 15:01:01"
+        picking.scheduled_date = "2020-04-02 14:00:00"
         onchange_res = picking._onchange_scheduled_date()
-        self.assertTrue("warning" in onchange_res.keys())
+        self.assertTrue(isinstance(onchange_res, dict) and "warning" in onchange_res.keys())
 
-    @freeze_time("2020-03-26 09:00:00")  # Thursday
+    @freeze_time("2020-03-26 08:59:59")  # Thursday
     def test_with_timezone_no_dst(self):
         # Define customer to allow shipping only between 10.00am and 4.00pm
         # in tz 'Europe/Brussels' (GMT+1 or GMT+2 during DST)
@@ -107,19 +111,26 @@ class TestPartnerDeliveryWindow(SavepointCase):
         )
         # Test No-DST
         #
-        # Frozen time is in UTC so 2020-04-02 09:00:00 == 2020-04-02 10:00:00
+        # Frozen time is in UTC so 2020-03-26 08:59:59 == 2020-04-02 09:59:59
         #  in Brussels which is preferred
         picking = self._create_delivery_picking(self.customer_shipping)
+        import pdb; pdb.set_trace()
+        onchange_res = picking._onchange_scheduled_date()
+        self.assertTrue(isinstance(onchange_res, dict) and "warning" in onchange_res.keys())
+        # Scheduled date is in UTC so 2020-03-26 09:00:00 == 2020-04-02 10:00:00
+        #  in Brussels which is preferred
+        picking.scheduled_date = "2020-03-26 09:00:00"
         onchange_res = picking._onchange_scheduled_date()
         # No warning since we're in the timeframe
         self.assertIsNone(onchange_res)
-        # Scheduled date is in UTC so 2020-04-02 07:59:59 == 2020-04-02 08:59:59
-        #  in Brussels which is not preferred
-        picking.scheduled_date = "2020-04-02 07:59:59"
+        # Scheduled date is in UTC so 2020-03-26 14:59:59 == 2020-04-02 15:59:59
+        #  in Brussels which is preferred
+        picking.scheduled_date = "2020-03-26 14:59:59"
         onchange_res = picking._onchange_scheduled_date()
-        self.assertTrue("warning" in onchange_res.keys())
-        # Scheduled date is in UTC so 2020-04-02 15:01:01 == 2020-04-02 16:01:01
-        #  in Brussels which is not preferred
-        picking.scheduled_date = "2020-04-02 15:01:01"
+        # No warning since we're in the timeframe
+        self.assertIsNone(onchange_res)
+        # Scheduled date is in UTC so 2020-03-26 15:00:00 == 2020-04-02 16:00:00
+        #  in Brussels which is preferred
+        picking.scheduled_date = "2020-03-26 15:00:00"
         onchange_res = picking._onchange_scheduled_date()
-        self.assertTrue("warning" in onchange_res.keys())
+        self.assertTrue(isinstance(onchange_res, dict) and "warning" in onchange_res.keys())

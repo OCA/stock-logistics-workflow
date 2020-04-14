@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.addons.partner_tz.tools import tz_utils
 
 
 class ResPartner(models.Model):
@@ -61,10 +62,24 @@ class ResPartner(models.Model):
         return res
 
     def is_in_delivery_window(self, date_time):
+        """
+        Checks if provided date_time is in a delivery window for actual partner
+
+        :param date_time: Datetime object
+        :return: Boolean
+        """
         self.ensure_one()
         windows = self.get_delivery_windows(date_time.weekday()).get(self.id)
         if windows:
             for w in windows:
-                if w.get_time_window_start_time() <= date_time.time() <= w.get_time_window_end_time():
+                start_time = w.get_time_window_start_time()
+                end_time = w.get_time_window_end_time()
+                if self.tz:
+                    utc_start = tz_utils.tz_to_utc_time(self.tz, start_time)
+                    utc_end = tz_utils.tz_to_utc_time(self.tz, end_time)
+                else:
+                    utc_start = start_time
+                    utc_end = end_time
+                if utc_start <= date_time.time() < utc_end:
                     return True
         return False
