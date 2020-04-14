@@ -9,19 +9,20 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-18 03:48+0000\n"
-"PO-Revision-Date: 2017-12-18 03:48+0000\n"
-"Last-Translator: Pedro Castro Silva <pedrocs@exo.pt>, 2017\n"
+"PO-Revision-Date: 2020-04-15 01:19+0000\n"
+"Last-Translator: Pedro Castro Silva <pedrocs@exo.pt>\n"
 "Language-Team: Portuguese (https://www.transifex.com/oca/teams/23907/pt/)\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: stock_picking_invoice_link
 #: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
 msgid "<span class=\"o_stat_text\">Invoices</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Faturas</span>"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_invoice
@@ -67,7 +68,7 @@ msgid ""
 "order)."
 msgstr ""
 "Operações de stock relacionadas (apenas quando a fatura foi gerada a partir "
-"de uma encomenda de venda)"
+"de uma encomenda de venda)."
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,help:stock_picking_invoice_link.field_account_invoice_line__move_line_ids
@@ -76,7 +77,7 @@ msgid ""
 "order)."
 msgstr ""
 "Movimentos de stock relacionados (apenas quando a fatura foi gerada a partir "
-"de uma encomenda de venda)"
+"de uma encomenda de venda)."
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_sale_order_line
@@ -97,7 +98,7 @@ msgstr "Transferência"
 #: code:addons/stock_picking_invoice_link/models/stock_move.py:34
 #, python-format
 msgid "You can not modify an invoiced stock move"
-msgstr ""
+msgstr "Não pode modificar um movimento de stock faturado"
 
 #~ msgid "View Invoice"
 #~ msgstr "Ver Fatura"
