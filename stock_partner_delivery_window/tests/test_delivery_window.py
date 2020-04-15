@@ -81,7 +81,7 @@ class TestPartnerDeliveryWindow(SavepointCase):
         # in tz 'Europe/Brussels' (GMT+1 or GMT+2 during DST)
         self.customer_shipping.tz = "Europe/Brussels"
         self.customer_shipping.delivery_time_window_ids.write(
-            {"time_window_start": 10.0, "time_window_end": 16.0,}
+            {"time_window_start": 10.0, "time_window_end": 16.0}
         )
         # Test DST
         #
@@ -116,7 +116,7 @@ class TestPartnerDeliveryWindow(SavepointCase):
         # in tz 'Europe/Brussels' (GMT+1 or GMT+2 during DST)
         self.customer_shipping.tz = "Europe/Brussels"
         self.customer_shipping.delivery_time_window_ids.write(
-            {"time_window_start": 10.0, "time_window_end": 16.0,}
+            {"time_window_start": 10.0, "time_window_end": 16.0}
         )
         # Test No-DST
         #
