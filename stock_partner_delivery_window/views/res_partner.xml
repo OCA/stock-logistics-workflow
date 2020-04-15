@@ -10,17 +10,22 @@
                 position="inside"
             >
                 <field name="delivery_time_preference" />
-                <div attrs="{'invisible': [('delivery_time_preference', '!=', 'time_windows')]}" colspan="2">
+                <div
+                    attrs="{'invisible': [('delivery_time_preference', '!=', 'time_windows')]}"
+                    colspan="2"
+                >
                     <label for="delivery_time_window_ids" />
-                    <field name="delivery_time_window_ids" >
+                    <field name="delivery_time_window_ids">
                         <tree editable="bottom">
-                            <field name="time_window_start" widget="float_time"/>
-                            <field name="time_window_end" widget="float_time"/>
-                            <field name="time_window_weekday_ids" widget="many2many_tags" />
+                            <field name="time_window_start" widget="float_time" />
+                            <field name="time_window_end" widget="float_time" />
+                            <field
+                                name="time_window_weekday_ids"
+                                widget="many2many_tags"
+                            />
                         </tree>
                     </field>
                 </div>
-
             </xpath>
         </field>
     </record>

@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+
 from odoo.addons.partner_tz.tools import tz_utils
 
 
@@ -21,22 +22,22 @@ class ResPartner(models.Model):
     )
 
     delivery_time_window_ids = fields.One2many(
-        'partner.delivery.time.window',
-        'partner_id',
-        string="Delivery time windows",
+        "partner.delivery.time.window", "partner_id", string="Delivery time windows",
     )
 
-    @api.constrains('delivery_time_preference', 'delivery_time_window_ids')
+    @api.constrains("delivery_time_preference", "delivery_time_window_ids")
     def _check_delivery_time_preference(self):
         for partner in self:
             if (
-                partner.delivery_time_preference == "time_windows" and
-                not partner.delivery_time_window_ids
+                partner.delivery_time_preference == "time_windows"
+                and not partner.delivery_time_window_ids
             ):
-                raise ValidationError(_(
-                    "Please define at least one delivery time window or change"
-                    " preference to Any time"
-                ))
+                raise ValidationError(
+                    _(
+                        "Please define at least one delivery time window or change"
+                        " preference to Any time"
+                    )
+                )
 
     def get_delivery_windows(self, day_name=None):
         """
@@ -48,16 +49,14 @@ class ResPartner(models.Model):
         res = {}
         domain = [("partner_id", "in", self.ids)]
         if day_name is not None:
-            week_day_id = self.env["time.weekday"]._get_id_by_name(
-                day_name
-            )
+            week_day_id = self.env["time.weekday"]._get_id_by_name(day_name)
             domain.append(("time_window_weekday_ids", "in", week_day_id))
-        windows = self.env["partner.delivery.time.window"].search(
-            domain
-        )
+        windows = self.env["partner.delivery.time.window"].search(domain)
         for window in windows:
             if not res.get(window.partner_id.id):
-                res[window.partner_id.id] = self.env["partner.delivery.time.window"].browse()
+                res[window.partner_id.id] = self.env[
+                    "partner.delivery.time.window"
+                ].browse()
             res[window.partner_id.id] |= window
         return res
 

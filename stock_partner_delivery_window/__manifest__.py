@@ -9,12 +9,7 @@
     "license": "AGPL-3",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": ["base_time_window", "partner_tz", "stock"],
-    "data": [
-        "security/ir.model.access.csv",
-        "views/res_partner.xml",
-    ],
-    "demo": [
-        "demo/delivery_time_window.xml",
-    ],
+    "data": ["security/ir.model.access.csv", "views/res_partner.xml",],
+    "demo": ["demo/delivery_time_window.xml",],
     "installable": True,
 }

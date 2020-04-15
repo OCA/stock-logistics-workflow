@@ -9,13 +9,13 @@ from odoo.tools.misc import format_datetime
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    @api.onchange('scheduled_date')
+    @api.onchange("scheduled_date")
     def _onchange_scheduled_date(self):
         self.ensure_one()
         if (
-            not self.partner_id or
-            self.partner_id.delivery_time_preference != 'time_windows' or
-            self.picking_type_id.code != 'outgoing'
+            not self.partner_id
+            or self.partner_id.delivery_time_preference != "time_windows"
+            or self.picking_type_id.code != "outgoing"
         ):
             return
         p = self.partner_id
@@ -27,11 +27,10 @@ class StockPicking(models.Model):
                 "set to prefer deliveries on following time windows:\n%s"
                 % (
                     format_datetime(self.env, self.scheduled_date),
-                    '\n'.join(
+                    "\n".join(
                         [
                             "  * %s" % w.display_name
-                            for w
-                            in p.get_delivery_windows().get(p.id)
+                            for w in p.get_delivery_windows().get(p.id)
                         ]
                     ),
                 )
@@ -40,8 +39,7 @@ class StockPicking(models.Model):
                 message += _(
                     "\nConsidering the security lead time of %s days defined on "
                     "the company, the delivery will not match the partner time"
-                    "windows preference."
-                    % sec_lead_time
+                    "windows preference." % sec_lead_time
                 )
             return {
                 "warning": {
