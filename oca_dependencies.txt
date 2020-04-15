@@ -1,0 +1,2 @@
+partner-contact
+server-tools
