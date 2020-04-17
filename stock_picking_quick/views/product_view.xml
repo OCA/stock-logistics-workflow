@@ -17,9 +17,10 @@
        </field>
     </record>
 
-    <record id="product_search_form_view" model="ir.ui.view">
+    <record id="product_search_view4picking" model="ir.ui.view">
         <field name="model">product.product</field>
         <field name="inherit_id" ref="base_product_mass_addition.product_search_form_view"/>
+        <field name="mode">primary</field>
         <field name="arch" type="xml">
             <xpath expr="//filter[last()]" position="after">
                 <filter name="use_only_available_products"

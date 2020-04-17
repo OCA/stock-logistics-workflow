@@ -25,6 +25,9 @@ class StockPicking(models.Model):
         res["view_id"] = (
             self.env.ref("stock_picking_quick.product_tree_view4picking").id,
         )
+        res["search_view_id"] = (
+            self.env.ref("stock_picking_quick.product_search_view4picking").id,
+        )
         return res
 
     def _prepare_quick_line(self, product):
