@@ -14,4 +14,6 @@ class StockProductionLot(models.Model):
     @api.depends("quant_ids", "quant_ids.location_id")
     def _compute_location_ids(self):
         for lot in self:
-            lot.location_ids = lot.mapped("quant_ids.location_id")
+            lot.location_ids = lot.quant_ids.filtered(lambda l: l.quantity > 0).mapped(
+                "location_id"
+            )
