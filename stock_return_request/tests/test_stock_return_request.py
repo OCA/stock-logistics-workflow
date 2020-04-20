@@ -103,3 +103,45 @@ class PurchaseReturnRequestCase(StockReturnRequestCase):
             lot_id=self.prod_3_lot2.id).qty_available
         self.assertAlmostEqual(prod_3_qty_lot_1, 40.0)
         self.assertAlmostEqual(prod_3_qty_lot_2, 5.0)
+
+    def test_return_child_location(self):
+        picking = self.picking_supplier_1.copy({
+            'location_dest_id': self.location_child_1.id,
+        })
+        picking.move_lines.unlink()
+        picking.move_lines = [(0, 0, {
+            'product_id': self.prod_3.id,
+            'name': self.prod_3.name,
+            'product_uom': self.prod_3.uom_id.id,
+            'location_id': picking.location_id.id,
+            'location_dest_id': picking.location_dest_id.id,
+        })]
+        picking.action_confirm()
+        for move in picking.move_lines:
+            vals = {
+                'picking_id': picking.id,
+                'product_id': move.product_id.id,
+                'product_uom_id': move.product_id.uom_id.id,
+                'location_id': picking.location_id.id,
+                'location_dest_id': picking.location_dest_id.id,
+                'lot_id': self.prod_3_lot3.id,
+                'qty_done': 30.0,
+            }
+            move.write({
+                'move_line_ids': [(0, 0, vals)],
+                'qty_done': 30.0
+            })
+        picking.action_done()
+        self.return_request_supplier.write({
+            'line_ids': [
+                (0, 0, {
+                    'product_id': self.prod_3.id,
+                    'lot_id': self.prod_3_lot3.id,
+                    'quantity': 30.0,
+                }),
+            ],
+        })
+        self.return_request_supplier.action_confirm()
+        returned_pickings = self.return_request_supplier.returned_picking_ids
+        self.assertEqual(returned_pickings.mapped('move_line_ids.location_id'),
+                         self.location_child_1)
