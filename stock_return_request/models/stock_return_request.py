@@ -212,9 +212,9 @@ class StockReturnRequest(models.Model):
             vals['to_refund'] = line.request_id.to_refund
         return vals
 
-    def _prepare_move_line_values(self, line, return_move, qty):
+    def _prepare_move_line_values(self, line, return_move, qty, quant=False):
         """Extend to add values to the move lines with lots"""
-        return {
+        vals = {
             'product_id': line.product_id.id,
             'product_uom_id': line.product_uom_id.id,
             'lot_id': line.lot_id.id,
@@ -222,6 +222,13 @@ class StockReturnRequest(models.Model):
             'location_dest_id': return_move.location_dest_id.id,
             'qty_done': qty,
         }
+        if not quant:
+            return vals
+        if line.request_id.return_type in ['internal', 'customer']:
+            vals['location_dest_id'] = quant.location_id.id
+        else:
+            vals['location_id'] = quant.location_id.id
+        return vals
 
     def action_confirm(self):
         """Wrapper for multi. Avoid recompute as it delays the pickings
@@ -235,6 +242,7 @@ class StockReturnRequest(models.Model):
         """Get moves and then try to reserve quantities. Fail if the quantites
            can't be assigned"""
         self.ensure_one()
+        Quant = self.env['stock.quant']
         if not self.line_ids:
             raise ValidationError(_("Add some products to return"))
         returnable_moves = self.line_ids._get_returnable_move_ids()
@@ -257,17 +265,24 @@ class StockReturnRequest(models.Model):
                 if line.lot_id:
                     # We try to reserve the stock manually so we ensure there's
                     # enough to make the return.
+                    vals_list = []
                     if return_move.location_id.usage == 'internal':
                         try:
-                            self.env['stock.quant']._update_reserved_quantity(
+                            quants = Quant._update_reserved_quantity(
                                 line.product_id, return_move.location_id, qty,
-                                lot_id=line.lot_id, strict=True)
+                                lot_id=line.lot_id, strict=False)
+                            for q in quants:
+                                vals_list.append((
+                                    0, 0, self._prepare_move_line_values(
+                                        line, return_move, q[1], q[0]))
+                                )
                         except UserError:
                             failed_moves.append((line, return_move))
-                    vals = self._prepare_move_line_values(
-                        line, return_move, qty)
+                    else:
+                        vals_list.append((0, 0, self._prepare_move_line_values(
+                            line, return_move, qty)))
                     return_move.write({
-                        'move_line_ids': [(0, 0, vals)],
+                        'move_line_ids': vals_list,
                     })
                     return_moves += return_move
                     line.returnable_move_ids += return_move
@@ -437,7 +452,7 @@ class StockReturnRequestLine(models.Model):
         # Return to supplier. Search for moves that came from that location
         else:
             domain += [
-                ('location_id', '=',
+                ('location_id', 'child_of',
                     self.request_id.return_to_location.id)]
         return domain
 
@@ -527,7 +542,7 @@ class StockReturnRequestLine(models.Model):
         if request.return_type == 'customer':
             return
         search_args = [
-            ('location_id', '=', request.return_from_location.id),
+            ('location_id', 'child_of', request.return_from_location.id),
             ('product_id', '=', self.product_id.id),
         ]
         if self.lot_id:
