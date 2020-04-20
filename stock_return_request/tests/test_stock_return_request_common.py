@@ -29,6 +29,9 @@ class StockReturnRequestCase(SavepointCase):
         cls.prod_3_lot2 = cls.prod_3_lot1.copy({
             'name': 'TSTPROD3LOT0002',
         })
+        cls.prod_3_lot3 = cls.prod_3_lot1.copy({
+            'name': 'TSTPROD3LOT0003',
+        })
         cls.wh1 = cls.env['stock.warehouse'].create({
             'name': 'TEST WH1',
             'code': 'TST1',
@@ -42,6 +45,15 @@ class StockReturnRequestCase(SavepointCase):
         cls.customer_loc = location_obj.create({
             'name': 'Test customer location',
             'usage': 'customer',
+        })
+        # Create child locations
+        cls.location_child_1 = location_obj.create({
+            'location_id': cls.wh1.lot_stock_id.id,
+            'name': 'Location child 1',
+        })
+        cls.location_child_2 = location_obj.create({
+            'location_id': cls.wh1.lot_stock_id.id,
+            'name': 'Location child 2',
         })
         # Create partners
         cls.partner_customer = cls.env['res.partner'].create({
@@ -82,7 +94,22 @@ class StockReturnRequestCase(SavepointCase):
                     'product_id': cls.prod_3.id,
                     'product_uom_qty': 30.0,
                     'product_uom': cls.prod_3.uom_id.id,
-                })],
+                }),
+                (0, 0, {
+                    'name': cls.prod_1.name,
+                    'product_id': cls.prod_1.id,
+                    'product_uom_qty': 50.0,
+                    'product_uom': cls.prod_1.uom_id.id,
+                    'location_dest_id': cls.location_child_1,
+                }),
+                (0, 0, {
+                    'name': cls.prod_1.name,
+                    'product_id': cls.prod_1.id,
+                    'product_uom_qty': 75.0,
+                    'product_uom': cls.prod_1.uom_id.id,
+                    'location_dest_id': cls.location_child_2,
+                }),
+            ],
         })
         move3 = cls.picking_supplier_1.move_lines.filtered(
             lambda x: x.product_id == cls.prod_3)
