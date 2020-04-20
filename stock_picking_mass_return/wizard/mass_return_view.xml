@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 PlanetaTIC - Marc Poch <mpoch@planetatic.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+<data>
+
+<record id="mass_return_wizard_view" model="ir.ui.view">
+    <field name="name">Mass Return Wizard</field>
+    <field name="model">mass.return.wizard</field>
+    <field name="arch" type="xml">
+        <form>
+            <div>
+                <group name="fields" >
+                    <field name="supplier_id"/>
+                    <field name="warehouse_id"/>
+                    <field name="return_line_ids" />
+                </group>
+            </div>
+            <footer>
+                <button name="return_products" string="Return Products" type="object" class="btn-primary" />
+                <button string="Cancel" class="btn-default" special="cancel" /> 
+            </footer>
+        </form>
+    </field>
+</record>
+
+<record id="mass_return_line_wizard_view" model="ir.ui.view">
+    <field name="name">Mass Return Line Wizard</field>
+    <field name="model">mass.return.line.wizard</field>
+    <field name="arch" type="xml">
+        <tree editable="botoom">
+            <field name="product_id"/>
+            <field name="product_qty"/>
+        </tree>
+    </field>
+</record>
+
+<record id="action_mass_return_wizard" model="ir.actions.act_window">
+    <field name="name">Mass Return</field>
+    <field name="res_model">mass.return.wizard</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">form</field>
+    <field name="view_id" ref="mass_return_wizard_view"/>
+    <field name="target">new</field>
+</record>
+
+<menuitem id="menu_mass_return" name="Mass return" action="action_mass_return_wizard" parent="stock.menu_stock_inventory_control" sequence="120"/>
+
+</data>
+</odoo>

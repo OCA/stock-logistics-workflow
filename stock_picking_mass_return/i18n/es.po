@@ -1,0 +1,140 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_picking_mass_return
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-11-07 17:09+0000\n"
+"PO-Revision-Date: 2019-11-07 17:09+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_mass_return
+#: model:ir.ui.view,arch_db:stock_picking_mass_return.mass_return_wizard_view
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: stock_picking_mass_return
+#: model:ir.model.fields,field_description:stock_picking_mass_return.field_mass_return_line_wizard_create_uid
+#: model:ir.model.fields,field_description:stock_picking_mass_return.field_mass_return_wizard_create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: stock_picking_mass_return
+#: model:ir.model.fields,field_description:stock_picking_mass_return.field_mass_return_line_wizard_create_date
+#: model:ir.model.fields,field_description:stock_picking_mass_return.field_mass_return_wizard_create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: stock_picking_mass_return
+#: model:ir.model.fields,field_description:stock_picking_mass_return.field_mass_return_line_wizard_display_name
+#: model:ir.model.fields,field_description:stock_picking_mass_return.field_mass_return_wizard_display_name
+msgid "Display Name"
+msgstr "Nombre a mostrar"
+
+#. module: stock_picking_mass_return
+#: model:ir.model.fields,field_description:stock_picking_mass_return.field_mass_return_line_wizard_id
+#: model:ir.model.fields,field_description:stock_picking_mass_return.field_mass_return_wizard_id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_picking_mass_return
+#: model:ir.ui.view,arch_db:stock_picking_mass_return.mass_return_wizard_view
+msgid "Return Products"
+msgstr "Devolver Productos"
+
+#. module: stock_picking_mass_return
+#: model:ir.model.fields,field_description:stock_picking_mass_return.field_mass_return_line_wizard___last_update
+#: model:ir.model.fields,field_description:stock_picking_mass_return.field_mass_return_wizard___last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: stock_picking_mass_return
+#: model:ir.model.fields,field_description:stock_picking_mass_return.field_mass_return_line_wizard_write_uid
+#: model:ir.model.fields,field_description:stock_picking_mass_return.field_mass_return_wizard_write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: stock_picking_mass_return
+#: model:ir.model.fields,field_description:stock_picking_mass_return.field_mass_return_line_wizard_write_date
+#: model:ir.model.fields,field_description:stock_picking_mass_return.field_mass_return_wizard_write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: stock_picking_mass_return
+#: model:ir.actions.act_window,name:stock_picking_mass_return.action_mass_return_wizard
+msgid "Mass Return"
+msgstr "Devolución masiva de productos"
+
+#. module: stock_picking_mass_return
+#: model:ir.ui.menu,name:stock_picking_mass_return.menu_mass_return
+msgid "Mass return"
+msgstr "Devolución masiva de productos"
+
+#. module: stock_picking_mass_return
+#: model:ir.model.fields,field_description:stock_picking_mass_return.field_mass_return_line_wizard_mass_return_id
+msgid "Mass return id"
+msgstr "Devolución masiva de productos"
+
+#. module: stock_picking_mass_return
+#: model:ir.model.fields,field_description:stock_picking_mass_return.field_mass_return_line_wizard_product_id
+msgid "Product"
+msgstr "Producto"
+
+#. module: stock_picking_mass_return
+#: model:ir.model.fields,field_description:stock_picking_mass_return.field_mass_return_wizard_return_line_ids
+msgid "Products to return"
+msgstr "Products to return"
+
+#. module: stock_picking_mass_return
+#: model:ir.model.fields,field_description:stock_picking_mass_return.field_mass_return_line_wizard_product_qty
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: stock_picking_mass_return
+#: model:ir.model.fields,field_description:stock_picking_mass_return.field_mass_return_wizard_location_id
+msgid "Source Location"
+msgstr "Ubicación origen"
+
+#. module: stock_picking_mass_return
+#: model:ir.model,name:stock_picking_mass_return.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento de existencias"
+
+#. module: stock_picking_mass_return
+#: model:ir.model.fields,field_description:stock_picking_mass_return.field_mass_return_wizard_supplier_id
+msgid "Supplier"
+msgstr "Proveedor"
+
+#. module: stock_picking_mass_return
+#: code:addons/stock_picking_mass_return/wizard/mass_return.py:89
+#, python-format
+msgid "Supplier %s has no incoming picking done."
+msgstr "El proveedor %s no tiene ningún albarán de entrada recibido."
+
+#. module: stock_picking_mass_return
+#: model:ir.model,name:stock_picking_mass_return.model_stock_picking
+msgid "Transfer"
+msgstr "Transferir"
+
+#. module: stock_picking_mass_return
+#: model:ir.model.fields,field_description:stock_picking_mass_return.field_mass_return_wizard_warehouse_id
+msgid "Warehouse"
+msgstr "Almacén"
+
+#. module: stock_picking_mass_return
+#: model:ir.model,name:stock_picking_mass_return.model_mass_return_line_wizard
+msgid "mass.return.line.wizard"
+msgstr "mass.return.line.wizard"
+
+#. module: stock_picking_mass_return
+#: model:ir.model,name:stock_picking_mass_return.model_mass_return_wizard
+msgid "mass.return.wizard"
+msgstr "mass.return.wizard"
+
