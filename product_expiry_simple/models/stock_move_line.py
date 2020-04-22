@@ -13,7 +13,7 @@ class StockMoveLine(models.Model):
 
     @api.model
     def _action_done(self):
-        super(StockMoveLine, self)._action_done()
+        super()._action_done()
         for rec in self:
             pick_type = rec.move_id.picking_type_id
             if (
