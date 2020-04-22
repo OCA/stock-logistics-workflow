@@ -6,7 +6,7 @@
     'summary': 'Show and group date_done of Stock Pickings',
     'version': '10.0.1.0.0',
     'category': 'Warehouse Management',
-    'author': 'PlanetaTIC',
+    'author': 'PlanetaTIC, Odoo Community Association (OCA)',
     'website': 'https://www.planetatic.com',
     'license': 'AGPL-3',
     'application': False,
