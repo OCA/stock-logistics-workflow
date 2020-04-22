@@ -18,5 +18,4 @@ class StockQuant(models.Model):
     def _get_removal_strategy_order(self, removal_strategy):
         if removal_strategy == 'fefo':
             return 'expiry_date, in_date, id'
-        return super(StockQuant, self)._get_removal_strategy_order(
-            removal_strategy)
+        return super()._get_removal_strategy_order(removal_strategy)
