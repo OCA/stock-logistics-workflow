@@ -15,7 +15,7 @@
     'depends': [
         'stock',
     ],
-    'conflicts': [
+    'excludes': [
         'product_expiry'
     ],
     'data': [
