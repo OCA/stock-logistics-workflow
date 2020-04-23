@@ -5,6 +5,7 @@
 {
     'name': 'Stock Picking Mass Return',
     'version': '10.0.1.0.0',
+    'description': 'New wizard to return products to their supplier',
     'author': "PlanetaTIC, Odoo Community Association (OCA)",
     'category': 'Stock',
     'depends': [
