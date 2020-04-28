@@ -15,6 +15,7 @@ msgstr ""
 
 #. module: stock_return_request
 #: code:addons/stock_return_request/models/stock_return_request.py:512
+#: code:addons/stock_return_request/models/stock_return_request.py:527
 #, python-format
 msgid "\n"
 "                You cannot have two open Stock Return Requests with the same\n"
@@ -72,6 +73,7 @@ msgstr ""
 
 #. module: stock_return_request
 #: code:addons/stock_return_request/models/stock_return_request.py:239
+#: code:addons/stock_return_request/models/stock_return_request.py:247
 #, python-format
 msgid "Add some products to return"
 msgstr ""
@@ -188,6 +190,7 @@ msgstr ""
 
 #. module: stock_return_request
 #: code:addons/stock_return_request/models/stock_return_request.py:291
+#: code:addons/stock_return_request/models/stock_return_request.py:306
 #, python-format
 msgid "It wasn't possible to assign stock for this returns:\n"
 "%s"
@@ -253,6 +256,8 @@ msgstr ""
 #: code:addons/stock_return_request/models/stock_return_request.py:17
 #: code:addons/stock_return_request/models/stock_return_request.py:338
 #: code:addons/stock_return_request/models/stock_return_request.py:340
+#: code:addons/stock_return_request/models/stock_return_request.py:353
+#: code:addons/stock_return_request/models/stock_return_request.py:355
 #, python-format
 msgid "New"
 msgstr ""
@@ -279,6 +284,7 @@ msgstr ""
 
 #. module: stock_return_request
 #: code:addons/stock_return_request/models/stock_return_request.py:492
+#: code:addons/stock_return_request/models/stock_return_request.py:507
 #, python-format
 msgid "Not enough moves to return this product.\n"
 "It wasn't possible to find enough moves to return %f %sof %s. A maximum of %f can be returned."
@@ -537,6 +543,7 @@ msgstr ""
 
 #. module: stock_return_request
 #: code:addons/stock_return_request/models/stock_return_request.py:543
+#: code:addons/stock_return_request/models/stock_return_request.py:558
 #, python-format
 msgid "Suggest Lot"
 msgstr ""
