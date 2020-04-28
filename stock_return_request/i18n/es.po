@@ -18,6 +18,7 @@ msgstr ""
 
 #. module: stock_return_request
 #: code:addons/stock_return_request/models/stock_return_request.py:512
+#: code:addons/stock_return_request/models/stock_return_request.py:527
 #, python-format
 msgid ""
 "\n"
@@ -88,6 +89,7 @@ msgstr "Añade un comentario. Se imprimirá en la Solicitud de Devolución"
 
 #. module: stock_return_request
 #: code:addons/stock_return_request/models/stock_return_request.py:239
+#: code:addons/stock_return_request/models/stock_return_request.py:247
 #, python-format
 msgid "Add some products to return"
 msgstr "Añadir productos a devolver"
@@ -208,6 +210,7 @@ msgstr ""
 
 #. module: stock_return_request
 #: code:addons/stock_return_request/models/stock_return_request.py:291
+#: code:addons/stock_return_request/models/stock_return_request.py:306
 #, python-format
 msgid ""
 "It wasn't possible to assign stock for this returns:\n"
@@ -276,6 +279,8 @@ msgstr ""
 #: code:addons/stock_return_request/models/stock_return_request.py:17
 #: code:addons/stock_return_request/models/stock_return_request.py:338
 #: code:addons/stock_return_request/models/stock_return_request.py:340
+#: code:addons/stock_return_request/models/stock_return_request.py:353
+#: code:addons/stock_return_request/models/stock_return_request.py:355
 #, python-format
 msgid "New"
 msgstr "Nueva"
@@ -302,6 +307,7 @@ msgstr ""
 
 #. module: stock_return_request
 #: code:addons/stock_return_request/models/stock_return_request.py:492
+#: code:addons/stock_return_request/models/stock_return_request.py:507
 #, python-format
 msgid ""
 "Not enough moves to return this product.\n"
@@ -568,6 +574,7 @@ msgstr "Solicitudes de Devolución de mercancía"
 
 #. module: stock_return_request
 #: code:addons/stock_return_request/models/stock_return_request.py:543
+#: code:addons/stock_return_request/models/stock_return_request.py:558
 #, python-format
 msgid "Suggest Lot"
 msgstr ""
