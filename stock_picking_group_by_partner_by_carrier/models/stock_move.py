@@ -41,7 +41,7 @@ class StockMove(models.Model):
         states = ("draft", "confirmed", "waiting", "partially_available", "assigned")
         if (
             not self.picking_type_id.group_pickings
-            or self.sale_line_id.order_id.picking_policy == "one"
+            or self.group_id.sale_id.picking_policy == "one"
         ):
             # use the normal domain from the stock module
             domain = [
@@ -51,12 +51,17 @@ class StockMove(models.Model):
             domain = [
                 # same partner
                 ("partner_id", "=", self.group_id.partner_id.id),
-                # same carrier
-                ("carrier_id", "=", self.group_id.carrier_id.id),
                 # avoid mixing picking policies
                 ("move_type", "=", self.group_id.move_type),
                 # don't search on the procurement.group
             ]
+            # same carrier only for outgoing transfers
+            if self.picking_type_id.code == "outgoing":
+                domain += [
+                    ("carrier_id", "=", self.group_id.carrier_id.id),
+                ]
+            else:
+                domain += [("carrier_id", "=", False)]
         domain += [
             ("location_id", "=", self.location_id.id),
             ("location_dest_id", "=", self.location_dest_id.id),
