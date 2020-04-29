@@ -19,7 +19,7 @@ msgid "Add"
 msgstr ""
 
 #. module: stock_picking_quick
-#: model_terms:ir.ui.view,arch_db:stock_picking_quick.product_search_form_view
+#: model_terms:ir.ui.view,arch_db:stock_picking_quick.product_search_view4picking
 msgid "Filter products available in the current location"
 msgstr ""
 
@@ -60,7 +60,7 @@ msgid "Transfer"
 msgstr ""
 
 #. module: stock_picking_quick
-#: model_terms:ir.ui.view,arch_db:stock_picking_quick.product_search_form_view
+#: model_terms:ir.ui.view,arch_db:stock_picking_quick.product_search_view4picking
 msgid "Use Only Available Products"
 msgstr ""
 
