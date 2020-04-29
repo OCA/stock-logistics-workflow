@@ -4,7 +4,7 @@
 
 {
     "name": "Quick Stock Picking",
-    "version": "12.0.1.0.1",
+    "version": "12.0.1.0.2",
     "author": "Akretion, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "license": "AGPL-3",
