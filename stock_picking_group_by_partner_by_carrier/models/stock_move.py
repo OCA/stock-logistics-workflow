@@ -37,6 +37,13 @@ class StockMove(models.Model):
         )
         return picking
 
+    def _domain_search_picking_handle_move_type(self):
+        """Hook to handle the move type. Can be overloaded by other modules.
+        By default the move type is taken from the procurement group.
+        """
+        # avoid mixing picking policies
+        return [("move_type", "=", self.group_id.move_type)]
+
     def _domain_search_picking_for_assignation(self):
         states = ("draft", "confirmed", "waiting", "partially_available", "assigned")
         if (
@@ -51,10 +58,9 @@ class StockMove(models.Model):
             domain = [
                 # same partner
                 ("partner_id", "=", self.group_id.partner_id.id),
-                # avoid mixing picking policies
-                ("move_type", "=", self.group_id.move_type),
                 # don't search on the procurement.group
             ]
+            domain += self._domain_search_picking_handle_move_type()
             # same carrier only for outgoing transfers
             if self.picking_type_id.code == "outgoing":
                 domain += [
