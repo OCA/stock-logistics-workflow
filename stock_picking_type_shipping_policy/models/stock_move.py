@@ -7,11 +7,17 @@ class StockMove(models.Model):
 
     _inherit = "stock.move"
 
-    def _get_new_picking_values(self):
-        res = super()._get_new_picking_values()
+    def _shipping_policy_from_picking_type(self):
         picking_type = self.mapped("picking_type_id")
         if picking_type.shipping_policy == "force_as_soon_as_possible":
-            res["move_type"] = "direct"
+            return "direct"
         elif picking_type.shipping_policy == "force_all_products_ready":
-            res["move_type"] = "one"
+            return "one"
+        return None
+
+    def _get_new_picking_values(self):
+        res = super()._get_new_picking_values()
+        picking_type_move_type = self._shipping_policy_from_picking_type()
+        if picking_type_move_type:
+            res["move_type"] = picking_type_move_type
         return res
