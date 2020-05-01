@@ -281,6 +281,39 @@ class TestSaleStock(TestSale):
         self.assertEqual(len(picks), 1)
         self.assertFalse(so1.picking_ids - so2.picking_ids)
 
+    def test_delivery_multi_step_group_pick_pack(self):
+        """the warehouse uses pick + pack + ship (with grouping enabled on pack)
+
+        -> shippings are grouped, as well as pickings"""
+        warehouse = self.env.ref("stock.warehouse0")
+        warehouse.delivery_steps = "pick_pack_ship"
+        warehouse.pick_type_id.group_pickings = False
+        warehouse.pack_type_id.group_pickings = True
+        so1 = self._get_new_sale_order(carrier=self.carrier1)
+        so1.action_confirm()
+        so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
+        so2.action_confirm()
+        self.assertEqual(len(so1.picking_ids), 3)
+        self.assertEqual(len(so2.picking_ids), 3)
+        # ship & pack should be shared between so1 and so2, but not pick
+        all_transfers = so1.picking_ids | so2.picking_ids
+        common_transfers = so1.picking_ids & so2.picking_ids
+        self.assertEqual(len(all_transfers), 4)
+        self.assertEqual(len(common_transfers), 2)
+        ships = all_transfers.filtered(
+            lambda o: o.picking_type_id == warehouse.out_type_id
+        )
+        packs = all_transfers.filtered(
+            lambda o: o.picking_type_id == warehouse.pack_type_id
+        )
+        picks = all_transfers.filtered(
+            lambda o: o.picking_type_id == warehouse.pick_type_id
+        )
+        self.assertEqual(len(ships), 1)
+        self.assertEqual(len(packs), 1)
+        self.assertEqual(len(picks), 2)
+        self.assertTrue(so1.picking_ids - so2.picking_ids)
+
     def test_delivery_multi_step_cancel_so1(self):
         """the warehouse uses pick + ship. Cancel SO1
 
