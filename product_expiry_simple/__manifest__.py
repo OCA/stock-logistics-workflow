@@ -11,6 +11,7 @@
     'summary':
     'Simpler and better alternative to the official product_expiry module',
     'author': 'Akretion,Jarsa Sistemas,Odoo Community Association (OCA)',
+    'maintainers': ['alexis-via'],
     'website': 'http://www.akretion.com',
     'depends': [
         'stock',
