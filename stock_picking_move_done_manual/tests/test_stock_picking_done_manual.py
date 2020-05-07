@@ -38,11 +38,13 @@ class TestStockPickingDoneManual(common.TransactionCase):
         }
         self.product_2 = self.env['product.product'].sudo(
             self.user_test).create(prod_dict)
+        picking_type = self.env.ref('stock.picking_type_out')
+        picking_type.allow_stock_picking_move_done_manual = True
         picking_dict = {
             'partner_id': self.env.ref('base.res_partner_1').id,
             'location_id': self.stock_location_stock.id,
             'location_dest_id': self.stock_location_customers.id,
-            'picking_type_id': self.ref('stock.picking_type_out'),
+            'picking_type_id': picking_type.id,
         }
         self.stock_picking = self.picking_model.sudo(
             self.user_test).create(picking_dict)

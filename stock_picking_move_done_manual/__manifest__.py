@@ -14,6 +14,7 @@
         "stock_move_action_done_hook",
     ],
     "data": [
+        'views/stock_picking_type_views.xml',
         'views/stock_picking_views.xml',
     ],
     "license": "LGPL-3",

@@ -9,20 +9,25 @@
             <field name="model">stock.picking</field>
             <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
+                <field name="has_tracking" position="after">
+                    <field name="allow_stock_picking_move_done_manual" invisible="True"/>
+                </field>
                 <xpath expr="//field[@name='move_ids_without_package']/tree" position="inside">
+                    <field name="allow_stock_picking_move_done_manual" invisible="True"/>
                     <button name="action_manual_done_from_picking"
                             string="Complete"
                             type="object"
                             icon="fa-check"
-                            attrs="{'invisible': [('state', 'in', ['done', 'cancel'])]}"
+                            attrs="{'invisible': ['|', ('allow_stock_picking_move_done_manual', '=', False), ('state', 'in', ['done', 'cancel'])]}"
                     />
                 </xpath>
                 <xpath expr="//field[@name='move_line_ids_without_package']/tree" position="inside">
+                    <field name="allow_stock_picking_move_done_manual" invisible="True"/>
                     <button name="action_move_manual_done_from_picking"
                             string="Complete"
                             type="object"
                             icon="fa-check"
-                            attrs="{'invisible': [('state', 'in', ['done', 'cancel'])]}"
+                            attrs="{'invisible': ['|', ('allow_stock_picking_move_done_manual', '=', False), ('state', 'in', ['done', 'cancel'])]}"
                     />
                 </xpath>
             </field>

@@ -1,11 +1,14 @@
 # Copyright 2020 ForgeFlow, S.L. (https://www.forgeflow.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo import api, models
+from odoo import api, fields, models
 
 
 class StockMove(models.Model):
     _inherit = "stock.move"
+
+    allow_stock_picking_move_done_manual = fields.Boolean(
+        related='picking_id.allow_stock_picking_move_done_manual')
 
     def _action_done_get_picking(self, moves, moves_todo):
         picking = super(StockMove, self)._action_done_get_picking(

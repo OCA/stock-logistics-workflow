@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Copyright 2020 ForgeFlow, S.L.-->
+    <!--(https://www.forgeflow.com)-->
+<!--License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).-->
+<odoo>
+
+    <record model="ir.ui.view" id="view_picking_type_form">
+        <field name="name">Operation Types</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form"/>
+        <field name="arch" type="xml">
+            <field name="use_existing_lots" position="after">
+                <field name="allow_stock_picking_move_done_manual"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

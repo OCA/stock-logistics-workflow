@@ -1,12 +1,15 @@
 # Copyright 2020 ForgeFlow, S.L. (https://www.forgeflow.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo import api, models
+from odoo import api, fields, models
 from odoo.tools.float_utils import float_is_zero
 
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"
+
+    allow_stock_picking_move_done_manual = fields.Boolean(
+        related='picking_type_id.allow_stock_picking_move_done_manual')
 
     def _button_validate_get_no_quantities_done(self):
         no_quantities_done = super(
@@ -25,8 +28,6 @@ class StockPicking(models.Model):
         return no_quantities_done
 
     def _validate_get_no_reserved_quantities(self):
-        precision_digits = self.env['decimal.precision'].precision_get(
-            'Product Unit of Measure')
         no_reserved_quantities = super(
             StockPicking, self)._validate_get_no_reserved_quantities()
         # If we have already started to process this picking and we want
