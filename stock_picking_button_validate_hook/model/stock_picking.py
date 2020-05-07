@@ -19,6 +19,13 @@ class StockPicking(models.Model):
             self.move_line_ids.filtered(
                 lambda m: m.state not in ('done', 'cancel')))
 
+    def _validate_get_no_reserved_quantities(self):
+        return all(
+            float_is_zero(
+                move_line.product_qty,
+                precision_rounding=move_line.product_uom_id.rounding)
+            for move_line in self.move_line_ids)
+
     def _register_hook(self):
 
         def new_button_validate(self):
@@ -29,12 +36,9 @@ class StockPicking(models.Model):
             picking_type = self.picking_type_id
             # START OF PATCH #
             no_quantities_done = self._button_validate_get_no_quantities_done()
+            no_reserved_quantities = \
+                self._validate_get_no_reserved_quantities()
             # END OF PATCH #
-            no_reserved_quantities = all(
-                float_is_zero(
-                    move_line.product_qty,
-                    precision_rounding=move_line.product_uom_id.rounding)
-                for move_line in self.move_line_ids)
             if no_reserved_quantities and no_quantities_done:
                 raise UserError(_(
                     'You cannot validate a transfer if no quantites '
