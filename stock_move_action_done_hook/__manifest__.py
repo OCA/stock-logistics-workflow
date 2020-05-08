@@ -12,5 +12,6 @@
     "depends": [
         'stock',
     ],
-    "installable": True
+    "installable": True,
+    "post_load": 'post_load_hook',
 }
