@@ -63,7 +63,7 @@ def post_load_hook():
             }
 
         if self._get_overprocessed_stock_moves() and not self._context.get(
-            'skip_overprocessed_check'):
+                'skip_overprocessed_check'):
             view = self.env.ref('stock.view_overprocessed_transfer')
             wiz = self.env['stock.overprocessed.transfer'].create(
                 {'picking_id': self.id})

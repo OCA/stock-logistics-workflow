@@ -23,9 +23,10 @@ def post_load_hook():
         # this operation could trigger a merge of moves.
         for move in moves:
             if move.quantity_done <= 0:
-                if float_compare(
-                    move.product_uom_qty, 0.0,
-                    precision_rounding=move.product_uom.rounding) == 0:
+                if float_compare(move.product_uom_qty,
+                                 0.0,
+                                 precision_rounding=
+                                 move.product_uom.rounding) == 0:
                     move._action_cancel()
 
         # Create extra moves where necessary
@@ -69,8 +70,8 @@ def post_load_hook():
         # be an unique location across
         # the contained quants.
         for result_package in moves_todo \
-            .mapped('move_line_ids.result_package_id') \
-            .filtered(lambda p: p.quant_ids and len(p.quant_ids) > 1):
+            .mapped('move_line_ids.result_package_id').filtered(
+                lambda p: p.quant_ids and len(p.quant_ids) > 1):
             if len(result_package.quant_ids.mapped('location_id')) > 1:
                 raise UserError(_(
                     'You cannot move the same package content more '
