@@ -8,18 +8,25 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-09 10:45+0000\n"
 "PO-Revision-Date: 2020-03-09 11:54+0100\n"
+"Last-Translator: Carlos <carlos.roca@tecnativa.com>\n"
 "Language-Team: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.6\n"
-"Last-Translator: Carlos <carlos.roca@tecnativa.com>\n"
-"Language: es\n"
 
 #. module: stock_picking_return_restricted_qty
 #: model:ir.model,name:stock_picking_return_restricted_qty.model_stock_return_picking
 msgid "Return Picking"
+msgstr "Albarán de devolución"
+
+#. module: stock_picking_return_restricted_qty
+#: model:ir.model,name:stock_picking_return_restricted_qty.model_stock_return_picking_line
+#, fuzzy
+#| msgid "Return Picking"
+msgid "Return Picking Line"
 msgstr "Albarán de devolución"
 
 #. module: stock_picking_return_restricted_qty
