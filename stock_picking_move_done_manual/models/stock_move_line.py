@@ -14,5 +14,3 @@ class StockMoveLine(models.Model):
     def action_move_manual_done_from_picking(self):
         for rec in self:
             rec.move_id.with_context(skip_backorder=True)._action_done()
-            if rec.picking_id.state not in ["done", "cancel"]:
-                rec.move_id.picking_id.action_assign()

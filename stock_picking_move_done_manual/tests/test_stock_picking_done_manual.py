@@ -124,28 +124,3 @@ class TestStockPickingDoneManual(common.TransactionCase):
         move_2.move_line_ids[0].action_move_manual_done_from_picking()
         self.assertEqual(move_2.state, 'done')
         self.assertEqual(self.stock_picking.state, 'done')
-
-    def test_partial_move_out_picking(self):
-        self.stock_picking.action_confirm()
-        self.stock_picking.action_assign()
-        self.stock_picking.move_lines[0].move_line_ids[0].qty_done = 1.0
-        self.stock_picking.move_lines[0].action_manual_done_from_picking()
-        self.assertEqual(self.stock_picking.move_lines[0].state, 'done')
-        self.assertEqual(self.stock_picking.state, 'assigned')
-        backorder_wizard = self.stock_picking.button_validate()
-        self.assertEqual(backorder_wizard['res_model'],
-                         'stock.backorder.confirmation')
-
-    def test_unreserve_picking(self):
-        self.stock_picking.action_confirm()
-        self.stock_picking.action_assign()
-        move_1 = self.stock_picking.move_lines.filtered(
-            lambda m: m.product_id == self.product_1)
-        move_1.move_line_ids[0].qty_done = 1.0
-        move_1.action_manual_done_from_picking()
-        move_1_1 = self.stock_picking.move_lines.filtered(
-            lambda m: m.product_id == self.product_1 and m.state != 'done')
-        self.assertEqual(move_1_1.state, 'assigned')
-        self.stock_picking.do_unreserve()
-        self.assertEqual(self.stock_picking.state, 'confirmed')
-        self.assertEqual(move_1_1.state, 'confirmed')
