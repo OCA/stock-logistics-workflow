@@ -30,6 +30,8 @@ class StockPicking(models.Model):
                     ])
                     if procurements:
                         procurements[0].copy(default={
+                            'name': 'PARTIAL RECEIVED: %s' % (
+                                backorder_pick.name),
                             'product_qty': move.product_qty,
                         })
                     else:
