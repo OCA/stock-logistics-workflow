@@ -32,6 +32,8 @@ Stock picking send by mail
 This module was written to extend the functionality of stock picking and allow
 you to send the picking order by email.
 
+This is a standard feature in Odoo 13, but if it is activated it automatically sends an email when validating any picking. This module offers the possibility to decide for each picking individually.
+
 **Table of contents**
 
 .. contents::
