@@ -2,7 +2,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo import fields, models, api
-from lxml import etree
 
 
 class SaleOrder(models.Model):
@@ -21,27 +20,28 @@ class SaleOrder(models.Model):
         for line in self.order_line:
             line.route_id = line.order_id.route_id
 
-    @api.model
-    def fields_view_get(self, view_id=None, view_type='form', toolbar=False,
-                        submenu=False):
-        """The purpose of this is to write a context on "order_line" field
-         respecting other contexts on this field.
-         There is a PR (https://github.com/odoo/odoo/pull/26607) to odoo for
-         avoiding this. If merged, remove this method and add the attribute
-         in the field.
-         """
-        res = super(SaleOrder, self).fields_view_get(
-            view_id=view_id, view_type=view_type, toolbar=toolbar,
-            submenu=submenu,
-        )
-        if view_type == 'form':
-            order_xml = etree.XML(res['arch'])
-            order_line_fields = order_xml.xpath("//field[@name='order_line']")
-            if order_line_fields:
-                order_line_field = order_line_fields[0]
-                context = order_line_field.attrib.get("context", "{}").replace(
-                    "{", "{'default_route_id': route_id, ", 1,
-                )
-                order_line_field.attrib['context'] = context
-                res['arch'] = etree.tostring(order_xml)
+    def write(self, vals):
+        res = super().write(vals)
+        if 'route_id' in vals:
+            lines = self.mapped('order_line').filtered(
+                lambda l: l.route_id.id != vals['route_id'])
+            lines.write({'route_id': vals['route_id']})
         return res
+
+
+class SaleOrderLine(models.Model):
+    _inherit = 'sale.order.line'
+
+    @api.onchange('product_id')
+    def product_id_change(self):
+        res = super().product_id_change()
+        self.route_id = self.order_id.route_id
+        return res
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if not vals.get('route_id', False):
+                order = self.env['sale.order'].browse(vals['order_id'])
+                vals['route_id'] = order.route_id.id
+        return super().create(vals_list)
