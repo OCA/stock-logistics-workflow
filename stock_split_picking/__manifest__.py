@@ -4,19 +4,13 @@
 # Copyright 2017 Tecnativa - Vicent Cubells
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
-    'name': 'Split picking',
-    'summary': 'Split a picking in two not transferred pickings',
-    'version': '12.0.1.0.0',
-    'category': 'Inventory',
-    'author': "Camptocamp, "
-              "Tecnativa, "
-              "Odoo Community Association (OCA),",
-    'license': 'AGPL-3',
-    'website': 'https://github.com/OCA/stock-logistics-workflow',
-    'depends': [
-        'stock',
-    ],
-    'data': [
-        'views/stock_partial_picking.xml',
-    ],
+    "name": "Split picking",
+    "summary": "Split a picking in two not transferred pickings",
+    "version": "13.0.1.0.0",
+    "category": "Inventory",
+    "author": "Camptocamp, " "Tecnativa, " "Odoo Community Association (OCA),",
+    "license": "AGPL-3",
+    "website": "https://github.com/OCA/stock-logistics-workflow",
+    "depends": ["stock"],
+    "data": ["views/stock_partial_picking.xml"],
 }
