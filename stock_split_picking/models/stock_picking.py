@@ -2,7 +2,7 @@
 # Copyright 2018 Camptocamp SA - Julien Coux
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, models
+from odoo import _, models
 from odoo.exceptions import UserError
 from odoo.tools.float_utils import float_compare
 
@@ -12,7 +12,6 @@ class StockPicking(models.Model):
 
     _inherit = "stock.picking"
 
-    @api.multi
     def split_process(self):
         """Use to trigger the wizard from button with correct context"""
         for picking in self:
