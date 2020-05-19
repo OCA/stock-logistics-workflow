@@ -18,15 +18,18 @@ class StockPicking(models.Model):
         for picking in self:
 
             # Check the picking state and condition before split
-            if picking.state == 'draft':
-                raise UserError(_('Mark as todo this picking please.'))
+            if picking.state == "draft":
+                raise UserError(_("Mark as todo this picking please."))
             if all([x.qty_done == 0.0 for x in picking.move_line_ids]):
                 raise UserError(
-                    _('You must enter done quantity in order to split your '
-                      'picking in several ones.'))
+                    _(
+                        "You must enter done quantity in order to split your "
+                        "picking in several ones."
+                    )
+                )
 
             # Split moves considering the qty_done on moves
-            new_moves = self.env['stock.move']
+            new_moves = self.env["stock.move"]
             for move in picking.move_lines:
                 rounding = move.product_uom.rounding
                 qty_done = move.quantity_done
@@ -37,9 +40,7 @@ class StockPicking(models.Model):
                 if qty_diff_compare < 0:
                     qty_split = qty_initial - qty_done
                     qty_uom_split = move.product_uom._compute_quantity(
-                        qty_split,
-                        move.product_id.uom_id,
-                        rounding_method='HALF-UP'
+                        qty_split, move.product_id.uom_id, rounding_method="HALF-UP"
                     )
                     new_move_id = move._split(qty_uom_split)
                     for move_line in move.move_line_ids:
@@ -47,34 +48,31 @@ class StockPicking(models.Model):
                             # To avoid an error
                             # when picking is partially available
                             try:
-                                move_line.write(
-                                    {'product_uom_qty': move_line.qty_done})
+                                move_line.write({"product_uom_qty": move_line.qty_done})
                             except UserError:
                                 pass
-                    new_moves |= self.env['stock.move'].browse(new_move_id)
+                    new_moves |= self.env["stock.move"].browse(new_move_id)
 
             # If we have new moves to move, create the backorder picking
             if new_moves:
-                backorder_picking = picking.copy({
-                    'name': '/',
-                    'move_lines': [],
-                    'move_line_ids': [],
-                    'backorder_id': picking.id,
-                })
+                backorder_picking = picking.copy(
+                    {
+                        "name": "/",
+                        "move_lines": [],
+                        "move_line_ids": [],
+                        "backorder_id": picking.id,
+                    }
+                )
                 picking.message_post(
                     body=_(
                         'The backorder <a href="#" '
                         'data-oe-model="stock.picking" '
                         'data-oe-id="%d">%s</a> has been created.'
-                    ) % (
-                        backorder_picking.id,
-                        backorder_picking.name
                     )
+                    % (backorder_picking.id, backorder_picking.name)
                 )
-                new_moves.write({
-                    'picking_id': backorder_picking.id,
-                })
-                new_moves.mapped('move_line_ids').write({
-                    'picking_id': backorder_picking.id,
-                })
+                new_moves.write({"picking_id": backorder_picking.id})
+                new_moves.mapped("move_line_ids").write(
+                    {"picking_id": backorder_picking.id}
+                )
                 new_moves._action_assign()
