@@ -42,5 +42,5 @@ class StockQuant(models.Model):
                     "stock level of the product '%s'%s would become negative "
                     "(%s) on the stock location '%s' and negative stock is "
                     "not allowed for this product and/or location.") % (
-                        quant.product_id.name, msg_add, quant.quantity,
+                        quant.product_id.display_name, msg_add, quant.quantity,
                         quant.location_id.complete_name))
