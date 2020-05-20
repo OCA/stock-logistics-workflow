@@ -43,7 +43,7 @@ class StockQuant(models.Model):
                         "not allowed for this product and/or location."
                     )
                     % (
-                        quant.product_id.name,
+                        quant.product_id.display_name,
                         msg_add,
                         quant.quantity,
                         quant.location_id.complete_name,
