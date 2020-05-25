@@ -4,7 +4,7 @@ from odoo import exceptions
 from odoo.tests import common
 
 
-class TestSourceRelocate(common.SavepointCase):
+class SourceRelocateCommon(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -53,9 +53,21 @@ class TestSourceRelocate(common.SavepointCase):
         }
         return self.env["stock.move"].create(move_vals)
 
+    def _create_relocate_rule(self, location, relocation, picking_type, domain=None):
+        self.env["stock.source.relocate"].create(
+            {
+                "location_id": location.id,
+                "picking_type_id": picking_type.id,
+                "relocate_location_id": relocation.id,
+                "rule_domain": domain or "[]",
+            }
+        )
+
     def _update_qty_in_location(self, location, product, quantity):
         self.env["stock.quant"]._update_available_quantity(product, location, quantity)
 
+
+class TestSourceRelocate(SourceRelocateCommon):
     def test_relocate_child_of_location(self):
         # relocate location is a child, valid
         self.env["stock.source.relocate"].create(
@@ -76,16 +88,6 @@ class TestSourceRelocate(common.SavepointCase):
                     "relocate_location_id": self.customer_loc.id,
                 }
             )
-
-    def _create_relocate_rule(self, location, relocation, picking_type, domain=None):
-        self.env["stock.source.relocate"].create(
-            {
-                "location_id": location.id,
-                "picking_type_id": picking_type.id,
-                "relocate_location_id": relocation.id,
-                "rule_domain": domain or "[]",
-            }
-        )
 
     def test_relocate_whole_move(self):
         self._create_relocate_rule(

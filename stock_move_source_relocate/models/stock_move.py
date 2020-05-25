@@ -30,31 +30,40 @@ class StockMove(models.Model):
             relocation = self.env["stock.source.relocate"]._rule_for_move(move)
             if not relocation or relocation.relocate_location_id == move.location_id:
                 continue
+            move._apply_source_relocate_rule(
+                relocation, reserved_availability, roundings
+            )
 
-            rounding = roundings[move]
-            if not reserved_availability[move]:
-                # nothing could be reserved, however, we want to source the
-                # move on the specific relocation (for replenishment), so
-                # update it's source location
-                move.location_id = relocation.relocate_location_id
-            else:
-                missing_reserved_uom_quantity = (
-                    move.product_uom_qty - reserved_availability[move]
-                )
-                need = move.product_uom._compute_quantity(
-                    missing_reserved_uom_quantity,
-                    move.product_id.uom_id,
-                    rounding_method="HALF-UP",
-                )
+    def _apply_source_relocate_rule(self, relocation, reserved_availability, roundings):
+        relocated = self.env["stock.move"].browse()
 
-                if float_is_zero(need, precision_rounding=rounding):
-                    continue
+        rounding = roundings[self]
+        if not reserved_availability[self]:
+            # nothing could be reserved, however, we want to source the
+            # move on the specific relocation (for replenishment), so
+            # update it's source location
+            self.location_id = relocation.relocate_location_id
+            relocated = self
+        else:
+            missing_reserved_uom_quantity = (
+                self.product_uom_qty - reserved_availability[self]
+            )
+            need = self.product_uom._compute_quantity(
+                missing_reserved_uom_quantity,
+                self.product_id.uom_id,
+                rounding_method="HALF-UP",
+            )
 
-                # A part of the quantity could be reserved in the original
-                # location, so keep this part in the move and split the rest
-                # in a new move, where will take the goods in the relocation
-                new_move_id = self._split(need)
-                # recheck first move which should now be available
-                new_move = self.browse(new_move_id)
-                new_move.location_id = relocation.relocate_location_id
-                move._action_assign()
+            if float_is_zero(need, precision_rounding=rounding):
+                return relocated
+
+            # A part of the quantity could be reserved in the original
+            # location, so keep this part in the move and split the rest
+            # in a new move, where will take the goods in the relocation
+            new_move_id = self._split(need)
+            # recheck first move which should now be available
+            new_move = self.browse(new_move_id)
+            new_move.location_id = relocation.relocate_location_id
+            self._action_assign()
+            relocated = new_move
+        return relocated
