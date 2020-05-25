@@ -29,6 +29,11 @@ msgid "Sale Order"
 msgstr ""
 
 #. module: sale_order_global_stock_route
+#: model:ir.model,name:sale_order_global_stock_route.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
+
+#. module: sale_order_global_stock_route
 #: model:ir.model.fields,help:sale_order_global_stock_route.field_sale_order__route_id
 msgid ""
 "When you change this field all the lines will be changed. After use it you "
