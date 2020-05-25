@@ -6,7 +6,7 @@
 {
     "name": "Split picking",
     "summary": "Split a picking in two not transferred pickings",
-    "version": "13.0.1.0.0",
+    "version": "13.0.1.0.1",
     "category": "Inventory",
     "author": "Camptocamp, " "Tecnativa, " "Odoo Community Association (OCA),",
     "license": "AGPL-3",
