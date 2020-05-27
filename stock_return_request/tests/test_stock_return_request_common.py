@@ -1,6 +1,7 @@
 # Copyright 2019 Tecnativa - David Vidal
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-
+from dateutil.relativedelta import relativedelta
+from odoo import fields
 from odoo.tests.common import SavepointCase
 
 
@@ -181,6 +182,12 @@ class StockReturnRequestCase(SavepointCase):
         cls.picking_supplier_2.action_confirm()
         cls.picking_supplier_2.action_assign()
         cls.picking_supplier_2.action_done()
+        # Test could run so fast that the move lines date would be in the same
+        # second. We need to sort them by date, so we'll be faking the line
+        # dates after the picking is done.
+        cls.picking_supplier_2.move_lines.write({
+            'date': fields.Datetime.now() + relativedelta(seconds=1)
+        })
         # We'll have 100 units of each product
         # No we deliver some products
         cls.picking_customer_1 = cls.picking_obj.create({
@@ -227,6 +234,12 @@ class StockReturnRequestCase(SavepointCase):
         cls.picking_customer_2.action_confirm()
         cls.picking_customer_2.action_assign()
         cls.picking_customer_2.action_done()
+        # Test could run so fast that the move lines date would be in the same
+        # second. We need to sort them by date, so we'll be faking the line
+        # dates after the picking is done.
+        cls.picking_customer_2.move_lines.write({
+            'date': fields.Datetime.now() + relativedelta(seconds=1)
+        })
         # Stock in wh1.lot_stock_id
         # prod_1: 80.0 / prod_2: 70.0 / prod_3: 100.0
         cls.return_request_obj = cls.env['stock.return.request']
