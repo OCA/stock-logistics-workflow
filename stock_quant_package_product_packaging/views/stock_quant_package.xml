@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_quant_package_form_inherit" model="ir.ui.view">
+        <field name="name">stock.quant.package.form.inherit</field>
+        <field name="model">stock.quant.package</field>
+        <field name="inherit_id" ref="stock.view_quant_package_form" />
+        <field name="arch" type="xml">
+            <field name="company_id" position="before">
+                <field name="single_product_id" groups="base.group_no_one" />
+                <field name="single_product_qty" groups="base.group_no_one" />
+                <field
+                    name="product_packaging_id"
+                    domain="[('product_id', '=', single_product_id), ('qty', '=', single_product_qty)]"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>
