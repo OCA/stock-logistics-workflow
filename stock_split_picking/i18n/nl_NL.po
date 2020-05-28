@@ -25,7 +25,7 @@ msgid "Are you sure you want to split current picking?"
 msgstr ""
 
 #. module: stock_split_picking
-#: code:addons/stock_split_picking/models/stock_picking.py:22
+#: code:addons/stock_split_picking/models/stock_picking.py:0
 #, python-format
 msgid "Mark as todo this picking please."
 msgstr ""
@@ -36,7 +36,7 @@ msgid "Split"
 msgstr "Splitsen"
 
 #. module: stock_split_picking
-#: code:addons/stock_split_picking/models/stock_picking.py:65
+#: code:addons/stock_split_picking/models/stock_picking.py:0
 #, python-format
 msgid ""
 "The backorder <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d"
@@ -49,7 +49,7 @@ msgid "Transfer"
 msgstr "Verplaats"
 
 #. module: stock_split_picking
-#: code:addons/stock_split_picking/models/stock_picking.py:25
+#: code:addons/stock_split_picking/models/stock_picking.py:0
 #, python-format
 msgid ""
 "You must enter done quantity in order to split your picking in several ones."
