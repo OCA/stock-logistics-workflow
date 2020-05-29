@@ -1,0 +1,69 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_quant_package_dimension
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_quant_package_dimension
+#: model_terms:ir.ui.view,arch_db:stock_quant_package_dimension.view_quant_package_form_inherit
+msgid "Dimensions"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,field_description:stock_quant_package_dimension.field_stock_quant_package__height
+msgid "Height (mm)"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,field_description:stock_quant_package_dimension.field_stock_quant_package__lngth
+msgid "Length (mm)"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model,name:stock_quant_package_dimension.model_stock_quant_package
+msgid "Packages"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,field_description:stock_quant_package_dimension.field_stock_quant_package__volume
+msgid "Volume (m³)"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,field_description:stock_quant_package_dimension.field_stock_quant_package__pack_weight
+msgid "Weight (kg)"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,field_description:stock_quant_package_dimension.field_stock_quant_package__width
+msgid "Width (mm)"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,help:stock_quant_package_dimension.field_stock_quant_package__height
+msgid "height in millimeters"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,help:stock_quant_package_dimension.field_stock_quant_package__lngth
+msgid "length in millimeters"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,help:stock_quant_package_dimension.field_stock_quant_package__volume
+msgid "volume in cubic meters"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,help:stock_quant_package_dimension.field_stock_quant_package__width
+msgid "width in millimeters"
+msgstr ""
