@@ -1,0 +1,2 @@
+product-attribute https://github.com/grindtildeath/product-attribute 13.0-mig-product_packaging_dimension
+stock-logistics-workflow https://github.com/grindtildeath/stock-logistics-workflow 13.0-mig-stock_quant_package_product_packaging
