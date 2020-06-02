@@ -8,6 +8,8 @@ class StockMoveLine(models.Model):
 
     def _action_done(self):
         res = super()._action_done()
-        for line in self.filtered(lambda l: l.result_package_id):
+        # _action_done in stock module sometimes delete a move line, we
+        # have to check if it still exists before reading/writing on it
+        for line in self.exists().filtered(lambda l: l.result_package_id):
             line.result_package_id.auto_assign_packaging()
         return res
