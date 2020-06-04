@@ -3,7 +3,7 @@
 # @author: Alexis de Lattre <alexis.delattre@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class StockMoveLine(models.Model):
@@ -11,10 +11,9 @@ class StockMoveLine(models.Model):
 
     expiry_date = fields.Date(string='Expiry Date')
 
-    @api.model
     def _action_done(self):
         super()._action_done()
-        for rec in self:
+        for rec in self.filtered(lambda m: m.exists()):
             pick_type = rec.move_id.picking_type_id
             if (
                     pick_type.use_create_lots and
