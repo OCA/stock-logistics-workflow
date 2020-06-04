@@ -2,7 +2,7 @@
 # © 2018 Jarsa Sistemas (Sarai Osorio <sarai.osorio@jarsa.com.mx>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import models, fields, api
+from odoo import models, fields
 
 
 class StockMoveLine(models.Model):
@@ -10,7 +10,6 @@ class StockMoveLine(models.Model):
 
     expiry_date = fields.Date(string='Expiry Date')
 
-    @api.model
     def _action_done(self):
         super(StockMoveLine, self)._action_done()
         for rec in self.filtered(lambda m: m.exists()):
