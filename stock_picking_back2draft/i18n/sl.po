@@ -36,7 +36,7 @@ msgid "Transfer"
 msgstr ""
 
 #. module: stock_picking_back2draft
-#: code:addons/stock_picking_back2draft/models/stock.py:14
+#: code:addons/stock_picking_back2draft/models/stock_move.py:0
 #, python-format
 msgid "You can set to draft cancelled moves only"
 msgstr "V osnutek lahko vrnete le preklicane premike"
