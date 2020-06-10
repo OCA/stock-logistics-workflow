@@ -23,7 +23,7 @@ Stock Disallow Negative
     :target: https://runbot.odoo-community.org/runbot/154/13.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5|
+|badge1| |badge2| |badge3| |badge4| |badge5| 
 
 By default, Odoo allows negative stock. The advantage of negative stock
 is that, if some stock levels are wrong in the ERP, you will not be blocked
@@ -39,7 +39,6 @@ when trying to validate a stock operation that will set the stock level of
 a product and/or location as negative. So you will have to fix the
 wrong stock level of that product without delay, in order to validate the
 stock operation in Odoo...you can't forget it anymore !
-
 
 **Table of contents**
 
@@ -71,7 +70,6 @@ For individual locations:
    activate the option the option *Allow Negative Stock* for the locations you
    choose.
 
-
 Usage
 =====
 
@@ -82,6 +80,12 @@ The consumable products can still have a negative stock level.
 
 Changelog
 =========
+
+13.0.1.0.0 (2020-01-03)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [13.0][MIG] stock_no_negative
+  Remove all decorators @api.multi
 
 11.0.1.1.0 (2018-12-13)
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -115,6 +119,8 @@ Contributors
 * Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>
 * Tecnativa <https://www.tecnativa.com>
   * Pedro M. Baeza
+* Spacefoot <https://www.spacefoot.com>
+  * Quentin Delcourte
 
 Maintainers
 ~~~~~~~~~~~
