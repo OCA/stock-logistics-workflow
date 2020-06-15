@@ -7,6 +7,7 @@ class TestRoutingRule(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.product = cls.env["product.product"].create(
             {"name": "Product", "type": "product"}
         )

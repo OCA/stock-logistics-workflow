@@ -1,9 +1,9 @@
 # Copyright 2019 Camptocamp (https://www.camptocamp.com)
 {
     "name": "Stock Dynamic Routing",
-    "summary": "Dynamic routing for special locations",
+    "summary": "Dynamic routing of stock moves",
     "author": "Camptocamp, Odoo Community Association (OCA)",
-    "website": "https://github.com/OCA/stock-logistics-warehouse",
+    "website": "https://github.com/OCA/wms",
     "category": "Warehouse Management",
     "version": "13.0.1.0.0",
     "license": "AGPL-3",

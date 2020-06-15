@@ -247,6 +247,13 @@ class StockRouting(models.Model):
         The method _routing_rule_for_move(_line)s reset the cache at beginning.
         Cache the result so inside _routing_rule_for_move(_line)s, we compute it
         only once for a move and a rule (if we have several move lines).
+
+        This method is part of the internal machinery of the algorithm to
+        find rules. It exists so we can have a local cache during the time of a
+        transaction, and is not meant to be overriden in any way.
+
+        If you wish to customize the validity of a rule, you should extend
+        ``StockRoutingRule._is_valid_for_moves()``
         """
         return rule._is_valid_for_moves(move)
 
