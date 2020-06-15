@@ -1,4 +1,4 @@
-# Copyright 2019 Eficent Business and IT Consulting Services S.L.
+# Copyright 2019 ForgeFlow S.L.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from datetime import date
@@ -24,9 +24,7 @@ class TestStockPickingPurchaseOrderLink(TransactionCase):
                 "standard_price": 100.00,
             }
         )
-        self.partner = self.env["res.partner"].create(
-            {"name": "Vendor - test", "vendor": True}
-        )
+        self.partner = self.env["res.partner"].create({"name": "Vendor - test"})
         self.picking_type = self.stock_picking_type_obj.search(
             [("warehouse_id", "=", self.warehouse.id), ("code", "=", "incoming")]
         )
