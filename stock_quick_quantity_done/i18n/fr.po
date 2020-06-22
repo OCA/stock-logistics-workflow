@@ -1,0 +1,73 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * stock_quick_quantity_done
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-26 13:05+0000\n"
+"PO-Revision-Date: 2020-06-26 13:05+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_quick_quantity_done
+#: model_terms:ir.ui.view,arch_db:stock_quick_quantity_done.view_stock_picking_quick_quantity_done
+msgid "Force Availability"
+msgstr "Forcer les disponibilités"
+
+#. module: stock_quick_quantity_done
+#: code:addons/stock_quick_quantity_done/models/stock_picking.py:34
+#, python-format
+msgid "Nothing to check the availability for."
+msgstr "Aucune quantité de disponibilité à vérifier."
+
+#. module: stock_quick_quantity_done
+#: model_terms:ir.ui.view,arch_db:stock_quick_quantity_done.view_stock_picking_quick_quantity_done
+msgid "Quickly set quantity done with initial demand"
+msgstr "Rapidement définir les quantités livrées avec la demande initiale"
+
+#. module: stock_quick_quantity_done
+#: model:ir.model.fields,field_description:stock_quick_quantity_done.field_stock_picking__show_quick_quantities_done
+msgid "Show Quick Quantities Done"
+msgstr ""
+
+#. module: stock_quick_quantity_done
+#: model:ir.model.fields,field_description:stock_quick_quantity_done.field_stock_move__show_quick_quantity_done
+msgid "Show Quick Quantity Done"
+msgstr ""
+
+#. module: stock_quick_quantity_done
+#: model:ir.model,name:stock_quick_quantity_done.model_stock_move
+msgid "Stock Move"
+msgstr "Mouvement de stock"
+
+#. module: stock_quick_quantity_done
+#: model:ir.model.fields,help:stock_quick_quantity_done.field_stock_picking__show_quick_quantities_done
+msgid "Technical field used to compute whether the quick quantities done button should be shown."
+msgstr ""
+
+#. module: stock_quick_quantity_done
+#: model:ir.model.fields,help:stock_quick_quantity_done.field_stock_move__show_quick_quantity_done
+msgid "Technical field used to compute whether the quick quantity done button should be shown."
+msgstr ""
+
+#. module: stock_quick_quantity_done
+#: model:ir.model,name:stock_quick_quantity_done.model_stock_picking
+msgid "Transfer"
+msgstr "Transfert"
+
+#. module: stock_quick_quantity_done
+#: model_terms:ir.ui.view,arch_db:stock_quick_quantity_done.view_stock_picking_quick_quantity_done
+msgid "Validate"
+msgstr "Valider"
+
+#. module: stock_quick_quantity_done
+#: code:addons/stock_quick_quantity_done/models/stock_move.py:33
+#, python-format
+msgid "We can't quickly set quantity done because there's no initial demand or it's null."
+msgstr "On ne peut pas déterminer rapidement les quantités livrées car il n'y a pas de quantité initiale demandée ou elle est nulle."

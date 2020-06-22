@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2017 - Today: GRAP (http://www.grap.coop)
+@author Quentin DUPONT (https://twitter.com/pondupont)
+License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<odoo>
+
+    <record id="view_stock_picking_quick_quantity_done" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <button name="button_validate" position="after">
+                <field name="show_quick_quantities_done" invisible="1"/>
+                <button name="quick_quantities_done"
+                    string="Force Availability"
+                    type="object" class="btn-primary"
+                    attrs="{'invisible': [('show_quick_quantities_done', '=', False)]}"/>
+            </button>
+            <button name="action_assign" position="attributes">
+                <attribute name="attrs">{'invisible': [
+                    ('show_quick_quantities_done', '=', False)
+                ]}</attribute>
+            </button>
+            <button name="button_validate" position="replace">
+                <button name="button_validate" attrs="{'invisible': ['|', ('state', 'in', ('waiting','confirmed')), ('show_validate', '=', False)]}" string="Validate" type="object" class="oe_highlight" groups="stock.group_stock_user"/>
+                <button name="button_validate" attrs="{'invisible': ['|', ('state', 'not in', ('waiting', 'confirmed')), ('show_validate', '=', False)]}" string="Validate" type="object" groups="stock.group_stock_user" class="oe_highlight o_btn_validate"/>
+            </button>
+
+            <field name="product_uom" position="after">
+                <field name="show_quick_quantity_done" invisible="1"/>
+                <button name="quick_quantity_done"
+                    help="Quickly set quantity done with initial demand"
+                    type="object"
+                    class="oe_stat_button" icon="fa-arrow-up"
+                    attrs="{'invisible': [('show_quick_quantity_done', '=', False)]}">
+                </button>
+            </field>
+        </field>
+    </record>
+
+</odoo>
