@@ -9,40 +9,41 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-03 03:56+0000\n"
-"PO-Revision-Date: 2017-12-03 03:56+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/"
-"teams/23907/pt_BR/)\n"
+"PO-Revision-Date: 2020-06-23 03:19+0000\n"
+"Last-Translator: Fernando Colus <fcolus1@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
+"23907/pt_BR/)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: stock_picking_line_sequence
 #: model_terms:ir.ui.view,arch_db:stock_picking_line_sequence.report_delivery_document
 msgid "<strong>Seq.</strong>"
-msgstr ""
+msgstr "<strong>Sequência</strong>"
 
 #. module: stock_picking_line_sequence
 #: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move__sequence
 msgid "HiddenSequence"
-msgstr ""
+msgstr "Ocultar Sequência"
 
 #. module: stock_picking_line_sequence
 #: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_picking__max_line_sequence
 msgid "Max sequence in lines"
-msgstr ""
+msgstr "Sequência máxima em linhas"
 
 #. module: stock_picking_line_sequence
 #: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move__sequence2
 msgid "Sequence"
-msgstr ""
+msgstr "Sequência"
 
 #. module: stock_picking_line_sequence
 #: model:ir.model.fields,help:stock_picking_line_sequence.field_stock_move__sequence2
 msgid "Shows the sequence in the Stock Move."
-msgstr ""
+msgstr "Exibe a sequência na movimentação de estoque."
 
 #. module: stock_picking_line_sequence
 #: model:ir.model,name:stock_picking_line_sequence.model_stock_move
@@ -52,4 +53,4 @@ msgstr "Movimentação de estoque"
 #. module: stock_picking_line_sequence
 #: model:ir.model,name:stock_picking_line_sequence.model_stock_picking
 msgid "Transfer"
-msgstr "Transferir"
+msgstr "Transferência"
