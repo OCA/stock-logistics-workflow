@@ -11,3 +11,9 @@ class StockMove(models.Model):
     def _cancel_remaining_quantities(self):
         to_cancel = self.filtered(lambda m: m.state not in ('done', 'cancel'))
         to_cancel._action_cancel()
+
+    def _split(self, qty, restrict_partner_id=False):
+        if self.picking_id.picking_type_id.disable_move_lines_split:
+            return False
+        else:
+            return super(StockMove, self)._split(qty, restrict_partner_id=restrict_partner_id)
