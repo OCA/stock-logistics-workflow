@@ -9,15 +9,16 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-01 02:08+0000\n"
-"PO-Revision-Date: 2017-06-01 02:08+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/"
-"teams/23907/pt_BR/)\n"
+"PO-Revision-Date: 2020-06-23 03:19+0000\n"
+"Last-Translator: Fernando Colus <fcolus1@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
+"23907/pt_BR/)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: stock_picking_package_preparation_line
 #: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation_line.view_stock_picking_package_preparation_line_setting
@@ -25,60 +26,62 @@ msgid ""
 "<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
 "specific.\" groups=\"base.group_multi_company\"/>"
 msgstr ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"Os valores aqui definidos são "
+"específicos da empresa.\" groups=\"base.group_multi_company\"/>"
 
 #. module: stock_picking_package_preparation_line
 #: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:149
 #, python-format
 msgid "Cannot find a default location for picking type: %s"
-msgstr ""
+msgstr "Impossível encontrar uma localização padrão para o Tipo de Coleta: %s"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model,name:stock_picking_package_preparation_line.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Empresas"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model,name:stock_picking_package_preparation_line.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Definições de Configuração"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Criado por"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Criado em"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_res_company__default_picking_type_for_package_preparation_id
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_res_config_settings__picking_type_for_package_preparation_id
 msgid "Default Picking Type used in package preparation"
-msgstr ""
+msgstr "Tipo de coleta padrão usada na preparação da embalagem"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__name
 #: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation_line.sppp_line_stock_picking_package_preparation_form
 msgid "Description"
-msgstr ""
+msgstr "Descrição"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation__line_ids
 #: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation_line.sppp_line_stock_picking_package_preparation_form
 msgid "Details"
-msgstr ""
+msgstr "Detalhes"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Exibir Nome"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__id
 msgid "ID"
-msgstr ""
+msgstr "ID (Identificação)"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,help:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__product_uom_qty
@@ -86,6 +89,9 @@ msgid ""
 "If you change this quantity for a 'ready' picking, the system will not "
 "generate a back order, but will just deliver the new quantity"
 msgstr ""
+"Se você alterar essa quantidade para uma coleta que estiver 'pronta', o "
+"sistema não gerará um pedido em atraso, mas apenas entregará a nova "
+"quantidade"
 
 #. module: stock_picking_package_preparation_line
 #: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:180
@@ -94,74 +100,76 @@ msgstr ""
 msgid ""
 "Impossible to create confirmed picking. Please check products availability!"
 msgstr ""
+"Impossível criar uma coleta confirmada. Por favor, verifique a "
+"disponibilidade dos produtos!"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Última Modificação Feita em"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última Atualização Feita por"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última Atualização Feita em"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__lot_id
 msgid "Lot"
-msgstr ""
+msgstr "Lote"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,help:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__lot_ids
 msgid "Lots effectively linked to stock move"
-msgstr ""
+msgstr "Lotes efetivamente vinculados à movimentação de estoque"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__lot_ids
 msgid "Moved lots"
-msgstr ""
+msgstr "Lotes Movimentados"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__note
 #: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation_line.sppp_line_stock_picking_package_preparation_form
 msgid "Note"
-msgstr ""
+msgstr "Observação"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation__picking_type_id
 msgid "Operation Type"
-msgstr ""
+msgstr "Tipo de Operação"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model,name:stock_picking_package_preparation_line.model_stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__package_preparation_id
 #: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation_line.view_stock_picking_package_preparation_line_setting
 msgid "Package Preparation"
-msgstr ""
+msgstr "Preparo da Embalagem"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model,name:stock_picking_package_preparation_line.model_stock_picking_package_preparation_line
 msgid "Package Preparation Line"
-msgstr ""
+msgstr "Linha do Preparo da Embalagem"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__product_id
 msgid "Product"
-msgstr ""
+msgstr "Produto"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__product_uom_qty
 msgid "Quantity"
-msgstr ""
+msgstr "Quantidade"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Sequência"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model,name:stock_picking_package_preparation_line.model_stock_move
@@ -172,9 +180,11 @@ msgstr "Movimentação de estoque"
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__product_uom_id
 msgid "UoM"
-msgstr ""
+msgstr "Unidade de Medida"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,help:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__lot_id
 msgid "Used to specify lot when line is created using package preparation"
 msgstr ""
+"Usado para especificar o lote quando a linha é criada usando o preparo da "
+"embalagem"
