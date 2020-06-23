@@ -9,37 +9,38 @@ msgstr ""
 "Project-Id-Version: Odoo Server 12.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-23 11:56+0000\n"
-"PO-Revision-Date: 2017-01-23 11:56+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/"
-"teams/23907/pt_BR/)\n"
+"PO-Revision-Date: 2020-06-23 03:19+0000\n"
+"Last-Translator: Fernando Colus <fcolus1@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
+"23907/pt_BR/)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: stock_picking_show_return
 #: model_terms:ir.ui.view,arch_db:stock_picking_show_return.view_picking_form
 msgid "<span class=\"o_stat_text\">Source picking</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Fonte da Coleta</span>"
 
 #. module: stock_picking_show_return
 #: model:ir.model.fields,field_description:stock_picking_show_return.field_stock_picking__returned_ids
 msgid "Returned pickings"
-msgstr ""
+msgstr "Coletas Retornadas"
 
 #. module: stock_picking_show_return
 #: model_terms:ir.ui.view,arch_db:stock_picking_show_return.view_picking_form
 msgid "Returns"
-msgstr ""
+msgstr "Retornos"
 
 #. module: stock_picking_show_return
 #: model:ir.model.fields,field_description:stock_picking_show_return.field_stock_picking__source_picking_id
 msgid "Source picking"
-msgstr ""
+msgstr "Fonte da Coleta"
 
 #. module: stock_picking_show_return
 #: model:ir.model,name:stock_picking_show_return.model_stock_picking
 msgid "Transfer"
-msgstr "Transferir"
+msgstr "Transferência"
