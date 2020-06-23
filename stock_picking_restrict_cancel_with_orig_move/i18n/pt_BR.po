@@ -6,20 +6,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2020-06-23 16:19+0000\n"
+"Last-Translator: Fernando Colus <fcolus1@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: stock_picking_restrict_cancel_with_orig_move
 #: code:addons/stock_picking_restrict_cancel_with_orig_move/models/stock_move.py:32
 #, python-format
 msgid "- %s : %s. \n"
 ""
-msgstr ""
+msgstr "- %s : %s. \n"
 
 #. module: stock_picking_restrict_cancel_with_orig_move
 #: code:addons/stock_picking_restrict_cancel_with_orig_move/models/stock_move.py:34
@@ -27,8 +29,12 @@ msgstr ""
 msgid "Cancelation of destination move is restricted if any previous move is not canceled or done.Original moves are not canceled or done on the following objects : \n"
 "%s"
 msgstr ""
+"O cancelamento da movimentação de destino é restrito se qualquer "
+"movimentação anterior não for cancelada ou concluída. As movimentações "
+"originais não estão canceladas ou realizadas nos seguintes objetos:\n"
+"%s"
 
 #. module: stock_picking_restrict_cancel_with_orig_move
 #: model:ir.model,name:stock_picking_restrict_cancel_with_orig_move.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimentação de Estoque"
