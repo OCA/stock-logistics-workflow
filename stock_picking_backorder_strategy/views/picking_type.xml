@@ -7,6 +7,8 @@
             <field name="arch" type="xml">
                 <field name="return_picking_type_id" position="after">
                     <field name="backorder_strategy"/>
+                    <field name="disable_move_lines_split" attrs="{'invisible': [('backorder_strategy','!=','no_create')]}"/>
+                    <field name="disable_backorder_only_on_picking_validation" attrs="{'invisible': [('backorder_strategy','!=','no_create')]}"/>
                 </field>
             </field>
         </record>
