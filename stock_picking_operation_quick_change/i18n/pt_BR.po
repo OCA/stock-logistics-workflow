@@ -6,123 +6,133 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2020-06-23 16:19+0000\n"
+"Last-Translator: Fernando Colus <fcolus1@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: stock_picking_operation_quick_change
 #: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__location_dest_id
 msgid "Actual destination location"
-msgstr ""
+msgstr "Localização de destino atual"
 
 #. module: stock_picking_operation_quick_change
 #: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
 msgid "Apply"
-msgstr ""
+msgstr "Aplicar"
 
 #. module: stock_picking_operation_quick_change
 #: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. module: stock_picking_operation_quick_change
 #: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__change_all
 msgid "Change All"
-msgstr ""
+msgstr "Mudar Tudo"
 
 #. module: stock_picking_operation_quick_change
 #: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.view_picking_form
 msgid "Change Location"
-msgstr ""
+msgstr "Alterar Localização"
 
 #. module: stock_picking_operation_quick_change
 #: model:ir.actions.act_window,name:stock_picking_operation_quick_change.action_stock_picking_operation_change_location
 msgid "Change Operation Destination Location"
-msgstr ""
+msgstr "Alterar Localização de Destino da Operação"
 
 #. module: stock_picking_operation_quick_change
 #: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
 msgid "Change the destination location.\n"
 "                    <br/>"
 msgstr ""
+"Mude a localização de destino.\n"
+"                     <br/>"
 
 #. module: stock_picking_operation_quick_change
 #: model:ir.model.fields,help:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__change_all
 msgid "Check if you want change all operations without filter by old location"
 msgstr ""
+"Verifique se deseja alterar todas as operações sem filtrar pela antiga "
+"localização"
 
 #. module: stock_picking_operation_quick_change
 #: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Criado por"
 
 #. module: stock_picking_operation_quick_change
 #: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Criado em"
 
 #. module: stock_picking_operation_quick_change
 #: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Exibir Nome"
 
 #. module: stock_picking_operation_quick_change
 #: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__id
 msgid "ID"
-msgstr ""
+msgstr "ID (Identificação)"
 
 #. module: stock_picking_operation_quick_change
 #: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Última Modificação Feita em"
 
 #. module: stock_picking_operation_quick_change
 #: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última Atualização Feita por"
 
 #. module: stock_picking_operation_quick_change
 #: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última Atualização Feita em"
 
 #. module: stock_picking_operation_quick_change
 #: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__new_location_dest_id
 msgid "New destination location"
-msgstr ""
+msgstr "Nova Localização de Destino"
 
 #. module: stock_picking_operation_quick_change
 #: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__old_location_dest_id
 msgid "Old destination location"
-msgstr ""
+msgstr "Antiga Localização de Destino"
 
 #. module: stock_picking_operation_quick_change
 #: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
 msgid "Stock Picking"
-msgstr ""
+msgstr "Coleta de Estoque"
 
 #. module: stock_picking_operation_quick_change
 #: model:ir.model,name:stock_picking_operation_quick_change.model_stock_picking_operation_wizard
 msgid "Stock Picking Operation Wizard"
-msgstr ""
+msgstr "Assistente de Operação de Coleta de Estoque"
 
 #. module: stock_picking_operation_quick_change
 #: code:addons/stock_picking_operation_quick_change/wizards/stock_picking_wizard.py:66
 #, python-format
 msgid "You can not change operations destination location if picking state is not in %s"
 msgstr ""
+"Você não pode alterar o local de destino das operações se o estado de "
+"picking não estiver em %s"
 
 #. module: stock_picking_operation_quick_change
 #: code:addons/stock_picking_operation_quick_change/wizards/stock_picking_wizard.py:73
 #, python-format
 msgid "You cannot change destination location if any of the moves has a destination move."
 msgstr ""
+"Você não pode alterar a localização de destino se alguma das movimentações "
+"tiver uma movimentação de destino."
 
 #. module: stock_picking_operation_quick_change
 #: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
 msgid "or"
-msgstr ""
+msgstr "ou"
