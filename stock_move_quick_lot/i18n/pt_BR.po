@@ -6,42 +6,46 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2020-06-23 16:19+0000\n"
+"Last-Translator: Fernando Colus <fcolus1@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: stock_move_quick_lot
 #: model:ir.model.fields,field_description:stock_move_quick_lot.field_stock_move__life_date
 msgid "End of Life Date"
-msgstr ""
+msgstr "Data do fim da vida útil"
 
 #. module: stock_move_quick_lot
 #: code:addons/stock_move_quick_lot/models/stock_move.py:68
 #, python-format
 msgid "Go to lots to change data"
-msgstr ""
+msgstr "Vá para \"lotes\" para alterar os dados"
 
 #. module: stock_move_quick_lot
 #: model:ir.model.fields,field_description:stock_move_quick_lot.field_stock_move__line_lot_name
 msgid "Lot Name"
-msgstr ""
+msgstr "Nome do Lote"
 
 #. module: stock_move_quick_lot
 #: code:addons/stock_move_quick_lot/models/stock_move.py:64
 #, python-format
 msgid "Open detail to remove lot"
-msgstr ""
+msgstr "Abra os detalhes para remover o lote"
 
 #. module: stock_move_quick_lot
 #: model:ir.model,name:stock_move_quick_lot.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimentação de Estoque"
 
 #. module: stock_move_quick_lot
 #: model:ir.model.fields,help:stock_move_quick_lot.field_stock_move__life_date
 msgid "This is the date on which the goods with this Serial Number may become dangerous and must not be consumed."
 msgstr ""
+"Essa é a data em que as mercadorias com este número de série podem se tornar "
+"perigosas e não devem ser consumidas."
