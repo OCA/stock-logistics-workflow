@@ -9,21 +9,21 @@ msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-15 11:08+0000\n"
-"PO-Revision-Date: 2019-08-30 15:23+0000\n"
-"Last-Translator: Rodrigo Macedo <rmsolucoeseminformatic4@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/"
-"teams/23907/pt_BR/)\n"
+"PO-Revision-Date: 2020-06-23 03:19+0000\n"
+"Last-Translator: Fernando Colus <fcolus1@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
+"23907/pt_BR/)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.8\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: stock_picking_invoice_link
 #: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
 msgid "<span class=\"o_stat_text\">Invoices</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Faturas</span>"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_invoice
@@ -50,7 +50,7 @@ msgstr "Faturas"
 #. module: stock_picking_invoice_link
 #: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.invoice_form
 msgid "Pickings"
-msgstr "Separações"
+msgstr "Coletas"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_invoice__picking_ids
@@ -88,18 +88,18 @@ msgstr "Linha de pedidos de venda"
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_stock_move
 msgid "Stock Move"
-msgstr "Movimentação do Estoque"
+msgstr "Movimentação de Estoque"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_stock_picking
 msgid "Transfer"
-msgstr "Transferir"
+msgstr "Transferência"
 
 #. module: stock_picking_invoice_link
 #: code:addons/stock_picking_invoice_link/models/stock_move.py:34
 #, python-format
 msgid "You can not modify an invoiced stock move"
-msgstr ""
+msgstr "Você não pode modificar uma movimentação de estoque faturada"
 
 #~ msgid "View Invoice"
 #~ msgstr "Ver Fatura"
