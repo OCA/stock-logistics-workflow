@@ -9,46 +9,47 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-03 03:55+0000\n"
-"PO-Revision-Date: 2017-12-03 03:55+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/"
-"teams/23907/pt_BR/)\n"
+"PO-Revision-Date: 2020-06-23 03:19+0000\n"
+"Last-Translator: Fernando Colus <fcolus1@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
+"23907/pt_BR/)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking__action_pack_op_auto_fill_allowed
 msgid "Action Pack Op Auto Fill Allowed"
-msgstr ""
+msgstr "Pacote de Ação com Opção de Preenchimento Automático"
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking__auto_fill_operation
 #: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking_type__auto_fill_operation
 msgid "Auto fill operations"
-msgstr ""
+msgstr "Operações de preenchimento automático"
 
 #. module: stock_move_line_auto_fill
 #: model_terms:ir.ui.view,arch_db:stock_move_line_auto_fill.stock_picking_form_view
 msgid "AutoFill"
-msgstr ""
+msgstr "Preenchimento automático"
 
 #. module: stock_move_line_auto_fill
 #: model_terms:ir.ui.view,arch_db:stock_move_line_auto_fill.view_picking_type_form_assignment
 msgid "Automation"
-msgstr ""
+msgstr "Automação"
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model.fields,help:stock_move_line_auto_fill.field_stock_picking_type__avoid_lot_assignment
 msgid "Avoid auto fill for more line with lots product"
-msgstr ""
+msgstr "Evite o preenchimento automático para mais linhas com lotes de produto"
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking_type__avoid_lot_assignment
 msgid "Avoid auto-assignment of lots"
-msgstr ""
+msgstr "Evite a atribuição automática de lotes"
 
 #. module: stock_move_line_auto_fill
 #: code:addons/stock_move_line_auto_fill/models/stock_picking.py:36
@@ -57,16 +58,18 @@ msgid ""
 "Filling the operations automatically is not possible, perhaps the pickings "
 "aren't in the right state (Partially available or available)."
 msgstr ""
+"Não é possível preencher as operações automaticamente, talvez as coletas não "
+"estejam na situação correta (Parcialmente disponível ou disponível)."
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model,name:stock_move_line_auto_fill.model_stock_picking_type
 msgid "Picking Type"
-msgstr ""
+msgstr "Tipo de Coleta"
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model,name:stock_move_line_auto_fill.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimentação de Estoque"
 
 #. module: stock_move_line_auto_fill
 #: model_terms:ir.ui.view,arch_db:stock_move_line_auto_fill.stock_picking_form_view
@@ -74,6 +77,8 @@ msgid ""
 "This button will automatically fill all operations that have no tracking set "
 "on the product, no processed qty and no selected package."
 msgstr ""
+"Este botão preencherá automaticamente todas as operações que não possuam: "
+"rastreamento definido no produto, quantidade processada e pacote selecionado."
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model.fields,help:stock_move_line_auto_fill.field_stock_picking__auto_fill_operation
@@ -83,8 +88,13 @@ msgid ""
 "- If checked, auto fill done quantity automatically\n"
 "- If unchecked, show button AutoFill for user to do the auto fill manually"
 msgstr ""
+"Para preencher automaticamente a quantidade concluída no documento de coleta."
+"\n"
+"- Se marcado, preencha automaticamente a quantidade concluída\n"
+"- Se desmarcada, mostre o botão \"Preenchimento Automático\" para o usuário "
+"fazer o preenchimento automático manualmente"
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model,name:stock_move_line_auto_fill.model_stock_picking
 msgid "Transfer"
-msgstr "Transferir"
+msgstr "Transferência"
