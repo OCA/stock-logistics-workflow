@@ -6,41 +6,45 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2020-06-23 16:19+0000\n"
+"Last-Translator: Fernando Colus <fcolus1@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: stock_change_price_at_date
 #: model:ir.model,name:stock_change_price_at_date.model_stock_change_standard_price
 msgid "Change Standard Price"
-msgstr ""
+msgstr "Alterar Preço Padrão"
 
 #. module: stock_change_price_at_date
 #: model:ir.model.fields,field_description:stock_change_price_at_date.field_stock_change_standard_price__date
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #. module: stock_change_price_at_date
 #: model:ir.model,name:stock_change_price_at_date.model_account_move
 msgid "Journal Entries"
-msgstr ""
+msgstr "Entradas do Diário"
 
 #. module: stock_change_price_at_date
 #: model:ir.model,name:stock_change_price_at_date.model_product_product
 msgid "Product"
-msgstr ""
+msgstr "Produto"
 
 #. module: stock_change_price_at_date
 #: code:addons/stock_change_price_at_date/wizards/stock_change_standard_price.py:42
 #, python-format
 msgid "The chosen date should be today or in the past!"
-msgstr ""
+msgstr "A data escolhida deve ser hoje ou no passado!"
 
 #. module: stock_change_price_at_date
 #: model:ir.model.fields,help:stock_change_price_at_date.field_stock_change_standard_price__date
 msgid "The date used to create account moves. If empty, assumes today.Cannot be a date in the future."
 msgstr ""
+"A data usada para criar movimentações de conta. Se vazio, assume hoje. Não "
+"pode ser uma data futura."
