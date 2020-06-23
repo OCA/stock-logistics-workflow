@@ -6,20 +6,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2020-06-23 03:19+0000\n"
+"Last-Translator: Fernando Colus <fcolus1@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: product_supplierinfo_for_customer_picking
 #: model:ir.model.fields,field_description:product_supplierinfo_for_customer_picking.field_stock_move__product_customer_code
 msgid "Product Customer Code"
-msgstr ""
+msgstr "Código do Cliente do Produto"
 
 #. module: product_supplierinfo_for_customer_picking
 #: model:ir.model,name:product_supplierinfo_for_customer_picking.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimentação de Estoque"
