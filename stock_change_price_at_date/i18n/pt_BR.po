@@ -1,0 +1,46 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_change_price_at_date
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+
+#. module: stock_change_price_at_date
+#: model:ir.model,name:stock_change_price_at_date.model_stock_change_standard_price
+msgid "Change Standard Price"
+msgstr ""
+
+#. module: stock_change_price_at_date
+#: model:ir.model.fields,field_description:stock_change_price_at_date.field_stock_change_standard_price__date
+msgid "Date"
+msgstr ""
+
+#. module: stock_change_price_at_date
+#: model:ir.model,name:stock_change_price_at_date.model_account_move
+msgid "Journal Entries"
+msgstr ""
+
+#. module: stock_change_price_at_date
+#: model:ir.model,name:stock_change_price_at_date.model_product_product
+msgid "Product"
+msgstr ""
+
+#. module: stock_change_price_at_date
+#: code:addons/stock_change_price_at_date/wizards/stock_change_standard_price.py:42
+#, python-format
+msgid "The chosen date should be today or in the past!"
+msgstr ""
+
+#. module: stock_change_price_at_date
+#: model:ir.model.fields,help:stock_change_price_at_date.field_stock_change_standard_price__date
+msgid "The date used to create account moves. If empty, assumes today.Cannot be a date in the future."
+msgstr ""
