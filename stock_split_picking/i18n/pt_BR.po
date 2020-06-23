@@ -9,31 +9,32 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-01 02:08+0000\n"
-"PO-Revision-Date: 2017-06-01 02:08+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/"
-"teams/23907/pt_BR/)\n"
+"PO-Revision-Date: 2020-06-23 03:19+0000\n"
+"Last-Translator: Fernando Colus <fcolus1@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
+"23907/pt_BR/)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: stock_split_picking
 #: model_terms:ir.ui.view,arch_db:stock_split_picking.view_picking_form
 msgid "Are you sure you want to split current picking?"
-msgstr ""
+msgstr "Tem certeza de que deseja dividir a coleta atual?"
 
 #. module: stock_split_picking
 #: code:addons/stock_split_picking/models/stock_picking.py:22
 #, python-format
 msgid "Mark as todo this picking please."
-msgstr ""
+msgstr "Marque essa coleta como \"a fazer\", por gentileza."
 
 #. module: stock_split_picking
 #: model_terms:ir.ui.view,arch_db:stock_split_picking.view_picking_form
 msgid "Split"
-msgstr ""
+msgstr "Dividir"
 
 #. module: stock_split_picking
 #: code:addons/stock_split_picking/models/stock_picking.py:65
@@ -42,11 +43,13 @@ msgid ""
 "The backorder <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d"
 "\">%s</a> has been created."
 msgstr ""
+"O Pedido Pendente <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\""
+"%d\">%s</a> foi criado."
 
 #. module: stock_split_picking
 #: model:ir.model,name:stock_split_picking.model_stock_picking
 msgid "Transfer"
-msgstr "Transferir"
+msgstr "Transferência"
 
 #. module: stock_split_picking
 #: code:addons/stock_split_picking/models/stock_picking.py:25
@@ -54,3 +57,5 @@ msgstr "Transferir"
 msgid ""
 "You must enter done quantity in order to split your picking in several ones."
 msgstr ""
+"É necessário você entrar com a quantidade concluída para dividir sua coleta "
+"em várias."
