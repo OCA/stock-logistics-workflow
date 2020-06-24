@@ -74,7 +74,8 @@ class StockMove(models.Model):
             previous_qty += move.quantity_done
             affected_moves = self.with_context(skip_avco_sync=True).search([
                 ('product_id', '=', move.product_id.id),
-                ('date', '>', move.date),
+                ('date', '>=', move.date),
+                ('id', '!=', move.id),
             ], order='date')
             for af_move in affected_moves:
                 if af_move._is_in():
