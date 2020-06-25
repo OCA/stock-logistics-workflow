@@ -158,3 +158,31 @@ class TestProductCostPriceAvcoSync(SavepointCase):
             ('product_id', '=', self.product.id),
         ])
         self.assertEqual(price_history_count, 4)
+
+    def test_sync_cost_price_multi_moves_done_at_same_time(self):
+        move_in = self.picking_in.move_lines[:1]
+        move_in.product_uom_qty = 10
+        move_in.price_unit = 10.0
+        move_in.quantity_done = move_in.product_uom_qty
+
+        picking_in_2 = self.picking_in.copy()
+        move_in_2 = picking_in_2.move_lines[:1]
+        move_in_2.product_uom_qty = 10.0
+        move_in_2.price_unit = 5.0
+        move_in_2.quantity_done = move_in_2.product_uom_qty
+
+        self.env['stock.immediate.transfer'].create({
+            'pick_ids': [(6, 0, (self.picking_in + picking_in_2).ids)],
+        }).process()
+        (self.picking_in + picking_in_2).action_done()
+
+        self.assertEqual(self.product.standard_price, 7.5)
+        move_in_2.price_unit = 4.0
+        self.assertEqual(self.product.standard_price, 7.0)
+        move_in.price_unit = 8.0
+        self.assertEqual(self.product.standard_price, 6)
+
+        move_in.price_unit = 10.0
+        self.assertEqual(self.product.standard_price, 7.0)
+        move_in_2.price_unit = 5.0
+        self.assertEqual(self.product.standard_price, 7.5)
