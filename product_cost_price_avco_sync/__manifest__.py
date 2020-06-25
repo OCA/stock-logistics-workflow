@@ -4,7 +4,7 @@
 {
     'name': 'Product cost price avco sync',
     'summary': 'Set product cost price from updated moves',
-    'version': '11.0.1.0.0',
+    'version': '11.0.1.0.1',
     'category': 'Stock',
     'website': 'https://github.com/OCA/stock-logistics-workflow',
     'author': 'Tecnativa, Odoo Community Association (OCA)',
