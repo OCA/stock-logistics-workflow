@@ -22,11 +22,9 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                     ('show_quick_quantities_done', '=', False)
                 ]}</attribute>
             </button>
-            <button name="button_validate" position="replace">
-                <button name="button_validate" attrs="{'invisible': ['|', ('state', 'in', ('waiting','confirmed')), ('show_validate', '=', False)]}" string="Validate" type="object" class="oe_highlight" groups="stock.group_stock_user"/>
-                <button name="button_validate" attrs="{'invisible': ['|', ('state', 'not in', ('waiting', 'confirmed')), ('show_validate', '=', False)]}" string="Validate" type="object" groups="stock.group_stock_user" class="oe_highlight o_btn_validate"/>
-            </button>
-
+            <xpath expr="//button[@name='button_validate'][2]" position="attributes">
+                <attribute name="class">oe_highlight</attribute>
+            </xpath>
             <field name="product_uom" position="after">
                 <field name="show_quick_quantity_done" invisible="1"/>
                 <button name="quick_quantity_done"
