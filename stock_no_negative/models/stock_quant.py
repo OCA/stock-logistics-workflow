@@ -22,7 +22,9 @@ class StockQuant(models.Model):
         )
         if not check_negative_qty:
             return
-
+        # Execute generic merge method before doing comparisons for avoiding
+        # existing negative quants not merged with their counterparts
+        self._merge_quants()
         for quant in self:
             disallowed_by_product = \
                 not quant.product_id.allow_negative_stock \
