@@ -21,17 +21,18 @@ class StockPicking(models.Model):
             return
         p = self.partner_id
         if not p.is_in_delivery_window(self._planned_delivery_date()):
+            delivery_windows_strings = []
+            for w in p.get_delivery_windows().get(p.id):
+                delivery_windows_strings.append(
+                    "  * {} ({})".format(w.display_name, self.partner_id.tz)
+                )
             message = _(
-                "The scheduled date is %s, but the partner is "
+                "The scheduled date is %s (%s), but the partner is "
                 "set to prefer deliveries on following time windows:\n%s"
                 % (
                     format_datetime(self.env, self.scheduled_date),
-                    "\n".join(
-                        [
-                            "  * %s" % w.display_name
-                            for w in p.get_delivery_windows().get(p.id)
-                        ]
-                    ),
+                    self.env.context.get("tz"),
+                    "\n".join(delivery_windows_strings),
                 )
             )
             return {
