@@ -1,7 +1,10 @@
 # Copyright 2020 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
+from datetime import time
+
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.tools.misc import format_time
 
 from odoo.addons.partner_tz.tools import tz_utils
 
@@ -82,3 +85,43 @@ class ResPartner(models.Model):
                 if utc_start <= date_time.time() < utc_end:
                     return True
         return False
+
+    def get_delivery_time_description(self):
+        res = dict()
+        day_translated_values = dict(
+            self.env["time.weekday"]._fields["name"]._description_selection(self.env)
+        )
+        for partner in self:
+            opening_times = {}
+            time_format_string = _("From %s to %s")
+            if partner.delivery_time_preference == "time_windows":
+                for day in self.env["time.weekday"].search([]):
+                    day_windows = partner.delivery_time_window_ids.filtered(
+                        lambda d: day in d.time_window_weekday_ids
+                    )
+                    for win in day_windows:
+                        opening_times.setdefault(day_translated_values[day.name], [])
+                        opening_times[day_translated_values[day.name]].append(
+                            time_format_string
+                            % (
+                                format_time(self.env, win.get_time_window_start_time()),
+                                format_time(self.env, win.get_time_window_end_time()),
+                            )
+                        )
+            else:
+                for day in self.env["time.weekday"].search([]):
+                    opening_times.setdefault(day_translated_values[day.name], [])
+                    opening_times[day_translated_values[day.name]].append(
+                        time_format_string
+                        % (
+                            format_time(self.env, time(hour=0, minute=0)),
+                            format_time(self.env, time(hour=23, minute=59)),
+                        )
+                    )
+            opening_times_description = list()
+            for day_name, time_list in opening_times.items():
+                opening_times_description.append(
+                    _("%s: %s") % (day_name, _(", ").join(time_list))
+                )
+            res[partner.id] = "\n".join(opening_times_description)
+        return res
