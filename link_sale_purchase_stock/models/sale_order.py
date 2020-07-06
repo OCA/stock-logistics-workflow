@@ -36,7 +36,7 @@ class SaleOrder(models.Model):
         }
         if len(purchase_order_ids) == 1:
             action.update(
-                {"view_mode": "form", "res_id": purchase_order_ids[0],}
+                {"view_mode": "form", "res_id": purchase_order_ids[0]}
             )
         else:
             action.update(

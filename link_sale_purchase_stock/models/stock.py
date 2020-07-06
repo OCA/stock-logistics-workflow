@@ -1,7 +1,7 @@
 # Copyright 2020 KEMA SK, s.r.o. - Radovan Skolnik <radovan@skolnik.info>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 
 class StockRule(models.Model):
@@ -16,7 +16,7 @@ class StockRule(models.Model):
         ]._prepare_purchase_order_line_from_procurement(
             product_id, product_qty, product_uom, company_id, values, po
         )
-        if not "sale_line_id" in res:
+        if "sale_line_id" not in res:
             res["sale_line_id"] = values.get("sale_line_id", False)
         return res
 

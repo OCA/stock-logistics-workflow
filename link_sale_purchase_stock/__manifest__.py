@@ -6,10 +6,7 @@
     "version": "13.0.1.0.0",
     "category": "Hidden",
     "summary": "SO/PO relation in case of MTO",
-    "description": """
-Add relation information between Sale Orders and Purchase Orders if Make to Order (MTO) is activated on one sold product.
-""",
-    "author": "Radovan Skolnik, based on master (14.0) version of Odoo",
+    "author": "Radovan Skolnik, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": ["sale_stock", "purchase_stock", "sale_purchase", "stock_dropshipping"],
     "license": "AGPL-3",
