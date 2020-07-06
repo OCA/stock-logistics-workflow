@@ -35,9 +35,7 @@ class SaleOrder(models.Model):
             "type": "ir.actions.act_window",
         }
         if len(purchase_order_ids) == 1:
-            action.update(
-                {"view_mode": "form", "res_id": purchase_order_ids[0]}
-            )
+            action.update({"view_mode": "form", "res_id": purchase_order_ids[0]})
         else:
             action.update(
                 {
