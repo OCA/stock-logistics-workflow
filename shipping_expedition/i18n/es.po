@@ -1,0 +1,469 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* shipping_expedition
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0-20200601\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-07-10 11:26+0000\n"
+"PO-Revision-Date: 2020-07-10 11:26+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__message_needaction
+msgid "Action Needed"
+msgstr "Acción Necesaria"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__ir_attachment_id
+msgid "Attachment"
+msgstr "Adjunto"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__message_attachment_count
+msgid "Attachment Count"
+msgstr "Conteo de archivos adjuntos"
+
+#. module: shipping_expedition
+#: selection:shipping.expedition,state:0
+msgid "Canceled"
+msgstr "Cancelada"
+
+#. module: shipping_expedition
+#: model_terms:ir.ui.view,arch_db:shipping_expedition.shipping_expedition_form_view
+msgid "Cancell expedition"
+msgstr "Cancelar expedición"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__carrier_id
+#: model:ir.model.fields,field_description:shipping_expedition.field_stock_picking__carrier_id
+#: model_terms:ir.ui.view,arch_db:shipping_expedition.view_shipping_expedition_search
+msgid "Carrier"
+msgstr "Transportista"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__carrier_type
+#: model:ir.model.fields,field_description:shipping_expedition.field_stock_picking__carrier_type
+msgid "Carrier type"
+msgstr ""
+
+#. module: shipping_expedition
+#: selection:delivery.carrier,carrier_type:0
+msgid "Cbl"
+msgstr ""
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__code
+msgid "Code"
+msgstr "Código"
+
+#. module: shipping_expedition
+#: model:ir.model,name:shipping_expedition.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: shipping_expedition
+#: model_terms:ir.ui.view,arch_db:shipping_expedition.shipping_expedition_view_picking_form
+msgid "Create expedition"
+msgstr "Crear expedición"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__date
+msgid "Date"
+msgstr "Fecha"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__delegation_name
+msgid "Delegation name"
+msgstr ""
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__delegation_phone
+msgid "Delegation phone"
+msgstr ""
+
+#. module: shipping_expedition
+#: selection:shipping.expedition,state:0
+msgid "Delivered"
+msgstr "Entregado"
+
+#. module: shipping_expedition
+#: model:ir.model,name:shipping_expedition.model_delivery_carrier
+msgid "Delivery Methods"
+msgstr "Método de envío"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__delivery_code
+msgid "Delivery code"
+msgstr ""
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__delivery_note
+msgid "Delivery note"
+msgstr ""
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: shipping_expedition
+#: selection:shipping.expedition,state:0
+msgid "Error"
+msgstr ""
+
+#. module: shipping_expedition
+#: model_terms:ir.ui.view,arch_db:shipping_expedition.shipping_expedition_form_view
+msgid "Expedicion"
+msgstr "Expedición"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_stock_picking__shipping_expedition_id
+msgid "Expedition"
+msgstr ""
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_sale_order__shipping_expedition_note
+msgid "Expedition Note"
+msgstr ""
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_stock_picking__shipping_expedition_note
+msgid "Expedition note"
+msgstr ""
+
+#. module: shipping_expedition
+#: model:ir.actions.act_window,name:shipping_expedition.shipping_expedition_action
+#: model:ir.model.fields,field_description:shipping_expedition.field_crm_lead__shipping_expedition_count
+#: model:ir.model.fields,field_description:shipping_expedition.field_res_partner__shipping_expedition_count
+#: model:ir.model.fields,field_description:shipping_expedition.field_res_users__shipping_expedition_count
+#: model:ir.model.fields,field_description:shipping_expedition.field_sale_order__shipping_expedition_count
+#: model:ir.ui.menu,name:shipping_expedition.menuitem_shipping_expedition
+#: model_terms:ir.ui.view,arch_db:shipping_expedition.shipping_expedition_crm_case_form_view_oppor
+#: model_terms:ir.ui.view,arch_db:shipping_expedition.shipping_expedition_tree
+#: model_terms:ir.ui.view,arch_db:shipping_expedition.shipping_expedition_view_order_form
+#: model_terms:ir.ui.view,arch_db:shipping_expedition.shipping_expedition_view_partner_form
+#: model_terms:ir.ui.view,arch_db:shipping_expedition.view_shipping_expedition_search
+msgid "Expeditions"
+msgstr "Expediciones"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__exps_rels
+msgid "Exps_rels"
+msgstr ""
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__failed_message_ids
+msgid "Failed Messages"
+msgstr "Mensajes Fallidos"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__message_follower_ids
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "Seguidores (Canales)"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguidores (Empresas)"
+
+#. module: shipping_expedition
+#: selection:shipping.expedition,state:0
+msgid "Generate"
+msgstr "Generar"
+
+#. module: shipping_expedition
+#: model_terms:ir.ui.view,arch_db:shipping_expedition.view_shipping_expedition_search
+msgid "Group by"
+msgstr "Agrupar por"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__hour
+msgid "Hour"
+msgstr ""
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__id
+msgid "ID"
+msgstr ""
+
+#. module: shipping_expedition
+#: model:ir.model.fields,help:shipping_expedition.field_shipping_expedition__message_unread
+msgid "If checked new messages require your attention."
+msgstr "Si está marcado, hay nuevos mensajes que requieren su atención"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,help:shipping_expedition.field_shipping_expedition__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Si está marcado, hay nuevos mensajes que requieren su atención."
+
+#. module: shipping_expedition
+#: model:ir.model.fields,help:shipping_expedition.field_shipping_expedition__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Si se encuentra marcado, algunos mensajes tienen error de envío."
+
+#. module: shipping_expedition
+#: selection:shipping.expedition,state:0
+msgid "In delegation"
+msgstr "En delegación"
+
+#. module: shipping_expedition
+#: selection:shipping.expedition,state:0
+msgid "In transit"
+msgstr "En tránsito"
+
+#. module: shipping_expedition
+#: selection:shipping.expedition,state:0
+msgid "Incidence"
+msgstr "Incidencia"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__message_is_follower
+msgid "Is Follower"
+msgstr "Es un seguidor"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition____last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__lead_id
+msgid "Lead"
+msgstr "Iniciativa"
+
+#. module: shipping_expedition
+#: model:ir.model,name:shipping_expedition.model_crm_lead
+msgid "Lead/Opportunity"
+msgstr "Iniciativa/Oportunidad"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "Adjuntos principales"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__message_has_error
+msgid "Message Delivery error"
+msgstr "Error de Envío de Mensaje"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__message_ids
+msgid "Messages"
+msgstr "Mensajes"
+
+#. module: shipping_expedition
+#: model_terms:ir.ui.view,arch_db:shipping_expedition.view_shipping_expedition_search
+msgid "My expeditions"
+msgstr "Mis expediciones"
+
+#. module: shipping_expedition
+#: selection:delivery.carrier,carrier_type:0
+msgid "Nacex"
+msgstr ""
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: shipping_expedition
+#: selection:delivery.carrier,carrier_type:0
+msgid "None"
+msgstr "Ninguno"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Número de acciones"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__message_has_error_counter
+msgid "Number of error"
+msgstr "Número de error"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,help:shipping_expedition.field_shipping_expedition__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "Número de mensajes que requieren una acción"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,help:shipping_expedition.field_shipping_expedition__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Número de mensajes con error de envío"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,help:shipping_expedition.field_shipping_expedition__message_unread_counter
+msgid "Number of unread messages"
+msgstr "Número de mensajes no leidos"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__observations
+msgid "Observations"
+msgstr ""
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__order_id
+msgid "Order"
+msgstr "Orden"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__origin
+msgid "Origin"
+msgstr "Origen"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__partner_id
+msgid "Partner"
+msgstr "Empresa"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__picking_id
+msgid "Picking"
+msgstr "Albarán"
+
+#. module: shipping_expedition
+#: model:ir.model,name:shipping_expedition.model_sale_order
+msgid "Sale Order"
+msgstr "Pedido de venta"
+
+#. module: shipping_expedition
+#: model_terms:ir.ui.view,arch_db:shipping_expedition.shipping_expedition_view_order_form
+#: model_terms:ir.ui.view,arch_db:shipping_expedition.shipping_expedition_view_picking_form
+msgid "Set notes for the carrier"
+msgstr "Define notas para el transportista"
+
+#. module: shipping_expedition
+#: selection:shipping.expedition,state:0
+msgid "Shipped"
+msgstr ""
+
+#. module: shipping_expedition
+#: model:ir.model,name:shipping_expedition.model_shipping_expedition
+msgid "Shipping Expedicion"
+msgstr ""
+
+#. module: shipping_expedition
+#: model:ir.actions.server,name:shipping_expedition.cron_shipping_expeditions_update_state_ir_actions_server
+#: model:ir.cron,cron_name:shipping_expedition.cron_shipping_expeditions_update_state
+#: model:ir.cron,name:shipping_expedition.cron_shipping_expeditions_update_state
+msgid "Shipping Expedition Update State"
+msgstr "Actualizar estado de expedición"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__state
+#: model_terms:ir.ui.view,arch_db:shipping_expedition.view_shipping_expedition_search
+msgid "State"
+msgstr "Provincia"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__state_code
+msgid "State code"
+msgstr ""
+
+#. module: shipping_expedition
+#: model:ir.model,name:shipping_expedition.model_stock_picking
+msgid "Transfer"
+msgstr "Albarán"
+
+#. module: shipping_expedition
+#: selection:delivery.carrier,carrier_type:0
+msgid "Tsb"
+msgstr ""
+
+#. module: shipping_expedition
+#: selection:delivery.carrier,carrier_type:0
+msgid "Txt"
+msgstr ""
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_delivery_carrier__carrier_type
+msgid "Type"
+msgstr "Tipo"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__message_unread
+msgid "Unread Messages"
+msgstr "Mensajes por leer"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "Contador de mensajes sin leer"
+
+#. module: shipping_expedition
+#: model_terms:ir.ui.view,arch_db:shipping_expedition.shipping_expedition_form_view
+msgid "Update state"
+msgstr "Actualizar estado"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__url_info
+msgid "Url info"
+msgstr ""
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__user_id
+msgid "User"
+msgstr "Usuario"
+
+#. module: shipping_expedition
+#: model_terms:ir.ui.view,arch_db:shipping_expedition.view_shipping_expedition_search
+msgid "User id"
+msgstr "Usuario"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,field_description:shipping_expedition.field_shipping_expedition__website_message_ids
+msgid "Website Messages"
+msgstr "Mensajes del sitio web"
+
+#. module: shipping_expedition
+#: model:ir.model.fields,help:shipping_expedition.field_shipping_expedition__website_message_ids
+msgid "Website communication history"
+msgstr "Historial de comunicaciones del sitio web"
+
+#. module: shipping_expedition
+#: model_terms:ir.ui.view,arch_db:shipping_expedition.shipping_expedition_view_picking_internal_search
+msgid "With expedition"
+msgstr "Con expedición"
+
+#. module: shipping_expedition
+#: model_terms:ir.ui.view,arch_db:shipping_expedition.shipping_expedition_view_picking_internal_search
+msgid "Without expedition"
+msgstr "Sin expedición"
+
+#. module: shipping_expedition
+#: model_terms:ir.ui.view,arch_db:shipping_expedition.shipping_expedition_form_view
+msgid "child"
+msgstr ""
+
