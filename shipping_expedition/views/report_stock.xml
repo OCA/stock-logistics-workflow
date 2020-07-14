@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<odoo>
-    <template id="report_expedition">
-        <t t-foreach="docs" t-as="o">
-            <span t-field="o.expedition_image" t-field-options='{"widget": "image"}'/>
-        </t>
-    </template>
-</odoo>
