@@ -13,6 +13,14 @@ class SaleOrder(models.Model):
                 SaleOrder, sale_order.with_context(cancel_sale_id=sale_order.id)
             ).action_cancel()
 
+    def get_name_for_delivery_line(self):
+        """Get the name for the sale order displayed on the delivery note"""
+        self.ensure_one()
+        if self.client_order_ref:
+            return self.name + " - " + self.client_order_ref
+        else:
+            return self.name
+
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
