@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="stock_putaway_list" model="ir.ui.view">
+        <field name="name">stock.putaway.rule.tree</field>
+        <field name="model">stock.putaway.rule</field>
+        <field name="inherit_id" ref="stock.stock_putaway_list" />
+        <field name="arch" type="xml">
+            <field name="category_id" position="after">
+                <field
+                    name="route_id"
+                    options="{'no_create': True, 'no_open': True, 'exclusive_selection': True}"
+                    readonly="context.get('putaway_route', False)"
+                    force_save="1"
+                />
+            </field>
+        </field>
+    </record>
+    <record id="view_putaway_search" model="ir.ui.view">
+        <field name="name">stock.putaway.rule.search</field>
+        <field name="model">stock.putaway.rule</field>
+        <field name="inherit_id" ref="stock.view_putaway_search" />
+        <field name="arch" type="xml">
+            <field name="category_id" position="after">
+                <field name="route_id" />
+            </field>
+        </field>
+    </record>
+</odoo>
