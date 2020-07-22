@@ -23,6 +23,8 @@ setuptools.setup(
         'odoo13-addon-stock_picking_show_return',
         'odoo13-addon-stock_picking_whole_scrap',
         'odoo13-addon-stock_production_lot_active',
+        'odoo13-addon-stock_putaway_by_route',
+        'odoo13-addon-stock_putaway_hook',
         'odoo13-addon-stock_quant_package_dimension',
         'odoo13-addon-stock_quant_package_product_packaging',
         'odoo13-addon-stock_split_picking',
