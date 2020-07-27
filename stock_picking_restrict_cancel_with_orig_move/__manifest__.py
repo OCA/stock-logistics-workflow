@@ -8,7 +8,5 @@
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "license": "AGPL-3",
-    "depends": [
-        "stock",
-    ],
+    "depends": ["stock"],
 }
