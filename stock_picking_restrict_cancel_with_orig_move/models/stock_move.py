@@ -59,8 +59,8 @@ class StockMove(models.Model):
         else:
             return {}
 
-    def _push_apply(self):
-        """Allow cancellation on the application of push rules"""
+    def _merge_moves(self, merge_into=False):
+        """Allow cancellation on the merge of moves"""
         return super(
             StockMove, self.with_context(bypass_check_state=True)
-        )._push_apply()
+        )._merge_moves(merge_into=merge_into)
