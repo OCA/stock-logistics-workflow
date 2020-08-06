@@ -1,8 +1,6 @@
 # Copyright 2020 Camptocamp
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from lxml import etree
-
 from odoo import models
 from odoo.osv.expression import AND, OR
 from odoo.tools.safe_eval import safe_eval
@@ -11,6 +9,8 @@ from odoo.addons.base.models.ir_ui_view import (
     transfer_modifiers_to_node,
     transfer_node_to_modifiers,
 )
+
+from lxml import etree
 
 
 class StockPutawayRule(models.Model):

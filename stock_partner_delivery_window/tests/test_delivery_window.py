@@ -1,8 +1,8 @@
 # Copyright 2020 Camptocamp
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from freezegun import freeze_time
-
 from odoo.tests import SavepointCase
+
+from freezegun import freeze_time
 
 
 class TestPartnerDeliveryWindow(SavepointCase):

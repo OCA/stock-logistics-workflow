@@ -1,8 +1,8 @@
 # Copyright 2020 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
-from freezegun import freeze_time
-
 from odoo.tests import SavepointCase, tagged
+
+from freezegun import freeze_time
 
 
 class TestGroupByDateBase(SavepointCase):

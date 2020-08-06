@@ -1,9 +1,9 @@
 # Copyright 2019 Tecnativa - David Vidal
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from dateutil.relativedelta import relativedelta
-
 from odoo import fields
 from odoo.tests.common import SavepointCase, tagged
+
+from dateutil.relativedelta import relativedelta
 
 
 @tagged("post_install", "-at_install")
