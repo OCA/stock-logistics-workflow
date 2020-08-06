@@ -7,9 +7,9 @@ class LandedCost(models.Model):
     _inherit = "stock.landed.cost"
 
     currency_id = fields.Many2one(
-        "res.currency",
+        comodel_name="res.currency",
         required=True,
-        states={"done": [("readonly", True)]},
+        related="",
         default=lambda self: self.env.user.company_id.currency_id,
     )
 
