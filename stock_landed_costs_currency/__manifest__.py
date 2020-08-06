@@ -3,7 +3,7 @@
 {
     "name": "Stock Landed Costs Currency",
     "version": "13.0.1.0.0",
-    "author": "Komit Consulting," "Odoo Community Association (OCA)",
+    "author": "Komit Consulting, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "category": "Stock Accounting",
     "website": "https://github.com/OCA/stock-logistics-workflow",
