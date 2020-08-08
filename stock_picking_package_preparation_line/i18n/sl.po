@@ -9,15 +9,16 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-10 02:42+0000\n"
-"PO-Revision-Date: 2017-05-10 02:42+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"PO-Revision-Date: 2020-08-08 16:59+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@matmoz.si>\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: stock_picking_package_preparation_line
 #: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation_line.view_stock_picking_package_preparation_line_setting
@@ -25,12 +26,14 @@ msgid ""
 "<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
 "specific.\" groups=\"base.group_multi_company\"/>"
 msgstr ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"Tu nastavljene vrednosti so "
+"specifične za določeno družbo.\" groups=\"base.group_multi_company\"/>"
 
 #. module: stock_picking_package_preparation_line
 #: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:149
 #, python-format
 msgid "Cannot find a default location for picking type: %s"
-msgstr ""
+msgstr "Za zbirnik tipa: %s ni mogoče najti privzete lokacije"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model,name:stock_picking_package_preparation_line.model_res_company
@@ -40,7 +43,7 @@ msgstr "Družbe"
 #. module: stock_picking_package_preparation_line
 #: model:ir.model,name:stock_picking_package_preparation_line.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Nastavitve"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__create_uid
@@ -86,17 +89,17 @@ msgid ""
 "If you change this quantity for a 'ready' picking, the system will not "
 "generate a back order, but will just deliver the new quantity"
 msgstr ""
-"Če spremenite to količino za 'pripravljen' zbirnik, sistem ne bo ustvaril "
-"čakajočega naloga, ampak bo enostavno dobavil novo količino."
+"Če spremenite to količino v dobavnem zbirniku v stanju 'pripravljeno', "
+"sistem ne bo ustvaril zaostalega naloga, ampak bo enostavno dobavil novo "
+"količino"
 
 #. module: stock_picking_package_preparation_line
 #: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:180
 #: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:186
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Impossible to create confirmed picking. Please check products availability!"
-msgstr ""
-"Potrjen zbirnik je nemogoče ustvariti. Preverite razpoložljivost proizvodov!"
+msgstr "Ni mogoče potrditi zbirnika. Preverite razpoložljivost proizvodov!"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line____last_update
@@ -121,12 +124,12 @@ msgstr "Lot"
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,help:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__lot_ids
 msgid "Lots effectively linked to stock move"
-msgstr ""
+msgstr "Loti dejansko povezani s premikom zaloge"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__lot_ids
 msgid "Moved lots"
-msgstr ""
+msgstr "Premeščeni loti"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__note
@@ -137,7 +140,7 @@ msgstr "Opomba"
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation__picking_type_id
 msgid "Operation Type"
-msgstr ""
+msgstr "Tip operacije"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model,name:stock_picking_package_preparation_line.model_stock_picking_package_preparation
@@ -159,7 +162,7 @@ msgstr "Proizvod"
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__product_uom_qty
 msgid "Quantity"
-msgstr ""
+msgstr "Količina"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__sequence
@@ -175,12 +178,13 @@ msgstr "Premik zaloge"
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__product_uom_id
 msgid "UoM"
-msgstr ""
+msgstr "EM"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,help:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__lot_id
 msgid "Used to specify lot when line is created using package preparation"
 msgstr ""
+"Rabi se za določitev lota pri ustvarjanju postavke preko priprave pakiranja"
 
 #~ msgid "Picking Type"
 #~ msgstr "Tip zbirnika"
