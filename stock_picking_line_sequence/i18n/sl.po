@@ -9,32 +9,31 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-03 03:56+0000\n"
-"PO-Revision-Date: 2017-12-03 03:56+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"PO-Revision-Date: 2020-08-08 16:59+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@matmoz.si>\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: stock_picking_line_sequence
 #: model_terms:ir.ui.view,arch_db:stock_picking_line_sequence.report_delivery_document
 msgid "<strong>Seq.</strong>"
-msgstr ""
+msgstr "<strong>Zap.</strong>"
 
 #. module: stock_picking_line_sequence
 #: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move__sequence
-#, fuzzy
-#| msgid "Sequence"
 msgid "HiddenSequence"
-msgstr "Zaporedje"
+msgstr "Skrito zaporedje"
 
 #. module: stock_picking_line_sequence
 #: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_picking__max_line_sequence
 msgid "Max sequence in lines"
-msgstr ""
+msgstr "Maks. zaporedje v vrsticah"
 
 #. module: stock_picking_line_sequence
 #: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move__sequence2
@@ -44,7 +43,7 @@ msgstr "Zaporedje"
 #. module: stock_picking_line_sequence
 #: model:ir.model.fields,help:stock_picking_line_sequence.field_stock_move__sequence2
 msgid "Shows the sequence in the Stock Move."
-msgstr ""
+msgstr "Prikaže zaporedje pri premikih zaloge."
 
 #. module: stock_picking_line_sequence
 #: model:ir.model,name:stock_picking_line_sequence.model_stock_move
@@ -54,4 +53,4 @@ msgstr "Premik zaloge"
 #. module: stock_picking_line_sequence
 #: model:ir.model,name:stock_picking_line_sequence.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Premestitev"
