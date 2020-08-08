@@ -9,78 +9,79 @@ msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-23 11:56+0000\n"
-"PO-Revision-Date: 2017-01-23 11:56+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"PO-Revision-Date: 2020-08-08 16:59+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@matmoz.si>\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__picking_count
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
 msgid "# Pickings"
-msgstr ""
+msgstr "# dobavnic"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
 msgid "<strong>Date:</strong>"
-msgstr ""
+msgstr "<strong>Datum:</strong>"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
 msgid "<strong>Printed by:</strong>"
-msgstr ""
+msgstr "<strong>Natisnil:</strong>"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
 msgid "<strong>Total:</strong>"
-msgstr ""
+msgstr "<strong>Skupaj:</strong>"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__active_picking_ids
 msgid "Active Pickings"
-msgstr ""
+msgstr "Aktivne dobavnice"
 
 #. module: stock_picking_batch_extended
 #: model:ir.actions.act_window,name:stock_picking_batch_extended.batch_picking_create_act_window
 msgid "Add to new Batch"
-msgstr ""
+msgstr "Dodaj v nov zbirnik"
 
 #. module: stock_picking_batch_extended
 #: code:addons/stock_picking_batch_extended/wizard/batch_picking_creator.py:96
 #, python-format
 msgid ""
 "All selected pickings are already in a batch picking or are in a wrong state."
-msgstr ""
+msgstr "Vse izbrane dobavnice so že v zbirniku ali pa v napačnem stanju."
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.res_config_settings_view_form
 msgid "Apply OCA batch validation"
-msgstr ""
+msgstr "Omogoči OCA overjanje zbirnikov"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.view_create_batch_picking
 msgid "Assign picking operations to an employee."
-msgstr ""
+msgstr "Določi odgovornega za obdelavo dobavnic."
 
 #. module: stock_picking_batch_extended
 #: selection:stock.picking.batch,state:0
 msgid "Available"
-msgstr ""
+msgstr "Na voljo"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking__batch_id
 msgid "Batch"
-msgstr ""
+msgstr "Zbirnik"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
 msgid "Batch Name"
-msgstr ""
+msgstr "Naziv zbirnika"
 
 #. module: stock_picking_batch_extended
 #: model:ir.actions.act_window,name:stock_picking_batch_extended.action_stock_batch_picking_tree
@@ -88,39 +89,39 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_tree
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.view_create_batch_picking
 msgid "Batch Picking"
-msgstr ""
+msgstr "Zbirnik dobavnic"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model,name:stock_picking_batch_extended.model_stock_picking_batch_creator
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__batch_picking_creator_id
 msgid "Batch Picking Creator"
-msgstr ""
+msgstr "Ustvarjanje zbirnih dobavnic"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model,name:stock_picking_batch_extended.model_stock_picking_batch_creator_group_field
 msgid "Batch Picking Creator Group Field"
-msgstr ""
+msgstr "Polje za združevanje pri ustvarjanju zbirnikov"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__name
 msgid "Batch Picking Name"
-msgstr ""
+msgstr "Naziv zbirnika dobavnic"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.view_create_batch_picking
 msgid "Batch Picking properties"
-msgstr ""
+msgstr "Lastnosti zbirnika dobavnic"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking__batch_id
 msgid "Batch associated to this picking"
-msgstr ""
+msgstr "Zbirnik povezan s to dobavnico"
 
 #. module: stock_picking_batch_extended
 #: model:ir.actions.report,name:stock_picking_batch_extended.action_report_batch_picking
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
 msgid "Batch picking"
-msgstr ""
+msgstr "Zbirnik dobavnic"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
@@ -136,32 +137,32 @@ msgstr "Preklicano"
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
 msgid "Carrier"
-msgstr ""
+msgstr "Prevoznik"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model,name:stock_picking_batch_extended.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Družbe"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model,name:stock_picking_batch_extended.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Nastavitve"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
 msgid "Confirm"
-msgstr ""
+msgstr "Potrdi"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator__batch_by_group
 msgid "Create batch pickings grouped by fields"
-msgstr ""
+msgstr "Ustvari zbirnik dobavnic združen po poljih"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.view_create_batch_picking
 msgid "Create multiple batch picking grouped by..."
-msgstr ""
+msgstr "Ustvari več zbirnikov dobavnic združenih po..."
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator__create_uid
@@ -179,29 +180,27 @@ msgstr "Ustvarjeno"
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__date
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator__date
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch_creator__date
 msgid "Date on which the batch picking is to be processed"
-msgstr ""
+msgstr "Predvideni datum obdelave zbirnika dobavnic"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_warehouse__default_user_id
 msgid "Default Picker"
-msgstr ""
+msgstr "Privzeti kontrolor"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
-#, fuzzy
 msgid "Detailed Operations"
-msgstr "Operacije"
+msgstr "Detajlne operacije"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__move_line_ids
-#, fuzzy
 msgid "Detailed operations"
-msgstr "Operacije"
+msgstr "Detajlne operacije"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_report_stock_picking_batch_extended_report_batch_picking__display_name
@@ -224,38 +223,38 @@ msgstr "Osnutek"
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__entire_package_ids
 msgid "Entire Package"
-msgstr ""
+msgstr "Celotna pošiljka"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__entire_package_detail_ids
 msgid "Entire Package Detail"
-msgstr ""
+msgstr "Podrobnosti celotne pošiljke"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__field_id
 msgid "Field to group"
-msgstr ""
+msgstr "Polje za združevanje"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch_creator__notes
 msgid "Free form remarks"
-msgstr ""
+msgstr "Opombe"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_search
 msgid "Group By..."
-msgstr ""
+msgstr "Združi po..."
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator__group_field_ids
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.view_create_batch_picking
 msgid "Group by field"
-msgstr ""
+msgstr "Združi po polju"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__sequence
 msgid "Group by picking field"
-msgstr ""
+msgstr "Združi po polju dobavnice"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_report_stock_picking_batch_extended_report_batch_picking__id
@@ -268,11 +267,13 @@ msgstr "ID"
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch_creator__group_field_ids
 msgid "If set any, multiple batch picking will be created, one per group field"
 msgstr ""
+"V primeru nastavitve bo ustvarjenih več zbirnikov dobavnic, za vsako polje "
+"združevanja po eden"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
 msgid "Initial Demand"
-msgstr ""
+msgstr "Začetno povpraševanje"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_report_stock_picking_batch_extended_report_batch_picking____last_update
@@ -296,31 +297,31 @@ msgstr "Zadnjič posodobljeno"
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__picking_ids
 msgid "List of picking managed by this batch."
-msgstr ""
+msgstr "Seznam dobavnic v sklopu tega zbirnika."
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator__name
 msgid "Name"
-msgstr ""
+msgstr "Naziv"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__name
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch_creator__name
 msgid "Name of the batch picking"
-msgstr ""
+msgstr "Naziv zbirnika dobavnic"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__notes
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator__notes
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
 msgid "Notes"
-msgstr ""
+msgstr "Beležka"
 
 #. module: stock_picking_batch_extended
 #: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:240
 #, python-format
 msgid "Nothing to print."
-msgstr ""
+msgstr "Ničesar ni za tiskanje."
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__move_lines
@@ -331,50 +332,50 @@ msgstr "Operacije"
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_search
 msgid "Order Date"
-msgstr ""
+msgstr "Datum naročila"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
 msgid "Picked By"
-msgstr ""
+msgstr "Sestavil"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__user_id
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator__user_id
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_search
 msgid "Picker"
-msgstr ""
+msgstr "Sestavljalec"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.res_config_settings_view_form
 msgid "Picking Batch"
-msgstr ""
+msgstr "Zbirnik dobavnic"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__picking_ids
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
 msgid "Pickings"
-msgstr ""
+msgstr "Dobavnice"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
 msgid "Pickings Order"
-msgstr ""
+msgstr "Dobavni nalog"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
 msgid "Print"
-msgstr ""
+msgstr "Natisni"
 
 #. module: stock_picking_batch_extended
 #: model:ir.actions.server,name:stock_picking_batch_extended.action_print_batch_delivery_slip
 msgid "Print Delivery Slip"
-msgstr ""
+msgstr "Natisni dobavnico"
 
 #. module: stock_picking_batch_extended
 #: model:ir.actions.server,name:stock_picking_batch_extended.action_print_batch_picking_operations
 msgid "Print Picking Operations"
-msgstr ""
+msgstr "Natisni dobavne operacije"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model,name:stock_picking_batch_extended.model_product_product
@@ -385,43 +386,43 @@ msgstr "Proizvod"
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
 msgid "QTY"
-msgstr ""
+msgstr "kol"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
 msgid "Register lots, packs, location"
-msgstr ""
+msgstr "Registriraj lote, pakiranja, lokacijo"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
 msgid "Remove Undone"
-msgstr ""
+msgstr "Odstrani neopravljene"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model,name:stock_picking_batch_extended.model_report_stock_picking_batch_extended_report_batch_picking
 msgid "Report for Batch Picking"
-msgstr ""
+msgstr "Poročilo za zbirno dobavnico"
 
 #. module: stock_picking_batch_extended
 #: model:ir.actions.server,name:stock_picking_batch_extended.action_stock_batch_picking_assign_all
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
 msgid "Reserve All"
-msgstr ""
+msgstr "Rezerviraj vse"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
 msgid "Reserved"
-msgstr ""
+msgstr "Rezervirano"
 
 #. module: stock_picking_batch_extended
 #: selection:stock.picking.batch,state:0
 msgid "Running"
-msgstr ""
+msgstr "V teku"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Zaporedje"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__state
@@ -432,109 +433,109 @@ msgstr "Stanje"
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
 msgid "Stock Moves"
-msgstr ""
+msgstr "Premiki zaloge"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.res_config_settings_view_form
 msgid "Switch behaviour bettwen Odoo and OCA for batch validation"
-msgstr ""
+msgstr "Preklop metodologije zbirnika dobav med Odoo in OCA"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch_creator__user_id
 msgid "The user to which the pickings are assigned"
-msgstr ""
+msgstr "Uporabnik, ki so mu dobavnice dodeljene"
 
 #. module: stock_picking_batch_extended
 #: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:160
 #, python-format
 msgid "These Batches have no pickings"
-msgstr ""
+msgstr "Ti zbirniki ne vsebujejo dobavnic"
 
 #. module: stock_picking_batch_extended
 #: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:158
 #, python-format
 msgid "This Batch has no pickings"
-msgstr ""
+msgstr "Ta zbirnik ne vsebuje dobavnic"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.product_normal_form_view
 msgid "This note will show up on the batch picking printout."
-msgstr ""
+msgstr "Ta beležka bo prikazana pri izpisu zbirne dobavnice."
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__entire_package_detail_ids
 msgid ""
 "Those are the entire packages of a picking shown in the view of detailed "
 "operations"
-msgstr ""
+msgstr "Celotna vsebina dobavnice prikazana v prikazu detajlne operacije"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__entire_package_ids
 msgid ""
 "Those are the entire packages of a picking shown in the view of operations"
-msgstr ""
+msgstr "Celotna vsebina dobavnice prikazana v prikazu operacije"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model,name:stock_picking_batch_extended.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Premestitev"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_search
 msgid "Unassigned"
-msgstr ""
+msgstr "Nedodeljeno"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
 msgid "Unit of Measure"
-msgstr ""
+msgstr "Enota mere"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_res_config_settings__use_oca_batch_validation
 msgid "Use OCA approach to validate Picking Batch"
-msgstr ""
+msgstr "Uporabi OCA metodologijo obdelave zbirnih dobavnic"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_res_company__use_oca_batch_validation
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__use_oca_batch_validation
 msgid "Use Oca Batch Validation"
-msgstr ""
+msgstr "Uporabi OCA zbirno obdelavo"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
 msgid "Validate"
-msgstr ""
+msgstr "Overi"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
 msgid "Visa:_________________"
-msgstr ""
+msgstr "Odobril:_________________"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model,name:stock_picking_batch_extended.model_stock_warehouse
 msgid "Warehouse"
-msgstr ""
+msgstr "Skladišče"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_product_product__description_warehouse
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.product_normal_form_view
 msgid "Warehouse Description"
-msgstr ""
+msgstr "Opis skladišča"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.view_create_batch_picking
 msgid "_Create"
-msgstr ""
+msgstr "_Ustvari"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__date
 msgid "date on which the batch picking is to be processed"
-msgstr ""
+msgstr "predvideni datum obdelave zbirnika dobavnic"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__notes
 msgid "free form remarks"
-msgstr ""
+msgstr "opombe"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__state
@@ -542,13 +543,15 @@ msgid ""
 "the state of the batch picking. Workflow is draft -> in_progress/assigned -> "
 "done or cancel"
 msgstr ""
+"stanje zbirnika dobavnic. Procedura je osnutek -> v_teku/dodeljeno -> "
+"opravljeno ali preklicano"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_warehouse__default_user_id
 msgid "the user to which the batch pickings are assigned by default"
-msgstr ""
+msgstr "uporabnik, kateremu se privzeto dodeljujejo zbirniki dobav"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__user_id
 msgid "the user to which the pickings are assigned"
-msgstr ""
+msgstr "uporabnik, ki so mu dobavnice dodeljene"
