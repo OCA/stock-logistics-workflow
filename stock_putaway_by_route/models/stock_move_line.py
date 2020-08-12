@@ -9,6 +9,6 @@ class StockMoveLine(models.Model):
 
     @api.onchange("product_id", "product_uom_id")
     def onchange_product_id(self):
-        if self.move_id.rule_id.route_id:
-            self = self.with_context(_putaway_route_id=self.rule_id.route_id)
+        if self.product_id.route_ids:
+            self = self.with_context(_putaway_route_id=self.product_id.route_ids)
         return super().onchange_product_id()
