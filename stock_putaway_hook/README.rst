@@ -63,7 +63,9 @@ Add the strategy key, named after the new field name, in ``StockLocation._putawa
 Pass the value to match with the putaway rule field in the context, in every
 method calling ``StockLocation._get_putaway_strategy``. The name of the key in
 the context is:``_putaway_<KEY>``, where KEY is the name of the new field on the
-putaway rule.
+putaway rule. The value can be a unit, a recordset of any length or a
+list/tuple. In latter cases, the putaway rule is selected if its field match any
+value in the list/recordset.
 
 Bug Tracker
 ===========
