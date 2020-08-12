@@ -407,7 +407,9 @@ class StockLocation(models.Model):
 <p>Pass the value to match with the putaway rule field in the context, in every
 method calling <tt class="docutils literal">StockLocation._get_putaway_strategy</tt>. The name of the key in
 the context is:<tt class="docutils literal">_putaway_&lt;KEY&gt;</tt>, where KEY is the name of the new field on the
-putaway rule.</p>
+putaway rule. The value can be a unit, a recordset of any length or a
+list/tuple. In latter cases, the putaway rule is selected if its field match any
+value in the list/recordset.</p>
 </div>
 <div class="section" id="bug-tracker">
 <h1><a class="toc-backref" href="#id2">Bug Tracker</a></h1>
