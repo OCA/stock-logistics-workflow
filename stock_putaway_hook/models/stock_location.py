@@ -15,7 +15,6 @@ class StockLocation(models.Model):
         strategy is found for the product and the category (default ones), the
         method ``_alternative_putaway_strategy`` will loop over these keys.
 
-
         The key of a strategy must be the name of the field added on
         ``stock.putaway.rule``.
 
@@ -48,7 +47,9 @@ class StockLocation(models.Model):
         The methods that calls ``StockLocation._get_putaway_strategy have to
         pass in the context a key with the name ``_putaway_<KEY>``, where KEY
         is the name of the strategy. The value must be the value to match with
-        the putaway rule.
+        the putaway rule. The value can be a unit, a recordset of any length or
+        a list/tuple. In latter cases, the putaway rule is selected if its
+        field match any value in the list/recordset.
         """
         current_location = self
         putaway_location = self.browse()
@@ -76,7 +77,9 @@ class StockLocation(models.Model):
                 value = strategy_values[strategy]
                 # Looking for a putaway from the strategy
                 putaway_rules = current_location.putaway_rule_ids.filtered(
-                    lambda x: x[strategy] == value
+                    lambda x: x[strategy] in value
+                    if isinstance(value, (models.BaseModel, list, tuple))
+                    else x[strategy] == value
                 )
                 if putaway_rules:
                     putaway_location = putaway_rules[0].location_out_id
