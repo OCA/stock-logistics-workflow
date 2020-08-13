@@ -12,7 +12,7 @@
                     <button name="action_transfer" states="draft" string="Validate" type="object"/>
                     <button name="action_transfer" states="assigned" string="Validate" class="oe_highlight" type="object"/>
                     <button name="action_cancel" states="draft,assigned" confirm="All pickings will be cancelled, Are you sure?" string="Cancel" type="object"/>
-                    <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,assigned"/>
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
