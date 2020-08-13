@@ -105,6 +105,9 @@ Contributors
 
   * Carlos Dauden
   * Sergio Teruel
+* `Punt Sistemes <https://www.puntsistemes.es>`_:
+
+  * Isaac Gallart <igallart@puntsistemes.es>
 
 Maintainers
 ~~~~~~~~~~~
