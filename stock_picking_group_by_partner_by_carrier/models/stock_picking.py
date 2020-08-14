@@ -53,9 +53,6 @@ class StockPicking(models.Model):
             StockPicking, self.with_context(picking_no_copy_if_can_group=0)
         ).copy(defaults)
 
-    def do_something(self):
-        return "bla bla"
-
     def get_delivery_report_lines(self):
         self.ensure_one()
         if self.state != "done":
@@ -70,7 +67,7 @@ class StockPicking(models.Model):
                     sales_and_moves.append(
                         MockedMove(
                             product_id=False,
-                            description_picking=sale.name,
+                            description_picking=sale.get_name_for_delivery_line(),
                             product_uom_qty=0,
                             product_uom=False,
                             lot_name="",
@@ -91,7 +88,7 @@ class StockPicking(models.Model):
                     sales_and_moves.append(
                         MockedMove(
                             product_id=False,
-                            description_picking=sale.name,
+                            description_picking=sale.get_name_for_delivery_line(),
                             product_uom_qty=0,
                             product_uom=False,
                             lot_name="",
