@@ -1,28 +1,26 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* stock_return_request
+#	* stock_return_request
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0\n"
+"Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-07 12:28+0000\n"
-"PO-Revision-Date: 2019-11-07 12:28+0000\n"
-"Last-Translator: <>\n"
-"Language-Team: \n"
-"Language: \n"
+"PO-Revision-Date: 2020-11-12 00:35+0000\n"
+"Last-Translator: Yann Papouin <y.papouin@dec-industrie.com>\n"
+"Language-Team: none\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: stock_return_request
 #: code:addons/stock_return_request/models/stock_return_request.py:527
 #, python-format
-msgid ""
-"\n"
-"                You cannot have two open Stock Return Requests with the "
-"same\n"
+msgid "\n"
+"                You cannot have two open Stock Return Requests with the same\n"
 "                product (%s), locations (%s, %s) partner (%s) and lot.\n"
 "\n"
 "                Please first validate the first return request with this\n"
@@ -30,189 +28,184 @@ msgid ""
 "                "
 msgstr ""
 "\n"
-"                No puedes validar dos Solicitudes de Devolución de "
-"mercancía\n"
-"                con el mismo producto (%s), ubicaciones (%s, %s) empresa "
-"(%s) y lote.\n"
+"                Vous ne pouvez pas avoir deux demandes de retour de stock en "
+"cours avec le même\n"
+"                article (%s), emplacements (%s,%s) partenaire (%s) et lot.\n"
 "\n"
-"                Por favor, valida primero la primera solicitud de "
-"devolución\n"
-"                con este producto y caracterísitcas antes de crear una "
-"nueva.\n"
+"                Veuillez d'abord valider la première demande de retour pour "
+"cet\n"
+"                article avant d'en créer une nouvelle.\n"
 "                "
 
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.report_stock_return_request_document
 msgid "<span><strong>Customer Address:</strong></span>"
-msgstr "<span><strong>Dirección del Cliente:</strong></span>"
+msgstr "<span><strong>Adresse du client :</strong></span>"
 
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.report_stock_return_request_document
 msgid "<span><strong>Supplier Address:</strong></span>"
-msgstr "<span><strong>Dirección del proveedor:</strong></span>"
+msgstr "<span><strong>Adresse du fournisseur :</strong></span>"
 
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.stock_move_lines_to_return
 msgid "<strong>Product</strong>"
-msgstr "<strong>Producto</strong>"
+msgstr "<strong>Article</strong>"
 
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.stock_move_lines_to_return
 msgid "<strong>Quantity</strong>"
-msgstr "<strong>Cantidad</strong>"
+msgstr "<strong>Quantité</strong>"
 
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.stock_return_request_line_suggest_lot
 msgid "Accept"
-msgstr ""
+msgstr "Accepter"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Action requise"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__activity_ids
 msgid "Activities"
-msgstr ""
+msgstr "Activités"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__activity_state
 msgid "Activity State"
-msgstr ""
+msgstr "Statut de l'activité"
 
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.view_stock_return_request_form
 msgid "Add a note that will be printed on the Request report"
-msgstr "Añade un comentario. Se imprimirá en la Solicitud de Devolución"
+msgstr "Ajouter une note qui figurera sur la demande"
 
 #. module: stock_return_request
 #: code:addons/stock_return_request/models/stock_return_request.py:247
 #, python-format
 msgid "Add some products to return"
-msgstr "Añadir productos a devolver"
+msgstr "Ajouter des articles à retourner"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Compteur de pièce jointe"
 
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.stock_return_request_line_suggest_lot
 #: model_terms:ir.ui.view,arch_db:stock_return_request.view_stock_return_request_form
 msgid "Cancel"
-msgstr "Cancelar"
+msgstr "Annuler"
 
 #. module: stock_return_request
 #: selection:stock.return.request,state:0
 msgid "Cancelled"
-msgstr "Cancelada"
+msgstr "Annulé"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__note
 #: model_terms:ir.ui.view,arch_db:stock_return_request.view_stock_return_request_form
 msgid "Comments"
-msgstr "Comentarios"
+msgstr "Commentaires"
 
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.view_stock_return_request_form
 msgid "Confirm"
-msgstr "Confirmar"
+msgstr "Confirmer"
 
 #. module: stock_return_request
 #: selection:stock.return.request,state:0
 msgid "Confirmed"
-msgstr "Confirmada"
+msgstr "Confirmé"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__create_uid
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line__create_uid
 #: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot__create_uid
 msgid "Created by"
-msgstr "Creado por"
+msgstr "Créé par"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__create_date
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line__create_date
 #: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot__create_date
 msgid "Created on"
-msgstr "Creado en"
+msgstr "Créé le"
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request_line__product_uom_id
-#, fuzzy
 msgid "Default unit of measure used for all stock operations."
 msgstr ""
-"Unidad de medida predeterminada utilizada para todas las operaciones de "
-"stock."
+"Unité de mesure par défaut utilisée pour toutes les opérations de stock."
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__display_name
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line__display_name
 #: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot__display_name
 msgid "Display Name"
-msgstr "Nombre mostrado"
+msgstr "Nom affiché"
 
 #. module: stock_return_request
 #: selection:stock.return.request,state:0
 msgid "Done"
-msgstr "Hecha"
+msgstr "Terminé"
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request_line__tracking
 msgid "Ensure the traceability of a storable product in your warehouse."
-msgstr ""
+msgstr "Assure la traçabilité d'un article stockable dans votre entrepôt."
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Abonnés"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__message_channel_ids
 msgid "Followers (Channels)"
-msgstr ""
+msgstr "Abonnés (Canaux)"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Abonnés (Partenaires)"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__id
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line__id
 #: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot__id
 msgid "ID"
-msgstr "ID (identificación)"
+msgstr "ID"
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__message_unread
 msgid "If checked new messages require your attention."
-msgstr ""
+msgstr "Si coché, de nouveaux messages requièrent votre attention."
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Si coché, de nouveaux messages requièrent votre attention."
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__message_has_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Si coché, des messages n'ont pas pu être livré."
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Est abonné"
 
 #. module: stock_return_request
 #: code:addons/stock_return_request/models/stock_return_request.py:306
 #, python-format
-msgid ""
-"It wasn't possible to assign stock for this returns:\n"
+msgid "It wasn't possible to assign stock for this returns:\n"
 "%s"
 msgstr ""
-"No fue posible asignar stock para estas devoluciones:\n"
+"Il n'a pas été possible d'affecter le stock à ces retours :\n"
 "%s"
 
 #. module: stock_return_request
@@ -220,56 +213,56 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line____last_update
 #: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot____last_update
 msgid "Last Modified on"
-msgstr "Última modificación en"
+msgstr "Dernière modification par"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__write_uid
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line__write_uid
 #: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot__write_uid
 msgid "Last Updated by"
-msgstr "Última actualización de"
+msgstr "Dernière mise à jour par"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__write_date
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line__write_date
 #: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot__write_date
 msgid "Last Updated on"
-msgstr "Última actualización en"
+msgstr "Dernière mise à jour le"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line__lot_id
 msgid "Lot / Serial"
-msgstr "Lote"
+msgstr "Lot/Série #"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot__lot_suggestion_mode
 msgid "Lot Suggestion Mode"
-msgstr ""
+msgstr "Mode de suggestion des lots"
 
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.stock_move_lines_to_return
 msgid "Lot/Serial Number"
-msgstr "Lote/Número de serie"
+msgstr "Lot/numéro de série"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__message_main_attachment_id
 msgid "Main Attachment"
-msgstr ""
+msgstr "Pièce jointe principale"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line__max_quantity
 msgid "Maximum available quantity"
-msgstr ""
+msgstr "Quantité disponible max"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Erreur lors de livraison du message"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Messages"
 
 #. module: stock_return_request
 #: code:addons/stock_return_request/models/stock_return_request.py:17
@@ -277,414 +270,410 @@ msgstr ""
 #: code:addons/stock_return_request/models/stock_return_request.py:355
 #, python-format
 msgid "New"
-msgstr "Nueva"
+msgstr "Nouveau"
 
 #. module: stock_return_request
 #: selection:stock.return.request,return_order:0
 msgid "Newer first"
-msgstr "Más recientes primero"
+msgstr "Plus récents en premier"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__activity_date_deadline
 msgid "Next Activity Deadline"
-msgstr ""
+msgstr "Échéance de la prochaine activité"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__activity_summary
 msgid "Next Activity Summary"
-msgstr ""
+msgstr "Résumé de la prochaine activité"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__activity_type_id
 msgid "Next Activity Type"
-msgstr ""
+msgstr "Type de la prochaine activité"
 
 #. module: stock_return_request
 #: code:addons/stock_return_request/models/stock_return_request.py:507
 #, python-format
-msgid ""
-"Not enough moves to return this product.\n"
-"It wasn't possible to find enough moves to return %f %sof %s. A maximum of "
-"%f can be returned."
+msgid "Not enough moves to return this product.\n"
+"It wasn't possible to find enough moves to return %f %sof %s. A maximum of %f can be returned."
 msgstr ""
-"No hay suficiente historia de movimientos para devolver esta cantidad.\n"
-"No fue posible encontrar suficientes movimientos para devolver %f %sde %s. "
-"Se puede devolver un máximo de %f."
+"Pas assez de mouvements pour retourner ce produit.\n"
+"Il n’a pas été possible de trouver suffisamment de mouvements pour renvoyer %"
+"f %s de %s. Un maximum de %f peut être retourné."
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Nombre d'activités"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__message_has_error_counter
 msgid "Number of error"
-msgstr ""
+msgstr "Nombre d'erreurs"
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__message_needaction_counter
 msgid "Number of messages which requires an action"
-msgstr ""
+msgstr "Nombre de messages qui nécessitent une action"
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Nombre de messages avec erreur de livraison"
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__message_unread_counter
 msgid "Number of unread messages"
-msgstr ""
+msgstr "Nombre de messages non lus"
 
 #. module: stock_return_request
 #: selection:stock.return.request,return_order:0
 msgid "Older first"
-msgstr "Más antiguos primero"
+msgstr "Plus anciens en premier"
 
 #. module: stock_return_request
 #: selection:stock.return.request,state:0
 msgid "Open"
-msgstr "Abierta"
+msgstr "Ouvert"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__picking_types
 msgid "Operation types"
-msgstr "Tipos de operación"
+msgstr "Types d'opérations"
 
 #. module: stock_return_request
 #: selection:stock.return.request,activity_state:0
 msgid "Overdue"
-msgstr ""
+msgstr "Dû"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__partner_id
 msgid "Partner"
-msgstr "Empresa"
+msgstr "Partenaire"
 
 #. module: stock_return_request
 #: model:ir.model,name:stock_return_request.model_stock_return_request
 msgid "Perform stock returns across pickings"
-msgstr "Devolver mercancía desde múltiples albaranes"
+msgstr "Effectuer des retours sur les préparations"
 
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.view_stock_return_request_form
 msgid "Pickings"
-msgstr "Albaranes"
+msgstr "Préparations"
 
 #. module: stock_return_request
 #: selection:stock.return.request,activity_state:0
 msgid "Planned"
-msgstr ""
+msgstr "Planifié"
 
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.view_stock_return_request_form
 msgid "Print"
-msgstr "Imprimir"
+msgstr "Imprimer"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line__product_id
 msgid "Product"
-msgstr "Producto"
+msgstr "Article"
 
 #. module: stock_return_request
 #: model:ir.model,name:stock_return_request.model_stock_return_request_line
 msgid "Product to search for returns"
-msgstr "Producto para el que buscar devoluciones"
+msgstr "Recherche de produits à retourner"
 
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.view_stock_return_request_form
 msgid "Products to Return"
-msgstr "Productos a Devolver"
+msgstr "Articles à renvoyer"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line__quantity
 msgid "Quantiy to return"
-msgstr "Cantidad a devolver"
+msgstr "Quantité à renvoyer"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__name
 msgid "Reference"
-msgstr "Referencia"
+msgstr "Référence"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot__request_line_id
-#, fuzzy
 msgid "Request Line"
-msgstr "Línea de devolución"
+msgstr "Ligne de demande d'achat"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__activity_user_id
 msgid "Responsible User"
-msgstr ""
+msgstr "Responsable"
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__picking_types
 msgid "Restrict operation types to search for"
-msgstr "Restringir los tipos de operación a buscar"
+msgstr "Restreindre les types d'opération à rechercher"
 
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.view_stock_return_request_form
 msgid "Return Line"
-msgstr "Línea de devolución"
+msgstr "Ligne de demande de retour"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__return_order
 msgid "Return Order"
-msgstr "Orden de devolución"
+msgstr "Ordre de retour"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line__request_id
 #: model:ir.ui.menu,name:stock_return_request.menu_stock_return_request
 msgid "Return Request"
-msgstr "Solicitud de devolución"
+msgstr "Demande de retour"
 
 #. module: stock_return_request
 #: model:ir.actions.act_window,name:stock_return_request.action_stock_return_request_tree
 msgid "Return Requests"
-msgstr "Solicitudes de devolución"
+msgstr "Demandes de retour"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__return_from_location
 msgid "Return from"
-msgstr "Devolver desde"
+msgstr "Retour depuis"
 
 #. module: stock_return_request
 #: selection:stock.return.request,return_type:0
 msgid "Return from Customer"
-msgstr "Devolución desde cliente"
+msgstr "Retour depuis un client"
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__return_from_location
 msgid "Return from this location"
-msgstr "Devolver a esta ubicación"
+msgstr "Retour depuis cet emplacement"
 
 #. module: stock_return_request
 #: code:addons/stock_return_request/models/stock_return_request.py:171
 #, python-format
 msgid "Return of %s"
-msgstr "Devolución de %s"
+msgstr "Retour de %s"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__return_to_location
 msgid "Return to"
-msgstr "Devolver a"
+msgstr "Retour vers"
 
 #. module: stock_return_request
 #: selection:stock.return.request,return_type:0
 msgid "Return to Internal location"
-msgstr "Devolver desde ubicación interna"
+msgstr "Retour vers cet emplacement interne"
 
 #. module: stock_return_request
 #: selection:stock.return.request,return_type:0
 msgid "Return to Supplier"
-msgstr "Devolver a proveedor"
+msgstr "Retour vers fournisseur"
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__return_to_location
 msgid "Return to this location"
-msgstr "Devolver a esta ubicación"
+msgstr "Retour vers cet emplacement"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__return_type
 msgid "Return type"
-msgstr "Tipo de devolución"
+msgstr "Type de retour"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line__returnable_move_ids
 msgid "Returnable Move Lines"
-msgstr "Operaciones posibles para devolución"
+msgstr "Mouvement de stock retournables"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_move__qty_returnable
 msgid "Returnable Quantity"
-msgstr "Cantidad devolvible"
+msgstr "Quantité retournable"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__returned_picking_ids
 msgid "Returned Pickings"
-msgstr "Albarenes de devolución"
+msgstr "Préparations retournées"
 
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.view_stock_return_request_form
 msgid "Returns"
-msgstr "Devoluciones"
+msgstr "Retours"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__from_date
 msgid "Search moves up to this date"
-msgstr "Buscar hasta esta fecha"
+msgstr "Rechercher les mouvements de stock qu'à partir de cette date"
 
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.view_stock_return_request_form
 msgid "Set to Draft"
-msgstr "Cambiar a borrador"
+msgstr "Mettre à l'état \"Brouillon\""
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__show_to_refund
 msgid "Show To Refund"
-msgstr "Mostrar a reembolsar"
+msgstr "Afficher \"À rembourser\""
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__state
 msgid "State"
-msgstr "Estado"
+msgstr "État"
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__activity_state
-msgid ""
-"Status based on activities\n"
+msgid "Status based on activities\n"
 "Overdue: Due date is already passed\n"
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
+"Statut basé sur les activités\n"
+"En retard : La date d'échéance est déjà dépassée\n"
+"Aujourd'hui : L'activité est planifiée pour aujourd'hui\n"
+"Planifiées : activités futures."
 
 #. module: stock_return_request
 #: model:ir.model,name:stock_return_request.model_stock_move
 msgid "Stock Move"
-msgstr "Movimiento de Stock"
+msgstr "Mouvement de stock"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__line_ids
 msgid "Stock Return"
-msgstr "Devolución de mercancía"
+msgstr "Retour au stock"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_picking__stock_return_request_id
 #: model_terms:ir.ui.view,arch_db:stock_return_request.view_stock_return_request_form
 msgid "Stock Return Request"
-msgstr "Solicitud de Devolución de mercancía"
+msgstr "Demande de retour au stock"
 
 #. module: stock_return_request
 #: model:ir.actions.report,name:stock_return_request.action_report_stock_return_request
 msgid "Stock Return Request Report"
-msgstr "Stock Return Request Report"
+msgstr "Rapport de demande de retour au stock"
 
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.view_stock_return_request_tree
 msgid "Stock Return Requests"
-msgstr "Solicitudes de Devolución de mercancía"
+msgstr "Demandes de retour au stock"
 
 #. module: stock_return_request
 #: code:addons/stock_return_request/models/stock_return_request.py:558
 #, python-format
 msgid "Suggest Lot"
-msgstr ""
+msgstr "Suggérer un lot"
 
 #. module: stock_return_request
 #: model:ir.model,name:stock_return_request.model_suggest_return_request_lot
 msgid "Suggest lots for the return request line"
-msgstr ""
+msgstr "Suggère une lot pour une ligne de demande de retour"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot__suggested_lot
 msgid "Suggested Lots"
-msgstr ""
+msgstr "Lots suggérés"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot__suggested_lot_detail
 msgid "Suggested Lots Detailed"
-msgstr ""
+msgstr "Lots détaillés suggérés"
 
 #. module: stock_return_request
 #: model:ir.actions.act_window,name:stock_return_request.act_stock_return_request_line_suggest_lot
 msgid "Suggested Lots for this Return Request Line"
-msgstr ""
+msgstr "Lots suggérés pour cette ligne de demande de retour"
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__return_type
-msgid ""
-"Supplier - Search for incoming moves from this supplier\n"
+msgid "Supplier - Search for incoming moves from this supplier\n"
 "Customer - Search for outgoing moves to this customer\n"
 "Internal - Search for outgoing moves to this location."
 msgstr ""
-"Proveedor - Buscar movimientos de entrada desde proveedores para esta "
-"empresa\n"
-"Cliente - Buscar movimientos de salida a clientes para esta empresa\n"
-"Internal - Buscar movimientos internos a esta ubicación interna."
+"Fournisseur - Recherche les mouvements entrants depuis ce fournisseur\n"
+"Client - Recherche les mouvements sortants vers ce client\n"
+"Interne - Recherche les mouvements sortants vers cet emplacement."
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__return_order
 msgid "The returns will be performed searching moves in the given order."
 msgstr ""
-"Las devoluciones ser realizarán buscando movimientos en el orden "
-"seleccionado."
+"Les retours seront effectués en recherchant les mouvements dans l'ordre "
+"indiqué."
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__note
 msgid "They will be visible on the report"
-msgstr "Serán visibles en el informe"
+msgstr "Ils seront visibles sur le rapport"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__to_refund
 msgid "To refund"
-msgstr "Reembolsar"
+msgstr "À rembourser"
 
 #. module: stock_return_request
 #: selection:stock.return.request,activity_state:0
 msgid "Today"
-msgstr ""
+msgstr "Aujourd'hui"
 
 #. module: stock_return_request
 #: selection:suggest.return.request.lot,lot_suggestion_mode:0
 msgid "Total by lot"
-msgstr ""
+msgstr "Total par lot"
 
 #. module: stock_return_request
 #: selection:suggest.return.request.lot,lot_suggestion_mode:0
 msgid "Total by move"
-msgstr ""
+msgstr "Total par mouvement"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line__tracking
 msgid "Tracking"
-msgstr "Seguimiento"
+msgstr "Suivi automatique"
 
 #. module: stock_return_request
 #: model:ir.model,name:stock_return_request.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Transfert"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line__product_uom_id
 msgid "Unit of Measure"
-msgstr "Unidad de medida"
+msgstr "Unité de mesure"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__message_unread
 msgid "Unread Messages"
-msgstr ""
+msgstr "Messages non-lus"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__message_unread_counter
 msgid "Unread Messages Counter"
-msgstr ""
+msgstr "Compteur de messages non-lus"
 
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.view_stock_return_request_form
 msgid "Validate"
-msgstr "Validar"
+msgstr "Valider"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Messages du sites web"
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Historique de la communication du site web"
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__show_to_refund
-msgid ""
-"Whether to show it or not depending on the availability ofthe stock_account "
-"module (so a bridge module is not necessary)"
+msgid "Whether to show it or not depending on the availability ofthe stock_account module (so a bridge module is not necessary)"
 msgstr ""
-"Mostrar el campo o no dependiendo de la disponibilidad del módulo "
-"stock_account (para evitar un módulo puente)"
+"Afficher le ou non en fonction de la disponibilité du module \""
+"stock_account\" (un module intermédiaire n'est donc pas nécessaire)"
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_suggest_return_request_lot__suggested_lot
 #: model:ir.model.fields,help:stock_return_request.field_suggest_return_request_lot__suggested_lot_detail
 msgid "You can return these lots"
-msgstr ""
+msgstr "Vous pouvez retourner ces lots"
