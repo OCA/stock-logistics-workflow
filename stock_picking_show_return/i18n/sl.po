@@ -37,7 +37,6 @@ msgstr "Vračila"
 #. module: stock_picking_show_return
 #: model:ir.model.fields,field_description:stock_picking_show_return.field_stock_picking_source_picking_id
 #, fuzzy
-#| msgid "Returned pickings"
 msgid "Source picking"
 msgstr "Povrnjeni zbirniki"
 
