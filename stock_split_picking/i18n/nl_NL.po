@@ -108,7 +108,6 @@ msgstr ""
 #. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_picking_split_line_split_id
 #, fuzzy
-#| msgid "Split"
 msgid "Split id"
 msgstr "Splitsen"
 
