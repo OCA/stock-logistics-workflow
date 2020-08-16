@@ -26,7 +26,6 @@ msgstr ""
 #. module: stock_picking_line_sequence
 #: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move__sequence
 #, fuzzy
-#| msgid "Sequence"
 msgid "HiddenSequence"
 msgstr "Secuencia"
 
