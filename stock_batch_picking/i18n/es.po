@@ -85,7 +85,6 @@ msgstr "Creador del grupo de albaranes"
 #. module: stock_batch_picking
 #: model:ir.model,name:stock_batch_picking.model_stock_batch_picking_creator_group_field
 #, fuzzy
-#| msgid "Batch Picking Creator"
 msgid "Batch Picking Creator Group Field"
 msgstr "Creador del grupo de albaranes"
 
@@ -124,7 +123,6 @@ msgstr "Crear grupos de albaranes"
 #. module: stock_batch_picking
 #: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_creator_batch_by_group
 #, fuzzy
-#| msgid "Create Batch Pickings"
 msgid "Create batch pickings grouped by fields"
 msgstr "Crear grupos de albaranes"
 
