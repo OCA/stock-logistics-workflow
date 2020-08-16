@@ -25,7 +25,6 @@ msgstr "Albarán de devolución"
 #. module: stock_picking_return_restricted_qty
 #: model:ir.model,name:stock_picking_return_restricted_qty.model_stock_return_picking_line
 #, fuzzy
-#| msgid "Return Picking"
 msgid "Return Picking Line"
 msgstr "Albarán de devolución"
 
