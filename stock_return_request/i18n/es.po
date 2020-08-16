@@ -283,7 +283,6 @@ msgstr "Referencia"
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot_request_line_id
 #, fuzzy
-#| msgid "Return Line"
 msgid "Request Line"
 msgstr "Línea de devolución"
 
