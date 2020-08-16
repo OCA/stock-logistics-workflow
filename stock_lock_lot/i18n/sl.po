@@ -58,7 +58,6 @@ msgstr "Lokacije inventarja"
 #. module: stock_lock_lot
 #: model_terms:ir.ui.view,arch_db:stock_lock_lot.search_product_lot_filter
 #, fuzzy
-#| msgid "Blocked"
 msgid "Locked"
 msgstr "Blokirano"
 
@@ -108,14 +107,12 @@ msgstr ""
 #. module: stock_lock_lot
 #: code:addons/stock_lock_lot/models/stock_production_lot.py:0
 #, fuzzy, python-format
-#| msgid "You are not allowed to unblock Serial Numbers/Lots"
 msgid "You are not allowed to block/unblock Serial Numbers/Lots"
 msgstr "Sprostitev serijskih številk/lotov vam ni dovoljena"
 
 #. module: stock_lock_lot
 #: code:addons/stock_lock_lot/models/stock_production_lot.py:0
 #, fuzzy, python-format
-#| msgid "You are not allowed to unblock Serial Numbers/Lots"
 msgid ""
 "You are not allowed to block/unblock, there are reserved quantities for "
 "these Serial Numbers/Lots"
