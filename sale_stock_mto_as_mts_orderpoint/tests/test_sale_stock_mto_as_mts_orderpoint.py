@@ -65,3 +65,11 @@ class TestSaleStockMtoAsMtsOrderpoint(SavepointCase):
             .search([("product_id", "=", self.product.id)])
         )
         self.assertTrue(orderpoint)
+
+    def test_cancel_sale_order_orderpoint(self):
+        order = self._create_sale_order()
+        order.action_confirm()
+        order.action_cancel()
+        order.action_draft()
+        order.action_confirm()
+        self.assertEqual(order.state, "sale")

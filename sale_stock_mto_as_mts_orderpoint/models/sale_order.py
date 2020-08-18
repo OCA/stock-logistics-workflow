@@ -22,6 +22,7 @@ class SaleOrderLine(models.Model):
         for line in self:
             delivery_move = line.move_ids.filtered(
                 lambda m: m.picking_id.picking_type_code == "outgoing"
+                and m.state not in ("done", "cancel")
             )
             if (
                 not delivery_move.is_from_mto_route
