@@ -11,6 +11,7 @@
     "category": "Warehouse Management",
     "depends": ["sale_stock", "delivery"],
     "data": [
+        "views/procurement_group.xml",
         "views/stock_picking_type.xml",
         "views/stock_warehouse.xml",
         "report/report_delivery_slip.xml",
