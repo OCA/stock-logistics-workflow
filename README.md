@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/OCA/stock-logistics-workflow.svg?branch=12.0)](https://travis-ci.org/OCA/stock-logistics-workflow)
 [![Coverage Status](https://img.shields.io/coveralls/OCA/stock-logistics-workflow.svg)](https://coveralls.io/r/OCA/stock-logistics-workflow?branch=12.0)
+[![Translation Status](https://translation.odoo-community.org/widgets/stock-logistics-workflow-12-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/stock-logistics-workflow-12-0/?utm_source=widget)
 
 Odoo Stock Logistic Workflow
 ===========================
