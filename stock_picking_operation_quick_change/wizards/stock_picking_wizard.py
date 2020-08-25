@@ -23,7 +23,7 @@ class StockPickingOperationWizard(models.TransientModel):
     def _default_old_dest_location_id(self):
         stock_picking_obj = self.env['stock.picking']
         pickings = stock_picking_obj.browse(self.env.context['active_ids'])
-        first_move_line = pickings.mapped('move_line_ids')[:1]
+        first_move_line = pickings.mapped('move_lines')[:1]
         return first_move_line.location_dest_id.id
 
     def _get_allowed_locations(self):
@@ -78,7 +78,7 @@ class StockPickingOperationWizard(models.TransientModel):
         stock_picking_obj = self.env['stock.picking']
         pickings = stock_picking_obj.browse(self.env.context['active_ids'])
         self.check_allowed_pickings(pickings)
-        move_lines = pickings.mapped('move_line_ids')
+        move_lines = pickings.mapped('move_lines')
 
         vals = {'location_dest_id': self.new_location_dest_id.id}
         if self.change_all:
