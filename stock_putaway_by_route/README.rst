@@ -39,8 +39,12 @@ to the one of the rule.
 The rules for the route are applied when no rule for product and categories have
 been found.
 
-Note: it is based on the Stock Rule stored on a move, so it cannot be applied
-on a route without rule.
+When the put-away strategy by route is applied it looks:
+
+1. If the move has a Stock Rule, it searches a put-away rule which has the
+   same Rule's Route
+2. Otherwise, if the Product has Route(s), it searches a put-away rule which
+   has any Route of the product set (it takes the first found)
 
 **Table of contents**
 
