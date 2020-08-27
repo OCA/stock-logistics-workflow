@@ -8,6 +8,7 @@ setuptools.setup(
     description="Meta package for oca-stock-logistics-workflow Odoo addons",
     version=version,
     install_requires=[
+        'odoo13-addon-sale_stock_mto_as_mts_orderpoint',
         'odoo13-addon-stock_lock_lot',
         'odoo13-addon-stock_move_line_auto_fill',
         'odoo13-addon-stock_no_negative',
