@@ -378,8 +378,13 @@ rule is defined on the replenishment route, the destination move will be changed
 to the one of the rule.</p>
 <p>The rules for the route are applied when no rule for product and categories have
 been found.</p>
-<p>Note: it is based on the Stock Rule stored on a move, so it cannot be applied
-on a route without rule.</p>
+<p>When the put-away strategy by route is applied it looks:</p>
+<ol class="arabic simple">
+<li>If the move has a Stock Rule, it searches a put-away rule which has the
+same Rule’s Route</li>
+<li>Otherwise, if the Product has Route(s), it searches a put-away rule which
+has any Route of the product set (it takes the first found)</li>
+</ol>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
