@@ -1,0 +1,39 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_stock_mto_as_mts_orderpoint
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_stock_mto_as_mts_orderpoint
+#: model:ir.model.fields,field_description:sale_stock_mto_as_mts_orderpoint.field_stock_move__is_from_mto_route
+msgid "Is From Mto Route"
+msgstr ""
+
+#. module: sale_stock_mto_as_mts_orderpoint
+#: model:ir.model,name:sale_stock_mto_as_mts_orderpoint.model_product_template
+msgid "Product Template"
+msgstr ""
+
+#. module: sale_stock_mto_as_mts_orderpoint
+#: model:ir.model,name:sale_stock_mto_as_mts_orderpoint.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
+
+#. module: sale_stock_mto_as_mts_orderpoint
+#: model:ir.model,name:sale_stock_mto_as_mts_orderpoint.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: sale_stock_mto_as_mts_orderpoint
+#: model:ir.model,name:sale_stock_mto_as_mts_orderpoint.model_stock_warehouse
+msgid "Warehouse"
+msgstr ""
