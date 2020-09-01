@@ -9,14 +9,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 12.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-23 11:56+0000\n"
-"PO-Revision-Date: 2017-01-23 11:56+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"PO-Revision-Date: 2020-09-01 16:00+0000\n"
+"Last-Translator: Sandie FAVRE <sandie.favre@grap.coop>\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: stock_picking_show_return
 #: model_terms:ir.ui.view,arch_db:stock_picking_show_return.view_picking_form
@@ -31,7 +32,7 @@ msgstr ""
 #. module: stock_picking_show_return
 #: model_terms:ir.ui.view,arch_db:stock_picking_show_return.view_picking_form
 msgid "Returns"
-msgstr ""
+msgstr "Retours"
 
 #. module: stock_picking_show_return
 #: model:ir.model.fields,field_description:stock_picking_show_return.field_stock_picking__source_picking_id
