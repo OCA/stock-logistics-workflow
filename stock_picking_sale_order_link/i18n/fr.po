@@ -9,19 +9,20 @@ msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-04-04 01:08+0000\n"
-"PO-Revision-Date: 2017-04-04 01:08+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"PO-Revision-Date: 2020-09-01 16:00+0000\n"
+"Last-Translator: Sandie FAVRE <sandie.favre@grap.coop>\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: stock_picking_sale_order_link
 #: model_terms:ir.ui.view,arch_db:stock_picking_sale_order_link.view_picking_form
 msgid "Sales Order"
-msgstr ""
+msgstr "Bons de commande"
 
 #. module: stock_picking_sale_order_link
 #: model:ir.model,name:stock_picking_sale_order_link.model_stock_picking
