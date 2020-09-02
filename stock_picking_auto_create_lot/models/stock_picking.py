@@ -25,4 +25,8 @@ class StockPicking(models.Model):
                 line.lot_id = self.env["stock.production.lot"].create(
                     {"product_id": line.product_id.id, "company_id": line.company_id.id}
                 )
+            if self.picking_type_id.code == "incoming":
+                return super(
+                    StockPicking, self.with_context(do_not_unreserve=True)
+                ).button_validate()
         return super().button_validate()
