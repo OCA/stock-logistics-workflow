@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2020 Tecnativa - Ernesto Tejeda
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo noupdate="1">
+    <record id="mail_activity_type_update_scheduled_date" model="mail.activity.type">
+        <field name="name">Late picking</field>
+        <field name="summary">Update scheduled date</field>
+        <field name="res_model_id" ref="stock.model_stock_picking"/>
+        <field name="icon">fa-calendar</field>
+        <field name="sequence">100</field>
+    </record>
+</odoo>

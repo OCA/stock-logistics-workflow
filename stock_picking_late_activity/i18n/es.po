@@ -1,0 +1,64 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_late_activity
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-08-31 13:23+0000\n"
+"PO-Revision-Date: 2020-08-31 09:25-0400\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 2.0.6\n"
+
+#. module: stock_picking_late_activity
+#: model:ir.model.fields,field_description:stock_picking_late_activity.field_stock_picking_type__create_late_picking_activity
+msgid "Create Late Picking Activity"
+msgstr "Crear actividad en albarán tardío"
+
+#. module: stock_picking_late_activity
+#: model:ir.model.fields,help:stock_picking_late_activity.field_stock_picking_type__create_late_picking_activity
+msgid ""
+"If checked, the pickings belonging to this 'operation type' will be checked "
+"periodically to request to update their planned date."
+msgstr ""
+"Si está marcado, los albaranes pertenecientes a este tipo de operación serán "
+"comprobados periódicamente para solicitar actualizar sus fechas previstas."
+
+#. module: stock_picking_late_activity
+#: model:mail.activity.type,name:stock_picking_late_activity.mail_activity_type_update_scheduled_date
+msgid "Late picking"
+msgstr "Albarán tardío"
+
+#. module: stock_picking_late_activity
+#: model:ir.model.fields,field_description:stock_picking_late_activity.field_stock_picking_type__late_picking_activity_user_id
+msgid "Late picking activity responsible"
+msgstr "Responsable de actividad de albarán tardío"
+
+#. module: stock_picking_late_activity
+#: model:ir.model,name:stock_picking_late_activity.model_stock_picking_type
+msgid "Picking Type"
+msgstr "Tipo de albarán"
+
+#. module: stock_picking_late_activity
+#: model:ir.actions.server,name:stock_picking_late_activity.ir_cron_notify_late_activity_ir_actions_server
+#: model:ir.cron,cron_name:stock_picking_late_activity.ir_cron_notify_late_activity
+#: model:ir.cron,name:stock_picking_late_activity.ir_cron_notify_late_activity
+msgid "Picking: activities for late pickings"
+msgstr "Albarán: actividades para albaranes tardíos"
+
+#. module: stock_picking_late_activity
+#: model:ir.model,name:stock_picking_late_activity.model_stock_picking
+msgid "Transfer"
+msgstr "Transferir"
+
+#. module: stock_picking_late_activity
+#: model:mail.activity.type,summary:stock_picking_late_activity.mail_activity_type_update_scheduled_date
+msgid "Update scheduled date"
+msgstr "Actualizar fecha prevista"

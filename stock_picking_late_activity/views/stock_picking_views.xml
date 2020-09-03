@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2020 Tecnativa - Ernesto Tejeda
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="view_picking_type_form" model="ir.ui.view">
+        <field name="name">Operation Types inherit</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form"/>
+        <field name="arch" type="xml">
+            <field name="show_reserved" position="after">
+                <field name="create_late_picking_activity"/>
+                <field name="late_picking_activity_user_id"
+                       attrs="{'invisible': [('create_late_picking_activity', '!=', True)], 'required': [('create_late_picking_activity', '=', True)]}"/>
+            </field>
+        </field>
+    </record>
+</odoo>
