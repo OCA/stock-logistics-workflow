@@ -12,16 +12,11 @@ class StockMove(models.Model):
 
     def write(self, vals):
         """ Update cost price avco """
-        if ("price_unit" in vals) and not self.env.context.get("skip_avco_sync"):
-            for move in self.filtered(lambda m: m.state == 'done'):
-                self.env['stock.move.line']._create_correction_svl(move, -move.quantity_done)
-
         res = super(StockMove, self).write(vals)
-
-        if ("price_unit" in vals) and not self.env.context.get("skip_avco_sync"):
-            # self.cost_price_avco_sync()
-            for move in self.filtered(lambda m: m.state == 'done'):
-                self.env['stock.move.line']._create_correction_svl(move, move.quantity_done)
+        if (
+            "price_unit" in vals or "quantity_done" in vals
+        ) and not self.env.context.get("skip_avco_sync"):
+            self.cost_price_avco_sync()
         return res
 
     def _create_price_history(self, value):
