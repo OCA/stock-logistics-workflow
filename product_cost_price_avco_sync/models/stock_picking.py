@@ -5,9 +5,8 @@ from odoo import models
 
 
 class StockPicking(models.Model):
-    _inherit = 'stock.picking'
+    _inherit = "stock.picking"
 
     def action_done(self):
         """ Avoid AVCO cost price recomputation when validating picking """
-        return super(StockPicking, self.with_context(
-            skip_avco_sync=True)).action_done()
+        return super(StockPicking, self.with_context(skip_avco_sync=True)).action_done()
