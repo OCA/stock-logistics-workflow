@@ -39,10 +39,10 @@ class StockRoutingRule(models.Model):
         help="Operation type that will be applied on the move.",
     )
     location_src_id = fields.Many2one(
-        related="picking_type_id.default_location_src_id", readonly=True
+        comodel_name="stock.location", compute="_compute_location_src_id",
     )
     location_dest_id = fields.Many2one(
-        related="picking_type_id.default_location_dest_id", readonly=True
+        comodel_name="stock.location", compute="_compute_location_dest_id",
     )
     rule_domain = fields.Char(
         string="Source Routing Domain",
@@ -53,6 +53,22 @@ class StockRoutingRule(models.Model):
 
     def _default_sequence(self):
         return _default_sequence(self)
+
+    @api.depends("picking_type_id.default_location_src_id")
+    def _compute_location_src_id(self):
+        for rule in self:
+            location = rule.picking_type_id.default_location_src_id
+            if not location:
+                __, location = self.env["stock.warehouse"]._get_partner_locations()
+            rule.location_src_id = location
+
+    @api.depends("picking_type_id.default_location_dest_id")
+    def _compute_location_dest_id(self):
+        for rule in self:
+            location = rule.picking_type_id.default_location_dest_id
+            if not location:
+                location, __ = self.env["stock.warehouse"]._get_partner_locations()
+            rule.location_dest_id = location
 
     @api.constrains("picking_type_id")
     def _constrains_picking_type_location(self):
