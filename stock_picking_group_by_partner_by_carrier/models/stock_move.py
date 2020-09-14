@@ -1,33 +1,72 @@
 import re
 from collections import namedtuple
 
-from odoo import models
+from odoo import fields, models
 
 
 class StockMove(models.Model):
     _inherit = "stock.move"
 
+    # store the first group the move was in when created, used for cancellation
+    # from a sales order
+    original_group_id = fields.Many2one(
+        comodel_name="procurement.group", string="Procurement Group",
+    )
+
     def _assign_picking(self):
-        return super(
+        result = super(
             StockMove, self.with_context(picking_no_overwrite_partner_origin=1)
         )._assign_picking()
+        self._on_assign_picking_merge_group()
+        return result
 
     def _assign_picking_post_process(self, new=False):
         res = super()._assign_picking_post_process(new=new)
         if not new:
-            picking = self.mapped("picking_id")
-            picking.ensure_one()
-            sales = self.mapped("sale_line_id.order_id")
-            for sale in sales:
-                pattern = r"\b%s\b" % sale.name
-                if not re.search(pattern, picking.origin):
-                    picking.origin += " " + sale.name
-                    picking.message_post_with_view(
-                        "mail.message_origin_link",
-                        values={"self": picking, "origin": sale},
-                        subtype_id=self.env.ref("mail.mt_note").id,
-                    )
+            self._on_assign_picking_message_link()
         return res
+
+    def _prepare_merge_group_values(self, sales):
+        return {
+            "sale_ids": [(6, 0, sales.ids)],
+            "name": ", ".join(sales.mapped("name")),
+        }
+
+    def _on_assign_picking_merge_group(self):
+        moves = {}
+        for move in self:
+            moves.setdefault(move.picking_id, self.browse())
+            moves[move.picking_id] |= move
+        for picking, moves in moves.items():
+            if not picking.picking_type_id.group_pickings:
+                return
+            base_group = picking.group_id
+            base_sales = base_group.sale_ids
+            line_sales = moves.sale_line_id.order_id
+            all_sales = base_sales | line_sales
+            # if we have different sales, it means "_assign_picking" added
+            # moves from another SO in the picking
+            if all_sales != base_sales:
+                # create a new group for the sales
+                new_group = base_group.copy(self._prepare_merge_group_values(all_sales))
+                pickings = base_group.picking_ids.filtered(
+                    lambda p: p.picking_type_id.group_pickings
+                )
+                pickings.move_lines.group_id = new_group
+
+    def _on_assign_picking_message_link(self):
+        picking = self.picking_id
+        picking.ensure_one()
+        sales = self.mapped("sale_line_id.order_id")
+        for sale in sales:
+            pattern = r"\b%s\b" % sale.name
+            if not re.search(pattern, picking.origin):
+                picking.origin += " " + sale.name
+                picking.message_post_with_view(
+                    "mail.message_origin_link",
+                    values={"self": picking, "origin": sale},
+                    subtype_id=self.env.ref("mail.mt_note").id,
+                )
 
     def _search_picking_for_assignation(self):
         # totally reimplement this one to add a hook to change the domain
