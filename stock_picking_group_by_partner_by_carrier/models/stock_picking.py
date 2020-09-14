@@ -12,10 +12,10 @@ class StockPicking(models.Model):
     # printed picking becomes printed
     printed = fields.Boolean(copy=False)
 
-    @api.depends("move_lines.group_id.sale_id")
+    @api.depends("move_lines.group_id.sale_ids")
     def _compute_sale_ids(self):
         for rec in self:
-            rec.sale_ids = rec.mapped("move_lines.group_id.sale_id")
+            rec.sale_ids = rec.mapped("move_lines.group_id.sale_ids")
 
     def write(self, values):
         if self.env.context.get("picking_no_overwrite_partner_origin"):
@@ -27,8 +27,8 @@ class StockPicking(models.Model):
     def action_cancel(self):
         cancel_sale_id = self.env.context.get("cancel_sale_id")
         if cancel_sale_id:
-            moves = self.mapped("move_lines").filtered(
-                lambda m: m.group_id.sale_id.id == cancel_sale_id
+            moves = self.move_lines.filtered(
+                lambda m: m.original_group_id.sale_id.id == cancel_sale_id
                 and m.state not in ("done", "cancel")
             )
             moves.with_context(cancel_sale_id=False)._action_cancel()

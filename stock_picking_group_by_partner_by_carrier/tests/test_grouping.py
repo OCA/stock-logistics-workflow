@@ -20,6 +20,7 @@ class TestSaleStock(TestSale):
             }
         )
         self.env.ref("stock.warehouse0").group_shippings = True
+        self.partner = self.env["res.partner"].create({"name": "Test Partner"})
 
     def _get_new_sale_order(self, amount=10.0, partner=None, carrier=None):
         """ Creates and returns a sale order with one default order line.
@@ -27,7 +28,7 @@ class TestSaleStock(TestSale):
         :param float amount: quantity of product for the order line (10 by default)
         """
         if partner is None:
-            partner = self.env.ref("base.res_partner_1")
+            partner = self.partner
         if carrier is None:
             carrier_id = False
         else:
@@ -381,3 +382,21 @@ class TestSaleStock(TestSale):
         self.assertTrue(so1.picking_ids)
         self.assertTrue(so2.picking_ids)
         self.assertFalse(so1.picking_ids & so2.picking_ids)
+
+    def test_sale_stock_merge_procurement_group(self):
+        """2 sale orders are merged, procurement group linked with SO
+
+        Ensure that the procurement group is linked with both SO
+        and we find the stock.picking records from the SO.
+        """
+        so1 = self._get_new_sale_order(carrier=self.carrier1)
+        so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
+        so1.action_confirm()
+        so2.action_confirm()
+        self.assertEqual(so1.picking_ids, so2.picking_ids)
+        picking = so1.picking_ids
+        # the group is the same on the move lines and picking
+        self.assertEqual(picking.group_id, picking.move_lines.group_id)
+        group = picking.group_id
+        # the group is related to both sales orders
+        self.assertEqual(group.sale_ids, so1 | so2)
