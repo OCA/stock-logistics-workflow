@@ -27,5 +27,7 @@ class SaleOrderLine(models.Model):
 
     def _prepare_procurement_group_vals(self):
         vals = super()._prepare_procurement_group_vals()
+        if not vals.get("sale_ids") and vals.get("sale_id"):
+            vals["sale_ids"] = [(6, 0, [vals["sale_id"]])]
         vals["carrier_id"] = self.order_id.carrier_id.id
         return vals
