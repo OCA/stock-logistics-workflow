@@ -12,5 +12,5 @@
     "maintainers": ["carlosdauden", "sergio-teruel"],
     "license": "AGPL-3",
     "installable": True,
-    "depends": ["purchase_stock",],
+    "depends": ["stock_account"],
 }
