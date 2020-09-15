@@ -18,7 +18,7 @@ class TestProductCostPriceAvcoSync(SavepointCase):
         cls.picking_type_in = cls.env.ref("stock.picking_type_in")
         cls.picking_type_out = cls.env.ref("stock.picking_type_out")
         cls.partner = cls.env["res.partner"].create(
-            {"customer": True, "supplier": True, "name": "Test Partner",}
+            {"customer": True, "supplier": True, "name": "Test Partner"}
         )
         cls.product = cls.env["product.product"].create(
             {
@@ -192,7 +192,7 @@ class TestProductCostPriceAvcoSync(SavepointCase):
         self.assertAlmostEqual(self.product.standard_price, 9.0, 2)
 
         price_history_count = self.env["product.price.history"].search_count(
-            [("company_id", "=", company_id), ("product_id", "=", self.product.id),]
+            [("company_id", "=", company_id), ("product_id", "=", self.product.id)]
         )
         self.assertEqual(price_history_count, 4)
 
@@ -209,7 +209,7 @@ class TestProductCostPriceAvcoSync(SavepointCase):
         move_in_2.quantity_done = move_in_2.product_uom_qty
 
         self.env["stock.immediate.transfer"].create(
-            {"pick_ids": [(6, 0, (self.picking_in + picking_in_2).ids)],}
+            {"pick_ids": [(6, 0, (self.picking_in + picking_in_2).ids)]}
         ).process()
         (self.picking_in + picking_in_2).action_done()
 
