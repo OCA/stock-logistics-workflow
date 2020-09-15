@@ -42,7 +42,10 @@ class StockMove(models.Model):
                 return
             base_group = picking.group_id
             base_sales = base_group.sale_ids
-            line_sales = moves.sale_line_id.order_id
+            # If we have different sales in the line's group, it means moves
+            # have been merged in the same picking/group but they come from a
+            # different sale.
+            line_sales = moves.group_id.sale_id
             all_sales = base_sales | line_sales
             # if we have different sales, it means "_assign_picking" added
             # moves from another SO in the picking
