@@ -7,10 +7,12 @@ from odoo import fields, models
 class StockMove(models.Model):
     _inherit = "stock.move"
 
-    # store the first group the move was in when created, used for cancellation
-    # from a sales order
+    # store the first group the move was in when created, used to keep track of
+    # original group's name when creating a joint group for merged transfers,
+    # and for cancellation of a sales order (to cancel only the moves related
+    # to it)
     original_group_id = fields.Many2one(
-        comodel_name="procurement.group", string="Procurement Group",
+        comodel_name="procurement.group", string="Original Procurement Group",
     )
 
     def _assign_picking(self):
@@ -26,34 +28,40 @@ class StockMove(models.Model):
             self._on_assign_picking_message_link()
         return res
 
-    def _prepare_merge_group_values(self, sales):
+    def _prepare_merge_group_values(self, move_groups):
+        sales = move_groups.sale_id
         return {
             "sale_ids": [(6, 0, sales.ids)],
-            "name": ", ".join(sales.mapped("name")),
+            "name": ", ".join(move_groups.mapped("name")),
         }
 
     def _on_assign_picking_merge_group(self):
-        moves = {}
-        for move in self:
-            moves.setdefault(move.picking_id, self.browse())
-            moves[move.picking_id] |= move
-        for picking, moves in moves.items():
+        for picking in self.picking_id:
             if not picking.picking_type_id.group_pickings:
-                return
+                continue
+            if picking.picking_type_id.code != "outgoing":
+                continue
             base_group = picking.group_id
-            base_sales = base_group.sale_ids
             # If we have different sales in the line's group, it means moves
             # have been merged in the same picking/group but they come from a
             # different sale.
-            line_sales = moves.group_id.sale_id
-            all_sales = base_sales | line_sales
+            moves = picking.move_lines
+            moves_groups = moves.original_group_id
+            moves_sales = moves_groups.sale_id
+            group_sales = base_group.sale_ids
             # if we have different sales, it means "_assign_picking" added
             # moves from another SO in the picking
-            if all_sales != base_sales:
-                # create a new group for the sales
-                new_group = base_group.copy(self._prepare_merge_group_values(all_sales))
+            if moves_sales != group_sales:
+                # create a new joint group for the existing different groups
+                new_group = base_group.copy(
+                    self._prepare_merge_group_values(moves_groups)
+                )
                 pickings = base_group.picking_ids.filtered(
-                    lambda p: p.picking_type_id.group_pickings
+                    lambda picking: picking.picking_type_id.group_pickings
+                    # Do no longer modify a printed or done transfer: they are
+                    # started and their group is now fixed. It prevents keeping
+                    # old, done sales orders in new groups forever
+                    and not (picking.printed or picking.state == "done")
                 )
                 pickings.move_lines.group_id = new_group
 
