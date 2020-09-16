@@ -37,9 +37,10 @@ class StockPicking(models.Model):
             return super().action_cancel()
 
     def _create_backorder(self):
-        return super(
-            StockPicking, self.with_context(picking_no_copy_if_can_group=1)
-        )._create_backorder()
+        self = self.with_context(picking_no_copy_if_can_group=1)
+        backorders = super()._create_backorder()
+        backorders.move_lines._on_assign_picking_merge_group()
+        return backorders
 
     def copy(self, defaults=None):
         if self.env.context.get("picking_no_copy_if_can_group") and self.move_lines:
