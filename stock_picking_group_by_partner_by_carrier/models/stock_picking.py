@@ -12,10 +12,10 @@ class StockPicking(models.Model):
     # printed picking becomes printed
     printed = fields.Boolean(copy=False)
 
-    @api.depends("move_lines.group_id.sale_id")
+    @api.depends("move_lines.group_id.sale_ids")
     def _compute_sale_ids(self):
         for rec in self:
-            rec.sale_ids = rec.mapped("move_lines.group_id.sale_id")
+            rec.sale_ids = rec.mapped("move_lines.group_id.sale_ids")
 
     def write(self, values):
         if self.env.context.get("picking_no_overwrite_partner_origin"):
@@ -27,8 +27,8 @@ class StockPicking(models.Model):
     def action_cancel(self):
         cancel_sale_id = self.env.context.get("cancel_sale_id")
         if cancel_sale_id:
-            moves = self.mapped("move_lines").filtered(
-                lambda m: m.group_id.sale_id.id == cancel_sale_id
+            moves = self.move_lines.filtered(
+                lambda m: m.original_group_id.sale_id.id == cancel_sale_id
                 and m.state not in ("done", "cancel")
             )
             moves.with_context(cancel_sale_id=False)._action_cancel()
@@ -37,9 +37,47 @@ class StockPicking(models.Model):
             return super().action_cancel()
 
     def _create_backorder(self):
-        return super(
-            StockPicking, self.with_context(picking_no_copy_if_can_group=1)
-        )._create_backorder()
+        self = self.with_context(picking_no_copy_if_can_group=1)
+        backorders = super()._create_backorder()
+        backorders._merge_procurement_groups()
+        return backorders
+
+    def _prepare_merge_procurement_group_values(self, move_groups):
+        sales = move_groups.sale_id
+        return {
+            "sale_ids": [(6, 0, sales.ids)],
+            "name": ", ".join(move_groups.mapped("name")),
+        }
+
+    def _merge_procurement_groups(self):
+        for picking in self:
+            if not picking.picking_type_id.group_pickings:
+                continue
+            if picking.picking_type_id.code != "outgoing":
+                continue
+            base_group = picking.group_id
+            # If we have different sales in the line's group, it means moves
+            # have been merged in the same picking/group but they come from a
+            # different sale.
+            moves = picking.move_lines
+            moves_groups = moves.original_group_id
+            moves_sales = moves_groups.sale_id
+            group_sales = base_group.sale_ids
+            # if we have different sales, it means "_assign_picking" added
+            # moves from another SO in the picking
+            if moves_sales != group_sales:
+                # create a new joint group for the existing different groups
+                new_group = base_group.copy(
+                    self._prepare_merge_procurement_group_values(moves_groups)
+                )
+                pickings = base_group.picking_ids.filtered(
+                    lambda picking: picking.picking_type_id.group_pickings
+                    # Do no longer modify a printed or done transfer: they are
+                    # started and their group is now fixed. It prevents keeping
+                    # old, done sales orders in new groups forever
+                    and not (picking.printed or picking.state == "done")
+                )
+                pickings.move_lines.group_id = new_group
 
     def copy(self, defaults=None):
         if self.env.context.get("picking_no_copy_if_can_group") and self.move_lines:
