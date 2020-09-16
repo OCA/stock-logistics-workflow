@@ -43,6 +43,16 @@ msgid ""
 msgstr ""
 
 #. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_move__original_group_id
+msgid "Original Procurement Group"
+msgstr ""
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_procurement_group__picking_ids
+msgid "Picking"
+msgstr ""
+
+#. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_stock_picking_type
 msgid "Picking Type"
 msgstr ""
@@ -58,6 +68,7 @@ msgid "Procurement Group"
 msgstr ""
 
 #. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_procurement_group__sale_ids
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking__sale_ids
 msgid "Sale"
 msgstr ""
@@ -75,6 +86,11 @@ msgstr ""
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_stock_move
 msgid "Stock Move"
+msgstr ""
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_stock_rule
+msgid "Stock Rule"
 msgstr ""
 
 #. module: stock_picking_group_by_partner_by_carrier
