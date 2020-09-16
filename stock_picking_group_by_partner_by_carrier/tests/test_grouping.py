@@ -22,6 +22,12 @@ class TestSaleStock(TestSale):
         self.env.ref("stock.warehouse0").group_shippings = True
         self.partner = self.env["res.partner"].create({"name": "Test Partner"})
 
+    def _update_qty_in_location(self, location, product, quantity):
+        quants = self.env["stock.quant"]._gather(product, location, strict=True)
+        # this method adds the quantity to the current quantity, so remove it
+        quantity -= sum(quants.mapped("quantity"))
+        self.env["stock.quant"]._update_available_quantity(product, location, quantity)
+
     def _get_new_sale_order(self, amount=10.0, partner=None, carrier=None):
         """ Creates and returns a sale order with one default order line.
 
@@ -384,13 +390,16 @@ class TestSaleStock(TestSale):
         self.assertFalse(so1.picking_ids & so2.picking_ids)
 
     def test_sale_stock_merge_procurement_group(self):
-        """2 sale orders are merged, procurement group linked with SO
+        """sale orders are merged, procurement groups are merged
 
         Ensure that the procurement group is linked with both SO
         and we find the stock.picking records from the SO.
+        Ensure that printed transfers keep their procurement group.
         """
         so1 = self._get_new_sale_order(carrier=self.carrier1)
+        so1.name = "SO1"
         so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
+        so2.name = "SO2"
         so1.action_confirm()
         so2.action_confirm()
         self.assertEqual(so1.picking_ids, so2.picking_ids)
@@ -400,3 +409,39 @@ class TestSaleStock(TestSale):
         group = picking.group_id
         # the group is related to both sales orders
         self.assertEqual(group.sale_ids, so1 | so2)
+        self.assertEqual(group.name, "{}, {}".format(so1.name, so2.name))
+
+        self._update_qty_in_location(
+            picking.location_id,
+            so1.order_line.product_id,
+            so1.order_line.product_uom_qty,
+        )
+        picking.action_assign()
+
+        # process move of so1, we'll expect groups for new backorders and new
+        # transfers merged in the backorder to "forget" about so1
+        move1 = picking.move_lines.filtered(
+            lambda line: line.sale_line_id.order_id == so1
+        )
+        line1 = move1.move_line_ids
+        line1.qty_done = line1.product_uom_qty
+        picking.action_done()
+
+        backorder = picking.backorder_ids
+        # as we no longer have anything of so1 in the backorder,
+        # now it's only related to so2
+        self.assertEqual(backorder.group_id.sale_ids, so2)
+        self.assertEqual(backorder.group_id.name, so2.name)
+
+        so3 = self._get_new_sale_order(carrier=self.carrier1)
+        so3.name = "SO3"
+        so3.action_confirm()
+
+        # so3 moves are merged in the backorder used for so2,
+        # a new group is used to hold so2 and so3
+        self.assertEqual(backorder.group_id.sale_ids, so2 | so3)
+        self.assertEqual(backorder.group_id.name, "{}, {}".format(so2.name, so3.name))
+
+        self.assertEqual(so1.picking_ids, picking)
+        self.assertEqual(so2.picking_ids, picking | backorder)
+        self.assertEqual(so3.picking_ids, backorder)
