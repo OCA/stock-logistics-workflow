@@ -19,7 +19,7 @@ class StockMove(models.Model):
         result = super(
             StockMove, self.with_context(picking_no_overwrite_partner_origin=1)
         )._assign_picking()
-        self._on_assign_picking_merge_group()
+        self.picking_id._merge_procurement_groups()
         return result
 
     def _assign_picking_post_process(self, new=False):
@@ -27,43 +27,6 @@ class StockMove(models.Model):
         if not new:
             self._on_assign_picking_message_link()
         return res
-
-    def _prepare_merge_group_values(self, move_groups):
-        sales = move_groups.sale_id
-        return {
-            "sale_ids": [(6, 0, sales.ids)],
-            "name": ", ".join(move_groups.mapped("name")),
-        }
-
-    def _on_assign_picking_merge_group(self):
-        for picking in self.picking_id:
-            if not picking.picking_type_id.group_pickings:
-                continue
-            if picking.picking_type_id.code != "outgoing":
-                continue
-            base_group = picking.group_id
-            # If we have different sales in the line's group, it means moves
-            # have been merged in the same picking/group but they come from a
-            # different sale.
-            moves = picking.move_lines
-            moves_groups = moves.original_group_id
-            moves_sales = moves_groups.sale_id
-            group_sales = base_group.sale_ids
-            # if we have different sales, it means "_assign_picking" added
-            # moves from another SO in the picking
-            if moves_sales != group_sales:
-                # create a new joint group for the existing different groups
-                new_group = base_group.copy(
-                    self._prepare_merge_group_values(moves_groups)
-                )
-                pickings = base_group.picking_ids.filtered(
-                    lambda picking: picking.picking_type_id.group_pickings
-                    # Do no longer modify a printed or done transfer: they are
-                    # started and their group is now fixed. It prevents keeping
-                    # old, done sales orders in new groups forever
-                    and not (picking.printed or picking.state == "done")
-                )
-                pickings.move_lines.group_id = new_group
 
     def _on_assign_picking_message_link(self):
         picking = self.picking_id
