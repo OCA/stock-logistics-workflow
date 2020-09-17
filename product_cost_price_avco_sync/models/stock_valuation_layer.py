@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import models
-from odoo.tools import float_compare, float_round
+from odoo.tools import float_compare
 
 
 class StockValuationLayer(models.Model):
@@ -24,66 +24,12 @@ class StockValuationLayer(models.Model):
             ("company_id", "=", self.company_id.id),
             ("product_id", "=", self.product_id.id),
             ("create_date", ">=", self.create_date),
-            ("id", "!=", self.id),
         ]
         return (
             self.env["stock.valuation.layer"]
             .sudo()
             .search(domain, order="create_date, id")
         )
-
-    def get_previous_values_avco_sync(self):
-        self.ensure_one()
-        domain = [
-            ("company_id", "=", self.company_id.id),
-            ("product_id", "=", self.product_id.id),
-            ("create_date", "<=", self.create_date),
-            ("id", "!=", self.id),
-        ]
-        svls = (
-            self.env["stock.valuation.layer"]
-            .sudo()
-            .search(domain, order="create_date, id")
-        )
-        if not svls:
-            return 0.0, 0.0
-        previous_price = 0.0
-        previous_qty = 0.0
-        old_price = 0.0
-        for svl in svls:
-            # Incoming line in layer
-            if svl.quantity > 0.0:
-                total_qty = previous_qty + svl.quantity
-                previous_price = svl.currency_id.round(
-                    (
-                        (previous_price * previous_qty + svl.unit_cost * svl.quantity)
-                        / total_qty
-                    )
-                    if total_qty
-                    else svl.unit_cost
-                )
-                old_price = svl.currency_id.round(
-                    (
-                        (
-                                old_price * previous_qty + svl.unit_cost * svl.quantity)
-                        / total_qty
-                    )
-                    if total_qty
-                    else svl.unit_cost
-                )
-                previous_qty = total_qty
-            # Outgoing line in layer
-            elif svl.quantity < 0.0:
-                previous_qty += svl.quantity
-            # Manual price adjustment line in layer
-            elif not svl.unit_cost and not svl.quantity:
-                old_diff = svl.value / previous_qty
-                previous_price = old_price + old_diff
-        return previous_price, previous_qty
-
-    def _round_value(self, value):
-        self.ensure_one()
-        return float_round(value, precision_rounding=self.uom_id.rounding)
 
     def cost_price_avco_sync(self, vals):
         procesed_lines = set()
@@ -94,59 +40,62 @@ class StockValuationLayer(models.Model):
                 or line.quantity <= 0.0
             ):
                 continue
-            previous_price, previous_qty = line.get_previous_values_avco_sync()
-            qty = vals.get("quantity", line.quantity)
-            total_qty = previous_qty + qty
-            old_price = line.currency_id.round(
-                (
-                    (previous_price * previous_qty + line.unit_cost * line.quantity)
-                    / total_qty
-                )
-                if total_qty
-                else line.unit_cost
-            )
-            previous_price = line.currency_id.round(
-                (
-                    (
-                        previous_price * previous_qty
-                        + vals.get("unit_cost", line.unit_cost) * qty
-                    )
-                    / total_qty
-                )
-                if total_qty
-                else vals.get("unit_cost", line.unit_cost)
-            )
-            previous_qty = total_qty
+            previous_price = previous_qty = old_price = 0.0
+            # update_enabled determines if svl is after modified line to enable
+            # write changes
+            update_enabled = False
+
             for svl in line.with_context(skip_avco_sync=True).get_svls_to_avco_sync():
+                # Enable update mode for after lines
+                if not update_enabled and svl.id == line.id:
+                    update_enabled = True
+                    qty = vals.get("quantity", line.quantity)
+                else:
+                    qty = svl.quantity
+
                 f_compare = float_compare(
-                    svl.quantity, 0.0, precision_rounding=svl.uom_id.rounding
+                    qty, 0.0, precision_rounding=svl.uom_id.rounding
                 )
                 # Incoming line in layer
                 if f_compare > 0:
-                    total_qty = previous_qty + svl.quantity
+                    total_qty = previous_qty + qty
                     previous_price = line.currency_id.round(
                         (
+                            (previous_price * previous_qty + svl.unit_cost * qty)
+                            / total_qty
+                        )
+                        if total_qty
+                        else svl.unit_cost
+                    )
+                    # Return moves
+                    if svl.stock_move_id.move_orig_ids:
+                        old_price = (
+                            svl.stock_move_id.move_orig_ids[:1]
+                            .stock_valuation_layer_ids[:1]
+                            .unit_cost
+                        )
+                        svl.with_context(skip_avco_sync=True).write(
+                            {
+                                "unit_cost": line.currency_id.round(old_price),
+                                "value": line.currency_id.round(
+                                    old_price * svl.quantity
+                                ),
+                            }
+                        )
+                    # Normal incoming moves
+                    else:
+                        old_price = line.currency_id.round(
                             (
-                                previous_price * previous_qty
-                                + svl.unit_cost * svl.quantity
+                                (old_price * previous_qty + svl.unit_cost * qty)
+                                / total_qty
                             )
-                            / total_qty
+                            if total_qty
+                            else svl.unit_cost
                         )
-                        if total_qty
-                        else svl.unit_cost
-                    )
-                    old_price = line.currency_id.round(
-                        (
-                            (old_price * previous_qty + svl.unit_cost * svl.quantity)
-                            / total_qty
-                        )
-                        if total_qty
-                        else svl.unit_cost
-                    )
                     previous_qty = total_qty
                 # Outgoing line in layer
                 elif f_compare < 0:
-                    if float_compare(
+                    if update_enabled and float_compare(
                         svl.unit_cost,
                         previous_price,
                         precision_rounding=svl.uom_id.rounding,
@@ -154,22 +103,25 @@ class StockValuationLayer(models.Model):
                         svl.with_context(skip_avco_sync=True).write(
                             {
                                 "unit_cost": line.currency_id.round(previous_price),
-                                "value": line.currency_id.round(
-                                    previous_price * svl.quantity
-                                ),
+                                "value": line.currency_id.round(previous_price * qty),
                             }
                         )
-                        previous_qty += svl.quantity
+                    previous_qty += qty
                 # Manual price adjustment line in layer
-                elif not svl.unit_cost and not svl.quantity:
+                elif not svl.unit_cost and not qty:
                     old_diff = svl.value / previous_qty
                     price = old_price + old_diff
-                    new_diff = price - previous_price
-                    new_value = line.currency_id.round(new_diff * previous_qty)
-                    svl.with_context(skip_avco_sync=True).value = new_value
+                    if update_enabled:
+                        new_diff = price - previous_price
+                        new_value = line.currency_id.round(new_diff * previous_qty)
+                        svl.with_context(skip_avco_sync=True).value = new_value
+                        previous_price = price
+                        break
+                    # TODO: Avoid duplicate line keeping break and
+                    #  previous_price updated
                     previous_price = price
-                    break
-            # Update product standard price
+                procesed_lines.add(svl.id)
+            # Update product standard price if it is modified
             if float_compare(
                 previous_price,
                 line.product_id.with_context(
@@ -183,12 +135,14 @@ class StockValuationLayer(models.Model):
             # Compute new values for layer line
             vals.update(
                 {
-                    "value": line.currency_id.round(vals["unit_cost"] * line.quantity),
+                    "value": line.currency_id.round(
+                        vals["unit_cost"] * vals.get("quantity", line.quantity)
+                    ),
                     "remaining_value": line.currency_id.round(
                         vals["unit_cost"] * line.remaining_qty
                     ),
                 }
             )
-            # Update price_unit for incoming stock moves
+            # Update unit_cost for incoming stock moves
             if line.stock_move_id:
                 line.stock_move_id.price_unit = vals["unit_cost"]
