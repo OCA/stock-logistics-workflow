@@ -4,7 +4,7 @@
 
 {
     'name': 'Product Expiry Simple',
-    'version': '11.0.1.1.0',
+    'version': '11.0.1.1.1',
     'category': 'Product',
     'license': 'AGPL-3',
     'summary':
