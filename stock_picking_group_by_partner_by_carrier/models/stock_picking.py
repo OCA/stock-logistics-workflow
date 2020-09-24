@@ -143,6 +143,15 @@ class StockPicking(models.Model):
             else:
                 return self.move_line_ids
 
+    def get_customer_refs(self):
+        """Returns all unique sales order customer references."""
+        if self.state != "done":
+            move_lines = self.move_lines.filtered("product_uom_qty")
+        else:
+            move_lines = self.move_lines
+        references = move_lines.mapped("sale_line_id.order_id.client_order_ref")
+        return set(filter(None, references))
+
 
 MockedMove = namedtuple(
     "MockedMove",
