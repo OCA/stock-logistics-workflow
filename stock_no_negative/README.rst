@@ -23,7 +23,7 @@ Stock Disallow Negative
     :target: https://runbot.odoo-community.org/runbot/154/13.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 By default, Odoo allows negative stock. The advantage of negative stock
 is that, if some stock levels are wrong in the ERP, you will not be blocked
@@ -114,7 +114,7 @@ Contributors
 ~~~~~~~~~~~~
 
 * Alexis de Lattre <alexis.delattre@akretion.com>
-* Eficent Business and IT Consulting Services S.L. <contact@eficent.com>
+* ForgeFlow S.L. <contact@forgeflow.com>
   * Jordi Ballester
 * Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>
 * Tecnativa <https://www.tecnativa.com>
