@@ -1,5 +1,5 @@
 # Copyright 2015-2016 Akretion (http://www.akretion.com) - Alexis de Lattre
-# Copyright 2016 Eficent (http://www.eficent.com)
+# Copyright 2016 ForgeFlow (http://www.forgeflow.com)
 # Copyright 2016 Serpent Consulting Services (<http://www.serpentcs.com>)
 # Copyright 2018 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
