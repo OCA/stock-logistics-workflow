@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2018 Simone Rubino - Agile Business Group
-     Copyright 2018 Eficent Business and IT Consulting Services S.L.
+     Copyright 2018 ForgeFlow S.L.
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
     <record id="view_stock_move_line_operation_tree" model="ir.ui.view">
