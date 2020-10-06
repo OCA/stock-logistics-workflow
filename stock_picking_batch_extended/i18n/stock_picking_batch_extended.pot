@@ -6,8 +6,6 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-06 13:20+0000\n"
-"PO-Revision-Date: 2020-10-06 13:20+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -96,14 +94,12 @@ msgid "Batch Picking"
 msgstr ""
 
 #. module: stock_picking_batch_extended
-#: model:ir.model,name:stock_picking_batch_extended.model_stock_batch_picking_creator
 #: model:ir.model,name:stock_picking_batch_extended.model_stock_picking_batch_creator
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__batch_picking_creator_id
 msgid "Batch Picking Creator"
 msgstr ""
 
 #. module: stock_picking_batch_extended
-#: model:ir.model,name:stock_picking_batch_extended.model_stock_batch_picking_creator_group_field
 #: model:ir.model,name:stock_picking_batch_extended.model_stock_picking_batch_creator_group_field
 msgid "Batch Picking Creator Group Field"
 msgstr ""
@@ -194,7 +190,7 @@ msgid "Date on which the batch picking is to be processed"
 msgstr ""
 
 #. module: stock_picking_batch_extended
-#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_warehouse_default_picker_id
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_warehouse__default_user_id
 msgid "Default Picker"
 msgstr ""
 
@@ -539,22 +535,12 @@ msgid "free form remarks"
 msgstr ""
 
 #. module: stock_picking_batch_extended
-#: model:ir.model,name:stock_picking_batch_extended.model_report_stock_batch_picking_report_batch_picking
-msgid "report.stock_batch_picking.report_batch_picking"
-msgstr ""
-
-#. module: stock_picking_batch_extended
-#: model:ir.model,name:stock_picking_batch_extended.model_stock_batch_picking
-msgid "stock.batch.picking"
-msgstr ""
-
-#. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__state
 msgid "the state of the batch picking. Workflow is draft -> in_progress/assigned -> done or cancel"
 msgstr ""
 
 #. module: stock_picking_batch_extended
-#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_warehouse_default_picker_id
+#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_warehouse__default_user_id
 msgid "the user to which the batch pickings are assigned by default"
 msgstr ""
 
