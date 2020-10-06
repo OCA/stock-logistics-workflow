@@ -105,14 +105,12 @@ msgid "Batch Picking"
 msgstr "Grupo de albaranes"
 
 #. module: stock_picking_batch_extended
-#: model:ir.model,name:stock_picking_batch_extended.model_stock_batch_picking_creator
 #: model:ir.model,name:stock_picking_batch_extended.model_stock_picking_batch_creator
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__batch_picking_creator_id
 msgid "Batch Picking Creator"
 msgstr "Creador del grupo de albaranes"
 
 #. module: stock_picking_batch_extended
-#: model:ir.model,name:stock_picking_batch_extended.model_stock_batch_picking_creator_group_field
 #: model:ir.model,name:stock_picking_batch_extended.model_stock_picking_batch_creator_group_field
 msgid "Batch Picking Creator Group Field"
 msgstr "Agrupar productos en batch picking"
@@ -203,7 +201,7 @@ msgid "Date on which the batch picking is to be processed"
 msgstr "Fecha en la que el grupo de albaranes se procesará"
 
 #. module: stock_picking_batch_extended
-#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_warehouse_default_picker_id
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_warehouse__default_user_id
 msgid "Default Picker"
 msgstr "Recogedor por defecto"
 
@@ -558,19 +556,6 @@ msgid "free form remarks"
 msgstr "libre de observaciones"
 
 #. module: stock_picking_batch_extended
-#: model:ir.model,name:stock_picking_batch_extended.model_report_stock_batch_picking_report_batch_picking
-#, fuzzy
-msgid "report.stock_batch_picking.report_batch_picking"
-msgstr "report.stock_batch_picking.report_batch_picking_es"
-
-#. module: stock_picking_batch_extended
-#: model:ir.model,name:stock_picking_batch_extended.model_stock_batch_picking
-#, fuzzy
-#| msgid "Batch picking"
-msgid "stock.batch.picking"
-msgstr "Grupo de albaranes"
-
-#. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__state
 msgid ""
 "the state of the batch picking. Workflow is draft -> in_progress/assigned -> "
@@ -580,7 +565,7 @@ msgstr ""
 "realizado o cancelado"
 
 #. module: stock_picking_batch_extended
-#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_warehouse_default_picker_id
+#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_warehouse__default_user_id
 msgid "the user to which the batch pickings are assigned by default"
 msgstr "el usuario al que se le asigna el grupo de albaranes por defecto"
 
@@ -588,3 +573,12 @@ msgstr "el usuario al que se le asigna el grupo de albaranes por defecto"
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__user_id
 msgid "the user to which the pickings are assigned"
 msgstr "el usuario al que se le asigna los albaranes por defecto"
+
+#, fuzzy
+#~ msgid "report.stock_batch_picking.report_batch_picking"
+#~ msgstr "report.stock_batch_picking.report_batch_picking_es"
+
+#, fuzzy
+#~| msgid "Batch picking"
+#~ msgid "stock.batch.picking"
+#~ msgstr "Grupo de albaranes"

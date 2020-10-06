@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_picking_batch_extended
+# 	* stock_picking_batch_extended
 #
 msgid ""
 msgstr ""
@@ -49,12 +49,23 @@ msgid "Add to new Batch"
 msgstr "Agregar a nuevos Lotes"
 
 #. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
+msgid "All pickings from this batch will be cancelled, are you sure?"
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: code:addons/stock_picking_batch_extended/wizard/batch_picking_creator.py:96
 #, python-format
-msgid "All selected pickings are already in a batch picking or are in a wrong state."
+msgid ""
+"All selected pickings are already in a batch picking or are in a wrong state."
 msgstr ""
 "Todas las despachos ya están en una selección de lotes o están en un estado "
 "incorrecto."
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
+msgid "All undone pickings from this batch will be removed, are you sure?"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.res_config_settings_view_form
@@ -436,7 +447,8 @@ msgstr "Movimientos de Inventario"
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.res_config_settings_view_form
 msgid "Switch behaviour bettwen Odoo and OCA for batch validation"
-msgstr "Cambiar el comportamiento entre Odoo y OCA para la validación por lotes"
+msgstr ""
+"Cambiar el comportamiento entre Odoo y OCA para la validación por lotes"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch_creator__user_id
@@ -462,14 +474,17 @@ msgstr "Esta nota aparecerá en la impresión de selección de lotes."
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__entire_package_detail_ids
-msgid "Those are the entire packages of a picking shown in the view of detailed operations"
+msgid ""
+"Those are the entire packages of a picking shown in the view of detailed "
+"operations"
 msgstr ""
 "Esos son los paquetes completos de un despacho que se muestra en la vista de "
 "operaciones detalladas"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__entire_package_ids
-msgid "Those are the entire packages of a picking shown in the view of operations"
+msgid ""
+"Those are the entire packages of a picking shown in the view of operations"
 msgstr ""
 "Esos son los paquetes completos de un despacho que se muestra en la vista de "
 "operaciones"
@@ -538,7 +553,9 @@ msgstr "comentarios de forma libre"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__state
-msgid "the state of the batch picking. Workflow is draft -> in_progress/assigned -> done or cancel"
+msgid ""
+"the state of the batch picking. Workflow is draft -> in_progress/assigned -> "
+"done or cancel"
 msgstr ""
 "El estado de la selección de lotes. El flujo de trabajo es borrador -> en "
 "progreso / asignado -> terminado o cancelado"
