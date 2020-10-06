@@ -8,16 +8,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-19 10:20+0100\n"
-"PO-Revision-Date: 2020-06-07 05:19+0000\n"
-"Last-Translator: Nelson Ramírez Sánchez <info@konos.cl>\n"
+"POT-Creation-Date: 2020-10-06 13:20+0000\n"
+"PO-Revision-Date: 2020-10-06 15:21+0200\n"
+"Last-Translator: Sergio Teruel <sergio.teruel@tecnativa.com>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10\n"
+"X-Generator: Poedit 2.3\n"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__picking_count
@@ -51,6 +51,11 @@ msgid "Add to new Batch"
 msgstr "Añadir a una nueva agrupación"
 
 #. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
+msgid "All pickings from this batch will be cancelled, are you sure?"
+msgstr "Todos los albaranes de esta agrupación serán cancelados, ¿Está seguro?"
+
+#. module: stock_picking_batch_extended
 #: code:addons/stock_picking_batch_extended/wizard/batch_picking_creator.py:96
 #, python-format
 msgid ""
@@ -58,6 +63,13 @@ msgid ""
 msgstr ""
 "Todos los albaranes seleccionados están ya en un grupo de albaranes o en un "
 "estado incorrecto."
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
+msgid "All undone pickings from this batch will be removed, are you sure?"
+msgstr ""
+"Todos los albaranes sin realizar de esta agrupación serán eliminados, ¿Está "
+"seguro?"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.res_config_settings_view_form
@@ -561,3 +573,12 @@ msgstr "el usuario al que se le asigna el grupo de albaranes por defecto"
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__user_id
 msgid "the user to which the pickings are assigned"
 msgstr "el usuario al que se le asigna los albaranes por defecto"
+
+#, fuzzy
+#~ msgid "report.stock_batch_picking.report_batch_picking"
+#~ msgstr "report.stock_batch_picking.report_batch_picking_es"
+
+#, fuzzy
+#~| msgid "Batch picking"
+#~ msgid "stock.batch.picking"
+#~ msgstr "Grupo de albaranes"

@@ -45,9 +45,19 @@ msgid "Add to new Batch"
 msgstr ""
 
 #. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
+msgid "All pickings from this batch will be cancelled, are you sure?"
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: code:addons/stock_picking_batch_extended/wizard/batch_picking_creator.py:96
 #, python-format
 msgid "All selected pickings are already in a batch picking or are in a wrong state."
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
+msgid "All undone pickings from this batch will be removed, are you sure?"
 msgstr ""
 
 #. module: stock_picking_batch_extended
