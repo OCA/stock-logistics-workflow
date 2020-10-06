@@ -35,17 +35,28 @@ class StockQuantPackage(models.Model):
         if self.env.context.get("_auto_assign_packaging") and vals.get(
             "product_packaging_id"
         ):
-            for package in self:
-                package.onchange_product_packaging_id()
+            self._update_dimensions_from_packaging(override=False)
         return res
+
+    def _update_dimensions_fields(self):
+        # source: destination
+        return {
+            "lngth": "lngth",
+            "width": "width",
+            "height": "height",
+            "max_weight": "pack_weight",
+        }
+
+    def _update_dimensions_from_packaging(self, override=False):
+        for package in self:
+            if not package.product_packaging_id:
+                continue
+            dimension_fields = self._update_dimensions_fields()
+            for source, dest in dimension_fields.items():
+                if not override and package[dest]:
+                    continue
+                package[dest] = package.product_packaging_id[source]
 
     @api.onchange("product_packaging_id")
     def onchange_product_packaging_id(self):
-        if self.product_packaging_id:
-            vals = self.product_packaging_id.read(
-                fields=["lngth", "width", "height", "max_weight"]
-            )[0]
-            vals["pack_weight"] = vals["max_weight"]
-            vals.pop("id")
-            vals.pop("max_weight")
-            self.update(vals)
+        self._update_dimensions_from_packaging(override=True)
