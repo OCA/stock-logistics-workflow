@@ -16,9 +16,12 @@
                     <button name="action_transfer" string="Validate" class="oe_highlight" type="object"
                         attrs="{'invisible': ['|',('use_oca_batch_validation', '!=', True), ('state', 'not in', ['in_progress','assigned'])]}"/>
                     <button name="remove_undone_pickings" string="Remove Undone" type="object"
-                        attrs="{'invisible': ['|',('active_picking_ids', '=', []),('use_oca_batch_validation', '!=', True)]}" />
+                        attrs="{'invisible': ['|',('active_picking_ids', '=', []),('use_oca_batch_validation', '!=', True)]}"
+                        confirm="All undone pickings from this batch will be removed, are you sure?"/>
                     <button name="action_cancel" string="Cancel" type="object"
-                        attrs="{'invisible': ['|',('use_oca_batch_validation', '!=', True),('state', 'not in', ['in_progress','draft','assigned'])]}"/>
+                        attrs="{'invisible': ['|',('use_oca_batch_validation', '!=', True),('state', 'not in', ['in_progress','draft','assigned'])]}"
+                        confirm="All pickings from this batch will be cancelled, are you sure?"
+                    />
                     <button name="action_print_picking" string="Print" type="object" class="oe_highlight"
                         attrs="{'invisible': [('use_oca_batch_validation', '!=', True)]}"/>
                     <!-- Buutons to call Odoo default functional -->
@@ -29,7 +32,9 @@
                     <button name="done" string="Done" type="object" class="oe_highlight"
                         attrs="{'invisible': ['|',('use_oca_batch_validation', '=', True), ('state', 'not in', ['in_progress','assigned'])]}"/>
                     <button name="cancel_picking" string="Cancel" type="object"
-                        attrs="{'invisible': ['|',('use_oca_batch_validation', '=', True), ('state', 'in', ['draft','in_progress','assigned'])]}"/>
+                        attrs="{'invisible': ['|',('use_oca_batch_validation', '=', True), ('state', 'in', ['draft','in_progress','assigned'])]}"
+                        confirm="All pickings from this batch will be cancelled, are you sure?"
+                    />
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
@@ -57,7 +62,7 @@
                         <page string="Pickings">
                                 <field name="active_picking_ids" invisible="True"/>
                                 <button name="remove_undone_pickings" string="Remove Undone" type="object"
-                                        class="oe_link" attrs="{'invisible': [('active_picking_ids', '=', [])]}" />
+                                        class="oe_link" attrs="{'invisible': [('active_picking_ids', '=', [])]}" confirm="All undone pickings from this batch will be removed, are you sure?"/>
                             <field name="picking_ids" widget="many2many" colspan="4" nolabel="1"
                                    domain="[('state', 'not in', ('done', 'cancel'))]"/>
                         </page>
