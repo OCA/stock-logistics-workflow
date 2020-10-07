@@ -12,4 +12,9 @@ class StockPicking(models.Model):
         of given picking.
         """
         self.ensure_one()
-        return self.sale_id.get_formview_action()
+        # Remove default_picking_id to avoid defaults get
+        # https://github.com/odoo/odoo/blob/e4d22d390c8aa8edf757e36704a9e04b2b89f115/
+        # addons/stock/models/stock_move.py#L410
+        ctx = self.env.context.copy()
+        ctx.pop("default_picking_id", False)
+        return self.with_context(ctx).sale_id.get_formview_action()
