@@ -80,16 +80,6 @@ msgid "Created on"
 msgstr ""
 
 #. module: stock_dynamic_routing
-#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__location_dest_id
-msgid "Default Destination Location"
-msgstr ""
-
-#. module: stock_dynamic_routing
-#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__location_src_id
-msgid "Default Source Location"
-msgstr ""
-
-#. module: stock_dynamic_routing
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing__display_name
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__display_name
 msgid "Display Name"
@@ -194,6 +184,16 @@ msgid "Location"
 msgstr ""
 
 #. module: stock_dynamic_routing
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__location_dest_id
+msgid "Location Dest"
+msgstr ""
+
+#. module: stock_dynamic_routing
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__location_src_id
+msgid "Location Src"
+msgstr ""
+
+#. module: stock_dynamic_routing
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__method
 msgid "Method"
 msgstr ""
@@ -215,6 +215,7 @@ msgstr ""
 
 #. module: stock_dynamic_routing
 #: code:addons/stock_dynamic_routing/models/stock_routing_rule.py:0
+#: code:addons/stock_dynamic_routing/models/stock_routing_rule.py:0
 #, python-format
 msgid ""
 "Operation type of a rule used as 'pull' must have '{}' or a sub-location as "
@@ -222,6 +223,7 @@ msgid ""
 msgstr ""
 
 #. module: stock_dynamic_routing
+#: code:addons/stock_dynamic_routing/models/stock_routing_rule.py:0
 #: code:addons/stock_dynamic_routing/models/stock_routing_rule.py:0
 #, python-format
 msgid ""
@@ -310,24 +312,6 @@ msgstr ""
 msgid ""
 "Technical field. Indicates the transfer is canceled because it was left "
 "empty after a dynamic routing."
-msgstr ""
-
-#. module: stock_dynamic_routing
-#: model:ir.model.fields,help:stock_dynamic_routing.field_stock_routing_rule__location_dest_id
-msgid ""
-"This is the default destination location when you create a picking manually "
-"with this operation type. It is possible however to change it or that the "
-"routes put another location. If it is empty, it will check for the customer "
-"location on the partner. "
-msgstr ""
-
-#. module: stock_dynamic_routing
-#: model:ir.model.fields,help:stock_dynamic_routing.field_stock_routing_rule__location_src_id
-msgid ""
-"This is the default source location when you create a picking manually with "
-"this operation type. It is possible however to change it or that the routes "
-"put another location. If it is empty, it will check for the supplier "
-"location on the partner. "
 msgstr ""
 
 #. module: stock_dynamic_routing
