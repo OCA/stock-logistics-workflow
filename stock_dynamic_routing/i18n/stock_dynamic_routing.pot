@@ -215,7 +215,6 @@ msgstr ""
 
 #. module: stock_dynamic_routing
 #: code:addons/stock_dynamic_routing/models/stock_routing_rule.py:0
-#: code:addons/stock_dynamic_routing/models/stock_routing_rule.py:0
 #, python-format
 msgid ""
 "Operation type of a rule used as 'pull' must have '{}' or a sub-location as "
@@ -223,7 +222,6 @@ msgid ""
 msgstr ""
 
 #. module: stock_dynamic_routing
-#: code:addons/stock_dynamic_routing/models/stock_routing_rule.py:0
 #: code:addons/stock_dynamic_routing/models/stock_routing_rule.py:0
 #, python-format
 msgid ""
