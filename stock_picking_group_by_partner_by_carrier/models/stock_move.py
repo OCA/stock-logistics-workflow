@@ -1,3 +1,7 @@
+# Copyright 2020 Camptocamp (https://www.camptocamp.com)
+# Copyright 2020 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
 import re
 from collections import namedtuple
 
@@ -12,8 +16,7 @@ class StockMove(models.Model):
     # and for cancellation of a sales order (to cancel only the moves related
     # to it)
     original_group_id = fields.Many2one(
-        comodel_name="procurement.group",
-        string="Original Procurement Group",
+        comodel_name="procurement.group", string="Original Procurement Group",
     )
 
     @api.model
