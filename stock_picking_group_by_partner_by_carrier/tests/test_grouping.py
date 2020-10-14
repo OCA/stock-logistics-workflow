@@ -29,7 +29,7 @@ class TestSaleStock(TestSale):
         self.env["stock.quant"]._update_available_quantity(product, location, quantity)
 
     def _get_new_sale_order(self, amount=10.0, partner=None, carrier=None):
-        """ Creates and returns a sale order with one default order line.
+        """Creates and returns a sale order with one default order line.
 
         :param float amount: quantity of product for the order line (10 by default)
         """
@@ -278,7 +278,8 @@ class TestSaleStock(TestSale):
         self.assertEqual(len(so1.picking_ids), 2)
         self.assertEqual(len(so2.picking_ids), 2)
         # ship & pick should be shared between so1 and so2
-        transfers = so1.picking_ids & so2.picking_ids
+        self.assertEqual(so1.picking_ids, so2.picking_ids)
+        transfers = so1.picking_ids
         self.assertEqual(len(transfers), 2)
         ships = transfers.filtered(lambda o: o.picking_type_id == warehouse.out_type_id)
         picks = transfers.filtered(
@@ -356,6 +357,48 @@ class TestSaleStock(TestSale):
         self.assertEqual(pick1.state, "confirmed")
         pick2 = so2.picking_ids - ships
         self.assertEqual(pick2.state, "cancel")
+
+    def test_delivery_multi_step_group_pick_cancel_so1(self):
+        """the warehouse uses pick + ship (with grouping enabled on pick)
+
+        -> shippings are grouped, as well as pickings"""
+        warehouse = self.env.ref("stock.warehouse0")
+        warehouse.delivery_steps = "pick_ship"
+        warehouse.pick_type_id.group_pickings = True
+        so1 = self._get_new_sale_order(carrier=self.carrier1)
+        so1.action_confirm()
+        so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
+        so2.action_confirm()
+        so1.action_cancel()
+        # ship & pick should be shared between so1 and so2
+        transfers = so1.picking_ids
+        ship = transfers.filtered(lambda o: o.picking_type_id == warehouse.out_type_id)
+        pick = transfers.filtered(lambda o: o.picking_type_id == warehouse.pick_type_id)
+        self.assertEqual(len(ship), 1)
+        self.assertEqual(len(pick), 1)
+        self.assertEqual(ship.state, "waiting")
+        self.assertEqual(pick.state, "confirmed")
+
+    def test_delivery_multi_step_group_pick_cancel_so2(self):
+        """the warehouse uses pick + ship (with grouping enabled on pick)
+
+        -> shippings are grouped, as well as pickings"""
+        warehouse = self.env.ref("stock.warehouse0")
+        warehouse.delivery_steps = "pick_ship"
+        warehouse.pick_type_id.group_pickings = True
+        so1 = self._get_new_sale_order(carrier=self.carrier1)
+        so1.action_confirm()
+        so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
+        so2.action_confirm()
+        so2.action_cancel()
+        # ship & pick should be shared between so1 and so2
+        transfers = so1.picking_ids
+        ship = transfers.filtered(lambda o: o.picking_type_id == warehouse.out_type_id)
+        pick = transfers.filtered(lambda o: o.picking_type_id == warehouse.pick_type_id)
+        self.assertEqual(len(ship), 1)
+        self.assertEqual(len(pick), 1)
+        self.assertEqual(ship.state, "waiting")
+        self.assertEqual(pick.state, "confirmed")
 
     def test_delivery_multi_step_cancel_so1_create_so3(self):
         """the warehouse uses pick + ship. Cancel SO1, create SO3
