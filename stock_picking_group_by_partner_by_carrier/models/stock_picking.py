@@ -28,7 +28,7 @@ class StockPicking(models.Model):
         cancel_sale_id = self.env.context.get("cancel_sale_id")
         if cancel_sale_id:
             moves = self.move_lines.filtered(
-                lambda m: m.original_group_id.sale_id.id == cancel_sale_id
+                lambda m: cancel_sale_id in m.original_group_id.sale_ids.ids
                 and m.state not in ("done", "cancel")
             )
             moves.with_context(cancel_sale_id=False)._action_cancel()
