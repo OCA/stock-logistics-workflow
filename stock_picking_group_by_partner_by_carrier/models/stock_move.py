@@ -1,7 +1,11 @@
+# Copyright 2020 Camptocamp (https://www.camptocamp.com)
+# Copyright 2020 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
 import re
 from collections import namedtuple
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class StockMove(models.Model):
@@ -14,6 +18,13 @@ class StockMove(models.Model):
     original_group_id = fields.Many2one(
         comodel_name="procurement.group", string="Original Procurement Group",
     )
+
+    @api.model
+    def _prepare_merge_moves_distinct_fields(self):
+        # Prevent merging pulled moves. This allows to cancel a SO without
+        # canceling pulled moves from other SO as we ensure they are not
+        # merged.
+        return super()._prepare_merge_moves_distinct_fields() + ["original_group_id"]
 
     def _assign_picking(self):
         result = super(
