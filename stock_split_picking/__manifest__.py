@@ -12,5 +12,5 @@
     "license": "AGPL-3",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": ["stock"],
-    "data": ["views/stock_partial_picking.xml"],
+    "data": ["wizards/stock_split_picking.xml", "views/stock_partial_picking.xml"],
 }
