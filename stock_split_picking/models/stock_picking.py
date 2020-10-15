@@ -55,22 +55,7 @@ class StockPicking(models.Model):
 
             # If we have new moves to move, create the backorder picking
             if new_moves:
-                backorder_picking = picking.copy({
-                    'name': '/',
-                    'move_lines': [],
-                    'move_line_ids': [],
-                    'backorder_id': picking.id,
-                })
-                picking.message_post(
-                    body=_(
-                        'The backorder <a href="#" '
-                        'data-oe-model="stock.picking" '
-                        'data-oe-id="%d">%s</a> has been created.'
-                    ) % (
-                        backorder_picking.id,
-                        backorder_picking.name
-                    )
-                )
+                backorder_picking = picking._create_split_backorder()
                 new_moves.write({
                     'picking_id': backorder_picking.id,
                 })
@@ -78,3 +63,42 @@ class StockPicking(models.Model):
                     'picking_id': backorder_picking.id,
                 })
                 new_moves._action_assign()
+
+    def _create_split_backorder(self, default=None):
+        """Copy current picking with defaults passed, post message about
+        backorder"""
+        self.ensure_one()
+        backorder_picking = self.copy(dict({
+            'name': '/',
+            'move_lines': [],
+            'move_line_ids': [],
+            'backorder_id': self.id,
+        }, **(default or {})))
+        self.message_post(
+            body=_(
+                'The backorder <a href="#" '
+                'data-oe-model="stock.picking" '
+                'data-oe-id="%d">%s</a> has been created.'
+            ) % (
+                backorder_picking.id,
+                backorder_picking.name
+            )
+        )
+        return backorder_picking
+
+    def _split_off_moves(self, moves):
+        """Remove moves from pickings in self and put them into a new one"""
+        new_picking = self.env['stock.picking']
+        for this in self:
+            if this.state in ('done', 'cancel'):
+                raise UserError(_('Cannot split picking %s in state %s') % (
+                    this.name, this.state,
+                ))
+            new_picking = new_picking or this._create_split_backorder()
+            if not this.move_lines - moves:
+                raise UserError(
+                    _('Cannot split off all moves from picking %s') % this.name
+                )
+        moves.write({'picking_id': new_picking.id})
+        moves.mapped('move_line_ids').write({'picking_id': new_picking.id})
+        return new_picking
