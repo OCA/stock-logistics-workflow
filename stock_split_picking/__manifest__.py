@@ -17,6 +17,7 @@
         'stock',
     ],
     'data': [
+        'wizards/stock_split_picking.xml',
         'views/stock_partial_picking.xml',
     ],
 }
