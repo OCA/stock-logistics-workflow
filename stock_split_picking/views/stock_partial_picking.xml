@@ -7,12 +7,11 @@
         <field name="arch" type="xml">
             <field name="state" position="before">
                 <button
-                    name="split_process"
+                    name="%(stock_split_picking.action_stock_split_picking)s"
                     states="draft,confirmed,assigned"
                     string="Split"
-                    confirm="Are you sure you want to split current picking?"
                     groups="stock.group_stock_user"
-                    type="object"
+                    type="action"
                 />
             </field>
         </field>
