@@ -4,3 +4,4 @@
 * Vicent Cubells <vicent.cubells@tecnativa.com>
 * Julien Coux <julien.coux@camptocamp.com>
 * Andrius Preimantas <andrius@versada.eu>
+* Holger Brunn <mail@hunki-enterprises.com>
