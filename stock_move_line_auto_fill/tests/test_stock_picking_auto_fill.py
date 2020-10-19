@@ -322,3 +322,40 @@ class TestStockPicking(TransactionCase):
         # The expected result is only opertions with product_id set and
         self.assertFalse(product_8_op.qty_done)
         self.assertTrue(product_9_op.qty_done)
+
+    def test_action_assign_replenish_stock(self):
+        # Covered case:
+        # For a product with less stock than initial demand, check after
+        # replenish stock that quantity done is written with initial demand
+        # after check availability
+        self.picking_type_in.auto_fill_operation = True
+        product = self.env["product.product"].create(
+            {"name": "Test auto fill", "type": "product"}
+        )
+        product_quant = self.env["stock.quant"].create(
+            {
+                "product_id": product.id,
+                "location_id": self.picking_type_out.default_location_src_id.id,
+                "quantity": 1000.00,
+            }
+        )
+        self.move_model.create(
+            dict(
+                product_id=product.id,
+                picking_id=self.picking.id,
+                name=product.display_name,
+                picking_type_id=self.picking_type_out.id,
+                product_uom_qty=1500.00,
+                location_id=self.picking_type_out.default_location_src_id.id,
+                location_dest_id=self.customer_location.id,
+                product_uom=product.uom_id.id,
+            )
+        )
+        self.picking.action_assign()
+        self.assertEqual(self.picking.state, "assigned")
+        self.assertEqual(len(self.picking.move_line_ids), 1)
+        # Try to fill all the operation automatically.
+        self.assertEqual(self.picking.move_line_ids.qty_done, 1000.00)
+        product_quant.quantity = 1500.00
+        self.picking.action_assign()
+        self.assertEqual(self.picking.move_line_ids.qty_done, 1500.00)
