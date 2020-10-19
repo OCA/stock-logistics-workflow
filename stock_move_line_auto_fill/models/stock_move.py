@@ -19,7 +19,32 @@ class StockMove(models.Model):
         elif (self.picking_id.picking_type_id.avoid_lot_assignment and
               res.get('lot_id')):
             return res
-        res.update({
-            'qty_done': res.get('product_uom_qty', 0.0),
-        })
+        if self.quantity_done != self.product_uom_qty:
+            # Not assign qty_done for extra moves in over processed quantities
+            res.update({"qty_done": res.get("product_uom_qty", 0.0)})
+        return res
+
+    def _action_assign(self):
+        """
+        Update stock move line quantity done field with reserved quantity.
+        This method take into account incoming and outgoing moves.
+        We can not use _prepare_move_line_vals method because this method only
+        is called for a new lines.
+        """
+        res = super()._action_assign()
+        for line in self:
+            if (
+                line.location_id.should_bypass_reservation()
+                or not line.picking_id.auto_fill_operation
+            ):
+                return res
+            lines_to_update = line.move_line_ids.filtered(
+                lambda l: l.qty_done != l.product_uom_qty
+            )
+            for move_line in lines_to_update:
+                if (
+                    not line.picking_id.picking_type_id.avoid_lot_assignment
+                    or not move_line.lot_id
+                ):
+                    move_line.qty_done = move_line.product_uom_qty
         return res
