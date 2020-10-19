@@ -1,0 +1,84 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_picking_tier_validation
+#
+msgid "Picking Tier Validation"
+msgstr "Validación de nivel en albaranes"
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-04-20 09:56+0000\n"
+"PO-Revision-Date: 2020-04-20 09:56+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_tier_validation
+#: model_terms:ir.ui.view,arch_db:stock_picking_tier_validation.tier_view_picking_form
+msgid "<i class=\"fa fa-info-circle\"/>This picking needs to be\n"
+"                        validated."
+msgstr "<i class=\"fa fa-info-circle\"/>Este albarán necesita ser\n"
+"                        validado."
+
+#. module: stock_picking_tier_validation
+#: model_terms:ir.ui.view,arch_db:stock_picking_tier_validation.tier_view_picking_form
+msgid "<i class=\"fa fa-thumbs-down\"/> Operation has been <b>rejected</b>."
+msgstr "<i class=\"fa fa-thumbs-down\"/>La operación ha sido <b>rechazada</b>."
+
+#. module: stock_picking_tier_validation
+#: model_terms:ir.ui.view,arch_db:stock_picking_tier_validation.tier_view_picking_form
+msgid "<i class=\"fa fa-thumbs-up\"/> Operation has been <b>validated</b>!"
+msgstr "<i class=\"fa fa-thumbs-up\"/>La operación ha sido <b>validada</b>!"
+
+#. module: stock_picking_tier_validation
+#: model_terms:ir.ui.view,arch_db:stock_picking_tier_validation.tier_view_picking_internal_search
+msgid "My Picking to review"
+msgstr "Mis albaranes a revisar"
+
+#. module: stock_picking_tier_validation
+#: model_terms:ir.ui.view,arch_db:stock_picking_tier_validation.tier_view_picking_internal_search
+msgid "Needs my Review"
+msgstr "Necesita mi Revisión"
+
+#. module: stock_picking_tier_validation
+#: model_terms:ir.ui.view,arch_db:stock_picking_tier_validation.tier_view_picking_internal_search
+msgid "Pickings validated and ready to be confirmed"
+msgstr "Albaranes validados y listos para confirmar"
+
+#. module: stock_picking_tier_validation
+#: model_terms:ir.ui.view,arch_db:stock_picking_tier_validation.tier_view_picking_form
+msgid "Reject"
+msgstr "Rechazar"
+
+#. module: stock_picking_tier_validation
+#: model_terms:ir.ui.view,arch_db:stock_picking_tier_validation.tier_view_picking_form
+msgid "Request Validation"
+msgstr "Solicitar Validación"
+
+#. module: stock_picking_tier_validation
+#: model_terms:ir.ui.view,arch_db:stock_picking_tier_validation.tier_view_picking_form
+msgid "Restart Validation"
+msgstr "Reiniciar Validación"
+
+#. module: stock_picking_tier_validation
+#: model:ir.model,name:stock_picking_tier_validation.model_tier_definition
+msgid "Tier Definition"
+msgstr "Definición de Nivel"
+
+#. module: stock_picking_tier_validation
+#: model:ir.model,name:stock_picking_tier_validation.model_stock_picking
+msgid "Transfer"
+msgstr "Transferir"
+
+#. module: stock_picking_tier_validation
+#: model_terms:ir.ui.view,arch_db:stock_picking_tier_validation.tier_view_picking_form
+msgid "Validate"
+msgstr "Validar"
+
+#. module: stock_picking_tier_validation
+#: model_terms:ir.ui.view,arch_db:stock_picking_tier_validation.tier_view_picking_internal_search
+msgid "Validated"
+msgstr "Validado"
+
