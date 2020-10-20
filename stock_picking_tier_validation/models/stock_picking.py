@@ -8,5 +8,5 @@ from odoo import models
 class Picking(models.Model):
     _name = "stock.picking"
     _inherit = ["stock.picking", "tier.validation"]
-    _state_from = ["draft"]
-    _state_to = ["waiting", "confirmed", "assigned", "done"]
+    _state_from = ["draft", "waiting", "confirmed", "assigned"]
+    _state_to = ["done"]
