@@ -26,7 +26,7 @@ Stock Picking Warn Message
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
 This module add a warning popup on pickings to ensure warning is populated
-no only when partner is changed.
+not only when partner is changed.
 
 **Table of contents**
 
