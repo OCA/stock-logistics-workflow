@@ -1,32 +1,36 @@
 # Copyright 2020 ForgeFlow S.L.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import TransactionCase
+from odoo.tests.common import SavepointCase
 
 
-class TestStockPickingWarnMessage(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.warehouse = self.env.ref("stock.warehouse0")
-        self.picking_type_out = self.warehouse.out_type_id
-        self.customer_location = self.env.ref("stock.stock_location_customers")
-        self.product = self.env.ref("product.product_product_4")
-        self.warn_msg_parent = "This customer has a warn from parent"
-        self.parent = self.env["res.partner"].create(
+class TestStockPickingWarnMessage(SavepointCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        # disable tracking test suite wise
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
+        cls.user_model = cls.env["res.users"].with_context(no_reset_password=True)
+        cls.warehouse = cls.env.ref("stock.warehouse0")
+        cls.picking_type_out = cls.warehouse.out_type_id
+        cls.customer_location = cls.env.ref("stock.stock_location_customers")
+        cls.product = cls.env.ref("product.product_product_4")
+        cls.warn_msg_parent = "This customer has a warn from parent"
+        cls.parent = cls.env["res.partner"].create(
             {
                 "name": "Customer with a warn",
                 "email": "customer@warn.com",
                 "picking_warn": "warning",
-                "picking_warn_msg": self.warn_msg_parent,
+                "picking_warn_msg": cls.warn_msg_parent,
             }
         )
-        self.warn_msg = "This customer has a warn"
-        self.partner = self.env["res.partner"].create(
+        cls.warn_msg = "This customer has a warn"
+        cls.partner = cls.env["res.partner"].create(
             {
                 "name": "Customer with a warn",
                 "email": "customer@warn.com",
                 "picking_warn": "warning",
-                "picking_warn_msg": self.warn_msg,
+                "picking_warn_msg": cls.warn_msg,
             }
         )
 
