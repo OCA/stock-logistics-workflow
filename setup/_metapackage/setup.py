@@ -25,6 +25,7 @@ setuptools.setup(
         'odoo13-addon-stock_picking_return_restricted_qty',
         'odoo13-addon-stock_picking_sale_order_link',
         'odoo13-addon-stock_picking_show_return',
+        'odoo13-addon-stock_picking_warn_message',
         'odoo13-addon-stock_picking_whole_scrap',
         'odoo13-addon-stock_production_lot_active',
         'odoo13-addon-stock_putaway_by_route',
