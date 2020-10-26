@@ -100,12 +100,18 @@ class StockValuationLayer(models.Model):
                         previous_price,
                         precision_rounding=svl.uom_id.rounding,
                     ):
-                        svl.with_context(skip_avco_sync=True).write(
-                            {
-                                "unit_cost": line.currency_id.round(previous_price),
-                                "value": line.currency_id.round(previous_price * qty),
-                            }
-                        )
+                        vals_out = {
+                            "unit_cost": line.currency_id.round(previous_price),
+                            "value": line.currency_id.round(previous_price * qty),
+                        }
+                        svl.with_context(skip_avco_sync=True).write(vals_out)
+                        # Update svl value from returned moves linked to this one
+                        move_dest = svl.stock_move_id.move_dest_ids
+                        if move_dest.location_id.usage == "customer":
+                            move_dest.stock_valuation_layer_ids.with_context(
+                                skip_avco_sync=True
+                            ).write(vals_out)
+                            procesed_lines.update(move_dest.stock_valuation_layer_ids.ids)
                     previous_qty += qty
                 # Manual price adjustment line in layer
                 elif not svl.unit_cost and not qty:
