@@ -23,7 +23,6 @@ class StockValuationLayer(models.Model):
         domain = [
             ("company_id", "=", self.company_id.id),
             ("product_id", "=", self.product_id.id),
-            ("create_date", ">=", self.create_date),
         ]
         return (
             self.env["stock.valuation.layer"]
@@ -40,7 +39,7 @@ class StockValuationLayer(models.Model):
                 or line.quantity <= 0.0
             ):
                 continue
-            previous_price = previous_qty = old_price = 0.0
+            previous_price = previous_qty = 0.0
             # update_enabled determines if svl is after modified line to enable
             # write changes
             update_enabled = False
@@ -50,8 +49,10 @@ class StockValuationLayer(models.Model):
                 if not update_enabled and svl.id == line.id:
                     update_enabled = True
                     qty = vals.get("quantity", line.quantity)
+                    unit_cost = vals.get("unit_cost", line.unit_cost)
                 else:
                     qty = svl.quantity
+                    unit_cost = svl.unit_cost
 
                 f_compare = float_compare(
                     qty, 0.0, precision_rounding=svl.uom_id.rounding
@@ -59,64 +60,44 @@ class StockValuationLayer(models.Model):
                 # Incoming line in layer
                 if f_compare > 0:
                     total_qty = previous_qty + qty
-                    previous_price = line.currency_id.round(
-                        (
-                            (previous_price * previous_qty + svl.unit_cost * qty)
-                            / total_qty
-                        )
-                        if total_qty
-                        else svl.unit_cost
-                    )
                     # Return moves
-                    if svl.stock_move_id.move_orig_ids:
-                        old_price = (
-                            svl.stock_move_id.move_orig_ids[:1]
-                            .stock_valuation_layer_ids[:1]
-                            .unit_cost
-                        )
+                    if update_enabled and svl.stock_move_id.move_orig_ids:
                         svl.with_context(skip_avco_sync=True).write(
                             {
-                                "unit_cost": line.currency_id.round(old_price),
+                                "unit_cost": line.currency_id.round(previous_price),
                                 "value": line.currency_id.round(
-                                    old_price * svl.quantity
+                                    previous_price * svl.quantity
                                 ),
                             }
                         )
                     # Normal incoming moves
                     else:
-                        old_price = line.currency_id.round(
+                        previous_price = line.currency_id.round(
                             (
-                                (old_price * previous_qty + svl.unit_cost * qty)
+                                (
+                                        previous_price * previous_qty + unit_cost * qty)
                                 / total_qty
                             )
                             if total_qty
-                            else svl.unit_cost
+                            else unit_cost
                         )
                     previous_qty = total_qty
                 # Outgoing line in layer
                 elif f_compare < 0:
                     if update_enabled and float_compare(
-                        svl.unit_cost,
+                        unit_cost,
                         previous_price,
                         precision_rounding=svl.uom_id.rounding,
                     ):
-                        vals_out = {
+                        svl.with_context(skip_avco_sync=True).write({
                             "unit_cost": line.currency_id.round(previous_price),
                             "value": line.currency_id.round(previous_price * qty),
-                        }
-                        svl.with_context(skip_avco_sync=True).write(vals_out)
-                        # Update svl value from returned moves linked to this one
-                        move_dest = svl.stock_move_id.move_dest_ids
-                        if move_dest.location_id.usage == "customer":
-                            move_dest.stock_valuation_layer_ids.with_context(
-                                skip_avco_sync=True
-                            ).write(vals_out)
-                            procesed_lines.update(move_dest.stock_valuation_layer_ids.ids)
+                        })
                     previous_qty += qty
                 # Manual price adjustment line in layer
-                elif not svl.unit_cost and not qty:
+                elif not unit_cost and not qty and not svl.stock_move_id:
                     old_diff = svl.value / previous_qty
-                    price = old_price + old_diff
+                    price = previous_price + old_diff
                     if update_enabled:
                         new_diff = price - previous_price
                         new_value = line.currency_id.round(new_diff * previous_qty)
