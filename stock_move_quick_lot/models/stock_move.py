@@ -26,14 +26,12 @@ class StockMove(models.Model):
         lot = self.production_lot_from_name(create_lot=False)
         self.life_date = lot.life_date
 
-    @api.multi
     def _compute_line_lot_name(self):
         for line in self:
             line.line_lot_name = ", ".join(
                 lot.name for lot in line.mapped("move_line_ids.lot_id")
             )
 
-    @api.multi
     def _inverse_line_lot_name(self):
         for line in self:
             if not line.line_lot_name:
@@ -43,12 +41,10 @@ class StockMove(models.Model):
                 if line.move_line_ids.lot_id != lot:
                     line.move_line_ids.lot_id = lot
 
-    @api.multi
     def _compute_life_date(self):
         for line in self:
             line.life_date = line.move_line_ids[:1].lot_id.life_date
 
-    @api.multi
     def _inverse_life_date(self):
         for line in self:
             if not line.life_date:
@@ -57,7 +53,6 @@ class StockMove(models.Model):
             if lot and lot.life_date != line.life_date:
                 lot.life_date = line.life_date
 
-    @api.multi
     def production_lot_from_name(self, create_lot=True):
         StockProductionLot = self.env["stock.production.lot"]
         if not self.line_lot_name:
@@ -80,6 +75,7 @@ class StockMove(models.Model):
                     "name": self.line_lot_name,
                     "product_id": self.product_id.id,
                     "life_date": self.life_date,
+                    "company_id": self.company_id.id,
                 }
             )
         return lot

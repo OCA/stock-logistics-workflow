@@ -23,7 +23,7 @@ msgid "End of Life Date"
 msgstr "Fecha de caducidad"
 
 #. module: stock_move_quick_lot
-#: code:addons/stock_move_quick_lot/models/stock_move.py:68
+#: code:addons/stock_move_quick_lot/models/stock_move.py:0
 #, python-format
 msgid "Go to lots to change data"
 msgstr "Vaya a lotes para cambiar datos"
@@ -34,7 +34,7 @@ msgid "Lot Name"
 msgstr "Lote/Nº de serie"
 
 #. module: stock_move_quick_lot
-#: code:addons/stock_move_quick_lot/models/stock_move.py:64
+#: code:addons/stock_move_quick_lot/models/stock_move.py:0
 #, python-format
 msgid "Open detail to remove lot"
 msgstr "Abra el detalle de lotes para eliminar"
