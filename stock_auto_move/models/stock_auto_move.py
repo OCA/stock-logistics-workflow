@@ -20,6 +20,19 @@ class StockMove(models.Model):
         todo_pickings = moves.mapped('picking_id')
         # We create packing operations to keep packing if any
         todo_pickings.do_prepare_partial()
+        # Here we should take manual info about pack ops from first picking and
+        # transfer them to pack ops from second picking
+        for move in moves:
+            if move.move_orig_ids and move.linked_move_operation_ids:
+                orig_move = move.move_orig_ids[0]
+                orig_op = orig_move.linked_move_operation_ids[0].operation_id
+                linked_move_op = move.linked_move_operation_ids[0]
+                pack_op = linked_move_op.operation_id
+                pack_op.qty_done = orig_op.qty_done
+                for pack_lot in pack_op.pack_lot_ids:
+                    pack_lot.qty = orig_op.pack_lot_ids.filtered(
+                        lambda pl: pl.lot_id == pack_lot.lot_id
+                    ).qty
         moves.action_done()
 
     @api.multi
