@@ -9,13 +9,13 @@
                 <button
                     name="request_validation"
                     string="Request Validation"
-                    attrs="{'invisible': ['|','|',('need_validation', '!=', True),('rejected','=',True),('state','not in',['draft'])]}"
+                    attrs="{'invisible': ['|','|',('need_validation', '!=', True),('rejected','=',True),('state','in',['done'])]}"
                     type="object"
                 />
                 <button
                     name="restart_validation"
                     string="Restart Validation"
-                    attrs="{'invisible': ['|',('review_ids', '=', []),('state','not in',['draft'])]}"
+                    attrs="{'invisible': ['|',('review_ids', '=', []),('state','in',['done'])]}"
                     type="object"
                 />
             </button>
@@ -27,7 +27,7 @@
                     class="alert alert-warning"
                     role="alert"
                     attrs="{'invisible': ['|', '|', '|',
-                     ('validated', '=', True), ('state', 'not in', ['draft']),
+                     ('validated', '=', True), ('state', 'in', ['done']),
                      ('rejected', '=', True), ('review_ids', '=', [])]}"
                     style="margin-bottom:0px;"
                 >
@@ -55,7 +55,7 @@
                 <div
                     class="alert alert-success"
                     role="alert"
-                    attrs="{'invisible': ['|', '|', ('validated', '!=', True), ('state', 'not in', ['draft']), ('review_ids', '=', [])]}"
+                    attrs="{'invisible': ['|', '|', ('validated', '!=', True), ('state', 'in', ['done']), ('review_ids', '=', [])]}"
                     style="margin-bottom:0px;"
                 >
                     <p><i class="fa fa-thumbs-up" /> Operation has been <b
@@ -64,7 +64,7 @@
                 <div
                     class="alert alert-danger"
                     role="alert"
-                    attrs="{'invisible': ['|', '|', ('rejected', '!=', True), ('state', 'not in', ['draft']), ('review_ids', '=', [])]}"
+                    attrs="{'invisible': ['|', '|', ('rejected', '!=', True), ('state', 'in', ['done']), ('review_ids', '=', [])]}"
                     style="margin-bottom:0px;"
                 >
                     <p><i class="fa fa-thumbs-down" /> Operation has been <b
@@ -94,7 +94,7 @@
                 <filter
                     name="needs_review"
                     string="Needs my Review"
-                    domain="[('reviewer_ids','in',uid), ('state', 'in', ['draft'])]"
+                    domain="[('reviewer_ids','in',uid), ('state', 'not in', ['done'])]"
                     help="My Picking to review"
                 />
                 <filter
