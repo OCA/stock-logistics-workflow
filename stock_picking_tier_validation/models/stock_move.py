@@ -11,16 +11,17 @@ class StockMove(models.Model):
     @api.constrains("state", "picking_id.review_ids", "picking_id.review_ids.status")
     def _check_tier_review(self):
         tiers = self.env["tier.definition"].search([("model", "=", "stock.picking")])
-        valid_tiers = any([self.picking_id.evaluate_tier(tier) for tier in tiers])
-        need_validation = (
-            not self.picking_id.review_ids
-            and valid_tiers
-            and getattr(self.picking_id, self.picking_id._state_field)
-            in self.picking_id._state_to
-        )
-        if (
-            self.state in self.picking_id._state_to
-            and not self.picking_id.validated
-            and need_validation
-        ):
-            raise ValidationError(_("This picking needs to be validated."))
+        for move in self:
+            valid_tiers = any([move.picking_id.evaluate_tier(tier) for tier in tiers])
+            need_validation = (
+                not move.picking_id.review_ids
+                and valid_tiers
+                and getattr(move.picking_id, move.picking_id._state_field)
+                in move.picking_id._state_to
+            )
+            if (
+                move.state in move.picking_id._state_to
+                and not move.picking_id.validated
+                and need_validation
+            ):
+                raise ValidationError(_("This picking needs to be validated."))
