@@ -45,9 +45,7 @@ class StockValuationLayer(models.Model):
             update_enabled = False
 
             for svl in line.with_context(skip_avco_sync=True).get_svls_to_avco_sync():
-                # Enable update mode for after lines
-                if not update_enabled and svl.id == line.id:
-                    update_enabled = True
+                if svl.id == line.id:
                     qty = vals.get("quantity", line.quantity)
                     unit_cost = vals.get("unit_cost", line.unit_cost)
                 else:
@@ -60,13 +58,17 @@ class StockValuationLayer(models.Model):
                 # Incoming line in layer
                 if f_compare > 0:
                     total_qty = previous_qty + qty
-                    # Return moves
-                    if update_enabled and svl.stock_move_id.move_orig_ids:
+                    # Return moves or adjust inventory moves
+                    if update_enabled and (svl.stock_move_id.move_orig_ids or
+                                           svl.stock_move_id.inventory_id):
                         svl.with_context(skip_avco_sync=True).write(
                             {
                                 "unit_cost": line.currency_id.round(previous_price),
                                 "value": line.currency_id.round(
                                     previous_price * svl.quantity
+                                ),
+                                "remaining_value": line.currency_id.round(
+                                    previous_price * svl.remaining_qty
                                 ),
                             }
                         )
@@ -107,6 +109,9 @@ class StockValuationLayer(models.Model):
                     # TODO: Avoid duplicate line keeping break and
                     #  previous_price updated
                     previous_price = price
+                # Enable update mode for after lines
+                if svl.id == line.id:
+                    update_enabled = True
                 procesed_lines.add(svl.id)
             # Update product standard price if it is modified
             if float_compare(
