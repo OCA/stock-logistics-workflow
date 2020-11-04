@@ -36,6 +36,7 @@ setuptools.setup(
         'odoo11-addon-stock_picking_show_backorder',
         'odoo11-addon-stock_picking_show_return',
         'odoo11-addon-stock_picking_whole_scrap',
+        'odoo11-addon-stock_push_delay',
         'odoo11-addon-stock_return_request',
         'odoo11-addon-stock_split_picking',
     ],
