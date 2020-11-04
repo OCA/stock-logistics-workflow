@@ -5,17 +5,17 @@ from odoo import api, models
 
 class StockMove(models.Model):
 
-    _inherit = 'stock.move'
+    _inherit = "stock.move"
 
     def _push_apply(self):
         """Manual triggering"""
-        if self.env.context.get('manual_push', False):
+        if self.env.context.get("manual_push", False):
             return super(StockMove, self)._push_apply()
 
 
 class StockPicking(models.Model):
 
-    _inherit = 'stock.picking'
+    _inherit = "stock.picking"
 
     @api.multi
     def action_done(self):
