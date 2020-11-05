@@ -3,98 +3,34 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo.tests import SavepointCase
 
+from .common import CommonStockPickingAutoCreateLot
 
-class TestStockPickingAutoCreateLot(SavepointCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.lot_obj = cls.env["stock.production.lot"]
-        cls.warehouse = cls.env.ref("stock.warehouse0")
-        cls.picking_type_in = cls.env.ref("stock.picking_type_in")
-        cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
-        cls.supplier = cls.env["res.partner"].create({"name": "Supplier - test"})
-        cls.product_serial = cls.env["product.product"].create(
-            {
-                "name": "Product Serial Test",
-                "type": "product",
-                "tracking": "serial",
-                "auto_create_lot": True,
-            }
-        )
-        cls.product_serial_not_auto = cls.env["product.product"].create(
-            {
-                "name": "Product Serial Not Auto Test",
-                "type": "product",
-                "tracking": "serial",
-                "auto_create_lot": False,
-            }
-        )
-        cls.product = cls.env["product.product"].create(
-            {
-                "name": "test",
-                "type": "product",
-                "tracking": "lot",
-                "auto_create_lot": True,
-            }
-        )
-        cls.picking = (
-            cls.env["stock.picking"]
-            .with_context(default_picking_type_id=cls.picking_type_in.id)
-            .create(
-                {
-                    "partner_id": cls.supplier.id,
-                    "picking_type_id": cls.picking_type_in.id,
-                    "location_id": cls.supplier_location.id,
-                }
-            )
-        )
-        cls.move = cls.env["stock.move"].create(
-            {
-                "name": "test-auto-serial",
-                "product_id": cls.product_serial.id,
-                "picking_id": cls.picking.id,
-                "picking_type_id": cls.picking_type_in.id,
-                "product_uom_qty": 3.0,
-                "product_uom": cls.product.uom_id.id,
-                "location_id": cls.supplier_location.id,
-                "location_dest_id": cls.picking_type_in.default_location_dest_id.id,
-            }
-        )
-        cls.move = cls.env["stock.move"].create(
-            {
-                "name": "test-not-auto-serial",
-                "product_id": cls.product_serial_not_auto.id,
-                "picking_id": cls.picking.id,
-                "picking_type_id": cls.picking_type_in.id,
-                "product_uom_qty": 4.0,
-                "product_uom": cls.product.uom_id.id,
-                "location_id": cls.supplier_location.id,
-                "location_dest_id": cls.picking_type_in.default_location_dest_id.id,
-            }
-        )
-        cls.move = cls.env["stock.move"].create(
-            {
-                "name": "test-auto-lot",
-                "product_id": cls.product.id,
-                "picking_id": cls.picking.id,
-                "picking_type_id": cls.picking_type_in.id,
-                "product_uom_qty": 2.0,
-                "product_uom": cls.product.uom_id.id,
-                "location_id": cls.supplier_location.id,
-                "location_dest_id": cls.picking_type_in.default_location_dest_id.id,
-            }
-        )
 
+class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, SavepointCase):
     def test_auto_create_lot(self):
+        # Create 3 products with lot/serial and auto_create True/False
+        self.product = self._create_product()
+        self.product_serial = self._create_product(tracking="serial")
+        self.product_serial_not_auto = self._create_product(
+            tracking="serial", auto=False
+        )
         self.picking_type_in.auto_create_lot = True
+
+        self._create_picking()
+        self._create_move(product=self.product, qty=2.0)
+        self._create_move(product=self.product_serial, qty=3.0)
+        self._create_move(product=self.product_serial_not_auto, qty=4.0)
+
         self.picking.action_assign()
         # Check the display field
         move = self.picking.move_lines.filtered(
-            lambda m: m.product_id == self.product_serial)
+            lambda m: m.product_id == self.product_serial
+        )
         self.assertFalse(move.display_assign_serial)
 
         move = self.picking.move_lines.filtered(
-            lambda m: m.product_id == self.product_serial_not_auto)
+            lambda m: m.product_id == self.product_serial_not_auto
+        )
         self.assertTrue(move.display_assign_serial)
 
         # Assign manual serials
