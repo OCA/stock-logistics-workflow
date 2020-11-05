@@ -11,6 +11,7 @@
     'summary': 'Disallow negative stock levels by default',
     'author': 'Akretion,Odoo Community Association (OCA)',
     'website': 'https://github.com/OCA/stock-logistics-workflow',
+    'maintainers': ['luisg123v'],
     'depends': ['stock'],
     'data': [
         'views/product_product_views.xml',
