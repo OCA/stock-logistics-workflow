@@ -1,0 +1,40 @@
+<odoo>
+    <template id="routing_rule_reserve_rule_warning_src">
+        <p class="alert alert-warning">
+            Warning: the origin operation type
+            <span t-esc="src_picking_type.display_name" />
+            has reservation rules in
+            <span t-esc="location_common_path" />
+            <t t-if="location_names">
+                , for locations: <span t-esc="location_names" />
+            </t>.
+            <br />
+            This dynamic routing may change moves' operation types to
+            <strong>
+                <span t-esc="dest_picking_type.display_name" />
+            </strong>
+            which does not have a reservation rule. It may lead
+            to inconsistencies in the routing.
+        </p>
+    </template>
+    <template id="routing_rule_reserve_rule_warning_dest">
+        <p class="alert alert-warning">
+            Warning: this dynamic routing may change moves' operation
+            type to
+            <strong>
+                <span t-esc="dest_picking_type.display_name" />
+            </strong>.
+            This new operation type has reservation rules in
+            <span t-esc="location_common_path" />
+            <t t-if="location_names">
+                , for locations: <span t-esc="location_names" />
+            </t>.
+            <br />
+            The origin operation type
+            <span t-esc="src_picking_type.display_name" />
+            , however, has no
+            reservation rule, which
+            may lead to inconsistencies in the routing.
+        </p>
+    </template>
+</odoo>
