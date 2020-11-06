@@ -10,7 +10,7 @@ class StockRouting(models.Model):
 
     def action_view_source_relocate(self):
         picking_types = self.mapped("picking_type_id")
-        routing = self.env["stock.routing"].search(
+        relocate = self.env["stock.source.relocate"].search(
             [("picking_type_id", "in", picking_types.ids)]
         )
         context = self.env.context
@@ -18,7 +18,7 @@ class StockRouting(models.Model):
             context = dict(context, default_picking_type_id=picking_types.id)
         return {
             "name": _("Source Relocation"),
-            "domain": [("id", "in", routing.ids)],
+            "domain": [("id", "in", relocate.ids)],
             "res_model": "stock.source.relocate",
             "type": "ir.actions.act_window",
             "view_id": False,
