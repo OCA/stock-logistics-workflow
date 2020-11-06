@@ -18,11 +18,11 @@
                     <h1>
                         <field name="location_id" />
                     </h1>
-                    <group>
-                        <group>
+                    <group name="options">
+                        <group name="picking_type">
                             <field name="picking_type_id" />
                         </group>
-                        <group>
+                        <group name="routing_message">
                             <field name="routing_message" nolabel="1" />
                         </group>
                     </group>
@@ -66,6 +66,7 @@
         <field name="arch" type="xml">
             <search string="Dynamic Routing">
                 <field name="location_id" />
+                <field name="picking_type_id" />
                 <separator />
                 <filter
                     string="Archived"
