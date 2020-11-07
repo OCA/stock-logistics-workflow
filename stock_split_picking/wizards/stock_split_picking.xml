@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<record id="view_stock_split_picking" model="ir.ui.view">
+    <field name="model">stock.split.picking</field>
+    <field name="arch" type="xml">
+        <form>
+            <group>
+                <field name="mode" />
+                <field name="picking_ids" invisible="True" />
+                <field name="move_ids" attrs="{'invisible': [('mode', '!=', 'selection')], 'required': [('mode', '=', 'selection')]}" domain="[('picking_id', 'in', picking_ids)]" />
+            </group>
+            <footer>
+                <button name="action_apply" class="btn btn-primary" string="Split" type="object" />
+                or
+                <button special="cancel" class="btn btn-secondary" string="Cancel" />
+            </footer>
+        </form>
+    </field>
+</record>
+
+<act_window
+    id="action_stock_split_picking"
+    res_model="stock.split.picking"
+    src_model="stock.picking"
+    multi="True"
+    target="new"
+    name="Split pickings"
+    view_id="view_stock_split_picking"
+/>
+
+</odoo>

@@ -81,3 +81,37 @@ class TestStockSplitPicking(SavepointCase):
         self.assertAlmostEqual(new_picking.move_lines.product_uom_qty, 6.0)
 
         self.assertEqual(new_picking.state, 'assigned')
+
+    def test_stock_split_picking_wizard_move(self):
+        self.move2 = self.move.copy()
+        self.assertEqual(self.move2.picking_id, self.picking)
+        wizard = self.env['stock.split.picking'].with_context(
+            active_ids=self.picking.ids
+        ).create({
+            'mode': 'move',
+        })
+        wizard.action_apply()
+        self.assertNotEqual(self.move2.picking_id, self.picking)
+        self.assertEqual(self.move.picking_id, self.picking)
+
+    def test_stock_split_picking_wizard_selection(self):
+        self.move2 = self.move.copy()
+        self.assertEqual(self.move2.picking_id, self.picking)
+        wizard = self.env['stock.split.picking'].with_context(
+            active_ids=self.picking.ids
+        ).create({
+            'mode': 'selection',
+            'move_ids': [(6, False, self.move2.ids)],
+        })
+        wizard.action_apply()
+        self.assertNotEqual(self.move2.picking_id, self.picking)
+        self.assertEqual(self.move.picking_id, self.picking)
+
+    def test_stock_picking_split_off_moves(self):
+        with self.assertRaises(UserError):
+            # fails because we can't split off all lines
+            self.picking._split_off_moves(self.picking.move_lines)
+        with self.assertRaises(UserError):
+            # fails because we can't split cancelled pickings
+            self.picking.action_cancel()
+            self.picking._split_off_moves(self.picking.move_lines)
