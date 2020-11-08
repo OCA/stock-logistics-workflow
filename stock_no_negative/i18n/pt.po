@@ -17,6 +17,7 @@ msgstr ""
 "X-Generator: Weblate 3.10\n"
 
 #. module: stock_no_negative
+#: code:addons/stock_no_negative/models/stock_quant.py:38
 #: code:addons/stock_no_negative/models/stock_quant.py:39
 #, python-format
 msgid " lot '%s'"
@@ -76,6 +77,7 @@ msgid "Quants"
 msgstr ""
 
 #. module: stock_no_negative
+#: code:addons/stock_no_negative/models/stock_quant.py:39
 #: code:addons/stock_no_negative/models/stock_quant.py:40
 #, python-format
 msgid ""
