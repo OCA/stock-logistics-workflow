@@ -33,7 +33,10 @@ class StockMove(models.Model):
         is called for a new lines.
         """
         res = super()._action_assign()
-        for line in self:
+        for line in self.filtered(
+            lambda m: m.state
+            in ["confirmed", "assigned", "waiting", "partially_available"]
+        ):
             if (
                 line._should_bypass_reservation()
                 or not line.picking_id.auto_fill_operation
