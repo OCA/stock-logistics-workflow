@@ -1,11 +1,11 @@
 # Copyright 2018 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from odoo import models, api
+from odoo import api, models
 
 
 class StockMove(models.Model):
 
-    _inherit = 'stock.move'
+    _inherit = "stock.move"
 
     @api.multi
     def get_next_moves_to_propagate(self):
@@ -35,7 +35,7 @@ class StockMove(models.Model):
         procurement group all along the chain.
         """
         # Write the group and assign new picking
-        res = self.write({'group_id': group.id, 'picking_id': False})
+        res = self.write({"group_id": group.id, "picking_id": False})
         self._assign_picking()
         # If there are destination move to propagate, propagate proc group
         to_propagate = self.get_next_moves_to_propagate()
@@ -58,12 +58,11 @@ class StockMove(models.Model):
             # Convert qty in dest move uom if needed
             if move.product_uom != dest_move.product_uom:
                 dest_qty = move.product_uom._compute_quantity(
-                    move.product_uom_qty, dest_move.product_uom)
+                    move.product_uom_qty, dest_move.product_uom
+                )
             else:
                 dest_qty = move.product_uom_qty
-            dest_move.write({
-                'product_uom_qty': dest_qty
-            })
+            dest_move.write({"product_uom_qty": dest_qty})
             # Recursive call on destination moves
             dest_move._propagate_quantity_to_dest_moves()
         return True
