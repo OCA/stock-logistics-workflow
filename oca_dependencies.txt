@@ -1,2 +1,3 @@
 product-attribute
 stock-logistics-warehouse
+purchase_line_procurement_group https://github.com/trobz/purchase-workflow.git 13.0-mig-purchase_line_procurement_group

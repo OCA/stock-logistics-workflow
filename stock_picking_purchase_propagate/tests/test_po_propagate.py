@@ -17,7 +17,7 @@ class TestPoPropagate(SavepointCase):
                         "type": "product",
                         "purchase_ok": True,
                         "seller_ids": [
-                            (0, 0, {"name": supplier.id, "min_qty": 1, "price": 1.0,})
+                            (0, 0, {"name": supplier.id, "min_qty": 1, "price": 1.0})
                         ],
                     }
                 )
@@ -234,7 +234,7 @@ class TestPoPropagate(SavepointCase):
                             "picking_type_id": self.internal_picking_type.id,
                             "group_propagation_option": "fixed",
                             "group_id": wh_wh2_pg.id,
-                            "propagate": True,
+                            "propagate_cancel": True,
                         },
                     )
                 ],

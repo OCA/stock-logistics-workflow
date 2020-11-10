@@ -1,13 +1,12 @@
 # Copyright 2018 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from odoo import api, models
+from odoo import models
 
 
 class StockMove(models.Model):
 
     _inherit = "stock.move"
 
-    @api.multi
     def get_next_moves_to_propagate(self):
         """Get the destination moves of self, if self is to propagate and no
         group_id is defined on the dest moves."""
@@ -17,7 +16,7 @@ class StockMove(models.Model):
             INNER JOIN stock_move_move_rel rel
                 ON rel.move_dest_id = dest_mov.id
             INNER JOIN stock_move orig_mov ON rel.move_orig_id = orig_mov.id
-            WHERE orig_mov.propagate = TRUE
+            WHERE orig_mov.propagate_cancel = TRUE
             AND dest_mov.group_id IS NULL
             AND orig_mov.id IN %s;
             """
@@ -25,7 +24,6 @@ class StockMove(models.Model):
         dest_moves_ids = [x[0] for x in self.env.cr.fetchall()]
         return self.browse(dest_moves_ids)
 
-    @api.multi
     def _propagate_procurement_group(self, group):
         """Write group to self and propagate group to dest moves where
         propagate is True.
@@ -44,11 +42,10 @@ class StockMove(models.Model):
             to_propagate._propagate_procurement_group(group)
         return res
 
-    @api.multi
     def _propagate_quantity_to_dest_moves(self):
         """Propagate the quantity if propagate and only one dest move."""
         for move in self:
-            if not move.propagate:
+            if not move.propagate_cancel:
                 continue
             dest_move = move.move_dest_ids
             # Stop propagation of qty if multiple dest moves
