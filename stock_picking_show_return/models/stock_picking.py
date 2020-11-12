@@ -34,3 +34,17 @@ class StockPicking(models.Model):
     def action_show_source_picking(self):
         """ Open source picking form action """
         return self.source_picking_id.get_formview_action()
+
+    def action_show_return_picking(self):
+        """ Open return form action """
+        action = self.env.ref('stock.action_picking_tree_all')
+        result = action.read()[0]
+        result['context'] = {}
+        pick_ids = self.returned_ids
+        if not pick_ids or len(pick_ids) > 1:
+            result['domain'] = "[('id','in',%s)]" % (pick_ids.ids)
+        elif len(pick_ids) == 1:
+            res = self.env.ref('stock.view_picking_form', False)
+            result['views'] = [(res and res.id or False, 'form')]
+            result['res_id'] = pick_ids.id
+        return result

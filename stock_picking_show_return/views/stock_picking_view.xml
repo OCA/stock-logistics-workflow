@@ -19,6 +19,13 @@
                         <span class="o_stat_text">Source picking</span>
                     </div>
                 </button>
+                <button name="action_show_return_picking" type="object" class="oe_stat_button"
+                        icon="fa fa-fw o_button_icon fa-truck"
+                        attrs="{'invisible': [('returned_ids', '=', [])]}">
+                    <div class="o_form_field o_stat_info">
+                        <span class="o_stat_text">Return pickings</span>
+                    </div>
+                </button>
             </div>
         </field>
     </record>
