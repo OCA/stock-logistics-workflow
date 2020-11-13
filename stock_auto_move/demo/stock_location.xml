@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2014-2015 NDP Systèmes (<https://www.ndp-systemes.fr>)
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="stock_location_a" model="stock.location">
+        <field name="name">Location 1</field>
+        <field name="location_id" ref="stock.stock_location_locations" />
+        <field name="active">1</field>
+        <field name="usage">internal</field>
+    </record>
+    <record id="stock_location_b" model="stock.location">
+        <field name="name">Location 2</field>
+        <field name="location_id" ref="stock.stock_location_locations" />
+        <field name="active">1</field>
+        <field name="usage">internal</field>
+    </record>
+    <record id="stock_location_c" model="stock.location">
+        <field name="name">Location 3</field>
+        <field name="location_id" ref="stock.stock_location_locations" />
+        <field name="active">1</field>
+        <field name="usage">internal</field>
+    </record>
+</odoo>
