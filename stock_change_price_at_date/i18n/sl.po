@@ -6,7 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2020-11-13 20:36+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@matmoz.si>\n"
 "Language-Team: none\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
@@ -14,34 +15,37 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
 "n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: stock_change_price_at_date
 #: model:ir.model,name:stock_change_price_at_date.model_stock_change_standard_price
 msgid "Change Standard Price"
-msgstr ""
+msgstr "Spremeni standardno ceno"
 
 #. module: stock_change_price_at_date
 #: model:ir.model.fields,field_description:stock_change_price_at_date.field_stock_change_standard_price__date
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #. module: stock_change_price_at_date
 #: model:ir.model,name:stock_change_price_at_date.model_account_move
 msgid "Journal Entries"
-msgstr ""
+msgstr "Dnevniški vnosi"
 
 #. module: stock_change_price_at_date
 #: model:ir.model,name:stock_change_price_at_date.model_product_product
 msgid "Product"
-msgstr ""
+msgstr "Proizvod"
 
 #. module: stock_change_price_at_date
 #: code:addons/stock_change_price_at_date/wizards/stock_change_standard_price.py:42
 #, python-format
 msgid "The chosen date should be today or in the past!"
-msgstr ""
+msgstr "Izbrani datum mora biti današnji ali pretekli!"
 
 #. module: stock_change_price_at_date
 #: model:ir.model.fields,help:stock_change_price_at_date.field_stock_change_standard_price__date
 msgid "The date used to create account moves. If empty, assumes today.Cannot be a date in the future."
 msgstr ""
+"Datum, ki se uporabi za ustvarjanje računovodskih vknjižb. Če prazno, se "
+"predpostavlja današnji. Ne more biti datum v prihodnosti."
