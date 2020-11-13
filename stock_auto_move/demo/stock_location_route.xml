@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2014-2015 NDP Systèmes (<https://www.ndp-systemes.fr>)
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="stock.location.route" id="test_route">
+        <field name="name">Test route</field>
+        <field name="active">1</field>
+        <field name="sequence">20</field>
+        <field name="product_categ_selectable" />
+        <field name="product_selectable">1</field>
+        <field name="company_id" />
+    </record>
+</odoo>
