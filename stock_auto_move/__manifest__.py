@@ -1,17 +1,25 @@
-# Copyright 2014 NDP Systèmes (<http://www.ndp-systemes.fr>)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# Copyright 2014 NDP Systèmes (<https://www.ndp-systemes.fr>)
+# Copyright 2020 ACSONE SA/NV (<https://acsone.eu>)
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 {
     "name": "Automatic Move Processing",
-    "version": "10.0.1.0.0",
-    "author": "NDP Systèmes, Odoo Community Association (OCA)",
+    "version": "13.0.1.0.0",
+    "author": "NDP Systèmes, ACSONE SA/NV, Odoo Community Association (OCA)",
     "category": "Warehouse",
-    "website": "http://www.ndp-systemes.fr",
+    "development_status": "Production/Stable",
+    "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": ["stock"],
-    "data": ["data/stock_auto_move_data.xml", "views/stock_auto_move_view.xml",],
-    "demo": ["demo/stock_auto_move_demo.xml",],
+    "data": [
+        "data/procurement_group.xml",
+        "views/stock_move.xml",
+        "views/stock_rule.xml",
+    ],
+    "demo": [
+        "demo/stock_location.xml",
+        "demo/stock_location_route.xml",
+        "demo/stock_rule.xml",
+    ],
     "installable": True,
-    "auto_install": False,
     "license": "AGPL-3",
-    "application": False,
 }
