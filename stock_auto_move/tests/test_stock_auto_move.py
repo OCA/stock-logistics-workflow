@@ -149,39 +149,46 @@ class TestStockAutoMove(SavepointCase):
             The second step movement should be processed automatically
             after processing the first movement.
         """
-        warehouse = self.env.ref('stock.warehouse0')
-        warehouse.reception_steps = 'two_steps'
-        warehouse.reception_route_id.push_ids.auto_move = True
+        warehouse = self.env.ref("stock.warehouse0")
+        warehouse.reception_steps = "two_steps"
+        warehouse.reception_route_id.rule_ids.auto_move = True
         warehouse.int_type_id.use_create_lots = False
         warehouse.int_type_id.use_existing_lots = True
 
-        picking = self.env['stock.picking'].with_context(
-            default_picking_type_id=warehouse.in_type_id.id).create({
-                'partner_id': self.env.ref('base.res_partner_1').id,
-                'picking_type_id': warehouse.in_type_id.id,
-                'group_id': self.auto_group_id,
-                'location_id':
-                self.env.ref('stock.stock_location_suppliers').id})
+        picking = (
+            self.env["stock.picking"]
+            .with_context(default_picking_type_id=warehouse.in_type_id.id)
+            .create(
+                {
+                    "partner_id": self.env.ref("base.res_partner_1").id,
+                    "picking_type_id": warehouse.in_type_id.id,
+                    "group_id": self.auto_group_id,
+                    "location_id": self.env.ref("stock.stock_location_suppliers").id,
+                }
+            )
+        )
 
-        move1 = self.env["stock.move"].create({
-            'name': "Supply source location for test",
-            'product_id': self.product_a1232.id,
-            'product_uom': self.product_uom_unit_id,
-            'product_uom_qty': 2,
-            'picking_id': picking.id,
-            'location_id': self.env.ref('stock.stock_location_suppliers').id,
-            'location_dest_id': warehouse.wh_input_stock_loc_id.id,
-            'picking_type_id': warehouse.in_type_id.id,
-        })
+        move1 = self.env["stock.move"].create(
+            {
+                "name": "Supply source location for test",
+                "product_id": self.product_a1232.id,
+                "product_uom": self.product_uom_unit_id,
+                "product_uom_qty": 2,
+                "picking_id": picking.id,
+                "location_id": self.env.ref("stock.stock_location_suppliers").id,
+                "location_dest_id": warehouse.wh_input_stock_loc_id.id,
+                "picking_type_id": warehouse.in_type_id.id,
+            }
+        )
         picking.action_confirm()
-        self.assertTrue(picking.pack_operation_ids)
-        self.assertEqual(len(picking.pack_operation_ids), 1)
-        picking.pack_operation_ids.qty_done = 2
-        picking.do_transfer()
-        self.assertTrue(move1.move_dest_id)
+        self.assertTrue(picking.move_line_ids)
+        self.assertEqual(len(picking.move_line_ids), 1)
+        picking.move_line_ids.qty_done = 2
+        picking.action_done()
+        self.assertTrue(move1.move_dest_ids)
 
-        self.assertTrue(move1.move_dest_id.auto_move)
-        self.assertEqual(move1.move_dest_id.state, 'done')
+        self.assertTrue(move1.move_dest_ids.auto_move)
+        self.assertEqual(move1.move_dest_ids.state, "done")
 
     def test_50_partial_chained_auto_move(self):
         """
@@ -195,58 +202,71 @@ class TestStockAutoMove(SavepointCase):
             The second step movement should be processed automatically
             and a back order is created.
         """
-        warehouse = self.env.ref('stock.warehouse0')
-        warehouse.reception_steps = 'two_steps'
-        warehouse.reception_route_id.push_ids.auto_move = True
+        warehouse = self.env.ref("stock.warehouse0")
+        warehouse.reception_steps = "two_steps"
+        warehouse.reception_route_id.rule_ids.auto_move = True
         warehouse.int_type_id.use_create_lots = False
         warehouse.int_type_id.use_existing_lots = True
 
-        picking = self.env['stock.picking'].with_context(
-            default_picking_type_id=warehouse.in_type_id.id).create({
-                'partner_id': self.env.ref('base.res_partner_1').id,
-                'picking_type_id': warehouse.in_type_id.id,
-                'group_id': self.auto_group_id,
-                'location_id':
-                self.env.ref('stock.stock_location_suppliers').id})
+        picking = (
+            self.env["stock.picking"]
+            .with_context(default_picking_type_id=warehouse.in_type_id.id)
+            .create(
+                {
+                    "partner_id": self.env.ref("base.res_partner_1").id,
+                    "picking_type_id": warehouse.in_type_id.id,
+                    "group_id": self.auto_group_id,
+                    "location_id": self.env.ref("stock.stock_location_suppliers").id,
+                }
+            )
+        )
 
-        move1 = self.env["stock.move"].create({
-            'name': "Supply source location for test",
-            'product_id': self.product_a1232.id,
-            'product_uom': self.product_uom_unit_id,
-            'product_uom_qty': 2,
-            'picking_id': picking.id,
-            'location_id': self.env.ref('stock.stock_location_suppliers').id,
-            'location_dest_id': warehouse.wh_input_stock_loc_id.id,
-            'picking_type_id': warehouse.in_type_id.id,
-        })
+        move1 = self.env["stock.move"].create(
+            {
+                "name": "Supply source location for test",
+                "product_id": self.product_a1232.id,
+                "product_uom": self.product_uom_unit_id,
+                "product_uom_qty": 2,
+                "picking_id": picking.id,
+                "location_id": self.env.ref("stock.stock_location_suppliers").id,
+                "location_dest_id": warehouse.wh_input_stock_loc_id.id,
+                "picking_type_id": warehouse.in_type_id.id,
+            }
+        )
         picking.action_confirm()
-        self.assertTrue(picking.pack_operation_ids)
-        self.assertEqual(len(picking.pack_operation_ids), 1)
-        picking.pack_operation_ids.qty_done = 1
-        picking.pack_operation_ids.product_qty = 1
-        picking.do_transfer()
+        self.assertTrue(picking.move_line_ids)
+        self.assertEqual(len(picking.move_line_ids), 1)
+        picking.move_line_ids.qty_done = 1
+        picking.move_line_ids.product_uom_qty = 1
+        picking.action_done()
 
-        self.assertTrue(move1.move_dest_id)
-        self.assertEqual(len(move1.move_dest_id), 1)
+        # As move_dest_ids include backorders
+        self.assertEqual(len(move1.move_dest_ids), 2)
 
-        self.assertTrue(move1.move_dest_id.auto_move)
-        self.assertEqual(move1.move_dest_id.state, 'done')
+        self.assertTrue(move1.move_dest_ids.mapped("auto_move"))
+        move_done = move1.move_dest_ids.filtered(
+            lambda m: not m.picking_id.backorder_id
+        )
+        self.assertEqual(move_done.state, "done")
+
+        move_back = move1.move_dest_ids.filtered("picking_id.backorder_id")
+        self.assertEqual(move_back.state, "waiting")
 
         # look up for the back order created
-        back_order = self.env['stock.picking'].search(
-            [('backorder_id', '=', picking.id)])
+        back_order = self.env["stock.picking"].search(
+            [("backorder_id", "=", picking.id)]
+        )
         self.assertTrue(back_order)
         self.assertEqual(len(back_order), 1)
 
-        back_order.pack_operation_ids.qty_done = 1
-        back_order.do_transfer()
+        back_order.move_line_ids.qty_done = 1
+        back_order.action_done()
 
         move2 = back_order.move_lines
-        self.assertTrue(move2.move_dest_id)
-        self.assertEqual(len(move2.move_dest_id), 1)
+        self.assertEqual(len(move2.move_dest_ids), 2)
 
-        self.assertTrue(move2.move_dest_id.auto_move)
-        self.assertEqual(move2.move_dest_id.state, 'done')
+        self.assertEquals(move2.move_dest_ids.mapped("auto_move"), [True, True])
+        self.assertEqual(move2.move_dest_ids.mapped("state"), ["done", "done"])
 
     def test_60_partial_chained_auto_move(self):
         """
@@ -262,66 +282,77 @@ class TestStockAutoMove(SavepointCase):
             and a back order is created with the product that is not set as an
             auto move.
         """
-        warehouse = self.env.ref('stock.warehouse0')
-        warehouse.reception_steps = 'two_steps'
-        warehouse.reception_route_id.push_ids.auto_move = True
+        warehouse = self.env.ref("stock.warehouse0")
+        warehouse.reception_steps = "two_steps"
+        warehouse.reception_route_id.rule_ids.auto_move = True
         warehouse.int_type_id.use_create_lots = False
         warehouse.int_type_id.use_existing_lots = True
 
-        picking = self.env['stock.picking'].with_context(
-            default_picking_type_id=warehouse.in_type_id.id).create({
-                'partner_id': self.env.ref('base.res_partner_1').id,
-                'picking_type_id': warehouse.in_type_id.id,
-                'group_id': self.auto_group_id,
-                'location_id':
-                self.env.ref('stock.stock_location_suppliers').id})
+        picking = (
+            self.env["stock.picking"]
+            .with_context(default_picking_type_id=warehouse.in_type_id.id)
+            .create(
+                {
+                    "partner_id": self.env.ref("base.res_partner_1").id,
+                    "picking_type_id": warehouse.in_type_id.id,
+                    "group_id": self.auto_group_id,
+                    "location_id": self.env.ref("stock.stock_location_suppliers").id,
+                }
+            )
+        )
 
-        move1 = self.env["stock.move"].create({
-            'name': "Supply source location for test",
-            'product_id': self.product_a1232.id,
-            'product_uom': self.product_uom_unit_id,
-            'product_uom_qty': 2,
-            'picking_id': picking.id,
-            'location_id': self.env.ref('stock.stock_location_suppliers').id,
-            'location_dest_id': warehouse.wh_input_stock_loc_id.id,
-            'picking_type_id': warehouse.in_type_id.id,
-        })
+        move1 = self.env["stock.move"].create(
+            {
+                "name": "Supply source location for test",
+                "product_id": self.product_a1232.id,
+                "product_uom": self.product_uom_unit_id,
+                "product_uom_qty": 2,
+                "picking_id": picking.id,
+                "location_id": self.env.ref("stock.stock_location_suppliers").id,
+                "location_dest_id": warehouse.wh_input_stock_loc_id.id,
+                "picking_type_id": warehouse.in_type_id.id,
+            }
+        )
 
-        move2 = self.env["stock.move"].create({
-            'name': "Supply source location for test",
-            'product_id': self.product_2.id,
-            'product_uom': self.product_uom_unit_id,
-            'product_uom_qty': 2,
-            'picking_id': picking.id,
-            'location_id': self.env.ref('stock.stock_location_suppliers').id,
-            'location_dest_id': warehouse.wh_input_stock_loc_id.id,
-            'picking_type_id': warehouse.in_type_id.id,
-        })
+        move2 = self.env["stock.move"].create(
+            {
+                "name": "Supply source location for test",
+                "product_id": self.product_2.id,
+                "product_uom": self.product_uom_unit_id,
+                "product_uom_qty": 2,
+                "picking_id": picking.id,
+                "location_id": self.env.ref("stock.stock_location_suppliers").id,
+                "location_dest_id": warehouse.wh_input_stock_loc_id.id,
+                "picking_type_id": warehouse.in_type_id.id,
+            }
+        )
 
         picking.action_confirm()
-        self.assertTrue(move1.move_dest_id.auto_move)
-        self.assertTrue(move2.move_dest_id.auto_move)
-        second_step_picking = move2.move_dest_id.picking_id
-        move2.move_dest_id.auto_move = False
+        self.assertTrue(move1.move_dest_ids.auto_move)
+        self.assertTrue(move2.move_dest_ids.auto_move)
+        second_step_picking = move2.move_dest_ids.picking_id
+        move2.move_dest_ids.auto_move = False
 
         # do partial reception of the first picking
-        move1.linked_move_operation_ids.operation_id.qty_done = 2
-        move1.linked_move_operation_ids.operation_id.product_qty = 2
+        move1.move_line_ids.qty_done = 2
+        move1.move_line_ids.product_uom_qty = 2
 
-        move2.linked_move_operation_ids.operation_id.qty_done = 1
-        move2.linked_move_operation_ids.operation_id.product_qty = 1
+        move2.move_line_ids.qty_done = 1
+        move2.move_line_ids.product_uom_qty = 1
 
-        picking.do_transfer()
+        picking.action_done()
 
-        second_step_back_order = self.env['stock.picking'].search(
-            [('backorder_id', '=', second_step_picking.id)])
+        second_step_back_order = self.env["stock.picking"].search(
+            [("backorder_id", "=", second_step_picking.id)]
+        )
 
-        self.assertEqual(second_step_picking.state, 'done')
+        self.assertEqual(second_step_picking.state, "done")
         self.assertEqual(len(second_step_picking.move_lines), 1)
-        self.assertEqual(len(second_step_picking.pack_operation_ids), 1)
+        self.assertEqual(len(second_step_picking.move_line_ids), 1)
 
-        self.assertEqual(len(second_step_back_order.move_lines), 2)
-        self.assertTrue(second_step_back_order.move_lines.filtered(
-            lambda m: m.state == 'assigned'))
-        self.assertTrue(second_step_back_order.move_lines.filtered(
-            lambda m: m.state == 'waiting'))
+        self.assertEqual(len(second_step_back_order.move_lines), 1)
+        self.assertTrue(
+            second_step_back_order.move_lines.filtered(
+                lambda m: m.state == "partially_available"
+            )
+        )
