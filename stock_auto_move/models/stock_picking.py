@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -7,7 +6,7 @@ from odoo import api, models
 
 class StockPicking(models.Model):
 
-    _inherit = 'stock.picking'
+    _inherit = "stock.picking"
 
     @api.model
     def _transfer_pickings_with_auto_move(self, auto_moves_by_pickings):
@@ -17,18 +16,31 @@ class StockPicking(models.Model):
         @params auto_moves_by_pickings: dict of moves grouped by pickings
         {stock.picking(id): stock.move(id1, id2, id3 ...), ...}
         """
+        backorder_obj = self.env["stock.backorder.confirmation"]
+        immediate_obj = self.env["stock.immediate.transfer"]
         for picking in auto_moves_by_pickings:
-            if len(picking.move_lines) != len(auto_moves_by_pickings[picking]):
-                # Create a back order for remaning moves
-                backorder_moves = \
-                    picking.move_lines - auto_moves_by_pickings[picking]
-                picking._create_backorder(backorder_moves=backorder_moves)
-
             # Create immediate transfer wizard so it will fill the qty_done
             # on the auto move linked operation
-            picking.do_prepare_partial()
-            wizard = self.env['stock.immediate.transfer'].create(
-                {'pick_id': picking.id})
-            wizard.process()
+            immediate_wizard_dict = picking.button_validate()
+            if (
+                isinstance(immediate_wizard_dict, dict)
+                and "res_model" in immediate_wizard_dict
+                and "stock.immediate.transfer" == immediate_wizard_dict.get("res_model")
+            ):
+                immediate_wizard = immediate_obj.browse(
+                    immediate_wizard_dict.get("res_id")
+                )
+                backorder_wizard_dict = immediate_wizard.process()
+                if (
+                    isinstance(backorder_wizard_dict, dict)
+                    and "res_model" in backorder_wizard_dict
+                    and "stock.backorder.confirmation"
+                    == backorder_wizard_dict.get("res_model")
+                ):
+                    backorder_wizard = backorder_obj.browse(
+                        backorder_wizard_dict.get("res_id")
+                    )
+                    if backorder_wizard:
+                        backorder_wizard.process()
 
         return
