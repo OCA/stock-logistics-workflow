@@ -12,7 +12,8 @@ class StockLocationPath(models.Model):
         help="If this option is selected, the generated moves will be "
              "automatically processed as soon as the products are available. "
              "This can be useful for situations with chained moves where we "
-             "do not want an operator action."
+             "do not want an operator action.",
+        oldname="auto_confirm",
     )
 
     @api.model
