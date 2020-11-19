@@ -4,8 +4,6 @@ from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools import float_compare, float_is_zero
 
-from odoo.addons import decimal_precision as dp
-
 
 class StockReturnRequest(models.Model):
     _name = "stock.return.request"
@@ -87,7 +85,7 @@ class StockReturnRequest(models.Model):
         default="draft",
         readonly=True,
         copy=False,
-        track_visibility="onchange",
+        tracking=True,
     )
     returned_picking_ids = fields.One2many(
         comodel_name="stock.picking",
@@ -153,6 +151,7 @@ class StockReturnRequest(models.Model):
     def _compute_show_to_refund(self):
         for one in self:
             if "to_refund" not in self.env["stock.move"]._fields:
+                one.show_to_refund = False
                 continue
             one.show_to_refund = True
 
@@ -355,7 +354,7 @@ class StockReturnRequest(models.Model):
             one._action_validate()
 
     def _action_validate(self):
-        self.returned_picking_ids.action_done()
+        self.returned_picking_ids._action_done()
         self.state = "done"
 
     def action_cancel_to_draft(self):
@@ -431,12 +430,12 @@ class StockReturnRequestLine(models.Model):
     )
     quantity = fields.Float(
         string="Quantiy to return",
-        digits=dp.get_precision("Product Unit of Measure"),
+        digits="Product Unit of Measure",
         required=True,
     )
     max_quantity = fields.Float(
         string="Maximum available quantity",
-        digits=dp.get_precision("Product Unit of Measure"),
+        digits="Product Unit of Measure",
         readonly=True,
     )
     returnable_move_ids = fields.Many2many(

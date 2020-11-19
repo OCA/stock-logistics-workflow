@@ -126,14 +126,16 @@
         </t>
     </template>
 
-    <report
-        string="Stock Return Request Report"
-        id="action_report_stock_return_request"
-        model="stock.return.request"
-        report_type="qweb-pdf"
-        name="stock_return_request.report_stock_return_request"
-        file="stock_return_request.report_stock_return_request"
-        menu="False"
-    />
+    <record id="action_report_stock_return_request" model="ir.actions.report">
+        <field name="name">Stock Return Request Report</field>
+        <field name="model">report.stock.card.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field
+            name="report_name"
+        >stock_return_request.report_stock_return_request</field>
+        <field
+            name="report_file"
+        >stock_return_request.report_stock_return_request</field>
+    </record>
 
 </odoo>
