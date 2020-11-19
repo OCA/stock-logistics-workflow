@@ -11,29 +11,36 @@ class StockReturnRequestCase(SavepointCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.product_obj = cls.env["product.product"]
+        cls.product_obj2 = cls.env["product.product"]
+        cls.product_obj3 = cls.env["product.product"]
+        cls.company = cls.env.ref("base.main_company")
         cls.prod_1 = cls.product_obj.create(
             {
                 "name": "Test Product 1",
                 "type": "product",
+                "company_id": cls.company.id,
             }
         )
-        cls.prod_2 = cls.prod_1.copy(
+        cls.prod_2 = cls.product_obj2.create(
             {
                 "name": "Test Product 2",
                 "type": "product",
+                "company_id": cls.company.id,
             }
         )
-        cls.prod_3 = cls.prod_1.copy(
+        cls.prod_3 = cls.product_obj3.create(
             {
                 "name": "Test Product 3",
                 "type": "product",
                 "tracking": "lot",
+                "company_id": cls.company.id,
             }
         )
         cls.prod_3_lot1 = cls.env["stock.production.lot"].create(
             {
                 "name": "TSTPROD3LOT0001",
                 "product_id": cls.prod_3.id,
+                "company_id": cls.company.id,
             }
         )
         cls.prod_3_lot2 = cls.prod_3_lot1.copy(
@@ -50,6 +57,7 @@ class StockReturnRequestCase(SavepointCase):
             {
                 "name": "TEST WH1",
                 "code": "TST1",
+                "company_id": cls.company.id,
             }
         )
         # Locations (WH1 locations are created automatically)
@@ -58,12 +66,14 @@ class StockReturnRequestCase(SavepointCase):
             {
                 "name": "Test supplier location",
                 "usage": "supplier",
+                "company_id": cls.company.id,
             }
         )
         cls.customer_loc = location_obj.create(
             {
                 "name": "Test customer location",
                 "usage": "customer",
+                "company_id": cls.company.id,
             }
         )
         # Create child locations
@@ -71,12 +81,14 @@ class StockReturnRequestCase(SavepointCase):
             {
                 "location_id": cls.wh1.lot_stock_id.id,
                 "name": "Location child 1",
+                "company_id": cls.company.id,
             }
         )
         cls.location_child_2 = location_obj.create(
             {
                 "location_id": cls.wh1.lot_stock_id.id,
                 "name": "Location child 2",
+                "company_id": cls.company.id,
             }
         )
         # Create partners
@@ -85,6 +97,7 @@ class StockReturnRequestCase(SavepointCase):
                 "name": "Mr. Odoo",
                 "property_stock_supplier": cls.supplier_loc.id,
                 "property_stock_customer": cls.customer_loc.id,
+                "company_id": cls.company.id,
             }
         )
         cls.partner_supplier = cls.env["res.partner"].create(
@@ -92,6 +105,7 @@ class StockReturnRequestCase(SavepointCase):
                 "name": "Mrs. OCA",
                 "property_stock_supplier": cls.supplier_loc.id,
                 "property_stock_customer": cls.customer_loc.id,
+                "company_id": cls.company.id,
             }
         )
         # Create deliveries and receipts orders to have a history
@@ -102,6 +116,7 @@ class StockReturnRequestCase(SavepointCase):
                 "location_id": cls.supplier_loc.id,
                 "location_dest_id": cls.wh1.lot_stock_id.id,
                 "partner_id": cls.partner_supplier.id,
+                "company_id": cls.company.id,
                 "picking_type_id": cls.wh1.in_type_id.id,
                 "move_lines": [
                     (
@@ -196,10 +211,10 @@ class StockReturnRequestCase(SavepointCase):
                 ],
             }
         )
-        move3.qty_done = 30
+        move3.quantity_done = 30
         cls.picking_supplier_1.action_confirm()
         cls.picking_supplier_1.action_assign()
-        cls.picking_supplier_1.action_done()
+        cls.picking_supplier_1._action_done()
         cls.picking_supplier_2 = cls.picking_supplier_1.copy(
             {
                 "move_lines": [
@@ -260,10 +275,10 @@ class StockReturnRequestCase(SavepointCase):
                 ],
             }
         )
-        move3.qty_done = 30
+        move3.quantity_done = 70
         cls.picking_supplier_2.action_confirm()
         cls.picking_supplier_2.action_assign()
-        cls.picking_supplier_2.action_done()
+        cls.picking_supplier_2._action_done()
         # Test could run so fast that the move lines date would be in the same
         # second. We need to sort them by date, so we'll be faking the line
         # dates after the picking is done.
@@ -276,6 +291,7 @@ class StockReturnRequestCase(SavepointCase):
             {
                 "location_id": cls.wh1.lot_stock_id.id,
                 "location_dest_id": cls.customer_loc.id,
+                "company_id": cls.company.id,
                 "partner_id": cls.partner_customer.id,
                 "picking_type_id": cls.wh1.out_type_id.id,
                 "move_lines": [
@@ -306,7 +322,7 @@ class StockReturnRequestCase(SavepointCase):
         )
         cls.picking_customer_1.action_confirm()
         cls.picking_customer_1.action_assign()
-        cls.picking_customer_1.action_done()
+        cls.picking_customer_1._action_done()
         cls.picking_customer_2 = cls.picking_customer_1.copy(
             {
                 "move_lines": [
@@ -337,7 +353,7 @@ class StockReturnRequestCase(SavepointCase):
         )
         cls.picking_customer_2.action_confirm()
         cls.picking_customer_2.action_assign()
-        cls.picking_customer_2.action_done()
+        cls.picking_customer_2._action_done()
         # Test could run so fast that the move lines date would be in the same
         # second. We need to sort them by date, so we'll be faking the line
         # dates after the picking is done.
