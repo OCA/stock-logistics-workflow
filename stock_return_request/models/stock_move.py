@@ -2,14 +2,12 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo import api, fields, models
 
-from odoo.addons import decimal_precision as dp
-
 
 class StockMove(models.Model):
     _inherit = "stock.move"
 
     qty_returnable = fields.Float(
-        digits=dp.get_precision("Product Unit of Measure"),
+        digits="Product Unit of Measure",
         string="Returnable Quantity",
         compute="_compute_qty_returnable",
         readonly=True,
