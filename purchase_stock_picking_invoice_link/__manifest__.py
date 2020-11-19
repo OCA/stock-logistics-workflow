@@ -3,7 +3,7 @@
 
 {
     'name': 'Purchase Stock Picking Invoice Link',
-    'version': '11.0.1.0.0',
+    'version': '12.0.1.0.0',
     'category': 'Warehouse Management',
     'summary': 'Adds link between purchases, pickings and invoices',
     'author': 'Tecnativa, '
