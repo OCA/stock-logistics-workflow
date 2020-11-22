@@ -51,7 +51,6 @@ msgstr ""
 #. module: stock_picking_backorder_strategy
 #: model:ir.model,name:stock_picking_backorder_strategy.model_stock_picking_type
 #, fuzzy
-#| msgid "Picking List"
 msgid "Picking Type"
 msgstr "Toplama Listesi"
 
