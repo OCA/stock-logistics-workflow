@@ -23,7 +23,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__picking_count
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
 #, fuzzy
-#| msgid "Pickings"
 msgid "# Pickings"
 msgstr "Kommissionierscheine"
 
