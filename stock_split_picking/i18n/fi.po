@@ -99,7 +99,6 @@ msgstr ""
 #. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking__picking_ids
 #, fuzzy
-#| msgid "Picking List"
 msgid "Picking"
 msgstr "Keräilylista"
 
