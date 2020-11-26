@@ -89,6 +89,10 @@
         >
             <attribute name="t-if">move_line.product_id</attribute>
         </xpath>
+        <!-- Remove "All items could not be shipped..." sentence -->
+        <xpath expr='//div[hasclass("page")]/p[last()]' position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
     </template>
     <template
         id="report_delivery_document_inherit_sale_stock"
