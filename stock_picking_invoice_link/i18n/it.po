@@ -91,6 +91,7 @@ msgstr "Trasferisci"
 
 #. module: stock_picking_invoice_link
 #: code:addons/stock_picking_invoice_link/models/stock_move.py:34
+#: code:addons/stock_picking_invoice_link/models/stock_move.py:35
 #, python-format
 msgid "You can not modify an invoiced stock move"
 msgstr ""

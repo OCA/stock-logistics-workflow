@@ -11,8 +11,8 @@ msgstr ""
 "POT-Creation-Date: 2017-06-15 11:08+0000\n"
 "PO-Revision-Date: 2020-06-23 03:19+0000\n"
 "Last-Translator: Fernando Colus <fcolus1@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
-"23907/pt_BR/)\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/"
+"teams/23907/pt_BR/)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -97,6 +97,7 @@ msgstr "Transferência"
 
 #. module: stock_picking_invoice_link
 #: code:addons/stock_picking_invoice_link/models/stock_move.py:34
+#: code:addons/stock_picking_invoice_link/models/stock_move.py:35
 #, python-format
 msgid "You can not modify an invoiced stock move"
 msgstr "Você não pode modificar uma movimentação de estoque faturada"
