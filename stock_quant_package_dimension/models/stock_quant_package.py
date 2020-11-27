@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2019 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 from odoo import api, fields, models
@@ -12,7 +13,7 @@ class StockQuantPackage(models.Model):
     width = fields.Integer("Width (mm)", help="width in millimeters")
     height = fields.Integer("Height (mm)", help="height in millimeters")
     volume = fields.Float(
-        "Volume (m³)",
+        u"Volume (m³)",
         digits=(8, 4),
         compute="_compute_volume",
         readonly=True,
@@ -27,11 +28,11 @@ class StockQuantPackage(models.Model):
 
     def auto_assign_packaging(self):
         self = self.with_context(_auto_assign_packaging=True)
-        res = super().auto_assign_packaging()
+        res = super(StockQuantPackage, self).auto_assign_packaging()
         return res
 
     def write(self, vals):
-        res = super().write(vals)
+        res = super(StockQuantPackage, self).write(vals)
         if self.env.context.get("_auto_assign_packaging") and vals.get(
             "product_packaging_id"
         ):

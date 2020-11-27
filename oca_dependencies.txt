@@ -1,3 +1,5 @@
 product-attribute
 stock-logistics-warehouse
 webkit-tools
+# PR https://github.com/OCA/product-attribute/pull/695
+product_packaging_dimension https://github.com/acsone/product-attribute.git 10.0-backport-product-_packaging_dimension-lmi
