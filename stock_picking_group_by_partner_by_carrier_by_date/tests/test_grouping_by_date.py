@@ -14,6 +14,7 @@ class TestGroupByDateBase(SavepointCase):
         cls.product = cls.env.ref("product.product_product_9")
         cls.warehouse = cls.env.ref("stock.warehouse0")
         cls.warehouse.out_type_id.group_pickings = True
+        cls.warehouse.out_type_id.group_pickings_by_date = True
 
     def _create_order(self, partner=None):
         order = self.env["sale.order"].create(

@@ -9,21 +9,20 @@ class StockMove(models.Model):
 
     def _domain_search_picking_for_assignation(self):
         domain = super()._domain_search_picking_for_assignation()
-        cutoff_domain = self._domain_search_picking_for_assignation_cutoff()
-        domain.extend(cutoff_domain)
+        by_date_domain = self._domain_search_picking_for_assignation_by_date()
+        domain.extend(by_date_domain)
         return domain
 
-    def _skip_search_picking_for_assignation_cutoff(self):
+    def _skip_search_picking_for_assignation_by_date(self):
         return (
-            # TODO: consider making this configurable on the picking type
-            self.picking_type_id.code != "outgoing"
+            not self.picking_type_id.group_pickings_by_date
             or not self.picking_type_id.group_pickings
             or self.group_id.sale_id.picking_policy == "one"
         )
 
-    def _domain_search_picking_for_assignation_cutoff(self):
+    def _domain_search_picking_for_assignation_by_date(self):
         domain = []
-        if self._skip_search_picking_for_assignation_cutoff():
+        if self._skip_search_picking_for_assignation_by_date():
             return domain
         date_planned = self.date_expected
         date_planned_end = date_planned.replace(hour=23, minute=59, second=59)
