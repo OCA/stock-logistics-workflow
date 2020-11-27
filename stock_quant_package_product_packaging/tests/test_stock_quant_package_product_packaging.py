@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2020 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 from odoo.tests import SavepointCase
@@ -6,7 +7,7 @@ from odoo.tests import SavepointCase
 class TestStockQuantPackageProductPackaging(SavepointCase):
     @classmethod
     def setUpClass(cls):
-        super().setUpClass()
+        super(TestStockQuantPackageProductPackaging, cls).setUpClass()
         cls.receipt_picking_type = cls.env.ref("stock.picking_type_in")
         # show_reserved must be set here because it changes the behaviour of
         # put_in_pack operation:
@@ -15,9 +16,11 @@ class TestStockQuantPackageProductPackaging(SavepointCase):
         #   stock.picking.move_line_nosuggest_ids
         cls.receipt_picking_type.show_reserved = True
         cls.product = cls.env.ref("product.product_delivery_02")
-        cls.packaging = cls.env["product.packaging"].create(
-            {"name": "10 pack", "product_id": cls.product.id, "qty": 10}
-        )
+        cls.packaging = cls.env["product.packaging"].create({
+            "name": "10 pack",
+            "product_tmpl_id": cls.product.product_tmpl_id.id,
+            "qty": 10
+        })
 
     def test_auto_assign_packaging(self):
         location_dest = self.receipt_picking_type.default_location_dest_id
@@ -48,13 +51,13 @@ class TestStockQuantPackageProductPackaging(SavepointCase):
             }
         )
         picking.action_confirm()
-        picking.move_line_ids.qty_done = 10.0
+        picking.pack_operation_ids.qty_done = 10.0
         first_package = picking.put_in_pack()
-        picking.move_line_ids.filtered(
+        picking.pack_operation_ids.filtered(
             lambda ml: not ml.result_package_id
         ).qty_done = 20.0
         second_package = picking.put_in_pack()
-        picking.button_validate()
+        picking.do_new_transfer()
         self.assertEqual(first_package.single_product_id, self.product)
         self.assertEqual(first_package.single_product_qty, 10.0)
         self.assertEqual(second_package.single_product_id, self.product)

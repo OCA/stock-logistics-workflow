@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2019 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 from odoo import api, fields, models
@@ -32,7 +33,7 @@ class StockQuantPackage(models.Model):
             if len(pack_products) == 1:
                 pack.single_product_id = pack_products.id
                 # TODO handle uom
-                pack.single_product_qty = sum(pack.quant_ids.mapped("quantity"))
+                pack.single_product_qty = sum(pack.quant_ids.mapped("qty"))
             else:
                 pack.single_product_id = False
                 pack.single_product_qty = 0
@@ -46,7 +47,11 @@ class StockQuantPackage(models.Model):
             ):
                 packaging = self.env["product.packaging"].search(
                     [
-                        ("product_id", "=", pack.single_product_id.id),
+                        (
+                            "product_tmpl_id",
+                            "=",
+                            pack.single_product_id.product_tmpl_id.id,
+                        ),
                         ("qty", "=", pack.single_product_qty),
                     ],
                     limit=1,
