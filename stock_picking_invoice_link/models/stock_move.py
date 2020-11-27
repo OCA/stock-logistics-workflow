@@ -27,7 +27,8 @@ class StockMove(models.Model):
         line quantities. So to avoid this inconsistency you can not update any
         stock move line in done state and have invoice lines linked.
         """
-        if 'product_uom_qty' in vals:
+        if ('product_uom_qty' in vals and not
+                self.env.context.get('bypass_stock_move_update_restriction')):
             for move in self:
                 if move.state == 'done' and move.invoice_line_ids:
                     raise UserError(
