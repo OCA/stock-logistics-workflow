@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2020 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="stock_move_form_view">
+        <field name="name">stock.move.form (in stock_move_backorder_move)</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_form" />
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button
+                    name="show_descendant_moves"
+                    string="Descendant Moves"
+                    help="Display all splitted moves from this one"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-sort-amount-asc"
+                />
+                <button
+                    name="show_ancestor_moves"
+                    string="Ancestors Moves"
+                    help="Display all moves that are origin of this one"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-sort-amount-desc"
+                />
+            </div>
+        </field>
+    </record>
+</odoo>
