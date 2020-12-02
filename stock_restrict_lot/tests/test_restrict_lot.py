@@ -40,28 +40,6 @@ class TestRestrictLot(SavepointCase):
         orig_move = move.move_orig_ids
         self.assertEqual(orig_move.restrict_lot_id.id, self.lot.id)
 
-    def test_move_split_and_copy(self):
-        move = self.env["stock.move"].create(
-            {
-                "product_id": self.product.id,
-                "location_id": self.output_loc.id,
-                "location_dest_id": self.customer_loc.id,
-                "product_uom_qty": 2,
-                "product_uom": self.product.uom_id.id,
-                "name": "test",
-                "procure_method": "make_to_stock",
-                "warehouse_id": self.warehouse.id,
-                "route_ids": [(6, 0, self.warehouse.delivery_route_id.ids)],
-                "restrict_lot_id": self.lot.id,
-            }
-        )
-        move._action_confirm()
-        vals_list = move._split(1)
-        new_move = self.env["stock.move"].create(vals_list)
-        self.assertEqual(new_move.restrict_lot_id.id, move.restrict_lot_id.id)
-        other_move = move.copy()
-        self.assertFalse(other_move.restrict_lot_id.id)
-
     def _update_product_stock(self, qty, lot_id=False):
         inventory = self.env["stock.inventory"].create(
             {
@@ -85,7 +63,7 @@ class TestRestrictLot(SavepointCase):
         )
         inventory.action_validate()
 
-    def test_move_restrict_lot_reservation(self):
+    def test_move_restrict_lot_reservation_and_transfer(self):
         lot2 = self.env["stock.production.lot"].create(
             {
                 "name": "lot2",
