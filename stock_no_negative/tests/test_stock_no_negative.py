@@ -74,7 +74,7 @@ class TestStockNoNegative(TransactionCase):
     def test_check_constrains(self):
         """Assert that constraint is raised when user
         tries to validate the stock operation which would
-        make the stock level of the product negative """
+        make the stock level of the product negative"""
         self.stock_picking.action_confirm()
         with self.assertRaises(ValidationError):
             self.stock_picking.button_validate()
