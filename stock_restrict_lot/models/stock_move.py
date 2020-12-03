@@ -6,7 +6,12 @@ from odoo import _, exceptions, fields, models
 class StockMove(models.Model):
     _inherit = "stock.move"
 
-    restrict_lot_id = fields.Many2one("stock.production.lot", string="Restrict Lot")
+    # seems better to not copy this field except when a move is splitted, because a move
+    # can be copied in multiple different occasions and could even be copied with a
+    # different product...
+    restrict_lot_id = fields.Many2one(
+        "stock.production.lot", string="Restrict Lot", copy=False
+    )
 
     def _prepare_procurement_values(self):
         vals = super()._prepare_procurement_values()
@@ -71,3 +76,9 @@ class StockMove(models.Model):
             owner_id=owner_id,
             strict=strict,
         )
+
+    def _split(self, qty, restrict_partner_id=False):
+        vals_list = super()._split(qty, restrict_partner_id=restrict_partner_id)
+        if vals_list and self.restrict_lot_id:
+            vals_list[0]["restrict_lot_id"] = self.restrict_lot_id.id
+        return vals_list
