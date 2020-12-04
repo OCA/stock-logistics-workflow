@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2020 PlanetaTIC - Marc Poch <mpoch@planetatic.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+<data>
+
+<record id="view_stock_move_operations" model="ir.ui.view">
+    <field name="name">stock.move.operations.form</field>
+    <field name="model">stock.move</field>
+    <field name="inherit_id" ref="stock.view_stock_move_operations"/>
+    <field name="arch" type="xml">
+        <xpath expr="/form/*" position="before">
+            <header>
+                <button name="do_unreserve" string="Unreserve" groups="base.group_user" type="object"
+                    attrs="{'invisible': [('state', '!=', 'assigned')]}"/>
+            </header>
+        </xpath>
+    </field>
+</record>
+
+<record id="view_move_form" model="ir.ui.view">
+    <field name="name">stock.move.form</field>
+    <field name="model">stock.move</field>
+    <field name="inherit_id" ref="stock.view_move_form"/>
+    <field name="arch" type="xml">
+        <header position="inside">
+            <button name="do_unreserve" string="Unreserve" groups="base.group_user" type="object"
+                attrs="{'invisible': [('state', '!=', 'assigned')]}"/>
+        </header>
+    </field>
+</record>
+
+<record id="view_move_picking_form" model="ir.ui.view">
+    <field name="name">stock.move.form</field>
+    <field name="model">stock.move</field>
+    <field name="inherit_id" ref="stock.view_move_picking_form"/>
+    <field name="arch" type="xml">
+        <header position="inside">
+            <button name="do_unreserve" string="Unreserve" groups="base.group_user" type="object"
+                attrs="{'invisible': [('state', '!=', 'assigned')]}"/>
+        </header>
+    </field>
+</record>
+
+</data>
+</odoo>
