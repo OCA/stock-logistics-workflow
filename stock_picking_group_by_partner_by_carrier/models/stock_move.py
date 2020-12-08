@@ -53,58 +53,51 @@ class StockMove(models.Model):
                     subtype_id=self.env.ref("mail.mt_note").id,
                 )
 
-    def _search_picking_for_assignation(self):
-        # totally reimplement this one to add a hook to change the domain
-        self.ensure_one()
-        picking = self.env["stock.picking"].search(
-            self._domain_search_picking_for_assignation(), limit=1
-        )
-        return picking
-
-    def _domain_search_picking_handle_move_type(self):
-        """Hook to handle the move type. Can be overloaded by other modules.
-        By default the move type is taken from the procurement group.
-        """
-        # avoid mixing picking policies
-        return [("move_type", "=", self.group_id.move_type)]
-
     def _domain_search_picking_for_assignation(self):
-        states = ("draft", "confirmed", "waiting", "partially_available", "assigned")
+        domain = super()._domain_search_picking_for_assignation()
         if (
             not self.picking_type_id.group_pickings
             or self.group_id.sale_id.picking_policy == "one"
         ):
-            # use the normal domain from the stock module
-            domain = [
-                ("group_id", "=", self.group_id.id),
+            return domain
+
+        # remove group
+        domain = [x for x in domain if x[0] != "group_id"]
+
+        grouping_domain = self._assign_picking_group_domain()
+
+        return domain + grouping_domain
+
+    # TODO: this part and everything related to generic grouping
+    # should be split into `stock_picking_group_by` module.
+    def _assign_picking_group_domain(self):
+        domain = [
+            # same partner
+            ("partner_id", "=", self.group_id.partner_id.id),
+            # don't search on the procurement.group
+        ]
+        domain += self._assign_picking_group_domain_move_type()
+        # same carrier only for outgoing transfers
+        if self.picking_type_id.code == "outgoing":
+            domain += [
+                ("carrier_id", "=", self.group_id.carrier_id.id),
             ]
         else:
-            domain = [
-                # same partner
-                ("partner_id", "=", self.group_id.partner_id.id),
-                # don't search on the procurement.group
-            ]
-            domain += self._domain_search_picking_handle_move_type()
-            # same carrier only for outgoing transfers
-            if self.picking_type_id.code == "outgoing":
-                domain += [
-                    ("carrier_id", "=", self.group_id.carrier_id.id),
-                ]
-            else:
-                domain += [("carrier_id", "=", False)]
-        domain += [
-            ("location_id", "=", self.location_id.id),
-            ("location_dest_id", "=", self.location_dest_id.id),
-            ("picking_type_id", "=", self.picking_type_id.id),
-            ("printed", "=", False),
-            ("immediate_transfer", "=", False),
-            ("state", "in", states),
-        ]
+            domain += [("carrier_id", "=", False)]
         if self.env.context.get("picking_no_copy_if_can_group"):
             # we are in the context of the creation of a backorder:
             # don't consider the current move's picking
             domain.append(("id", "!=", self.picking_id.id))
         return domain
+
+    def _assign_picking_group_domain_move_type(self):
+        """Hook to handle the move type.
+
+        By default the move type is taken from the procurement group.
+        Override to customize this behavior.
+        """
+        # avoid mixing picking policies
+        return [("move_type", "=", self.group_id.move_type)]
 
     def _key_assign_picking(self):
         return (
