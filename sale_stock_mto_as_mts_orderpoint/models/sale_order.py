@@ -67,13 +67,19 @@ class SaleOrderLine(models.Model):
                 {"active": True, "product_min_qty": 0.0, "product_max_qty": 0.0}
             )
         elif not orderpoint:
-            orderpoint = self.env["stock.warehouse.orderpoint"].create(
-                {
-                    "product_id": self.product_id.id,
-                    "warehouse_id": warehouse.id,
-                    "location_id": warehouse._get_locations_for_mto_orderpoints().id,
-                    "product_min_qty": 0.0,
-                    "product_max_qty": 0.0,
-                }
+            orderpoint = (
+                self.env["stock.warehouse.orderpoint"]
+                .sudo()
+                .create(
+                    {
+                        "product_id": self.product_id.id,
+                        "warehouse_id": warehouse.id,
+                        "location_id": (
+                            warehouse._get_locations_for_mto_orderpoints().id
+                        ),
+                        "product_min_qty": 0.0,
+                        "product_max_qty": 0.0,
+                    }
+                )
             )
         return orderpoint

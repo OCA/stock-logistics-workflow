@@ -73,3 +73,16 @@ class TestSaleStockMtoAsMtsOrderpoint(SavepointCase):
         order.action_draft()
         order.action_confirm()
         self.assertEqual(order.state, "sale")
+
+    def test_confirm_mto_as_mts_sudo_needed(self):
+        """Check access right needed to confirm sale.
+
+        A sale manager user with no right on inventory will raise an access
+        right error on confirmation.
+        This is the why of the sudo in `sale_stock_mto_as_mts_orderpoint`
+        """
+        user = self.env.ref("base.user_demo")
+        sale_group = self.env.ref("sales_team.group_sale_manager")
+        sale_group.users = [(4, user.id)]
+        order = self._create_sale_order()
+        order.with_user(user).action_confirm()
