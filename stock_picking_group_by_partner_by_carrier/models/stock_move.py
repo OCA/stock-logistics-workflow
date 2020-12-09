@@ -76,7 +76,7 @@ class StockMove(models.Model):
             ("partner_id", "=", self.group_id.partner_id.id),
             # don't search on the procurement.group
         ]
-        domain += self._assign_picking_group_domain_move_type()
+        domain += self._domain_search_picking_handle_move_type()
         # same carrier only for outgoing transfers
         if self.picking_type_id.code == "outgoing":
             domain += [
@@ -90,7 +90,7 @@ class StockMove(models.Model):
             domain.append(("id", "!=", self.picking_id.id))
         return domain
 
-    def _assign_picking_group_domain_move_type(self):
+    def _domain_search_picking_handle_move_type(self):
         """Hook to handle the move type.
 
         By default the move type is taken from the procurement group.
