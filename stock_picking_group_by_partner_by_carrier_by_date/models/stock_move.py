@@ -18,6 +18,7 @@ class StockMove(models.Model):
             not self.picking_type_id.group_pickings_by_date
             or not self.picking_type_id.group_pickings
             or self.group_id.sale_id.picking_policy == "one"
+            or self.env.context.get("picking_manual_merge")
         )
 
     def _assign_picking_group_domain_by_date(self):
