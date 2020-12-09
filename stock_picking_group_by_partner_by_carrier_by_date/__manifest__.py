@@ -5,7 +5,7 @@
     "name": "Stock Picking: group by partner and carrier and scheduled date",
     "Summary": """Delivery orders will be matched by date too.
     """,
-    "version": "13.0.1.0.0",
+    "version": "13.0.1.1.0",
     "development_status": "Alpha",
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
