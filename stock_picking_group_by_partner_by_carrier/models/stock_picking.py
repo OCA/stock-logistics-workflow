@@ -15,6 +15,24 @@ class StockPicking(models.Model):
     # don't copy the printed state of a picking otherwise the backorder of a
     # printed picking becomes printed
     printed = fields.Boolean(copy=False)
+    canceled_by_merge = fields.Boolean(
+        default=False,
+        help="Technical field. Indicates the transfer is"
+        " canceled because it was left empty after a manual merge.",
+    )
+
+    @api.depends("canceled_by_merge")
+    def _compute_state(self):
+        super()._compute_state()
+        for picking in self:
+            if picking.canceled_by_merge:
+                picking.state = "cancel"
+
+    def _check_emptyness_after_merge(self):
+        """Handle pickings emptied during a manual merge."""
+        for picking in self:
+            if not picking.move_lines:
+                picking.canceled_by_merge = True
 
     @api.depends("move_lines.group_id.sale_ids")
     def _compute_sale_ids(self):

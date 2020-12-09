@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="stock_picking_merge_wiz_info">
+        <div class="alert alert-warning" role="alert" t-if="not something_todo">
+          Sorry, nothing to be done here.
+        </div>
+        <div class="alert alert-info" role="alert">
+            <h4 class="alert-heading">Forecasted grouping</h4>
+            <div class="list-group" t-if="grouping_forecast">
+                <t t-foreach="grouping_forecast" t-as="group">
+                    <li
+                        class="list-group-item flex-column justify-content-between align-items-start"
+                    >
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">
+                                <strong
+                                    class="partner"
+                                    t-if="group.partner"
+                                >For customer:</strong>
+                                <span
+                                    class="partner"
+                                    t-if="group.partner"
+                                    t-esc="group.partner.name"
+                                />
+                                <strong
+                                    class="carrier"
+                                    t-if="group.carrier"
+                                    style="padding-left:1em"
+                                >With carrier:</strong>
+                                <span
+                                    class="carrier"
+                                    t-if="group.carrier"
+                                    t-field="group.carrier.name"
+                                />
+                            </h5>
+                            <span
+                                t-attf-class="badge #{'badge-danger' if not group.has_todo else 'badge-primary'} badge-pill"
+                            >
+                                <t t-esc="len(group.pickings)" />
+                            </span>
+                        </div>
+                        <p class="mb-1">
+                            <t t-foreach="group.pickings[:20]" t-as="picking">
+                                <span class="picking" t-esc="picking.name" />
+                                <span
+                                    class="sep"
+                                    t-if="not picking_last"
+                                    t-translation="off"
+                                > + </span>
+                            </t>
+                            <span
+                                t-if="len(group.pickings) > 20"
+                                t-esc="'&amp;hellip;'"
+                            />
+                        </p>
+                    </li>
+                </t>
+            </div>
+        </div>
+    </template>
+</odoo>
