@@ -11,6 +11,6 @@
     "demo": [],
     "data": ["views/stock_routing_views.xml", "views/stock_source_relocate_views.xml"],
     "auto_install": True,
-    "installable": True,
+    "installable": False,
     "development_status": "Alpha",
 }
