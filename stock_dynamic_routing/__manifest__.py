@@ -14,6 +14,6 @@
         "demo/stock_routing_demo.xml",
     ],
     "data": ["views/stock_routing_views.xml", "security/ir.model.access.csv"],
-    "installable": True,
+    "installable": False,
     "development_status": "Beta",
 }
