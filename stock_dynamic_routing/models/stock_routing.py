@@ -23,7 +23,10 @@ class StockRouting(models.Model):
     _rec_name = "location_id"
 
     location_id = fields.Many2one(
-        comodel_name="stock.location", required=True, ondelete="cascade", index=True,
+        comodel_name="stock.location",
+        required=True,
+        ondelete="cascade",
+        index=True,
     )
     picking_type_id = fields.Many2one(
         comodel_name="stock.picking.type",

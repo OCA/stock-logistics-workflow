@@ -39,10 +39,12 @@ class StockRoutingRule(models.Model):
         help="Operation type that will be applied on the move.",
     )
     location_src_id = fields.Many2one(
-        comodel_name="stock.location", compute="_compute_location_src_id",
+        comodel_name="stock.location",
+        compute="_compute_location_src_id",
     )
     location_dest_id = fields.Many2one(
-        comodel_name="stock.location", compute="_compute_location_dest_id",
+        comodel_name="stock.location",
+        compute="_compute_location_dest_id",
     )
     rule_domain = fields.Char(
         string="Source Routing Domain",
