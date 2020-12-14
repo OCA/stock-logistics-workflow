@@ -6,3 +6,4 @@
   * Pedro M. Baeza
 * Spacefoot <https://www.spacefoot.com>
   * Quentin Delcourte
+* Vishnu Vanneri <vanneri.odoodev@gmail.com>
