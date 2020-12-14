@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2020 PlanetaTIC - Marc Poch <mpoch@planetatic.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+<data>
+
+<record id="default_warranty" model="ir.config_parameter">
+    <field name="key">stock_picking_multi_copy.deliveryslip_folder</field>
+    <field name="value"></field>
+</record>
+
+</data>
+</odoo>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2020 PlanetaTIC - Marc Poch <mpoch@planetatic.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+<data>
+
+<record id="view_partner_multi_copy_form" model="ir.ui.view">
+    <field name="name">res.partner.multi.copy.form.inherit</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//page[@name='sales_purchases']//field[@name='ref']/ancestor::*[1]" position="inside">
+            <field name="num_picking_copies"/>
+        </xpath>
+    </field>
+</record>
+
+</data>
+</odoo>
