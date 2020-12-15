@@ -33,6 +33,7 @@ setuptools.setup(
         'odoo12-addon-stock_picking_operation_quick_change',
         'odoo12-addon-stock_picking_package_preparation',
         'odoo12-addon-stock_picking_package_preparation_line',
+        'odoo12-addon-stock_picking_product_assortment',
         'odoo12-addon-stock_picking_purchase_order_link',
         'odoo12-addon-stock_picking_purchase_propagate',
         'odoo12-addon-stock_picking_quick',
