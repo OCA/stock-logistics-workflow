@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_partner_form" model="ir.ui.view">
+        <field name="name">res.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <group name="warehouse" position="inside">
+                <field name="batch_picking_auto_invoice"/>
+            </group>
+            <xpath expr="//field[@name='child_ids']/form//field[@name='name']/.." position="after">
+                <group>
+                    <field name="batch_picking_auto_invoice"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
