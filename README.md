@@ -15,7 +15,11 @@ TODO: add repo description.
 
 [//]: # (addons)
 
-This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
+Available addons
+----------------
+addon | version | summary
+--- | --- | ---
+[stock_restrict_lot](stock_restrict_lot/) | 14.0.1.1.0 | Base module that add back the concept of restrict lot on stock move
 
 [//]: # (end addons)
 
