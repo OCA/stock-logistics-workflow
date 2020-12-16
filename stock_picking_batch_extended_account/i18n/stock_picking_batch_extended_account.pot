@@ -1,0 +1,47 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_picking_batch_extended_account
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_batch_extended_account
+#: model:ir.model,name:stock_picking_batch_extended_account.model_stock_picking_batch
+msgid "Batch Picking"
+msgstr ""
+
+#. module: stock_picking_batch_extended_account
+#: model:ir.model.fields,field_description:stock_picking_batch_extended_account.field_res_partner__batch_picking_auto_invoice
+#: model:ir.model.fields,field_description:stock_picking_batch_extended_account.field_res_users__batch_picking_auto_invoice
+msgid "Batch Picking Auto Invoice"
+msgstr ""
+
+#. module: stock_picking_batch_extended_account
+#: model:ir.model,name:stock_picking_batch_extended_account.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: stock_picking_batch_extended_account
+#: code:addons/stock_picking_batch_extended_account/models/stock_batch_picking.py:13
+#, python-format
+msgid "Nothing to print."
+msgstr ""
+
+#. module: stock_picking_batch_extended_account
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended_account.stock_batch_picking_form
+msgid "Print Invoices"
+msgstr ""
+
+#. module: stock_picking_batch_extended_account
+#: model:ir.model,name:stock_picking_batch_extended_account.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
