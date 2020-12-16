@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="stock_batch_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.batch.form</field>
+        <field name="model">stock.picking.batch</field>
+        <field name="inherit_id" ref="stock_picking_batch_extended.stock_batch_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/header/button[@name='action_print_picking']" position="before">
+                <button name="action_print_invoices"
+                        string="Print Invoices"
+                        type="object"
+                        attrs="{'invisible': [('state', 'in', ['draft','in_progress','assigned'])]}"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
