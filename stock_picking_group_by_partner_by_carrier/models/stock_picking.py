@@ -59,9 +59,11 @@ class StockPicking(models.Model):
             return super().action_cancel()
 
     def _create_backorder(self):
-        self = self.with_context(picking_no_copy_if_can_group=1)
+        if self.picking_type_id.group_pickings:
+            self = self.with_context(picking_no_copy_if_can_group=1)
         backorders = super()._create_backorder()
-        backorders._merge_procurement_groups()
+        if self.picking_type_id.group_pickings:
+            backorders._merge_procurement_groups()
         return backorders
 
     def _prepare_merge_procurement_group_values(self, move_groups):
