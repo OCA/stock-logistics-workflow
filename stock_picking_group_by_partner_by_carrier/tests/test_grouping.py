@@ -431,3 +431,25 @@ class TestGroupBy(TestGroupByBase):
         self.assertEqual(so1.picking_ids, picking)
         self.assertEqual(so2.picking_ids, picking | backorder)
         self.assertEqual(so3.picking_ids, backorder)
+
+    def test_create_backorder(self):
+        """Ensure there is no regression when group pickings is disabled when
+        we confirm a partial qty on a picking to create a backorder.
+        """
+        so = self._get_new_sale_order(amount=10, carrier=self.carrier1)
+        so.name = "SO TEST"
+        so.action_confirm()
+        picking = so.picking_ids
+        picking.picking_type_id.group_pickings = False
+        self._update_qty_in_location(
+            picking.location_id,
+            so.order_line[0].product_id,
+            so.order_line[0].product_uom_qty,
+        )
+        picking.action_assign()
+        line = picking.move_lines[0].move_line_ids
+        line.qty_done = line.product_uom_qty / 2
+        picking.action_done()
+        self.assertEqual(picking.state, "done")
+        self.assertTrue(picking.backorder_ids)
+        self.assertNotEqual(picking, picking.backorder_ids)
