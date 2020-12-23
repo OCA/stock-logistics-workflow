@@ -10,11 +10,6 @@
     "maintainers": ["CarlosRoca13"],
     "license": "AGPL-3",
     "installable": True,
-    "depends": [
-        "stock",
-        "product_assortment"
-    ],
-    "data": [
-        "views/stock_picking_view.xml"
-    ]
+    "depends": ["stock", "product_assortment"],
+    "data": ["views/stock_picking_view.xml"],
 }
