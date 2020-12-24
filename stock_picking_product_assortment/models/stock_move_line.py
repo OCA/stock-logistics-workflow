@@ -3,6 +3,8 @@
 from odoo import api, fields, models
 
 
+# We overwrite this class as a trick to repeat the product_id field with different
+# attributes on the view.
 class StockMoveLine(models.Model):
     _inherit = "stock.move.line"
 
