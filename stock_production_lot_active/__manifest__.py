@@ -5,7 +5,7 @@
     "name": "Stock Production Lot Active",
     "summary": """
         Allow to archive/unarchive a lot.""",
-    "version": "13.0.1.0.0",
+    "version": "12.0.1.0.0",
     "development_status": "Beta",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
