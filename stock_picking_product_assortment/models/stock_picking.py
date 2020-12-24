@@ -16,15 +16,16 @@ class StockPicking(models.Model):
         string="Blacklisted Products",
         compute="_compute_product_assortment_ids",
     )
-    has_whitelist = fields.Boolean(
-        default="False", compute="_compute_product_assortment_ids"
-    )
-    has_blacklist = fields.Boolean(
-        default="False", compute="_compute_product_assortment_ids"
-    )
+    has_whitelist = fields.Boolean(compute="_compute_product_assortment_ids")
+    has_blacklist = fields.Boolean(compute="_compute_product_assortment_ids")
 
     @api.depends("partner_id")
     def _compute_product_assortment_ids(self):
+        # If we don't initialize the fields we get an error with NewId
+        self.whitelist_product_ids = self.env["product.product"]
+        self.blacklist_product_ids = self.env["product.product"]
+        self.has_whitelist = False
+        self.has_blacklist = False
         if self.partner_id and self.picking_type_id.code == "outgoing":
             filters = self.env["ir.filters"].search(
                 [
