@@ -40,18 +40,22 @@
                     required="1"
                 />
             </xpath>
-            <xpath
-                expr="//field[@name='move_line_ids_without_package']/tree/field[@name='product_id']"
-                position="attributes"
-            >
+        </field>
+    </record>
+    <record id="view_stock_move_line_detailed_operation_tree" model="ir.ui.view">
+        <field name="name">stock.move.line.operations.tree</field>
+        <field name="model">stock.move.line</field>
+        <field
+            name="inherit_id"
+            ref="stock.view_stock_move_line_detailed_operation_tree"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//tree/field[@name='product_id']" position="attributes">
                 <attribute name="attrs">
                     {'column_invisible':['|', '|', '&amp;', ('parent.has_whitelist', '=', True), ('parent.has_blacklist', '=', True), '&amp;', ('parent.has_whitelist', '=', True), ('parent.has_blacklist', '=', False), '&amp;',('parent.has_whitelist', '=', False), ('parent.has_blacklist', '=', True)]}
                 </attribute>
             </xpath>
-            <xpath
-                expr="//field[@name='move_line_ids_without_package']/tree/field[@name='product_id']"
-                position="after"
-            >
+            <xpath expr="//tree/field[@name='product_id']" position="after">
                 <field
                     name="product_has_both_assortment_id"
                     string="Product"
