@@ -24,6 +24,7 @@ setuptools.setup(
         'odoo12-addon-stock_picking_back2draft',
         'odoo12-addon-stock_picking_backorder_strategy',
         'odoo12-addon-stock_picking_batch_extended',
+        'odoo12-addon-stock_picking_batch_extended_account',
         'odoo12-addon-stock_picking_customer_ref',
         'odoo12-addon-stock_picking_filter_lot',
         'odoo12-addon-stock_picking_invoice_link',
