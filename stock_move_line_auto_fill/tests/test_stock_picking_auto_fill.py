@@ -2,11 +2,11 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import UserError
-from odoo.tests import Form
-from odoo.tests.common import TransactionCase
+from odoo.tests import Form, common
 
 
-class TestStockPicking(TransactionCase):
+@common.tagged("-at_install", "post_install")
+class TestStockPicking(common.TransactionCase):
     def setUp(self):
         super(TestStockPicking, self).setUp()
 
@@ -437,7 +437,7 @@ class TestStockPicking(TransactionCase):
         )
         return_pick.action_assign()
         # return_pick.move_lines.quantity_done = qty
-        return_pick.action_done()
+        return_pick._action_done()
         return return_pick
 
     def test_return_twice(self):
@@ -470,7 +470,7 @@ class TestStockPicking(TransactionCase):
         self.picking_out.action_confirm()
         self.picking_out.action_assign()
         # self.picking_out.move_lines.quantity_done = 500
-        self.picking_out.action_done()
+        self.picking_out._action_done()
         self.assertEqual(product.qty_available, 0.0)
 
         # Make first return from customer location to stock location
