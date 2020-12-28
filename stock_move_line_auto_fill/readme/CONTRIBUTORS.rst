@@ -6,3 +6,4 @@
     * Sergio Teruel <sergio.teruel@tecnativa.com>
     * David Vidal <david.vidal@tecnativa.com>
 * Jaime Arroyo (Creu Blanca) <jaime.arroyo@creublanca.es>
+* Iván Todorovich <ivan.todorovich@gmail.com>
