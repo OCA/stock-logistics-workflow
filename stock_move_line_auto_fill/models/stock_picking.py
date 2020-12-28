@@ -7,19 +7,20 @@ from odoo.exceptions import UserError
 
 
 class StockPicking(models.Model):
-
     _inherit = "stock.picking"
 
     action_pack_op_auto_fill_allowed = fields.Boolean(
         compute="_compute_action_pack_operation_auto_fill_allowed"
     )
     auto_fill_operation = fields.Boolean(
-        related="picking_type_id.auto_fill_operation", string="Auto fill operations"
+        string="Auto fill operations",
+        related="picking_type_id.auto_fill_operation",
     )
 
     @api.depends("state", "move_line_ids")
     def _compute_action_pack_operation_auto_fill_allowed(self):
-        """ The auto fill button is allowed only in ready state, and the
+        """
+        The auto fill button is allowed only in ready state, and the
         picking have pack operations.
         """
         for rec in self:
@@ -38,7 +39,8 @@ class StockPicking(models.Model):
             )
 
     def action_pack_operation_auto_fill(self):
-        """ Fill automatically pack operation for products with the following
+        """
+        Fill automatically pack operation for products with the following
         conditions:
             - the package is not required, the package is required if the
             the no product is set on the operation.
