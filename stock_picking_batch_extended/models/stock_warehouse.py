@@ -5,10 +5,11 @@ from odoo import fields, models
 
 
 class StockWarehouse(models.Model):
-    _inherit = 'stock.warehouse'
+    _inherit = "stock.warehouse"
 
     default_user_id = fields.Many2one(
-        'res.users', 'Default Picker',
-        help='the user to which the batch pickings are assigned by default',
+        "res.users",
+        "Default Picker",
+        help="the user to which the batch pickings are assigned by default",
         index=True,
     )
