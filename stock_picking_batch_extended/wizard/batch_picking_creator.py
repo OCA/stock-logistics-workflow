@@ -31,7 +31,6 @@ class StockBatchPickingCreator(models.TransientModel):
     user_id = fields.Many2one(
         "res.users",
         string="Picker",
-        oldname="picker_id",
         default=lambda self: self._default_user_id(),
         help="The user to which the pickings are assigned",
     )
@@ -127,7 +126,6 @@ class StockBatchPickingCreator(models.TransientModel):
             StockPicking.search(group["__domain"]).write({"batch_id": batchs[-1:].id})
         return batchs
 
-    @api.multi
     def action_create_batch(self):
         """ Create a batch picking  with selected pickings after having checked
         that they are not already in another batch or done/cancel.
@@ -151,7 +149,6 @@ class StockBatchPickingCreator(models.TransientModel):
             )
         return self.action_view_batch_picking(batchs)
 
-    @api.multi
     def action_view_batch_picking(self, batch_pickings):
         if len(batch_pickings) > 1:
             action = self.env.ref(

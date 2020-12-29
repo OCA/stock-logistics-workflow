@@ -2,7 +2,7 @@
 # Copyright 2018 Tecnativa - Carlos Dauden
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import fields, models
 from odoo.tools import float_is_zero
 
 
@@ -11,7 +11,6 @@ class StockPicking(models.Model):
 
     batch_id = fields.Many2one(string="Batch", domain="[('state', '=', 'draft')]",)
 
-    @api.multi
     def action_cancel(self):
         """In addition to what the method in the parent class does,
         cancel the batches for which all pickings are cancelled
@@ -21,7 +20,6 @@ class StockPicking(models.Model):
 
         return result
 
-    @api.multi
     def action_assign(self):
         """In addition to what the method in the parent class does,
         Changed batches states to assigned if all picking are assigned.
@@ -31,7 +29,6 @@ class StockPicking(models.Model):
 
         return result
 
-    @api.multi
     def action_done(self):
         """In addition to what the method in the parent class does,
         Changed batches states to done if all picking are done.
