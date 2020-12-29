@@ -1,12 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <report string="Batch picking"
-            id="action_report_batch_picking"
-            model="stock.picking.batch"
-            report_type="qweb-pdf"
-            name="stock_picking_batch_extended.report_batch_picking"
-            file="stock_picking_batch_extended.report_batch_picking"/>
-
+    <report
+        string="Batch picking"
+        id="action_report_batch_picking"
+        model="stock.picking.batch"
+        report_type="qweb-pdf"
+        name="stock_picking_batch_extended.report_batch_picking"
+        file="stock_picking_batch_extended.report_batch_picking"
+    />
     <template id="report_batch_picking">
         <t t-call="web.html_container">
             <t t-call="web.external_layout">
@@ -14,11 +15,11 @@
                     <div class="row mt32 mb32">
                         <div class="col-3">
                             <strong>Date:</strong>
-                            <span t-esc="now()" t-options="{'widget': 'datetime'}"/>
+                            <span t-esc="now()" t-options="{'widget': 'datetime'}" />
                         </div>
                         <div class="col-3">
                             <strong>Printed by:</strong>
-                            <span t-field="user.name"/>
+                            <span t-field="user.name" />
                         </div>
                     </div>
                     <t t-foreach="docs" t-as="doc">
@@ -26,37 +27,39 @@
                             <thead>
                                 <tr>
                                     <th name="th_name">Pickings Order</th>
-                                    <th name="th_visa"></th>
+                                    <th name="th_visa" />
                                     <th name="th_picker">Picked By</th>
-                                    <th name="th_count" class="text-center"># Pickings</th>
+                                    <th
+                                        name="th_count"
+                                        class="text-center"
+                                    ># Pickings</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td name="td_name">
-                                        <span t-esc="doc.name"/>
+                                        <span t-esc="doc.name" />
                                     </td>
                                     <td name="td_visa">Visa:_________________</td>
                                     <td name="td_picker">
-                                        <span t-esc="doc.user_id.name"/>
+                                        <span t-esc="doc.user_id.name" />
                                     </td>
                                     <td name="td_count" class="text-center">
-                                        <span t-esc="doc.picking_count"/>
+                                        <span t-esc="doc.picking_count" />
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <br/>
-                        <br/>
-                        <p t-esc="doc.notes"/>
-                        <br/>
+                        <br />
+                        <br />
+                        <p t-esc="doc.notes" />
+                        <br />
                         <t t-foreach="get_grouped_data(doc)" t-as="l0_data">
-
                             <table class="table table-condensed">
                                 <caption>
                                     <b>
                                         <u>
-                                            <span t-esc="l0_data['name']"/>
+                                            <span t-esc="l0_data['name']" />
                                         </u>
                                     </b>
                                 </caption>
@@ -67,29 +70,45 @@
                                     <!--<th>Explanation</th>-->
                                 </thead>
                                 <tbody>
-                                    <t t-set="total_qty" t-value="0.0"/>
+                                    <t t-set="total_qty" t-value="0.0" />
                                     <t t-foreach="l0_data['l1_items']" t-as="l1_item">
-                                        <t t-set="product" t-value="l1_item['product']"/>
-                                        <t t-set="qty" t-value="l1_item['product_qty']"/>
-                                        <t t-set="total_qty" t-value="total_qty + qty"/>
-                                        <t t-set="carrier" t-value="l1_item['operations'][:1].picking_id.carrier_id"/>
-
+                                        <t
+                                            t-set="product"
+                                            t-value="l1_item['product']"
+                                        />
+                                        <t
+                                            t-set="qty"
+                                            t-value="l1_item['product_qty']"
+                                        />
+                                        <t
+                                            t-set="total_qty"
+                                            t-value="total_qty + qty"
+                                        />
+                                        <t
+                                            t-set="carrier"
+                                            t-value="l1_item['operations'][:1].picking_id.carrier_id"
+                                        />
                                         <tr>
                                             <td>
-                                                <span t-field="product.display_name"/>
+                                                <span t-field="product.display_name" />
                                             </td>
                                             <td>
-                                                <span t-esc="carrier.name"/>
+                                                <span t-esc="carrier.name" />
                                             </td>
                                             <td class="text-right">
-                                                <span t-esc="qty"/>
+                                                <span t-esc="qty" />
                                             </td>
                                             <!--<td>stock error<br/>breakage-->
                                             <!--</td>-->
-                                            <tr align="left" t-if="product.description_warehouse">
+                                            <tr
+                                                align="left"
+                                                t-if="product.description_warehouse"
+                                            >
                                                 <td colspan="4">
                                                     <pre class="description ">
-                                                        <span t-esc="product.description_warehouse"></span>
+                                                        <span
+                                                            t-esc="product.description_warehouse"
+                                                        />
                                                     </pre>
                                                 </td>
                                             </tr>
@@ -98,12 +117,12 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td/>
+                                        <td />
                                         <td id="total_label" class="text-right">
                                             <strong>Total:</strong>
                                         </td>
                                         <td id="total_qty" class="text-right">
-                                            <strong t-esc="total_qty"/>
+                                            <strong t-esc="total_qty" />
                                         </td>
                                     </tr>
                                 </tfoot>
