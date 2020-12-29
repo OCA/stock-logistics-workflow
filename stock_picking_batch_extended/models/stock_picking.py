@@ -9,10 +9,7 @@ from odoo.tools import float_is_zero
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    batch_id = fields.Many2one(
-        string='Batch',
-        domain="[('state', '=', 'draft')]",
-    )
+    batch_id = fields.Many2one(string="Batch", domain="[('state', '=', 'draft')]",)
 
     @api.multi
     def action_cancel(self):
@@ -20,7 +17,7 @@ class StockPicking(models.Model):
         cancel the batches for which all pickings are cancelled
         """
         result = super(StockPicking, self).action_cancel()
-        self.mapped('batch_id').verify_state()
+        self.mapped("batch_id").verify_state()
 
         return result
 
@@ -30,7 +27,7 @@ class StockPicking(models.Model):
         Changed batches states to assigned if all picking are assigned.
         """
         result = super(StockPicking, self).action_assign()
-        self.mapped('batch_id').verify_state('assigned')
+        self.mapped("batch_id").verify_state("assigned")
 
         return result
 
@@ -40,7 +37,7 @@ class StockPicking(models.Model):
         Changed batches states to done if all picking are done.
         """
         result = super(StockPicking, self).action_done()
-        self.mapped('batch_id').verify_state()
+        self.mapped("batch_id").verify_state()
 
         return result
 
@@ -54,9 +51,9 @@ class StockPicking(models.Model):
         If a picking has no qty_done filled, we released it from his batch
         """
         for pick in self:
-            if pick.state != 'assigned':
+            if pick.state != "assigned":
                 pick.action_assign()
-                if pick.state != 'assigned':
+                if pick.state != "assigned":
                     continue
 
             if force_qty:
@@ -64,10 +61,11 @@ class StockPicking(models.Model):
                     pack.qty_done = pack.product_uom_qty
             else:
                 if all(
-                        float_is_zero(
-                            pack.qty_done,
-                            precision_rounding=pack.product_uom_id.rounding)
-                        for pack in pick.move_line_ids):
+                    float_is_zero(
+                        pack.qty_done, precision_rounding=pack.product_uom_id.rounding
+                    )
+                    for pack in pick.move_line_ids
+                ):
                     # No qties to process, release out of the batch
                     pick.batch_id = False
                     continue
