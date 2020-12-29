@@ -16,7 +16,7 @@
 
 * `Camptocamp <https://www.camptocamp.com>`_:
   * Cyril Gaudin
-  
+
 * `Tecnativa <https://www.tecnativa.com>`_:
 
   * Carlos Dauden
