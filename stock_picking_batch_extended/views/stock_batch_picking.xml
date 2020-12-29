@@ -7,6 +7,7 @@
         <field name="priority" eval="10" />
         <field name="arch" type="xml">
             <form string="Batch picking">
+                <field name="company_id" invisible="1" />
                 <header>
                     <field name="state" widget="statusbar" />
                     <button
@@ -140,6 +141,7 @@
                                     string="Stock Moves"
                                     editable="bottom"
                                 >
+                                    <field name="company_id" invisible="1" />
                                     <field name="name" invisible="1" />
                                     <field name="date_expected" invisible="1" />
                                     <field name="state" invisible="1" readonly="0" />
@@ -215,6 +217,7 @@
                                     decoration-danger="qty_done&gt;product_uom_qty and state!='done'"
                                     decoration-success="qty_done==product_uom_qty and state!='done' and not result_package_id"
                                 >
+                                    <field name="company_id" invisible="1" />
                                     <field
                                         name="product_id"
                                         required="1"
