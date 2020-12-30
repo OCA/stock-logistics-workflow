@@ -6,19 +6,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2020-12-30 08:43+0000\n"
+"Last-Translator: Yoshi Tashiro <tashiro@roomsfor.hk>\n"
 "Language-Team: none\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: stock_no_negative
 #: code:addons/stock_no_negative/models/stock_quant.py:38
 #, python-format
 msgid " lot '%s'"
-msgstr ""
+msgstr " ロット '%s'"
 
 #. module: stock_no_negative
 #: model:ir.model.fields,field_description:stock_no_negative.field_product_category__allow_negative_stock
@@ -26,46 +28,48 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_no_negative.field_product_template__allow_negative_stock
 #: model:ir.model.fields,field_description:stock_no_negative.field_stock_location__allow_negative_stock
 msgid "Allow Negative Stock"
-msgstr ""
+msgstr "マイナス在庫を許可"
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_product_category__allow_negative_stock
 msgid "Allow negative stock levels for the stockable products attached to this category. The options doesn't apply to products attached to sub-categories of this category."
-msgstr ""
+msgstr "このカテゴリの在庫可能プロダクトにつきマイナス在庫を許可します。この選択はサブカテゴリのプロダクトには適用されません。"
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_stock_location__allow_negative_stock
 msgid "Allow negative stock levels for the stockable products attached to this location."
-msgstr ""
+msgstr "このロケーションの在庫可能プロダクトにつきマイナス在庫を許可します。"
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_product_product__allow_negative_stock
 #: model:ir.model.fields,help:stock_no_negative.field_product_template__allow_negative_stock
 msgid "If this option is not active on this product nor on its product category and that this product is a stockable product, then the validation of the related stock moves will be blocked if the stock level becomes negative with the stock move."
 msgstr ""
+"プロダクトまたはプロダクトカテゴリにてこのオプションが選択されていない場合、在庫移動の結果マイナス在庫が発生する状況下で、当該在庫移動の検証はブロックされ"
+"ます。"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_stock_location
 msgid "Inventory Locations"
-msgstr ""
+msgstr "在庫ロケーション"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_product_category
 msgid "Product Category"
-msgstr ""
+msgstr "プロダクトカテゴリ"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_product_template
 msgid "Product Template"
-msgstr ""
+msgstr "プロダクトテンプレート"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_stock_quant
 msgid "Quants"
-msgstr ""
+msgstr "保管ロット"
 
 #. module: stock_no_negative
 #: code:addons/stock_no_negative/models/stock_quant.py:39
 #, python-format
 msgid "You cannot validate this stock operation because the stock level of the product '%s'%s would become negative (%s) on the stock location '%s' and negative stock is not allowed for this product and/or location."
-msgstr ""
+msgstr "プロダクト '%s'%s の在庫レベルがマイナス (%s) （在庫ロケーション '%s'）となるため、在庫オペレーションは検証できません。"
