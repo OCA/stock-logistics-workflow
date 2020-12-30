@@ -1,0 +1,12 @@
+<odoo>
+
+    <record id="stock_scrap_product_action" model="ir.actions.act_window">
+        <field name="name">Scrap Report</field>
+        <field name="res_model">stock.scrap.product.wizard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <menuitem id="menu_scrap_report" name="Scrap Report" parent="stock.menu_warehouse_report" sequence="120" action="stock_scrap_product_action"/>
+
+</odoo>

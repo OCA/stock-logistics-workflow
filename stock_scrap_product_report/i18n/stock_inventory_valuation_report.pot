@@ -1,0 +1,201 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_scrap_product_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-12-31 04:41+0000\n"
+"PO-Revision-Date: 2020-12-31 04:41+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_scrap_product_report
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard_view__barcode
+msgid "Barcode"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model_terms:ir.ui.view,arch_db:stock_scrap_product_report.view_stock_scrap_report_wizard_form
+msgid "Cancel"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard_view__categ_name
+msgid "Categ Name"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model_terms:ir.ui.view,arch_db:stock_scrap_product_report.view_stock_scrap_report_wizard_form
+msgid "Choose your date"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard__company_id
+msgid "Company"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard_view__cost_currency_id
+msgid "Cost Currency"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard_view__cost_method
+msgid "Cost Method"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_report_report_stock_scrap_product_report_xlsx__create_uid
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard__create_uid
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard_view__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_report_report_stock_scrap_product_report_xlsx__create_date
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard__create_date
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard_view__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard_view__currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard_view__date
+msgid "Date"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_report_report_stock_scrap_product_report_xlsx__display_name
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard__display_name
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard_view__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard__end_date
+msgid "End Date"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model_terms:ir.ui.view,arch_db:stock_scrap_product_report.view_stock_scrap_report_wizard_form
+msgid "Export XLSX"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_report_report_stock_scrap_product_report_xlsx__id
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard__id
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard_view__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_report_report_stock_scrap_product_report_xlsx____last_update
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard____last_update
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard_view____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_report_report_stock_scrap_product_report_xlsx__write_uid
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard__write_uid
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard_view__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_report_report_stock_scrap_product_report_xlsx__write_date
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard__write_date
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard_view__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard_view__name
+msgid "Name"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard_view__qty_at_date
+msgid "Qty At Date"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard_view__reference
+msgid "Reference"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard__results
+msgid "Results"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.actions.report,name:stock_scrap_product_report.action_stock_scrap_report_xlsx
+msgid "Scrap Product Report XLSX"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.actions.act_window,name:stock_scrap_product_report.stock_scrap_product_action
+#: model:ir.ui.menu,name:stock_scrap_product_report.menu_scrap_report
+msgid "Scrap Report"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard_view__standard_price
+msgid "Standard Price"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard__start_date
+msgid "Start Date"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.model,name:stock_scrap_product_report.model_report_stock_inventory_valuation_report
+msgid "Stock Inventory Valuation Report"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.model,name:stock_scrap_product_report.model_stock_quantity_history
+msgid "Stock Quantity History"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard_view__stock_value
+msgid "Stock Value"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard_view__uom_id
+msgid "Uom"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.model.fields,help:stock_scrap_product_report.field_stock_scrap_product_wizard__results
+msgid "Use compute fields, so there is nothing store in database"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.model,name:stock_scrap_product_report.model_stock_scrap_product_wizard
+msgid "Wizard for Scrap Report"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.model,name:stock_scrap_product_report.model_stock_scrap_product_wizard_view
+msgid "Wizard for Scrap Report View"
+msgstr ""
+
+#. module: stock_scrap_product_report
+#: model:ir.model,name:stock_scrap_product_report.model_report_report_stock_scrap_product_report_xlsx
+msgid "report.report_stock_scrap_product_report_xlsx"
+msgstr ""

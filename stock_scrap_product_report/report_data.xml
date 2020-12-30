@@ -1,0 +1,10 @@
+<odoo>
+    <report string="Scrap Product Report XLSX"
+            id="action_stock_scrap_report_xlsx"
+            model="stock.scrap.product.wizard"
+            name="report_stock_scrap_product_report_xlsx"
+            file="Scrap Report"
+            report_type="xlsx"
+            attachment_use="False"/>
+
+</odoo>
