@@ -16,7 +16,7 @@ class StockPicking(models.Model):
 
         deliveryslip_folder = self.env['ir.config_parameter'].sudo().get_param(
             'stock_picking_multi_copy.deliveryslip_folder')
-        if deliveryslip_folder:
+        if deliveryslip_folder and self.picking_type_id.code == 'outgoing':
             report_obj = self.env["ir.actions.report"]
             report = report_obj._get_report_from_name(
                 'stock.report_deliveryslip'
