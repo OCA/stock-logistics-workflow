@@ -4,24 +4,25 @@
 from odoo.tests import common
 
 
-class TestBackorderStrategy(common.TransactionCase):
-    def setUp(self):
-        """ Create the picking
-        """
-        super(TestBackorderStrategy, self).setUp()
+class TestBackorderStrategy(common.SavepointCase):
+    @classmethod
+    def setUpClass(cls):
+        """Create the picking."""
+        super().setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
 
-        self.picking_obj = self.env["stock.picking"]
-        move_obj = self.env["stock.move"]
+        cls.picking_obj = cls.env["stock.picking"]
+        move_obj = cls.env["stock.move"]
 
-        self.picking_type = self.env.ref("stock.picking_type_in")
+        cls.picking_type = cls.env.ref("stock.picking_type_in")
 
-        product = self.env.ref("product.product_product_13")
-        loc_supplier_id = self.env.ref("stock.stock_location_suppliers").id
-        loc_stock_id = self.env.ref("stock.stock_location_stock").id
+        product = cls.env.ref("product.product_product_13")
+        loc_supplier_id = cls.env.ref("stock.stock_location_suppliers").id
+        loc_stock_id = cls.env.ref("stock.stock_location_stock").id
 
-        self.picking = self.picking_obj.create(
+        cls.picking = cls.picking_obj.create(
             {
-                "picking_type_id": self.picking_type.id,
+                "picking_type_id": cls.picking_type.id,
                 "location_id": loc_supplier_id,
                 "location_dest_id": loc_stock_id,
             }
@@ -29,7 +30,7 @@ class TestBackorderStrategy(common.TransactionCase):
         move_obj.create(
             {
                 "name": "/",
-                "picking_id": self.picking.id,
+                "picking_id": cls.picking.id,
                 "product_uom": product.uom_id.id,
                 "location_id": loc_supplier_id,
                 "location_dest_id": loc_stock_id,
@@ -37,7 +38,7 @@ class TestBackorderStrategy(common.TransactionCase):
                 "product_uom_qty": 2,
             }
         )
-        self.picking.action_confirm()
+        cls.picking.action_confirm()
 
     def _process_picking(self):
         """ Receive partially the picking
