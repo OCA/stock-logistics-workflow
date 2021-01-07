@@ -1,15 +1,16 @@
 # Copyright 2016 Oihane Crucelaegui - AvanzOSC
 # Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # Copyright 2017 Jacques-Etienne Baudoux <je@bcim.be>
+# Copyright 2021 Tecnativa - João Marques
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
 from odoo.exceptions import UserError
 from odoo.tests import Form
 
-from odoo.addons.sale.tests.test_sale_common import TestSale
+from odoo.addons.sale.tests.common import TestSaleCommon
 
 
-class TestStockPickingInvoiceLink(TestSale):
+class TestStockPickingInvoiceLink(TestSaleCommon):
     def _update_product_qty(self, product):
 
         product_qty = self.env["stock.change.product.qty"].create(
@@ -22,59 +23,60 @@ class TestStockPickingInvoiceLink(TestSale):
         product_qty.change_product_qty()
         return product_qty
 
-    def setUp(self):
-        super(TestStockPickingInvoiceLink, self).setUp()
-        for (_, p) in self.products.items():
-            if p.type == "product":
-                self._update_product_qty(p)
-        self.prod_order = self.products["prod_order"]
-        self.prod_del = self.products["prod_del"]
-        self.serv_order = self.products["serv_order"]
-        self.so = self.env["sale.order"].create(
+    @classmethod
+    def setUpClass(cls, chart_template_ref=None):
+        super().setUpClass(chart_template_ref=chart_template_ref)
+        for (_, i) in cls.company_data.items():
+            if "type" in i and i.type == "product":
+                cls._update_product_qty(i)
+        cls.prod_order = cls.company_data["product_order_no"]
+        cls.prod_del = cls.company_data["product_delivery_no"]
+        cls.serv_order = cls.company_data["product_service_order"]
+        cls.so = cls.env["sale.order"].create(
             {
-                "partner_id": self.partner.id,
-                "partner_invoice_id": self.partner.id,
-                "partner_shipping_id": self.partner.id,
+                "partner_id": cls.partner_a.id,
+                "partner_invoice_id": cls.partner_a.id,
+                "partner_shipping_id": cls.partner_a.id,
                 "order_line": [
                     (
                         0,
                         0,
                         {
-                            "name": self.prod_order.name,
-                            "product_id": self.prod_order.id,
+                            "name": cls.prod_order.name,
+                            "product_id": cls.prod_order.id,
                             "product_uom_qty": 2,
-                            "product_uom": self.prod_order.uom_id.id,
-                            "price_unit": self.prod_order.list_price,
+                            "product_uom": cls.prod_order.uom_id.id,
+                            "price_unit": cls.prod_order.list_price,
                         },
                     ),
                     (
                         0,
                         0,
                         {
-                            "name": self.prod_del.name,
-                            "product_id": self.prod_del.id,
+                            "name": cls.prod_del.name,
+                            "product_id": cls.prod_del.id,
                             "product_uom_qty": 2,
-                            "product_uom": self.prod_del.uom_id.id,
-                            "price_unit": self.prod_del.list_price,
+                            "product_uom": cls.prod_del.uom_id.id,
+                            "price_unit": cls.prod_del.list_price,
                         },
                     ),
                     (
                         0,
                         0,
                         {
-                            "name": self.serv_order.name,
-                            "product_id": self.serv_order.id,
+                            "name": cls.serv_order.name,
+                            "product_id": cls.serv_order.id,
                             "product_uom_qty": 2,
-                            "product_uom": self.serv_order.uom_id.id,
-                            "price_unit": self.serv_order.list_price,
+                            "product_uom": cls.serv_order.uom_id.id,
+                            "price_unit": cls.serv_order.list_price,
                         },
                     ),
                 ],
-                "pricelist_id": self.env.ref("product.list0").id,
+                "pricelist_id": cls.env.ref("product.list0").id,
                 "picking_policy": "direct",
             }
         )
-        self.so.action_confirm()
+        cls.so.action_confirm()
 
     def test_00_sale_stock_invoice_link(self):
         pick_obj = self.env["stock.picking"]
@@ -92,7 +94,7 @@ class TestStockPickingInvoiceLink(TestSale):
             and x.state in ("confirmed", "assigned", "partially_available")
         )
         pick_1.move_line_ids.write({"qty_done": 1})
-        pick_1.action_done()
+        pick_1._action_done()
         self.assertEqual(
             self.so.invoice_status,
             "to invoice",
@@ -117,7 +119,7 @@ class TestStockPickingInvoiceLink(TestSale):
             and x.state in ("confirmed", "assigned", "partially_available")
         )
         pick_2.move_line_ids.write({"qty_done": 1})
-        pick_2.action_done()
+        pick_2._action_done()
         backorders = pick_obj.search([("backorder_id", "=", pick_2.id)])
         self.assertFalse(
             backorders,
@@ -196,7 +198,7 @@ class TestStockPickingInvoiceLink(TestSale):
             and x.state in ("confirmed", "assigned", "partially_available")
         )
         pick_1.move_line_ids.write({"qty_done": 2})
-        pick_1.action_done()
+        pick_1._action_done()
 
         # Create invoice
         inv = self.so._create_invoices()
@@ -235,7 +237,7 @@ class TestStockPickingInvoiceLink(TestSale):
             and x.state in ("confirmed", "assigned", "partially_available")
         )
         pick_1.move_line_ids.write({"qty_done": 2})
-        pick_1.action_done()
+        pick_1._action_done()
         # Create invoice
         inv = self.so._create_invoices()
         inv.action_post()
@@ -249,7 +251,7 @@ class TestStockPickingInvoiceLink(TestSale):
         )
         wiz_invoice_refund.reverse_moves()
         new_invoice = self.so.invoice_ids.filtered(
-            lambda i: i.type == "out_invoice" and i.state == "draft"
+            lambda i: i.move_type == "out_invoice" and i.state == "draft"
         )
         inv_line_prod_del = new_invoice.invoice_line_ids.filtered(
             lambda l: l.product_id == self.prod_del
