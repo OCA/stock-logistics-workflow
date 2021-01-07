@@ -19,6 +19,7 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
+[stock_picking_invoice_link](stock_picking_invoice_link/) | 14.0.1.0.0 | Adds link between pickings and invoices
 [stock_restrict_lot](stock_restrict_lot/) | 14.0.1.1.0 | Base module that add back the concept of restrict lot on stock move
 
 [//]: # (end addons)
