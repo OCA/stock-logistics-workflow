@@ -22,8 +22,14 @@ class TestRoutingPullCommon(common.SavepointCase):
         cls.location_hb = cls.env["stock.location"].create(
             {"name": "Highbay", "location_id": cls.wh.lot_stock_id.id}
         )
+        cls.location_shelving = cls.env["stock.location"].create(
+            {"name": "Shelving", "location_id": cls.wh.lot_stock_id.id}
+        )
         cls.location_shelf_1 = cls.env["stock.location"].create(
-            {"name": "Shelf 1", "location_id": cls.wh.lot_stock_id.id}
+            {"name": "Shelf 1", "location_id": cls.location_shelving.id}
+        )
+        cls.location_shelf_2 = cls.env["stock.location"].create(
+            {"name": "Shelf 2", "location_id": cls.location_shelving.id}
         )
         cls.location_hb_1 = cls.env["stock.location"].create(
             {"name": "Highbay Shelf 1", "location_id": cls.location_hb.id}
@@ -910,3 +916,138 @@ class TestRoutingPull(TestRoutingPullCommon):
         self.assertEqual(move_middle.picking_id.picking_type_id, pick_type_routing_qa)
 
         self.assertEqual(move_b.picking_id.picking_type_id, pick_type_routing_delivery)
+
+    def test_mix_routing_reservation_same_location(self):
+        """Test a picking with different types of routing
+
+        Changing the picking type on 2 moves.
+        Changing the picking type and inserting a move to reach the destination
+        from a different source location.
+        """
+        # All the moves with a high priority are changed to a special "Pick"
+        # picking type, which allows us to trigger a special condition where a
+        # move is routed through a handover (new move inserted) + change of
+        # picking type and another move is routed only through a change of
+        # picking type.
+        # The issue which can happen in such case is that one move routed only
+        # through a picking type reserve the goods which should have been reserved
+        # for the moves that go through the handover.
+        priority_pick_type = self.env["stock.picking.type"].create(
+            {
+                "name": "Priority",
+                "code": "outgoing",
+                "sequence_code": "PRI",
+                "warehouse_id": self.wh.id,
+                "use_create_lots": False,
+                "use_existing_lots": True,
+                "default_location_src_id": self.location_shelving.id,
+                "default_location_dest_id": self.wh.wh_output_stock_loc_id.id,
+            }
+        )
+        self.env["stock.routing"].create(
+            {
+                "location_id": self.wh.lot_stock_id.id,
+                "picking_type_id": self.wh.pick_type_id.id,
+                "rule_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "method": "pull",
+                            "picking_type_id": priority_pick_type.id,
+                            "rule_domain": [("priority", "=", "3")],
+                        },
+                    )
+                ],
+            }
+        )
+
+        pick_picking, customer_picking = self._create_pick_ship(
+            self.wh, [(self.product1, 30)]
+        )
+        pick_picking.move_lines.priority = "3"
+
+        self._update_product_qty_in_location(self.location_hb_1_1, self.product1, 5)
+        self._update_product_qty_in_location(self.location_hb_1_2, self.product1, 7)
+        self._update_product_qty_in_location(self.location_shelf_1, self.product1, 10)
+        self._update_product_qty_in_location(self.location_shelf_2, self.product1, 8)
+
+        pick_picking.action_assign()
+
+        # all the moves are moved to the priority picking type -> original pick
+        # cancelled
+        self.assertEqual(pick_picking.state, "cancel")
+
+        customer_moves = customer_picking.move_lines
+        pick_picking = customer_moves.move_orig_ids.picking_id
+        pick_moves = pick_picking.move_lines
+
+        shelf_move = pick_moves.filtered(lambda m: m.product_uom_qty == 18)
+        handover_move = pick_moves.filtered(lambda m: m.product_uom_qty == 12)
+
+        # At this point, we should have 3 stock.picking:
+        #
+        # +-------------------------------------------------------------------+
+        # | HO/xxxx  Assigned                                                 |
+        # | Stock → Stock/Handover                                            |
+        # | 12x Product Highbay  → Stock/Handover (available)                 |
+        # |   lines: 5 from Bay1/Bin1, 7 from Bay1/Bin2                       |
+        # +-------------------------------------------------------------------+
+        #
+        # +-------------------------------------------------------------------+
+        # | PRI/xxxx Waiting                                                  |
+        # | Stock → Output                                                    |
+        # | 12x Product Stock → Output (waiting on the Handover moves)        |
+        # | 18x Product Stock → Output (available)                            |
+        # |   lines: 10 from Stock/Shelf1, 8 from Stock/Shelf2                |
+        # +-------------------------------------------------------------------+
+        #
+        # +-------------------------------------------------+
+        # | OUT/xxxx Waiting                                |
+        # | Output → Customer                               |
+        # | 18x Product Output → Customer (waiting)         |
+        # | 12x Product Output → Customer (waiting)         |
+        # +-------------------------------------------------+
+
+        highbay_move = handover_move.move_orig_ids
+
+        self.assertRecordValues(
+            shelf_move + handover_move,
+            [
+                {
+                    "state": "assigned",
+                    "product_uom_qty": 18,
+                    "picking_type_id": priority_pick_type.id,
+                },
+                {
+                    "state": "waiting",
+                    "product_uom_qty": 12,
+                    "picking_type_id": priority_pick_type.id,
+                },
+            ],
+        )
+        self.assertRecordValues(
+            shelf_move.move_line_ids,
+            [
+                {"location_id": self.location_shelf_1.id, "product_uom_qty": 10},
+                {"location_id": self.location_shelf_2.id, "product_uom_qty": 8},
+            ],
+        )
+
+        self.assertRecordValues(
+            highbay_move,
+            [
+                {
+                    "state": "assigned",
+                    "product_uom_qty": 12,
+                    "picking_type_id": self.pick_type_routing_op.id,
+                },
+            ],
+        )
+        self.assertRecordValues(
+            highbay_move.move_line_ids,
+            [
+                {"location_id": self.location_hb_1_1.id, "product_uom_qty": 5},
+                {"location_id": self.location_hb_1_2.id, "product_uom_qty": 7},
+            ],
+        )

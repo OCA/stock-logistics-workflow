@@ -235,6 +235,7 @@ class StockMove(models.Model):
         the routing ones and creates a new chained move after it.
         """
         pickings_to_check_for_emptiness = self.env["stock.picking"]
+        move_ids_to_assign_per_location = defaultdict(list)
         for move in self:
             routing_rule = routing_details[move].rule
             if not routing_rule.method == "pull":
@@ -273,13 +274,58 @@ class StockMove(models.Model):
 
             pickings_to_check_for_emptiness |= move.picking_id
             move._assign_picking()
-            # Note: we have to call _action_assign() here because if the move
-            # has been split because of partial availability, we want to ensure
-            # to reserve the move which has been "routed" first. Even if
-            # _action_assign() is called again, it should not be an issue
-            # because the move's state will be "assigned" and will be excluded
-            # by the method.
-            move.with_context(exclude_apply_dynamic_routing=True)._action_assign()
+            move_ids_to_assign_per_location[move.location_id].append(move.id)
+
+        # We have two kind of "routed" moves:
+        #
+        # * The ones where only the picking type / destination has been changed
+        # * The ones which are assigned to a new picking and a new move is inserted
+        #   to reach the destination
+        #
+        # For these 2 kinds, we have to call _action_assign() here because if
+        # the move has been split because of partial availability, we want to
+        # ensure to reserve the move which has been "routed" before the moves
+        # without routing. Even if _action_assign() is called again, it will
+        # not be an issue (unless a custom module does not check the current
+        # state) because the move's state will be "assigned" and will be
+        # excluded by the method.
+        #
+        # Now among these moves, some may have their source location changed by
+        # the dynamic routing, for instance:
+        #
+        # * A move of 20 units has a source location: Stock
+        # * We have this in stock:
+        #   * 10 in Stock/Shelving
+        #   * 10 in Stock/Reserve
+        # * a routing is configured to insert a new move to do Stock/Reserve ->
+        #   Stock/Shelving
+        #
+        # The source location for the reserve move is now Stock/Reserve. The
+        # source location for the other move is still "Stock".
+        # If the move to reserve the first move in "Stock" is reserved
+        # first, it may take the goods in Stock/Reserve, which should be
+        # reserved by the second one.
+        #
+        # Besides this, we have to reserve them in the same order as they were
+        # initially, otherwise we may not reserve the correct quant (e.g., we
+        # reserve in X in the savepoint, the dynamic routing changes the
+        # picking type, and the new reservation reserves in Y because X has
+        # been reserved by another move).
+        #
+        # To ensure moves don't reserve something which was initially reserved
+        # by another move, sort the moves by their source location, from the
+        # most precise to the least precise. The order of the move ids within
+        # one location is preserved.
+        sorted_locations = sorted(
+            move_ids_to_assign_per_location, key=lambda l: l.parent_path, reverse=True
+        )
+        to_assign_ids = []
+        for location in sorted_locations:
+            to_assign_ids += move_ids_to_assign_per_location[location]
+
+        self.browse(to_assign_ids).with_context(
+            exclude_apply_dynamic_routing=True
+        )._action_assign()
 
         pickings_to_check_for_emptiness._dynamic_routing_handle_empty()
 
