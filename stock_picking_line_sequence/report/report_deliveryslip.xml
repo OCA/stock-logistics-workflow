@@ -2,17 +2,32 @@
 <odoo>
 
     <template id="report_delivery_document" inherit_id="stock.report_delivery_document">
+        <xpath expr="//table[1]/thead/tr/th[1]" position="before">
+            <th><strong>Seq.</strong></th>
+        </xpath>
+        <xpath expr="//table[1]/tbody/tr/td[1]" position="before">
+            <td><span t-field="move.sequence2" /></td>
+        </xpath>
         <xpath expr="//table[2]/thead/tr/th[1]" position="before">
             <th><strong>Seq.</strong></th>
         </xpath>
-        <xpath expr="//table[2]/tbody/tr/td[1]" position="before">
-            <td><span t-field="move.sequence2" /></td>
-        </xpath>
-        <xpath expr="//table[3]/thead/tr/th[1]" position="before">
-            <th><strong>Seq.</strong></th>
-        </xpath>
-        <xpath expr="//table[3]/tbody/tr/td[1]" position="before">
+    </template>
+
+    <template
+        id="report_delivery_has_serial_moveline"
+        inherit_id="stock.stock_report_delivery_has_serial_move_line"
+    >
+        <xpath expr="//td[1]" position="before">
             <td><span t-field="move_line.move_id.sequence2" /></td>
+        </xpath>
+    </template>
+
+    <template
+        id="report_delivery_aggregated_moveline"
+        inherit_id="stock.stock_report_delivery_aggregated_move_lines"
+    >
+        <xpath expr="//td[1]" position="before">
+            <td><span t-esc="aggregated_lines[line]['sequence2']" /></td>
         </xpath>
     </template>
 

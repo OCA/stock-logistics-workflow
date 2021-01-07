@@ -11,7 +11,8 @@
     "author": "Camptocamp, "
     "Eficent, "
     "Serpent CS, "
-    "Odoo Community Association (OCA)",
+    "Odoo Community Association (OCA), "
+    "ArcheTI",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": ["stock", "sale", "sale_stock"],
     "data": [
