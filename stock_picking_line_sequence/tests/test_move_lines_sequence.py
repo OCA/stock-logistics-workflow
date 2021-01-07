@@ -95,9 +95,12 @@ class TestStockMove(common.TransactionCase):
         picking.action_confirm()
         picking.action_assign()
         picking.move_line_ids[1].write({"qty_done": 5})
-        backorder_wiz_id = picking.button_validate()["res_id"]
-        backorder_wiz = self.env["stock.backorder.confirmation"].browse(
-            [backorder_wiz_id]
+        res_dict = picking.button_validate()
+        self.assertEqual(res_dict["res_model"], "stock.backorder.confirmation")
+        backorder_wiz = (
+            self.env["stock.backorder.confirmation"]
+            .browse(res_dict.get("res_id"))
+            .with_context(res_dict["context"])
         )
         backorder_wiz.process()
         picking_backorder = self.Picking.search([("backorder_id", "=", picking.id)])
@@ -107,3 +110,20 @@ class TestStockMove(common.TransactionCase):
         self.assertEqual(
             picking_backorder[0].move_lines[0].sequence, 1, "Backorder wrong sequence"
         )
+
+    def test_move_lines_aggregated(self):
+        picking = self._create_picking()
+        picking._compute_max_line_sequence()
+        picking.action_confirm()
+        agg_mls = picking.move_line_ids[0]._get_aggregated_product_quantities()
+        for key in agg_mls:
+            self.assertNotEqual(
+                agg_mls[key].get("sequence2", "NA"),
+                "NA",
+                "The field sequence2 is not added in dictionary",
+            )
+            self.assertEqual(
+                picking.move_line_ids[0].move_id.sequence2,
+                agg_mls[key]["sequence2"],
+                "The Sequence is not copied properly in the aggregated move lines",
+            )
