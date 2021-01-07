@@ -31,10 +31,37 @@ class StockMove(models.Model):
         return move
 
 
+class StockMoveLine(models.Model):
+    _inherit = "stock.move.line"
+
+    def _get_aggregated_product_quantities(self, **kwargs):
+        aggregated_move_lines = super(
+            StockMoveLine, self
+        )._get_aggregated_product_quantities(**kwargs)
+        for move_line in self:
+            name = move_line.product_id.display_name
+            description = move_line.move_id.description_picking
+            if description == name or description == move_line.product_id.name:
+                description = False
+            uom = move_line.product_uom_id
+            line_key = (
+                str(move_line.product_id.id)
+                + "_"
+                + name
+                + (description or "")
+                + "uom "
+                + str(uom.id)
+            )
+            sequence2 = move_line.move_id.sequence2
+            if line_key in aggregated_move_lines:
+                aggregated_move_lines[line_key]["sequence2"] = sequence2
+
+        return aggregated_move_lines
+
+
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    @api.multi
     @api.depends("move_ids_without_package")
     def _compute_max_line_sequence(self):
         """Allow to know the highest sequence entered in move lines.
@@ -52,7 +79,6 @@ class StockPicking(models.Model):
         string="Max sequence in lines", compute="_compute_max_line_sequence"
     )
 
-    @api.multi
     def _reset_sequence(self):
         for rec in self:
             current_sequence = 1
@@ -60,13 +86,11 @@ class StockPicking(models.Model):
                 line.sequence = current_sequence
                 current_sequence += 1
 
-    @api.multi
     def copy(self, default=None):
         return super(StockPicking, self.with_context(keep_line_sequence=True)).copy(
             default
         )
 
-    @api.multi
     def button_validate(self):
         return super(
             StockPicking, self.with_context(keep_line_sequence=True)
