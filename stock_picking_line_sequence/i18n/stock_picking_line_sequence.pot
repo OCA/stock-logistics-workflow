@@ -1,12 +1,12 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_picking_line_sequence
+# 	* stock_picking_line_sequence
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: <>\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,13 +19,39 @@ msgid "<strong>Seq.</strong>"
 msgstr ""
 
 #. module: stock_picking_line_sequence
+#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move__display_name
+#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move_line__display_name
+#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_picking__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_picking_line_sequence
 #: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move__sequence
 msgid "HiddenSequence"
 msgstr ""
 
 #. module: stock_picking_line_sequence
+#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move__id
+#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move_line__id
+#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_picking__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_picking_line_sequence
+#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move____last_update
+#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move_line____last_update
+#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_picking____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_picking_line_sequence
 #: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_picking__max_line_sequence
 msgid "Max sequence in lines"
+msgstr ""
+
+#. module: stock_picking_line_sequence
+#: model:ir.model,name:stock_picking_line_sequence.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
 msgstr ""
 
 #. module: stock_picking_line_sequence
@@ -47,4 +73,3 @@ msgstr ""
 #: model:ir.model,name:stock_picking_line_sequence.model_stock_picking
 msgid "Transfer"
 msgstr ""
-
