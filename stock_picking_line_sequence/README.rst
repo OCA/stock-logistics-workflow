@@ -23,7 +23,7 @@ Stock picking lines with sequence number
     :target: https://runbot.odoo-community.org/runbot/154/12.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 
 Provide a new field sequence on stock moves, which allows to manage the order of moves in a picking.
@@ -53,6 +53,7 @@ Credits
 Authors
 ~~~~~~~
 
+* ArcheTI
 * Camptocamp
 * Eficent
 * Serpent CS
@@ -60,7 +61,7 @@ Authors
 Contributors
 ~~~~~~~~~~~~
 
-
+* Cécile Jallais <cjallais@archeti.com>
 * Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
 * Damien Crier <damien.crier@camptocamp.com>
 * Eficent Business and IT Consulting Services S.L. <contact@eficent.com>
