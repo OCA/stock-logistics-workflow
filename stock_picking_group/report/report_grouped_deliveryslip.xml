@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+<template id="report_one_grouped_deliveryslip_picking">
+    <t t-if="picking.state != 'done'">
+        <t t-set="lines" t-value="picking.move_lines.filtered(lambda x: x.product_uom_qty)"/>
+    </t>
+    <t t-if="picking.state == 'done'">
+        <t t-set="lines" t-value="picking.move_line_ids"/>
+    </t>
+    <tr>
+        <td colspan="2">
+            <strong>
+                <span>Order:</span>
+                <span t-if="picking.origin" t-field="picking.origin"/>
+                <t t-if="picking.sale_id.client_order_ref">
+                    <span t-translation="off"> (</span><span t-field="picking.sale_id.client_order_ref"/><span t-translation="off">)</span>
+                </t>
+                <span>Picking:</span>
+                <span t-field="picking.date_done" t-options="{'widget': 'date'}"/>
+                <span t-field="picking.name"/>
+            </strong>
+        </td>
+    </tr>
+    <tr t-foreach="lines" t-as="move">
+        <td>
+            <span t-field="move.product_id"/>
+            <p t-if="picking.picking_type_code == 'outgoing'">
+                <span t-field="move.product_id.sudo().description_pickingout"/>
+            </p>
+            <p t-if="picking.picking_type_code == 'incoming'">
+                <span t-field="move.product_id.sudo().description_pickingin"/>
+            </p>
+        </td>
+        <td t-if="picking_group.has_serial_number and move_line.lot_name" groups="stock.group_lot_on_delivery_slip">
+            <span t-field="move_line.lot_name or ''"/>
+        </td>
+        <td>
+            <t t-if="picking.state != 'done'">
+                <td>
+                    <span t-field="move.product_uom_qty"/>
+                    <span t-field="move.product_uom"/>
+                </td>
+            </t>
+            <t t-if="picking.state == 'done'">
+                <td class="text-center">
+                    <span t-field="move.qty_done"/>
+                    <span t-field="move.product_uom_id"/>
+                </td>
+            </t>
+        </td>
+    </tr>
+</template>
+
+<template id="report_one_grouped_deliveryslip_pickings">
+    <t t-set="pickings" t-value="picking_group.picking_ids[0]" />    
+    <table class="table table-sm mt48">
+        <thead>
+            <tr>
+                <th><strong>Product</strong></th>
+                <th name="lot_serial" t-if="picking_group.has_serial_number" groups="stock.group_lot_on_delivery_slip">
+                    Lot/Serial Number
+                </th>
+                <th class="text-center"><strong>Quantity</strong></th>
+            </tr>
+        </thead>
+        <tbody>
+            <t t-foreach="picking_group.picking_ids" t-as="picking">
+                <t t-call="stock_picking_group.report_one_grouped_deliveryslip_picking"/>
+            </t>
+        </tbody>
+    </table>
+            
+</template>
+
+<template id="report_one_grouped_deliveryslip">
+    <t t-call="web.html_container">
+        <t t-call="web.external_layout">
+            <t t-set="first_picking" t-value="picking_group.picking_ids[0]" />
+            <t t-set="partner" t-value="first_picking.partner_id" />
+            <t t-set="picking_group" t-value="picking_group.with_context(lang=partner.lang)" />
+            
+            <t t-if="partner" name="partner_header">
+                <t t-set="address">
+                    <div t-esc="partner"
+                    t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True}'/>
+               </t>
+            </t>
+
+            <div class="page">
+                <h2>
+                    <span t-field="picking_group.name"/>
+                </h2>
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th name="td_sched_date_h">
+                                <strong>Date</strong>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td name="td_sched_date">
+                               <t t-if="first_picking.state == 'done'">
+                                    <span t-field="picking.date_done"/>
+                               </t>
+                               <t t-if="first_picking.state != 'done'">
+                                    <span t-field="first_picking.scheduled_date"/>
+                               </t>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <t t-call="stock_picking_group.report_one_grouped_deliveryslip_pickings"/>
+                <p>
+                    <t t-if="picking_group.remaining">
+                        All items couldn't be shipped, the remaining ones will be shipped as soon as they become available.
+                    </t>
+                </p>
+            </div>
+        </t>
+     </t>
+</template>
+
+<template id="report_grouped_deliveryslip">
+    <t t-foreach="docs" t-as="picking_group">
+        <t t-call="stock_picking_group.report_one_grouped_deliveryslip"/>
+    </t>
+</template>
+
+</odoo>

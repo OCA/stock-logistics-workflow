@@ -1,0 +1,167 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_picking_group
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-01-08 10:52+0000\n"
+"PO-Revision-Date: 2021-01-08 10:52+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_group
+#: model_terms:ir.ui.view,arch_db:stock_picking_group.report_one_grouped_deliveryslip_picking
+msgid "<span>Order:</span>"
+msgstr "<span>Pedido:</span>"
+
+#. module: stock_picking_group
+#: model_terms:ir.ui.view,arch_db:stock_picking_group.report_one_grouped_deliveryslip_picking
+msgid "<span>Picking:</span>"
+msgstr "<span>Albarán:</span>"
+
+#. module: stock_picking_group
+#: model_terms:ir.ui.view,arch_db:stock_picking_group.report_one_grouped_deliveryslip
+msgid "<strong>Date</strong>"
+msgstr "<strong>Fecha</strong>"
+
+#. module: stock_picking_group
+#: model_terms:ir.ui.view,arch_db:stock_picking_group.report_one_grouped_deliveryslip_pickings
+msgid "<strong>Product</strong>"
+msgstr "<strong>Producto</strong>"
+
+#. module: stock_picking_group
+#: model_terms:ir.ui.view,arch_db:stock_picking_group.report_one_grouped_deliveryslip_pickings
+msgid "<strong>Quantity</strong>"
+msgstr "<strong>Cantidad</strong>"
+
+#. module: stock_picking_group
+#: model_terms:ir.ui.view,arch_db:stock_picking_group.report_one_grouped_deliveryslip
+msgid "All items couldn't be shipped, the remaining ones will be shipped as soon as they become available."
+msgstr "Todos los artículos no pudieron ser enviados, los restantes serán enviados tan pronto como estén disponibles."
+
+#. module: stock_picking_group
+#: model:ir.model.fields,field_description:stock_picking_group.field_stock_picking_group__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: stock_picking_group
+#: model:ir.model.fields,field_description:stock_picking_group.field_stock_picking_group__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: stock_picking_group
+#: model:ir.model.fields,field_description:stock_picking_group.field_stock_picking_group__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: stock_picking_group
+#: model:ir.model.fields,field_description:stock_picking_group.field_stock_picking__picking_group_id
+msgid "Group"
+msgstr "Grupo"
+
+#. module: stock_picking_group
+#: model:ir.actions.server,name:stock_picking_group.action_server_act_group_pickings
+msgid "Group Pickings"
+msgstr "Agrupar Albaranes"
+
+#. module: stock_picking_group
+#: model:ir.model.fields,field_description:stock_picking_group.field_stock_picking_group__name
+msgid "Group Reference"
+msgstr "Referencia"
+
+#. module: stock_picking_group
+#: model:ir.actions.report,name:stock_picking_group.action_report_delivery
+msgid "Grouped Delivery Slip"
+msgstr "Vale de entrega agrupado"
+
+#. module: stock_picking_group
+#: code:addons/stock_picking_group/models/stock_picking_group.py:59
+#, python-format
+msgid "Grouped pickings must have same parnter."
+msgstr "Los albaranes agrupados deben pertenecer a la misma empresa."
+
+#. module: stock_picking_group
+#: model:ir.model.fields,field_description:stock_picking_group.field_stock_picking_group__has_serial_number
+msgid "Has Serial Number"
+msgstr "Tiene número de serie"
+
+#. module: stock_picking_group
+#: model:ir.model.fields,field_description:stock_picking_group.field_stock_picking_group__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_picking_group
+#: model:ir.model.fields,field_description:stock_picking_group.field_stock_picking_group____last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: stock_picking_group
+#: model:ir.model.fields,field_description:stock_picking_group.field_stock_picking_group__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: stock_picking_group
+#: model:ir.model.fields,field_description:stock_picking_group.field_stock_picking_group__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: stock_picking_group
+#: model_terms:ir.ui.view,arch_db:stock_picking_group.report_one_grouped_deliveryslip_pickings
+msgid "Lot/Serial Number"
+msgstr "Lote/Nº de serie"
+
+#. module: stock_picking_group
+#: code:addons/stock_picking_group/models/stock_picking_group.py:61
+#, python-format
+msgid "New"
+msgstr "Nuevo"
+
+#. module: stock_picking_group
+#: model:ir.model.fields,field_description:stock_picking_group.field_stock_picking_group__partner_id
+msgid "Partner"
+msgstr "Empresa"
+
+#. module: stock_picking_group
+#: model:ir.model.fields,field_description:stock_picking_group.field_stock_picking_group__picking_ids
+msgid "Pickings"
+msgstr "Albaranes"
+
+#. module: stock_picking_group
+#: model:ir.model.fields,field_description:stock_picking_group.field_stock_picking_group__remaining
+msgid "Remaining"
+msgstr "Aún pendiente"
+
+#. module: stock_picking_group
+#: code:addons/stock_picking_group/models/stock_picking.py:27
+#, python-format
+msgid "Sales Order(s)"
+msgstr "Pedidos de venta"
+
+#. module: stock_picking_group
+#: model:ir.actions.act_window,name:stock_picking_group.stock_picking_group_action
+#: model:ir.ui.menu,name:stock_picking_group.menu_stock_picking_group
+msgid "Stock Picking Groups"
+msgstr "Agrupaciones de albaranes"
+
+#. module: stock_picking_group
+#: model:ir.model,name:stock_picking_group.model_stock_picking
+msgid "Transfer"
+msgstr "Transferir"
+
+#. module: stock_picking_group
+#: code:addons/stock_picking_group/models/stock_picking.py:20
+#, python-format
+msgid "You must select more than one picking."
+msgstr "Debes seleccionar más de un albarán"
+
+#. module: stock_picking_group
+#: model:ir.model,name:stock_picking_group.model_stock_picking_group
+msgid "stock.picking.group"
+msgstr "stock.picking.group"
+

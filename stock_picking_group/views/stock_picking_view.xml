@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2021 PlanetaTIC - Marc Poch <mpoch@planetatic.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+<data>
+
+    <record id="action_server_act_group_pickings" model="ir.actions.server">
+        <field name="name">Group Pickings</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="model_stock_picking" />
+        <field name="binding_model_id" ref="model_stock_picking" />
+        <field name="state">code</field>
+        <field name="code">action = records.group_pickings()</field>
+    </record>
+
+</data>
+</odoo>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2021 PlanetaTIC - Marc Poch <mpoch@planetatic.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+<data>
+
+    <report
+        string="Grouped Delivery Slip"
+        id="action_report_delivery"
+        model="stock.picking.group"
+        report_type="qweb-pdf"
+        name="stock_picking_group.report_grouped_deliveryslip"
+        file="stock_picking_group.report_grouped_deliveryslip"
+        print_report_name="'Delivery Slip - %s - %s' % (object.partner_id.name or '', object.name)"
+    />
+
+</data>
+</odoo>

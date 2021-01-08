@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2021 PlanetaTIC - Marc Poch <mpoch@planetatic.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+<data>
+
+    <record model="ir.ui.view" id="view_picking_type_form">
+        <field name="name">Stock Picking Groups</field>
+        <field name="model">stock.picking.group</field>
+        <field name="arch" type="xml">
+            <form>
+                <group name="main">
+                    <field name="name" />
+                </group>
+                <group name="pickings" colspan="4">
+                    <field name="picking_ids" />
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_picking_type_form">
+        <field name="name">Stock Picking Groups</field>
+        <field name="model">stock.picking.group</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="picking_ids" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="stock_picking_group_action" model="ir.actions.act_window">
+        <field name="name">Stock Picking Groups</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.picking.group</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+    </record>
+
+    <menuitem id="menu_stock_picking_group" name="Stock Picking Groups" action="stock_picking_group_action" parent="stock.menu_stock_warehouse_mgmt" sequence="100"/>
+
+</data>
+</odoo>
