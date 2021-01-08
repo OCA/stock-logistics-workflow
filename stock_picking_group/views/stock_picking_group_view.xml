@@ -4,7 +4,7 @@
 <odoo>
 <data>
 
-    <record model="ir.ui.view" id="view_picking_type_form">
+    <record id="view_picking_group_form" model="ir.ui.view">
         <field name="name">Stock Picking Groups</field>
         <field name="model">stock.picking.group</field>
         <field name="arch" type="xml">
@@ -19,7 +19,7 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="view_picking_type_form">
+    <record id="view_picking_group_tree" model="ir.ui.view">
         <field name="name">Stock Picking Groups</field>
         <field name="model">stock.picking.group</field>
         <field name="arch" type="xml">
