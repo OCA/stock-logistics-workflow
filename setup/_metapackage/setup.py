@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo13-addon-delivery_package_default_shipping_weight',
         'odoo13-addon-sale_stock_mto_as_mts_orderpoint',
+        'odoo13-addon-stock_account_product_run_fifo_hook',
         'odoo13-addon-stock_lock_lot',
         'odoo13-addon-stock_move_assign_picking_hook',
         'odoo13-addon-stock_move_line_auto_fill',
@@ -37,6 +38,7 @@ setuptools.setup(
         'odoo13-addon-stock_quant_package_dimension',
         'odoo13-addon-stock_quant_package_product_packaging',
         'odoo13-addon-stock_split_picking',
+        'odoo13-addon-stock_valuation_layer_usage',
     ],
     classifiers=[
         'Programming Language :: Python',
