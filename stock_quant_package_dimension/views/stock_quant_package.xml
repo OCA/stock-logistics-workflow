@@ -7,11 +7,36 @@
         <field name="arch" type="xml">
             <xpath expr="//group[field[@name='company_id']]" position="after">
                 <group name="dimensions" string="Dimensions">
-                    <field name="lngth" />
-                    <field name="width" />
-                    <field name="height" />
-                    <field name="pack_weight" />
-                    <field name="volume" />
+                    <label for="volume" />
+                        <div class="o_row">
+                            <field name="volume" />
+                            <field name="volume_uom_name" />
+                        </div>
+                    <label for="pack_length" />
+                        <div class="o_row">
+                            <field name="pack_length" />
+                            <field name="length_uom_name" />
+                        </div>
+                    <label for="width" />
+                        <div class="o_row">
+                            <field name="width" />
+                            <field name="length_uom_name" />
+                        </div>
+                    <label for="height" />
+                        <div class="o_row">
+                            <field name="height" />
+                            <field name="length_uom_name" />
+                        </div>
+                    <label for="pack_weight" />
+                        <div class="o_row" name="pack_weight">
+                        <field name="pack_weight" />
+                             <span><field name="weight_uom_name" /></span>
+                        </div>
+                </group>
+                <group string="Units of Measure">
+                    <field name="volume_uom_id" />
+                    <field name="length_uom_id" />
+                    <field name="weight_uom_id" />
                 </group>
             </xpath>
         </field>
