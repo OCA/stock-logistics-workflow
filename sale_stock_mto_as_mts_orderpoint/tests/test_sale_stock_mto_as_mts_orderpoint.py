@@ -49,6 +49,7 @@ class TestSaleStockMtoAsMtsOrderpoint(SavepointCase):
         orderpoint = self.env["stock.warehouse.orderpoint"].search(
             [("product_id", "=", self.product.id)]
         )
+
         self.assertEqual(
             orderpoint.location_id,
             self.warehouse._get_locations_for_mto_orderpoints(),
