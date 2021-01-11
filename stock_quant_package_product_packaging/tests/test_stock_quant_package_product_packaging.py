@@ -49,11 +49,11 @@ class TestStockQuantPackageProductPackaging(SavepointCase):
         )
         picking.action_confirm()
         picking.move_line_ids.qty_done = 10.0
-        first_package = picking.put_in_pack()
+        first_package = picking.action_put_in_pack()
         picking.move_line_ids.filtered(
             lambda ml: not ml.result_package_id
         ).qty_done = 20.0
-        second_package = picking.put_in_pack()
+        second_package = picking.action_put_in_pack()
         picking.button_validate()
         self.assertEqual(first_package.single_product_id, self.product)
         self.assertEqual(first_package.single_product_qty, 10.0)
