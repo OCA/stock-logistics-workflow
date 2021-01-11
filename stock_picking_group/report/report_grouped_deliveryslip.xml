@@ -99,7 +99,7 @@
                         <tr>
                             <td name="td_sched_date">
                                <t t-if="first_picking.state == 'done'">
-                                    <span t-field="picking.date_done"/>
+                                    <span t-field="first_picking.date_done"/>
                                </t>
                                <t t-if="first_picking.state != 'done'">
                                     <span t-field="first_picking.scheduled_date"/>
