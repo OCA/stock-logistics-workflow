@@ -50,7 +50,8 @@ class TestSaleStockMtoAsMtsOrderpoint(SavepointCase):
             [("product_id", "=", self.product.id)]
         )
         self.assertEqual(
-            orderpoint.location_id, self.warehouse._get_locations_for_mto_orderpoints(),
+            orderpoint.location_id,
+            self.warehouse._get_locations_for_mto_orderpoints(),
         )
         self.assertAlmostEqual(orderpoint.product_min_qty, 0.0)
         self.assertAlmostEqual(orderpoint.product_max_qty, 0.0)
