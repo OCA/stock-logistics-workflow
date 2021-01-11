@@ -14,24 +14,26 @@ class TestStockQuantPackageProductPackaging(SavepointCase):
                 "name": "10 pack",
                 "product_id": cls.product.id,
                 "qty": 10,
-                "lngth": 12,
+                "packaging_length": 12,
                 "width": 13,
                 "height": 14,
                 "max_weight": 15,
             }
         )
         cls.package = cls.env["stock.quant.package"].create({})
+        cls.uom_cm = cls.env["uom.uom"].search([("name", "=", "cm")], limit=1)
 
     def test_set_dimensions_on_write(self):
         self.package.with_context(
             _auto_assign_packaging=True
         ).product_packaging_id = self.packaging
         self.assertRecordValues(
-            self.package, [{"lngth": 12, "width": 13, "height": 14, "pack_weight": 15}]
+            self.package,
+            [{"pack_length": 12, "width": 13, "height": 14, "pack_weight": 15}],
         )
 
     def test_set_dimensions_on_write_no_override(self):
-        values = {"lngth": 22, "width": 23, "height": 24, "pack_weight": 25}
+        values = {"pack_length": 22, "width": 23, "height": 24, "pack_weight": 25}
         self.package.write(values)
         self.package.with_context(
             _auto_assign_packaging=True
@@ -39,12 +41,13 @@ class TestStockQuantPackageProductPackaging(SavepointCase):
         self.assertRecordValues(self.package, [values])
 
     def test_set_dimensions_onchange(self):
-        values = {"lngth": 22, "width": 23, "height": 24, "pack_weight": 25}
+        values = {"pack_length": 22, "width": 23, "height": 24, "pack_weight": 25}
         self.package.write(values)
         with Form(self.package) as form:
             form.product_packaging_id = self.packaging
             form.save()
         # onchange overrides values
         self.assertRecordValues(
-            self.package, [{"lngth": 12, "width": 13, "height": 14, "pack_weight": 15}]
+            self.package,
+            [{"pack_length": 12, "width": 13, "height": 14, "pack_weight": 15}],
         )
