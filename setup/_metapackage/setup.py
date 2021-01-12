@@ -19,6 +19,7 @@ setuptools.setup(
         'odoo13-addon-stock_no_negative',
         'odoo13-addon-stock_picking_auto_create_lot',
         'odoo13-addon-stock_picking_back2draft',
+        'odoo13-addon-stock_picking_backorder_strategy',
         'odoo13-addon-stock_picking_batch_extended',
         'odoo13-addon-stock_picking_filter_lot',
         'odoo13-addon-stock_picking_group_by_partner_by_carrier',
