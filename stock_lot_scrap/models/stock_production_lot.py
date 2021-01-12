@@ -19,7 +19,7 @@ class StockProductionLot(models.Model):
         """Inject the button here to avoid conflicts with other modules
          that add a header element in the main view.
         """
-        res = super(StockProductionLot, self).fields_view_get(
+        res = super().fields_view_get(
             view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu
         )
         eview = etree.fromstring(res["arch"])
@@ -62,7 +62,6 @@ class StockProductionLot(models.Model):
             "package_id": quant.package_id.id,
         }
 
-    @api.multi
     def action_scrap_lot(self):
         self.ensure_one()
         quants = self.quant_ids.filtered(lambda x: x.location_id.usage == "internal",)
@@ -72,7 +71,19 @@ class StockProductionLot(models.Model):
             )
         scrap_obj = self.env["stock.scrap"]
         scraps = scrap_obj.browse()
-        scrap_location_id = self.env.ref("stock.stock_location_scrapped").id
+        # The data model has disappeared and right now is a function who creates the
+        # scrap location. That's why we have to search by company_id and scrap_location.
+        scrap_location_id = (
+            self.env["stock.location"]
+            .search(
+                [
+                    ("company_id", "=", self.company_id.id),
+                    ("scrap_location", "=", True,),
+                ],
+                limit=1,
+            )
+            .id
+        )
         for quant in quants:
             scrap = scrap_obj.create(
                 self._prepare_scrap_vals(quant, scrap_location_id),
