@@ -3,16 +3,15 @@
 # Copyright 2017 David Vidal <david.vidal@tecnativa.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, models
+from odoo import _, models
 
 
 class StockScrap(models.Model):
     _inherit = "stock.scrap"
 
-    @api.multi
     def action_validate(self):
         self.ensure_one()
         self.lot_id.message_post(
             body=_("Lot was scrapped by <b>%s</b>.") % self.env.user.name
         )
-        return super(StockScrap, self).action_validate()
+        return super().action_validate()
