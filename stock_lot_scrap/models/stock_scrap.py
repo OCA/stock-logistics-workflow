@@ -7,11 +7,12 @@ from odoo import _, api, models
 
 
 class StockScrap(models.Model):
-    _inherit = 'stock.scrap'
+    _inherit = "stock.scrap"
 
     @api.multi
     def action_validate(self):
         self.ensure_one()
         self.lot_id.message_post(
-            body=_("Lot was scrapped by <b>%s</b>.") % self.env.user.name)
+            body=_("Lot was scrapped by <b>%s</b>.") % self.env.user.name
+        )
         return super(StockScrap, self).action_validate()
