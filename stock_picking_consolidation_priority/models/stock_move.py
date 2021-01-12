@@ -3,11 +3,13 @@
 from odoo import models
 from odoo.osv import expression
 
+from odoo.addons.stock.models.stock_move import PROCUREMENT_PRIORITIES
+
 
 class StockMove(models.Model):
     _inherit = "stock.move"
 
-    _consolidate_priority_value = "3"
+    _consolidate_priority_value = PROCUREMENT_PRIORITIES[1][0]
 
     def _action_done(self, cancel_backorder=False):
         moves_to_check = super()._action_done(cancel_backorder=cancel_backorder)
