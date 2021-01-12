@@ -4,9 +4,9 @@
 {
     "name": "Stock Transfers Consolidation Priority",
     "summary": "Raise priority of all transfers for a chain when started",
-    "version": "13.0.1.0.0",
+    "version": "14.0.1.0.0",
     "author": "Camptocamp, Odoo Community Association (OCA)",
-    "website": "https://github.com/OCA/stock-logistics-warehouse",
+    "website": "https://github.com/OCA/wms",
     "category": "Stock Management",
     "depends": ["stock"],
     "data": [],
