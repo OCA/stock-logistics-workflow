@@ -12,12 +12,17 @@ from odoo.tools.safe_eval import safe_eval
 class TestStockLotScrap(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
-        super(TestStockLotScrap, cls).setUpClass()
+        super().setUpClass()
         cls.product = cls.env["product.product"].create(
             {"name": "Test product", "type": "product"}
         )
+        cls.company = cls.env.ref("base.main_company")
         cls.lot010 = cls.env["stock.production.lot"].create(
-            {"name": "0000010", "product_id": cls.product.id}
+            {
+                "name": "0000010",
+                "product_id": cls.product.id,
+                "company_id": cls.company.id,
+            }
         )
         cls.quant1 = cls.env["stock.quant"].create(
             {
@@ -52,7 +57,11 @@ class TestStockLotScrap(common.SavepointCase):
     def test_warning(self):
         product_new = self.product.create({"name": "Test product 040"})
         self.lot040 = self.env["stock.production.lot"].create(
-            {"name": "0000040", "product_id": product_new.id}
+            {
+                "name": "0000040",
+                "product_id": product_new.id,
+                "company_id": self.company.id,
+            }
         )
         with self.assertRaises(ValidationError):
             self.lot040.action_scrap_lot()
