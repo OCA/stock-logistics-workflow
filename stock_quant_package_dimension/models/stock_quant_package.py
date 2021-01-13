@@ -7,6 +7,12 @@ class StockQuantPackage(models.Model):
     _inherit = "stock.quant.package"
 
     pack_weight = fields.Float("Weight (kg)")
+    estimated_pack_weight = fields.Float(
+        "Estimated weight (kg)",
+        digits="Product Unit of Measure",
+        compute="_compute_estimated_pack_weight",
+        help="Based on the weight of the product.",
+    )
     # lngth IS NOT A TYPO: https://github.com/odoo/odoo/issues/41353
     lngth = fields.Integer("Length (mm)", help="length in millimeters")
     width = fields.Integer("Width (mm)", help="width in millimeters")
@@ -19,6 +25,47 @@ class StockQuantPackage(models.Model):
         store=False,
         help="volume in cubic meters",
     )
+
+    def _get_picking_move_line_ids_per_package(self, picking_id):
+        if not picking_id:
+            return {}
+        move_lines = self.env["stock.move.line"].search(
+            [("result_package_id", "in", self.ids), ("picking_id", "=", picking_id)]
+        )
+        res = dict.fromkeys(self.ids, self.env["stock.move.line"])
+        for ml in move_lines:
+            res.setdefault(ml.result_package_id, set(ml.ids))
+            res[ml.result_package_id].add(ml.id)
+        return res
+
+    def _get_weight_from_move_lines(self, move_lines):
+        return sum(
+            ml.product_uom_id._compute_quantity(ml.qty_done, ml.product_id.uom_id)
+            * ml.product_id.weight
+            for ml in move_lines
+        )
+
+    def _get_weight_from_quants(self, quants):
+        return sum(quant.quantity * quant.product_id.weight for quant in quants)
+
+    @api.depends("quant_ids")
+    @api.depends_context("picking_id")
+    def _compute_estimated_pack_weight(self):
+        # NOTE: copy-pasted and adapted from `delivery` module
+        # because we do not want to add the dependency against 'delivery' here.
+        picking_id = self.env.context.get("picking_id")
+        move_line_ids_per_package = self._get_picking_move_line_ids_per_package(
+            picking_id
+        )
+        for package in self:
+            weight = 0.0
+            if picking_id:  # coming from a transfer
+                move_line_ids = move_line_ids_per_package.get(package, [])
+                move_lines = self.env["stock.move.line"].browse(move_line_ids)
+                weight = package._get_weight_from_move_lines(move_lines)
+            else:
+                weight = package._get_weight_from_quants(package.quant_ids)
+            package.estimated_pack_weight = weight
 
     @api.depends("lngth", "width", "height")
     def _compute_volume(self):
