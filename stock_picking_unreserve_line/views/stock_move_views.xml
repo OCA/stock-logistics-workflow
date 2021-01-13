@@ -12,7 +12,7 @@
         <xpath expr="/form/*" position="before">
             <header>
                 <button name="do_unreserve" string="Unreserve" groups="base.group_user" type="object"
-                    attrs="{'invisible': [('state', '!=', 'assigned')]}"/>
+                    attrs="{'invisible': [('state', 'not in', ('assigned', 'partially_available'))]}"/>
             </header>
         </xpath>
     </field>
@@ -25,7 +25,7 @@
     <field name="arch" type="xml">
         <header position="inside">
             <button name="do_unreserve" string="Unreserve" groups="base.group_user" type="object"
-                attrs="{'invisible': [('state', '!=', 'assigned')]}"/>
+                attrs="{'invisible': [('state', 'not in', ('assigned', 'partially_available'))]}"/>
         </header>
     </field>
 </record>
@@ -37,7 +37,7 @@
     <field name="arch" type="xml">
         <header position="inside">
             <button name="do_unreserve" string="Unreserve" groups="base.group_user" type="object"
-                attrs="{'invisible': [('state', '!=', 'assigned')]}"/>
+                attrs="{'invisible': [('state', 'not in', ('assigned', 'partially_available'))]}"/>
         </header>
     </field>
 </record>
