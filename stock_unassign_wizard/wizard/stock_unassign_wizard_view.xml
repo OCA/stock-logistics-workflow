@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2021 PlanetaTIC - Marc Poch <mpoch@planetatic.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+<data>
+
+<record id="view_stock_unassign_wizard" model="ir.ui.view">
+    <field name="name">stock.unassign.wizard</field>
+    <field name="model">stock.unassign.wizard</field>
+    <field name="arch" type="xml">
+        <form>
+            <group>
+                <field name="line_ids">
+                    <tree editable="bottom">
+                        <field name="product_id" />
+                        <field name="partner_id" />
+                        <field name="picking_id" />
+                        <field name="picking_id" />
+                        <button name="unassign_line" type="object" string="Unassign"/>
+                    </tree>
+                </field>
+            </group>
+            <footer>
+                <button special="cancel" class="btn btn-secondary" string="Close" />
+            </footer>
+        </form>
+    </field>
+</record>
+
+</data>
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2021 PlanetaTIC - Marc Poch <mpoch@planetatic.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+<data>
+
+<record id="view_picking_form" model="ir.ui.view">
+    <field name="name">stock.picking.form</field>
+    <field name="model">stock.picking</field>
+    <field name="inherit_id" ref="stock.view_picking_form" />
+    <field name="arch" type="xml">
+        <button name="action_show_details" position="before">
+	        <button name="open_unassign_wizard" type="object" icon="fa-unlock"
+	                string="Stock Unassign"
+	                attrs="{'invisible':[('state','not in',('confirmed','partially_available','cancel'))]}"/>
+        </button>
+    </field>
+</record>
+
+</data>
+</odoo>
