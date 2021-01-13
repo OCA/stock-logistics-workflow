@@ -2,12 +2,19 @@
 # Copyright 2019 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 from odoo import api, fields, models
+from odoo.addons import decimal_precision as dp
 
 
 class StockQuantPackage(models.Model):
     _inherit = "stock.quant.package"
 
     pack_weight = fields.Float("Weight (kg)")
+    estimated_pack_weight = fields.Float(
+        "Estimated weight (kg)",
+        digits=dp.get_precision('Product Unit of Measure'),
+        compute="_compute_estimated_pack_weight",
+        help="Based on the weight of the product.",
+    )
     # lngth IS NOT A TYPO: https://github.com/odoo/odoo/issues/41353
     lngth = fields.Integer("Length (mm)", help="length in millimeters")
     width = fields.Integer("Width (mm)", help="width in millimeters")
@@ -20,6 +27,17 @@ class StockQuantPackage(models.Model):
         store=False,
         help="volume in cubic meters",
     )
+
+    @api.depends('quant_ids', 'children_ids')
+    def _compute_estimated_pack_weight(self):
+        for package in self:
+            weight = 0
+            for quant in package.quant_ids:
+                weight += quant.qty * quant.product_id.weight
+            for pack in package.children_ids:
+                pack._compute_weight()
+                weight += pack.weight
+            package.estimated_pack_weight = weight
 
     @api.depends("lngth", "width", "height")
     def _compute_volume(self):
