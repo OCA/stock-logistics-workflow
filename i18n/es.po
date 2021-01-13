@@ -1,0 +1,122 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_unassign_wizard
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-01-13 12:19+0000\n"
+"PO-Revision-Date: 2021-01-13 12:19+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_unassign_wizard
+#: model_terms:ir.ui.view,arch_db:stock_unassign_wizard.view_stock_unassign_wizard
+msgid "Close"
+msgstr "Cerrar"
+
+#. module: stock_unassign_wizard
+#: model:ir.model.fields,field_description:stock_unassign_wizard.field_stock_unassign_wizard__create_uid
+#: model:ir.model.fields,field_description:stock_unassign_wizard.field_stock_unassign_wizard_line__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: stock_unassign_wizard
+#: model:ir.model.fields,field_description:stock_unassign_wizard.field_stock_unassign_wizard__create_date
+#: model:ir.model.fields,field_description:stock_unassign_wizard.field_stock_unassign_wizard_line__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: stock_unassign_wizard
+#: model:ir.model.fields,field_description:stock_unassign_wizard.field_stock_unassign_wizard__display_name
+#: model:ir.model.fields,field_description:stock_unassign_wizard.field_stock_unassign_wizard_line__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: stock_unassign_wizard
+#: model:ir.model.fields,field_description:stock_unassign_wizard.field_stock_unassign_wizard__id
+#: model:ir.model.fields,field_description:stock_unassign_wizard.field_stock_unassign_wizard_line__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_unassign_wizard
+#: model:ir.model.fields,field_description:stock_unassign_wizard.field_stock_unassign_wizard____last_update
+#: model:ir.model.fields,field_description:stock_unassign_wizard.field_stock_unassign_wizard_line____last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: stock_unassign_wizard
+#: model:ir.model.fields,field_description:stock_unassign_wizard.field_stock_unassign_wizard__write_uid
+#: model:ir.model.fields,field_description:stock_unassign_wizard.field_stock_unassign_wizard_line__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: stock_unassign_wizard
+#: model:ir.model.fields,field_description:stock_unassign_wizard.field_stock_unassign_wizard__write_date
+#: model:ir.model.fields,field_description:stock_unassign_wizard.field_stock_unassign_wizard_line__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: stock_unassign_wizard
+#: model:ir.model.fields,field_description:stock_unassign_wizard.field_stock_unassign_wizard__line_ids
+msgid "Lines"
+msgstr "Líneas"
+
+#. module: stock_unassign_wizard
+#: model:ir.model.fields,field_description:stock_unassign_wizard.field_stock_unassign_wizard_line__partner_id
+msgid "Partner"
+msgstr "Empresa"
+
+#. module: stock_unassign_wizard
+#: model:ir.model.fields,field_description:stock_unassign_wizard.field_stock_unassign_wizard_line__move_id
+#: model:ir.model.fields,field_description:stock_unassign_wizard.field_stock_unassign_wizard_line__picking_id
+msgid "Picking"
+msgstr "Albarán"
+
+#. module: stock_unassign_wizard
+#: model:ir.model.fields,field_description:stock_unassign_wizard.field_stock_unassign_wizard_line__product_id
+msgid "Product"
+msgstr "Producto"
+
+#. module: stock_unassign_wizard
+#: model:ir.model,name:stock_unassign_wizard.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento de existencias"
+
+#. module: stock_unassign_wizard
+#: model_terms:ir.ui.view,arch_db:stock_unassign_wizard.view_picking_form
+msgid "Stock Unassign"
+msgstr ""
+
+#. module: stock_unassign_wizard
+#: code:addons/stock_unassign_wizard/models/stock_move.py:37
+#: code:addons/stock_unassign_wizard/wizard/stock_unassign_wizard.py:41
+#, python-format
+msgid "Stock Unassign Wizard"
+msgstr "Assistente para anular reservas"
+
+#. module: stock_unassign_wizard
+#: model_terms:ir.ui.view,arch_db:stock_unassign_wizard.view_stock_unassign_wizard
+msgid "Unassign"
+msgstr "Anular reserva"
+
+#. module: stock_unassign_wizard
+#: model:ir.model.fields,field_description:stock_unassign_wizard.field_stock_unassign_wizard_line__wizard_id
+msgid "Wizard"
+msgstr "Asistente"
+
+#. module: stock_unassign_wizard
+#: model:ir.model,name:stock_unassign_wizard.model_stock_unassign_wizard
+msgid "stock.unassign.wizard"
+msgstr "stock.unassign.wizard"
+
+#. module: stock_unassign_wizard
+#: model:ir.model,name:stock_unassign_wizard.model_stock_unassign_wizard_line
+msgid "stock.unassign.wizard.line"
+msgstr "stock.unassign.line"
+
