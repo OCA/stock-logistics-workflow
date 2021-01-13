@@ -21,7 +21,6 @@ class TestStockQuantPackageProductPackaging(common.TestStockQuantPackageCommon):
                 "max_weight": 15,
             }
         )
-        cls.package = cls.env["stock.quant.package"].create({})
         cls.uom_cm = cls.env["uom.uom"].search([("name", "=", "cm")], limit=1)
 
     def test_set_dimensions_on_write(self):
