@@ -22,8 +22,19 @@ class StockUnassignWizardLine(models.TransientModel):
     partner_id = fields.Many2one(comodel_name='res.partner', string='Partner')
     picking_id = fields.Many2one(
         comodel_name='stock.picking', string='Picking')
+    raw_material_production_id = fields.Many2one(
+        comodel_name='mrp.production',
+        string='Production Order for raw materials')
     move_id = fields.Many2one(
         comodel_name='stock.move', string='Picking')
+
+    reserved_availability = fields.Float(
+        string='Reserved', compute='_get_reserved_quantity')
+
+    @api.multi
+    def _get_reserved_quantity(self):
+        for line in self:
+            line.reserved_availability = line.move_id.reserved_availability
 
     @api.multi
     def unassign_line(self):

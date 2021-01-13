@@ -13,10 +13,12 @@
     'depends': [
         'stock',
         'stock_picking_unreserve_line',
+        'mrp',
     ],
     'demo': [],
     'data': [
         'views/stock_picking_view.xml',
+        'views/mrp_production_view.xml',
         'wizard/stock_unassign_wizard_view.xml',
     ],
     'installable': True,

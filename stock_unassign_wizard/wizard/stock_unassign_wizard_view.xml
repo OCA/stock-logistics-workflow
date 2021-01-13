@@ -10,15 +10,19 @@
     <field name="arch" type="xml">
         <form>
             <group>
-                <field name="line_ids">
-                    <tree editable="bottom">
-                        <field name="product_id" />
-                        <field name="partner_id" />
-                        <field name="picking_id" />
-                        <field name="picking_id" />
-                        <button name="unassign_line" type="object" string="Unassign"/>
-                    </tree>
-                </field>
+                <div>
+                    <label string="Lines to unassign" for="line_ids"/>
+	                <field name="line_ids" colspan="4" readonly="1">
+	                    <tree>
+	                        <field name="product_id" />
+	                        <field name="partner_id" />
+	                        <field name="picking_id" />
+	                        <field name="raw_material_production_id" />
+	                        <field name="reserved_availability" />
+	                        <button name="unassign_line" type="object" icon="fa-undo"/>
+	                    </tree>
+	                </field>
+                </div>
             </group>
             <footer>
                 <button special="cancel" class="btn btn-secondary" string="Close" />

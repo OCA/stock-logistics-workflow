@@ -15,16 +15,25 @@ class StockMove(models.Model):
         confirmed_moves = self.search([
             ('product_id', '=', self.product_id.id),
             ('state', 'in', ['assigned', 'partially_available']),
+            '|',
+            '&',
+            '&',
             ('picking_id', '!=', False),
             ('picking_id', '!=', self.picking_id.id),
             ('picking_type_id.code', '=', 'outgoing'),
+            '&',
+            ('raw_material_production_id', '!=', False),
+            ('raw_material_production_id', '!=', self.raw_material_production_id.id),
         ])
+
         wizard_lines_vals = []
         for move in confirmed_moves:
             cur_vals = {
                 'product_id': move.product_id.id,
                 'picking_id': move.picking_id.id,
                 'move_id': move.id,
+                'raw_material_production_id':
+                    move.raw_material_production_id.id,
                 'partner_id': move.partner_id.id,
             }
             wizard_lines_vals.append((0, False, cur_vals))
