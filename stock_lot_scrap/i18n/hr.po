@@ -1,0 +1,50 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_lot_scrap
+#
+# Translators:
+# Bole <bole@dajmi5.com>, 2018
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-02-28 03:51+0000\n"
+"PO-Revision-Date: 2018-02-28 03:51+0000\n"
+"Last-Translator: Bole <bole@dajmi5.com>, 2018\n"
+"Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
+"Language: hr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#. module: stock_lot_scrap
+#: code:addons/stock_lot_scrap/models/stock_scrap.py:16
+#, python-format
+msgid "Lot was scrapped by <b>%s</b>."
+msgstr ""
+
+#. module: stock_lot_scrap
+#: model:ir.model,name:stock_lot_scrap.model_stock_production_lot
+msgid "Lot/Serial"
+msgstr "Lot/Serial"
+
+#. module: stock_lot_scrap
+#: code:addons/stock_lot_scrap/models/stock_production_lot.py:39
+#: model:ir.model,name:stock_lot_scrap.model_stock_scrap
+#, python-format
+msgid "Scrap"
+msgstr "Otpis"
+
+#. module: stock_lot_scrap
+#: code:addons/stock_lot_scrap/models/stock_production_lot.py:65
+#, python-format
+msgid "This lot doesn't contain any quant in internal location."
+msgstr "Ovaj lot nema nikakve količine na internoj lokaciji"
+
+#. module: stock_lot_scrap
+#: code:addons/stock_lot_scrap/models/stock_production_lot.py:37
+#, python-format
+msgid "This will scrap the whole lot. Are you sure you want to continue?"
+msgstr "Ovo će otpisati kompletan lot. Jeste li sigurni da želite nastaviti?"
