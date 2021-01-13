@@ -3,7 +3,7 @@
     "name": "Stock Source Relocate - Dynamic Routing",
     "summary": "Glue module",
     "author": "Camptocamp, Odoo Community Association (OCA)",
-    "website": "https://github.com/OCA/stock-logistics-warehouse",
+    "website": "https://github.com/OCA/wms",
     "category": "Warehouse Management",
     "version": "13.0.1.0.0",
     "license": "AGPL-3",
