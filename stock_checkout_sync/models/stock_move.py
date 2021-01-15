@@ -45,8 +45,9 @@ class StockMove(models.Model):
                 lambda move: move.state not in ("done", "cancel")
             )
             for dest_picking in dest_pickings:
-                if dest_picking not in selected_pickings:
-                    selected_pickings[dest_picking] = self.env["stock.move"].browse()
-                selected_pickings[dest_picking] |= moves
-
-        return selected_pickings
+                selected_pickings.setdefault(dest_picking, set())
+                selected_pickings[dest_picking] |= set(moves.ids)
+        return {
+            picking: self.env["stock.move"].browse(move_ids)
+            for picking, move_ids in selected_pickings.items()
+        }
