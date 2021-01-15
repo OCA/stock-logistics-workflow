@@ -1,7 +1,8 @@
 # Copyright 2019 Camptocamp (https://www.camptocamp.com)
 {
-    "name": "Stock Routing Operations - Checkout Sync",
-    "summary": "Glue module",
+    "name": "Stock Dynamic Routing - Checkout Sync",
+    "summary": "Glue module for tests when dynamic routing and"
+    " checkout sync are used ",
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/wms",
     "category": "Warehouse Management",

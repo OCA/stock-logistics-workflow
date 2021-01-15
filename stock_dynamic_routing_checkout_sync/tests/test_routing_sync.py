@@ -1,10 +1,10 @@
 # Copyright 2020 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 
-from odoo.addons.stock_checkout_sync.tests.test_checkout_sync import CheckoutSyncCommon
+from odoo.addons.stock_checkout_sync.tests.common import CheckoutSyncCommonCase
 
 
-class TestRoutingPullWithSync(CheckoutSyncCommon):
+class TestRoutingPullWithSync(CheckoutSyncCommonCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
