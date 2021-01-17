@@ -1,0 +1,2 @@
+odoo14-addon-partner-tz @ git+https://github.com/trobz/partner-contact@14.0-mig-partner_tz#subdirectory=setup/partner_tz
+odoo14-addon-base-time-window @ git+https://github.com/trobz/server-tools@14.0-mig-base_time_window#subdirectory=setup/base_time_window

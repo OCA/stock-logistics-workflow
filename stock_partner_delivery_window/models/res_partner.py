@@ -25,9 +25,7 @@ class ResPartner(models.Model):
     )
 
     delivery_time_window_ids = fields.One2many(
-        "partner.delivery.time.window",
-        "partner_id",
-        string="Delivery time windows",
+        "partner.delivery.time.window", "partner_id", string="Delivery time windows"
     )
 
     @api.constrains("delivery_time_preference", "delivery_time_window_ids")
