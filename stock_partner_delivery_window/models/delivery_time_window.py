@@ -17,7 +17,11 @@ class DeliveryTimeWindow(models.Model):
     partner_id = fields.Many2one(
         "res.partner", required=True, index=True, ondelete="cascade"
     )
-    tz = fields.Selection(_tz_get, related="partner_id.tz", readonly=True,)
+    tz = fields.Selection(
+        _tz_get,
+        related="partner_id.tz",
+        readonly=True,
+    )
 
     @api.constrains("partner_id")
     def check_window_no_overlaps(self):
