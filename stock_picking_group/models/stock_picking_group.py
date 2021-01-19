@@ -9,7 +9,7 @@ class StockPickingGroup(models.Model):
     _name = 'stock.picking.group'
 
     name = fields.Char(string='Group Reference')
-    picking_ids = fields.One2many(
+    picking_ids = fields.Many2many(
         comodel_name='stock.picking', inverse_name='picking_group_id',
         string='Pickings')
     has_serial_number = fields.Boolean(
