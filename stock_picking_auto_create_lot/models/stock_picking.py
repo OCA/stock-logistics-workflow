@@ -7,7 +7,7 @@ from odoo import models
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    def button_validate(self):
+    def _set_auto_lot(self):
         if self.picking_type_id.auto_create_lot:
             lines = self.move_line_ids.filtered(
                 lambda x: (
@@ -19,4 +19,10 @@ class StockPicking(models.Model):
             )
             lines.set_lot_auto()
 
-        return super().button_validate()
+    def action_done(self):
+        self._set_auto_lot()
+        return super().action_done()
+
+    def button_validate(self):
+        self._set_auto_lot()
+        return super().action_done()
