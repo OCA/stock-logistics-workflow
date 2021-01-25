@@ -21,10 +21,8 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, SavepointCa
         cls._create_move(product=cls.product_serial, qty=3.0)
         cls._create_move(product=cls.product_serial_not_auto, qty=4.0)
 
-        cls.picking.action_assign()
-
     def test_manual_lot(self):
-
+        self.picking.action_assign()
         # Check the display field
         move = self.picking.move_lines.filtered(
             lambda m: m.product_id == self.product_serial
@@ -52,6 +50,7 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, SavepointCa
         self.assertEqual(len(lot), 3)
 
     def test_auto_create_lot(self):
+        self.picking.action_assign()
         # Check the display field
         move = self.picking.move_lines.filtered(
             lambda m: m.product_id == self.product_serial
@@ -75,17 +74,21 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, SavepointCa
         self.assertEqual(len(lot), 3)
 
     def test_auto_create_transfer_lot(self):
-        # Check the display field
-        move = self.picking.move_lines.filtered(
-            lambda m: m.product_id == self.product_serial
-        )
-        self.assertFalse(move.display_assign_serial)
-
+        self.picking.action_assign()
         moves = self.picking.move_lines.filtered(
             lambda m: m.product_id == self.product_serial
         )
         for line in moves.mapped("move_line_ids"):
             self.assertFalse(line.lot_id)
+
+        # Assign manual serial for product that need it
+        moves = self.picking.move_lines.filtered(
+            lambda m: m.product_id == self.product_serial_not_auto
+        )
+
+        # Assign manual serials
+        for line in moves.mapped("move_line_ids"):
+            line.lot_id = self.lot_obj.create(line._prepare_auto_lot_values())
 
         self.picking.button_validate()
         for line in moves.mapped("move_line_ids"):
@@ -100,3 +103,37 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, SavepointCa
             [("product_id", "=", self.product_serial.id)]
         )
         self.assertEqual(len(lot), 3)
+
+    def test_multi_auto_create_lot(self):
+        """
+            Create two pickings
+            Try to validate them together
+            Check if lots have been assigned to each move
+        """
+        self.picking.action_assign()
+        picking_1 = self.picking
+        self._create_picking()
+        picking_2 = self.picking
+        self._create_move(product=self.product_serial, qty=3.0)
+        picking_2.action_assign()
+        pickings = picking_1 | picking_2
+
+        moves = pickings.mapped("move_lines").filtered(
+            lambda m: m.product_id == self.product_serial
+        )
+        for line in moves.mapped("move_line_ids"):
+            self.assertFalse(line.lot_id)
+
+        pickings.action_done()
+        for line in moves.mapped("move_line_ids"):
+            self.assertTrue(line.lot_id)
+
+        lot = self.env["stock.production.lot"].search(
+            [("product_id", "=", self.product.id)]
+        )
+        self.assertEqual(len(lot), 1)
+        # Search for serials
+        lot = self.env["stock.production.lot"].search(
+            [("product_id", "=", self.product_serial.id)]
+        )
+        self.assertEqual(len(lot), 6)
