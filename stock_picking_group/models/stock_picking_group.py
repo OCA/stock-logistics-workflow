@@ -45,9 +45,7 @@ class StockPickingGroup(models.Model):
     @api.model
     def create(self, vals):
         sequence_obj = self.env['ir.sequence']
-
         new_group = super(StockPickingGroup, self).create(vals)
-
         # Verify that all picking_ids have the same partner_id and carrier_id
         company_id = new_group.picking_ids[0].company_id.id
         partner_id = new_group.picking_ids[0].partner_id.id
@@ -58,5 +56,17 @@ class StockPickingGroup(models.Model):
         new_group.name = sequence_obj.with_context(force_company=company_id).\
             next_by_code('stock.picking.group') or _('New')
         new_group.partner_id = partner_id
-
         return new_group
+
+    @api.multi
+    def write(self, vals):
+        res = super(StockPickingGroup, self).write(vals)
+        # Verify that all picking_ids have the same partner_id and carrier_id
+        if 'picking_ids' in vals:
+            if self.picking_ids:
+                partner_id = self.picking_ids[0].partner_id.id
+                for picking in self.picking_ids:
+                    if partner_id != picking.partner_id.id:
+                        raise UserError(
+                            _('Grouped pickings must have same parnter.'))
+        return res

@@ -3,7 +3,7 @@
 
 {
     'name': 'Stock Picking Group',
-    'summary': 'Permits to group pickings by partner and carrier',
+    'summary': 'Permits to group pickings by partner',
     'version': '12.0.1.0.0',
     'category': 'Stock',
     'author': 'PlanetaTIC'
