@@ -4,6 +4,13 @@
 
 
 class CommonStockPickingAutoCreateLot(object):
+    def assertUniqueIn(self, element_list):
+        elements = []
+        for element in element_list:
+            if element in elements:
+                raise Exception("Element %s is not unique in list" % element)
+            elements.append(element)
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
