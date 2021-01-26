@@ -1,6 +1,7 @@
 # Copyright 2018 Tecnativa - Sergio Teruel
 # Copyright 2020 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+from odoo.exceptions import UserError
 from odoo.tests import SavepointCase
 
 from .common import CommonStockPickingAutoCreateLot
@@ -81,6 +82,10 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, SavepointCa
         for line in moves.mapped("move_line_ids"):
             self.assertFalse(line.lot_id)
 
+        # Test the exception if manual serials are not filled in
+        with self.assertRaises(UserError), self.cr.savepoint():
+            self.picking.button_validate()
+
         # Assign manual serial for product that need it
         moves = self.picking.move_lines.filtered(
             lambda m: m.product_id == self.product_serial_not_auto
@@ -103,6 +108,16 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, SavepointCa
             [("product_id", "=", self.product_serial.id)]
         )
         self.assertEqual(len(lot), 3)
+
+        # Check if lots are unique per move and per product if managed
+        # per serial
+        move_lines_serial = self.picking.move_line_ids.filtered(
+            lambda m: m.product_id.tracking == "serial" and m.product_id.auto_create_lot
+        )
+        serials = []
+        for move in move_lines_serial:
+            serials.append(move.lot_id.name)
+        self.assertUniqueIn(serials)
 
     def test_multi_auto_create_lot(self):
         """
