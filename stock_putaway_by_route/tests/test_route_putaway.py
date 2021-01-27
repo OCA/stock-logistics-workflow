@@ -103,7 +103,6 @@ class TestRoutePutaway(SavepointCase):
         # the onchange is applied on move line only for NewID records
         # otherwise we are not even allowed to change the product
         view_move_line = Form(self.env["stock.move.line"])
-        view_move_line.product_uom_qty = 2.0
         view_move_line.picking_id = picking
         view_move_line.location_id = self.input_location
         view_move_line.location_dest_id = picking.location_dest_id
