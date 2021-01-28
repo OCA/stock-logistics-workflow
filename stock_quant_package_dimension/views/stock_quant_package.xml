@@ -11,6 +11,7 @@
                     <field name="width" />
                     <field name="height" />
                     <field name="pack_weight" />
+                    <field name="estimated_pack_weight" />
                     <field name="volume" />
                 </group>
             </xpath>
