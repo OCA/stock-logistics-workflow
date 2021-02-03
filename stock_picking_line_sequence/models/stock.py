@@ -7,32 +7,35 @@ from odoo import api, fields, models
 
 
 class StockMove(models.Model):
-    _inherit = 'stock.move'
+    _inherit = "stock.move"
 
     # re-defines the field to change the default
-    sequence = fields.Integer('HiddenSequence',
-                              default=9999)
+    sequence = fields.Integer("HiddenSequence", default=9999)
 
     # displays sequence on the stock moves
-    sequence2 = fields.Integer('Sequence',
-                               help="Shows the sequence in the Stock Move.",
-                               related='sequence', readonly=True, store=True)
+    sequence2 = fields.Integer(
+        "Sequence",
+        help="Shows the sequence in the Stock Move.",
+        related="sequence",
+        readonly=True,
+        store=True,
+    )
 
     @api.model
     def create(self, values):
         move = super(StockMove, self).create(values)
         # We do not reset the sequence if we are copying a complete picking
         # or creating a backorder
-        if not self.env.context.get('keep_line_sequence', False):
+        if not self.env.context.get("keep_line_sequence", False):
             move.picking_id._reset_sequence()
         return move
 
 
 class StockPicking(models.Model):
-    _inherit = 'stock.picking'
+    _inherit = "stock.picking"
 
     @api.multi
-    @api.depends('move_ids_without_package')
+    @api.depends("move_ids_without_package")
     def _compute_max_line_sequence(self):
         """Allow to know the highest sequence entered in move lines.
         Then we add 1 to this value for the next sequence, this value is
@@ -42,12 +45,12 @@ class StockPicking(models.Model):
         """
         for picking in self:
             picking.max_line_sequence = (
-                max(picking.mapped('move_ids_without_package.sequence') or
-                    [0]) + 1
-                )
+                max(picking.mapped("move_ids_without_package.sequence") or [0]) + 1
+            )
 
-    max_line_sequence = fields.Integer(string='Max sequence in lines',
-                                       compute='_compute_max_line_sequence')
+    max_line_sequence = fields.Integer(
+        string="Max sequence in lines", compute="_compute_max_line_sequence"
+    )
 
     @api.multi
     def _reset_sequence(self):
@@ -59,11 +62,12 @@ class StockPicking(models.Model):
 
     @api.multi
     def copy(self, default=None):
-        return super(StockPicking,
-                     self.with_context(keep_line_sequence=True)).copy(default)
+        return super(StockPicking, self.with_context(keep_line_sequence=True)).copy(
+            default
+        )
 
     @api.multi
     def button_validate(self):
-        return super(StockPicking,
-                     self.with_context(keep_line_sequence=True)
-                     ).button_validate()
+        return super(
+            StockPicking, self.with_context(keep_line_sequence=True)
+        ).button_validate()

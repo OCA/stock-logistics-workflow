@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
 
-    <template id="report_delivery_document"
-              inherit_id="stock.report_delivery_document">
+    <template id="report_delivery_document" inherit_id="stock.report_delivery_document">
         <xpath expr="//table[2]/thead/tr/th[1]" position="before">
             <th><strong>Seq.</strong></th>
         </xpath>
         <xpath expr="//table[2]/tbody/tr/td[1]" position="before">
-            <td><span t-field="move.sequence2"/></td>
+            <td><span t-field="move.sequence2" /></td>
         </xpath>
         <xpath expr="//table[3]/thead/tr/th[1]" position="before">
             <th><strong>Seq.</strong></th>
         </xpath>
         <xpath expr="//table[3]/tbody/tr/td[1]" position="before">
-            <td><span t-field="move_line.move_id.sequence2"/></td>
+            <td><span t-field="move_line.move_id.sequence2" /></td>
         </xpath>
     </template>
 
