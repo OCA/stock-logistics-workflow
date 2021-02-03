@@ -1,22 +1,32 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
         <record id="view_picking_form" model="ir.ui.view">
             <field name="name">stock.picking.form</field>
             <field name="model">stock.picking</field>
             <field name="inherit_id" ref="stock.view_picking_form" />
-            <field name="priority" eval="255"/>
+            <field name="priority" eval="255" />
             <field name="arch" type="xml">
-                <xpath expr="//notebook/page/field[@name='move_ids_without_package']" position="before">
-                    <field name="max_line_sequence" invisible="1"/>
+                <xpath
+                expr="//notebook/page/field[@name='move_ids_without_package']"
+                position="before"
+            >
+                    <field name="max_line_sequence" invisible="1" />
                 </xpath>
-                <xpath expr="//notebook/page/field[@name='move_ids_without_package']/tree/field[@name='name']"
-                       position="before">
-                    <field name="sequence" widget="handle"/>
-                    <field name="sequence2"/>
+                <xpath
+                expr="//notebook/page/field[@name='move_ids_without_package']/tree/field[@name='name']"
+                position="before"
+            >
+                    <field name="sequence" widget="handle" />
+                    <field name="sequence2" />
                 </xpath>
-                <xpath expr="//notebook/page/field[@name='move_ids_without_package']" position="attributes">
-                    <attribute name="context">{'picking_type_code': picking_type_code, 'default_picking_id': id,
+                <xpath
+                expr="//notebook/page/field[@name='move_ids_without_package']"
+                position="attributes"
+            >
+                    <attribute
+                    name="context"
+                >{'picking_type_code': picking_type_code, 'default_picking_id': id,
                     'form_view_ref':'stock.view_move_picking_form', 'address_in_id': partner_id,
                     'default_picking_type_id': picking_type_id, 'default_location_id': location_id,
                     'default_location_dest_id': location_dest_id, 'default_sequence': max_line_sequence}
