@@ -87,9 +87,7 @@ class StockPutawayRule(models.Model):
 
             field.set("attrs", str(attrs))
             modifiers = {}
-            transfer_node_to_modifiers(
-                field, modifiers, self.env.context, in_tree_view=True
-            )
+            transfer_node_to_modifiers(field, modifiers, context=self.env.context)
             transfer_modifiers_to_node(modifiers, field)
 
     def _add_exclusive_selection(self, doc, field_name):
