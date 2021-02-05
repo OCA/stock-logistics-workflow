@@ -53,6 +53,7 @@ class StockPickingGroup(models.Model):
             if partner_id != picking.partner_id.id:
                 raise UserError(
                     _('Grouped pickings must have same parnter.'))
+            picking.picking_group_id = new_group
         new_group.name = sequence_obj.with_context(force_company=company_id).\
             next_by_code('stock.picking.group') or _('New')
         new_group.partner_id = partner_id
@@ -63,10 +64,12 @@ class StockPickingGroup(models.Model):
         res = super(StockPickingGroup, self).write(vals)
         # Verify that all picking_ids have the same partner_id and carrier_id
         if 'picking_ids' in vals:
-            if self.picking_ids:
-                partner_id = self.picking_ids[0].partner_id.id
-                for picking in self.picking_ids:
-                    if partner_id != picking.partner_id.id:
-                        raise UserError(
-                            _('Grouped pickings must have same parnter.'))
+            for group in self:
+                if group.picking_ids:
+                    partner_id = group.picking_ids[0].partner_id.id
+                    for picking in group.picking_ids:
+                        if partner_id != picking.partner_id.id:
+                            raise UserError(
+                                _('Grouped pickings must have same parnter.'))
+                        picking.picking_group_id = group
         return res
