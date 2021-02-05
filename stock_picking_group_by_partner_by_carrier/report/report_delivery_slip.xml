@@ -13,7 +13,7 @@
             expr='//table[@name="stock_move_table"]/tbody/tr//span[@t-field="move.product_id"]/..'
             position="replace"
         >
-            <t t-if="move.product_id">
+            <t t-if="move.id">
                 <td>
                     <span t-field="move.product_id" />
                     <p t-if="move.description_picking != move.product_id.name">
@@ -32,14 +32,14 @@
             expr='//table[@name="stock_move_table"]/tbody/tr/td/span[@t-field="move.product_uom_qty"]'
             position="attributes"
         >
-            <attribute name="t-if">move.product_id</attribute>
+            <attribute name="t-if">move.id</attribute>
         </xpath>
 
         <xpath
             expr='//table[@name="stock_move_table"]/tbody/tr/td/span[@t-field="move.product_uom"]'
             position="attributes"
         >
-            <attribute name="t-if">move.product_id</attribute>
+            <attribute name="t-if">move.id</attribute>
         </xpath>
 
         <!-- overrides when the picking is done -->
@@ -64,19 +64,19 @@
         inherit_id="stock.stock_report_delivery_has_serial_move_line"
     >
         <xpath expr='//span[@t-field="move_line.lot_id.name"]' position="attributes">
-            <attribute name="t-if">move_line.product_id</attribute>
+            <attribute name="t-if">move_line.id</attribute>
         </xpath>
 
         <xpath expr='//span[@t-field="move_line.lot_id.name"]' position="attributes">
-            <attribute name="t-if">move_line.product_id</attribute>
+            <attribute name="t-if">move_line.id</attribute>
         </xpath>
 
         <xpath expr='//span[@t-field="move_line.qty_done"]' position="attributes">
-            <attribute name="t-if">move_line.product_id</attribute>
+            <attribute name="t-if">move_line.id</attribute>
         </xpath>
 
         <xpath expr='//span[@t-field="move_line.product_uom_id"]' position="attributes">
-            <attribute name="t-if">move_line.product_id</attribute>
+            <attribute name="t-if">move_line.id</attribute>
         </xpath>
     </template>
 
