@@ -81,11 +81,6 @@ msgid "ID"
 msgstr "ID"
 
 #. module: stock_move_source_relocate
-#: model:ir.model,name:stock_move_source_relocate.model_stock_location
-msgid "Inventory Locations"
-msgstr "Ubicaciones de Inventario"
-
-#. module: stock_move_source_relocate
 #: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate____last_update
 msgid "Last Modified on"
 msgstr "Última Modificación el"
@@ -168,15 +163,14 @@ msgstr "Regla de Reservación de Existencias"
 #: code:addons/stock_move_source_relocate/models/stock_source_relocate.py:0
 #, python-format
 msgid ""
-"When a move with operation type "
-"<strong>{rule.picking_type_id.display_name}</strong> is inside the location "
-"<strong>{rule.location_id.display_name}</strong> and a check of availability"
-" returns no reservation, the move is relocated to the location "
-"<strong>{rule.relocate_location_id.display_name}</strong> (source location "
-"changed).<br/>If a move is partially unavailable, the move is split in two "
-"parts:<ul><li>the available part is adjusted to the reserved quantity, and "
-"its source location stays the same </li><li>the unavailable part is split in"
-" a new move in the relocation location</li></ul>"
+"When a move with operation type <strong>{rule.picking_type_id.display_name}</"
+"strong> is inside the location <strong>{rule.location_id.display_name}</"
+"strong> and a check of availability returns no reservation, the move is "
+"relocated to the location <strong>{rule.relocate_location_id.display_name}</"
+"strong> (source location changed).<br/>If a move is partially unavailable, "
+"the move is split in two parts:<ul><li>the available part is adjusted to the "
+"reserved quantity, and its source location stays the same </li><li>the "
+"unavailable part is split in a new move in the relocation location</li></ul>"
 msgstr ""
 "Cuando un movimiento con el tipo de operación <strong>{rule.picking_type_id."
 "display_name}</strong> está dentro de la ubicación <strong>{rule.location_id."
@@ -186,5 +180,8 @@ msgstr ""
 "<br/>Si un movimiento no está parcialmente disponible, el movimiento se "
 "divide en dos partes: <ul><li>el la parte disponible se ajusta a la cantidad "
 "reservada y su ubicación de origen permanece igual</li><li>la parte no "
-"disponible se divide en un nuevo movimiento en la ubicación de "
-"reubicación</li></ul>"
+"disponible se divide en un nuevo movimiento en la ubicación de reubicación</"
+"li></ul>"
+
+#~ msgid "Inventory Locations"
+#~ msgstr "Ubicaciones de Inventario"

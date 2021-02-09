@@ -74,11 +74,6 @@ msgid "ID"
 msgstr ""
 
 #. module: stock_move_source_relocate
-#: model:ir.model,name:stock_move_source_relocate.model_stock_location
-msgid "Inventory Locations"
-msgstr ""
-
-#. module: stock_move_source_relocate
 #: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate____last_update
 msgid "Last Modified on"
 msgstr ""
