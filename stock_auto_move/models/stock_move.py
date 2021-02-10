@@ -15,7 +15,7 @@ class StockMove(models.Model):
 
     def _auto_assign_quantities(self):
         for move in self:
-            move.quantity_done = move.product_qty
+            move.quantity_done = move.product_uom_qty
 
     def _action_assign(self):
         res = super(StockMove, self)._action_assign()
