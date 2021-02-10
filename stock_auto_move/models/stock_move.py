@@ -58,7 +58,7 @@ class StockMove(models.Model):
 
     def _change_procurement_group(self):
         automatic_group = self.env.ref("stock_auto_move.automatic_group")
-        moves = self.filtered(lambda m: m.auto_move and m.group_id != automatic_group)
+        moves = self.filtered(lambda m: m.auto_move and not m.group_id)
         moves.write({"group_id": automatic_group.id})
 
     def _action_confirm(self, merge=True, merge_into=False):
