@@ -18,7 +18,7 @@ class TestStockAutoMove(SavepointCase):
         cls.location_3 = cls.env.ref("stock_auto_move.stock_location_c")
         cls.product_uom_unit_id = cls.env.ref("uom.product_uom_unit").id
         cls.picking_type_id = cls.env.ref("stock.picking_type_internal").id
-        cls.auto_group_id = cls.env.ref("stock_auto_move.automatic_group").id
+        cls.auto_group = cls.env.ref("stock_auto_move.automatic_group")
         cls.move_obj = cls.env["stock.move"]
 
     def test_10_auto_move(self):
@@ -49,7 +49,7 @@ class TestStockAutoMove(SavepointCase):
         )
         move._action_confirm()
         self.assertTrue(move.picking_id)
-        self.assertEqual(move.group_id.id, self.auto_group_id)
+        self.assertEqual(move.group_id, self.auto_group)
         move2._action_confirm()
         self.assertTrue(move2.picking_id)
         self.assertFalse(move2.group_id)
@@ -105,6 +105,7 @@ class TestStockAutoMove(SavepointCase):
 
         self.assertTrue(moves_after.auto_move)
         self.assertEqual(moves_after.state, "confirmed")
+        self.assertEquals(moves_after.group_id, self.auto_group)
 
     def test_30_push_rule_auto(self):
         """Checks that push rule with auto set leads to an auto_move."""
@@ -162,7 +163,7 @@ class TestStockAutoMove(SavepointCase):
                 {
                     "partner_id": self.env.ref("base.res_partner_1").id,
                     "picking_type_id": warehouse.in_type_id.id,
-                    "group_id": self.auto_group_id,
+                    "group_id": self.auto_group.id,
                     "location_id": self.env.ref("stock.stock_location_suppliers").id,
                 }
             )
@@ -215,7 +216,7 @@ class TestStockAutoMove(SavepointCase):
                 {
                     "partner_id": self.env.ref("base.res_partner_1").id,
                     "picking_type_id": warehouse.in_type_id.id,
-                    "group_id": self.auto_group_id,
+                    "group_id": self.auto_group.id,
                     "location_id": self.env.ref("stock.stock_location_suppliers").id,
                 }
             )
@@ -295,7 +296,7 @@ class TestStockAutoMove(SavepointCase):
                 {
                     "partner_id": self.env.ref("base.res_partner_1").id,
                     "picking_type_id": warehouse.in_type_id.id,
-                    "group_id": self.auto_group_id,
+                    "group_id": self.auto_group.id,
                     "location_id": self.env.ref("stock.stock_location_suppliers").id,
                 }
             )
@@ -356,3 +357,36 @@ class TestStockAutoMove(SavepointCase):
                 lambda m: m.state == "partially_available"
             )
         )
+
+    def test_70_procurement_auto_move_keep_group(self):
+        """Check that move generated with procurement rule
+        have auto_move set."""
+        self.product_a1232.route_ids = [(4, self.ref("stock_auto_move.test_route"))]
+        moves_before = self.move_obj.search([])
+        group_manual = self.env["procurement.group"].create({"name": "TEST MANUAL"})
+        self.env["procurement.group"].run(
+            [
+                self.env["procurement.group"].Procurement(
+                    self.product_a1232,
+                    1,
+                    self.env.ref("uom.product_uom_unit"),
+                    self.location_2,
+                    "Test Procurement with auto_move",
+                    "Test Procurement with auto_move",
+                    self.env.company,
+                    {
+                        "warehouse_id": self.env.ref("stock.warehouse0"),
+                        "date_planned": "2015-02-02 00:00:00",
+                        "group_id": group_manual,
+                    },
+                )
+            ]
+        )
+        moves_after = self.move_obj.search([]) - moves_before
+        self.assertEqual(
+            moves_after.rule_id.id, self.ref("stock_auto_move.stock_rule_a_to_b"),
+        )
+
+        self.assertTrue(moves_after.auto_move)
+        self.assertEqual(moves_after.state, "confirmed")
+        self.assertEquals(moves_after.group_id, group_manual)
