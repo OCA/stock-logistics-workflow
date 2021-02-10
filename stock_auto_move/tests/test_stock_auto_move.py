@@ -17,6 +17,7 @@ class TestStockAutoMove(SavepointCase):
         cls.location_2 = cls.env.ref("stock_auto_move.stock_location_b")
         cls.location_3 = cls.env.ref("stock_auto_move.stock_location_c")
         cls.product_uom_unit_id = cls.env.ref("uom.product_uom_unit").id
+        cls.uom_dozen = cls.env.ref("uom.product_uom_dozen")
         cls.picking_type_id = cls.env.ref("stock.picking_type_internal").id
         cls.auto_group = cls.env.ref("stock_auto_move.automatic_group")
         cls.move_obj = cls.env["stock.move"]
@@ -390,3 +391,58 @@ class TestStockAutoMove(SavepointCase):
         self.assertTrue(moves_after.auto_move)
         self.assertEqual(moves_after.state, "confirmed")
         self.assertEquals(moves_after.group_id, group_manual)
+
+    def test_80_chained_auto_move_uom(self):
+        """
+        Test case:
+            - product with tracking set to serial.
+            - warehouse reception steps set to two steps.
+            - the push rule on the reception route set to auto move.
+            - create movement using the reception picking type.
+            - Use the unit dozen => 24.0 total quantity
+        Expected Result:
+            The second step movement should be processed automatically
+            after processing the first movement.
+        """
+        warehouse = self.env.ref("stock.warehouse0")
+        warehouse.reception_steps = "two_steps"
+        warehouse.reception_route_id.rule_ids.auto_move = True
+        warehouse.int_type_id.use_create_lots = False
+        warehouse.int_type_id.use_existing_lots = True
+
+        picking = (
+            self.env["stock.picking"]
+            .with_context(default_picking_type_id=warehouse.in_type_id.id)
+            .create(
+                {
+                    "partner_id": self.env.ref("base.res_partner_1").id,
+                    "picking_type_id": warehouse.in_type_id.id,
+                    "group_id": self.auto_group.id,
+                    "location_id": self.env.ref("stock.stock_location_suppliers").id,
+                }
+            )
+        )
+
+        move1 = self.env["stock.move"].create(
+            {
+                "name": "Supply source location for test",
+                "product_id": self.product_a1232.id,
+                "product_uom": self.uom_dozen.id,
+                "product_uom_qty": 2,
+                "picking_id": picking.id,
+                "location_id": self.env.ref("stock.stock_location_suppliers").id,
+                "location_dest_id": warehouse.wh_input_stock_loc_id.id,
+                "picking_type_id": warehouse.in_type_id.id,
+            }
+        )
+        picking.action_confirm()
+        self.assertTrue(picking.move_line_ids)
+        self.assertEqual(len(picking.move_line_ids), 1)
+        picking.move_line_ids.qty_done = 2
+        picking.action_done()
+        self.assertTrue(move1.move_dest_ids)
+
+        self.assertTrue(move1.move_dest_ids.auto_move)
+        self.assertEqual(move1.move_dest_ids.state, "done")
+        self.assertEqual(move1.move_dest_ids.quantity_done, 2.0)
+        self.assertEqual(move1.move_dest_ids.product_qty, 24.0)
