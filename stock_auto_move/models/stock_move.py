@@ -15,12 +15,14 @@ class StockMove(models.Model):
 
     def _auto_assign_quantities(self):
         for move in self:
-            move.quantity_done = move.product_uom_qty
+            move.quantity_done = move.reserved_availability
 
     def _action_assign(self):
         res = super(StockMove, self)._action_assign()
         # Transfer all pickings which have an auto move assigned
-        moves = self.filtered(lambda m: m.state == "assigned" and m.auto_move)
+        moves = self.filtered(
+            lambda m: m.state in ("assigned", "partially_available") and m.auto_move
+        )
         moves._auto_assign_quantities()
         moves._action_done()
         already_assigned_moves = self.filtered(lambda m: m.state == "assigned")
