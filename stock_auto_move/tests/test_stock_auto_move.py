@@ -123,6 +123,7 @@ class TestStockAutoMove(SavepointCase):
             }
         )
         move3._action_confirm()
+        move3._action_assign()
         move3._auto_assign_quantities()
         move3._action_done()
         quants_in_3 = self.env["stock.quant"].search(
