@@ -447,3 +447,91 @@ class TestStockAutoMove(SavepointCase):
         self.assertEqual(move1.move_dest_ids.state, "done")
         self.assertEqual(move1.move_dest_ids.quantity_done, 2.0)
         self.assertEqual(move1.move_dest_ids.product_qty, 24.0)
+
+    def test_90_partial_chained_auto_move_no_backorder(self):
+        """
+        Test case:
+            - product with tracking set to serial.
+            - warehouse reception steps set to two steps.
+            - create picking with two move lines.
+            - do partial reception on first step with no backorder
+        Expected Result:
+            The second step movement should be processed automatically
+            and the actual first quantity should be done
+        """
+        warehouse = self.env.ref("stock.warehouse0")
+        warehouse.reception_steps = "two_steps"
+        warehouse.reception_route_id.rule_ids.auto_move = True
+        warehouse.int_type_id.use_create_lots = False
+        warehouse.int_type_id.use_existing_lots = True
+
+        picking = (
+            self.env["stock.picking"]
+            .with_context(default_picking_type_id=warehouse.in_type_id.id)
+            .create(
+                {
+                    "partner_id": self.env.ref("base.res_partner_1").id,
+                    "picking_type_id": warehouse.in_type_id.id,
+                    "group_id": self.auto_group.id,
+                    "location_id": self.env.ref("stock.stock_location_suppliers").id,
+                }
+            )
+        )
+
+        move1 = self.env["stock.move"].create(
+            {
+                "name": "Supply source location for test",
+                "product_id": self.product_a1232.id,
+                "product_uom": self.product_uom_unit_id,
+                "product_uom_qty": 2,
+                "picking_id": picking.id,
+                "location_id": self.env.ref("stock.stock_location_suppliers").id,
+                "location_dest_id": warehouse.wh_input_stock_loc_id.id,
+                "picking_type_id": warehouse.in_type_id.id,
+                "propagate_cancel": True,
+            }
+        )
+
+        move2 = self.env["stock.move"].create(
+            {
+                "name": "Supply source location for test",
+                "product_id": self.product_2.id,
+                "product_uom": self.product_uom_unit_id,
+                "product_uom_qty": 2,
+                "picking_id": picking.id,
+                "location_id": self.env.ref("stock.stock_location_suppliers").id,
+                "location_dest_id": warehouse.wh_input_stock_loc_id.id,
+                "picking_type_id": warehouse.in_type_id.id,
+                "propagate_cancel": True,
+            }
+        )
+
+        picking.action_confirm()
+        self.assertTrue(move1.move_dest_ids.auto_move)
+        self.assertTrue(move2.move_dest_ids.auto_move)
+        second_step_picking = move2.move_dest_ids.picking_id
+
+        # do partial reception of the first picking
+        move1.move_line_ids.qty_done = 2
+        move1.move_line_ids.product_uom_qty = 2
+
+        move2.move_line_ids.qty_done = 1
+        move2.move_line_ids.product_uom_qty = 1
+
+        res = picking.button_validate()
+        self.assertDictContainsSubset(
+            {"res_model": "stock.backorder.confirmation"}, res,
+        )
+        wizard = self.env["stock.backorder.confirmation"].browse(res["res_id"])
+        wizard.process_cancel_backorder()
+
+        second_step_back_order = self.env["stock.picking"].search(
+            [("backorder_id", "=", second_step_picking.id)]
+        )
+
+        self.assertFalse(second_step_back_order)
+
+        self.assertEquals("done", move1.move_dest_ids.state)
+        self.assertEquals("done", move2.move_dest_ids.state)
+        self.assertEquals(2.0, move1.move_dest_ids.quantity_done)
+        self.assertEquals(1.0, move2.move_dest_ids.quantity_done)
