@@ -16,7 +16,8 @@ class StockMove(models.Model):
     # and for cancellation of a sales order (to cancel only the moves related
     # to it)
     original_group_id = fields.Many2one(
-        comodel_name="procurement.group", string="Original Procurement Group",
+        comodel_name="procurement.group",
+        string="Original Procurement Group",
     )
 
     @api.model
