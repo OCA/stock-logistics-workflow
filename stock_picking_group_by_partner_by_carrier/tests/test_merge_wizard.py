@@ -150,7 +150,8 @@ class TestMergeWizard(SavepointCase):
         wiz._compute_pickings()
         valid_expected = self.all_pickings_partner1 - self.pick_p1_1 - self.pick_p1_2
         self.assertEqual(
-            wiz.valid_picking_ids, valid_expected,
+            wiz.valid_picking_ids,
+            valid_expected,
         )
         self.assertEqual(wiz.discarded_picking_ids, self.pick_p1_1 + self.pick_p1_2)
         # Only one picking left, nothing to do
