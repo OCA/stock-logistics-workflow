@@ -24,7 +24,11 @@ class StockMove(models.Model):
             lambda m: m.state in ("assigned", "partially_available") and m.auto_move
         )
         moves._auto_assign_quantities()
-        moves._action_done()
+        # In case of no backorder on the first move and cancel propagation
+        # we need to propagate cancel_backorder to action_done
+        moves._action_done(
+            cancel_backorder=self.env.context.get("cancel_backorder", False)
+        )
         already_assigned_moves = self.filtered(lambda m: m.state == "assigned")
 
         not_assigned_auto_move = self - already_assigned_moves
