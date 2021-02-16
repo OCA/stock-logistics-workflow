@@ -7,3 +7,6 @@ shares the same delivery address and carrier (or lack thereof).
 
 Sale orders with a Shipping Policy set to 'When all products are ready' always
 get their own shipping.
+
+When the delivery slip is printed, the list of pending quantities to deliver
+is shown at the end, grouped by order.
