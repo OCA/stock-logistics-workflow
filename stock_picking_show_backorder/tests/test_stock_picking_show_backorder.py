@@ -6,12 +6,11 @@ from odoo.tests.common import SavepointCase
 class TestStockPickingShowBackorder(SavepointCase):
     @classmethod
     def setUpClass(cls):
-        super(TestStockPickingShowBackorder, cls).setUpClass()
-
+        super().setUpClass()
         cls.src_location = cls.env.ref("stock.stock_location_stock")
         cls.dest_location = cls.env.ref("stock.stock_location_customers")
-        cls.product = cls.env["product.product"].create({"name": "Test product",})
-        cls.partner = cls.env["res.partner"].create({"name": "Test partner",})
+        cls.product = cls.env["product.product"].create({"name": "Test product"})
+        cls.partner = cls.env["res.partner"].create({"name": "Test partner"})
         cls.picking = cls.env["stock.picking"].create(
             {
                 "partner_id": cls.partner.id,
@@ -45,7 +44,6 @@ class TestStockPickingShowBackorder(SavepointCase):
             [("picking_id", "=", self.picking.id)], limit=1
         )
         move_line.qty_done = 1.0
-
         self.picking.action_done()
         self.assertEqual(self.picking.state, "done")
         # The backorder should be created
