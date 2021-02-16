@@ -14,6 +14,7 @@
         "views/procurement_group.xml",
         "views/stock_picking_type.xml",
         "views/stock_warehouse.xml",
+        "report/assets.xml",
         "report/report_delivery_slip.xml",
         "wizard/stock_picking_merge_wiz.xml",
         "wizard/stock_picking_merge_wiz_info_template.xml",
