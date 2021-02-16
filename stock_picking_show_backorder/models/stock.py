@@ -7,6 +7,10 @@ from odoo import fields, models
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    backorder_ids = fields.One2many(comodel_name='stock.picking',
-                                    inverse_name='backorder_id', copy=False,
-                                    string='Backorders', readonly=True)
+    backorder_ids = fields.One2many(
+        comodel_name="stock.picking",
+        inverse_name="backorder_id",
+        copy=False,
+        string="Backorders",
+        readonly=True,
+    )
