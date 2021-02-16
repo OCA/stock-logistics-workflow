@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <template id="report_delivery_document" inherit_id="stock.report_delivery_document">
+        <div class="page" position="before">
+            <t t-set="report_lines" t-value="o.get_delivery_report_lines()" />
+        </div>
         <!-- overrides when the picking is not done -->
         <xpath
             expr='//table[@name="stock_move_table"]/tbody/t[@t-set="lines"]'
             position="attributes"
         >
-            <attribute name="t-value">o.get_delivery_report_lines()</attribute>
+            <attribute name="t-value">report_lines</attribute>
         </xpath>
 
         <xpath
@@ -55,6 +58,51 @@
             position="attributes"
         >
             <attribute name="t-if">False</attribute>
+        </xpath>
+
+        <!-- Remove "All items could not be shipped..." sentence
+            Substitute it by a message indicating if all goods have been delivered. -->
+        <xpath expr='//t[@t-if="o.backorder_ids and backorders"]' position="attributes">
+            <attribute name="t-if">False</attribute>
+            <attribute name="name">stock_backorder_block</attribute>
+        </xpath>
+        <xpath expr='//t[@name="stock_backorder_block"]' position="after">
+            <t t-if="o.picking_type_id.code == 'outgoing'">
+                <t t-set="remainings" t-value="get_remaining_to_deliver(o)" />
+                <t t-if="not remainings">
+                    <p
+                        class="remaining-to-deliver-separator"
+                    >All ordered items have been delivered.</p>
+                </t>
+                <t t-else="">
+                    <p class="remaining-to-deliver-separator">Remaining to deliver:</p>
+                    <table class="table table-sm" name="remaining_to_deliver_table">
+                        <tbody>
+                            <tr t-foreach="remainings" t-as="remaining">
+                                <td>
+                                    <span
+                                        t-att-class="'font-weight-bold' if remaining['is_header'] else None"
+                                        t-esc="remaining['concept']"
+                                    />
+                                </td>
+                                <td style="text-align: right">
+                                    <t t-if="not remaining['is_header']">
+                                        <span
+                                            t-esc="remaining['qty']"
+                                            t-options="{'widget': 'float',
+                                                          'precision': rounding_to_precision(remaining['uom'].rounding)}"
+                                        />
+                                        <span
+                                            class="remaining_uom_name"
+                                            t-field="remaining['uom'].name"
+                                        />
+                                    </t>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+            </t>
         </xpath>
 
     </template>
