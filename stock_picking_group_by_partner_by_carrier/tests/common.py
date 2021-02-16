@@ -69,3 +69,8 @@ class TestGroupByBase(TestSaleCommonBase):
         }
         sale_order = self.env["sale.order"].create(sale_order_vals)
         return sale_order
+
+    def _validate_transfer(self, picking):
+        for move_line in picking.move_line_ids:
+            move_line.qty_done = move_line.product_uom_qty
+        picking._action_done()
