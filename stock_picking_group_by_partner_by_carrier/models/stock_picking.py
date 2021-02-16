@@ -142,7 +142,9 @@ class StockPicking(models.Model):
                 fake_record["name"] = "fake move"
                 for sale, sale_moves in grouped_moves:
                     line_desc = sale.get_name_for_delivery_line()
-                    fake_record["description_picking"] = line_desc
+                    fake_record.update(
+                        {"description_picking": line_desc, "origin": sale.name}
+                    )
                     sales_and_moves |= sales_and_moves.new(fake_record.copy())
                     for move in sale_moves:
                         sales_and_moves |= move
@@ -152,7 +154,9 @@ class StockPicking(models.Model):
                 fake_record["product_uom_id"] = fake_record.pop("product_uom")
                 for sale, sale_moves in grouped_moves:
                     line_desc = sale.get_name_for_delivery_line()
-                    fake_record["description_picking"] = line_desc
+                    fake_record.update(
+                        {"description_picking": line_desc, "origin": sale.name}
+                    )
                     sales_and_moves |= sales_and_moves.new(fake_record.copy())
                     for move in sale_moves:
                         for move_line in move.move_line_ids:
