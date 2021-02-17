@@ -60,12 +60,12 @@ def post_init_hook(cr, registry):
                 (qty, tuple(ids)),
             )
         moves_no_return_done = env["stock.move"].search(
-            [("returned_move_ids", "=", False), ("state", "=", "done"),]
+            [("returned_move_ids", "=", False), ("state", "=", "done")]
         )
         # Recursively solve quantities
         updated_moves = moves_no_return_done + moves_draft + moves_no_return_pendant
         remaining_moves = env["stock.move"].search(
-            [("returned_move_ids", "!=", False), ("state", "=", "done"),]
+            [("returned_move_ids", "!=", False), ("state", "=", "done")]
         )
         while remaining_moves:
             _logger.info("{} moves left...".format(len(remaining_moves)))

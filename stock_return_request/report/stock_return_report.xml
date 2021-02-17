@@ -70,7 +70,7 @@
             <t t-call="web.external_layout">
                 <div class="page">
                     <div class="row">
-                        <div class="col-xs-5 col-xs-offset-1">
+                        <div class="col-5 col-offset-1">
                             <div
                                 t-if="request.return_type == 'supplier' and request.partner_id"
                             >

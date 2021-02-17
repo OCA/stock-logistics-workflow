@@ -4,8 +4,6 @@ from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools import float_compare, float_is_zero
 
-from odoo.addons import decimal_precision as dp
-
 
 class StockReturnRequest(models.Model):
     _name = "stock.return.request"
@@ -85,7 +83,7 @@ class StockReturnRequest(models.Model):
         default="draft",
         readonly=True,
         copy=False,
-        track_visibility="onchange",
+        tracking=True,
     )
     returned_picking_ids = fields.One2many(
         comodel_name="stock.picking",
@@ -136,7 +134,7 @@ class StockReturnRequest(models.Model):
     @api.model
     def _default_warehouse_id(self):
         warehouse = self.env["stock.warehouse"].search(
-            [("company_id", "=", self.env.user.company_id.id),], limit=1
+            [("company_id", "=", self.env.user.company_id.id)], limit=1
         )
         return warehouse
 
@@ -173,7 +171,7 @@ class StockReturnRequest(models.Model):
         return_pickings = self.env["stock.picking"]
         for picking in pickings:
             picking_dict = picking.copy_data(
-                {"origin": picking.name, "printed": False,}
+                {"origin": picking.name, "printed": False}
             )[0]
             moves = picking_moves.filtered(
                 lambda x: x.origin_returned_move_id.picking_id == picking
@@ -288,9 +286,7 @@ class StockReturnRequest(models.Model):
                                 self._prepare_move_line_values(line, return_move, qty),
                             )
                         )
-                    return_move.write(
-                        {"move_line_ids": vals_list,}
-                    )
+                    return_move.write({"move_line_ids": vals_list})
                     return_moves += return_move
                     line.returnable_move_ids += return_move
                 # If not lots, just try standard assign
@@ -409,13 +405,11 @@ class StockReturnRequestLine(models.Model):
         comodel_name="stock.production.lot", string="Lot / Serial",
     )
     quantity = fields.Float(
-        string="Quantiy to return",
-        digits=dp.get_precision("Product Unit of Measure"),
-        required=True,
+        string="Quantiy to return", digits="Product Unit of Measure", required=True,
     )
     max_quantity = fields.Float(
         string="Maximum available quantity",
-        digits=dp.get_precision("Product Unit of Measure"),
+        digits="Product Unit of Measure",
         readonly=True,
     )
     returnable_move_ids = fields.Many2many(

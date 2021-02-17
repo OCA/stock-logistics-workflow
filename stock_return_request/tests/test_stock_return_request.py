@@ -1,8 +1,11 @@
 # Copyright 2019 Tecnativa - David Vidal
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+from odoo.tests import tagged
+
 from .test_stock_return_request_common import StockReturnRequestCase
 
 
+@tagged("post_install", "-at_install")
 class PurchaseReturnRequestCase(StockReturnRequestCase):
     @classmethod
     def setUpClass(cls):
@@ -11,7 +14,7 @@ class PurchaseReturnRequestCase(StockReturnRequestCase):
     def test_01_return_request_to_customer(self):
         """Find pickings from the customer and make the return"""
         self.return_request_customer.write(
-            {"line_ids": [(0, 0, {"product_id": self.prod_1.id, "quantity": 12.0,})],}
+            {"line_ids": [(0, 0, {"product_id": self.prod_1.id, "quantity": 12.0})]}
         )
         self.return_request_customer.action_confirm()
         pickings = self.return_request_customer.returned_picking_ids
@@ -35,7 +38,7 @@ class PurchaseReturnRequestCase(StockReturnRequestCase):
     def test_02_return_request_to_supplier(self):
         """Find pickings from the supplier and make the return"""
         self.return_request_supplier.write(
-            {"line_ids": [(0, 0, {"product_id": self.prod_1.id, "quantity": 12.0,})],}
+            {"line_ids": [(0, 0, {"product_id": self.prod_1.id, "quantity": 12.0})]}
         )
         self.return_request_supplier.action_confirm()
         pickings = self.return_request_supplier.returned_picking_ids
@@ -109,7 +112,7 @@ class PurchaseReturnRequestCase(StockReturnRequestCase):
 
     def test_return_child_location(self):
         picking = self.picking_supplier_1.copy(
-            {"location_dest_id": self.location_child_1.id,}
+            {"location_dest_id": self.location_child_1.id}
         )
         picking.move_lines.unlink()
         picking.move_lines = [
@@ -136,7 +139,7 @@ class PurchaseReturnRequestCase(StockReturnRequestCase):
                 "lot_id": self.prod_3_lot3.id,
                 "qty_done": 30.0,
             }
-            move.write({"move_line_ids": [(0, 0, vals)], "qty_done": 30.0})
+            move.write({"move_line_ids": [(0, 0, vals)], "quantity_done": 30.0})
         picking.action_done()
         self.return_request_supplier.write(
             {

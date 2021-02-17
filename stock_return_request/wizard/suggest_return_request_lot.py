@@ -15,8 +15,7 @@ class SuggestReturnRequestLot(models.TransientModel):
         ondelete="cascade",
     )
     lot_suggestion_mode = fields.Selection(
-        selection=[("sum", "Total by lot"), ("detail", "Total by move"),],
-        default="sum",
+        selection=[("sum", "Total by lot"), ("detail", "Total by move")], default="sum",
     )
     suggested_lot = fields.Selection(
         selection="_get_suggested_lots_selection",

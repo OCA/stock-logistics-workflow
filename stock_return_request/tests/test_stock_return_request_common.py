@@ -3,43 +3,50 @@
 from dateutil.relativedelta import relativedelta
 
 from odoo import fields
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import SavepointCase, tagged
 
 
+@tagged("post_install", "-at_install")
 class StockReturnRequestCase(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.product_obj = cls.env["product.product"]
         cls.prod_1 = cls.product_obj.create(
-            {"name": "Test Product 1", "type": "product",}
+            {"name": "Test Product 1", "type": "product"}
         )
-        cls.prod_2 = cls.prod_1.copy({"name": "Test Product 2", "type": "product",})
-        cls.prod_3 = cls.prod_1.copy(
-            {"name": "Test Product 3", "type": "product", "tracking": "lot",}
+        cls.prod_2 = cls.prod_1.with_context({}).copy(
+            {"name": "Test Product 2", "type": "product"}
+        )
+        cls.prod_3 = cls.prod_1.with_context({}).copy(
+            {"name": "Test Product 3", "type": "product", "tracking": "lot"}
         )
         cls.prod_3_lot1 = cls.env["stock.production.lot"].create(
-            {"name": "TSTPROD3LOT0001", "product_id": cls.prod_3.id,}
+            {
+                "name": "TSTPROD3LOT0001",
+                "product_id": cls.prod_3.id,
+                "company_id": cls.env.company.id,
+            }
         )
-        cls.prod_3_lot2 = cls.prod_3_lot1.copy({"name": "TSTPROD3LOT0002",})
-        cls.prod_3_lot3 = cls.prod_3_lot1.copy({"name": "TSTPROD3LOT0003",})
+        cls.prod_3_lot2 = cls.prod_3_lot1.copy({"name": "TSTPROD3LOT0002"})
+        cls.prod_3_lot3 = cls.prod_3_lot1.copy({"name": "TSTPROD3LOT0003"})
         cls.wh1 = cls.env["stock.warehouse"].create(
-            {"name": "TEST WH1", "code": "TST1",}
+            {"name": "TEST WH1", "code": "TST1"}
         )
         # Locations (WH1 locations are created automatically)
         location_obj = cls.env["stock.location"]
         cls.supplier_loc = location_obj.create(
-            {"name": "Test supplier location", "usage": "supplier",}
+            {"name": "Test supplier location", "usage": "supplier"}
         )
         cls.customer_loc = location_obj.create(
-            {"name": "Test customer location", "usage": "customer",}
+            {"name": "Test customer location", "usage": "customer"}
         )
         # Create child locations
         cls.location_child_1 = location_obj.create(
-            {"location_id": cls.wh1.lot_stock_id.id, "name": "Location child 1",}
+            {"location_id": cls.wh1.lot_stock_id.id, "name": "Location child 1"}
         )
         cls.location_child_2 = location_obj.create(
-            {"location_id": cls.wh1.lot_stock_id.id, "name": "Location child 2",}
+            {"location_id": cls.wh1.lot_stock_id.id, "name": "Location child 2"}
         )
         # Create partners
         cls.partner_customer = cls.env["res.partner"].create(
