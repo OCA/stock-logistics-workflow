@@ -8,7 +8,7 @@ class TestStockPickingSendByMail(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super(TestStockPickingSendByMail, cls).setUpClass()
-        cls.product = cls.env["product.product"].create({"name": "Test product",})
+        cls.product = cls.env["product.product"].create({"name": "Test product"})
         cls.picking_type = cls.env.ref("stock.picking_type_out")
         cls.picking = cls.env["stock.picking"].create(
             {
