@@ -4,7 +4,7 @@
         <field name="name">Stock Picking - Send by Email</field>
         <field
             name="email_from"
-        >${(object.user_id.email_formatted or user.email_formatted) | safe}</field>
+        >${(object.user_id.email_formatted or user.email_formatted or '') | safe}</field>
         <field
             name="subject"
         >${object.company_id.name|safe} Picking (Ref ${object.name or 'n/a' })</field>
@@ -26,6 +26,7 @@
     <p style="border-left: 1px solid #8e0000; margin-left: 30px;">
        &nbsp;&nbsp;<strong>REFERENCES</strong><br />
        &nbsp;&nbsp;Picking number: <strong>${object.name}</strong><br />
+       &nbsp;&nbsp;Picking date: ${format_datetime(object.date, tz=user.tz, lang_code=object.partner_id.lang)} <br />
        % if object.origin:
            &nbsp;&nbsp;Picking reference: ${object.origin}<br />
        % endif
