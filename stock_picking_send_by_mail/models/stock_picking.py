@@ -2,13 +2,12 @@
 # Copyright 2017 Tecnativa - Vicent Cubells
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import _, api, models
+from odoo import _, models
 
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    @api.multi
     def action_picking_send(self):
         self.ensure_one()
         template = self.env.ref(
