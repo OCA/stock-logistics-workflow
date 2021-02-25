@@ -10,6 +10,7 @@ class ProductPackaging(models.Model):
 
     package_default_shipping_weight = fields.Float(
         string="Default shipping weight",
+        digits="Stock Weight",
         help="If set, this weight will be used as default value for Shipping "
         "weight, when this Package Type is selected on a Package.",
     )
