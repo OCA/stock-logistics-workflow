@@ -1,0 +1,97 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_shifting_end_of_lot
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-02-25 08:26+0000\n"
+"PO-Revision-Date: 2021-02-25 09:39+0100\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: fr_FR\n"
+"X-Generator: Poedit 2.3\n"
+
+#. module: stock_shifting_end_of_lot
+#: model_terms:ir.ui.view,arch_db:stock_shifting_end_of_lot.view_picking_type_form
+msgid "End Of Lot"
+msgstr "Fin de lot"
+
+#. module: stock_shifting_end_of_lot
+#: model:ir.model.fields,field_description:stock_shifting_end_of_lot.field_stock_picking_type__end_lot_location_id
+msgid "End of lot destination"
+msgstr "Destination de la fin de lot"
+
+#. module: stock_shifting_end_of_lot
+#: code:addons/stock_shifting_end_of_lot/models/stock_picking.py:26
+#, python-format
+msgid "End of lot picking <a href=# data-oe-model=stock.picking data-oe-id=%d>%s</a> created. You need validate this picking"
+msgstr "Transfert de la fin de lot <a href=# data-oe-model=stock.picking data-oe-id=%d>%s</a> créé. Vous devez valider ce transfert"
+
+#. module: stock_shifting_end_of_lot
+#: model:ir.model.fields,field_description:stock_shifting_end_of_lot.field_stock_picking_type__end_lot_picking_type_id
+msgid "End of lot picking type"
+msgstr "Type d'opération de fin de lot"
+
+#. module: stock_shifting_end_of_lot
+#: model:ir.model.fields,help:stock_shifting_end_of_lot.field_stock_picking_type__end_lot_location_id
+msgid "If defined, allows to move all quantity rest from Source Location after first customer/outgoing or internal picking with this picking type operation"
+msgstr "Si défini, permet de déplacer toute la quantité restante de l'emplacement source consécutivement à un transfert initial de type client ou interne"
+
+#. module: stock_shifting_end_of_lot
+#: model:ir.model.fields,help:stock_shifting_end_of_lot.field_stock_picking_type__end_lot_picking_type_id
+msgid "If specified, used when an end of lot picking is done."
+msgstr "Si spécifié, utilisé quand un transfert de fin de lot est réalisé."
+
+#. module: stock_shifting_end_of_lot
+#: model:ir.model,name:stock_shifting_end_of_lot.model_stock_picking_type
+msgid "Picking Type"
+msgstr "Type de préparation"
+
+#. module: stock_shifting_end_of_lot
+#: model:product.product,name:stock_shifting_end_of_lot.product_4_end_lot1
+#: model:product.template,name:stock_shifting_end_of_lot.product_4_end_lot1_product_template
+msgid "Product 1 with lot"
+msgstr ""
+
+#. module: stock_shifting_end_of_lot
+#: model:product.product,name:stock_shifting_end_of_lot.product_4_end_lot2
+#: model:product.template,name:stock_shifting_end_of_lot.product_4_end_lot2_product_template
+msgid "Product 2 with lot"
+msgstr ""
+
+#. module: stock_shifting_end_of_lot
+#: model:product.product,name:stock_shifting_end_of_lot.product_4_end_lot_no_lot
+#: model:product.template,name:stock_shifting_end_of_lot.product_4_end_lot_no_lot_product_template
+msgid "Product 3 no lot"
+msgstr ""
+
+#. module: stock_shifting_end_of_lot
+#: model:ir.model,name:stock_shifting_end_of_lot.model_stock_picking
+msgid "Transfer"
+msgstr "Transfert"
+
+#. module: stock_shifting_end_of_lot
+#: model:product.product,uom_name:stock_shifting_end_of_lot.product_4_end_lot1
+#: model:product.product,uom_name:stock_shifting_end_of_lot.product_4_end_lot2
+#: model:product.product,uom_name:stock_shifting_end_of_lot.product_4_end_lot_no_lot
+#: model:product.template,uom_name:stock_shifting_end_of_lot.product_4_end_lot1_product_template
+#: model:product.template,uom_name:stock_shifting_end_of_lot.product_4_end_lot2_product_template
+#: model:product.template,uom_name:stock_shifting_end_of_lot.product_4_end_lot_no_lot_product_template
+msgid "Unit(s)"
+msgstr "Unité(s)"
+
+#. module: stock_shifting_end_of_lot
+#: model:product.product,weight_uom_name:stock_shifting_end_of_lot.product_4_end_lot1
+#: model:product.product,weight_uom_name:stock_shifting_end_of_lot.product_4_end_lot2
+#: model:product.product,weight_uom_name:stock_shifting_end_of_lot.product_4_end_lot_no_lot
+#: model:product.template,weight_uom_name:stock_shifting_end_of_lot.product_4_end_lot1_product_template
+#: model:product.template,weight_uom_name:stock_shifting_end_of_lot.product_4_end_lot2_product_template
+#: model:product.template,weight_uom_name:stock_shifting_end_of_lot.product_4_end_lot_no_lot_product_template
+msgid "kg"
+msgstr ""
