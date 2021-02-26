@@ -21,6 +21,7 @@ class TestStockAutoMove(SavepointCase):
         cls.picking_type_id = cls.env.ref("stock.picking_type_internal").id
         cls.auto_group = cls.env.ref("stock_auto_move.automatic_group")
         cls.move_obj = cls.env["stock.move"]
+        cls.procurement_group_obj = cls.env["procurement.group"]
 
     def test_10_auto_move(self):
         """Check automatic processing of move with auto_move set."""
@@ -535,3 +536,127 @@ class TestStockAutoMove(SavepointCase):
         self.assertEquals("done", move2.move_dest_ids.state)
         self.assertEquals(2.0, move1.move_dest_ids.quantity_done)
         self.assertEquals(1.0, move2.move_dest_ids.quantity_done)
+
+    def test_100_partial_chained_auto_move_mixed_no_backorder(self):
+        """
+        Test case:
+            We do a two steps picking flow mixing products with auto move
+            and no auto move.
+            The procurement group is the same to simulate a picking flow
+            for a purchase for instance.
+            We transfer the first picking with partial quantities for both
+            products and do not require backorder.
+        Expected Result:
+            The second step picking should be done for the auto move product
+            and a backorder should have been generated for not yet transfered
+            products. Indeed, a picking should not contain done movements with
+            not yet done ones (and not cancelled).
+
+        PICKING 1                           PICKING 2
+            PRODUCT 1 (AUTO): 10 (5 done) =>    PRODUCT 1 (AUTO): 10
+                                                    (5 done, 5 cancelled)
+                                                ^
+                                                | (backorder)
+                                            PICKING 3
+            PRODUCT 2: 10 (5 done)        =>    PRODUCT 2: 10 (5 partially ready)
+        """
+        vals = {"name": "PROCUREMENT PURCHASE TEST"}
+        self.procurement = self.procurement_group_obj.create(vals)
+        warehouse = self.env.ref("stock.warehouse0")
+        warehouse.reception_steps = "two_steps"
+        warehouse.reception_route_id.rule_ids.action = "push"
+        warehouse.reception_route_id.rule_ids.auto_move = True
+        warehouse.int_type_id.use_create_lots = False
+        warehouse.int_type_id.use_existing_lots = True
+
+        # Create a second route for non automatic products
+        route_manual = warehouse.reception_route_id.copy()
+        route_manual.rule_ids.auto_move = False
+
+        # Set product_2 to manual
+        self.product_2.route_ids -= warehouse.reception_route_id
+        self.product_2.route_ids |= route_manual
+
+        picking = (
+            self.env["stock.picking"]
+            .with_context(default_picking_type_id=warehouse.in_type_id.id)
+            .create(
+                {
+                    "partner_id": self.env.ref("base.res_partner_1").id,
+                    "picking_type_id": warehouse.in_type_id.id,
+                    "group_id": self.procurement.id,
+                    "location_id": self.env.ref("stock.stock_location_suppliers").id,
+                }
+            )
+        )
+
+        move1 = self.env["stock.move"].create(
+            {
+                "name": "Supply source location for test",
+                "product_id": self.product_a1232.id,
+                "product_uom": self.product_uom_unit_id,
+                "product_uom_qty": 10,
+                "picking_id": picking.id,
+                "location_id": self.env.ref("stock.stock_location_suppliers").id,
+                "location_dest_id": warehouse.wh_input_stock_loc_id.id,
+                "picking_type_id": warehouse.in_type_id.id,
+                "propagate_cancel": True,
+                "group_id": self.procurement.id,
+            }
+        )
+
+        move2 = self.env["stock.move"].create(
+            {
+                "name": "Supply source location for test",
+                "product_id": self.product_2.id,
+                "product_uom": self.product_uom_unit_id,
+                "product_uom_qty": 10,
+                "picking_id": picking.id,
+                "location_id": self.env.ref("stock.stock_location_suppliers").id,
+                "location_dest_id": warehouse.wh_input_stock_loc_id.id,
+                "picking_type_id": warehouse.in_type_id.id,
+                "propagate_cancel": True,
+                "group_id": self.procurement.id,
+            }
+        )
+
+        picking.action_confirm()
+        self.assertTrue(move1.move_dest_ids.auto_move)
+        self.assertFalse(move2.move_dest_ids.auto_move)
+        second_step_picking = move2.move_dest_ids.picking_id
+
+        # do partial reception of the first picking
+        move1.move_line_ids.qty_done = 5
+        move1.move_line_ids.product_uom_qty = 5
+
+        move2.move_line_ids.qty_done = 5
+        move2.move_line_ids.product_uom_qty = 5
+
+        res = picking.button_validate()
+        self.assertDictContainsSubset(
+            {"res_model": "stock.backorder.confirmation"}, res,
+        )
+        wizard = self.env["stock.backorder.confirmation"].browse(res["res_id"])
+        wizard.process_cancel_backorder()
+
+        # We need to ensure that all moves are done or cancelled in the
+        # second picking
+        self.assertItemsEqual(
+            ["done", "cancel"],
+            list(set(second_step_picking.move_lines.mapped("state"))),
+        )
+
+        # The second step picking should have a backorder for the
+        # manual products
+        second_step_back_order = self.env["stock.picking"].search(
+            [("backorder_id", "=", second_step_picking.id)]
+        )
+
+        self.assertTrue(second_step_back_order)
+        # If https://github.com/odoo/odoo/pull/66124 is integrated,
+        # this should become assigned as remaining quantity should be cancelled
+        # and quantities should be 5.0
+        self.assertEquals(
+            "partially_available", second_step_back_order.move_lines.state
+        )
+        self.assertEquals(10.0, second_step_back_order.move_lines.product_uom_qty)

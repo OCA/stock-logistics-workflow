@@ -29,22 +29,9 @@ class StockMove(models.Model):
         moves._action_done(
             cancel_backorder=self.env.context.get("cancel_backorder", False)
         )
-        already_assigned_moves = self.filtered(lambda m: m.state == "assigned")
+        # We need to create backorder if there are mixed moves (auto and manual)
+        moves.mapped("picking_id")._create_backorder()
 
-        not_assigned_auto_move = self - already_assigned_moves
-
-        # Process only moves that have been processed recently
-        auto_moves = not_assigned_auto_move.filtered(
-            lambda m: m.state in ("assigned", "partially_available") and m.auto_move
-        )
-
-        # group the moves by pickings
-        auto_moves_by_pickings = self._get_auto_moves_by_pickings(auto_moves)
-
-        # process the moves by creating backorders
-        self.env["stock.picking"]._transfer_pickings_with_auto_move(
-            auto_moves_by_pickings
-        )
         return res
 
     @api.model
