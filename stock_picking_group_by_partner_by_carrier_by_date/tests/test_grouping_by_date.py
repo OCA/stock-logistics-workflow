@@ -68,6 +68,11 @@ class TestGroupByDate(TestGroupByDateBase):
             self.assertEqual(p5, p6)
             self.assertNotEqual(p5, p1)
 
+            # We need to cancel these pickings to avoid
+            # the impact on the next test case (Delay 1st picking date)
+            p5.action_cancel()
+            p6.action_cancel()
+
         # Delay 1st picking date
         p1.scheduled_date = "2020-11-27 18:30:00"
         with freeze_time("2020-11-27 18:00:00"):
