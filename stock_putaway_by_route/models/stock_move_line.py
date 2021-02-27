@@ -8,7 +8,7 @@ class StockMoveLine(models.Model):
     _inherit = "stock.move.line"
 
     @api.onchange("product_id", "product_uom_id")
-    def onchange_product_id(self):
+    def _onchange_product_id(self):
         if self.product_id.route_ids:
             self = self.with_context(_putaway_route_id=self.product_id.route_ids)
-        return super().onchange_product_id()
+        return super()._onchange_product_id()
