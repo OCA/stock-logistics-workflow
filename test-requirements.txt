@@ -1,0 +1,1 @@
+odoo14-addon-stock_move_assign_picking_hook @ git+https://github.com/phuctranerp/stock-logistics-workflow.git@14.0-mig-stock_move_assign_picking_hook#subdirectory=setup/stock_move_assign_picking_hook

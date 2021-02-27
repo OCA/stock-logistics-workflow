@@ -5,11 +5,11 @@
 
 from odoo.tests import tagged
 
-from odoo.addons.sale.tests.test_sale_common import TestSale
+from odoo.addons.sale.tests.common import TestSaleCommonBase
 
 
 @tagged("post_install", "-at_install")
-class TestGroupByBase(TestSale):
+class TestGroupByBase(TestSaleCommonBase):
     # FIXME: TestSale is very heavy and create tons of records w/ no tracking disable
     # for every test. Move to SavepointCase!
     def setUp(self):
