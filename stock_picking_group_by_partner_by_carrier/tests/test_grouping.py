@@ -122,7 +122,7 @@ class TestGroupBy(TestGroupByBase):
         pick = so1.picking_ids
         move = pick.move_lines[0]
         move.quantity_done = 5
-        pick.with_context(cancel_backorder=False).action_done()
+        pick.with_context(cancel_backorder=False)._action_done()
         self.assertTrue(so2.picking_ids & so1.picking_ids)
         self.assertEqual(so2.picking_ids.sale_ids, so1 + so2)
 
@@ -411,7 +411,7 @@ class TestGroupBy(TestGroupByBase):
         )
         line1 = move1.move_line_ids
         line1.qty_done = line1.product_uom_qty
-        picking.action_done()
+        picking._action_done()
 
         backorder = picking.backorder_ids
         # as we no longer have anything of so1 in the backorder,
@@ -449,7 +449,7 @@ class TestGroupBy(TestGroupByBase):
         picking.action_assign()
         line = picking.move_lines[0].move_line_ids
         line.qty_done = line.product_uom_qty / 2
-        picking.action_done()
+        picking._action_done()
         self.assertEqual(picking.state, "done")
         self.assertTrue(picking.backorder_ids)
         self.assertNotEqual(picking, picking.backorder_ids)
