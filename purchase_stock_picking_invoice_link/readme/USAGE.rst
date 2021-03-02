@@ -1,5 +1,5 @@
 * Create a Purchase Order and confirm.
 * Deliver its pickings totally or partially.
 * Create an invoice of the goods delivered.
-* If you open invoice form, you must see a new Pickings tab with information
-  about them.
+* If you open invoice form, you must see a smart-button labeled *Pickings*.
+* Click on this smart-button to see the linked pickings.
