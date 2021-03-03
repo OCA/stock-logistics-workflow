@@ -78,7 +78,7 @@ class StockRouting(models.Model):
     def action_view_reserve_rule(self):
         picking_types = self.picking_type_id | self.rule_ids.picking_type_id
         reserve_rules = self.env["stock.reserve.rule"].search(
-            [("picking_type_id", "in", picking_types.ids)]
+            [("picking_type_ids", "in", picking_types.ids)]
         )
         context = self.env.context
         if len(picking_types) == 1:
