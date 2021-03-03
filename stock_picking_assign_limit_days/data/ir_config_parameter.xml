@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2021 PlanetaTIC - Marc Poch <mpoch@planetatic.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+<data>
+
+<record id="stock_picking_assign_limit_days_param" model="ir.config_parameter">
+    <field name="key">stock_picking_assign_limit_days.stock_picking_assign_limit_days</field>
+    <field name="value"></field>
+</record>
+
+</data>
+</odoo>

@@ -1,0 +1,37 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_picking_assign_limit_days
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-03 15:06+0000\n"
+"PO-Revision-Date: 2021-03-03 15:06+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_assign_limit_days
+#: model:ir.model.fields,help:stock_picking_assign_limit_days.field_res_config_settings__stock_picking_assign_limit_days
+msgid "A stock move will not be assigned until its date_expected will be set before to today plus the indicated number of days"
+msgstr "Un movimiento de stock no se reservará hasta que su fecha prevista no sea antes del día de hoy más el número de días indicados"
+
+#. module: stock_picking_assign_limit_days
+#: model:ir.model,name:stock_picking_assign_limit_days.model_res_config_settings
+msgid "Config Settings"
+msgstr "Opciones de Configuración"
+
+#. module: stock_picking_assign_limit_days
+#: model:ir.model,name:stock_picking_assign_limit_days.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento de existencias"
+
+#. module: stock_picking_assign_limit_days
+#: model:ir.model.fields,field_description:stock_picking_assign_limit_days.field_res_config_settings__stock_picking_assign_limit_days
+msgid "Stock Picking Assign Limit Days"
+msgstr "Días límite para reservar movimientos de stock"
+
