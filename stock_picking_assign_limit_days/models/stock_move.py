@@ -23,5 +23,5 @@ class StockMove(models.Model):
                         days=int(confirm_before_days))
                     if move.date_expected <= limit_date_to_assign:
                         move_to_assign |= move
-        res = super(StockMove, move_to_assign)._assign_picking()
+        res = super(StockMove, move_to_assign)._action_assign()
         return res
