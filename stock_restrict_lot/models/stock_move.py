@@ -23,7 +23,11 @@ class StockMove(models.Model):
             quantity=quantity, reserved_quant=reserved_quant
         )
         if self.restrict_lot_id:
-            if "lot_id" in vals and vals["lot_id"] != self.restrict_lot_id.id:
+            if (
+                "lot_id" in vals
+                and vals["lot_id"] is not False
+                and vals["lot_id"] != self.restrict_lot_id.id
+            ):
                 raise exceptions.UserError(
                     _(
                         "Inconsistencies between reserved quant and lot restriction on "
