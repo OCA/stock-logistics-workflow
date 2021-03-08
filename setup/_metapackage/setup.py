@@ -28,6 +28,7 @@ setuptools.setup(
         'odoo13-addon-stock_picking_group_by_partner_by_carrier_by_date',
         'odoo13-addon-stock_picking_invoice_link',
         'odoo13-addon-stock_picking_mass_action',
+        'odoo13-addon-stock_picking_product_assortment',
         'odoo13-addon-stock_picking_purchase_order_link',
         'odoo13-addon-stock_picking_restrict_cancel_with_orig_move',
         'odoo13-addon-stock_picking_return_restricted_qty',
