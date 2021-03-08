@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo14-addon-stock_no_negative',
         'odoo14-addon-stock_picking_invoice_link',
+        'odoo14-addon-stock_putaway_hook',
         'odoo14-addon-stock_restrict_lot',
     ],
     classifiers=[
