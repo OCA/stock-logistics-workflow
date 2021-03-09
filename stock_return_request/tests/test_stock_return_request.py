@@ -139,7 +139,7 @@ class PurchaseReturnRequestCase(StockReturnRequestCase):
                 "lot_id": self.prod_3_lot3.id,
                 "qty_done": 30.0,
             }
-            move.write({"move_line_ids": [(0, 0, vals)], "quantity_done": 30.0})
+            move.write({"move_line_ids": [(0, 0, vals)]})
         picking.action_done()
         self.return_request_supplier.write(
             {
