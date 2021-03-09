@@ -129,7 +129,6 @@ class PurchaseReturnRequestCase(StockReturnRequestCase):
             }
             move.write({
                 'move_line_ids': [(0, 0, vals)],
-                'qty_done': 30.0
             })
         picking.action_done()
         self.return_request_supplier.write({

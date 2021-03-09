@@ -136,9 +136,7 @@ class StockReturnRequestCase(SavepointCase):
                 }),
             ],
         })
-        move3.qty_done = 30
         cls.picking_supplier_1.action_confirm()
-        cls.picking_supplier_1.action_assign()
         cls.picking_supplier_1.action_done()
         cls.picking_supplier_2 = cls.picking_supplier_1.copy({
             'move_lines': [
@@ -178,9 +176,7 @@ class StockReturnRequestCase(SavepointCase):
                 }),
             ],
         })
-        move3.qty_done = 30
         cls.picking_supplier_2.action_confirm()
-        cls.picking_supplier_2.action_assign()
         cls.picking_supplier_2.action_done()
         # Test could run so fast that the move lines date would be in the same
         # second. We need to sort them by date, so we'll be faking the line
@@ -212,7 +208,6 @@ class StockReturnRequestCase(SavepointCase):
                 })],
         })
         cls.picking_customer_1.action_confirm()
-        cls.picking_customer_1.action_assign()
         cls.picking_customer_1.action_done()
         cls.picking_customer_2 = cls.picking_customer_1.copy({
             'move_lines': [
@@ -232,7 +227,6 @@ class StockReturnRequestCase(SavepointCase):
                 })],
         })
         cls.picking_customer_2.action_confirm()
-        cls.picking_customer_2.action_assign()
         cls.picking_customer_2.action_done()
         # Test could run so fast that the move lines date would be in the same
         # second. We need to sort them by date, so we'll be faking the line
