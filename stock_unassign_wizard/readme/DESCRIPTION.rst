@@ -1,0 +1,1 @@
+Permits to unassign reserved stock from other stock.move
