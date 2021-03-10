@@ -1,0 +1,1 @@
+Permits to unreserve stock.move
