@@ -26,4 +26,3 @@ The late picking activities created will be associated with a new
 
 Note: The summary and note of the created activities will be the same
 defined as summary in the 'activity type' named 'Late picking'.
-

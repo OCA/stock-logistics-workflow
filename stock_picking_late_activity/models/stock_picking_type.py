@@ -9,10 +9,9 @@ class StockPickingType(models.Model):
 
     create_late_picking_activity = fields.Boolean(
         help="If checked, the pickings belonging to this 'operation "
-             "type' will be checked periodically to request to update "
-             "their planned date.",
+        "type' will be checked periodically to request to update "
+        "their planned date.",
     )
     late_picking_activity_user_id = fields.Many2one(
-        comodel_name="res.users",
-        string="Late picking activity responsible",
+        comodel_name="res.users", string="Late picking activity responsible",
     )
