@@ -21,7 +21,7 @@ class StockPicking(models.Model):
         if not late_picking:
             return False
         activity_type = self.env.ref(
-            "stock_picking_late_activity" ".mail_activity_type_update_scheduled_date"
+            "stock_picking_late_activity.mail_activity_type_update_scheduled_date"
         )
         vals_list = []
         for picking in late_picking:
@@ -34,12 +34,12 @@ class StockPicking(models.Model):
         self.env["mail.activity"].create(vals_list)
 
     def _prepare_late_picking_activity_vals(self):
-        """ Hook method to prepare the values to create a late picking
+        """Hook method to prepare the values to create a late picking
         activity.
         """
         self.ensure_one()
         activity_type = self.env.ref(
-            "stock_picking_late_activity" ".mail_activity_type_update_scheduled_date"
+            "stock_picking_late_activity.mail_activity_type_update_scheduled_date"
         )
         return {
             "res_id": self.id,

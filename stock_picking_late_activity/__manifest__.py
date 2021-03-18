@@ -3,14 +3,14 @@
 {
     "name": "Stock Picking Late Activity",
     "summary": "Add an scheduled action that creates late picking activities",
-    "version": "12.0.1.0.0",
+    "version": "13.0.1.0.0",
     "development_status": "Production/Stable",
     "category": "Warehouse Management",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "maintainers": ["ernestotejeda"],
     "license": "AGPL-3",
-    "depends": ["stock",],
+    "depends": ["stock"],
     "data": [
         "data/ir_cron_data.xml",
         "data/mail_activity_type_data.xml",

@@ -12,9 +12,9 @@ class TestStockPickingLateActivity(common.SavepointCase):
     def setUpClass(cls):
         super(TestStockPickingLateActivity, cls).setUpClass()
         cls.user_demo = cls.env.ref("base.demo_user0")
-        cls.partner = cls.env["res.partner"].create({"name": "Partner test",})
+        cls.partner = cls.env["res.partner"].create({"name": "Partner test"})
         cls.product = cls.env["product.product"].create(
-            {"name": "Product test 1", "type": "product",}
+            {"name": "Product test 1", "type": "product"}
         )
         cls.sequence = cls.env["ir.sequence"].create(
             {
@@ -28,6 +28,7 @@ class TestStockPickingLateActivity(common.SavepointCase):
             {
                 "name": "Picking type test",
                 "code": "incoming",
+                "sequence_code": "PLA",
                 "sequence_id": cls.sequence.id,
                 "create_late_picking_activity": True,
                 "late_picking_activity_user_id": cls.user_demo.id,
@@ -63,7 +64,6 @@ class TestStockPickingLateActivity(common.SavepointCase):
             ),
             view="stock.view_picking_form",
         )
-        picking_form.company_id = cls.env.user.company_id
         picking_form.partner_id = partner
         with picking_form.move_ids_without_package.new() as move:
             move.product_id = product
