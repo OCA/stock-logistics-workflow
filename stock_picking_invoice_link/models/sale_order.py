@@ -12,8 +12,9 @@ class SaleOrderLine(models.Model):
     def get_stock_moves_link_invoice(self):
         return self.mapped('move_ids')._filter_for_invoice_link()
 
-    def _prepare_invoice_line(self, **optional_values):
-        vals = super()._prepare_invoice_line(**optional_values)
+
+    def _prepare_invoice_line(self, qty):
+        vals = super()._prepare_invoice_line(qty)
         stock_moves = self.get_stock_moves_link_invoice()
         # Invoice returned moves marked as to_refund
         precision = self.env['decimal.precision'].precision_get(
