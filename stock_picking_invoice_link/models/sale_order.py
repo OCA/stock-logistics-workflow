@@ -16,12 +16,11 @@ class SaleOrderLine(models.Model):
         vals = super()._prepare_invoice_line(**optional_values)
         stock_moves = self.get_stock_moves_link_invoice()
         # Invoice returned moves marked as to_refund
-        if (
-            float_compare(
-                self.qty_to_invoice, 0.0, precision_rounding=self.currency_id.rounding
-            )
-            < 0
-        ):
+        precision = self.env['decimal.precision'].precision_get(
+            'Product Unit of Measure'
+        )
+        if float_compare(
+                qty, 0.0, precision_digits=precision) < 0:
             stock_moves = stock_moves.filtered(
                 lambda m: m.to_refund and not m.invoice_line_ids
             )
