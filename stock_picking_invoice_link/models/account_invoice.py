@@ -13,11 +13,23 @@ class AccountInvoice(models.Model):
     picking_ids = fields.Many2many(
         comodel_name='stock.picking',
         string='Related Pickings',
+        compute="_compute_picking_ids",
+        relation="account_invoice_stock_picking_rel",
+        column1="account_invoice_id",
+        column2="stock_picking_id",
         readonly=True,
         copy=False,
+        store=True,
         help="Related pickings "
              "(only when the invoice has been generated from a sale order).",
     )
+
+    @api.depends("invoice_line_ids.move_line_ids.picking_id")
+    def _compute_picking_ids(self):
+        for inv in self:
+            inv.picking_ids = inv.invoice_line_ids.mapped(
+                "move_line_ids.picking_id"
+            )
 
     @api.model
     def _refund_cleanup_lines(self, lines):

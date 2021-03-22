@@ -12,13 +12,6 @@ class SaleOrderLine(models.Model):
     def get_stock_moves_link_invoice(self):
         return self.mapped('move_ids')._filter_for_invoice_link()
 
-    def invoice_line_create_vals(self, invoice_id, qty):
-        stock_moves = self.get_stock_moves_link_invoice()
-        stock_moves.mapped('picking_id').write({
-            'invoice_ids': [(4, invoice_id)],
-        })
-        return super().invoice_line_create_vals(invoice_id, qty)
-
     def _prepare_invoice_line(self, qty):
         vals = super()._prepare_invoice_line(qty)
         stock_moves = self.get_stock_moves_link_invoice()
