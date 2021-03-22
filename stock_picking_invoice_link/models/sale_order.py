@@ -10,26 +10,7 @@ class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
     def get_stock_moves_link_invoice(self):
-        skip_check_invoice_state = self.env.context.get(
-            "skip_check_invoice_state", False
-        )
-        return self.mapped("move_ids").filtered(
-            lambda mv: (
-                mv.state == "done"
-                and not (
-                    not skip_check_invoice_state
-                    and any(
-                        inv.state != "cancel"
-                        for inv in mv.invoice_line_ids.mapped("move_id")
-                    )
-                )
-                and not mv.scrapped
-                and (
-                    mv.location_dest_id.usage == "customer"
-                    or (mv.location_id.usage == "customer" and mv.to_refund)
-                )
-            )
-        )
+        return self.mapped('move_ids')._filter_for_invoice_link()
 
     def _prepare_invoice_line(self, **optional_values):
         vals = super()._prepare_invoice_line(**optional_values)
