@@ -1,12 +1,12 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_picking_late_activity
+# 	* stock_picking_late_activity
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: <>\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +20,9 @@ msgstr ""
 
 #. module: stock_picking_late_activity
 #: model:ir.model.fields,help:stock_picking_late_activity.field_stock_picking_type__create_late_picking_activity
-msgid "If checked, the pickings belonging to this 'operation type' will be checked periodically to request to update their planned date."
+msgid ""
+"If checked, the pickings belonging to this 'operation type' will be checked "
+"periodically to request to update their planned date."
 msgstr ""
 
 #. module: stock_picking_late_activity
@@ -54,4 +56,3 @@ msgstr ""
 #: model:mail.activity.type,summary:stock_picking_late_activity.mail_activity_type_update_scheduled_date
 msgid "Update scheduled date"
 msgstr ""
-
