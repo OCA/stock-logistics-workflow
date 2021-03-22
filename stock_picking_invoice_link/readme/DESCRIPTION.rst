@@ -8,6 +8,3 @@ invoices relate to. You only have the quantity.
 
 This module is also useful if you want to present data on the invoice report
 grouped by deliveries.
-
-Note that the links are only for products with an invoicing policy set on
-delivery.
