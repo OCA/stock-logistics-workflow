@@ -34,3 +34,15 @@ class StockMove(models.Model):
                     raise UserError(
                         _('You can not modify an invoiced stock move'))
         return super().write(vals)
+
+    def _filter_for_invoice_link(self):
+        return self.filtered(
+            lambda x: (
+                x.state == 'done' and not (any(
+                    inv.state != 'cancel' for inv in x.invoice_line_ids.mapped(
+                        'invoice_id'))) and not x.scrapped and (
+                    x.location_dest_id.usage == 'customer' or
+                    (x.location_id.usage == 'customer' and
+                     x.to_refund))
+            )
+        )

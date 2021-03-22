@@ -10,16 +10,7 @@ class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
     def get_stock_moves_link_invoice(self):
-        return self.mapped('move_ids').filtered(
-            lambda x: (
-                x.state == 'done' and not (any(
-                    inv.state != 'cancel' for inv in x.invoice_line_ids.mapped(
-                        'invoice_id'))) and not x.scrapped and (
-                    x.location_dest_id.usage == 'customer' or
-                    (x.location_id.usage == 'customer' and
-                     x.to_refund))
-            )
-        )
+        return self.mapped('move_ids')._filter_for_invoice_link()
 
     def invoice_line_create_vals(self, invoice_id, qty):
         stock_moves = self.get_stock_moves_link_invoice()
