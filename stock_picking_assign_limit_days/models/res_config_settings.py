@@ -29,9 +29,9 @@ class ResConfigSettings(models.TransientModel):
         super(ResConfigSettings, self).set_values()
         param = self.env['ir.config_parameter'].sudo()
 
-        stock_picking_confirm_before_days =\
-            self.stock_picking_confirm_before_days or False
+        stock_picking_assign_limit_days =\
+            self.stock_picking_assign_limit_days or False
 
         param.set_param('stock_picking_assign_limit_days.'
                         'stock_picking_assign_limit_days',
-                        stock_picking_confirm_before_days)
+                        stock_picking_assign_limit_days)
