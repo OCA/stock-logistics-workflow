@@ -134,7 +134,6 @@ msgstr ""
 
 #. module: stock_split_picking
 #: code:addons/stock_split_picking/models/stock_picking.py:0
-#: code:addons/stock_split_picking/models/stock_picking.py:0
 #, python-format
 msgid ""
 "The backorder <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-"
