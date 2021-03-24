@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo13-addon-delivery_package_default_shipping_weight',
+        'odoo13-addon-delivery_total_weight_from_packaging',
         'odoo13-addon-sale_stock_mto_as_mts_orderpoint',
         'odoo13-addon-stock_account_product_run_fifo_hook',
         'odoo13-addon-stock_lock_lot',
