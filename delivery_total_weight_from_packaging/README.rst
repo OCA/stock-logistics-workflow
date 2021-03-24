@@ -25,7 +25,7 @@ Delivery Total Weight From Packaging
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
-This module change the way the weight is computed on move, operation and
+This module changes the way the weight is computed on move, operation and
 package to include packaging weight instead of the weight of the product only.
 
 **Table of contents**
