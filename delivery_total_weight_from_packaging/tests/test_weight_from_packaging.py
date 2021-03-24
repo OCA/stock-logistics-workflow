@@ -38,6 +38,8 @@ class TestWeight(TestShippingWeightCommon):
             5,
             package_id=pack,
         )
+        # The box of 5 items weights 7
+        self.assertEqual(pack.shipping_weight, 7)
         # Reserve goods
         picking = self.move.picking_id
         picking.action_assign()
@@ -46,7 +48,7 @@ class TestWeight(TestShippingWeightCommon):
         self.assertTrue(picking.package_ids)
         self.assertTrue(picking.move_ids_without_package)
         # Check shipping weight knowing there is no shipping weight on the package
-        self.assertEqual(picking.shipping_weight, 9)
+        self.assertEqual(picking.shipping_weight, 16)
         pack.shipping_weight = 6
         picking.invalidate_cache(["shipping_weight"])
         self.assertEqual(picking.shipping_weight, 15)
@@ -59,3 +61,8 @@ class TestWeight(TestShippingWeightCommon):
         self.move._action_assign()
         # 1 Box + 2 Small Box to satisfy 7 qties => 11kg
         self.assertEqual(pack.weight, 11)
+        # Shipping weight computed
+        self.assertEqual(pack.shipping_weight, 11)
+        # I can still override it
+        pack.shipping_weight = 20
+        self.assertEqual(pack.shipping_weight, 20)
