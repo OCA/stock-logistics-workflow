@@ -184,8 +184,19 @@ class TestPackagePreparationLine(TransactionCase):
         lot = self.env['stock.production.lot'].create({
             'name': self.product1.name,
             'product_id': self.product1.id,
-            })
+        })
         self.product1.tracking = 'lot'
+        # FIXME: temp fix for issue with _gather function cf
+        #  https://github.com/OCA/stock-logistics-workflow/issues/792
+        lot0 = self.env['stock.production.lot'].create({
+            'name': "0000",
+            'product_id': self.product1.id,
+        })
+        existing_quant = self.env['stock.quant']._gather(
+            product_id=self.product1,
+            location_id=self.src_location
+        )
+        existing_quant.lot_id = lot0
         # Add a line in preparation with lot
         quantity = 2.0
         self._create_line(self.preparation, self.product1, quantity,
