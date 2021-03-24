@@ -14,13 +14,29 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: delivery_total_weight_from_packaging
+#: model:ir.model,name:delivery_total_weight_from_packaging.model_choose_delivery_package
+msgid "Delivery Package Selection Wizard"
+msgstr ""
+
+#. module: delivery_total_weight_from_packaging
 #: model:ir.model,name:delivery_total_weight_from_packaging.model_stock_quant_package
 msgid "Packages"
 msgstr ""
 
 #. module: delivery_total_weight_from_packaging
+#: model:ir.model.fields,field_description:delivery_total_weight_from_packaging.field_choose_delivery_package__shipping_weight
+#: model:ir.model.fields,field_description:delivery_total_weight_from_packaging.field_stock_quant_package__shipping_weight
+msgid "Shipping Weight"
+msgstr ""
+
+#. module: delivery_total_weight_from_packaging
 #: model:ir.model,name:delivery_total_weight_from_packaging.model_stock_move
 msgid "Stock Move"
+msgstr ""
+
+#. module: delivery_total_weight_from_packaging
+#: model:ir.model.fields,help:delivery_total_weight_from_packaging.field_stock_quant_package__shipping_weight
+msgid "Total weight of the package."
 msgstr ""
 
 #. module: delivery_total_weight_from_packaging
