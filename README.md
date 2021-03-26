@@ -23,6 +23,7 @@ addon | version | summary
 [stock_picking_invoice_link](stock_picking_invoice_link/) | 14.0.1.0.0 | Adds link between pickings and invoices
 [stock_putaway_hook](stock_putaway_hook/) | 14.0.1.0.0 | Add hooks allowing modules to add more putaway strategies
 [stock_restrict_lot](stock_restrict_lot/) | 14.0.1.1.1 | Base module that add back the concept of restrict lot on stock move
+[stock_return_request](stock_return_request/) | 14.0.1.0.0 | Stock Return Request
 
 [//]: # (end addons)
 
