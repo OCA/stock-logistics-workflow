@@ -1,18 +1,18 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* stock_shifting_end_of_lot
+#	* stock_shifting_end_of_lot
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-25 08:26+0000\n"
-"PO-Revision-Date: 2021-02-25 09:39+0100\n"
+"POT-Creation-Date: 2021-03-26 11:25+0000\n"
+"PO-Revision-Date: 2021-03-26 11:25+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 "Language: fr_FR\n"
 "X-Generator: Poedit 2.3\n"
@@ -47,6 +47,11 @@ msgstr "Si défini, permet de déplacer toute la quantité restante de l'emplace
 #: model:ir.model.fields,help:stock_shifting_end_of_lot.field_stock_picking_type__end_lot_picking_type_id
 msgid "If specified, used when an end of lot picking is done."
 msgstr "Si spécifié, utilisé quand un transfert de fin de lot est réalisé."
+
+#. module: stock_shifting_end_of_lot
+#: model:ir.model.fields,field_description:stock_shifting_end_of_lot.field_stock_picking_type__end_lot_partner_ids
+msgid "Partners"
+msgstr "Partenaires"
 
 #. module: stock_shifting_end_of_lot
 #: model:ir.model,name:stock_shifting_end_of_lot.model_stock_picking_type
@@ -95,3 +100,4 @@ msgstr "Unité(s)"
 #: model:product.template,weight_uom_name:stock_shifting_end_of_lot.product_4_end_lot_no_lot_product_template
 msgid "kg"
 msgstr ""
+

@@ -75,16 +75,11 @@ class StockPicking(models.Model):
         domain = [("location_id", "child_of", self.location_id.id)]
         if len(prd_lot) > 1:
             domain.extend(["|"] * (len(prd_lot) - 1))
-        [
-            domain.extend(x)
-            for x in [
-                x
-                for x in [
-                    ["&", ("product_id", "=", x.id), ("lot_id", "=", prd_lot[x].id)]
-                    for x in prd_lot
-                ]
-            ]
-        ]
+        for domain_line in [
+            ["&", ("product_id", "=", prd.id), ("lot_id", "=", lot.id)]
+            for prd, lot in prd_lot.items()
+        ]:
+            domain.extend(domain_line)
         # domain output example:
         # [('location_id', 'child_of', 13),
         #  '|', '|',
@@ -103,5 +98,12 @@ class StockPicking(models.Model):
             self.picking_type_id.end_lot_location_id
             and self.picking_type_id.end_lot_picking_type_id
         ):
+            if (
+                self.picking_type_id.end_lot_partner_ids
+                and self.partner_id not in self.picking_type_id.end_lot_partner_ids
+            ):
+                # If partner is not in the specified ones, we skip the behavior
+                return False
+            # match with any partners
             return True
         return False

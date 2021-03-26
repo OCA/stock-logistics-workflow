@@ -6,9 +6,15 @@
         <field name="inherit_id" ref="stock.view_picking_type_form"/>
         <field type="xml" name="arch">
             <xpath expr="//group[1]" position="inside">
-                <group name="end_of_lot" string="End Of Lot" attrs="{'invisible': [('code', '=', 'incoming')]}">
-                    <field name="end_lot_location_id"/>
-                    <field name="end_lot_picking_type_id" attrs="{'required': [('end_lot_location_id', '!=', False)], 'invisible': [('end_lot_location_id', '=', False)]}"/>
+                <group name="end_of_lot" string="End Of Lot" attrs="{'invisible': [('code', '=', 'incoming')]}" cols="2">
+                    <group colspan="2">
+                        <field name="end_lot_location_id"/>
+                    </group>
+                    <group name="end_lot_other" colspan="2"
+                        attrs="{'invisible': [('end_lot_location_id', '=', False)]}">
+                        <field name="end_lot_picking_type_id" attrs="{'required': [('end_lot_location_id', '!=', False)]}"/>
+                        <field name="end_lot_partner_ids" widget="many2many_tags"/>
+                    </group>
                 </group>
             </xpath>
         </field>

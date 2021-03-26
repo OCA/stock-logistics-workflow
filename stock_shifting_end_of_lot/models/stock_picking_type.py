@@ -20,3 +20,9 @@ class StockPickingType(models.Model):
         string="End of lot picking type",
         help="If specified, used when an end of lot picking is done.",
     )
+    end_lot_partner_ids = fields.Many2many(
+        comodel_name="res.partner",
+        string="Partners",
+        help="If set, only pickings matching these partners'll trigger "
+        "the end of lot behavior",
+    )
