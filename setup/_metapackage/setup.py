@@ -12,6 +12,7 @@ setuptools.setup(
         'odoo14-addon-stock_picking_invoice_link',
         'odoo14-addon-stock_putaway_hook',
         'odoo14-addon-stock_restrict_lot',
+        'odoo14-addon-stock_return_request',
     ],
     classifiers=[
         'Programming Language :: Python',
