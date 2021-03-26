@@ -46,6 +46,7 @@ setuptools.setup(
         'odoo12-addon-stock_picking_show_return',
         'odoo12-addon-stock_picking_whole_scrap',
         'odoo12-addon-stock_return_request',
+        'odoo12-addon-stock_shifting_end_of_lot',
         'odoo12-addon-stock_split_picking',
     ],
     classifiers=[
