@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<odoo noupdate="1">
+
+    <record id="end_of_lot1" model="stock.production.lot">
+        <field name="name">Product end_lot lot 1</field>
+        <field name="product_id" ref="product_4_end_lot1"/>
+    </record>
+    <record id="end_of_lot2" model="stock.production.lot">
+        <field name="name">Product end_lot lot 2</field>
+        <field name="product_id" ref="product_4_end_lot2"/>
+    </record>
+
+    <record id="inventory_move_end_lot" model="stock.inventory">
+        <field name="name">DEMO end_lot product</field>
+        <field name="filter">partial</field>
+        <field name="location_id" ref="stock.stock_location_stock"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+    <record id="inventory_line_end_lot1" model="stock.inventory.line">
+        <field name="location_id" ref="stock.stock_location_stock"/>
+        <field name="inventory_id" ref="inventory_move_end_lot"/>
+        <field name="product_id" ref="product_4_end_lot1"/>
+        <field name="prod_lot_id" ref="end_of_lot1"/>
+        <field name="product_qty">100</field>
+    </record>
+    <record id="inventory_line_end_lot2" model="stock.inventory.line">
+        <field name="location_id" ref="stock.stock_location_stock"/>
+        <field name="inventory_id" ref="inventory_move_end_lot"/>
+        <field name="product_id" ref="product_4_end_lot2"/>
+        <field name="prod_lot_id" ref="end_of_lot2"/>
+        <field name="product_qty">50</field>
+    </record>
+    <record id="inventory_line_end_lot3" model="stock.inventory.line">
+        <field name="location_id" ref="stock.stock_location_stock"/>
+        <field name="inventory_id" ref="inventory_move_end_lot"/>
+        <field name="product_id" ref="product_4_end_lot_no_lot"/>
+        <field name="product_qty">30</field>
+    </record>
+
+    <function model="stock.inventory" name="action_start">
+        <function eval="[[('state','=','draft'), ('id', '=', ref('inventory_move_end_lot'))]]" model="stock.inventory" name="search"/>
+    </function>
+
+    <record id="picking_out_end_lot_product" model="stock.picking">
+        <field name="picking_type_id" ref="stock.picking_type_out" />
+        <field name="origin">Outgoing shipment (end_lot product)</field>
+        <field name="partner_id" ref="base.res_partner_1" />
+        <field name="date" eval="DateTime.today()" />
+        <field name="location_id" ref="stock.stock_location_stock" />
+        <field name="location_dest_id" ref="stock.stock_location_customers" />
+        <field
+            name="move_lines"
+            model="stock.move"
+            eval="[(0, 0, {
+                     'name': obj().env.ref('stock_shifting_end_of_lot.product_4_end_lot1').name,
+                     'product_id': ref('stock_shifting_end_of_lot.product_4_end_lot1'),
+                     'product_uom': ref('uom.product_uom_unit'),
+                     'product_uom_qty': 90.0,
+                     'picking_type_id': ref('stock.picking_type_out'),
+                     'location_id': ref('stock.stock_location_stock'),
+                     'location_dest_id': ref('stock.stock_location_customers'),
+                     }),
+                   (0, 0, {
+                     'name': obj().env.ref('stock_shifting_end_of_lot.product_4_end_lot2').name,
+                     'product_id': ref('stock_shifting_end_of_lot.product_4_end_lot2'),
+                     'product_uom': ref('uom.product_uom_unit'),
+                     'product_uom_qty': 40.0,
+                     'picking_type_id': ref('stock.picking_type_out'),
+                     'location_id': ref('stock.stock_location_stock'),
+                     'location_dest_id': ref('stock.stock_location_customers'),
+                     }),
+                   (0, 0, {
+                     'name': obj().env.ref('stock_shifting_end_of_lot.product_4_end_lot_no_lot').name,
+                     'product_id': ref('stock_shifting_end_of_lot.product_4_end_lot_no_lot'),
+                     'product_uom': ref('uom.product_uom_unit'),
+                     'product_uom_qty': 25.0,
+                     'picking_type_id': ref('stock.picking_type_out'),
+                     'location_id': ref('stock.stock_location_stock'),
+                     'location_dest_id': ref('stock.stock_location_customers'),
+                     }),
+                 ]"
+        />
+    </record>
+
+    <record id="end_lot_location" model="stock.location">
+        <field name="location_id" ref="stock.stock_location_locations"/>
+        <field name="name">End of lot Location</field>
+    </record>
+
+</odoo>
