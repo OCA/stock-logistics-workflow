@@ -57,7 +57,7 @@ To use this module you need to:
 **The stock with owner assigned is not available in products:**
 
 #. Go to *Inventory > Master Data > Products*
-#. Search any product which is in incoming delivery order created in previos step.
+#. Search any product which is in incoming delivery order created in previous step.
 #. The quantity on hand has not take into account the incoming quanities with
    a owner assigned.
 
