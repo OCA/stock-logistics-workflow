@@ -2,6 +2,7 @@
 <!-- Copyright 2020 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
+
     <record model="ir.ui.view" id="stock_production_lot_form_view">
         <field
             name="name"
@@ -20,6 +21,7 @@
             </field>
         </field>
     </record>
+
     <record model="ir.ui.view" id="stock_production_lot_search_view">
         <field
             name="name"
@@ -32,6 +34,7 @@
             </field>
         </field>
     </record>
+
     <record model="ir.ui.view" id="stock_production_lot_tree_view">
         <field
             name="name"
@@ -48,4 +51,5 @@
             </field>
         </field>
     </record>
+
 </odoo>
