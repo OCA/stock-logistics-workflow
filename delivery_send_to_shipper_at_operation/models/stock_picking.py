@@ -23,9 +23,10 @@ class StockPicking(models.Model):
                     and carrier.send_delivery_notice_on == "custom"
                     and picking.picking_type_id
                     in carrier.send_delivery_notice_picking_type_ids
-                    and not related_ship.delivery_notification_sent
                 ):
+                    picking.carrier_id = carrier
                     picking.send_to_shipper()
+                    picking.carrier_id = False
                     related_ship.delivery_notification_sent = True
             super(StockPicking, picking)._send_confirmation_email()
 
