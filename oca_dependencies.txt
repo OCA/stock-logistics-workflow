@@ -1,4 +1,4 @@
 product-attribute
-stock-logistics-warehouse
+stock-logistics-warehouse https://github.com/camptocamp/stock-logistics-warehouse 13.0-stock_helper_delivery
 partner-contact
 server-tools
