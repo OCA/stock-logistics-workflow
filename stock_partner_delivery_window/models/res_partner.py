@@ -86,6 +86,9 @@ class ResPartner(models.Model):
                     return True
         return False
 
+    def _get_delivery_time_format_string(self):
+        return _("From %s to %s")
+
     def get_delivery_time_description(self):
         res = dict()
         day_translated_values = dict(
@@ -93,7 +96,7 @@ class ResPartner(models.Model):
         )
         for partner in self:
             opening_times = {}
-            time_format_string = _("From %s to %s")
+            time_format_string = self._get_delivery_time_format_string()
             if partner.delivery_time_preference == "time_windows":
                 for day in self.env["time.weekday"].search([]):
                     day_windows = partner.delivery_time_window_ids.filtered(
@@ -104,8 +107,16 @@ class ResPartner(models.Model):
                         opening_times[day_translated_values[day.name]].append(
                             time_format_string
                             % (
-                                format_time(self.env, win.get_time_window_start_time()),
-                                format_time(self.env, win.get_time_window_end_time()),
+                                format_time(
+                                    self.env,
+                                    win.get_time_window_start_time(),
+                                    time_format="short",
+                                ),
+                                format_time(
+                                    self.env,
+                                    win.get_time_window_end_time(),
+                                    time_format="short",
+                                ),
                             )
                         )
             else:
@@ -114,8 +125,12 @@ class ResPartner(models.Model):
                     opening_times[day_translated_values[day.name]].append(
                         time_format_string
                         % (
-                            format_time(self.env, time(hour=0, minute=0)),
-                            format_time(self.env, time(hour=23, minute=59)),
+                            format_time(
+                                self.env, time(hour=0, minute=0), time_format="short"
+                            ),
+                            format_time(
+                                self.env, time(hour=23, minute=59), time_format="short"
+                            ),
                         )
                     )
             opening_times_description = list()
