@@ -5,15 +5,14 @@ from odoo import fields, models
 
 SEND_DELIVERY_NOTICE_ON_HELP = """
     'Ship operation' (default): send the carrier notification after the
-    operation having a delivery method defined has been marked as done,
-    in Odoo usually the ship operation;
+    operation having a delivery method defined has been marked as done.
 
     'Defined operations': send the carrier notification after the operation
-    of the chosen type bellow has been marked as done. In that case, the
-    carrier will be taken looking at the next operations until we found the
-    carrier (e.g. in a pick + pack + ship setup, if you set the notification
-    to be sent on the pack operation type, it'll look at the carrier defined
-    in the next operation, being here the ship).
+    of the chosen types has been marked as done. In this case, the
+    carrier will be taken looking at the next operations until a
+    carrier is found. For instance, in a pick + pack + ship setup,
+    if you set the notification to be sent on the pack operation type,
+    it will look at the carrier defined in the next operation (the ship in this case).
 
     If no notification have been sent when reaching the ship step
     (e.g. re-route goods from carrier A to B), then a fallback ensure the
@@ -32,7 +31,7 @@ class DeliveryCarrier(models.Model):
     )
     send_delivery_notice_picking_type_ids = fields.Many2many(
         comodel_name="stock.picking.type",
-        string="Operation types",
+        string="Send delivery notice operation types",
         help="""
             When an operation of the listed type will be mark as done, the
             notification will be sent to the carrier (instead of the default

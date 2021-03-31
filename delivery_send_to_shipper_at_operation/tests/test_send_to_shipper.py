@@ -9,7 +9,7 @@ from odoo.tests.common import SavepointCase
 class TestDeliverySendToShipper(SavepointCase):
     @classmethod
     def setUpClass(cls):
-        super(TestDeliverySendToShipper, cls).setUpClass()
+        super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.wh = cls.env.ref("stock.warehouse0")
         cls.wh.delivery_steps = "pick_pack_ship"

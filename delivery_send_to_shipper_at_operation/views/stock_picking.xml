@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2021 Camptocamp SA
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="delivery_send_to_shipper_at_operation" model="ir.ui.view">
+        <field name="name">delivery.stock.picking_withcarrier.form.view.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="delivery.view_picking_withcarrier_out_form" />
+        <field name="arch" type="xml">
+            <group name="carrier_data" position="inside">
+                <field name="delivery_notification_sent" invisible="1" />
+            </group>
+        </field>
+    </record>
+</odoo>

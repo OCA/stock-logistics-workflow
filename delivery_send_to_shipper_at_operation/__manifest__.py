@@ -1,4 +1,4 @@
-# Copyright 2020 Camptocamp SA
+# Copyright 2021 Camptocamp SA
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl)
 {
     "name": "Delivery Send To Shipper at Operation",
@@ -18,5 +18,5 @@
         # OCA/stock-logistics-workflow
         "stock_helper_delivery",
     ],
-    "data": ["views/delivery_carrier.xml"],
+    "data": ["views/delivery_carrier.xml", "views/stock_picking.xml"],
 }
