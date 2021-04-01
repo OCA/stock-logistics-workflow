@@ -15,7 +15,6 @@ msgstr ""
 
 #. module: stock_partner_delivery_window
 #: code:addons/stock_partner_delivery_window/models/res_partner.py:0
-#: code:addons/stock_partner_delivery_window/models/res_partner.py:0
 #, python-format
 msgid "%s: %s"
 msgstr ""
@@ -78,7 +77,6 @@ msgid "From"
 msgstr ""
 
 #. module: stock_partner_delivery_window
-#: code:addons/stock_partner_delivery_window/models/res_partner.py:0
 #: code:addons/stock_partner_delivery_window/models/res_partner.py:0
 #, python-format
 msgid "From %s to %s"
