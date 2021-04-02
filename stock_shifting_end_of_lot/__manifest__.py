@@ -4,7 +4,7 @@
 {
     "name": "Shifting End of lot",
     "summary": "Move product lot quantity rest to another location",
-    "version": "12.0.1.0.0",
+    "version": "12.0.1.0.1",
     "author": "Akretion, Odoo Community Association (OCA)",
     "category": "Stock",
     "depends": [
