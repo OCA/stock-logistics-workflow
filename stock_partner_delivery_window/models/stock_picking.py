@@ -21,26 +21,26 @@ class StockPicking(models.Model):
             return
         p = self.partner_id
         if not p.is_in_delivery_window(self._planned_delivery_date()):
-            delivery_windows_strings = []
-            for w in p.get_delivery_windows().get(p.id):
-                delivery_windows_strings.append(
-                    "  * {} ({})".format(w.display_name, self.partner_id.tz)
-                )
-            message = _(
-                "The scheduled date is %s (%s), but the partner is "
-                "set to prefer deliveries on following time windows:\n%s"
-                % (
-                    format_datetime(self.env, self.scheduled_date),
-                    self.env.context.get("tz"),
-                    "\n".join(delivery_windows_strings),
-                )
+            return {"warning": self._scheduled_date_no_delivery_window_match_msg()}
+
+    def _scheduled_date_no_delivery_window_match_msg(self):
+        delivery_windows_strings = []
+        for w in self.partner_id.get_delivery_windows().get(self.partner_id.id):
+            delivery_windows_strings.append(
+                "  * {} ({})".format(w.display_name, self.partner_id.tz)
             )
-            return {
-                "warning": {
-                    "title": _(
-                        "Scheduled date does not match partner's Delivery window"
-                        " preference."
-                    ),
-                    "message": message,
-                }
-            }
+        message = _(
+            "The scheduled date is %s (%s), but the partner is "
+            "set to prefer deliveries on following time windows:\n%s"
+            % (
+                format_datetime(self.env, self.scheduled_date),
+                self.env.context.get("tz"),
+                "\n".join(delivery_windows_strings),
+            )
+        )
+        return {
+            "title": _(
+                "Scheduled date does not match partner's Delivery window preference."
+            ),
+            "message": message,
+        }
