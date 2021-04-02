@@ -39,9 +39,8 @@ In that case, quantity rest is moved automatically towards a another location.
 
 .. image:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/12.0/stock_shifting_end_of_lot/static/description/main.png
 
-Here is a delivery matching behavior ...
+Here is a delivery matching behavior which trigger an internal picking transfer
 
- ... which trigger an internal picking transfer
 
 .. image:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/12.0/stock_shifting_end_of_lot/static/description/tranfer.png
 
@@ -65,6 +64,9 @@ Goto chosen picking type Customer/outgoing or internal for this workflow and fil
 * End of lot partners (optionally)
 
 Only picking types with these settings will benefit of the module feature.
+
+
+.. image:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/12.0/stock_shifting_end_of_lot/static/description/conf.png
 
 Bug Tracker
 ===========
