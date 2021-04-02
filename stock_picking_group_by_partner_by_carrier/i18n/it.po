@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-01 15:06+0000\n"
-"PO-Revision-Date: 2021-03-01 15:06+0000\n"
+"POT-Creation-Date: 2021-03-01 15:08+0000\n"
+"PO-Revision-Date: 2021-03-01 15:08+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -17,38 +17,23 @@ msgstr ""
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.report_delivery_document
-msgid "&lt;/strong&gt;"
-msgstr ""
-
-#. module: stock_picking_group_by_partner_by_carrier
-#: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.report_delivery_document
-msgid "&lt;strong&gt;"
-msgstr ""
-
-#. module: stock_picking_group_by_partner_by_carrier
-#: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
-msgid "<span attrs=\"{'invisible': [('nothing_todo', '=', True)]}\">or</span>"
-msgstr ""
-
-#. module: stock_picking_group_by_partner_by_carrier
-#: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.report_delivery_document
 msgid "All ordered items have been delivered."
-msgstr ""
+msgstr "Tutti i prodotti sono stati forniti"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
 msgid "Cancel"
-msgstr ""
+msgstr "Annulla"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking__canceled_by_merge
 msgid "Canceled By Merge"
-msgstr ""
+msgstr "Annullato da unione"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
 msgid "Confirm"
-msgstr ""
+msgstr "Confema"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__create_uid
@@ -89,36 +74,38 @@ msgstr ""
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.stock_picking_merge_wiz_info
 msgid "For customer:"
-msgstr ""
+msgstr "Per cliente:"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.stock_picking_merge_wiz_info
 msgid "Forecasted grouping"
-msgstr ""
+msgstr "Raggruppamento previsto"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_type__group_pickings
 msgid "Group pickings"
-msgstr ""
+msgstr "Raggruppa consegne"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,help:stock_picking_group_by_partner_by_carrier.field_stock_picking_type__group_pickings
 msgid ""
 "Group pickings for the same partner and carrier. Pickings with shipping "
 "policy set to 'When all products are ready' are never grouped."
-msgstr ""
+msgstr "Raggruppa consegne per stesso client e stesso corriere. "
+"Ordini con politica di consegna 'Quando tutti i prodotti sono pronti' non sono mai raggruppati."
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_warehouse__group_shippings
 msgid "Group shippings"
-msgstr ""
+msgstr "Raggruppa spedizioni"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,help:stock_picking_group_by_partner_by_carrier.field_stock_warehouse__group_shippings
 msgid ""
 "Group shippings for the same partner and carrier. Shippings with shipping "
 "policy set to 'When all products are ready' are never grouped."
-msgstr ""
+msgstr "Raggruppa spedizioni per stesso client e stesso corriere. "
+"Spedizioni con politica di consegna 'Quando tutti i prodotti sono pronti' non sono mai raggruppati."
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: code:addons/stock_picking_group_by_partner_by_carrier/wizard/stock_picking_merge_wiz.py:0
@@ -182,29 +169,29 @@ msgstr ""
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_stock_picking_type
 msgid "Picking Type"
-msgstr ""
+msgstr "Tipologia ordine"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
 msgid ""
 "Pickings should match these parameters: picking type is groupable, state not"
 " cancelled or done, not printed."
-msgstr ""
+msgstr "Gli ordini devono soddisfare questi parametri: tipologia raggruppabile, stato non 'annullato' o 'completo', non stampato."
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking__printed
 msgid "Printed"
-msgstr ""
+msgstr "Stampato"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_procurement_group
 msgid "Procurement Group"
-msgstr ""
+msgstr "Gruppo di approvvigionamento"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.report_delivery_document
 msgid "Remaining to deliver:"
-msgstr ""
+msgstr "Posizioni in sospeso:"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_procurement_group__sale_ids
@@ -215,37 +202,37 @@ msgstr ""
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_sale_order
 msgid "Sales Order"
-msgstr ""
+msgstr "Ordine di vendita"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_sale_order_line
 msgid "Sales Order Line"
-msgstr ""
+msgstr "Riga ordine di vendita"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__selected_picking_ids
 msgid "Selected Pickings"
-msgstr ""
+msgstr "Ordini selezionati"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__show_discarded_detail
 msgid "Show Discarded Detail"
-msgstr ""
+msgstr "Mostra dettaglio scartati"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
 msgid "Some pickings you've selected are discarded"
-msgstr ""
+msgstr "Alcuni ordini selezionati sono stati scartati"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.stock_picking_merge_wiz_info
 msgid "Sorry, nothing to be done here."
-msgstr ""
+msgstr "Spiacente, nessun ordine da processare."
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimento di magazzino"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_stock_picking_merge
@@ -255,29 +242,29 @@ msgstr ""
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_stock_rule
 msgid "Stock Rule"
-msgstr ""
+msgstr "Regola di magazzino"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,help:stock_picking_group_by_partner_by_carrier.field_stock_picking__canceled_by_merge
 msgid ""
 "Technical field. Indicates the transfer is canceled because it was left "
 "empty after a manual merge."
-msgstr ""
+msgstr "Campo tecnico. Indica che il trasferimento è stato annullato perchè rimasto vuoto dopo un raggruppamento"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Trasferisci"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_sale_order__picking_ids
 msgid "Transfers"
-msgstr ""
+msgstr "Trasferimenti"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__valid_picking_ids
 msgid "Valid Pickings"
-msgstr ""
+msgstr "Trasferimenti validi"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
@@ -287,9 +274,9 @@ msgstr ""
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_stock_warehouse
 msgid "Warehouse"
-msgstr ""
+msgstr "Magazzino"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.stock_picking_merge_wiz_info
 msgid "With carrier:"
-msgstr ""
+msgstr "Con corriere:"
