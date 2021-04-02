@@ -3,7 +3,7 @@
 {
     "name": "Stock Partner Delivery Window",
     "summary": "Define preferred delivery time windows for partners",
-    "version": "13.0.1.1.0",
+    "version": "13.0.1.2.0",
     "category": "Inventory",
     "author": "Camptocamp, ACSONE SA/NV, Odoo Community Association (OCA)",
     "license": "AGPL-3",
