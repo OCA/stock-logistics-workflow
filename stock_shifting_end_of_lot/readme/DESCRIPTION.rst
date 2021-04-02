@@ -12,8 +12,7 @@ In that case, quantity rest is moved automatically towards a another location.
 
 .. image:: ../static/description/main.png
 
-Here is a delivery matching behavior ...
+Here is a delivery matching behavior which trigger an internal picking transfer
 
- ... which trigger an internal picking transfer
 
 .. image:: ../static/description/tranfer.png

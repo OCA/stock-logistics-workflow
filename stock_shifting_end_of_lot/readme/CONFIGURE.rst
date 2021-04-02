@@ -5,3 +5,6 @@ Goto chosen picking type Customer/outgoing or internal for this workflow and fil
 * End of lot partners (optionally)
 
 Only picking types with these settings will benefit of the module feature.
+
+
+.. image:: ../static/description/conf.png

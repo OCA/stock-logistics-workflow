@@ -72,6 +72,9 @@ class StockPicking(models.Model):
             # We exclude stock.move with several lots to minimize side effects
             if len(x.move_line_ids.mapped("lot_id")) in (1, False)
         }
+        if not prd_lot:
+            # There is no data to apply some search, we stop the process
+            return None
         domain = [("location_id", "child_of", self.location_id.id)]
         if len(prd_lot) > 1:
             domain.extend(["|"] * (len(prd_lot) - 1))
