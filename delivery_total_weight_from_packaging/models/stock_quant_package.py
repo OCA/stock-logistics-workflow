@@ -9,7 +9,9 @@ class StockQuantPackage(models.Model):
 
     # This fiels already exists and it's stored.
     # Here is made computed but kept editable using readonly=False
-    shipping_weight = fields.Float(compute="_compute_shipping_weight", readonly=False)
+    shipping_weight = fields.Float(
+        compute="_compute_shipping_weight", readonly=False, store=True
+    )
 
     @api.depends("quant_ids")
     @api.depends_context("picking_id")
