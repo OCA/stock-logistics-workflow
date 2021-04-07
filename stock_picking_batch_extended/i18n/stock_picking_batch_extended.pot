@@ -292,6 +292,11 @@ msgid "List of picking managed by this batch."
 msgstr ""
 
 #. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_search
+msgid "My batches"
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator__name
 msgid "Name"
 msgstr ""
