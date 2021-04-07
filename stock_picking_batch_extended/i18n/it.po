@@ -58,7 +58,7 @@ msgid "All pickings from this batch will be cancelled, are you sure?"
 msgstr ""
 
 #. module: stock_picking_batch_extended
-#: code:addons/stock_picking_batch_extended/wizard/batch_picking_creator.py:96
+#: code:addons/stock_picking_batch_extended/wizard/batch_picking_creator.py:0
 #, python-format
 msgid ""
 "All selected pickings are already in a batch picking or are in a wrong state."
@@ -80,7 +80,7 @@ msgid "Assign picking operations to an employee."
 msgstr ""
 
 #. module: stock_picking_batch_extended
-#: selection:stock.picking.batch,state:0
+#: model:ir.model.fields.selection,name:stock_picking_batch_extended.selection__stock_picking_batch__state__assigned
 msgid "Available"
 msgstr "Disponibile"
 
@@ -96,7 +96,6 @@ msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.actions.act_window,name:stock_picking_batch_extended.action_stock_batch_picking_tree
-#: model:ir.model,name:stock_picking_batch_extended.model_stock_picking_batch
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_tree
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.view_create_batch_picking
 msgid "Batch Picking"
@@ -114,18 +113,19 @@ msgid "Batch Picking Creator Group Field"
 msgstr ""
 
 #. module: stock_picking_batch_extended
-#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__name
-msgid "Batch Picking Name"
-msgstr ""
-
-#. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.view_create_batch_picking
 msgid "Batch Picking properties"
 msgstr ""
 
 #. module: stock_picking_batch_extended
+#: model:ir.model,name:stock_picking_batch_extended.model_stock_picking_batch
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__name
+msgid "Batch Transfer"
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking__batch_id
-msgid "Batch associated to this picking"
+msgid "Batch associated to this transfer"
 msgstr ""
 
 #. module: stock_picking_batch_extended
@@ -139,11 +139,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.view_create_batch_picking
 msgid "Cancel"
 msgstr "Annulla"
-
-#. module: stock_picking_batch_extended
-#: selection:stock.picking.batch,state:0
-msgid "Cancelled"
-msgstr "Annullato"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
@@ -224,14 +219,8 @@ msgstr "Nome da visualizzare"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
-#: selection:stock.picking.batch,state:0
 msgid "Done"
 msgstr "Completato"
-
-#. module: stock_picking_batch_extended
-#: selection:stock.picking.batch,state:0
-msgid "Draft"
-msgstr "Bozza"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__entire_package_ids
@@ -311,14 +300,23 @@ msgid "List of picking managed by this batch."
 msgstr ""
 
 #. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_search
+msgid "My batches"
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator__name
 msgid "Name"
 msgstr "Nome"
 
 #. module: stock_picking_batch_extended
-#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__name
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch_creator__name
 msgid "Name of the batch picking"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__name
+msgid "Name of the batch transfer"
 msgstr ""
 
 #. module: stock_picking_batch_extended
@@ -329,7 +327,7 @@ msgid "Notes"
 msgstr ""
 
 #. module: stock_picking_batch_extended
-#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:240
+#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:0
 #, python-format
 msgid "Nothing to print."
 msgstr ""
@@ -427,11 +425,6 @@ msgid "Reserved"
 msgstr ""
 
 #. module: stock_picking_batch_extended
-#: selection:stock.picking.batch,state:0
-msgid "Running"
-msgstr ""
-
-#. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__sequence
 msgid "Sequence"
 msgstr ""
@@ -458,13 +451,13 @@ msgid "The user to which the pickings are assigned"
 msgstr ""
 
 #. module: stock_picking_batch_extended
-#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:160
+#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:0
 #, python-format
 msgid "These Batches have no pickings"
 msgstr ""
 
 #. module: stock_picking_batch_extended
-#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:158
+#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:0
 #, python-format
 msgid "This Batch has no pickings"
 msgstr ""
@@ -565,6 +558,12 @@ msgstr ""
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__user_id
 msgid "the user to which the pickings are assigned"
 msgstr ""
+
+#~ msgid "Cancelled"
+#~ msgstr "Annullato"
+
+#~ msgid "Draft"
+#~ msgstr "Bozza"
 
 #, fuzzy
 #~ msgid "Show Pickings"

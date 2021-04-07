@@ -51,7 +51,7 @@
                         class="oe_highlight"
                         attrs="{'invisible': [('use_oca_batch_validation', '!=', True)]}"
                     />
-                    <!-- Buutons to call Odoo default functional -->
+                    <!-- Buttons to call Odoo default functional -->
                     <button
                         name="confirm_picking"
                         string="Confirm"
@@ -302,18 +302,6 @@
             </tree>
         </field>
     </record>
-    <record model="ir.actions.server" id="action_stock_batch_picking_assign_all">
-        <field name="name">Reserve All</field>
-        <field name="model_id" ref="stock_picking_batch.model_stock_picking_batch" />
-        <field
-            name="binding_model_id"
-            ref="stock_picking_batch.model_stock_picking_batch"
-        />
-        <field name="state">code</field>
-        <field name="code">
-            batches = records.action_assign()
-        </field>
-    </record>
     <!-- stock.picking.batch search view -->
     <record id="stock_batch_picking_search" model="ir.ui.view">
         <field name="name">batch.picking.search</field>
@@ -342,6 +330,11 @@
                     />
                 </group>
                 <filter
+                    name="my_batch"
+                    string="My batches"
+                    domain="[('user_id','=', uid)]"
+                />
+                <filter
                     name="no_user_id"
                     string="Unassigned"
                     domain="[('user_id','=', False)]"
@@ -352,7 +345,7 @@
     <record id="action_stock_batch_picking_tree" model="ir.actions.act_window">
         <field name="name">Batch Picking</field>
         <field name="res_model">stock.picking.batch</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,kanban</field>
         <field name="view_id" ref="stock_batch_picking_tree" />
         <field name="search_view_id" ref="stock_batch_picking_search" />
     </record>
