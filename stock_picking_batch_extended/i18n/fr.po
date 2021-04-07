@@ -58,7 +58,7 @@ msgid "All pickings from this batch will be cancelled, are you sure?"
 msgstr ""
 
 #. module: stock_picking_batch_extended
-#: code:addons/stock_picking_batch_extended/wizard/batch_picking_creator.py:96
+#: code:addons/stock_picking_batch_extended/wizard/batch_picking_creator.py:0
 #, python-format
 msgid ""
 "All selected pickings are already in a batch picking or are in a wrong state."
@@ -82,7 +82,7 @@ msgid "Assign picking operations to an employee."
 msgstr "Assign picking operations to an employee."
 
 #. module: stock_picking_batch_extended
-#: selection:stock.picking.batch,state:0
+#: model:ir.model.fields.selection,name:stock_picking_batch_extended.selection__stock_picking_batch__state__assigned
 msgid "Available"
 msgstr "Available"
 
@@ -98,7 +98,6 @@ msgstr "Nom du bon de préparation"
 
 #. module: stock_picking_batch_extended
 #: model:ir.actions.act_window,name:stock_picking_batch_extended.action_stock_batch_picking_tree
-#: model:ir.model,name:stock_picking_batch_extended.model_stock_picking_batch
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_tree
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.view_create_batch_picking
 msgid "Batch Picking"
@@ -117,21 +116,20 @@ msgid "Batch Picking Creator Group Field"
 msgstr "Batch Picking Creator"
 
 #. module: stock_picking_batch_extended
-#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__name
-#, fuzzy
-msgid "Batch Picking Name"
-msgstr "Bon de préparation"
-
-#. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.view_create_batch_picking
 msgid "Batch Picking properties"
 msgstr "Batch Picking properties"
 
 #. module: stock_picking_batch_extended
+#: model:ir.model,name:stock_picking_batch_extended.model_stock_picking_batch
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__name
+msgid "Batch Transfer"
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking__batch_id
-#, fuzzy
-msgid "Batch associated to this picking"
-msgstr "Ce bon de préparation n'a pas de transfert"
+msgid "Batch associated to this transfer"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.actions.report,name:stock_picking_batch_extended.action_report_batch_picking
@@ -144,11 +142,6 @@ msgstr "Bon de préparation"
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.view_create_batch_picking
 msgid "Cancel"
 msgstr "Annuler"
-
-#. module: stock_picking_batch_extended
-#: selection:stock.picking.batch,state:0
-msgid "Cancelled"
-msgstr "Annulé"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
@@ -230,14 +223,8 @@ msgstr "Nom affiché"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
-#: selection:stock.picking.batch,state:0
 msgid "Done"
 msgstr "Terminé"
-
-#. module: stock_picking_batch_extended
-#: selection:stock.picking.batch,state:0
-msgid "Draft"
-msgstr "Brouillon"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__entire_package_ids
@@ -318,15 +305,24 @@ msgid "List of picking managed by this batch."
 msgstr "Liste des transferts gérés par ce bon de préparation."
 
 #. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_search
+msgid "My batches"
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator__name
 msgid "Name"
 msgstr "Nom"
 
 #. module: stock_picking_batch_extended
-#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__name
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch_creator__name
 msgid "Name of the batch picking"
 msgstr "Nom du bon de préparation"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__name
+msgid "Name of the batch transfer"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__notes
@@ -336,7 +332,7 @@ msgid "Notes"
 msgstr "Notes"
 
 #. module: stock_picking_batch_extended
-#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:240
+#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:0
 #, python-format
 msgid "Nothing to print."
 msgstr ""
@@ -438,11 +434,6 @@ msgid "Reserved"
 msgstr "Reserve All"
 
 #. module: stock_picking_batch_extended
-#: selection:stock.picking.batch,state:0
-msgid "Running"
-msgstr ""
-
-#. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__sequence
 msgid "Sequence"
 msgstr ""
@@ -470,13 +461,13 @@ msgid "The user to which the pickings are assigned"
 msgstr "L'utilisateur en charge du traitement du bon de préparation"
 
 #. module: stock_picking_batch_extended
-#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:160
+#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:0
 #, python-format
 msgid "These Batches have no pickings"
 msgstr "Ces bons de préparation n'ont pas de transferts"
 
 #. module: stock_picking_batch_extended
-#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:158
+#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:0
 #, python-format
 msgid "This Batch has no pickings"
 msgstr "Ce bon de préparation n'a pas de transfert"
@@ -580,6 +571,20 @@ msgstr ""
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__user_id
 msgid "the user to which the pickings are assigned"
 msgstr "L'utilisateur en charge du traitement du bon de préparation"
+
+#, fuzzy
+#~ msgid "Batch Picking Name"
+#~ msgstr "Bon de préparation"
+
+#, fuzzy
+#~ msgid "Batch associated to this picking"
+#~ msgstr "Ce bon de préparation n'a pas de transfert"
+
+#~ msgid "Cancelled"
+#~ msgstr "Annulé"
+
+#~ msgid "Draft"
+#~ msgstr "Brouillon"
 
 #~ msgid "In which batch picking this picking will be processed."
 #~ msgstr "Dans quel bon de préparation ce tranfert sera effectué."
