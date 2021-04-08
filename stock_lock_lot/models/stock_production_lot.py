@@ -11,7 +11,7 @@ class StockProductionLot(models.Model):
     _mail_post_access = "read"
 
     locked = fields.Boolean(string="Blocked", tracking=True)
-    product_id = fields.Many2one(track_visibility="onchange")
+    product_id = fields.Many2one(tracking=True)
 
     def _get_product_locked(self, product):
         """Should create locked? (including categories and parents)
