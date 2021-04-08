@@ -13,6 +13,9 @@ class TestPartnerDeliveryWindow(SavepointCase):
         cls.customer_anytime = cls.env["res.partner"].create(
             {"name": "Anytime", "delivery_time_preference": "anytime"}
         )
+        cls.customer_working_days = cls.env["res.partner"].create(
+            {"name": "Working Days", "delivery_time_preference": "workdays"}
+        )
         cls.customer_time_window = cls.env["res.partner"].create(
             {
                 "name": "Time Window",
@@ -61,17 +64,30 @@ class TestPartnerDeliveryWindow(SavepointCase):
     @freeze_time("2020-04-02")  # Thursday
     def test_delivery_window_warning(self):
         # No warning with anytime
-        cust_picking = self._create_delivery_picking(self.customer_anytime)
-        cust_picking.scheduled_date = "2020-04-03"  # Friday
-        onchange_res = cust_picking._onchange_scheduled_date()
+        anytime_picking = self._create_delivery_picking(self.customer_anytime)
+        anytime_picking.scheduled_date = "2020-04-03"  # Friday
+        onchange_res = anytime_picking._onchange_scheduled_date()
         self.assertIsNone(onchange_res)
+        # No warning on friday
+        workdays_picking = self._create_delivery_picking(self.customer_working_days)
+        workdays_picking.scheduled_date = "2020-04-03"  # Friday
+        onchange_res = workdays_picking._onchange_scheduled_date()
+        self.assertIsNone(onchange_res)
+        # But warning on saturday
+        workdays_picking.scheduled_date = "2020-04-04"  # Saturday
+        onchange_res = workdays_picking._onchange_scheduled_date()
+        self.assertIn("warning", onchange_res)
+        self.assertIn(
+            "the partner is set to prefer deliveries on working days",
+            onchange_res["warning"]["message"],
+        )
         # No warning on preferred time window
-        cust_ship_picking = self._create_delivery_picking(self.customer_time_window)
-        cust_ship_picking.scheduled_date = "2020-04-04"  # Saturday
-        onchange_res = cust_ship_picking._onchange_scheduled_date()
+        time_window_picking = self._create_delivery_picking(self.customer_time_window)
+        time_window_picking.scheduled_date = "2020-04-04"  # Saturday
+        onchange_res = time_window_picking._onchange_scheduled_date()
         self.assertIsNone(onchange_res)
-        cust_ship_picking.scheduled_date = "2020-04-03"  # Friday
-        onchange_res = cust_ship_picking._onchange_scheduled_date()
+        time_window_picking.scheduled_date = "2020-04-03"  # Friday
+        onchange_res = time_window_picking._onchange_scheduled_date()
         self.assertTrue("warning" in onchange_res.keys())
 
     @freeze_time("2020-04-02 07:59:59")  # Thursday

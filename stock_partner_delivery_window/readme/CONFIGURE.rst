@@ -5,6 +5,7 @@ Possible configurations are:
 
 * Any time: Do not postpone deliveries
 * Fixed time windows: Postpone deliveries to the next preferred time window
+* Weekdays: Postpone deliveries to the next weekday
 
 After selecting "Fixed time windows", one can define the preferred delivery
 windows in the embedded tree view below.
