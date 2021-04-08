@@ -9,20 +9,27 @@ from odoo.tools.misc import format_time
 
 from odoo.addons.partner_tz.tools import tz_utils
 
+WORKDAYS = list(range(5))
+
 
 class ResPartner(models.Model):
 
     _inherit = "res.partner"
 
     delivery_time_preference = fields.Selection(
-        [("anytime", "Any time"), ("time_windows", "Fixed time windows")],
+        [
+            ("anytime", "Any time"),
+            ("time_windows", "Fixed time windows"),
+            ("workdays", "Weekdays (Monday to Friday)"),
+        ],
         string="Delivery time schedule preference",
-        default="anytime",
+        default="workdays",
         required=True,
         help="Define the scheduling preference for delivery orders:\n\n"
         "* Any time: Do not postpone deliveries\n"
         "* Fixed time windows: Postpone deliveries to the next preferred "
-        "time window",
+        "time window\n"
+        "* Weekdays: Postpone deliveries to the next weekday",
     )
 
     delivery_time_window_ids = fields.One2many(
