@@ -33,9 +33,9 @@ class StockPicking(models.Model):
             ).format(formatted_scheduled_date, scheduled_date.weekday())
         else:
             delivery_windows_strings = []
-            for w in self.partner_id.get_delivery_windows().get(partner.id):
+            for w in partner.get_delivery_windows().get(partner.id):
                 delivery_windows_strings.append(
-                    "  * {} ({})".format(w.display_name, self.partner_id.tz)
+                    "  * {} ({})".format(w.display_name, partner.tz)
                 )
             message = _(
                 "The scheduled date is %s (%s), but the partner is "
@@ -46,7 +46,6 @@ class StockPicking(models.Model):
                     "\n".join(delivery_windows_strings),
                 )
             )
-        )
         return {
             "title": _(
                 "Scheduled date does not match partner's Delivery window preference."
