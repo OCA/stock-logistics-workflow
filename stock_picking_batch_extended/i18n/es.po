@@ -56,7 +56,7 @@ msgid "All pickings from this batch will be cancelled, are you sure?"
 msgstr "Todos los albaranes de esta agrupación serán cancelados, ¿Está seguro?"
 
 #. module: stock_picking_batch_extended
-#: code:addons/stock_picking_batch_extended/wizard/batch_picking_creator.py:96
+#: code:addons/stock_picking_batch_extended/wizard/batch_picking_creator.py:0
 #, python-format
 msgid ""
 "All selected pickings are already in a batch picking or are in a wrong state."
@@ -82,7 +82,7 @@ msgid "Assign picking operations to an employee."
 msgstr "Asignar operaciones de albarán a un empleado."
 
 #. module: stock_picking_batch_extended
-#: selection:stock.picking.batch,state:0
+#: model:ir.model.fields.selection,name:stock_picking_batch_extended.selection__stock_picking_batch__state__assigned
 msgid "Available"
 msgstr "Disponible"
 
@@ -98,7 +98,6 @@ msgstr "Nombre del grupo"
 
 #. module: stock_picking_batch_extended
 #: model:ir.actions.act_window,name:stock_picking_batch_extended.action_stock_batch_picking_tree
-#: model:ir.model,name:stock_picking_batch_extended.model_stock_picking_batch
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_tree
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.view_create_batch_picking
 msgid "Batch Picking"
@@ -116,19 +115,20 @@ msgid "Batch Picking Creator Group Field"
 msgstr "Agrupar productos en batch picking"
 
 #. module: stock_picking_batch_extended
-#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__name
-msgid "Batch Picking Name"
-msgstr "Nombre de agrupación de albaranes"
-
-#. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.view_create_batch_picking
 msgid "Batch Picking properties"
 msgstr "Propiedades del grupo de albaranes"
 
 #. module: stock_picking_batch_extended
+#: model:ir.model,name:stock_picking_batch_extended.model_stock_picking_batch
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__name
+msgid "Batch Transfer"
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking__batch_id
-msgid "Batch associated to this picking"
-msgstr "Agrupación asociada a este albarán"
+msgid "Batch associated to this transfer"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.actions.report,name:stock_picking_batch_extended.action_report_batch_picking
@@ -141,11 +141,6 @@ msgstr "Grupo de albaranes"
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.view_create_batch_picking
 msgid "Cancel"
 msgstr "Cancelar"
-
-#. module: stock_picking_batch_extended
-#: selection:stock.picking.batch,state:0
-msgid "Cancelled"
-msgstr "Cancelado"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
@@ -224,14 +219,8 @@ msgstr "Nombre Mostrado"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
-#: selection:stock.picking.batch,state:0
 msgid "Done"
 msgstr "Hecho"
-
-#. module: stock_picking_batch_extended
-#: selection:stock.picking.batch,state:0
-msgid "Draft"
-msgstr "Borrador"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__entire_package_ids
@@ -313,15 +302,24 @@ msgid "List of picking managed by this batch."
 msgstr "Lista de albaranes gestionados en este grupo."
 
 #. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_search
+msgid "My batches"
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator__name
 msgid "Name"
 msgstr "Nombre"
 
 #. module: stock_picking_batch_extended
-#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__name
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch_creator__name
 msgid "Name of the batch picking"
 msgstr "Nombre del grupo de albaranes"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__name
+msgid "Name of the batch transfer"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__notes
@@ -331,7 +329,7 @@ msgid "Notes"
 msgstr "Notas"
 
 #. module: stock_picking_batch_extended
-#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:240
+#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:0
 #, python-format
 msgid "Nothing to print."
 msgstr "Nada que imprimir."
@@ -428,11 +426,6 @@ msgid "Reserved"
 msgstr "Reservado"
 
 #. module: stock_picking_batch_extended
-#: selection:stock.picking.batch,state:0
-msgid "Running"
-msgstr "En proceso"
-
-#. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__sequence
 msgid "Sequence"
 msgstr "Secuencia"
@@ -460,13 +453,13 @@ msgid "The user to which the pickings are assigned"
 msgstr "El usuario al que los albaranes están asignados"
 
 #. module: stock_picking_batch_extended
-#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:160
+#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:0
 #, python-format
 msgid "These Batches have no pickings"
 msgstr "Estos grupos no tienen albaranes"
 
 #. module: stock_picking_batch_extended
-#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:158
+#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:0
 #, python-format
 msgid "This Batch has no pickings"
 msgstr "Este grupo no tiene albaranes"
@@ -573,6 +566,21 @@ msgstr "el usuario al que se le asigna el grupo de albaranes por defecto"
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__user_id
 msgid "the user to which the pickings are assigned"
 msgstr "el usuario al que se le asigna los albaranes por defecto"
+
+#~ msgid "Batch Picking Name"
+#~ msgstr "Nombre de agrupación de albaranes"
+
+#~ msgid "Batch associated to this picking"
+#~ msgstr "Agrupación asociada a este albarán"
+
+#~ msgid "Cancelled"
+#~ msgstr "Cancelado"
+
+#~ msgid "Draft"
+#~ msgstr "Borrador"
+
+#~ msgid "Running"
+#~ msgstr "En proceso"
 
 #, fuzzy
 #~ msgid "report.stock_batch_picking.report_batch_picking"
