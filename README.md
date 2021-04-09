@@ -23,6 +23,7 @@ addon | version | summary
 [stock_picking_back2draft](stock_picking_back2draft/) | 14.0.1.0.0 | Reopen cancelled pickings
 [stock_picking_invoice_link](stock_picking_invoice_link/) | 14.0.1.0.0 | Adds link between pickings and invoices
 [stock_putaway_hook](stock_putaway_hook/) | 14.0.1.0.0 | Add hooks allowing modules to add more putaway strategies
+[stock_quant_package_product_packaging](stock_quant_package_product_packaging/) | 14.0.1.0.0 | Use product packagings on packages
 [stock_restrict_lot](stock_restrict_lot/) | 14.0.1.1.1 | Base module that add back the concept of restrict lot on stock move
 [stock_return_request](stock_return_request/) | 14.0.1.0.0 | Stock Return Request
 
