@@ -1,0 +1,112 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_dynamic_routing_reserve_rule
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2021-04-15 01:46+0000\n"
+"Last-Translator: Ignacio Buioli <ibuioli@gmail.com>\n"
+"Language-Team: none\n"
+"Language: es_AR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
+
+#. module: stock_dynamic_routing_reserve_rule
+#: model_terms:ir.ui.view,arch_db:stock_dynamic_routing_reserve_rule.routing_rule_reserve_rule_warning_dest
+#: model_terms:ir.ui.view,arch_db:stock_dynamic_routing_reserve_rule.routing_rule_reserve_rule_warning_src
+msgid ", for locations:"
+msgstr ", para ubicaciones:"
+
+#. module: stock_dynamic_routing_reserve_rule
+#: model_terms:ir.ui.view,arch_db:stock_dynamic_routing_reserve_rule.routing_rule_reserve_rule_warning_dest
+msgid ""
+", however, has no\n"
+"            reservation rule, which\n"
+"            may lead to inconsistencies in the routing."
+msgstr ""
+", sin embargo, no tiene\n"
+"             regla de reserva, lo cual\n"
+"             puede dar lugar a inconsistencias en el enrutamiento."
+
+#. module: stock_dynamic_routing_reserve_rule
+#: model_terms:ir.ui.view,arch_db:stock_dynamic_routing_reserve_rule.routing_rule_reserve_rule_warning_dest
+msgid ""
+".\n"
+"            <br/>\n"
+"            The origin operation type"
+msgstr ""
+".\n"
+"            <br/>\n"
+"            El tipo de operación de origen"
+
+#. module: stock_dynamic_routing_reserve_rule
+#: model_terms:ir.ui.view,arch_db:stock_dynamic_routing_reserve_rule.routing_rule_reserve_rule_warning_src
+msgid ""
+".\n"
+"            <br/>\n"
+"            This dynamic routing may change moves' operation types to"
+msgstr ""
+".\n"
+"            <br/>\n"
+"            Este enrutamiento dinámico puede cambiar los tipos de operación "
+"de los movimientos a"
+
+#. module: stock_dynamic_routing_reserve_rule
+#: model_terms:ir.ui.view,arch_db:stock_dynamic_routing_reserve_rule.routing_rule_reserve_rule_warning_dest
+msgid ""
+".\n"
+"            This new operation type has reservation rules in"
+msgstr ""
+".\n"
+"            Este nuevo tipo de operación tiene reglas de reserva en"
+
+#. module: stock_dynamic_routing_reserve_rule
+#: code:addons/stock_dynamic_routing_reserve_rule/models/stock_routing.py:0
+#: model_terms:ir.ui.view,arch_db:stock_dynamic_routing_reserve_rule.view_stock_routing_form
+#, python-format
+msgid "Reservation Rules"
+msgstr "Reglas de Reserva"
+
+#. module: stock_dynamic_routing_reserve_rule
+#: model:ir.model.fields,field_description:stock_dynamic_routing_reserve_rule.field_stock_routing__reserve_rule_warning
+msgid "Reserve Rule Warning"
+msgstr "Advertencia de Regla de Reserva"
+
+#. module: stock_dynamic_routing_reserve_rule
+#: model:ir.model,name:stock_dynamic_routing_reserve_rule.model_stock_routing
+msgid "Stock Dynamic Routing"
+msgstr "Rutas Dinámicas de Inventario"
+
+#. module: stock_dynamic_routing_reserve_rule
+#: model_terms:ir.ui.view,arch_db:stock_dynamic_routing_reserve_rule.routing_rule_reserve_rule_warning_src
+msgid "Warning: the origin operation type"
+msgstr "Advertencia: el tipo de operación de origen"
+
+#. module: stock_dynamic_routing_reserve_rule
+#: model_terms:ir.ui.view,arch_db:stock_dynamic_routing_reserve_rule.routing_rule_reserve_rule_warning_dest
+msgid ""
+"Warning: this dynamic routing may change moves' operation\n"
+"            type to"
+msgstr ""
+"Advertencia: este enrutamiento dinámico puede cambiar el tipo de operación "
+"de los\n"
+"             movimientos a"
+
+#. module: stock_dynamic_routing_reserve_rule
+#: model_terms:ir.ui.view,arch_db:stock_dynamic_routing_reserve_rule.routing_rule_reserve_rule_warning_src
+msgid "has reservation rules in"
+msgstr "tiene reglas de reserva en"
+
+#. module: stock_dynamic_routing_reserve_rule
+#: model_terms:ir.ui.view,arch_db:stock_dynamic_routing_reserve_rule.routing_rule_reserve_rule_warning_src
+msgid ""
+"which does not have a reservation rule. It may lead\n"
+"            to inconsistencies in the routing."
+msgstr ""
+"el cual no tiene una regla de reserva. Puede llevar\n"
+"             a inconsistencias en el enrutamiento."
