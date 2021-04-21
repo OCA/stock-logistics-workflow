@@ -12,6 +12,7 @@
     "depends": ["sale_stock", "delivery", "stock_move_assign_picking_hook"],
     "data": [
         "views/procurement_group.xml",
+        "views/res_partner.xml",
         "views/stock_picking_type.xml",
         "views/stock_warehouse.xml",
         "report/assets.xml",

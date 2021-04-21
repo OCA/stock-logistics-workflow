@@ -58,6 +58,7 @@ class StockMove(models.Model):
         domain = super()._domain_search_picking_for_assignation()
         if (
             not self.picking_type_id.group_pickings
+            or self.partner_id.disable_picking_grouping
             or self.group_id.sale_id.picking_policy == "one"
         ):
             return domain
