@@ -58,11 +58,14 @@ class StockPicking(models.Model):
             return super().action_cancel()
 
     def _create_backorder(self):
-        if self.picking_type_id.group_pickings:
-            self = self.with_context(picking_no_copy_if_can_group=1)
-        backorders = super()._create_backorder()
-        if self.picking_type_id.group_pickings:
-            backorders._merge_procurement_groups()
+        backorders = self.browse()
+        for picking in self:
+            if not picking._is_grouping_disabled():
+                picking = picking.with_context(picking_no_copy_if_can_group=1)
+            backorder = super(StockPicking, picking)._create_backorder()
+            if not picking._is_grouping_disabled():
+                backorder._merge_procurement_groups()
+            backorders |= backorder
         return backorders
 
     def _prepare_merge_procurement_group_values(self, move_groups):
@@ -74,7 +77,7 @@ class StockPicking(models.Model):
 
     def _merge_procurement_groups(self):
         for picking in self:
-            if not picking.picking_type_id.group_pickings:
+            if picking._is_grouping_disabled():
                 continue
             if picking.picking_type_id.code != "outgoing":
                 continue
@@ -113,6 +116,13 @@ class StockPicking(models.Model):
         return super(
             StockPicking, self.with_context(picking_no_copy_if_can_group=0)
         ).copy(defaults)
+
+    def _is_grouping_disabled(self):
+        self.ensure_one()
+        return (
+            not self.picking_type_id.group_pickings
+            or self.partner_id.disable_picking_grouping
+        )
 
     def get_delivery_report_lines(self):
         """Return the lines that will be on the report.
