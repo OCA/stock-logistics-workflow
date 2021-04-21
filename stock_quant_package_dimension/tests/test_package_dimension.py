@@ -167,7 +167,8 @@ class TestStockQuantPackageProductPackaging(
             try:
                 with self.env.cr.savepoint():
                     self.env.cr.execute(
-                        "SELECT 1 FROM stock_quant WHERE id = %s FOR UPDATE NOWAIT",
+                        "SELECT 1 FROM stock_quant WHERE id = %s "
+                        "FOR UPDATE NOWAIT",
                         [quant.id],
                         log_exceptions=False,
                     )

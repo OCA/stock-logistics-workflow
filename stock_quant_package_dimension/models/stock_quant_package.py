@@ -11,7 +11,7 @@ class StockQuantPackage(models.Model):
     pack_weight = fields.Float("Weight (kg)")
     estimated_pack_weight = fields.Float(
         "Estimated weight (kg)",
-        digits=dp.get_precision('Product Unit of Measure'),
+        digits=dp.get_precision("Product Unit of Measure"),
         compute="_compute_estimated_pack_weight",
         help="Based on the weight of the product.",
     )
@@ -28,8 +28,40 @@ class StockQuantPackage(models.Model):
         help="volume in cubic meters",
     )
 
-    @api.depends('quant_ids', 'children_ids')
+    def _get_picking_pack_operation_ids_per_package(self, picking_id):
+        if not picking_id:
+            return {}
+        pack_operations = self.env["stock.pack.operation"].search(
+            [
+                ("result_package_id", "in", self.ids),
+                ("picking_id", "=", picking_id),
+            ]
+        )
+        res = dict.fromkeys(self.ids, self.env["stock.pack.operation"])
+        for pop in pack_operations:
+            res.setdefault(pop.result_package_id, set(pop.ids))
+            res[pop.result_package_id].add(pop.id)
+        return res
+
+    def _get_weight_from_pack_operations(self, pack_operations):
+        weigths = []
+        for pop in pack_operations:
+            product = pop.product_id or pop.package_id.single_product_id
+            qty_done = pop.product_uom_id._compute_quantity(
+                pop.qty_done, product.uom_id
+            )
+            weigth = pop.package_id.estimated_pack_weight or product.weight
+            weigths.append(weigth * qty_done)
+        return sum(weigths)
+
+    @api.depends("quant_ids", "children_ids")
     def _compute_estimated_pack_weight(self):
+        picking_id = self.env.context.get("picking_id")
+        pack_operation_ids_per_package = (
+            self._get_picking_pack_operation_ids_per_package(
+                picking_id
+            )
+        )
         for package in self:
             weight = 0
             for quant in package.quant_ids:
@@ -37,6 +69,23 @@ class StockQuantPackage(models.Model):
             for pack in package.children_ids:
                 pack._compute_weight()
                 weight += pack.weight
+            if (
+                not package.quant_ids
+                and not package.children_ids
+                and picking_id
+            ):
+                # compute the height from the pricking if package is
+                # the destination of some pack operations
+                pack_operation_ids = pack_operation_ids_per_package.get(
+                    package, []
+                )
+                pack_operations = self.env["stock.pack.operation"].browse(
+                    pack_operation_ids
+                )
+                weight = package._get_weight_from_pack_operations(
+                    pack_operations
+                )
+
             package.estimated_pack_weight = weight
 
     @api.depends("lngth", "width", "height")
