@@ -1,0 +1,22 @@
+<odoo>
+    <record id="view_move_line_form" model="ir.ui.view">
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_move_line_form" />
+        <field name="arch" type="xml">
+            <form position="inside">
+                <field name="use_manual_lot_selection" invisible="True" />
+            </form>
+            <field name="lot_id" position="before">
+                <field
+                    name="manual_lot_id"
+                    groups="stock.group_production_lot"
+                    context="{'default_product_id': product_id, 'active_picking_id': picking_id}"
+                    attrs="{'invisible': ['|', ('use_manual_lot_selection', '=', False), '&amp;', ('manual_lot_id', '=', False), ('lot_name', '!=', False)]}"
+                />
+            </field>
+            <field name="lot_id" position="attributes">
+                <attribute name="attrs" operation="python_dict" key="invisible">['|', ('use_manual_lot_selection', '=', True), '&amp;', ('lot_id', '=', False), ('lot_name', '!=', False)]</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>
