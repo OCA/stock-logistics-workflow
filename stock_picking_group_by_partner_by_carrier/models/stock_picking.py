@@ -124,7 +124,7 @@ class StockPicking(models.Model):
         self.ensure_one()
         moves = self.move_lines
         if self.state != "done":
-            moves = moves.filtered("product_uom_qty")
+            moves = moves.filtered("reserved_availability")
         moves = moves.sorted(lambda m: m.sale_line_id.order_id)
 
         if len(moves.mapped("sale_line_id.order_id")) > 1:
