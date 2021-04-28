@@ -127,16 +127,11 @@ class TestReport(TestGroupByBase):
         so1.action_confirm()
         so2.action_confirm()
         picking = so1.picking_ids
+        # No qty reserved thus nothing to print
         res = picking.get_delivery_report_lines()
-        self.assertEqual(len(res), 4)
+        self.assertEqual(len(res), 0)
         self.assertEqual(res._name, "stock.move")
-        # Check that we have two display moves (sale name)
-        # And two real moves.
-        self.assertFalse(res[0].id)
-        self.assertTrue(res[1].id)
-        self.assertFalse(res[2].id)
-        self.assertTrue(res[3].id)
-        # Deliver and test again
+        # Reserve goods and test again
         self._update_qty_in_location(
             picking.location_id,
             so1.order_line[0].product_id,
@@ -148,6 +143,14 @@ class TestReport(TestGroupByBase):
             so2.order_line[0].product_uom_qty,
         )
         picking.action_assign()
+        # Check that we have two display moves (sale name)
+        # And two real moves.
+        res = picking.get_delivery_report_lines()
+        self.assertFalse(res[0].id)
+        self.assertTrue(res[1].id)
+        self.assertFalse(res[2].id)
+        self.assertTrue(res[3].id)
+        # Deliver and test again
         line = picking.move_lines[0].move_line_ids
         line.qty_done = line.product_uom_qty
         line = picking.move_lines[1].move_line_ids
