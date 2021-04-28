@@ -27,22 +27,23 @@ class DeliverySlipReport(models.AbstractModel):
             for line in sale.order_line.filtered(
                 lambda l: not l.display_type and l.product_id.type != "service"
             ):
-                move = stock_move.search(
+                moves = stock_move.search(
                     [("sale_line_id", "=", line.id), ("picking_id", "=", picking.id)],
-                    limit=1,
                 )
                 qty = 0
-                if picking.state == "done" or not move:
+                if picking.state == "done" or not moves:
                     # If the picking is done, or if the line is not in any move
                     # of this picking, we rely only in the sales order.
                     qty = line.product_uom_qty - line.qty_delivered
                 elif picking.state not in ("cancel", "done"):
-                    # Else, we consider the amount reserved in the move.
+                    # Else, we consider the initial demand in the move.
                     qty = (
-                        line.product_uom_qty - line.qty_delivered - move.product_uom_qty
+                        line.product_uom_qty
+                        - line.qty_delivered
+                        - sum(moves.mapped("product_uom_qty"))
                     )
 
-                uom = move.product_uom if move else line.product_uom
+                uom = moves.product_uom if moves else line.product_uom
                 uom_rounding = uom.rounding
                 if not float_is_zero(qty, precision_rounding=uom_rounding):
                     if order_name not in sales_data:
