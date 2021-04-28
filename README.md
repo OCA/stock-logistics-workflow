@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [![Runbot Status](https://runbot.odoo-community.org/runbot/badge/flat/154/14.0.svg)](https://runbot.odoo-community.org/runbot/repo/github-com-oca-stock-logistics-workflow-154)
 [![Build Status](https://travis-ci.com/OCA/stock-logistics-workflow.svg?branch=14.0)](https://travis-ci.com/OCA/stock-logistics-workflow)
 [![codecov](https://codecov.io/gh/OCA/stock-logistics-workflow/branch/14.0/graph/badge.svg)](https://codecov.io/gh/OCA/stock-logistics-workflow)
@@ -44,3 +45,25 @@ that explains its license.
 OCA, or the [Odoo Community Association](http://odoo-community.org/), is a nonprofit
 organization whose mission is to support the collaborative development of Odoo features
 and promote its widespread use.
+=======
+[![Build Status](https://travis-ci.org/OCA/stock-logistics-workflow.svg?branch=13.0)](https://travis-ci.org/OCA/stock-logistics-workflow)
+[![Coverage Status](https://img.shields.io/coveralls/OCA/stock-logistics-workflow.svg)](https://coveralls.io/r/OCA/stock-logistics-workflow?branch=13.0)
+
+Odoo Stock Logistic Workflow
+===========================
+
+This project aims to deal with modules related to manage logistic flows. You'll find modules that:
+
+ - Bring support for picking dispatch
+ - Hold picking (adding a step in their workflow)
+ - Ease the flow creation for the stock_location official module
+ - Add filter to manage packing and deliveries
+
+Please don't hesitate to suggest one of your module to this project. Also, you may want to have a look on those other projects here:
+
+ - https://github.com/OCA/stock-logistics-tracking
+ - https://github.com/OCA/stock-logistics-barcode
+ - https://github.com/OCA/stock-logistics-warehouse
+
+
+>>>>>>> [MIG] Add metafiles
