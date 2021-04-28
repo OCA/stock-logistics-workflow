@@ -3,8 +3,7 @@
 
 from odoo import fields, models
 
-
 class StockProductionLot(models.Model):
     _inherit = "stock.production.lot"
 
-    active = fields.Boolean(string="Active", default=True)
+    active = fields.Boolean("Active", default=True)

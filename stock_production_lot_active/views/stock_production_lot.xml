@@ -2,10 +2,9 @@
 <!-- Copyright 2020 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
+
     <record model="ir.ui.view" id="stock_production_lot_form_view">
-        <field
-            name="name"
-        >stock.production.lot.form (in stock_production_lot_active)</field>
+        <field name="name">stock.production.lot.form (in stock_production_lot_active)</field>
         <field name="model">stock.production.lot</field>
         <field name="inherit_id" ref="stock.view_production_lot_form" />
         <field name="arch" type="xml">
@@ -14,12 +13,12 @@
                     name="web_ribbon"
                     title="Archived"
                     bg_color="bg-danger"
-                    attrs="{'invisible': [('active', '=', True)]}"
-                />
+                    attrs="{'invisible': [('active', '=', True)]}"/>
                 <field name="active" invisible="1" />
             </field>
         </field>
     </record>
+    
     <record model="ir.ui.view" id="stock_production_lot_search_view">
         <field
             name="name"
@@ -32,6 +31,7 @@
             </field>
         </field>
     </record>
+    
     <record model="ir.ui.view" id="stock_production_lot_tree_view">
         <field
             name="name"
@@ -48,4 +48,5 @@
             </field>
         </field>
     </record>
+    
 </odoo>
