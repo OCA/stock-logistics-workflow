@@ -59,8 +59,10 @@ class StockValuationLayer(models.Model):
                 if f_compare > 0:
                     total_qty = previous_qty + qty
                     # Return moves or adjust inventory moves
-                    if update_enabled and (svl.stock_move_id.move_orig_ids or
-                                           svl.stock_move_id.inventory_id):
+                    if update_enabled and (
+                        svl.stock_move_id.move_orig_ids
+                        or svl.stock_move_id.inventory_id
+                    ):
                         svl.with_context(skip_avco_sync=True).write(
                             {
                                 "unit_cost": line.currency_id.round(previous_price),
@@ -76,8 +78,7 @@ class StockValuationLayer(models.Model):
                     else:
                         previous_price = line.currency_id.round(
                             (
-                                (
-                                        previous_price * previous_qty + unit_cost * qty)
+                                (previous_price * previous_qty + unit_cost * qty)
                                 / total_qty
                             )
                             if total_qty
@@ -91,15 +92,22 @@ class StockValuationLayer(models.Model):
                         previous_price,
                         precision_rounding=svl.uom_id.rounding,
                     ):
-                        svl.with_context(skip_avco_sync=True).write({
-                            "unit_cost": line.currency_id.round(previous_price),
-                            "value": line.currency_id.round(previous_price * qty),
-                        })
+                        svl.with_context(skip_avco_sync=True).write(
+                            {
+                                "unit_cost": line.currency_id.round(previous_price),
+                                "value": line.currency_id.round(previous_price * qty),
+                            }
+                        )
                     previous_qty += qty
                 # Manual price adjustment line in layer
                 elif not unit_cost and not qty and not svl.stock_move_id:
                     old_diff = svl.value / previous_qty
-                    price = previous_price + old_diff
+                    move_diff = previous_price * previous_qty + (
+                        (vals.get("unit_cost", line.unit_cost) - line.unit_cost)
+                        * (vals.get("quantity", line.quantity))
+                    )
+                    move_diff_price = move_diff / previous_qty
+                    price = previous_price + old_diff + move_diff_price
                     if update_enabled:
                         new_diff = price - previous_price
                         new_value = line.currency_id.round(new_diff * previous_qty)
@@ -125,16 +133,22 @@ class StockValuationLayer(models.Model):
                     force_company=line.company_id.id
                 ).sudo().write({"standard_price": previous_price})
             # Compute new values for layer line
+            vals_unit_cost = vals.get("unit_cost", line.unit_cost)
+            if "quantity" in vals:
+                remaining_qty = line.remaining_qty - (line.quantity - vals["quantity"])
+            else:
+                remaining_qty = line.remaining_qty
             vals.update(
                 {
                     "value": line.currency_id.round(
-                        vals["unit_cost"] * vals.get("quantity", line.quantity)
+                        vals_unit_cost * vals.get("quantity", line.quantity)
                     ),
+                    "remaining_qty": remaining_qty,
                     "remaining_value": line.currency_id.round(
-                        vals["unit_cost"] * line.remaining_qty
+                        vals_unit_cost * remaining_qty
                     ),
                 }
             )
             # Update unit_cost for incoming stock moves
             if line.stock_move_id:
-                line.stock_move_id.price_unit = vals["unit_cost"]
+                line.stock_move_id.price_unit = vals_unit_cost
