@@ -3,9 +3,10 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from time import sleep
 
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import SavepointCase, tagged
 
 
+@tagged("-at_install", "post_install")
 class TestProductCostPriceAvcoSync(SavepointCase):
     @classmethod
     def setUpClass(cls):
@@ -17,16 +18,16 @@ class TestProductCostPriceAvcoSync(SavepointCase):
         cls.stock_location = cls.env.ref("stock.stock_location_stock")
         cls.picking_type_in = cls.env.ref("stock.picking_type_in")
         cls.picking_type_out = cls.env.ref("stock.picking_type_out")
-        cls.partner = cls.env["res.partner"].create(
-            {"customer": True, "supplier": True, "name": "Test Partner"}
-        )
+        cls.partner = cls.env["res.partner"].create({"name": "Test Partner"})
+        cls.categ_all = cls.env.ref("product.product_category_all")
+        cls.categ_all.property_cost_method = "average"
         cls.product = cls.env["product.product"].create(
             {
                 "name": "Product for test",
                 "type": "product",
                 "tracking": "none",
-                "property_cost_method": "average",
                 "standard_price": 1,
+                "categ_id": cls.categ_all.id,
             }
         )
         cls.picking_in = cls.env["stock.picking"].create(
@@ -69,7 +70,7 @@ class TestProductCostPriceAvcoSync(SavepointCase):
             }
         )
 
-    def test_sync_cost_price(self):
+    def _test_sync_cost_price(self):
         move_in = self.picking_in.move_lines[:1]
         move_in.product_uom_qty = 100
         move_in.price_unit = 5.0
@@ -134,7 +135,7 @@ class TestProductCostPriceAvcoSync(SavepointCase):
         self.assertAlmostEqual(move_out.price_unit, -2.27, 2)
         self.assertAlmostEqual(move_out_2.price_unit, -2.27, 2)
 
-    def test_sync_cost_price_and_history(self):
+    def _test_sync_cost_price_and_history(self):
         company_id = self.picking_in.company_id.id
         move_in = self.picking_in.move_lines[:1]
         move_in.quantity_done = move_in.product_uom_qty
@@ -196,7 +197,7 @@ class TestProductCostPriceAvcoSync(SavepointCase):
         )
         self.assertEqual(price_history_count, 4)
 
-    def test_sync_cost_price_multi_moves_done_at_same_time(self):
+    def _test_sync_cost_price_multi_moves_done_at_same_time(self):
         move_in = self.picking_in.move_lines[:1]
         move_in.product_uom_qty = 10
         move_in.price_unit = 10.0
@@ -223,3 +224,45 @@ class TestProductCostPriceAvcoSync(SavepointCase):
         self.assertEqual(self.product.standard_price, 7.0)
         move_in_2.price_unit = 5.0
         self.assertEqual(self.product.standard_price, 7.5)
+
+    def test_change_quantiy_price(self):
+        """Write quantity and price to zero in a stock valuation layer
+        """
+        self.picking_in.action_assign()
+        move_in = self.picking_in.move_lines[:1]
+        self.picking_in.move_line_ids.qty_done = move_in.product_uom_qty
+        self.picking_in.action_done()
+
+        picking_in_2 = self.picking_in.copy()
+        picking_in_2.action_assign()
+        move_in_2 = picking_in_2.move_lines[:1]
+        move_in_2.product_uom_qty = 10.0
+        move_in_2.quantity_done = move_in_2.product_uom_qty
+        picking_in_2.action_done()
+        move_in_2.stock_valuation_layer_ids.unit_cost = 2.0
+        self.assertAlmostEqual(self.product.standard_price, 1.5, 2)
+
+        # Change qty before price
+        move_in.stock_valuation_layer_ids.unit_cost = 0.0
+        self.assertAlmostEqual(self.product.standard_price, 1.0, 2)
+        move_in.quantity_done = 0.0
+        self.assertAlmostEqual(self.product.standard_price, 2.0, 2)
+
+        move_in.quantity_done = 10.0
+        move_in.stock_valuation_layer_ids.unit_cost = 4.0
+        self.assertAlmostEqual(self.product.standard_price, 3.0, 2)
+
+        move_in.quantity_done = 0.0
+        self.assertAlmostEqual(self.product.standard_price, 2.0, 2)
+        move_in.stock_valuation_layer_ids.unit_cost = 0.0
+        self.assertAlmostEqual(self.product.standard_price, 2.0, 2)
+
+        move_in.quantity_done = 10.0
+        move_in.stock_valuation_layer_ids.unit_cost = 1.0
+        self.product.with_context(import_file=True).standard_price = 6.0
+        svl_manual = self.env["stock.valuation.layer"].search(
+            [("product_id", "=", self.product.id)], order="id DESC", limit=1
+        )
+        self.assertAlmostEqual(svl_manual.value, 90.0, 2)
+        move_in.stock_valuation_layer_ids.unit_cost = 0.0
+        self.assertAlmostEqual(svl_manual.value, 100.0, 2)
