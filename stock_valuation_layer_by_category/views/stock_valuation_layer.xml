@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_stock_valuation_layer_category_form" model="ir.ui.view">
+        <field name="model">stock.valuation.layer</field>
+        <field name="inherit_id" ref="stock_account.stock_valuation_layer_form" />
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="categ_id" />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_stock_valuation_layer_category_search" model="ir.ui.view">
+        <field name="model">stock.valuation.layer</field>
+        <field name="inherit_id" ref="stock_account.view_inventory_valuation_search" />
+        <field name="arch" type="xml">
+            <filter name="group_by_product_id" position="before">
+                <filter
+                    string='Category'
+                    name="group_by_categ_id"
+                    context="{'group_by': 'categ_id'}"
+                />
+            </filter>
+        </field>
+    </record>
+
+    <record
+        id="stock_account.stock_valuation_layer_action"
+        model="ir.actions.act_window"
+    >
+        <!-- Just add default group by categ_id -->
+        <field
+            name="context"
+        >{'search_default_group_by_categ_id': 1, 'search_default_group_by_product_id': 1}</field>
+    </record>
+
+</odoo>
