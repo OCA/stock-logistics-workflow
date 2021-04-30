@@ -124,6 +124,20 @@ class StockPicking(models.Model):
             or self.partner_id.disable_picking_grouping
         )
 
+    def _group_moves_by_order(self, moves):
+        # Meant to be overridden
+        return groupby(moves, lambda m: m.sale_line_id.order_id)
+
+    def _get_sorted_moves(self):
+        # Meant to be overriden
+        self.ensure_one()
+        return self.move_lines.sorted(lambda m: m.sale_line_id.order_id.id)
+
+    def _get_sorted_move_lines(self):
+        # Meant to be overriden
+        self.ensure_one()
+        return self.move_line_ids
+
     def get_delivery_report_lines(self):
         """Return the lines that will be on the report.
 
@@ -132,13 +146,12 @@ class StockPicking(models.Model):
         Otherwise standard records are returned.
         """
         self.ensure_one()
-        moves = self.move_lines
+        moves = self._get_sorted_moves()
         if self.state != "done":
             moves = moves.filtered("reserved_availability")
-        moves = moves.sorted(lambda m: m.sale_line_id.order_id)
 
         if len(moves.mapped("sale_line_id.order_id")) > 1:
-            grouped_moves = groupby(moves, lambda m: m.sale_line_id.order_id)
+            grouped_moves = self._group_moves_by_order(moves)
             fake_record = {
                 "product_id": 1,
                 "product_uom_qty": 0,
@@ -175,7 +188,7 @@ class StockPicking(models.Model):
         elif self.state != "done":
             return moves
         else:
-            return self.move_line_ids
+            return self._get_sorted_move_lines()
 
     def get_customer_refs(self):
         """Returns all unique sales order customer references."""
