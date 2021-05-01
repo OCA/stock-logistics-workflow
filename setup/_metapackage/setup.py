@@ -27,6 +27,7 @@ setuptools.setup(
         'odoo12-addon-stock_picking_batch_extended_account',
         'odoo12-addon-stock_picking_customer_ref',
         'odoo12-addon-stock_picking_filter_lot',
+        'odoo12-addon-stock_picking_filter_product',
         'odoo12-addon-stock_picking_invoice_link',
         'odoo12-addon-stock_picking_late_activity',
         'odoo12-addon-stock_picking_line_sequence',
