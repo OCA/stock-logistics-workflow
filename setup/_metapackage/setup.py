@@ -42,6 +42,7 @@ setuptools.setup(
         'odoo13-addon-stock_picking_warn_message',
         'odoo13-addon-stock_picking_whole_scrap',
         'odoo13-addon-stock_production_lot_active',
+        'odoo13-addon-stock_push_delay',
         'odoo13-addon-stock_putaway_by_route',
         'odoo13-addon-stock_putaway_hook',
         'odoo13-addon-stock_quant_package_dimension',
