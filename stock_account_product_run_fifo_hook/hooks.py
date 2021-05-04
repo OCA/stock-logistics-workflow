@@ -16,18 +16,15 @@ def post_load_hook():
         # Find back incoming stock valuation layers (called candidates here)
         # to value `quantity`.
         qty_to_take_on_candidates = quantity
+        # START HOOK Search Candidates
+        candidates_domain = self._get_candidates_domain(company)
         candidates = (
             self.env["stock.valuation.layer"]
             .sudo()
             .with_context(active_test=False)
-            .search(
-                [
-                    ("product_id", "=", self.id),
-                    ("remaining_qty", ">", 0),
-                    ("company_id", "=", company.id),
-                ]
-            )
+            .search(candidates_domain)
         )
+        # END HOOK Search Candidates
         new_standard_price = 0
         tmp_value = 0  # to accumulate the value taken on the candidates
         for candidate in candidates:
@@ -46,14 +43,14 @@ def post_load_hook():
                 "remaining_qty": candidate.remaining_qty - qty_taken_on_candidate,
                 "remaining_value": new_remaining_value,
             }
-            # Start Hook
+            # Start Hook Prepare Candidate
             candidate_vals = self._run_fifo_prepare_candidate_update(
                 candidate,
                 qty_taken_on_candidate,
                 value_taken_on_candidate,
                 candidate_vals,
             )
-            # End Hook
+            # End Hook Prepare Candidate
             candidate.write(candidate_vals)
 
             qty_to_take_on_candidates -= qty_taken_on_candidate
