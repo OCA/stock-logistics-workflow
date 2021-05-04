@@ -7,3 +7,8 @@
   'Inventory / Reporting / Stock Moves'. You will see a section
   'Valuation Layers' where you will be able to identify the valuation layers
   that were used to value this move, and the quantity and value that was taken.
+
+* Create several MTO order
+
+* Deliver the products to a customer in a random way and check the section
+  'Valuation Layers Usage'. The MTO logic is respected, then FIFO applies.
