@@ -14,6 +14,7 @@ class StockMove(models.Model):
 
         move_to_assign = self.browse()
         for move in self:
+            skip_move = False
             if move.date_expected:
                 confirm_before_days = param_obj.sudo().get_param(
                     'stock_picking_assign_limit_days.'
@@ -21,7 +22,9 @@ class StockMove(models.Model):
                 if confirm_before_days:
                     limit_date_to_assign = datetime.now() + relativedelta(
                         days=int(confirm_before_days))
-                    if move.date_expected <= limit_date_to_assign:
-                        move_to_assign |= move
+                    if move.date_expected > limit_date_to_assign:
+                        skip_move = True
+            if not skip_move:
+                move_to_assign |= move
         res = super(StockMove, move_to_assign)._action_assign()
         return res
