@@ -2,9 +2,9 @@
 <!-- Copyright 2021 PlanetaTIC - Marc Poch <mpoch@planetatic.com>
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
-<data>
+<data noupdate="1">
 
-<record id="purchase_limit_date_param" model="ir.config_parameter">
+<record id="purchase_limit_days_param" model="ir.config_parameter">
     <field name="key">stock_picking_purchase_limit_date.purchase_limit_days</field>
     <field name="value"></field>
 </record>
