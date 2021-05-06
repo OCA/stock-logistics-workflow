@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo14-addon-stock_move_assign_picking_hook',
+        'odoo14-addon-stock_move_line_auto_fill',
         'odoo14-addon-stock_no_negative',
         'odoo14-addon-stock_picking_back2draft',
         'odoo14-addon-stock_picking_invoice_link',
