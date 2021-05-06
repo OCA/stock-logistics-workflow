@@ -20,6 +20,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [stock_move_assign_picking_hook](stock_move_assign_picking_hook/) | 14.0.1.1.1 | Stock Move picking assignment hook
+[stock_move_line_auto_fill](stock_move_line_auto_fill/) | 14.0.1.0.0 | Stock Move Line auto fill
 [stock_no_negative](stock_no_negative/) | 14.0.1.0.0 | Disallow negative stock levels by default
 [stock_picking_back2draft](stock_picking_back2draft/) | 14.0.1.0.0 | Reopen cancelled pickings
 [stock_picking_invoice_link](stock_picking_invoice_link/) | 14.0.1.0.0 | Adds link between pickings and invoices
