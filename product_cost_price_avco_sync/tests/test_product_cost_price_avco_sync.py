@@ -266,3 +266,10 @@ class TestProductCostPriceAvcoSync(SavepointCase):
         self.assertAlmostEqual(svl_manual.value, 90.0, 2)
         move_in.stock_valuation_layer_ids.unit_cost = 0.0
         self.assertAlmostEqual(svl_manual.value, 100.0, 2)
+
+    # def test_change_quantiy_price(self):
+    #     """Caso 1: Vendo unidades que no tengo y que compraré
+    #     posteriormente a la venta.
+    #     """
+    #     self.picking_in.action_assign()
+    #     move_in = self.picking_in.move_lines[:1]
