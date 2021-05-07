@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_picking_package_preparation
+# 	* stock_picking_package_preparation
 #
 msgid ""
 msgstr ""
@@ -32,14 +32,14 @@ msgid "All Content"
 msgstr "Todo o conteúdo"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:196
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:200
 #, python-format
 msgid "All the transfers must be \"Ready to Transfer\"."
 msgstr ""
 "Todas as transferências devem estar como \"Prontas para Transferência\"."
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:180
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:184
 #, python-format
 msgid "All the transfers must have the same destination location"
 msgstr "Todas as transferências devem ter o mesmo local de destino"
@@ -60,7 +60,7 @@ msgid "Cancelled"
 msgstr "Cancelado"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:146
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:147
 #, python-format
 msgid "Cannot cancel a done package preparation."
 msgstr "Não é possível cancelar uma preparação de pacote já concluída."
@@ -142,7 +142,10 @@ msgstr "Se marcada, algumas mensagens apresentam um erro de entrega."
 
 #. module: stock_picking_package_preparation
 #: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation.stock_picking_package_preparation_form
-msgid "If there is no product but a source package, this means the source package was moved entirely.  If there is a product and a source package, the product was taken from the source package."
+msgid ""
+"If there is no product but a source package, this means the source package "
+"was moved entirely.  If there is a product and a source package, the product "
+"was taken from the source package."
 msgstr ""
 "Se não houver nenhum produto além de um pacote de origem, isso significa que "
 "o pacote de origem foi movido inteiramente. Se houver um produto e um pacote "
@@ -194,7 +197,7 @@ msgid "Move Line"
 msgstr "Linha de Movimentação"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:175
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:179
 #, python-format
 msgid "No transfer selected for this preparation."
 msgstr "Nenhuma transferência selecionada para esta preparação."
@@ -230,7 +233,7 @@ msgid "Number of unread messages"
 msgstr "Número de mensagens não lidas"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:160
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:162
 #, python-format
 msgid "Only canceled package preparations can be reset to draft."
 msgstr ""
