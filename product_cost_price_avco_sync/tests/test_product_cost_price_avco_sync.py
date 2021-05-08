@@ -225,7 +225,7 @@ class TestProductCostPriceAvcoSync(SavepointCase):
         move_in_2.price_unit = 5.0
         self.assertEqual(self.product.standard_price, 7.5)
 
-    def test_change_quantiy_price(self):
+    def _test_change_quantiy_price(self):
         """Write quantity and price to zero in a stock valuation layer
         """
         self.picking_in.action_assign()
@@ -267,9 +267,127 @@ class TestProductCostPriceAvcoSync(SavepointCase):
         move_in.stock_valuation_layer_ids.unit_cost = 0.0
         self.assertAlmostEqual(svl_manual.value, 100.0, 2)
 
-    # def test_change_quantiy_price(self):
-    #     """Caso 1: Vendo unidades que no tengo y que compraré
-    #     posteriormente a la venta.
-    #     """
-    #     self.picking_in.action_assign()
-    #     move_in = self.picking_in.move_lines[:1]
+    def crete_picking(self, p_type="IN", qty=1.0, confirmed=True):
+        if p_type == "IN":
+            picking_type = self.picking_type_in
+            location_id = self.supplier_location
+            location_dest_id = self.stock_location
+        else:
+            picking_type = self.picking_type_out
+            location_id = self.stock_location
+            location_dest_id = self.customer_location
+        picking = self.env["stock.picking"].create(
+            {
+                "picking_type_id": picking_type.id,
+                "location_id": location_id.id,
+                "location_dest_id": location_dest_id.id,
+                "move_lines": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "a move",
+                            "product_id": self.product.id,
+                            "product_uom_qty": qty,
+                            "product_uom": self.product.uom_id.id,
+                        },
+                    )
+                ],
+            }
+        )
+        if confirmed:
+            picking.action_assign()
+            move = picking.move_lines[:1]
+            picking.move_line_ids.qty_done = move.product_uom_qty
+            picking.action_done()
+        return picking, move
+
+    def _test_change_quantiy_price_xx(self):
+        """Write quantity and price to zero in a stock valuation layer"""
+        picking_in_01, move_in_01 = self.crete_picking("IN", 10)
+        quant = self.env["stock.quant"].search(
+            [
+                ("location_id.usage", "=", "internal"),
+                ("product_id", "=", self.product.id),
+            ]
+        )
+        picking_in_02, move_in_02 = self.crete_picking("IN", 10)
+        move_in_02.stock_valuation_layer_ids.unit_cost = 2.0
+        self.assertAlmostEqual(self.product.standard_price, 1.5, 2)
+
+        # Change qty before price
+        move_in_01.stock_valuation_layer_ids.unit_cost = 0.0
+        self.assertAlmostEqual(self.product.standard_price, 1.0, 2)
+        move_in_01.quantity_done = 0.0
+        self.assertAlmostEqual(self.product.standard_price, 2.0, 2)
+
+        move_in_01.quantity_done = 10.0
+        move_in_01.stock_valuation_layer_ids.unit_cost = 4.0
+        self.assertAlmostEqual(self.product.standard_price, 3.0, 2)
+
+        move_in_01.quantity_done = 0.0
+        self.assertAlmostEqual(self.product.standard_price, 2.0, 2)
+        move_in_01.stock_valuation_layer_ids.unit_cost = 0.0
+        self.assertAlmostEqual(self.product.standard_price, 2.0, 2)
+
+        move_in_01.quantity_done = 10.0
+        move_in_01.stock_valuation_layer_ids.unit_cost = 1.0
+        self.product.with_context(import_file=True).standard_price = 6.0
+        svl_manual = self.env["stock.valuation.layer"].search(
+            [("product_id", "=", self.product.id)], order="id DESC", limit=1
+        )
+        self.assertAlmostEqual(svl_manual.value, 90.0, 2)
+        move_in_01.stock_valuation_layer_ids.unit_cost = 0.0
+        self.assertAlmostEqual(svl_manual.value, 100.0, 2)
+
+        # self.env.context.get('inventory_mode')
+        quant = self.env["stock.quant"].search(
+            [
+                ("location_id.usage", "=", "internal"),
+                ("product_id", "=", self.product.id),
+            ]
+        )
+        quant.inventory_quantity = 0
+
+        picking_out_01, move_out_01 = self.crete_picking("OUT", qty=5.0)
+
+    def test_change_quantiy_price_xx(self):
+        """Write quantity and price to zero in a stock valuation layer"""
+        # Case 1
+        picking_in_01, move_in_01 = self.crete_picking("IN", 10)
+        picking_in_02, move_in_02 = self.crete_picking("IN", 10)
+        picking_out_01, move_out_01 = self.crete_picking("OUT", qty=5.0)
+
+        move_in_01.stock_valuation_layer_ids.unit_cost = 2.0
+        self.assertAlmostEqual(move_in_01.stock_valuation_layer_ids.value, 20,
+                               2)
+        self.assertAlmostEqual(move_in_02.stock_valuation_layer_ids.value, 10,
+                               2)
+        self.assertAlmostEqual(move_out_01.stock_valuation_layer_ids.value,
+                               -7.5, 2)
+        self.assertAlmostEqual(self.product.standard_price, 1.5, 2)
+
+        # Case 2
+        quant = self.env["stock.quant"].search(
+            [
+                ("location_id.usage", "=", "internal"),
+                ("product_id", "=", self.product.id),
+            ]
+        )
+        self.print_svl()
+        quant.inventory_quantity = 5
+        self.print_svl()
+        picking_out_02, move_out_02 = self.crete_picking("OUT", qty=10.0)
+        self.print_svl()
+        self.product.with_context(import_file=True).standard_price = 3.0
+        self.print_svl()
+        picking_in_02, move_in_02 = self.crete_picking("IN", 25)
+        self.print_svl()
+
+    def print_svl(self):
+        for svl in self.env['stock.valuation.layer'].search([
+            ('product_id', '=', self.product.id)
+        ]):
+            pass
+            # print('{} {} {} {}'.format(svl.create_date, svl.quantity,
+            #                         svl.unit_cost, svl.description))
