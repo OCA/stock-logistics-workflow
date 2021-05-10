@@ -10,10 +10,16 @@ msgstr ""
 "PO-Revision-Date: 2021-03-01 15:08+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
+msgid "<span attrs=\"{'invisible': [('nothing_todo', '=', True)]}\">or</span>"
+msgstr ""
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.report_delivery_document
@@ -33,6 +39,11 @@ msgstr ""
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
 msgid "Confirm"
+msgstr ""
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_res_partner
+msgid "Contact"
 msgstr ""
 
 #. module: stock_picking_group_by_partner_by_carrier
@@ -69,6 +80,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_report_stock_report_deliveryslip__display_name
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__display_name
 msgid "Display Name"
+msgstr ""
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_res_partner__disable_picking_grouping
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_res_users__disable_picking_grouping
+msgid "Do not group deliveries"
 msgstr ""
 
 #. module: stock_picking_group_by_partner_by_carrier
@@ -172,8 +189,8 @@ msgstr "Type de préparation"
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
 msgid ""
-"Pickings should match these parameters: picking type is groupable, state not"
-" cancelled or done, not printed."
+"Pickings should match these parameters: picking type is groupable, state not "
+"cancelled or done, not printed."
 msgstr ""
 
 #. module: stock_picking_group_by_partner_by_carrier
