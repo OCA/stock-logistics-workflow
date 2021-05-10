@@ -1,7 +1,7 @@
 # Copyright 2020 Tecnativa - Carlos Dauden
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import api, models
+from odoo import _, api, models
 from odoo.tools import float_compare, float_round
 
 
@@ -182,7 +182,8 @@ class StockValuationLayer(models.Model):
                     if update_enabled:
                         new_diff = price - previous_price
                         new_value = line.currency_id.round(new_diff * previous_qty)
-                        svl.with_context(skip_avco_sync=True).value = new_value
+                        svl.value = new_value
+                        svl.description += _('\n Product value manually modified (from %s to %s)') % (previous_price, price)
                         previous_price = price
                         if not self.env.context.get('force_complete_recompute', True):
                             break
