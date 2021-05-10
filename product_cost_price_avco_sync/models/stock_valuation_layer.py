@@ -86,16 +86,12 @@ class StockValuationLayer(models.Model):
                         svl.stock_move_id.move_orig_ids
                         or svl.stock_move_id.inventory_id
                     ):
-                        svl.with_context(skip_avco_sync=True).write(
-                            {
-                                "unit_cost": line.currency_id.round(previous_price),
-                                "value": line.currency_id.round(
-                                    previous_price * svl.quantity
-                                ),
-                                "remaining_value": line.currency_id.round(
-                                    previous_price * svl.remaining_qty
-                                ),
-                            }
+                        svl.unit_cost = line.currency_id.round(previous_price)
+                        svl.value = line.currency_id.round(
+                            previous_price * svl.quantity
+                        )
+                        svl.remaining_value = line.currency_id.round(
+                            previous_price * svl.remaining_qty
                         )
                     # Normal incoming moves
                     else:
@@ -161,13 +157,11 @@ class StockValuationLayer(models.Model):
                         previous_price,
                         precision_rounding=svl.uom_id.rounding,
                     ):
-                        svl.with_context(skip_avco_sync=True).write(
-                            {
-                                "unit_cost": line.currency_id.round(previous_price),
-                                "value": line.currency_id.round(previous_price * qty),
-                            }
-                        )
-                    previous_qty = float_round(previous_qty + qty, precision_rounding=svl.uom_id.rounding)
+                        svl.unit_cost = line.currency_id.round(previous_price)
+                        svl.value = line.currency_id.round(previous_price * qty)
+                    previous_qty = float_round(
+                        previous_qty + qty, precision_rounding=svl.uom_id.rounding
+                    )
                 # Manual price adjustment line in layer
                 elif not unit_cost and not qty and not svl.stock_move_id:
                     old_diff = svl.value / previous_qty
@@ -183,9 +177,11 @@ class StockValuationLayer(models.Model):
                         new_diff = price - previous_price
                         new_value = line.currency_id.round(new_diff * previous_qty)
                         svl.value = new_value
-                        svl.description += _('\n Product value manually modified (from %s to %s)') % (previous_price, price)
+                        svl.description += _(
+                            "\n Product value manually modified (from %s to %s)"
+                        ) % (previous_price, price)
                         previous_price = price
-                        if not self.env.context.get('force_complete_recompute', True):
+                        if not self.env.context.get("force_complete_recompute", True):
                             break
                     # TODO: Avoid duplicate line keeping break and
                     #  previous_price updated
@@ -204,7 +200,7 @@ class StockValuationLayer(models.Model):
             ):
                 line.product_id.with_context(
                     force_company=line.company_id.id
-                ).sudo().write({"standard_price": previous_price})
+                ).sudo().standard_price = previous_price
             # Compute new values for layer line
             vals_unit_cost = vals.get("unit_cost", line.unit_cost)
             # if "quantity" in vals:
