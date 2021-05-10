@@ -374,20 +374,42 @@ class TestProductCostPriceAvcoSync(SavepointCase):
                 ("product_id", "=", self.product.id),
             ]
         )
-        self.print_svl()
+        self.print_svl(quant)
         quant.inventory_quantity = 5
-        self.print_svl()
+        self.print_svl(quant)
         picking_out_02, move_out_02 = self.crete_picking("OUT", qty=10.0)
-        self.print_svl()
+        self.print_svl(quant)
         self.product.with_context(import_file=True).standard_price = 3.0
-        self.print_svl()
-        picking_in_02, move_in_02 = self.crete_picking("IN", 25)
-        self.print_svl()
+        self.print_svl(quant)
+        picking_in_03, move_in_03 = self.crete_picking("IN", 25)
+        self.print_svl(quant)
+        picking_out_03, move_out_03 = self.crete_picking("OUT", 8)
+        self.print_svl(quant)
+        move_in_01.quantity_done = 0.0
+        self.print_svl(quant)
+        move_in_01.stock_valuation_layer_ids.unit_cost = 0.0
+        self.print_svl(quant)
+        move_in_01.quantity_done = 10.0
+        self.print_svl(quant)
+        move_in_01.stock_valuation_layer_ids.unit_cost = 1.0
+        self.print_svl(quant)
+        move_in_01.stock_valuation_layer_ids.unit_cost = 0.0
+        self.print_svl(quant)
+        move_in_01.quantity_done = 0.0
+        self.print_svl(quant)
 
-    def print_svl(self):
+
+    def print_svl(self, quant):
+        # quant = self.env["stock.quant"].search(
+        #     [
+        #         ("location_id.usage", "=", "internal"),
+        #         ("product_id", "=", self.product.id),
+        #     ]
+        # )
+        print("\n")
         for svl in self.env['stock.valuation.layer'].search([
             ('product_id', '=', self.product.id)
         ]):
             pass
-            # print('{} {} {} {}'.format(svl.create_date, svl.quantity,
-            #                         svl.unit_cost, svl.description))
+            print('{} {} {} {} {} {}'.format(svl.create_date, svl.quantity,
+                                    svl.unit_cost, svl.value, svl.description, quant.quantity))
