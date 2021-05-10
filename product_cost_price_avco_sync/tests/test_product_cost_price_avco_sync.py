@@ -1,9 +1,12 @@
 # Copyright 2019 Tecnativa - Carlos Dauden
 # Copyright 2019 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+import logging
 from time import sleep
 
 from odoo.tests.common import SavepointCase, tagged
+
+_logger = logging.getLogger(__name__)
 
 
 @tagged("-at_install", "post_install")
@@ -226,8 +229,7 @@ class TestProductCostPriceAvcoSync(SavepointCase):
         self.assertEqual(self.product.standard_price, 7.5)
 
     def _test_change_quantiy_price(self):
-        """Write quantity and price to zero in a stock valuation layer
-        """
+        """Write quantity and price to zero in a stock valuation layer"""
         self.picking_in.action_assign()
         move_in = self.picking_in.move_lines[:1]
         self.picking_in.move_line_ids.qty_done = move_in.product_uom_qty
@@ -267,7 +269,7 @@ class TestProductCostPriceAvcoSync(SavepointCase):
         move_in.stock_valuation_layer_ids.unit_cost = 0.0
         self.assertAlmostEqual(svl_manual.value, 100.0, 2)
 
-    def crete_picking(self, p_type="IN", qty=1.0, confirmed=True):
+    def create_picking(self, p_type="IN", qty=1.0, confirmed=True):
         if p_type == "IN":
             picking_type = self.picking_type_in
             location_id = self.supplier_location
@@ -276,24 +278,28 @@ class TestProductCostPriceAvcoSync(SavepointCase):
             picking_type = self.picking_type_out
             location_id = self.stock_location
             location_dest_id = self.customer_location
-        picking = self.env["stock.picking"].create(
-            {
-                "picking_type_id": picking_type.id,
-                "location_id": location_id.id,
-                "location_dest_id": location_dest_id.id,
-                "move_lines": [
-                    (
-                        0,
-                        0,
-                        {
-                            "name": "a move",
-                            "product_id": self.product.id,
-                            "product_uom_qty": qty,
-                            "product_uom": self.product.uom_id.id,
-                        },
-                    )
-                ],
-            }
+        picking = (
+            self.env["stock.picking"]
+            .with_context(tracking_disable=True)
+            .create(
+                {
+                    "picking_type_id": picking_type.id,
+                    "location_id": location_id.id,
+                    "location_dest_id": location_dest_id.id,
+                    "move_lines": [
+                        (
+                            0,
+                            0,
+                            {
+                                "name": "a move",
+                                "product_id": self.product.id,
+                                "product_uom_qty": qty,
+                                "product_uom": self.product.uom_id.id,
+                            },
+                        )
+                    ],
+                }
+            )
         )
         if confirmed:
             picking.action_assign()
@@ -304,14 +310,14 @@ class TestProductCostPriceAvcoSync(SavepointCase):
 
     def _test_change_quantiy_price_xx(self):
         """Write quantity and price to zero in a stock valuation layer"""
-        picking_in_01, move_in_01 = self.crete_picking("IN", 10)
+        picking_in_01, move_in_01 = self.create_picking("IN", 10)
         quant = self.env["stock.quant"].search(
             [
                 ("location_id.usage", "=", "internal"),
                 ("product_id", "=", self.product.id),
             ]
         )
-        picking_in_02, move_in_02 = self.crete_picking("IN", 10)
+        picking_in_02, move_in_02 = self.create_picking("IN", 10)
         move_in_02.stock_valuation_layer_ids.unit_cost = 2.0
         self.assertAlmostEqual(self.product.standard_price, 1.5, 2)
 
@@ -349,67 +355,97 @@ class TestProductCostPriceAvcoSync(SavepointCase):
         )
         quant.inventory_quantity = 0
 
-        picking_out_01, move_out_01 = self.crete_picking("OUT", qty=5.0)
+        picking_out_01, move_out_01 = self.create_picking("OUT", qty=5.0)
 
     def test_change_quantiy_price_xx(self):
         """Write quantity and price to zero in a stock valuation layer"""
         # Case 1
-        picking_in_01, move_in_01 = self.crete_picking("IN", 10)
-        picking_in_02, move_in_02 = self.crete_picking("IN", 10)
-        picking_out_01, move_out_01 = self.crete_picking("OUT", qty=5.0)
+        picking_in_01, move_in_01 = self.create_picking("IN", 10)
+        picking_in_02, move_in_02 = self.create_picking("IN", 10)
+        picking_out_01, move_out_01 = self.create_picking("OUT", qty=5.0)
 
         move_in_01.stock_valuation_layer_ids.unit_cost = 2.0
-        self.assertAlmostEqual(move_in_01.stock_valuation_layer_ids.value, 20,
-                               2)
-        self.assertAlmostEqual(move_in_02.stock_valuation_layer_ids.value, 10,
-                               2)
-        self.assertAlmostEqual(move_out_01.stock_valuation_layer_ids.value,
-                               -7.5, 2)
+        self.assertAlmostEqual(move_in_01.stock_valuation_layer_ids.value, 20, 2)
+        self.assertAlmostEqual(move_in_02.stock_valuation_layer_ids.value, 10, 2)
+        self.assertAlmostEqual(move_out_01.stock_valuation_layer_ids.value, -7.5, 2)
         self.assertAlmostEqual(self.product.standard_price, 1.5, 2)
 
         # Case 2
-        quant = self.env["stock.quant"].search(
-            [
-                ("location_id.usage", "=", "internal"),
-                ("product_id", "=", self.product.id),
-            ]
+        quant = (
+            self.env["stock.quant"]
+            .with_context(inventory_mode=True)
+            .search(
+                [
+                    ("location_id.usage", "=", "internal"),
+                    ("product_id", "=", self.product.id),
+                ]
+            )
         )
-        self.print_svl(quant)
+        self.print_svl(
+            "Before update inventory_quantity Quant:{}".format(quant.quantity)
+        )
         quant.inventory_quantity = 5
-        self.print_svl(quant)
-        picking_out_02, move_out_02 = self.crete_picking("OUT", qty=10.0)
-        self.print_svl(quant)
+        self.print_svl("After set inventory_quantity to 5 {}".format(quant.quantity))
+        picking_out_02, move_out_02 = self.create_picking("OUT", qty=10.0)
+        self.print_svl("After OUT 10 Quant:{}".format(quant.quantity))
         self.product.with_context(import_file=True).standard_price = 3.0
-        self.print_svl(quant)
-        picking_in_03, move_in_03 = self.crete_picking("IN", 25)
-        self.print_svl(quant)
-        picking_out_03, move_out_03 = self.crete_picking("OUT", 8)
-        self.print_svl(quant)
+        self.print_svl(
+            "After force standard price to 3 Quant:{}".format(quant.quantity)
+        )
+        picking_in_03, move_in_03 = self.create_picking("IN", 25)
+        self.print_svl("After IN 25 Quant:{}".format(quant.quantity))
+        picking_out_03, move_out_03 = self.create_picking("OUT", 8)
+        self.print_svl("After OUT 8 Quant:{}".format(quant.quantity))
+
+        # Change qty before cost
         move_in_01.quantity_done = 0.0
-        self.print_svl(quant)
+        self.print_svl(
+            "After force quantity to 0 in first IN move Quant:{}".format(quant.quantity)
+        )
         move_in_01.stock_valuation_layer_ids.unit_cost = 0.0
-        self.print_svl(quant)
+        self.print_svl(
+            "After force unit cost to 0 in first IN move Quant:{}".format(
+                quant.quantity
+            )
+        )
+
+        # Restore to initial values
         move_in_01.quantity_done = 10.0
-        self.print_svl(quant)
         move_in_01.stock_valuation_layer_ids.unit_cost = 1.0
-        self.print_svl(quant)
+        self.print_svl("After restore initial values Quant:{}".format(quant.quantity))
+
+        # Change cost before quantity
         move_in_01.stock_valuation_layer_ids.unit_cost = 0.0
-        self.print_svl(quant)
+        self.print_svl(
+            "After force unit cost to 0 in first IN move Quant:{}".format(
+                quant.quantity
+            )
+        )
         move_in_01.quantity_done = 0.0
-        self.print_svl(quant)
+        self.print_svl(
+            "After force quantity to 0 in first IN move Quant:{}".format(quant.quantity)
+        )
 
-
-    def print_svl(self, quant):
-        # quant = self.env["stock.quant"].search(
-        #     [
-        #         ("location_id.usage", "=", "internal"),
-        #         ("product_id", "=", self.product.id),
-        #     ]
-        # )
-        print("\n")
-        for svl in self.env['stock.valuation.layer'].search([
-            ('product_id', '=', self.product.id)
-        ]):
-            pass
-            print('{} {} {} {} {} {}'.format(svl.create_date, svl.quantity,
-                                    svl.unit_cost, svl.value, svl.description, quant.quantity))
+    def print_svl(self, char_info=""):
+        msg_list = ["{}".format(char_info)]
+        total_qty = total_value = 0.0
+        for svl in self.env["stock.valuation.layer"].search(
+            [("product_id", "=", self.product.id)]
+        ):
+            msg_list.append(
+                "{} {} {} {} {}".format(
+                    svl.create_date,
+                    svl.quantity,
+                    svl.unit_cost,
+                    svl.value,
+                    svl.description,
+                )
+            )
+            total_qty += svl.quantity
+            total_value += svl.value
+        msg_list.append(
+            "Total qty: {} Total value: {} Cost average {}".format(
+                total_qty, total_value, total_value / total_qty if total_qty else 0.0
+            )
+        )
+        _logger.info("\n".join(msg_list))
