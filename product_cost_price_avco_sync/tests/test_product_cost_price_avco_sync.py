@@ -382,25 +382,47 @@ class TestProductCostPriceAvcoSync(SavepointCase):
             )
         )
         self.print_svl(
-            "Before update inventory_quantity Quant:{}".format(quant.quantity)
+            "Before update inventory_quantity Quant:{} Standard Price:{}".format(
+                quant.quantity, quant.product_id.standard_price
+            )
         )
         quant.inventory_quantity = 5
-        self.print_svl("After set inventory_quantity to 5 {}".format(quant.quantity))
-        picking_out_02, move_out_02 = self.create_picking("OUT", qty=10.0)
-        self.print_svl("After OUT 10 Quant:{}".format(quant.quantity))
-        self.product.with_context(import_file=True).standard_price = 3.0
         self.print_svl(
-            "After force standard price to 3 Quant:{}".format(quant.quantity)
+            "After set inventory_quantity to 5 Quant:{} Standard Price:{}".format(
+                quant.quantity, quant.product_id.standard_price
+            )
+        )
+        picking_out_02, move_out_02 = self.create_picking("OUT", qty=10.0)
+        self.print_svl(
+            "After OUT 10 Quant:{} Standard Price:{}".format(
+                quant.quantity, quant.product_id.standard_price
+            )
+        )
+        self.product.with_context(import_file=True).standard_price = 4.0
+        self.print_svl(
+            "After force standard price to 4 Quant:{} Standard Price:{}".format(
+                quant.quantity, quant.product_id.standard_price
+            )
         )
         picking_in_03, move_in_03 = self.create_picking("IN", 25)
-        self.print_svl("After IN 25 Quant:{}".format(quant.quantity))
+        self.print_svl(
+            "After IN 25 Quant:{} Standard Price:{}".format(
+                quant.quantity, quant.product_id.standard_price
+            )
+        )
         picking_out_03, move_out_03 = self.create_picking("OUT", 8)
-        self.print_svl("After OUT 8 Quant:{}".format(quant.quantity))
+        self.print_svl(
+            "After OUT 8 Quant:{} Standard Price:{}".format(
+                quant.quantity, quant.product_id.standard_price
+            )
+        )
 
         # Change qty before cost
         move_in_01.quantity_done = 0.0
         self.print_svl(
-            "After force quantity to 0 in first IN move Quant:{}".format(quant.quantity)
+            "After force quantity to 0 in first IN move Quant:{} Cost:{}".format(
+                quant.quantity, quant.product_id.standard_price
+            )
         )
         move_in_01.stock_valuation_layer_ids.unit_cost = 0.0
         self.print_svl(
@@ -411,8 +433,12 @@ class TestProductCostPriceAvcoSync(SavepointCase):
 
         # Restore to initial values
         move_in_01.quantity_done = 10.0
-        move_in_01.stock_valuation_layer_ids.unit_cost = 1.0
-        self.print_svl("After restore initial values Quant:{}".format(quant.quantity))
+        move_in_01.stock_valuation_layer_ids.unit_cost = 2.0
+        self.print_svl(
+            "After restore initial values Quant:{} Standard Price:{}".format(
+                quant.quantity, quant.product_id.standard_price
+            )
+        )
 
         # Change cost before quantity
         move_in_01.stock_valuation_layer_ids.unit_cost = 0.0
@@ -423,7 +449,9 @@ class TestProductCostPriceAvcoSync(SavepointCase):
         )
         move_in_01.quantity_done = 0.0
         self.print_svl(
-            "After force quantity to 0 in first IN move Quant:{}".format(quant.quantity)
+            "After force quantity to 0 in first IN move Quant:{} Cost:{}".format(
+                quant.quantity, quant.product_id.standard_price
+            )
         )
 
     def print_svl(self, char_info=""):
@@ -432,19 +460,23 @@ class TestProductCostPriceAvcoSync(SavepointCase):
         for svl in self.env["stock.valuation.layer"].search(
             [("product_id", "=", self.product.id)]
         ):
+            total_qty += svl.quantity
+            total_value += svl.value
             msg_list.append(
-                "{} {} {} {} {}".format(
-                    svl.create_date,
+                "Qty:{:.3f} Cost:{:.3f} Value:{:.3f} RemQty:{:.3f}"
+                " Totals: qty:{:.3f} val:{:.3f} avg:{:.3f} {}".format(
                     svl.quantity,
                     svl.unit_cost,
                     svl.value,
+                    svl.remaining_qty,
+                    total_qty,
+                    total_value,
+                    total_value / total_qty if total_qty else 0.0,
                     svl.description,
                 )
             )
-            total_qty += svl.quantity
-            total_value += svl.value
         msg_list.append(
-            "Total qty: {} Total value: {} Cost average {}".format(
+            "Total qty: {:.3f} Total value: {:.3f} Cost average {:.3f}".format(
                 total_qty, total_value, total_value / total_qty if total_qty else 0.0
             )
         )
