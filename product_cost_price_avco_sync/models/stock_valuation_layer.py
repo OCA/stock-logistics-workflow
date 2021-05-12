@@ -185,14 +185,15 @@ class StockValuationLayer(models.Model):
                                 svl_manual_price = float(
                                     svl_manual.description.split(" ")[-1][:-1]
                                 )
-                                svl_manual_qty = float_round(
-                                    svl_manual.value
-                                    / (svl_to_vacuum.unit_cost - svl_manual_price),
-                                    precision_rounding=precision_qty,
-                                )
-                                svl_manual_rest = svl_manual_qty - diff
-                                # Set only value of not vaccum quantity
-                                svl_manual.value = svl_manual_rest * svl_manual_price
+                                if svl.currency_id.round(svl_to_vacuum.unit_cost - svl_manual_price):
+                                    svl_manual_qty = float_round(
+                                        svl_manual.value
+                                        / (svl_to_vacuum.unit_cost - svl_manual_price),
+                                        precision_rounding=precision_qty,
+                                    )
+                                    svl_manual_rest = float_round(svl_manual_qty + diff, precision_rounding=precision_qty)
+                                    # Set only value of not vaccum quantity
+                                    svl_manual.value = svl_manual_rest * svl_manual_price
                             svl_to_vacuum.unit_cost = new_unit_cost
                             svl_to_vacuum.value = new_value
                             svl_to_vacuum.remaining_value = (
@@ -261,6 +262,7 @@ class StockValuationLayer(models.Model):
                     if self.env.context.get("get_price_from_description", True):
                         price = float(svl.description.split(" ")[-1][:-1])
                     if update_enabled:
+                        # TODO: Review abs in previous_qty or new_diff
                         new_diff = price - previous_price
                         new_value = line.currency_id.round(new_diff * previous_qty)
                         svl.value = new_value
