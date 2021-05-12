@@ -22,11 +22,15 @@ class StockValuationLayer(models.Model):
     def create(self, vals):
         svl = super().create(vals)
         if vals.get("quantity", 0.0) > 0.0 and svl.product_id.cost_method == "average":
-            svl_remaining = self.sudo().search([
-                ("company_id", "=", svl.company_id.id),
-                ("product_id", "=", svl.product_id.id),
-                ("remaining_qty", "<", 0.0),
-            ], order="id", limit=1)
+            svl_remaining = self.sudo().search(
+                [
+                    ("company_id", "=", svl.company_id.id),
+                    ("product_id", "=", svl.product_id.id),
+                    ("remaining_qty", "<", 0.0),
+                ],
+                order="id",
+                limit=1,
+            )
             if svl_remaining:
                 svl.cost_price_avco_sync({})
         return svl
@@ -68,8 +72,11 @@ class StockValuationLayer(models.Model):
             svls_to_avco_sync = line.with_context(
                 skip_avco_sync=True
             ).get_svls_to_avco_sync()
-            precision_qty = line.uom_id.rounding  # dpo.precision_get("Product Unit of Measure")
+            precision_qty = (
+                line.uom_id.rounding
+            )  # self.env["decimal.precision"].precision_get("Product Unit of Measure")
             # precision_price = line.currency_id.rounding
+            inventory_processed = False
             for svl in svls_to_avco_sync:
                 if svl.id == line.id:
                     qty = vals.get("quantity", line.quantity)
@@ -78,13 +85,40 @@ class StockValuationLayer(models.Model):
                     qty = svl.quantity
                     unit_cost = svl.unit_cost
 
-                f_compare = float_compare(
-                    qty, 0.0, precision_rounding=precision_qty
-                )
+                f_compare = float_compare(qty, 0.0, precision_rounding=precision_qty)
                 # Incoming line in layer
                 if f_compare > 0:
-                    total_qty = float_round(previous_qty + qty, precision_rounding=precision_qty)
+                    total_qty = float_round(
+                        previous_qty + qty, precision_rounding=precision_qty
+                    )
                     # Return moves or adjust inventory moves
+                    if (
+                        update_enabled
+                        and "quantity" in vals
+                        and not inventory_processed
+                        and svl.stock_move_id.location_id.usage == "inventory"
+                    ):
+                        new_svl_qty = svl.quantity - (line.quantity - vals["quantity"])
+                        # Check if with the new difference the sign of the move changes
+                        if new_svl_qty < 0:
+                            location_aux = svl.stock_move_id.location_id
+                            svl.stock_move_id.location_id = (
+                                svl.stock_move_id.location_dest_id
+                            )
+                            svl.stock_move_id.location_dest_id = location_aux
+                            svl.stock_move_id.move_line_ids.location_id = (
+                                svl.stock_move_id.location_id
+                            )
+                            svl.stock_move_id.move_line_ids.location_dest_id = (
+                                svl.stock_move_id.location_dest_id
+                            )
+                        svl.stock_move_id.quantity_done = abs(new_svl_qty)
+                        qty = new_svl_qty
+                        inventory_processed = True
+                        svl.quantity = new_svl_qty
+                        svl.value = svl.quantity * line.currency_id.round(
+                            previous_price
+                        )
                     if update_enabled and (
                         svl.stock_move_id.move_orig_ids
                         or svl.stock_move_id.inventory_id
@@ -134,13 +168,28 @@ class StockValuationLayer(models.Model):
                                     * (abs(svl_to_vacuum.quantity + diff))
                                 )
                                 + previous_price * diff
-                            ) / float_round(abs(svl_to_vacuum.quantity), precision_rounding=precision_qty)
+                            ) / float_round(
+                                abs(svl_to_vacuum.quantity),
+                                precision_rounding=precision_qty,
+                            )
                             new_value = svl_to_vacuum.quantity * new_unit_cost
-                            svl_manuals_to_vacuum = svls_to_avco_sync.filtered(lambda ln: ln.unit_cost == 0 and ln.quantity == 0.0 and not ln.stock_move_id and ln.create_date >= svl_to_vacuum.create_date and ln.create_date <= svl.create_date)
+                            svl_manuals_to_vacuum = svls_to_avco_sync.filtered(
+                                lambda ln: ln.unit_cost == 0
+                                and ln.quantity == 0.0
+                                and not ln.stock_move_id
+                                and ln.create_date >= svl_to_vacuum.create_date
+                                and ln.create_date <= svl.create_date
+                            )
                             for svl_manual in svl_manuals_to_vacuum:
                                 # TODO: Compute price instad take of description
-                                svl_manual_price = float(svl_manual.description.split(" ")[-1][:-1])
-                                svl_manual_qty = float_round(svl_manual.value / svl_manual_price, precision_rounding=precision_qty)
+                                svl_manual_price = float(
+                                    svl_manual.description.split(" ")[-1][:-1]
+                                )
+                                svl_manual_qty = float_round(
+                                    svl_manual.value
+                                    / (svl_to_vacuum.unit_cost - svl_manual_price),
+                                    precision_rounding=precision_qty,
+                                )
                                 svl_manual_rest = svl_manual_qty - diff
                                 # Set only value of not vaccum quantity
                                 svl_manual.value = svl_manual_rest * svl_manual_price
@@ -154,19 +203,45 @@ class StockValuationLayer(models.Model):
                     previous_qty = total_qty
                 # Outgoing line in layer
                 elif f_compare < 0:
-                    if previous_qty <= 0:
-                        svl.remaining_qty = qty
-                    elif previous_qty < abs(qty):
-                        svl.remaining_qty = previous_qty + qty
+                    if (
+                        update_enabled
+                        and "quantity" in vals
+                        and not inventory_processed
+                        and svl.stock_move_id.location_dest_id.usage == "inventory"
+                    ):
+                        new_svl_qty = svl.quantity + (line.quantity - vals["quantity"])
+                        # Check if with the new difference the sign of the move changes
+                        if new_svl_qty > 0:
+                            location_aux = svl.stock_move_id.location_id
+                            svl.stock_move_id.location_id = (
+                                svl.stock_move_id.location_dest_id
+                            )
+                            svl.stock_move_id.location_dest_id = location_aux
+                            svl.stock_move_id.move_line_ids.location_id = (
+                                svl.stock_move_id.location_id
+                            )
+                            svl.stock_move_id.move_line_ids.location_dest_id = (
+                                svl.stock_move_id.location_dest_id
+                            )
+                        svl.stock_move_id.quantity_done = abs(new_svl_qty)
+                        qty = new_svl_qty
+                        inventory_processed = True
+                        svl.quantity = new_svl_qty
+                        svl.value = svl.quantity * line.currency_id.round(
+                            previous_price
+                        )
                     else:
-                        svl.remaining_qty = 0.0
-                    svl.remaining_value = line.currency_id.round(
-                        previous_price * svl.remaining_qty
-                    )
+                        if previous_qty <= 0:
+                            svl.remaining_qty = qty
+                        elif previous_qty < abs(qty):
+                            svl.remaining_qty = previous_qty + qty
+                        else:
+                            svl.remaining_qty = 0.0
+                        svl.remaining_value = line.currency_id.round(
+                            previous_price * svl.remaining_qty
+                        )
                     if update_enabled and float_compare(
-                        unit_cost,
-                        previous_price,
-                        precision_rounding=precision_qty,
+                        unit_cost, previous_price, precision_rounding=precision_qty,
                     ):
                         svl.unit_cost = line.currency_id.round(previous_price)
                         svl.value = line.currency_id.round(previous_price * qty)
@@ -181,6 +256,7 @@ class StockValuationLayer(models.Model):
                         * (vals.get("quantity", line.quantity))
                     )
                     move_diff_price = move_diff / previous_qty
+                    # TODO: Review operations
                     price = previous_price + old_diff + move_diff_price
                     if self.env.context.get("get_price_from_description", True):
                         price = float(svl.description.split(" ")[-1][:-1])
