@@ -1,4 +1,4 @@
-# © 2017 Sergio Teruel <sergio.teruel@tecnativa.com>
+# Copyright 2017 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import _, api, fields, models
@@ -14,7 +14,7 @@ class StockPickingOperationWizard(models.TransientModel):
 
     @api.model
     def default_get(self, fields):
-        res = super(StockPickingOperationWizard, self).default_get(fields)
+        res = super().default_get(fields)
         active_model = self.env.context["active_model"]
         active_ids = self.env.context["active_ids"] or []
         picking = self.env[active_model].browse(active_ids)
@@ -83,7 +83,6 @@ class StockPickingOperationWizard(models.TransientModel):
                 )
             )
 
-    @api.multi
     def action_apply(self):
         stock_picking_obj = self.env["stock.picking"]
         pickings = stock_picking_obj.browse(self.env.context["active_ids"])
