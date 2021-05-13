@@ -7,15 +7,9 @@
     "version": "12.0.1.0.0",
     "category": "Warehouse",
     "website": "https://github.com/OCA/stock-logistics-workflow",
-    "author": "Tecnativa, "
-              "Odoo Community Association (OCA)",
+    "author": "Tecnativa, " "Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "installable": True,
-    "depends": [
-        "stock",
-    ],
-    "data": [
-        "wizards/stock_picking_wizard_view.xml",
-        "views/stock_picking_view.xml",
-    ],
+    "depends": ["stock",],
+    "data": ["wizards/stock_picking_wizard_view.xml", "views/stock_picking_view.xml",],
 }
