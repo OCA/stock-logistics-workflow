@@ -153,11 +153,11 @@ class StockValuationLayer(models.Model):
                                 continue
                             if abs(svl_to_vacuum.remaining_qty) <= vacuum_qty:
                                 vacuum_qty += svl_to_vacuum.remaining_qty
-                                diff = -svl_to_vacuum.remaining_qty
+                                diff_qty = svl_to_vacuum.remaining_qty
                                 svl_to_vacuum.remaining_qty = 0.0
                             else:
                                 svl_to_vacuum.remaining_qty += vacuum_qty
-                                diff = vacuum_qty
+                                diff_qty = -vacuum_qty
                                 vacuum_qty = 0.0
                             # if svl.id != line.id:
                             svl.remaining_qty = vacuum_qty
@@ -165,9 +165,9 @@ class StockValuationLayer(models.Model):
                             new_unit_cost = (
                                 (
                                     svl_to_vacuum.unit_cost
-                                    * (abs(svl_to_vacuum.quantity + diff))
+                                    * (abs(svl_to_vacuum.quantity) + diff_qty)
                                 )
-                                + previous_price * diff
+                                + previous_price * abs(diff_qty)
                             ) / float_round(
                                 abs(svl_to_vacuum.quantity),
                                 precision_rounding=precision_qty,
@@ -191,7 +191,11 @@ class StockValuationLayer(models.Model):
                                         / (svl_to_vacuum.unit_cost - svl_manual_price),
                                         precision_rounding=precision_qty,
                                     )
-                                    svl_manual_rest = float_round(svl_manual_qty + diff, precision_rounding=precision_qty)
+                                    if abs(svl_manual_qty) - abs(diff_qty) <= 0.01:
+                                        svl_manual_qty = diff_qty
+                                    svl_manual_rest = float_round(svl_manual_qty - diff_qty, precision_rounding=precision_qty)
+                                    if abs(svl_manual_rest) <= 0.01:
+                                        svl_manual_rest = 0.0
                                     # Set only value of not vaccum quantity
                                     svl_manual.value = svl_manual_rest * svl_manual_price
                             svl_to_vacuum.unit_cost = new_unit_cost
@@ -235,7 +239,7 @@ class StockValuationLayer(models.Model):
                         if previous_qty <= 0:
                             svl.remaining_qty = qty
                         elif previous_qty < abs(qty):
-                            svl.remaining_qty = previous_qty + qty
+                            svl.remaining_qty = float_round(previous_qty + qty, precision_rounding=precision_qty)
                         else:
                             svl.remaining_qty = 0.0
                         svl.remaining_value = line.currency_id.round(
@@ -263,8 +267,8 @@ class StockValuationLayer(models.Model):
                         price = float(svl.description.split(" ")[-1][:-1])
                     if update_enabled:
                         # TODO: Review abs in previous_qty or new_diff
-                        new_diff = price - previous_price
-                        new_value = line.currency_id.round(new_diff * previous_qty)
+                        new_diff = line.currency_id.round(price - previous_price)
+                        new_value = line.currency_id.round(new_diff * abs(previous_qty))
                         svl.value = new_value
                         svl.description += _(
                             "\n Product value manually modified (from %s to %s)"
