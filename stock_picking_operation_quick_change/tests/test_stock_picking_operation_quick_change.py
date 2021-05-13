@@ -1,4 +1,4 @@
-# © 2017 Sergio Teruel <sergio.teruel@tecnativa.com>
+# Copyright 2017 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import UserError
@@ -7,14 +7,14 @@ from odoo.tests.common import TransactionCase
 
 class TestOperationQuickChange(TransactionCase):
     def setUp(self):
-        super(TestOperationQuickChange, self).setUp()
+        super().setUp()
         self.Location = self.env["stock.location"]
         self.PickingType = self.env["stock.picking.type"]
         self.Picking = self.env["stock.picking"]
         self.Product = self.env["product.template"]
         self.Wizard = self.env["stock.picking.operation.wizard"]
         self.warehouse = self.env["stock.warehouse"].create(
-            {"name": "warehouse - test", "code": "WH-TEST",}
+            {"name": "warehouse - test", "code": "WH-TEST"}
         )
 
         # self.warehouse.lot_stock_id.id
@@ -26,7 +26,7 @@ class TestOperationQuickChange(TransactionCase):
                 "standard_price": 100.00,
             }
         )
-        self.qty_on_hand(self.product.product_variant_ids[:1])
+        self.qty_on_hand(self.product.product_variant_ids)
         self.product2 = self.Product.create(
             {
                 "name": "Product2 - Test",
@@ -35,12 +35,10 @@ class TestOperationQuickChange(TransactionCase):
                 "standard_price": 100.00,
             }
         )
-        self.qty_on_hand(self.product2.product_variant_ids[:1])
-        self.customer = self.env["res.partner"].create(
-            {"name": "Customer - test", "customer": True,}
-        )
+        self.qty_on_hand(self.product2.product_variant_ids)
+        self.customer = self.env["res.partner"].create({"name": "Customer - test"})
         self.picking_type = self.PickingType.search(
-            [("warehouse_id", "=", self.warehouse.id), ("code", "=", "outgoing"),]
+            [("warehouse_id", "=", self.warehouse.id), ("code", "=", "outgoing")]
         )
         self.picking = self.Picking.create(
             {
@@ -54,7 +52,7 @@ class TestOperationQuickChange(TransactionCase):
                         0,
                         {
                             "name": self.product.name,
-                            "product_id": self.product.product_variant_ids[:1].id,
+                            "product_id": self.product.product_variant_ids.id,
                             "product_uom_qty": 20.0,
                             "product_uom": self.product.uom_id.id,
                         },
@@ -64,7 +62,7 @@ class TestOperationQuickChange(TransactionCase):
                         0,
                         {
                             "name": self.product.name,
-                            "product_id": self.product2.product_variant_ids[:1].id,
+                            "product_id": self.product2.product_variant_ids.id,
                             "product_uom_qty": 60.0,
                             "product_uom": self.product.uom_id.id,
                         },
@@ -74,14 +72,26 @@ class TestOperationQuickChange(TransactionCase):
         )
 
     def qty_on_hand(self, product):
-        stock_change_obj = self.env["stock.change.product.qty"]
-        vals = {
-            "product_id": product.id,
-            "new_quantity": 200.0,
-            "location_id": self.warehouse.lot_stock_id.id,
-        }
-        wiz = stock_change_obj.create(vals)
-        wiz.change_product_qty()
+        wiz = self.env["stock.inventory"].create(
+            {
+                "name": "Stock Inventory",
+                "product_ids": [(4, product.id, 0)],
+                "line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "product_id": product.id,
+                            "product_uom_id": product.uom_id.id,
+                            "product_qty": 200,
+                            "location_id": self.warehouse.lot_stock_id.id,
+                        },
+                    ),
+                ],
+            }
+        )
+        wiz.action_start()
+        wiz.action_validate()
 
     def test_picking_operation_change_location_dest_all(self):
         self.picking.action_assign()
@@ -93,7 +103,7 @@ class TestOperationQuickChange(TransactionCase):
         )
         wiz = self.Wizard.with_context(
             active_model=self.picking._name, active_ids=self.picking.ids,
-        ).create({"new_location_dest_id": new_location_dest_id.id, "change_all": True,})
+        ).create({"new_location_dest_id": new_location_dest_id.id, "change_all": True})
         move_lines = self.picking.mapped("move_line_ids")
         self.assertEqual(wiz.location_dest_id, self.picking.location_dest_id)
         self.assertEqual(wiz.old_location_dest_id, move_lines[:1].location_dest_id)
@@ -142,6 +152,6 @@ class TestOperationQuickChange(TransactionCase):
         )
         wiz = self.Wizard.with_context(
             active_model=self.picking._name, active_ids=self.picking.ids,
-        ).create({"new_location_dest_id": new_location_dest_id.id, "change_all": True,})
+        ).create({"new_location_dest_id": new_location_dest_id.id, "change_all": True})
         with self.assertRaises(UserError):
             wiz.action_apply()
