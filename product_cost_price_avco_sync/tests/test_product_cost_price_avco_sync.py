@@ -363,14 +363,6 @@ class TestProductCostPriceAvcoSync(SavepointCase):
         picking_in_01, move_in_01 = self.create_picking("IN", 10)
         picking_in_02, move_in_02 = self.create_picking("IN", 10)
         picking_out_01, move_out_01 = self.create_picking("OUT", qty=5.0)
-
-        move_in_01.stock_valuation_layer_ids.unit_cost = 2.0
-        self.assertAlmostEqual(move_in_01.stock_valuation_layer_ids.value, 20, 2)
-        self.assertAlmostEqual(move_in_02.stock_valuation_layer_ids.value, 10, 2)
-        self.assertAlmostEqual(move_out_01.stock_valuation_layer_ids.value, -7.5, 2)
-        self.assertAlmostEqual(self.product.standard_price, 1.5, 2)
-
-        # Case 2
         quant = (
             self.env["stock.quant"]
             .with_context(inventory_mode=True)
@@ -381,14 +373,33 @@ class TestProductCostPriceAvcoSync(SavepointCase):
                 ]
             )
         )
+
+        self.print_svl(
+            "Before set move 1 unit cost to 2.0 Quant:{} Standard Price:{}".format(
+                quant.quantity, quant.product_id.standard_price
+            )
+        )
+
+        move_in_01.stock_valuation_layer_ids.unit_cost = 2.0
+        self.print_svl(
+            "After set move 1 unit cost to 2.0 Quant:{} Standard Price:{}".format(
+                quant.quantity, quant.product_id.standard_price
+            )
+        )
+        self.assertAlmostEqual(move_in_01.stock_valuation_layer_ids.value, 20, 2)
+        self.assertAlmostEqual(move_in_02.stock_valuation_layer_ids.value, 10, 2)
+        self.assertAlmostEqual(move_out_01.stock_valuation_layer_ids.value, -7.5, 2)
+        self.assertAlmostEqual(self.product.standard_price, 1.5, 2)
+
+        # Case 2
         self.print_svl(
             "Before update inventory_quantity Quant:{} Standard Price:{}".format(
                 quant.quantity, quant.product_id.standard_price
             )
         )
-        quant.inventory_quantity = 5
+        quant.inventory_quantity = 6
         self.print_svl(
-            "After set inventory_quantity to 5 Quant:{} Standard Price:{}".format(
+            "After set inventory_quantity to 6 Quant:{} Standard Price:{}".format(
                 quant.quantity, quant.product_id.standard_price
             )
         )
@@ -404,9 +415,21 @@ class TestProductCostPriceAvcoSync(SavepointCase):
                 quant.quantity, quant.product_id.standard_price
             )
         )
-        picking_in_03, move_in_03 = self.create_picking("IN", 25)
+        picking_in_03, move_in_03 = self.create_picking("IN", 2)
         self.print_svl(
-            "After IN 25 Quant:{} Standard Price:{}".format(
+            "After IN 2 Quant:{} Standard Price:{}".format(
+                quant.quantity, quant.product_id.standard_price
+            )
+        )
+        self.product.with_context(import_file=True).standard_price = 7.0
+        self.print_svl(
+            "After force standard price to 7 Quant:{} Standard Price:{}".format(
+                quant.quantity, quant.product_id.standard_price
+            )
+        )
+        picking_in_04, move_in_04 = self.create_picking("IN", 23)
+        self.print_svl(
+            "After IN 23 Quant:{} Standard Price:{}".format(
                 quant.quantity, quant.product_id.standard_price
             )
         )
@@ -416,7 +439,6 @@ class TestProductCostPriceAvcoSync(SavepointCase):
                 quant.quantity, quant.product_id.standard_price
             )
         )
-
         # Change qty before cost
         move_in_01.quantity_done = 0.0
         self.print_svl(
@@ -454,6 +476,15 @@ class TestProductCostPriceAvcoSync(SavepointCase):
             )
         )
 
+        # Restore to initial values
+        move_in_01.stock_valuation_layer_ids.unit_cost = 2.0
+        move_in_01.quantity_done = 10.0
+        self.print_svl(
+            "After restore initial values Quant:{} Standard Price:{}".format(
+                quant.quantity, quant.product_id.standard_price
+            )
+        )
+
     def print_svl(self, char_info=""):
         msg_list = ["{}".format(char_info)]
         total_qty = total_value = 0.0
@@ -477,7 +508,7 @@ class TestProductCostPriceAvcoSync(SavepointCase):
             )
         msg_list.append(
             "Total qty: {:.3f} Total value: {:.3f} Cost average {:.3f}".format(
-                total_qty, total_value, total_value / total_qty if total_qty else 0.0
+                total_qty, total_value, (total_value / total_qty if total_qty else 0.0)
             )
         )
         _logger.info("\n".join(msg_list))
