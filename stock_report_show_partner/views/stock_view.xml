@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright 2021 Daniel Domínguez - https://xtendoo.es
+Copyright 2021 Manuel Calero - https://xtendoo.es
+License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<odoo>
+    <data>
+        <record id="stock_report_stock_move_line_tree_inherit" model="ir.ui.view">
+            <field name="name">stock.move.line.tree.inherit</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_move_line_tree" />
+            <field name="arch" type="xml">
+                <xpath expr="//tree/field[@name='reference']" position="after">
+                    <field name="partner_id" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
