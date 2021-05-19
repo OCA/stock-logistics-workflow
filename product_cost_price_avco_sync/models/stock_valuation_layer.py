@@ -256,7 +256,11 @@ class StockValuationLayer(models.Model):
                     else:
                         # TODO: Is necessary?
                         svl.update_avco_svl_values(unit_cost=previous_unit_cost)
-
+                    # Check if adjust IN and we have moves to vacuum outs without stock
+                    if update_enabled and "quantity" in vals and svl.quantity > 0.0 and previous_qty < 0.0:
+                        svl.vacumm_avco_svl(qty, svls_to_avco_sync, vacuum_dic)
+                    elif update_enabled and "quantity" in vals and svl.quantity < 0.0:
+                        svl.update_remaining_avco_svl_in(svls_to_avco_sync)
                     previous_qty = float_round(
                         previous_qty + qty, precision_rounding=precision_qty
                     )
