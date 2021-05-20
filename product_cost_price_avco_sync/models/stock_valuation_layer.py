@@ -261,15 +261,11 @@ class StockValuationLayer(models.Model):
                     previous_unit_cost = unit_cost
                 f_compare = float_compare(qty, 0.0, precision_rounding=precision_qty)
                 # Adjust inventory IN and OUT
+                # Discard moves with a picking because they are not an inventory
                 if (
                     svl.stock_move_id.location_id.usage == "inventory"
-                    and not svl.stock_move_id.location_id.scrap_location
-                    and not svl.stock_move_id.location_id.return_location
-                ) or (
-                    svl.stock_move_id.location_dest_id.usage == "inventory"
-                    and not svl.stock_move_id.location_id.scrap_location
-                    and not svl.stock_move_id.location_id.return_location
-                ):
+                    or svl.stock_move_id.location_dest_id.usage == "inventory"
+                ) and not svl.stock_move_id.picking_id:
                     if (
                         update_enabled
                         and "quantity" in vals
