@@ -30,6 +30,7 @@ addon | version | summary
 [stock_quant_package_product_packaging](stock_quant_package_product_packaging/) | 14.0.1.0.0 | Use product packagings on packages
 [stock_restrict_lot](stock_restrict_lot/) | 14.0.1.1.1 | Base module that add back the concept of restrict lot on stock move
 [stock_return_request](stock_return_request/) | 14.0.1.0.0 | Stock Return Request
+[stock_valuation_layer_by_category](stock_valuation_layer_by_category/) | 14.0.1.0.0 | Display stock valuation layer by category
 
 [//]: # (end addons)
 
