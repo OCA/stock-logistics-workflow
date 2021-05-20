@@ -32,7 +32,6 @@ msgid "All Content"
 msgstr "Todo o conteúdo"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:196
 #: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:200
 #, python-format
 msgid "All the transfers must be \"Ready to Transfer\"."
@@ -40,7 +39,6 @@ msgstr ""
 "Todas as transferências devem estar como \"Prontas para Transferência\"."
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:180
 #: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:184
 #, python-format
 msgid "All the transfers must have the same destination location"
@@ -62,7 +60,6 @@ msgid "Cancelled"
 msgstr "Cancelado"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:146
 #: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:147
 #, python-format
 msgid "Cannot cancel a done package preparation."
@@ -200,7 +197,6 @@ msgid "Move Line"
 msgstr "Linha de Movimentação"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:175
 #: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:179
 #, python-format
 msgid "No transfer selected for this preparation."
@@ -237,7 +233,6 @@ msgid "Number of unread messages"
 msgstr "Número de mensagens não lidas"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:160
 #: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:162
 #, python-format
 msgid "Only canceled package preparations can be reset to draft."
