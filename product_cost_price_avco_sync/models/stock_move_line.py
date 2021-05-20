@@ -11,4 +11,5 @@ class StockMoveLine(models.Model):
     def _create_correction_svl(self, move, diff):
         if move.product_id.cost_method != "average":
             return super()._create_correction_svl(move, diff)
-        move.stock_valuation_layer_ids.quantity += diff
+        for svl in move.stock_valuation_layer_ids:
+            svl.quantity += diff
