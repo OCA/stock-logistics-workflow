@@ -19,6 +19,7 @@ setuptools.setup(
         'odoo14-addon-stock_quant_package_product_packaging',
         'odoo14-addon-stock_restrict_lot',
         'odoo14-addon-stock_return_request',
+        'odoo14-addon-stock_valuation_layer_by_category',
     ],
     classifiers=[
         'Programming Language :: Python',
