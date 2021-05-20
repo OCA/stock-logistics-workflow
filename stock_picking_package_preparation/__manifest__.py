@@ -4,7 +4,7 @@
 
 {
     'name': 'Stock Picking Package Preparation',
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.0.1',
     'author': 'Camptocamp, Agile Business Group, '
               'Odoo Community Association (OCA)',
     'maintainer': 'Camptocamp',
