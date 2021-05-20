@@ -138,6 +138,7 @@ class StockPickingPackagePreparation(models.Model):
         for picking in self.picking_ids:
             picking.action_done()
         self.write({'state': 'done', 'date_done': fields.Datetime.now()})
+        return True
 
     @api.multi
     def action_cancel(self):
@@ -152,6 +153,7 @@ class StockPickingPackagePreparation(models.Model):
             move_lines.write({'result_package_id': False})
             package_ids.unlink()
         self.write({'state': 'cancel'})
+        return True
 
     @api.multi
     def action_draft(self):
@@ -160,12 +162,14 @@ class StockPickingPackagePreparation(models.Model):
                 _('Only canceled package preparations can be reset to draft.')
             )
         self.write({'state': 'draft'})
+        return True
 
     @api.multi
     def action_put_in_pack(self):
         for preparation in self:
             preparation._generate_pack()
         self.write({'state': 'in_pack'})
+        return True
 
     @api.multi
     def _prepare_package(self):
