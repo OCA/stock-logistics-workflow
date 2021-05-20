@@ -92,7 +92,11 @@ class StockPicking(models.Model):
         for this in self:
             if this.state in ("done", "cancel"):
                 raise UserError(
-                    _("Cannot split picking %s in state %s") % (this.name, this.state,)
+                    _("Cannot split picking %s in state %s")
+                    % (
+                        this.name,
+                        this.state,
+                    )
                 )
             new_picking = new_picking or this._create_split_backorder()
             if not this.move_lines - moves:
