@@ -3,7 +3,8 @@
 
 from collections import defaultdict
 
-from odoo import api, models
+from odoo import _, api, models
+from odoo.exceptions import ValidationError
 from odoo.tools import float_compare, float_round
 
 
@@ -86,7 +87,22 @@ class StockValuationLayer(models.Model):
                 svl.stock_move_id.location_dest_id
             )
         # TODO: Split new_svl_qty in related stock move lines
-        svl.stock_move_id.quantity_done = abs(new_svl_qty)
+        if (
+            float_compare(
+                abs(new_svl_qty),
+                svl.stock_move_id.quantity_done,
+                precision_rounding=precision_qty,
+            )
+            != 0
+        ):
+            if len(svl.stock_move_id.move_line_ids) > 1:
+                raise ValidationError(
+                    _(
+                        "More than one stock move line to assign the new "
+                        "stock valuation layer quantity"
+                    )
+                )
+            svl.stock_move_id.quantity_done = abs(new_svl_qty)
         # Reasign qty variables
         qty = new_svl_qty
         svl.quantity = new_svl_qty
