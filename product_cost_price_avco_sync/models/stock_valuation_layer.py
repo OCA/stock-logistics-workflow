@@ -85,6 +85,7 @@ class StockValuationLayer(models.Model):
             svl.stock_move_id.move_line_ids.location_dest_id = (
                 svl.stock_move_id.location_dest_id
             )
+        # TODO: Split new_svl_qty in related stock move lines
         svl.stock_move_id.quantity_done = abs(new_svl_qty)
         # Reasign qty variables
         qty = new_svl_qty
@@ -246,7 +247,12 @@ class StockValuationLayer(models.Model):
                 # Adjust inventory IN and OUT
                 if (
                     svl.stock_move_id.location_id.usage == "inventory"
-                    or svl.stock_move_id.location_dest_id.usage == "inventory"
+                    and not svl.stock_move_id.location_id.scrap_location
+                    and not svl.stock_move_id.location_id.return_location
+                ) or (
+                    svl.stock_move_id.location_dest_id.usage == "inventory"
+                    and not svl.stock_move_id.location_id.scrap_location
+                    and not svl.stock_move_id.location_id.return_location
                 ):
                     if (
                         update_enabled
