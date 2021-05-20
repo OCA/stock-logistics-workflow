@@ -19,7 +19,8 @@ class StockSplitPicking(models.TransientModel):
     )
 
     picking_ids = fields.Many2many(
-        "stock.picking", default=lambda self: self._default_picking_ids(),
+        "stock.picking",
+        default=lambda self: self._default_picking_ids(),
     )
     move_ids = fields.Many2many("stock.move")
 
@@ -50,7 +51,8 @@ class StockSplitPicking(models.TransientModel):
 
     def _picking_action(self, pickings):
         action = self.env["ir.actions.act_window"].for_xml_id(
-            "stock", "action_picking_tree_all",
+            "stock",
+            "action_picking_tree_all",
         )
         action["domain"] = [("id", "in", pickings.ids)]
         return action
