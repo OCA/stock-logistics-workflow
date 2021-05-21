@@ -12,7 +12,7 @@ class StockPicking(models.Model):
         # If strategy == 'manual', let the normal process going on
         if self.picking_type_id.backorder_strategy == "manual":
             return super(StockPicking, self)._check_backorder()
-        return False
+        return self.browse()
 
     def _create_backorder(self):
         # Do nothing with pickings 'no_create'
