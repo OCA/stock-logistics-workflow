@@ -8,11 +8,9 @@ class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     def _check_backorder(self):
-        self.ensure_one()
         # If strategy == 'manual', let the normal process going on
-        if self.picking_type_id.backorder_strategy == "manual":
-            return super(StockPicking, self)._check_backorder()
-        return False
+        self = self.filtered(lambda p: p.picking_type_id.backorder_strategy == "manual")
+        return super(StockPicking, self)._check_backorder()
 
     def _create_backorder(self):
         # Do nothing with pickings 'no_create'
