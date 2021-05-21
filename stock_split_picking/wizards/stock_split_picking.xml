@@ -39,7 +39,7 @@
                                 string="Date"
                                 groups="base.group_no_one"
                             />
-                            <field name="date_expected" string="Date Expected" />
+                            <field name="date_deadline" />
                             <field name="state" />
                         </tree>
                     </field>
@@ -57,11 +57,11 @@
             </form>
         </field>
     </record>
-    <act_window
-        id="action_stock_split_picking"
-        res_model="stock.split.picking"
-        target="new"
-        name="Split pickings"
-        view_id="view_stock_split_picking"
-    />
+
+    <record id="action_stock_split_picking" model="ir.actions.act_window">
+        <field name="name">Split pickings</field>
+        <field name="res_model">stock.split.picking</field>
+        <field name="view_id" ref="view_stock_split_picking" />
+        <field name="target">new</field>
+    </record>
 </odoo>
