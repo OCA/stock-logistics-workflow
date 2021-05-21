@@ -5,3 +5,4 @@
 * Julien Coux <julien.coux@camptocamp.com>
 * Andrius Preimantas <andrius@versada.eu>
 * Holger Brunn <mail@hunki-enterprises.com>
+* Rujia Liu <rujial@roof.co.nz>

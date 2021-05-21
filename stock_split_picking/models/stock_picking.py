@@ -41,7 +41,7 @@ class StockPicking(models.Model):
                     qty_uom_split = move.product_uom._compute_quantity(
                         qty_split, move.product_id.uom_id, rounding_method="HALF-UP"
                     )
-                    new_move_id = move._split(qty_uom_split)
+                    new_move_vals = move._split(qty_uom_split)
                     for move_line in move.move_line_ids:
                         if move_line.product_qty and move_line.qty_done:
                             # To avoid an error
@@ -50,7 +50,9 @@ class StockPicking(models.Model):
                                 move_line.write({"product_uom_qty": move_line.qty_done})
                             except UserError:
                                 pass
-                    new_moves |= self.env["stock.move"].browse(new_move_id)
+                    new_move = self.env["stock.move"].create(new_move_vals)
+                    new_move._action_confirm(merge=False)
+                    new_moves |= new_move
 
             # If we have new moves to move, create the backorder picking
             if new_moves:
