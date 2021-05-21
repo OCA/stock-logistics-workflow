@@ -50,9 +50,8 @@ class StockSplitPicking(models.TransientModel):
         return self._picking_action(new_picking)
 
     def _picking_action(self, pickings):
-        action = self.env["ir.actions.act_window"].for_xml_id(
-            "stock",
-            "action_picking_tree_all",
+        action = self.env["ir.actions.act_window"]._for_xml_id(
+            "stock.action_picking_tree_all",
         )
         action["domain"] = [("id", "in", pickings.ids)]
         return action
