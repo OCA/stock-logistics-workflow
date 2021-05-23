@@ -263,9 +263,13 @@ class StockValuationLayer(models.Model):
                 # Adjust inventory IN and OUT
                 # Discard moves with a picking because they are not an inventory
                 if (
-                    svl.stock_move_id.location_id.usage == "inventory"
-                    or svl.stock_move_id.location_dest_id.usage == "inventory"
-                ) and not svl.stock_move_id.picking_id:
+                    (
+                        svl.stock_move_id.location_id.usage == "inventory"
+                        or svl.stock_move_id.location_dest_id.usage == "inventory"
+                    )
+                    and not svl.stock_move_id.picking_id
+                    and not svl.stock_move_id.scrapped
+                ):
                     if (
                         update_enabled
                         and "quantity" in vals
