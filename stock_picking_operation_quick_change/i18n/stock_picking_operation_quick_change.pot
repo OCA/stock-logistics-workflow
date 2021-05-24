@@ -1,12 +1,12 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_picking_operation_quick_change
+# 	* stock_picking_operation_quick_change
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: <>\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -45,7 +45,8 @@ msgstr ""
 
 #. module: stock_picking_operation_quick_change
 #: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
-msgid "Change the destination location.\n"
+msgid ""
+"Change the destination location.\n"
 "                    <br/>"
 msgstr ""
 
@@ -110,19 +111,22 @@ msgid "Stock Picking Operation Wizard"
 msgstr ""
 
 #. module: stock_picking_operation_quick_change
-#: code:addons/stock_picking_operation_quick_change/wizards/stock_picking_wizard.py:66
+#: code:addons/stock_picking_operation_quick_change/wizards/stock_picking_wizard.py:0
 #, python-format
-msgid "You can not change operations destination location if picking state is not in %s"
+msgid ""
+"You can not change operations destination location if picking state is not "
+"in %s"
 msgstr ""
 
 #. module: stock_picking_operation_quick_change
-#: code:addons/stock_picking_operation_quick_change/wizards/stock_picking_wizard.py:73
+#: code:addons/stock_picking_operation_quick_change/wizards/stock_picking_wizard.py:0
 #, python-format
-msgid "You cannot change destination location if any of the moves has a destination move."
+msgid ""
+"You cannot change destination location if any of the moves has a destination"
+" move."
 msgstr ""
 
 #. module: stock_picking_operation_quick_change
 #: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
 msgid "or"
 msgstr ""
-
