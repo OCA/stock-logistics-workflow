@@ -440,7 +440,7 @@ class TestProductCostPriceAvcoSync(SavepointCase):
             )
         )
         # Change qty before cost
-        move_in_01.quantity_done = 0.0
+        move_in_01.with_context(keep_avco_inventory=True).quantity_done = 0.0
         self.print_svl(
             "After force quantity to 0 in first IN move Quant:{} Cost:{}".format(
                 quant.quantity, quant.product_id.standard_price
@@ -454,7 +454,7 @@ class TestProductCostPriceAvcoSync(SavepointCase):
         )
 
         # Restore to initial values
-        move_in_01.quantity_done = 10.0
+        move_in_01.with_context(keep_avco_inventory=True).quantity_done = 10.0
         move_in_01.stock_valuation_layer_ids.unit_cost = 2.0
         self.print_svl(
             "After restore initial values Quant:{} Standard Price:{}".format(
