@@ -274,6 +274,8 @@ class StockValuationLayer(models.Model):
                         update_enabled
                         and "quantity" in vals
                         and not inventory_processed
+                        # Context to keep stock quantities after inventory qty update
+                        and self.env.context.get("keep_avco_inventory", False)
                     ):
                         qty = self.process_avco_svl_inventory(
                             svl, line, vals, previous_unit_cost
@@ -301,7 +303,7 @@ class StockValuationLayer(models.Model):
                         previous_qty + qty, precision_rounding=precision_qty
                     )
                     # Return moves
-                    if update_enabled and svl.stock_move_id.move_orig_ids:
+                    if update_enabled and (not svl.stock_move_id or svl.stock_move_id.move_orig_ids):
                         svl.update_avco_svl_values(unit_cost=previous_unit_cost)
                     # Normal incoming moves
                     else:
