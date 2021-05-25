@@ -12,4 +12,8 @@ class StockMoveLine(models.Model):
         if move.product_id.cost_method != "average":
             return super()._create_correction_svl(move, diff)
         for svl in move.stock_valuation_layer_ids:
-            svl.quantity += diff
+            # TODO: Review if is dropshipping
+            if move._is_out():
+                svl.quantity -= diff
+            else:
+                svl.quantity += diff
