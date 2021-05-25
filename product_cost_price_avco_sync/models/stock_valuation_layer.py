@@ -40,11 +40,17 @@ class StockValuationLayer(models.Model):
 
     def write(self, vals):
         """ Update cost price avco """
+        svl_previous_vals = defaultdict(dict)
         if ("unit_cost" in vals or "quantity" in vals) and not self.env.context.get(
             "skip_avco_sync"
         ):
-            self.cost_price_avco_sync(vals)
-        return super().write(vals)
+            for svl in self:
+                for field_name in vals.keys():
+                    svl_previous_vals[svl.id][field_name] = svl[field_name]
+        res = super().write(vals)
+        if svl_previous_vals:
+            self.cost_price_avco_sync(vals, svl_previous_vals)
+        return res
 
     def get_svls_to_avco_sync(self):
         self.ensure_one()
@@ -69,10 +75,10 @@ class StockValuationLayer(models.Model):
         return qty, unit_cost
 
     @api.model
-    def process_avco_svl_inventory(self, svl, line, vals, previous_unit_cost):
+    def process_avco_svl_inventory(self, svl, line, svl_previous_vals, previous_unit_cost):
         precision_qty = line.uom_id.rounding
         new_svl_qty = float_round(
-            svl.quantity + (line.quantity - vals["quantity"]),
+            svl.quantity + (svl_previous_vals[line.id]["quantity"] - line.quantity),
             precision_rounding=precision_qty,
         )
         # Check if with the new difference the sign of the move changes
@@ -230,7 +236,7 @@ class StockValuationLayer(models.Model):
                         accumulated_value + svl.value
                     )
 
-    def cost_price_avco_sync(self, vals):  # noqa: C901
+    def cost_price_avco_sync(self, vals, svl_previous_vals={}):  # noqa: C901
         procesed_lines = set()
         # precision_price = self.env["decimal.precision"].precision_get("Product Price")
         for line in self.sorted(key=lambda l: (l.create_date, l.id)):
@@ -278,7 +284,7 @@ class StockValuationLayer(models.Model):
                         and self.env.context.get("keep_avco_inventory", False)
                     ):
                         qty = self.process_avco_svl_inventory(
-                            svl, line, vals, previous_unit_cost
+                            svl, line, svl_previous_vals, previous_unit_cost,
                         )
                         inventory_processed = True
                     else:
@@ -383,14 +389,7 @@ class StockValuationLayer(models.Model):
                     force_company=line.company_id.id
                 ).sudo().standard_price = previous_unit_cost
             # Compute new values for layer line
-            vals_unit_cost = vals.get("unit_cost", line.unit_cost)
-            vals.update(
-                {
-                    "value": line.currency_id.round(
-                        vals_unit_cost * vals.get("quantity", line.quantity)
-                    ),
-                }
-            )
+            line.value = line.currency_id.round(line.unit_cost * line.quantity)
             # Update unit_cost for incoming stock moves
             if line.stock_move_id:
-                line.stock_move_id.price_unit = vals_unit_cost
+                line.stock_move_id.price_unit = line.unit_cost
