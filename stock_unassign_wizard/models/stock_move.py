@@ -20,7 +20,7 @@ class StockMove(models.Model):
             '&',
             ('picking_id', '!=', False),
             ('picking_id', '!=', self.picking_id.id),
-            ('picking_type_id.code', '=', 'outgoing'),
+            ('picking_type_id.code', 'in', ('outgoing', 'internal')),
             '&',
             ('raw_material_production_id', '!=', False),
             ('raw_material_production_id', '!=', self.raw_material_production_id.id),
