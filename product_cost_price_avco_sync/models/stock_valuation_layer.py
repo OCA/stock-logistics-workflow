@@ -325,8 +325,7 @@ class StockValuationLayer(models.Model):
                                 qty,
                                 total_qty,
                             )
-                        if update_enabled:
-                            svl.update_avco_svl_values(remaining_qty=qty)
+                    svl.update_avco_svl_values(remaining_qty=qty)
                     if previous_qty < 0:
                         # Vacuum previous product outs without stock
                         svl.vacumm_avco_svl(qty, svls_to_avco_sync, vacuum_dic)
@@ -352,7 +351,6 @@ class StockValuationLayer(models.Model):
                             remaining_qty=new_remaining_qty,
                         )
                     else:
-                        # Always update remaning qty?
                         svl.update_avco_svl_values(remaining_qty=new_remaining_qty)
                     previous_qty = float_round(
                         previous_qty + qty, precision_rounding=precision_qty
