@@ -197,6 +197,9 @@ class StockValuationLayer(models.Model):
                 self.update_avco_svl_values(
                     svl_in_remaining, remaining_qty=new_remaining_qty
                 )
+                self.update_avco_svl_values(
+                    svl_dic, remaining_qty=svl_out_qty
+                )
                 if svl_out_qty == 0.0:
                     break
 
