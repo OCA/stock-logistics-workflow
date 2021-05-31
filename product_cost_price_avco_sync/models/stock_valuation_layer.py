@@ -210,12 +210,10 @@ class StockValuationLayer(models.Model):
                     and not svl.stock_move_id
                 ):
                     standard_price = float(svl.description.split(" ")[-1][:-1])
-                    adjust_value = (
+                    svl_dic["value"] = (
                         standard_price * accumulated_qty
                     ) - accumulated_value
-                    if svl_dic["value"] != adjust_value:
-                        svl_dic["value"] = adjust_value
-                if svl.id == line.id:
+                if svl == line:
                     accumulated_qty = accumulated_qty + vals.get(
                         "quantity", line.quantity
                     )
@@ -267,6 +265,7 @@ class StockValuationLayer(models.Model):
                     "unit_cost": unit_cost,
                     "remaining_qty": qty,
                     "remaining_value": qty * unit_cost,
+                    "value": svl.value,
                 }
                 svl_dic = svls_dic[svl]
                 # Keep inventory unit_cost if not previous incoming or manual adjustment
