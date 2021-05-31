@@ -234,7 +234,7 @@ class StockValuationLayer(models.Model):
                     new_value,
                     # Currency decimal precision for values and high precision to others
                     precision_digits=svl.currency_id.decimal_places
-                    if "value" in field_name
+                    if field_name in ("unit_cost", "value", "remaining_value")
                     else 8,
                 ):
                     vals[field_name] = new_value
