@@ -115,6 +115,7 @@ class TestRoutingPullCommon(common.SavepointCase):
                     "product_uom_qty": qty,
                     "product_uom": product.uom_id.id,
                     "picking_id": customer_picking.id,
+                    "picking_type_id": wh.out_type_id.id,
                     "location_id": wh.wh_output_stock_loc_id.id,
                     "location_dest_id": self.customer_loc.id,
                     "state": "waiting",
@@ -129,6 +130,7 @@ class TestRoutingPullCommon(common.SavepointCase):
                     "product_uom_qty": qty,
                     "product_uom": product.uom_id.id,
                     "picking_id": pick_picking.id,
+                    "picking_type_id": wh.pick_type_id.id,
                     "location_id": wh.lot_stock_id.id,
                     "location_dest_id": wh.wh_output_stock_loc_id.id,
                     "move_dest_ids": [(4, dest.id)],
@@ -785,6 +787,7 @@ class TestRoutingPull(TestRoutingPullCommon):
             move_a | move_b | move_c | move_d,
             [
                 {
+                    "product_qty": 4,
                     "move_orig_ids": [],
                     "move_dest_ids": move_b.ids,
                     "state": "confirmed",
@@ -792,6 +795,7 @@ class TestRoutingPull(TestRoutingPullCommon):
                     "location_dest_id": self.wh.wh_output_stock_loc_id.id,
                 },
                 {
+                    "product_qty": 4,
                     "move_orig_ids": move_a.ids,
                     "move_dest_ids": [],
                     "state": "waiting",
@@ -799,6 +803,7 @@ class TestRoutingPull(TestRoutingPullCommon):
                     "location_dest_id": self.customer_loc.id,
                 },
                 {
+                    "product_qty": 6,
                     "move_orig_ids": [],
                     "move_dest_ids": move_d.ids,
                     "state": "assigned",
@@ -806,6 +811,7 @@ class TestRoutingPull(TestRoutingPullCommon):
                     "location_dest_id": area1.id,
                 },
                 {
+                    "product_qty": 6,
                     "move_orig_ids": move_c.ids,
                     "move_dest_ids": [],
                     "state": "waiting",
