@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_picking_mass_action_stock_user,stock.picking.mass.action stock_user,model_stock_picking_mass_action,stock.group_stock_user,1,1,1,1
