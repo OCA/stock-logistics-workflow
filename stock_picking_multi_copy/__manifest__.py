@@ -14,9 +14,9 @@
         'stock',
     ],
     'data': [
-        'data/ir_config_parameter.xml',
         'report/report_deliveryslip.xml',
         'views/res_partner_view.xml',
+        'views/stock_warehouse_view.xml',
     ],
     'installable': True,
     'auto_install': False

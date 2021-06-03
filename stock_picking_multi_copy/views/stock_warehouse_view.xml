@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2021 PlanetaTIC - Marc Poch <mpoch@planetatic.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+<data>
+
+<record id="view_view_warehouse_form" model="ir.ui.view">
+    <field name="name">stock.warehouse.form</field>
+    <field name="model">stock.warehouse</field>
+    <field name="inherit_id" ref="stock.view_warehouse"/>
+    <field name="arch" type="xml">
+        <xpath expr="//notebook/page//field[@name='in_type_id']/ancestor::*[1]" position="after">
+            <group string="Directories">
+                <field name="deliveryslip_folder" />
+            </group>
+        </xpath>
+    </field>
+</record>
+
+</data>
+</odoo>

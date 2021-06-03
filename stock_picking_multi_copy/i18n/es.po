@@ -26,12 +26,17 @@ msgid "Contact"
 msgstr "Contacto"
 
 #. module: stock_picking_multi_copy
-#: model:ir.model.fields,field_description:stock_picking_multi_copy.field_res_config_settings__deliveryslip_folder
+#: model:ir.model.fields,field_description:stock_picking_multi_copy.field_stock_warehouse__deliveryslip_folder
 msgid "Delivery Slip Folder"
 msgstr "Directorio Vale de Entrega"
 
 #. module: stock_picking_multi_copy
-#: model:ir.model.fields,help:stock_picking_multi_copy.field_res_config_settings__deliveryslip_folder
+#: model_terms:ir.ui.view,arch_db:stock_picking_multi_copy.view_view_warehouse_form
+msgid "Directories"
+msgstr "Directorios"
+
+#. module: stock_picking_multi_copy
+#: model:ir.model.fields,help:stock_picking_multi_copy.field_stock_warehouse__deliveryslip_folder
 msgid "Directory where to store Delivery Slip report"
 msgstr "Directorio donde guardar los Vales de Entrega una vez se confirman los albaranes"
 
@@ -45,4 +50,9 @@ msgstr "Copias albarán"
 #: model:ir.model,name:stock_picking_multi_copy.model_stock_picking
 msgid "Transfer"
 msgstr "Transferir"
+
+#. module: stock_picking_multi_copy
+#: model:ir.model,name:stock_picking_multi_copy.model_stock_warehouse
+msgid "Warehouse"
+msgstr "Almacén"
 
