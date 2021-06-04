@@ -81,8 +81,8 @@ class StockMove(models.Model):
             strict=strict,
         )
 
-    def _split(self, qty, restrict_partner_id=False):
-        vals_list = super()._split(qty, restrict_partner_id=restrict_partner_id)
-        if vals_list and self.restrict_lot_id:
-            vals_list[0]["restrict_lot_id"] = self.restrict_lot_id.id
-        return vals_list
+    def _prepare_move_split_vals(self, qty):
+        vals = super()._prepare_move_split_vals(qty)
+        if self.restrict_lot_id:
+            vals["restrict_lot_id"] = self.restrict_lot_id.id
+        return vals
