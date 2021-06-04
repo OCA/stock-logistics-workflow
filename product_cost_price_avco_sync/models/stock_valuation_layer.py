@@ -3,7 +3,7 @@
 
 from collections import OrderedDict, defaultdict
 
-from odoo import _, api, models
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools import float_compare, float_round
 
@@ -20,6 +20,11 @@ class StockValuationLayer(models.Model):
     """Stock Valuation Layer"""
 
     _inherit = "stock.valuation.layer"
+
+    # Change Monetary to Float improve decimal precision
+    unit_cost = fields.Float(digits="Product Price")
+    value = fields.Float(digits=(20, 8))
+    remaining_value = fields.Float(digits=(20, 8))
 
     @api.model
     def create(self, vals):
@@ -219,14 +224,7 @@ class StockValuationLayer(models.Model):
         for svl, svl_dic in svls_dic.items():
             vals = {}
             for field_name, new_value in svl_dic.items():
-                if float_compare(
-                    svl[field_name],
-                    new_value,
-                    # Currency decimal precision for values and high precision to others
-                    precision_digits=svl.currency_id.decimal_places
-                    if field_name in ("unit_cost", "value", "remaining_value")
-                    else 8,
-                ):
+                if float_compare(svl[field_name], new_value, precision_digits=8,):
                     vals[field_name] = new_value
             # Write modified fields
             if vals:
