@@ -35,7 +35,7 @@ class StockValuationLayer(models.Model):
                 limit=1,
             )
             if svl_remaining:
-                svl.cost_price_avco_sync({})
+                svl.cost_price_avco_sync({}, {})
         return svl
 
     def write(self, vals):
@@ -232,7 +232,7 @@ class StockValuationLayer(models.Model):
             if vals:
                 svl.with_context(skip_avco_sync=True).write(vals)
 
-    def cost_price_avco_sync(self, vals, svl_previous_vals={}):  # noqa: C901
+    def cost_price_avco_sync(self, vals, svl_previous_vals):  # noqa: C901
         dp_obj = self.env["decimal.precision"]
         precision_qty = dp_obj.precision_get("Product Unit of Measure")
         precision_price = dp_obj.precision_get("Product Price")
@@ -258,10 +258,12 @@ class StockValuationLayer(models.Model):
                     "value": svl.value,
                 }
                 svl_dic = svls_dic[svl]
+                f_compare = float_compare(qty, 0.0, precision_digits=precision_qty)
                 # Keep inventory unit_cost if not previous incoming or manual adjustment
                 if not unit_cost_processed:
                     previous_unit_cost = unit_cost
-                f_compare = float_compare(qty, 0.0, precision_digits=precision_qty)
+                    if f_compare > 0.0:
+                        unit_cost_processed = True
                 # Adjust inventory IN and OUT
                 # Discard moves with a picking because they are not an inventory
                 if (
@@ -272,7 +274,8 @@ class StockValuationLayer(models.Model):
                     and not svl.stock_move_id.picking_id
                     and not svl.stock_move_id.scrapped
                 ):
-                    if (not inventory_processed
+                    if (
+                        not inventory_processed
                         # Context to keep stock quantities after inventory qty update
                         and self.env.context.get("keep_avco_inventory", False)
                     ):
@@ -285,9 +288,7 @@ class StockValuationLayer(models.Model):
                             svl_dic, unit_cost=previous_unit_cost
                         )
                     # Check if adjust IN and we have moves to vacuum outs without stock
-                    if (svl_dic["quantity"] > 0.0
-                        and previous_qty < 0.0
-                    ):
+                    if svl_dic["quantity"] > 0.0 and previous_qty < 0.0:
                         svl.vacumm_avco_svl(qty, svls_dic, vacuum_dic)
                     elif svl_dic["quantity"] < 0.0:
                         svl.update_remaining_avco_svl_in(svls_dic, vacuum_dic)
