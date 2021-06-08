@@ -25,3 +25,11 @@ class ProcurementGroup(models.Model):
             'to_date': limit_date,
             'procurement_values': dict()
         }]
+
+    @api.model
+    def _procure_orderpoint_confirm(
+            self, use_new_cursor=False, company_id=False):
+        res = super(ProcurementGroup, self.with_context(
+            purchase_limit_days=True))._procure_orderpoint_confirm(
+                use_new_cursor=use_new_cursor, company_id=company_id)
+        return res
