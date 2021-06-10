@@ -18,25 +18,25 @@ class StockMove(models.Model):
             move.quantity_done = move.reserved_availability
 
     def _action_assign(self):
-        res = super(StockMove, self)._action_assign()
+        res = super()._action_assign()
         # Transfer all pickings which have an auto move assigned
         moves = self.filtered(
             lambda m: m.state in ("assigned", "partially_available") and m.auto_move
         )
-        moves._auto_assign_quantities()
-        # In case of no backorder on the first move and cancel propagation
-        # we need to propagate cancel_backorder to action_done
-        moves._action_done(
-            cancel_backorder=self.env.context.get("cancel_backorder", False)
-        )
-        # We need to create backorder if there are mixed moves (auto and manual)
-        moves.mapped("picking_id")._create_backorder()
-
+        if moves:
+            moves._auto_assign_quantities()
+            # In case of no backorder on the first move and cancel propagation
+            # we need to propagate cancel_backorder to action_done
+            moves._action_done(
+                cancel_backorder=self.env.context.get("cancel_backorder", False)
+            )
+            # We need to create backorder if there are mixed moves (auto and manual)
+            moves.mapped("picking_id")._create_backorder()
         return res
 
     @api.model
     def _get_auto_moves_by_pickings(self, auto_moves):
-        """ Group moves by picking.
+        """Group moves by picking.
         @param auto_moves: stock.move data set
         @return dict dict of moves grouped by pickings
         {stock.picking(id): stock.move(id1, id2, id3 ...), ...}
@@ -56,6 +56,4 @@ class StockMove(models.Model):
 
     def _action_confirm(self, merge=True, merge_into=False):
         self._change_procurement_group()
-        return super(StockMove, self)._action_confirm(
-            merge=merge, merge_into=merge_into
-        )
+        return super()._action_confirm(merge=merge, merge_into=merge_into)
