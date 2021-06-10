@@ -102,16 +102,24 @@ class TestStockAutoMove(SavepointCase):
         )
         moves_after = self.move_obj.search([]) - moves_before
         self.assertEqual(
-            moves_after.rule_id.id, self.ref("stock_auto_move.stock_rule_a_to_b"),
+            moves_after.rule_id.id,
+            self.ref("stock_auto_move.stock_rule_a_to_b"),
         )
 
         self.assertTrue(moves_after.auto_move)
         self.assertEqual(moves_after.state, "confirmed")
-        self.assertEquals(moves_after.group_id, self.auto_group)
+        self.assertEqual(moves_after.group_id, self.auto_group)
 
     def test_30_push_rule_auto(self):
         """Checks that push rule with auto set leads to an auto_move."""
         self.product_a1232.route_ids = [(4, self.ref("stock_auto_move.test_route"))]
+        self.env["stock.quant"].create(
+            {
+                "product_id": self.product_a1232.id,
+                "location_id": self.location_shelf.id,
+                "quantity": 10,
+            }
+        )
         move3 = self.move_obj.create(
             {
                 "name": "Supply source location for test",
@@ -188,7 +196,7 @@ class TestStockAutoMove(SavepointCase):
         self.assertTrue(picking.move_line_ids)
         self.assertEqual(len(picking.move_line_ids), 1)
         picking.move_line_ids.qty_done = 2
-        picking.action_done()
+        picking._action_done()
         self.assertTrue(move1.move_dest_ids)
 
         self.assertTrue(move1.move_dest_ids.auto_move)
@@ -242,7 +250,7 @@ class TestStockAutoMove(SavepointCase):
         self.assertEqual(len(picking.move_line_ids), 1)
         picking.move_line_ids.qty_done = 1
         picking.move_line_ids.product_uom_qty = 1
-        picking.action_done()
+        picking._action_done()
 
         # As move_dest_ids include backorders
         self.assertEqual(len(move1.move_dest_ids), 2)
@@ -264,12 +272,12 @@ class TestStockAutoMove(SavepointCase):
         self.assertEqual(len(back_order), 1)
 
         back_order.move_line_ids.qty_done = 1
-        back_order.action_done()
+        back_order._action_done()
 
         move2 = back_order.move_lines
         self.assertEqual(len(move2.move_dest_ids), 2)
 
-        self.assertEquals(move2.move_dest_ids.mapped("auto_move"), [True, True])
+        self.assertEqual(move2.move_dest_ids.mapped("auto_move"), [True, True])
         self.assertEqual(move2.move_dest_ids.mapped("state"), ["done", "done"])
 
     def test_60_partial_chained_auto_move(self):
@@ -344,7 +352,7 @@ class TestStockAutoMove(SavepointCase):
         move2.move_line_ids.qty_done = 1
         move2.move_line_ids.product_uom_qty = 1
 
-        picking.action_done()
+        picking._action_done()
 
         second_step_back_order = self.env["stock.picking"].search(
             [("backorder_id", "=", second_step_picking.id)]
@@ -387,12 +395,13 @@ class TestStockAutoMove(SavepointCase):
         )
         moves_after = self.move_obj.search([]) - moves_before
         self.assertEqual(
-            moves_after.rule_id.id, self.ref("stock_auto_move.stock_rule_a_to_b"),
+            moves_after.rule_id.id,
+            self.ref("stock_auto_move.stock_rule_a_to_b"),
         )
 
         self.assertTrue(moves_after.auto_move)
         self.assertEqual(moves_after.state, "confirmed")
-        self.assertEquals(moves_after.group_id, group_manual)
+        self.assertEqual(moves_after.group_id, group_manual)
 
     def test_80_chained_auto_move_uom(self):
         """
@@ -441,7 +450,7 @@ class TestStockAutoMove(SavepointCase):
         self.assertTrue(picking.move_line_ids)
         self.assertEqual(len(picking.move_line_ids), 1)
         picking.move_line_ids.qty_done = 2
-        picking.action_done()
+        picking._action_done()
         self.assertTrue(move1.move_dest_ids)
 
         self.assertTrue(move1.move_dest_ids.auto_move)
@@ -520,10 +529,12 @@ class TestStockAutoMove(SavepointCase):
         move2.move_line_ids.product_uom_qty = 1
 
         res = picking.button_validate()
-        self.assertDictContainsSubset(
-            {"res_model": "stock.backorder.confirmation"}, res,
+        self.assertEqual(res.get("res_model"), "stock.backorder.confirmation")
+        wizard = (
+            self.env["stock.backorder.confirmation"]
+            .with_context(**res.get("context", {}))
+            .create({})
         )
-        wizard = self.env["stock.backorder.confirmation"].browse(res["res_id"])
         wizard.process_cancel_backorder()
 
         second_step_back_order = self.env["stock.picking"].search(
@@ -532,10 +543,10 @@ class TestStockAutoMove(SavepointCase):
 
         self.assertFalse(second_step_back_order)
 
-        self.assertEquals("done", move1.move_dest_ids.state)
-        self.assertEquals("done", move2.move_dest_ids.state)
-        self.assertEquals(2.0, move1.move_dest_ids.quantity_done)
-        self.assertEquals(1.0, move2.move_dest_ids.quantity_done)
+        self.assertEqual("done", move1.move_dest_ids.state)
+        self.assertEqual("done", move2.move_dest_ids.state)
+        self.assertEqual(2.0, move1.move_dest_ids.quantity_done)
+        self.assertEqual(1.0, move2.move_dest_ids.quantity_done)
 
     def test_100_partial_chained_auto_move_mixed_no_backorder(self):
         """
@@ -633,10 +644,12 @@ class TestStockAutoMove(SavepointCase):
         move2.move_line_ids.product_uom_qty = 5
 
         res = picking.button_validate()
-        self.assertDictContainsSubset(
-            {"res_model": "stock.backorder.confirmation"}, res,
+        self.assertEqual(res.get("res_model"), "stock.backorder.confirmation")
+        wizard = (
+            self.env["stock.backorder.confirmation"]
+            .with_context(**res.get("context", {}))
+            .create({})
         )
-        wizard = self.env["stock.backorder.confirmation"].browse(res["res_id"])
         wizard.process_cancel_backorder()
 
         # We need to ensure that all moves are done or cancelled in the
@@ -656,7 +669,5 @@ class TestStockAutoMove(SavepointCase):
         # If https://github.com/odoo/odoo/pull/66124 is integrated,
         # this should become assigned as remaining quantity should be cancelled
         # and quantities should be 5.0
-        self.assertEquals(
-            "partially_available", second_step_back_order.move_lines.state
-        )
-        self.assertEquals(10.0, second_step_back_order.move_lines.product_uom_qty)
+        self.assertEqual("partially_available", second_step_back_order.move_lines.state)
+        self.assertEqual(10.0, second_step_back_order.move_lines.product_uom_qty)
