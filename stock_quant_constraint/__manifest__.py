@@ -10,6 +10,6 @@
     "author": "Therp BV,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": ["stock"],
-    "data": [],
+    "data": ["data/ir_cron.xml"],
     "installable": True,
 }

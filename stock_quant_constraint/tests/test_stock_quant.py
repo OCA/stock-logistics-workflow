@@ -31,18 +31,13 @@ class TestStockQuant(TransactionCase):
 
     def _create_product(self, name):
         product = self.product_model.create(
-            {
-                "name": name,
-                "categ_id": self.product_ctg.id,
-                "type": "product",
-            }
+            {"name": name, "categ_id": self.product_ctg.id, "type": "product"}
         )
         # make some stock
-        quant_model = self.env['stock.quant']
+        quant_model = self.env["stock.quant"]
         quant_model._update_available_quantity(product, self.stock_location, 100)
         self.assertEqual(
-            quant_model._get_available_quantity(product, self.stock_location),
-            100.0
+            quant_model._get_available_quantity(product, self.stock_location), 100.0
         )
         return product
 
@@ -72,13 +67,13 @@ class TestStockQuant(TransactionCase):
     def test_check_constrains(self):
         """Quant reservations should always be consistent with line reservations."""
         # Find quant for product.
-        quant_model = self.env['stock.quant']
+        quant_model = self.env["stock.quant"]
         stock_quant = quant_model.search(
             [
                 ("location_id", "=", self.location_id.id),
                 ("product_id", "=", self.product_id.id),
             ],
-            limit=1
+            limit=1,
         )
         self.assertEqual(stock_quant.reserved_quantity, 10.0)
         with self.assertRaises(ValidationError):
