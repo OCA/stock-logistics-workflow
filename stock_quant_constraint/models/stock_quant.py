@@ -159,7 +159,7 @@ class StockQuant(models.Model):
             self.env.cr.execute(RESERVED_STATEMENT, parameters)
             reserved_in_moves = self.env.cr.fetchone()
             comparison = float_compare(
-                reserved_quantity, reserved_in_moves, precision_digits=precision
+                reserved_quantity, reserved_in_moves[0], precision_digits=precision
             )
             if comparison == 0:
                 continue
@@ -194,3 +194,7 @@ class StockQuant(models.Model):
         cursor.execute(STOCK_STATEMENT)
         for row in cursor.fetchall():
             _logger.error(_("Mismatch in stock %s"), str(row))
+            self._do_repair(row)
+
+    def _do_repair(self, row):
+        """Repair (or create) stock_quant, based on stock moves."""

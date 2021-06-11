@@ -12,42 +12,45 @@ class TestStockQuant(TransactionCase):
 
     def setUp(self):
         super().setUp()
+        # Setup models used.
+        self.quant_model = self.env["stock.quant"]
         self.product_model = self.env["product.product"]
-        self.product_ctg_model = self.env["product.category"]
-        self.picking_type_id = self.env.ref("stock.picking_type_out")
-        self.location_id = self.env.ref("stock.stock_location_stock")
-        self.location_dest_id = self.env.ref("stock.stock_location_customers")
-        # Create product category
-        self.product_ctg = self._create_product_category()
-        # Create a Product
+        self.product_category_model = self.env["product.category"]
+        # Link to standard records.
+        self.picking_type = self.env.ref("stock.picking_type_out")
+        self.stock_location = self.env.ref("stock.stock_location_stock")
+        self.destination_location = self.env.ref("stock.stock_location_customers")
+        # Create test data.
+        self.product_category = self._create_product_category()
         self.product = self._create_product("test_product1")
         self._create_picking()
 
     def _create_product_category(self):
-        product_ctg = self.product_ctg_model.create(
-            {"name": "test_product_ctg", "allow_negative_stock": False}
+        product_category = self.product_category_model.create(
+            {"name": "test_product_category", "allow_negative_stock": False}
         )
-        return product_ctg
+        return product_category
 
     def _create_product(self, name):
         product = self.product_model.create(
-            {"name": name, "categ_id": self.product_ctg.id, "type": "product"}
+            {"name": name, "categ_id": self.product_category.id, "type": "product"}
         )
         # make some stock
-        quant_model = self.env["stock.quant"]
-        quant_model._update_available_quantity(product, self.stock_location, 100)
+        self.quant_model._update_available_quantity(product, self.stock_location, 100)
         self.assertEqual(
-            quant_model._get_available_quantity(product, self.stock_location), 100.0
+            self.quant_model._get_available_quantity(product, self.stock_location),
+            100.0,
         )
         return product
 
     def _create_picking(self):
+        """Create picking for  product. This will create a reservation automagically."""
         self.stock_picking = self.env["stock.picking"].create(
             {
-                "picking_type_id": self.picking_type_id.id,
+                "picking_type_id": self.picking_type.id,
                 "move_type": "direct",
-                "location_id": self.location_id.id,
-                "location_dest_id": self.location_dest_id.id,
+                "location_id": self.stock_location.id,
+                "location_dest_id": self.destination_location.id,
             }
         )
         self.stock_move = self.env["stock.move"].create(
@@ -58,8 +61,8 @@ class TestStockQuant(TransactionCase):
                 "product_uom": self.product.uom_id.id,
                 "picking_id": self.stock_picking.id,
                 "state": "draft",
-                "location_id": self.location_id.id,
-                "location_dest_id": self.location_dest_id.id,
+                "location_id": self.stock_location.id,
+                "location_dest_id": self.destination_location.id,
                 "quantity_done": 10.0,
             }
         )
@@ -67,14 +70,13 @@ class TestStockQuant(TransactionCase):
     def test_check_constrains(self):
         """Quant reservations should always be consistent with line reservations."""
         # Find quant for product.
-        quant_model = self.env["stock.quant"]
-        stock_quant = quant_model.search(
+        stock_quant = self.quant_model.search(
             [
-                ("location_id", "=", self.location_id.id),
-                ("product_id", "=", self.product_id.id),
+                ("location_id", "=", self.stock_location.id),
+                ("product_id", "=", self.product.id),
             ],
             limit=1,
         )
         self.assertEqual(stock_quant.reserved_quantity, 10.0)
         with self.assertRaises(ValidationError):
-            quant_model.write({"reserved_quantity": 5.0})
+            self.quant_model.write({"reserved_quantity": 5.0})
