@@ -62,11 +62,18 @@ def post_load_hook():
 
         # Update the standard price with the price of the last used candidate,
         # if any.
-        if new_standard_price and self.cost_method == "fifo":
-            self.sudo().with_context(
-                force_company=company.id
-            ).standard_price = new_standard_price
-
+        # START HOOK update standard price
+        if hasattr(self, "_price_updateable"):
+            if self._price_updateable(new_standard_price):
+                self.sudo().with_context(
+                    force_company=company.id
+                ).standard_price = new_standard_price
+        else:
+            if new_standard_price and self.cost_method == "fifo":
+                self.sudo().with_context(
+                    force_company=company.id
+                ).standard_price = new_standard_price
+        # END HOOK update standard price
         # If there's still quantity to value but we're out of candidates,
         # we fall in the
         # negative stock use case. We chose to value the out move at the price
