@@ -34,3 +34,7 @@ class ProductProduct(models.Model):
             ("company_id", "=", company.id),
         ]
         return candidates_domain
+
+    def _price_updateable(self, new_standard_price=False):
+        self.ensure_one()
+        return new_standard_price and self.cost_method == "fifo"
