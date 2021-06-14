@@ -2,3 +2,4 @@ product-attribute
 stock-logistics-warehouse
 partner-contact
 server-tools
+community-data-files
