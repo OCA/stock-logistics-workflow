@@ -3,3 +3,4 @@ stock-logistics-warehouse
 partner-contact
 server-tools
 delivery-carrier
+community-data-files
