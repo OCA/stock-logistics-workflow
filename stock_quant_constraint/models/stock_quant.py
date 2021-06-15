@@ -129,19 +129,13 @@ class StockQuant(models.Model):
         - the sum of reservations for a product on a location, must match the
           move lines having that location as a source location.
         """
-        virtual_locations = (
-            "vendor",
-            "customer",
-            "inventory",
-            "view",
-        )
         precision = self.env["decimal.precision"].precision_get(
             "Product Unit of Measure"
         )
         for quant in self:
-            reserved_quantity = quant.reserved_quantity
+            reserved_quantity = quant.reserved_quantity or 0.0
             location = quant.location_id
-            if reserved_quantity > 0.0 and location.usage in virtual_locations:
+            if reserved_quantity > 0.0 and location.usage != "internal":
                 raise ValidationError(
                     _(
                         "Invalid attempt to reserve product %s"
