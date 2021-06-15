@@ -100,10 +100,13 @@ SELECT
 """
 
 RESERVED_STATEMENT = """
-SELECT SUM(product_qty) AS reserved_in_moves
+SELECT COALESCE(SUM(product_qty), 0.0) AS reserved_in_moves
  FROM stock_move_line
  WHERE location_id = %(location_id)s
    AND product_id = %(product_id)s
+   AND COALESCE(lot_id, 0) = %(lot_id)s
+   AND COALESCE(package_id, 0) = %(package_id)s
+   AND COALESCE(owner_id, 0) = %(owner_id)s
 """
 
 
@@ -149,11 +152,20 @@ class StockQuant(models.Model):
             parameters = {
                 "location_id": self.location_id.id,
                 "product_id": self.product_id.id,
+                "lot_id": self.lot_id.id or 0,
+                "package_id": self.package_id.id or 0,
+                "owner_id": self.owner_id.id or 0,
             }
             self.env.cr.execute(RESERVED_STATEMENT, parameters)
-            reserved_in_moves = self.env.cr.fetchone()
+            reserved_in_moves = self.env.cr.fetchone()[0]
+            _logger.info(
+                _("Reserved in quants %s, reserved in moves %s for keys %s"),
+                reserved_quantity,
+                reserved_in_moves,
+                str(parameters),
+            )
             comparison = float_compare(
-                reserved_quantity, reserved_in_moves[0], precision_digits=precision
+                reserved_quantity, reserved_in_moves, precision_digits=precision
             )
             if comparison == 0:
                 continue
