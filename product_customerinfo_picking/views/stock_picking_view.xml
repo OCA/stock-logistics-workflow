@@ -1,32 +1,25 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<!--
-  product customer code picking for OpenERP
-  Copyright (C) 2013 Agile Business Group sagl (<http://www.agilebg.com>).
-    Authors, Nicola Malcontenti, nicola.malcontenti@agilebg.com
--->
+<!-- Copyright 2021 Alex Comba - Agile Business Group
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
 
-    <record id="view_move_picking_tree" model="ir.ui.view">
-        <field name="name">stock.move.product.code.tree</field>
-        <field name="model">stock.move</field>
-        <field name="inherit_id" ref="stock.view_move_picking_tree" />
-        <field eval="16" name="priority" />
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
         <field name="arch" type="xml">
-            <field name="product_id" position="after">
+            <xpath
+                expr="//notebook/page/field[@name='move_ids_without_package']/form//field[@name='product_id']"
+                position="after"
+            >
                 <field name="product_customer_code" />
-            </field>
-        </field>
-    </record>
-
-    <record id="view_move_picking_form" model="ir.ui.view">
-        <field name="name">stock.move.product.code.form</field>
-        <field name="model">stock.move</field>
-        <field name="inherit_id" ref="stock.view_move_picking_form" />
-        <field eval="16" name="priority" />
-        <field name="arch" type="xml">
-            <field name="product_id" position="after">
+            </xpath>
+            <xpath
+                expr="//notebook/page/field[@name='move_ids_without_package']/tree/field[@name='product_id']"
+                position="after"
+            >
                 <field name="product_customer_code" />
-            </field>
+            </xpath>
         </field>
     </record>
 

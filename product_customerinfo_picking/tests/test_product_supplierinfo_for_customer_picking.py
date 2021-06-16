@@ -18,7 +18,6 @@ class TestProductSupplierinfoForCustomerPicking(TransactionCase):
                         {
                             "name": self.agrolait.id,
                             "product_code": "test_agrolait",
-                            "type": "customer",
                         },
                     )
                 ],
