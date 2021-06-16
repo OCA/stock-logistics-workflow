@@ -5,23 +5,26 @@ from odoo import api, fields, models
 
 
 class StockMove(models.Model):
-    _inherit = 'stock.move'
+    _inherit = "stock.move"
 
     @api.multi
-    @api.depends('picking_id.partner_id', 'product_id',
-                 'product_id.customer_ids.product_code')
+    @api.depends(
+        "picking_id.partner_id", "product_id", "product_id.customer_ids.product_code"
+    )
     def _compute_product_customer_code(self):
-        for move in self.filtered(lambda m: m.picking_id and
-                                  m.picking_id.partner_id and
-                                  m.product_tmpl_id.customer_ids):
-            customers = \
-                move.product_tmpl_id.customer_ids.filtered(
-                    lambda m: move.picking_id.partner_id)
+        for move in self.filtered(
+            lambda m: m.picking_id
+            and m.picking_id.partner_id
+            and m.product_tmpl_id.customer_ids
+        ):
+            customers = move.product_tmpl_id.customer_ids.filtered(
+                lambda m: move.picking_id.partner_id
+            )
             if customers:
                 move.product_customer_code = customers[0].product_code
 
     product_customer_code = fields.Char(
-        compute='_compute_product_customer_code',
-        string='Product Customer Code',
-        size=64
+        compute="_compute_product_customer_code",
+        string="Product Customer Code",
+        size=64,
     )

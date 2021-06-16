@@ -4,17 +4,13 @@
 {
     "name": "Product Supplierinfo For Customer Picking",
     "version": "12.0.1.0.0",
-    "author": "Agile Business Group, "
-              "Odoo Community Association (OCA)",
+    "author": "Agile Business Group, " "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "category": "Stock",
     "summary": "This module makes the product customer code visible "
-               "in the stock moves of a picking.",
+    "in the stock moves of a picking.",
     "license": "AGPL-3",
-    "depends": [
-        "stock",
-        "product_supplierinfo_for_customer"
-    ],
+    "depends": ["stock", "product_supplierinfo_for_customer"],
     "data": [
         "views/stock_picking_view.xml",
     ],
