@@ -77,6 +77,8 @@ class TestStockQuant(TransactionCase):
             ],
             limit=1,
         )
+        self.assertEqual(stock_quant.reserved_quantity, 0.0)
+        self.stock_picking.action_assign()
         self.assertEqual(stock_quant.reserved_quantity, 10.0)
         with self.assertRaises(ValidationError):
             self.quant_model.write({"reserved_quantity": 5.0})

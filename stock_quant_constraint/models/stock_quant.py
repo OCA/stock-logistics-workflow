@@ -114,12 +114,12 @@ class StockQuant(models.Model):
     _inherit = "stock.quant"
 
     quantity_error = fields.Float(
-        "Quantity",
+        "Quantity in Error",
         help="Difference between computed and actual quantity",
         readonly=True,
     )
     quantity_computed = fields.Float(
-        "Quantity",
+        "Quantity in Stock Move Lines",
         help="Difference between computed and actual quantity",
         readonly=True,
     )
