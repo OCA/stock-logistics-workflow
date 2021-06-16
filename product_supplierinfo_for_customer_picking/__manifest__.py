@@ -1,10 +1,9 @@
-# Copyright 2013-2017 Agile Business Group sagl
-#     (<http://www.agilebg.com>)
+# Copyright 2013 - 2021 Agile Business Group sagl (<https://www.agilebg.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Product Supplierinfo For Customer Picking",
-    "version": "12.0.1.0.0",
-    "author": "Agile Business Group, " "Odoo Community Association (OCA)",
+    "version": "14.0.1.0.0",
+    "author": "Agile Business Group, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "category": "Stock",
     "summary": "This module makes the product customer code visible "
