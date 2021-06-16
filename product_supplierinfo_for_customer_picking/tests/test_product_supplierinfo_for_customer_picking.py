@@ -1,4 +1,4 @@
-# Copyright 2018 Eficent <http://www.eficent.com>
+# Copyright 2018 Eficent <http://www.forgeflow.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo.tests.common import TransactionCase
@@ -12,15 +12,7 @@ class TestProductSupplierinfoForCustomerPicking(TransactionCase):
         self.computer_SC234.write(
             {
                 "customer_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "name": self.agrolait.id,
-                            "product_code": "test_agrolait",
-                            "type": "customer",
-                        },
-                    )
+                    (0, 0, {"name": self.agrolait.id, "product_code": "test_agrolait"},)
                 ],
             }
         )
