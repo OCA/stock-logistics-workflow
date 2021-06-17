@@ -19,7 +19,7 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
-[stock_delivery_note](stock_delivery_note/) | 14.0.1.0.0 | This module allows to fill in a delivery note that will be displayed on delivery report
+[stock_delivery_note](stock_delivery_note/) | 14.0.1.0.1 | This module allows to fill in a delivery note that will be displayed on delivery report
 [stock_move_assign_picking_hook](stock_move_assign_picking_hook/) | 14.0.1.1.1 | Stock Move picking assignment hook
 [stock_move_line_auto_fill](stock_move_line_auto_fill/) | 14.0.1.0.0 | Stock Move Line auto fill
 [stock_no_negative](stock_no_negative/) | 14.0.1.0.0 | Disallow negative stock levels by default
