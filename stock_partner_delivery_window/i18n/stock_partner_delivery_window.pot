@@ -15,7 +15,6 @@ msgstr ""
 
 #. module: stock_partner_delivery_window
 #: code:addons/stock_partner_delivery_window/models/res_partner.py:0
-#: code:addons/stock_partner_delivery_window/models/res_partner.py:0
 #, python-format
 msgid "%s: %s"
 msgstr ""
@@ -80,7 +79,6 @@ msgstr ""
 
 #. module: stock_partner_delivery_window
 #: code:addons/stock_partner_delivery_window/models/res_partner.py:0
-#: code:addons/stock_partner_delivery_window/models/res_partner.py:0
 #, python-format
 msgid "From %s to %s"
 msgstr ""
@@ -112,7 +110,6 @@ msgstr ""
 
 #. module: stock_partner_delivery_window
 #: code:addons/stock_partner_delivery_window/models/res_partner.py:0
-#: code:addons/stock_partner_delivery_window/models/res_partner.py:0
 #, python-format
 msgid ""
 "Please define at least one delivery time window or change preference to Any "
@@ -126,13 +123,11 @@ msgstr ""
 
 #. module: stock_partner_delivery_window
 #: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
-#: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
 #, python-format
 msgid "Scheduled date does not match partner's Delivery window preference."
 msgstr ""
 
 #. module: stock_partner_delivery_window
-#: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
 #: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
 #, python-format
 msgid ""
