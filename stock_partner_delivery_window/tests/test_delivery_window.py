@@ -10,13 +10,15 @@ class TestPartnerDeliveryWindow(SavepointCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
-        cls.customer = cls.env["res.partner"].create(
-            {"name": "ACME", "delivery_time_preference": "anytime"}
+        cls.customer_anytime = cls.env["res.partner"].create(
+            {"name": "Anytime", "delivery_time_preference": "anytime"}
         )
-        cls.customer_shipping = cls.env["res.partner"].create(
+        cls.customer_working_days = cls.env["res.partner"].create(
+            {"name": "Working Days", "delivery_time_preference": "workdays"}
+        )
+        cls.customer_time_window = cls.env["res.partner"].create(
             {
-                "name": "Delivery address",
-                "parent_id": cls.customer.id,
+                "name": "Time Window",
                 "delivery_time_preference": "time_windows",
                 "delivery_time_window_ids": [
                     (
@@ -62,32 +64,45 @@ class TestPartnerDeliveryWindow(SavepointCase):
     @freeze_time("2020-04-02")  # Thursday
     def test_delivery_window_warning(self):
         # No warning with anytime
-        cust_picking = self._create_delivery_picking(self.customer)
-        cust_picking.scheduled_date = "2020-04-03"  # Friday
-        onchange_res = cust_picking._onchange_scheduled_date()
+        anytime_picking = self._create_delivery_picking(self.customer_anytime)
+        anytime_picking.scheduled_date = "2020-04-03"  # Friday
+        onchange_res = anytime_picking._onchange_scheduled_date()
         self.assertIsNone(onchange_res)
+        # No warning on friday
+        workdays_picking = self._create_delivery_picking(self.customer_working_days)
+        workdays_picking.scheduled_date = "2020-04-03"  # Friday
+        onchange_res = workdays_picking._onchange_scheduled_date()
+        self.assertIsNone(onchange_res)
+        # But warning on saturday
+        workdays_picking.scheduled_date = "2020-04-04"  # Saturday
+        onchange_res = workdays_picking._onchange_scheduled_date()
+        self.assertIn("warning", onchange_res)
+        self.assertIn(
+            "the partner is set to prefer deliveries on working days",
+            onchange_res["warning"]["message"],
+        )
         # No warning on preferred time window
-        cust_ship_picking = self._create_delivery_picking(self.customer_shipping)
-        cust_ship_picking.scheduled_date = "2020-04-04"  # Saturday
-        onchange_res = cust_ship_picking._onchange_scheduled_date()
+        time_window_picking = self._create_delivery_picking(self.customer_time_window)
+        time_window_picking.scheduled_date = "2020-04-04"  # Saturday
+        onchange_res = time_window_picking._onchange_scheduled_date()
         self.assertIsNone(onchange_res)
-        cust_ship_picking.scheduled_date = "2020-04-03"  # Friday
-        onchange_res = cust_ship_picking._onchange_scheduled_date()
+        time_window_picking.scheduled_date = "2020-04-03"  # Friday
+        onchange_res = time_window_picking._onchange_scheduled_date()
         self.assertTrue("warning" in onchange_res.keys())
 
     @freeze_time("2020-04-02 07:59:59")  # Thursday
     def test_with_timezone_dst(self):
         # Define customer to allow shipping only between 10.00am and 4.00pm
         # in tz 'Europe/Brussels' (GMT+1 or GMT+2 during DST)
-        self.customer_shipping.tz = "Europe/Brussels"
-        self.customer_shipping.delivery_time_window_ids.write(
+        self.customer_time_window.tz = "Europe/Brussels"
+        self.customer_time_window.delivery_time_window_ids.write(
             {"time_window_start": 10.0, "time_window_end": 16.0}
         )
         # Test DST
         #
         # Frozen time is in UTC so 2020-04-02 07:59:59 == 2020-04-02 09:59:59
         #  in Brussels which is preferred
-        picking = self._create_delivery_picking(self.customer_shipping)
+        picking = self._create_delivery_picking(self.customer_time_window)
         onchange_res = picking._onchange_scheduled_date()
         self.assertTrue(
             isinstance(onchange_res, dict) and "warning" in onchange_res.keys()
@@ -114,15 +129,15 @@ class TestPartnerDeliveryWindow(SavepointCase):
     def test_with_timezone_no_dst(self):
         # Define customer to allow shipping only between 10.00am and 4.00pm
         # in tz 'Europe/Brussels' (GMT+1 or GMT+2 during DST)
-        self.customer_shipping.tz = "Europe/Brussels"
-        self.customer_shipping.delivery_time_window_ids.write(
+        self.customer_time_window.tz = "Europe/Brussels"
+        self.customer_time_window.delivery_time_window_ids.write(
             {"time_window_start": 10.0, "time_window_end": 16.0}
         )
         # Test No-DST
         #
         # Frozen time is in UTC so 2020-03-26 08:59:59 == 2020-04-02 09:59:59
         #  in Brussels which is preferred
-        picking = self._create_delivery_picking(self.customer_shipping)
+        picking = self._create_delivery_picking(self.customer_time_window)
         onchange_res = picking._onchange_scheduled_date()
         self.assertTrue(
             isinstance(onchange_res, dict) and "warning" in onchange_res.keys()

@@ -1,5 +1,6 @@
 # Copyright 2020 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
+from collections import defaultdict
 from datetime import time
 
 from odoo import _, api, fields, models
@@ -8,20 +9,27 @@ from odoo.tools.misc import format_time
 
 from odoo.addons.partner_tz.tools import tz_utils
 
+WORKDAYS = list(range(5))
+
 
 class ResPartner(models.Model):
 
     _inherit = "res.partner"
 
     delivery_time_preference = fields.Selection(
-        [("anytime", "Any time"), ("time_windows", "Fixed time windows")],
+        [
+            ("anytime", "Any time"),
+            ("time_windows", "Fixed time windows"),
+            ("workdays", "Weekdays (Monday to Friday)"),
+        ],
         string="Delivery time schedule preference",
-        default="anytime",
+        default="workdays",
         required=True,
         help="Define the scheduling preference for delivery orders:\n\n"
         "* Any time: Do not postpone deliveries\n"
         "* Fixed time windows: Postpone deliveries to the next preferred "
-        "time window",
+        "time window\n"
+        "* Weekdays: Postpone deliveries to the next weekday",
     )
 
     delivery_time_window_ids = fields.One2many(
@@ -71,6 +79,10 @@ class ResPartner(models.Model):
         :return: Boolean
         """
         self.ensure_one()
+        if self.delivery_time_preference == "workdays":
+            if date_time.weekday() > 4:
+                return False
+            return True
         windows = self.get_delivery_windows(date_time.weekday()).get(self.id)
         if windows:
             for w in windows:
@@ -94,45 +106,45 @@ class ResPartner(models.Model):
         day_translated_values = dict(
             self.env["time.weekday"]._fields["name"]._description_selection(self.env)
         )
+
+        def short_format_time(time):
+            return format_time(self.env, time, time_format="short")
+
+        weekdays = self.env["time.weekday"].search([])
         for partner in self:
-            opening_times = {}
+            opening_times = defaultdict(list)
             time_format_string = self._get_delivery_time_format_string()
             if partner.delivery_time_preference == "time_windows":
-                for day in self.env["time.weekday"].search([]):
+                for day in weekdays:
                     day_windows = partner.delivery_time_window_ids.filtered(
                         lambda d: day in d.time_window_weekday_ids
                     )
                     for win in day_windows:
-                        opening_times.setdefault(day_translated_values[day.name], [])
-                        opening_times[day_translated_values[day.name]].append(
-                            time_format_string
-                            % (
-                                format_time(
-                                    self.env,
-                                    win.get_time_window_start_time(),
-                                    time_format="short",
-                                ),
-                                format_time(
-                                    self.env,
-                                    win.get_time_window_end_time(),
-                                    time_format="short",
-                                ),
-                            )
+                        start = win.get_time_window_start_time()
+                        end = win.get_time_window_end_time()
+                        translated_day = day_translated_values[day.name]
+                        value = time_format_string % (
+                            short_format_time(start),
+                            short_format_time(end),
                         )
-            else:
-                for day in self.env["time.weekday"].search([]):
-                    opening_times.setdefault(day_translated_values[day.name], [])
-                    opening_times[day_translated_values[day.name]].append(
-                        time_format_string
-                        % (
-                            format_time(
-                                self.env, time(hour=0, minute=0), time_format="short"
-                            ),
-                            format_time(
-                                self.env, time(hour=23, minute=59), time_format="short"
-                            ),
-                        )
+                        opening_times[translated_day].append(value)
+            elif partner.delivery_time_preference == "workdays":
+                day_windows = weekdays.filtered(lambda d: d.name in WORKDAYS)
+                for day in day_windows:
+                    translated_day = day_translated_values[day.name]
+                    value = time_format_string % (
+                        short_format_time(time(hour=0, minute=0)),
+                        short_format_time(time(hour=23, minute=59)),
                     )
+                    opening_times[translated_day].append(value)
+            else:
+                for day in weekdays:
+                    translated_day = day_translated_values[day.name]
+                    value = time_format_string % (
+                        short_format_time(time(hour=0, minute=0)),
+                        short_format_time(time(hour=23, minute=59)),
+                    )
+                    opening_times[translated_day].append(value)
             opening_times_description = list()
             for day_name, time_list in opening_times.items():
                 opening_times_description.append(
