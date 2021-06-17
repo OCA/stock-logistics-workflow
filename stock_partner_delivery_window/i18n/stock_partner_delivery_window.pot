@@ -15,6 +15,7 @@ msgstr ""
 
 #. module: stock_partner_delivery_window
 #: code:addons/stock_partner_delivery_window/models/res_partner.py:0
+#: code:addons/stock_partner_delivery_window/models/res_partner.py:0
 #, python-format
 msgid "%s: %s"
 msgstr ""
@@ -46,7 +47,8 @@ msgid ""
 "Define the scheduling preference for delivery orders:\n"
 "\n"
 "* Any time: Do not postpone deliveries\n"
-"* Fixed time windows: Postpone deliveries to the next preferred time window"
+"* Fixed time windows: Postpone deliveries to the next preferred time window\n"
+"* Weekdays: Postpone deliveries to the next weekday"
 msgstr ""
 
 #. module: stock_partner_delivery_window
@@ -77,6 +79,7 @@ msgid "From"
 msgstr ""
 
 #. module: stock_partner_delivery_window
+#: code:addons/stock_partner_delivery_window/models/res_partner.py:0
 #: code:addons/stock_partner_delivery_window/models/res_partner.py:0
 #, python-format
 msgid "From %s to %s"
@@ -109,6 +112,7 @@ msgstr ""
 
 #. module: stock_partner_delivery_window
 #: code:addons/stock_partner_delivery_window/models/res_partner.py:0
+#: code:addons/stock_partner_delivery_window/models/res_partner.py:0
 #, python-format
 msgid ""
 "Please define at least one delivery time window or change preference to Any "
@@ -122,16 +126,26 @@ msgstr ""
 
 #. module: stock_partner_delivery_window
 #: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
+#: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
 #, python-format
 msgid "Scheduled date does not match partner's Delivery window preference."
 msgstr ""
 
 #. module: stock_partner_delivery_window
 #: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
+#: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
 #, python-format
 msgid ""
 "The scheduled date is %s (%s), but the partner is set to prefer deliveries on following time windows:\n"
 "%s"
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
+#, python-format
+msgid ""
+"The scheduled date is {} ({}), but the partner is set to prefer deliveries "
+"on working days."
 msgstr ""
 
 #. module: stock_partner_delivery_window
@@ -152,6 +166,11 @@ msgstr ""
 #. module: stock_partner_delivery_window
 #: model:ir.model,name:stock_partner_delivery_window.model_stock_picking
 msgid "Transfer"
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields.selection,name:stock_partner_delivery_window.selection__res_partner__delivery_time_preference__workdays
+msgid "Weekdays (Monday to Friday)"
 msgstr ""
 
 #. module: stock_partner_delivery_window
