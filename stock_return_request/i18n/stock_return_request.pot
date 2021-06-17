@@ -280,6 +280,11 @@ msgid "Messages"
 msgstr ""
 
 #. module: stock_return_request
+#: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: stock_return_request
 #: code:addons/stock_return_request/models/stock_return_request.py:0
 #: code:addons/stock_return_request/models/stock_return_request.py:0
 #: code:addons/stock_return_request/models/stock_return_request.py:0
