@@ -66,6 +66,19 @@ class TestSaleStockMtoAsMtsOrderpoint(SavepointCase):
         )
         self.assertTrue(orderpoint)
 
+    def test_mtp_as_mts_orderpoint_product_no_mto(self):
+        self.product.route_ids = False
+        order = self._create_sale_order()
+        orderpoint = self.env["stock.warehouse.orderpoint"].search(
+            [("product_id", "=", self.product.id)]
+        )
+        self.assertFalse(orderpoint)
+        order.action_confirm()
+        orderpoint = self.env["stock.warehouse.orderpoint"].search(
+            [("product_id", "=", self.product.id)]
+        )
+        self.assertFalse(orderpoint)
+
     def test_cancel_sale_order_orderpoint(self):
         order = self._create_sale_order()
         order.action_confirm()
