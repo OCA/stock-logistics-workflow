@@ -17,6 +17,7 @@ setuptools.setup(
         'odoo14-addon-stock_picking_invoice_link',
         'odoo14-addon-stock_picking_line_sequence',
         'odoo14-addon-stock_putaway_hook',
+        'odoo14-addon-stock_quant_package_dimension',
         'odoo14-addon-stock_quant_package_product_packaging',
         'odoo14-addon-stock_restrict_lot',
         'odoo14-addon-stock_return_request',
