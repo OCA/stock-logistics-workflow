@@ -28,6 +28,7 @@ addon | version | summary
 [stock_picking_invoice_link](stock_picking_invoice_link/) | 14.0.1.0.0 | Adds link between pickings and invoices
 [stock_picking_line_sequence](stock_picking_line_sequence/) | 14.0.1.0.0 | Manages the order of stock moves by displaying its sequence
 [stock_putaway_hook](stock_putaway_hook/) | 14.0.1.0.0 | Add hooks allowing modules to add more putaway strategies
+[stock_quant_package_dimension](stock_quant_package_dimension/) | 14.0.1.0.0 | Use dimensions on packages
 [stock_quant_package_product_packaging](stock_quant_package_product_packaging/) | 14.0.1.0.0 | Use product packagings on packages
 [stock_restrict_lot](stock_restrict_lot/) | 14.0.1.1.1 | Base module that add back the concept of restrict lot on stock move
 [stock_return_request](stock_return_request/) | 14.0.1.0.0 | Stock Return Request
