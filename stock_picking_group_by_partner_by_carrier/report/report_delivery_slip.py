@@ -72,6 +72,10 @@ class DeliverySlipReport(models.AbstractModel):
 
     @api.model
     def get_remaining_to_deliver(self, picking):
+        # As data fetched here is meant to be displayed on a report,
+        # set the lang
+        self = self.with_context(lang=picking.partner_id.lang)
+        picking = picking.with_context(lang=picking.partner_id.lang)
         sales_data = self._get_remaining_to_deliver(picking)
 
         # Check: being sales_data an *ordered* dictonary, maybe .values()
