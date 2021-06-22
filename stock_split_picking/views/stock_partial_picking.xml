@@ -8,7 +8,7 @@
             <field name="state" position="before">
                 <button
                     name="%(stock_split_picking.action_stock_split_picking)s"
-                    states="draft,confirmed,assigned"
+                    states="draft,confirmed,waiting,assigned"
                     string="Split"
                     groups="stock.group_stock_user"
                     type="action"
