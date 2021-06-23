@@ -6,7 +6,7 @@
     "summary": "Link between picking and sale order",
     "version": "13.0.1.0.1",
     "category": "Inventory",
-    "website": "http://github.com/OCA/stock-logistics-workflow",
+    "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Tecnativa, " "Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "application": False,
