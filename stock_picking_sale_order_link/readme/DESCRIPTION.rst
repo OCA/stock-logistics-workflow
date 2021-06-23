@@ -1,2 +1,2 @@
-This module extends standard WMS to add a smart button in pickings to go to
-sales order that creates the picking.
+This module adds a smart button to Stock Transfers,
+to open the related Sales Order.
