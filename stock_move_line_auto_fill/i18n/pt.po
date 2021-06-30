@@ -1,0 +1,89 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_pack_operation_auto_fill
+#
+# Translators:
+# Pedro Castro Silva <pedrocs@exo.pt>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-18 03:48+0000\n"
+"PO-Revision-Date: 2017-12-18 03:48+0000\n"
+"Last-Translator: Pedro Castro Silva <pedrocs@exo.pt>, 2017\n"
+"Language-Team: Portuguese (https://www.transifex.com/oca/teams/23907/pt/)\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: stock_move_line_auto_fill
+#: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking__action_pack_op_auto_fill_allowed
+msgid "Action Pack Op Auto Fill Allowed"
+msgstr ""
+
+#. module: stock_move_line_auto_fill
+#: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking__auto_fill_operation
+#: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking_type__auto_fill_operation
+msgid "Auto fill operations"
+msgstr ""
+
+#. module: stock_move_line_auto_fill
+#: model_terms:ir.ui.view,arch_db:stock_move_line_auto_fill.stock_picking_form_view
+msgid "AutoFill"
+msgstr ""
+
+#. module: stock_move_line_auto_fill
+#: model_terms:ir.ui.view,arch_db:stock_move_line_auto_fill.view_picking_type_form_assignment
+msgid "Automation"
+msgstr ""
+
+#. module: stock_move_line_auto_fill
+#: model:ir.model.fields,help:stock_move_line_auto_fill.field_stock_picking_type__avoid_lot_assignment
+msgid "Avoid auto fill for more line with lots product"
+msgstr ""
+
+#. module: stock_move_line_auto_fill
+#: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking_type__avoid_lot_assignment
+msgid "Avoid auto-assignment of lots"
+msgstr ""
+
+#. module: stock_move_line_auto_fill
+#: code:addons/stock_move_line_auto_fill/models/stock_picking.py:0
+#, python-format
+msgid ""
+"Filling the operations automatically is not possible, perhaps the pickings "
+"aren't in the right state (Partially available or available)."
+msgstr ""
+
+#. module: stock_move_line_auto_fill
+#: model:ir.model,name:stock_move_line_auto_fill.model_stock_picking_type
+msgid "Picking Type"
+msgstr ""
+
+#. module: stock_move_line_auto_fill
+#: model:ir.model,name:stock_move_line_auto_fill.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_move_line_auto_fill
+#: model_terms:ir.ui.view,arch_db:stock_move_line_auto_fill.stock_picking_form_view
+msgid ""
+"This button will automatically fill all operations that have no tracking set "
+"on the product, no processed qty and no selected package."
+msgstr ""
+
+#. module: stock_move_line_auto_fill
+#: model:ir.model.fields,help:stock_move_line_auto_fill.field_stock_picking__auto_fill_operation
+#: model:ir.model.fields,help:stock_move_line_auto_fill.field_stock_picking_type__auto_fill_operation
+msgid ""
+"To auto fill done quantity in picking document.\n"
+"- If checked, auto fill done quantity automatically\n"
+"- If unchecked, show button AutoFill for user to do the auto fill manually"
+msgstr ""
+
+#. module: stock_move_line_auto_fill
+#: model:ir.model,name:stock_move_line_auto_fill.model_stock_picking
+msgid "Transfer"
+msgstr "Transferência"
