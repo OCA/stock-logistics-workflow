@@ -23,7 +23,7 @@ class ResPartner(models.Model):
             ("workdays", "Weekdays (Monday to Friday)"),
         ],
         string="Delivery time schedule preference",
-        default="workdays",
+        default="anytime",
         required=True,
         help="Define the scheduling preference for delivery orders:\n\n"
         "* Any time: Do not postpone deliveries\n"
