@@ -1,15 +1,16 @@
 # Copyright 2020 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 
-from odoo.tests import Form, SavepointCase
+from odoo.tests import Form
+
+from . import common
 
 
-class TestStockQuantPackageProductPackaging(SavepointCase):
+class TestStockQuantPackageProductPackaging(common.TestStockQuantPackageCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.product = cls.env.ref("product.product_delivery_02")
-        cls.packaging = cls.env["product.packaging"].create(
+        cls.product.packaging_ids = cls.packaging = cls.env["product.packaging"].create(
             {
                 "name": "10 pack",
                 "product_id": cls.product.id,
@@ -50,4 +51,23 @@ class TestStockQuantPackageProductPackaging(SavepointCase):
         self.assertRecordValues(
             self.package,
             [{"pack_length": 12, "width": 13, "height": 14, "pack_weight": 15}],
+        )
+
+    def test_package_estimated_pack_weight_kg(self):
+        self.env["stock.quant"]._update_available_quantity(
+            self.product,
+            self.wh.out_type_id.default_location_src_id,
+            7.0,
+            package_id=self.package,
+        )
+        # Weight are taken from product, like the delivery module
+        self.assertEqual(self.package.estimated_pack_weight_kg, 7)
+        self.move._action_assign()
+        for line in self.move.move_line_ids:
+            line.qty_done = line.product_uom_qty
+        self.assertEqual(
+            self.package.with_context(
+                picking_id=self.move.picking_id.id
+            ).estimated_pack_weight_kg,
+            7,
         )
