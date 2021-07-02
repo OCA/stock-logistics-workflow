@@ -32,6 +32,11 @@
                         <field name="pack_weight" />
                              <span><field name="weight_uom_name" /></span>
                         </div>
+                    <label for="estimated_pack_weight_kg" />
+                        <div class="o_row" name="estimated_pack_weight_kg">
+                        <field name="estimated_pack_weight_kg" />
+                            <span>kg</span>
+                        </div>
                 </group>
                 <group string="Units of Measure">
                     <field name="volume_uom_id" />

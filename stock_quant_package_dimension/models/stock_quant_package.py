@@ -6,17 +6,23 @@ from odoo import api, fields, models
 class StockQuantPackage(models.Model):
     _inherit = "stock.quant.package"
 
-    pack_weight = fields.Float("Weight")
-    pack_length = fields.Integer("Length", help="length")
-    width = fields.Integer("Width", help="width")
-    height = fields.Integer("Height", help="height")
+    pack_weight = fields.Float("Pack Weight")
+    pack_length = fields.Integer("Pack Length", help="length")
+    width = fields.Integer("Pack Width", help="width")
+    height = fields.Integer("Pack Height", help="height")
     volume = fields.Float(
-        "Volume",
+        "Pack Volume",
         digits=(8, 4),
         compute="_compute_volume",
         readonly=True,
         store=False,
         help="volume",
+    )
+    estimated_pack_weight_kg = fields.Float(
+        "Estimated weight (in kg)",
+        digits="Product Unit of Measure",
+        compute="_compute_estimated_pack_weight_kg",
+        help="Based on the weight of the product.",
     )
 
     length_uom_id = fields.Many2one(
@@ -129,3 +135,56 @@ class StockQuantPackage(models.Model):
     @api.onchange("product_packaging_id")
     def onchange_product_packaging_id(self):
         self._update_dimensions_from_packaging(override=True)
+
+    def _get_picking_move_line_ids_per_package(self, picking_id):
+        if not picking_id:
+            return {}
+        move_lines = self.env["stock.move.line"].search(
+            [("result_package_id", "in", self.ids), ("picking_id", "=", picking_id)]
+        )
+        res = dict.fromkeys(self.ids, self.env["stock.move.line"])
+        for ml in move_lines:
+            res.setdefault(ml.result_package_id, set(ml.ids))
+            res[ml.result_package_id].add(ml.id)
+        return res
+
+    def _get_weight_kg_from_move_lines(self, move_lines):
+        uom_kg = self.env.ref("uom.product_uom_kgm")
+        return sum(
+            ml.product_uom_id._compute_quantity(
+                qty=ml.qty_done, to_unit=ml.product_id.uom_id
+            )
+            * ml.product_id.weight_uom_id._compute_quantity(
+                qty=ml.product_id.weight, to_unit=uom_kg
+            )
+            for ml in move_lines
+        )
+
+    def _get_weight_kg_from_quants(self, quants):
+        uom_kg = self.env.ref("uom.product_uom_kgm")
+        return sum(
+            quant.quantity
+            * quant.product_id.weight_uom_id._compute_quantity(
+                qty=quant.product_id.weight, to_unit=uom_kg
+            )
+            for quant in quants
+        )
+
+    @api.depends("quant_ids")
+    @api.depends_context("picking_id")
+    def _compute_estimated_pack_weight_kg(self):
+        # NOTE: copy-pasted and adapted from `delivery` module
+        # because we do not want to add the dependency against 'delivery' here.
+        picking_id = self.env.context.get("picking_id")
+        move_line_ids_per_package = self._get_picking_move_line_ids_per_package(
+            picking_id
+        )
+        for package in self:
+            weight = 0.0
+            if picking_id:  # coming from a transfer
+                move_line_ids = move_line_ids_per_package.get(package, [])
+                move_lines = self.env["stock.move.line"].browse(move_line_ids)
+                weight = package._get_weight_kg_from_move_lines(move_lines)
+            else:
+                weight = package._get_weight_kg_from_quants(package.quant_ids)
+            package.estimated_pack_weight_kg = weight
