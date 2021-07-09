@@ -25,7 +25,8 @@ Stock Quant Package Dimension
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
-This module adds dimension fields on stock packages.
+This module adds dimension fields on stock packages
+and an estimated weight (in kg).
 
 .. IMPORTANT::
    This is an alpha version, the data model and design can change at any time without warning.
