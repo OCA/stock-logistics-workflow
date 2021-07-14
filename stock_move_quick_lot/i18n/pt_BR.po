@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_move_quick_lot
+# 	* stock_move_quick_lot
 #
 msgid ""
 msgstr ""
@@ -39,13 +39,20 @@ msgid "Open detail to remove lot"
 msgstr "Abra os detalhes para remover o lote"
 
 #. module: stock_move_quick_lot
+#: model:ir.model,name:stock_move_quick_lot.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: stock_move_quick_lot
 #: model:ir.model,name:stock_move_quick_lot.model_stock_move
 msgid "Stock Move"
 msgstr "Movimentação de Estoque"
 
 #. module: stock_move_quick_lot
 #: model:ir.model.fields,help:stock_move_quick_lot.field_stock_move__life_date
-msgid "This is the date on which the goods with this Serial Number may become dangerous and must not be consumed."
+msgid ""
+"This is the date on which the goods with this Serial Number may become "
+"dangerous and must not be consumed."
 msgstr ""
 "Essa é a data em que as mercadorias com este número de série podem se tornar "
 "perigosas e não devem ser consumidas."
