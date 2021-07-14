@@ -36,6 +36,11 @@ msgid "Open detail to remove lot"
 msgstr ""
 
 #. module: stock_move_quick_lot
+#: model:ir.model,name:stock_move_quick_lot.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: stock_move_quick_lot
 #: model:ir.model,name:stock_move_quick_lot.model_stock_move
 msgid "Stock Move"
 msgstr ""
