@@ -20,6 +20,11 @@ msgstr ""
 
 #. module: stock_picking_show_return
 #: model:ir.ui.view,arch_db:stock_picking_show_return.view_picking_form
+msgid "<span class=\"o_stat_text\">Return pickings</span>"
+msgstr ""
+
+#. module: stock_picking_show_return
+#: model:ir.ui.view,arch_db:stock_picking_show_return.view_picking_form
 msgid "<span class=\"o_stat_text\">Source picking</span>"
 msgstr ""
 
