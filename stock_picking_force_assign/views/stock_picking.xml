@@ -1,0 +1,17 @@
+<odoo>
+    <record id="view_stock_picking_form" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="groups_id" eval="[(4, ref('group_stock_force_assign'))]" />
+        <field name="arch" type="xml">
+            <button name="action_assign" position="after">
+                <button
+                    name="action_force_assign_pickings"
+                    type="object"
+                    string="Force reservation"
+                    attrs="{'invisible': [('show_check_availability', '=', False)]}"
+                />
+            </button>
+        </field>
+    </record>
+</odoo>
