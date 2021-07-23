@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- wizard view -->
+    <record id="stock_move_change_source_location_view" model="ir.ui.view">
+        <field name="name">Stock Move Change Source Location</field>
+        <field name="model">stock.move.change.source.location.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Stock Picking">
+                <div>
+                    Change the source location.
+                    <br />
+                </div>
+                <group>
+                    <field name="warehouse_view_location_id" invisible="1" />
+                    <field name="moves_to_change" />
+                    <field
+                        name="old_location_id"
+                        attrs="{'invisible': [('moves_to_change', '!=', 'matched')]}"
+                        options="{'no_create': True, 'no_open': True}"
+                    />
+                    <field name="new_location_id" options="{'no_create': True}" />
+                    <field
+                        name="move_lines"
+                        attrs="{'invisible': [('moves_to_change', '!=', 'manual')]}"
+                        options="{'no_create': True}"
+                        domain="[('picking_id', '=', active_id)]"
+                    >
+                        <tree string="Move lines">
+                            <field name="picking_id" />
+                            <field name="state" />
+                            <field name="product_id" />
+                            <field name="location_id" />
+                            <field name="location_dest_id" />
+                            <field name="product_uom_qty" />
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button
+                        string="Apply"
+                        name="action_apply"
+                        type="object"
+                        class="oe_highlight"
+                    />
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_stock_move_change_source_location" model="ir.actions.act_window">
+        <field name="name">Change Stock Move Source Location</field>
+        <field name="res_model">stock.move.change.source.location.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
