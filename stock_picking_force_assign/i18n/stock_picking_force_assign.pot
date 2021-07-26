@@ -1,0 +1,48 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_picking_force_assign
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_force_assign
+#: code:addons/stock_picking_force_assign/models/stock_picking.py:61
+#, python-format
+msgid "Cannot unreserve enough %s, missing quantity is %d"
+msgstr ""
+
+#. module: stock_picking_force_assign
+#: model:res.groups,name:stock_picking_force_assign.group_stock_force_assign
+msgid "Force availability on pickings"
+msgstr ""
+
+#. module: stock_picking_force_assign
+#: model_terms:ir.ui.view,arch_db:stock_picking_force_assign.view_stock_picking_form
+msgid "Force reservation"
+msgstr ""
+
+#. module: stock_picking_force_assign
+#: model:ir.model,name:stock_picking_force_assign.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: stock_picking_force_assign
+#: code:addons/stock_picking_force_assign/models/stock_picking.py:15
+#, python-format
+msgid "Unreserved picking(s) %s in order to assign this one"
+msgstr ""
+
+#. module: stock_picking_force_assign
+#: code:addons/stock_picking_force_assign/models/stock_picking.py:20
+#, python-format
+msgid "Unreserved this picking in order to assign %s"
+msgstr ""
+
