@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_split_picking" model="ir.ui.view">
+        <field name="name">stock.split.picking.form</field>
+        <field name="model">stock.split.picking</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="mode" />
+                    <field name="picking_ids" invisible="True" />
+                    <field
+                        name="move_ids"
+                        attrs="{'invisible': [('mode', '!=', 'selection')], 'required': [('mode', '=', 'selection')]}"
+                        domain="[('picking_id', 'in', picking_ids)]"
+                    >
+                        <tree string="Moves" create="true" edit="true" delete="true">
+                            <field name="product_id" />
+                            <field name="product_uom_qty" />
+                            <field
+                                name="product_uom"
+                                options="{'no_open': True, 'no_create': True}"
+                                string="Unit of Measure"
+                                groups="uom.group_uom"
+                            />
+                            <field name="picking_id" />
+                            <field
+                                name="location_id"
+                                options="{'no_create': True}"
+                                groups="stock.group_stock_multi_locations"
+                            />
+                            <field
+                                name="location_dest_id"
+                                options="{'no_create': True}"
+                                groups="stock.group_stock_multi_locations"
+                            />
+                            <field name="create_date" groups="base.group_no_one" />
+                            <field
+                                name="date"
+                                string="Date"
+                                groups="base.group_no_one"
+                            />
+                            <field name="date_deadline" />
+                            <field name="state" />
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                <button
+                        name="action_apply"
+                        class="btn btn-primary"
+                        string="Split"
+                        type="object"
+                    />
+                or
+                <button special="cancel" class="btn btn-secondary" string="Cancel" />
+            </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_stock_split_picking" model="ir.actions.act_window">
+        <field name="name">Split pickings</field>
+        <field name="res_model">stock.split.picking</field>
+        <field name="view_id" ref="view_stock_split_picking" />
+        <field name="target">new</field>
+    </record>
+</odoo>
