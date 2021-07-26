@@ -1,0 +1,5 @@
+<odoo>
+    <record id="group_stock_force_assign" model="res.groups">
+        <field name="users" eval="[(4, ref('base.user_demo'))]" />
+    </record>
+</odoo>
