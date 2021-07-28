@@ -18,6 +18,7 @@ setuptools.setup(
         'odoo12-addon-stock_landed_costs_currency',
         'odoo12-addon-stock_lot_scrap',
         'odoo12-addon-stock_move_line_auto_fill',
+        'odoo12-addon-stock_move_manual_lot',
         'odoo12-addon-stock_move_quick_lot',
         'odoo12-addon-stock_no_negative',
         'odoo12-addon-stock_picking_auto_create_lot',
