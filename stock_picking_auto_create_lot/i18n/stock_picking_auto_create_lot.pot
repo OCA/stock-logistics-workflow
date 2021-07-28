@@ -26,8 +26,18 @@ msgid "Picking Type"
 msgstr ""
 
 #. module: stock_picking_auto_create_lot
+#: model:ir.model,name:stock_picking_auto_create_lot.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: stock_picking_auto_create_lot
 #: model:ir.model,name:stock_picking_auto_create_lot.model_product_template
 msgid "Product Template"
+msgstr ""
+
+#. module: stock_picking_auto_create_lot
+#: model:ir.model,name:stock_picking_auto_create_lot.model_stock_move
+msgid "Stock Move"
 msgstr ""
 
 #. module: stock_picking_auto_create_lot
