@@ -15,6 +15,7 @@ setuptools.setup(
         'odoo14-addon-stock_no_negative',
         'odoo14-addon-stock_partner_delivery_window',
         'odoo14-addon-stock_picking_back2draft',
+        'odoo14-addon-stock_picking_cancel_reason',
         'odoo14-addon-stock_picking_filter_lot',
         'odoo14-addon-stock_picking_invoice_link',
         'odoo14-addon-stock_picking_line_sequence',
