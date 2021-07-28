@@ -1,0 +1,11 @@
+<odoo>
+    <record id="view_picking_type_form" model="ir.ui.view">
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form" />
+        <field name="arch" type="xml">
+            <field name="use_existing_lots" position="after">
+                <field name="use_manual_lot_selection" />
+            </field>
+        </field>
+    </record>
+</odoo>
