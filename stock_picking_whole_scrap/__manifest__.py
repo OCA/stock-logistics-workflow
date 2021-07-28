@@ -11,9 +11,10 @@
     "license": "AGPL-3",
     "installable": True,
     "depends": ["stock"],
-    "data": ["wizards/stock_picking_whole_scrap.xml",
-             "views/stock_picking_views.xml",
-             "security/ir.model.access.csv",
-             ],
+    "data": [
+        "wizards/stock_picking_whole_scrap.xml",
+        "views/stock_picking_views.xml",
+        "security/ir.model.access.csv",
+    ],
     "maintainers": ["sergio-teruel"],
 }

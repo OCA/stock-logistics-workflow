@@ -28,7 +28,9 @@ class StockPickingScrapLine(models.TransientModel):
         comodel_name="uom.uom", string="Unit of Measure", readonly=True
     )
     wizard_id = fields.Many2one(comodel_name="wiz.stock.picking.scrap", string="Wizard")
-    move_line_id = fields.Many2one(comodel_name="stock.move.line", string="Move Line",readonly=True)
+    move_line_id = fields.Many2one(
+        comodel_name="stock.move.line", string="Move Line", readonly=True
+    )
 
 
 class StockPickingScrap(models.TransientModel):
