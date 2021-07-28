@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+wiz_stock_picking_scrap_user,wiz_stock_picking_scrap_user,model_wiz_stock_picking_scrap,stock.group_stock_user,1,1,1,0
+wiz_stock_picking_scrap_manager,wiz_stock_picking_scrap_manager,model_wiz_stock_picking_scrap,stock.group_stock_manager,1,1,1,1
+wiz_stock_picking_scrap_line_user,wiz_stock_picking_scrap_line_user,model_wiz_stock_picking_scrap_line,stock.group_stock_user,1,1,1,0
+wiz_stock_picking_scrap_line_manager,wiz_stock_picking_scrap_line_manager,model_wiz_stock_picking_scrap_line,stock.group_stock_manager,1,1,1,1

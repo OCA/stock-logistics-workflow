@@ -28,7 +28,7 @@ class StockPickingScrapLine(models.TransientModel):
         comodel_name="uom.uom", string="Unit of Measure", readonly=True
     )
     wizard_id = fields.Many2one(comodel_name="wiz.stock.picking.scrap", string="Wizard")
-    move_line_id = fields.Many2one(comodel_name="stock.move.line", string="Move Line")
+    move_line_id = fields.Many2one(comodel_name="stock.move.line", string="Move Line",readonly=True)
 
 
 class StockPickingScrap(models.TransientModel):
@@ -118,5 +118,5 @@ class StockPickingScrap(models.TransientModel):
             ):
                 raise UserError(_("You can't scrap more quantity that done it"))
             new_scraps += StockScrap.create(self._prepare_stock_scrap(line))
-        new_scraps.do_scrap()
+        new_scraps.with_context(skip_expired=1).do_scrap()
         return new_scraps
