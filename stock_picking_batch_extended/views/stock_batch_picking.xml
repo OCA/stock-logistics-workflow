@@ -296,6 +296,8 @@
         <field name="arch" type="xml">
             <tree string="Batch Picking">
                 <field name="name" />
+                <!-- Change to optional="hide" when framework does not compute hide fields -->
+                <field name="picking_count" optional="show" />
                 <field name="user_id" />
                 <field name="date" />
                 <field name="state" />
