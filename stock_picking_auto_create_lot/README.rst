@@ -41,6 +41,9 @@ To configure this module, you need to:
 #. Go to a *Inventory > Configuration > Operation Types*.
 #. Set 'auto create lot' option for this operation type.
 
+#. Go to a *Inventory > Master Data > Products*.
+#. Set 'auto create lot' option for the products you need.
+
 Usage
 =====
 
@@ -68,6 +71,7 @@ Credits
 Authors
 ~~~~~~~
 
+* ACSONE SA/NV
 * Tecnativa
 
 Contributors
@@ -76,6 +80,7 @@ Contributors
 * Carlos Dauden <carlos.dauden@tecnativa.com>
 * Sergio Teruel <sergio.teruel@tecnativa.com>
 * Pimolnat Suntian <pimolnats@ecosoft.co.th>
+* Denis Roussel <denis.roussel@acsone.eu>
 
 Maintainers
 ~~~~~~~~~~~
