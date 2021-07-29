@@ -138,6 +138,9 @@ class StockPicking(models.Model):
         self.ensure_one()
         return self.move_line_ids
 
+    def _delivery_report_state_is_done(self):
+        return self.state == "done"
+
     def get_delivery_report_lines(self):
         """Return the lines that will be on the report.
 
@@ -147,7 +150,7 @@ class StockPicking(models.Model):
         """
         self.ensure_one()
         moves = self._get_sorted_moves()
-        if self.state != "done":
+        if not self._delivery_report_state_is_done():
             moves = moves.filtered("reserved_availability")
 
         if len(moves.mapped("sale_line_id.order_id")) > 1:
@@ -160,7 +163,7 @@ class StockPicking(models.Model):
                 "location_id": self.env.ref("stock.stock_location_output").id,
                 "location_dest_id": self.env.ref("stock.stock_location_output").id,
             }
-            if self.state != "done":
+            if not self._delivery_report_state_is_done():
                 sales_and_moves = self.env["stock.move"]
                 fake_record["name"] = "fake move"
                 for sale, sale_moves in grouped_moves:
@@ -185,16 +188,16 @@ class StockPicking(models.Model):
                         for move_line in move.move_line_ids:
                             sales_and_moves |= move_line
                 return sales_and_moves
-        elif self.state != "done":
+        elif not self._delivery_report_state_is_done():
             return moves
         else:
             return self._get_sorted_move_lines()
 
     def get_customer_refs(self):
         """Returns all unique sales order customer references."""
-        if self.state != "done":
-            move_lines = self.move_lines.filtered("product_uom_qty")
-        else:
+        if self._delivery_report_state_is_done():
             move_lines = self.move_lines
+        else:
+            move_lines = self.move_lines.filtered("product_uom_qty")
         references = move_lines.mapped("sale_line_id.order_id.client_order_ref")
         return set(filter(None, references))
