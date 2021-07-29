@@ -5,7 +5,7 @@
 {
     "name": "Stock Picking by Mail",
     "summary": "Send stock picking by email",
-    "version": "13.0.1.0.0",
+    "version": "13.0.1.1.0",
     "author": "Sandra Figueroa Varela, "
     "Tecnativa, "
     "Odoo Community Association (OCA)",

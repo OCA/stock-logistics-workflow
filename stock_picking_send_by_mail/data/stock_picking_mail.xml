@@ -11,7 +11,7 @@
         <field name="partner_to">${object.partner_id.id}</field>
         <field name="model_id" ref="stock.model_stock_picking" />
         <field name="auto_delete" eval="True" />
-        <field name="report_template" ref="stock.action_report_picking" />
+        <field name="report_template" ref="stock.action_report_delivery" />
         <field name="report_name">${(object.name or '').replace('/','_')}</field>
         <field name="lang">${object.partner_id.lang}</field>
         <field
