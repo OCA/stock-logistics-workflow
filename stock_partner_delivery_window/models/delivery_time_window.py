@@ -3,8 +3,6 @@
 
 from odoo import api, fields, models
 
-from odoo.addons.base.models.res_partner import _tz_get
-
 
 class DeliveryTimeWindow(models.Model):
 
@@ -18,7 +16,7 @@ class DeliveryTimeWindow(models.Model):
         "res.partner", required=True, index=True, ondelete="cascade"
     )
 
-    tz = fields.Selection(_tz_get, related="partner_id.tz", readonly=True)
+    tz = fields.Selection(related="partner_id.tz", readonly=True)
 
     @api.constrains("partner_id")
     def check_window_no_overlaps(self):
