@@ -7,12 +7,12 @@ from odoo import fields, models
 class StockQuantPackage(models.Model):
     _inherit = "stock.quant.package"
 
-    estimated_pack_weight = fields.Float(
+    estimated_pack_weight_kg = fields.Float(
         # Overloaded field
         help="Based on the weight of the product packagings."
     )
 
-    def _get_weight_from_move_lines(self, move_lines):
+    def _get_weight_kg_from_move_lines(self, move_lines):
         # Overridden from 'stock_quant_package_dimension' module to use the
         # 'get_total_weight_from_packaging' method supplied by the
         # 'product_total_weight_from_packaging' module
@@ -21,7 +21,7 @@ class StockQuantPackage(models.Model):
             for ml in move_lines
         )
 
-    def _get_weight_from_quants(self, quants):
+    def _get_weight_kg_from_quants(self, quants):
         # Overridden from 'stock_quant_package_dimension' module to use the
         # 'get_total_weight_from_packaging' method supplied by the
         # 'product_total_weight_from_packaging' module
