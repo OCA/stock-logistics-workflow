@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_delivery_document" inherit_id="stock.report_delivery_document">
+        <!-- overrides when the picking is not done -->
+        <xpath
+            expr='//table[@name="stock_move_table"]/tbody/t[@t-set="lines"]'
+            position="attributes"
+        >
+            <attribute name="t-value">o.get_delivery_report_lines()</attribute>
+        </xpath>
+
+        <xpath
+            expr='//table[@name="stock_move_table"]/tbody/tr//span[@t-field="move.product_id"]/..'
+            position="replace"
+        >
+            <t t-if="move.product_id">
+                <td>
+                    <span t-field="move.product_id" />
+                    <p t-if="move.description_picking != move.product_id.name">
+                        <span t-field="move.description_picking" />
+                    </p>
+                </td>
+            </t>
+            <t t-else="">
+                <th>
+                    <span t-esc="move.description_picking" />
+                </th>
+            </t>
+        </xpath>
+
+        <xpath
+            expr='//table[@name="stock_move_table"]/tbody/tr/td/span[@t-field="move.product_uom_qty"]'
+            position="attributes"
+        >
+            <attribute name="t-if">move.product_id</attribute>
+        </xpath>
+
+        <xpath
+            expr='//table[@name="stock_move_table"]/tbody/tr/td/span[@t-field="move.product_uom"]'
+            position="attributes"
+        >
+            <attribute name="t-if">move.product_id</attribute>
+        </xpath>
+
+        <!-- overrides when the picking is done -->
+        <xpath
+            expr='//table[@name="stock_move_line_table"]/tbody//tr[@t-as="move_line"]'
+            position="attributes"
+        >
+            <attribute name="t-foreach">o.get_delivery_report_lines()</attribute>
+        </xpath>
+
+        <xpath
+            expr="//table[@name='stock_backorder_table']/../p[last()]"
+            position="attributes"
+        >
+            <attribute name="t-if">False</attribute>
+        </xpath>
+
+    </template>
+
+    <template
+        id="stock_report_delivery_has_serial_move_line_inherit"
+        inherit_id="stock.stock_report_delivery_has_serial_move_line"
+    >
+        <xpath expr='//span[@t-field="move_line.lot_id.name"]' position="attributes">
+            <attribute name="t-if">move_line.product_id</attribute>
+        </xpath>
+
+        <xpath expr='//span[@t-field="move_line.lot_id.name"]' position="attributes">
+            <attribute name="t-if">move_line.product_id</attribute>
+        </xpath>
+
+        <xpath expr='//span[@t-field="move_line.qty_done"]' position="attributes">
+            <attribute name="t-if">move_line.product_id</attribute>
+        </xpath>
+
+        <xpath expr='//span[@t-field="move_line.product_uom_id"]' position="attributes">
+            <attribute name="t-if">move_line.product_id</attribute>
+        </xpath>
+    </template>
+
+    <template
+        id="report_delivery_document_inherit_sale_stock"
+        inherit_id="sale_stock.report_delivery_document_inherit_sale_stock"
+    >
+        <!-- Remove the customer reference in the header if there is more than one -->
+        <xpath
+            expr='//div[@t-if="o.sudo().sale_id.client_order_ref"]'
+            position="attributes"
+        >
+            <attribute name="t-if">len(o.get_customer_refs())==1</attribute>
+        </xpath>
+
+        <!-- Replace the customer refs with the one based on the move line displayed -->
+        <xpath
+            expr='//p[@t-field="o.sudo().sale_id.client_order_ref"]'
+            position="replace"
+        >
+            <p>
+                <t t-esc="o.get_customer_refs().pop()" />
+            </p>
+        </xpath>
+    </template>
+</odoo>
