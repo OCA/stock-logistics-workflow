@@ -20,7 +20,7 @@ msgstr ""
 
 #. module: stock_quant_package_dimension
 #: model:ir.model.fields,help:stock_quant_package_dimension.field_stock_quant_package__estimated_pack_weight_kg
-msgid "Based on the weight of the product."
+msgid "Based on the weight of the product packagings."
 msgstr ""
 
 #. module: stock_quant_package_dimension
