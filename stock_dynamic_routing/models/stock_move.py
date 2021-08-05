@@ -217,11 +217,13 @@ class StockMove(models.Model):
                 # lines with different routing (or lines with a dynamic
                 # routing, lines without). We split the lines according to
                 # these.
-                # The _split() method returns the same move if the qty is the
-                # same than the move's qty, so we don't need to explicitly
-                # check if we really need to split or not.
-                new_move_id = move._split(qty)
-                new_move = self.env["stock.move"].browse(new_move_id)
+                new_move_vals = move._split(qty)
+                if new_move_vals:
+                    new_move = self.env["stock.move"].create(new_move_vals)
+                    new_move._action_confirm(merge=False)
+                else:
+                    # If no split occurred keep the current move
+                    new_move = move
                 moves_with_routing_details[new_move] = routing_details
 
         return moves_with_routing_details
@@ -341,7 +343,11 @@ class StockMove(models.Model):
         # FIXME what should happen if we have > 1 move? What would
         # be the use case?
         if next_move and len(next_move) == 1:
-            split_move = self.browse(next_move._split(self.product_qty))
+            split_move = next_move
+            split_move_vals = next_move._split(self.product_qty)
+            if split_move_vals:
+                split_move = self.create(split_move_vals)
+                split_move._action_confirm(merge=False)
             if split_move != next_move:
                 # No split occurs if the quantity was the same.
                 # But if it did split, detach it from the move on which

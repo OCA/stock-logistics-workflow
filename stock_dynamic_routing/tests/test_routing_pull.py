@@ -176,7 +176,7 @@ class TestRoutingPullCommon(common.SavepointCase):
     def process_operations(self, move):
         qty = move.move_line_ids.product_uom_qty
         move.move_line_ids.qty_done = qty
-        move.picking_id.action_done()
+        move.picking_id._action_done()
 
 
 class TestRoutingPull(TestRoutingPullCommon):
@@ -955,7 +955,7 @@ class TestRoutingPull(TestRoutingPullCommon):
                         {
                             "method": "pull",
                             "picking_type_id": priority_pick_type.id,
-                            "rule_domain": [("priority", "=", "3")],
+                            "rule_domain": [("priority", "=", "1")],
                         },
                     )
                 ],
@@ -965,7 +965,7 @@ class TestRoutingPull(TestRoutingPullCommon):
         pick_picking, customer_picking = self._create_pick_ship(
             self.wh, [(self.product1, 30)]
         )
-        pick_picking.move_lines.priority = "3"
+        pick_picking.priority = "1"
 
         self._update_product_qty_in_location(self.location_hb_1_1, self.product1, 5)
         self._update_product_qty_in_location(self.location_hb_1_2, self.product1, 7)

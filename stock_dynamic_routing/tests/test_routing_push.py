@@ -186,7 +186,7 @@ class TestRoutingPush(common.SavepointCase):
         for move in moves:
             qty = move.move_line_ids.product_uom_qty
             move.move_line_ids.qty_done = qty
-        move.mapped("picking_id").action_done()
+        move.mapped("picking_id")._action_done()
 
     def test_change_location_to_dynamic_routing(self):
         in_picking, internal_picking = self._create_supplier_input_highbay(
@@ -232,12 +232,12 @@ class TestRoutingPush(common.SavepointCase):
         self.assert_src_handover(routing_move)
         self.assert_dest_highbay_1_2(routing_move)
 
-        self.assertEquals(routing_move.picking_type_id, self.pick_type_routing_op)
-        self.assertEquals(
+        self.assertEqual(routing_move.picking_type_id, self.pick_type_routing_op)
+        self.assertEqual(
             routing_move.picking_id.picking_type_id, self.pick_type_routing_op
         )
-        self.assertEquals(move_a.picking_id.picking_type_id, self.wh.in_type_id)
-        self.assertEquals(move_b.picking_id.picking_type_id, self.wh.int_type_id)
+        self.assertEqual(move_a.picking_id.picking_type_id, self.wh.in_type_id)
+        self.assertEqual(move_b.picking_id.picking_type_id, self.wh.int_type_id)
         self.assertEqual(move_a.state, "done")
         self.assertEqual(move_b.state, "assigned")
         self.assertEqual(routing_move.state, "waiting")

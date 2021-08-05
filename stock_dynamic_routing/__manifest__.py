@@ -5,7 +5,7 @@
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/wms",
     "category": "Warehouse Management",
-    "version": "13.0.1.0.1",
+    "version": "14.0.1.0.0",
     "license": "AGPL-3",
     "depends": ["stock", "stock_helper"],
     "demo": [
@@ -14,6 +14,6 @@
         "demo/stock_routing_demo.xml",
     ],
     "data": ["views/stock_routing_views.xml", "security/ir.model.access.csv"],
-    "installable": False,
+    "installable": True,
     "development_status": "Beta",
 }
