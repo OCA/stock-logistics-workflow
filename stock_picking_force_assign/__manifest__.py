@@ -3,7 +3,7 @@
 {
     "name": "Auto Unreserve",
     "summary": "Unreserve waiting and ready pickings to reserve current picking",
-    "version": "12.0.1.0.0",
+    "version": "12.0.1.0.1",
     "development_status": "Beta",
     "category": "Warehouse",
     "website": "https://github.com/OCA/stock-logistics-workflow",
