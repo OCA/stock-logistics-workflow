@@ -12,12 +12,12 @@ class StockPicking(models.Model):
         link_template = '<a href="#" data-oe-model="%s" data-oe-id="%d">%s</a>'
         to_unreserve = self._force_assign_find_moves()
         to_unreserve._do_unreserve()
-        self.message_post(_(
+        self.message_post(body=_(
             'Unreserved picking(s) %s in order to assign this one'
         ) % ', '.join(to_unreserve.mapped('picking_id').mapped(
             lambda x: link_template % (x._name, x.id, x.name)
         )))
-        to_unreserve.mapped('picking_id').message_post(_(
+        to_unreserve.mapped('picking_id').message_post(body=_(
             'Unreserved this picking in order to assign %s'
         ) % ', '.join(self.mapped(
             lambda x: link_template % (x._name, x.id, x.name)
