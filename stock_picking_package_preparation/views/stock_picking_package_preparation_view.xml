@@ -4,7 +4,7 @@
         <field name="name">stock.picking.package.preparation.tree</field>
         <field name="model">stock.picking.package.preparation</field>
         <field name="arch" type="xml">
-            <tree colors="grey:state == 'cancel';" string="Package Preparations">
+            <tree decoration-muted="state == 'cancel'" string="Package Preparations">
                 <field name="name" />
                 <field name="partner_id" />
                 <field name="date" />
@@ -145,7 +145,6 @@
         <field name="name">Package Preparations</field>
         <field name="res_model">stock.picking.package.preparation</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">

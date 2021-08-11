@@ -6,15 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2020-06-23 16:19+0000\n"
+"POT-Creation-Date: 2021-08-11 10:21+0000\n"
+"PO-Revision-Date: 2021-08-11 12:23+0200\n"
 "Last-Translator: Fernando Colus <fcolus1@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.10\n"
+"X-Generator: Poedit 2.3\n"
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__message_needaction
@@ -32,14 +33,14 @@ msgid "All Content"
 msgstr "Todo o conteúdo"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:200
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:0
 #, python-format
 msgid "All the transfers must be \"Ready to Transfer\"."
 msgstr ""
 "Todas as transferências devem estar como \"Prontas para Transferência\"."
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:184
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:0
 #, python-format
 msgid "All the transfers must have the same destination location"
 msgstr "Todas as transferências devem ter o mesmo local de destino"
@@ -55,12 +56,12 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 #. module: stock_picking_package_preparation
-#: selection:stock.picking.package.preparation,state:0
+#: model:ir.model.fields.selection,name:stock_picking_package_preparation.selection__stock_picking_package_preparation__state__cancel
 msgid "Cancelled"
 msgstr "Cancelado"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:147
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:0
 #, python-format
 msgid "Cannot cancel a done package preparation."
 msgstr "Não é possível cancelar uma preparação de pacote já concluída."
@@ -96,12 +97,12 @@ msgid "Document Date"
 msgstr "Data do Documento"
 
 #. module: stock_picking_package_preparation
-#: selection:stock.picking.package.preparation,state:0
+#: model:ir.model.fields.selection,name:stock_picking_package_preparation.selection__stock_picking_package_preparation__state__done
 msgid "Done"
 msgstr "Concluído"
 
 #. module: stock_picking_package_preparation
-#: selection:stock.picking.package.preparation,state:0
+#: model:ir.model.fields.selection,name:stock_picking_package_preparation.selection__stock_picking_package_preparation__state__draft
 msgid "Draft"
 msgstr "Rascunho"
 
@@ -126,17 +127,14 @@ msgid "ID"
 msgstr "ID (Identificação)"
 
 #. module: stock_picking_package_preparation
-#: model:ir.model.fields,help:stock_picking_package_preparation.field_stock_picking_package_preparation__message_unread
-msgid "If checked new messages require your attention."
-msgstr "Se marcada, novas mensagens requerem sua atenção."
-
-#. module: stock_picking_package_preparation
 #: model:ir.model.fields,help:stock_picking_package_preparation.field_stock_picking_package_preparation__message_needaction
+#: model:ir.model.fields,help:stock_picking_package_preparation.field_stock_picking_package_preparation__message_unread
 msgid "If checked, new messages require your attention."
 msgstr "Se marcada, novas mensagens requerem sua atenção."
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,help:stock_picking_package_preparation.field_stock_picking_package_preparation__message_has_error
+#: model:ir.model.fields,help:stock_picking_package_preparation.field_stock_picking_package_preparation__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Se marcada, algumas mensagens apresentam um erro de entrega."
 
@@ -152,7 +150,7 @@ msgstr ""
 "de origem, o produto foi retirado do pacote de origem."
 
 #. module: stock_picking_package_preparation
-#: selection:stock.picking.package.preparation,state:0
+#: model:ir.model.fields.selection,name:stock_picking_package_preparation.selection__stock_picking_package_preparation__state__in_pack
 msgid "In Pack"
 msgstr "No Pacote"
 
@@ -197,7 +195,7 @@ msgid "Move Line"
 msgstr "Linha de Movimentação"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:179
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:0
 #, python-format
 msgid "No transfer selected for this preparation."
 msgstr "Nenhuma transferência selecionada para esta preparação."
@@ -214,7 +212,9 @@ msgstr "Número de Ações"
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__message_has_error_counter
-msgid "Number of error"
+#, fuzzy
+#| msgid "Number of error"
+msgid "Number of errors"
 msgstr "Número de Erros"
 
 #. module: stock_picking_package_preparation
@@ -233,7 +233,7 @@ msgid "Number of unread messages"
 msgstr "Número de mensagens não lidas"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:162
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:0
 #, python-format
 msgid "Only canceled package preparations can be reset to draft."
 msgstr ""
@@ -294,6 +294,13 @@ msgid "Reset to draft"
 msgstr "Redefinir como rascunho"
 
 #. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__message_has_sms_error
+#, fuzzy
+#| msgid "Message Delivery error"
+msgid "SMS Delivery error"
+msgstr "Erro na entrega da mensagem"
+
+#. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__date_done
 msgid "Shipping Date"
 msgstr "Data de Embarque"
@@ -304,7 +311,7 @@ msgid "State"
 msgstr "Estado"
 
 #. module: stock_picking_package_preparation
-#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:136
+#: code:addons/stock_picking_package_preparation/models/stock_picking_package_preparation.py:0
 #, python-format
 msgid "The package has not been generated."
 msgstr "O pacote ainda não foi gerado."
@@ -329,16 +336,6 @@ msgstr "Mensagens não lidas"
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__message_unread_counter
 msgid "Unread Messages Counter"
 msgstr "Contador de Mensagens Não Lidas"
-
-#. module: stock_picking_package_preparation
-#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__website_message_ids
-msgid "Website Messages"
-msgstr "Mensagens do Site"
-
-#. module: stock_picking_package_preparation
-#: model:ir.model.fields,help:stock_picking_package_preparation.field_stock_picking_package_preparation__website_message_ids
-msgid "Website communication history"
-msgstr "Histórico de comunicação através do site"
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__weight
