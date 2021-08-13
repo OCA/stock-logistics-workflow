@@ -20,6 +20,7 @@ setuptools.setup(
         'odoo14-addon-stock_picking_group_by_partner_by_carrier',
         'odoo14-addon-stock_picking_invoice_link',
         'odoo14-addon-stock_picking_line_sequence',
+        'odoo14-addon-stock_picking_sale_order_link',
         'odoo14-addon-stock_putaway_hook',
         'odoo14-addon-stock_quant_package_dimension',
         'odoo14-addon-stock_quant_package_dimension_total_weight_from_packaging',
