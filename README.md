@@ -31,6 +31,7 @@ addon | version | summary
 [stock_picking_group_by_partner_by_carrier](stock_picking_group_by_partner_by_carrier/) | 14.0.1.0.0 | Stock Picking: group by partner and carrier
 [stock_picking_invoice_link](stock_picking_invoice_link/) | 14.0.1.0.0 | Adds link between pickings and invoices
 [stock_picking_line_sequence](stock_picking_line_sequence/) | 14.0.1.0.0 | Manages the order of stock moves by displaying its sequence
+[stock_picking_sale_order_link](stock_picking_sale_order_link/) | 14.0.1.0.1 | Link between picking and sale order
 [stock_putaway_hook](stock_putaway_hook/) | 14.0.1.0.0 | Add hooks allowing modules to add more putaway strategies
 [stock_quant_package_dimension](stock_quant_package_dimension/) | 14.0.2.1.0 | Use dimensions on packages
 [stock_quant_package_dimension_total_weight_from_packaging](stock_quant_package_dimension_total_weight_from_packaging/) | 14.0.1.1.0 | Estimated weight of a package
