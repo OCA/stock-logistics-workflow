@@ -34,7 +34,6 @@ class StockMove(models.Model):
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    @api.multi
     @api.depends("move_ids_without_package")
     def _compute_max_line_sequence(self):
         """Allow to know the highest sequence entered in move lines.
@@ -52,7 +51,6 @@ class StockPicking(models.Model):
         string="Max sequence in lines", compute="_compute_max_line_sequence"
     )
 
-    @api.multi
     def _reset_sequence(self):
         for rec in self:
             current_sequence = 1
@@ -60,13 +58,11 @@ class StockPicking(models.Model):
                 line.sequence = current_sequence
                 current_sequence += 1
 
-    @api.multi
     def copy(self, default=None):
         return super(StockPicking, self.with_context(keep_line_sequence=True)).copy(
             default
         )
 
-    @api.multi
     def button_validate(self):
         return super(
             StockPicking, self.with_context(keep_line_sequence=True)
