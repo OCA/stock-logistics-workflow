@@ -28,8 +28,7 @@ class StockPicking(models.Model):
 
     @api.depends("move_lines.origin_returned_move_id")
     def _compute_source_picking_id(self):
-        """Get source piking from this picking. Only one origin is possible.
-        """
+        """Get source piking from this picking. Only one origin is possible."""
         for picking in self:
             picking.source_picking_id = first(
                 picking.mapped("move_lines.origin_returned_move_id.picking_id")
