@@ -17,7 +17,7 @@ Show returns on stock pickings
     :target: https://github.com/OCA/stock-logistics-workflow/tree/14.0/stock_picking_show_return
     :alt: OCA/stock-logistics-workflow
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-14.0/stock-logistics-workflow-14.0-stock_picking_show_return
+    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-14-0/stock-logistics-workflow-14-0-stock_picking_show_return
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
     :target: https://runbot.odoo-community.org/runbot/154/14.0
