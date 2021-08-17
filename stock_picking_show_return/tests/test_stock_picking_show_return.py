@@ -33,7 +33,7 @@ class TestStockPickingShowReturn(TransactionCase):
     def test_returned_ids_field(self):
         self.picking.action_assign()
         self.picking.move_line_ids.qty_done = 1
-        self.picking.action_done()
+        self.picking._action_done()
         wizard = (
             self.env["stock.return.picking"]
             .with_context(
@@ -51,7 +51,7 @@ class TestStockPickingShowReturn(TransactionCase):
     def test_source_picking_id_field(self):
         self.picking.action_assign()
         self.picking.move_line_ids.qty_done = 1
-        self.picking.action_done()
+        self.picking._action_done()
         wizard = (
             self.env["stock.return.picking"]
             .with_context(
