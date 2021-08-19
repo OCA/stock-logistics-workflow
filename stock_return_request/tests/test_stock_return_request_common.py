@@ -11,6 +11,7 @@ class StockReturnRequestCase(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.product_obj = cls.env["product.product"]
         cls.prod_1 = cls.product_obj.create(
             {"name": "Test Product 1", "type": "product"}

@@ -1,6 +1,7 @@
 # Copyright 2019 Tecnativa - David Vidal
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo.tests import tagged
+from odoo.tools import mute_logger
 
 from .test_stock_return_request_common import StockReturnRequestCase
 
@@ -114,7 +115,8 @@ class PurchaseReturnRequestCase(StockReturnRequestCase):
         picking = self.picking_supplier_1.copy(
             {"location_dest_id": self.location_child_1.id}
         )
-        picking.move_lines.unlink()
+        with mute_logger("odoo.models.unlink"):
+            picking.move_lines.unlink()
         picking.move_lines = [
             (
                 0,
