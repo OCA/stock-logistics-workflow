@@ -2,48 +2,54 @@
 
 from odoo.exceptions import UserError
 from odoo.tests.common import SavepointCase, tagged
+from odoo.tools import mute_logger
 
 
 @tagged("post_install", "-at_install")
 class TestBatchPicking(SavepointCase):
-    def _create_product(self, name, type="consu"):
-        return self.env["product.product"].create({"name": name, "type": type})
-
-    def setUp(self):
-        super(TestBatchPicking, self).setUp()
-        self.stock_loc = self.browse_ref("stock.stock_location_stock")
-        self.customer_loc = self.browse_ref("stock.stock_location_customers")
-        self.uom_unit = self.env.ref("uom.product_uom_unit")
-        self.batch_model = self.env["stock.picking.batch"]
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
+        cls.stock_loc = cls.env.ref("stock.stock_location_stock")
+        cls.customer_loc = cls.env.ref("stock.stock_location_customers")
+        cls.uom_unit = cls.env.ref("uom.product_uom_unit")
+        cls.batch_model = cls.env["stock.picking.batch"]
         # Delete (in transaction) all batches for simplify tests.
-        self.batch_model.search([]).unlink()
-        self.picking_model = self.env["stock.picking"]
-        self.product6 = self._create_product("product_product_6")
-        self.product7 = self._create_product("product_product_7")
-        self.product8 = self._create_product("product_product_8", "product")
-        self.product9 = self._create_product("product_product_9")
-        self.product10 = self._create_product("product_product_10")
-        self.product11 = self._create_product("product_product_11")
-        self.picking = self.create_simple_picking(self.product6.ids + self.product7.ids)
-        self.picking.action_confirm()
-        self.picking2 = self.create_simple_picking((self.product9 + self.product10).ids)
-        self.picking2.action_confirm()
-        self.batch = self.batch_model.create(
+        with mute_logger("odoo.models.unlink"):
+            cls.batch_model.search([]).unlink()
+        cls.picking_model = cls.env["stock.picking"]
+        cls.product6 = cls._create_product("product_product_6")
+        cls.product7 = cls._create_product("product_product_7")
+        cls.product8 = cls._create_product("product_product_8", "product")
+        cls.product9 = cls._create_product("product_product_9")
+        cls.product10 = cls._create_product("product_product_10")
+        cls.product11 = cls._create_product("product_product_11")
+        cls.picking = cls._create_simple_picking(cls.product6.ids + cls.product7.ids)
+        cls.picking.action_confirm()
+        cls.picking2 = cls._create_simple_picking((cls.product9 + cls.product10).ids)
+        cls.picking2.action_confirm()
+        cls.batch = cls.batch_model.create(
             {
-                "user_id": self.env.uid,
+                "user_id": cls.env.uid,
                 "use_oca_batch_validation": True,
-                "picking_ids": [(4, self.picking.id), (4, self.picking2.id)],
+                "picking_ids": [(4, cls.picking.id), (4, cls.picking2.id)],
             }
         )
 
-    def create_simple_picking(self, product_ids, batch_id=False):
+    @classmethod
+    def _create_product(cls, name, _type="consu"):
+        return cls.env["product.product"].create({"name": name, "type": _type})
+
+    @classmethod
+    def _create_simple_picking(cls, product_ids, batch_id=False):
         # The 'planned_picking' context key ensures that the picking
         # will be created in the 'draft' state (no autoconfirm)
-        return self.picking_model.with_context(planned_picking=True).create(
+        return cls.picking_model.with_context(planned_picking=True).create(
             {
-                "picking_type_id": self.ref("stock.picking_type_out"),
-                "location_id": self.stock_loc.id,
-                "location_dest_id": self.customer_loc.id,
+                "picking_type_id": cls.env.ref("stock.picking_type_out").id,
+                "location_id": cls.stock_loc.id,
+                "location_dest_id": cls.customer_loc.id,
                 "batch_id": batch_id,
                 "move_lines": [
                     (
@@ -52,10 +58,10 @@ class TestBatchPicking(SavepointCase):
                         {
                             "name": "Test move",
                             "product_id": product_id,
-                            "product_uom": self.ref("uom.product_uom_unit"),
+                            "product_uom": cls.env.ref("uom.product_uom_unit").id,
                             "product_uom_qty": 1,
-                            "location_id": self.stock_loc.id,
-                            "location_dest_id": self.customer_loc.id,
+                            "location_id": cls.stock_loc.id,
+                            "location_dest_id": cls.customer_loc.id,
                         },
                     )
                     for product_id in product_ids
@@ -142,7 +148,7 @@ class TestBatchPicking(SavepointCase):
         )
 
     def test_action_transfer__unavailable(self):
-        picking3 = self.create_simple_picking(self.product8.ids)
+        picking3 = self._create_simple_picking(self.product8.ids)
         self.batch = self.batch_model.create(
             {
                 "user_id": self.env.uid,
@@ -167,7 +173,7 @@ class TestBatchPicking(SavepointCase):
         self.assertEqual("cancel", self.picking2.state)
 
     def test_cancel_multi(self):
-        picking3 = self.create_simple_picking(self.product8.ids)
+        picking3 = self._create_simple_picking(self.product8.ids)
         batch2 = self.batch_model.create(
             {"user_id": self.env.uid, "picking_ids": [(4, picking3.id)]}
         )
@@ -217,7 +223,7 @@ class TestBatchPicking(SavepointCase):
             wizard.with_context(active_ids=[self.picking.id]).action_create_batch()
 
         # Creating and selecting (too) another picking
-        picking3 = self.create_simple_picking(self.product8.ids)
+        picking3 = self._create_simple_picking(self.product8.ids)
         picking3.action_confirm()
 
         self.assertEqual(
@@ -236,7 +242,7 @@ class TestBatchPicking(SavepointCase):
         self.assertEqual(batch, picking3.batch_id)
 
     def test_wizard_user_id(self):
-        wh_main = self.browse_ref("stock.warehouse0")
+        wh_main = self.env.ref("stock.warehouse0")
 
         wizard_model = self.env["stock.picking.batch.creator"]
         wizard = wizard_model.create({"name": "Unittest wizard"})
@@ -320,7 +326,7 @@ class TestBatchPicking(SavepointCase):
         self.assertEqual(0, backorder2.move_line_ids.qty_done)
 
     def test_assign_draft_pick(self):
-        picking3 = self.create_simple_picking(
+        picking3 = self._create_simple_picking(
             self.product11.ids, batch_id=self.batch.id
         )
         self.assertEqual("draft", picking3.state)
@@ -334,7 +340,7 @@ class TestBatchPicking(SavepointCase):
 
     # TODO: Review this test
     def _test_package(self):
-        warehouse = self.browse_ref("stock.warehouse0")
+        warehouse = self.env.ref("stock.warehouse0")
         warehouse.delivery_steps = "pick_ship"
         group = self.env["procurement.group"].create(
             {"name": "Test", "move_type": "direct"}
@@ -384,11 +390,11 @@ class TestBatchPicking(SavepointCase):
 
     def test_remove_undone(self):
         self.picking2.action_cancel()
-        picking3 = self.create_simple_picking(
+        picking3 = self._create_simple_picking(
             self.product11.ids, batch_id=self.batch.id
         )
         picking3.force_transfer()
-        picking4 = self.create_simple_picking(
+        picking4 = self._create_simple_picking(
             [self.ref("product.product_product_11")], batch_id=self.batch.id
         )
         self.assertEqual("confirmed", self.picking.state)
