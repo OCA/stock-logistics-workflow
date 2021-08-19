@@ -9,6 +9,7 @@ class TestStockPickingScrapQuick(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.warehouse = cls.env.ref("stock.warehouse0")
         cls.picking_type_out = cls.warehouse.out_type_id
         cls.customer_location = cls.env.ref("stock.stock_location_customers")
