@@ -129,7 +129,6 @@ class TestStockValuationLayerUsage(TransactionCase):
                     "type": "product",
                     "standard_price": standard_price,
                     "valuation": "real_time",
-                    "invoice_policy": "delivery",
                 }
             )
             return template.product_variant_ids[0]
