@@ -35,8 +35,7 @@ class AccountMove(models.Model):
         """
         self.ensure_one()
         form_view_name = "stock.view_picking_form"
-        action = self.env.ref("stock.action_picking_tree_all")
-        result = action.read()[0]
+        result = self.env["ir.actions.actions"]._for_xml_id("stock.action_picking_tree_all")
         if len(self.picking_ids) > 1:
             result["domain"] = "[('id', 'in', %s)]" % self.picking_ids.ids
         else:
