@@ -10,9 +10,10 @@ class StockMove(models.Model):
     @api.multi
     def _get_moves(self):
         return self.filtered(
-            lambda x: x.state == 'done' and
-            not x.scrapped and (
-                x.location_id.usage == 'supplier' or
-                (x.location_dest_id.usage == 'customer' and
-                 x.to_refund)
-            ))
+            lambda x: x.state == "done"
+            and not x.scrapped
+            and (
+                x.location_id.usage == "supplier"
+                or (x.location_dest_id.usage == "customer" and x.to_refund)
+            )
+        )
