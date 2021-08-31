@@ -10,36 +10,34 @@ class AccountInvoice(models.Model):
     @api.multi
     def _prepare_invoice_line_from_po_line(self, line):
         vals = super()._prepare_invoice_line_from_po_line(line)
-        moves = self.env['stock.move'].search([
-            ('purchase_line_id', '=', line.id),
-        ])
+        moves = self.env["stock.move"].search([("purchase_line_id", "=", line.id),])
         if moves:
             move_ids = moves._get_moves()
-            vals['move_line_ids'] = [(6, 0, move_ids.ids)]
-            pickings = move_ids.mapped('picking_id')
+            vals["move_line_ids"] = [(6, 0, move_ids.ids)]
+            pickings = move_ids.mapped("picking_id")
             for picking in pickings:
                 picking.invoice_ids = [(4, self.id)]
         return vals
 
     @api.model
     def create(self, vals_list):
-        pickings = self.env['stock.picking']
+        pickings = self.env["stock.picking"]
         result = []
-        if 'invoice_line_ids' not in vals_list:
+        if "invoice_line_ids" not in vals_list:
             return super().create(vals_list)
-        for item in vals_list.get('invoice_line_ids'):
-            if not item[2].get('purchase_line_id'):
+        for item in vals_list.get("invoice_line_ids"):
+            if not item[2].get("purchase_line_id"):
                 continue
-            moves = self.env['stock.move'].search([
-                ('purchase_line_id', '=', item[2]['purchase_line_id']),
-            ])
+            moves = self.env["stock.move"].search(
+                [("purchase_line_id", "=", item[2]["purchase_line_id"]),]
+            )
             if moves:
                 move_ids = moves._get_moves()
-                item[2]['move_line_ids'] = [(6, 0, move_ids.ids)]
-                pickings |= move_ids.mapped('picking_id')
+                item[2]["move_line_ids"] = [(6, 0, move_ids.ids)]
+                pickings |= move_ids.mapped("picking_id")
             result.append(item)
-        if result and vals_list.get('invoice_line_ids'):
-            vals_list['invoice_line_ids'] = result
+        if result and vals_list.get("invoice_line_ids"):
+            vals_list["invoice_line_ids"] = result
         res = super().create(vals_list)
         if res:
             for picking in pickings:
