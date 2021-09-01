@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2021 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="stock_device_type_tree_view">
+        <field
+            name="name"
+        >stock.device.type.tree (in stock_picking_batch_creation)</field>
+        <field name="model">stock.device.type</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="min_volume" />
+                <field name="max_volume" />
+                <field name="max_weight" />
+                <field name="nbr_bins" />
+                <field name="sequence" />
+            </tree>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="stock_device_type_form_view">
+        <field
+            name="name"
+        >stock.device.type.form (in stock_picking_batch_creation)</field>
+        <field name="model">stock.device.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="min_volume" />
+                        <field name="max_volume" />
+                        <field name="max_weight" />
+                        <field name="nbr_bins" />
+                        <field name="sequence" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <act_window
+        id="stock_device_type_act_window"
+        name="Stock Device Type"
+        res_model="stock.device.type"
+        view_mode="tree,form"
+    />
+    <menuitem
+        id="menu_stock_device_types"
+        name="Device Types"
+        parent="stock.menu_stock_config_settings"
+        groups="stock.group_stock_manager"
+        sequence="100"
+    />
+    <menuitem
+        id="menu_stock_device_type"
+        action="stock_device_type_act_window"
+        parent="stock_picking_batch_creation.menu_stock_device_types"
+        groups="stock.group_stock_manager"
+        sequence="1"
+    />
+</odoo>

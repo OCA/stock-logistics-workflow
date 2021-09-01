@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2021 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="stock_picking_wave_form_view">
+        <field
+            name="name"
+        >stock.picking.wave.form (in stock_picking_batch_creation)</field>
+        <field name="model">stock.picking.wave</field>
+        <field name="inherit_id" ref="stock_picking_wave.view_picking_wave_form" />
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="picking_device_id" />
+                <field name="wave_weight" />
+                <field name="wave_volume" />
+                <field name="wave_nbr_bins" />
+                <field name="wave_nbr_lines" />
+            </field>
+            <xpath
+                expr="//field[@name='picking_ids']/tree/field[@name='state']"
+                position="after"
+            >
+                <field name="picking_device_id" />
+                <field name="user_id" />
+                <field name="total_weight_batch_picking" />
+                <field name="total_volume_batch_picking" />
+                <field name="nbr_bins_batch_picking" />
+                <field name="nbr_picking_lines" />
+            </xpath>
+            <sheet position="inside">
+                <notebook>
+                    <page
+                        string="Detailed Operations"
+                        attrs="{'invisible': [('state', '=', 'draft')]}"
+                    >
+                        <field
+                            name="pack_operation_ids"
+                            context="{'tree_view_ref': 'stock_picking_batch_creation.view_pack_operations_tree'}"
+                        />
+                    </page>
+                    <page
+                        string="Moves"
+                        attrs="{'invisible': [('state', '=', 'draft')]}"
+                    >
+                        <field
+                            name="move_ids"
+                            context="{'tree_view_ref': 'stock_picking_batch_creation.view_picking_move_tree_inherited'}"
+                        />
+                    </page>
+                </notebook>
+            </sheet>
+        </field>
+    </record>
+    <record id="view_pack_operations_tree" model="ir.ui.view">
+        <field name="name">stock_picking_batch_creation.pack.operation.tree</field>
+        <field name="model">stock.pack.operation</field>
+        <field name="arch" type="xml">
+            <tree
+                editable="top"
+                decoration-muted="state == 'cancel'"
+                default_order="location_id"
+            >
+                <field name="state" invisible="1" />
+                <field name="product_id" context="{'default_type': 'product'}" />
+                <field
+                    name="picking_id"
+                    required="1"
+                    options="{'no_create_edit': True}"
+                    domain="[('id', 'in', parent.picking_ids)]"
+                />
+                <field name="location_id" />
+                <field name="location_dest_id" />
+                <field name="package_id" groups="stock.group_tracking_lot" />
+                <field name="result_package_id" groups="stock.group_tracking_lot" />
+                <field name="product_qty" readonly="1" />
+                <field
+                    name="product_uom_id"
+                    options="{'no_create': True}"
+                    groups="uom.group_uom"
+                    readonly="1"
+                    force_save="1"
+                />
+                <field name="qty_done" />
+            </tree>
+        </field>
+    </record>
+    <record id="view_picking_move_tree_inherited" model="ir.ui.view">
+        <field name="name">stock_picking_batch_creation.picking.move.tree</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_tree" />
+        <field name="priority" eval="1000" />
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="delete">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='product_id']" position="after">
+                <field
+                    name="picking_id"
+                    required="1"
+                    domain="[('id', 'in', parent.picking_ids)]"
+                    options="{'no_create_edit': True}"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>

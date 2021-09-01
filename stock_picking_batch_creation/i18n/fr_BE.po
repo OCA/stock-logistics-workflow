@@ -1,0 +1,184 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* cluster_picking_base
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-08-17 14:49+0000\n"
+"PO-Revision-Date: 2021-08-17 14:49+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: cluster_picking_base
+#: model:ir.ui.view,arch_db:cluster_picking_base.cluster_picking_wizard_form_view
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: cluster_picking_base
+#: model:ir.actions.act_window,name:cluster_picking_base.create_cluster_picking_wizard_act_window
+#: model:ir.ui.menu,name:cluster_picking_base.create_cluster_picking
+#: model:ir.ui.view,arch_db:cluster_picking_base.cluster_picking_wizard_form_view
+msgid "Cluster Picking Wizard"
+msgstr "Création d'une vague de préparations"
+
+#. module: cluster_picking_base
+#: model:ir.ui.view,arch_db:cluster_picking_base.view_picking_type_form
+msgid "Cluster picking"
+msgstr "Vague de préparation"
+
+#. module: cluster_picking_base
+#: model:ir.ui.view,arch_db:cluster_picking_base.cluster_picking_wizard_form_view
+msgid "Create cluster picking"
+msgstr "Créer l'ensemble de préparations"
+
+#. module: cluster_picking_base
+#: model:ir.model.fields,field_description:cluster_picking_base.field_cluster_picking_wizard_create_uid
+#: model:ir.model.fields,field_description:cluster_picking_base.field_stock_picking_hardware_create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: cluster_picking_base
+#: model:ir.model.fields,field_description:cluster_picking_base.field_cluster_picking_wizard_create_date
+#: model:ir.model.fields,field_description:cluster_picking_base.field_stock_picking_hardware_create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: cluster_picking_base
+#: model:ir.model.fields,field_description:cluster_picking_base.field_cluster_picking_wizard_display_name
+#: model:ir.model.fields,field_description:cluster_picking_base.field_stock_picking_hardware_display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: cluster_picking_base
+#: model:ir.model.fields,field_description:cluster_picking_base.field_stock_picking_wave_picking_hardware_id
+msgid "Hardware for the cluster"
+msgstr "Chariot à utiliser"
+
+#. module: cluster_picking_base
+#: model:ir.model.fields,field_description:cluster_picking_base.field_stock_picking_picking_hardware_id
+msgid "Hardware for the picking"
+msgstr "Chariot à utiliser"
+
+#. module: cluster_picking_base
+#: model:ir.model.fields,field_description:cluster_picking_base.field_cluster_picking_wizard_id
+#: model:ir.model.fields,field_description:cluster_picking_base.field_stock_picking_hardware_id
+msgid "ID"
+msgstr "ID"
+
+#. module: cluster_picking_base
+#: model:ir.model.fields,field_description:cluster_picking_base.field_cluster_picking_wizard___last_update
+#: model:ir.model.fields,field_description:cluster_picking_base.field_stock_picking_hardware___last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: cluster_picking_base
+#: model:ir.model.fields,field_description:cluster_picking_base.field_cluster_picking_wizard_write_uid
+#: model:ir.model.fields,field_description:cluster_picking_base.field_stock_picking_hardware_write_uid
+msgid "Last Updated by"
+msgstr "Derniere fois mis à jour par"
+
+#. module: cluster_picking_base
+#: model:ir.model.fields,field_description:cluster_picking_base.field_cluster_picking_wizard_write_date
+#: model:ir.model.fields,field_description:cluster_picking_base.field_stock_picking_hardware_write_date
+msgid "Last Updated on"
+msgstr "Dernière mis à jour le"
+
+#. module: cluster_picking_base
+#: model:ir.model.fields,field_description:cluster_picking_base.field_cluster_picking_wizard_maximum_number_of_preparation_lines
+msgid "Maximum number of preparation lines for the cluster"
+msgstr "Nombre maximum de lignes de préparation à réaliser par l'opérateur"
+
+#. module: cluster_picking_base
+#: model:ir.model.fields,field_description:cluster_picking_base.field_stock_picking_hardware_max_volume_liter
+msgid "Maximum volume of the hardware (in liters)"
+msgstr "Volume maximum sur le chariot (en litres)"
+
+#. module: cluster_picking_base
+#: model:ir.model.fields,field_description:cluster_picking_base.field_stock_picking_hardware_max_volume_m3
+msgid "Maximum volume of the hardware (in m3)"
+msgstr "Volume maximum sur le chariot (en m3)"
+
+#. module: cluster_picking_base
+#: model:ir.model.fields,field_description:cluster_picking_base.field_stock_picking_hardware_max_weight
+msgid "Maximum weight of the hardware (in kg)"
+msgstr "Poids maximum sur le chariot (en kg)"
+
+#. module: cluster_picking_base
+#: model:ir.model.fields,field_description:cluster_picking_base.field_stock_picking_hardware_min_volume_liter
+msgid "Minimum volume to use this hardware (in liters)"
+msgstr "Volume minimum pour l'utlisation du chariot (en liters)"
+
+#. module: cluster_picking_base
+#: model:ir.model.fields,field_description:cluster_picking_base.field_stock_picking_hardware_min_volume_m3
+msgid "Minimum volume to use this hardware (in m3)"
+msgstr "Volume minimum pour l'utlisation du chariot (en m3)"
+
+#. module: cluster_picking_base
+#: model:ir.model.fields,field_description:cluster_picking_base.field_stock_picking_hardware_name
+msgid "Name"
+msgstr "Nom"
+
+#. module: cluster_picking_base
+#: model:ir.model.fields,field_description:cluster_picking_base.field_stock_picking_hardware_nbr_bins
+msgid "Number of places available on the hardware"
+msgstr "Nombre d'emplacements disponibles sur le chariot"
+
+#. module: cluster_picking_base
+#: model:ir.model.fields,field_description:cluster_picking_base.field_cluster_picking_wizard_operator_id
+msgid "Operator"
+msgstr "Opérateur"
+
+#. module: cluster_picking_base
+#: model:ir.model.fields,field_description:cluster_picking_base.field_cluster_picking_wizard_picking_type_id
+#: model:ir.model.fields,field_description:cluster_picking_base.field_stock_picking_hardware_picking_type_id
+msgid "Picking Type"
+msgstr "Type de préparation"
+
+#. module: cluster_picking_base
+#: model:ir.model,name:cluster_picking_base.model_stock_picking_wave
+msgid "Picking Wave"
+msgstr "Vague de préparation"
+
+#. module: cluster_picking_base
+#: model:ir.model.fields,field_description:cluster_picking_base.field_stock_picking_hardware_sequence
+msgid "Priority"
+msgstr "Priorité"
+
+#. module: cluster_picking_base
+#: model:ir.actions.act_window,name:cluster_picking_base.stock_picking_hardware_act_window
+#: model:ir.model,name:cluster_picking_base.model_stock_picking_hardware
+#: model:ir.ui.menu,name:cluster_picking_base.menu_stock_picking_hardware
+msgid "Stock Picking Hardware"
+msgstr "Chariot pour les vagues de préparation"
+
+#. module: cluster_picking_base
+#: model:ir.model.fields,field_description:cluster_picking_base.field_stock_picking_type_stock_picking_hardware_ids
+msgid "Stock picking hardware ids"
+msgstr "Chariot pour les vagues de préparation"
+
+#. module: cluster_picking_base
+#: model:ir.model,name:cluster_picking_base.model_stock_picking_type
+msgid "The picking type determines the picking view"
+msgstr "Le type de préparation détermine la vue de préparation"
+
+#. module: cluster_picking_base
+#: model:ir.model,name:cluster_picking_base.model_stock_picking
+msgid "Transfer"
+msgstr "Transfert"
+
+#. module: cluster_picking_base
+#: model:ir.model,name:cluster_picking_base.model_cluster_picking_wizard
+msgid "cluster.picking.wizard"
+msgstr "cluster.picking.wizard"
+
+#. module: cluster_picking_base
+#: model:ir.model,name:cluster_picking_base.model_stock_picking_type_stock_picking_hardware_rel
+msgid "stock.picking.type.stock.picking.hardware.rel"
+msgstr "stock.picking.type.stock.picking.hardware.rel"
+
