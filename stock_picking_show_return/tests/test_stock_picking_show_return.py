@@ -1,7 +1,7 @@
 # Copyright 2014-2017 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import TransactionCase, tagged
+from odoo.tests.common import Form, TransactionCase, tagged
 
 
 @tagged("post_install", "-at_install")
@@ -30,20 +30,21 @@ class TestStockPickingShowReturn(TransactionCase):
             }
         )
 
+    def get_return_picking_wizard(self, picking):
+        stock_return_picking_form = Form(
+            self.env["stock.return.picking"].with_context(
+                active_ids=picking.ids,
+                active_id=picking.ids[0],
+                active_model="stock.picking",
+            )
+        )
+        return stock_return_picking_form.save()
+
     def test_returned_ids_field(self):
         self.picking.action_assign()
         self.picking.move_line_ids.qty_done = 1
         self.picking.action_done()
-        wizard = (
-            self.env["stock.return.picking"]
-            .with_context(
-                active_ids=self.picking.ids,
-                active_id=self.picking.id,
-                active_model="stock.picking",
-            )
-            .create({})
-        )
-        wizard._onchange_picking_id()
+        wizard = self.get_return_picking_wizard(self.picking)
         wizard.create_returns()
         self.picking._compute_returned_ids()
         self.assertTrue(self.picking.returned_ids)
@@ -52,16 +53,7 @@ class TestStockPickingShowReturn(TransactionCase):
         self.picking.action_assign()
         self.picking.move_line_ids.qty_done = 1
         self.picking.action_done()
-        wizard = (
-            self.env["stock.return.picking"]
-            .with_context(
-                active_ids=self.picking.ids,
-                active_id=self.picking.id,
-                active_model="stock.picking",
-            )
-            .create({})
-        )
-        wizard._onchange_picking_id()
+        wizard = self.get_return_picking_wizard(self.picking)
         wizard.create_returns()
         self.picking._compute_returned_ids()
         picking_returned = self.picking.returned_ids[0]
