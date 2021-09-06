@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo.exceptions import UserError
-from odoo.tests import common
+from odoo.tests import Form, common
 
 
 class StockPickingReturnRestrictedQtyTest(common.SavepointCase):
@@ -42,13 +42,20 @@ class StockPickingReturnRestrictedQtyTest(common.SavepointCase):
         self.picking.move_lines[:1].quantity_done = 20
         self.picking.button_validate()
 
+    def get_return_picking_wizard(self, picking):
+        stock_return_picking_form = Form(
+            self.env["stock.return.picking"].with_context(
+                active_ids=picking.ids,
+                active_id=picking.ids[0],
+                active_model="stock.picking",
+            )
+        )
+        return stock_return_picking_form.save()
+
     def test_return_not_allowed(self):
         """On this test we create a return picking with more quantity
             than the quantity that client have on his hand"""
-        return_picking = self.env["stock.return.picking"].create(
-            {"picking_id": self.picking.id}
-        )
-        return_picking._onchange_picking_id()
+        return_picking = self.get_return_picking_wizard(self.picking)
         self.assertEqual(return_picking.product_return_moves.quantity, 20)
         return_picking.product_return_moves.quantity = 30
         with self.assertRaises(UserError):
@@ -57,19 +64,16 @@ class StockPickingReturnRestrictedQtyTest(common.SavepointCase):
     def test_multiple_return(self):
         """On this test we are going to follow a sequence that a client
             can follow if he tries to return a product"""
-        wiz = self.env["stock.return.picking"].create({"picking_id": self.picking.id})
-        wiz._onchange_picking_id()
+        wiz = self.get_return_picking_wizard(self.picking)
         wiz.product_return_moves.quantity = 10
         picking_returned_id = wiz._create_returns()[0]
         picking_returned = self.env["stock.picking"].browse(picking_returned_id)
 
-        wiz = self.env["stock.return.picking"].create({"picking_id": self.picking.id})
-        wiz._onchange_picking_id()
+        wiz = self.get_return_picking_wizard(self.picking)
         self.assertEqual(wiz.product_return_moves.quantity, 10)
 
         picking_returned.action_done()
-        wiz = self.env["stock.return.picking"].create({"picking_id": self.picking.id})
-        wiz._onchange_picking_id()
+        wiz = self.get_return_picking_wizard(self.picking)
         self.assertEqual(wiz.product_return_moves.quantity, 10)
 
         wiz.product_return_moves.quantity = 80
