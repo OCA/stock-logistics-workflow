@@ -23,6 +23,7 @@ setuptools.setup(
         'odoo14-addon-stock_picking_sale_order_link',
         'odoo14-addon-stock_picking_show_return',
         'odoo14-addon-stock_production_lot_active',
+        'odoo14-addon-stock_putaway_by_route',
         'odoo14-addon-stock_putaway_hook',
         'odoo14-addon-stock_quant_package_dimension',
         'odoo14-addon-stock_quant_package_dimension_total_weight_from_packaging',
