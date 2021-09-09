@@ -280,6 +280,7 @@ class TestStockValuationLayerUsage(TransactionCase):
         self.assertEquals(layer_usage.value, 10.0)
         self.assertEquals(layer_usage.stock_valuation_layer_id, layer)
 
+    # FIXME: check if it fails
     def test_02_drop_ship(self):
         """Drop shipment from vendor to customer
         """
