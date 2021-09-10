@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-06 13:20+0000\n"
-"PO-Revision-Date: 2021-04-25 03:47+0000\n"
+"POT-Creation-Date: 2021-09-10 08:44+0000\n"
+"PO-Revision-Date: 2021-09-10 10:45+0200\n"
 "Last-Translator: Carlos Dauden <carlos.dauden@tecnativa.com>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.2\n"
+"X-Generator: Poedit 2.3\n"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__picking_count
@@ -63,6 +63,18 @@ msgid ""
 msgstr ""
 "Todos los albaranes seleccionados están ya en un grupo de albaranes o en un "
 "estado incorrecto."
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
+msgid "All the pickings from this batch will be confirmed. Are you sure?"
+msgstr ""
+"Todos los albaranes de esta agrupación serán confirmados, ¿Está seguro?"
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
+msgid "All the pickings from this batch will be transferred. Are you sure?"
+msgstr ""
+"Todos los albaranes de esta agrupación serán transferidos, ¿Está seguro?"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
@@ -566,27 +578,3 @@ msgstr "el usuario al que se le asigna el grupo de albaranes por defecto"
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__user_id
 msgid "the user to which the pickings are assigned"
 msgstr "el usuario al que se le asigna los albaranes por defecto"
-
-#~ msgid "Batch Picking Name"
-#~ msgstr "Nombre de agrupación de albaranes"
-
-#~ msgid "Batch associated to this picking"
-#~ msgstr "Agrupación asociada a este albarán"
-
-#~ msgid "Cancelled"
-#~ msgstr "Cancelado"
-
-#~ msgid "Draft"
-#~ msgstr "Borrador"
-
-#~ msgid "Running"
-#~ msgstr "En proceso"
-
-#, fuzzy
-#~ msgid "report.stock_batch_picking.report_batch_picking"
-#~ msgstr "report.stock_batch_picking.report_batch_picking_es"
-
-#, fuzzy
-#~| msgid "Batch picking"
-#~ msgid "stock.batch.picking"
-#~ msgstr "Grupo de albaranes"
