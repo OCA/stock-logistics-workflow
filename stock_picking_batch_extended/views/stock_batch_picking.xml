@@ -22,6 +22,7 @@
                         string="Validate"
                         type="object"
                         attrs="{'invisible': ['|',('use_oca_batch_validation', '!=', True),('state', '!=', 'draft')]}"
+                        confirm="All the pickings from this batch will be transferred. Are you sure?"
                     />
                     <button
                         name="action_transfer"
@@ -29,6 +30,7 @@
                         class="oe_highlight"
                         type="object"
                         attrs="{'invisible': ['|',('use_oca_batch_validation', '!=', True), ('state', 'not in', ['in_progress','assigned'])]}"
+                        confirm="All the pickings from this batch will be transferred. Are you sure?"
                     />
                     <button
                         name="remove_undone_pickings"
@@ -72,6 +74,7 @@
                         type="object"
                         class="oe_highlight"
                         attrs="{'invisible': ['|',('use_oca_batch_validation', '=', True), ('state', 'not in', ['in_progress','assigned'])]}"
+                        confirm="All the pickings from this batch will be confirmed. Are you sure?"
                     />
                     <button
                         name="cancel_picking"
