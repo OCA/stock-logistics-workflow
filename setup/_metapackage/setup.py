@@ -35,6 +35,7 @@ setuptools.setup(
         'odoo13-addon-stock_picking_late_activity',
         'odoo13-addon-stock_picking_mass_action',
         'odoo13-addon-stock_picking_operation_quick_change',
+        'odoo13-addon-stock_picking_package_preparation',
         'odoo13-addon-stock_picking_product_assortment',
         'odoo13-addon-stock_picking_purchase_order_link',
         'odoo13-addon-stock_picking_restrict_cancel_with_orig_move',
