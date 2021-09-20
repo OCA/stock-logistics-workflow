@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="product_packaging_delivery_form">
+        <field name="name">product.packaging.form.delivery</field>
+        <field name="model">product.packaging</field>
+        <field name="inherit_id" ref="delivery.product_packaging_delivery_form" />
+        <field name="arch" type="xml">
+            <field name="max_weight" position="after">
+                <field name="package_default_shipping_weight" />
+            </field>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="product_packaging_delivery_tree_inherit">
+        <field name="name">product.packaging.tree.delivery.inherit</field>
+        <field name="model">product.packaging</field>
+        <field name="inherit_id" ref="delivery.product_packaging_delivery_tree" />
+        <field name="arch" type="xml">
+            <field name="max_weight" position="after">
+                <field name="package_default_shipping_weight" />
+            </field>
+        </field>
+    </record>
+</odoo>
