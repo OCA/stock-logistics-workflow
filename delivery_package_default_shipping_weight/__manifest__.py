@@ -3,7 +3,7 @@
 {
     "name": "Delivery Package Default Shipping Weight",
     "summary": "Set default package shipping weight according to packaging",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "development_status": "Production/Stable",
     "category": "Inventory",
     "website": "https://github.com/OCA/stock-logistics-workflow",
