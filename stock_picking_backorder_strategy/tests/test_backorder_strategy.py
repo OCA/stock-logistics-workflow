@@ -41,15 +41,14 @@ class TestBackorderStrategy(common.SavepointCase):
         cls.picking.action_confirm()
 
     def _process_picking(self):
-        """ Receive partially the picking
-        """
+        """Receive partially the picking"""
         res = self.picking.button_validate()
         return res
 
     def test_backorder_strategy_create(self):
-        """ Check strategy for stock.picking_type_in is create
-            Receive picking
-            Check backorder is created
+        """Check strategy for stock.picking_type_in is create
+        Receive picking
+        Check backorder is created
         """
         self.picking_type.backorder_strategy = "create"
         self._process_picking()
@@ -58,10 +57,10 @@ class TestBackorderStrategy(common.SavepointCase):
             self.assertTrue(backorder)
 
     def test_backorder_strategy_no_create(self):
-        """ Set strategy for stock.picking_type_in to no_create
-            Receive picking
-            Check there is no backorder
-            Check if there is one move done and one move cancelled
+        """Set strategy for stock.picking_type_in to no_create
+        Receive picking
+        Check there is no backorder
+        Check if there is one move done and one move cancelled
         """
         self.picking_type.backorder_strategy = "no_create"
         self._process_picking()
@@ -70,16 +69,18 @@ class TestBackorderStrategy(common.SavepointCase):
             self.assertFalse(backorder)
             states = list(set(self.picking.move_lines.mapped("state")))
             self.assertEquals(
-                "done", self.picking.state,
+                "done",
+                self.picking.state,
             )
             self.assertListEqual(
-                ["cancel", "done"], states,
+                ["cancel", "done"],
+                states,
             )
 
     def test_backorder_strategy_cancel(self):
-        """ Set strategy for stock.picking_type_in to cancel
-            Receive picking
-            Check the backorder state is cancel
+        """Set strategy for stock.picking_type_in to cancel
+        Receive picking
+        Check the backorder state is cancel
         """
         self.picking_type.backorder_strategy = "cancel"
         self._process_picking()
@@ -89,9 +90,9 @@ class TestBackorderStrategy(common.SavepointCase):
             self.assertEqual("cancel", backorder[0].state)
 
     def test_backorder_strategy_manual(self):
-        """ Set strategy for stock.picking_type_in to manual
-            Receive picking
-            Check the backorder wizard is launched
+        """Set strategy for stock.picking_type_in to manual
+        Receive picking
+        Check the backorder wizard is launched
         """
         self.assertEqual("manual", self.picking_type.backorder_strategy)
         old_wizards = self.env["stock.backorder.confirmation"].search([])
