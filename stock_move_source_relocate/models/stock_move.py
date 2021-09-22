@@ -60,9 +60,11 @@ class StockMove(models.Model):
             # A part of the quantity could be reserved in the original
             # location, so keep this part in the move and split the rest
             # in a new move, where will take the goods in the relocation
-            new_move_id = self._split(need)
-            # recheck first move which should now be available
-            new_move = self.browse(new_move_id)
+            new_move = self  # fallback if no split occurs
+            new_move_vals = self._split(need)
+            if new_move_vals:
+                new_move = self.create(new_move_vals)
+                new_move._action_confirm(merge=False)
             new_move.location_id = relocation.relocate_location_id
             self._action_assign()
             relocated = new_move
