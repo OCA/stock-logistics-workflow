@@ -3,7 +3,7 @@
 {
     "name": "Stock Move Source Relocation",
     "summary": "Change source location of unavailable moves",
-    "version": "13.0.1.1.0",
+    "version": "14.0.1.0.0",
     "development_status": "Alpha",
     "category": "Warehouse Management",
     "website": "https://github.com/OCA/wms",
