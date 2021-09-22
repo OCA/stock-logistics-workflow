@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2021 Le Filament
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="view_stock_move_line_operation_tree" model="ir.ui.view">
+        <field
+            name="name"
+        >stock.move.line.operations.tree - stock_picking_filter_lot_configurable</field>
+        <field name="model">stock.move.line</field>
+        <field
+            name="inherit_id"
+            ref="stock_picking_filter_lot.view_stock_move_line_operation_tree"
+        />
+        <field name="arch" type="xml">
+            <field name="picking_id" position="after">
+                <field name="lot_id_domain" invisible="1" />
+            </field>
+            <field name="lot_id" position="attributes">
+                <attribute name="domain">lot_id_domain</attribute>
+            </field>
+        </field>
+    </record>
+    <record id="view_stock_move_line_detailed_operation_tree" model="ir.ui.view">
+        <field
+            name="name"
+        >stock.move.line.detailed.operations.tree - stock_picking_filter_lot_configurable</field>
+        <field name="model">stock.move.line</field>
+        <field
+            name="inherit_id"
+            ref="stock_picking_filter_lot.view_stock_move_line_detailed_operation_tree"
+        />
+        <field name="arch" type="xml">
+            <field name="picking_id" position="after">
+                <field name="lot_id_domain" invisible="1" />
+            </field>
+            <field name="lot_id" position="attributes">
+                <attribute name="domain">lot_id_domain</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>
