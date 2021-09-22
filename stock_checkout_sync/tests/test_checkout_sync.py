@@ -66,21 +66,26 @@ class TestMoveCommonDestSyncLocation(CheckoutSyncCommonCase):
         cls.picking_pack = cls.pack_move1.picking_id
         cls.picking_pack_post = cls.pack_move4.picking_id
 
-    def test_pack_sync(self):
+    def _prepare_pickings(self, with_check=True):
+        self.pack_type.checkout_sync = True
+        self.pack_post_type.checkout_sync = True
+
+        if not with_check:
+            self.assertTrue(self.pick_move1.picking_id.can_sync_to_checkout)
+            self.assertTrue(self.pick_move2.picking_id.can_sync_to_checkout)
+            self.assertTrue(self.pick_move3.picking_id.can_sync_to_checkout)
+            self.assertTrue(self.pick_move4.picking_id.can_sync_to_checkout)
+
         self.moves._action_assign()
+        if not with_check:
+            return
         self.assertEqual(self.pick_move1.state, "assigned")
         self.assertEqual(self.pick_move2.state, "assigned")
         self.assertEqual(self.pick_move3.state, "assigned")
         self.assertEqual(self.pick_move4.state, "assigned")
 
-        self.pack_type.checkout_sync = True
-        self.pack_post_type.checkout_sync = True
-
-        self.assertTrue(self.pick_move1.picking_id.can_sync_to_checkout)
-        self.assertTrue(self.pick_move2.picking_id.can_sync_to_checkout)
-        self.assertTrue(self.pick_move3.picking_id.can_sync_to_checkout)
-        self.assertTrue(self.pick_move4.picking_id.can_sync_to_checkout)
-
+    def test_pack_sync(self):
+        self._prepare_pickings()
         wizard = self.env["stock.move.checkout.sync"]._create_self(
             self.pick_move1.picking_id
         )
@@ -165,20 +170,7 @@ class TestMoveCommonDestSyncLocation(CheckoutSyncCommonCase):
         # lines to have the same destination location as the first move.
         # It works because we set the selected location on the other stock.move
         # records, so the move lines inherit the move's destination location
-        self.pack_type.checkout_sync = True
-        self.pack_post_type.checkout_sync = True
-
-        self.assertTrue(self.pick_move1.picking_id.can_sync_to_checkout)
-        self.assertTrue(self.pick_move2.picking_id.can_sync_to_checkout)
-        self.assertTrue(self.pick_move3.picking_id.can_sync_to_checkout)
-        self.assertTrue(self.pick_move4.picking_id.can_sync_to_checkout)
-
-        self.pick_move1._action_assign()
-        self.assertEqual(self.pick_move1.state, "assigned")
-        self.assertEqual(self.pick_move2.state, "confirmed")
-        self.assertEqual(self.pick_move3.state, "confirmed")
-        self.assertEqual(self.pick_move4.state, "confirmed")
-
+        self._prepare_pickings()
         wizard = self.env["stock.move.checkout.sync"]._create_self(
             self.pick_move1.picking_id
         )
@@ -216,4 +208,53 @@ class TestMoveCommonDestSyncLocation(CheckoutSyncCommonCase):
                 # different picking,
                 self.pick_move4: self.packing_location,
             }
+        )
+
+    def test_skip_to_next(self):
+        self._prepare_pickings(with_check=False)
+        next_action = self.pick_move1.picking_id.open_checkout_sync_wizard()
+        wizard = self.env["stock.move.checkout.sync"].browse(next_action["res_id"])
+        next_action = wizard.skip_to_next()
+        # a new wizard has been created for the second step
+        wizard = self.env["stock.move.checkout.sync"].browse(next_action["res_id"])
+        self.assertRecordValues(
+            wizard,
+            [
+                {
+                    "picking_ids": self.pick_move1.picking_id.ids,
+                    "move_ids": self.pick_move4.ids,
+                    "dest_picking_id": self.picking_pack_post.id,
+                    "remaining_help": (
+                        "<ul><li>{}: 3 move(s)</li>\n"
+                        "<li><strong>{}: 1 move(s)</strong></li></ul>"
+                    ).format(self.picking_pack.name, self.picking_pack_post.name),
+                    "done_dest_picking_ids": self.picking_pack.ids,
+                    # False because it's the last step to sync
+                    "show_skip_button": False,
+                }
+            ],
+        )
+
+    def test_open_checkout_sync_wizard(self):
+        self._prepare_pickings(with_check=False)
+        next_action = self.pick_move1.picking_id.open_checkout_sync_wizard()
+        wizard = self.env["stock.move.checkout.sync"].browse(next_action["res_id"])
+        self.assertRecordValues(
+            wizard,
+            [
+                {
+                    "picking_ids": self.pick_move1.picking_id.ids,
+                    "move_ids": (
+                        self.pick_move1 | self.pick_move2 | self.pick_move3
+                    ).ids,
+                    "dest_picking_id": self.picking_pack.id,
+                    "remaining_help": (
+                        "<ul><li><strong>{}: 3 move(s)</strong></li>\n"
+                        "<li>{}: 1 move(s)</li></ul>"
+                    ).format(self.picking_pack.name, self.picking_pack_post.name),
+                    "done_dest_picking_ids": [],
+                    # True because we have another picking to sync after
+                    "show_skip_button": True,
+                }
+            ],
         )

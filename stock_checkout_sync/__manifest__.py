@@ -3,7 +3,7 @@
 {
     "name": "Stock Checkout Synchronization",
     "summary": "Sync location for Checkout operations",
-    "version": "13.0.1.1.0",
+    "version": "14.0.1.0.0",
     "development_status": "Alpha",
     "category": "Warehouse Management",
     "website": "https://github.com/OCA/wms",
@@ -13,6 +13,7 @@
     "installable": True,
     "depends": ["stock_move_common_dest"],
     "data": [
+        "security/ir.model.access.csv",
         "views/stock_picking_type_views.xml",
         "views/stock_picking_views.xml",
         "wizards/stock_move_checkout_sync_views.xml",

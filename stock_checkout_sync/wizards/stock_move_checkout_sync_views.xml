@@ -44,11 +44,7 @@
                                 options="{'no_create': True}"
                                 groups="stock.group_stock_multi_locations"
                             />
-                            <field
-                                name="date_expected"
-                                string="Date Expected"
-                                optional="show"
-                            />
+                            <field name="date" string="Date Expected" optional="show" />
                             <field name="state" optional="show" />
                         </tree>
                     </field>
