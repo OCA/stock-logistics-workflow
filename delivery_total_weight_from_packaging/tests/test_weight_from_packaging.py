@@ -24,11 +24,15 @@ class TestWeight(TestShippingWeightCommon):
     def test_picking_shipping_weight(self):
         # Add a Small Box of 1 unit without package
         self.env["stock.quant"]._update_available_quantity(
-            self.product, self.wh.out_type_id.default_location_src_id, 1,
+            self.product,
+            self.wh.out_type_id.default_location_src_id,
+            1,
         )
         # Add a Box of 5 units without package
         self.env["stock.quant"]._update_available_quantity(
-            self.product, self.wh.out_type_id.default_location_src_id, 5,
+            self.product,
+            self.wh.out_type_id.default_location_src_id,
+            5,
         )
         # Add a Box of 5 units within a package
         pack = self.env["stock.quant.package"].create({"name": "Test package"})
