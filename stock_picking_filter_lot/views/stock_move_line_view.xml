@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<!-- Copyright 2018 Simone Rubino - Agile Business Group
+<!-- Copyright 2021 Le Filament
+     Copyright 2018 Simone Rubino - Agile Business Group
      Copyright 2018 ForgeFlow S.L.
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
@@ -10,10 +11,13 @@
         <field name="model">stock.move.line</field>
         <field name="inherit_id" ref="stock.view_stock_move_line_operation_tree" />
         <field name="arch" type="xml">
+            <field name="picking_id" position="after">
+                <field name="picking_type_use_filter_lots" invisible="1" />
+            </field>
             <field name="lot_id" position="attributes">
-                <attribute
-                    name="domain"
-                >[('product_id','=', parent.product_id), ('company_id', '=', company_id), ('location_ids', 'child_of', location_id)]</attribute>
+                <attribute name="domain">
+                    picking_type_use_filter_lots and [('product_id','=', product_id), ('company_id', '=', company_id), ('location_ids', 'child_of', location_id)] or [('product_id','=', product_id), ('company_id', '=', company_id)]
+                </attribute>
             </field>
         </field>
     </record>
@@ -27,10 +31,13 @@
             ref="stock.view_stock_move_line_detailed_operation_tree"
         />
         <field name="arch" type="xml">
+            <field name="picking_id" position="after">
+                <field name="picking_type_use_filter_lots" invisible="1" />
+            </field>
             <field name="lot_id" position="attributes">
-                <attribute
-                    name="domain"
-                >[('product_id','=', product_id), ('company_id', '=', company_id), ('location_ids', 'child_of', location_id)]</attribute>
+                <attribute name="domain">
+                    picking_type_use_filter_lots and [('product_id','=', product_id), ('company_id', '=', company_id), ('location_ids', 'child_of', location_id)] or [('product_id','=', product_id), ('company_id', '=', company_id)]
+                </attribute>
             </field>
         </field>
     </record>
