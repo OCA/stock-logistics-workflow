@@ -10,7 +10,7 @@
                 <field name="single_product_qty" groups="base.group_no_one" />
                 <field
                     name="product_packaging_id"
-                    domain="[('product_id', '=', single_product_id), ('qty', '=', single_product_qty)]"
+                    domain="[('product_tmpl_id', '=', single_product_id.product_tmpl_id), ('qty', '=', single_product_qty)]"
                 />
             </field>
         </field>
