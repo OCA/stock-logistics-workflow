@@ -182,3 +182,35 @@ class PurchaseReturnRequestCase(StockReturnRequestCase):
         self.assertEqual(
             returned_pickings.mapped("move_line_ids.location_id"), self.location_child_1
         )
+
+    def test_return_request_putaway_from_customer(self):
+        """Test that the putaway strategy has been applied"""
+        self.return_request_customer.write(
+            {"line_ids": [(0, 0, {"product_id": self.prod_1.id, "quantity": 5.0})]}
+        )
+        self.return_request_customer.action_confirm()
+        stock_move_lines = self.return_request_customer.returned_picking_ids.mapped(
+            "move_line_ids"
+        )
+        # No putaway strategy is applied
+        self.assertEqual(
+            stock_move_lines.mapped("location_dest_id"), self.wh1.lot_stock_id
+        )
+
+        # Create a putaway rule to test
+        self.env["stock.putaway.rule"].create(
+            {
+                "product_id": self.prod_1.id,
+                "location_in_id": self.wh1.lot_stock_id.id,
+                "location_out_id": self.location_child_1.id,
+            }
+        )
+        self.return_request_customer.action_cancel()
+        self.return_request_customer.action_cancel_to_draft()
+        self.return_request_customer.action_confirm()
+        stock_move_lines = self.return_request_customer.returned_picking_ids.mapped(
+            "move_line_ids"
+        )
+        self.assertEqual(
+            stock_move_lines.mapped("location_dest_id"), self.location_child_1
+        )

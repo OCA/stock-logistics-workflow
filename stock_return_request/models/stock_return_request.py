@@ -224,7 +224,10 @@ class StockReturnRequest(models.Model):
             "product_uom_id": line.product_uom_id.id,
             "lot_id": line.lot_id.id,
             "location_id": return_move.location_id.id,
-            "location_dest_id": return_move.location_dest_id.id,
+            "location_dest_id": return_move.location_dest_id._get_putaway_strategy(
+                line.product_id
+            ).id
+            or return_move.location_dest_id.id,
             "qty_done": qty,
         }
         if not quant:
