@@ -25,7 +25,7 @@ class StockMove(models.Model):
         domain = []
         if self._skip_assign_picking_group_domain_by_date():
             return domain
-        date_planned = self.date_expected
+        date_planned = self.date_expected.replace(hour=0, minute=0, second=0)
         date_planned_end = date_planned.replace(hour=23, minute=59, second=59)
         domain = [
             ("scheduled_date", "<=", date_planned_end),

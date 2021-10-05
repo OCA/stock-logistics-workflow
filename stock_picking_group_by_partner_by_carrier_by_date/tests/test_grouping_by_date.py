@@ -56,17 +56,17 @@ class TestGroupByDate(TestGroupByDateBase):
             p1, p2 = self._create_orders_and_pickings()
             self.assertEqual(p1, p2)
 
-        # Same day, inside time window
+        # Same day
         with freeze_time("2020-11-27 11:00:00"):
             p3, p4 = self._create_orders_and_pickings()
             self.assertEqual(p3, p4)
             self.assertEqual(p3, p1)
 
-        # Same day, out of time window
-        with freeze_time("2020-11-27 18:00:00"):
+        # Same day, one minute later
+        with freeze_time("2020-11-27 11:01:00"):
             p5, p6 = self._create_orders_and_pickings()
             self.assertEqual(p5, p6)
-            self.assertNotEqual(p5, p1)
+            self.assertEqual(p5, p1)
 
         # Delay 1st picking date
         p1.scheduled_date = "2020-11-27 18:30:00"
