@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <data noupdate="1">
+        <record id="stock.route_warehouse0_mto" model="stock.location.route">
+            <field name="active" eval="True" />
+        </record>
+    </data>
+
+</odoo>
