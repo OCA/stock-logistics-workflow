@@ -61,11 +61,17 @@ class StockMoveLine(models.Model):
         return result
 
     def _reserve_manual_lot(self, vals):
-        if not vals.get("manual_lot_id") and "lot_id" not in vals:
+        if "manual_lot_id" not in vals and "lot_id" not in vals:
             return
         for this in self:
-            if not vals.get("manual_lot_id"):
-                if not this.picking_id.picking_type_id.use_manual_lot_selection:
+            if this.product_id.tracking == 'none':
+                if "manual_lot_id" not in vals:
+                    if this.manual_lot_id != this.lot_id:
+                        this.manual_lot_id = this.lot_id
+                    continue
+            elif not vals.get("manual_lot_id"):
+                if (not this.picking_id.picking_type_id.use_manual_lot_selection
+                        and this.manual_lot_id != this.lot_id):
                     this.manual_lot_id = this.lot_id
                 continue
             if this.lot_id == this.manual_lot_id:
@@ -77,8 +83,8 @@ class StockMoveLine(models.Model):
                 if float_compare(
                         product_qty, this.product_qty,
                         this.product_uom_id.rounding):
-                    product_uom_qty = self.product_id.uom_id._compute_quantity(
-                        product_qty, self.product_uom_id,
+                    product_uom_qty = this.product_id.uom_id._compute_quantity(
+                        product_qty, this.product_uom_id,
                         rounding_method="HALF-UP")
 
             available_qty = self.env['stock.quant']._get_available_quantity(
@@ -120,6 +126,10 @@ class StockMoveLine(models.Model):
                         lot_id=this.manual_lot_id,
                         package_id=this.package_id,
                         owner_id=this.owner_id,
+                        # For untracked products, reservation of stock
+                        # without serial is enforced.
+                        strict=(not this.manual_lot_id
+                                and this.product_id.tracking == 'none'),
                     )
                 except UserError as ex:
                     raise UserError(

@@ -273,15 +273,39 @@ class TestStockMoveManualLot(TransactionCase):
     def test_09_non_tracked_product(self):
         """Non tracked product, but having lots in stock
 
-        Currently, no manual lot is required even if the picking type is marked
-        for manual lots and the reservation has a lot.
+        Manual lot is synced with lot_id automatically. If the manual lot
+        is unset, reservation of stock without serial is enforced.
         """
         self.product.tracking = 'none'
+        self.picking.do_unreserve()
+        self.picking.action_assign()
+        self.assertTrue(self.picking.move_line_ids.manual_lot_id)
+        self.assertEqual(
+            self.picking.move_line_ids.manual_lot_id,
+            self.picking.move_line_ids.lot_id)
+        # Lot is synced with manual lot
+        self.picking.move_line_ids.manual_lot_id = self.lot2
+        self.assertEqual(self.picking.move_line_ids.lot_id, self.lot2)
+        # Manual lot is synced with lot
+        self.picking.move_line_ids.lot_id = self.lot1
+        self.assertEqual(self.picking.move_line_ids.manual_lot_id, self.lot1)
+        # Unsetting the serial raises if there is stock without serial.
+        with self.assertRaisesRegex(
+                UserError, "than you have in stock"
+        ), self.env.clear_upon_failure(), self.env.cr.savepoint():
+            self.picking.move_line_ids.manual_lot_id = False
+
+        # Create stock without serial. Serial can now be unset
+        self._create_quant(self.env["stock.production.lot"])
+        self.picking.move_line_ids.manual_lot_id = False
+        self.assertFalse(self.picking.move_line_ids.lot_id)
+        self.assertTrue(self.picking.move_line_ids.product_qty)
+
         self.picking.move_line_ids.qty_done = (
             self.picking.move_line_ids.product_qty
         )
         self.picking.button_validate()
-        self.assertEqual(self.picking.move_line_ids.manual_lot_id, self.lot1)
+        self.assertEqual(self.picking.state, "done")
 
     def test_10_unset_manual_lot(self):
         """Unsetting a manual lot does not unreserve the move line."""
