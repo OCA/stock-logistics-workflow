@@ -79,7 +79,7 @@ class DeliverySlipReport(models.AbstractModel):
 
     @api.model
     def rounding_to_precision(self, rounding):
-        """ Convert rounding specification to precision digits
+        """Convert rounding specification to precision digits
 
         Rounding is encoded in Odoo as a floating number with as
         many meaningful decimals as used for the rounding, e.g.

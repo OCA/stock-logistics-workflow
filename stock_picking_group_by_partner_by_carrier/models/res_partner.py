@@ -8,7 +8,8 @@ class ResPartner(models.Model):
     _inherit = "res.partner"
 
     disable_picking_grouping = fields.Boolean(
-        string="Do not group deliveries", default=False,
+        string="Do not group deliveries",
+        default=False,
     )
 
     def _commercial_fields(self):
