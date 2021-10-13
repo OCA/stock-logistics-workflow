@@ -75,7 +75,7 @@ class StockPickingMergeWizard(TransientModel):
         tmpl = self._get_info_template()
         for rec in self:
             info = rec._get_grouping_info()
-            rec.details = tmpl.render(info)
+            rec.details = tmpl._render(info)
             rec.nothing_todo = not info["something_todo"]
 
     def _get_grouping_info(self):
