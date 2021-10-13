@@ -2,7 +2,6 @@
 # Copyright 2020 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from collections import namedtuple
 from itertools import groupby
 
 from odoo import api, fields, models
@@ -59,11 +58,14 @@ class StockPicking(models.Model):
             return super().action_cancel()
 
     def _create_backorder(self):
-        if self.picking_type_id.group_pickings:
-            self = self.with_context(picking_no_copy_if_can_group=1)
-        backorders = super()._create_backorder()
-        if self.picking_type_id.group_pickings:
-            backorders._merge_procurement_groups()
+        backorders = self.browse()
+        for picking in self:
+            if not picking._is_grouping_disabled():
+                picking = picking.with_context(picking_no_copy_if_can_group=1)
+            backorder = super(StockPicking, picking)._create_backorder()
+            if not picking._is_grouping_disabled():
+                backorder._merge_procurement_groups()
+            backorders |= backorder
         return backorders
 
     def _prepare_merge_procurement_group_values(self, move_groups):
@@ -75,7 +77,7 @@ class StockPicking(models.Model):
 
     def _merge_procurement_groups(self):
         for picking in self:
-            if not picking.picking_type_id.group_pickings:
+            if picking._is_grouping_disabled():
                 continue
             if picking.picking_type_id.code != "outgoing":
                 continue
@@ -115,65 +117,87 @@ class StockPicking(models.Model):
             StockPicking, self.with_context(picking_no_copy_if_can_group=0)
         ).copy(defaults)
 
-    def get_delivery_report_lines(self):
+    def _is_grouping_disabled(self):
         self.ensure_one()
-        if self.state != "done":
-            moves = self.move_lines.filtered("product_uom_qty").sorted(
-                lambda m: m.sale_line_id.order_id
-            )
-            if len(moves.mapped("sale_line_id.order_id")) > 1:
-                sales_and_moves = []
-                for sale, sale_moves in groupby(
-                    moves, lambda m: m.sale_line_id.order_id
-                ):
-                    sales_and_moves.append(
-                        MockedMove(
-                            product_id=False,
-                            description_picking=sale.get_name_for_delivery_line(),
-                            product_uom_qty=0,
-                            product_uom=False,
-                            lot_name="",
-                        )
+        return (
+            not self.picking_type_id.group_pickings
+            or self.partner_id.disable_picking_grouping
+        )
+
+    def _group_moves_by_order(self, moves):
+        # Meant to be overridden
+        return groupby(moves, lambda m: m.sale_line_id.order_id)
+
+    def _get_sorted_moves(self):
+        # Meant to be overriden
+        self.ensure_one()
+        return self.move_lines.sorted(lambda m: m.sale_line_id.order_id.id)
+
+    def _get_sorted_move_lines(self):
+        # Meant to be overriden
+        self.ensure_one()
+        return self.move_line_ids
+
+    def _delivery_report_state_is_done(self):
+        return self.state == "done"
+
+    def get_delivery_report_lines(self):
+        """Return the lines that will be on the report.
+
+        If the picking concerns multiple sale order some fake records are
+        inserted to have the sale information as line separators.
+        Otherwise standard records are returned.
+        """
+        self.ensure_one()
+        moves = self._get_sorted_moves()
+        if not self._delivery_report_state_is_done():
+            moves = moves.filtered("reserved_availability")
+
+        if len(moves.mapped("sale_line_id.order_id")) > 1:
+            grouped_moves = self._group_moves_by_order(moves)
+            fake_record = {
+                "product_id": 1,
+                "product_uom_qty": 0,
+                "product_uom": self.env.ref("uom.product_uom_unit").id,
+                "company_id": self.env.user.company_id.id,
+                "location_id": self.env.ref("stock.stock_location_output").id,
+                "location_dest_id": self.env.ref("stock.stock_location_output").id,
+            }
+            if not self._delivery_report_state_is_done():
+                sales_and_moves = self.env["stock.move"]
+                fake_record["name"] = "fake move"
+                for sale, sale_moves in grouped_moves:
+                    line_desc = sale.get_name_for_delivery_line()
+                    fake_record.update(
+                        {"description_picking": line_desc, "origin": sale.name}
                     )
+                    sales_and_moves |= sales_and_moves.new(fake_record.copy())
                     for move in sale_moves:
-                        sales_and_moves.append(move)
+                        sales_and_moves |= move
                 return sales_and_moves
             else:
-                return moves
-        else:
-            moves = self.move_lines.sorted(lambda m: m.sale_line_id.order_id)
-            if len(moves.mapped("sale_line_id.order_id")) > 1:
-                sales_and_moves = []
-                for sale, sale_moves in groupby(
-                    moves, lambda m: m.sale_line_id.order_id
-                ):
-                    sales_and_moves.append(
-                        MockedMove(
-                            product_id=False,
-                            description_picking=sale.get_name_for_delivery_line(),
-                            product_uom_qty=0,
-                            product_uom=False,
-                            lot_name="",
-                        )
+                sales_and_moves = self.env["stock.move.line"]
+                fake_record["product_uom_id"] = fake_record.pop("product_uom")
+                for sale, sale_moves in grouped_moves:
+                    line_desc = sale.get_name_for_delivery_line()
+                    fake_record.update(
+                        {"description_picking": line_desc, "origin": sale.name}
                     )
+                    sales_and_moves |= sales_and_moves.new(fake_record.copy())
                     for move in sale_moves:
                         for move_line in move.move_line_ids:
-                            sales_and_moves.append(move_line)
+                            sales_and_moves |= move_line
                 return sales_and_moves
-            else:
-                return self.move_line_ids
+        elif not self._delivery_report_state_is_done():
+            return moves
+        else:
+            return self._get_sorted_move_lines()
 
     def get_customer_refs(self):
         """Returns all unique sales order customer references."""
-        if self.state != "done":
-            move_lines = self.move_lines.filtered("product_uom_qty")
-        else:
+        if self._delivery_report_state_is_done():
             move_lines = self.move_lines
+        else:
+            move_lines = self.move_lines.filtered("product_uom_qty")
         references = move_lines.mapped("sale_line_id.order_id.client_order_ref")
         return set(filter(None, references))
-
-
-MockedMove = namedtuple(
-    "MockedMove",
-    ["product_id", "description_picking", "product_uom_qty", "product_uom", "lot_name"],
-)
