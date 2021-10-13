@@ -35,6 +35,9 @@ shares the same delivery address and carrier (or lack thereof).
 Sale orders with a Shipping Policy set to 'When all products are ready' always
 get their own shipping.
 
+When the delivery slip is printed, the list of pending quantities to deliver
+is shown at the end, grouped by order.
+
 .. IMPORTANT::
    This is an alpha version, the data model and design can change at any time without warning.
    Only for development or testing purpose, do not use in production.
@@ -86,6 +89,7 @@ Contributors
 
 * Camptocamp:
   * Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
+  * Thierry Ducrest <thierry.ducrest@camptocamp.com>
 * BCIM:
   * Jacques-Etienne Baudoux <je@bcim.be>
 
