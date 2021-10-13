@@ -15,6 +15,7 @@ msgstr ""
 
 #. module: stock_return_request
 #: code:addons/stock_return_request/models/stock_return_request.py:0
+#: code:addons/stock_return_request/models/stock_return_request.py:0
 #, python-format
 msgid ""
 "\n"
@@ -83,6 +84,7 @@ msgid "Add a note that will be printed on the Request report"
 msgstr ""
 
 #. module: stock_return_request
+#: code:addons/stock_return_request/models/stock_return_request.py:0
 #: code:addons/stock_return_request/models/stock_return_request.py:0
 #, python-format
 msgid "Add some products to return"
@@ -207,6 +209,7 @@ msgstr ""
 
 #. module: stock_return_request
 #: code:addons/stock_return_request/models/stock_return_request.py:0
+#: code:addons/stock_return_request/models/stock_return_request.py:0
 #, python-format
 msgid ""
 "It wasn't possible to assign stock for this returns:\n"
@@ -273,6 +276,7 @@ msgstr ""
 #: code:addons/stock_return_request/models/stock_return_request.py:0
 #: code:addons/stock_return_request/models/stock_return_request.py:0
 #: code:addons/stock_return_request/models/stock_return_request.py:0
+#: code:addons/stock_return_request/models/stock_return_request.py:0
 #, python-format
 msgid "New"
 msgstr ""
@@ -298,6 +302,7 @@ msgid "Next Activity Type"
 msgstr ""
 
 #. module: stock_return_request
+#: code:addons/stock_return_request/models/stock_return_request.py:0
 #: code:addons/stock_return_request/models/stock_return_request.py:0
 #, python-format
 msgid ""
@@ -553,6 +558,7 @@ msgid "Stock Return Requests"
 msgstr ""
 
 #. module: stock_return_request
+#: code:addons/stock_return_request/models/stock_return_request.py:0
 #: code:addons/stock_return_request/models/stock_return_request.py:0
 #, python-format
 msgid "Suggest Lot"
