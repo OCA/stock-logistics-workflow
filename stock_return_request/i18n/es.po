@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_return_request
-#: code:addons/stock_return_request/models/stock_return_request.py:527
+#: code:addons/stock_return_request/models/stock_return_request.py:0
 #, python-format
 msgid ""
 "\n"
@@ -43,13 +43,19 @@ msgstr ""
 
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.report_stock_return_request_document
-msgid "<span><strong>Customer Address:</strong></span>"
-msgstr "<span><strong>Dirección del Cliente:</strong></span>"
+msgid ""
+"<span>\n"
+"                                    <strong>Customer Address:</strong>\n"
+"                                </span>"
+msgstr ""
 
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.report_stock_return_request_document
-msgid "<span><strong>Supplier Address:</strong></span>"
-msgstr "<span><strong>Dirección del proveedor:</strong></span>"
+msgid ""
+"<span>\n"
+"                                    <strong>Supplier Address:</strong>\n"
+"                                </span>"
+msgstr ""
 
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.stock_move_lines_to_return
@@ -77,6 +83,11 @@ msgid "Activities"
 msgstr ""
 
 #. module: stock_return_request
+#: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__activity_state
 msgid "Activity State"
 msgstr ""
@@ -87,7 +98,7 @@ msgid "Add a note that will be printed on the Request report"
 msgstr "Añade un comentario. Se imprimirá en la Solicitud de Devolución"
 
 #. module: stock_return_request
-#: code:addons/stock_return_request/models/stock_return_request.py:247
+#: code:addons/stock_return_request/models/stock_return_request.py:0
 #, python-format
 msgid "Add some products to return"
 msgstr "Añadir productos a devolver"
@@ -104,7 +115,7 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 #. module: stock_return_request
-#: selection:stock.return.request,state:0
+#: model:ir.model.fields.selection,name:stock_return_request.selection__stock_return_request__state__cancel
 msgid "Cancelled"
 msgstr "Cancelada"
 
@@ -120,7 +131,7 @@ msgid "Confirm"
 msgstr "Confirmar"
 
 #. module: stock_return_request
-#: selection:stock.return.request,state:0
+#: model:ir.model.fields.selection,name:stock_return_request.selection__stock_return_request__state__confirmed
 msgid "Confirmed"
 msgstr "Confirmada"
 
@@ -154,7 +165,7 @@ msgid "Display Name"
 msgstr "Nombre mostrado"
 
 #. module: stock_return_request
-#: selection:stock.return.request,state:0
+#: model:ir.model.fields.selection,name:stock_return_request.selection__stock_return_request__state__done
 msgid "Done"
 msgstr "Hecha"
 
@@ -186,17 +197,24 @@ msgid "ID"
 msgstr "ID (identificación)"
 
 #. module: stock_return_request
-#: model:ir.model.fields,help:stock_return_request.field_stock_return_request__message_unread
-msgid "If checked new messages require your attention."
+#: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: stock_return_request
+#: model:ir.model.fields,help:stock_return_request.field_stock_return_request__activity_exception_icon
+msgid "Icon to indicate an exception activity."
 msgstr ""
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__message_needaction
+#: model:ir.model.fields,help:stock_return_request.field_stock_return_request__message_unread
 msgid "If checked, new messages require your attention."
 msgstr ""
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__message_has_error
+#: model:ir.model.fields,help:stock_return_request.field_stock_return_request__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr ""
 
@@ -206,7 +224,7 @@ msgid "Is Follower"
 msgstr ""
 
 #. module: stock_return_request
-#: code:addons/stock_return_request/models/stock_return_request.py:306
+#: code:addons/stock_return_request/models/stock_return_request.py:0
 #, python-format
 msgid ""
 "It wasn't possible to assign stock for this returns:\n"
@@ -272,15 +290,13 @@ msgid "Messages"
 msgstr ""
 
 #. module: stock_return_request
-#: code:addons/stock_return_request/models/stock_return_request.py:17
-#: code:addons/stock_return_request/models/stock_return_request.py:353
-#: code:addons/stock_return_request/models/stock_return_request.py:355
+#: code:addons/stock_return_request/models/stock_return_request.py:0
 #, python-format
 msgid "New"
 msgstr "Nueva"
 
 #. module: stock_return_request
-#: selection:stock.return.request,return_order:0
+#: model:ir.model.fields.selection,name:stock_return_request.selection__stock_return_request__return_order__date_desc,_id_desc
 msgid "Newer first"
 msgstr "Más recientes primero"
 
@@ -300,7 +316,7 @@ msgid "Next Activity Type"
 msgstr ""
 
 #. module: stock_return_request
-#: code:addons/stock_return_request/models/stock_return_request.py:507
+#: code:addons/stock_return_request/models/stock_return_request.py:0
 #, python-format
 msgid ""
 "Not enough moves to return this product.\n"
@@ -318,7 +334,7 @@ msgstr ""
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__message_has_error_counter
-msgid "Number of error"
+msgid "Number of errors"
 msgstr ""
 
 #. module: stock_return_request
@@ -337,12 +353,12 @@ msgid "Number of unread messages"
 msgstr ""
 
 #. module: stock_return_request
-#: selection:stock.return.request,return_order:0
+#: model:ir.model.fields.selection,name:stock_return_request.selection__stock_return_request__return_order__date_asc,_id_desc
 msgid "Older first"
 msgstr "Más antiguos primero"
 
 #. module: stock_return_request
-#: selection:stock.return.request,state:0
+#: model:ir.model.fields.selection,name:stock_return_request.selection__stock_return_request__state__draft
 msgid "Open"
 msgstr "Abierta"
 
@@ -350,11 +366,6 @@ msgstr "Abierta"
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__picking_types
 msgid "Operation types"
 msgstr "Tipos de operación"
-
-#. module: stock_return_request
-#: selection:stock.return.request,activity_state:0
-msgid "Overdue"
-msgstr ""
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__partner_id
@@ -370,11 +381,6 @@ msgstr "Devolver mercancía desde múltiples albaranes"
 #: model_terms:ir.ui.view,arch_db:stock_return_request.view_stock_return_request_form
 msgid "Pickings"
 msgstr "Albaranes"
-
-#. module: stock_return_request
-#: selection:stock.return.request,activity_state:0
-msgid "Planned"
-msgstr ""
 
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.view_stock_return_request_form
@@ -449,7 +455,7 @@ msgid "Return from"
 msgstr "Devolver desde"
 
 #. module: stock_return_request
-#: selection:stock.return.request,return_type:0
+#: model:ir.model.fields.selection,name:stock_return_request.selection__stock_return_request__return_type__customer
 msgid "Return from Customer"
 msgstr "Devolución desde cliente"
 
@@ -459,7 +465,7 @@ msgid "Return from this location"
 msgstr "Devolver a esta ubicación"
 
 #. module: stock_return_request
-#: code:addons/stock_return_request/models/stock_return_request.py:171
+#: code:addons/stock_return_request/models/stock_return_request.py:0
 #, python-format
 msgid "Return of %s"
 msgstr "Devolución de %s"
@@ -470,12 +476,12 @@ msgid "Return to"
 msgstr "Devolver a"
 
 #. module: stock_return_request
-#: selection:stock.return.request,return_type:0
+#: model:ir.model.fields.selection,name:stock_return_request.selection__stock_return_request__return_type__internal
 msgid "Return to Internal location"
 msgstr "Devolver desde ubicación interna"
 
 #. module: stock_return_request
-#: selection:stock.return.request,return_type:0
+#: model:ir.model.fields.selection,name:stock_return_request.selection__stock_return_request__return_type__supplier
 msgid "Return to Supplier"
 msgstr "Devolver a proveedor"
 
@@ -508,6 +514,11 @@ msgstr "Albarenes de devolución"
 #: model_terms:ir.ui.view,arch_db:stock_return_request.view_stock_return_request_form
 msgid "Returns"
 msgstr "Devoluciones"
+
+#. module: stock_return_request
+#: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__from_date
@@ -565,7 +576,7 @@ msgid "Stock Return Requests"
 msgstr "Solicitudes de Devolución de mercancía"
 
 #. module: stock_return_request
-#: code:addons/stock_return_request/models/stock_return_request.py:558
+#: code:addons/stock_return_request/models/stock_return_request.py:0
 #, python-format
 msgid "Suggest Lot"
 msgstr ""
@@ -620,17 +631,12 @@ msgid "To refund"
 msgstr "Reembolsar"
 
 #. module: stock_return_request
-#: selection:stock.return.request,activity_state:0
-msgid "Today"
-msgstr ""
-
-#. module: stock_return_request
-#: selection:suggest.return.request.lot,lot_suggestion_mode:0
+#: model:ir.model.fields.selection,name:stock_return_request.selection__suggest_return_request_lot__lot_suggestion_mode__sum
 msgid "Total by lot"
 msgstr ""
 
 #. module: stock_return_request
-#: selection:suggest.return.request.lot,lot_suggestion_mode:0
+#: model:ir.model.fields.selection,name:stock_return_request.selection__suggest_return_request_lot__lot_suggestion_mode__detail
 msgid "Total by move"
 msgstr ""
 
@@ -642,6 +648,11 @@ msgstr "Seguimiento"
 #. module: stock_return_request
 #: model:ir.model,name:stock_return_request.model_stock_picking
 msgid "Transfer"
+msgstr ""
+
+#. module: stock_return_request
+#: model:ir.model.fields,help:stock_return_request.field_stock_return_request__activity_exception_decoration
+msgid "Type of the exception activity on record."
 msgstr ""
 
 #. module: stock_return_request
@@ -688,3 +699,9 @@ msgstr ""
 #: model:ir.model.fields,help:stock_return_request.field_suggest_return_request_lot__suggested_lot_detail
 msgid "You can return these lots"
 msgstr ""
+
+#~ msgid "<span><strong>Customer Address:</strong></span>"
+#~ msgstr "<span><strong>Dirección del Cliente:</strong></span>"
+
+#~ msgid "<span><strong>Supplier Address:</strong></span>"
+#~ msgstr "<span><strong>Dirección del proveedor:</strong></span>"
