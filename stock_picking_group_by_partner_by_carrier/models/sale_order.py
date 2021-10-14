@@ -9,8 +9,10 @@ class SaleOrder(models.Model):
     def action_cancel(self):
         for sale_order in self:
             # change the context so we can intercept this in StockPicking.action_cancel
+            proc_groups = sale_order.order_line._get_procurement_group()
             super(
-                SaleOrder, sale_order.with_context(cancel_sale_id=sale_order.id)
+                SaleOrder,
+                sale_order.with_context(cancel_sale_group_ids=proc_groups.ids),
             ).action_cancel()
 
     def action_draft(self):
