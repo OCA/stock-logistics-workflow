@@ -191,26 +191,50 @@ class TestGroupBy(TestGroupByBase):
         so1.action_confirm()
         so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
         so2.action_confirm()
-        self.assertEqual(len(so1.picking_ids), 2)
-        self.assertEqual(len(so2.picking_ids), 2)
+        self.assertEqual(len(so1.picking_ids), 3)
+        self.assertEqual(len(so2.picking_ids), 3)
+        self.assertEqual(so1.picking_ids, so2.picking_ids)
         # ship should be shared between so1 and so2
-        ships = so1.picking_ids & so2.picking_ids
+        ships = (so1.picking_ids | so2.picking_ids).filtered(
+            lambda p: p.picking_type_code == "outgoing"
+        )
         self.assertEqual(len(ships), 1)
         self.assertEqual(ships.picking_type_id, warehouse.out_type_id)
         # but not picks
-        self.assertTrue(so1.picking_ids - so2.picking_ids)
-        self.assertTrue(so2.picking_ids - so1.picking_ids)
-        picks = (so1.picking_ids - so2.picking_ids) | (
-            so2.picking_ids - so1.picking_ids
-        )
-
+        # Note: When grouping the ships, all pulled internal moves should also
+        # be regrouped but this is currently not supported by this module. You
+        # need the stock_available_to_promise_release module to have this
+        # feature
+        picks = so1.picking_ids - ships
         self.assertEqual(len(picks), 2)
-        self.assertEqual(picks.mapped("picking_type_id"), warehouse.pick_type_id)
+        self.assertEqual(picks.picking_type_id, warehouse.pick_type_id)
+        # the group is the same on the move lines and picking
+        self.assertEqual(len(so1.picking_ids.group_id), 1)
+        self.assertEqual(so1.picking_ids.group_id, so1.picking_ids.move_lines.group_id)
+        # Add a line to so1
+        self.assertEqual(len(ships.move_lines), 2)
+        so1.order_line = [(0, 0, self._prepare_new_sale_order_line(4))]
+        self.assertEqual(len(ships.move_lines), 3)
+        # the group is the same on the move lines and picking
+        self.assertEqual(len(so1.picking_ids.group_id), 1)
+        self.assertEqual(so1.picking_ids.group_id, so1.picking_ids.move_lines.group_id)
+        # Add a line to so2
+        self.assertEqual(len(ships.move_lines), 3)
+        so1.order_line = [(0, 0, self._prepare_new_sale_order_line(4))]
+        self.assertEqual(len(ships.move_lines), 4)
+        # the group is the same on the move lines and picking
+        self.assertEqual(len(so2.picking_ids.group_id), 1)
+        self.assertEqual(so1.picking_ids.group_id, so2.picking_ids.move_lines.group_id)
 
     def test_delivery_multi_step_group_pick(self):
         """the warehouse uses pick + ship (with grouping enabled on pick)
 
-        -> shippings are grouped, as well as pickings"""
+        -> shippings are grouped, as well as pickings
+
+        Note that the grouping of pickings cannot be enabled, the grouping
+        option is only visible on the outgoing picking types. Grouping
+        conditions are based on some data that are only available on the
+        shipping."""
         warehouse = self.env.ref("stock.warehouse0")
         warehouse.delivery_steps = "pick_ship"
         warehouse.pick_type_id.group_pickings = True
@@ -232,39 +256,6 @@ class TestGroupBy(TestGroupByBase):
         self.assertEqual(len(picks), 1)
         self.assertFalse(so1.picking_ids - so2.picking_ids)
 
-    def test_delivery_multi_step_group_pick_pack(self):
-        """the warehouse uses pick + pack + ship (with grouping enabled on pack)
-
-        -> shippings are grouped, as well as pickings"""
-        warehouse = self.env.ref("stock.warehouse0")
-        warehouse.delivery_steps = "pick_pack_ship"
-        warehouse.pick_type_id.group_pickings = False
-        warehouse.pack_type_id.group_pickings = True
-        so1 = self._get_new_sale_order(carrier=self.carrier1)
-        so1.action_confirm()
-        so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
-        so2.action_confirm()
-        self.assertEqual(len(so1.picking_ids), 3)
-        self.assertEqual(len(so2.picking_ids), 3)
-        # ship & pack should be shared between so1 and so2, but not pick
-        all_transfers = so1.picking_ids | so2.picking_ids
-        common_transfers = so1.picking_ids & so2.picking_ids
-        self.assertEqual(len(all_transfers), 4)
-        self.assertEqual(len(common_transfers), 2)
-        ships = all_transfers.filtered(
-            lambda o: o.picking_type_id == warehouse.out_type_id
-        )
-        packs = all_transfers.filtered(
-            lambda o: o.picking_type_id == warehouse.pack_type_id
-        )
-        picks = all_transfers.filtered(
-            lambda o: o.picking_type_id == warehouse.pick_type_id
-        )
-        self.assertEqual(len(ships), 1)
-        self.assertEqual(len(packs), 1)
-        self.assertEqual(len(picks), 2)
-        self.assertTrue(so1.picking_ids - so2.picking_ids)
-
     def test_delivery_multi_step_cancel_so1(self):
         """the warehouse uses pick + ship. Cancel SO1
 
@@ -275,12 +266,14 @@ class TestGroupBy(TestGroupByBase):
         so1.action_confirm()
         so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
         so2.action_confirm()
-        ships = so1.picking_ids & so2.picking_ids
+        ships = (so1.picking_ids | so2.picking_ids).filtered(
+            lambda p: p.picking_type_code == "outgoing"
+        )
+        pick1 = so1.order_line.move_ids.move_orig_ids.picking_id
+        pick2 = so2.order_line.move_ids.move_orig_ids.picking_id
         so1.action_cancel()
         self.assertEqual(ships.state, "waiting")
-        pick1 = so1.picking_ids - ships
         self.assertEqual(pick1.state, "cancel")
-        pick2 = so2.picking_ids - ships
         self.assertEqual(pick2.state, "confirmed")
 
     def test_delivery_multi_step_cancel_so2(self):
@@ -293,12 +286,14 @@ class TestGroupBy(TestGroupByBase):
         so1.action_confirm()
         so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
         so2.action_confirm()
-        ships = so1.picking_ids & so2.picking_ids
+        ships = (so1.picking_ids | so2.picking_ids).filtered(
+            lambda p: p.picking_type_code == "outgoing"
+        )
+        pick1 = so1.order_line.move_ids.move_orig_ids.picking_id
+        pick2 = so2.order_line.move_ids.move_orig_ids.picking_id
         so2.action_cancel()
         self.assertEqual(ships.state, "waiting")
-        pick1 = so1.picking_ids - ships
         self.assertEqual(pick1.state, "confirmed")
-        pick2 = so2.picking_ids - ships
         self.assertEqual(pick2.state, "cancel")
 
     def test_delivery_multi_step_group_pick_cancel_so1(self):
@@ -353,12 +348,14 @@ class TestGroupBy(TestGroupByBase):
         so1.action_confirm()
         so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
         so2.action_confirm()
-        ships = so1.picking_ids & so2.picking_ids
+        ships = (so1.picking_ids | so2.picking_ids).filtered(
+            lambda p: p.picking_type_code == "outgoing"
+        )
         so1.action_cancel()
         so3 = self._get_new_sale_order(amount=12, carrier=self.carrier1)
         so3.action_confirm()
         self.assertTrue(ships in so3.picking_ids)
-        pick3 = so3.picking_ids - ships
+        pick3 = so3.order_line.move_ids.move_orig_ids.picking_id
         self.assertEqual(len(pick3), 1)
         self.assertEqual(pick3.state, "confirmed")
 
@@ -376,7 +373,7 @@ class TestGroupBy(TestGroupByBase):
         self.assertFalse(so1.picking_ids & so2.picking_ids)
 
     def test_sale_stock_merge_procurement_group(self):
-        """sale orders are merged, procurement groups are merged
+        """sales orders moves are merged, procurement groups are merged
 
         Ensure that the procurement group is linked with both SO
         and we find the stock.picking records from the SO.
@@ -414,10 +411,6 @@ class TestGroupBy(TestGroupByBase):
         picking._action_done()
 
         backorder = picking.backorder_ids
-        # as we no longer have anything of so1 in the backorder,
-        # now it's only related to so2
-        self.assertEqual(backorder.group_id.sale_ids, so2)
-        self.assertEqual(backorder.group_id.name, so2.name)
 
         so3 = self._get_new_sale_order(carrier=self.carrier1)
         so3.name = "SO3"
