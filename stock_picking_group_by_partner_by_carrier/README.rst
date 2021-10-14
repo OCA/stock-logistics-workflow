@@ -38,6 +38,14 @@ get their own shipping.
 When the delivery slip is printed, the list of pending quantities to deliver
 is shown at the end, grouped by order.
 
+The grouping can also be applied in case of external resupply. Moves at the
+destination of the same delivery address defined on the resupply stock rule
+will be grouped in a same delivery order.
+
+Note: The grouping is currently not propagated to the pulled internal moves if
+you don't use the module stock_available_to_promise_release in the wms
+repository.
+
 .. IMPORTANT::
    This is an alpha version, the data model and design can change at any time without warning.
    Only for development or testing purpose, do not use in production.
