@@ -14,6 +14,7 @@ setuptools.setup(
         'odoo14-addon-sale_stock_mto_as_mts_orderpoint',
         'odoo14-addon-stock_auto_move',
         'odoo14-addon-stock_delivery_note',
+        'odoo14-addon-stock_lock_lot',
         'odoo14-addon-stock_move_assign_picking_hook',
         'odoo14-addon-stock_move_line_auto_fill',
         'odoo14-addon-stock_no_negative',
