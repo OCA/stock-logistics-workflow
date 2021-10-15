@@ -11,9 +11,13 @@ class StockPicking(models.Model):
     def action_picking_send(self):
         self.ensure_one()
         template = self.env.ref(
-            "stock_picking_send_by_mail.email_template_stock_picking", False,
+            "stock_picking_send_by_mail.email_template_stock_picking",
+            False,
         )
-        compose_form = self.env.ref("mail.email_compose_message_wizard_form", False,)
+        compose_form = self.env.ref(
+            "mail.email_compose_message_wizard_form",
+            False,
+        )
         ctx = dict(
             default_model="stock.picking",
             default_res_id=self.id,
