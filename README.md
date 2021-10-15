@@ -25,6 +25,7 @@ addon | version | maintainers | summary
 [sale_stock_mto_as_mts_orderpoint](sale_stock_mto_as_mts_orderpoint/) | 14.0.1.0.0 |  | Materialize need from MTO route through orderpoint
 [stock_auto_move](stock_auto_move/) | 14.0.1.0.0 |  | Automatic Move Processing
 [stock_delivery_note](stock_delivery_note/) | 14.0.1.0.1 |  | This module allows to fill in a delivery note that will be displayed on delivery report
+[stock_lock_lot](stock_lock_lot/) | 14.0.1.0.0 |  | Stock Lock Lot
 [stock_move_assign_picking_hook](stock_move_assign_picking_hook/) | 14.0.1.1.1 |  | Stock Move picking assignment hook
 [stock_move_line_auto_fill](stock_move_line_auto_fill/) | 14.0.1.0.0 |  | Stock Move Line auto fill
 [stock_no_negative](stock_no_negative/) | 14.0.1.0.1 |  | Disallow negative stock levels by default
