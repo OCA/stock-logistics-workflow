@@ -131,7 +131,8 @@ class StockPicking(models.Model):
     def _get_sorted_moves(self):
         # Meant to be overriden
         self.ensure_one()
-        return self.move_lines.sorted(lambda m: m.sale_line_id.order_id.id)
+        moves = self.move_lines.filtered(lambda m: m.state != "cancel")
+        return moves.sorted(lambda m: m.sale_line_id.order_id.id)
 
     def _get_sorted_move_lines(self):
         # Meant to be overriden
@@ -179,11 +180,12 @@ class StockPicking(models.Model):
                 sales_and_moves = self.env["stock.move.line"]
                 fake_record["product_uom_id"] = fake_record.pop("product_uom")
                 for sale, sale_moves in grouped_moves:
-                    line_desc = sale.get_name_for_delivery_line()
-                    fake_record.update(
-                        {"description_picking": line_desc, "origin": sale.name}
-                    )
-                    sales_and_moves |= sales_and_moves.new(fake_record.copy())
+                    if sale:
+                        line_desc = sale.get_name_for_delivery_line()
+                        fake_record.update(
+                            {"description_picking": line_desc, "origin": sale.name}
+                        )
+                        sales_and_moves |= sales_and_moves.new(fake_record.copy())
                     for move in sale_moves:
                         for move_line in move.move_line_ids:
                             sales_and_moves |= move_line
