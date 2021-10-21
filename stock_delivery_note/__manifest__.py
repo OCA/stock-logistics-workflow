@@ -6,10 +6,16 @@
     "summary": """
         This module allows to fill in a delivery note that will be displayed
         on delivery report""",
-    "version": "14.0.1.0.1",
+    "version": "12.0.1.0.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
-    "depends": ["stock", "delivery"],
-    "data": ["views/stock_picking.xml", "reports/report_picking.xml"],
+    "depends": [
+        "stock",
+        "delivery",
+    ],
+    "data": [
+        "views/stock_picking.xml",
+        "reports/report_picking.xml",
+    ],
 }

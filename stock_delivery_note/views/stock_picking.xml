@@ -9,7 +9,7 @@
         <field name="inherit_id" ref="delivery.view_picking_withcarrier_out_form" />
         <field name="arch" type="xml">
             <div name="tracking" position="after">
-                <field name="delivery_note" placeholder="Delivery note" />
+                <field name="delivery_note" placeholder="Delivery Note" />
             </div>
         </field>
     </record>

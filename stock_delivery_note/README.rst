@@ -61,6 +61,7 @@ Contributors
 ~~~~~~~~~~~~
 
 * Denis Roussel <denis.roussel@acsone.eu>
+* Antonio González (Trey) <antonio@trey.es>
 
 Maintainers
 ~~~~~~~~~~~
@@ -75,6 +76,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/14.0/stock_delivery_note>`_ project on GitHub.
+This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/12.0/stock_delivery_note>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
