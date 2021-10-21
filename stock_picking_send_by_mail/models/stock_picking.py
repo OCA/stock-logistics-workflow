@@ -10,10 +10,7 @@ class StockPicking(models.Model):
 
     def action_picking_send(self):
         self.ensure_one()
-        template = self.env.ref(
-            "stock_picking_send_by_mail.email_template_stock_picking",
-            False,
-        )
+        template = self.company_id.stock_mail_confirmation_template_id
         compose_form = self.env.ref(
             "mail.email_compose_message_wizard_form",
             False,
