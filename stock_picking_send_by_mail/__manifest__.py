@@ -13,6 +13,6 @@
     "category": "Warehouse Management",
     "license": "AGPL-3",
     "depends": ["stock", "mail"],
-    "data": ["data/stock_picking_mail.xml", "views/stock_picking_view.xml"],
+    "data": ["views/stock_picking_view.xml"],
     "installable": True,
 }
