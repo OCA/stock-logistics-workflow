@@ -1,9 +1,9 @@
-# Copyright 2018 Simone Rubino - Agile Business Group
+# Copyright 2021 Simone Rubino - Agile Business Group
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Stock picking filter lot",
     "summary": "In picking out lots' selection, filter lots based on their location",
-    "version": "14.0.1.0.1",
+    "version": "15.0.1.0.0",
     "category": "Warehouse",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Agile Business Group, Odoo Community Association (OCA)",
