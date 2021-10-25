@@ -3,10 +3,10 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import UserError
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestStockSplitPicking(SavepointCase):
+class TestStockSplitPicking(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super(TestStockSplitPicking, cls).setUpClass()
