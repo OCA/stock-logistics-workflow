@@ -6,3 +6,4 @@
 * Andrius Preimantas <andrius@versada.eu>
 * Holger Brunn <mail@hunki-enterprises.com>
 * Rujia Liu <rujial@roof.co.nz>
+* Bernat Puig <bernat.puig@forgeflow.com>
