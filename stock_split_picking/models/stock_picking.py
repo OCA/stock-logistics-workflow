@@ -49,7 +49,7 @@ class StockPicking(models.Model):
                             try:
                                 move_line.write({"product_uom_qty": move_line.qty_done})
                             except UserError:
-                                pass
+                                continue
                     new_move = self.env["stock.move"].create(new_move_vals)
                     new_move._action_confirm(merge=False)
                     new_moves |= new_move
@@ -82,9 +82,10 @@ class StockPicking(models.Model):
             body=_(
                 'The backorder <a href="#" '
                 'data-oe-model="stock.picking" '
-                'data-oe-id="%d">%s</a> has been created.'
-            )
-            % (backorder_picking.id, backorder_picking.name)
+                'data-oe-id="%(id)d">%(name)s</a> has been created.'
+            ),
+            id=backorder_picking.id,
+            name=backorder_picking.name,
         )
         return backorder_picking
 
@@ -94,10 +95,8 @@ class StockPicking(models.Model):
         for this in self:
             if this.state in ("done", "cancel"):
                 raise UserError(
-                    _("Cannot split picking %s in state %s")
-                    % (
-                        this.name,
-                        this.state,
+                    _("Cannot split picking {name} in state {state}").format(
+                        name=this.name, state=this.state
                     )
                 )
             new_picking = new_picking or this._create_split_backorder()
