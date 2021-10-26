@@ -1,9 +1,7 @@
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestRestrictLot(SavepointCase):
+class TestRestrictLot(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -21,7 +19,7 @@ class TestRestrictLot(SavepointCase):
             }
         )
 
-    def test_move_restrict_lot_propagation(self):
+    def test_00_move_restrict_lot_propagation(self):
         move = self.env["stock.move"].create(
             {
                 "product_id": self.product.id,
@@ -40,7 +38,7 @@ class TestRestrictLot(SavepointCase):
         orig_move = move.move_orig_ids
         self.assertEqual(orig_move.restrict_lot_id.id, self.lot.id)
 
-    def test_move_split_and_copy(self):
+    def test_01_move_split_and_copy(self):
         move = self.env["stock.move"].create(
             {
                 "product_id": self.product.id,
@@ -63,29 +61,17 @@ class TestRestrictLot(SavepointCase):
         self.assertFalse(other_move.restrict_lot_id.id)
 
     def _update_product_stock(self, qty, lot_id=False):
-        inventory = self.env["stock.inventory"].create(
+        quant = self.env["stock.quant"].create(
             {
-                "name": "Test Inventory",
-                "product_ids": [(6, 0, self.product.ids)],
-                "state": "confirm",
-                "line_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "product_qty": qty,
-                            "location_id": self.warehouse.lot_stock_id.id,
-                            "product_id": self.product.id,
-                            "product_uom_id": self.product.uom_id.id,
-                            "prod_lot_id": lot_id,
-                        },
-                    )
-                ],
+                "product_id": self.product.id,
+                "location_id": self.warehouse.lot_stock_id.id,
+                "lot_id": lot_id,
+                "inventory_quantity": qty,
             }
         )
-        inventory.action_validate()
+        quant.action_apply_inventory()
 
-    def test_move_restrict_lot_reservation(self):
+    def test_02_move_restrict_lot_reservation(self):
         lot2 = self.env["stock.production.lot"].create(
             {
                 "name": "lot2",
