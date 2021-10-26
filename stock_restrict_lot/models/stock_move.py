@@ -1,6 +1,4 @@
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-
-from odoo import _, exceptions, fields, models
+from odoo import _, api, exceptions, fields, models
 
 
 class StockMove(models.Model):
@@ -12,6 +10,12 @@ class StockMove(models.Model):
     restrict_lot_id = fields.Many2one(
         "stock.production.lot", string="Restrict Lot", copy=False
     )
+
+    @api.model
+    def _prepare_merge_moves_distinct_fields(self):
+        distinct_fields = super(StockMove, self)._prepare_merge_moves_distinct_fields()
+        distinct_fields.append("restrict_lot_id")
+        return distinct_fields
 
     def _prepare_procurement_values(self):
         vals = super()._prepare_procurement_values()
