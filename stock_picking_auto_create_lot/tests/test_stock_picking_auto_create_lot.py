@@ -63,7 +63,7 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, SavepointCa
         )
         self.assertTrue(move.display_assign_serial)
 
-        self.picking.action_done()
+        self.picking._action_done()
         lot = self.env["stock.production.lot"].search(
             [("product_id", "=", self.product.id)]
         )
@@ -121,9 +121,9 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, SavepointCa
 
     def test_multi_auto_create_lot(self):
         """
-            Create two pickings
-            Try to validate them together
-            Check if lots have been assigned to each move
+        Create two pickings
+        Try to validate them together
+        Check if lots have been assigned to each move
         """
         self.picking.action_assign()
         picking_1 = self.picking
@@ -139,7 +139,7 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, SavepointCa
         for line in moves.mapped("move_line_ids"):
             self.assertFalse(line.lot_id)
 
-        pickings.action_done()
+        pickings._action_done()
         for line in moves.mapped("move_line_ids"):
             self.assertTrue(line.lot_id)
 
