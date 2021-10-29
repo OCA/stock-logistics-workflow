@@ -36,7 +36,7 @@ Sale orders with a Shipping Policy set to 'When all products are ready' always
 get their own shipping.
 
 When the delivery slip is printed, the list of pending quantities to deliver
-is shown at the end, grouped by sales order.
+is shown at the end, grouped by order.
 
 The grouping can also be applied in case of external resupply. Moves at the
 destination of the same delivery address defined on the resupply stock rule
