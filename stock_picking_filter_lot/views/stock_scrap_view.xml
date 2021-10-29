@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="stock_scrap_form_view" model="ir.ui.view">
+        <field name="name">stock.scrap.form - stock_picking_filter_lot</field>
+        <field name="model">stock.scrap</field>
+        <field name="inherit_id" ref="stock.stock_scrap_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='lot_id']" position="attributes">
+                <attribute
+                    name="domain"
+                >[('product_id','=', product_id), ('company_id', '=', company_id), ('location_ids', 'child_of', location_id)]</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
