@@ -9,7 +9,7 @@ class StockPicking(models.Model):
 
     def _set_auto_lot(self):
         """
-            Allows to be called either by button or through code
+        Allows to be called either by button or through code
         """
         pickings = self.filtered(lambda p: p.picking_type_id.auto_create_lot)
         lines = pickings.mapped("move_line_ids").filtered(
@@ -22,9 +22,9 @@ class StockPicking(models.Model):
         )
         lines.set_lot_auto()
 
-    def action_done(self):
+    def _action_done(self):
         self._set_auto_lot()
-        return super().action_done()
+        return super()._action_done()
 
     def button_validate(self):
         self._set_auto_lot()

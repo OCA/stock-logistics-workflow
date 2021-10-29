@@ -17,9 +17,9 @@ class StockMoveLine(models.Model):
 
     def set_lot_auto(self):
         """
-            Create lots using create_multi to avoid too much queries
-            As move lines were created by product or by tracked 'serial'
-            products, we apply the lot with both different approaches.
+        Create lots using create_multi to avoid too much queries
+        As move lines were created by product or by tracked 'serial'
+        products, we apply the lot with both different approaches.
         """
         values = []
         production_lot_obj = self.env["stock.production.lot"]
