@@ -35,6 +35,16 @@ class TestGroupByBase(TestSaleCommonBase):
         quantity -= sum(quants.mapped("quantity"))
         self.env["stock.quant"]._update_available_quantity(product, location, quantity)
 
+    def _prepare_new_sale_order_line(self, amount=10.0):
+        product = self.env.ref("product.product_delivery_01")
+        return {
+            "name": product.name,
+            "product_id": product.id,
+            "product_uom_qty": amount,
+            "product_uom": product.uom_id.id,
+            "price_unit": product.list_price,
+        }
+
     def _get_new_sale_order(self, amount=10.0, partner=None, carrier=None):
         """Creates and returns a sale order with one default order line.
 
@@ -46,25 +56,12 @@ class TestGroupByBase(TestSaleCommonBase):
             carrier_id = False
         else:
             carrier_id = carrier.id
-        product = self.env.ref("product.product_delivery_01")
         sale_order_vals = {
             "partner_id": partner.id,
             "partner_invoice_id": partner.id,
             "partner_shipping_id": partner.id,
             "carrier_id": carrier_id,
-            "order_line": [
-                (
-                    0,
-                    0,
-                    {
-                        "name": product.name,
-                        "product_id": product.id,
-                        "product_uom_qty": amount,
-                        "product_uom": product.uom_id.id,
-                        "price_unit": product.list_price,
-                    },
-                )
-            ],
+            "order_line": [(0, 0, self._prepare_new_sale_order_line(amount))],
             "pricelist_id": self.env.ref("product.list0").id,
         }
         sale_order = self.env["sale.order"].create(sale_order_vals)

@@ -1,5 +1,5 @@
 # Copyright 2020 Camptocamp (https://www.camptocamp.com)
-# Copyright 2020 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
+# Copyright 2020-2021 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from itertools import groupby
@@ -46,13 +46,15 @@ class StockPicking(models.Model):
         return super().write(values)
 
     def action_cancel(self):
-        cancel_sale_id = self.env.context.get("cancel_sale_id")
-        if cancel_sale_id:
+        # When a SO is canceled, cancel only moves related to this SO and not
+        # all moves of the picking
+        cancel_sale_group_ids = self.env.context.get("cancel_sale_group_ids")
+        if cancel_sale_group_ids:
             moves = self.move_lines.filtered(
-                lambda m: cancel_sale_id in m.original_group_id.sale_ids.ids
+                lambda m: m.original_group_id.id in cancel_sale_group_ids
                 and m.state not in ("done", "cancel")
             )
-            moves.with_context(cancel_sale_id=False)._action_cancel()
+            moves.with_context(cancel_sale_group_ids=False)._action_cancel()
             return True
         else:
             return super().action_cancel()
@@ -63,47 +65,85 @@ class StockPicking(models.Model):
             if not picking._is_grouping_disabled():
                 picking = picking.with_context(picking_no_copy_if_can_group=1)
             backorder = super(StockPicking, picking)._create_backorder()
-            if not picking._is_grouping_disabled():
+            if backorder and not picking._is_grouping_disabled():
                 backorder._merge_procurement_groups()
+                backorder._update_merged_origin()
             backorders |= backorder
         return backorders
 
+    def _prepare_merged_origin(self):
+        """Concatenate all origin together.
+        Note that in standard, only max 5 are displayed"""
+        moves = self.move_lines.filtered(lambda m: m.state != "cancel")
+        origins = moves.filtered(lambda m: m.origin).mapped("origin")
+        origins = sorted(list(set(origins)))
+        return " ".join(origins)
+
+    def _update_merged_origin(self):
+        self.origin = self._prepare_merged_origin()
+
     def _prepare_merge_procurement_group_values(self, move_groups):
+        """Build a new procurement group that is the merge of given procurement
+        group."""
         sales = move_groups.sale_id
         return {
             "sale_ids": [(6, 0, sales.ids)],
-            "name": ", ".join(move_groups.mapped("name")),
+            "name": ", ".join(move_groups.sorted("name").mapped("name")),
         }
 
     def _merge_procurement_groups(self):
-        for picking in self:
-            if picking._is_grouping_disabled():
-                continue
-            if picking.picking_type_id.code != "outgoing":
-                continue
-            base_group = picking.group_id
-            # If we have different sales in the line's group, it means moves
-            # have been merged in the same picking/group but they come from a
-            # different sale.
-            moves = picking.move_lines
-            moves_groups = moves.original_group_id
-            moves_sales = moves_groups.sale_id
-            group_sales = base_group.sale_ids
-            # if we have different sales, it means "_assign_picking" added
-            # moves from another SO in the picking
-            if moves_sales != group_sales:
-                # create a new joint group for the existing different groups
+        self.ensure_one()
+        if self._is_grouping_disabled():
+            return False
+        if self.picking_type_id.code != "outgoing":
+            return False
+        group_pickings = self.move_lines.group_id.picking_ids.filtered(
+            # Do no longer modify a printed or done transfer: they are
+            # started and their group is now fixed. It prevents keeping
+            # old, done sales orders in new groups forever
+            lambda picking: not (picking.printed or picking.state == "done")
+        )
+        moves = group_pickings.move_lines
+        base_group = self.group_id
+
+        # If we have moves of different procurement groups, it means moves
+        # have been merged in the same picking. In this case a new
+        # procurement group is required
+        if len(moves.original_group_id) > 1 and base_group in moves.original_group_id:
+            # Create a new procurement group
+            new_group = base_group.copy(
+                self._prepare_merge_procurement_group_values(moves.original_group_id)
+            )
+            group_pickings.move_lines.group_id = new_group
+            return True
+
+        new_moves = moves.filtered(lambda move: move.group_id != base_group)
+        old_moves = moves - new_moves
+        if new_moves.original_group_id - old_moves.original_group_id:
+            # A move with a new procurement group has been added. Adapt
+            # the procurement group
+            closed_pickings = self.move_lines.group_id.picking_ids.filtered(
+                lambda picking: picking.printed or picking.state == "done"
+            )
+            if closed_pickings:
+                # Do no longer modify a printed or done transfer: they
+                # are started and their group is now fixed. So create a
+                # new procurement group
                 new_group = base_group.copy(
-                    self._prepare_merge_procurement_group_values(moves_groups)
+                    self._prepare_merge_procurement_group_values(
+                        moves.original_group_id
+                    )
                 )
-                pickings = base_group.picking_ids.filtered(
-                    lambda picking: picking.picking_type_id.group_pickings
-                    # Do no longer modify a printed or done transfer: they are
-                    # started and their group is now fixed. It prevents keeping
-                    # old, done sales orders in new groups forever
-                    and not (picking.printed or picking.state == "done")
-                )
-                pickings.move_lines.group_id = new_group
+                group_pickings.move_lines.group_id = new_group
+                return True
+
+            base_group.write(
+                self._prepare_merge_procurement_group_values(moves.original_group_id)
+            )
+            new_moves.group_id = base_group
+            return True
+        new_moves.group_id = base_group
+        return False
 
     def copy(self, defaults=None):
         if self.env.context.get("picking_no_copy_if_can_group") and self.move_lines:
