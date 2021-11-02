@@ -12,6 +12,33 @@ class DeliverySlipReport(models.AbstractModel):
     _description = "Delivery Slip Report"
 
     @api.model
+    def _calculate_quantity(self, line, moves, picking):
+        qty = 0
+        if picking.state == "done" or not moves:
+            # If the picking is done, or if the line is not in any move
+            # of this picking, we rely only in the sales order.
+            qty = line.product_uom_qty - line.qty_delivered
+        elif picking.state not in ("cancel", "done"):
+            # Else, we consider the initial demand in the move.
+            qty = (
+                line.product_uom_qty
+                - line.qty_delivered
+                - sum(moves.mapped("product_uom_qty"))
+            )
+        return qty
+
+    @api.model
+    def _get_sale_data(self, line, moves, picking, qty, uom):
+        return {
+            "is_header": False,
+            "concept": line.product_id.name_get()[0][-1],
+            "qty": float_round(qty, precision_rounding=uom.rounding),
+            "product": line.product_id,
+            "uom": uom,
+            "sale_order_line": line,
+        }
+
+    @api.model
     def _get_remaining_to_deliver(self, picking):
         """Return dictionaries encoding pending quantities to deliver
 
@@ -30,19 +57,7 @@ class DeliverySlipReport(models.AbstractModel):
                 moves = stock_move.search(
                     [("sale_line_id", "=", line.id), ("picking_id", "=", picking.id)],
                 )
-                qty = 0
-                if picking.state == "done" or not moves:
-                    # If the picking is done, or if the line is not in any move
-                    # of this picking, we rely only in the sales order.
-                    qty = line.product_uom_qty - line.qty_delivered
-                elif picking.state not in ("cancel", "done"):
-                    # Else, we consider the initial demand in the move.
-                    qty = (
-                        line.product_uom_qty
-                        - line.qty_delivered
-                        - sum(moves.mapped("product_uom_qty"))
-                    )
-
+                qty = self._calculate_quantity(line, moves, picking)
                 uom = moves.product_uom if moves else line.product_uom
                 uom_rounding = uom.rounding
                 if not float_is_zero(qty, precision_rounding=uom_rounding):
@@ -51,16 +66,8 @@ class DeliverySlipReport(models.AbstractModel):
                             {"is_header": True, "concept": order_name}
                         ]
                     sales_data[order_name].append(
-                        {
-                            "is_header": False,
-                            "concept": line.product_id.name_get()[0][-1],
-                            "qty": float_round(qty, precision_rounding=uom_rounding),
-                            "product": line.product_id,
-                            "uom": uom,
-                            "sale_order_line": line,
-                        }
+                        self._get_sale_data(line, moves, picking, qty, uom)
                     )
-
         return sales_data
 
     @api.model
