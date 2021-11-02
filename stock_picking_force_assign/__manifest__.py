@@ -14,6 +14,7 @@
     ],
     "data": [
         "security/stock_picking_force_assign_security.xml",
+        "data/ir_config_parameter.xml",
         "views/stock_picking.xml",
     ],
     "demo": [

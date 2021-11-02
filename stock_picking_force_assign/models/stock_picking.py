@@ -24,6 +24,15 @@ class StockPicking(models.Model):
         )))
         return self.action_assign()
 
+    def _force_assign_allow_partial(self):
+        """Indicate if partial forced assignments should be allowed"""
+        return tools.misc.str2bool(
+            self.env["ir.config_parameter"].sudo().get_param(
+                "stock_picking_force_assign.allow_partial"
+            ),
+            default=False,
+        )
+
     def _force_assign_find_moves(self):
         """ Return moves to unreserve in order to reserve pickings in self """
         location = self.mapped('location_id')
@@ -56,7 +65,8 @@ class StockPicking(models.Model):
                 else:
                     break
 
-            if float_compare(demand, 0) > 0:
+            if (float_compare(demand, 0) > 0
+                    and not self._force_assign_allow_partial()):
                 raise exceptions.UserError(
                     _('Cannot unreserve enough %s, missing quantity is %d') % (
                         move.product_id.name, demand

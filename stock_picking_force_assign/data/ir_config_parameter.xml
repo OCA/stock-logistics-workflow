@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <record model="ir.config_parameter" id="parameter_force_assign_allow_partial">
+        <field name="key">stock_picking_force_assign.allow_partial</field>
+        <field name="value">False</field>
+    </record>
+</odoo>
