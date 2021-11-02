@@ -35,19 +35,38 @@ class TestStockPickingForceAssign(TransactionCase):
         self.waiting_picking = self.assigned_picking.copy({
             'name': 'Picking to assign',
         })
-        self.waiting_picking.action_assign()
-        self.assertEqual(self.waiting_picking.state, 'confirmed')
 
     def test_happy_flow(self):
         """ Test unreservation works """
+        self.waiting_picking.action_assign()
+        self.assertEqual(self.waiting_picking.state, 'confirmed')
         self.waiting_picking.action_force_assign_pickings()
         self.assertEqual(self.waiting_picking.state, 'assigned')
         self.assertEqual(self.assigned_picking.state, 'confirmed')
 
-    def test_errors(self):
-        """ Test error cases """
+    def test_on_done_picking(self):
+        """ Test force assigning a done picking """
+        self.waiting_picking.action_assign()
         self.assigned_picking.move_line_ids.qty_done = 42
         self.assigned_picking.action_done()
         self.assertEqual(self.assigned_picking.state, 'done')
         with self.assertRaises(UserError):
             self.waiting_picking.action_force_assign_pickings()
+
+    def test_partial(self):
+        """ Test partial force assignment controlled by configuration parameter
+        """
+        self.waiting_picking.move_lines.product_uom_qty = 43
+        self.waiting_picking.action_assign()
+        self.env["ir.config_parameter"].set_param(
+            "stock_picking_force_assign.allow_partial", "False")
+        with self.assertRaises(UserError):
+            with self.env.cr.savepoint():
+                self.waiting_picking.action_force_assign_pickings()
+        # Alter the configuration
+        self.env["ir.config_parameter"].set_param(
+            "stock_picking_force_assign.allow_partial", "True")
+        # Partial force assignment is now possible
+        self.waiting_picking.action_force_assign_pickings()
+        self.assertEqual(
+            self.waiting_picking.move_lines.reserved_availability, 42)
