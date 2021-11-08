@@ -156,7 +156,6 @@ Authors
 ~~~~~~~
 
 * Camptocamp
-* BCIM
 
 Contributors
 ~~~~~~~~~~~~
