@@ -17,8 +17,7 @@ class TestPacking(SavepointCase):
         )
 
     def test_push_delay(self):
-        """ Checks that the push picking is delayed
-        """
+        """Checks that the push picking is delayed"""
         receipt_form = Form(self.env["stock.picking"])
         receipt_form.picking_type_id = self.warehouse.in_type_id
         with receipt_form.move_ids_without_package.new() as move_line:
