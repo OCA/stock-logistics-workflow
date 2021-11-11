@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo-addon-stock_picking_filter_lot>=15.0dev,<15.1dev',
         'odoo-addon-stock_picking_purchase_order_link>=15.0dev,<15.1dev',
+        'odoo-addon-stock_split_picking>=15.0dev,<15.1dev',
     ],
     classifiers=[
         'Programming Language :: Python',
