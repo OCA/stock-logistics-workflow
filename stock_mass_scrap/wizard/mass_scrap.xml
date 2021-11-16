@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    # Copyright 2021 Camptocamp SA
+    # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<odoo>
+
+    <record id="mass_scrap_view_form" model="ir.ui.view">
+        <field name="name">mass.scrap.form</field>
+        <field name="model">mass.scrap</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group string="Criteria">
+                            <field name="date_expiration_to_scrap" />
+                            <field name="specific_warehouse_id" />
+                        </group>
+                        <group string="Destination">
+                            <field name="scrap_location_id" />
+                        </group>
+                        <group string="Quants">
+                            <field name="stock_quant_ids" nolabel="1" />
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button
+                        name="button_confirm"
+                        type="object"
+                        string="Confirm"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" special="cancel" class="btn-secondary" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="mass_scrap_act_window" model="ir.actions.act_window">
+        <field name="name">Mass scrap</field>
+        <field name="res_model">mass.scrap</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="mass_scrap_view_form" />
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+        id="menu_mass_scrap_wizard"
+        parent="stock.menu_stock_warehouse_mgmt"
+        action="mass_scrap_act_window"
+        sequence="60"
+    />
+
+</odoo>
