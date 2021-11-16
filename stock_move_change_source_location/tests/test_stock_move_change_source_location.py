@@ -102,7 +102,8 @@ class TestStockMoveChangeSourceLocation(SavepointCase):
             {"name": "Shelf 1", "location_id": self.warehouse.lot_stock_id.id}
         )
         wiz = self.Wizard.with_context(
-            active_model=self.picking._name, active_ids=self.picking.ids,
+            active_model=self.picking._name,
+            active_ids=self.picking.ids,
         ).create({"new_location_id": new_location_id.id, "moves_to_change": "all"})
         move_lines = self.picking.mapped("move_lines")
         self.assertEqual(
@@ -128,7 +129,8 @@ class TestStockMoveChangeSourceLocation(SavepointCase):
         move_lines = self.picking.mapped("move_lines")
         move_lines[:1].write({"location_id": other_location_id.id})
         wiz = self.Wizard.with_context(
-            active_model=self.picking._name, active_ids=self.picking.ids,
+            active_model=self.picking._name,
+            active_ids=self.picking.ids,
         ).create(
             {
                 "old_location_id": self.picking.location_id.id,
@@ -148,7 +150,8 @@ class TestStockMoveChangeSourceLocation(SavepointCase):
             {"name": "Shelf 1", "location_id": self.warehouse.lot_stock_id.id}
         )
         wiz = self.Wizard.with_context(
-            active_model=self.picking._name, active_ids=self.picking.ids,
+            active_model=self.picking._name,
+            active_ids=self.picking.ids,
         ).create(
             {
                 "new_location_id": new_location_id.id,
@@ -173,7 +176,8 @@ class TestStockMoveChangeSourceLocation(SavepointCase):
             {"name": "Shelf 1", "location_id": self.warehouse.lot_stock_id.id}
         )
         wiz = self.Wizard.with_context(
-            active_model=self.picking._name, active_ids=self.picking.ids,
+            active_model=self.picking._name,
+            active_ids=self.picking.ids,
         ).create({"new_location_id": new_location_id.id, "moves_to_change": "all"})
         with self.assertRaises(UserError):
             wiz.action_apply()
