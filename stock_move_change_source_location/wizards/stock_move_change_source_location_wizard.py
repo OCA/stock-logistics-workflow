@@ -86,7 +86,7 @@ class StockMoveChangeSourceLocation(models.TransientModel):
                     "You can not change move source location if "
                     "picking state is not in %s"
                 )
-                % ",".join(self._get_allowed_states())
+                % ", ".join(self._get_allowed_states())
             )
 
     def _check_allowed_moves(self, moves):
@@ -99,7 +99,7 @@ class StockMoveChangeSourceLocation(models.TransientModel):
                     "You can not change move source location if "
                     "the move state is not in %s"
                 )
-                % ",".join(self._get_allowed_states())
+                % ", ".join(self._get_allowed_states())
             )
         if any([move.move_orig_ids for move in moves]):
             raise UserError(
