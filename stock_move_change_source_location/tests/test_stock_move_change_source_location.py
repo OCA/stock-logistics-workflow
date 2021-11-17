@@ -171,7 +171,7 @@ class TestStockMoveChangeSourceLocation(SavepointCase):
         self.picking.action_assign()
         for move in self.picking.move_lines:
             move.quantity_done = 1
-        self.picking.action_done()
+        self.picking._action_done()
         new_location_id = self.Location.create(
             {"name": "Shelf 1", "location_id": self.warehouse.lot_stock_id.id}
         )
