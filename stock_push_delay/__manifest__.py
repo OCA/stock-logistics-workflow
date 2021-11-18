@@ -3,7 +3,7 @@
 {
     "name": "Stock Push Delay",
     "summary": "Manual evaluation of Push rules",
-    "version": "13.0.1.0.1",
+    "version": "14.0.1.0.1",
     "category": "Inventory",
     "author": "ForgeFlow, " "Odoo Community Association (OCA)",
     "license": "AGPL-3",
