@@ -1,8 +1,8 @@
 from odoo.tests import Form
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestPacking(SavepointCase):
+class TestPacking(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super(TestPacking, cls).setUpClass()
@@ -33,7 +33,7 @@ class TestPacking(SavepointCase):
         )
         self.assertNotEqual(internal_transfer.origin, receipt.name)
 
-        receipt.action_done()
+        receipt._action_done()
         # Checks an internal transfer was created.
         internal_transfer = self.env["stock.picking"].search(
             [("picking_type_id", "=", self.warehouse.int_type_id.id)],
