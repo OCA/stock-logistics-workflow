@@ -21,6 +21,8 @@ class TestStockPickingShowReturn(TransactionCase):
                         0,
                         {
                             "name": self.product.name,
+                            "location_id": picking_type.default_location_src_id.id,
+                            "location_dest_id": picking_type.default_location_dest_id.id,
                             "product_id": self.product.id,
                             "product_uom": self.product.uom_id.id,
                             "product_uom_qty": 1,
