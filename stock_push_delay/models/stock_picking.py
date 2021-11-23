@@ -7,8 +7,8 @@ class StockPicking(models.Model):
 
     _inherit = "stock.picking"
 
-    def action_done(self):
-        res = super(StockPicking, self).action_done()
+    def _action_done(self):
+        res = super(StockPicking, self)._action_done()
         for picking in self.with_context(manual_push=True):
             picking.move_lines._push_apply()
         return res
