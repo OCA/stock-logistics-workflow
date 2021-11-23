@@ -35,5 +35,5 @@ class StockPicking(models.Model):
             )
 
     def action_show_source_picking(self):
-        """ Open source picking form action """
+        """Open source picking form action"""
         return self.source_picking_id.get_formview_action()
