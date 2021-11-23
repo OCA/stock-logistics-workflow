@@ -10,4 +10,8 @@ class StockMove(models.Model):
     def _push_apply(self):
         """Manual triggering"""
         if self.env.context.get("manual_push", False):
-            return super(StockMove, self)._push_apply()
+            new_move = super(StockMove, self)._push_apply()
+            if new_move:
+                new_move._action_confirm()
+            return new_move
+        return self.env["stock.move"]
