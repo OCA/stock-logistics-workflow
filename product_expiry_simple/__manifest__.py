@@ -4,26 +4,23 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    'name': 'Product Expiry Simple',
-    'version': '14.0.1.0.0',
-    'category': 'Product',
-    'license': 'AGPL-3',
-    'summary':
-    'Simpler and better alternative to the official product_expiry module',
-    'author': 'Akretion,Jarsa Sistemas,Odoo Community Association (OCA)',
-    'maintainers': ['alexis-via'],
-    'website': 'http://github.com/OCA/stock-logistics-workflow',
-    'depends': [
-        'stock',
+    "name": "Product Expiry Simple",
+    "version": "14.0.1.0.0",
+    "category": "Product",
+    "license": "AGPL-3",
+    "summary": "Simpler and better alternative to the official product_expiry module",
+    "author": "Akretion,Jarsa Sistemas,Odoo Community Association (OCA)",
+    "maintainers": ["alexis-via"],
+    "website": "https://github.com/OCA/stock-logistics-workflow",
+    "depends": [
+        "stock",
     ],
-    'excludes': [
-        'product_expiry'
+    "excludes": ["product_expiry"],
+    "data": [
+        "data/product_removal.xml",
+        "views/stock_production_lot.xml",
+        "views/stock_quant.xml",
+        "views/stock_move_line.xml",
     ],
-    'data': [
-        'data/product_removal.xml',
-        'views/stock_production_lot.xml',
-        'views/stock_quant.xml',
-        'views/stock_move_line.xml',
-    ],
-    'installable': True,
+    "installable": True,
 }
