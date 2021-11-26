@@ -7,15 +7,15 @@ from odoo import api, fields, models
 
 
 class StockQuant(models.Model):
-    _inherit = 'stock.quant'
+    _inherit = "stock.quant"
 
-    expiry_date = fields.Date(related='lot_id.expiry_date', store=True)
-    expired = fields.Boolean(related='lot_id.expired')
+    expiry_date = fields.Date(related="lot_id.expiry_date", store=True)
+    expired = fields.Boolean(related="lot_id.expired")
 
     # method copy/pasted from the official product_expiry module
     # Copyright Odoo SA
     @api.model
     def _get_removal_strategy_order(self, removal_strategy):
-        if removal_strategy == 'fefo':
-            return 'expiry_date, in_date, id'
+        if removal_strategy == "fefo":
+            return "expiry_date, in_date, id"
         return super()._get_removal_strategy_order(removal_strategy)
