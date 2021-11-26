@@ -21,6 +21,7 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [stock_picking_filter_lot](stock_picking_filter_lot/) | 15.0.1.0.0 |  | In picking out lots' selection, filter lots based on their location
 [stock_picking_purchase_order_link](stock_picking_purchase_order_link/) | 15.0.1.0.0 |  | Link between picking and purchase order
+[stock_picking_show_return](stock_picking_show_return/) | 15.0.1.0.0 |  | Show returns on stock pickings
 [stock_split_picking](stock_split_picking/) | 15.0.1.0.0 |  | Split a picking in two not transferred pickings
 
 [//]: # (end addons)
