@@ -1,5 +1,5 @@
-# Copyright 2017-2019 Akretion France (http://www.akretion.com/)
-# Copyright 2018-2019 Jarsa Sistemas (Sarai Osorio <sarai.osorio@jarsa.com.mx>)
+# Copyright 2017-2021 Akretion France (http://www.akretion.com/)
+# Copyright 2018-2021 Jarsa Sistemas (Sarai Osorio <sarai.osorio@jarsa.com.mx>)
 # @author: Alexis de Lattre <alexis.delattre@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -11,12 +11,14 @@ class StockMoveLine(models.Model):
 
     expiry_date = fields.Date(string='Expiry Date')
 
-    def _action_done(self):
-        super()._action_done()
-        for rec in self.filtered(lambda m: m.exists()):
-            pick_type = rec.move_id.picking_type_id
-            if (
-                    pick_type.use_create_lots and
-                    not pick_type.use_existing_lots and
-                    rec.lot_id):
-                rec.lot_id.write({'expiry_date': rec.expiry_date})
+    # When you read the code of _create_and_assign_production_lot()
+    # you need the defects of that method:
+    # 1. it's not possible to inherit the creation of the lot
+    # 2. it creates one lot per company/product/lot_name
+    # On that second point, we can consider that, for a particular product,
+    # lot X will always have the same expiry_date
+
+    def _assign_production_lot(self, lot):
+        super()._assign_production_lot(lot)
+        if self[0].expiry_date:
+            self.lot_id.write({'expiry_date': self[0].expiry_date})
