@@ -1,5 +1,5 @@
-# Copyright 2017-2019 Akretion France (http://www.akretion.com/)
-# Copyright 2018-2019 Jarsa Sistemas (Alan Ramos <alan.ramos@jarsa.com.mx>)
+# Copyright 2017-2021 Akretion France (http://www.akretion.com/)
+# Copyright 2018-2021 Jarsa Sistemas (Alan Ramos <alan.ramos@jarsa.com.mx>)
 # @author: Alexis de Lattre <alexis.delattre@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
