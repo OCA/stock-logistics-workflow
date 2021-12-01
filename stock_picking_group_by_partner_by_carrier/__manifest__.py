@@ -9,9 +9,11 @@
     "author": "Camptocamp, BCIM, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "category": "Warehouse Management",
-    "depends": ["sale_stock", "delivery", "stock_move_assign_picking_hook"],
+    "depends": [
+        "delivery_procurement_group_carrier",
+        "stock_move_assign_picking_hook",
+    ],
     "data": [
-        "views/procurement_group.xml",
         "views/res_partner.xml",
         "views/stock_picking_type.xml",
         "views/stock_warehouse.xml",
