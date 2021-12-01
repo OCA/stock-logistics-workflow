@@ -7,7 +7,7 @@
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "category": "Warehouse Managemen",
     "depends": [
-        "stock_picking_group_by_partner_by_carrier",
+        "delivery_procurement_group_carrier",
         "procurement_auto_create_group",
     ],
     "installable": True,
