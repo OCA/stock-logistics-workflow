@@ -25,7 +25,7 @@ Procurement Auto Create Group Carrier
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
-This module is the glue between `procurement_auto_create_group` and `stock_picking_group_by_partner_by_carrier`.
+This module is the glue between `procurement_auto_create_group` and `procurement_group_carrier`.
 It stores the delivery carrier id into the procurement group.
 
 .. IMPORTANT::
