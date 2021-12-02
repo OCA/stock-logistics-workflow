@@ -33,7 +33,7 @@ class StockRouting(models.Model):
                     location_names,
                 ) = self._removal_rules_common_locations(src_reserve_rule)
                 messages.append(
-                    self.env["ir.qweb"].render(
+                    self.env["ir.qweb"]._render(
                         "stock_dynamic_routing_reserve_rule."
                         "routing_rule_reserve_rule_warning_src",
                         values={
@@ -52,7 +52,7 @@ class StockRouting(models.Model):
                     dest_picking_type.reserve_rule_ids
                 )
                 messages.append(
-                    self.env["ir.qweb"].render(
+                    self.env["ir.qweb"]._render(
                         "stock_dynamic_routing_reserve_rule."
                         "routing_rule_reserve_rule_warning_dest",
                         values={
