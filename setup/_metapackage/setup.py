@@ -25,6 +25,7 @@ setuptools.setup(
         'odoo12-addon-stock_picking_auto_create_lot',
         'odoo12-addon-stock_picking_back2draft',
         'odoo12-addon-stock_picking_backorder_strategy',
+        'odoo12-addon-stock_picking_batch_back2draft',
         'odoo12-addon-stock_picking_batch_extended',
         'odoo12-addon-stock_picking_batch_extended_account',
         'odoo12-addon-stock_picking_customer_ref',
