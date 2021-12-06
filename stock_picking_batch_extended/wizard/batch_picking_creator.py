@@ -7,8 +7,7 @@ from odoo.exceptions import UserError
 
 
 class StockBatchPickingCreator(models.TransientModel):
-    """Create a stock.picking.batch from stock.picking
-    """
+    """Create a stock.picking.batch from stock.picking"""
 
     _name = "stock.picking.batch.creator"
     _description = "Batch Picking Creator"
@@ -35,7 +34,9 @@ class StockBatchPickingCreator(models.TransientModel):
         help="The user to which the pickings are assigned",
     )
     notes = fields.Text("Notes", help="Free form remarks")
-    batch_by_group = fields.Boolean(string="Create batch pickings grouped by fields",)
+    batch_by_group = fields.Boolean(
+        string="Create batch pickings grouped by fields",
+    )
     group_field_ids = fields.One2many(
         comodel_name="stock.picking.batch.creator.group.field",
         inverse_name="batch_picking_creator_id",
@@ -73,7 +74,7 @@ class StockBatchPickingCreator(models.TransientModel):
         return res
 
     def _default_user_id(self):
-        """ Return default_user_id from the main company warehouse
+        """Return default_user_id from the main company warehouse
         except if a warehouse_id is specified in context.
         """
         warehouse_id = self.env.context.get("warehouse_id")
@@ -127,7 +128,7 @@ class StockBatchPickingCreator(models.TransientModel):
         return batchs
 
     def action_create_batch(self):
-        """ Create a batch picking  with selected pickings after having checked
+        """Create a batch picking  with selected pickings after having checked
         that they are not already in another batch or done/cancel.
         """
         domain = [
@@ -168,7 +169,9 @@ class StockBatchPickingCreatorGroupField(models.TransientModel):
     _order = "sequence, id"
 
     batch_picking_creator_id = fields.Many2one(
-        comodel_name="stock.picking.batch.creator", ondelete="cascade", required=True,
+        comodel_name="stock.picking.batch.creator",
+        ondelete="cascade",
+        required=True,
     )
     sequence = fields.Integer(help="Group by picking field", default=0)
     field_id = fields.Many2one(
