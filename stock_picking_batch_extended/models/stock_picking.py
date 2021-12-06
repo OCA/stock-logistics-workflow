@@ -9,7 +9,10 @@ from odoo.tools import float_is_zero
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    batch_id = fields.Many2one(string="Batch", domain="[('state', '=', 'draft')]",)
+    batch_id = fields.Many2one(
+        string="Batch",
+        domain="[('state', '=', 'draft')]",
+    )
 
     def action_cancel(self):
         """In addition to what the method in the parent class does,
@@ -39,7 +42,7 @@ class StockPicking(models.Model):
         return result
 
     def force_transfer(self, force_qty=True):
-        """ Do the picking transfer (by calling action_done)
+        """Do the picking transfer (by calling action_done)
 
         If *force_qty* is True, force the transfer for all product_uom_qty
         when qty_done is 0.
