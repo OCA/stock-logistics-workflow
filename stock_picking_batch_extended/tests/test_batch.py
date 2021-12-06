@@ -369,7 +369,8 @@ class TestBatchPicking(SavepointCase):
         other_picking = pickings.filtered(lambda p: p.id != picking.id)
         self.assertEqual("assigned", other_picking.state)
         self.assertEqual(
-            package, other_picking.move_line_ids.package_id,
+            package,
+            other_picking.move_line_ids.package_id,
         )
         # We add the 'package' picking in batch
         other_picking.batch_id = self.batch
