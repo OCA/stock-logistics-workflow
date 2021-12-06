@@ -6,8 +6,7 @@ from odoo.exceptions import UserError
 
 
 class StockBatchPicking(models.Model):
-    """ This object allow to manage multiple stock.picking at the same time.
-    """
+    """This object allow to manage multiple stock.picking at the same time."""
 
     # renamed stock.batch.picking -> stock.picking.batch
     _inherit = ["stock.picking.batch", "mail.thread", "mail.activity.mixin"]
@@ -74,7 +73,9 @@ class StockBatchPicking(models.Model):
     notes = fields.Text("Notes", help="free form remarks")
 
     move_lines = fields.Many2many(
-        comodel_name="stock.move", string="Operations", compute="_compute_move_lines",
+        comodel_name="stock.move",
+        string="Operations",
+        compute="_compute_move_lines",
     )
 
     move_line_ids = fields.Many2many(
@@ -99,7 +100,8 @@ class StockBatchPicking(models.Model):
     )
 
     picking_count = fields.Integer(
-        string="# Pickings", compute="_compute_picking_count",
+        string="# Pickings",
+        compute="_compute_picking_count",
     )
 
     @api.depends("picking_ids")
@@ -144,7 +146,7 @@ class StockBatchPicking(models.Model):
             batch.picking_count = counts.get(batch.id, 0)
 
     def get_not_empties(self):
-        """ Return all batches in this recordset
+        """Return all batches in this recordset
         for which picking_ids is not empty.
 
         :raise UserError: If all batches are empty.
@@ -160,7 +162,7 @@ class StockBatchPicking(models.Model):
         return self.filtered(lambda b: len(b.picking_ids) != 0)
 
     def verify_state(self, expected_state=None):
-        """ Check if batches states must be changed based on pickings states.
+        """Check if batches states must be changed based on pickings states.
 
         If all pickings are canceled, batch must be canceled.
         If all pickings are canceled or done, batch must be done.
@@ -190,7 +192,7 @@ class StockBatchPicking(models.Model):
         return all_good
 
     def action_cancel(self):
-        """ Call action_cancel for all batches pickings
+        """Call action_cancel for all batches pickings
         and set batches states to cancel too.
         """
         self.cancel_picking()
@@ -202,8 +204,7 @@ class StockBatchPicking(models.Model):
             return self.confirm_picking()
 
     def action_transfer(self):
-        """ Create wizard to process all active pickings in these batches
-        """
+        """Create wizard to process all active pickings in these batches"""
         batches = self.get_not_empties()
         if not batches.verify_state():
             return self.done()
@@ -217,8 +218,7 @@ class StockBatchPicking(models.Model):
         ).report_action(self)
 
     def remove_undone_pickings(self):
-        """ Remove of this batch all pickings which state is not done / cancel.
-        """
+        """Remove of this batch all pickings which state is not done / cancel."""
         self.mapped("active_picking_ids").write({"batch_id": False})
         self.verify_state()
 
