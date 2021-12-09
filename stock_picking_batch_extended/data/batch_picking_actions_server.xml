@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2018 Tecnativa - Carlos Dauden
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
-<odoo noupdate="0">
+<odoo>
     <!-- Stock Batch Picking - Print Picking Operations -->
     <record id="action_print_batch_picking_operations" model="ir.actions.server">
         <field name="name">Print Picking Operations</field>
