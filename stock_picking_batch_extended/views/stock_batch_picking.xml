@@ -55,21 +55,21 @@
                     />
                     <!-- Buttons to call Odoo default functional -->
                     <button
-                        name="confirm_picking"
+                        name="action_confirm"
                         string="Confirm"
                         type="object"
                         class="oe_highlight"
                         attrs="{'invisible': ['|',('use_oca_batch_validation', '=', True),('state', '!=', 'draft')]}"
                     />
                     <button
-                        name="print_picking"
+                        name="action_print"
                         string="Print"
                         type="object"
                         class="oe_highlight"
                         attrs="{'invisible': [('use_oca_batch_validation', '=', True)]}"
                     />
                     <button
-                        name="done"
+                        name="action_done"
                         string="Done"
                         type="object"
                         class="oe_highlight"
@@ -77,7 +77,7 @@
                         confirm="All the pickings from this batch will be confirmed. Are you sure?"
                     />
                     <button
-                        name="cancel_picking"
+                        name="action_cancel"
                         string="Cancel"
                         type="object"
                         attrs="{'invisible': ['|',('use_oca_batch_validation', '=', True), ('state', 'in', ['draft','in_progress','assigned'])]}"
@@ -146,7 +146,10 @@
                                 >
                                     <field name="company_id" invisible="1" />
                                     <field name="name" invisible="1" />
-                                    <field name="date_expected" invisible="1" />
+                                    <field
+                                        name="forecast_expected_date"
+                                        invisible="1"
+                                    />
                                     <field name="state" invisible="1" readonly="0" />
                                     <field name="picking_type_id" invisible="1" />
                                     <field name="location_id" invisible="1" />
@@ -227,6 +230,10 @@
                                         attrs="{'readonly': ['|', ('state', '=', 'done'), ('move_id', '!=', False)]}"
                                     />
                                     <field name="move_id" invisible="1" />
+                                    <field
+                                        name="product_uom_category_id"
+                                        invisible="1"
+                                    />
                                     <field
                                         name="product_uom_id"
                                         force_save="1"
