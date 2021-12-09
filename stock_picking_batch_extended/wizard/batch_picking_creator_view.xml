@@ -6,7 +6,7 @@
         <field name="arch" type="xml">
             <form string="Batch Picking properties">
                 <separator string="Batch Picking" />
-                <label for="" string="Assign picking operations to an employee." />
+                <div class="o_form_label">Assign picking operations to an employee</div>
                 <br />
                 <br />
                 <label for="name" />
@@ -43,12 +43,15 @@
             </form>
         </field>
     </record>
-    <act_window
-        name="Add to new Batch"
-        res_model="stock.picking.batch.creator"
-        binding_model="stock.picking"
-        view_mode="form"
-        target="new"
-        id="batch_picking_create_act_window"
-    />
+
+    <record id="batch_picking_create_act_window" model="ir.actions.act_window">
+        <field name="name">Add to new Batch</field>
+        <field name="res_model">stock.picking.batch.creator</field>
+        <field
+            name="binding_model_id"
+            ref="stock_picking_batch_extended.model_stock_picking"
+        />
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
 </odoo>
