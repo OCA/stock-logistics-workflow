@@ -32,11 +32,11 @@ class StockPicking(models.Model):
 
         return result
 
-    def action_done(self):
+    def _action_done(self):
         """In addition to what the method in the parent class does,
         Changed batches states to done if all picking are done.
         """
-        result = super(StockPicking, self).action_done()
+        result = super(StockPicking, self)._action_done()
         self.mapped("batch_id").verify_state()
 
         return result
@@ -74,4 +74,4 @@ class StockPicking(models.Model):
                         if not pack.qty_done:
                             pack.unlink()
 
-            pick.action_done()
+            pick._action_done()

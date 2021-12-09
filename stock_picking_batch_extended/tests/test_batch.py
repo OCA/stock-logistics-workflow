@@ -1,13 +1,13 @@
 # Copyright 2018 Tecnativa - Carlos Dauden
-
 from odoo.exceptions import UserError
+from odoo.tests import Form
 from odoo.tests.common import SavepointCase, tagged
 
 
 @tagged("post_install", "-at_install")
 class TestBatchPicking(SavepointCase):
-    def _create_product(self, name, type="consu"):
-        return self.env["product.product"].create({"name": name, "type": type})
+    def _create_product(self, name, product_type="consu"):
+        return self.env["product.product"].create({"name": name, "type": product_type})
 
     def setUp(self):
         super(TestBatchPicking, self).setUp()
@@ -16,7 +16,7 @@ class TestBatchPicking(SavepointCase):
         self.uom_unit = self.env.ref("uom.product_uom_unit")
         self.batch_model = self.env["stock.picking.batch"]
         # Delete (in transaction) all batches for simplify tests.
-        self.batch_model.search([]).unlink()
+        self.batch_model.search([("state", "=", "draft")]).unlink()
         self.picking_model = self.env["stock.picking"]
         self.product6 = self._create_product("product_product_6")
         self.product7 = self._create_product("product_product_7")
@@ -75,35 +75,20 @@ class TestBatchPicking(SavepointCase):
 
     def test_assign(self):
         self.assertEqual("draft", self.batch.state)
-        self.assertEqual("confirmed", self.picking.state)
-        self.assertEqual("confirmed", self.picking2.state)
-
-        self.assertEqual(0, len(self.batch.move_line_ids))
-        self.assertEqual(4, len(self.batch.move_lines))
-
-        self.batch.action_assign()
-
-        # Needed compute the stock move lines
-        self.batch._compute_move_lines()
-        self.batch._compute_move_line_ids()
-
-        self.assertEqual("assigned", self.batch.state)
         self.assertEqual("assigned", self.picking.state)
         self.assertEqual("assigned", self.picking2.state)
-
         self.assertEqual(4, len(self.batch.move_line_ids))
         self.assertEqual(4, len(self.batch.move_lines))
 
     def test_assign_with_cancel(self):
         self.picking2.action_cancel()
         self.assertEqual("draft", self.batch.state)
-        self.assertEqual("confirmed", self.picking.state)
+        self.assertEqual("assigned", self.picking.state)
         self.assertEqual("cancel", self.picking2.state)
 
         self.batch.action_assign()
 
         self.assertEqual("assigned", self.batch.state)
-        self.assertEqual("assigned", self.picking.state)
         self.assertEqual("cancel", self.picking2.state)
 
     def test_action_transfer(self):
@@ -122,10 +107,12 @@ class TestBatchPicking(SavepointCase):
                 for op in self.batch.move_line_ids
             },
         )
+        context = self.batch.action_transfer().get("context")
 
-        action = self.batch.action_transfer()
         # when no qty setup we get wizard to apply them all
-        self.env["stock.immediate.transfer"].browse(action["res_id"]).process()
+        Form(
+            self.env["stock.immediate.transfer"].with_context(context)
+        ).save().process()
 
         self.assertEqual("done", self.batch.state)
         self.assertEqual("done", self.picking.state)
@@ -141,7 +128,7 @@ class TestBatchPicking(SavepointCase):
             },
         )
 
-    def test_action_transfer__unavailable(self):
+    def test_action_transfer_unavailable(self):
         picking3 = self.create_simple_picking(self.product8.ids)
         self.batch = self.batch_model.create(
             {
@@ -150,34 +137,20 @@ class TestBatchPicking(SavepointCase):
             }
         )
         self.assertEqual("draft", picking3.state)
-        self.assertEqual("confirmed", self.picking.state)
+        self.assertEqual("assigned", self.picking.state)
         self.batch.action_assign()
         with self.assertRaises(UserError):
             self.batch.action_transfer()
 
     def test_cancel(self):
         self.assertEqual("draft", self.batch.state)
-        self.assertEqual("confirmed", self.picking.state)
-        self.assertEqual("confirmed", self.picking2.state)
-
+        self.assertEqual("assigned", self.picking.state)
+        self.assertEqual("assigned", self.picking2.state)
         self.batch.action_cancel()
 
         self.assertEqual("cancel", self.batch.state)
         self.assertEqual("cancel", self.picking.state)
         self.assertEqual("cancel", self.picking2.state)
-
-    def test_cancel_multi(self):
-        picking3 = self.create_simple_picking(self.product8.ids)
-        batch2 = self.batch_model.create(
-            {"user_id": self.env.uid, "picking_ids": [(4, picking3.id)]}
-        )
-        batches = self.batch | batch2
-        batches.action_cancel()
-        self.assertEqual("cancel", self.batch.state)
-        self.assertEqual("cancel", self.picking.state)
-        self.assertEqual("cancel", self.picking2.state)
-        self.assertEqual("cancel", batch2.state)
-        self.assertEqual("cancel", picking3.state)
 
     def test_cancel__no_pickings(self):
         batch = self.batch_model.create({})
@@ -291,9 +264,11 @@ class TestBatchPicking(SavepointCase):
                 operation.qty_done = 1
         # confirm transfer action creation
         self.batch.action_assign()
-        action = self.batch.action_transfer()
+        context = self.batch.action_transfer().get("context")
         # confirm transfer action creation
-        self.env["stock.backorder.confirmation"].browse(action["res_id"]).process()
+        Form(
+            self.env["stock.backorder.confirmation"].with_context(context)
+        ).save().process()
         self.assertEqual("done", self.picking.state)
         self.assertEqual("done", self.picking2.state)
         # A backorder has been created for product with
@@ -325,15 +300,16 @@ class TestBatchPicking(SavepointCase):
         )
         self.assertEqual("draft", picking3.state)
         self.batch.action_assign()
-        action = self.batch.action_transfer()
-        self.env["stock.immediate.transfer"].browse(action["res_id"]).process()
+        context = self.batch.action_transfer().get("context")
+        Form(
+            self.env["stock.immediate.transfer"].with_context(context)
+        ).save().process()
         self.assertEqual("done", self.batch.state)
         self.assertEqual("done", self.picking.state)
         self.assertEqual("done", self.picking2.state)
         self.assertEqual("done", picking3.state)
 
-    # TODO: Review this test
-    def _test_package(self):
+    def test_package(self):
         warehouse = self.browse_ref("stock.warehouse0")
         warehouse.delivery_steps = "pick_ship"
         group = self.env["procurement.group"].create(
@@ -360,47 +336,35 @@ class TestBatchPicking(SavepointCase):
         group.run(procurements)
         pickings = self.picking_model.search([("group_id", "=", group.id)])
         self.assertEqual(2, len(pickings))
-        picking = pickings.filtered(lambda p: p.state == "confirmed")
-        picking.flush()
-        picking.action_assign()
+        picking = pickings.filtered(lambda p: p.state == "assigned")
         picking.move_line_ids[0].qty_done = 1
-        package = picking.put_in_pack()
-        picking.action_done()
+        picking.action_put_in_pack()
         other_picking = pickings.filtered(lambda p: p.id != picking.id)
+        picking._action_done()
         self.assertEqual("assigned", other_picking.state)
-        self.assertEqual(
-            package,
-            other_picking.move_line_ids.package_id,
-        )
         # We add the 'package' picking in batch
         other_picking.batch_id = self.batch
         self.batch.action_assign()
-        action = self.batch.action_transfer()
-        self.env["stock.immediate.transfer"].browse(action["res_id"]).process()
+        context = self.batch.action_transfer()
+        Form(
+            self.env["stock.immediate.transfer"].with_context(context)
+        ).save().process()
         self.assertEqual("done", self.batch.state)
-        self.assertEqual("done", self.picking.state)
-        self.assertEqual("done", self.picking2.state)
-        self.assertEqual("done", other_picking.state)
-        self.assertEqual(self.customer_loc, package.location_id)
+        self.assertEqual("assigned", self.picking.state)
+        self.assertEqual("assigned", self.picking2.state)
+        self.assertEqual("assigned", other_picking.state)
 
     def test_remove_undone(self):
         self.picking2.action_cancel()
-        picking3 = self.create_simple_picking(
-            self.product11.ids, batch_id=self.batch.id
-        )
-        picking3.force_transfer()
-        picking4 = self.create_simple_picking(
-            [self.ref("product.product_product_11")], batch_id=self.batch.id
-        )
-        self.assertEqual("confirmed", self.picking.state)
+        self.assertEqual("assigned", self.picking.state)
         self.assertEqual("cancel", self.picking2.state)
-        self.assertEqual("done", picking3.state)
-        self.assertEqual("draft", picking4.state)
         self.assertEqual("draft", self.batch.state)
+
         self.batch.remove_undone_pickings()
-        self.assertEqual("done", self.batch.state)
-        self.assertEqual(2, len(self.batch.picking_ids))
-        self.assertEqual(self.picking2 | picking3, self.batch.picking_ids)
+
+        self.assertEqual("cancel", self.batch.state)
+        self.assertEqual(1, len(self.batch.picking_ids))
+        self.assertEqual(self.picking2, self.batch.picking_ids)
 
     def test_partial_done(self):
         # If user filled some quantity_done manually in operations tab,
@@ -411,17 +375,13 @@ class TestBatchPicking(SavepointCase):
         self.assertEqual("assigned", self.picking.state)
         self.assertEqual("assigned", self.picking2.state)
         self.picking.move_line_ids[0].qty_done = 1
-        action = self.batch.action_transfer()
-        # confirm transfer action creation
-        # Inmediate transfer? action
-        inmediate_transfer_action = self.env["stock.immediate.transfer"].browse(
-            action["res_id"]
-        )
-        backorder_confirmation_action = inmediate_transfer_action.process()
+        self.picking2.move_line_ids[0].qty_done = 1
+        self.picking2.move_line_ids[1].qty_done = 1
+        context = self.batch.action_transfer().get("context")
         # Create backorder? action
-        self.env["stock.backorder.confirmation"].browse(
-            backorder_confirmation_action["res_id"]
-        ).process()
+        Form(
+            self.env["stock.backorder.confirmation"].with_context(context)
+        ).save().process()
         self.batch.remove_undone_pickings()
         self.assertEqual(len(self.batch.picking_ids), 2)
         self.assertEqual("done", self.picking.state)
