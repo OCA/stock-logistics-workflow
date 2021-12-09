@@ -14,18 +14,17 @@ class StockBatchPicking(models.Model):
 
     name = fields.Char(
         index=True,
-        unique=True,
         states={"draft": [("readonly", False)]},
         default=lambda self: self.env["ir.sequence"].next_by_code(
             "stock.picking.batch"
         ),
     )
-
     # added state to be compatible with picking_ids
     state = fields.Selection(
         selection_add=[("assigned", "Available")],
         readonly=True,
         index=True,
+        ondelete={"assigned": "set default"},
         help="the state of the batch picking. "
         "Workflow is draft -> in_progress/assigned -> done or cancel",
     )
@@ -47,7 +46,6 @@ class StockBatchPicking(models.Model):
         index=True,
         states={"draft": [("readonly", False)], "in_progress": [("readonly", False)]},
         help="the user to which the pickings are assigned",
-        old_name="picker_id",
     )
 
     use_oca_batch_validation = fields.Boolean(
@@ -61,13 +59,14 @@ class StockBatchPicking(models.Model):
         states={"draft": [("readonly", False)]},
         help="List of picking managed by this batch.",
     )
-    # TODO add comment to this field
+
     active_picking_ids = fields.One2many(
         string="Active Pickings",
         comodel_name="stock.picking",
         inverse_name="batch_id",
         readonly=True,
         domain=[("state", "not in", ("cancel", "done"))],
+        help="List of active picking managed by this batch.",
     )
 
     notes = fields.Text("Notes", help="free form remarks")
@@ -195,19 +194,23 @@ class StockBatchPicking(models.Model):
         """Call action_cancel for all batches pickings
         and set batches states to cancel too.
         """
-        self.cancel_picking()
+        self.mapped("picking_ids").action_cancel()
+        super().action_cancel()
 
     def action_assign(self):
         """Check if batches pickings are available."""
         batches = self.get_not_empties()
         if not batches.verify_state("in_progress"):
-            return self.confirm_picking()
+            self._check_company()
+            self.write({"state": "in_progress"})
+        return self.mapped("picking_ids").action_assign()
 
     def action_transfer(self):
         """Create wizard to process all active pickings in these batches"""
         batches = self.get_not_empties()
         if not batches.verify_state():
-            return self.done()
+            self.write({"state": "done"})
+            return self.action_done()
 
     def action_print_picking(self):
         pickings = self.mapped("picking_ids")
