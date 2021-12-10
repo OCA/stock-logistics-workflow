@@ -163,7 +163,7 @@ class StockValuationLayer(models.Model):
                 new_remaining_qty = svl_to_vacuum["remaining_qty"] + vacuum_qty
                 diff_qty = vacuum_qty
                 vacuum_qty = 0.0
-            vacuum_dic[svl_to_vacuum["id"]].append((diff_qty, self.unit_cost))
+            vacuum_dic[svl_to_vacuum["id"]].append((diff_qty, svls_dic[self]["unit_cost"]))
             x = 0.0
             for q, c in vacuum_dic[svl_to_vacuum["id"]]:
                 x += q * c
