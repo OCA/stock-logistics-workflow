@@ -161,3 +161,10 @@ class TestPartnerDeliveryWindow(SavepointCase):
         self.assertTrue(
             isinstance(onchange_res, dict) and "warning" in onchange_res.keys()
         )
+
+    def test_copy_partner_with_time_window_ids(self):
+        copied_partner = self.customer_time_window.copy()
+        expecting = len(self.customer_time_window.delivery_time_window_ids)
+        self.assertEqual(len(copied_partner.delivery_time_window_ids), expecting)
+        copied_partner = self.customer_working_days.copy()
+        self.assertFalse(copied_partner.delivery_time_window_ids)

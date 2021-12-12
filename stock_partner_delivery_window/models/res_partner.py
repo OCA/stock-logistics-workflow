@@ -152,3 +152,22 @@ class ResPartner(models.Model):
                 )
             res[partner.id] = "\n".join(opening_times_description)
         return res
+
+    def copy_data(self, default=None):
+        result = super().copy_data(default=default)[0]
+        not_time_windows = self.delivery_time_preference != "time_windows"
+        not_copy_windows = not_time_windows or "delivery_time_window_ids" in result
+        if not_copy_windows:
+            return [result]
+        values = [
+            {
+                "time_window_start": window_id.time_window_start,
+                "time_window_end": window_id.time_window_end,
+                "time_window_weekday_ids": [
+                    (4, wd_id.id, 0) for wd_id in window_id.time_window_weekday_ids
+                ],
+            }
+            for window_id in self.delivery_time_window_ids
+        ]
+        result["delivery_time_window_ids"] = [(0, 0, val) for val in values]
+        return [result]
