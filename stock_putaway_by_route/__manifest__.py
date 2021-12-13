@@ -9,7 +9,7 @@
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "license": "AGPL-3",
-    "application": True,
+    "application": False,
     "depends": ["stock_putaway_hook"],
     "data": ["views/stock_putaway_rule_views.xml"],
 }
