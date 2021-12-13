@@ -1,8 +1,10 @@
 # Copyright 2021 Hunki Enterprises BV
+# Copyright 2021 Opener B.V. <stefan@opener.amsterdam>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 import operator
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+from odoo.tools.float_utils import float_compare
 
 
 class StockMoveLine(models.Model):
@@ -11,11 +13,44 @@ class StockMoveLine(models.Model):
     use_manual_lot_selection = fields.Boolean(
         related="picking_id.picking_type_id.use_manual_lot_selection",
     )
-    manual_lot_id = fields.Many2one("stock.production.lot", "Lot/Serial")
+    manual_lot_id = fields.Many2one(
+        comodel_name="stock.production.lot",
+        string="Lot/Serial",
+        copy=False,
+    )
+
+    @api.multi
+    def unlink(self):
+        """Keep move lines if they are assigned a manual lot in a batch"""
+        if self.env.context.get("manual_lot_move_lines"):
+            to_keep = self.filtered(
+                lambda ml: ml.id in self.env.context["manual_lot_move_lines"])
+            to_keep.write({"product_uom_qty": 0, "lot_id": False})
+            self -= to_keep
+        if not self:
+            return True
+        return super().unlink()
 
     @api.model_create_multi
     def create(self, vals_list):
-        result = super().create(vals_list)
+        """Reuse zero quantity move line from the same move."""
+        to_super = vals_list
+        result = self.env["stock.move.line"]
+        if self.env.context.get("manual_lot_move_lines"):
+            to_super = []
+            for vals in vals_list:
+                if not vals.get("manual_lot_id") and vals.get("move_id"):
+                    existing = self.search(
+                        [("product_uom_qty", "=", 0),
+                         ("move_id", "=", vals["move_id"])],
+                        limit=1)
+                    if existing:
+                        result += existing
+                        existing.with_context(
+                            bypass_reservation_update=True).write(vals)
+                    else:
+                        to_super.append(vals)
+        result += super().create(to_super)
         for vals, this in zip(vals_list, result):
             this._reserve_manual_lot(vals)
         return result
@@ -26,13 +61,25 @@ class StockMoveLine(models.Model):
         return result
 
     def _reserve_manual_lot(self, vals):
-        if "manual_lot_id" not in vals:
+        if not vals.get("manual_lot_id") and "lot_id" not in vals:
             return
         for this in self:
+            if not vals.get("manual_lot_id"):
+                if not this.picking_id.picking_type_id.use_manual_lot_selection:
+                    this.manual_lot_id = this.lot_id
+                continue
             if this.lot_id == this.manual_lot_id:
                 continue
-            if not this.picking_id.picking_type_id.use_manual_lot_selection:
-                continue
+            product_qty = this.product_qty
+            product_uom_qty = this.product_uom_qty
+            if this.id in self.env.context.get("manual_lot_move_lines", {}):
+                product_qty = self.env.context["manual_lot_move_lines"][this.id]
+                if float_compare(
+                        product_qty, this.product_qty,
+                        this.product_uom_id.rounding):
+                    product_uom_qty = self.product_id.uom_id._compute_quantity(
+                        product_qty, self.product_uom_id,
+                        rounding_method="HALF-UP")
 
             available_qty = self.env['stock.quant']._get_available_quantity(
                 this.product_id,
@@ -42,7 +89,7 @@ class StockMoveLine(models.Model):
                 owner_id=this.owner_id,
             )
             updated_picking_ids = []
-            if available_qty < this.product_qty:
+            if available_qty < product_qty:
                 # free_reservation might unassign pickings, so we record which
                 # ones have been changed
                 self.env.cr.execute("select now() at time zone 'UTC'")
@@ -50,7 +97,7 @@ class StockMoveLine(models.Model):
                 this._free_reservation(
                     this.product_id,
                     this.location_id,
-                    this.product_qty - available_qty,
+                    product_qty - available_qty,
                     lot_id=this.manual_lot_id,
                     package_id=this.package_id,
                     owner_id=this.owner_id,
@@ -64,7 +111,21 @@ class StockMoveLine(models.Model):
                 ))
 
             this.lot_id = this.manual_lot_id
-
+            if this.product_qty < product_qty:
+                try:
+                    self.env["stock.quant"]._update_reserved_quantity(
+                        this.product_id,
+                        this.location_id,
+                        product_qty - this.product_qty,
+                        lot_id=this.manual_lot_id,
+                        package_id=this.package_id,
+                        owner_id=this.owner_id,
+                    )
+                except UserError as ex:
+                    raise UserError(
+                        _("Error assigning lot %s: %s") % (
+                            this.manual_lot_id.name, ex.args[0]))
+                this.product_uom_qty = product_uom_qty
             if updated_picking_ids:
                 # see if we can assign pickings that were unassigned above
                 try:
