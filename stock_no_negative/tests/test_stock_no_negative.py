@@ -10,21 +10,19 @@ from odoo.tests.common import TransactionCase
 
 
 class TestStockNoNegative(TransactionCase):
-    at_install = False
-    post_install = True
-
-    def setUp(self):
-        super(TestStockNoNegative, self).setUp()
-        self.product_model = self.env["product.product"]
-        self.product_ctg_model = self.env["product.category"]
-        self.picking_type_id = self.env.ref("stock.picking_type_out")
-        self.location_id = self.env.ref("stock.stock_location_stock")
-        self.location_dest_id = self.env.ref("stock.stock_location_customers")
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.product_model = cls.env["product.product"]
+        cls.product_ctg_model = cls.env["product.category"]
+        cls.picking_type_id = cls.env.ref("stock.picking_type_out")
+        cls.location_id = cls.env.ref("stock.stock_location_stock")
+        cls.location_dest_id = cls.env.ref("stock.stock_location_customers")
         # Create product category
-        self.product_ctg = self._create_product_category()
+        cls.product_ctg = cls._create_product_category(cls)
         # Create a Product
-        self.product = self._create_product("test_product1")
-        self._create_picking()
+        cls.product = cls._create_product(cls, "test_product1")
+        cls._create_picking(cls)
 
     def _create_product_category(self):
         product_ctg = self.product_ctg_model.create(
