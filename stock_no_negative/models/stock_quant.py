@@ -1,4 +1,4 @@
-# ?? 2015-2017 Akretion (http://www.akretion.com)
+# Copyright 2015-2017 Akretion (http://www.akretion.com)
 # @author Alexis de Lattre <alexis.delattre@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -45,7 +45,7 @@ class StockQuant(models.Model):
                         "not allowed for this product and/or location."
                     )
                     % {
-                        "quantity": quant.product_id.display_name,
+                        "name": quant.product_id.display_name,
                         "name_lot": msg_add,
                         "q_quantity": quant.quantity,
                         "complete_name": quant.location_id.complete_name,
