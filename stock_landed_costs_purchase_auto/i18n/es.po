@@ -20,7 +20,6 @@ msgstr ""
 #. module: stock_landed_costs_purchase_auto
 #: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_purchase_order__landed_cost_number
 #, fuzzy
-#| msgid "Landed Costs Number"
 msgid "Landed Cost Number"
 msgstr "Total de costes en destino"
 
@@ -39,6 +38,11 @@ msgstr "Compra"
 #: model:ir.model,name:stock_landed_costs_purchase_auto.model_purchase_order
 msgid "Purchase Order"
 msgstr "Pedido de compra"
+
+#. module: stock_landed_costs_purchase_auto
+#: model:ir.model,name:stock_landed_costs_purchase_auto.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr ""
 
 #. module: stock_landed_costs_purchase_auto
 #: model:ir.model,name:stock_landed_costs_purchase_auto.model_stock_landed_cost
