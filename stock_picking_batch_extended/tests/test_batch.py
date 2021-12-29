@@ -6,8 +6,8 @@ from odoo.tests.common import SavepointCase, tagged
 
 @tagged("post_install", "-at_install")
 class TestBatchPicking(SavepointCase):
-    def _create_product(self, name, type="consu"):
-        return self.env["product.product"].create({"name": name, "type": type})
+    def _create_product(self, name, product_type="consu"):
+        return self.env["product.product"].create({"name": name, "type": product_type})
 
     def setUp(self):
         super(TestBatchPicking, self).setUp()
