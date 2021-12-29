@@ -6,8 +6,8 @@ from odoo.tests.common import SavepointCase, tagged
 
 @tagged("post_install", "-at_install")
 class TestBatchPicking(SavepointCase):
-    def _create_product(self, name, type="consu"):
-        return self.env["product.product"].create({"name": name, "type": type})
+    def _create_product(self, name, product_type="consu"):
+        return self.env["product.product"].create({"name": name, "type": product_type})
 
     def setUp(self):
         super(TestBatchPicking, self).setUp()
@@ -412,21 +412,17 @@ class TestBatchPicking(SavepointCase):
         self.picking.move_line_ids[0].qty_done = 1
         action = self.batch.action_transfer()
         # confirm transfer action creation
-        # Inmediate transfer? action
-        inmediate_transfer_action = self.env["stock.immediate.transfer"].browse(
+        backorder_confirmation_record = self.env[action["res_model"]].browse(
             action["res_id"]
         )
-        backorder_confirmation_action = inmediate_transfer_action.process()
-        # Create backorder? action
-        self.env["stock.backorder.confirmation"].browse(
-            backorder_confirmation_action["res_id"]
-        ).process()
+        backorder_confirmation_record.process()
         self.batch.remove_undone_pickings()
-        self.assertEqual(len(self.batch.picking_ids), 2)
+        self.assertTrue(self.picking in self.batch.picking_ids)
+        self.assertFalse(self.picking2 in self.batch.picking_ids)
         self.assertEqual("done", self.picking.state)
-        # Second picking is filled and his state is done too
-        self.assertEqual("done", self.picking2.state)
-        self.assertTrue(self.picking2.batch_id)
+        self.assertEqual("assigned", self.picking2.state)
+        self.assertTrue(self.picking.batch_id)
+        self.assertFalse(self.picking2.batch_id)
         picking_backorder = self.picking_model.search(
             [("backorder_id", "=", self.picking.id)]
         )
