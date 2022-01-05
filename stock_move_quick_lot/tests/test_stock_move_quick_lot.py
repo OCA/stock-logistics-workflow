@@ -44,13 +44,13 @@ class TestStockMoveQuickLot(SavepointCase):
         self.move_line.line_lot_name = "SN99999999999"
         self.move_line._compute_line_lot_name()
         self.move_line.onchange_line_lot_name()  # Try again
-        self.move_line.life_date = "2030-12-31"
+        self.move_line.expiration_date = "2030-12-31"
         lot = self.move_line.move_line_ids[:1].lot_id
         self.assertTrue(lot)
         self.move_line.line_lot_name = False
         self.move_line.line_lot_name = "SN99999999998"
         lot2 = self.move_line.move_line_ids[:1].lot_id
         self.assertNotEqual(lot, lot2)
-        self.move_line.life_date = False
-        self.move_line.life_date = "2030-12-28"
-        self.assertEqual(str(lot2.life_date), "2030-12-28 00:00:00")
+        self.move_line.expiration_date = False
+        self.move_line.expiration_date = "2030-12-28"
+        self.assertEqual(str(lot2.expiration_date), "2030-12-28 00:00:00")
