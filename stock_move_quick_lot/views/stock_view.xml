@@ -18,7 +18,7 @@
                     attrs="{'readonly': ['|', ('has_tracking', '=', 'none'), ('has_move_lines', '=', False)]}"
                 />
                 <field
-                    name="life_date"
+                    name="expiration_date"
                     attrs="{'column_invisible': [('parent.picking_type_code', '!=', 'incoming')], 'readonly': ['|', ('has_tracking','=', 'none'), ('has_move_lines', '=', False)]}"
                 />
             </xpath>

@@ -13,18 +13,18 @@ class StockMove(models.Model):
         compute="_compute_line_lot_name",
         inverse="_inverse_line_lot_name",
     )
-    life_date = fields.Datetime(
+    expiration_date = fields.Datetime(
         string="End of Life Date",
         help="This is the date on which the goods with this Serial Number may "
         "become dangerous and must not be consumed.",
-        compute="_compute_life_date",
-        inverse="_inverse_life_date",
+        compute="_compute_expiration_date",
+        inverse="_inverse_expiration_date",
     )
 
     @api.onchange("line_lot_name")
     def onchange_line_lot_name(self):
         lot = self.production_lot_from_name(create_lot=False)
-        self.life_date = lot.life_date
+        self.expiration_date = lot.expiration_date
 
     def _compute_line_lot_name(self):
         for line in self:
@@ -41,17 +41,17 @@ class StockMove(models.Model):
                 if line.move_line_ids.lot_id != lot:
                     line.move_line_ids.lot_id = lot
 
-    def _compute_life_date(self):
+    def _compute_expiration_date(self):
         for line in self:
-            line.life_date = line.move_line_ids[:1].lot_id.life_date
+            line.expiration_date = line.move_line_ids[:1].lot_id.expiration_date
 
-    def _inverse_life_date(self):
+    def _inverse_expiration_date(self):
         for line in self:
-            if not line.life_date:
+            if not line.expiration_date:
                 continue
             lot = line.production_lot_from_name()
-            if lot and lot.life_date != line.life_date:
-                lot.life_date = line.life_date
+            if lot and lot.expiration_date != line.expiration_date:
+                lot.expiration_date = line.expiration_date
 
     def production_lot_from_name(self, create_lot=True):
         StockProductionLot = self.env["stock.production.lot"]
@@ -74,7 +74,7 @@ class StockMove(models.Model):
                 {
                     "name": self.line_lot_name,
                     "product_id": self.product_id.id,
-                    "life_date": self.life_date,
+                    "expiration_date": self.expiration_date,
                     "company_id": self.company_id.id,
                 }
             )
