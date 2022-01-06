@@ -22,7 +22,7 @@ class StockPicking(models.Model):
         """
         self.ensure_one()
         form_view_name = "account.view_move_form"
-        action = self.env.ref("account.action_move_out_invoice_type")
+        action = self.env.ref("account.action_move_out_invoice_type").sudo()
         result = action.read()[0]
         if len(self.invoice_ids) > 1:
             result["domain"] = "[('id', 'in', %s)]" % self.invoice_ids.ids
