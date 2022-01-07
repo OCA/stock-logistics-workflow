@@ -32,6 +32,7 @@ setuptools.setup(
         'odoo14-addon-stock_picking_purchase_order_link',
         'odoo14-addon-stock_picking_restrict_cancel_with_orig_move',
         'odoo14-addon-stock_picking_sale_order_link',
+        'odoo14-addon-stock_picking_send_by_mail',
         'odoo14-addon-stock_picking_show_return',
         'odoo14-addon-stock_production_lot_active',
         'odoo14-addon-stock_push_delay',
