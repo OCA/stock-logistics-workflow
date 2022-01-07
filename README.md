@@ -43,6 +43,7 @@ addon | version | maintainers | summary
 [stock_picking_purchase_order_link](stock_picking_purchase_order_link/) | 14.0.1.0.0 |  | Link between picking and purchase order
 [stock_picking_restrict_cancel_with_orig_move](stock_picking_restrict_cancel_with_orig_move/) | 14.0.1.0.1 |  | Restrict cancellation of dest moves according to origin.
 [stock_picking_sale_order_link](stock_picking_sale_order_link/) | 14.0.1.0.1 |  | Link between picking and sale order
+[stock_picking_send_by_mail](stock_picking_send_by_mail/) | 14.0.1.0.0 |  | Send stock picking by email
 [stock_picking_show_return](stock_picking_show_return/) | 14.0.1.0.1 |  | Show returns on stock pickings
 [stock_production_lot_active](stock_production_lot_active/) | 14.0.1.0.0 | [![ThomasBinsfeld](https://github.com/ThomasBinsfeld.png?size=30px)](https://github.com/ThomasBinsfeld) | Allow to archive/unarchive a lot.
 [stock_push_delay](stock_push_delay/) | 14.0.1.0.1 |  | Manual evaluation of Push rules
