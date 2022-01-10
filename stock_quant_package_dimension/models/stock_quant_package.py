@@ -5,6 +5,43 @@ from odoo import api, fields, models
 from odoo.addons import decimal_precision as dp
 
 
+# from more-itertools package
+def split_after(iterable, pred, maxsplit=-1):
+    """Yield lists of items from *iterable*, where each list ends with an
+    item where callable *pred* returns ``True``:
+
+        >>> list(split_after('one1two2', lambda s: s.isdigit()))
+        [['o', 'n', 'e', '1'], ['t', 'w', 'o', '2']]
+
+        >>> list(split_after(range(10), lambda n: n % 3 == 0))
+        [[0], [1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+    At most *maxsplit* splits are done. If *maxsplit* is not specified or -1,
+    then there is no limit on the number of splits:
+
+        >>> list(split_after(range(10), lambda n: n % 3 == 0, maxsplit=2))
+        [[0], [1, 2, 3], [4, 5, 6, 7, 8, 9]]
+
+    """
+    if maxsplit == 0:
+        yield list(iterable)
+        return
+
+    buf = []
+    it = iter(iterable)
+    for item in it:
+        buf.append(item)
+        if pred(item) and buf:
+            yield buf
+            if maxsplit == 1:
+                yield list(it)
+                return
+            buf = []
+            maxsplit -= 1
+    if buf:
+        yield buf
+
+
 class StockQuantPackage(models.Model):
     _inherit = "stock.quant.package"
 
@@ -62,6 +99,7 @@ class StockQuantPackage(models.Model):
                 picking_id
             )
         )
+        packs_ops_to_recompute = {}
         for package in self:
             weight = 0
             for quant in package.quant_ids:
@@ -85,7 +123,25 @@ class StockQuantPackage(models.Model):
                 weight = package._get_weight_from_pack_operations(
                     pack_operations
                 )
-
+                # the package we compute depends on the result
+                # we may not have computed yet, depending on self's ordering
+                # self(id1, id2, ...) which is not deterministic.
+                # normally that would translate into an api.depends...
+                # note that this fix is also kind of a hack: to be correct,
+                # we should compute a linear order on the ids, and then go through
+                # the loop in this order.
+                # however that means building a lattice to order it,
+                # and also compare it with the linear order from self ids...
+                # so we go through one pack_op: package_id -> result_package_id
+                origin_package = pack_operations.mapped("package_id") & self
+                if origin_package:
+                    before = next(split_after(self.ids, lambda x: x == package.id))
+                    origin = set(origin_package.ids)
+                    if origin - set(before) or origin & set(packs_ops_to_recompute):
+                        packs_ops_to_recompute[package] = pack_operations
+            package.estimated_pack_weight = weight
+        for package, pack_operations in packs_ops_to_recompute.items():
+            weight = package._get_weight_from_pack_operations(pack_operations)
             package.estimated_pack_weight = weight
 
     @api.depends("lngth", "width", "height")
