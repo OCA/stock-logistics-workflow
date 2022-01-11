@@ -7,18 +7,18 @@ from odoo.tests.common import TransactionCase
 class SaleOrderGlobalStockRouteTest(TransactionCase):
     def setUp(self):
         super(SaleOrderGlobalStockRouteTest, self).setUp()
-        self.partner = self.env["res.partner"].create({"name": "Test",})
+        self.partner = self.env["res.partner"].create({"name": "Test"})
         self.product1 = self.env["product.product"].create(
-            {"name": "test_product1", "type": "product",}
+            {"name": "test_product1", "type": "product"}
         )
         self.product2 = self.env["product.product"].create(
-            {"name": "test_product2", "type": "product",}
+            {"name": "test_product2", "type": "product"}
         )
         self.route1 = self.env["stock.location.route"].create(
-            {"name": "test_route_1", "sale_selectable": "True",}
+            {"name": "test_route_1", "sale_selectable": "True"}
         )
         self.route2 = self.env["stock.location.route"].create(
-            {"name": "test_route_2", "sale_selectable": "True",}
+            {"name": "test_route_2", "sale_selectable": "True"}
         )
         self.order = self.env["sale.order"].create(
             [
