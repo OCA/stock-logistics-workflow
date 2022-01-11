@@ -17,6 +17,9 @@ class SaleOrder(models.Model):
 
     @api.onchange("route_id")
     def _onchange_route_id(self):
+        """We could do sale order line route_id field compute store writable.
+        But this field is created by Odoo so I prefer not modify it.
+        """
         for line in self.order_line:
             line.route_id = line.order_id.route_id
 
