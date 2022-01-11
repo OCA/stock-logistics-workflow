@@ -6,7 +6,11 @@
         <field name="inherit_id" ref="sale.view_order_form" />
         <field name="arch" type="xml">
             <field name="payment_term_id" position="after">
-                <field name="route_id" groups="sale_stock.group_route_so_lines" />
+                <!-- Security group sale_stock.group_route_so_lines
+                     disappear  in v13. So we use the same group that route_id
+                     field in sale order lines.
+                 -->
+                <field name="route_id" groups="stock.group_adv_location" />
             </field>
         </field>
     </record>
