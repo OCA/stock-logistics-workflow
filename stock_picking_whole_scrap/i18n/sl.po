@@ -6,16 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2020-11-13 20:36+0000\n"
-"Last-Translator: Matjaz Mozetic <matjaz@matmoz.si>\n"
+"PO-Revision-Date: 2022-01-11 19:39+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: none\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
-"n%100==4 ? 2 : 3;\n"
-"X-Generator: Weblate 3.10\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: stock_picking_whole_scrap
 #: model_terms:ir.ui.view,arch_db:stock_picking_whole_scrap.view_stock_picking_scrap_form
@@ -102,7 +102,7 @@ msgstr "Dobavnica"
 #. module: stock_picking_whole_scrap
 #: model:ir.model,name:stock_picking_whole_scrap.model_wiz_stock_picking_scrap
 msgid "Picking Whole Scrap"
-msgstr ""
+msgstr "Odpis cele dobavnice"
 
 #. module: stock_picking_whole_scrap
 #: model:ir.model.fields,field_description:stock_picking_whole_scrap.field_wiz_stock_picking_scrap_line__product_id
@@ -143,7 +143,7 @@ msgstr "Enota mere"
 #: code:addons/stock_picking_whole_scrap/models/stock_picking.py:12
 #, python-format
 msgid "Whole Scrap"
-msgstr ""
+msgstr "Odpiši vse"
 
 #. module: stock_picking_whole_scrap
 #: model:ir.model.fields,field_description:stock_picking_whole_scrap.field_wiz_stock_picking_scrap_line__wizard_id
@@ -153,13 +153,13 @@ msgstr "Čarovnik"
 #. module: stock_picking_whole_scrap
 #: model:ir.model,name:stock_picking_whole_scrap.model_wiz_stock_picking_scrap_line
 msgid "Wizard lines for picking whole scrap"
-msgstr ""
+msgstr "Vrstice čarovnika za odpis dobavnice"
 
 #. module: stock_picking_whole_scrap
 #: code:addons/stock_picking_whole_scrap/wizards/stock_picking_whole_scrap.py:129
 #, python-format
 msgid "You can't scrap more quantity that done it"
-msgstr ""
+msgstr "Ne morete odpisati večje količine od opravljene"
 
 #. module: stock_picking_whole_scrap
 #: code:addons/stock_picking_whole_scrap/wizards/stock_picking_whole_scrap.py:72
