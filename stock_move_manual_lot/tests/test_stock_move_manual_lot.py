@@ -1,5 +1,6 @@
 # Copyright 2021 Opener B.V. <stefan@opener.amsterdam>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+from datetime import timedelta
 from uuid import uuid1
 from odoo.exceptions import UserError
 from odoo.tests.common import TransactionCase
@@ -90,7 +91,12 @@ class TestStockMoveManualLot(TransactionCase):
         self.assertEqual(self.quant2.reserved_quantity, 1)
         self.assertEqual(picking2.move_line_ids.lot_id, self.lot2)
         self.assertTrue(self.picking.move_line_ids)
-        picking2.move_line_ids.manual_lot_id = self.lot1
+        self.picking.move_lines.write_date -= timedelta(minutes=1)
+        picking2.write({
+            "move_line_ids": [
+                (1, picking2.move_line_ids.id, {
+                    "manual_lot_id": self.lot1.id,
+                })]})
         self.assertTrue(self.picking.move_line_ids)
         self.assertEqual(self.picking.move_line_ids.lot_id, self.lot2)
         with self.assertRaises(

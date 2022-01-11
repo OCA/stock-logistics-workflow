@@ -1,7 +1,6 @@
 # Copyright 2021 Hunki Enterprises BV
 # Copyright 2021 Opener B.V. <stefan@opener.amsterdam>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-import operator
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools.float_utils import float_compare
@@ -110,11 +109,9 @@ class StockMoveLine(models.Model):
                     ml_to_ignore=self,
                 )
                 self.env.cr.execute(
-                    'select id from stock_picking where write_date = %s', (now,),
+                    'select distinct picking_id from stock_move where write_date = %s', (now,),
                 )
-                updated_picking_ids = list(map(
-                    operator.itemgetter(0), self.env.cr.fetchall(),
-                ))
+                updated_picking_ids = [row for row, in self.env.cr.fetchall() if row]
 
             this.lot_id = this.manual_lot_id
             if this.product_qty < product_qty:
