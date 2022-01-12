@@ -16,8 +16,11 @@ class AccountMove(models.Model):
         string="Related Pickings",
         store=True,
         compute="_compute_picking_ids",
-        help="Related pickings "
-        "(only when the invoice has been generated from a sale order).",
+        help="Related pickings (only when the invoice has been generated from a sale order).",
+    )
+
+    delivery_count = fields.Integer(
+        string="Delivery Orders", compute="_compute_picking_ids", store=True
     )
 
     @api.depends("invoice_line_ids", "invoice_line_ids.move_line_ids")
@@ -26,6 +29,7 @@ class AccountMove(models.Model):
             invoice.picking_ids = invoice.mapped(
                 "invoice_line_ids.move_line_ids.picking_id"
             )
+            invoice.delivery_count = len(invoice.picking_ids)
 
     def action_show_picking(self):
         """This function returns an action that display existing pickings
@@ -35,8 +39,9 @@ class AccountMove(models.Model):
         """
         self.ensure_one()
         form_view_name = "stock.view_picking_form"
-        action = self.env.ref("stock.action_picking_tree_all").sudo()
-        result = action.read()[0]
+        result = self.env["ir.actions.act_window"]._for_xml_id(
+            "stock.action_picking_tree_all"
+        )
         if len(self.picking_ids) > 1:
             result["domain"] = "[('id', 'in', %s)]" % self.picking_ids.ids
         else:
@@ -44,6 +49,20 @@ class AccountMove(models.Model):
             result["views"] = [(form_view.id, "form")]
             result["res_id"] = self.picking_ids.id
         return result
+
+    def _reverse_move_vals(self, default_values, cancel=True):
+        move_vals = super()._reverse_move_vals(default_values, cancel=cancel)
+        # Invoice returned moves marked as to_refund
+        for line_command in move_vals.get("line_ids", []):
+            line_vals = line_command[2]
+            product_id = line_vals.get("product_id", False)
+            if product_id:
+                stock_moves = self.line_ids.filtered(
+                    lambda l: l.product_id.id == product_id
+                ).mapped("move_line_ids")
+                if stock_moves:
+                    line_vals["move_line_ids"] = [(4, m.id) for m in stock_moves]
+        return move_vals
 
 
 class AccountMoveLine(models.Model):
@@ -56,6 +75,7 @@ class AccountMoveLine(models.Model):
         column2="move_id",
         string="Related Stock Moves",
         readonly=True,
-        help="Related stock moves "
-        "(only when the invoice has been generated from a sale order).",
+        copy=False,
+        help="Related stock moves (only when the invoice has been"
+        " generated from a sale order).",
     )
