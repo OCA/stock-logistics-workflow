@@ -10,13 +10,13 @@
             <div name="button_box" position="inside">
                 <field name="picking_ids" invisible="1" />
                 <button
+                    type="object"
                     name="action_show_picking"
                     class="oe_stat_button"
                     icon="fa-truck"
-                    type="object"
-                    attrs="{'invisible': [('picking_ids', '=', [])]}"
-                    string="Pickings"
+                    attrs="{'invisible': [('delivery_count', '=', 0)]}"
                 >
+                    <field name="delivery_count" widget="statinfo" string="Delivery" />
                 </button>
             </div>
             <xpath expr="//field[@name='invoice_line_ids']//tree" position="inside">
