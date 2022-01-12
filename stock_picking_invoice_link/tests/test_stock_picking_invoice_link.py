@@ -3,13 +3,13 @@
 # Copyright 2017 Jacques-Etienne Baudoux <je@bcim.be>
 # Copyright 2021 Tecnativa - João Marques
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
-
 from odoo.exceptions import UserError
-from odoo.tests import Form
+from odoo.tests import Form, tagged
 
 from odoo.addons.sale.tests.common import TestSaleCommon
 
 
+@tagged("post_install", "-at_install")
 class TestStockPickingInvoiceLink(TestSaleCommon):
     @classmethod
     def _update_product_qty(cls, product):
@@ -255,7 +255,13 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         wiz_invoice_refund = (
             self.env["account.move.reversal"]
             .with_context(active_model="account.move", active_ids=inv.ids)
-            .create({"refund_method": "modify", "reason": "test"})
+            .create(
+                {
+                    "refund_method": "modify",
+                    "reason": "test",
+                    "journal_id": inv.journal_id.id,
+                }
+            )
         )
         wiz_invoice_refund.reverse_moves()
         new_invoice = self.so.invoice_ids.filtered(
@@ -288,7 +294,13 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         wiz_invoice_refund = (
             self.env["account.move.reversal"]
             .with_context(active_model="account.move", active_ids=inv.ids)
-            .create({"refund_method": "cancel", "reason": "test"})
+            .create(
+                {
+                    "refund_method": "cancel",
+                    "reason": "test",
+                    "journal_id": inv.journal_id.id,
+                }
+            )
         )
         wiz_invoice_refund.reverse_moves()
         # Create invoice again
@@ -306,7 +318,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
             and x.state in ("confirmed", "assigned", "partially_available")
         )
         pick_1.move_line_ids.write({"qty_done": 2})
-        pick_1.action_done()
+        pick_1._action_done()
         # Create invoice
         inv = self.so._create_invoices()
         with Form(inv) as move_form:
@@ -324,7 +336,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
             and x.state in ("confirmed", "assigned", "partially_available")
         )
         pick_1.move_line_ids.write({"qty_done": 2})
-        pick_1.action_done()
+        pick_1._action_done()
         # Create invoice
         inv = self.so._create_invoices()
         inv_line_prod_del = inv.invoice_line_ids.filtered(

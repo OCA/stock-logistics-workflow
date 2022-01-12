@@ -4,7 +4,7 @@
 # Copyright 2017 Jacques-Etienne Baudoux <je@bcim.be>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class StockPicking(models.Model):
@@ -12,6 +12,9 @@ class StockPicking(models.Model):
 
     invoice_ids = fields.Many2many(
         comodel_name="account.move", copy=False, string="Invoices", readonly=True
+    )
+    invoice_count = fields.Integer(
+        string="Invoices Orders", compute="_compute_invoice_count"
     )
 
     def action_view_invoice(self):
@@ -22,8 +25,9 @@ class StockPicking(models.Model):
         """
         self.ensure_one()
         form_view_name = "account.view_move_form"
-        action = self.env.ref("account.action_move_out_invoice_type").sudo()
-        result = action.read()[0]
+        result = self.env["ir.actions.act_window"]._for_xml_id(
+            "account.action_move_out_invoice_type"
+        )
         if len(self.invoice_ids) > 1:
             result["domain"] = "[('id', 'in', %s)]" % self.invoice_ids.ids
         else:
@@ -31,3 +35,8 @@ class StockPicking(models.Model):
             result["views"] = [(form_view.id, "form")]
             result["res_id"] = self.invoice_ids.id
         return result
+
+    @api.depends("invoice_ids")
+    def _compute_invoice_count(self):
+        for order in self:
+            order.invoice_count = len(order.invoice_ids)
