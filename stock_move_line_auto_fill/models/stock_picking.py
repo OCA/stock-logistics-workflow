@@ -54,7 +54,7 @@ class StockPicking(models.Model):
                 and not op.qty_done
                 and (
                     not op.lots_visible
-                    or not op.picking_id.picking_type_id.avoid_lot_assignment
+                    or op.picking_id.picking_type_id.avoid_lot_assignment
                 )
             )
         )
