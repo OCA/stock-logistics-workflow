@@ -12,6 +12,7 @@ setuptools.setup(
         'odoo13-addon-delivery_total_weight_from_packaging',
         'odoo13-addon-procurement_auto_create_group_carrier',
         'odoo13-addon-purchase_stock_picking_invoice_link',
+        'odoo13-addon-sale_order_global_stock_route',
         'odoo13-addon-sale_stock_mto_as_mts_orderpoint',
         'odoo13-addon-stock_account_product_run_fifo_hook',
         'odoo13-addon-stock_auto_move',
