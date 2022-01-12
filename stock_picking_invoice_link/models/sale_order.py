@@ -1,6 +1,7 @@
 # Copyright 2013-15 Agile Business Group sagl (<http://www.agilebg.com>)
 # Copyright 2017 Jacques-Etienne Baudoux <je@bcim.be>
 # Copyright 2021 Tecnativa - João Marques
+# Copyright 2022 Antony Herrera - LooErp
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 from odoo import models
 from odoo.tools import float_compare

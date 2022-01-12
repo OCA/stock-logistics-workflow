@@ -5,11 +5,12 @@
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
 from odoo.exceptions import UserError
-from odoo.tests import Form
+from odoo.tests.common import Form, tagged
 
 from odoo.addons.sale.tests.common import TestSaleCommon
 
 
+@tagged("post_install", "-at_install")
 class TestStockPickingInvoiceLink(TestSaleCommon):
     def _update_product_qty(self, product):
 
@@ -247,7 +248,13 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         wiz_invoice_refund = (
             self.env["account.move.reversal"]
             .with_context(active_model="account.move", active_ids=inv.ids)
-            .create({"refund_method": "modify", "reason": "test"})
+            .create(
+                {
+                    "refund_method": "modify",
+                    "reason": "test",
+                    "journal_id": inv.journal_id.id,
+                }
+            )
         )
         wiz_invoice_refund.reverse_moves()
         new_invoice = self.so.invoice_ids.filtered(
