@@ -25,7 +25,7 @@ msgstr "Ruta"
 
 #. module: sale_order_global_stock_route
 #: model:ir.model,name:sale_order_global_stock_route.model_sale_order
-msgid "Sale Order"
+msgid "Sales Order"
 msgstr ""
 
 #. module: sale_order_global_stock_route
