@@ -1,6 +1,7 @@
 # Copyright 2013-15 Agile Business Group sagl (<http://www.agilebg.com>)
 # Copyright 2015-2016 AvanzOSC
 # Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
+# Copyright 2022 Antony Herrera - LooErp
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
 from odoo import _, fields, models
