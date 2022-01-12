@@ -26,3 +26,4 @@
 * Jacques-Etienne Baudoux <je@bcim.be>
 * Aitor Bouzas Naveira <abouzas@softdil.com>
 * Carlos Lopez Mite <celm1990@gmail.com>
+* Joel Matías Zilli <joz@adhoc.com.ar>
