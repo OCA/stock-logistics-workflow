@@ -17,6 +17,11 @@
                     attrs="{'invisible': [('picking_ids', '=', [])]}"
                     string="Pickings"
                 >
+                <div class="o_field_widget o_stat_info">
+                    <span class="o_stat_value">
+                        <field name="delivery_count" widget="statinfo" nolabel="1" class="mr4"/>
+                    </span>
+                </div>
                 </button>
             </div>
         </field>

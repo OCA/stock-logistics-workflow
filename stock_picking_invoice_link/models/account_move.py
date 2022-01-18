@@ -19,6 +19,8 @@ class AccountMove(models.Model):
         help="Related pickings "
         "(only when the invoice has been generated from a sale order).",
     )
+    
+    delivery_count = fields.Integer(string='Delivery Orders', compute='_compute_picking_count_ids')
 
     @api.depends("invoice_line_ids", "invoice_line_ids.move_line_ids")
     def _compute_picking_ids(self):
@@ -44,6 +46,11 @@ class AccountMove(models.Model):
             result["views"] = [(form_view.id, "form")]
             result["res_id"] = self.picking_ids.id
         return result
+    
+    @api.depends('picking_ids')
+    def _compute_picking_count_ids(self):
+        for order in self:
+            order.delivery_count = len(order.picking_ids)
 
 
 class AccountMoveLine(models.Model):

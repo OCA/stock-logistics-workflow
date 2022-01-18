@@ -4,7 +4,7 @@
 # Copyright 2017 Jacques-Etienne Baudoux <je@bcim.be>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class StockPicking(models.Model):
@@ -13,7 +13,8 @@ class StockPicking(models.Model):
     invoice_ids = fields.Many2many(
         comodel_name="account.move", copy=False, string="Invoices", readonly=True
     )
-
+    invoice_count = fields.Integer(string='Invoices Orders', compute='_compute_invoice_ids')
+    
     def action_view_invoice(self):
         """This function returns an action that display existing invoices
         of given stock pickings.
@@ -31,3 +32,8 @@ class StockPicking(models.Model):
             result["views"] = [(form_view.id, "form")]
             result["res_id"] = self.invoice_ids.id
         return result
+    
+    @api.depends('invoice_ids')
+    def _compute_invoice_ids(self):
+        for order in self:
+            order.invoice_count = len(order.invoice_ids)
