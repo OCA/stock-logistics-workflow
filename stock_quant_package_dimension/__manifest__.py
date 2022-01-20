@@ -4,7 +4,7 @@
     "name": "Stock Quant Package Dimension",
     "summary": "Use dimensions on packages",
     "version": "14.0.2.1.0",
-    "development_status": "Alpha",
+    "development_status": "Beta",
     "category": "Warehouse Management",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Camptocamp, Odoo Community Association (OCA)",
