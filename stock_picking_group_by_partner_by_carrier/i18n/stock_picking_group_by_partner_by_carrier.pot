@@ -54,11 +54,6 @@ msgid "Created on"
 msgstr ""
 
 #. module: stock_picking_group_by_partner_by_carrier
-#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_procurement_group__carrier_id
-msgid "Delivery Method"
-msgstr ""
-
-#. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_report_stock_report_deliveryslip
 msgid "Delivery Slip Report"
 msgstr ""
