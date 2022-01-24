@@ -1,7 +1,7 @@
 {
     "name": "Procurement Auto Create Group Carrier",
     "Summary": """Adds the delivery carrier in the procurement group data.""",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.1.0",
     "development_status": "Alpha",
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
