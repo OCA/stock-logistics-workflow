@@ -17,4 +17,4 @@ class StockPicking(models.Model):
         # addons/stock/models/stock_move.py#L410
         ctx = self.env.context.copy()
         ctx.pop("default_picking_id", False)
-        return self.with_context(ctx).sale_id.get_formview_action()
+        return self.with_context(**ctx).sale_id.get_formview_action()
