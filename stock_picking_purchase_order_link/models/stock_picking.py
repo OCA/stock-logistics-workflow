@@ -12,7 +12,8 @@ class StockPicking(models.Model):
         of given picking.
         """
         self.ensure_one()
-        action = self.env.ref("purchase.purchase_form_action").read()[0]
+        xmlid = "purchase.purchase_form_action"
+        action = self.env["ir.actions.act_window"]._for_xml_id(xmlid)
         form = self.env.ref("purchase.purchase_order_form")
         action["views"] = [(form.id, "form")]
         action["res_id"] = self.purchase_id.id

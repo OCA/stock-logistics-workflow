@@ -35,15 +35,15 @@ class AccountMove(models.Model):
         """
         self.ensure_one()
         form_view_name = "stock.view_picking_form"
-        action = self.env.ref("stock.action_picking_tree_all").sudo()
-        result = action.read()[0]
+        xmlid = "stock.action_picking_tree_all"
+        action = self.env["ir.actions.act_window"]._for_xml_id(xmlid)
         if len(self.picking_ids) > 1:
-            result["domain"] = "[('id', 'in', %s)]" % self.picking_ids.ids
+            action["domain"] = "[('id', 'in', %s)]" % self.picking_ids.ids
         else:
             form_view = self.env.ref(form_view_name)
-            result["views"] = [(form_view.id, "form")]
-            result["res_id"] = self.picking_ids.id
-        return result
+            action["views"] = [(form_view.id, "form")]
+            action["res_id"] = self.picking_ids.id
+        return action
 
 
 class AccountMoveLine(models.Model):
