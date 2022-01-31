@@ -1,4 +1,4 @@
-# Copyright 2018 Eficent <http://www.eficent.com>
+# Copyright 2018 ForgeFlow <http://www.forgeflow.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo.tests.common import TransactionCase
