@@ -383,17 +383,17 @@ class StockReturnRequest(models.Model):
 
     def action_view_pickings(self):
         """Display returned pickings"""
-        action = self.env.ref("stock.action_picking_tree_all")
-        result = action.read()[0]
-        result["context"] = {}
+        xmlid = "stock.action_picking_tree_all"
+        action = self.env["ir.actions.act_window"]._for_xml_id(xmlid)
+        action["context"] = {}
         pickings = self.mapped("returned_picking_ids")
         if not pickings or len(pickings) > 1:
-            result["domain"] = "[('id', 'in', %s)]" % (pickings.ids)
+            action["domain"] = "[('id', 'in', %s)]" % (pickings.ids)
         elif len(pickings) == 1:
             res = self.env.ref("stock.view_picking_form", False)
-            result["views"] = [(res and res.id or False, "form")]
-            result["res_id"] = pickings.id
-        return result
+            action["views"] = [(res and res.id or False, "form")]
+            action["res_id"] = pickings.id
+        return action
 
     def do_print_return_request(self):
         return self.env.ref(
