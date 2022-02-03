@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_lot_scrap
-#: code:addons/stock_lot_scrap/models/stock_scrap.py:16
+#: code:addons/stock_lot_scrap/models/stock_scrap.py:0
 #, python-format
 msgid "Lot was scrapped by <b>%s</b>."
 msgstr ""
@@ -30,20 +30,20 @@ msgid "Lot/Serial"
 msgstr "Lotto/Numero di serie"
 
 #. module: stock_lot_scrap
-#: code:addons/stock_lot_scrap/models/stock_production_lot.py:39
+#: code:addons/stock_lot_scrap/models/stock_production_lot.py:0
 #: model:ir.model,name:stock_lot_scrap.model_stock_scrap
 #, python-format
 msgid "Scrap"
 msgstr "Scarta"
 
 #. module: stock_lot_scrap
-#: code:addons/stock_lot_scrap/models/stock_production_lot.py:65
+#: code:addons/stock_lot_scrap/models/stock_production_lot.py:0
 #, python-format
 msgid "This lot doesn't contain any quant in internal location."
 msgstr ""
 
 #. module: stock_lot_scrap
-#: code:addons/stock_lot_scrap/models/stock_production_lot.py:37
+#: code:addons/stock_lot_scrap/models/stock_production_lot.py:0
 #, python-format
 msgid "This will scrap the whole lot. Are you sure you want to continue?"
 msgstr ""
