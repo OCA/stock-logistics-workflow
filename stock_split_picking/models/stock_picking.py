@@ -79,6 +79,7 @@ class StockPicking(models.Model):
                     "move_lines": [],
                     "move_line_ids": [],
                     "backorder_id": self.id,
+                    "origin": self.origin,
                 },
                 **(default or {})
             )
