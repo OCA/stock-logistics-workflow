@@ -11,7 +11,8 @@ class StockScrap(models.Model):
 
     def action_validate(self):
         self.ensure_one()
-        self.lot_id.message_post(
-            body=_("Lot was scrapped by <b>%s</b>.") % self.env.user.name
-        )
+        if self.lot_id:
+            self.lot_id.message_post(
+                body=_("Lot was scrapped by <b>%s</b>.") % self.env.user.name
+            )
         return super().action_validate()
