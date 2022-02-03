@@ -15,6 +15,7 @@ msgstr ""
 
 #. module: stock_lot_scrap
 #: code:addons/stock_lot_scrap/models/stock_scrap.py:0
+#: code:addons/stock_lot_scrap/models/stock_scrap.py:0
 #, python-format
 msgid "Lot was scrapped by <b>%s</b>."
 msgstr ""
