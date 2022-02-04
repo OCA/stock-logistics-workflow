@@ -14,6 +14,8 @@ class TestStockSplitPicking(SavepointCase):
         cls.src_location = cls.env.ref("stock.stock_location_stock")
         cls.dest_location = cls.env.ref("stock.stock_location_customers")
         cls.product = cls.env["product.product"].create({"name": "Test product"})
+        cls.product2 = cls.env["product.product"].create({"name": "Test product 2"})
+        cls.product3 = cls.env["product.product"].create({"name": "Test product 3"})
         cls.partner = cls.env["res.partner"].create({"name": "Test partner"})
         cls.picking = cls.env["stock.picking"].create(
             {
@@ -34,6 +36,88 @@ class TestStockSplitPicking(SavepointCase):
                 "location_dest_id": cls.dest_location.id,
             }
         )
+
+        cls.picking2 = cls.env["stock.picking"].create(
+            {
+                "partner_id": cls.partner.id,
+                "picking_type_id": cls.env.ref("stock.picking_type_out").id,
+                "location_id": cls.src_location.id,
+                "location_dest_id": cls.dest_location.id,
+            }
+        )
+        cls.move2 = cls.env["stock.move"].create(
+            {
+                "name": "/",
+                "picking_id": cls.picking2.id,
+                "product_id": cls.product2.id,
+                "product_uom_qty": 10,
+                "product_uom": cls.product.uom_id.id,
+                "location_id": cls.src_location.id,
+                "location_dest_id": cls.dest_location.id,
+            }
+        )
+        cls.move3 = cls.env["stock.move"].create(
+            {
+                "name": "/",
+                "picking_id": cls.picking2.id,
+                "product_id": cls.product.id,
+                "product_uom_qty": 10,
+                "product_uom": cls.product.uom_id.id,
+                "location_id": cls.src_location.id,
+                "location_dest_id": cls.dest_location.id,
+            }
+        )
+        cls.move4 = cls.env["stock.move"].create(
+            {
+                "name": "/",
+                "picking_id": cls.picking2.id,
+                "product_id": cls.product3.id,
+                "product_uom_qty": 10,
+                "product_uom": cls.product.uom_id.id,
+                "location_id": cls.src_location.id,
+                "location_dest_id": cls.dest_location.id,
+            }
+        )
+
+    def test_stock_split_picking_multi(self):
+        # Picking state is draft
+        self.assertEqual(self.picking2.state, "draft")
+        # Confirm picking
+        self.picking2.action_confirm()
+        # We assign quantities in order to split
+        self.picking2.action_assign()
+        move_lines = self.env["stock.move.line"].search(
+            [("picking_id", "=", self.picking2.id)]
+        )
+        move_lines[0].qty_done = 4.0
+        # Split picking: 4 and 6
+        # import pdb; pdb.set_trace()
+        self.picking2.split_process()
+
+        # We now should have only one move line on the original picking
+        # and a backorder with 3 lines
+        new_picking = self.env["stock.picking"].search(
+            [("backorder_id", "=", self.picking2.id)], limit=1
+        )
+        new_move_lines = self.env["stock.move.line"].search(
+            [("picking_id", "=", new_picking.id)]
+        )
+        move_line_for_test = self.env["stock.move.line"].search(
+            [
+                ("picking_id", "=", new_picking.id),
+                ("product_id", "=", move_lines[0].product_id.id),
+            ]
+        )
+        origin_move_lines = self.env["stock.move.line"].search(
+            [("picking_id", "=", self.picking2.id)]
+        )
+
+        self.assertEqual(len(new_move_lines), 3)
+        self.assertEqual(len(origin_move_lines), 1)
+        self.assertEqual(origin_move_lines[0].product_qty, 4)
+        self.assertEqual(origin_move_lines[0].qty_done, 4)
+        self.assertEqual(move_line_for_test[0].qty_done, 0)
+        self.assertEqual(move_line_for_test[0].product_qty, 6)
 
     def test_stock_split_picking(self):
         # Picking state is draft
