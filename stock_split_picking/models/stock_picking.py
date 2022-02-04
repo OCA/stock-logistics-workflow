@@ -51,6 +51,8 @@ class StockPicking(models.Model):
                                     {'product_uom_qty': move_line.qty_done})
                             except UserError:
                                 pass
+                        elif not move_line.qty_done:
+                            move_line.unlink()
                     new_moves |= self.env['stock.move'].browse(new_move_id)
 
             # If we have new moves to move, create the backorder picking
