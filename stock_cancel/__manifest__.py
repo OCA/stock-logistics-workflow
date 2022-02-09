@@ -5,7 +5,7 @@
 
 {
     'name': 'Stock Cancel',
-    'version': '10.0.0.1.1',
+    'version': '10.0.0.2.0',
     'category': 'Stock',
     'summary': "This module allows you to bring back a completed stock "
                "picking to draft state",
