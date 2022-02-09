@@ -14,7 +14,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_picking_force_assign
-#: code:addons/stock_picking_force_assign/models/stock_picking.py:61
 #: code:addons/stock_picking_force_assign/models/stock_picking.py:71
 #, python-format
 msgid "Cannot unreserve enough %s, missing quantity is %d"
