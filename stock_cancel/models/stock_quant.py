@@ -10,13 +10,11 @@ class StockQuant(models.Model):
     _inherit = 'stock.quant'
 
     @api.multi
-    def _revert(self):
+    def _revert(self, previous_move):
+        previous_location = previous_move.location_id
         for quant in self.sudo():
-            previous_move = quant.history_ids[-1]
             if len(previous_move.linked_move_operation_ids) != 1:
                 raise exceptions.ValidationError(
                     _('Cannot cancel a picking with multiple operations'))
-            linked_operation = previous_move.linked_move_operation_ids[0]
-            previous_location = linked_operation.operation_id.location_id
             quant.location_id = previous_location.id
-            quant.write({'history_ids': [(3, quant.history_ids[-1].id)]})
+            quant.write({'history_ids': [(3, previous_move.id)]})
