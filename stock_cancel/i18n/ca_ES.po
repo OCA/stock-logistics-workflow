@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_cancel
+# 	* stock_cancel
 #
 msgid ""
 msgstr ""
@@ -15,13 +15,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #. module: stock_cancel
-#: code:addons/stock_cancel/models/stock_move.py:18
+#: code:addons/stock_cancel/models/stock_move.py:19
 #, python-format
 msgid "Action not allowed. Chained move."
 msgstr ""
 
 #. module: stock_cancel
-#: code:addons/stock_cancel/models/stock_move.py:15
+#: code:addons/stock_cancel/models/stock_move.py:16
 #, python-format
 msgid "Action not allowed. Move splited / with returned moves."
 msgstr ""
