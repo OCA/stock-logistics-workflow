@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2022 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="decimal_deliverable_rate" model="decimal.precision" forcecreate="True">
+        <field name="name">Sale order deliverable rate</field>
+        <field name="digits">0</field>
+    </record>
+</odoo>

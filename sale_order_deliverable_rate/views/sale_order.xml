@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2022 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="sale_order_form_view">
+        <field name="name">sale.order.form (in sale_order_deliverable_rate)</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="priority" eval="90" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <div class="o_td_label" groups="base.group_no_one">
+                    <label for="deliverable_rate" string="Deliverable Rate" />
+                </div>
+                <field name="deliverable_rate" widget="percentpie" string=" " />
+            </xpath>
+            <xpath
+                expr="//field[@name='order_line']/tree//field[@name='product_uom']"
+                position="after"
+            >
+                <field name="deliverable_rate" optional="hide" />
+                <field name="qty_to_ship" invisible="1" />
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="sale_order_tree_view">
+        <field name="name">sale.order.tree (in sale_order_deliverable_rate)</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree" />
+        <field name="priority" eval="90" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_status']" position="after">
+                <field name="nb_order_line_need_delivery" invisible="1" />
+                <field
+                    name="deliverable_rate"
+                    widget="progressbar"
+                    options="{'current_value': 'deliverable_rate', 'max_value': '100.0', 'editable': false}"
+                    attrs="{'invisible': [('nb_order_line_need_delivery', '=', 0)]}"
+                />
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="sale_order_search_view">
+        <field name="name">sale.order.search (in sale_order_deliverable_rate)</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter" />
+        <field name="priority" eval="90" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="deliverable_rate" />
+            </xpath>
+            <xpath expr="//field[@name='analytic_account_id']" position="after">
+                <filter
+                    string="Deliverable (100%)"
+                    domain="[('deliverable_rate', '=', 100)]"
+                    name="deliverable_rate_100_filter"
+                />
+                <filter
+                    string="Partially deliverable (>=80%)"
+                    domain="[('deliverable_rate', '&gt;=', 80),('deliverable_rate','&lt;=',99)]"
+                    name="deliverable_rate_partially_filter"
+                />
+                <separator />
+            </xpath>
+        </field>
+    </record>
+</odoo>
