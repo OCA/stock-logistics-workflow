@@ -4,7 +4,7 @@
 {
     'name': 'Stock Picking Show Date Done',
     'version': '10.0.1.0.0',
-    'category': 'Warehouse Management',
+    'category': 'Warehouse',
     'author': 'PlanetaTIC, Odoo Community Association (OCA)',
     'website': 'https://www.planetatic.com',
     'license': 'AGPL-3',
