@@ -61,6 +61,7 @@ setuptools.setup(
         'odoo13-addon-stock_quant_package_dimension_total_weight_from_packaging',
         'odoo13-addon-stock_quant_package_product_packaging',
         'odoo13-addon-stock_return_request',
+        'odoo13-addon-stock_scrap_cancel',
         'odoo13-addon-stock_split_picking',
         'odoo13-addon-stock_valuation_layer_usage',
     ],
