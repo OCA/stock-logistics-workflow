@@ -121,4 +121,4 @@ class StockMove(models.Model):
                 [[("id", "in", move_ids)], self._consolidate_priority_domain()]
             )
         )
-        moves.write(self._consolidate_priority_values())
+        moves.picking_id.write(self._consolidate_priority_values())
