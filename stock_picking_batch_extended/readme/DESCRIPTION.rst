@@ -3,7 +3,7 @@ but reworked for matching Odoo new picking system (with pack operations).
 
 Since v12 it is compatible with odoo addon https://github.com/odoo/odoo/blob/12.0/addons/stock_picking_batch/models/stock_picking_batch.py
 It allows to define which approach for batch handling will be used per company.
-By default after installation this option will be activated for all companies, you cal disable
+By default after installation this option will be activated for all companies, you can disable
 it in settings.
 
 Batch picking allows you to manage several pickings at the same time.
