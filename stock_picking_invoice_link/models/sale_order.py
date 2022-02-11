@@ -10,11 +10,15 @@ class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
     def get_stock_moves_link_invoice(self):
+        skip_check_invoice_state = self.env.context.get(
+            "skip_check_invoice_state", False
+        )
         return self.mapped("move_ids").filtered(
             lambda mv: (
                 mv.state == "done"
                 and not (
-                    any(
+                    not skip_check_invoice_state
+                    and any(
                         inv.state != "cancel"
                         for inv in mv.invoice_line_ids.mapped("move_id")
                     )
