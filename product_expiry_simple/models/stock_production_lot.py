@@ -4,6 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import _, api, fields, models
+from odoo.tools.misc import format_date
 
 
 class StockProductionLot(models.Model):
@@ -27,9 +28,10 @@ class StockProductionLot(models.Model):
         for lot in self:
             dname = lot.name
             if lot.expiry_date:
+                expiry_date_print = format_date(self.env, lot.expiry_date)
                 if lot.expiry_date < today:
-                    dname = _("[%s Expired] %s") % (lot.expiry_date, dname)
+                    dname = _("[%s Expired] %s") % (expiry_date_print, dname)
                 else:
-                    dname = "[%s] %s" % (lot.expiry_date, dname)
+                    dname = "[%s] %s" % (expiry_date_print, dname)
             res.append((lot.id, dname))
         return res
