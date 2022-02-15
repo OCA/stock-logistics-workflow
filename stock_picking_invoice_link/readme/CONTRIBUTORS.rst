@@ -14,6 +14,10 @@
   * Alfredo de la Fuente <alfredodelafuente@avanzosc.es>
   * Ainara Galdona <ainaragaldona@avanzosc.es>
 
+* `DynApps <https://www.dynapps.be>`_
+
+  * Robin Goots <robin.goots@dynapps.be>
+
 * `Tecnativa <https://www.tecnativa.com>`_
 
   * Pedro M. Baeza
