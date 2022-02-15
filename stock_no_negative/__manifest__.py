@@ -13,6 +13,6 @@
     'author': 'Akretion,Odoo Community Association (OCA)',
     'website': 'http://www.akretion.com',
     'depends': ['stock'],
-    'data': ['views/product.xml'],
+    'data': ['views/product.xml', 'views/stock_location.xml'],
     'installable': True,
 }
