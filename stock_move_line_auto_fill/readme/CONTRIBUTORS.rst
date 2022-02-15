@@ -7,3 +7,4 @@
     * David Vidal <david.vidal@tecnativa.com>
 * Jaime Arroyo (Creu Blanca) <jaime.arroyo@creublanca.es>
 * Iván Todorovich <ivan.todorovich@gmail.com>
+* Robin Goots <robin.goots@dynapps.be>
