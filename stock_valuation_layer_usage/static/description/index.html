@@ -374,6 +374,14 @@ used, and how much quantity was taken by the particular stock move.</p>
 <p>This kind of traceability is important in case that at some point you want
 to conduct an revaluation (for example, in case that the purchase order price
 changes after the products have been received into stock).</p>
+<p>Also, it changes the way the outgoing layers are created in order to respect
+the MTO case. When creating the out svl, Odoo takes the first layer available
+with value. The module stock_valuation_layer_usage arises an issue with that
+Odoo process. Odoo will take always the oldest svl. However, that is not the
+case for MTO. When there is a fixed link between the incoming move and the
+outgoing move, at the time of creating the outgoing svl the system should
+take the specific incoming svl not just the oldest one. Also, when the case
+is not MTO, the system should avoid using svl that are “reserved”.</p>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
 <p class="last">This is an alpha version, the data model and design can change at any time without warning.
@@ -413,6 +421,9 @@ inventory valuation and FIFO costing method.</li>
 ‘Inventory / Reporting / Stock Moves’. You will see a section
 ‘Valuation Layers’ where you will be able to identify the valuation layers
 that were used to value this move, and the quantity and value that was taken.</li>
+<li>Create several MTO order</li>
+<li>Deliver the products to a customer in a random way and check the section
+‘Valuation Layers Usage’. The MTO logic is respected, then FIFO applies.</li>
 </ul>
 </div>
 <div class="section" id="changelog">
