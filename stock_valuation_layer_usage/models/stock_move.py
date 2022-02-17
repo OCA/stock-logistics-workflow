@@ -19,7 +19,9 @@ class StockMove(models.Model):
     def _create_out_svl(self, forced_quantity=None):
         layers = self.env["stock.valuation.layer"]
         for move in self:
-            move = move.with_context(used_in_move_id=move.id)
+            move = move.with_context(
+                used_in_move_id=move.id, reserved_from=move.move_orig_ids.ids
+            )
             layer = super(StockMove, move)._create_out_svl(
                 forced_quantity=forced_quantity
             )

@@ -24,8 +24,8 @@ class TestStockValuationLayerUsage(TransactionCase):
         # Get required Model data
         self.product_uom = self.env.ref("uom.product_uom_unit")
         self.company = self.env.ref("base.main_company")
-        self.stock_picking_type_out_id = self.ref("stock.picking_type_out")
-        self.stock_picking_type_in_id = self.ref("stock.picking_type_in")
+        self.stock_picking_type_out = self.env.ref("stock.picking_type_out")
+        self.stock_picking_type_in = self.env.ref("stock.picking_type_in")
         self.stock_location_id = self.ref("stock.stock_location_stock")
         self.stock_location_customer_id = self.ref("stock.stock_location_customers")
         self.stock_location_supplier_id = self.ref("stock.stock_location_suppliers")
@@ -143,9 +143,9 @@ class TestStockValuationLayerUsage(TransactionCase):
     ):
         return self.env["stock.picking"].create(
             {
-                "name": product.name + "OUT",
+                "name": self.stock_picking_type_out.sequence_id._next(),
                 "partner_id": self.customer.id,
-                "picking_type_id": self.stock_picking_type_out_id,
+                "picking_type_id": self.stock_picking_type_out.id,
                 "location_id": self.stock_location_id,
                 "location_dest_id": self.stock_location_customer_id,
                 "move_lines": [
@@ -171,9 +171,9 @@ class TestStockValuationLayerUsage(TransactionCase):
     ):
         return self.env["stock.picking"].create(
             {
-                "name": product.name + "DROP",
+                "name": self.stock_picking_type_out.sequence_id._next(),
                 "partner_id": self.customer.id,
-                "picking_type_id": self.stock_picking_type_out_id,
+                "picking_type_id": self.stock_picking_type_out.id,
                 "location_id": self.stock_location_supplier_id,
                 "location_dest_id": self.stock_location_customer_id,
                 "move_lines": [
@@ -193,14 +193,13 @@ class TestStockValuationLayerUsage(TransactionCase):
             }
         )
 
-    def _create_receipt(
-        self, product, qty,
-    ):
+    def _create_receipt(self, product, qty, move_dest_id=False):
+        move_dest_id = [(4, move_dest_id)] if move_dest_id else False
         return self.env["stock.picking"].create(
             {
-                "name": product.name + "IN",
+                "name": self.stock_picking_type_in.sequence_id._next(),
                 "partner_id": self.vendor_partner.id,
-                "picking_type_id": self.stock_picking_type_in_id,
+                "picking_type_id": self.stock_picking_type_in.id,
                 "location_id": self.stock_location_supplier_id,
                 "location_dest_id": self.stock_location_id,
                 "move_lines": [
@@ -213,6 +212,7 @@ class TestStockValuationLayerUsage(TransactionCase):
                             "product_uom": product.uom_id.id,
                             "product_uom_qty": qty,
                             "price_unit": 10.0,
+                            "move_dest_ids": move_dest_id,
                             "location_id": self.stock_location_supplier_id,
                             "location_dest_id": self.stock_location_id,
                             "procure_method": "make_to_stock",
@@ -322,3 +322,41 @@ class TestStockValuationLayerUsage(TransactionCase):
         self.assertEquals(layer_usage.quantity, 1.0)
         self.assertEquals(layer_usage.value, 10.0)
         self.assertEquals(layer_usage.stock_valuation_layer_id, in_layer)
+
+    def test_03_mto(self):
+        """Create a delivery
+           Receive 1, reserve
+           Receive another, no not reserve
+           Deliver 1, the system shoudl take the one not reserved, instead
+           of the oldest
+           Deliver the other, the system should find the reserved one.
+        """
+        # Create delivery
+        out_picking_reserved = self._create_delivery(self.product, 1)
+        # Create receipt and for and reserve
+        in_picking_reserved = self._create_receipt(
+            self.product, 1.0, out_picking_reserved.move_lines.ids[0]
+        )
+        # Receive one unit.
+        self._do_picking(in_picking_reserved, fields.Datetime.now(), 1.0)
+        layer_reserved = in_picking_reserved.move_lines.stock_valuation_layer_ids
+        # Create another receipt without reserve
+        in_picking_whatever = self._create_receipt(self.product, 1.0)
+        # Receive another unit.
+        self._do_picking(in_picking_whatever, fields.Datetime.now(), 1.0)
+        layer_unreserved = in_picking_whatever.move_lines.stock_valuation_layer_ids
+        # Create an out picking
+        out_picking_whatever = self._create_delivery(self.product, 1)
+        self._do_picking(out_picking_whatever, fields.Datetime.now(), 1.0)
+        # The system associates the unreserved incoming picking not the other
+        self.assertEquals(
+            out_picking_whatever.move_lines.layer_usage_ids.stock_valuation_layer_id,
+            layer_unreserved,
+        )
+        # Deliver the reserved one
+        self._do_picking(out_picking_reserved, fields.Datetime.now(), 1.0)
+        # The system associates the reserved incoming picking
+        self.assertEquals(
+            out_picking_reserved.move_lines.layer_usage_ids.stock_valuation_layer_id,
+            layer_reserved,
+        )
