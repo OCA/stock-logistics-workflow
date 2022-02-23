@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Weblate 3.1.1\n"
 
 #. module: stock_no_negative
-#: code:addons/stock_no_negative/models/stock_quant.py:30
+#: code:addons/stock_no_negative/models/stock_quant.py:38
 #, python-format
 msgid " lot '%s'"
 msgstr " lote '%s'"
@@ -33,6 +33,11 @@ msgid "Allow Negative Stock"
 msgstr "Permitir Stock Negativo"
 
 #. module: stock_no_negative
+#: model:ir.model.fields,field_description:stock_no_negative.field_stock_location_allow_negative_stock
+msgid "Allow negative stock"
+msgstr ""
+
+#. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_product_category_allow_negative_stock
 msgid ""
 "Allow negative stock levels for the stockable products attached to this "
@@ -42,6 +47,13 @@ msgstr ""
 "Permitir níveis de stock negativos para os produtos armazenáveis "
 "relacionados com esta categoria. A opção não é aplicável a produtos "
 "relacionados com uma sub-categoria desta."
+
+#. module: stock_no_negative
+#: model:ir.model.fields,help:stock_no_negative.field_stock_location_allow_negative_stock
+msgid ""
+"Allow negative stock levels for the stockable products attached to this "
+"location."
+msgstr ""
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_product_product_allow_negative_stock
@@ -56,6 +68,11 @@ msgstr ""
 "e este produto for um produto armazenável, o registo dos movimentos de stock "
 "será bloqueado se os níveis de stock relacionados com o movimento ficarem "
 "negativos."
+
+#. module: stock_no_negative
+#: model:ir.model,name:stock_no_negative.model_stock_location
+msgid "Inventory Locations"
+msgstr ""
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_product_category
@@ -73,13 +90,19 @@ msgid "Quants"
 msgstr ""
 
 #. module: stock_no_negative
-#: code:addons/stock_no_negative/models/stock_quant.py:31
+#: code:addons/stock_no_negative/models/stock_quant.py:39
 #, python-format
 msgid ""
 "You cannot validate this stock operation because the stock level of the "
 "product '%s'%s would become negative (%s) on the stock location '%s' and "
-"negative stock is not allowed for this product."
+"negative stock is not allowed for this product and/or location."
 msgstr ""
-"Não pode registar esta operação de stock porque o nível de stock do produto "
-"'%s'%s ficaria negativo (%s) na localização de stock '%s' e isso não é "
-"permitido neste produto."
+
+#~ msgid ""
+#~ "You cannot validate this stock operation because the stock level of the "
+#~ "product '%s'%s would become negative (%s) on the stock location '%s' and "
+#~ "negative stock is not allowed for this product."
+#~ msgstr ""
+#~ "Não pode registar esta operação de stock porque o nível de stock do "
+#~ "produto '%s'%s ficaria negativo (%s) na localização de stock '%s' e isso "
+#~ "não é permitido neste produto."

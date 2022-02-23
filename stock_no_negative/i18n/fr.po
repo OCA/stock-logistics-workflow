@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: stock_no_negative
-#: code:addons/stock_no_negative/models/stock_quant.py:30
+#: code:addons/stock_no_negative/models/stock_quant.py:38
 #, python-format
 msgid " lot '%s'"
 msgstr ""
@@ -32,6 +32,11 @@ msgid "Allow Negative Stock"
 msgstr "Autoriser le stock négatif"
 
 #. module: stock_no_negative
+#: model:ir.model.fields,field_description:stock_no_negative.field_stock_location_allow_negative_stock
+msgid "Allow negative stock"
+msgstr ""
+
+#. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_product_category_allow_negative_stock
 msgid ""
 "Allow negative stock levels for the stockable products attached to this "
@@ -41,6 +46,13 @@ msgstr ""
 "Autorise les niveaux de stock négatif pour les articles stockables attachés "
 "à cette catégorie. Cette option ne s'applique pas aux articles attachés à "
 "des sous-catégories de cette catégorie."
+
+#. module: stock_no_negative
+#: model:ir.model.fields,help:stock_no_negative.field_stock_location_allow_negative_stock
+msgid ""
+"Allow negative stock levels for the stockable products attached to this "
+"location."
+msgstr ""
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_product_product_allow_negative_stock
@@ -55,6 +67,11 @@ msgstr ""
 "laquelle il est rattaché et que cet article est un produit stockable, alors "
 "la validation des mouvements de stock sera bloquée si le niveau de stock "
 "devient négatif avec ce mouvement de stock."
+
+#. module: stock_no_negative
+#: model:ir.model,name:stock_no_negative.model_stock_location
+msgid "Inventory Locations"
+msgstr ""
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_product_category
@@ -72,10 +89,10 @@ msgid "Quants"
 msgstr "Quants"
 
 #. module: stock_no_negative
-#: code:addons/stock_no_negative/models/stock_quant.py:31
+#: code:addons/stock_no_negative/models/stock_quant.py:39
 #, python-format
 msgid ""
 "You cannot validate this stock operation because the stock level of the "
 "product '%s'%s would become negative (%s) on the stock location '%s' and "
-"negative stock is not allowed for this product."
+"negative stock is not allowed for this product and/or location."
 msgstr ""
