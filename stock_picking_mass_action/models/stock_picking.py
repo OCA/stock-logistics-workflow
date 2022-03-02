@@ -11,7 +11,7 @@ class StockPicking(Model):
 
     @api.model
     def check_assign_all(self):
-        """ Try to assign confirmed pickings """
+        """Try to assign confirmed pickings"""
         domain = [("picking_type_code", "=", "outgoing"), ("state", "=", "confirmed")]
         records = self.search(domain, order="scheduled_date")
         records.action_assign()
