@@ -5,7 +5,7 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form" />
         <field name="arch" type="xml">
-            <group name="warehouse" position="inside">
+            <group name="inventory" position="inside">
                 <field name="batch_picking_auto_invoice" />
             </group>
             <xpath
