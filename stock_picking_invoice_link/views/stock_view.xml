@@ -8,19 +8,8 @@
         <field name="arch" type="xml">
             <div name="button_box" position="inside">
                 <field name="invoice_ids" invisible="1" />
-                <button
-                    name="action_view_invoice"
-                    class="oe_stat_button"
-                    icon="fa-pencil-square-o"
-                    type="object"
-                    attrs="{'invisible': [('invoice_ids', '=', [])]}"
-                    string="Invoices"
-                >
-                <div class="o_field_widget o_stat_info">
-                    <span class="o_stat_value">
-                        <field name="invoice_count" widget="statinfo" nolabel="1" class="mr4"/>
-                    </span>
-                </div>
+                <button type="object" name="action_view_invoice" class="oe_stat_button" icon="fa-pencil-square-o" attrs="{'invisible': [('invoice_count', '=', 0)]}">
+                    <field name="invoice_count" widget="statinfo" string="Invoice" />
                 </button>
             </div>
         </field>
@@ -32,18 +21,8 @@
         <field name="inherit_id" ref="stock.view_move_form" />
         <field name="arch" type="xml">
             <group name="linked_group" position="after">
-                <group
-                    name="invoice_line"
-                    string="Invoice Lines"
-                    colspan="2"
-                    attrs="{'invisible':[('invoice_line_ids', '=', [])]}"
-                >
-                    <field
-                        name="invoice_line_ids"
-                        nolabel="1"
-                        groups="account.group_account_invoice"
-                        widget="one2many_list"
-                    />
+                <group name="invoice_line" string="Invoice Lines" colspan="2" attrs="{'invisible':[('invoice_line_ids', '=', [])]}">
+                    <field name="invoice_line_ids" nolabel="1" groups="account.group_account_invoice" widget="one2many_list" />
                 </group>
             </group>
         </field>
@@ -54,17 +33,8 @@
         <field name="inherit_id" ref="stock.view_move_form" />
         <field name="arch" type="xml">
             <group position="after">
-                <group
-                    name="invoice_line"
-                    string="Invoice Lines"
-                    attrs="{'invisible':[('invoice_line_ids', '=', [])]}"
-                >
-                    <field
-                        name="invoice_line_ids"
-                        nolabel="1"
-                        groups="account.group_account_invoice"
-                        widget="one2many_list"
-                    />
+                <group name="invoice_line" string="Invoice Lines" attrs="{'invisible':[('invoice_line_ids', '=', [])]}">
+                    <field name="invoice_line_ids" nolabel="1" groups="account.group_account_invoice" widget="one2many_list" />
                 </group>
             </group>
         </field>
