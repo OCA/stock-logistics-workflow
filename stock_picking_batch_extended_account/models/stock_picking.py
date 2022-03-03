@@ -16,9 +16,9 @@ class StockPicking(models.Model):
             "sale_id"
         )
         self.env["sale.advance.payment.inv"].create(
-            {"advance_payment_method": "all",}
+            {"advance_payment_method": "delivered"}
         ).with_context(active_ids=sales.ids).create_invoices()
         sales.mapped("invoice_ids").filtered(
             lambda r: r.state == "draft",
-        ).action_invoice_open()
+        ).action_post()
         return result
