@@ -3,6 +3,7 @@
 # Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # Copyright 2017 Jacques-Etienne Baudoux <je@bcim.be>
 # Copyright 2020 Manuel Calero - Tecnativa
+# Copyright 2022 Antony Herrera - looerp
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
 from odoo import api, fields, models
@@ -16,18 +17,16 @@ class AccountMove(models.Model):
         string="Related Pickings",
         store=True,
         compute="_compute_picking_ids",
-        help="Related pickings "
-        "(only when the invoice has been generated from a sale order).",
+        help="Related pickings (only when the invoice has been generated from a sale order).",
     )
-    
-    delivery_count = fields.Integer(string='Delivery Orders', compute='_compute_picking_count_ids')
+
+    delivery_count = fields.Integer(string="Delivery Orders", compute="_compute_picking_ids")
 
     @api.depends("invoice_line_ids", "invoice_line_ids.move_line_ids")
     def _compute_picking_ids(self):
         for invoice in self:
-            invoice.picking_ids = invoice.mapped(
-                "invoice_line_ids.move_line_ids.picking_id"
-            )
+            invoice.picking_ids = invoice.mapped("invoice_line_ids.move_line_ids.picking_id")
+            invoice.delivery_count = len(invoice.picking_ids)
 
     def action_show_picking(self):
         """This function returns an action that display existing pickings
@@ -37,7 +36,7 @@ class AccountMove(models.Model):
         """
         self.ensure_one()
         form_view_name = "stock.view_picking_form"
-        action = self.env.ref("stock.action_picking_tree_all").sudo()
+        action = self.env.ref("stock.action_picking_tree_all")
         result = action.read()[0]
         if len(self.picking_ids) > 1:
             result["domain"] = "[('id', 'in', %s)]" % self.picking_ids.ids
@@ -46,11 +45,6 @@ class AccountMove(models.Model):
             result["views"] = [(form_view.id, "form")]
             result["res_id"] = self.picking_ids.id
         return result
-    
-    @api.depends('picking_ids')
-    def _compute_picking_count_ids(self):
-        for order in self:
-            order.delivery_count = len(order.picking_ids)
 
 
 class AccountMoveLine(models.Model):
@@ -63,6 +57,13 @@ class AccountMoveLine(models.Model):
         column2="move_id",
         string="Related Stock Moves",
         readonly=True,
-        help="Related stock moves "
-        "(only when the invoice has been generated from a sale order).",
+        copy=False,
+        help="Related stock moves (only when the invoice has been generated from a sale order).",
     )
+
+    def _can_update_amount_cost(self):
+        return (
+            self.move_id.state == "draft"
+            or self.company_currency_id.is_zero(self.amount_cost)
+            or not self.move_line_ids
+        )

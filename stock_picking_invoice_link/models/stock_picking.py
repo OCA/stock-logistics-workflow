@@ -2,6 +2,7 @@
 # Copyright 2015-2016 AvanzOSC
 # Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # Copyright 2017 Jacques-Etienne Baudoux <je@bcim.be>
+# Copyright 2022 Antony Herrera - LooErp
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
 from odoo import api, fields, models
@@ -10,11 +11,9 @@ from odoo import api, fields, models
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    invoice_ids = fields.Many2many(
-        comodel_name="account.move", copy=False, string="Invoices", readonly=True
-    )
-    invoice_count = fields.Integer(string='Invoices Orders', compute='_compute_invoice_ids')
-    
+    invoice_ids = fields.Many2many(comodel_name="account.move", copy=False, string="Invoices", readonly=True)
+    invoice_count = fields.Integer(string="Invoices Orders", compute="_compute_invoice_ids")
+
     def action_view_invoice(self):
         """This function returns an action that display existing invoices
         of given stock pickings.
@@ -23,7 +22,7 @@ class StockPicking(models.Model):
         """
         self.ensure_one()
         form_view_name = "account.view_move_form"
-        action = self.env.ref("account.action_move_out_invoice_type").sudo()
+        action = self.env.ref("account.action_move_out_invoice_type")
         result = action.read()[0]
         if len(self.invoice_ids) > 1:
             result["domain"] = "[('id', 'in', %s)]" % self.invoice_ids.ids
@@ -32,8 +31,8 @@ class StockPicking(models.Model):
             result["views"] = [(form_view.id, "form")]
             result["res_id"] = self.invoice_ids.id
         return result
-    
-    @api.depends('invoice_ids')
+
+    @api.depends("invoice_ids")
     def _compute_invoice_ids(self):
         for order in self:
             order.invoice_count = len(order.invoice_ids)
