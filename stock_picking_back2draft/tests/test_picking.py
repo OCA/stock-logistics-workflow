@@ -54,7 +54,7 @@ class TestPickingBackToDraft(TransactionCase):
         self.picking_a.action_back_to_draft()
         self.assertEqual(self.picking_a.state, "draft")
         self.picking_a.action_confirm()
-        self.assertEqual(self.picking_a.state, "confirmed")
+        self.assertEqual(self.picking_a.state, "assigned")
         with self.assertRaises(UserError):
             self.picking_a.action_back_to_draft()
         self.picking_a.action_cancel()
