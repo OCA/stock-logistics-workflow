@@ -34,6 +34,7 @@ setuptools.setup(
         'odoo13-addon-stock_picking_back2draft',
         'odoo13-addon-stock_picking_backorder_strategy',
         'odoo13-addon-stock_picking_batch_extended',
+        'odoo13-addon-stock_picking_batch_extended_account',
         'odoo13-addon-stock_picking_filter_lot',
         'odoo13-addon-stock_picking_group_by_partner_by_carrier',
         'odoo13-addon-stock_picking_group_by_partner_by_carrier_by_date',
