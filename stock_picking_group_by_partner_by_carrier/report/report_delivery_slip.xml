@@ -52,6 +52,12 @@
         >
             <attribute name="t-foreach">o.get_delivery_report_lines()</attribute>
         </xpath>
+        <xpath
+            expr="//tbody/t[@t-else='']//tr[@t-as='move_line']"
+            position="attributes"
+        >
+            <attribute name="t-foreach">o.get_delivery_report_lines()</attribute>
+        </xpath>
 
         <xpath
             expr="//table[@name='stock_backorder_table']/../p[last()]"
@@ -111,6 +117,18 @@
         id="stock_report_delivery_has_serial_move_line_inherit"
         inherit_id="stock.stock_report_delivery_has_serial_move_line"
     >
+        <!-- Odoo tries to display both description and product name.
+        When the line is a SO section, we only want to display a description.
+        Enable default behavior when line has an id, only display the description otherwise. -->
+        <xpath expr="//span[@t-field='move_line.product_id']/.." position="attributes">
+            <attribute name="t-if">move_line.id</attribute>
+        </xpath>
+        <xpath expr="//span[@t-field='move_line.product_id']/.." position="after">
+            <td t-else="">
+                <span t-field="move_line.description_picking" />
+            </td>
+        </xpath>
+        <!-- Disable the rest, when line doesn't have an id -->
         <xpath expr='//span[@t-field="move_line.lot_id.name"]' position="attributes">
             <attribute name="t-if">move_line.id</attribute>
         </xpath>
