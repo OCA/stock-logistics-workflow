@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2022 Camptocamp SA (https://www.camptocamp.com).
+    @author Iván Todorovich <ivan.todorovich@camptocamp.com>
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+
+    <record id="vpicktree" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree" />
+        <field name="arch" type="xml">
+            <button name="do_unreserve" position="before">
+                <button
+                    name="action_assign"
+                    type="object"
+                    string="Check availability"
+                />
+            </button>
+        </field>
+    </record>
+
+    <record id="action_assign_picking" model="ir.actions.server">
+        <field name="name">Check availability</field>
+        <field name="model_id" ref="stock.model_stock_picking" />
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">if records: records.action_assign()</field>
+    </record>
+
+</odoo>
