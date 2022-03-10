@@ -125,5 +125,5 @@ class TestStockMove(common.TransactionCase):
             self.assertEqual(
                 picking.move_line_ids[0].move_id.sequence2,
                 agg_mls[key]["sequence2"],
-                "The Sequence is not copied properly in the aggregated move lines",
+                "The Sequence is not copied properly in " "the aggregated move lines",
             )

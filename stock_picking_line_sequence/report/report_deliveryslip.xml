@@ -27,7 +27,11 @@
         inherit_id="stock.stock_report_delivery_aggregated_move_lines"
     >
         <xpath expr="//td[1]" position="before">
-            <td><span t-esc="aggregated_lines[line]['sequence2']" /></td>
+            <td class="text-center" name="move_line_aggregated_sequence2">
+                <t t-if=" 'sequence2' in aggregated_lines[line]">
+                    <span t-esc="aggregated_lines[line]['sequence2']" />
+                </t>
+            </td>
         </xpath>
     </template>
 
