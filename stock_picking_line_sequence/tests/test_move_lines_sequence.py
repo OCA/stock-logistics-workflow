@@ -100,7 +100,7 @@ class TestStockMove(common.TransactionCase):
         backorder_wiz = (
             self.env["stock.backorder.confirmation"]
             .browse(res_dict.get("res_id"))
-            .with_context(res_dict["context"])
+            .with_context(**res_dict["context"])
         )
         backorder_wiz.process()
         picking_backorder = self.Picking.search([("backorder_id", "=", picking.id)])
