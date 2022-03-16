@@ -30,6 +30,7 @@ setuptools.setup(
         'odoo14-addon-stock_picking_group_by_partner_by_carrier_by_date',
         'odoo14-addon-stock_picking_invoice_link',
         'odoo14-addon-stock_picking_line_sequence',
+        'odoo14-addon-stock_picking_mass_action',
         'odoo14-addon-stock_picking_purchase_order_link',
         'odoo14-addon-stock_picking_restrict_cancel_with_orig_move',
         'odoo14-addon-stock_picking_sale_order_link',
