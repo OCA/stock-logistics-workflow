@@ -5,7 +5,7 @@ By default, you can only provide a lot/serial number name
 when receiving products tracked by lot/serial numbers, with this module you can also
 provide the following information of the lot:
 
-* Lot/Serial End of Life Date.
+* Lot/Serial Expiration Date.
 * Lot/Serial Best before Date.
 * Lot/Serial Removal Date.
 * Lot/Serial Alert Date.
