@@ -11,7 +11,7 @@
         <field name="arch" type="xml">
             <field name="lot_name" position="after">
                 <field
-                    name="lot_life_date"
+                    name="lot_expiration_date"
                     groups="stock.group_production_lot"
                     optional="hide"
                     attrs="{'readonly': [('package_level_id', '!=', False), ('parent.picking_type_entire_packs', '=', True)]}"
@@ -53,7 +53,7 @@
         <field name="arch" type="xml">
             <field name="lot_name" position="after">
                 <field
-                    name="lot_life_date"
+                    name="lot_expiration_date"
                     optional="hide"
                     groups="stock.group_production_lot"
                     attrs="{'column_invisible': [('parent.show_lots_text', '=', False)], 'invisible': [('lots_visible', '=', False)]}"
