@@ -1,0 +1,39 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_scrap_cancel
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_scrap_cancel
+#: model_terms:ir.ui.view,arch_db:stock_scrap_cancel.stock_scrap_form_view
+msgid "Cancel"
+msgstr ""
+
+#. module: stock_scrap_cancel
+#: model:ir.model.fields.selection,name:stock_scrap_cancel.selection__stock_scrap__state__cancel
+msgid "Cancelled"
+msgstr ""
+
+#. module: stock_scrap_cancel
+#: model:ir.model,name:stock_scrap_cancel.model_stock_scrap
+msgid "Scrap"
+msgstr ""
+
+#. module: stock_scrap_cancel
+#: model_terms:ir.ui.view,arch_db:stock_scrap_cancel.stock_scrap_form_view
+msgid "Set to Draft"
+msgstr ""
+
+#. module: stock_scrap_cancel
+#: model:ir.model.fields,field_description:stock_scrap_cancel.field_stock_scrap__state
+msgid "Status"
+msgstr ""
