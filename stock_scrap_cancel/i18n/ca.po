@@ -1,0 +1,43 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_scrap_cancel
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-02-03 10:24+0000\n"
+"PO-Revision-Date: 2022-03-29 13:26+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 2.3\n"
+
+#. module: stock_scrap_cancel
+#: model_terms:ir.ui.view,arch_db:stock_scrap_cancel.stock_scrap_form_view
+msgid "Cancel"
+msgstr "Cancel·lar"
+
+#. module: stock_scrap_cancel
+#: model:ir.model.fields.selection,name:stock_scrap_cancel.selection__stock_scrap__state__cancel
+msgid "Cancelled"
+msgstr "Cancel·lat"
+
+#. module: stock_scrap_cancel
+#: model:ir.model,name:stock_scrap_cancel.model_stock_scrap
+msgid "Scrap"
+msgstr "Rebutjar"
+
+#. module: stock_scrap_cancel
+#: model_terms:ir.ui.view,arch_db:stock_scrap_cancel.stock_scrap_form_view
+msgid "Set to Draft"
+msgstr "Tornar a esborrany"
+
+#. module: stock_scrap_cancel
+#: model:ir.model.fields,field_description:stock_scrap_cancel.field_stock_scrap__state
+msgid "Status"
+msgstr "Estat"
