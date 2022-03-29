@@ -60,6 +60,7 @@ addon | version | maintainers | summary
 [stock_return_request](stock_return_request/) | 14.0.1.0.2 |  | Stock Return Request
 [stock_split_picking](stock_split_picking/) | 14.0.1.1.0 |  | Split a picking in two not transferred pickings
 [stock_valuation_layer_by_category](stock_valuation_layer_by_category/) | 14.0.1.0.0 |  | Display stock valuation layer by category
+[stock_valuation_no_developer_mode](stock_valuation_no_developer_mode/) | 14.0.1.0.0 |  | Stock valuation layer no developer mode
 
 [//]: # (end addons)
 
