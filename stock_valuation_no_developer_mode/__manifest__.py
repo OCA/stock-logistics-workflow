@@ -3,7 +3,7 @@
 {
     "name": "Stock Valuation Layer no developer mode",
     "summary": "Stock valuation layer no developer mode",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "category": "Stock",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Jarsa, Odoo Community Association (OCA)",
