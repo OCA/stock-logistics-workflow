@@ -6,14 +6,14 @@ from odoo import models
 
 
 class StockMove(models.Model):
-    _inherit = 'stock.move'
+    _inherit = "stock.move"
 
     def product_price_update_before_done(self, forced_qty=None):
         super().product_price_update_before_done(forced_qty=forced_qty)
         for move in self.filtered(
-                lambda move: move._is_in()
-                and move.with_company(
-                    move.company_id.id).product_id.cost_method == 'last'):
+            lambda move: move._is_in()
+            and move.with_company(move.company_id.id).product_id.cost_method == "last"
+        ):
             move.product_id.with_company(move.company_id.id).with_context(
-                disable_auto_svl=True).sudo().write(
-                    {'standard_price': move._get_price_unit()})
+                disable_auto_svl=True
+            ).sudo().write({"standard_price": move._get_price_unit()})
