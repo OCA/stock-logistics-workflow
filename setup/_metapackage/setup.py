@@ -49,6 +49,7 @@ setuptools.setup(
         'odoo14-addon-stock_return_request',
         'odoo14-addon-stock_split_picking',
         'odoo14-addon-stock_valuation_layer_by_category',
+        'odoo14-addon-stock_valuation_no_developer_mode',
     ],
     classifiers=[
         'Programming Language :: Python',
