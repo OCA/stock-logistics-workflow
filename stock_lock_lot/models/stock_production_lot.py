@@ -70,7 +70,7 @@ class StockProductionLot(models.Model):
         return self.browse(lot.id)  # for cleaning context
 
     def write(self, values):
-        """"Lock the lot if changing the product and locking is required"""
+        """ "Lock the lot if changing the product and locking is required"""
         if "product_id" in values:
             product = self.env["product.product"].browse(values["product_id"])
             values["locked"] = self._get_product_locked(product)
