@@ -28,13 +28,11 @@ class StockPickingMassAction(TransientModel):
         help="check this box if you want to mark as Todo the" " selected Pickings.",
     )
     check_availability = fields.Boolean(
-        string="Check Availability",
         default=lambda self: self._default_check_availability(),
         help="check this box if you want to check the availability of"
         " the selected Pickings.",
     )
     transfer = fields.Boolean(
-        string="Transfer",
         default=lambda self: self._default_transfer(),
         help="check this box if you want to transfer all the selected"
         " pickings.\n You'll not have the possibility to realize a"
