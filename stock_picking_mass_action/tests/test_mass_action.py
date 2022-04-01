@@ -16,26 +16,16 @@ class TestMassAction(common.SavepointCase):
         picking_type_out = cls.env.ref("stock.picking_type_out")
         stock_location = cls.env.ref("stock.stock_location_stock")
         customer_location = cls.env.ref("stock.stock_location_customers")
-        inventory = cls.env["stock.inventory"].create(
+        cls.env["stock.quant"].create(
             {
-                "name": "Test Inventory",
-                "product_ids": [(6, 0, product.ids)],
-                "state": "confirm",
-                "line_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "product_qty": 600,
-                            "location_id": stock_location.id,
-                            "product_id": product.id,
-                            "product_uom_id": product.uom_id.id,
-                        },
-                    )
-                ],
+                "product_id": product.id,
+                "location_id": stock_location.id,
+                "quantity": 600.0,
             }
         )
-        inventory.action_validate()
+        # Force Odoo not to automatically reserve the products on the pickings
+        # so we can test stock.picking.mass.action
+        picking_type_out.reservation_method = "manual"
         # We create a picking out
         cls.picking = cls.env["stock.picking"].create(
             {
