@@ -378,3 +378,58 @@ class TestStockMoveManualLot(TransactionCase):
         picking.button_validate()
         self.assertEqual(picking.state, "done")
         self.assertEqual(picking.move_line_ids.manual_lot_id, lot2)
+
+    def test_12_no_overassignment(self):
+        """Overassignment does not occur after assigning manual lots.
+
+        This problem can occur when pickings are reassigned before the values
+        for stock.move.line's product_qty are stored in the database.
+        """
+        self._create_quant(qty=2)
+        picking = self._create_picking(3)
+        self._create_quant(qty=5)
+        picking2 = self._create_picking(3)
+        self.assertEqual(picking.move_lines.state, "partially_available")
+        self.assertEqual(len(picking.move_line_ids), 2)
+        self.assertEqual(picking2.move_lines.state, "assigned")
+        self._backdate_moves()
+        picking2.write({
+            "move_line_ids_without_package": [
+                (
+                    1, picking2.move_line_ids[0].id,
+                    {"manual_lot_id": picking.move_line_ids[0].lot_id.id}
+                ),
+                (
+                    1, picking2.move_line_ids[1].id,
+                    {"manual_lot_id": picking.move_line_ids[1].lot_id.id}
+                ),
+            ],
+        })
+        self.assertEqual(len(picking.move_line_ids), 3)
+        self.assertEqual(picking.move_lines.state, "assigned")
+        self.assertEqual(len(picking2.move_line_ids), 3)
+        self.assertEqual(picking2.move_lines.state, "assigned")
+
+    def test_13_reassign_multiple(self):
+        """This specific reassignment breaks if product_qty is not up to date.
+
+        Having two assigned pickings with a quantity of two, assigning a lot
+        from the first picking to the first picking while assigning the
+        original lot from the assigned move line to the second move line of
+        the same picking should not raise an error.
+        """
+        self._create_quant(qty=4)
+        picking = self._create_picking(2)
+        picking2 = self._create_picking(2)
+        self._backdate_moves()
+        vals = [
+            (1, picking2.move_line_ids[0].id,
+             {"manual_lot_id": picking.move_line_ids[0].lot_id.id}),
+            (1, picking2.move_line_ids[1].id,
+             {"manual_lot_id": picking2.move_line_ids[0].lot_id.id}),
+        ]
+        picking2.write({"move_line_ids_without_package": vals})
+        self.assertEqual(len(picking.move_line_ids), 2)
+        self.assertEqual(picking.move_lines.state, "assigned")
+        self.assertEqual(len(picking2.move_line_ids), 2)
+        self.assertEqual(picking2.move_lines.state, "assigned")

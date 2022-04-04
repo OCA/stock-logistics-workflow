@@ -18,13 +18,33 @@ class StockMoveLine(models.Model):
         copy=False,
     )
 
+    def _store_product_qty(self):
+        """Ensure consistent values for product_qty in the database
+
+        This module triggers (re)assignment of affected pickings within a
+        x2many write on a picking's move lines. The quantity to assign depends
+        on stock.move's reserved_quantity, which depends on the recompute of
+        stock.move.line's `product_qty` whenever `product_uom_quantity is
+        written. Because the x2many commands are processed under the scope of
+        env.norecompute(), we have to take care of this ourselves.
+        """
+        field = self._fields["product_qty"]
+        mls = self.env.field_todo(field).exists()
+        for ml in mls:
+            ml._write({"product_qty": ml.product_qty})
+        self.env.remove_todo(field, mls)
+
     @api.multi
     def unlink(self):
         """Keep move lines if they are assigned a manual lot in a batch"""
         if self.env.context.get("manual_lot_move_lines"):
             to_keep = self.filtered(
                 lambda ml: ml.id in self.env.context["manual_lot_move_lines"])
-            to_keep.write({"product_uom_qty": 0, "lot_id": False})
+            to_keep.write({
+                "lot_id": False,
+                "manual_lot_id": False,
+                "product_uom_qty": 0,
+            })
             self -= to_keep
         if not self:
             return True
@@ -50,12 +70,16 @@ class StockMoveLine(models.Model):
                     else:
                         to_super.append(vals)
         result += super().create(to_super)
+        if not self.env.recompute:
+            self._store_product_qty()
         for vals, this in zip(vals_list, result):
             this._reserve_manual_lot(vals)
         return result
 
     def write(self, vals):
         result = super().write(vals)
+        if "product_uom_qty" in vals and not self.env.recompute:
+            self._store_product_qty()
         self._reserve_manual_lot(vals)
         return result
 
