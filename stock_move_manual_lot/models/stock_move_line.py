@@ -133,7 +133,8 @@ class StockMoveLine(models.Model):
                     ml_to_ignore=self,
                 )
                 self.env.cr.execute(
-                    'select distinct picking_id from stock_move where write_date = %s', (now,),
+                    'select distinct picking_id from stock_move where write_date = %s',
+                    (now,),
                 )
                 updated_picking_ids = [row for row, in self.env.cr.fetchall() if row]
 
