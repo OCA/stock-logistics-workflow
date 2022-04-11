@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field
+                    name="estimated_progress"
+                    widget="percentpie"
+                    string=" "
+                    class="ml-3 align-middle"
+                    attrs="{'invisible': ['|', '|', ('can_be_estimated', '=', False), ('picking_type_code', '!=', 'outgoing'), ('state','=', 'done')]}"
+                />
+            </field>
+
+            <field name="owner_id" position="after">
+                <field name="can_be_estimated" invisible="1" />
+                <field name="amount_currency_id" invisible="1" />
+
+                <field
+                    name="demand_total_amount"
+                    widget="monetary"
+                    options="{'currency_field': 'amount_currency_id'}"
+                    attrs="{'invisible': [('can_be_estimated', '=', False)]}"
+                />
+                <field
+                    name="reserved_total_amount"
+                    widget="monetary"
+                    options="{'currency_field': 'amount_currency_id'}"
+                    attrs="{'invisible': ['|', '|', ('can_be_estimated', '=', False), ('picking_type_code', '!=', 'outgoing'), ('state','=', 'done')]}"
+                />
+            </field>
+            <field name="lot_ids" position="after">
+                <field name="amount_currency_id" invisible="1" />
+                <field
+                    name="product_price_demand_subtotal"
+                    widget="monetary"
+                    optional="hide"
+                    options="{'currency_field': 'amount_currency_id'}"
+                    attrs="{'column_invisible': [('parent.can_be_estimated', '=', False)]}"
+                />
+                <field
+                    name="product_price_reserved_subtotal"
+                    widget="monetary"
+                    optional="hide"
+                    options="{'currency_field': 'amount_currency_id'}"
+                    attrs="{'column_invisible': ['|', '|', ('parent.can_be_estimated', '=', False), ('parent.picking_type_code', '!=', 'outgoing'), ('parent.state','=', 'done')]}"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>
