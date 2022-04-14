@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
+    <record id="view_picking_tree" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree" />
+        <field name="arch" type="xml">
+            <field name="backorder_id" position="after">
+                <field name="amount_currency_id" invisible="1" />
+                <field
+                    name="demand_total_amount"
+                    widget="monetary"
+                    optional="hide"
+                    options="{'currency_field': 'amount_currency_id'}"
+                />
+                <field
+                    name="reserved_total_amount"
+                    widget="monetary"
+                    optional="hide"
+                    options="{'currency_field': 'amount_currency_id'}"
+                />
+                <field
+                    name="estimated_progress_normalized"
+                    widget="percentage"
+                    optional="hide"
+                />
+            </field>
+        </field>
+    </record>
     <record id="view_picking_form" model="ir.ui.view">
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.view_picking_form" />

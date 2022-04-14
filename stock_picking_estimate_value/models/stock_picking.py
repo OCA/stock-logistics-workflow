@@ -20,6 +20,13 @@ class StockPicking(models.Model):
         "Estimated Progress", compute="_compute_estimated_progress"
     )
 
+    # This is required because percentagepie and percentage use different
+    # percentage representations
+    estimated_progress_normalized = fields.Float(
+        "Estimated Progress",
+        compute="_compute_estimated_progress_normalized",
+    )
+
     amount_currency_id = fields.Many2one(
         "res.currency",
         string="Amount Currency",
@@ -34,23 +41,39 @@ class StockPicking(models.Model):
 
     def _compute_demand_total_amount(self):
         for picking in self:
-            picking.demand_total_amount = sum(
-                picking.move_lines.mapped("product_price_demand_subtotal")
-            )
+            if picking.can_be_estimated:
+                picking.demand_total_amount = sum(
+                    picking.move_lines.mapped("product_price_demand_subtotal")
+                )
+            else:
+                picking.demand_total_amount = False
 
     def _compute_reserved_total_amount(self):
         for picking in self:
-            picking.reserved_total_amount = sum(
-                picking.move_lines.mapped("product_price_reserved_subtotal")
-            )
+            if picking.can_be_estimated:
+                picking.reserved_total_amount = sum(
+                    picking.move_lines.mapped("product_price_reserved_subtotal")
+                )
+            else:
+                picking.reserved_total_amount = False
 
     def _compute_estimated_progress(self):
         for picking in self:
-            picking.estimated_progress = (
-                picking.reserved_total_amount / picking.demand_total_amount * 100
-                if picking.demand_total_amount
-                else 0
-            )
+            if picking.can_be_estimated:
+                picking.estimated_progress = (
+                    picking.reserved_total_amount / picking.demand_total_amount * 100
+                    if picking.demand_total_amount
+                    else 0
+                )
+            else:
+                picking.estimated_progress = False
+
+    def _compute_estimated_progress_normalized(self):
+        for picking in self:
+            if picking.can_be_estimated:
+                picking.estimated_progress_normalized = picking.estimated_progress / 100
+            else:
+                picking.estimated_progress_normalized = False
 
     def _compute_amount_currency_id(self):
         for picking in self:
