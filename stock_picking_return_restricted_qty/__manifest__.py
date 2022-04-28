@@ -7,7 +7,7 @@
     "version": "13.0.1.0.0",
     "license": "AGPL-3",
     "author": "Tecnativa," "Odoo Community Association (OCA)",
-    "website": "https://github.com/OCA/stock-logistics-workflow/",
+    "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": ["stock"],
     "data": [],
 }
