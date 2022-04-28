@@ -3,10 +3,10 @@
 # Copyright 2017 David Vidal <david.vidal@tecnativa.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+from lxml import etree
+
 from odoo import _, api, models
 from odoo.exceptions import ValidationError
-
-from lxml import etree
 
 
 class StockProductionLot(models.Model):
