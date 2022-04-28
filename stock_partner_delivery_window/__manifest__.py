@@ -12,4 +12,5 @@
     "data": ["security/ir.model.access.csv", "views/res_partner.xml"],
     "demo": ["demo/delivery_time_window.xml"],
     "installable": True,
+    "development_status": "Alpha",
 }
