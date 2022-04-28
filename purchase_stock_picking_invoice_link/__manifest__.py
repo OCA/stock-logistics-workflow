@@ -7,7 +7,7 @@
     "category": "Warehouse Management",
     "summary": "Adds link between purchases, pickings and invoices",
     "author": "Tecnativa, Odoo Community Association (OCA)",
-    "website": "http://github.com/OCA/stock-logistics-workflow",
+    "website": "https://github.com/OCA/stock-logistics-workflow",
     "license": "AGPL-3",
     "depends": ["stock_picking_invoice_link", "purchase"],
     "installable": True,
