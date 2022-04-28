@@ -6,7 +6,7 @@
     "name": "Stock Picking Mass Action",
     "version": "13.0.1.0.0",
     "author": "Camptocamp, " "GRAP," "Tecnativa," "Odoo Community Association (OCA)",
-    "website": "https://github.com/OCA/stock-logistics-workflow/",
+    "website": "https://github.com/OCA/stock-logistics-workflow",
     "license": "AGPL-3",
     "category": "Warehouse Management",
     "depends": ["stock_account"],

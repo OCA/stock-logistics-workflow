@@ -10,7 +10,7 @@
     "license": "AGPL-3",
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "maintainers": ["ThomasBinsfeld"],
-    "website": "https://github.com/oca/stock-logistics-workflow",
+    "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": ["stock"],
     "data": ["views/stock_production_lot.xml"],
     "demo": [],
