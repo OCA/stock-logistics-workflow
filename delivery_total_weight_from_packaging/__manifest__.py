@@ -3,7 +3,7 @@
 {
     "name": "Delivery Total Weight From Packaging",
     "summary": "Include packaging weight on move, transfer and package.",
-    "version": "13.0.1.1.1",
+    "version": "13.0.1.1.2",
     "development_status": "Alpha",
     "category": "Inventory",
     "website": "https://github.com/OCA/stock-logistics-workflow",
