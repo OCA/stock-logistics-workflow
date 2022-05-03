@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="stock_picking_import_serial_number_wiz" model="ir.ui.view">
+        <field name="name">stock.picking.import.serial.number.wiz.form</field>
+        <field name="model">stock.picking.import.serial.number.wiz</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field
+                            name="data_file"
+                            filename="filename"
+                            placeholder="Choose a file to import..."
+                        />
+                        <field name="overwrite_serial" />
+                        <field name="filename" invisible="1" />
+                    </group>
+                    <field name="picking_ids" invisible="1" />
+                </sheet>
+                <footer>
+                    <button
+                        name="action_import"
+                        string="Import S/N"
+                        type="object"
+                        class="oe_highlight"
+                    />
+                    <button string="_Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_import_serial_number" model="ir.actions.act_window">
+        <field name="name">Import S/N</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.picking.import.serial.number.wiz</field>
+        <field name="view_mode">form</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="target">new</field>
+    </record>
+</odoo>
