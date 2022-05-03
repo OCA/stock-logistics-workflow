@@ -4,12 +4,14 @@
 # Copyright 2021 Tecnativa - João Marques
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
+import odoo
 from odoo.exceptions import UserError
 from odoo.tests import Form
 
 from odoo.addons.sale.tests.common import TestSaleCommon
 
 
+@odoo.tests.tagged("-at_install", "post_install")
 class TestStockPickingInvoiceLink(TestSaleCommon):
     def _update_product_qty(self, product):
 
@@ -91,7 +93,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         )
         pick_1 = self.so.picking_ids.filtered(
             lambda x: x.picking_type_code == "outgoing"
-            and x.state in ("confirmed", "assigned", "partially_available")
+            and x.state in ("confirmed", "assigned")
         )
         pick_1.move_line_ids.write({"qty_done": 1})
         pick_1._action_done()
@@ -116,7 +118,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
 
         pick_2 = self.so.picking_ids.filtered(
             lambda x: x.picking_type_code == "outgoing"
-            and x.state in ("confirmed", "assigned", "partially_available")
+            and x.state in ("confirmed", "assigned")
         )
         pick_2.move_line_ids.write({"qty_done": 1})
         pick_2._action_done()
@@ -195,7 +197,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
     def test_return_picking_to_refund(self):
         pick_1 = self.so.picking_ids.filtered(
             lambda x: x.picking_type_code == "outgoing"
-            and x.state in ("confirmed", "assigned", "partially_available")
+            and x.state in ("confirmed", "assigned")
         )
         pick_1.move_line_ids.write({"qty_done": 2})
         pick_1._action_done()
@@ -234,7 +236,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
     def test_invoice_refund(self):
         pick_1 = self.so.picking_ids.filtered(
             lambda x: x.picking_type_code == "outgoing"
-            and x.state in ("confirmed", "assigned", "partially_available")
+            and x.state in ("confirmed", "assigned")
         )
         pick_1.move_line_ids.write({"qty_done": 2})
         pick_1._action_done()
