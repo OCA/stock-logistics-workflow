@@ -36,15 +36,12 @@ class TestStockPickingShowBackorder(SavepointCase):
         self.assertEqual(self.picking.state, "draft")
         # Confirm picking
         self.picking.action_confirm()
-        self.assertEqual(self.picking.state, "confirmed")
-        self.picking.action_assign()
-        # Assign and change the quantity
         self.assertEqual(self.picking.state, "assigned")
         move_line = self.env["stock.move.line"].search(
             [("picking_id", "=", self.picking.id)], limit=1
         )
         move_line.qty_done = 1.0
-        self.picking.action_done()
+        self.picking._action_done()
         self.assertEqual(self.picking.state, "done")
         # The backorder should be created
         self.assertEqual(len(self.picking.backorder_ids), 1, "It should be 1")
