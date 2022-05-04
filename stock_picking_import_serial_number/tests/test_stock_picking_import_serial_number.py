@@ -6,7 +6,7 @@ from odoo.tests import SavepointCase
 from .common import CommonStockPickingImportSerial
 
 
-class TestStockPickingAutoCreateLot(CommonStockPickingImportSerial, SavepointCase):
+class TestStockPickingImportSN(CommonStockPickingImportSerial, SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -21,6 +21,7 @@ class TestStockPickingAutoCreateLot(CommonStockPickingImportSerial, SavepointCas
         cls._create_move(
             picking=cls.picking_in_01, product=cls.product_no_tracking, qty=4.0
         )
+
         cls.picking_in_01.action_assign()
 
         cls.picking_in_02 = cls._create_picking()
@@ -31,8 +32,9 @@ class TestStockPickingAutoCreateLot(CommonStockPickingImportSerial, SavepointCas
         )
         cls.picking_in_02.action_assign()
 
-    def _create_wizard(self):
-        pickings = self.picking_in_01 | self.picking_in_02
+    def _create_wizard(self, pickings=False):
+        if not pickings:
+            pickings = self.picking_in_01 | self.picking_in_02
         return self.env["stock.picking.import.serial.number.wiz"].create(
             {
                 "picking_ids": [(6, 0, pickings.ids)],
@@ -47,12 +49,6 @@ class TestStockPickingAutoCreateLot(CommonStockPickingImportSerial, SavepointCas
         with self.assertRaises(UserError):
             wiz.action_import()
 
-    def test_import_serial_number_no_incoming_picking(self):
-        self.picking_type_in.code = "outgoing"
-        wiz = self._create_wizard()
-        with self.assertRaises(UserError):
-            wiz.action_import()
-
     def test_import_serial_number_no_create_lot(self):
         self.picking_type_in.use_create_lots = False
         wiz = self._create_wizard()
@@ -64,5 +60,15 @@ class TestStockPickingAutoCreateLot(CommonStockPickingImportSerial, SavepointCas
         wiz.action_import()
         smls = self.picking_in_01.move_line_ids.filtered("lot_name")
         self.assertEqual(len(smls), 3)
-        smls = self.picking_in_01.move_line_ids.filtered("lot_name")
+        smls = self.picking_in_02.move_line_ids.filtered("lot_name")
         self.assertEqual(len(smls), 3)
+
+    def test_import_serial_number_no_show_reserved(self):
+        self.picking_in_01.picking_type_id.show_reserved = False
+        picking = self.picking_in_01.copy()
+        picking.action_confirm()
+        picking.action_assign()
+        wiz = self._create_wizard(pickings=picking)
+        wiz.action_import()
+        smls = picking.move_line_nosuggest_ids.filtered("lot_name")
+        self.assertEqual(len(smls), 6)
