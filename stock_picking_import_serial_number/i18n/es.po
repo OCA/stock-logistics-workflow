@@ -6,16 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-03 22:17+0000\n"
-"PO-Revision-Date: 2022-05-04 00:23+0200\n"
+"POT-Creation-Date: 2022-05-04 10:48+0000\n"
+"PO-Revision-Date: 2022-05-04 12:49+0200\n"
+"Last-Translator: Sergio Teruel <sergio.teruel@tecnativa.com>\n"
 "Language-Team: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.3\n"
-"Last-Translator: Sergio Teruel <sergio.teruel@tecnativa.com>\n"
-"Language: es\n"
 
 #. module: stock_picking_import_serial_number
 #: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.res_config_settings_view_form
@@ -25,16 +25,20 @@ msgstr "<span class=\"o_form_label\">Campo por el que buscar productos</span>"
 #. module: stock_picking_import_serial_number
 #: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.res_config_settings_view_form
 msgid "<span class=\"o_form_label\">File column index for products</span>"
-msgstr "<span class=\"o_form_label\">Índice de la columna que contiene el producto</span>"
+msgstr ""
+"<span class=\"o_form_label\">Índice de la columna que contiene el producto</"
+"span>"
 
 #. module: stock_picking_import_serial_number
 #: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.res_config_settings_view_form
 msgid "<span class=\"o_form_label\">File column index for serial number</span>"
-msgstr "<span class=\"o_form_label\">Índice de la columna que contiene el número de serie</span>"
+msgstr ""
+"<span class=\"o_form_label\">Índice de la columna que contiene el número de "
+"serie</span>"
 
 #. module: stock_picking_import_serial_number
-#: model:ir.model.fields.selection,name:stock_picking_import_serial_number.selection__res_config_settings__default_search_product_by_field__barcode
-#: model:ir.model.fields.selection,name:stock_picking_import_serial_number.selection__stock_picking_import_serial_number_wiz__search_product_by_field__barcode
+#: model:ir.model.fields.selection,name:stock_picking_import_serial_number.selection__res_config_settings__default_sn_search_product_by_field__barcode
+#: model:ir.model.fields.selection,name:stock_picking_import_serial_number.selection__stock_picking_import_serial_number_wiz__sn_search_product_by_field__barcode
 msgid "Barcode"
 msgstr "Código de barras"
 
@@ -44,14 +48,14 @@ msgid "Choose a file to import..."
 msgstr "Seleccione un archivo a importar..."
 
 #. module: stock_picking_import_serial_number
-#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_res_config_settings__default_serial_column_index
-#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz__serial_column_index
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_res_config_settings__default_sn_serial_column_index
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz__sn_serial_column_index
 msgid "Column index for S/N"
 msgstr "Índice de la columna para S/N"
 
 #. module: stock_picking_import_serial_number
-#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_res_config_settings__default_product_column_index
-#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz__product_column_index
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_res_config_settings__default_sn_product_column_index
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz__sn_product_column_index
 msgid "Column index for product"
 msgstr "Índice de la columna para el producto"
 
@@ -129,14 +133,14 @@ msgid "Picking"
 msgstr "Albarán"
 
 #. module: stock_picking_import_serial_number
-#: model:ir.model.fields.selection,name:stock_picking_import_serial_number.selection__res_config_settings__default_search_product_by_field__default_code
-#: model:ir.model.fields.selection,name:stock_picking_import_serial_number.selection__stock_picking_import_serial_number_wiz__search_product_by_field__default_code
+#: model:ir.model.fields.selection,name:stock_picking_import_serial_number.selection__res_config_settings__default_sn_search_product_by_field__default_code
+#: model:ir.model.fields.selection,name:stock_picking_import_serial_number.selection__stock_picking_import_serial_number_wiz__sn_search_product_by_field__default_code
 msgid "Reference"
 msgstr "Referencia"
 
 #. module: stock_picking_import_serial_number
-#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_res_config_settings__default_search_product_by_field
-#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz__search_product_by_field
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_res_config_settings__default_sn_search_product_by_field
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz__sn_search_product_by_field
 msgid "Search product by field"
 msgstr "Buscar producto por campo"
 
@@ -148,12 +152,15 @@ msgstr "Seleccione el campo para buscar productos"
 #. module: stock_picking_import_serial_number
 #: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.res_config_settings_view_form
 msgid "Select the index file column which contains the product info"
-msgstr "Selecciones el índice de la columna que contiene información del producto"
+msgstr ""
+"Selecciones el índice de la columna que contiene información del producto"
 
 #. module: stock_picking_import_serial_number
 #: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.res_config_settings_view_form
 msgid "Select the index file column which contains the serial numbers info"
-msgstr "Selecciones el índice de la columna que contiene información del número se serie"
+msgstr ""
+"Selecciones el índice de la columna que contiene información del número se "
+"serie"
 
 #. module: stock_picking_import_serial_number
 #: code:addons/stock_picking_import_serial_number/wizard/import_serial_number_wizard.py:0
@@ -170,7 +177,8 @@ msgstr "Solo puede importar S/N para albaranes de entrada"
 #. module: stock_picking_import_serial_number
 #: code:addons/stock_picking_import_serial_number/wizard/import_serial_number_wizard.py:0
 #, python-format
-msgid "You only can import S/N for picking operations with creation lots checked"
+msgid ""
+"You only can import S/N for picking operations with creation lots checked"
 msgstr "Solo puede importar S/N para operaciones con creación de lotes marcado"
 
 #. module: stock_picking_import_serial_number
