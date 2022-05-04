@@ -21,7 +21,7 @@
                                 Select the field to search products
                             </div>
                                 <div class="text-muted">
-                                    <field name="default_search_product_by_field" />
+                                    <field name="default_sn_search_product_by_field" />
                                 </div>
                             </div>
                         </div>
@@ -36,7 +36,7 @@
                                 Select the index file column which contains the product info
                             </div>
                                 <div class="text-muted">
-                                    <field name="default_product_column_index" />
+                                    <field name="default_sn_product_column_index" />
                                 </div>
                             </div>
                         </div>
@@ -49,7 +49,7 @@
                                 Select the index file column which contains the serial numbers info
                             </div>
                                 <div class="text-muted">
-                                    <field name="default_serial_column_index" />
+                                    <field name="default_sn_serial_column_index" />
                                 </div>
                             </div>
                         </div>
