@@ -7,7 +7,7 @@ from odoo import fields, models
 class ResConfigSettings(models.TransientModel):
     _inherit = "res.config.settings"
 
-    default_search_product_by_field = fields.Selection(
+    default_sn_search_product_by_field = fields.Selection(
         [("default_code", "Reference"), ("barcode", "Barcode")],
         string="Search product by field",
         default="default_code",
@@ -15,12 +15,12 @@ class ResConfigSettings(models.TransientModel):
         required=True,
     )
 
-    default_product_column_index = fields.Integer(
+    default_sn_product_column_index = fields.Integer(
         string="Column index for product",
         default_model="stock.picking.import.serial.number.wiz",
         default=0,
     )
-    default_serial_column_index = fields.Integer(
+    default_sn_serial_column_index = fields.Integer(
         string="Column index for S/N",
         default_model="stock.picking.import.serial.number.wiz",
         default="1",
