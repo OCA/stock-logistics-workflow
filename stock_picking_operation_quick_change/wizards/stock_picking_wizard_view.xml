@@ -14,8 +14,14 @@
                 </div>
                 <group>
                     <group>
+                        <field name="picking_id" invisible="1" />
                         <field name="location_dest_id" invisible="1" />
                         <field name="change_all" />
+                        <field name="allowed_product_ids" invisible="1" />
+                        <field
+                            name="product_id"
+                            attrs="{'invisible': [('change_all', '=', True)]}"
+                        />
                         <field
                             name="old_location_dest_id"
                             attrs="{'invisible': [('change_all', '=', True)]}"
