@@ -43,7 +43,7 @@ To use this module, you need to:
 #. Go to inventory dashboard and click on "Delivery Orders" card to create a new
    transfer.
 #. Create a picking and select the product to do the transfer and save it.
-#. Click on button *Change Location*, select in wizard the old location and
+#. Click on button *Change Location*, select in wizard the old location or product and
    new location.
 
 Bug Tracker
