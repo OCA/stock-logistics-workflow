@@ -4,17 +4,19 @@
 from odoo.tests import common
 
 
-class TestStockPickingSendByMail(common.SavepointCase):
+class TestStockPickingSendByMail(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super(TestStockPickingSendByMail, cls).setUpClass()
         cls.product = cls.env["product.product"].create({"name": "Test product"})
+        cls.location_id = cls.env.ref("stock.stock_location_stock")
+        cls.location_destination_id = cls.env.ref("stock.stock_location_customers")
         cls.picking_type = cls.env.ref("stock.picking_type_out")
         cls.picking = cls.env["stock.picking"].create(
             {
                 "picking_type_id": cls.picking_type.id,
-                "location_id": cls.picking_type.default_location_src_id.id,
-                "location_dest_id": cls.picking_type.default_location_src_id.id,
+                "location_id": cls.location_id.id,
+                "location_dest_id": cls.location_destination_id.id,
                 "move_lines": [
                     (
                         0,
@@ -23,6 +25,8 @@ class TestStockPickingSendByMail(common.SavepointCase):
                             "name": cls.product.name,
                             "product_id": cls.product.id,
                             "product_uom": cls.product.uom_id.id,
+                            "location_id": cls.location_id.id,
+                            "location_dest_id": cls.location_destination_id.id,
                         },
                     )
                 ],

@@ -5,10 +5,11 @@
 {
     "name": "Stock Picking by Mail",
     "summary": "Send stock picking by email",
-    "version": "14.0.1.0.0",
+    "version": "15.0.1.0.0",
     "author": "Sandra Figueroa Varela, "
     "Tecnativa, "
-    "Odoo Community Association (OCA)",
+    "Odoo Community Association (OCA), "
+    "Daniel Domínguez (Xtendoo)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "category": "Warehouse Management",
     "license": "AGPL-3",
