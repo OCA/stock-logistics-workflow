@@ -1,10 +1,10 @@
 # Copyright 2020 ForgeFlow S.L.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestStockPickingWarnMessage(SavepointCase):
+class TestStockPickingWarnMessage(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -50,6 +50,8 @@ class TestStockPickingWarnMessage(SavepointCase):
                             "product_id": self.product.id,
                             "product_uom": self.product.uom_id.id,
                             "product_uom_qty": 1,
+                            "location_id": self.picking_type_out.default_location_src_id.id,
+                            "location_dest_id": self.customer_location.id,
                         },
                     ),
                 ],
@@ -74,6 +76,8 @@ class TestStockPickingWarnMessage(SavepointCase):
                             "product_id": self.product.id,
                             "product_uom": self.product.uom_id.id,
                             "product_uom_qty": 1,
+                            "location_id": self.picking_type_out.default_location_src_id.id,
+                            "location_dest_id": self.customer_location.id,
                         },
                     ),
                 ],
@@ -99,6 +103,8 @@ class TestStockPickingWarnMessage(SavepointCase):
                             "product_id": self.product.id,
                             "product_uom": self.product.uom_id.id,
                             "product_uom_qty": 1,
+                            "location_id": self.picking_type_out.default_location_src_id.id,
+                            "location_dest_id": self.customer_location.id,
                         },
                     ),
                 ],
