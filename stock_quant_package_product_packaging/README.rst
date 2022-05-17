@@ -23,7 +23,7 @@ Stock Quant Package Product Packaging
     :target: https://runbot.odoo-community.org/runbot/154/10.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5|
+|badge1| |badge2| |badge3| |badge4| |badge5| 
 
 This module allows to define on a Product Package (`stock.quant.package`), a
 Packaging Type (`product.packaging`) that is linked to a product, if said
@@ -65,6 +65,7 @@ Contributors
 ~~~~~~~~~~~~
 
 * Akim Juillerat <akim.juillerat@camptocamp.com>
+* Laurent Mignon <laurent.mignon@acsone.eu>
 
 Maintainers
 ~~~~~~~~~~~
