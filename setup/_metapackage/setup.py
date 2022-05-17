@@ -21,6 +21,7 @@ setuptools.setup(
         'odoo14-addon-stock_move_change_source_location',
         'odoo14-addon-stock_move_line_auto_fill',
         'odoo14-addon-stock_no_negative',
+        'odoo14-addon-stock_owner_restriction',
         'odoo14-addon-stock_partner_delivery_window',
         'odoo14-addon-stock_picking_back2draft',
         'odoo14-addon-stock_picking_backorder_strategy',
