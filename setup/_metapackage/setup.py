@@ -38,6 +38,7 @@ setuptools.setup(
         'odoo10-addon-stock_picking_show_backorder',
         'odoo10-addon-stock_picking_show_return',
         'odoo10-addon-stock_picking_transfer_lot_autoassign',
+        'odoo10-addon-stock_quant_package_product_packaging',
         'odoo10-addon-stock_split_picking',
     ],
     classifiers=[
