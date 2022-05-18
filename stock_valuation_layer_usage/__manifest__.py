@@ -3,9 +3,9 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 {
     "name": "Stock Valuation Layer Usage",
-    "version": "13.0.1.1.0",
+    "version": "14.0.1.0.0",
     "category": "Warehouse Management",
-    "development_status": "Alpha",
+    "development_status": "Beta",
     "license": "AGPL-3",
     "summary": "Trace where has the stock valuation been used in, including "
     "the quantities taken.",
@@ -19,4 +19,5 @@
         "views/stock_move_views.xml",
     ],
     "installable": True,
+    "maintainer": "AaronHForgeFlow",
 }
