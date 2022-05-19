@@ -39,7 +39,8 @@ class SaleOrderLine(models.Model):
     @api.onchange("product_id")
     def product_id_change(self):
         res = super().product_id_change()
-        self.route_id = self.order_id.route_id
+        if self.order_id.route_id:
+            self.route_id = self.order_id.route_id
         return res
 
     @api.model_create_multi
@@ -47,5 +48,6 @@ class SaleOrderLine(models.Model):
         for vals in vals_list:
             if not vals.get("route_id", False):
                 order = self.env["sale.order"].browse(vals["order_id"])
-                vals["route_id"] = order.route_id.id
+                if order.route_id:
+                    vals["route_id"] = order.route_id.id
         return super().create(vals_list)
