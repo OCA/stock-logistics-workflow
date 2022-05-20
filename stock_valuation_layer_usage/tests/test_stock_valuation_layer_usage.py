@@ -77,7 +77,7 @@ class TestStockValuationLayerUsage(TransactionCase):
         )
 
     def _create_user(self, login, groups, company):
-        """ Create a user."""
+        """Create a user."""
         group_ids = [group.id for group in groups]
         user = self.res_users_model.with_context({"no_reset_password": True}).create(
             {
@@ -139,7 +139,9 @@ class TestStockValuationLayerUsage(TransactionCase):
         return product
 
     def _create_delivery(
-        self, product, qty,
+        self,
+        product,
+        qty,
     ):
         return self.env["stock.picking"].create(
             {
@@ -167,7 +169,9 @@ class TestStockValuationLayerUsage(TransactionCase):
         )
 
     def _create_drophip_picking(
-        self, product, qty,
+        self,
+        product,
+        qty,
     ):
         return self.env["stock.picking"].create(
             {
@@ -237,8 +241,7 @@ class TestStockValuationLayerUsage(TransactionCase):
         return True
 
     def test_01_stock_receipt(self):
-        """Receive into stock and ship to the customer
-        """
+        """Receive into stock and ship to the customer"""
         # Create receipt
         in_picking = self._create_receipt(self.product, 1.0)
         # Receive one unit.
@@ -281,8 +284,7 @@ class TestStockValuationLayerUsage(TransactionCase):
         self.assertEquals(layer_usage.stock_valuation_layer_id, layer)
 
     def test_02_drop_ship(self):
-        """Drop shipment from vendor to customer
-        """
+        """Drop shipment from vendor to customer"""
         # Create drop_shipment
         dropship_picking = self._create_drophip_picking(self.product, 1.0)
         # Receive one unit.
@@ -325,11 +327,11 @@ class TestStockValuationLayerUsage(TransactionCase):
 
     def test_03_mto(self):
         """Create a delivery
-           Receive 1, reserve
-           Receive another, no not reserve
-           Deliver 1, the system shoudl take the one not reserved, instead
-           of the oldest
-           Deliver the other, the system should find the reserved one.
+        Receive 1, reserve
+        Receive another, no not reserve
+        Deliver 1, the system shoudl take the one not reserved, instead
+        of the oldest
+        Deliver the other, the system should find the reserved one.
         """
         # Create delivery
         out_picking_reserved = self._create_delivery(self.product, 1)
