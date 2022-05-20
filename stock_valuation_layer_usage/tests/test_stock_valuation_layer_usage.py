@@ -232,7 +232,7 @@ class TestStockValuationLayerUsage(TransactionCase):
         picking.action_assign()
         picking.move_lines.quantity_done = qty
         res = picking.button_validate()
-        if res:
+        if isinstance(res, dict) and res:
             backorder_wiz_id = res["res_id"]
             backorder_wiz = self.env["stock.backorder.confirmation"].browse(
                 [backorder_wiz_id]
