@@ -186,7 +186,9 @@ def post_load_hook():
             new_remaining_qty = svl_to_vacuum.remaining_qty + qty_taken_on_candidates
             corrected_value = remaining_value_before_vacuum - tmp_value
             svl_to_vacuum.write(
-                {"remaining_qty": new_remaining_qty,}
+                {
+                    "remaining_qty": new_remaining_qty,
+                }
             )
 
             # Don't create a layer or an accounting entry if the
