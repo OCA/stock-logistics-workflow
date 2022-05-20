@@ -18,12 +18,7 @@ def post_load_hook():
         qty_to_take_on_candidates = quantity
         # START HOOK Search Candidates
         candidates_domain = self._get_candidates_domain(company)
-        candidates = (
-            self.env["stock.valuation.layer"]
-            .sudo()
-            .with_context(active_test=False)
-            .search(candidates_domain)
-        )
+        candidates = self.env["stock.valuation.layer"].sudo().search(candidates_domain)
         # END HOOK Search Candidates
         new_standard_price = 0
         tmp_value = 0  # to accumulate the value taken on the candidates
@@ -58,6 +53,17 @@ def post_load_hook():
             if float_is_zero(
                 qty_to_take_on_candidates, precision_rounding=self.uom_id.rounding
             ):
+                if float_is_zero(
+                    candidate.remaining_qty, precision_rounding=self.uom_id.rounding
+                ):
+                    next_candidates = candidates.filtered(
+                        lambda svl: svl.remaining_qty > 0
+                    )
+                    new_standard_price = (
+                        next_candidates
+                        and next_candidates[0].unit_cost
+                        or new_standard_price
+                    )
                 break
 
         # Update the standard price with the price of the last used candidate,
@@ -65,13 +71,13 @@ def post_load_hook():
         # START HOOK update standard price
         if hasattr(self, "_price_updateable"):
             if self._price_updateable(new_standard_price):
-                self.sudo().with_context(
-                    force_company=company.id
+                self.sudo().with_company(company.id).with_context(
+                    disable_auto_svl=True
                 ).standard_price = new_standard_price
         else:
             if new_standard_price and self.cost_method == "fifo":
-                self.sudo().with_context(
-                    force_company=company.id
+                self.sudo().with_company(company.id).with_context(
+                    disable_auto_svl=True
                 ).standard_price = new_standard_price
         # END HOOK update standard price
         # If there's still quantity to value but we're out of candidates,
@@ -123,18 +129,22 @@ def post_load_hook():
                 order="create_date, id",
             )
         )
+        if not svls_to_vacuum:
+            return
+        domain = [
+            ("company_id", "=", company.id),
+            ("product_id", "=", self.id),
+            ("remaining_qty", ">", 0),
+            ("create_date", ">=", svls_to_vacuum[0].create_date),
+        ]
+        all_candidates = self.env["stock.valuation.layer"].sudo().search(domain)
         for svl_to_vacuum in svls_to_vacuum:
-            domain = [
-                ("company_id", "=", svl_to_vacuum.company_id.id),
-                ("product_id", "=", self.id),
-                ("remaining_qty", ">", 0),
-                "|",
-                ("create_date", ">", svl_to_vacuum.create_date),
-                "&",
-                ("create_date", "=", svl_to_vacuum.create_date),
-                ("id", ">", svl_to_vacuum.id),
-            ]
-            candidates = self.env["stock.valuation.layer"].sudo().search(domain)
+            # We don't use search to avoid executing _flush_search and to decrease interaction with DB
+            candidates = all_candidates.filtered(
+                lambda r: r.create_date > svl_to_vacuum.create_date
+                or r.create_date == svl_to_vacuum.create_date
+                and r.id > svl_to_vacuum.id
+            )
             if not candidates:
                 break
             qty_to_take_on_candidates = abs(svl_to_vacuum.remaining_qty)
@@ -171,6 +181,8 @@ def post_load_hook():
                 )
                 # End Hook
                 candidate.write(candidate_vals)
+                if not (candidate.remaining_qty > 0):
+                    all_candidates -= candidate
 
                 qty_to_take_on_candidates -= qty_taken_on_candidate
                 tmp_value += value_taken_on_candidate
@@ -213,16 +225,6 @@ def post_load_hook():
             }
             vacuum_svl = self.env["stock.valuation.layer"].sudo().create(vals)
 
-            # If some negative stock were fixed, we need to recompute
-            # the standard price.
-            product = self.with_context(force_company=company.id)
-            if product.cost_method == "average" and not float_is_zero(
-                product.quantity_svl, precision_rounding=self.uom_id.rounding
-            ):
-                product.sudo().write(
-                    {"standard_price": product.value_svl / product.quantity_svl}
-                )
-
             # Create the account move.
             if self.valuation != "real_time":
                 continue
@@ -231,6 +233,18 @@ def post_load_hook():
                 vacuum_svl.description,
                 vacuum_svl.id,
                 vacuum_svl.value,
+            )
+            # Create the related expense entry
+            self._create_fifo_vacuum_anglo_saxon_expense_entry(
+                vacuum_svl, svl_to_vacuum
+            )
+        # If some negative stock were fixed, we need to recompute the standard price.
+        product = self.with_company(company.id)
+        if product.cost_method == "average" and not float_is_zero(
+            product.quantity_svl, precision_rounding=self.uom_id.rounding
+        ):
+            product.sudo().with_context(disable_auto_svl=True).write(
+                {"standard_price": product.value_svl / product.quantity_svl}
             )
 
     if not hasattr(ProductProduct, "_run_fifo_vacuum_original"):
