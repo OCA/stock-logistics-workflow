@@ -55,9 +55,9 @@ class TestStockPickingProductAssortment(TransactionCase):
         stock_picking_form.location_dest_id = self.customers_location
         with stock_picking_form.move_ids_without_package.new() as move_id:
             move_id.product_has_both_assortment_id = self.product_1.product_variant_id
-            self.assertEquals(move_id.product_id, self.product_1.product_variant_id)
+            self.assertEqual(move_id.product_id, self.product_1.product_variant_id)
         stock_picking_1 = stock_picking_form.save()
-        self.assertEquals(
+        self.assertEqual(
             stock_picking_1.whitelist_product_ids,
             assortment_with_whitelist.whitelist_product_ids,
         )
@@ -80,13 +80,13 @@ class TestStockPickingProductAssortment(TransactionCase):
         stock_picking_form.location_dest_id = self.customers_location
         with stock_picking_form.move_ids_without_package.new() as move_id:
             move_id.product_has_both_assortment_id = self.product_1.product_variant_id
-            self.assertEquals(move_id.product_id, self.product_1.product_variant_id)
+            self.assertEqual(move_id.product_id, self.product_1.product_variant_id)
         stock_picking_2 = stock_picking_form.save()
-        self.assertEquals(
+        self.assertEqual(
             stock_picking_2.whitelist_product_ids,
             assortment_with_whitelist.whitelist_product_ids,
         )
-        self.assertEquals(
+        self.assertEqual(
             stock_picking_2.blacklist_product_ids,
             assortment_with_blacklist.blacklist_product_ids,
         )
@@ -101,9 +101,9 @@ class TestStockPickingProductAssortment(TransactionCase):
             move_id.product_has_blacklist_assortment_id = (
                 self.product_1.product_variant_id
             )
-            self.assertEquals(move_id.product_id, self.product_1.product_variant_id)
+            self.assertEqual(move_id.product_id, self.product_1.product_variant_id)
         stock_picking_3 = stock_picking_form.save()
-        self.assertEquals(
+        self.assertEqual(
             stock_picking_3.blacklist_product_ids,
             assortment_with_blacklist.blacklist_product_ids,
         )
