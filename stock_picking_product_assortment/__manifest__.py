@@ -3,7 +3,7 @@
 
 {
     "name": "Stock Picking Product Assortment",
-    "version": "13.0.1.0.0",
+    "version": "15.0.1.0.0",
     "category": "Warehouse Management",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Tecnativa, Odoo Community Association (OCA)",
