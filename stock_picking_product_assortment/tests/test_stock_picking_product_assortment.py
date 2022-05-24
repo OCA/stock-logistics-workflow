@@ -54,15 +54,14 @@ class TestStockPickingProductAssortment(TransactionCase):
         stock_picking_form.location_id = self.stock_location
         stock_picking_form.location_dest_id = self.customers_location
         with stock_picking_form.move_ids_without_package.new() as move_id:
-            move_id.product_has_both_assortment_id = self.product_1.product_variant_id
+            move_id.assortment_product_id = self.product_1.product_variant_id
             self.assertEqual(move_id.product_id, self.product_1.product_variant_id)
         stock_picking_1 = stock_picking_form.save()
         self.assertEqual(
-            stock_picking_1.whitelist_product_ids,
+            stock_picking_1.assortment_product_ids,
             assortment_with_whitelist.whitelist_product_ids,
         )
-        self.assertTrue(stock_picking_1.has_whitelist)
-        self.assertFalse(stock_picking_1.has_blacklist)
+        self.assertTrue(stock_picking_1.has_assortment)
         assortment_with_blacklist = self.filter_obj.create(
             {
                 "name": "Test Assortment 2",
@@ -79,33 +78,26 @@ class TestStockPickingProductAssortment(TransactionCase):
         stock_picking_form.location_id = self.stock_location
         stock_picking_form.location_dest_id = self.customers_location
         with stock_picking_form.move_ids_without_package.new() as move_id:
-            move_id.product_has_both_assortment_id = self.product_1.product_variant_id
+            move_id.assortment_product_id = self.product_1.product_variant_id
             self.assertEqual(move_id.product_id, self.product_1.product_variant_id)
         stock_picking_2 = stock_picking_form.save()
         self.assertEqual(
-            stock_picking_2.whitelist_product_ids,
-            assortment_with_whitelist.whitelist_product_ids,
+            stock_picking_2.assortment_product_ids,
+            assortment_with_whitelist.whitelist_product_ids
+            - assortment_with_blacklist.blacklist_product_ids,
         )
-        self.assertEqual(
-            stock_picking_2.blacklist_product_ids,
-            assortment_with_blacklist.blacklist_product_ids,
-        )
-        self.assertTrue(stock_picking_2.has_whitelist)
-        self.assertTrue(stock_picking_2.has_blacklist)
+        self.assertTrue(stock_picking_2.has_assortment)
         stock_picking_form = Form(self.stock_picking_obj)
         stock_picking_form.partner_id = self.partner_2
         stock_picking_form.picking_type_id = self.pick_type_out
         stock_picking_form.location_id = self.stock_location
         stock_picking_form.location_dest_id = self.customers_location
         with stock_picking_form.move_ids_without_package.new() as move_id:
-            move_id.product_has_blacklist_assortment_id = (
-                self.product_1.product_variant_id
-            )
+            move_id.assortment_product_id = self.product_1.product_variant_id
             self.assertEqual(move_id.product_id, self.product_1.product_variant_id)
         stock_picking_3 = stock_picking_form.save()
-        self.assertEqual(
-            stock_picking_3.blacklist_product_ids,
-            assortment_with_blacklist.blacklist_product_ids,
+        self.assertFalse(
+            stock_picking_3.assortment_product_ids
+            & assortment_with_blacklist.blacklist_product_ids
         )
-        self.assertFalse(stock_picking_3.has_whitelist)
-        self.assertTrue(stock_picking_3.has_blacklist)
+        self.assertTrue(stock_picking_3.has_assortment)
