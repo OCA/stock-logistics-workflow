@@ -32,6 +32,7 @@
                                 force_save="1"
                                 groups="uom.group_uom"
                             />
+                            <field name="move_line_id" invisible="1" />
                         </tree>
                     </field>
                 </group>
