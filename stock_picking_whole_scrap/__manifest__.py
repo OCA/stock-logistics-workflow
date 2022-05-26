@@ -3,7 +3,7 @@
 {
     "name": "Stock Picking Whole Scrap",
     "summary": "Create whole scrap from a picking for move lines",
-    "version": "13.0.1.0.0",
+    "version": "15.0.1.0.0",
     "development_status": "Production/Stable",
     "category": "Warehouse",
     "website": "https://github.com/OCA/stock-logistics-workflow",
@@ -11,6 +11,10 @@
     "license": "AGPL-3",
     "installable": True,
     "depends": ["stock"],
-    "data": ["wizards/stock_picking_whole_scrap.xml", "views/stock_picking_views.xml"],
+    "data": [
+        "security/ir.model.access.csv",
+        "wizards/stock_picking_whole_scrap.xml",
+        "views/stock_picking_views.xml",
+    ],
     "maintainers": ["sergio-teruel"],
 }

@@ -21,9 +21,7 @@ class StockPickingScrapLine(models.TransientModel):
     owner_id = fields.Many2one(
         comodel_name="res.partner", string="Owner", readonly=True
     )
-    quantity = fields.Float(
-        string="Quantity", digits="Product Unit of Measure", required=True
-    )
+    quantity = fields.Float(digits="Product Unit of Measure", required=True)
     uom_id = fields.Many2one(
         comodel_name="uom.uom", string="Unit of Measure", readonly=True
     )
@@ -72,7 +70,7 @@ class StockPickingScrap(models.TransientModel):
                         {
                             "product_id": move_line.product_id.id,
                             "lot_id": move_line.lot_id.id,
-                            "package_id": move_line.package_id.id,
+                            "package_id": move_line.result_package_id.id,
                             "owner_id": move_line.owner_id.id,
                             "quantity": quantity,
                             "uom_id": move_line.product_uom_id.id,
@@ -94,7 +92,7 @@ class StockPickingScrap(models.TransientModel):
             "product_id": scrap_line.product_id.id,
             "product_uom_id": scrap_line.uom_id.id,
             "lot_id": scrap_line.move_line_id.lot_id.id,
-            "package_id": scrap_line.move_line_id.package_id.id,
+            "package_id": scrap_line.move_line_id.result_package_id.id,
             "owner_id": scrap_line.move_line_id.owner_id.id,
             "move_id": scrap_line.move_line_id.move_id.id,
             "picking_id": scrap_line.move_line_id.picking_id.id,
