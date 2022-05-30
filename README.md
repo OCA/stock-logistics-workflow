@@ -28,6 +28,7 @@ addon | version | maintainers | summary
 [stock_picking_sale_order_link](stock_picking_sale_order_link/) | 15.0.1.0.2 |  | Link between picking and sale order
 [stock_picking_send_by_mail](stock_picking_send_by_mail/) | 15.0.1.0.0 |  | Send stock picking by email
 [stock_picking_show_return](stock_picking_show_return/) | 15.0.1.0.0 |  | Show returns on stock pickings
+[stock_picking_whole_scrap](stock_picking_whole_scrap/) | 15.0.1.0.0 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Create whole scrap from a picking for move lines
 [stock_production_lot_active](stock_production_lot_active/) | 15.0.1.0.1 | [![ThomasBinsfeld](https://github.com/ThomasBinsfeld.png?size=30px)](https://github.com/ThomasBinsfeld) | Allow to archive/unarchive a lot.
 [stock_push_delay](stock_push_delay/) | 15.0.1.0.0 |  | Manual evaluation of Push rules
 [stock_restrict_lot](stock_restrict_lot/) | 15.0.0.0.1 | [![florian-dacosta](https://github.com/florian-dacosta.png?size=30px)](https://github.com/florian-dacosta) | Base module that add back the concept of restrict lot on stock move
