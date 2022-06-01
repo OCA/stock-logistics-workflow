@@ -16,9 +16,6 @@ class AccountMove(models.Model):
         string="Related Pickings",
         store=True,
         compute="_compute_picking_ids",
-        relation="account_invoice_stock_picking_rel",
-        column1="account_invoice_id",
-        column2="stock_picking_id",
         help="Related pickings "
         "(only when the invoice has been generated from a sale order).",
     )
