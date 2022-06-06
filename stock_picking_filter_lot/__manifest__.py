@@ -6,7 +6,7 @@
                "filter lots based on their location",
     "version": "12.0.1.1.0",
     "category": "Warehouse",
-    "website": "https://github.com/OCA/stock-logistics-workflow"
+    "website": "https://github.com/OCA/stock-logistics-workflow/"
                "12.0/stock_filter_lot",
     "author": "Agile Business Group, "
               "Odoo Community Association (OCA)",
