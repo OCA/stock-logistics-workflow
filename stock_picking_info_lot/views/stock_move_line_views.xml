@@ -44,7 +44,6 @@
                     name="lot_info"
                     attrs="{
                        'readonly': [('lot_info_usage', '=', 'no')],
-                       'required': [('lot_info_usage', '=', 'required')],
                        }"
                 />
             </xpath>
@@ -65,7 +64,6 @@
                     name="lot_info"
                     attrs="{
                        'readonly': [('lot_info_usage', '=', 'no')],
-                       'required': [('lot_info_usage', '=', 'required')],
                        }"
                 />
             </xpath>

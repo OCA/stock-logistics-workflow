@@ -9,7 +9,9 @@ class StockPicking(models.Model):
     def _check_required_lot_info(self):
         for picking in self:
             lines_missing_lotinfo = picking.move_line_ids_without_package.filtered(
-                lambda x: x.lot_info_usage == "required" and not x.lot_info
+                lambda x: x.qty_done
+                and x.lot_info_usage == "required"
+                and not x.lot_info
             )
             if lines_missing_lotinfo:
                 raise exceptions.UserError(
