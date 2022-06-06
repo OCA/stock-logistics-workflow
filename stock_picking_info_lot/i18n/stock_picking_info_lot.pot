@@ -1,0 +1,62 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_info_lot
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_info_lot
+#: model:ir.model.fields,field_description:stock_picking_info_lot.field_product_product__lot_info_usage
+#: model:ir.model.fields,field_description:stock_picking_info_lot.field_product_template__lot_info_usage
+#: model:ir.model.fields,field_description:stock_picking_info_lot.field_stock_move_line__lot_info_usage
+msgid "Lot Information Usage"
+msgstr ""
+
+#. module: stock_picking_info_lot
+#: model:ir.model.fields,field_description:stock_picking_info_lot.field_stock_move_line__lot_info
+msgid "Lot/Serial Number Info"
+msgstr ""
+
+#. module: stock_picking_info_lot
+#: code:addons/stock_picking_info_lot/models/stock_picking.py:0
+#, python-format
+msgid "Missing Lot Info for Products %s."
+msgstr ""
+
+#. module: stock_picking_info_lot
+#: model:ir.model.fields.selection,name:stock_picking_info_lot.selection__product_template__lot_info_usage__no
+msgid "No"
+msgstr ""
+
+#. module: stock_picking_info_lot
+#: model:ir.model.fields.selection,name:stock_picking_info_lot.selection__product_template__lot_info_usage__optional
+msgid "Optional"
+msgstr ""
+
+#. module: stock_picking_info_lot
+#: model:ir.model,name:stock_picking_info_lot.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: stock_picking_info_lot
+#: model:ir.model,name:stock_picking_info_lot.model_product_template
+msgid "Product Template"
+msgstr ""
+
+#. module: stock_picking_info_lot
+#: model:ir.model.fields.selection,name:stock_picking_info_lot.selection__product_template__lot_info_usage__required
+msgid "Required"
+msgstr ""
+
+#. module: stock_picking_info_lot
+#: model:ir.model,name:stock_picking_info_lot.model_stock_picking
+msgid "Transfer"
+msgstr ""
