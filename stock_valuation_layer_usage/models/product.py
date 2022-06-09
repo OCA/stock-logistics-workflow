@@ -3,7 +3,6 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import models
-from odoo.osv import expression
 
 
 class ProductProduct(models.Model):
@@ -74,18 +73,9 @@ class ProductProduct(models.Model):
         else:
             # Case 2: the layer out did not reserve any move,
             # we pick the oldest among the ones not reserved for any
-            res = res.filtered(lambda svl: not svl.stock_move_id.move_dest_ids)
-        return res
-
-    def _get_candidates_domain(self, company):
-        res = super()._get_candidates_domain(company)
-        reserved_from = self.env.context.get("reserved_from", False)
-        if reserved_from:
-            # Case 1: the layer out has reserved an incoming move,
-            # we search amount those
-            res = expression.AND([res, [("stock_move_id", "in", reserved_from)]])
-        else:
-            # Case 2: the layer out did not reserve any move,
-            # we pick the oldest among the ones not reserved for any
-            res = expression.AND([res, [("stock_move_id.move_dest_ids", "=", False)]])
+            res = res.filtered(
+                lambda svl: not svl.stock_move_id.move_dest_ids.filtered(
+                    lambda x: x.state not in ("done", "cancel")
+                )
+            )
         return res

@@ -24,6 +24,16 @@ def post_load_hook():
             .with_context(active_test=False)
             .search(candidates_domain)
         )
+        if self.env.context.get("reserved_from", []):
+            candidates = candidates.filtered(
+                lambda x: x.stock_move_id.id in self.env.context.get("reserved_from")
+            )
+        else:
+            candidates = candidates.filtered(
+                lambda x: not x.stock_move_id.move_dest_ids.filtered(
+                    lambda x: x.state not in ("done", "cancel")
+                )
+            )
         # END HOOK Search Candidates
         new_standard_price = 0
         tmp_value = 0  # to accumulate the value taken on the candidates
