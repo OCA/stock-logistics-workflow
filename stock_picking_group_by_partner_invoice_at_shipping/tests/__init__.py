@@ -1,0 +1,1 @@
+from . import test_stock_picking_group_by_partner_invoice_at_shipping
