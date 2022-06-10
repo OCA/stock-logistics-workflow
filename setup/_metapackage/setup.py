@@ -8,6 +8,7 @@ setuptools.setup(
     description="Meta package for oca-stock-logistics-workflow Odoo addons",
     version=version,
     install_requires=[
+        'odoo-addon-product_supplierinfo_for_customer_picking>=15.0dev,<15.1dev',
         'odoo-addon-stock_no_negative>=15.0dev,<15.1dev',
         'odoo-addon-stock_picking_back2draft>=15.0dev,<15.1dev',
         'odoo-addon-stock_picking_filter_lot>=15.0dev,<15.1dev',
