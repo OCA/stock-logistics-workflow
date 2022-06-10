@@ -6,35 +6,37 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2022-06-10 08:12+0000\n"
+"Last-Translator: Maria Sparenberg <maria.sparenberg@gmx.net>\n"
 "Language-Team: none\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: stock_picking_purchase_order_link
 #: model:ir.model.fields,field_description:stock_picking_purchase_order_link.field_stock_picking__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Anzeigename"
 
 #. module: stock_picking_purchase_order_link
 #: model:ir.model.fields,field_description:stock_picking_purchase_order_link.field_stock_picking__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_picking_purchase_order_link
 #: model:ir.model.fields,field_description:stock_picking_purchase_order_link.field_stock_picking____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Zuletzt geändert am"
 
 #. module: stock_picking_purchase_order_link
 #: model_terms:ir.ui.view,arch_db:stock_picking_purchase_order_link.view_picking_form
 msgid "Purchase Order"
-msgstr ""
+msgstr "Einkaufsbestellung"
 
 #. module: stock_picking_purchase_order_link
 #: model:ir.model,name:stock_picking_purchase_order_link.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Umlagern"
