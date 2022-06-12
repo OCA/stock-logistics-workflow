@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id='view_stock_landed_cost_ext_form' model='ir.ui.view'>
+        <field name="name">stock.landed.cost.ext.form</field>
+        <field name="model">stock.landed.cost</field>
+        <field name="inherit_id" ref="stock_landed_costs.view_stock_landed_cost_form" />
+        <field name="arch" type="xml">
+            <button name="button_validate" position="attributes">
+                <attribute
+                    name="groups"
+                >stock_landed_costs_security.group_stock_landed_costs_security_user,stock.group_stock_manager
+                </attribute>
+            </button>
+        </field>
+    </record>
+
+    <menuitem
+        name="Landed Costs"
+        id="menu_landed_costs"
+        sequence="30"
+        action="stock_landed_costs.action_stock_landed_cost"
+        groups="stock.group_stock_manager,stock.group_stock_user,stock_landed_costs_security.group_stock_landed_costs_security_user"
+        web_icon="stock_landed_costs_security,static/description/icon.png"
+    />
+</odoo>
