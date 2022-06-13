@@ -1,9 +1,9 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestStockPickingShowBackorder(SavepointCase):
+class TestStockPickingShowBackorder(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
