@@ -1,11 +1,11 @@
 # Copyright 2018 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo.exceptions import UserError
-from odoo.tests.common import SavepointCase, tagged
+from odoo.tests.common import TransactionCase, tagged
 
 
 @tagged("post_install", "-at_install")
-class TestStockPickingScrapQuick(SavepointCase):
+class TestStockPickingScrapQuick(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
