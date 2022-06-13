@@ -16,7 +16,7 @@ class StockMove(models.Model):
                 inv_line = self.env["account.move.line"].search(
                     [
                         ("purchase_line_id", "=", stock_move.purchase_line_id.id),
-                        ("move_id.type", "=", inv_type),
+                        ("move_id.move_type", "=", inv_type),
                     ]
                 )
                 if inv_line:
