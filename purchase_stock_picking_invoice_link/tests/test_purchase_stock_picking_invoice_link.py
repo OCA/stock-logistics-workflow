@@ -27,9 +27,10 @@ class TestPurchaseSTockPickingInvoiceLink(common.SavepointCase):
         picking.move_lines.quantity_done = 1.0
         picking.button_validate()
         # Create and post invoice
-        inv_action = self.po.action_view_invoice()
-        inv_form = Form(self.env["account.move"].with_context(**inv_action["context"]))
-        invoice = inv_form.save()
+        inv_action = self.po.action_create_invoice()
+        invoice = self.env["account.move"].browse([(inv_action["res_id"])])
+        invoice.invoice_date = self.po.create_date
+        invoice._compute_picking_ids()
         invoice.action_post()
         # Only one invoice line has been created
         self.assertEqual(len(invoice.invoice_line_ids), 1)
@@ -45,9 +46,9 @@ class TestPurchaseSTockPickingInvoiceLink(common.SavepointCase):
         # Purchase order confirm
         self.po.button_confirm()
         # create and post invoice
-        inv_action = self.po.action_view_invoice()
-        inv_form = Form(self.env["account.move"].with_context(**inv_action["context"]))
-        invoice = inv_form.save()
+        inv_action = self.po.action_create_invoice()
+        invoice = self.env["account.move"].browse([(inv_action["res_id"])])
+        invoice.invoice_date = self.po.create_date
         invoice.action_post()
         # Validate shipment
         picking = self.po.picking_ids[0]
@@ -57,6 +58,7 @@ class TestPurchaseSTockPickingInvoiceLink(common.SavepointCase):
         picking.button_validate()
         # Only one invoice line has been created
         self.assertEqual(len(invoice.invoice_line_ids), 1)
+
         line = invoice.invoice_line_ids
         # Move lines are set in invoice lines
         self.assertEqual(len(line.mapped("move_line_ids")), 1)

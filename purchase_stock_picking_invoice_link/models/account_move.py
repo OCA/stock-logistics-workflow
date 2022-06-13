@@ -15,7 +15,7 @@ class AccountMove(models.Model):
                 stock_moves = self.env["stock.move"].search(
                     [
                         ("purchase_line_id", "=", line.purchase_line_id.id),
-                        ("to_refund", "=", (move.type == "in_refund")),
+                        ("to_refund", "=", (move.move_type == "in_refund")),
                     ]
                 )
                 if stock_moves:
