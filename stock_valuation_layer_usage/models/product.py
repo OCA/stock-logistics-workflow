@@ -63,29 +63,15 @@ class ProductProduct(models.Model):
             )
         return candidate_vals
 
-    def _get_candidates(self, company):
-        res = super()._get_candidates(company)
-        reserved_from = self.env.context.get("reserved_from", False)
-        # Here we try to not pick layers reserved for an MTO scenario
-        if reserved_from:
-            # Case 1: the layer out has reserved an incoming move,
-            # we search amount those
-            res = res.filtered(lambda svl: svl.stock_move_id.id in reserved_from)
-        else:
-            # Case 2: the layer out did not reserve any move,
-            # we pick the oldest among the ones not reserved for any
-            res = res.filtered(lambda svl: not svl.stock_move_id.move_dest_ids)
-        return res
-
     def _get_candidates_domain(self, company):
         res = super()._get_candidates_domain(company)
         reserved_from = self.env.context.get("reserved_from", False)
+        reserved_from_moves = self.env["stock.move"]
         if reserved_from:
-            # Case 1: the layer out has reserved an incoming move,
-            # we search amount those
-            res = expression.AND([res, [("stock_move_id", "in", reserved_from)]])
-        else:
-            # Case 2: the layer out did not reserve any move,
-            # we pick the oldest among the ones not reserved for any
-            res = expression.AND([res, [("stock_move_id.move_dest_ids", "=", False)]])
+            reserved_from_moves = self.env["stock.move"].browse(reserved_from)
+        in_moves = reserved_from_moves._get_in_moves()
+        if in_moves:
+            # The layer out has reserved an incoming move,
+            # we search among those
+            res = expression.AND([res, [("stock_move_id", "in", in_moves.ids)]])
         return res
