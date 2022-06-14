@@ -46,3 +46,12 @@ class StockMove(models.Model):
                 }
             )
         return layers
+
+    def _get_in_moves(self):
+        """We try to fetch the moves that originated"""
+        in_moves = self.env["stock.move"]
+        for move in self:
+            if move._is_in():
+                in_moves |= move
+            in_moves |= move.move_orig_ids._get_in_moves()
+        return in_moves
