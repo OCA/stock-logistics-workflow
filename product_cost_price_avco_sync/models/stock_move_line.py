@@ -9,7 +9,9 @@ class StockMoveLine(models.Model):
 
     @api.model
     def _create_correction_svl(self, move, diff):
-        if move.product_id.cost_method != "average":
+        if move.product_id.cost_method != "average" or self.env.context.get(
+            "new_stock_move_create", False
+        ):
             return super()._create_correction_svl(move, diff)
         for svl in move.stock_valuation_layer_ids:
             # TODO: Review if is dropshipping
@@ -17,3 +19,9 @@ class StockMoveLine(models.Model):
                 svl.quantity -= diff
             else:
                 svl.quantity += diff
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        return super(
+            StockMoveLine, self.with_context(new_stock_move_create=True)
+        ).create(vals_list)
