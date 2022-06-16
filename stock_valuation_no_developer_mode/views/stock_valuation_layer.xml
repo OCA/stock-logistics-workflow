@@ -9,7 +9,9 @@
                 expr="//button[@name='action_view_stock_valuation_layers']"
                 position="attributes"
             >
-                <attribute name="groups">account.group_account_invoice</attribute>
+                <attribute
+                    name="groups"
+                >account.group_account_invoice,stock.group_stock_manager</attribute>
             </xpath>
         </field>
     </record>
