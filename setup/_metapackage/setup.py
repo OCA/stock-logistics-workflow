@@ -40,6 +40,7 @@ setuptools.setup(
         'odoo13-addon-stock_picking_filter_lot',
         'odoo13-addon-stock_picking_group_by_partner_by_carrier',
         'odoo13-addon-stock_picking_group_by_partner_by_carrier_by_date',
+        'odoo13-addon-stock_picking_import_serial_number',
         'odoo13-addon-stock_picking_invoice_link',
         'odoo13-addon-stock_picking_late_activity',
         'odoo13-addon-stock_picking_line_sequence',
