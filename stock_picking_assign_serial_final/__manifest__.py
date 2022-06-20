@@ -3,7 +3,7 @@
 {
     "name": "Stock Picking Assign Serial Final",
     "summary": "Generate serial numbers until to a final serial number",
-    "version": "13.0.1.0.0",
+    "version": "13.0.1.1.0",
     "development_status": "Beta",
     "category": "stock",
     "website": "https://github.com/OCA/stock-logistics-workflow",
