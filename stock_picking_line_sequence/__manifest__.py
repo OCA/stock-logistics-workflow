@@ -1,5 +1,5 @@
 # Copyright 2017 Camptocamp SA - Damien Crier, Alexandre Fayolle
-# Copyright 2017 Eficent Business and IT Consulting Services S.L.
+# Copyright 2017 ForgeFlow S.L.
 # Copyright 2017 Serpent Consulting Services Pvt. Ltd.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
@@ -9,11 +9,11 @@
     "version": "13.0.1.0.0",
     "category": "Warehouse Management",
     "author": "Camptocamp, "
-    "Eficent, "
+    "ForgeFlow, "
     "Serpent CS, "
     "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
-    "depends": ["stock", "sale", "sale_stock"],
+    "depends": ["sale_stock"],
     "data": ["views/stock_view.xml", "report/report_deliveryslip.xml"],
     "post_init_hook": "post_init_hook",
     "installable": True,

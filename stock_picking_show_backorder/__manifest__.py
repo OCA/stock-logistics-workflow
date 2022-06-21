@@ -1,4 +1,4 @@
-# Copyright 2015-17 Eficent Business and IT Consulting Services, S.L.
+# Copyright 2015-17 ForgeFlow S.L.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 {
@@ -7,7 +7,7 @@
     "category": "Warehouse Management",
     "summary": "Provides a new field on stock pickings, allowing to display "
     "the corresponding backorders.",
-    "author": "Eficent, " "Odoo Community Association (OCA)",
+    "author": "ForgeFlow, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": ["stock"],
     "data": ["views/stock_view.xml"],
