@@ -72,7 +72,7 @@ Contributors
   * Sergio Teruel
   * Carlos Roca
 
-* Lois Rilo <lois.rilo@eficent.com>
+* Lois Rilo <lois.rilo@forgeflow.com>
 
 Maintainers
 ~~~~~~~~~~~
