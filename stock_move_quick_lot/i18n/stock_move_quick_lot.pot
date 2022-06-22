@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 13.0\n"
+"Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -14,7 +14,12 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_move_quick_lot
-#: model:ir.model.fields,field_description:stock_move_quick_lot.field_stock_move__life_date
+#: model:ir.model.fields,field_description:stock_move_quick_lot.field_stock_move__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_move_quick_lot
+#: model:ir.model.fields,field_description:stock_move_quick_lot.field_stock_move__expiration_date
 msgid "End of Life Date"
 msgstr ""
 
@@ -22,6 +27,16 @@ msgstr ""
 #: code:addons/stock_move_quick_lot/models/stock_move.py:0
 #, python-format
 msgid "Go to lots to change data"
+msgstr ""
+
+#. module: stock_move_quick_lot
+#: model:ir.model.fields,field_description:stock_move_quick_lot.field_stock_move__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_move_quick_lot
+#: model:ir.model.fields,field_description:stock_move_quick_lot.field_stock_move____last_update
+msgid "Last Modified on"
 msgstr ""
 
 #. module: stock_move_quick_lot
@@ -41,7 +56,7 @@ msgid "Stock Move"
 msgstr ""
 
 #. module: stock_move_quick_lot
-#: model:ir.model.fields,help:stock_move_quick_lot.field_stock_move__life_date
+#: model:ir.model.fields,help:stock_move_quick_lot.field_stock_move__expiration_date
 msgid ""
 "This is the date on which the goods with this Serial Number may become "
 "dangerous and must not be consumed."
