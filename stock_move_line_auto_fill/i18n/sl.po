@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-01-11 19:39+0000\n"
+"PO-Revision-Date: 2022-06-26 10:05+0000\n"
 "Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: none\n"
 "Language: sl\n"
@@ -53,6 +53,8 @@ msgstr "Izogibanje samo-dodeljevanju lotov"
 #, python-format
 msgid "Filling the operations automatically is not possible, perhaps the pickings aren't in the right state (Partially available or available)."
 msgstr ""
+"Samodejno izpolnjevanje operacij ni mogoče. Dobavnice mogoče niso v pravem "
+"stanju (delno na voljo ali na voljo)."
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model,name:stock_move_line_auto_fill.model_stock_picking_type
@@ -79,6 +81,9 @@ msgid "To auto fill done quantity in picking document.\n"
 "- If checked, auto fill done quantity automatically\n"
 "- If unchecked, show button AutoFill for user to do the auto fill manually"
 msgstr ""
+"Za samodejno izpolnjevanje opravljenih količin v dobavnici.\n"
+"- Če označeno, samodejno izpolni opravljene količine\n"
+"- Če neoznačeno, prikaži gumb Samodejno izpolni, da uporabnik ročno izpolni"
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model,name:stock_move_line_auto_fill.model_stock_picking
