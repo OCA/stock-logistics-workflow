@@ -8,8 +8,10 @@
 {
     "name": "Stock Picking Max Shipping Date",
     "summary": "Adds max shipping date field",
-    "author": "Beescoop - Cellule IT, Coop IT Easy SC",
-    "website": "https://github.com/beescoop/Obeesdoo",
+    "author": "Beescoop - Cellule IT,"
+              " Coop IT Easy SC,"
+              " Odoo Community Association (OCA)",
+    "website": "https://github.com/OCA/stock-logistics-workflow",
     "category": "Inventory",
     "version": "12.0.1.0.2",
     "depends": [
