@@ -1,5 +1,5 @@
 ===========================
-Stock Landed Costs Currency
+Stock landed costs security
 ===========================
 
 .. !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -14,10 +14,10 @@ Stock Landed Costs Currency
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
-    :target: https://github.com/OCA/stock-logistics-workflow/tree/13.0/stock_landed_costs_currency
+    :target: https://github.com/OCA/stock-logistics-workflow/tree/13.0/stock_landed_costs_security
     :alt: OCA/stock-logistics-workflow
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-13-0/stock-logistics-workflow-13-0-stock_landed_costs_currency
+    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-13-0/stock-logistics-workflow-13-0-stock_landed_costs_security
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
     :target: https://runbot.odoo-community.org/runbot/154/13.0
@@ -25,8 +25,7 @@ Stock Landed Costs Currency
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
-This module allows user to add landed costs in different currencies
-to cost of products
+This module promotes the "Landing cost" feature to a full application, with its icon and specific menu, accessible through an specific user group. Any user mapped to this group can create and validate landing costs without extra permissions.
 
 **Table of contents**
 
@@ -36,24 +35,17 @@ to cost of products
 Configuration
 =============
 
-To configure this module, you need to:
-
-#. Enable Multi-Currencies configuration
-#. Go to your user settings.
-#. Tick the box *Multi Currencies* in *Extra Rights*.
+#. Go to *Settings* > Users and companies > Users.
+#. Select one user or create a new one.
+#. Select on the section "Operations", line "Landing costs", the option "User".
 
 Usage
 =====
 
-To use this module, you need to:
-
-# Go to *Inventory > Operations > Landed Costs* and choose the
-*Account Journal* and the corresponding *Currency*
-# Add a cost line and set the *Cost* column with the amount in that *Currency*
-# The amount in column *Cost in Company Currency* will be automatically
-converted to Company's currency by the exchange rate on the Date of Landed Cost
-# After clicking "Validate", your products has been valued with amounts in a
-consistent currency (which is Company's currency)
+#. Go to Users.
+#. Select Landing costs -> User.
+#. Go to *Landed Costs*.
+#. This user can create and validate any landed cost.
 
 Bug Tracker
 ===========
@@ -61,7 +53,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/stock-logistics-workflow/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_landed_costs_currency%0Aversion:%2013.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_landed_costs_security%0Aversion:%2013.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -71,13 +63,15 @@ Credits
 Authors
 ~~~~~~~
 
-* Komit Consulting
+* Tecnativa
 
 Contributors
 ~~~~~~~~~~~~
 
-* Duc, Dao Dong <duc.dd@komit-consulting.com> (https://komit-consulting.com)
-* Pimolnat Suntian <pimolnats@ecosoft.co.th> (https://ecosoft.co.th)
+* `Tecnativa <https://www.tecnativa.com>`_
+
+  * Pedro M. Baeza
+  * César A. Sánchez
 
 Maintainers
 ~~~~~~~~~~~
@@ -92,6 +86,14 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/13.0/stock_landed_costs_currency>`_ project on GitHub.
+.. |maintainer-cesar-tecnativa| image:: https://github.com/cesar-tecnativa.png?size=40px
+    :target: https://github.com/cesar-tecnativa
+    :alt: cesar-tecnativa
+
+Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
+
+|maintainer-cesar-tecnativa| 
+
+This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/13.0/stock_landed_costs_security>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
