@@ -21,6 +21,7 @@ setuptools.setup(
         'odoo13-addon-stock_landed_costs_currency',
         'odoo13-addon-stock_landed_costs_delivery',
         'odoo13-addon-stock_landed_costs_purchase_auto',
+        'odoo13-addon-stock_landed_costs_security',
         'odoo13-addon-stock_lock_lot',
         'odoo13-addon-stock_lot_scrap',
         'odoo13-addon-stock_move_assign_picking_hook',
