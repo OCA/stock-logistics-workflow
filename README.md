@@ -45,6 +45,7 @@ addon | version | maintainers | summary
 [stock_landed_costs_currency](stock_landed_costs_currency/) | 13.0.1.0.0 |  | Stock Landed Costs Currency
 [stock_landed_costs_delivery](stock_landed_costs_delivery/) | 13.0.1.0.0 | [![victoralmau](https://github.com/victoralmau.png?size=30px)](https://github.com/victoralmau) | Stock landed costs delivery
 [stock_landed_costs_purchase_auto](stock_landed_costs_purchase_auto/) | 13.0.1.0.0 | [![victoralmau](https://github.com/victoralmau.png?size=30px)](https://github.com/victoralmau) | Stock landed costs purchase auto
+[stock_landed_costs_security](stock_landed_costs_security/) | 13.0.1.0.0 | [![cesar-tecnativa](https://github.com/cesar-tecnativa.png?size=30px)](https://github.com/cesar-tecnativa) | Stock landed costs security
 [stock_lock_lot](stock_lock_lot/) | 13.0.1.0.0 |  | Stock Lock Lot
 [stock_lot_scrap](stock_lot_scrap/) | 13.0.1.0.1 |  | This module adds a button in Production Lot/Serial Number view form to Scrap all products contained.
 [stock_move_assign_picking_hook](stock_move_assign_picking_hook/) | 13.0.1.1.0 |  | Stock Move picking assignment hook
