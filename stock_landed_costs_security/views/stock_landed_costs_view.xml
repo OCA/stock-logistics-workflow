@@ -19,7 +19,7 @@
         id="menu_landed_costs"
         sequence="30"
         action="stock_landed_costs.action_stock_landed_cost"
-        groups="stock.group_stock_manager,stock.group_stock_user,stock_landed_costs_security.group_stock_landed_costs_security_user"
+        groups="stock_landed_costs_security.group_stock_landed_costs_security_user"
         web_icon="stock_landed_costs_security,static/description/icon.png"
     />
 </odoo>
