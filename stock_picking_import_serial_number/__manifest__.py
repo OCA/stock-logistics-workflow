@@ -3,7 +3,7 @@
 {
     "name": "Stock Picking Import Serial Numbers",
     "summary": "Import S/N from excel file for incoming pickings",
-    "version": "13.0.1.0.0",
+    "version": "13.0.1.0.1",
     "development_status": "Beta",
     "category": "stock",
     "website": "https://github.com/OCA/stock-logistics-workflow",
