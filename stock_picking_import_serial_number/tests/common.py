@@ -1,4 +1,5 @@
 # Copyright 2022 Tecnativa - Sergio Teruel
+# Copyright 2022 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 
@@ -26,14 +27,14 @@ class CommonStockPickingImportSerial(object):
     @classmethod
     def _create_product(cls, tracking="lot", reference=None):
         name = "{tracking}".format(tracking=tracking)
-        return cls.env["product.product"].create(
-            {
-                "name": name,
-                "type": "product",
-                "tracking": tracking,
-                "default_code": reference,
-            }
-        )
+        vals = {
+            "name": name,
+            "type": "product",
+            "tracking": tracking,
+        }
+        if reference:
+            vals["default_code"] = reference
+        return cls.env["product.product"].create(vals)
 
     @classmethod
     def _create_picking(cls):
