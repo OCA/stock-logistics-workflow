@@ -13,6 +13,5 @@ class StockPickingType(models.Model):
             ("unassigned_owner", "Unassigned owner"),
             ("picking_partner", "Picking partner"),
         ],
-        string="Owner restriction",
         default="standard_behavior",
     )
