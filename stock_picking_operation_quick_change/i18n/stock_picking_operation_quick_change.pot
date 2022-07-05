@@ -19,6 +19,11 @@ msgid "Actual destination location"
 msgstr ""
 
 #. module: stock_picking_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__allowed_product_ids
+msgid "Allowed Product"
+msgstr ""
+
+#. module: stock_picking_operation_quick_change
 #: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
 msgid "Apply"
 msgstr ""
@@ -98,6 +103,16 @@ msgstr ""
 #. module: stock_picking_operation_quick_change
 #: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__old_location_dest_id
 msgid "Old destination location"
+msgstr ""
+
+#. module: stock_picking_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__picking_id
+msgid "Picking"
+msgstr ""
+
+#. module: stock_picking_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__product_id
+msgid "Product"
 msgstr ""
 
 #. module: stock_picking_operation_quick_change
