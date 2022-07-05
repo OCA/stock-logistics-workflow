@@ -16,18 +16,6 @@ class StockMove(models.Model):
         "including the quantities taken.",
     )
 
-    def _create_out_svl(self, forced_quantity=None):
-        layers = self.env["stock.valuation.layer"]
-        for move in self:
-            move = move.with_context(
-                used_in_move_id=move.id, reserved_from=move.move_orig_ids.ids
-            )
-            layer = super(StockMove, move)._create_out_svl(
-                forced_quantity=forced_quantity
-            )
-            layers |= layer
-        return layers
-
     def _create_dropshipped_svl(self, forced_quantity=None):
         layers = super(StockMove, self)._create_dropshipped_svl(
             forced_quantity=forced_quantity
@@ -36,9 +24,14 @@ class StockMove(models.Model):
             in_layer = layers.filtered(
                 lambda l: l.quantity > 0 and l.stock_move_id == move
             )
+            # FIXME: this could be more than one?, can be for multi lots layers?
+            out_layer = self.env["stock.valuation.layer"].search(
+                [("stock_move_id", "=", move.id), ("id", "!=", in_layer.id)], limit=1,
+            )
             self.env["stock.valuation.layer.usage"].sudo().create(
                 {
                     "stock_valuation_layer_id": in_layer.id,
+                    "dest_stock_valuation_layer_id": out_layer.id,
                     "stock_move_id": move.id,
                     "quantity": in_layer.quantity,
                     "value": in_layer.value,
