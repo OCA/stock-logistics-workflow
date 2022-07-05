@@ -70,7 +70,7 @@ addon | version | maintainers | summary
 [stock_picking_late_activity](stock_picking_late_activity/) | 13.0.1.0.0 | [![ernestotejeda](https://github.com/ernestotejeda.png?size=30px)](https://github.com/ernestotejeda) | Add an scheduled action that creates late picking activities
 [stock_picking_line_sequence](stock_picking_line_sequence/) | 13.0.1.0.1 |  | Manages the order of stock moves by displaying its sequence
 [stock_picking_mass_action](stock_picking_mass_action/) | 13.0.1.0.0 |  | Stock Picking Mass Action
-[stock_picking_operation_quick_change](stock_picking_operation_quick_change/) | 13.0.1.0.1 |  | Change location of all picking operations
+[stock_picking_operation_quick_change](stock_picking_operation_quick_change/) | 13.0.1.1.0 |  | Change location of all picking operations
 [stock_picking_package_preparation](stock_picking_package_preparation/) | 13.0.1.0.0 |  | Stock Picking Package Preparation
 [stock_picking_product_assortment](stock_picking_product_assortment/) | 13.0.1.0.0 | [![CarlosRoca13](https://github.com/CarlosRoca13.png?size=30px)](https://github.com/CarlosRoca13) | Stock Picking Product Assortment
 [stock_picking_purchase_order_link](stock_picking_purchase_order_link/) | 13.0.1.0.0 |  | Link between picking and purchase order
