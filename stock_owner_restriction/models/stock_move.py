@@ -15,7 +15,7 @@ class StockMove(models.Model):
         moves = self.filtered(
             lambda m: m.picking_type_id.owner_restriction == "standard_behavior"
         )
-        super(StockMove, moves)._action_assign()
+        res = super(StockMove, moves)._action_assign()
         dict_key = defaultdict(lambda: self.env["stock.move"])
         for move in self - moves:
             if move.picking_type_id.owner_restriction == "unassigned_owner":
@@ -27,6 +27,7 @@ class StockMove(models.Model):
                 StockMove,
                 moves_to_assign.with_context(force_restricted_owner_id=owner_id),
             )._action_assign()
+        return res
 
     def _update_reserved_quantity(
         self,
