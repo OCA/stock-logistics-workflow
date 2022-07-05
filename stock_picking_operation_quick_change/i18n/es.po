@@ -24,6 +24,11 @@ msgid "Actual destination location"
 msgstr "Ubicación actual de destino del albarán"
 
 #. module: stock_picking_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__allowed_product_ids
+msgid "Allowed Product"
+msgstr ""
+
+#. module: stock_picking_operation_quick_change
 #: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
 msgid "Apply"
 msgstr "Aplicar"
@@ -110,6 +115,16 @@ msgid "Old destination location"
 msgstr "Anterior ubicación de destino"
 
 #. module: stock_picking_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__picking_id
+msgid "Picking"
+msgstr ""
+
+#. module: stock_picking_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__product_id
+msgid "Product"
+msgstr ""
+
+#. module: stock_picking_operation_quick_change
 #: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
 msgid "Stock Picking"
 msgstr "Albarán"
@@ -121,7 +136,7 @@ msgid "Stock Picking Operation Wizard"
 msgstr "Albarán"
 
 #. module: stock_picking_operation_quick_change
-#: code:addons/stock_picking_operation_quick_change/wizards/stock_picking_wizard.py:66
+#: code:addons/stock_picking_operation_quick_change/wizards/stock_picking_wizard.py:0
 #, fuzzy, python-format
 msgid ""
 "You can not change operations destination location if picking state is not "
@@ -131,7 +146,7 @@ msgstr ""
 "sea %s"
 
 #. module: stock_picking_operation_quick_change
-#: code:addons/stock_picking_operation_quick_change/wizards/stock_picking_wizard.py:73
+#: code:addons/stock_picking_operation_quick_change/wizards/stock_picking_wizard.py:0
 #, fuzzy, python-format
 msgid ""
 "You cannot change destination location if any of the moves has a destination "
