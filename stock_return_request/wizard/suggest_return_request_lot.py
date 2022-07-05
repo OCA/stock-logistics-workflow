@@ -69,12 +69,14 @@ class SuggestReturnRequestLot(models.TransientModel):
             return [
                 (
                     ml.lot_id.id,
-                    "{} - {} - {}".format(ml.date, ml.name, suggested_lots_moves[ml]),
+                    "{date} - {name} - {moves}".format(
+                        date=ml.date, name=ml.name, moves=suggested_lots_moves[ml]
+                    ),
                 )
                 for ml in suggested_lots_moves.keys()
             ]
         return [
-            (x.id, "{} - {}".format(x.name, suggested_lots[x]))
+            (x.id, "{name} - {lots}".format(name=x.name, lots=suggested_lots[x]))
             for x in suggested_lots.keys()
         ]
 
@@ -86,8 +88,11 @@ class SuggestReturnRequestLot(models.TransientModel):
         return [
             (
                 ml.lot_id.id,
-                "{} - {} - {} - {}".format(
-                    ml.date, ml.lot_id.name, ml.reference, suggested_lots_moves[ml]
+                "{date} - {lot} - {ref} - {moves}".format(
+                    date=ml.date,
+                    lot=ml.lot_id.name,
+                    ref=ml.reference,
+                    moves=suggested_lots_moves[ml],
                 ),
             )
             for ml in suggested_lots_moves.keys()
