@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_picking_operation_quick_change
+# 	* stock_picking_operation_quick_change
 #
 msgid ""
 msgstr ""
@@ -20,6 +20,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__location_dest_id
 msgid "Actual destination location"
 msgstr "Localização de destino atual"
+
+#. module: stock_picking_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__allowed_product_ids
+msgid "Allowed Product"
+msgstr ""
 
 #. module: stock_picking_operation_quick_change
 #: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
@@ -48,7 +53,8 @@ msgstr "Alterar Localização de Destino da Operação"
 
 #. module: stock_picking_operation_quick_change
 #: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
-msgid "Change the destination location.\n"
+msgid ""
+"Change the destination location.\n"
 "                    <br/>"
 msgstr ""
 "Mude a localização de destino.\n"
@@ -107,6 +113,16 @@ msgid "Old destination location"
 msgstr "Antiga Localização de Destino"
 
 #. module: stock_picking_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__picking_id
+msgid "Picking"
+msgstr ""
+
+#. module: stock_picking_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__product_id
+msgid "Product"
+msgstr ""
+
+#. module: stock_picking_operation_quick_change
 #: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
 msgid "Stock Picking"
 msgstr "Coleta de Estoque"
@@ -117,17 +133,21 @@ msgid "Stock Picking Operation Wizard"
 msgstr "Assistente de Operação de Coleta de Estoque"
 
 #. module: stock_picking_operation_quick_change
-#: code:addons/stock_picking_operation_quick_change/wizards/stock_picking_wizard.py:66
+#: code:addons/stock_picking_operation_quick_change/wizards/stock_picking_wizard.py:0
 #, python-format
-msgid "You can not change operations destination location if picking state is not in %s"
+msgid ""
+"You can not change operations destination location if picking state is not "
+"in %s"
 msgstr ""
 "Você não pode alterar o local de destino das operações se o estado de "
 "picking não estiver em %s"
 
 #. module: stock_picking_operation_quick_change
-#: code:addons/stock_picking_operation_quick_change/wizards/stock_picking_wizard.py:73
+#: code:addons/stock_picking_operation_quick_change/wizards/stock_picking_wizard.py:0
 #, python-format
-msgid "You cannot change destination location if any of the moves has a destination move."
+msgid ""
+"You cannot change destination location if any of the moves has a destination "
+"move."
 msgstr ""
 "Você não pode alterar a localização de destino se alguma das movimentações "
 "tiver uma movimentação de destino."
