@@ -3,6 +3,7 @@
   * Sergio Teruel
   * Pedro M. Baeza
   * David Vidal
+  * César A. Sánchez
 
 * `Pro Thai <http://prothaitechnology.com>`__:
 

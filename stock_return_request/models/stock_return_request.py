@@ -29,7 +29,6 @@ class StockReturnRequest(models.Model):
             ("customer", "Return from Customer"),
             ("internal", "Return to Internal location"),
         ],
-        string="Return type",
         required=True,
         help="Supplier - Search for incoming moves from this supplier\n"
         "Customer - Search for outgoing moves to this customer\n"
@@ -62,7 +61,6 @@ class StockReturnRequest(models.Model):
         ],
         default="date desc, id desc",
         required=True,
-        string="Return Order",
         help="The returns will be performed searching moves in " "the given order.",
         readonly=True,
         states={"draft": [("readonly", False)]},
@@ -95,7 +93,6 @@ class StockReturnRequest(models.Model):
         copy=False,
     )
     to_refund = fields.Boolean(
-        string="To refund",
         readonly=True,
         states={"draft": [("readonly", False)]},
     )
@@ -267,10 +264,10 @@ class StockReturnRequest(models.Model):
                     return_move.product_uom_qty += qty
                 done_moves.setdefault(move, self.env["stock.move"])
                 done_moves[move] += return_move
-                return_move._action_confirm()
-                # We need to be deterministic with lots to avoid autoassign
-                # thus we create manually the line
                 if line.lot_id:
+                    # We need to be deterministic with lots to avoid autoassign
+                    # thus we create manually the line
+                    return_move.with_context(skip_assign_move=True)._action_confirm()
                     # We try to reserve the stock manually so we ensure there's
                     # enough to make the return.
                     vals_list = []
@@ -312,6 +309,9 @@ class StockReturnRequest(models.Model):
                     line.returnable_move_ids += return_move
                 # If not lots, just try standard assign
                 else:
+                    return_move._action_confirm()
+                    # Force assign because the reservation method of picking type
+                    # operation can be "manual" and the products would not be reserved
                     return_move._action_assign()
                     if return_move.state == "assigned":
                         return_move.quantity_done = qty
@@ -334,8 +334,8 @@ class StockReturnRequest(models.Model):
             raise ValidationError(
                 _(
                     "It wasn't possible to assign stock for this returns:\n"
-                    "%s" % failed_moves_str
-                )
+                    "{failed_moves_str}"
+                ).format(failed_moves_str=failed_moves_str)
             )
         # Finish move traceability
         for move in return_moves:
@@ -397,7 +397,7 @@ class StockReturnRequest(models.Model):
 
     def do_print_return_request(self):
         return self.env.ref(
-            "stock_return_request" ".action_report_stock_return_request"
+            "stock_return_request.action_report_stock_return_request"
         ).report_action(self)
 
 
@@ -535,14 +535,15 @@ class StockReturnRequestLine(models.Model):
                 raise ValidationError(
                     _(
                         "Not enough moves to return this product.\n"
-                        "It wasn't possible to find enough moves to return %f %s"
-                        "of %s. A maximum of %f can be returned."
-                        % (
-                            line.quantity,
-                            line.product_uom_id.name,
-                            line.product_id.display_name,
-                            qty_found,
-                        )
+                        "It wasn't possible to find enough moves to return "
+                        "{line_quantity} {line_product_uom_id_name}"
+                        "of {line_product_id_displayname}. A maximum of {qty_found} "
+                        "can be returned."
+                    ).format(
+                        line_quantity=line.quantity,
+                        line_product_uom_id_name=line.product_uom_id.name,
+                        line_product_id_displayname=line.product_id.display_name,
+                        qty_found=qty_found,
                     )
                 )
         return moves_for_return
@@ -577,16 +578,16 @@ class StockReturnRequestLine(models.Model):
                 _(
                     """
                 You cannot have two open Stock Return Requests with the same
-                product (%s), locations (%s, %s) partner (%s) and lot.\n
+                product ({product_id}), locations ({return_from_location},
+                 {return_to_location}) partner ({partner_id}) and lot.\n
                 Please first validate the first return request with this
                 product before creating a new one.
                 """
-                )
-                % (
-                    res.product_id.display_name,
-                    res.request_id.return_from_location.display_name,
-                    res.request_id.return_to_location.display_name,
-                    res.request_id.partner_id.name,
+                ).format(
+                    product_id=res.product_id.display_name,
+                    return_from_location=res.request_id.return_from_location.display_name,
+                    return_to_location=res.request_id.return_to_location.display_name,
+                    partner_id=res.request_id.partner_id.name,
                 )
             )
         return res

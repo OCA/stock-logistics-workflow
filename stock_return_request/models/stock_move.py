@@ -12,6 +12,7 @@ class StockMove(models.Model):
         compute="_compute_qty_returnable",
         readonly=True,
         store=True,
+        recursive=True,
     )
 
     @api.depends(
@@ -47,3 +48,9 @@ class StockMove(models.Model):
                 qty += sum(mls.mapped("product_uom_qty"))
             qty -= move.returned_move_ids._get_lot_returnable_qty(lot_id)
         return qty
+
+    def _action_assign(self):
+        if self.env.context.get("skip_assign_move", False):
+            # Avoid assign stock moves allowing create stock move lines manually
+            return
+        return super(StockMove, self)._action_assign()

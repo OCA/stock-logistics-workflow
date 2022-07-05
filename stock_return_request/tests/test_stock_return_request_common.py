@@ -3,10 +3,10 @@
 from dateutil.relativedelta import relativedelta
 
 from odoo import fields
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class StockReturnRequestCase(SavepointCase):
+class StockReturnRequestCase(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -128,6 +128,8 @@ class StockReturnRequestCase(SavepointCase):
                             "product_uom_qty": 10.0,
                             "product_uom": cls.prod_1.uom_id.id,
                             "quantity_done": 10.0,
+                            "location_id": cls.supplier_loc.id,
+                            "location_dest_id": cls.wh1.lot_stock_id.id,
                         },
                     ),
                     (
@@ -139,6 +141,8 @@ class StockReturnRequestCase(SavepointCase):
                             "product_uom_qty": 20.0,
                             "product_uom": cls.prod_2.uom_id.id,
                             "quantity_done": 20.0,
+                            "location_id": cls.supplier_loc.id,
+                            "location_dest_id": cls.wh1.lot_stock_id.id,
                         },
                     ),
                     (
@@ -149,6 +153,8 @@ class StockReturnRequestCase(SavepointCase):
                             "product_id": cls.prod_3.id,
                             "product_uom_qty": 30.0,
                             "product_uom": cls.prod_3.uom_id.id,
+                            "location_id": cls.supplier_loc.id,
+                            "location_dest_id": cls.wh1.lot_stock_id.id,
                         },
                     ),
                     (
@@ -159,7 +165,8 @@ class StockReturnRequestCase(SavepointCase):
                             "product_id": cls.prod_1.id,
                             "product_uom_qty": 50.0,
                             "product_uom": cls.prod_1.uom_id.id,
-                            "location_dest_id": cls.location_child_1,
+                            "location_dest_id": cls.location_child_1.id,
+                            "location_id": cls.supplier_loc.id,
                         },
                     ),
                     (
@@ -170,7 +177,8 @@ class StockReturnRequestCase(SavepointCase):
                             "product_id": cls.prod_1.id,
                             "product_uom_qty": 75.0,
                             "product_uom": cls.prod_1.uom_id.id,
-                            "location_dest_id": cls.location_child_2,
+                            "location_dest_id": cls.location_child_2.id,
+                            "location_id": cls.supplier_loc.id,
                         },
                     ),
                 ],
@@ -227,6 +235,8 @@ class StockReturnRequestCase(SavepointCase):
                             "product_uom_qty": 90.0,
                             "product_uom": cls.prod_1.uom_id.id,
                             "quantity_done": 90.0,
+                            "location_id": cls.supplier_loc.id,
+                            "location_dest_id": cls.wh1.lot_stock_id.id,
                         },
                     ),
                     (
@@ -238,6 +248,8 @@ class StockReturnRequestCase(SavepointCase):
                             "product_uom_qty": 80.0,
                             "product_uom": cls.prod_2.uom_id.id,
                             "quantity_done": 90.0,
+                            "location_id": cls.supplier_loc.id,
+                            "location_dest_id": cls.wh1.lot_stock_id.id,
                         },
                     ),
                     (
@@ -248,6 +260,8 @@ class StockReturnRequestCase(SavepointCase):
                             "product_id": cls.prod_3.id,
                             "product_uom_qty": 70.0,
                             "product_uom": cls.prod_3.uom_id.id,
+                            "location_id": cls.supplier_loc.id,
+                            "location_dest_id": cls.wh1.lot_stock_id.id,
                         },
                     ),
                 ],
@@ -304,6 +318,8 @@ class StockReturnRequestCase(SavepointCase):
                             "product_uom_qty": 10.0,
                             "product_uom": cls.prod_1.uom_id.id,
                             "quantity_done": 10.0,
+                            "location_id": cls.wh1.lot_stock_id.id,
+                            "location_dest_id": cls.customer_loc.id,
                         },
                     ),
                     (
@@ -315,6 +331,8 @@ class StockReturnRequestCase(SavepointCase):
                             "product_uom_qty": 20.0,
                             "product_uom": cls.prod_2.uom_id.id,
                             "quantity_done": 20.0,
+                            "location_id": cls.wh1.lot_stock_id.id,
+                            "location_dest_id": cls.customer_loc.id,
                         },
                     ),
                 ],
@@ -335,6 +353,8 @@ class StockReturnRequestCase(SavepointCase):
                             "product_uom_qty": 10.0,
                             "product_uom": cls.prod_1.uom_id.id,
                             "quantity_done": 10.0,
+                            "location_id": cls.wh1.lot_stock_id.id,
+                            "location_dest_id": cls.customer_loc.id,
                         },
                     ),
                     (
@@ -346,6 +366,8 @@ class StockReturnRequestCase(SavepointCase):
                             "product_uom_qty": 10.0,
                             "product_uom": cls.prod_2.uom_id.id,
                             "quantity_done": 10.0,
+                            "location_id": cls.wh1.lot_stock_id.id,
+                            "location_dest_id": cls.customer_loc.id,
                         },
                     ),
                 ],
