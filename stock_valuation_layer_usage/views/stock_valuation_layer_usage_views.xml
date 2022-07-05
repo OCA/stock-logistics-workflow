@@ -9,6 +9,7 @@
                         <field name="product_id" />
                         <field name="stock_move_id" />
                         <field name="stock_valuation_layer_id" />
+                        <field name="dest_stock_valuation_layer_id" />
                         <field name="quantity" />
                         <field name="value" />
                         <field name="company_id" groups="base.group_multi_company" />
@@ -24,9 +25,10 @@
             <tree edit="0" create="0">
                 <field name="product_id" />
                 <field name="stock_valuation_layer_id" />
+                <field name="dest_stock_valuation_layer_id" />
                 <field name="stock_move_id" />
-                <field name="quantity" />
-                <field name="value" />
+                <field name="quantity" sum="Quantity" />
+                <field name="value" sum="Value" />
                 <field name="company_id" groups="base.group_multi_company" />
             </tree>
         </field>
@@ -38,6 +40,7 @@
             <search>
                 <field name="product_id" />
                 <field name="stock_valuation_layer_id" />
+                <field name="dest_stock_valuation_layer_id" />
                 <field name="stock_move_id" />
                 <field name="quantity" />
                 <field name="value" />

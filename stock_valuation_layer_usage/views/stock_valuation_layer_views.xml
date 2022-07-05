@@ -8,6 +8,13 @@
                 <page name="usage" string="Usage">
                     <field name="usage_ids" />
                 </page>
+                <page
+                    name="incoming_usage"
+                    string="Incoming Usage"
+                    attrs="{'invisible': [('incoming_usage_ids', '=', [])]}"
+                >
+                    <field name="incoming_usage_ids" />
+                </page>
             </notebook>
         </field>
     </record>
