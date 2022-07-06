@@ -82,3 +82,53 @@ class TestStockPickingWarnMessage(SavepointCase):
         self.assertEqual(
             picking.picking_warn_msg, self.warn_msg_parent + "\n" + self.warn_msg
         )
+
+    def test_compute_picking_warn(self):
+        picking = self.env["stock.picking"].create(
+            {
+                "partner_id": self.partner.id,
+                "picking_type_id": self.picking_type_out.id,
+                "location_id": self.picking_type_out.default_location_src_id.id,
+                "location_dest_id": self.customer_location.id,
+                "move_lines": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": self.product.name,
+                            "product_id": self.product.id,
+                            "product_uom": self.product.uom_id.id,
+                            "product_uom_qty": 1,
+                        },
+                    ),
+                ],
+            }
+        )
+        self.partner.update({"picking_warn": "block"})
+        self.assertEqual(picking.picking_warn, "block")
+        self.partner.update({"picking_warn": "warning"})
+        self.assertEqual(picking.picking_warn, "warning")
+
+        # Check that block always overrules warning
+        self.partner.update({"parent_id": self.parent.id})
+        self.parent.update({"picking_warn": "warning"})
+        self.partner.update({"picking_warn": "block"})
+        self.assertEqual(picking.picking_warn, "block")
+        self.parent.update({"picking_warn": "block"})
+        self.partner.update({"picking_warn": "warning"})
+        self.assertEqual(picking.picking_warn, "block")
+
+        # We should still see the warning of the partner even when the parent partner
+        # has no warning set
+        self.parent.update({"picking_warn": "no-message"})
+        self.assertEqual(picking.picking_warn, "warning")
+
+        # When both the partner and the parent partner have no message set we expect
+        # to see that also in the picking
+        self.partner.update({"picking_warn": "no-message"})
+        self.assertEqual(picking.picking_warn, "no-message")
+
+        # On the other hand even when the partner has no warning set we still see
+        # the one from the parent
+        self.parent.update({"picking_warn": "warning"})
+        self.assertEqual(picking.picking_warn, "warning")
