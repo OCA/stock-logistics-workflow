@@ -4,12 +4,11 @@
 {
     "name": "Product Supplierinfo Picking",
     "version": "12.0.1.0.0",
-    "author": "ForgeFlow, "
-              "Odoo Community Association (OCA)",
+    "author": "ForgeFlow, " "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "category": "Stock",
     "summary": "This module makes the product supplier code visible "
-               "in the stock moves of a picking.",
+    "in the stock moves of a picking.",
     "license": "AGPL-3",
     "depends": [
         "stock",
