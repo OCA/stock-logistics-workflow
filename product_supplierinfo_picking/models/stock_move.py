@@ -7,7 +7,6 @@ from odoo import api, fields, models
 class StockMove(models.Model):
     _inherit = "stock.move"
 
-    @api.multi
     @api.depends(
         "picking_id.partner_id", "product_id", "product_id.seller_ids.product_code"
     )
