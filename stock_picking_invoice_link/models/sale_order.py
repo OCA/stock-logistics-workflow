@@ -28,7 +28,9 @@ class SaleOrderLine(models.Model):
             ):
                 continue
             invoice_lines = stock_move.invoice_line_ids.filtered(
-                lambda invl: skip_check_invoice_state or invl.move_id.state != "cancel"
+                lambda invl: skip_check_invoice_state
+                or invl.move_id.state != "cancel"
+                and invl.move_id.move_type in {"out_invoice", "out_refund"}
             )
             invoiced_qty = 0
             for inv_line in invoice_lines:
