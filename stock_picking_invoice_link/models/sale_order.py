@@ -15,7 +15,9 @@ class SaleOrderLine(models.Model):
                 and not (
                     any(
                         inv.state != "cancel"
-                        for inv in mv.invoice_line_ids.mapped("move_id")
+                        for inv in mv.invoice_line_ids.mapped("move_id").filtered(
+                            lambda x: x.type in ("out_invoice", "out_refund")
+                        )
                     )
                 )
                 and not mv.scrapped
