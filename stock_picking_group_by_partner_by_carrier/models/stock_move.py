@@ -55,8 +55,8 @@ class StockMove(models.Model):
                 subtype_id=self.env.ref("mail.mt_note").id,
             )
 
-    def _domain_search_picking_for_assignation(self):
-        domain = super()._domain_search_picking_for_assignation()
+    def _search_picking_for_assignation_domain(self):
+        domain = super()._search_picking_for_assignation_domain()
         if (
             not self.picking_type_id.group_pickings
             or self.partner_id.disable_picking_grouping
