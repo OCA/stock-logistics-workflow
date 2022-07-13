@@ -15,12 +15,15 @@
 **stock_batch_picking**
 
 * `Camptocamp <https://www.camptocamp.com>`_:
+
   * Cyril Gaudin
 
 * `Tecnativa <https://www.tecnativa.com>`_:
 
   * Carlos Dauden
   * Sergio Teruel
+  * César A. Sánchez
+
 * `Trobz <https://trobz.com>`_:
 
     * Son Ho <sonhd@trobz.com>
