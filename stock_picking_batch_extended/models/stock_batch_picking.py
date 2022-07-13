@@ -9,8 +9,7 @@ class StockBatchPicking(models.Model):
     """This object allow to manage multiple stock.picking at the same time."""
 
     # renamed stock.batch.picking -> stock.picking.batch
-    _inherit = ["stock.picking.batch", "mail.thread", "mail.activity.mixin"]
-    _name = "stock.picking.batch"
+    _inherit = "stock.picking.batch"
 
     name = fields.Char(
         index=True,
@@ -30,7 +29,6 @@ class StockBatchPicking(models.Model):
     )
 
     date = fields.Date(
-        string="Date",
         required=True,
         readonly=True,
         index=True,
@@ -69,7 +67,7 @@ class StockBatchPicking(models.Model):
         help="List of active picking managed by this batch.",
     )
 
-    notes = fields.Text("Notes", help="free form remarks")
+    notes = fields.Text(help="free form remarks")
 
     move_lines = fields.Many2many(
         comodel_name="stock.move",
@@ -195,7 +193,7 @@ class StockBatchPicking(models.Model):
         and set batches states to cancel too.
         """
         self.mapped("picking_ids").action_cancel()
-        super().action_cancel()
+        return super().action_cancel()
 
     def action_assign(self):
         """Check if batches pickings are available."""
