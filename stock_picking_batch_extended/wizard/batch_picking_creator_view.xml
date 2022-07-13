@@ -25,7 +25,7 @@
                     attrs="{'invisible': [('batch_by_group', '=', False)]}"
                 >
                     <field name="group_field_ids" nolabel="1">
-                        <tree string="Group by field" editable="bottom">
+                        <tree editable="bottom">
                             <field name="sequence" widget="handle" />
                             <field name="field_id" options="{'no_create': True}" />
                         </tree>
