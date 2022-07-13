@@ -10,10 +10,11 @@ class SaleOrder(models.Model):
         for sale_order in self:
             # change the context so we can intercept this in StockPicking.action_cancel
             proc_groups = sale_order.order_line._get_procurement_group()
-            super(
+            res = super(
                 SaleOrder,
                 sale_order.with_context(cancel_sale_group_ids=proc_groups.ids),
             ).action_cancel()
+            return res
 
     def get_name_for_delivery_line(self):
         """Get the name for the sale order displayed on the delivery note"""

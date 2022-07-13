@@ -98,6 +98,8 @@ Contributors
 
 * Phuc Tran Thanh <phuc@trobz.com>
 
+* Elliott - Glo Networks <elliott@glo.systems>
+
 Other credits
 ~~~~~~~~~~~~~
 

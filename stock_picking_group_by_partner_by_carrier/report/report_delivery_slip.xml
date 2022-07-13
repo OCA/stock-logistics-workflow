@@ -26,7 +26,7 @@
             </t>
             <t t-else="">
                 <th>
-                    <span t-esc="move.description_picking" />
+                    <span t-out="move.description_picking" />
                 </th>
             </t>
         </xpath>
@@ -88,13 +88,13 @@
                                 <td>
                                     <span
                                         t-att-class="'font-weight-bold' if remaining['is_header'] else None"
-                                        t-esc="remaining['concept']"
+                                        t-out="remaining['concept']"
                                     />
                                 </td>
                                 <td style="text-align: right">
                                     <t t-if="not remaining['is_header']">
                                         <span
-                                            t-esc="remaining['qty']"
+                                            t-out="remaining['qty']"
                                             t-options="{'widget': 'float',
                                                           'precision': rounding_to_precision(remaining['uom'].rounding)}"
                                         />
@@ -164,7 +164,7 @@
             position="replace"
         >
             <p>
-                <t t-esc="o.get_customer_refs().pop()" />
+                <t t-out="o.get_customer_refs().pop()" />
             </p>
         </xpath>
     </template>
