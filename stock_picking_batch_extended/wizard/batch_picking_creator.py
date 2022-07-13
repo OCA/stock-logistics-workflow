@@ -14,13 +14,11 @@ class StockBatchPickingCreator(models.TransientModel):
     _group_field_param = "stock_batch_picking.group_field"
 
     name = fields.Char(
-        "Name",
         required=True,
         default=lambda x: x.env["ir.sequence"].next_by_code("stock.picking.batch"),
         help="Name of the batch picking",
     )
     date = fields.Date(
-        "Date",
         required=True,
         index=True,
         default=fields.Date.context_today,
@@ -33,7 +31,7 @@ class StockBatchPickingCreator(models.TransientModel):
         default=lambda self: self._default_user_id(),
         help="The user to which the pickings are assigned",
     )
-    notes = fields.Text("Notes", help="Free form remarks")
+    notes = fields.Text(help="Free form remarks")
     batch_by_group = fields.Boolean(
         string="Create batch pickings grouped by fields",
     )
