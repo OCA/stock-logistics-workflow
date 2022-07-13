@@ -111,7 +111,7 @@ class TestBatchPicking(SavepointCase):
 
         # when no qty setup we get wizard to apply them all
         Form(
-            self.env["stock.immediate.transfer"].with_context(context)
+            self.env["stock.immediate.transfer"].with_context(**context)
         ).save().process()
 
         self.assertEqual("done", self.batch.state)
@@ -267,7 +267,7 @@ class TestBatchPicking(SavepointCase):
         context = self.batch.action_transfer().get("context")
         # confirm transfer action creation
         Form(
-            self.env["stock.backorder.confirmation"].with_context(context)
+            self.env["stock.backorder.confirmation"].with_context(**context)
         ).save().process()
         self.assertEqual("done", self.picking.state)
         self.assertEqual("done", self.picking2.state)
@@ -302,7 +302,7 @@ class TestBatchPicking(SavepointCase):
         self.batch.action_assign()
         context = self.batch.action_transfer().get("context")
         Form(
-            self.env["stock.immediate.transfer"].with_context(context)
+            self.env["stock.immediate.transfer"].with_context(**context)
         ).save().process()
         self.assertEqual("done", self.batch.state)
         self.assertEqual("done", self.picking.state)
@@ -347,7 +347,7 @@ class TestBatchPicking(SavepointCase):
         self.batch.action_assign()
         context = self.batch.action_transfer()
         Form(
-            self.env["stock.immediate.transfer"].with_context(context)
+            self.env["stock.immediate.transfer"].with_context(**context)
         ).save().process()
         self.assertEqual("done", self.batch.state)
         self.assertEqual("assigned", self.picking.state)
@@ -380,7 +380,7 @@ class TestBatchPicking(SavepointCase):
         context = self.batch.action_transfer().get("context")
         # Create backorder? action
         Form(
-            self.env["stock.backorder.confirmation"].with_context(context)
+            self.env["stock.backorder.confirmation"].with_context(**context)
         ).save().process()
         self.batch.remove_undone_pickings()
         self.assertEqual(len(self.batch.picking_ids), 2)
