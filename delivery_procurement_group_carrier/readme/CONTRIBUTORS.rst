@@ -5,3 +5,5 @@
   * Jacques-Etienne Baudoux <je@bcim.be>
 * TROBZ:
   * Phuc Tran Thanh <phuc@trobz.com>
+* Glo Networks:
+  * Elliott Bristow <elliott@glo.systems>

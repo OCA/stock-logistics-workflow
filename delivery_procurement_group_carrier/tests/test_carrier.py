@@ -10,7 +10,7 @@ from odoo.addons.sale.tests.common import TestSaleCommonBase
 @tagged("post_install", "-at_install")
 class TestProcurementGroupCarrier(TestSaleCommonBase):
     # FIXME: TestSale is very heavy and create tons of records w/ no tracking disable
-    # for every test. Move to SavepointCase!
+    # for every test. Move to TransactionCase!
     def setUp(self):
         super().setUp()
         self.carrier1 = self.env["delivery.carrier"].create(
@@ -43,3 +43,5 @@ class TestProcurementGroupCarrier(TestSaleCommonBase):
         so.action_confirm()
         self.assertTrue(so.picking_ids)
         self.assertEqual(so.procurement_group_id.carrier_id, so.carrier_id)
+        so.action_draft()
+        self.assertFalse(so.procurement_group_id)
