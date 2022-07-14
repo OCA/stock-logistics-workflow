@@ -9,118 +9,119 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-01 02:08+0000\n"
-"PO-Revision-Date: 2017-06-01 02:08+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"PO-Revision-Date: 2022-07-14 14:06+0000\n"
+"Last-Translator: Aserti Global Solutions, S.L. <soporte@aserti.es>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: stock_split_picking
 #: model:ir.ui.view,arch_db:stock_split_picking.view_stock_split_picking
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. module: stock_split_picking
 #: code:addons/stock_split_picking/models/stock_picking.py:100
 #, python-format
 msgid "Cannot split off all moves from picking %s"
-msgstr ""
+msgstr "No puede dividir todos los movimientos del albarán %s"
 
 #. module: stock_split_picking
 #: code:addons/stock_split_picking/models/stock_picking.py:94
 #, python-format
 msgid "Cannot split picking %s in state %s"
-msgstr ""
+msgstr "No puede dividir el albarán %s en el estado %s"
 
 #. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking_create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creado por"
 
 #. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking_create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creado el"
 
 #. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nombre a Mostrar"
 
 #. module: stock_split_picking
 #: selection:stock.split.picking,mode:0
 msgid "Done quantities"
-msgstr ""
+msgstr "Cantidades hechas"
 
 #. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking_id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Última Modificación en"
 
 #. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking_write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última actualización de"
 
 #. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking_write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última Actualización el"
 
 #. module: stock_split_picking
 #: code:addons/stock_split_picking/models/stock_picking.py:22
 #, python-format
 msgid "Mark as todo this picking please."
-msgstr ""
+msgstr "Marque por hacer este albarán por favor."
 
 #. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking_mode
 msgid "Mode"
-msgstr ""
+msgstr "Modo"
 
 #. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking_move_ids
 msgid "Move"
-msgstr ""
+msgstr "Movimiento"
 
 #. module: stock_split_picking
 #: selection:stock.split.picking,mode:0
 msgid "One picking per move"
-msgstr ""
+msgstr "Un albarán por movimiento"
 
 #. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking_picking_ids
 msgid "Picking"
-msgstr ""
+msgstr "Albarán"
 
 #. module: stock_split_picking
 #: selection:stock.split.picking,mode:0
 msgid "Select move lines to split off"
-msgstr ""
+msgstr "Seleccione las líneas de movimientos para dividir"
 
 #. module: stock_split_picking
 #: model:ir.ui.view,arch_db:stock_split_picking.view_picking_form
 #: model:ir.ui.view,arch_db:stock_split_picking.view_stock_split_picking
 msgid "Split"
-msgstr ""
+msgstr "Dividir"
 
 #. module: stock_split_picking
 #: model:ir.model,name:stock_split_picking.model_stock_split_picking
 msgid "Split a picking"
-msgstr ""
+msgstr "Dividir un albarán"
 
 #. module: stock_split_picking
 #: model:ir.actions.act_window,name:stock_split_picking.action_stock_split_picking
 msgid "Split pickings"
-msgstr ""
+msgstr "Dividir albaranes"
 
 #. module: stock_split_picking
 #: code:addons/stock_split_picking/models/stock_picking.py:78
@@ -129,6 +130,8 @@ msgid ""
 "The backorder <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d"
 "\">%s</a> has been created."
 msgstr ""
+"El pedido pendiente <a href=\\\"#\\\" data-oe-model=\\\"stock.picking\\\" "
+"data-oe-id=\\\"%d\\\">%s</a> ha sido creado."
 
 #. module: stock_split_picking
 #: model:ir.model,name:stock_split_picking.model_stock_picking
@@ -140,9 +143,9 @@ msgstr "Transferir"
 #, python-format
 msgid ""
 "You must enter done quantity in order to split your picking in several ones."
-msgstr ""
+msgstr "Debe ingresar la cantidad hecha para dividir el albarán en varios."
 
 #. module: stock_split_picking
 #: model:ir.ui.view,arch_db:stock_split_picking.view_stock_split_picking
 msgid "or"
-msgstr ""
+msgstr "o"
