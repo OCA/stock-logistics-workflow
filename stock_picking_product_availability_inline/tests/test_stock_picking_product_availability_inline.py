@@ -1,9 +1,10 @@
 # Copyright 2022 Tecnativa - Ernesto Tejeda
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests import Form, SavepointCase
+from odoo.tests import Form, SavepointCase, tagged
 
 
+@tagged("post_install", "-at_install")
 class TestStockPickingProductAvailabilityInline(SavepointCase):
     @classmethod
     def setUpClass(cls):
@@ -18,40 +19,23 @@ class TestStockPickingProductAvailabilityInline(SavepointCase):
         cls.warehouse2 = cls.env["stock.warehouse"].create(
             {"name": "Warehouse 2", "code": "AI2"}
         )
-        cls.inventory = cls.env["stock.inventory"].create(
+        StockQuant = cls.env["stock.quant"]
+        StockQuant.create(
             {
-                "name": "Initial product qty",
-                "location_ids": [(6, 0, [cls.warehouse1.lot_stock_id.id])],
-                "product_ids": [(6, 0, [cls.product.id])],
-            }
-        )
-        cls.inventory.action_start()
-        cls.env["stock.inventory.line"].create(
-            {
-                "inventory_id": cls.inventory.id,
                 "product_id": cls.product.id,
-                "product_qty": 10,
+                "product_uom_id": cls.product.uom_id.id,
                 "location_id": cls.warehouse1.lot_stock_id.id,
+                "quantity": 10.00,
             }
         )
-        cls.inventory.action_validate()
-        cls.inventory2 = cls.env["stock.inventory"].create(
+        StockQuant.create(
             {
-                "name": "Initial product qty 2",
-                "location_ids": [(6, 0, [cls.warehouse2.lot_stock_id.id])],
-                "product_ids": [(6, 0, [cls.product.id])],
-            }
-        )
-        cls.inventory2.action_start()
-        cls.env["stock.inventory.line"].create(
-            {
-                "inventory_id": cls.inventory2.id,
                 "product_id": cls.product.id,
-                "product_qty": 20,
+                "product_uom_id": cls.product.uom_id.id,
                 "location_id": cls.warehouse2.lot_stock_id.id,
+                "quantity": 20.00,
             }
         )
-        cls.inventory2.action_validate()
 
     def test_stock_picking_product_rec_name(self):
         self.env.ref("product.decimal_product_uom").write({"digits": 3})
@@ -71,9 +55,9 @@ class TestStockPickingProductAvailabilityInline(SavepointCase):
             self.assertTrue(
                 line_form.product_id.display_name.endswith("(10.000 Units)")
             )
-        # Show free_qty in warehouse1
+        # Show free_qty in warehouse2
         self.assertEqual(
-            self.product.with_context(warehouse=self.warehouse1.id).free_qty, 20.0,
+            self.product.with_context(warehouse=self.warehouse2.id).free_qty, 20.0,
         )
         picking_form = Form(
             self.env["stock.picking"].with_context(
