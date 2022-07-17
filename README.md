@@ -55,7 +55,7 @@ addon | version | maintainers | summary
 [stock_picking_show_backorder](stock_picking_show_backorder/) | 14.0.1.0.0 |  | Provides a new field on stock pickings, allowing to display the corresponding backorders.
 [stock_picking_show_return](stock_picking_show_return/) | 14.0.1.0.1 |  | Show returns on stock pickings
 [stock_picking_warn_message](stock_picking_warn_message/) | 14.0.1.0.1 |  | Add a popup warning on picking to ensure warning is populated
-[stock_production_lot_active](stock_production_lot_active/) | 14.0.1.0.0 | [![ThomasBinsfeld](https://github.com/ThomasBinsfeld.png?size=30px)](https://github.com/ThomasBinsfeld) | Allow to archive/unarchive a lot.
+[stock_production_lot_active](stock_production_lot_active/) | 14.0.1.0.1 | [![ThomasBinsfeld](https://github.com/ThomasBinsfeld.png?size=30px)](https://github.com/ThomasBinsfeld) | Allow to archive/unarchive a lot.
 [stock_push_delay](stock_push_delay/) | 14.0.1.0.1 |  | Manual evaluation of Push rules
 [stock_putaway_by_route](stock_putaway_by_route/) | 14.0.1.0.0 |  | Add a match by route on putaway, after product and categories
 [stock_putaway_hook](stock_putaway_hook/) | 14.0.1.0.0 |  | Add hooks allowing modules to add more putaway strategies
