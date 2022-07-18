@@ -30,3 +30,28 @@ class StockMove(models.Model):
                 sp_product_stock_inline=False, warehouse=self.warehouse_id.id
             )
         return super(StockMove, sp_line).onchange_product_id()
+
+
+class StockMoveLine(models.Model):
+    _inherit = "stock.move.line"
+
+    picking_type_warehouse_id = fields.Many2one(
+        comodel_name="stock.warehouse",
+        string="Stock picking type warehouse",
+        related="picking_id.picking_type_id.warehouse_id",
+        store=True,
+        readonly=False,
+    )
+
+    @api.onchange("product_id")
+    def onchange_product_id(self):
+        """Avoid calling product name_get method several times
+        with 'sp_product_stock_inline' context key.
+        """
+        sp_line = self
+        if self.env.context.get("sp_product_stock_inline"):
+            sp_line = self.with_context(
+                sp_product_stock_inline=False,
+                warehouse=self.picking_type_warehouse_id.id,
+            )
+        return super(StockMoveLine, sp_line).onchange_product_id()

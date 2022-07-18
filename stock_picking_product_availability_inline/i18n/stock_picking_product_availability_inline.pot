@@ -19,11 +19,17 @@ msgid "Product"
 msgstr ""
 
 #. module: stock_picking_product_availability_inline
+#: model:ir.model,name:stock_picking_product_availability_inline.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: stock_picking_product_availability_inline
 #: model:ir.model,name:stock_picking_product_availability_inline.model_stock_move
 msgid "Stock Move"
 msgstr ""
 
 #. module: stock_picking_product_availability_inline
+#: model:ir.model.fields,field_description:stock_picking_product_availability_inline.field_stock_move_line__picking_type_warehouse_id
 #: model:ir.model.fields,field_description:stock_picking_product_availability_inline.field_stock_picking__picking_type_warehouse_id
 msgid "Stock picking type warehouse"
 msgstr ""
