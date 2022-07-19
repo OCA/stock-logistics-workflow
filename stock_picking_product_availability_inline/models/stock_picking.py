@@ -11,8 +11,6 @@ class StockPicking(models.Model):
         comodel_name="stock.warehouse",
         string="Stock picking type warehouse",
         related="picking_type_id.warehouse_id",
-        store=True,
-        readonly=False,
     )
 
 
@@ -39,8 +37,6 @@ class StockMoveLine(models.Model):
         comodel_name="stock.warehouse",
         string="Stock picking type warehouse",
         related="picking_id.picking_type_id.warehouse_id",
-        store=True,
-        readonly=False,
     )
 
     @api.onchange("product_id")
