@@ -36,8 +36,12 @@ class StockPicking(models.Model):
         """
         if not self.env.context.get("from_launch_stock_rule", False):
             return super().action_assign()
+        # Exclude incoming pickings
+        incoming_pickings = self.filtered(
+            lambda p: p.picking_type_id.code == "incoming"
+        )
         pickings = self.browse()
-        for picking in self:
+        for picking in self - incoming_pickings:
             method = picking.picking_type_id.reservation_method
             days_before = picking.picking_type_id.reservation_days_before
             reservation_date = fields.Date.to_date(picking.scheduled_date) - timedelta(
@@ -48,7 +52,7 @@ class StockPicking(models.Model):
             ):
                 pickings |= picking
         # Avoid raise if 'Nothing to check the availability for'
+        pickings += incoming_pickings
         if pickings:
             return super(StockPicking, pickings).action_assign()
-        else:
-            return True
+        return True
