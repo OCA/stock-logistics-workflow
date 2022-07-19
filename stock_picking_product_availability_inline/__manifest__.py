@@ -11,5 +11,4 @@
     "license": "AGPL-3",
     "depends": ["stock", "base_view_inheritance_extension"],
     "data": ["views/stock_picking_views.xml", "views/stock_move_line_views.xml"],
-    "pre_init_hook": "pre_init_hook",
 }
