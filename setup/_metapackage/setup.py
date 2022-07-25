@@ -13,6 +13,7 @@ setuptools.setup(
         'odoo13-addon-procurement_auto_create_group_carrier',
         'odoo13-addon-product_supplierinfo_for_customer_picking',
         'odoo13-addon-purchase_stock_picking_invoice_link',
+        'odoo13-addon-sale_line_returned_qty',
         'odoo13-addon-sale_order_deliverable_rate',
         'odoo13-addon-sale_order_global_stock_route',
         'odoo13-addon-sale_stock_mto_as_mts_orderpoint',
