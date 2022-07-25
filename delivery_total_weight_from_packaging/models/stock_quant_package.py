@@ -1,4 +1,5 @@
 # Copyright 2021 Camptocamp SA
+# Copyright 2022 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
 from odoo import api, fields, models
@@ -25,7 +26,11 @@ class StockQuantPackage(models.Model):
     @api.depends_context("picking_id")
     def _compute_shipping_weight(self):
         for package in self:
-            package.shipping_weight = package._get_weight_from_packaging()
+            # When you ship the parcel, the weight should not be erased and
+            # remain the one that was encoded during the packing step.
+            package.shipping_weight = (
+                package.shipping_weight or package._get_weight_from_packaging()
+            )
 
     def _get_weight_from_packaging(self):
         # NOTE: code copied/pasted and adapter from `delivery`
