@@ -1,4 +1,5 @@
 # Copyright 2020 Camptocamp SA (http://www.camptocamp.com)
+# Copyright 2022 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from .common import TestShippingWeightCommon
 
@@ -55,6 +56,9 @@ class TestWeight(TestShippingWeightCommon):
         self.assertEqual(picking.shipping_weight, 16)
         pack.shipping_weight = 6
         picking.invalidate_cache(["shipping_weight"])
+        self.assertEqual(picking.shipping_weight, 15)
+        picking._action_done()
+        # Check the manualy set weight is not lost when quants are inserted in the package
         self.assertEqual(picking.shipping_weight, 15)
 
     def test_package_weight(self):
