@@ -37,6 +37,7 @@ addon | version | maintainers | summary
 [procurement_auto_create_group_carrier](procurement_auto_create_group_carrier/) | 13.0.1.0.0 |  | Procurement Auto Create Group Carrier
 [product_supplierinfo_for_customer_picking](product_supplierinfo_for_customer_picking/) | 13.0.1.0.2 |  | This module makes the product customer code visible in the stock moves of a picking.
 [purchase_stock_picking_invoice_link](purchase_stock_picking_invoice_link/) | 13.0.1.0.0 |  | Adds link between purchases, pickings and invoices
+[sale_line_returned_qty](sale_line_returned_qty/) | 13.0.1.0.0 |  | Track returned quantity of sale order lines.
 [sale_order_deliverable_rate](sale_order_deliverable_rate/) | 13.0.1.0.0 |  | Rate of deliverable product on a sale order
 [sale_order_global_stock_route](sale_order_global_stock_route/) | 13.0.1.0.0 |  | Add the possibility to choose one warehouse path for an order
 [sale_stock_mto_as_mts_orderpoint](sale_stock_mto_as_mts_orderpoint/) | 13.0.1.2.3 |  | Materialize need from MTO route through orderpoint
