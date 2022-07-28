@@ -25,8 +25,8 @@ Sale Line Returned Qty Mrp
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
-Auto-install module needed to correctly compute the returned quantity of sale 
-order lines for BoM products.
+Auto-install module needed to correctly compute the returned quantity of sale
+order lines for Kit BoM products.
 
 **Table of contents**
 
