@@ -15,17 +15,19 @@ class StockPicking(models.Model):
 
     @api.multi
     def _add_follower(self):
-        for picking in self:
-            if picking.responsible:
-                types = self.env["mail.message.subtype"].search(
-                    [
-                        "|",
-                        ("res_model", "=", "stock.picking"),
-                        ("name", "=", "Discussions"),
-                    ]
-                )
+        responsible_picking_ids = self.filtered("responsible")
+        if responsible_picking_ids:
+            discussion_subtype = self.env.ref("mail.mt_comment")
+            picking_subtypes = self.env["mail.message.subtype"].search(
+                [
+                    ("res_model", "=", "stock.picking"),
+                ]
+            )
+            subtypes = discussion_subtype | picking_subtypes
+
+            for picking in responsible_picking_ids:
                 picking.message_subscribe(
-                    partner_ids=picking.responsible.ids, subtype_ids=types.ids
+                    partner_ids=picking.responsible.ids, subtype_ids=subtypes.ids
                 )
 
     @api.multi
