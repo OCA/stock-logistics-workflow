@@ -30,6 +30,11 @@ msgid "Contact"
 msgstr ""
 
 #. module: stock_picking_batch_extended_account
+#: model:ir.model.fields.selection,name:stock_picking_batch_extended_account.selection__res_partner__batch_picking_auto_invoice__no
+msgid "No"
+msgstr ""
+
+#. module: stock_picking_batch_extended_account
 #: code:addons/stock_picking_batch_extended_account/models/stock_batch_picking.py:0
 #, python-format
 msgid "Nothing to print."
@@ -43,4 +48,9 @@ msgstr ""
 #. module: stock_picking_batch_extended_account
 #: model:ir.model,name:stock_picking_batch_extended_account.model_stock_picking
 msgid "Transfer"
+msgstr ""
+
+#. module: stock_picking_batch_extended_account
+#: model:ir.model.fields.selection,name:stock_picking_batch_extended_account.selection__res_partner__batch_picking_auto_invoice__yes
+msgid "Yes"
 msgstr ""
