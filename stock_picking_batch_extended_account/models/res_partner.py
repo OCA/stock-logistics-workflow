@@ -7,7 +7,9 @@ from odoo import api, fields, models
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
-    batch_picking_auto_invoice = fields.Boolean(company_dependent=True)
+    batch_picking_auto_invoice = fields.Selection(
+        [("yes", "Yes"), ("no", "No")], default="no", company_dependent=True
+    )
 
     @api.model
     def _commercial_fields(self):

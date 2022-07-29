@@ -14,9 +14,12 @@ class StockBatchPicking(models.Model):
         report = self.env.ref("account.account_invoices_without_payment")
         return report.report_action(invoices)
 
+    def _get_domain_picking_to_invoice(self):
+        return [("partner_id.batch_picking_auto_invoice", "=", "yes")]
+
     def _get_self_with_context_to_invoice(self):
-        to_invoice = self.mapped("picking_ids").filtered(
-            lambda r: r.partner_id.batch_picking_auto_invoice
+        to_invoice = self.mapped("picking_ids").filtered_domain(
+            self._get_domain_picking_to_invoice()
         )
         return self.with_context(picking_to_invoice_in_batch=to_invoice.ids)
 
