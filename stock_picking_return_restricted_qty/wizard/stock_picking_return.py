@@ -45,8 +45,8 @@ class ReturnPickingLine(models.TransientModel):
 
     def get_returned_restricted_quantity(self, stock_move):
         """This function is created to know how many products
-            have the person who tries to create a return picking
-            on his hand."""
+        have the person who tries to create a return picking
+        on his hand."""
         qty = stock_move.product_qty
         for line in stock_move.move_dest_ids.mapped("move_line_ids"):
             if line.state in {"partially_available", "assigned"}:
