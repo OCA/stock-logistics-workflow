@@ -54,7 +54,7 @@ class StockPickingReturnRestrictedQtyTest(common.SavepointCase):
 
     def test_return_not_allowed(self):
         """On this test we create a return picking with more quantity
-            than the quantity that client have on his hand"""
+        than the quantity that client have on his hand"""
         return_picking = self.get_return_picking_wizard(self.picking)
         self.assertEqual(return_picking.product_return_moves.quantity, 20)
         return_picking.product_return_moves.quantity = 30
@@ -63,7 +63,7 @@ class StockPickingReturnRestrictedQtyTest(common.SavepointCase):
 
     def test_multiple_return(self):
         """On this test we are going to follow a sequence that a client
-            can follow if he tries to return a product"""
+        can follow if he tries to return a product"""
         wiz = self.get_return_picking_wizard(self.picking)
         wiz.product_return_moves.quantity = 10
         picking_returned_id = wiz._create_returns()[0]
