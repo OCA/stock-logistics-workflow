@@ -26,6 +26,7 @@ addon | version | maintainers | summary
 [stock_picking_filter_lot](stock_picking_filter_lot/) | 15.0.1.0.0 |  | In picking out lots' selection, filter lots based on their location
 [stock_picking_info_lot](stock_picking_info_lot/) | 15.0.1.0.0 |  | Add lot information on Stock Transfer lines
 [stock_picking_purchase_order_link](stock_picking_purchase_order_link/) | 15.0.1.0.0 |  | Link between picking and purchase order
+[stock_picking_return_restricted_qty](stock_picking_return_restricted_qty/) | 15.0.1.0.0 |  | Restrict the return to delivered quantity
 [stock_picking_sale_order_link](stock_picking_sale_order_link/) | 15.0.1.0.2 |  | Link between picking and sale order
 [stock_picking_send_by_mail](stock_picking_send_by_mail/) | 15.0.1.0.0 |  | Send stock picking by email
 [stock_picking_show_return](stock_picking_show_return/) | 15.0.1.0.0 |  | Show returns on stock pickings
