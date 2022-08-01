@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 from odoo.tests import Form, common
 
 
-class StockPickingReturnRestrictedQtyTest(common.SavepointCase):
+class StockPickingReturnRestrictedQtyTest(common.TransactionCase):
     def setUp(self):
         super().setUp()
         partner = self.env["res.partner"].create({"name": "Test"})
@@ -72,7 +72,7 @@ class StockPickingReturnRestrictedQtyTest(common.SavepointCase):
         wiz = self.get_return_picking_wizard(self.picking)
         self.assertEqual(wiz.product_return_moves.quantity, 10)
 
-        picking_returned.action_done()
+        picking_returned._action_done()
         wiz = self.get_return_picking_wizard(self.picking)
         self.assertEqual(wiz.product_return_moves.quantity, 10)
 
