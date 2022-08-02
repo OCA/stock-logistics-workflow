@@ -17,7 +17,7 @@ class StockProductionLot(models.Model):
         self, view_id=None, view_type="form", toolbar=False, submenu=False
     ):  # pragma: no cover
         """Inject the button here to avoid conflicts with other modules
-         that add a header element in the main view.
+        that add a header element in the main view.
         """
         res = super().fields_view_get(
             view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu
@@ -64,7 +64,9 @@ class StockProductionLot(models.Model):
 
     def action_scrap_lot(self):
         self.ensure_one()
-        quants = self.quant_ids.filtered(lambda x: x.location_id.usage == "internal",)
+        quants = self.quant_ids.filtered(
+            lambda x: x.location_id.usage == "internal",
+        )
         if not quants:
             raise ValidationError(
                 _("This lot doesn't contain any quant in internal location."),
@@ -78,7 +80,11 @@ class StockProductionLot(models.Model):
             .search(
                 [
                     ("company_id", "=", self.company_id.id),
-                    ("scrap_location", "=", True,),
+                    (
+                        "scrap_location",
+                        "=",
+                        True,
+                    ),
                 ],
                 limit=1,
             )
