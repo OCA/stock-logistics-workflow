@@ -8,7 +8,7 @@
     "name": "Scrap Production Lot",
     "summary": "This module adds a button in Production Lot/Serial Number "
     "view form to Scrap all products contained.",
-    "version": "13.0.1.0.1",
+    "version": "14.0.1.0.0",
     "category": "Stock",
     "license": "AGPL-3",
     "author": "Tecnativa," "Odoo Community Association (OCA)",
