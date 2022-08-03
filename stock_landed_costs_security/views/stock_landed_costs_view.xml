@@ -13,6 +13,34 @@
             </button>
         </field>
     </record>
+    <record id="stock_landed_costs.account_view_move_form_inherited" model="ir.ui.view">
+        <field
+            name="groups_id"
+            eval="[(4, ref('stock_landed_costs_security.group_stock_landed_costs_security_user'))]"
+        />
+    </record>
+    <record id="account_view_move_form_inherited" model="ir.ui.view">
+        <field name="model">account.move</field>
+        <field
+            name="inherit_id"
+            ref="stock_landed_costs.account_view_move_form_inherited"
+        />
+        <field name="arch" type="xml">
+            <button name="action_view_landed_costs" position="attributes">
+                <attribute
+                    name="groups"
+                >stock_landed_costs_security.group_stock_landed_costs_security_user
+                </attribute>
+            </button>
+            <button name="button_create_landed_costs" position="attributes">
+                <attribute
+                    name="groups"
+                    add="stock_landed_costs_security.group_stock_landed_costs_security_user"
+                    separator=","
+                />
+            </button>
+        </field>
+    </record>
 
     <menuitem
         name="Landed Costs"
