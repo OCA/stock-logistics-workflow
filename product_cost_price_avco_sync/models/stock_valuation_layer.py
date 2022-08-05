@@ -1,6 +1,7 @@
 # Copyright 2020 Tecnativa - Carlos Dauden
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+import re
 from collections import OrderedDict, defaultdict
 
 from odoo import _, api, fields, models
@@ -214,10 +215,12 @@ class StockValuationLayer(models.Model):
                 and not svl_dic["unit_cost"]
                 and not svl.stock_move_id
             ):
-                standard_price = float(svl.description.split(" ")[-1][:-1])
-                svl_dic["value"] = (
-                    standard_price * accumulated_qty
-                ) - accumulated_value
+                match_price = re.findall(r"[+-]?[0-9]+\.[0-9]+\)$", svl.description)
+                if match_price:
+                    standard_price = float(match_price[0][:-1])
+                    svl_dic["value"] = (
+                        standard_price * accumulated_qty
+                    ) - accumulated_value
             accumulated_qty = accumulated_qty + svl_dic["quantity"]
             accumulated_value = accumulated_value + svl_dic["value"]
 
@@ -331,11 +334,17 @@ class StockValuationLayer(models.Model):
                 # Manual standard_price adjustment line in layer
                 elif not unit_cost and not qty and not svl.stock_move_id:
                     unit_cost_processed = True
-                    standard_price = float(svl.description.split(" ")[-1][:-1])
-                    # TODO: Review abs in previous_qty or new_diff
-                    new_diff = standard_price - previous_unit_cost
-                    svl_dic["value"] = new_diff * previous_qty
-                    previous_unit_cost = standard_price
+                    match_price = re.findall(r"[+-]?[0-9]+\.[0-9]+\)$", svl.description)
+                    if match_price:
+                        standard_price = float(match_price[0][:-1])
+                        # TODO: Review abs in previous_qty or new_diff
+                        new_diff = standard_price - previous_unit_cost
+                        svl_dic["value"] = new_diff * previous_qty
+                        previous_unit_cost = standard_price
+                    # elif previous_qty > 0.0:
+                    #     previous_unit_cost = (
+                    #         previous_unit_cost * previous_qty + svl_dic["value"]
+                    #     ) / previous_qty
                 # Incoming or Outgoing moves without quantity and unit_cost
                 elif not qty and svl.stock_move_id:
                     svl_dic["value"] = 0.0
