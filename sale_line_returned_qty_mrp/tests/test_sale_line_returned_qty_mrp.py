@@ -38,7 +38,7 @@ class TestSaleLineReturnedQtyMrp(common.SavepointCase):
             {"bom_id": cls.bom.id, "product_id": cls.c1.id, "product_qty": 1}
         )
         cls.env["mrp.bom.line"].create(
-            {"bom_id": cls.bom.id, "product_id": cls.c2.id, "product_qty": 2}
+            {"bom_id": cls.bom.id, "product_id": cls.c2.id, "product_qty": 1}
         )
         # Add components stock
         cls.env["stock.quant"].create(
@@ -91,12 +91,12 @@ class TestSaleLineReturnedQtyMrp(common.SavepointCase):
         self.order.action_confirm()
         so_line = self.order.order_line[0]
         self.assertEqual(so_line.qty_returned, 0.0)
-        # Partial delivery one
+        # Deliver the order
         picking = self.order.picking_ids
         self.assertEqual(len(picking.move_lines), 2)
         picking.action_assign()
         self._validate_picking(picking)
         self.assertEqual(so_line.qty_returned, 0.0)
-        # Make a return for 5 units
+        # Make a return for 5 of the 10 units delivered
         self._return_picking(picking, 5.0, to_refund=True)
         self.assertEqual(so_line.qty_returned, 5.0)
