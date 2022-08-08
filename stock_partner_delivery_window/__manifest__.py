@@ -5,6 +5,7 @@
     "summary": "Define preferred delivery time windows for partners",
     "version": "14.0.1.2.0",
     "category": "Inventory",
+    "development_status": "Alpha",
     "author": "Camptocamp, ACSONE SA/NV, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "website": "https://github.com/OCA/stock-logistics-workflow",
