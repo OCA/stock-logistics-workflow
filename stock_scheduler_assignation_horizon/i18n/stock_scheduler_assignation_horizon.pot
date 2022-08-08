@@ -1,0 +1,112 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_scheduler_assignation_horizon
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_scheduler_assignation_horizon
+#: model_terms:ir.ui.view,arch_db:stock_scheduler_assignation_horizon.res_config_settings_view_form_stock
+msgid ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
+"specific.\" aria-label=\"Values set here are company-specific.\" "
+"groups=\"base.group_multi_company\" role=\"img\"/>"
+msgstr ""
+
+#. module: stock_scheduler_assignation_horizon
+#: model:ir.model.fields,field_description:stock_scheduler_assignation_horizon.field_res_config_settings__moves_assignation_horizon
+msgid "Assignation Horizon"
+msgstr ""
+
+#. module: stock_scheduler_assignation_horizon
+#: model:ir.model.fields,help:stock_scheduler_assignation_horizon.field_res_config_settings__is_moves_assignation_limited
+msgid ""
+"Check this box to prevent the scheduler from assigning moves before the "
+"horizon below"
+msgstr ""
+
+#. module: stock_scheduler_assignation_horizon
+#: model:ir.model,name:stock_scheduler_assignation_horizon.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: stock_scheduler_assignation_horizon
+#: model:ir.model,name:stock_scheduler_assignation_horizon.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: stock_scheduler_assignation_horizon
+#: model:ir.model.fields,field_description:stock_scheduler_assignation_horizon.field_procurement_group__display_name
+#: model:ir.model.fields,field_description:stock_scheduler_assignation_horizon.field_res_company__display_name
+#: model:ir.model.fields,field_description:stock_scheduler_assignation_horizon.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_scheduler_assignation_horizon
+#: model_terms:ir.ui.view,arch_db:stock_scheduler_assignation_horizon.res_config_settings_view_form_stock
+msgid "Do not schedule delivery before horizon timeframe"
+msgstr ""
+
+#. module: stock_scheduler_assignation_horizon
+#: model_terms:ir.ui.view,arch_db:stock_scheduler_assignation_horizon.res_config_settings_view_form_stock
+msgid "Horizon timeframe (in days)"
+msgstr ""
+
+#. module: stock_scheduler_assignation_horizon
+#: model:ir.model.fields,field_description:stock_scheduler_assignation_horizon.field_procurement_group__id
+#: model:ir.model.fields,field_description:stock_scheduler_assignation_horizon.field_res_company__id
+#: model:ir.model.fields,field_description:stock_scheduler_assignation_horizon.field_res_config_settings__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_scheduler_assignation_horizon
+#: model:ir.model.fields,field_description:stock_scheduler_assignation_horizon.field_res_company__is_moves_assignation_limited
+msgid "Is Moves Assignation Limited"
+msgstr ""
+
+#. module: stock_scheduler_assignation_horizon
+#: model:ir.model.fields,field_description:stock_scheduler_assignation_horizon.field_procurement_group____last_update
+#: model:ir.model.fields,field_description:stock_scheduler_assignation_horizon.field_res_company____last_update
+#: model:ir.model.fields,field_description:stock_scheduler_assignation_horizon.field_res_config_settings____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_scheduler_assignation_horizon
+#: model:ir.model.fields,field_description:stock_scheduler_assignation_horizon.field_res_company__moves_assignation_horizon
+msgid "Moves Assignation Horizon"
+msgstr ""
+
+#. module: stock_scheduler_assignation_horizon
+#: model:ir.model.fields,help:stock_scheduler_assignation_horizon.field_res_config_settings__moves_assignation_horizon
+msgid ""
+"Only reserve moves that are scheduled within the specified number of days"
+msgstr ""
+
+#. module: stock_scheduler_assignation_horizon
+#: model:ir.model,name:stock_scheduler_assignation_horizon.model_procurement_group
+msgid "Procurement Group"
+msgstr ""
+
+#. module: stock_scheduler_assignation_horizon
+#: model:ir.model.fields,field_description:stock_scheduler_assignation_horizon.field_res_config_settings__is_moves_assignation_limited
+msgid "Scheduler Assignation Limit"
+msgstr ""
+
+#. module: stock_scheduler_assignation_horizon
+#: model_terms:ir.ui.view,arch_db:stock_scheduler_assignation_horizon.res_config_settings_view_form_stock
+msgid "Shipping Scheduler"
+msgstr ""
+
+#. module: stock_scheduler_assignation_horizon
+#: code:addons/stock_scheduler_assignation_horizon/models/res_config_settings.py:0
+#, python-format
+msgid "The assignation horizon cannot be negative"
+msgstr ""
