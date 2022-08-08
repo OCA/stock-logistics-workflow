@@ -34,7 +34,7 @@ addon | version | maintainers | summary
 [stock_production_lot_active](stock_production_lot_active/) | 15.0.1.0.2 | [![ThomasBinsfeld](https://github.com/ThomasBinsfeld.png?size=30px)](https://github.com/ThomasBinsfeld) | Allow to archive/unarchive a lot.
 [stock_push_delay](stock_push_delay/) | 15.0.1.0.0 |  | Manual evaluation of Push rules
 [stock_restrict_lot](stock_restrict_lot/) | 15.0.0.0.1 | [![florian-dacosta](https://github.com/florian-dacosta.png?size=30px)](https://github.com/florian-dacosta) | Base module that add back the concept of restrict lot on stock move
-[stock_split_picking](stock_split_picking/) | 15.0.1.0.0 |  | Split a picking in two not transferred pickings
+[stock_split_picking](stock_split_picking/) | 15.0.1.1.0 |  | Split a picking in two not transferred pickings
 
 [//]: # (end addons)
 
