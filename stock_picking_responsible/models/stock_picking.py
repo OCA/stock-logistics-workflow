@@ -7,7 +7,7 @@ from odoo import api, fields, models
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    responsible = fields.Many2one(
+    responsible_id = fields.Many2one(
         comodel_name="res.partner",
         string="Responsible",
         default=lambda self: self.env.user.partner_id.id,
@@ -15,7 +15,7 @@ class StockPicking(models.Model):
 
     @api.multi
     def _add_follower(self):
-        responsible_picking_ids = self.filtered("responsible")
+        responsible_picking_ids = self.filtered("responsible_id")
         if responsible_picking_ids:
             discussion_subtype = self.env.ref("mail.mt_comment")
             picking_subtypes = self.env["mail.message.subtype"].search(
@@ -27,7 +27,7 @@ class StockPicking(models.Model):
 
             for picking in responsible_picking_ids:
                 picking.message_subscribe(
-                    partner_ids=picking.responsible.ids, subtype_ids=subtypes.ids
+                    partner_ids=picking.responsible_id.ids, subtype_ids=subtypes.ids
                 )
 
     @api.multi

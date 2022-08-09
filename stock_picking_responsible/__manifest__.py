@@ -11,7 +11,7 @@
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "maintainers": ["robinkeunen"],
     "category": "Inventory",
-    "version": "12.0.1.0.0",
+    "version": "12.0.1.0.1",
     "depends": ["stock"],
     "data": ["views/stock_picking.xml"],
     "installable": True,
