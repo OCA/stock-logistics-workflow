@@ -20,7 +20,7 @@ class TestCopyQuantity(TransactionCase):
         picking = self.env["stock.picking"].create(
             {
                 "partner_id": self.partner.id,
-                "responsible": self.responsible.id,
+                "responsible_id": self.responsible.id,
                 "picking_type_id": self.picking_type_out.id,
                 "location_id": self.supplier_location.id,
                 "location_dest_id": self.stock_location.id,
@@ -33,7 +33,7 @@ class TestCopyQuantity(TransactionCase):
         )
 
         # test write
-        picking.responsible = self.other_responsible
+        picking.responsible_id = self.other_responsible
         self.assertIn(
             self.other_responsible.id,
             picking.message_follower_ids.mapped("partner_id").ids,
