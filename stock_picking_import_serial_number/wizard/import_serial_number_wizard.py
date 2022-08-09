@@ -78,6 +78,7 @@ class StockPickingImportSerialNumber(models.TransientModel):
         products = self.env["product.product"].search(
             [(self.sn_search_product_by_field, "in", list(product_file_set))]
         )
+        sml_done = self.env["stock.move.line"]
         for item in serial_list:
             product = products.filtered(
                 lambda p: p[self.sn_search_product_by_field] == item[0]
@@ -85,9 +86,12 @@ class StockPickingImportSerialNumber(models.TransientModel):
             if picking.picking_type_id.show_reserved:
                 smls = stock_move_lines.filtered(lambda ln: ln.product_id == product)
                 for sml in smls:
-                    if not sml.lot_name or self.overwrite_serial:
+                    lot_ok = not sml.lot_name
+                    overwrite_ok = self.overwrite_serial and sml not in sml_done
+                    if lot_ok or overwrite_ok:
                         sml.lot_name = item[1]
                         sml.qty_done = 1.0
+                        sml_done += sml
                         # Only assign one serial
                         break
             # TODO: Check if product is present on initial demand??
