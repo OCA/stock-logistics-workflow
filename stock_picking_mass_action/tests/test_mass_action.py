@@ -116,3 +116,23 @@ class TestMassAction(common.SavepointCase):
         self.picking.move_lines[0].quantity_done = 30
         res = wiz_tranfer.mass_action()
         self.assertEqual(res["res_model"], "stock.backorder.confirmation")
+
+    def test_mass_action_mixed_pikings(self):
+        picking2 = self.picking.copy()
+        wiz_tranfer = self.env["stock.picking.mass.action"].create(
+            {
+                "picking_ids": [(4, self.picking.id), (4, picking2.id)],
+                "confirm": True,
+                "transfer": True,
+            }
+        )
+        self.picking.action_assign()
+        self.picking.move_lines[0].quantity_done = 30
+        res = wiz_tranfer.mass_action()
+        self.assertEqual(res["res_model"], "stock.backorder.confirmation")
+        button_validate_picking_ids = res.get("context").get("default_pick_ids")[0][1]
+        self.env[res["res_model"]].with_context(
+            button_validate_picking_ids=button_validate_picking_ids
+        ).process_cancel_backorder()
+        self.assertEqual(self.picking.move_lines[0].state, "done")
+        self.assertEqual(picking2.move_lines[0].state, "confirmed")

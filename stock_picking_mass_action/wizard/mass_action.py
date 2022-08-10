@@ -50,7 +50,6 @@ class StockPickingMassAction(TransientModel):
 
     def mass_action(self):
         self.ensure_one()
-
         # Get draft pickings and confirm them if asked
         if self.confirm:
             draft_picking_lst = self.picking_ids.filtered(
@@ -80,4 +79,4 @@ class StockPickingMassAction(TransientModel):
                 return assigned_picking_lst.action_immediate_transfer_wizard()
             if any([pick._check_backorder() for pick in assigned_picking_lst]):
                 return assigned_picking_lst._action_generate_backorder_wizard()
-            assigned_picking_lst.button_validate()
+            assigned_picking_lst._action_done()
