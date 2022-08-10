@@ -12,6 +12,7 @@ setuptools.setup(
         'odoo-addon-stock_picking_back2draft>=15.0dev,<15.1dev',
         'odoo-addon-stock_picking_filter_lot>=15.0dev,<15.1dev',
         'odoo-addon-stock_picking_info_lot>=15.0dev,<15.1dev',
+        'odoo-addon-stock_picking_mass_action>=15.0dev,<15.1dev',
         'odoo-addon-stock_picking_purchase_order_link>=15.0dev,<15.1dev',
         'odoo-addon-stock_picking_return_restricted_qty>=15.0dev,<15.1dev',
         'odoo-addon-stock_picking_sale_order_link>=15.0dev,<15.1dev',
