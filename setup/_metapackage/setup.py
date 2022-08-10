@@ -42,6 +42,7 @@ setuptools.setup(
         'odoo14-addon-stock_picking_send_by_mail',
         'odoo14-addon-stock_picking_show_backorder',
         'odoo14-addon-stock_picking_show_return',
+        'odoo14-addon-stock_picking_tier_validation',
         'odoo14-addon-stock_picking_warn_message',
         'odoo14-addon-stock_production_lot_active',
         'odoo14-addon-stock_push_delay',
