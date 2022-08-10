@@ -28,7 +28,6 @@ msgstr "退货调拨明细"
 
 #. module: stock_picking_return_restricted_qty
 #: code:addons/stock_picking_return_restricted_qty/wizard/stock_picking_return.py:0
-#: code:addons/stock_picking_return_restricted_qty/wizard/stock_picking_return.py:0
 #, python-format
 msgid "Return more quantities than delivered is not allowed."
 msgstr "退货数量不允许超出送货数量。"
