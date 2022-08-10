@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="vpicktree">
+        <field name="name">stock.picking.tree</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree" />
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="responsible_id" />
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_picking_form">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <field name="backorder_id" position="after">
+                <field name="responsible_id" />
+            </field>
+        </field>
+    </record>
+</odoo>
