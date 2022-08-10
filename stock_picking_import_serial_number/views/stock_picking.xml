@@ -1,13 +1,23 @@
 <odoo>
+    <record id="view_picking_type_form" model="ir.ui.view">
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='stock_picking_type_lot']" position="inside">
+                <field name="import_lot_from_file" />
+            </xpath>
+        </field>
+    </record>
     <record id="view_picking_form" model="ir.ui.view">
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.view_picking_form" />
         <field name="arch" type="xml">
             <button name="action_toggle_is_locked" position="after">
+                <field name="import_lot_from_file" invisible="1" />
                 <button
                     name="%(action_import_serial_number)d"
                     string="Import S/N"
-                    attrs="{'invisible': ['|', ('state', '!=', 'assigned'), ('picking_type_code', '!=', 'incoming')]}"
+                    attrs="{'invisible': ['|', ('state', '!=', 'assigned'), ('import_lot_from_file', '=', False)]}"
                     type="action"
                     groups="base.group_user"
                 />
