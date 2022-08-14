@@ -87,6 +87,7 @@ class TestStockPickingImportSN(CommonStockPickingImportSerial, SavepointCase):
         # Create the file lot to avoid error
         file_lots = self._create_lots_for_product(self.product_serial, ["XX01", "XX02"])
         wiz = self._create_wizard(pickings=picking_int)
+        wiz.process_only_lot_available = False
         wiz.action_import()
         # Initial sml = 3 (XX01_1 ==> 0.0, XX02_1 ==> 0.0, XX03 ==> 0.0)
         # After import file with S/N sml = 5
@@ -95,3 +96,23 @@ class TestStockPickingImportSN(CommonStockPickingImportSerial, SavepointCase):
         # sml with lot XX01 is new
         self.assertEqual(picking_int.move_line_ids[3].lot_id, file_lots[0])
         self.assertEqual(picking_int.move_line_ids[3].qty_done, 1.0)
+
+    def test_import_serial_number_internal_transfer_qty_available(self):
+        # Create an internal transfer
+        self.picking_type_int.import_lot_from_file = True
+        picking_int = self._create_picking(self.picking_type_int)
+        self._create_move(picking=picking_int, product=self.product_serial, qty=3.0)
+        lots = self._create_lots_for_product(
+            self.product_serial, ["XX01_1", "XX02_1", "XX03"]
+        )
+        self._create_quant_for_lot(lots)
+        picking_int.action_assign()
+
+        # Create the file lot to avoid error
+        file_lots = self._create_lots_for_product(self.product_serial, ["XX01", "XX02"])
+        wiz = self._create_wizard(pickings=picking_int)
+        wiz.process_only_lot_available = True
+        # There are not quantity available for lot XX01. So not must be any sml line
+        # with lot XX01
+        smls = picking_int.move_line_ids.filtered(lambda ln: ln.lot_id == file_lots[0])
+        self.assertFalse(smls)

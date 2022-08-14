@@ -40,6 +40,7 @@ class StockPickingImportSerialNumber(models.TransientModel):
         string="Column index for product", default=0
     )
     sn_serial_column_index = fields.Integer(string="Column index for S/N", default="1")
+    process_only_lot_available = fields.Boolean(default=True)
 
     def action_import(self):
         if self.picking_ids.filtered(
@@ -129,13 +130,24 @@ class StockPickingImportSerialNumber(models.TransientModel):
         self, picking, product, lot_name, assigned_sml, search_lot=False
     ):
         lot = False
+        quant_available = self.env["stock.quant"].browse()
         if search_lot:
             # For use case of internal transfers or outgoing picking the lots of file
             # must be exists
             lot = self.env["stock.production.lot"].search(
                 [("product_id", "=", product.id), ("name", "=", lot_name)]
             )
-            if not lot:
+            if lot:
+                # Get lot available in source picking location
+                quant_available = self.env["stock.quant"]._gather(
+                    product, picking.location_id, lot_id=lot
+                )
+                if self.process_only_lot_available and not quant_available:
+                    return False
+                    # raise UserError(_("There are not quantity available on "
+                    #                   "source picking location for product '%s'
+                    #                   and lot '%s'" % (product.name, lot_name)))
+            else:
                 # TODO: What to do in this case.
                 # Raise an error or continue
                 # raise UserError(_("Lots not found"))
@@ -143,7 +155,7 @@ class StockPickingImportSerialNumber(models.TransientModel):
         move = picking.move_lines.filtered(lambda ln: ln.product_id == product)
         vals = {
             "picking_id": picking.id,
-            "location_id": picking.location_id.id,
+            "location_id": quant_available.location_id.id or picking.location_id.id,
             "location_dest_id": picking.location_dest_id.id,
             "product_id": product.id,
             "product_uom_id": product.uom_id.id,

@@ -13,6 +13,7 @@
                             placeholder="Choose a file to import..."
                         />
                         <field name="overwrite_serial" />
+                        <field name="process_only_lot_available" />
                         <field name="filename" invisible="1" />
                     </group>
                     <field name="picking_ids" invisible="1" />

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-10 16:10+0000\n"
-"PO-Revision-Date: 2022-08-10 16:10+0000\n"
+"POT-Creation-Date: 2022-08-14 19:01+0000\n"
+"PO-Revision-Date: 2022-08-14 19:01+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -135,6 +135,11 @@ msgstr ""
 #. module: stock_picking_import_serial_number
 #: model:ir.model,name:stock_picking_import_serial_number.model_stock_picking_type
 msgid "Picking Type"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz__process_only_lot_available
+msgid "Process Only Lot Available"
 msgstr ""
 
 #. module: stock_picking_import_serial_number
