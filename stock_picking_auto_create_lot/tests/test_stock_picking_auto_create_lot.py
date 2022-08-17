@@ -121,9 +121,9 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, SavepointCa
 
     def test_multi_auto_create_lot(self):
         """
-            Create two pickings
-            Try to validate them together
-            Check if lots have been assigned to each move
+        Create two pickings
+        Try to validate them together
+        Check if lots have been assigned to each move
         """
         self.picking.action_assign()
         picking_1 = self.picking
