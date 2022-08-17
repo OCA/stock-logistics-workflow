@@ -6,4 +6,4 @@ from odoo import fields, models
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    auto_create_lot = fields.Boolean(string="Auto Create Lot")
+    auto_create_lot = fields.Boolean("Auto Create Lot")
