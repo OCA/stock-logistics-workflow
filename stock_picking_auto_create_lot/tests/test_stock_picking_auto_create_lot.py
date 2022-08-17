@@ -2,12 +2,12 @@
 # Copyright 2020 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo.exceptions import UserError
-from odoo.tests import SavepointCase
+from odoo.tests import TransactionCase
 
 from .common import CommonStockPickingAutoCreateLot
 
 
-class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, SavepointCase):
+class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
