@@ -6,4 +6,4 @@ from odoo import fields, models
 class StockPickingType(models.Model):
     _inherit = "stock.picking.type"
 
-    auto_create_lot = fields.Boolean("Auto Create Lot")
+    auto_create_lot = fields.Boolean()
