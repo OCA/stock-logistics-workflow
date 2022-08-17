@@ -52,6 +52,6 @@ class SaleOrderLine(models.Model):
             )
             < 0
         ):
-            stock_moves = stock_moves.filtered(lambda m: m.to_refund)
+            stock_moves = stock_moves.filtered("to_refund")
         vals["move_line_ids"] = [(4, m.id) for m in stock_moves]
         return vals
