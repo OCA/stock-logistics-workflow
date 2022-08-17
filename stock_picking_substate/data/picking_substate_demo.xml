@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+
+<!--Picking Substate -->
+ <record id="base_substate_preparation" model="base.substate">
+    <field name="name">Preparation</field>
+    <field name="sequence">1</field>
+    <field name="target_state_value_id" ref="target_state_value_draft" />
+</record>
+<record id="base_substate_wait_docs" model="base.substate">
+    <field name="name">Waiting for legal documents</field>
+    <field name="sequence">2</field>
+    <field name="target_state_value_id" ref="target_state_value_confirmed" />
+    <field
+            name="mail_template_id"
+            ref="stock_picking_substate.mail_template_data_picking_substate_wait_docs"
+        />
+</record>
+ <record id="base_substate_valid_docs" model="base.substate">
+     <field name="name">To validate legal documents</field>
+    <field name="sequence">3</field>
+    <field name="target_state_value_id" ref="target_state_value_assigned" />
+</record>
+<record id="base_substate_in_delivery" model="base.substate">
+    <field name="name">In delivering</field>
+    <field name="sequence">4</field>
+    <field name="target_state_value_id" ref="target_state_value_assigned" />
+    <field
+            name="mail_template_id"
+            ref="stock_picking_substate.mail_template_data_picking_substate_delivery"
+        />
+</record>
+ <record id="base_substate_delivered" model="base.substate">
+     <field name="name">Delivered</field>
+    <field name="sequence">5</field>
+    <field name="target_state_value_id" ref="target_state_value_done" />
+</record>
+</odoo>

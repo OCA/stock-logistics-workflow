@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="base_substate_type_picking" model="base.substate.type">
+        <field name="name">Stock Picking Substate</field>
+        <field name="model">stock.picking</field>
+        <field name="target_state_field">state</field>
+    </record>
+    <!-- Picking related substate to Done state (confirmed, assigned, done) -->
+    <record id="target_state_value_draft" model="target.state.value">
+        <field name="name">Draft</field>
+        <field name="base_substate_type_id" ref="base_substate_type_picking" />
+        <field name="target_state_value">draft</field>
+    </record>
+    <record id="target_state_value_confirmed" model="target.state.value">
+        <field name="name">Waiting</field>
+        <field name="base_substate_type_id" ref="base_substate_type_picking" />
+        <field name="target_state_value">confirmed</field>
+    </record>
+    <record id="target_state_value_assigned" model="target.state.value">
+        <field name="name">Ready</field>
+        <field name="base_substate_type_id" ref="base_substate_type_picking" />
+        <field name="target_state_value">assigned</field>
+    </record>
+    <record id="target_state_value_done" model="target.state.value">
+        <field name="name">Done</field>
+        <field name="base_substate_type_id" ref="base_substate_type_picking" />
+        <field name="target_state_value">done</field>
+    </record>
+ </odoo>

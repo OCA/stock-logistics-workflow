@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2022 ArcheTI
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="after">
+                <header name="substate">
+                    <field
+                        name="substate_id"
+                        widget="statusbar"
+                        options="{'clickable': '1',}"
+                    />
+                </header>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="vpicktree" model="ir.ui.view">
+        <field name="name">stock.picking.tree</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree" />
+        <field name="arch" type="xml">
+            <field name="state" position="after">
+                <field name="substate_id" optional="hide" />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_picking_internal_search" model="ir.ui.view">
+        <field name="name">stock.picking.internal.search</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search" />
+        <field name="arch" type="xml">
+            <field name="picking_type_id" position="after">
+                <field name="substate_id" />
+            </field>
+            <filter name="picking_type" position="after">
+                <filter
+                    name="substate_id"
+                    string="Substate"
+                    domain="[]"
+                    context="{'group_by':'substate_id'}"
+                />
+            </filter>
+        </field>
+    </record>
+
+</odoo>
