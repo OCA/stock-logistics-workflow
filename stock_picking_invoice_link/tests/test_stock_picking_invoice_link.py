@@ -264,3 +264,29 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         res = new_invoice.action_show_picking()
         opened_picking = self.env["stock.picking"].browse(res["res_id"])
         self.assertEqual(pick_1, opened_picking)
+
+    def test_invoice_refund_invoice(self):
+        """Check that the invoice created after a refund is linked to the stock
+        picking.
+        """
+        pick_1 = self.so.picking_ids.filtered(
+            lambda x: x.picking_type_code == "outgoing"
+            and x.state in ("confirmed", "assigned", "partially_available")
+        )
+        pick_1.move_line_ids.write({"qty_done": 2})
+        pick_1._action_done()
+        # Create invoice
+        inv = self.so._create_invoices()
+        inv.action_post()
+        # Refund invoice
+        wiz_invoice_refund = (
+            self.env["account.move.reversal"]
+            .with_context(active_model="account.move", active_ids=inv.ids)
+            .create({"refund_method": "cancel", "reason": "test"})
+        )
+        wiz_invoice_refund.reverse_moves()
+        # Create invoice again
+        new_inv = self.so._create_invoices()
+        new_inv.action_post()
+        # Assert that new invoice has related picking
+        self.assertEqual(new_inv.picking_ids, pick_1)
