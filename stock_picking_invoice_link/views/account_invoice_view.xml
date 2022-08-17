@@ -19,6 +19,12 @@
                 >
                 </button>
             </div>
+            <xpath expr="//field[@name='invoice_line_ids']//tree" position="inside">
+                <field name="move_line_ids" force_save="1" invisible="1" />
+            </xpath>
+            <xpath expr="//field[@name='line_ids']//tree" position="inside">
+                <field name="move_line_ids" force_save="1" invisible="1" />
+            </xpath>
         </field>
     </record>
 </odoo>
