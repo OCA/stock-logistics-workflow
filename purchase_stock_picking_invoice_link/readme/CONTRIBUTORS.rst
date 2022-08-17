@@ -2,6 +2,8 @@
 
   * Vicent Cubells
   * Ernesto Tejeda
+  * Pedro M. Baeza
+  * Carlos Roca
 
 * `Obertix <https://www.obertix.net>`_
 
