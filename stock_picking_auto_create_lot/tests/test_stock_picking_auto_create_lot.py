@@ -2,12 +2,12 @@
 # Copyright 2020 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo.exceptions import UserError
-from odoo.tests import SavepointCase
+from odoo.tests import TransactionCase
 
 from .common import CommonStockPickingAutoCreateLot
 
 
-class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, SavepointCase):
+class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -63,7 +63,7 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, SavepointCa
         )
         self.assertTrue(move.display_assign_serial)
 
-        self.picking.action_done()
+        self.picking._action_done()
         lot = self.env["stock.production.lot"].search(
             [("product_id", "=", self.product.id)]
         )
@@ -139,7 +139,7 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, SavepointCa
         for line in moves.mapped("move_line_ids"):
             self.assertFalse(line.lot_id)
 
-        pickings.action_done()
+        pickings._action_done()
         for line in moves.mapped("move_line_ids"):
             self.assertTrue(line.lot_id)
 
