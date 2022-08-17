@@ -11,16 +11,16 @@ class StockMove(models.Model):
         "stock.production.lot", string="Restrict Lot", copy=False
     )
 
-    @api.model
-    def _prepare_merge_moves_distinct_fields(self):
-        distinct_fields = super(StockMove, self)._prepare_merge_moves_distinct_fields()
-        distinct_fields.append("restrict_lot_id")
-        return distinct_fields
-
     def _prepare_procurement_values(self):
         vals = super()._prepare_procurement_values()
         vals["restrict_lot_id"] = self.restrict_lot_id.id
         return vals
+
+    @api.model
+    def _prepare_merge_moves_distinct_fields(self):
+        distinct_fields = super()._prepare_merge_moves_distinct_fields()
+        distinct_fields.append("restrict_lot_id")
+        return distinct_fields
 
     def _prepare_move_line_vals(self, quantity=None, reserved_quant=None):
         vals = super()._prepare_move_line_vals(
