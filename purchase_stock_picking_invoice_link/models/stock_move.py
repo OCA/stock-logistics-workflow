@@ -8,6 +8,10 @@ class StockMove(models.Model):
     _inherit = "stock.move"
 
     def write(self, vals):
+        """Method used to associate the stock.move with the created account.move.line
+        when the invoicing method of the product is 'purchase' and the invoice is done
+        before receiving the products.
+        """
         res = super().write(vals)
         if vals.get("state", "") == "done":
             stock_moves = self.get_moves_link_invoice()
