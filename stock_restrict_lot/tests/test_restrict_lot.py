@@ -62,7 +62,7 @@ class TestRestrictLot(SavepointCase):
         other_move = move.copy()
         self.assertFalse(other_move.restrict_lot_id.id)
 
-    def _update_product_stock(self, qty, lot_id=False):
+    def _update_product_stock(self, qty, lot_id=False, location=None):
         inventory = self.env["stock.inventory"].create(
             {
                 "name": "Test Inventory",
@@ -74,7 +74,9 @@ class TestRestrictLot(SavepointCase):
                         0,
                         {
                             "product_qty": qty,
-                            "location_id": self.warehouse.lot_stock_id.id,
+                            "location_id": location.id
+                            if location
+                            else self.warehouse.lot_stock_id.id,
                             "product_id": self.product.id,
                             "product_uom_id": self.product.uom_id.id,
                             "prod_lot_id": lot_id,
@@ -116,3 +118,124 @@ class TestRestrictLot(SavepointCase):
         move._action_assign()
         self.assertEqual(move.state, "assigned")
         self.assertEqual(move.move_line_ids.lot_id.id, self.lot.id)
+
+    def test_procurement_with_2_steps_output(self):
+        # make warehouse output in two step
+        self.env["res.config.settings"].write(
+            {
+                "group_stock_adv_location": True,
+                "group_stock_multi_locations": True,
+            }
+        )
+        warehouse = self.env["stock.warehouse"].search(
+            [("company_id", "=", self.env.company.id)], limit=1
+        )
+        warehouse.delivery_steps = "pick_ship"
+
+        self.product.categ_id.route_ids |= self.env["stock.location.route"].search(
+            [("name", "ilike", "deliver in 2")]
+        )
+        # self.env["stock.warehouse"].write(dict(delivery_steps='pick_ship',))
+        location_1 = self.env["stock.location"].create(
+            {"name": "loc1", "location_id": warehouse.lot_stock_id.id}
+        )
+        location_2 = self.env["stock.location"].create(
+            {"name": "loc2", "location_id": warehouse.lot_stock_id.id}
+        )
+
+        # create goods in stock
+        lot2 = self.env["stock.production.lot"].create(
+            {
+                "name": "lot 2",
+                "product_id": self.product.id,
+                "company_id": self.warehouse.company_id.id,
+            }
+        )
+        self._update_product_stock(10, self.lot.id, location=location_1)
+        self._update_product_stock(10, self.lot.id, location=location_2)
+        self._update_product_stock(5, lot2.id, location=location_1)
+        self._update_product_stock(25, lot2.id, location=location_2)
+
+        # create a procurement with two lines of same product with different lots
+        procurement_group = self.env["procurement.group"].create(
+            {"name": "My procurement", "move_type": "one"}
+        )
+        self.env["procurement.group"].run(
+            [
+                self.env["procurement.group"].Procurement(
+                    self.product,
+                    15,
+                    self.product.uom_id,
+                    self.customer_loc,
+                    "a name",
+                    "an origin restrict on lot 1",
+                    self.env.company,
+                    {
+                        "group_id": procurement_group,
+                        "restrict_lot_id": self.lot.id,
+                    },
+                ),
+                self.env["procurement.group"].Procurement(
+                    self.product,
+                    30,
+                    self.product.uom_id,
+                    self.customer_loc,
+                    "a name",
+                    "an origin restrict on lot 2",
+                    self.env.company,
+                    {
+                        "group_id": procurement_group,
+                        "restrict_lot_id": lot2.id,
+                    },
+                ),
+            ]
+        )
+        # make sure in the two stock picking we get right quantities
+        # for expected lot and locations
+
+        def assert_move_qty_per_lot(moves, expect_lot, expect_qty):
+            concern_move = moves.filtered(lambda mov: mov.restrict_lot_id == expect_lot)
+            self.assertEqual(len(concern_move), 1)
+            self.assertEqual(concern_move.product_uom_qty, expect_qty)
+
+        def assert_move_line_per_lot_and_location(
+            moves, expect_lot, expect_from_location, expect_reserved_qty
+        ):
+            concern_move_line = moves.filtered(
+                lambda mov: mov.lot_id == expect_lot
+                and mov.location_id == expect_from_location
+            )
+            self.assertEqual(len(concern_move_line), 1)
+            self.assertEqual(concern_move_line.product_uom_qty, expect_reserved_qty)
+
+        pickings = self.env["stock.picking"].search(
+            [("group_id", "=", procurement_group.id)]
+        )
+        self.assertEqual(len(pickings), 2)
+        delivery = pickings.filtered(
+            lambda pick: pick.picking_type_id.code == "outgoing"
+        )
+        pick = pickings.filtered(lambda pick: pick.picking_type_id.code == "internal")
+
+        self.assertEqual(delivery.state, "waiting")
+        self.assertEqual(len(delivery.move_ids_without_package), 2)
+        assert_move_qty_per_lot(delivery.move_ids_without_package, self.lot, 15)
+        assert_move_qty_per_lot(delivery.move_ids_without_package, lot2, 30)
+
+        pick.action_assign()
+        self.assertEqual(pick.state, "assigned")
+        self.assertEqual(len(pick.move_ids_without_package), 2)
+        assert_move_qty_per_lot(pick.move_ids_without_package, self.lot, 15)
+        assert_move_qty_per_lot(pick.move_ids_without_package, lot2, 30)
+        assert_move_line_per_lot_and_location(
+            pick.move_line_ids_without_package, self.lot, location_1, 10
+        )
+        assert_move_line_per_lot_and_location(
+            pick.move_line_ids_without_package, self.lot, location_2, 5
+        )
+        assert_move_line_per_lot_and_location(
+            pick.move_line_ids_without_package, lot2, location_1, 5
+        )
+        assert_move_line_per_lot_and_location(
+            pick.move_line_ids_without_package, lot2, location_2, 25
+        )
