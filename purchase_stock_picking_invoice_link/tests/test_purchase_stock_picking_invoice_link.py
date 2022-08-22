@@ -64,3 +64,62 @@ class TestPurchaseSTockPickingInvoiceLink(common.SavepointCase):
         self.assertEqual(len(invoice.picking_ids), 1)
         # Invoices are set in pickings
         self.assertEqual(picking.invoice_ids, invoice)
+
+    def test_invoice_refund_invoice(self):
+        """Check that the invoice created after a refund is linked to the stock
+        picking.
+        """
+        self.po.button_confirm()
+        # Validate shipment
+        picking = self.po.picking_ids[0]
+        # Process pickings
+        picking.action_confirm()
+        picking.move_lines.quantity_done = 1.0
+        picking.button_validate()
+        # Create invoice
+        inv_action = self.po.action_view_invoice()
+        inv_form = Form(self.env["account.move"].with_context(**inv_action["context"]))
+        invoice = inv_form.save()
+        invoice.action_post()
+        # Refund invoice
+        wiz_invoice_refund = (
+            self.env["account.move.reversal"]
+            .with_context(active_model="account.move", active_ids=invoice.ids)
+            .create({"refund_method": "cancel", "reason": "test"})
+        )
+        wiz_invoice_refund.reverse_moves()
+        # Create invoice again
+        inv_action = self.po.action_view_invoice()
+        inv_form = Form(self.env["account.move"].with_context(**inv_action["context"]))
+        new_inv = inv_form.save()
+        new_inv.action_post()
+        # Assert that new invoice has related picking
+        self.assertEqual(new_inv.picking_ids, picking)
+
+    def test_invoice_refund_modify(self):
+        """Check that the invoice created when the option "Full refund and new draft
+        invoice" is selected, is linked to the picking.
+        """
+        self.po.button_confirm()
+        # Validate shipment
+        picking = self.po.picking_ids[0]
+        # Process pickings
+        picking.action_confirm()
+        picking.move_lines.quantity_done = 1.0
+        picking.button_validate()
+        # Create invoice
+        inv_action = self.po.action_view_invoice()
+        inv_form = Form(self.env["account.move"].with_context(**inv_action["context"]))
+        invoice = inv_form.save()
+        invoice.action_post()
+        # Refund invoice
+        wiz_invoice_refund = (
+            self.env["account.move.reversal"]
+            .with_context(active_model="account.move", active_ids=invoice.ids)
+            .create({"refund_method": "modify", "reason": "test"})
+        )
+        invoice_id = wiz_invoice_refund.reverse_moves()["res_id"]
+        new_inv = self.env["account.move"].browse(invoice_id)
+        new_inv.action_post()
+        self.assertTrue(len(picking.invoice_ids) == 3)
+        self.assertEqual(new_inv.picking_ids, picking)
