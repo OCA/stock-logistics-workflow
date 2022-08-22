@@ -14,9 +14,9 @@ class PurchaseOrderLine(models.Model):
                 stock_move.state != "done"
                 or stock_move.scrapped
                 or (
-                    stock_move.location_dest_id.usage != "internal"
+                    stock_move.location_id.usage != "supplier"
                     and (
-                        stock_move.location_id.usage != "internal"
+                        stock_move.location_dest_id.usage != "supplier"
                         or not stock_move.to_refund
                     )
                 )
@@ -24,6 +24,7 @@ class PurchaseOrderLine(models.Model):
                 continue
             invoice_lines = stock_move.invoice_line_ids.filtered(
                 lambda invl: invl.move_id.state != "cancel"
+                and invl.move_id.move_type in {"in_invoice", "in_refund"}
             )
             invoiced_qty = 0
             for inv_line in invoice_lines:
