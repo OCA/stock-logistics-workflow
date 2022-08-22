@@ -14,8 +14,8 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: purchase_stock_picking_invoice_link
-#: model:ir.model,name:purchase_stock_picking_invoice_link.model_account_move
-msgid "Journal Entries"
+#: model:ir.model,name:purchase_stock_picking_invoice_link.model_purchase_order_line
+msgid "Purchase Order Line"
 msgstr ""
 
 #. module: purchase_stock_picking_invoice_link
