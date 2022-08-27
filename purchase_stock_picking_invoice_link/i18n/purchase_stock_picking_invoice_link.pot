@@ -14,26 +14,26 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: purchase_stock_picking_invoice_link
-#: model:ir.model.fields,field_description:purchase_stock_picking_invoice_link.field_account_move__display_name
+#: model:ir.model.fields,field_description:purchase_stock_picking_invoice_link.field_purchase_order_line__display_name
 #: model:ir.model.fields,field_description:purchase_stock_picking_invoice_link.field_stock_move__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: purchase_stock_picking_invoice_link
-#: model:ir.model.fields,field_description:purchase_stock_picking_invoice_link.field_account_move__id
+#: model:ir.model.fields,field_description:purchase_stock_picking_invoice_link.field_purchase_order_line__id
 #: model:ir.model.fields,field_description:purchase_stock_picking_invoice_link.field_stock_move__id
 msgid "ID"
 msgstr ""
 
 #. module: purchase_stock_picking_invoice_link
-#: model:ir.model,name:purchase_stock_picking_invoice_link.model_account_move
-msgid "Journal Entry"
+#: model:ir.model.fields,field_description:purchase_stock_picking_invoice_link.field_purchase_order_line____last_update
+#: model:ir.model.fields,field_description:purchase_stock_picking_invoice_link.field_stock_move____last_update
+msgid "Last Modified on"
 msgstr ""
 
 #. module: purchase_stock_picking_invoice_link
-#: model:ir.model.fields,field_description:purchase_stock_picking_invoice_link.field_account_move____last_update
-#: model:ir.model.fields,field_description:purchase_stock_picking_invoice_link.field_stock_move____last_update
-msgid "Last Modified on"
+#: model:ir.model,name:purchase_stock_picking_invoice_link.model_purchase_order_line
+msgid "Purchase Order Line"
 msgstr ""
 
 #. module: purchase_stock_picking_invoice_link
