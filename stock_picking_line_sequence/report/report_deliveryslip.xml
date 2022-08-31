@@ -28,7 +28,7 @@
     >
         <xpath expr="//td[1]" position="before">
             <td class="text-center" name="move_line_aggregated_sequence2">
-                <t t-if="aggregated_lines[line]['sequence2']">
+                <t t-if=" 'sequence2' in aggregated_lines[line]">
                     <span t-esc="aggregated_lines[line]['sequence2']" />
                 </t>
             </td>
