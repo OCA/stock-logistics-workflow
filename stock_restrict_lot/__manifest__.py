@@ -3,7 +3,7 @@
 {
     "name": "Stock Restrict Lot",
     "summary": "Base module that add back the concept of restrict lot on stock move",
-    "version": "14.0.1.1.1",
+    "version": "14.0.1.1.2",
     "category": "Warehouse Management",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Akretion, Odoo Community Association (OCA)",
