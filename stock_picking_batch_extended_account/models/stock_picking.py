@@ -9,7 +9,9 @@ class StockPicking(models.Model):
 
     def action_done(self):
         result = super().action_done()
-        picking_to_invoice_ids = self.env.context.get("picking_to_invoice_in_batch",)
+        picking_to_invoice_ids = self.env.context.get(
+            "picking_to_invoice_in_batch",
+        )
         if not picking_to_invoice_ids:
             return result
         sales = self.filtered(lambda r: r.id in picking_to_invoice_ids).mapped(
