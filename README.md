@@ -64,7 +64,7 @@ addon | version | maintainers | summary
 [stock_quant_package_dimension](stock_quant_package_dimension/) | 14.0.2.2.0 |  | Use dimensions on packages
 [stock_quant_package_dimension_total_weight_from_packaging](stock_quant_package_dimension_total_weight_from_packaging/) | 14.0.1.1.0 |  | Estimated weight of a package
 [stock_quant_package_product_packaging](stock_quant_package_product_packaging/) | 14.0.1.1.0 |  | Use product packagings on packages
-[stock_restrict_lot](stock_restrict_lot/) | 14.0.1.1.1 | [![florian-dacosta](https://github.com/florian-dacosta.png?size=30px)](https://github.com/florian-dacosta) | Base module that add back the concept of restrict lot on stock move
+[stock_restrict_lot](stock_restrict_lot/) | 14.0.1.1.2 | [![florian-dacosta](https://github.com/florian-dacosta.png?size=30px)](https://github.com/florian-dacosta) | Base module that add back the concept of restrict lot on stock move
 [stock_return_request](stock_return_request/) | 14.0.1.0.2 |  | Stock Return Request
 [stock_scheduler_assignation_horizon](stock_scheduler_assignation_horizon/) | 14.0.1.0.0 |  | Set a timeframe limit to the delivery scheduler
 [stock_split_picking](stock_split_picking/) | 14.0.1.1.0 |  | Split a picking in two not transferred pickings
