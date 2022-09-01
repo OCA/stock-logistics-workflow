@@ -1,0 +1,53 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_lot_scrap
+#
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
+# guillaume bauer <guillaume.bauer@syentys.com>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-18 03:48+0000\n"
+"PO-Revision-Date: 2017-12-18 03:48+0000\n"
+"Last-Translator: guillaume bauer <guillaume.bauer@syentys.com>, 2017\n"
+"Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: stock_lot_scrap
+#: code:addons/stock_lot_scrap/models/stock_scrap.py:0
+#, python-format
+msgid "Lot was scrapped by <b>%s</b>."
+msgstr ""
+
+#. module: stock_lot_scrap
+#: model:ir.model,name:stock_lot_scrap.model_stock_production_lot
+msgid "Lot/Serial"
+msgstr "Lot/n° de série"
+
+#. module: stock_lot_scrap
+#: code:addons/stock_lot_scrap/models/stock_production_lot.py:0
+#: model:ir.model,name:stock_lot_scrap.model_stock_scrap
+#, python-format
+msgid "Scrap"
+msgstr "Rebut"
+
+#. module: stock_lot_scrap
+#: code:addons/stock_lot_scrap/models/stock_production_lot.py:0
+#, python-format
+msgid "This lot doesn't contain any quant in internal location."
+msgstr ""
+"Ce lot ne contient aucune quantité correspondant à l'emplacement interne."
+
+#. module: stock_lot_scrap
+#: code:addons/stock_lot_scrap/models/stock_production_lot.py:0
+#, python-format
+msgid "This will scrap the whole lot. Are you sure you want to continue?"
+msgstr ""
+"Cela va mettre au rebut tout le lot. Etes - vous certains de vouloir "
+"continuer?"
