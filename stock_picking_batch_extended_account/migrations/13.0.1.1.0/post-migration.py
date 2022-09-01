@@ -15,7 +15,7 @@ def migrate(env, version):
         UPDATE ir_property
         SET value_text = CASE WHEN value_integer = 1 THEN 'yes' ELSE 'no' END,
         type='char', value_integer=NULL
-        WHERE name='batch_picking_auto_invoice' AND field_id = %s
+        WHERE name='batch_picking_auto_invoice' AND fields_id = %s
         """
         % (batch_picking_auto_invoice_field.id,),
     )
