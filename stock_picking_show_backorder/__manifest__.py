@@ -3,7 +3,7 @@
 
 {
     "name": "Stock Picking Show Backorder",
-    "version": "15.0.1.0.0",
+    "version": "15.0.1.0.1",
     "category": "Warehouse Management",
     "summary": "Provides a new field on stock pickings, allowing to display "
     "the corresponding backorders.",
