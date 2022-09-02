@@ -82,8 +82,10 @@ class SaleOrderLine(models.Model):
                     qty_returned = moves._compute_kit_quantities(
                         order_line.product_id, order_qty, relevant_bom, filters
                     )
-                    order_line.qty_returned = relevant_bom.product_uom_id._compute_quantity(
-                        qty_returned, order_line.product_uom
+                    order_line.qty_returned = (
+                        relevant_bom.product_uom_id._compute_quantity(
+                            qty_returned, order_line.product_uom
+                        )
                     )
                 elif boms:
                     if all(
