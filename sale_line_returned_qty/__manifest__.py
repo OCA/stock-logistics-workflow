@@ -4,7 +4,7 @@
 {
     "name": "Sale Line Returned Qty",
     "summary": "Track returned quantity of sale order lines.",
-    "version": "14.0.1.0.0",
+    "version": "15.0.1.0.0",
     "category": "Sales",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
