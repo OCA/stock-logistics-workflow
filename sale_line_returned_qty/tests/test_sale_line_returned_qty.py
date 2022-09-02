@@ -48,7 +48,7 @@ class TestSaleLineReturnedQty(common.SavepointCase):
         """Helper method to confirm the pickings"""
         for line in picking.move_lines:
             line.quantity_done = line.product_uom_qty
-        picking.action_done()
+        picking._action_done()
 
     def test_returned_qty(self):
         self.order.action_confirm()
@@ -58,7 +58,7 @@ class TestSaleLineReturnedQty(common.SavepointCase):
         picking = self.order.picking_ids
         picking.action_assign()
         picking.move_lines.quantity_done = 10.0
-        picking.action_done()
+        picking._action_done()
         self.assertEqual(so_line.qty_returned, 0.0)
         # Make a return for 5 units
         self._return_picking(picking, 5.0, to_refund=True)
