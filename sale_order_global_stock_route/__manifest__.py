@@ -8,7 +8,7 @@
     'version': '12.0.1.0.1',
     'development_status': 'Beta',
     'category': 'Warehouse',
-    'website': 'https://github.com/OCA/stock-logistics-warehouse',
+    'website': 'https://github.com/OCA/stock-logistics-workflow',
     'author': 'Tecnativa, Odoo Community Association (OCA)',
     'license': 'AGPL-3',
     'installable': True,

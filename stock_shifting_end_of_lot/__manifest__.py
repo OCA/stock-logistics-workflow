@@ -10,7 +10,7 @@
     "depends": [
         "stock",
     ],
-    "website": "https://github.com/oca/stock-logistics-workflow/tree/12.0",
+    "website": "https://github.com/OCA/stock-logistics-workflow",
     "data": [
         "views/picking_type.xml",
     ],

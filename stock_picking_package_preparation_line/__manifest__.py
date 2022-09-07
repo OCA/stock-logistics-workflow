@@ -15,7 +15,7 @@
         'product',
         'stock_picking_package_preparation',
     ],
-    'website': 'https://github.com/OCA/stock-logistics-workflow/tree/'
+    'website': 'https://github.com/OCA/stock-logistics-workflow'
                '12.0/stock_picking_package_preparation_line',
     'data': [
         'security/ir.model.access.csv',
