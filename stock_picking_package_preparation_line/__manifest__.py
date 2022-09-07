@@ -5,7 +5,7 @@
 
 {
     'name': 'Stock Picking Package Preparation Line',
-    'version': '12.0.1.0.1',
+    'version': '12.0.1.0.2',
     'author': 'Apulia Software srl, Odoo Italia Network, '
               'Odoo Community Association (OCA)',
     'license': 'AGPL-3',
