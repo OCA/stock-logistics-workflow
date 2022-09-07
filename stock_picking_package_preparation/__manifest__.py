@@ -11,7 +11,7 @@
     'license': 'AGPL-3',
     'category': 'Warehouse Management',
     'depends': ['stock'],
-    'website': 'https://github.com/OCA/stock-logistics-workflow/tree/'
+    'website': 'https://github.com/OCA/stock-logistics-workflow'
                '12.0/stock_picking_package_preparation',
     'data': [
         'security/ir.model.access.csv',

@@ -9,7 +9,7 @@
               'GRAP,'
               'Tecnativa,'
               'Odoo Community Association (OCA)',
-    'website': 'https://github.com/OCA/stock-logistics-workflow/',
+    'website': 'https://github.com/OCA/stock-logistics-workflow',
     'license': 'AGPL-3',
     'category': 'Warehouse Management',
     'depends': [
