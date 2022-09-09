@@ -214,6 +214,7 @@ class StockValuationLayer(models.Model):
                 not svl_dic["quantity"]
                 and not svl_dic["unit_cost"]
                 and not svl.stock_move_id
+                and svl.description
             ):
                 match_price = re.findall(r"[+-]?[0-9]+\.[0-9]+\)$", svl.description)
                 if match_price:
@@ -343,7 +344,12 @@ class StockValuationLayer(models.Model):
                     previous_qty = previous_qty + qty
                     svl.update_remaining_avco_svl_in(svls_dic, vacuum_dic)
                 # Manual standard_price adjustment line in layer
-                elif not unit_cost and not qty and not svl.stock_move_id:
+                elif (
+                    not unit_cost
+                    and not qty
+                    and not svl.stock_move_id
+                    and svl.description
+                ):
                     unit_cost_processed = True
                     match_price = re.findall(r"[+-]?[0-9]+\.[0-9]+\)$", svl.description)
                     if match_price:
