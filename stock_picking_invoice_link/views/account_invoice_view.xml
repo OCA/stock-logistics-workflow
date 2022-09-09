@@ -16,6 +16,7 @@
                     type="object"
                     attrs="{'invisible': [('picking_ids', '=', [])]}"
                     string="Pickings"
+                    groups="stock.group_stock_user"
                 >
                 </button>
             </div>
