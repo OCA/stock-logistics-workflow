@@ -242,7 +242,10 @@ class StockValuationLayer(models.Model):
         precision_qty = dp_obj.precision_get("Product Unit of Measure")
         precision_price = dp_obj.precision_get("Product Price")
         for line in self.sorted(key=lambda l: (l.create_date, l.id)):
-            if line.product_id.cost_method != "average":
+            if (
+                line.product_id.cost_method != "average"
+                or line.stock_valuation_layer_id
+            ):
                 continue
             previous_unit_cost = previous_qty = 0.0
             svls_to_avco_sync = line.with_context(
@@ -253,6 +256,14 @@ class StockValuationLayer(models.Model):
             unit_cost_processed = False
             svls_dic = OrderedDict()
             for svl in svls_to_avco_sync:
+                # Compatibility with landed cost
+                if svl.stock_valuation_layer_id:
+                    linked_layer = svl.stock_valuation_layer_id
+                    cost_to_add = svl.value
+                    if cost_to_add and previous_qty:
+                        previous_unit_cost += cost_to_add / previous_qty
+                        svls_dic[linked_layer]["remaining_value"] += cost_to_add
+                    continue
                 qty, unit_cost = self.get_avco_svl_qty_unit_cost(line, svl, vals)
                 svls_dic[svl] = {
                     "id": svl.id,
