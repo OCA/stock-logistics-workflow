@@ -75,6 +75,7 @@ msgid "Created on"
 msgstr "Creado en"
 
 #. module: stock_picking_import_serial_number
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz__display_name
 msgid "Display Name"
 msgstr "Nombre a mostrar"
@@ -90,6 +91,7 @@ msgid "Filename"
 msgstr "Nombre de archivo"
 
 #. module: stock_picking_import_serial_number
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_res_config_settings__id
 #: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz__id
 msgid "ID"
 msgstr ""
@@ -108,6 +110,7 @@ msgid "Import S/N wizard"
 msgstr "Asistente de importación S/N"
 
 #. module: stock_picking_import_serial_number
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_res_config_settings____last_update
 #: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz____last_update
 msgid "Last Modified on"
 msgstr "Última modificación en"
@@ -171,12 +174,6 @@ msgstr "Debe de subir un fichero para importar registros"
 #. module: stock_picking_import_serial_number
 #: code:addons/stock_picking_import_serial_number/wizard/import_serial_number_wizard.py:0
 #, python-format
-msgid "You only can import S/N for incoming moves"
-msgstr "Solo puede importar S/N para albaranes de entrada"
-
-#. module: stock_picking_import_serial_number
-#: code:addons/stock_picking_import_serial_number/wizard/import_serial_number_wizard.py:0
-#, python-format
 msgid ""
 "You only can import S/N for picking operations with creation lots checked"
 msgstr "Solo puede importar S/N para operaciones con creación de lotes marcado"
@@ -185,3 +182,7 @@ msgstr "Solo puede importar S/N para operaciones con creación de lotes marcado"
 #: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.stock_picking_import_serial_number_wiz
 msgid "_Cancel"
 msgstr "_Cancelar"
+
+#, python-format
+#~ msgid "You only can import S/N for incoming moves"
+#~ msgstr "Solo puede importar S/N para albaranes de entrada"
