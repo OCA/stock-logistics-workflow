@@ -3,12 +3,13 @@
 
 {
     "name": "Purchase Stock Picking Invoice Link",
-    "version": "13.0.1.0.0",
+    "version": "12.0.1.0.0",
     "category": "Warehouse Management",
     "summary": "Adds link between purchases, pickings and invoices",
-    "author": "Tecnativa, Odoo Community Association (OCA)",
+    "author": "Tecnativa, " "Odoo Community Association (OCA)",
     "website": "http://github.com/OCA/stock-logistics-workflow",
     "license": "AGPL-3",
-    "depends": ["stock_picking_invoice_link", "purchase"],
+    "depends": ["stock_picking_invoice_link", "purchase",],
+    "data": ["views/account_invoice_views.xml",],
     "installable": True,
 }
