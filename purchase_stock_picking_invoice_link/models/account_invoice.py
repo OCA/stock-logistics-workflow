@@ -17,17 +17,16 @@ class AccountInvoice(models.Model):
             move_ids = moves._get_moves()
             vals['move_line_ids'] = [(6, 0, move_ids.ids)]
             pickings = move_ids.mapped('picking_id')
-            for picking in pickings:
-                picking.invoice_ids = [(4, self.id)]
+            pickings.invoice_ids = [(4, self.id)]
         return vals
 
     @api.model
-    def create(self, vals_list):
+    def create(self, values):
         pickings = self.env['stock.picking']
         result = []
-        if 'invoice_line_ids' not in vals_list:
-            return super().create(vals_list)
-        for item in vals_list.get('invoice_line_ids'):
+        if 'invoice_line_ids' not in values:
+            return super().create(values)
+        for item in values.get('invoice_line_ids'):
             if not item[2].get('purchase_line_id'):
                 continue
             moves = self.env['stock.move'].search([
@@ -38,9 +37,9 @@ class AccountInvoice(models.Model):
                 item[2]['move_line_ids'] = [(6, 0, move_ids.ids)]
                 pickings |= move_ids.mapped('picking_id')
             result.append(item)
-        if result and vals_list.get('invoice_line_ids'):
-            vals_list['invoice_line_ids'] = result
-        res = super().create(vals_list)
+        if result and values.get('invoice_line_ids'):
+            values['invoice_line_ids'] = result
+        res = super().create(values)
         if res:
             for picking in pickings:
                 picking.invoice_ids = [(4, res.id)]
