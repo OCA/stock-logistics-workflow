@@ -46,6 +46,7 @@ class TestPurchaseSTockPickingInvoiceLink(common.SavepointCase):
             'type': 'in_invoice',
         })
         self.invoice.purchase_order_change()
+        self.invoice.onchange_invoice_lines_get_po_moves()
         self.invoice.action_invoice_open()
         # Only one invoice line has been created
         self.assertEqual(len(self.invoice.invoice_line_ids), 1)
