@@ -1,8 +1,8 @@
-# © 2019 Today Akretion
+# © 2022 Today Akretion
 # @author Pierrick Brun <pierrick.brun@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import api, models, _
+from odoo import _, api, models
 
 
 class StockPicking(models.Model):
