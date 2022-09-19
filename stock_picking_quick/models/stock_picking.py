@@ -2,14 +2,13 @@
 # @author Pierrick Brun <pierrick.brun@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import _, api, models
+from odoo import _, models
 
 
 class StockPicking(models.Model):
     _name = "stock.picking"
     _inherit = ["stock.picking", "product.mass.addition"]
 
-    @api.multi
     def add_product(self):
         self.ensure_one()
         res = self._common_action_keys()
@@ -43,12 +42,22 @@ class StockPicking(models.Model):
         )
 
     def _get_quick_line_qty_vals(self, product):
-        return {"product_uom_qty": product.qty_to_process}
+        return {
+            "product_uom_qty": product.qty_to_process,
+            "product_uom": product.quick_uom_id.id,
+        }
 
     def _complete_quick_line_vals(self, vals, lines_key=""):
-        return super(StockPicking, self)._complete_quick_line_vals(
+        vals.update(
+            {
+                "picking_id": self.id,
+            }
+        )
+        res = super(StockPicking, self)._complete_quick_line_vals(
             vals, lines_key="move_ids_without_package"
         )
+        res.pop("product_qty")
+        return res
 
     def _add_quick_line(self, product, lines_key=""):
         return super(StockPicking, self)._add_quick_line(
