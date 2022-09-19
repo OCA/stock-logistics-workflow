@@ -10,11 +10,11 @@ class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
     def get_stock_moves_link_invoice(self):
-        skip_check_invoice_state = self.env.context.get(
-            "skip_check_invoice_state", False
-        )
         moves_linked = self.env["stock.move"]
-        for stock_move in self.move_ids:
+        to_invoice = self.qty_to_invoice
+        for stock_move in self.move_ids.sorted(
+            lambda m: (m.write_date, m.id), reverse=True
+        ):
             if (
                 stock_move.state != "done"
                 or stock_move.scrapped
@@ -27,21 +27,24 @@ class SaleOrderLine(models.Model):
                 )
             ):
                 continue
-            invoice_lines = stock_move.invoice_line_ids.filtered(
-                lambda invl: skip_check_invoice_state
-                or invl.move_id.state != "cancel"
-                and invl.move_id.move_type in {"out_invoice", "out_refund"}
-            )
-            invoiced_qty = 0
-            for inv_line in invoice_lines:
-                if inv_line.move_id.move_type == "out_refund":
-                    invoiced_qty -= inv_line.quantity
-                else:
-                    invoiced_qty += inv_line.quantity
-            if float_is_zero(
-                invoiced_qty, precision_rounding=self.product_uom.rounding
-            ):
+            if not stock_move.invoice_line_ids:
+                to_invoice -= (
+                    stock_move.quantity_done
+                    if not stock_move.to_refund
+                    else -stock_move.quantity_done
+                )
                 moves_linked += stock_move
+                continue
+            elif float_is_zero(
+                to_invoice, precision_rounding=self.product_uom.rounding
+            ):
+                break
+            to_invoice -= (
+                stock_move.quantity_done
+                if not stock_move.to_refund
+                else -stock_move.quantity_done
+            )
+            moves_linked += stock_move
         return moves_linked
 
     def _prepare_invoice_line(self, **optional_values):

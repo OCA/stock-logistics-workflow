@@ -290,3 +290,24 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         new_inv.action_post()
         # Assert that new invoice has related picking
         self.assertEqual(new_inv.picking_ids, pick_1)
+
+    def test_partial_invoice_full_link(self):
+        """Check that the partial invoices are linked to the stock
+        picking.
+        """
+        pick_1 = self.so.picking_ids.filtered(
+            lambda x: x.picking_type_code == "outgoing"
+            and x.state in ("confirmed", "assigned", "partially_available")
+        )
+        pick_1.move_line_ids.write({"qty_done": 2})
+        pick_1._action_done()
+        # Create invoice
+        inv = self.so._create_invoices()
+        with Form(inv) as move_form:
+            for i in range(len(move_form.invoice_line_ids)):
+                with move_form.invoice_line_ids.edit(i) as line_form:
+                    line_form.quantity = 1
+        inv.action_post()
+        self.assertEqual(inv.picking_ids, pick_1)
+        inv2 = self.so._create_invoices()
+        self.assertEqual(inv2.picking_ids, pick_1)
