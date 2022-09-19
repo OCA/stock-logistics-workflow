@@ -34,6 +34,11 @@ class ProductProduct(models.Model):
                         product.qty_to_process = qty["product_qty"]
         return res
 
+    def _default_quick_uom_id(self):
+        if self.env.context.get("parent_model", False) == "stock.picking":
+            return self.uom_id
+        return super()._default_quick_uom_id()
+
     @api.model
     def search(self, args, offset=0, limit=None, order=None, count=False):
         if self.env.context.get("in_current_parent"):
