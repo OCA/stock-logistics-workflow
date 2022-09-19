@@ -1,4 +1,4 @@
-# © 2019 Today Akretion
+# © 2022 Today Akretion
 # @author Pierrick Brun <pierrick.brun@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
@@ -41,10 +41,8 @@ class ProductProduct(models.Model):
                 self.env.context.get("parent_id")
             )
             if picking:
-                moves = self.env["stock.move"].search(
-                    [("picking_id", "=", picking.id)]
-                )
-                args.append((("id", "in", moves.mapped("product_id").ids)))
+                moves = self.env["stock.move"].search([("picking_id", "=", picking.id)])
+                args.append(("id", "in", moves.mapped("product_id").ids))
         return super(ProductProduct, self).search(
             args, offset=offset, limit=limit, order=order, count=count
         )
