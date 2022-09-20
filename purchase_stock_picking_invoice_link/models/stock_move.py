@@ -15,7 +15,10 @@ class StockMove(models.Model):
         res = super().write(vals)
         if vals.get("state", "") == "done":
             stock_moves = self.get_moves_link_invoice()
-            for stock_move in stock_moves.filtered("purchase_line_id"):
+            for stock_move in stock_moves.filtered(
+                lambda sm: sm.purchase_line_id
+                and sm.product_id.purchase_method == "purchase"
+            ):
                 inv_type = stock_move.to_refund and "in_refund" or "in_invoice"
                 inv_line = self.env["account.move.line"].search(
                     [
