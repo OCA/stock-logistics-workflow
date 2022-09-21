@@ -23,14 +23,12 @@ class TestPurchaseSTockPickingInvoiceLink(common.SavepointCase):
         # Validate shipment
         picking = self.po.picking_ids[0]
         # Process pickings
-        picking.action_confirm()
         picking.move_lines.quantity_done = 1.0
         picking.button_validate()
         # Create and post invoice
         inv_action = self.po.action_view_invoice()
         inv_form = Form(self.env["account.move"].with_context(**inv_action["context"]))
         invoice = inv_form.save()
-        invoice.action_post()
         # Only one invoice line has been created
         self.assertEqual(len(invoice.invoice_line_ids), 1)
         line = invoice.invoice_line_ids
@@ -40,7 +38,7 @@ class TestPurchaseSTockPickingInvoiceLink(common.SavepointCase):
         # Invoices are set in pickings
         self.assertEqual(picking.invoice_ids, invoice)
 
-    def test_link_with_on_receive_quantities_policy(self):
+    def test_link_transfer_after_invoice_creation(self):
         self.product.purchase_method = "purchase"
         # Purchase order confirm
         self.po.button_confirm()
@@ -48,11 +46,9 @@ class TestPurchaseSTockPickingInvoiceLink(common.SavepointCase):
         inv_action = self.po.action_view_invoice()
         inv_form = Form(self.env["account.move"].with_context(**inv_action["context"]))
         invoice = inv_form.save()
-        invoice.action_post()
         # Validate shipment
         picking = self.po.picking_ids[0]
         # Process pickings
-        picking.action_confirm()
         picking.move_lines.quantity_done = 1.0
         picking.button_validate()
         # Only one invoice line has been created
@@ -73,7 +69,6 @@ class TestPurchaseSTockPickingInvoiceLink(common.SavepointCase):
         # Validate shipment
         picking = self.po.picking_ids[0]
         # Process pickings
-        picking.action_confirm()
         picking.move_lines.quantity_done = 1.0
         picking.button_validate()
         # Create invoice
@@ -92,7 +87,6 @@ class TestPurchaseSTockPickingInvoiceLink(common.SavepointCase):
         inv_action = self.po.action_view_invoice()
         inv_form = Form(self.env["account.move"].with_context(**inv_action["context"]))
         new_inv = inv_form.save()
-        new_inv.action_post()
         # Assert that new invoice has related picking
         self.assertEqual(new_inv.picking_ids, picking)
 
@@ -104,7 +98,6 @@ class TestPurchaseSTockPickingInvoiceLink(common.SavepointCase):
         # Validate shipment
         picking = self.po.picking_ids[0]
         # Process pickings
-        picking.action_confirm()
         picking.move_lines.quantity_done = 1.0
         picking.button_validate()
         # Create invoice
@@ -120,6 +113,47 @@ class TestPurchaseSTockPickingInvoiceLink(common.SavepointCase):
         )
         invoice_id = wiz_invoice_refund.reverse_moves()["res_id"]
         new_inv = self.env["account.move"].browse(invoice_id)
-        new_inv.action_post()
-        self.assertTrue(len(picking.invoice_ids) == 3)
         self.assertEqual(new_inv.picking_ids, picking)
+        self.assertTrue(len(picking.invoice_ids) == 3)
+
+    def test_purchase_invoice_backorder_no_linked_policy_receive(self):
+        self.product.purchase_method = "receive"
+        self.po.order_line.product_qty = 10
+        self.po.button_confirm()
+        picking = self.po.picking_ids[0]
+        picking.move_lines.quantity_done = 8.0
+        wiz = self.env["stock.backorder.confirmation"].create(
+            {"pick_ids": [(4, picking.id)]}
+        )
+        wiz.process()
+        inv_action = self.po.action_view_invoice()
+        inv_form = Form(self.env["account.move"].with_context(**inv_action["context"]))
+        invoice = inv_form.save()
+        self.assertTrue(len(picking.invoice_ids) == 1)
+        self.assertEqual(invoice.picking_ids, picking)
+        backorder_picking = self.po.picking_ids.filtered(lambda p: p.state != "done")
+        backorder_picking.move_lines.quantity_done = 2.0
+        backorder_picking.button_validate()
+        self.assertFalse(len(backorder_picking.invoice_ids))
+        self.assertEqual(invoice.picking_ids, picking)
+
+    def test_purchase_invoice_backorder_linked_policy_purchase(self):
+        self.product.purchase_method = "purchase"
+        self.po.order_line.product_qty = 10
+        self.po.button_confirm()
+        picking = self.po.picking_ids[0]
+        picking.move_lines.quantity_done = 8.0
+        wiz = self.env["stock.backorder.confirmation"].create(
+            {"pick_ids": [(4, picking.id)]}
+        )
+        wiz.process()
+        inv_action = self.po.action_view_invoice()
+        inv_form = Form(self.env["account.move"].with_context(**inv_action["context"]))
+        invoice = inv_form.save()
+        self.assertTrue(len(picking.invoice_ids) == 1)
+        self.assertEqual(invoice.picking_ids, picking)
+        backorder_picking = self.po.picking_ids.filtered(lambda p: p.state != "done")
+        backorder_picking.move_lines.quantity_done = 2.0
+        backorder_picking.button_validate()
+        self.assertFalse(len(backorder_picking.invoice_ids) == 1)
+        self.assertEqual(invoice.picking_ids, picking + backorder_picking)
