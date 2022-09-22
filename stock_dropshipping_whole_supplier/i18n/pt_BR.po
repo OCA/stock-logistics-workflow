@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2020-06-23 16:19+0000\n"
-"Last-Translator: Fernando Colus <fcolus1@gmail.com>\n"
+"PO-Revision-Date: 2022-09-22 23:08+0000\n"
+"Last-Translator: Douglas Custódio <douglascstd@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.10\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: stock_dropshipping_whole_supplier
 #: model:ir.model,name:stock_dropshipping_whole_supplier.model_res_partner
@@ -25,7 +25,7 @@ msgstr "Contato"
 #: model:product.product,name:stock_dropshipping_whole_supplier.dropship_prd
 #: model:product.template,name:stock_dropshipping_whole_supplier.dropship_prd_product_template
 msgid "Dropshipped Product"
-msgstr "Produto Vendido Diretamente"
+msgstr "Produto de Remessa Direta"
 
 #. module: stock_dropshipping_whole_supplier
 #: model:ir.model.fields,help:stock_dropshipping_whole_supplier.field_res_partner__allow_whole_order_dropshipping
@@ -33,21 +33,21 @@ msgstr "Produto Vendido Diretamente"
 msgid "If checked and at least one dropshipping product required for a sale,\n"
 "whole furnitures of this vendor will be delivered in dropshipping flow whether routes defined in product."
 msgstr ""
-"Se marcado e pelo menos um produto vendido de forma direta, necessário para "
-"uma venda, todos os produtos desse fornecedor serão entregues na forma de "
-"venda direta, independentemente das rotas definidas no produto."
+"Se marcado e pelo menos um produto de remessa direta, necessário para uma "
+"venda, todos os produtos desse fornecedor serão entregues na forma remessa "
+"direta, independentemente das rotas definidas no produto."
 
 #. module: stock_dropshipping_whole_supplier
 #: model:ir.model.fields,field_description:stock_dropshipping_whole_supplier.field_res_partner__allow_whole_order_dropshipping
 #: model:ir.model.fields,field_description:stock_dropshipping_whole_supplier.field_res_users__allow_whole_order_dropshipping
 msgid "Overall Dropshipping"
-msgstr "Totalmente Venda Direta"
+msgstr "Totalmente Remessa Direta"
 
 #. module: stock_dropshipping_whole_supplier
 #: code:addons/stock_dropshipping_whole_supplier/models/sale.py:36
 #, python-format
 msgid "Products '%s' are provided by a dropship order, "
-msgstr "Os produtos '%s' são fornecidos por um pedido de venda direta, "
+msgstr "Os produtos '%s' são fornecidos por um pedido de remessa direta, "
 
 #. module: stock_dropshipping_whole_supplier
 #: model:product.product,name:stock_dropshipping_whole_supplier.purchase_prd
