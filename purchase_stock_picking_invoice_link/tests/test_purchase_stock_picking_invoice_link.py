@@ -1,6 +1,6 @@
 # Copyright 2019 Vicent Cubells <pedro.baeza@tecnativa.com>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
-
+from odoo import fields
 from odoo.tests import Form, common
 
 
@@ -162,3 +162,28 @@ class TestPurchaseSTockPickingInvoiceLink(common.SavepointCase):
         backorder_picking._action_done()
         self.assertFalse(len(backorder_picking.invoice_ids) == 1)
         self.assertEqual(invoice.picking_ids, picking + backorder_picking)
+
+    def test_partial_invoice_full_link(self):
+        """Check that the partial invoices are linked to the stock
+        picking.
+        """
+        self.product.purchase_method = "purchase"
+        self.po.order_line.product_qty = 2.0
+        self.po.button_confirm()
+        picking = self.po.picking_ids[0]
+        picking.move_lines.quantity_done = 2.0
+        picking._action_done()
+        # Create invoice
+        inv_action = self.po.action_create_invoice()
+        invoice = self.env["account.move"].browse([(inv_action["res_id"])])
+        inv_form = Form(invoice)
+        inv_form.invoice_date = fields.Date.today()
+        for i in range(len(inv_form.invoice_line_ids)):
+            with inv_form.invoice_line_ids.edit(i) as line_form:
+                line_form.quantity = 1
+        inv = inv_form.save()
+        inv.action_post()
+        self.assertEqual(inv.picking_ids, picking)
+        inv_action = self.po.action_create_invoice()
+        inv2 = self.env["account.move"].browse([(inv_action["res_id"])])
+        self.assertEqual(inv2.picking_ids, picking)
