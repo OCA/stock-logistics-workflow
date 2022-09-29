@@ -10,9 +10,6 @@ class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
     def get_stock_moves_link_invoice(self):
-        skip_check_invoice_state = self.env.context.get(
-            "skip_check_invoice_state", False
-        )
         moves_linked = self.env["stock.move"]
         to_invoice = self.qty_to_invoice
         for stock_move in self.move_ids.sorted(
