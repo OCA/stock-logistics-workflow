@@ -30,16 +30,22 @@ class StockLocation(models.Model):
         """
         return []
 
-    def _get_putaway_strategy(self, product):
+    def _get_putaway_strategy(
+        self, product, quantity=0, package=None, packaging=None, additional_qty=None
+    ):
         """Extend the code method to add hooks
 
         * Call the alternative strategies lookups
         * Call a hook ``_putaway_strategy_finalizer`` after all the strategies
         """
-        putaway_location = super()._get_putaway_strategy(product)
+        putaway_location = super()._get_putaway_strategy(
+            product, quantity, package, packaging, additional_qty
+        )
         if not putaway_location:
             putaway_location = self._alternative_putaway_strategy()
-        return self._putaway_strategy_finalizer(putaway_location, product)
+        return self._putaway_strategy_finalizer(
+            putaway_location, product, quantity, package, packaging, additional_qty
+        )
 
     def _alternative_putaway_strategy(self):
         """Find a putaway according to the ``_putaway_strategies`` keys
@@ -86,7 +92,15 @@ class StockLocation(models.Model):
             current_location = current_location.location_id
         return putaway_location
 
-    def _putaway_strategy_finalizer(self, putaway_location, product):
+    def _putaway_strategy_finalizer(
+        self,
+        putaway_location,
+        product,
+        quantity=0,
+        package=None,
+        packaging=None,
+        additional_qty=None,
+    ):
         """Hook for putaway called after the strategy lookup"""
         # by default, do nothing
         return putaway_location
