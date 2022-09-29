@@ -311,3 +311,50 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         self.assertEqual(inv.picking_ids, pick_1)
         inv2 = self.so._create_invoices()
         self.assertEqual(inv2.picking_ids, pick_1)
+
+    def test_return_and_invoice_refund(self):
+        pick_1 = self.so.picking_ids.filtered(
+            lambda x: x.picking_type_code == "outgoing"
+            and x.state in ("confirmed", "assigned", "partially_available")
+        )
+        pick_1.move_line_ids.write({"qty_done": 2})
+        pick_1._action_done()
+        # Create invoice
+        inv = self.so._create_invoices()
+        inv_line_prod_del = inv.invoice_line_ids.filtered(
+            lambda l: l.product_id == self.prod_del
+        )
+        inv.action_post()
+        self.assertEqual(
+            inv_line_prod_del.move_line_ids,
+            pick_1.move_lines.filtered(lambda m: m.product_id == self.prod_del),
+        )
+        # Create return picking
+        return_form = Form(self.env["stock.return.picking"])
+        return_form.picking_id = pick_1
+        return_wiz = return_form.save()
+        # Remove product ordered line
+        return_wiz.product_return_moves.filtered(
+            lambda l: l.product_id == self.prod_order
+        ).unlink()
+        return_wiz.product_return_moves.quantity = 1.0
+        return_wiz.product_return_moves.to_refund = True
+        res = return_wiz.create_returns()
+        return_pick = self.env["stock.picking"].browse(res["res_id"])
+        # Validate picking
+        return_pick.move_lines.quantity_done = 1.0
+        return_pick.button_validate()
+        wiz_invoice_refund = (
+            self.env["account.move.reversal"]
+            .with_context(active_model="account.move", active_ids=inv.ids)
+            .create({"refund_method": "cancel", "reason": "test"})
+        )
+        action = wiz_invoice_refund.reverse_moves()
+        invoice_refund = self.env["account.move"].browse(action["res_id"])
+        inv_line_prod_del_refund = invoice_refund.invoice_line_ids.filtered(
+            lambda l: l.product_id == self.prod_del
+        )
+        self.assertEqual(
+            inv_line_prod_del_refund.move_line_ids,
+            return_pick.move_lines.filtered(lambda m: m.product_id == self.prod_del),
+        )
