@@ -21,6 +21,11 @@ msgstr ""
 "X-Generator: Weblate 3.8\n"
 
 #. module: stock_picking_invoice_link
+#: model:ir.model,name:stock_picking_invoice_link.model_account_move_reversal
+msgid "Account Move Reversal"
+msgstr ""
+
+#. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move__invoice_line_ids
 msgid "Invoice Line"
 msgstr "Linha da Fatura"
