@@ -2,11 +2,11 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 
 from odoo.exceptions import UserError
-from odoo.tests import SavepointCase
+from odoo.tests import TransactionCase
 from odoo.tools import float_compare, float_is_zero
 
 
-class TestSearchLotProductQty(SavepointCase):
+class TestSearchLotProductQty(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
