@@ -8,9 +8,8 @@
             <xpath expr="//field[@name='lot_id']" position="attributes">
                 <attribute
                     name="context"
-                    operation="python_dict"
-                    key="name_search_qty_on_hand_first"
-                >parent.display_lots_on_hand_first</attribute>
+                    operation="update"
+                >{'name_search_qty_on_hand_first': parent.display_lots_on_hand_first}</attribute>
             </xpath>
         </field>
     </record>
@@ -31,9 +30,8 @@
             <xpath expr="//field[@name='lot_id']" position="attributes">
                 <attribute
                     name="context"
-                    operation="python_dict"
-                    key="name_search_qty_on_hand_first"
-                >parent.display_lots_on_hand_first</attribute>
+                    operation="update"
+                >{'name_search_qty_on_hand_first': parent.display_lots_on_hand_first}</attribute>
             </xpath>
         </field>
     </record>

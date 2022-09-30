@@ -1,11 +1,11 @@
 # Copyright 2022 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 
-from odoo.tests import SavepointCase
+from odoo.tests import TransactionCase
 from odoo.tools import float_is_zero
 
 
-class TestLotOnHandFirst(SavepointCase):
+class TestLotOnHandFirst(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
