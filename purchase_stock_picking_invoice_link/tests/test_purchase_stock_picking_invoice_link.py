@@ -157,3 +157,27 @@ class TestPurchaseSTockPickingInvoiceLink(common.SavepointCase):
         backorder_picking.button_validate()
         self.assertFalse(len(backorder_picking.invoice_ids) == 1)
         self.assertEqual(invoice.picking_ids, picking + backorder_picking)
+
+    def test_partial_invoice_full_link(self):
+        """Check that the partial invoices are linked to the stock
+        picking.
+        """
+        self.product.purchase_method = "purchase"
+        self.po.order_line.product_qty = 2.0
+        self.po.button_confirm()
+        picking = self.po.picking_ids[0]
+        picking.move_lines.quantity_done = 2.0
+        picking.action_done()
+        # Create invoice
+        inv_action = self.po.action_view_invoice()
+        inv_form = Form(self.env["account.move"].with_context(**inv_action["context"]))
+        for i in range(len(inv_form.invoice_line_ids)):
+            with inv_form.invoice_line_ids.edit(i) as line_form:
+                line_form.quantity = 1
+        inv = inv_form.save()
+        inv.action_post()
+        self.assertEqual(inv.picking_ids, picking)
+        inv_action = self.po.action_view_invoice()
+        inv_form = Form(self.env["account.move"].with_context(**inv_action["context"]))
+        inv2 = inv_form.save()
+        self.assertEqual(inv2.picking_ids, picking)
