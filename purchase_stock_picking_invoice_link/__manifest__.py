@@ -3,7 +3,7 @@
 
 {
     "name": "Purchase Stock Picking Invoice Link",
-    "version": "13.0.2.0.2",
+    "version": "13.0.2.0.3",
     "category": "Warehouse Management",
     "summary": "Adds link between purchases, pickings and invoices",
     "author": "Tecnativa, Odoo Community Association (OCA)",
