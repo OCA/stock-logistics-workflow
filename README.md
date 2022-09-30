@@ -36,7 +36,7 @@ addon | version | maintainers | summary
 [delivery_total_weight_from_packaging](delivery_total_weight_from_packaging/) | 13.0.1.1.2 |  | Include packaging weight on move, transfer and package.
 [procurement_auto_create_group_carrier](procurement_auto_create_group_carrier/) | 13.0.1.0.0 |  | Procurement Auto Create Group Carrier
 [product_supplierinfo_for_customer_picking](product_supplierinfo_for_customer_picking/) | 13.0.1.0.2 |  | This module makes the product customer code visible in the stock moves of a picking.
-[purchase_stock_picking_invoice_link](purchase_stock_picking_invoice_link/) | 13.0.2.0.2 |  | Adds link between purchases, pickings and invoices
+[purchase_stock_picking_invoice_link](purchase_stock_picking_invoice_link/) | 13.0.2.0.3 |  | Adds link between purchases, pickings and invoices
 [sale_line_returned_qty](sale_line_returned_qty/) | 13.0.1.0.0 |  | Track returned quantity of sale order lines.
 [sale_line_returned_qty_mrp](sale_line_returned_qty_mrp/) | 13.0.1.0.1 |  | Track returned quantity of sale order lines for BoM products.
 [sale_order_deliverable_rate](sale_order_deliverable_rate/) | 13.0.1.0.0 |  | Rate of deliverable product on a sale order
@@ -70,7 +70,7 @@ addon | version | maintainers | summary
 [stock_picking_group_by_partner_by_carrier](stock_picking_group_by_partner_by_carrier/) | 13.0.1.10.2 |  | Stock Picking: group by partner and carrier
 [stock_picking_group_by_partner_by_carrier_by_date](stock_picking_group_by_partner_by_carrier_by_date/) | 13.0.1.1.1 |  | Stock Picking: group by partner and carrier and scheduled date
 [stock_picking_import_serial_number](stock_picking_import_serial_number/) | 13.0.1.0.2 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Import S/N from excel file for incoming pickings
-[stock_picking_invoice_link](stock_picking_invoice_link/) | 13.0.2.0.1 |  | Adds link between pickings and invoices
+[stock_picking_invoice_link](stock_picking_invoice_link/) | 13.0.2.0.2 |  | Adds link between pickings and invoices
 [stock_picking_late_activity](stock_picking_late_activity/) | 13.0.1.0.0 | [![ernestotejeda](https://github.com/ernestotejeda.png?size=30px)](https://github.com/ernestotejeda) | Add an scheduled action that creates late picking activities
 [stock_picking_line_sequence](stock_picking_line_sequence/) | 13.0.1.0.1 |  | Manages the order of stock moves by displaying its sequence
 [stock_picking_mass_action](stock_picking_mass_action/) | 13.0.1.0.0 |  | Stock Picking Mass Action
