@@ -20,6 +20,31 @@ msgstr ""
 "%100==4 ? 2 : 3);\n"
 
 #. module: stock_picking_invoice_link
+#: model:ir.model,name:stock_picking_invoice_link.model_account_move_reversal
+msgid "Account Move Reversal"
+msgstr ""
+
+#. module: stock_picking_invoice_link
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move__display_name
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move_reversal__display_name
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_sale_order_line__display_name
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move__display_name
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_picking_invoice_link
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move__id
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move_line__id
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move_reversal__id
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_sale_order_line__id
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move__id
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move__invoice_line_ids
 msgid "Invoice Line"
 msgstr ""
@@ -38,7 +63,7 @@ msgstr ""
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_move
-msgid "Journal Entries"
+msgid "Journal Entry"
 msgstr ""
 
 #. module: stock_picking_invoice_link
@@ -47,12 +72,24 @@ msgid "Journal Item"
 msgstr ""
 
 #. module: stock_picking_invoice_link
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move____last_update
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move_line____last_update
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move_reversal____last_update
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_sale_order_line____last_update
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move____last_update
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_picking_invoice_link
 #: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.invoice_form
 msgid "Pickings"
 msgstr ""
 
 #. module: stock_picking_invoice_link
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_bank_statement_line__picking_ids
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move__picking_ids
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_payment__picking_ids
 msgid "Related Pickings"
 msgstr ""
 
@@ -62,7 +99,9 @@ msgid "Related Stock Moves"
 msgstr ""
 
 #. module: stock_picking_invoice_link
+#: model:ir.model.fields,help:stock_picking_invoice_link.field_account_bank_statement_line__picking_ids
 #: model:ir.model.fields,help:stock_picking_invoice_link.field_account_move__picking_ids
+#: model:ir.model.fields,help:stock_picking_invoice_link.field_account_payment__picking_ids
 msgid ""
 "Related pickings (only when the invoice has been generated from a sale "
 "order)."
