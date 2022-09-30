@@ -26,7 +26,7 @@ addon | version | maintainers | summary
 [delivery_total_weight_from_packaging](delivery_total_weight_from_packaging/) | 14.0.1.0.0 |  | Include packaging weight on move, transfer and package.
 [procurement_auto_create_group_carrier](procurement_auto_create_group_carrier/) | 14.0.1.1.0 |  | Procurement Auto Create Group Carrier
 [product_supplierinfo_for_customer_picking](product_supplierinfo_for_customer_picking/) | 14.0.1.0.1 |  | This module makes the product customer code visible in the stock moves of a picking.
-[purchase_stock_picking_invoice_link](purchase_stock_picking_invoice_link/) | 14.0.1.0.2 |  | Adds link between purchases, pickings and invoices
+[purchase_stock_picking_invoice_link](purchase_stock_picking_invoice_link/) | 14.0.1.1.0 |  | Adds link between purchases, pickings and invoices
 [sale_line_returned_qty](sale_line_returned_qty/) | 14.0.1.0.0 |  | Track returned quantity of sale order lines.
 [sale_stock_mto_as_mts_orderpoint](sale_stock_mto_as_mts_orderpoint/) | 14.0.1.0.1 |  | Materialize need from MTO route through orderpoint
 [stock_auto_move](stock_auto_move/) | 14.0.1.0.0 |  | Automatic Move Processing
@@ -48,7 +48,7 @@ addon | version | maintainers | summary
 [stock_picking_filter_lot](stock_picking_filter_lot/) | 14.0.1.0.1 |  | In picking out lots' selection, filter lots based on their location
 [stock_picking_group_by_partner_by_carrier](stock_picking_group_by_partner_by_carrier/) | 14.0.1.4.2 |  | Stock Picking: group by partner and carrier
 [stock_picking_group_by_partner_by_carrier_by_date](stock_picking_group_by_partner_by_carrier_by_date/) | 14.0.1.0.1 |  | Stock Picking: group by partner and carrier and scheduled date
-[stock_picking_invoice_link](stock_picking_invoice_link/) | 14.0.1.1.2 |  | Adds link between pickings and invoices
+[stock_picking_invoice_link](stock_picking_invoice_link/) | 14.0.1.2.0 |  | Adds link between pickings and invoices
 [stock_picking_line_sequence](stock_picking_line_sequence/) | 14.0.1.0.0 |  | Manages the order of stock moves by displaying its sequence
 [stock_picking_mass_action](stock_picking_mass_action/) | 14.0.1.0.2 |  | Stock Picking Mass Action
 [stock_picking_purchase_order_link](stock_picking_purchase_order_link/) | 14.0.1.0.1 |  | Link between picking and purchase order
