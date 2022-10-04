@@ -32,6 +32,7 @@ addon | version | maintainers | summary
 [stock_auto_move](stock_auto_move/) | 14.0.1.0.0 |  | Automatic Move Processing
 [stock_delivery_note](stock_delivery_note/) | 14.0.1.0.1 |  | This module allows to fill in a delivery note that will be displayed on delivery report
 [stock_lock_lot](stock_lock_lot/) | 14.0.1.0.0 |  | Stock Lock Lot
+[stock_lot_product_qty_search](stock_lot_product_qty_search/) | 14.0.1.0.0 | [![grindtildeath](https://github.com/grindtildeath.png?size=30px)](https://github.com/grindtildeath) | Allows to search on Quantity field of Lot/Serial Numbers
 [stock_lot_scrap](stock_lot_scrap/) | 14.0.1.0.1 |  | This module adds a button in Production Lot/Serial Number view form to Scrap all products contained.
 [stock_move_assign_picking_hook](stock_move_assign_picking_hook/) | 14.0.1.1.1 |  | Stock Move picking assignment hook
 [stock_move_change_source_location](stock_move_change_source_location/) | 14.0.1.0.0 |  | This module allows you to change the source location of a stock move from the picking
