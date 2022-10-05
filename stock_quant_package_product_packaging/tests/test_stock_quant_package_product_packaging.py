@@ -1,9 +1,9 @@
 # Copyright 2020 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
-from odoo.tests import SavepointCase
+from odoo.tests import TransactionCase
 
 
-class TestStockQuantPackageProductPackaging(SavepointCase):
+class TestStockQuantPackageProductPackaging(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -28,10 +28,10 @@ class TestStockQuantPackageProductPackaging(SavepointCase):
                 "location_dest_id": location_dest.id,
             }
         )
-        picking.onchange_picking_type()
+        picking._onchange_picking_type()
         picking.write(
             {
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
