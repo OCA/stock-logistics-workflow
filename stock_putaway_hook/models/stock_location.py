@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from odoo import models
+from odoo.fields import first
 
 
 class StockLocation(models.Model):
@@ -37,11 +38,12 @@ class StockLocation(models.Model):
 
         * Call the alternative strategies lookups
         * Call a hook ``_putaway_strategy_finalizer`` after all the strategies
+        * This should always return a result
         """
         putaway_location = super()._get_putaway_strategy(
             product, quantity, package, packaging, additional_qty
         )
-        if not putaway_location:
+        if putaway_location == self:
             putaway_location = self._alternative_putaway_strategy()
         return self._putaway_strategy_finalizer(
             putaway_location, product, quantity, package, packaging, additional_qty
@@ -73,7 +75,7 @@ class StockLocation(models.Model):
         ]
 
         if not available_strategies:
-            return putaway_location
+            return current_location
 
         while current_location and not putaway_location:
             # copy and reverse the strategies, so we pop them in their order
@@ -87,10 +89,9 @@ class StockLocation(models.Model):
                     if isinstance(value, (models.BaseModel, list, tuple))
                     else x[strategy] == value
                 )
-                if putaway_rules:
-                    putaway_location = putaway_rules[0].location_out_id
+                putaway_location = first(putaway_rules).location_out_id
             current_location = current_location.location_id
-        return putaway_location
+        return putaway_location or self
 
     def _putaway_strategy_finalizer(
         self,
