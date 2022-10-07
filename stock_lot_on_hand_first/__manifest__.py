@@ -11,9 +11,7 @@
     "maintainers": ["grindtildeath"],
     "license": "AGPL-3",
     "installable": True,
-    "depends": [
-        "stock_lot_product_qty_search",
-    ],
+    "depends": ["stock_lot_product_qty_search", "base_view_inheritance_extension"],
     "data": [
         "views/stock_move_line.xml",
         "views/stock_move.xml",
