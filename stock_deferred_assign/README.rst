@@ -23,9 +23,10 @@ Stock deferred assign
     :target: https://runbot.odoo-community.org/runbot/154/13.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module allows
+This module allows you to configure at the picking type level the moment in which
+the stock reservation is done.
 
 **Table of contents**
 
@@ -76,7 +77,7 @@ promote its widespread use.
 
 Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-carlosdauden| 
+|maintainer-carlosdauden|
 
 This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/13.0/stock_deferred_assign>`_ project on GitHub.
 
