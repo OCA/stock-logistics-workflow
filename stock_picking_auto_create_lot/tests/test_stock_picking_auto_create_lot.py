@@ -25,12 +25,12 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
     def test_manual_lot(self):
         self.picking.action_assign()
         # Check the display field
-        move = self.picking.move_lines.filtered(
+        move = self.picking.move_ids.filtered(
             lambda m: m.product_id == self.product_serial
         )
         self.assertFalse(move.display_assign_serial)
 
-        move = self.picking.move_lines.filtered(
+        move = self.picking.move_ids.filtered(
             lambda m: m.product_id == self.product_serial_not_auto
         )
         self.assertTrue(move.display_assign_serial)
@@ -40,12 +40,10 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
             line.lot_id = self.lot_obj.create(line._prepare_auto_lot_values())
 
         self.picking.button_validate()
-        lot = self.env["stock.production.lot"].search(
-            [("product_id", "=", self.product.id)]
-        )
+        lot = self.env["stock.lot"].search([("product_id", "=", self.product.id)])
         self.assertEqual(len(lot), 1)
         # Search for serials
-        lot = self.env["stock.production.lot"].search(
+        lot = self.env["stock.lot"].search(
             [("product_id", "=", self.product_serial.id)]
         )
         self.assertEqual(len(lot), 3)
@@ -53,30 +51,28 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
     def test_auto_create_lot(self):
         self.picking.action_assign()
         # Check the display field
-        move = self.picking.move_lines.filtered(
+        move = self.picking.move_ids.filtered(
             lambda m: m.product_id == self.product_serial
         )
         self.assertFalse(move.display_assign_serial)
 
-        move = self.picking.move_lines.filtered(
+        move = self.picking.move_ids.filtered(
             lambda m: m.product_id == self.product_serial_not_auto
         )
         self.assertTrue(move.display_assign_serial)
 
         self.picking._action_done()
-        lot = self.env["stock.production.lot"].search(
-            [("product_id", "=", self.product.id)]
-        )
+        lot = self.env["stock.lot"].search([("product_id", "=", self.product.id)])
         self.assertEqual(len(lot), 1)
         # Search for serials
-        lot = self.env["stock.production.lot"].search(
+        lot = self.env["stock.lot"].search(
             [("product_id", "=", self.product_serial.id)]
         )
         self.assertEqual(len(lot), 3)
 
     def test_auto_create_transfer_lot(self):
         self.picking.action_assign()
-        moves = self.picking.move_lines.filtered(
+        moves = self.picking.move_ids.filtered(
             lambda m: m.product_id == self.product_serial
         )
         for line in moves.mapped("move_line_ids"):
@@ -87,7 +83,7 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
             self.picking.button_validate()
 
         # Assign manual serial for product that need it
-        moves = self.picking.move_lines.filtered(
+        moves = self.picking.move_ids.filtered(
             lambda m: m.product_id == self.product_serial_not_auto
         )
 
@@ -99,12 +95,10 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
         for line in moves.mapped("move_line_ids"):
             self.assertTrue(line.lot_id)
 
-        lot = self.env["stock.production.lot"].search(
-            [("product_id", "=", self.product.id)]
-        )
+        lot = self.env["stock.lot"].search([("product_id", "=", self.product.id)])
         self.assertEqual(len(lot), 1)
         # Search for serials
-        lot = self.env["stock.production.lot"].search(
+        lot = self.env["stock.lot"].search(
             [("product_id", "=", self.product_serial.id)]
         )
         self.assertEqual(len(lot), 3)
@@ -133,7 +127,7 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
         picking_2.action_assign()
         pickings = picking_1 | picking_2
 
-        moves = pickings.mapped("move_lines").filtered(
+        moves = pickings.mapped("move_ids").filtered(
             lambda m: m.product_id == self.product_serial
         )
         for line in moves.mapped("move_line_ids"):
@@ -143,12 +137,10 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
         for line in moves.mapped("move_line_ids"):
             self.assertTrue(line.lot_id)
 
-        lot = self.env["stock.production.lot"].search(
-            [("product_id", "=", self.product.id)]
-        )
+        lot = self.env["stock.lot"].search([("product_id", "=", self.product.id)])
         self.assertEqual(len(lot), 1)
         # Search for serials
-        lot = self.env["stock.production.lot"].search(
+        lot = self.env["stock.lot"].search(
             [("product_id", "=", self.product_serial.id)]
         )
         self.assertEqual(len(lot), 6)
