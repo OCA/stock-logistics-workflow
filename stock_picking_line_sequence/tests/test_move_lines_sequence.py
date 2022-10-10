@@ -50,19 +50,18 @@ class TestStockMove(common.TransactionCase):
         return picking
 
     def test_move_lines_sequence(self):
-
         self.picking = self._create_picking()
         self.picking._compute_max_line_sequence()
         self.picking.move_lines.write({'product_uom_qty': 10.0})
         self.picking2 = self.picking.copy()
         self.assertEqual(self.picking2[0].move_lines[0].sequence,
-                         self.picking.move_lines[0].sequence,
+                         1,
                          'The Sequence is not copied properly')
         self.assertEqual(self.picking2[0].move_lines[1].sequence,
-                         self.picking.move_lines[1].sequence,
+                         2,
                          'The Sequence is not copied properly')
         self.assertEqual(self.picking2[0].move_lines[2].sequence,
-                         self.picking.move_lines[2].sequence,
+                         3,
                          'The Sequence is not copied properly')
 
     def test_backorder(self):
@@ -74,7 +73,7 @@ class TestStockMove(common.TransactionCase):
         backorder_wiz_id = picking.button_validate()['res_id']
         backorder_wiz = self.env['stock.backorder.confirmation'].browse(
             [backorder_wiz_id])
-        backorder_wiz.process()
+        backorder_wiz.with_context(keep_line_sequence=True).process()
         picking_backorder = self.Picking.search([
             ('backorder_id', '=', picking.id)
         ])
