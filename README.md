@@ -47,7 +47,7 @@ addon | version | maintainers | summary
 [stock_picking_force_assign](stock_picking_force_assign/) | 12.0.1.1.0 |  | Unreserve waiting and ready pickings to reserve current picking
 [stock_picking_invoice_link](stock_picking_invoice_link/) | 12.0.2.0.2 |  | Adds link between pickings and invoices
 [stock_picking_late_activity](stock_picking_late_activity/) | 12.0.1.0.0 | [![ernestotejeda](https://github.com/ernestotejeda.png?size=30px)](https://github.com/ernestotejeda) | Add an scheduled action that creates late picking activities
-[stock_picking_line_sequence](stock_picking_line_sequence/) | 12.0.1.1.1 |  | Manages the order of stock moves by displaying its sequence
+[stock_picking_line_sequence](stock_picking_line_sequence/) | 12.0.1.2.0 |  | Manages the order of stock moves by displaying its sequence
 [stock_picking_mass_action](stock_picking_mass_action/) | 12.0.1.1.2 |  | Stock Picking Mass Action
 [stock_picking_operation_quick_change](stock_picking_operation_quick_change/) | 12.0.1.0.0 |  | Change location of all picking operations
 [stock_picking_package_preparation](stock_picking_package_preparation/) | 12.0.1.0.2 |  | Stock Picking Package Preparation
