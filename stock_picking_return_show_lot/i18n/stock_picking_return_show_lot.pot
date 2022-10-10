@@ -1,0 +1,39 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_return_show_lot
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_return_show_lot
+#: model:ir.model.fields,field_description:stock_picking_return_show_lot.field_stock_return_picking_line__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_picking_return_show_lot
+#: model:ir.model.fields,field_description:stock_picking_return_show_lot.field_stock_return_picking_line__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_picking_return_show_lot
+#: model:ir.model.fields,field_description:stock_picking_return_show_lot.field_stock_return_picking_line____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_picking_return_show_lot
+#: model:ir.model,name:stock_picking_return_show_lot.model_stock_return_picking_line
+msgid "Return Picking Line"
+msgstr ""
+
+#. module: stock_picking_return_show_lot
+#: model:ir.model.fields,field_description:stock_picking_return_show_lot.field_stock_return_picking_line__lot_ids
+msgid "Serial Numbers"
+msgstr ""
