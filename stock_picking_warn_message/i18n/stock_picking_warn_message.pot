@@ -21,6 +21,13 @@ msgid ""
 msgstr ""
 
 #. module: stock_picking_warn_message
+#: model_terms:ir.ui.view,arch_db:stock_picking_warn_message.view_picking_form
+msgid ""
+"<i class=\"fa fa-warning\"/>\n"
+"                        &amp;nbsp;"
+msgstr ""
+
+#. module: stock_picking_warn_message
 #: model:ir.model.fields,field_description:stock_picking_warn_message.field_stock_picking__display_name
 msgid "Display Name"
 msgstr ""
@@ -33,6 +40,11 @@ msgstr ""
 #. module: stock_picking_warn_message
 #: model:ir.model.fields,field_description:stock_picking_warn_message.field_stock_picking____last_update
 msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_picking_warn_message
+#: model:ir.model.fields,field_description:stock_picking_warn_message.field_stock_picking__picking_warn
+msgid "Picking Warn"
 msgstr ""
 
 #. module: stock_picking_warn_message
