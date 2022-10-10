@@ -22,11 +22,11 @@ class StockMoveLine(models.Model):
         products, we apply the lot with both different approaches.
         """
         values = []
-        production_lot_obj = self.env["stock.production.lot"]
+        stock_lot_obj = self.env["stock.lot"]
         lots_by_product = dict()
         for line in self:
             values.append(line._prepare_auto_lot_values())
-        lots = production_lot_obj.create(values)
+        lots = stock_lot_obj.create(values)
         for lot in lots:
             if lot.product_id.id not in lots_by_product:
                 lots_by_product[lot.product_id.id] = lot
