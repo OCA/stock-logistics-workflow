@@ -19,6 +19,7 @@ class AssignSerialFinalMixin(models.AbstractModel):
     def _compute_next_serial_count(self):
         for rec in self:
             if not (rec[rec._next_serial_field] and rec.final_serial_number):
+                rec.next_serial_count = 0
                 continue
             lot_search = re.search(r"-?\d+\.?\d*", rec[rec._next_serial_field])
             start_num = lot_search.group()
