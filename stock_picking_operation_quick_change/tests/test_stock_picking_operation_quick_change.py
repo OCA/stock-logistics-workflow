@@ -1,10 +1,12 @@
-# Copyright 2017 Tecnativa - Sergio Teruel
+# Copyright 2022 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import UserError
+from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
 
 
+@tagged("post_install", "-at_install")
 class TestOperationQuickChange(TransactionCase):
     def setUp(self):
         super().setUp()
@@ -55,6 +57,8 @@ class TestOperationQuickChange(TransactionCase):
                             "product_id": self.product.product_variant_ids.id,
                             "product_uom_qty": 20.0,
                             "product_uom": self.product.uom_id.id,
+                            "location_id": self.warehouse.lot_stock_id.id,
+                            "location_dest_id": self.warehouse.wh_output_stock_loc_id.id,
                         },
                     ),
                     (
@@ -65,6 +69,8 @@ class TestOperationQuickChange(TransactionCase):
                             "product_id": self.product2.product_variant_ids.id,
                             "product_uom_qty": 60.0,
                             "product_uom": self.product.uom_id.id,
+                            "location_id": self.warehouse.lot_stock_id.id,
+                            "location_dest_id": self.warehouse.wh_output_stock_loc_id.id,
                         },
                     ),
                 ],
@@ -72,26 +78,13 @@ class TestOperationQuickChange(TransactionCase):
         )
 
     def qty_on_hand(self, product):
-        wiz = self.env["stock.inventory"].create(
+        self.env["stock.quant"].with_context(inventory_mode=True).create(
             {
-                "name": "Stock Inventory",
-                "product_ids": [(4, product.id, 0)],
-                "line_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "product_id": product.id,
-                            "product_uom_id": product.uom_id.id,
-                            "product_qty": 200,
-                            "location_id": self.warehouse.lot_stock_id.id,
-                        },
-                    ),
-                ],
+                "product_id": product.id,
+                "inventory_quantity": 200,
+                "location_id": self.warehouse.lot_stock_id.id,
             }
-        )
-        wiz.action_start()
-        wiz.action_validate()
+        )._apply_inventory()
 
     def test_picking_operation_change_location_dest_all(self):
         self.picking.action_assign()
@@ -102,7 +95,8 @@ class TestOperationQuickChange(TransactionCase):
             }
         )
         wiz = self.Wizard.with_context(
-            active_model=self.picking._name, active_ids=self.picking.ids,
+            active_model=self.picking._name,
+            active_ids=self.picking.ids,
         ).create({"new_location_dest_id": new_location_dest_id.id, "change_all": True})
         move_lines = self.picking.mapped("move_line_ids")
         self.assertEqual(wiz.location_dest_id, self.picking.location_dest_id)
@@ -128,7 +122,8 @@ class TestOperationQuickChange(TransactionCase):
         move_lines = self.picking.mapped("move_line_ids")
         move_lines[:1].write({"location_dest_id": other_location_dest_id.id})
         wiz = self.Wizard.with_context(
-            active_model=self.picking._name, active_ids=self.picking.ids,
+            active_model=self.picking._name,
+            active_ids=self.picking.ids,
         ).create(
             {
                 "old_location_dest_id": self.picking.location_dest_id.id,
@@ -143,7 +138,7 @@ class TestOperationQuickChange(TransactionCase):
         self.picking.action_assign()
         for move in self.picking.move_lines:
             move.quantity_done = 1
-        self.picking.action_done()
+        self.picking._action_done()
         new_location_dest_id = self.Location.create(
             {
                 "name": "New Test Customer Location",
@@ -151,7 +146,8 @@ class TestOperationQuickChange(TransactionCase):
             }
         )
         wiz = self.Wizard.with_context(
-            active_model=self.picking._name, active_ids=self.picking.ids,
+            active_model=self.picking._name,
+            active_ids=self.picking.ids,
         ).create({"new_location_dest_id": new_location_dest_id.id, "change_all": True})
         with self.assertRaises(UserError):
             wiz.action_apply()
