@@ -23,7 +23,7 @@ class StockPicking(models.Model):
     # This is required because percentagepie and percentage use different
     # percentage representations
     estimated_progress_normalized = fields.Float(
-        "Estimated Progress",
+        "Estimated Progress Normalized",
         compute="_compute_estimated_progress_normalized",
     )
 
