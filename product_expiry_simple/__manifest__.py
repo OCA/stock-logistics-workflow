@@ -21,6 +21,7 @@
         "views/stock_production_lot.xml",
         "views/stock_quant.xml",
         "views/stock_move_line.xml",
+        "views/stock_picking.xml",
     ],
     "installable": True,
 }
