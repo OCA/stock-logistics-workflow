@@ -19,14 +19,12 @@ msgid "Cancel"
 msgstr ""
 
 #. module: stock_split_picking
-#: code:addons/stock_split_picking/models/stock_picking.py:100
 #: code:addons/stock_split_picking/models/stock_picking.py:102
 #, python-format
 msgid "Cannot split off all moves from picking %s"
 msgstr ""
 
 #. module: stock_split_picking
-#: code:addons/stock_split_picking/models/stock_picking.py:94
 #: code:addons/stock_split_picking/models/stock_picking.py:96
 #, python-format
 msgid "Cannot split picking %s in state %s"
@@ -120,7 +118,6 @@ msgid "Split pickings"
 msgstr ""
 
 #. module: stock_split_picking
-#: code:addons/stock_split_picking/models/stock_picking.py:78
 #: code:addons/stock_split_picking/models/stock_picking.py:80
 #, python-format
 msgid "The backorder <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d\">%s</a> has been created."
