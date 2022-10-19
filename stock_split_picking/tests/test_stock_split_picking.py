@@ -1,5 +1,6 @@
 # Copyright 2017 Tecnativa - Vicent Cubells <vicent.cubells@tecnativa.com>
 # Copyright 2018 Camptocamp SA - Julien Coux
+# Copyright 2021 sewisoft - Guenter Selbert <guenter.selbert@sewisoft.de>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.tests.common import SavepointCase
@@ -13,9 +14,20 @@ class TestStockSplitPicking(SavepointCase):
         super(TestStockSplitPicking, cls).setUpClass()
 
         cls.src_location = cls.env.ref('stock.stock_location_stock')
+        cls.src_location_1 = cls.src_location.copy(
+            default={
+                'location_id': cls.src_location.id,
+                'name': cls.src_location.name + ' 1',
+            })
+        cls.src_location_2 = cls.src_location.copy(
+            default={
+                'location_id': cls.src_location.id,
+                'name': cls.src_location.name + ' 2',
+            })
         cls.dest_location = cls.env.ref('stock.stock_location_customers')
         cls.product = cls.env['product.product'].create({
             'name': 'Test product',
+            'type': 'product',
         })
         cls.partner = cls.env['res.partner'].create({
             'name': 'Test partner',
@@ -47,6 +59,19 @@ class TestStockSplitPicking(SavepointCase):
         # We can't split an unassigned picking
         with self.assertRaises(UserError):
             self.picking.split_process()
+
+        # add 5.0 quantities of the product per source child location
+        self.env['stock.change.product.qty'].create({
+            'product_id': self.product.id,
+            'location_id': self.src_location_1.id,
+            'new_quantity': 5.0,
+        }).change_product_qty()
+        self.env['stock.change.product.qty'].create({
+            'product_id': self.product.id,
+            'location_id': self.src_location_2.id,
+            'new_quantity': 5.0,
+        }).change_product_qty()
+
         # We assign quantities in order to split
         self.picking.action_assign()
         move_line = self.env['stock.move.line'].search(
@@ -57,10 +82,16 @@ class TestStockSplitPicking(SavepointCase):
         self.picking.split_process()
 
         # We have a picking with 4 units in state assigned
-        self.assertAlmostEqual(move_line.qty_done, 4.0)
-        self.assertAlmostEqual(move_line.product_qty, 4.0)
-        self.assertAlmostEqual(move_line.product_uom_qty, 4.0)
-        self.assertAlmostEqual(move_line.ordered_qty, 10.0)
+        self.assertAlmostEqual(
+            sum(self.picking.move_line_ids.mapped("qty_done")), 4.0
+        )
+        self.assertAlmostEqual(
+            sum(self.picking.move_line_ids.mapped("product_qty")), 4.0
+        )
+        self.assertAlmostEqual(
+            sum(self.picking.move_line_ids.mapped("product_uom_qty")), 4.0
+        )
+        self.assertAlmostEqual(move_line.ordered_qty, 5.0)
 
         self.assertAlmostEqual(self.move.quantity_done, 4.0)
         self.assertAlmostEqual(self.move.product_qty, 4.0)
@@ -71,13 +102,14 @@ class TestStockSplitPicking(SavepointCase):
         # An another one with 6 units in state assigned
         new_picking = self.env['stock.picking'].search(
             [('backorder_id', '=', self.picking.id)], limit=1)
-        move_line = self.env['stock.move.line'].search(
-            [('picking_id', '=', new_picking.id)], limit=1)
+        move_line = self.env['stock.move.line'].search([
+            ('picking_id', '=', new_picking.id),
+        ])
 
-        self.assertAlmostEqual(move_line.qty_done, 0.0)
-        self.assertAlmostEqual(move_line.product_qty, 6.0)
-        self.assertAlmostEqual(move_line.product_uom_qty, 6.0)
-        self.assertAlmostEqual(move_line.ordered_qty, 6.0)
+        self.assertAlmostEqual(sum(move_line.mapped("qty_done")), 0.0)
+        self.assertAlmostEqual(sum(move_line.mapped("product_qty")), 6.0)
+        self.assertAlmostEqual(sum(move_line.mapped("product_uom_qty")), 6.0)
+        self.assertAlmostEqual(sum(move_line.mapped("ordered_qty")), 6.0)
 
         self.assertAlmostEqual(new_picking.move_lines.quantity_done, 0.0)
         self.assertAlmostEqual(new_picking.move_lines.product_qty, 6.0)
