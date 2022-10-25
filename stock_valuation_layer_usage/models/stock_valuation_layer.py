@@ -45,12 +45,10 @@ class StockValuationLayer(models.Model):
             rec.incoming_usage_value = sum(rec.incoming_usage_ids.mapped("value"))
 
     usage_quantity = fields.Float(
-        string="Usage quantity",
         compute="_compute_usage_values",
         store=True,
     )
     usage_value = fields.Float(
-        string="Usage value",
         compute="_compute_usage_values",
         store=True,
     )

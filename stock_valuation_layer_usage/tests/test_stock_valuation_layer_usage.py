@@ -3,10 +3,10 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import fields
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestStockValuationLayerUsage(SavepointCase):
+class TestStockValuationLayerUsage(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super(TestStockValuationLayerUsage, cls).setUpClass()
@@ -77,7 +77,7 @@ class TestStockValuationLayerUsage(SavepointCase):
     def _create_user(cls, login, groups, company):
         """Create a user."""
         group_ids = [group.id for group in groups]
-        user = cls.res_users_model.with_context({"no_reset_password": True}).create(
+        user = cls.res_users_model.with_context(no_reset_password=True).create(
             {
                 "name": "Test User",
                 "login": login,
