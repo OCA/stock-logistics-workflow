@@ -16,7 +16,7 @@ msgstr ""
 #. module: stock_no_negative
 #: code:addons/stock_no_negative/models/stock_quant.py:0
 #, python-format
-msgid " lot '%s'"
+msgid " lot {}"
 msgstr ""
 
 #. module: stock_no_negative
@@ -77,7 +77,7 @@ msgstr ""
 #, python-format
 msgid ""
 "You cannot validate this stock operation because the stock level of the "
-"product '%(name)s'%(name_lot)s would become negative (%(q_quantity)s) on the"
-" stock location '%(complete_name)s' and negative stock is not allowed for "
+"product '{name}'{name_lot} would become negative ({q_quantity}) on the"
+" stock location '{complete_name}' and negative stock is not allowed for "
 "this product and/or location."
 msgstr ""
