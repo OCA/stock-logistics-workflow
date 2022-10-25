@@ -140,6 +140,9 @@ def post_load_hook():
         )
         if not svls_to_vacuum:
             return
+
+        as_svls = []
+
         domain = [
             ("company_id", "=", company.id),
             ("product_id", "=", self.id),
@@ -249,19 +252,10 @@ def post_load_hook():
             }
             vacuum_svl = self.env["stock.valuation.layer"].sudo().create(vals)
 
-            # Create the account move.
             if self.valuation != "real_time":
                 continue
-            vacuum_svl.stock_move_id._account_entry_move(
-                vacuum_svl.quantity,
-                vacuum_svl.description,
-                vacuum_svl.id,
-                vacuum_svl.value,
-            )
-            # Create the related expense entry
-            self._create_fifo_vacuum_anglo_saxon_expense_entry(
-                vacuum_svl, svl_to_vacuum
-            )
+            as_svls.append((vacuum_svl, svl_to_vacuum))
+
         # If some negative stock were fixed, we need to recompute the standard price.
         product = self.with_company(company.id)
         if product.cost_method == "average" and not float_is_zero(
@@ -269,6 +263,15 @@ def post_load_hook():
         ):
             product.sudo().with_context(disable_auto_svl=True).write(
                 {"standard_price": product.value_svl / product.quantity_svl}
+            )
+
+        self.env["stock.valuation.layer"].browse(
+            x[0].id for x in as_svls
+        )._validate_accounting_entries()
+
+        for vacuum_svl, svl_to_vacuum in as_svls:
+            self._create_fifo_vacuum_anglo_saxon_expense_entry(
+                vacuum_svl, svl_to_vacuum
             )
 
     if not hasattr(ProductProduct, "_run_fifo_vacuum_original"):
