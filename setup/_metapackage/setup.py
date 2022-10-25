@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo-addon-stock_picking_auto_create_lot>=16.0dev,<16.1dev',
+        'odoo-addon-stock_picking_sale_order_link>=16.0dev,<16.1dev',
         'odoo-addon-stock_putaway_hook>=16.0dev,<16.1dev',
         'odoo-addon-stock_quant_package_product_packaging>=16.0dev,<16.1dev',
     ],
