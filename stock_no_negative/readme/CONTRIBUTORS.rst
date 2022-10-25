@@ -8,3 +8,4 @@
     * Pedro M. Baeza
 * `Spacefoot <https://www.spacefoot.com>`_:
     * Quentin Delcourte
+* Vishnu Vanneri <vvanneri@ioppolo.com.au>
