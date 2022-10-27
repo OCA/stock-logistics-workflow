@@ -6,17 +6,21 @@
 -->
 <odoo>
     <record id="view_production_lot_form" model="ir.ui.view">
-        <field name="name">product_expiry_simple.stock.production.lot.form</field>
-        <field name="model">stock.production.lot</field>
+        <field name="name">product_expiry_simple.stock.lot.form</field>
+        <field name="model">stock.lot</field>
         <field name="inherit_id" ref="stock.view_production_lot_form" />
         <field name="arch" type="xml">
-            <field name="ref" position="after">
-                <field name="expiry_date" />
+            <field name="ref" position="before">
+                <field
+                    name="expiry_date"
+                    attrs="{'invisible': [('use_expiry_date', '!=', True)], 'required': [('use_expiry_date', '=', True)]}"
+                />
                 <field name="expired" invisible="1" />
+                <field name="use_expiry_date" invisible="1" />
             </field>
             <xpath expr="//div[hasclass('oe_title')]" position="inside">
                 <span
-                    class="badge badge-danger"
+                    class="badge text-bg-danger"
                     attrs="{'invisible': [('expired', '=', False)]}"
                 >Expired</span>
             </xpath>
@@ -24,11 +28,11 @@
     </record>
 
     <record id="view_production_lot_tree" model="ir.ui.view">
-        <field name="name">product_expiry_simple.stock.production.lot.tree</field>
-        <field name="model">stock.production.lot</field>
+        <field name="name">product_expiry_simple.stock.lot.tree</field>
+        <field name="model">stock.lot</field>
         <field name="inherit_id" ref="stock.view_production_lot_tree" />
         <field name="arch" type="xml">
-            <field name="ref" position="after">
+            <field name="name" position="after">
                 <field name="expiry_date" optional="show" />
             </field>
             <xpath expr="/tree" position="attributes">
@@ -39,11 +43,14 @@
         </field>
     </record>
     <record id="search_product_lot_filter" model="ir.ui.view">
-        <field name="name">product_expiry_simple.stock.production.lot.search</field>
-        <field name="model">stock.production.lot</field>
+        <field name="name">product_expiry_simple.stock.lot.search</field>
+        <field name="model">stock.lot</field>
         <field name="inherit_id" ref="stock.search_product_lot_filter" />
         <field name="arch" type="xml">
             <field name="product_id" position="after">
+                <separator />
+                <filter string="Expiry Date" name="expiry_date" date="expiry_date" />
+                <separator />
                 <filter
                     domain="[('expiry_date', '&lt;', context_today().strftime('%Y-%m-%d'))]"
                     name="expired"

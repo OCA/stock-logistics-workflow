@@ -1,4 +1,4 @@
-This module is similar to the official `product_expiry <https://github.com/odoo/odoo/tree/14.0/addons/product_expiry>`_ module that adds support for *Expiry Dates* on products, but it is both simpler and better:
+This module is similar to the official `product_expiry <https://github.com/odoo/odoo/tree/16.0/addons/product_expiry>`_ module that adds support for *Expiry Dates* on products, but it is both simpler and better:
 
 * Only one *Expiry Date* field instead of 4 fields (Expiration Date, Best before Date, Removal Date, Alert Date)!
 * Use date field instead of datetime field for *Expiry Date*.
