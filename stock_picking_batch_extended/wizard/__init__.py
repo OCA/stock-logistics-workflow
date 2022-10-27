@@ -1,1 +1,1 @@
-from . import batch_picking_creator
+from . import stock_picking_to_batch
