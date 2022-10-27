@@ -41,7 +41,8 @@ action = env.ref('stock.action_report_delivery').report_action(pickings)
         />
         <field name="state">code</field>
         <field name="code">
-            batches = records.action_assign()
+for record in records:
+    record.action_assign()
         </field>
     </record>
 </odoo>
