@@ -5,10 +5,10 @@
   License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 -->
 <odoo>
-     <record id="view_stock_quant_form" model="ir.ui.view">
+     <record id="view_stock_quant_form_editable" model="ir.ui.view">
         <field name="name">product_expiry_simple.stock.quant.form</field>
         <field name="model">stock.quant</field>
-        <field name="inherit_id" ref="stock.view_stock_quant_form" />
+        <field name="inherit_id" ref="stock.view_stock_quant_form_editable" />
         <field name="arch" type="xml">
             <field name="product_id" position="before">
                     <!-- Cannot use context_today() nor current_date in a form view,
@@ -61,6 +61,25 @@
             </xpath>
         </field>
     </record>
+    <record id="view_stock_quant_tree_inventory_editable" model="ir.ui.view">
+        <field
+            name="name"
+        >product_expiry_simple.stock.quant.tree.inventory.editable</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree_inventory_editable" />
+        <field name="arch" type="xml">
+            <field name="lot_id" position="after">
+                <!-- We show expiry_date in tree view in order to do an "order by" on this column via the interface
+            But the information is already in the lot_id column via name_get() -->
+                <field name="expiry_date" optional="hide" />
+            </field>
+            <xpath expr="/tree" position="attributes">
+                  <attribute
+                    name="decoration-danger"
+                >expiry_date and expiry_date &lt; current_date</attribute>
+            </xpath>
+        </field>
+    </record>
 
     <record id="quant_search_view" model="ir.ui.view">
         <field name="name">product_expiry_simple.stock.quant.search</field>
@@ -68,6 +87,8 @@
         <field name="inherit_id" ref="stock.quant_search_view" />
         <field name="arch" type="xml">
             <filter name="reserved" position="after">
+                <separator />
+                <filter name="expiry_date" date="expiry_date" string="Expiry Date" />
                 <separator />
                 <filter
                     domain="[('expiry_date', '&lt;', context_today().strftime('%Y-%m-%d'))]"
