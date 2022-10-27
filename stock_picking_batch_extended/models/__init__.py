@@ -3,5 +3,4 @@
 from . import res_config_settings
 from . import stock_batch_picking
 from . import product_product
-from . import stock_picking
 from . import stock_warehouse

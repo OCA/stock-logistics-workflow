@@ -4,6 +4,8 @@
         <field name="name">Batch picking</field>
         <field name="model">stock.picking.batch</field>
         <field name="report_type">qweb-pdf</field>
+        <field name="binding_model_id" ref="model_stock_picking_batch" />
+        <field name="binding_type">report</field>
         <field
             name="report_name"
         >stock_picking_batch_extended.report_batch_picking</field>
