@@ -6,30 +6,17 @@ from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 
-class StockBatchPickingCreator(models.TransientModel):
+class StockPickingToBatch(models.TransientModel):
     """Create a stock.picking.batch from stock.picking"""
 
-    _name = "stock.picking.batch.creator"
-    _description = "Batch Picking Creator"
+    _inherit = "stock.picking.to.batch"
     _group_field_param = "stock_batch_picking.group_field"
 
     name = fields.Char(
-        required=True,
-        default=lambda x: x.env["ir.sequence"].next_by_code("stock.picking.batch"),
         help="Name of the batch picking",
     )
-    date = fields.Date(
-        required=True,
-        index=True,
-        default=fields.Date.context_today,
-        help="Date on which the batch picking is to be processed",
-    )
-
     user_id = fields.Many2one(
-        "res.users",
-        string="Picker",
         default=lambda self: self._default_user_id(),
-        help="The user to which the pickings are assigned",
     )
     notes = fields.Text(help="Free form remarks")
     batch_by_group = fields.Boolean(
@@ -37,7 +24,7 @@ class StockBatchPickingCreator(models.TransientModel):
     )
     group_field_ids = fields.One2many(
         comodel_name="stock.picking.batch.creator.group.field",
-        inverse_name="batch_picking_creator_id",
+        inverse_name="picking_to_batch_id",
         string="Group by field",
         help="If set any, multiple batch picking will be created, one per "
         "group field",
@@ -86,12 +73,14 @@ class StockBatchPickingCreator(models.TransientModel):
         return warehouse.default_user_id
 
     def _prepare_stock_batch_picking(self):
-        return {
-            "name": self.name,
-            "date": self.date,
+        vals = {
             "notes": self.notes,
             "user_id": self.user_id.id,
         }
+        if self.name:
+            # If not name set in wizard Odoo creates one automatically by sequence
+            vals["name"] = self.name
+        return vals
 
     def _raise_message_error(self):
         return _(
@@ -126,9 +115,15 @@ class StockBatchPickingCreator(models.TransientModel):
         return batchs
 
     def action_create_batch(self):
-        """Create a batch picking  with selected pickings after having checked
-        that they are not already in another batch or done/cancel.
         """
+        For OCA approach:
+         Create a batch picking  with selected pickings after having checked
+         that they are not already in another batch or done/cancel.
+        For non OCA approach:
+         Call to original method
+        """
+        if not self.env.company.use_oca_batch_validation:
+            return self.attach_pickings()
         domain = [
             ("id", "in", self.env.context["active_ids"]),
             ("batch_id", "=", False),
@@ -151,7 +146,7 @@ class StockBatchPickingCreator(models.TransientModel):
     def action_view_batch_picking(self, batch_pickings):
         if len(batch_pickings) > 1:
             action = self.env.ref(
-                "stock_picking_batch_extended.action_stock_batch_picking_tree"
+                "stock_picking_batch.stock_picking_batch_action"
             ).read()[0]
             action["domain"] = [("id", "in", batch_pickings.ids)]
         else:
@@ -166,8 +161,8 @@ class StockBatchPickingCreatorGroupField(models.TransientModel):
     _description = "Batch Picking Creator Group Field"
     _order = "sequence, id"
 
-    batch_picking_creator_id = fields.Many2one(
-        comodel_name="stock.picking.batch.creator",
+    picking_to_batch_id = fields.Many2one(
+        comodel_name="stock.picking.to.batch",
         ondelete="cascade",
         required=True,
     )
