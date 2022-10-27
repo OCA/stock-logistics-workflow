@@ -59,6 +59,7 @@ class StockPicking(models.Model):
                 new_moves.mapped("move_line_ids").write(
                     {"picking_id": backorder_picking.id}
                 )
+                new_moves._action_confirm()
                 new_moves._action_assign()
 
     def _create_split_backorder(self, default=None):
