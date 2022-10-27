@@ -9,7 +9,7 @@ from odoo import fields, models
 class StockMoveLine(models.Model):
     _inherit = "stock.move.line"
 
-    expiry_date = fields.Date(string="Expiry Date")
+    expiry_date = fields.Date()
 
     # When you read the code of _create_and_assign_production_lot()
     # you need the defects of that method:
@@ -19,6 +19,7 @@ class StockMoveLine(models.Model):
     # lot X will always have the same expiry_date
 
     def _assign_production_lot(self, lot):
-        super()._assign_production_lot(lot)
+        res = super()._assign_production_lot(lot)
         if self[0].expiry_date:
             self.lot_id.write({"expiry_date": self[0].expiry_date})
+        return res
