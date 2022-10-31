@@ -29,7 +29,6 @@ class StockPicking(models.Model):
             picking.product_count = len(set(products.ids))
             picking.product_ids = products
 
-    @api.multi
     def action_view_products(self):
         self.ensure_one()
         return {

@@ -3,7 +3,7 @@
 
 {
     "name": "Stock Picking Product Link",
-    "version": "12.0.1.0.0",
+    "version": "14.0.1.0.0",
     "depends": ["stock"],
     "author": "Odoo Community Association (OCA), Coop IT Easy SC",
     "license": "AGPL-3",
