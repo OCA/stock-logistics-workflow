@@ -28,30 +28,34 @@ class TestStockPickingProducts(SavepointCase):
                 "location_dest_id": self.customer_location.id,
             }
         )
-        self.move_model.create({
-            "product_id": self.product_8.id,
-            "picking_id": stock_picking.id,
-            "product_uom_qty": 1.0,
-            "name": self.product_8.display_name,
-            "picking_type_id": self.picking_type_out.id,
-            "location_id": self.stock_location.id,
-            "location_dest_id": self.customer_location.id,
-            "product_uom": self.product_8.uom_id.id,
-        })
-        self.move_model.create({
-            "product_id": self.product_9.id,
-            "picking_id": stock_picking.id,
-            "product_uom_qty": 1.0,
-            "name": self.product_9.display_name,
-            "picking_type_id": self.picking_type_out.id,
-            "location_id": self.stock_location.id,
-            "location_dest_id": self.customer_location.id,
-            "product_uom": self.product_9.uom_id.id,
-        })
+        self.move_model.create(
+            {
+                "product_id": self.product_8.id,
+                "picking_id": stock_picking.id,
+                "product_uom_qty": 1.0,
+                "name": self.product_8.display_name,
+                "picking_type_id": self.picking_type_out.id,
+                "location_id": self.stock_location.id,
+                "location_dest_id": self.customer_location.id,
+                "product_uom": self.product_8.uom_id.id,
+            }
+        )
+        self.move_model.create(
+            {
+                "product_id": self.product_9.id,
+                "picking_id": stock_picking.id,
+                "product_uom_qty": 1.0,
+                "name": self.product_9.display_name,
+                "picking_type_id": self.picking_type_out.id,
+                "location_id": self.stock_location.id,
+                "location_dest_id": self.customer_location.id,
+                "product_uom": self.product_9.uom_id.id,
+            }
+        )
 
         self.assertEqual(
             sorted(stock_picking.product_ids.ids),
-            sorted([self.product_8.id, self.product_9.id])
+            sorted([self.product_8.id, self.product_9.id]),
         )
         self.assertEqual(stock_picking.product_count, 2)
         # coverage
