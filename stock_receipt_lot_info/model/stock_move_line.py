@@ -12,8 +12,8 @@ class StockMoveLine(models.Model):
     lot_removal_date = fields.Datetime(string="Lot/Serial Removal Date")
     lot_alert_date = fields.Datetime(string="Lot/Serial Alert Date")
 
-    def _prepare_new_lot_vals(self):
-        vals = super()._prepare_new_lot_vals()
+    def _get_value_production_lot(self):
+        vals = super()._get_value_production_lot()
         creation_lot_fields = [
             "expiration_date",
             "use_date",
