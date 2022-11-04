@@ -24,6 +24,7 @@ addon | version | maintainers | summary
 [stock_picking_auto_create_lot](stock_picking_auto_create_lot/) | 16.0.1.0.0 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Auto create lots for incoming pickings
 [stock_picking_sale_order_link](stock_picking_sale_order_link/) | 16.0.1.0.0 |  | Link between picking and sale order
 [stock_putaway_hook](stock_putaway_hook/) | 16.0.1.0.0 |  | Add hooks allowing modules to add more putaway strategies
+[stock_quant_package_dimension](stock_quant_package_dimension/) | 16.0.1.0.0 |  | Use dimensions on packages
 [stock_quant_package_product_packaging](stock_quant_package_product_packaging/) | 16.0.1.0.1 |  | Use product packagings on packages
 
 [//]: # (end addons)
