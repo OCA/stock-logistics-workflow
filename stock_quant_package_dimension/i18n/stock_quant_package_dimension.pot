@@ -1,0 +1,149 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_quant_package_dimension
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_quant_package_dimension
+#: model_terms:ir.ui.view,arch_db:stock_quant_package_dimension.view_quant_package_form_inherit
+msgid "<span>kg</span>"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,help:stock_quant_package_dimension.field_stock_quant_package__estimated_pack_weight_kg
+msgid "Based on the weight of the product packagings."
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model_terms:ir.ui.view,arch_db:stock_quant_package_dimension.view_quant_package_form_inherit
+msgid "Dimensions"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,field_description:stock_quant_package_dimension.field_stock_quant_package__length_uom_id
+msgid "Dimensions Units of Measure"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,field_description:stock_quant_package_dimension.field_stock_quant_package__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,field_description:stock_quant_package_dimension.field_stock_quant_package__estimated_pack_weight_kg
+msgid "Estimated weight (in kg)"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,field_description:stock_quant_package_dimension.field_stock_quant_package__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,field_description:stock_quant_package_dimension.field_stock_quant_package____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,field_description:stock_quant_package_dimension.field_stock_quant_package__length_uom_name
+msgid "Length unit of measure label"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,field_description:stock_quant_package_dimension.field_stock_quant_package__height
+msgid "Pack Height"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,field_description:stock_quant_package_dimension.field_stock_quant_package__pack_length
+msgid "Pack Length"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,field_description:stock_quant_package_dimension.field_stock_quant_package__volume
+msgid "Pack Volume"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,field_description:stock_quant_package_dimension.field_stock_quant_package__pack_weight
+msgid "Pack Weight"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,field_description:stock_quant_package_dimension.field_stock_quant_package__width
+msgid "Pack Width"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model,name:stock_quant_package_dimension.model_stock_quant_package
+msgid "Packages"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,help:stock_quant_package_dimension.field_stock_quant_package__volume_uom_id
+msgid "Packaging volume unit of measure"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model_terms:ir.ui.view,arch_db:stock_quant_package_dimension.view_quant_package_form_inherit
+msgid "Units of Measure"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,help:stock_quant_package_dimension.field_stock_quant_package__length_uom_id
+msgid "UoM for pack length, height, width (based on lenght UoM)"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,field_description:stock_quant_package_dimension.field_stock_quant_package__volume_uom_name
+msgid "Volume Unit of Measure label"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,field_description:stock_quant_package_dimension.field_stock_quant_package__volume_uom_id
+msgid "Volume Units of Measure"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,help:stock_quant_package_dimension.field_stock_quant_package__weight_uom_id
+msgid "Weight Unit of Measure"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,field_description:stock_quant_package_dimension.field_stock_quant_package__weight_uom_id
+msgid "Weight Units of Measure"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,field_description:stock_quant_package_dimension.field_stock_quant_package__weight_uom_name
+msgid "Weight unit of measure label"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,help:stock_quant_package_dimension.field_stock_quant_package__height
+msgid "height"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,help:stock_quant_package_dimension.field_stock_quant_package__pack_length
+msgid "length"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,help:stock_quant_package_dimension.field_stock_quant_package__volume
+msgid "volume"
+msgstr ""
+
+#. module: stock_quant_package_dimension
+#: model:ir.model.fields,help:stock_quant_package_dimension.field_stock_quant_package__width
+msgid "width"
+msgstr ""
