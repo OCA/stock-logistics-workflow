@@ -14,15 +14,16 @@ class StockPicking(models.Model):
 
     @api.depends("canceled_by_routing")
     def _compute_state(self):
-        super()._compute_state()
+        res = super()._compute_state()
         for picking in self:
             if picking.canceled_by_routing:
                 picking.state = "cancel"
+        return res
 
     def _dynamic_routing_handle_empty(self):
         """Handle pickings emptied during a dynamic routing"""
         for picking in self:
-            if not picking.move_lines:
+            if not picking.move_ids:
                 # When the picking type changes, it will create a new picking
                 # for the move. As the picking is now empty, it's useless.
                 # We could drop it but it can make code crash later in the

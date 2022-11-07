@@ -29,7 +29,7 @@
                     <field name="active" invisible="1" />
                     <group string="Routing Rules" name="rule">
                         <field name="rule_ids" nolabel="1">
-                            <tree string="Routing Rules">
+                            <tree>
                                 <field name="sequence" widget="handle" />
                                 <field name="method" />
                                 <field name="picking_type_id" />
@@ -80,7 +80,7 @@
         <field name="name">stock.routing</field>
         <field name="model">stock.routing</field>
         <field name="arch" type="xml">
-            <tree string="Dynamic Routing">
+            <tree>
                 <field name="sequence" widget="handle" />
                 <field name="location_id" />
                 <field name="picking_type_id" />

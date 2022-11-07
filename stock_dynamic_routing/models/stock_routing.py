@@ -202,14 +202,14 @@ class StockRouting(models.Model):
         empty_rule = self.env["stock.routing.rule"].browse()
         return empty_rule
 
-    def _routing_rule_for_move_lines(self, moves):
+    def _routing_rule_for_move_ids(self, moves):
         """Return a routing rule for move lines
 
         Look first for a pull routing rule, if no match, look for a push
         routing rule.
 
         :param move: recordset of the move
-        :return: dict {move: {rule: move_lines}}
+        :return: dict {move: {rule: move_ids}}
         """
         # ensure the cache is clean
         self.__cached_is_rule_valid_for_move.cache_clear()

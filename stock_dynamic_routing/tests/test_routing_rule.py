@@ -3,7 +3,7 @@
 from odoo.tests import common
 
 
-class TestRoutingRule(common.SavepointCase):
+class TestRoutingRule(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

@@ -3,7 +3,7 @@
 from odoo.tests import common
 
 
-class TestRoutingPullCommon(common.SavepointCase):
+class TestRoutingPullCommon(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -176,7 +176,7 @@ class TestRoutingPullCommon(common.SavepointCase):
         self.assertEqual(record.location_dest_id, self.customer_loc)
 
     def process_operations(self, move):
-        qty = move.move_line_ids.product_uom_qty
+        qty = move.move_line_ids.reserved_uom_qty
         move.move_line_ids.qty_done = qty
         move.picking_id._action_done()
 
@@ -186,8 +186,8 @@ class TestRoutingPull(TestRoutingPullCommon):
         pick_picking, customer_picking = self._create_pick_ship(
             self.wh, [(self.product1, 10)]
         )
-        move_a = pick_picking.move_lines
-        move_b = customer_picking.move_lines
+        move_a = pick_picking.move_ids
+        move_b = customer_picking.move_ids
 
         self._update_product_qty_in_location(
             self.location_hb_1_2, move_a.product_id, 100
@@ -242,10 +242,10 @@ class TestRoutingPull(TestRoutingPullCommon):
         self._update_product_qty_in_location(self.location_hb_1_2, self.product1, 20)
         # another product in a shelf, no additional operation for this one
         self._update_product_qty_in_location(self.location_shelf_1, self.product2, 20)
-        pick_moves = pick_picking.move_lines
+        pick_moves = pick_picking.move_ids
         move_a_p1 = pick_moves.filtered(lambda r: r.product_id == product1)
         move_a_p2 = pick_moves.filtered(lambda r: r.product_id == product2)
-        cust_moves = customer_picking.move_lines
+        cust_moves = customer_picking.move_ids
         move_b_p1 = cust_moves.filtered(lambda r: r.product_id == product1)
         move_b_p2 = cust_moves.filtered(lambda r: r.product_id == product2)
 
@@ -346,12 +346,12 @@ class TestRoutingPull(TestRoutingPullCommon):
         self.assertEqual(move_b_p1.state, "done")
         self.assertEqual(move_b_p2.state, "done")
 
-    def test_several_move_lines(self):
+    def test_several_move_ids(self):
         pick_picking, customer_picking = self._create_pick_ship(
             self.wh, [(self.product1, 10)]
         )
-        move_a = pick_picking.move_lines
-        move_b = customer_picking.move_lines
+        move_a = pick_picking.move_ids
+        move_b = customer_picking.move_ids
         # in Highbay → should generate a new operation in Highbay picking type
         self._update_product_qty_in_location(self.location_hb_1_2, move_a.product_id, 6)
         # same product in a shelf, we should have a second move line directly
@@ -364,13 +364,9 @@ class TestRoutingPull(TestRoutingPullCommon):
 
         # it splits the stock move to be able to chain the quantities from
         # the Highbay
-        self.assertEqual(len(pick_picking.move_lines), 2)
-        move_a1 = pick_picking.move_lines.filtered(
-            lambda move: move.product_uom_qty == 4
-        )
-        move_a2 = pick_picking.move_lines.filtered(
-            lambda move: move.product_uom_qty == 6
-        )
+        self.assertEqual(len(pick_picking.move_ids), 2)
+        move_a1 = pick_picking.move_ids.filtered(lambda move: move.product_uom_qty == 4)
+        move_a2 = pick_picking.move_ids.filtered(lambda move: move.product_uom_qty == 6)
         move_ho = move_a2.move_orig_ids
         # move_ho is the move which has been split from move_a and moved
         # to a different picking type
@@ -467,8 +463,8 @@ class TestRoutingPull(TestRoutingPullCommon):
         pick_picking, customer_picking = self._create_pick_ship(
             self.wh, [(self.product1, 10)]
         )
-        move_a = pick_picking.move_lines
-        move_b = customer_picking.move_lines
+        move_a = pick_picking.move_ids
+        move_b = customer_picking.move_ids
 
         self._update_product_qty_in_location(
             self.location_hb_1_2, move_a.product_id, 100
@@ -528,8 +524,8 @@ class TestRoutingPull(TestRoutingPullCommon):
         pick_picking, customer_picking = self._create_pick_ship(
             self.wh, [(self.product1, 10)]
         )
-        move_a = pick_picking.move_lines
-        move_b = customer_picking.move_lines
+        move_a = pick_picking.move_ids
+        move_b = customer_picking.move_ids
 
         self._update_product_qty_in_location(
             self.location_hb_1_2, move_a.product_id, 100
@@ -576,8 +572,8 @@ class TestRoutingPull(TestRoutingPullCommon):
         pick_picking, customer_picking = self._create_pick_ship(
             self.wh, [(self.product1, 10)]
         )
-        move_a = pick_picking.move_lines
-        move_b = customer_picking.move_lines
+        move_a = pick_picking.move_ids
+        move_b = customer_picking.move_ids
         self._update_product_qty_in_location(
             self.location_hb_1_2, move_a.product_id, 100
         )
@@ -597,8 +593,8 @@ class TestRoutingPull(TestRoutingPullCommon):
         pick_picking, customer_picking = self._create_pick_ship(
             self.wh, [(self.product1, 10)]
         )
-        move_a = pick_picking.move_lines
-        move_b = customer_picking.move_lines
+        move_a = pick_picking.move_ids
+        move_b = customer_picking.move_ids
         self._update_product_qty_in_location(
             self.location_hb_1_2, move_a.product_id, 100
         )
@@ -613,7 +609,7 @@ class TestRoutingPull(TestRoutingPullCommon):
         pick_picking, customer_picking = self._create_pick_ship(
             self.wh, [(self.product1, 10)]
         )
-        move_a = pick_picking.move_lines
+        move_a = pick_picking.move_ids
         self._update_product_qty_in_location(self.location_hb_1_2, move_a.product_id, 8)
         pick_picking.action_assign()
 
@@ -686,8 +682,8 @@ class TestRoutingPull(TestRoutingPullCommon):
         pick_picking, customer_picking = self._create_pick_ship(
             self.wh, [(self.product1, 10)]
         )
-        move_a = pick_picking.move_lines
-        move_b = customer_picking.move_lines
+        move_a = pick_picking.move_ids
+        move_b = customer_picking.move_ids
 
         self._update_product_qty_in_location(
             self.location_hb_1_2, move_a.product_id, 100
@@ -741,8 +737,8 @@ class TestRoutingPull(TestRoutingPullCommon):
         pick_picking, customer_picking = self._create_pick_ship(
             self.wh, [(self.product1, 10)]
         )
-        move_a = pick_picking.move_lines
-        move_b = customer_picking.move_lines
+        move_a = pick_picking.move_ids
+        move_b = customer_picking.move_ids
 
         self._update_product_qty_in_location(self.location_hb_1_2, move_a.product_id, 6)
         pick_picking.action_assign()
@@ -776,12 +772,12 @@ class TestRoutingPull(TestRoutingPullCommon):
         move_c = (
             self.env["stock.picking"]
             .search([("picking_type_id", "=", self.pick_type_routing_op.id)])
-            .move_lines
+            .move_ids
         )
         move_d = (
             self.env["stock.picking"]
             .search([("picking_type_id", "=", pick_type_routing_delivery.id)])
-            .move_lines
+            .move_ids
         )
         self.assertRecordValues(
             move_a | move_b | move_c | move_d,
@@ -901,8 +897,8 @@ class TestRoutingPull(TestRoutingPullCommon):
         pick_picking, customer_picking = self._create_pick_ship(
             self.wh, [(self.product1, 10)]
         )
-        move_a = pick_picking.move_lines
-        move_b = customer_picking.move_lines
+        move_a = pick_picking.move_ids
+        move_b = customer_picking.move_ids
 
         self._update_product_qty_in_location(
             self.location_hb_1_2, move_a.product_id, 100
@@ -984,9 +980,9 @@ class TestRoutingPull(TestRoutingPullCommon):
         # cancelled
         self.assertEqual(pick_picking.state, "cancel")
 
-        customer_moves = customer_picking.move_lines
+        customer_moves = customer_picking.move_ids
         pick_picking = customer_moves.move_orig_ids.picking_id
-        pick_moves = pick_picking.move_lines
+        pick_moves = pick_picking.move_ids
 
         shelf_move = pick_moves.filtered(lambda m: m.product_uom_qty == 18)
         handover_move = pick_moves.filtered(lambda m: m.product_uom_qty == 12)
@@ -1035,8 +1031,8 @@ class TestRoutingPull(TestRoutingPullCommon):
         self.assertRecordValues(
             shelf_move.move_line_ids,
             [
-                {"location_id": self.location_shelf_1.id, "product_uom_qty": 10},
-                {"location_id": self.location_shelf_2.id, "product_uom_qty": 8},
+                {"location_id": self.location_shelf_1.id, "reserved_uom_qty": 10},
+                {"location_id": self.location_shelf_2.id, "reserved_uom_qty": 8},
             ],
         )
 
@@ -1053,7 +1049,7 @@ class TestRoutingPull(TestRoutingPullCommon):
         self.assertRecordValues(
             highbay_move.move_line_ids,
             [
-                {"location_id": self.location_hb_1_1.id, "product_uom_qty": 5},
-                {"location_id": self.location_hb_1_2.id, "product_uom_qty": 7},
+                {"location_id": self.location_hb_1_1.id, "reserved_uom_qty": 5},
+                {"location_id": self.location_hb_1_2.id, "reserved_uom_qty": 7},
             ],
         )
