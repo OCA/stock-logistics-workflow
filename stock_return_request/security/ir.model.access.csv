@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_return_request_stock_user,stock.return.request stock_user,model_stock_return_request,stock.group_stock_user,1,0,0,0
+access_stock_return_request_stock_manager,stock.return.request stock_manager,model_stock_return_request,stock.group_stock_manager,1,1,1,1
+access_stock_return_request_line_stock_user,stock.return.request.line stock_user,model_stock_return_request_line,stock.group_stock_user,1,0,0,0
+access_stock_return_request_line_stock_manager,stock.return.request.line stock_manager,model_stock_return_request_line,stock.group_stock_manager,1,1,1,1
+access_suggest_return_request_lot,access_suggest_return_request_lot,model_suggest_return_request_lot,base.group_user,1,1,1,1
