@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="stock_return_request_line_suggest_lot" model="ir.ui.view">
+        <field name="name">Suggested Lots for this Return Request Line</field>
+        <field name="model">suggest.return.request.lot</field>
+        <field name="arch" type="xml">
+            <form>
+                    <field name="lot_suggestion_mode" />
+                    <field
+                    name="suggested_lot"
+                    attrs="{'invisible': [('lot_suggestion_mode', '=', 'detail')]}"
+                />
+                    <field
+                    name="suggested_lot_detail"
+                    attrs="{'invisible': [('lot_suggestion_mode', '=', 'sum')]}"
+                />
+                <footer>
+                    <button
+                        name="action_confirm"
+                        type="object"
+                        string="Accept"
+                        class="oe_highlight"
+                    />
+                    <button special="cancel" string="Cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record
+        id="act_stock_return_request_line_suggest_lot"
+        model="ir.actions.act_window"
+    >
+        <field name="name">Suggested Lots for this Return Request Line</field>
+        <field name="res_model">suggest.return.request.lot</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>
