@@ -41,7 +41,8 @@ class TestStockPickingProductAvailabilityInline(SavepointCase):
         self.env.ref("product.decimal_product_uom").write({"digits": 3})
         # Show free_qty in warehouse1
         self.assertEqual(
-            self.product.with_context(warehouse=self.warehouse1.id).free_qty, 10.0,
+            self.product.with_context(warehouse=self.warehouse1.id).free_qty,
+            10.0,
         )
         picking_form = Form(
             self.env["stock.picking"].with_context(
@@ -57,7 +58,8 @@ class TestStockPickingProductAvailabilityInline(SavepointCase):
             )
         # Show free_qty in warehouse2
         self.assertEqual(
-            self.product.with_context(warehouse=self.warehouse2.id).free_qty, 20.0,
+            self.product.with_context(warehouse=self.warehouse2.id).free_qty,
+            20.0,
         )
         picking_form = Form(
             self.env["stock.picking"].with_context(
