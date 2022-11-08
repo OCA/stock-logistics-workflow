@@ -31,6 +31,7 @@ setuptools.setup(
         'odoo-addon-stock_push_delay>=15.0dev,<15.1dev',
         'odoo-addon-stock_putaway_hook>=15.0dev,<15.1dev',
         'odoo-addon-stock_restrict_lot>=15.0dev,<15.1dev',
+        'odoo-addon-stock_return_request>=15.0dev,<15.1dev',
         'odoo-addon-stock_split_picking>=15.0dev,<15.1dev',
     ],
     classifiers=[
