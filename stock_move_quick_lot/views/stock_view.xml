@@ -11,15 +11,14 @@
                 expr="//field[@name='move_ids_without_package']/tree//field[@name='product_id']"
                 position="after"
             >
-                <field name="has_tracking" invisible="1" />
-                <field name="has_move_lines" invisible="1" />
+                <field name="move_lines_count" invisible="1" />
                 <field
                     name="line_lot_name"
-                    attrs="{'readonly': ['|', ('has_tracking', '=', 'none'), ('has_move_lines', '=', False)]}"
+                    attrs="{'readonly': ['|', ('has_tracking', '=', 'none'), ('move_lines_count', '=', 0)]}"
                 />
                 <field
                     name="expiration_date"
-                    attrs="{'column_invisible': [('parent.picking_type_code', '!=', 'incoming')], 'readonly': ['|', ('has_tracking','=', 'none'), ('has_move_lines', '=', False)]}"
+                    attrs="{'column_invisible': [('parent.picking_type_code', '!=', 'incoming')], 'readonly': ['|', ('has_tracking','=', 'none'), ('move_lines_count', '=', 0)]}"
                 />
             </xpath>
         </field>

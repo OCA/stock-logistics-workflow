@@ -4,7 +4,7 @@
 {
     "name": "Stock Move Quick Lot",
     "summary": "Set lot name and end date directly on picking operations",
-    "version": "14.0.1.0.0",
+    "version": "15.0.1.0.0",
     "category": "Stock",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Tecnativa, Odoo Community Association (OCA)",

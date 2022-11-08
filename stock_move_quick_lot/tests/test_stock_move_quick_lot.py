@@ -3,10 +3,10 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import ValidationError
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestStockMoveQuickLot(SavepointCase):
+class TestStockMoveQuickLot(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super(TestStockMoveQuickLot, cls).setUpClass()
