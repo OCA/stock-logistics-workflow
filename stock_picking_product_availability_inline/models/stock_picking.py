@@ -18,7 +18,7 @@ class StockMove(models.Model):
     _inherit = "stock.move"
 
     @api.onchange("product_id")
-    def onchange_product_id(self):
+    def _onchange_product_id(self):
         """Avoid calling product name_get method several times
         with 'sp_product_stock_inline' context key.
         """
@@ -27,7 +27,7 @@ class StockMove(models.Model):
             sp_line = self.with_context(
                 sp_product_stock_inline=False, warehouse=self.warehouse_id.id
             )
-        return super(StockMove, sp_line).onchange_product_id()
+        return super(StockMove, sp_line)._onchange_product_id()
 
 
 class StockMoveLine(models.Model):
@@ -40,7 +40,7 @@ class StockMoveLine(models.Model):
     )
 
     @api.onchange("product_id")
-    def onchange_product_id(self):
+    def _onchange_product_id(self):
         """Avoid calling product name_get method several times
         with 'sp_product_stock_inline' context key.
         """
@@ -50,4 +50,4 @@ class StockMoveLine(models.Model):
                 sp_product_stock_inline=False,
                 warehouse=self.picking_type_warehouse_id.id,
             )
-        return super(StockMoveLine, sp_line).onchange_product_id()
+        return super(StockMoveLine, sp_line)._onchange_product_id()
