@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2022 ACSONE SA/NV
+     License LPL-3.0 or later (https://www.gnu.org/licenses/lgpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="res_config_settings_form_view">
+        <field name="name">res.config.settings.form (in stock_picking_start)</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <div name="operations_setting_container" position="inside">
+                <div class="col-12 col-lg-6 o_setting_box" id="stock_picking_start">
+                    <div class="o_setting_left_pane">
+                        <field name="stock_picking_assign_operator_at_start" />
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label
+                            for="stock_picking_assign_operator_at_start"
+                            string="Assign responsible at stock picking start"
+                        />
+                        <span
+                            class="fa fa-lg"
+                            title="Values set here are company-specific."
+                            groups="base.group_multi_company"
+                        />
+                        <div class="text-muted">
+                            Assign responsible when the button start si pushed on the stock picking form.
+                            If set, when a picking is created no default value is provided for the responsible field on the picking form.
+                            It will be filled with the current user when the button start on the picking form is clicked.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </field>
+    </record>
+
+
+
+</odoo>
