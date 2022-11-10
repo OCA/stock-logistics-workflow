@@ -11,9 +11,10 @@ from odoo.addons.sale.tests.common import TestSaleCommon
 
 
 class TestStockPickingInvoiceLink(TestSaleCommon):
-    def _update_product_qty(self, product):
+    @classmethod
+    def _update_product_qty(cls, product):
 
-        product_qty = self.env["stock.change.product.qty"].create(
+        product_qty = cls.env["stock.change.product.qty"].create(
             {
                 "product_id": product.id,
                 "product_tmpl_id": product.product_tmpl_id.id,
@@ -24,15 +25,8 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         return product_qty
 
     @classmethod
-    def setUpClass(cls, chart_template_ref=None):
-        super().setUpClass(chart_template_ref=chart_template_ref)
-        for (_, i) in cls.company_data.items():
-            if "type" in i and i.type == "product":
-                cls._update_product_qty(i)
-        cls.prod_order = cls.company_data["product_order_no"]
-        cls.prod_del = cls.company_data["product_delivery_no"]
-        cls.serv_order = cls.company_data["product_service_order"]
-        cls.so = cls.env["sale.order"].create(
+    def _create_sale_order_and_confirm(cls):
+        so = cls.env["sale.order"].create(
             {
                 "partner_id": cls.partner_a.id,
                 "partner_invoice_id": cls.partner_a.id,
@@ -76,7 +70,21 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
                 "picking_policy": "direct",
             }
         )
-        cls.so.action_confirm()
+        so.action_confirm()
+        return so
+
+    @classmethod
+    def setUpClass(cls, chart_template_ref=None):
+        super().setUpClass(chart_template_ref=chart_template_ref)
+        for (_, i) in cls.company_data.items():
+            if "type" in i and i.type == "product":
+                cls._update_product_qty(i)
+        cls.prod_order = cls.company_data["product_order_no"]
+        cls.prod_order.invoice_policy = "delivery"
+        cls.prod_del = cls.company_data["product_delivery_no"]
+        cls.prod_del.invoice_policy = "delivery"
+        cls.serv_order = cls.company_data["product_service_order"]
+        cls.so = cls._create_sale_order_and_confirm()
 
     def test_00_sale_stock_invoice_link(self):
         pick_obj = self.env["stock.picking"]
@@ -355,3 +363,27 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
             inv_line_prod_del_refund.move_line_ids,
             return_pick.move_lines.filtered(lambda m: m.product_id == self.prod_del),
         )
+
+    def test_link_transfer_after_invoice_creation(self):
+        self.prod_order.invoice_policy = "order"
+        # Create new sale.order to get the change on invoice policy
+        so = self._create_sale_order_and_confirm()
+        # create and post invoice
+        invoice = so._create_invoices()
+        # Validate shipment
+        picking = so.picking_ids.filtered(
+            lambda x: x.picking_type_code == "outgoing"
+            and x.state in ("confirmed", "assigned")
+        )
+        picking.move_line_ids.write({"qty_done": 2})
+        picking._action_done()
+        # Two invoice lines has been created, One of them related to product service
+        self.assertEqual(len(invoice.invoice_line_ids), 2)
+        line = invoice.invoice_line_ids
+        # Move lines are set in invoice lines
+        self.assertEqual(len(line.mapped("move_line_ids")), 1)
+        # One of the lines has invoice_policy = 'order' but the other one not
+        self.assertIn(line.mapped("move_line_ids"), picking.move_lines)
+        self.assertEqual(len(invoice.picking_ids), 1)
+        # Invoices are set in pickings
+        self.assertEqual(picking.invoice_ids, invoice)
