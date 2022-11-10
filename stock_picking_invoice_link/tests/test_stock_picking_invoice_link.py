@@ -28,7 +28,9 @@ class TestStockPickingInvoiceLink(TestSale):
             if p.type == "product":
                 self._update_product_qty(p)
         self.prod_order = self.products["prod_order"]
+        self.prod_order.invoice_policy = "delivery"
         self.prod_del = self.products["prod_del"]
+        self.prod_del.invoice_policy = "delivery"
         self.serv_order = self.products["serv_order"]
         self.so = self.env["sale.order"].create(
             {
@@ -353,3 +355,25 @@ class TestStockPickingInvoiceLink(TestSale):
             inv_line_prod_del_refund.move_line_ids,
             return_pick.move_lines.filtered(lambda m: m.product_id == self.prod_del),
         )
+
+    def test_link_transfer_after_invoice_creation(self):
+        self.prod_order.invoice_policy = "order"
+        # create and post invoice
+        invoice = self.so._create_invoices()
+        # Validate shipment
+        picking = self.so.picking_ids.filtered(
+            lambda x: x.picking_type_code == "outgoing"
+            and x.state in ("confirmed", "assigned", "partially_available")
+        )
+        picking.move_line_ids.write({"qty_done": 2})
+        picking.action_done()
+        # Two invoice lines has been created, One of them related to product service
+        self.assertEqual(len(invoice.invoice_line_ids), 2)
+        line = invoice.invoice_line_ids
+        # Move lines are set in invoice lines
+        self.assertEqual(len(line.mapped("move_line_ids")), 1)
+        # One of the lines has invoice_policy = 'order' but the other one not
+        self.assertIn(line.mapped("move_line_ids"), picking.move_lines)
+        self.assertEqual(len(invoice.picking_ids), 1)
+        # Invoices are set in pickings
+        self.assertEqual(picking.invoice_ids, invoice)
