@@ -33,4 +33,29 @@ class StockMove(models.Model):
             for move in self:
                 if move.state == "done" and move.invoice_line_ids:
                     raise UserError(_("You can not modify an invoiced stock move"))
-        return super().write(vals)
+        res = super().write(vals)
+        if vals.get("state", "") == "done":
+            stock_moves = self.get_moves_delivery_link_invoice()
+            for stock_move in stock_moves.filtered(
+                lambda sm: sm.sale_line_id and sm.product_id.invoice_policy == "order"
+            ):
+                inv_type = stock_move.to_refund and "out_refund" or "out_invoice"
+                inv_line = self.env["account.move.line"].search(
+                    [
+                        ("sale_line_ids", "=", stock_move.sale_line_id.id),
+                        ("move_id.move_type", "=", inv_type),
+                    ]
+                )
+                if inv_line:
+                    stock_move.invoice_line_ids = [(4, m.id) for m in inv_line]
+        return res
+
+    def get_moves_delivery_link_invoice(self):
+        return self.filtered(
+            lambda x: x.state == "done"
+            and not x.scrapped
+            and (
+                x.location_id.usage == "internal"
+                or (x.location_dest_id.usage == "internal" and x.to_refund)
+            )
+        )
