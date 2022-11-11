@@ -16,7 +16,7 @@ class SaleOrderLine(models.Model):
     )
     def _compute_qty_returned(self):
         # Based on the standard method in 'sale_mrp' to compute qty_delivered
-        super(SaleOrderLine, self)._compute_qty_returned()
+        res = super()._compute_qty_returned()
         for order_line in self:
             if order_line.qty_delivered_method == "stock_move":
                 boms = order_line.move_ids.filtered(
@@ -97,3 +97,4 @@ class SaleOrderLine(models.Model):
                         order_line.qty_returned = 0.0
                     else:
                         order_line.qty_returned = order_line.product_uom_qty
+        return res
