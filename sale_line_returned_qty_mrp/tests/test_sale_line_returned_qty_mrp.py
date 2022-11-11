@@ -3,7 +3,7 @@
 from odoo.tests import Form, common
 
 
-class TestSaleLineReturnedQtyMrp(common.SavepointCase):
+class TestSaleLineReturnedQtyMrp(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
