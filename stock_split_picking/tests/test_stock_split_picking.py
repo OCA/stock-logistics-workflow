@@ -14,6 +14,7 @@ class TestStockSplitPicking(TransactionCase):
         cls.src_location = cls.env.ref("stock.stock_location_stock")
         cls.dest_location = cls.env.ref("stock.stock_location_customers")
         cls.product = cls.env["product.product"].create({"name": "Test product"})
+        cls.product_2 = cls.env["product.product"].create({"name": "Test product 2"})
         cls.partner = cls.env["res.partner"].create({"name": "Test partner"})
         cls.picking = cls.env["stock.picking"].create(
             {
@@ -23,17 +24,22 @@ class TestStockSplitPicking(TransactionCase):
                 "location_dest_id": cls.dest_location.id,
             }
         )
-        cls.move = cls.env["stock.move"].create(
-            {
-                "name": "/",
-                "picking_id": cls.picking.id,
-                "product_id": cls.product.id,
-                "product_uom_qty": 10,
-                "product_uom": cls.product.uom_id.id,
-                "location_id": cls.src_location.id,
-                "location_dest_id": cls.dest_location.id,
-            }
-        )
+
+        def _create_stock_move(product):
+            return cls.env["stock.move"].create(
+                {
+                    "name": "/",
+                    "picking_id": cls.picking.id,
+                    "product_id": product.id,
+                    "product_uom_qty": 10,
+                    "product_uom": product.uom_id.id,
+                    "location_id": cls.src_location.id,
+                    "location_dest_id": cls.dest_location.id,
+                }
+            )
+
+        cls.move = _create_stock_move(cls.product)
+        cls.move_2 = _create_stock_move(cls.product_2)
 
     def test_stock_split_picking(self):
         # Picking state is draft
@@ -49,7 +55,18 @@ class TestStockSplitPicking(TransactionCase):
         # We assign quantities in order to split
         self.picking.action_assign()
         move_line = self.env["stock.move.line"].search(
-            [("picking_id", "=", self.picking.id)], limit=1
+            [
+                ("picking_id", "=", self.picking.id),
+                ("product_id", "=", self.product.id),
+            ],
+            limit=1,
+        )
+        move_line_2 = self.env["stock.move.line"].search(
+            [
+                ("picking_id", "=", self.picking.id),
+                ("product_id", "=", self.product_2.id),
+            ],
+            limit=1,
         )
         move_line.qty_done = 4.0
         # Split picking: 4 and 6
@@ -65,22 +82,54 @@ class TestStockSplitPicking(TransactionCase):
         self.assertAlmostEqual(self.move.product_qty, 4.0)
         self.assertAlmostEqual(self.move.product_uom_qty, 4.0)
 
+        self.assertEqual(move_line.picking_id, self.picking)
+        self.assertEqual(self.move.picking_id, self.picking)
+        # move/move_line with no done qty no longer belongs to the original picking.
+        self.assertNotEqual(move_line_2.picking_id, self.picking)
+        self.assertNotEqual(self.move_2.picking_id, self.picking)
+
         self.assertEqual(self.picking.state, "assigned")
         # An another one with 6 units in state assigned
         new_picking = self.env["stock.picking"].search(
             [("backorder_id", "=", self.picking.id)], limit=1
         )
         move_line = self.env["stock.move.line"].search(
-            [("picking_id", "=", new_picking.id)], limit=1
+            [("picking_id", "=", new_picking.id), ("product_id", "=", self.product.id)],
+            limit=1,
+        )
+        move_line_2 = self.env["stock.move.line"].search(
+            [
+                ("picking_id", "=", new_picking.id),
+                ("product_id", "=", self.product_2.id),
+            ],
+            limit=1,
         )
 
         self.assertAlmostEqual(move_line.qty_done, 0.0)
         self.assertAlmostEqual(move_line.product_qty, 6.0)
         self.assertAlmostEqual(move_line.product_uom_qty, 6.0)
+        self.assertAlmostEqual(move_line_2.qty_done, 0.0)
+        self.assertAlmostEqual(move_line_2.product_qty, 10.0)
+        self.assertAlmostEqual(move_line_2.product_uom_qty, 10.0)
 
-        self.assertAlmostEqual(new_picking.move_lines.quantity_done, 0.0)
-        self.assertAlmostEqual(new_picking.move_lines.product_qty, 6.0)
-        self.assertAlmostEqual(new_picking.move_lines.product_uom_qty, 6.0)
+        move = self.env["stock.move"].search(
+            [("picking_id", "=", new_picking.id), ("product_id", "=", self.product.id)],
+            limit=1,
+        )
+        move_2 = self.env["stock.move"].search(
+            [
+                ("picking_id", "=", new_picking.id),
+                ("product_id", "=", self.product_2.id),
+            ],
+            limit=1,
+        )
+
+        self.assertAlmostEqual(move.quantity_done, 0.0)
+        self.assertAlmostEqual(move.product_qty, 6.0)
+        self.assertAlmostEqual(move.product_uom_qty, 6.0)
+        self.assertAlmostEqual(move_2.quantity_done, 0.0)
+        self.assertAlmostEqual(move_2.product_qty, 10.0)
+        self.assertAlmostEqual(move_2.product_uom_qty, 10.0)
 
         self.assertEqual(new_picking.state, "assigned")
 

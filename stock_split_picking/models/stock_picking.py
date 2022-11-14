@@ -41,16 +41,23 @@ class StockPicking(models.Model):
                     qty_uom_split = move.product_uom._compute_quantity(
                         qty_split, move.product_id.uom_id, rounding_method="HALF-UP"
                     )
+                    # Empty list is returned for moves with zero qty_done.
                     new_move_vals = move._split(qty_uom_split)
-                    for move_line in move.move_line_ids:
-                        if move_line.product_qty and move_line.qty_done:
-                            # To avoid an error
-                            # when picking is partially available
-                            try:
-                                move_line.write({"product_uom_qty": move_line.qty_done})
-                            except UserError:
-                                continue
-                    new_move = self.env["stock.move"].create(new_move_vals)
+                    if new_move_vals:
+                        for move_line in move.move_line_ids:
+                            if move_line.product_qty and move_line.qty_done:
+                                # To avoid an error
+                                # when picking is partially available
+                                try:
+                                    move_line.write(
+                                        {"product_uom_qty": move_line.qty_done}
+                                    )
+                                except UserError:
+                                    continue
+                        new_move = self.env["stock.move"].create(new_move_vals)
+                    # Moves with no qty_done should be moved to the new picking.
+                    else:
+                        new_move = move
                     new_move._action_confirm(merge=False)
                     new_moves |= new_move
 
