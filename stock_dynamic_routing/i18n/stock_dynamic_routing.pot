@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -80,9 +80,6 @@ msgid "Created on"
 msgstr ""
 
 #. module: stock_dynamic_routing
-#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_location__display_name
-#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_move__display_name
-#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_picking__display_name
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing__display_name
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__display_name
 msgid "Display Name"
@@ -100,7 +97,6 @@ msgstr ""
 #: model:ir.ui.menu,name:stock_dynamic_routing.menu_stock_routing
 #: model_terms:ir.ui.view,arch_db:stock_dynamic_routing.view_stock_routing_form
 #: model_terms:ir.ui.view,arch_db:stock_dynamic_routing.view_stock_routing_search
-#: model_terms:ir.ui.view,arch_db:stock_dynamic_routing.view_stock_routing_tree
 msgid "Dynamic Routing"
 msgstr ""
 
@@ -115,9 +111,6 @@ msgid "Highbay → Handover"
 msgstr ""
 
 #. module: stock_dynamic_routing
-#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_location__id
-#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_move__id
-#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_picking__id
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing__id
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__id
 msgid "ID"
@@ -166,9 +159,6 @@ msgid "Inventory Locations"
 msgstr ""
 
 #. module: stock_dynamic_routing
-#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_location____last_update
-#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_move____last_update
-#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_picking____last_update
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing____last_update
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule____last_update
 msgid "Last Modified on"
