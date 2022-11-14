@@ -20,11 +20,10 @@ msgstr ""
 #: code:addons/stock_dynamic_routing/models/stock_routing.py:0
 #, python-format
 msgid ""
-"<h2>Pull rules:</h2>When a move with operation type "
-"<strong>{routing.picking_type_id.display_name}</strong> has a source "
-"location <strong>{routing.location_id.display_name}</strong> (or a sub-"
-"location), one of these rules can apply (depending of their "
-"domain):<ul>{rule_messages}</ul>"
+"<h2>Pull rules:</h2>When a move with operation type <strong>{routing."
+"picking_type_id.display_name}</strong> has a source location "
+"<strong>{routing.location_id.display_name}</strong> (or a sub-location), one "
+"of these rules can apply (depending of their domain):<ul>{rule_messages}</ul>"
 msgstr ""
 "<h2>Reglas de extracción:</h2>Cuando un movimiento con el tipo de operación "
 "<strong>{routing.picking_type_id.display_name}</strong> tiene una ubicación "
@@ -36,11 +35,10 @@ msgstr ""
 #: code:addons/stock_dynamic_routing/models/stock_routing.py:0
 #, python-format
 msgid ""
-"<h2>Push rules:</h2>When a move with operation type "
-"<strong>{routing.picking_type_id.display_name}</strong> has a destination "
-"location <strong>{routing.location_id.display_name}</strong> (or a sub-"
-"location), one of these rules can apply (depending of their "
-"domain):<ul>{rule_messages}</ul>"
+"<h2>Push rules:</h2>When a move with operation type <strong>{routing."
+"picking_type_id.display_name}</strong> has a destination location "
+"<strong>{routing.location_id.display_name}</strong> (or a sub-location), one "
+"of these rules can apply (depending of their domain):<ul>{rule_messages}</ul>"
 msgstr ""
 "<h2>Reglas de empuje:</h2>Cuando un movimiento con el tipo de operación "
 "<strong>{routing.picking_type_id.display_name}</strong> tiene una ubicación "
@@ -96,9 +94,6 @@ msgid "Created on"
 msgstr "Creado el"
 
 #. module: stock_dynamic_routing
-#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_location__display_name
-#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_move__display_name
-#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_picking__display_name
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing__display_name
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__display_name
 msgid "Display Name"
@@ -118,7 +113,6 @@ msgstr ""
 #: model:ir.ui.menu,name:stock_dynamic_routing.menu_stock_routing
 #: model_terms:ir.ui.view,arch_db:stock_dynamic_routing.view_stock_routing_form
 #: model_terms:ir.ui.view,arch_db:stock_dynamic_routing.view_stock_routing_search
-#: model_terms:ir.ui.view,arch_db:stock_dynamic_routing.view_stock_routing_tree
 msgid "Dynamic Routing"
 msgstr "Rutas Dinámicas"
 
@@ -133,9 +127,6 @@ msgid "Highbay → Handover"
 msgstr "Highbay → Traspaso"
 
 #. module: stock_dynamic_routing
-#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_location__id
-#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_move__id
-#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_picking__id
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing__id
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__id
 msgid "ID"
@@ -145,20 +136,18 @@ msgstr "ID"
 #: code:addons/stock_dynamic_routing/models/stock_routing.py:0
 #, python-format
 msgid ""
-"If the destination of the move is already "
-"<strong>{rule.location_dest_id.display_name}</strong>, the operation type of"
-" the move is changed to "
-"<strong>{rule.picking_type_id.display_name}</strong>.<br/>If the destination"
-" of the move is a parent location of  "
-"<strong>{rule.location_dest_id.display_name}</strong>, the destination is "
-"set to <strong>{rule.location_dest_id.display_name}</strong>  and the "
-"operation type of the move is changed to "
-"<strong>{rule.picking_type_id.display_name}</strong>.<br/>If the destination"
-" of the move is unrelated to  "
-"<strong>{rule.location_dest_id.display_name}</strong>, a new move is added "
-"before, from <strong>{rule.location_src_id.display_name}</strong> to  "
-"<strong>{rule.location_dest_id.display_name}</strong>, using the operation "
-"type  <strong>{rule.picking_type_id.display_name}</strong>."
+"If the destination of the move is already <strong>{rule.location_dest_id."
+"display_name}</strong>, the operation type of the move is changed to "
+"<strong>{rule.picking_type_id.display_name}</strong>.<br/>If the destination "
+"of the move is a parent location of  <strong>{rule.location_dest_id."
+"display_name}</strong>, the destination is set to <strong>{rule."
+"location_dest_id.display_name}</strong>  and the operation type of the move "
+"is changed to <strong>{rule.picking_type_id.display_name}</strong>.<br/>If "
+"the destination of the move is unrelated to  <strong>{rule.location_dest_id."
+"display_name}</strong>, a new move is added before, from <strong>{rule."
+"location_src_id.display_name}</strong> to  <strong>{rule.location_dest_id."
+"display_name}</strong>, using the operation type  <strong>{rule."
+"picking_type_id.display_name}</strong>."
 msgstr ""
 "Si el destino del movimiento ya es <strong>{rule.location_dest_id."
 "display_name}</strong>, el tipo de operación del movimiento se cambia a "
@@ -166,8 +155,8 @@ msgstr ""
 "traslado es una ubicación principal de <strong>{rule.location_dest_id."
 "display_name}</strong>, el destino se establece en <strong>{rule."
 "location_dest_id.display_name}</strong> y el tipo de operación del "
-"movimiento se cambia a <strong>{rule.picking_type_id.display_name}</strong>.<"
-"br/>Si el destino del movimiento no está relacionado con <strong>{rule."
+"movimiento se cambia a <strong>{rule.picking_type_id.display_name}</strong>."
+"<br/>Si el destino del movimiento no está relacionado con <strong>{rule."
 "location_dest_id.display_name}</strong>, un se agrega un nuevo movimiento "
 "antes, de <strong>{rule.location_src_id.display_name}</strong> a "
 "<strong>{rule.location_dest_id.display_name}</strong>, utilizando el tipo de "
@@ -177,28 +166,26 @@ msgstr ""
 #: code:addons/stock_dynamic_routing/models/stock_routing.py:0
 #, python-format
 msgid ""
-"If the source of the move is already "
-"<strong>{rule.location_src_id.display_name}</strong> or a sub-location, the "
-"operation type of the move is changed to "
-"<strong>{rule.picking_type_id.display_name}</strong>.<br/>If the source of "
-"the move is outside or a parent location of  "
-"<strong>{rule.location_dest_id.display_name}</strong>, the destination of "
-"the move is set to  <strong>{rule.location_src_id.display_name}</strong>,  a"
-" new move is added after it, from "
-"<strong>{rule.location_src_id.display_name}</strong> to  "
-"<strong>{rule.location_dest_id.display_name}</strong> using the operation "
-"type  <strong>{rule.picking_type_id.display_name}</strong>."
+"If the source of the move is already <strong>{rule.location_src_id."
+"display_name}</strong> or a sub-location, the operation type of the move is "
+"changed to <strong>{rule.picking_type_id.display_name}</strong>.<br/>If the "
+"source of the move is outside or a parent location of  <strong>{rule."
+"location_dest_id.display_name}</strong>, the destination of the move is set "
+"to  <strong>{rule.location_src_id.display_name}</strong>,  a new move is "
+"added after it, from <strong>{rule.location_src_id.display_name}</strong> "
+"to  <strong>{rule.location_dest_id.display_name}</strong> using the "
+"operation type  <strong>{rule.picking_type_id.display_name}</strong>."
 msgstr ""
-"Si el origen del movimiento ya es <strong>{rule.location_src_id."
-"display_name}</strong> o una ubicación secundaria, el tipo de operación del "
-"movimiento se cambia a <strong>{rule.picking_type_id.display_name}</strong>.<"
-"br/>Si el origen del movimiento es exterior o una ubicación principal de "
-"<strong>{rule.location_dest_id.display_name}</strong>, el destino del "
-"movimiento se establece en <strong>{rule.location_src_id. display_name}</"
-"strong>, se agrega un nuevo movimiento después, de <strong>{rule."
-"location_src_id.display_name}</strong> a <strong>{rule.location_dest_id."
-"display_name}</strong> usando el tipo de operación <strong>{rule."
-"picking_type_id.display_name}</strong>."
+"Si el origen del movimiento ya es <strong>{rule.location_src_id.display_name}"
+"</strong> o una ubicación secundaria, el tipo de operación del movimiento se "
+"cambia a <strong>{rule.picking_type_id.display_name}</strong>.<br/>Si el "
+"origen del movimiento es exterior o una ubicación principal de <strong>{rule."
+"location_dest_id.display_name}</strong>, el destino del movimiento se "
+"establece en <strong>{rule.location_src_id. display_name}</strong>, se "
+"agrega un nuevo movimiento después, de <strong>{rule.location_src_id."
+"display_name}</strong> a <strong>{rule.location_dest_id.display_name}</"
+"strong> usando el tipo de operación <strong>{rule.picking_type_id."
+"display_name}</strong>."
 
 #. module: stock_dynamic_routing
 #: model:ir.model,name:stock_dynamic_routing.model_stock_location
@@ -206,9 +193,6 @@ msgid "Inventory Locations"
 msgstr "Ubicaciones de Inventario"
 
 #. module: stock_dynamic_routing
-#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_location____last_update
-#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_move____last_update
-#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_picking____last_update
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing____last_update
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule____last_update
 msgid "Last Modified on"
@@ -273,8 +257,8 @@ msgid ""
 "Operation type of a rule used as 'pull' must have '{}' or a sub-location as "
 "source location."
 msgstr ""
-"El tipo de operación de una regla utilizada como 'extracción' debe tener '{}"
-"' o una sububicación como ubicación de origen."
+"El tipo de operación de una regla utilizada como 'extracción' debe tener "
+"'{}' o una sububicación como ubicación de origen."
 
 #. module: stock_dynamic_routing
 #: code:addons/stock_dynamic_routing/models/stock_routing_rule.py:0
@@ -283,8 +267,8 @@ msgid ""
 "Operation type of a rule used as 'push' must have '{}' or a sub-location as "
 "destination location."
 msgstr ""
-"El tipo de operación de una regla utilizada como 'extracción' debe tener '{}"
-"' o una sububicación como ubicación de destino."
+"El tipo de operación de una regla utilizada como 'extracción' debe tener "
+"'{}' o una sububicación como ubicación de destino."
 
 #. module: stock_dynamic_routing
 #: model:ir.model.fields,help:stock_dynamic_routing.field_stock_routing_rule__picking_type_id
