@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+
+    <record id="is_moves_assignation_limited" model="ir.config_parameter">
+        <field
+            name="key"
+        >stock_scheduler_assignation_horizon.stock_horizon_move_assignation</field>
+        <field name="value">False</field>
+    </record>
+    <record id="stock_scheduler_assignation_horizon" model="ir.config_parameter">
+        <field
+            name="key"
+        >stock_scheduler_assignation_horizon.stock_horizon_move_assignation_limit</field>
+        <field name="value">0</field>
+    </record>
+</odoo>

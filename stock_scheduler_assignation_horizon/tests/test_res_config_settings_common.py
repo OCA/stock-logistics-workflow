@@ -10,8 +10,13 @@ class ResConfigSettingsCase(SavepointCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
-        cls.company = cls.env.company
 
-        cls.settings = cls.env["res.config.settings"].create(
-            {"is_moves_assignation_limited": True, "moves_assignation_horizon": 2}
+        cls.settings = cls.env["res.config.settings"].create({})
+        # enable global params
+        cls.env["ir.config_parameter"].sudo().set_param(
+            "stock_scheduler_assignation_horizon.stock_horizon_move_assignation", True
+        )
+        cls.env["ir.config_parameter"].sudo().set_param(
+            "stock_scheduler_assignation_horizon.stock_horizon_move_assignation_limit",
+            2,
         )
