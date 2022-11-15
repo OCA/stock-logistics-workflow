@@ -121,6 +121,27 @@ class TestStockOwnerRestriction(TransactionCase):
         self.assertTrue(self.picking_out.move_line_ids.mapped("owner_id"))
         self.assertEqual(self.picking_out.state, "assigned")
 
+        # Set restriction options on picking type to get only quants with an
+        # owner assigned.
+        # The picking partner has quants assigned and there ara unassigned quants
+        # so the picking is in assigned state and with 1000 reserved units
+        self.picking_type_out.owner_restriction = "partner_or_unassigned"
+        self.picking_out.do_unreserve()
+        self.picking_out.action_assign()
+        self.assertEqual(self.picking_out.move_lines.reserved_availability, 1000.00)
+        self.assertEqual(len(self.picking_out.move_line_ids), 2)
+        self.assertEqual(self.picking_out.move_line_ids.mapped("owner_id"), self.owner)
+
+        # Set restriction options on picking type to get only quants with an
+        # owner assigned.
+        # The picking partner has not quants assigned but there are unassigned quants
+        # so the picking is in assigned state with 500 reserved units
+        self.picking_out.partner_id = False
+        self.picking_out.do_unreserve()
+        self.picking_out.action_assign()
+        self.assertEqual(self.picking_out.move_lines.reserved_availability, 500.00)
+        self.assertEqual(len(self.picking_out.move_line_ids), 1)
+
     def test_search_qty(self):
         products = self.env["product.product"].search(
             [("id", "=", self.product.id), ("qty_available", ">", 500.00)]
