@@ -27,6 +27,20 @@ class StockMove(models.Model):
                 StockMove,
                 moves_to_assign.with_context(force_restricted_owner_id=owner_id),
             )._action_assign()
+            if (
+                owner_id
+                and moves_to_assign.picking_type_id.owner_restriction
+                == "partner_or_unassigned"
+                and sum(
+                    move.reserved_availability - move.product_uom_qty
+                    for move in moves_to_assign
+                )
+                < 0
+            ):
+                super(
+                    StockMove,
+                    moves_to_assign.with_context(force_restricted_owner_id=False),
+                )._action_assign()
         return res
 
     def _update_reserved_quantity(

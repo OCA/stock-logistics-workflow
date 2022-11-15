@@ -12,6 +12,7 @@ class StockPickingType(models.Model):
             ("standard_behavior", "Standard behavior"),
             ("unassigned_owner", "Unassigned owner"),
             ("picking_partner", "Picking partner"),
+            ("partner_or_unassigned", "Picking partner or unassigned owner"),
         ],
         default="standard_behavior",
     )
