@@ -17,6 +17,7 @@ msgstr ""
 "X-Generator: Weblate 4.3.2\n"
 
 #. module: stock_dynamic_routing
+#. odoo-python
 #: code:addons/stock_dynamic_routing/models/stock_routing.py:0
 #, python-format
 msgid ""
@@ -32,6 +33,7 @@ msgstr ""
 "<ul>{rule_messages}</ul>"
 
 #. module: stock_dynamic_routing
+#. odoo-python
 #: code:addons/stock_dynamic_routing/models/stock_routing.py:0
 #, python-format
 msgid ""
@@ -133,6 +135,7 @@ msgid "ID"
 msgstr "ID"
 
 #. module: stock_dynamic_routing
+#. odoo-python
 #: code:addons/stock_dynamic_routing/models/stock_routing.py:0
 #, python-format
 msgid ""
@@ -163,6 +166,7 @@ msgstr ""
 "operación <strong>{rule.picking_type_id.display_name}</strong>."
 
 #. module: stock_dynamic_routing
+#. odoo-python
 #: code:addons/stock_dynamic_routing/models/stock_routing.py:0
 #, python-format
 msgid ""
@@ -251,6 +255,7 @@ msgid "Operation Type"
 msgstr "Tipo de Operación"
 
 #. module: stock_dynamic_routing
+#. odoo-python
 #: code:addons/stock_dynamic_routing/models/stock_routing_rule.py:0
 #, python-format
 msgid ""
@@ -261,6 +266,7 @@ msgstr ""
 "'{}' o una sububicación como ubicación de origen."
 
 #. module: stock_dynamic_routing
+#. odoo-python
 #: code:addons/stock_dynamic_routing/models/stock_routing_rule.py:0
 #, python-format
 msgid ""
