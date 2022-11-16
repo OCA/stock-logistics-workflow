@@ -14,6 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_dynamic_routing
+#. odoo-python
 #: code:addons/stock_dynamic_routing/models/stock_routing.py:0
 #, python-format
 msgid ""
@@ -25,6 +26,7 @@ msgid ""
 msgstr ""
 
 #. module: stock_dynamic_routing
+#. odoo-python
 #: code:addons/stock_dynamic_routing/models/stock_routing.py:0
 #, python-format
 msgid ""
@@ -117,6 +119,7 @@ msgid "ID"
 msgstr ""
 
 #. module: stock_dynamic_routing
+#. odoo-python
 #: code:addons/stock_dynamic_routing/models/stock_routing.py:0
 #, python-format
 msgid ""
@@ -137,6 +140,7 @@ msgid ""
 msgstr ""
 
 #. module: stock_dynamic_routing
+#. odoo-python
 #: code:addons/stock_dynamic_routing/models/stock_routing.py:0
 #, python-format
 msgid ""
@@ -213,6 +217,7 @@ msgid "Operation Type"
 msgstr ""
 
 #. module: stock_dynamic_routing
+#. odoo-python
 #: code:addons/stock_dynamic_routing/models/stock_routing_rule.py:0
 #, python-format
 msgid ""
@@ -221,6 +226,7 @@ msgid ""
 msgstr ""
 
 #. module: stock_dynamic_routing
+#. odoo-python
 #: code:addons/stock_dynamic_routing/models/stock_routing_rule.py:0
 #, python-format
 msgid ""
