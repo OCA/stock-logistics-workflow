@@ -41,43 +41,42 @@ def pre_init_hook(cr):
 
 def post_init_hook(cr, registry):
     """Set moves returnable qty on hand"""
-    with api.Environment.manage():
-        env = api.Environment(cr, SUPERUSER_ID, {})
-        moves_draft = env["stock.move"].search([("state", "in", ["draft", "cancel"])])
-        moves_no_return_pendant = env["stock.move"].search(
-            [
-                ("returned_move_ids", "=", False),
-                ("state", "not in", ["draft", "cancel", "done"]),
-            ]
+    env = api.Environment(cr, SUPERUSER_ID, {})
+    moves_draft = env["stock.move"].search([("state", "in", ["draft", "cancel"])])
+    moves_no_return_pendant = env["stock.move"].search(
+        [
+            ("returned_move_ids", "=", False),
+            ("state", "not in", ["draft", "cancel", "done"]),
+        ]
+    )
+    moves_by_reserved_availability = {}
+    for move in moves_no_return_pendant:
+        moves_by_reserved_availability.setdefault(move.reserved_availability, [])
+        moves_by_reserved_availability[move.reserved_availability].append(move.id)
+    for qty, ids in moves_by_reserved_availability.items():
+        cr.execute(
+            "UPDATE stock_move SET qty_returnable = %s " "WHERE id IN %s",
+            (qty, tuple(ids)),
         )
-        moves_by_reserved_availability = {}
-        for move in moves_no_return_pendant:
-            moves_by_reserved_availability.setdefault(move.reserved_availability, [])
-            moves_by_reserved_availability[move.reserved_availability].append(move.id)
-        for qty, ids in moves_by_reserved_availability.items():
-            cr.execute(
-                "UPDATE stock_move SET qty_returnable = %s " "WHERE id IN %s",
-                (qty, tuple(ids)),
-            )
-        moves_no_return_done = env["stock.move"].search(
-            [
-                ("returned_move_ids", "=", False),
-                ("state", "=", "done"),
-            ]
+    moves_no_return_done = env["stock.move"].search(
+        [
+            ("returned_move_ids", "=", False),
+            ("state", "=", "done"),
+        ]
+    )
+    # Recursively solve quantities
+    updated_moves = moves_no_return_done + moves_draft + moves_no_return_pendant
+    remaining_moves = env["stock.move"].search(
+        [
+            ("returned_move_ids", "!=", False),
+            ("state", "=", "done"),
+        ]
+    )
+    while remaining_moves:
+        _logger.info("{} moves left...".format(len(remaining_moves)))
+        remaining_moves, updated_moves = update_qty_returnable(
+            cr, remaining_moves, updated_moves
         )
-        # Recursively solve quantities
-        updated_moves = moves_no_return_done + moves_draft + moves_no_return_pendant
-        remaining_moves = env["stock.move"].search(
-            [
-                ("returned_move_ids", "!=", False),
-                ("state", "=", "done"),
-            ]
-        )
-        while remaining_moves:
-            _logger.info("{} moves left...".format(len(remaining_moves)))
-            remaining_moves, updated_moves = update_qty_returnable(
-                cr, remaining_moves, updated_moves
-            )
 
 
 def update_qty_returnable(cr, remaining_moves, updated_moves):
