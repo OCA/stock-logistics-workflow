@@ -1,1 +1,2 @@
-freezegun
+# generated from manifests external_dependencies
+xlrd
