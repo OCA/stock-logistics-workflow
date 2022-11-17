@@ -73,7 +73,7 @@ class StockPickingForceAvailability(models.TransientModel):
                             location,
                             product,
                             picking_type=picking_type,
-                            exclude_moves=moves_to_assign,
+                            extra_domain=[("id", "not in", moves_to_assign.ids)],
                         ).ids
                     )
             moves_to_unreserve = move_model.browse(moves_to_unreserve_ids)
