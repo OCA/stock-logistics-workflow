@@ -34,6 +34,7 @@ msgid "Transfer"
 msgstr ""
 
 #. module: stock_picking_back2draft
+#. odoo-python
 #: code:addons/stock_picking_back2draft/models/stock_move.py:0
 #, python-format
 msgid "You can set to draft cancelled moves only"
