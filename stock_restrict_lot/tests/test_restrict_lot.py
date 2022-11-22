@@ -11,7 +11,7 @@ class TestRestrictLot(TransactionCase):
         cls.product.write({"tracking": "lot"})
         cls.warehouse = cls.env.ref("stock.warehouse0")
         cls.warehouse.write({"delivery_steps": "pick_ship"})
-        cls.lot = cls.env["stock.production.lot"].create(
+        cls.lot = cls.env["stock.lot"].create(
             {
                 "name": "lot1",
                 "product_id": cls.product.id,
@@ -74,7 +74,7 @@ class TestRestrictLot(TransactionCase):
         quant.action_apply_inventory()
 
     def test_02_move_restrict_lot_reservation(self):
-        lot2 = self.env["stock.production.lot"].create(
+        lot2 = self.env["stock.lot"].create(
             {
                 "name": "lot2",
                 "product_id": self.product.id,
@@ -118,10 +118,9 @@ class TestRestrictLot(TransactionCase):
         )
         warehouse.delivery_steps = "pick_ship"
 
-        self.product.categ_id.route_ids |= self.env["stock.location.route"].search(
+        self.product.categ_id.route_ids |= self.env["stock.route"].search(
             [("name", "ilike", "deliver in 2")]
         )
-        # self.env["stock.warehouse"].write(dict(delivery_steps='pick_ship',))
         location_1 = self.env["stock.location"].create(
             {"name": "loc1", "location_id": warehouse.lot_stock_id.id}
         )
@@ -130,7 +129,7 @@ class TestRestrictLot(TransactionCase):
         )
 
         # create goods in stock
-        lot2 = self.env["stock.production.lot"].create(
+        lot2 = self.env["stock.lot"].create(
             {
                 "name": "lot 2",
                 "product_id": self.product.id,
@@ -192,7 +191,7 @@ class TestRestrictLot(TransactionCase):
                 and mov.location_id == expect_from_location
             )
             self.assertEqual(len(concern_move_line), 1)
-            self.assertEqual(concern_move_line.product_uom_qty, expect_reserved_qty)
+            self.assertEqual(concern_move_line.reserved_uom_qty, expect_reserved_qty)
 
         pickings = self.env["stock.picking"].search(
             [("group_id", "=", procurement_group.id)]
