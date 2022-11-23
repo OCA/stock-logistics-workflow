@@ -40,7 +40,7 @@ class StockValuationLayer(models.Model):
         return svl
 
     def write(self, vals):
-        """ Update cost price avco """
+        """Update cost price avco"""
         svl_previous_vals = defaultdict(dict)
         if ("unit_cost" in vals or "quantity" in vals) and not self.env.context.get(
             "skip_avco_sync"
@@ -297,7 +297,11 @@ class StockValuationLayer(models.Model):
                         and self.env.context.get("keep_avco_inventory", False)
                     ):
                         qty = self.process_avco_svl_inventory(
-                            svl, svl_dic, line, svl_previous_vals, previous_unit_cost,
+                            svl,
+                            svl_dic,
+                            line,
+                            svl_previous_vals,
+                            previous_unit_cost,
                         )
                         inventory_processed = True
                     else:
@@ -341,7 +345,8 @@ class StockValuationLayer(models.Model):
                 elif f_compare < 0:
                     # Normal OUT
                     svl.update_avco_svl_values(
-                        svl_dic, unit_cost=previous_unit_cost,
+                        svl_dic,
+                        unit_cost=previous_unit_cost,
                     )
                     previous_qty = previous_qty + qty
                     svl.update_remaining_avco_svl_in(svls_dic, vacuum_dic)
