@@ -4,13 +4,13 @@
 import logging
 from time import sleep
 
-from odoo.tests.common import SavepointCase, tagged
+from odoo.tests.common import TransactionCase, tagged
 
 _logger = logging.getLogger(__name__)
 
 
 @tagged("-at_install", "post_install")
-class TestProductCostPriceAvcoSync(SavepointCase):
+class TestProductCostPriceAvcoSync(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super(TestProductCostPriceAvcoSync, cls).setUpClass()
@@ -47,6 +47,8 @@ class TestProductCostPriceAvcoSync(SavepointCase):
                             "product_id": cls.product.id,
                             "product_uom_qty": 10.0,
                             "product_uom": cls.product.uom_id.id,
+                            "location_id": cls.supplier_location.id,
+                            "location_dest_id": cls.stock_location.id,
                         },
                     )
                 ],
@@ -67,6 +69,8 @@ class TestProductCostPriceAvcoSync(SavepointCase):
                             "product_id": cls.product.id,
                             "product_uom_qty": 5.0,
                             "product_uom": cls.product.uom_id.id,
+                            "location_id": cls.stock_location.id,
+                            "location_dest_id": cls.customer_location.id,
                         },
                     )
                 ],
@@ -78,7 +82,7 @@ class TestProductCostPriceAvcoSync(SavepointCase):
         move_in.product_uom_qty = 100
         move_in.price_unit = 5.0
         move_in.quantity_done = move_in.product_uom_qty
-        self.picking_in.action_done()
+        self.picking_in._action_done()
         move_in.date = "2019-10-01 00:00:00"
         # Why do we a sleep during 1 second after avery move validation?
         # The cost_price_avco_sync method remove future product price history
@@ -93,19 +97,19 @@ class TestProductCostPriceAvcoSync(SavepointCase):
         move_in_2 = picking_in_2.move_lines[:1]
         move_in_2.product_uom_qty = 10.0
         move_in_2.quantity_done = move_in_2.product_uom_qty
-        picking_in_2.action_done()
+        picking_in_2._action_done()
         move_in_2.date = "2019-10-02 00:00:00"
         sleep(1)
 
         move_out = self.picking_out.move_lines[:1]
         move_out.quantity_done = move_out.product_uom_qty
-        self.picking_out.action_done()
+        self.picking_out._action_done()
         move_out.date = "2019-10-03 00:00:00"
 
         picking_out_2 = self.picking_out.copy()
         move_out_2 = picking_out_2.move_lines[:1]
         move_out_2.quantity_done = move_out_2.product_uom_qty
-        picking_out_2.action_done()
+        picking_out_2._action_done()
         move_out_2.date = "2019-10-04 00:00:00"
 
         # Make an inventory
@@ -142,32 +146,32 @@ class TestProductCostPriceAvcoSync(SavepointCase):
         company_id = self.picking_in.company_id.id
         move_in = self.picking_in.move_lines[:1]
         move_in.quantity_done = move_in.product_uom_qty
-        self.picking_in.action_done()
+        self.picking_in._action_done()
         move_in.date = "2019-10-01 00:00:00"
 
         move_out = self.picking_out.move_lines[:1]
         move_out.quantity_done = move_out.product_uom_qty
-        self.picking_out.action_done()
+        self.picking_out._action_done()
         move_out.date = "2019-10-01 01:00:00"
 
         picking_in_2 = self.picking_in.copy()
         move_in_2 = picking_in_2.move_lines[:1]
         move_in_2.quantity_done = move_in_2.product_uom_qty
-        picking_in_2.action_done()
+        picking_in_2._action_done()
         move_in_2.date = "2019-10-01 02:00:00"
 
         picking_out_2 = self.picking_out.copy()
         move_out_2 = picking_out_2.move_lines[:1]
         move_out_2.product_uom_qty = 15
         move_out_2.quantity_done = move_out_2.product_uom_qty
-        picking_out_2.action_done()
+        picking_out_2._action_done()
         move_out_2.date = "2019-10-01 03:00:00"
 
         picking_in_3 = self.picking_in.copy()
         move_in_3 = picking_in_3.move_lines[:1]
         move_in_3.quantity_done = move_in_3.product_uom_qty
         move_in_3.price_unit = 2.0
-        picking_in_3.action_done()
+        picking_in_3._action_done()
         move_in_3.date = "2019-10-01 04:00:00"
 
         self.assertAlmostEqual(self.product.standard_price, 2.0, 2)
@@ -195,10 +199,10 @@ class TestProductCostPriceAvcoSync(SavepointCase):
         (move_in | move_in_2 | move_in_3).write({"price_unit": 9.0})
         self.assertAlmostEqual(self.product.standard_price, 9.0, 2)
 
-        price_history_count = self.env["product.price.history"].search_count(
+        svl_count = self.env["stock.valuation.layer"].search_count(
             [("company_id", "=", company_id), ("product_id", "=", self.product.id)]
         )
-        self.assertEqual(price_history_count, 4)
+        self.assertEqual(svl_count, 4)  # TODO: Miralo que no se si es así
 
     def _test_sync_cost_price_multi_moves_done_at_same_time(self):
         move_in = self.picking_in.move_lines[:1]
@@ -215,7 +219,7 @@ class TestProductCostPriceAvcoSync(SavepointCase):
         self.env["stock.immediate.transfer"].create(
             {"pick_ids": [(6, 0, (self.picking_in + picking_in_2).ids)]}
         ).process()
-        (self.picking_in + picking_in_2).action_done()
+        (self.picking_in + picking_in_2)._action_done()
 
         self.assertEqual(self.product.standard_price, 7.5)
         move_in_2.price_unit = 4.0
@@ -233,14 +237,14 @@ class TestProductCostPriceAvcoSync(SavepointCase):
         self.picking_in.action_assign()
         move_in = self.picking_in.move_lines[:1]
         self.picking_in.move_line_ids.qty_done = move_in.product_uom_qty
-        self.picking_in.action_done()
+        self.picking_in._action_done()
 
         picking_in_2 = self.picking_in.copy()
         picking_in_2.action_assign()
         move_in_2 = picking_in_2.move_lines[:1]
         move_in_2.product_uom_qty = 10.0
         move_in_2.quantity_done = move_in_2.product_uom_qty
-        picking_in_2.action_done()
+        picking_in_2._action_done()
         move_in_2.stock_valuation_layer_ids.unit_cost = 2.0
         self.assertAlmostEqual(self.product.standard_price, 1.5, 2)
 
@@ -295,6 +299,8 @@ class TestProductCostPriceAvcoSync(SavepointCase):
                                 "product_id": self.product.id,
                                 "product_uom_qty": qty,
                                 "product_uom": self.product.uom_id.id,
+                                "location_id": location_id.id,
+                                "location_dest_id": location_dest_id.id,
                             },
                         )
                     ],
@@ -305,7 +311,7 @@ class TestProductCostPriceAvcoSync(SavepointCase):
             picking.action_assign()
             move = picking.move_lines[:1]
             picking.move_line_ids.qty_done = move.product_uom_qty
-            picking.action_done()
+            picking._action_done()
         return picking, move
 
     def _test_change_quantiy_price_xx(self):
