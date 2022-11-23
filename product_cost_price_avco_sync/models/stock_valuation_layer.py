@@ -382,8 +382,8 @@ class StockValuationLayer(models.Model):
                 ).standard_price,
                 precision_digits=precision_price,
             ):
-                line.product_id.with_context(
-                    force_company=line.company_id.id
+                line.product_id.with_company(line.company_id.id).with_context(
+                    disable_auto_svl=True
                 ).sudo().standard_price = float_round(
                     previous_unit_cost, precision_digits=precision_price
                 )
