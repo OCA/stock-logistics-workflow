@@ -57,6 +57,7 @@ addon | version | maintainers | summary
 [stock_picking_line_sequence](stock_picking_line_sequence/) | 14.0.1.0.0 |  | Manages the order of stock moves by displaying its sequence
 [stock_picking_mass_action](stock_picking_mass_action/) | 14.0.1.0.2 |  | Stock Picking Mass Action
 [stock_picking_product_link](stock_picking_product_link/) | 14.0.1.0.0 | [![robinkeunen](https://github.com/robinkeunen.png?size=30px)](https://github.com/robinkeunen) | Adds a "Product" smart button on stock pickings.
+[stock_picking_progress](stock_picking_progress/) | 14.0.1.0.0 | [![mmequignon](https://github.com/mmequignon.png?size=30px)](https://github.com/mmequignon) | Compute the stock.picking progression
 [stock_picking_purchase_order_link](stock_picking_purchase_order_link/) | 14.0.1.0.1 |  | Link between picking and purchase order
 [stock_picking_restrict_cancel_with_orig_move](stock_picking_restrict_cancel_with_orig_move/) | 14.0.1.0.1 |  | Restrict cancellation of dest moves according to origin.
 [stock_picking_return_show_lot](stock_picking_return_show_lot/) | 14.0.1.0.1 |  | This module allows to show lots in the picking return wizard before " "return picking creation.
