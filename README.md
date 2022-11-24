@@ -32,7 +32,7 @@ addon | version | maintainers | summary
 [sale_stock_mto_as_mts_orderpoint](sale_stock_mto_as_mts_orderpoint/) | 14.0.1.0.1 |  | Materialize need from MTO route through orderpoint
 [stock_auto_move](stock_auto_move/) | 14.0.1.0.0 |  | Automatic Move Processing
 [stock_delivery_note](stock_delivery_note/) | 14.0.1.0.1 |  | This module allows to fill in a delivery note that will be displayed on delivery report
-[stock_landed_costs_mrp_subcontracting](stock_landed_costs_mrp_subcontracting/) | 14.0.1.0.0 |  | When using Subcontracting, use the incoming shipment in landed costs
+[stock_landed_costs_mrp_subcontracting](stock_landed_costs_mrp_subcontracting/) | 14.0.1.0.1 |  | When using Subcontracting, use the incoming shipment in landed costs
 [stock_lock_lot](stock_lock_lot/) | 14.0.1.0.0 |  | Stock Lock Lot
 [stock_lot_on_hand_first](stock_lot_on_hand_first/) | 14.0.1.0.0 | [![grindtildeath](https://github.com/grindtildeath.png?size=30px)](https://github.com/grindtildeath) | Allows to display lots on hand first in M2o fields
 [stock_lot_product_qty_search](stock_lot_product_qty_search/) | 14.0.1.0.0 | [![grindtildeath](https://github.com/grindtildeath.png?size=30px)](https://github.com/grindtildeath) | Allows to search on Quantity field of Lot/Serial Numbers
