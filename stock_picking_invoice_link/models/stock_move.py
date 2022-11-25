@@ -40,11 +40,15 @@ class StockMove(models.Model):
                 lambda sm: sm.sale_line_id and sm.product_id.invoice_policy == "order"
             ):
                 inv_type = stock_move.to_refund and "out_refund" or "out_invoice"
-                inv_line = self.env["account.move.line"].search(
-                    [
-                        ("sale_line_ids", "=", stock_move.sale_line_id.id),
-                        ("move_id.move_type", "=", inv_type),
-                    ]
+                inv_line = (
+                    self.env["account.move.line"]
+                    .sudo()
+                    .search(
+                        [
+                            ("sale_line_ids", "=", stock_move.sale_line_id.id),
+                            ("move_id.move_type", "=", inv_type),
+                        ]
+                    )
                 )
                 if inv_line:
                     stock_move.invoice_line_ids = [(4, m.id) for m in inv_line]
