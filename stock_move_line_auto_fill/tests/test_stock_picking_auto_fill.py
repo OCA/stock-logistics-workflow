@@ -444,6 +444,8 @@ class TestStockPicking(common.TransactionCase):
         # Covered case:
         # Return more than one times not duplicate quant units in stock
         self.picking_type_out.auto_fill_operation = True
+        # By default from v15 there is a picking operation type to return goods
+        self.picking_type_out.return_picking_type_id.auto_fill_operation = True
         self.picking_type_in.auto_fill_operation = True
         product = self.env["product.product"].create(
             {"name": "Test return", "type": "product"}
@@ -482,6 +484,6 @@ class TestStockPicking(common.TransactionCase):
         self.assertEqual(product.qty_available, 0.0)
 
         # Make third return from customer location to stock location
-        returned_picking = self._picking_return(returned_picking, 500.00)
+        self._picking_return(returned_picking, 500.00)
 
         self.assertEqual(product.qty_available, 500)
