@@ -23,7 +23,7 @@ Stock Landed Costs Currency
     :target: https://runbot.odoo-community.org/runbot/154/13.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 This module allows user to add landed costs in different currencies
 to cost of products
@@ -49,9 +49,12 @@ To use this module, you need to:
 
 # Go to *Inventory > Operations > Landed Costs* and choose the
 *Account Journal* and the corresponding *Currency*
+
 # Add a cost line and set the *Cost* column with the amount in that *Currency*
+
 # The amount in column *Cost in Company Currency* will be automatically
 converted to Company's currency by the exchange rate on the Date of Landed Cost
+
 # After clicking "Validate", your products has been valued with amounts in a
 consistent currency (which is Company's currency)
 

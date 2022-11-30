@@ -16,6 +16,9 @@
                 <field name="currency_price_unit" />
                 <field name="currency_id" invisible="1" />
             </xpath>
+            <field name="amount_total" position="before">
+                <field name="company_currency_id" invisible="1" />
+            </field>
             <xpath expr="//tree/field[@name='price_unit']" position="attributes">
                 <attribute name="readonly">1</attribute>
                 <attribute name="force_save">1</attribute>
