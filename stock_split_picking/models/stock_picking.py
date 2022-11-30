@@ -4,7 +4,6 @@
 
 from odoo import _, models
 from odoo.exceptions import UserError
-from odoo.tools.float_utils import float_compare
 
 
 class StockPicking(models.Model):
@@ -12,56 +11,51 @@ class StockPicking(models.Model):
 
     _inherit = "stock.picking"
 
-    def _check_split_process(self):
-        # Check the picking state and condition before split
-        if self.state == "draft":
-            raise UserError(_("Mark as todo this picking please."))
-        if all([x.qty_done == 0.0 for x in self.move_line_ids]):
-            raise UserError(
-                _(
-                    "You must enter done quantity in order to split your "
-                    "picking in several ones."
-                )
-            )
-
-    def split_process(self):
+    def split_process(self, keep_lines=False):
         """Use to trigger the wizard from button with correct context"""
         for picking in self:
-            picking._check_split_process()
 
             # Split moves considering the qty_done on moves
             new_moves = self.env["stock.move"]
+            new_move_lines = self.env["stock.move.line"]
             for move in picking.move_lines:
-                rounding = move.product_uom.rounding
                 qty_done = move.quantity_done
-                qty_initial = move.product_uom_qty
-                qty_diff_compare = float_compare(
-                    qty_done, qty_initial, precision_rounding=rounding
-                )
-                if qty_diff_compare < 0:
-                    qty_split = qty_initial - qty_done
+                if qty_done:
                     qty_uom_split = move.product_uom._compute_quantity(
-                        qty_split, move.product_id.uom_id, rounding_method="HALF-UP"
+                        qty_done, move.product_id.uom_id, rounding_method="HALF-UP"
                     )
                     new_move_id = move._split(qty_uom_split)
                     for move_line in move.move_line_ids:
                         if move_line.product_qty and move_line.qty_done:
-                            # To avoid an error
-                            # when picking is partially available
-                            try:
-                                move_line.write({"product_uom_qty": move_line.qty_done})
-                            except UserError:
-                                pass
+                            if keep_lines:
+                                new_move_line_id = move_line._split(
+                                    move_line.qty_done, new_move_id
+                                )
+                                new_move_lines |= self.env["stock.move.line"].browse(
+                                    new_move_line_id
+                                )
+                            else:
+                                # To avoid an error
+                                # when picking is partially available
+                                try:
+                                    move_line.write(
+                                        {"product_uom_qty": move_line.qty_done}
+                                    )
+                                except UserError:
+                                    pass
+
                     new_moves |= self.env["stock.move"].browse(new_move_id)
 
             # If we have new moves to move, create the backorder picking
             if new_moves:
                 backorder_picking = picking._create_split_backorder()
                 new_moves.write({"picking_id": backorder_picking.id})
-                new_moves.mapped("move_line_ids").write(
-                    {"picking_id": backorder_picking.id}
-                )
-                new_moves._action_assign()
+                if new_move_lines:
+                    new_move_lines.write({"picking_id": backorder_picking.id})
+                    new_moves._recompute_state()
+                else:
+                    new_moves._action_assign()
+                return backorder_picking
 
     def _create_split_backorder(self, default=None):
         """Copy current picking with defaults passed, post message about

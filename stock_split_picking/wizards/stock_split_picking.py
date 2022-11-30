@@ -12,7 +12,8 @@ class StockSplitPicking(models.TransientModel):
         [
             ("done", "Done quantities"),
             ("move", "One picking per move"),
-            ("selection", "Select move lines to split off"),
+            ("selection", "Select stock move to split off"),
+            ("lines_done", "Done quantities keeping move lines"),
         ],
         required=True,
         default="done",
@@ -31,6 +32,10 @@ class StockSplitPicking(models.TransientModel):
 
     def _apply_done(self):
         return self.mapped("picking_ids").split_process()
+
+    def _apply_lines_done(self):
+        """Move to a new picking the qty done keeping the stock move lines"""
+        return self.mapped("picking_ids").split_process(keep_lines=True)
 
     def _apply_move(self):
         """Create new pickings for every move line, keep first
