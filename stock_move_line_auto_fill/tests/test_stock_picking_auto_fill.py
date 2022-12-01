@@ -251,10 +251,10 @@ class TestStockPicking(common.TransactionCase):
         # the product_id.tracking == none, have a qty_done set.
         self.picking.action_pack_operation_auto_fill()
         self.assertFalse(product_8_op.qty_done)
-        self.assertEqual(product_9_op.product_uom_qty, product_9_op.qty_done)
+        self.assertEqual(product_9_op.reserved_uom_qty, product_9_op.qty_done)
         self.assertFalse(product_10_op.qty_done)
-        self.assertEqual(product_11_op.product_uom_qty, product_11_op.qty_done)
-        self.assertEqual(product_12_op.product_uom_qty, product_12_op.qty_done)
+        self.assertEqual(product_11_op.reserved_uom_qty, product_11_op.qty_done)
+        self.assertEqual(product_12_op.reserved_uom_qty, product_12_op.qty_done)
 
     def test_action_auto_transfer(self):
         # set tracking on the products
@@ -315,7 +315,7 @@ class TestStockPicking(common.TransactionCase):
         self.picking_type_out.avoid_lot_assignment = True
         self.product_8.tracking = "lot"
         self.product_9.tracking = "none"
-        self.lot8 = self.env["stock.production.lot"].create(
+        self.lot8 = self.env["stock.lot"].create(
             {
                 "company_id": self.warehouse.company_id.id,
                 "product_id": self.product_8.id,
@@ -429,6 +429,7 @@ class TestStockPicking(common.TransactionCase):
                 active_model="stock.picking",
             )
         )
+
         stock_return_picking = return_form.save()
         stock_return_picking.product_return_moves.quantity = qty
         stock_return_picking_action = stock_return_picking.create_returns()
@@ -436,7 +437,7 @@ class TestStockPicking(common.TransactionCase):
             stock_return_picking_action["res_id"]
         )
         return_pick.action_assign()
-        # return_pick.move_lines.quantity_done = qty
+        return_pick.move_ids.quantity_done = qty
         return_pick._action_done()
         return return_pick
 
@@ -448,13 +449,16 @@ class TestStockPicking(common.TransactionCase):
         product = self.env["product.product"].create(
             {"name": "Test return", "type": "product"}
         )
-        self.env["stock.quant"].create(
-            {
-                "product_id": product.id,
-                "location_id": self.picking_type_out.default_location_src_id.id,
-                "quantity": 500.00,
-            }
-        )
+        self.env["stock.quant"].with_context(inventory_mode=True).create(
+            [
+                {
+                    "product_id": product.id,
+                    "location_id": self.picking_type_out.default_location_src_id.id,
+                    "inventory_quantity": 500.00,
+                },
+            ]
+        )._apply_inventory()
+
         self.move_model.create(
             dict(
                 product_id=product.id,
@@ -483,5 +487,4 @@ class TestStockPicking(common.TransactionCase):
 
         # Make third return from customer location to stock location
         returned_picking = self._picking_return(returned_picking, 500.00)
-
         self.assertEqual(product.qty_available, 500)
