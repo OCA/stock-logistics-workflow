@@ -22,7 +22,7 @@ class StockMove(models.Model):
             return res
         if self.quantity_done != self.product_uom_qty:
             # Not assign qty_done for extra moves in over processed quantities
-            res.update({"qty_done": res.get("product_uom_qty", 0.0)})
+            res.update({"qty_done": res.get("reserved_uom_qty", 0.0)})
         return res
 
     def _action_assign(self):
@@ -43,12 +43,12 @@ class StockMove(models.Model):
             ):
                 return res
             lines_to_update = line.move_line_ids.filtered(
-                lambda l: l.qty_done != l.product_uom_qty
+                lambda l: l.qty_done != l.reserved_uom_qty
             )
             for move_line in lines_to_update:
                 if (
                     not line.picking_id.picking_type_id.avoid_lot_assignment
                     or not move_line.lot_id
                 ):
-                    move_line.qty_done = move_line.product_uom_qty
+                    move_line.qty_done = move_line.reserved_uom_qty
         return res
