@@ -59,4 +59,4 @@ class StockPicking(models.Model):
             )
         )
         for op in operations_to_auto_fill:
-            op.qty_done = op.product_uom_qty
+            op.qty_done = op.reserved_uom_qty

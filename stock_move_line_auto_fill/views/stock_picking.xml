@@ -5,7 +5,6 @@
             name="name"
         >stock.picking.form (in stock_pack_operation_auto_fill)</field>
         <field name="model">stock.picking</field>
-        <field name="groups_id" eval="[(4,ref('stock.group_stock_user'))]" />
         <field name="inherit_id" ref="stock.view_picking_form" />
         <field name="arch" type="xml">
             <button name="button_validate" position="before">
@@ -16,6 +15,7 @@
                     string="AutoFill"
                     attrs="{'invisible': ['|', ('action_pack_op_auto_fill_allowed','=', False), ('auto_fill_operation', '=', True)]}"
                     help="This button will automatically fill all operations that have no tracking set on the product, no processed qty and no selected package."
+                    groups="stock.group_stock_user"
                 />
                 <field name="action_pack_op_auto_fill_allowed" invisible="1" />
                 <field name="auto_fill_operation" invisible="1" />
