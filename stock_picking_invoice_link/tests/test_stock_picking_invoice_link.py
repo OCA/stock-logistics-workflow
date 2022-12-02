@@ -342,6 +342,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         inv_line_prod_del = inv.invoice_line_ids.filtered(
             lambda l: l.product_id == self.prod_del
         )
+        inv.action_post()
         self.assertEqual(
             inv_line_prod_del.move_line_ids,
             pick_1.move_lines.filtered(lambda m: m.product_id == self.prod_del),
@@ -364,7 +365,13 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         wiz_invoice_refund = (
             self.env["account.move.reversal"]
             .with_context(active_model="account.move", active_ids=inv.ids)
-            .create({"refund_method": "cancel", "reason": "test"})
+            .create(
+                {
+                    "refund_method": "cancel",
+                    "reason": "test",
+                    "journal_id": inv.journal_id.id,
+                }
+            )
         )
         action = wiz_invoice_refund.reverse_moves()
         invoice_refund = self.env["account.move"].browse(action["res_id"])
