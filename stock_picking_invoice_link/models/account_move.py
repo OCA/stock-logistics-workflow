@@ -79,3 +79,16 @@ class AccountMoveLine(models.Model):
         help="Related stock moves (only when the invoice has been"
         " generated from a sale order).",
     )
+
+    def copy_data(self, default=None):
+        """Copy the move_line_ids in case of refund invoice creating a new invoice
+        (refund_method="modify").
+        """
+        self.ensure_one()
+        res = super().copy_data(default=default)
+        if (
+            self.env.context.get("force_copy_stock_moves")
+            and "move_line_ids" not in res
+        ):
+            res[0]["move_line_ids"] = [(6, 0, self.move_line_ids.ids)]
+        return res
