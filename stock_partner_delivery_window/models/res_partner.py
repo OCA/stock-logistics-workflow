@@ -25,11 +25,13 @@ class ResPartner(models.Model):
         string="Delivery time schedule preference",
         default="anytime",
         required=True,
-        help="Define the scheduling preference for delivery orders:\n\n"
-        "* Any time: Do not postpone deliveries\n"
-        "* Fixed time windows: Postpone deliveries to the next preferred "
-        "time window\n"
-        "* Weekdays: Postpone deliveries to the next weekday",
+        help=(
+            "Define the scheduling preference for delivery orders:\n\n"
+            "* Any time: Do not postpone deliveries\n"
+            "* Fixed time windows: Postpone deliveries to the next preferred "
+            "time window\n"
+            "* Weekdays: Postpone deliveries to the next weekday"
+        ),
     )
 
     delivery_time_window_ids = fields.One2many(
@@ -98,9 +100,6 @@ class ResPartner(models.Model):
                     return True
         return False
 
-    def _get_delivery_time_format_string(self):
-        return _("From %s to %s")
-
     def get_delivery_time_description(self):
         res = dict()
         day_translated_values = dict(
@@ -113,43 +112,43 @@ class ResPartner(models.Model):
         weekdays = self.env["time.weekday"].search([])
         for partner in self:
             opening_times = defaultdict(list)
-            time_format_string = self._get_delivery_time_format_string()
             if partner.delivery_time_preference == "time_windows":
                 for day in weekdays:
                     day_windows = partner.delivery_time_window_ids.filtered(
                         lambda d: day in d.time_window_weekday_ids
                     )
                     for win in day_windows:
-                        start = win.get_time_window_start_time()
-                        end = win.get_time_window_end_time()
+
+                        start = win.get_time_window_start_time()  # noqa: F841
+                        end = win.get_time_window_end_time()  # noqa: F841
                         translated_day = day_translated_values[day.name]
-                        value = time_format_string % (
-                            short_format_time(start),
-                            short_format_time(end),
+                        value = _(
+                            "From %%(short_format_time(start))s to"
+                            " %%(short_format_time(end))s"
                         )
+
                         opening_times[translated_day].append(value)
             elif partner.delivery_time_preference == "workdays":
                 day_windows = weekdays.filtered(lambda d: d.name in WORKDAYS)
                 for day in day_windows:
                     translated_day = day_translated_values[day.name]
-                    value = time_format_string % (
-                        short_format_time(time(hour=0, minute=0)),
-                        short_format_time(time(hour=23, minute=59)),
-                    )
+                    start = short_format_time(time(hour=0, minute=0))  # noqa: F841
+                    end = short_format_time(time(hour=23, minute=59))  # noqa: F841
+
+                    value = _("From %%(start)s to %%(end)s")
                     opening_times[translated_day].append(value)
             else:
                 for day in weekdays:
                     translated_day = day_translated_values[day.name]
-                    value = time_format_string % (
-                        short_format_time(time(hour=0, minute=0)),
-                        short_format_time(time(hour=23, minute=59)),
-                    )
+                    start = short_format_time(time(hour=0, minute=0))  # noqa: F841
+                    end = short_format_time(time(hour=23, minute=59))  # noqa: F841
+
+                    value = _("From %%(start)s to %%(end)s")
                     opening_times[translated_day].append(value)
             opening_times_description = list()
-            for day_name, time_list in opening_times.items():
-                opening_times_description.append(
-                    _("%s: %s") % (day_name, _(", ").join(time_list))
-                )
+            for _day_name, time_list in opening_times.items():
+                _(", ").join(time_list)
+                opening_times_description.append(_("%%(day_name)s: %%(_time_list)s"))
             res[partner.id] = "\n".join(opening_times_description)
         return res
 

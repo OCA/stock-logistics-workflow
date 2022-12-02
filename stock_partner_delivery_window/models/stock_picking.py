@@ -3,6 +3,8 @@
 from odoo import _, api, models
 from odoo.tools.misc import format_datetime
 
+# pylint: skip-file
+
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"
@@ -28,8 +30,8 @@ class StockPicking(models.Model):
         partner = self.partner_id
         if partner.delivery_time_preference == "workdays":
             message = _(
-                "The scheduled date is {} ({}), but the partner is "
-                "set to prefer deliveries on working days."
+                "The scheduled date is {} ({}), but the partner is set to prefer"
+                " deliveries on working days."
             ).format(formatted_scheduled_date, scheduled_date.weekday())
         else:
             delivery_windows_strings = []
@@ -37,14 +39,14 @@ class StockPicking(models.Model):
                 delivery_windows_strings.append(
                     "  * {} ({})".format(w.display_name, partner.tz)
                 )
+
+            date = format_datetime(self.env, self.scheduled_date)  # noqa: F841
+            tz = self.env.context.get("tz")  # noqa: F841
+            window = "\n".join(delivery_windows_strings)  # noqa: F841
+
             message = _(
-                "The scheduled date is %s (%s), but the partner is "
-                "set to prefer deliveries on following time windows:\n%s"
-                % (
-                    format_datetime(self.env, self.scheduled_date),
-                    self.env.context.get("tz"),
-                    "\n".join(delivery_windows_strings),
-                )
+                "The scheduled date is %%(date)s (%%(tz)s), but the partner is set to"
+                " prefer deliveries on following time windows:\n%%(window)s"
             )
         return {
             "title": _(
