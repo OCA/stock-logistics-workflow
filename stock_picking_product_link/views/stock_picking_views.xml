@@ -11,6 +11,11 @@
                     icon="fa-list"
                     type="object"
                     name="action_view_products"
+                    help="This displays the amount of products (variants) in the
+                    stock transfer. If you do not have product variants enabled, but
+                    somehow someone else did, there exists a rare case where the
+                    amount displayed is higher than the amount of products you see
+                    when clicking on this button."
                 >
                     <field string="Products" name="product_count" widget="statinfo" />
                 </button>

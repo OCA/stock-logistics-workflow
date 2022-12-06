@@ -19,6 +19,12 @@ class TestStockPickingProducts(SavepointCase):
         cls.customer_location = cls.env.ref("stock.stock_location_customers")
         cls.picking_type_out = cls.env.ref("stock.picking_type_out")
 
+    def _change_group_product_variant(self, value):
+        ResConfig = self.env['res.config.settings']
+        default_values = ResConfig.default_get(list(ResConfig.fields_get()))
+        default_values.update({'group_product_variant': value})
+        ResConfig.create(default_values).execute()
+
     def test_stock_picking_product_count(self):
         stock_picking = self.picking_model.create(
             {
@@ -53,6 +59,19 @@ class TestStockPickingProducts(SavepointCase):
             sorted(stock_picking.product_ids.ids),
             sorted([self.product_8.id, self.product_9.id])
         )
+        self.assertEqual(
+            sorted(stock_picking.product_template_ids.ids),
+            sorted(
+                [self.product_8.product_tmpl_id.id, self.product_9.product_tmpl_id.id]
+            )
+        )
         self.assertEqual(stock_picking.product_count, 2)
         # coverage
-        stock_picking.action_view_products()
+        # Remove user from group.
+        self._change_group_product_variant(False)
+        action = stock_picking.action_view_products()
+        self.assertEqual(action["res_model"], "product.template")
+        # Add user to group.
+        self._change_group_product_variant(True)
+        action = stock_picking.action_view_products()
+        self.assertEqual(action["res_model"], "product.product")
