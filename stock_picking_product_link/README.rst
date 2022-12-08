@@ -34,6 +34,12 @@ list when clicked.
 .. contents::
    :local:
 
+Known issues / Roadmap
+======================
+
+- Move the fields on stock.picking (and their compute functions) out of this
+  module and into a separate stand-alone module.
+
 Bug Tracker
 ===========
 
