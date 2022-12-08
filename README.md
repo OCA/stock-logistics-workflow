@@ -53,7 +53,7 @@ addon | version | maintainers | summary
 [stock_picking_package_preparation](stock_picking_package_preparation/) | 12.0.1.0.2 |  | Stock Picking Package Preparation
 [stock_picking_package_preparation_line](stock_picking_package_preparation_line/) | 12.0.1.0.2 |  | Stock Picking Package Preparation Line
 [stock_picking_product_assortment](stock_picking_product_assortment/) | 12.0.1.0.0 | [![CarlosRoca13](https://github.com/CarlosRoca13.png?size=30px)](https://github.com/CarlosRoca13) | Stock Picking Product Assortment
-[stock_picking_product_link](stock_picking_product_link/) | 12.0.1.0.0 | [![robinkeunen](https://github.com/robinkeunen.png?size=30px)](https://github.com/robinkeunen) | Adds a "Product" smart button on stock pickings.
+[stock_picking_product_link](stock_picking_product_link/) | 12.0.1.1.0 | [![robinkeunen](https://github.com/robinkeunen.png?size=30px)](https://github.com/robinkeunen) | Adds a "Product" smart button on stock pickings.
 [stock_picking_purchase_order_link](stock_picking_purchase_order_link/) | 12.0.1.0.0 |  | Link between picking and purchase order
 [stock_picking_purchase_propagate](stock_picking_purchase_propagate/) | 12.0.1.0.0 |  | Propagate procurement group and quantity from purchase order
 [stock_picking_quick](stock_picking_quick/) | 12.0.1.0.3 | [![PierrickBrun](https://github.com/PierrickBrun.png?size=30px)](https://github.com/PierrickBrun) [![bealdav](https://github.com/bealdav.png?size=30px)](https://github.com/bealdav) | Quick Stock Picking
