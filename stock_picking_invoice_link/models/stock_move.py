@@ -5,6 +5,7 @@
 
 from odoo import _, fields, models
 from odoo.exceptions import UserError
+from odoo.tools import float_compare
 
 
 class StockMove(models.Model):
@@ -31,6 +32,15 @@ class StockMove(models.Model):
             "bypass_stock_move_update_restriction"
         ):
             for move in self:
-                if move.state == "done" and move.invoice_line_ids:
+                # When we change a lot on stock.move.line write same value on field
+                different_value = (
+                    float_compare(
+                        move.product_uom_qty,
+                        vals.get("product_uom_qty", 0.0),
+                        precision_rounding=move.product_uom.rounding,
+                    )
+                    != 0
+                )
+                if move.state == "done" and move.invoice_line_ids and different_value:
                     raise UserError(_("You can not modify an invoiced stock move"))
         return super().write(vals)
