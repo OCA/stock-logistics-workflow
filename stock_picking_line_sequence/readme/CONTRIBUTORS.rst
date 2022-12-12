@@ -1,4 +1,5 @@
 
+* Sulivan Lominchar <slominchar@archeti.com>
 * Cécile Jallais <cjallais@archeti.com>
 * Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
 * Damien Crier <damien.crier@camptocamp.com>
