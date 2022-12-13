@@ -45,7 +45,7 @@ msgid "Nothing to print."
 msgstr "Nada para imprimir."
 
 #. module: stock_picking_batch_extended_account
-#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended_account.stock_batch_picking_form
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended_account.stock_picking_batch_form
 msgid "Print Invoices"
 msgstr "Imprimir facturas"
 
