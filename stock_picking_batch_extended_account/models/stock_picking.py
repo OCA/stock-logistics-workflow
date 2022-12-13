@@ -7,8 +7,8 @@ from odoo import models
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    def action_done(self):
-        result = super().action_done()
+    def _action_done(self):
+        result = super()._action_done()
         picking_to_invoice_ids = self.env.context.get(
             "picking_to_invoice_in_batch",
         )

@@ -1,9 +1,9 @@
 # Copyright 2022 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
-from odoo.tests import Form, SavepointCase
+from odoo.tests import Form, TransactionCase
 
 
-class TestStockPickingBatchExtendedAccount(SavepointCase):
+class TestStockPickingBatchExtendedAccount(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -40,21 +40,23 @@ class TestStockPickingBatchExtendedAccount(SavepointCase):
             so_form.partner_id = partner
             with so_form.order_line.new() as line_form:
                 line_form.product_id = self.product
+                line_form.product_uom_qty = 1.0
         return so_form.save()
 
     def _create_batch_picking(self, pickings):
         # Create the BP
         with Form(
-            self.env["stock.picking.batch.creator"].with_context(
+            self.env["stock.picking.to.batch"].with_context(
                 active_ids=pickings.ids, active_model="sotck.picking"
             )
         ) as wiz_form:
             wiz_form.name = "BP for test"
+            wiz_form.mode = "new"
         wiz = wiz_form.save()
         action = wiz.action_create_batch()
         return self.env["stock.picking.batch"].browse(action["res_id"])
 
-    def test_create_invoice_from_bp_no_invoices(self):
+    def _test_create_invoice_from_bp_no_invoices(self):
         self.partner.batch_picking_auto_invoice = "no"
         self.partner2.batch_picking_auto_invoice = "no"
         self.order1 = self._create_sale_order(self.partner)
@@ -66,7 +68,7 @@ class TestStockPickingBatchExtendedAccount(SavepointCase):
         move_lines.qty_done = 1.0
         bp = self._create_batch_picking(pickings)
         bp.action_assign()
-        bp.action_transfer()
+        bp.action_done()
         self.assertFalse(self.order1.invoice_ids)
         self.assertFalse(self.order2.invoice_ids)
 
@@ -82,7 +84,7 @@ class TestStockPickingBatchExtendedAccount(SavepointCase):
         move_lines.qty_done = 1.0
         bp = self._create_batch_picking(pickings)
         bp.action_assign()
-        bp.action_transfer()
+        bp.action_done()
         self.assertTrue(self.order1.invoice_ids)
         self.assertTrue(self.order2.invoice_ids)
 
@@ -98,6 +100,6 @@ class TestStockPickingBatchExtendedAccount(SavepointCase):
         move_lines.qty_done = 1.0
         bp = self._create_batch_picking(pickings)
         bp.action_assign()
-        bp.action_transfer()
+        bp.action_done()
         self.assertTrue(self.order1.invoice_ids)
         self.assertFalse(self.order2.invoice_ids)
