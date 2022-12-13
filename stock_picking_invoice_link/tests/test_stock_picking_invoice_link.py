@@ -156,7 +156,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         )
         self.assertEqual(
             inv_1.invoice_line_ids.mapped("move_line_ids"),
-            pick_1.move_lines.filtered(
+            pick_1.move_ids.filtered(
                 lambda x: x.product_id.invoice_policy == "delivery"
             ),
             "Invoice 1 lines must link to only First Partial Delivery lines",
@@ -166,7 +166,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         )
         self.assertEqual(
             inv_2.invoice_line_ids.mapped("move_line_ids"),
-            pick_2.move_lines.filtered(
+            pick_2.move_ids.filtered(
                 lambda x: x.product_id.invoice_policy == "delivery"
             ),
             "Invoice 2 lines must link to only Second Delivery lines",
@@ -191,7 +191,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         )
         self.assertEqual(
             inv_1.invoice_line_ids.mapped("move_line_ids"),
-            pick_1.move_lines.filtered(
+            pick_1.move_ids.filtered(
                 lambda x: x.product_id.invoice_policy == "delivery"
             ),
             "Invoice 1 lines must link to only First Partial Delivery lines",
@@ -215,11 +215,11 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         )
         self.assertEqual(
             inv_line_prod_del.move_line_ids,
-            pick_1.move_lines.filtered(lambda m: m.product_id == self.prod_del),
+            pick_1.move_ids.filtered(lambda m: m.product_id == self.prod_del),
         )
         # Create return picking
         return_form = Form(self.env["stock.return.picking"])
-        return_form.picking_id = pick_1
+        # return_form.picking_id = pick_1
         return_wiz = return_form.save()
 
         # Remove product ordered line
@@ -231,13 +231,13 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         res = return_wiz.create_returns()
         return_pick = self.env["stock.picking"].browse(res["res_id"])
         # Validate picking
-        return_pick.move_lines.quantity_done = 1.0
+        return_pick.move_ids.quantity_done = 1.0
         return_pick.button_validate()
         inv = self.so._create_invoices(final=True)
         inv_line_prod_del = inv.invoice_line_ids.filtered(
             lambda l: l.product_id == self.prod_del
         )
-        self.assertEqual(inv_line_prod_del.move_line_ids, return_pick.move_lines)
+        self.assertEqual(inv_line_prod_del.move_line_ids, return_pick.move_ids)
 
     def test_invoice_refund(self):
         pick_1 = self.so.picking_ids.filtered(
@@ -249,7 +249,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         # Create invoice
         inv = self.so._create_invoices()
         inv.action_post()
-        move_line_prod_del = pick_1.move_lines.filtered(
+        move_line_prod_del = pick_1.move_ids.filtered(
             lambda l: l.product_id == self.prod_del
         )
         wiz_invoice_refund = (
@@ -345,11 +345,11 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         inv.action_post()
         self.assertEqual(
             inv_line_prod_del.move_line_ids,
-            pick_1.move_lines.filtered(lambda m: m.product_id == self.prod_del),
+            pick_1.move_ids.filtered(lambda m: m.product_id == self.prod_del),
         )
         # Create return picking
         return_form = Form(self.env["stock.return.picking"])
-        return_form.picking_id = pick_1
+        # return_form.picking_id = pick_1
         return_wiz = return_form.save()
         # Remove product ordered line
         return_wiz.product_return_moves.filtered(
@@ -360,7 +360,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         res = return_wiz.create_returns()
         return_pick = self.env["stock.picking"].browse(res["res_id"])
         # Validate picking
-        return_pick.move_lines.quantity_done = 1.0
+        return_pick.move_ids.quantity_done = 1.0
         return_pick.button_validate()
         wiz_invoice_refund = (
             self.env["account.move.reversal"]
@@ -380,7 +380,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         )
         self.assertEqual(
             inv_line_prod_del_refund.move_line_ids,
-            return_pick.move_lines.filtered(lambda m: m.product_id == self.prod_del),
+            return_pick.move_ids.filtered(lambda m: m.product_id == self.prod_del),
         )
 
     def test_link_transfer_after_invoice_creation(self):
@@ -402,7 +402,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         # Move lines are set in invoice lines
         self.assertEqual(len(line.mapped("move_line_ids")), 1)
         # One of the lines has invoice_policy = 'order' but the other one not
-        self.assertIn(line.mapped("move_line_ids"), picking.move_lines)
+        self.assertIn(line.mapped("move_line_ids"), picking.move_ids)
         self.assertEqual(len(invoice.picking_ids), 1)
         # Invoices are set in pickings
         self.assertEqual(picking.invoice_ids, invoice)
