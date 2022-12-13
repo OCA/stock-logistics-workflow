@@ -31,6 +31,6 @@ class TestStockPickingBatchExtendedAccountSaleType(
         move_lines.qty_done = 1.0
         bp = self._create_batch_picking(pickings)
         bp.action_assign()
-        bp.action_transfer()
+        bp.action_done()
         self.assertFalse(self.order1.invoice_ids)
         self.assertTrue(self.order2.invoice_ids)
