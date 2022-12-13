@@ -1,0 +1,222 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_grn
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-19 15:01+0000\n"
+"PO-Revision-Date: 2022-12-19 15:01+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_grn
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn__carrier_id
+#: model_terms:ir.ui.view,arch_db:stock_grn.view_grn_search
+msgid "Carrier"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn__carrier_ref
+msgid "Carrier Id"
+msgstr ""
+
+#. module: stock_grn
+#: model_terms:ir.ui.view,arch_db:stock_grn.view_grn_search
+msgid "Carrier reference"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn__company_id
+msgid "Company"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.model.fields,field_description:stock_grn.field_stock_picking_type__count_picking_grn
+msgid "Count Picking Grn"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn__create_uid
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn_type__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn__create_date
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn_type__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn__date
+msgid "Date"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn__description
+msgid "Description"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn__display_name
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn_type__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn__from_info
+msgid "From"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.actions.act_window,name:stock_grn.action_picking_tree_grn
+#: model_terms:ir.ui.view,arch_db:stock_grn.stock_move_tree_view
+#: model_terms:ir.ui.view,arch_db:stock_grn.view_grn_form
+#: model_terms:ir.ui.view,arch_db:stock_grn.view_grn_search
+#: model_terms:ir.ui.view,arch_db:stock_grn.view_picking_withgrn_tree
+msgid "GRN"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.model.fields,field_description:stock_grn.field_stock_picking__grn_date
+msgid "GRN Date"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.actions.act_window,name:stock_grn.action_grn_view
+#: model:ir.model,name:stock_grn.model_stock_grn
+#: model:ir.model.fields,field_description:stock_grn.field_stock_move__grn_id
+#: model:ir.model.fields,field_description:stock_grn.field_stock_picking__grn_id
+#: model:ir.ui.menu,name:stock_grn.menu_stock_grn
+msgid "Goods Received Note"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn__type_id
+msgid "Grn Type"
+msgstr ""
+
+#. module: stock_grn
+#: model_terms:ir.ui.view,arch_db:stock_grn.view_grn_search
+msgid "Group By"
+msgstr ""
+
+#. module: stock_grn
+#: model_terms:ir.ui.view,arch_db:stock_grn.stock_picking_type_kanban
+msgid "Having GRN"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn__id
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn_type__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn__picking_ids
+msgid "Incoming Shipments"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn____last_update
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn_type____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn__write_uid
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn_type__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn__write_date
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn_type__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn__name
+#: model_terms:ir.ui.view,arch_db:stock_grn.view_grn_search
+msgid "Name"
+msgstr ""
+
+#. module: stock_grn
+#: model_terms:ir.actions.act_window,help:stock_grn.action_picking_tree_grn
+msgid "No transfer found. Let's create one!"
+msgstr ""
+
+#. module: stock_grn
+#: model_terms:ir.ui.view,arch_db:stock_grn.stock_move_search_view
+#: model_terms:ir.ui.view,arch_db:stock_grn.view_picking_withgrn_search
+msgid "Not Received"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.model,name:stock_grn.model_stock_picking_type
+msgid "Picking Type"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn__qty_box
+msgid "Qty Boxes"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn__qty_pallet
+msgid "Qty Pallets"
+msgstr ""
+
+#. module: stock_grn
+#: model_terms:ir.ui.view,arch_db:stock_grn.stock_move_search_view
+#: model_terms:ir.ui.view,arch_db:stock_grn.view_picking_withgrn_search
+msgid "Received"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn__ref
+msgid "Reference"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.model,name:stock_grn.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn__supplier_id
+#: model_terms:ir.ui.view,arch_db:stock_grn.view_grn_search
+msgid "Supplier"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn__delivery_note_supplier_number
+#: model:ir.model.fields,field_description:stock_grn.field_stock_picking__delivery_note_supplier_number
+msgid "Supplier delivery note number"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.model,name:stock_grn.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: stock_grn
+#: model_terms:ir.actions.act_window,help:stock_grn.action_picking_tree_grn
+msgid "Transfers allow you to move products from one location to another."
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn_type__name
+msgid "Type"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.model,name:stock_grn.model_stock_grn_type
+msgid "stock.grn.type"
+msgstr ""

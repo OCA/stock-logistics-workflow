@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="stock_picking_type_kanban" model="ir.ui.view">
+        <field name="name">stock.picking.type.kanban (in stock_grn)</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.stock_picking_type_kanban" />
+        <field name="arch" type="xml">
+            <field name="count_picking_backorders" position="after">
+                <field name="count_picking_grn" />
+            </field>
+            <xpath expr="//div[@name='picking_type_backorder_count']" position="after">
+                <div t-if="record.count_picking_grn.raw_value > 0" class="row">
+                    <div class="col-12">
+                        <a
+                            class="oe_kanban_stock_picking_type_list"
+                            name="get_action_picking_tree_grn"
+                            type="object"
+                        >
+                            <field name="count_picking_grn" />
+                            Having GRN
+                        </a>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
