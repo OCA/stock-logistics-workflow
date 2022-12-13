@@ -23,10 +23,6 @@ class StockBatchPicking(models.Model):
         )
         return self.with_context(picking_to_invoice_in_batch=to_invoice.ids)
 
-    def done(self):
+    def action_done(self):
         self_with_ctx = self._get_self_with_context_to_invoice()
-        return super(StockBatchPicking, self_with_ctx).done()
-
-    def action_transfer(self):
-        self_with_ctx = self._get_self_with_context_to_invoice()
-        return super(StockBatchPicking, self_with_ctx).action_transfer()
+        return super(StockBatchPicking, self_with_ctx).action_done()
