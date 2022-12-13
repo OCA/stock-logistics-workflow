@@ -7,7 +7,7 @@ class StockBatchPicking(models.Model):
     _inherit = "stock.picking.batch"
 
     def _get_domain_picking_to_invoice(self):
-        domain = super(StockBatchPicking, self)._get_domain_picking_to_invoice()
+        domain = super()._get_domain_picking_to_invoice()
         return [
             "|",
             "&",
