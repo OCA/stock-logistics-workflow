@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+  <record model="ir.ui.view" id="view_grn_search">
+    <field name="name">stock.grn.search</field>
+    <field name="model">stock.grn</field>
+    <field name="arch" type="xml">
+      <search string="GRN">
+        <field name="name" string="Name" />
+        <field name="carrier_ref" string="Carrier reference" />
+        <group expand='0' string='Group By'>
+          <filter
+                        name="group_carrier"
+                        string="Carrier"
+                        domain="[]"
+                        context="{'group_by': 'carrier_id'}"
+                    />
+          <filter
+                        name="group_supplier"
+                        string="Supplier"
+                        domain="[]"
+                        context="{'group_by': 'supplier_id'}"
+                    />
+        </group>
+      </search>
+    </field>
+  </record>
+  <record model="ir.ui.view" id="view_grn_tree">
+    <field name="name">stock.grn.tree</field>
+    <field name="model">stock.grn</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="name" />
+        <field name="date" />
+        <field name="carrier_id" />
+        <field name="carrier_ref" />
+        <field name="supplier_id" />
+        <field name="ref" />
+        <field name="qty_pallet" />
+        <field name="qty_box" />
+        <field name="delivery_note_supplier_number" />
+      </tree>
+    </field>
+  </record>
+  <record model="ir.ui.view" id="view_grn_form">
+    <field name="name">stock.grn.form</field>
+    <field name="model">stock.grn</field>
+    <field eval="10" name="priority" />
+    <field name="arch" type="xml">
+      <form string="GRN">
+        <header>
+        </header>
+        <sheet>
+          <div class="oe_title">
+            <h1>
+              <field name="name" readonly="1" class="oe_inline" />
+            </h1>
+          </div>
+          <group>
+            <group>
+              <field name="date" />
+              <field
+                                name="carrier_id"
+                                context="{'default_customer': False}"
+                                options="{'no_create': True}"
+                            />
+              <field name="carrier_ref" />
+              <field name="supplier_id" />
+              <field name="company_id" groups="base.group_multi_company" />
+              <field name="qty_pallet" />
+              <field name="qty_box" />
+              <field name="delivery_note_supplier_number" />
+            </group>
+            <group>
+              <field name="from_info" />
+              <field name="ref" />
+              <field name="description" />
+            </group>
+          </group>
+            <label for="picking_ids" />
+            <field
+                        name="picking_ids"
+                        nolabel="1"
+                        widget="many2many"
+                        options="{'delete':False}"
+                        context="{'search_default_available':1,'search_default_nogrn':1}"
+                    />
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record model="ir.actions.act_window" id="action_grn_view">
+    <field name="name">Goods Received Note</field>
+    <field name="res_model">stock.grn</field>
+  </record>
+  <menuitem
+        id="menu_stock_grn"
+        name="Goods Received Note"
+        parent="stock.menu_stock_inventory_control"
+        sequence="50"
+        action="action_grn_view"
+    />
+</odoo>

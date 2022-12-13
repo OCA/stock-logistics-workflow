@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+  <record id="view_picking_withgrn_search" model="ir.ui.view">
+    <field name="name">stock.picking.grn.search</field>
+    <field name="model">stock.picking</field>
+    <field name="inherit_id" ref="stock.view_picking_internal_search" />
+    <field name="arch" type="xml">
+      <filter name="late" position="after">
+        <filter name="grn" string="Received (GRN)" domain="[('grn_id', '!=', False)]" />
+        <filter
+                    name="nogrn"
+                    string="Not Received (GRN)"
+                    domain="[('grn_id', '=', False)]"
+                />
+      </filter>
+    </field>
+  </record>
+  <record id="view_picking_withgrn_tree" model="ir.ui.view">
+    <field name="name">stock.picking.grn.tree</field>
+    <field name="model">stock.picking</field>
+    <field name="inherit_id" ref="stock.vpicktree" />
+    <field name="arch" type="xml">
+      <field name="state" position="after">
+        <field name="grn_id" string="GRN" />
+        <field name="delivery_note_supplier_number" />
+        <field name="grn_date" widget="date" />
+      </field>
+    </field>
+  </record>
+  <record id="view_picking_withgrn_form" model="ir.ui.view">
+    <field name="name">stock.picking.grn.form</field>
+    <field name="model">stock.picking</field>
+    <field name="inherit_id" ref="stock.view_picking_form" />
+    <field name="arch" type="xml">
+      <field name="backorder_id" position="after">
+        <field name="picking_type_code" invisible="1" />
+        <field
+                    name="grn_id"
+                    attrs="{'invisible':[('picking_type_code','!=','incoming')]}"
+                    options="{'no_create':True}"
+                />
+        <field
+                    name="grn_date"
+                    attrs="{'invisible':[('picking_type_code','!=','incoming')]}"
+                />
+        <field
+                    name="delivery_note_supplier_number"
+                    attrs="{'invisible':[('picking_type_code','!=','incoming')]}"
+                />
+      </field>
+    </field>
+  </record>
+    <record id="action_picking_tree_grn" model="ir.actions.act_window">
+        <field name="name">GRN</field>
+        <field name="res_model">stock.picking</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,kanban,form,calendar</field>
+        <field name="domain">[('state', 'not in', ('done', 'cancel'))]</field>
+        <field
+            name="context"
+        >{'contact_display': 'partner_address', 'search_default_grn': 1}</field>
+        <field name="search_view_id" ref="stock.view_picking_internal_search" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No transfer found. Let's create one!
+            </p>
+            <p>
+                Transfers allow you to move products from one location to another.
+            </p>
+        </field>
+    </record>
+</odoo>

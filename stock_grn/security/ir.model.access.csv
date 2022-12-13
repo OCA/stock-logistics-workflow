@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+user_001,user_001,model_stock_grn_type,stock.group_stock_user,1,0,0,0
+mngt_001,mngt_001,model_stock_grn_type,stock.group_stock_manager,1,1,1,1
+user_002,user_002,model_stock_grn,stock.group_stock_user,1,1,1,1
+mngt_002,mngt_002,model_stock_grn,stock.group_stock_manager,1,1,1,1
