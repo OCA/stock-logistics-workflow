@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="action_report_batch_picking" model="ir.actions.report">
+        <field name="name">Batch picking</field>
+        <field name="model">stock.picking.batch</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="binding_model_id" ref="model_stock_picking_batch" />
+        <field name="binding_type">report</field>
+        <field
+            name="report_name"
+        >stock_picking_batch_extended.report_batch_picking</field>
+        <field
+            name="report_file"
+        >stock_picking_batch_extended.report_batch_picking</field>
+    </record>
+
+    <template id="report_batch_picking">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="row mt32 mb32">
+                        <div class="col-3">
+                            <strong>Date:</strong>
+                            <span t-esc="now()" t-options="{'widget': 'datetime'}" />
+                        </div>
+                        <div class="col-3">
+                            <strong>Printed by:</strong>
+                            <span t-field="user.name" />
+                        </div>
+                    </div>
+                    <t t-foreach="docs" t-as="doc">
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th name="th_name">Pickings Order</th>
+                                    <th name="th_visa" />
+                                    <th name="th_picker">Picked By</th>
+                                    <th
+                                        name="th_count"
+                                        class="text-center"
+                                    ># Pickings</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td name="td_name">
+                                        <span t-esc="doc.name" />
+                                    </td>
+                                    <td name="td_visa">Visa:_________________</td>
+                                    <td name="td_picker">
+                                        <span t-esc="doc.user_id.name" />
+                                    </td>
+                                    <td name="td_count" class="text-center">
+                                        <span t-esc="doc.picking_count" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br />
+                        <br />
+                        <p t-esc="doc.notes" />
+                        <br />
+                        <t t-foreach="get_grouped_data(doc)" t-as="l0_data">
+                            <table class="table table-condensed">
+                                <caption>
+                                    <b>
+                                        <u>
+                                            <span t-esc="l0_data['name']" />
+                                        </u>
+                                    </b>
+                                </caption>
+                                <thead>
+                                    <th>Product</th>
+                                    <th>Carrier</th>
+                                    <th class="text-right">QTY</th>
+                                    <!--<th>Explanation</th>-->
+                                </thead>
+                                <tbody>
+                                    <t t-set="total_qty" t-value="0.0" />
+                                    <t t-foreach="l0_data['l1_items']" t-as="l1_item">
+                                        <t
+                                            t-set="product"
+                                            t-value="l1_item['product']"
+                                        />
+                                        <t
+                                            t-set="qty"
+                                            t-value="l1_item['product_qty']"
+                                        />
+                                        <t
+                                            t-set="total_qty"
+                                            t-value="total_qty + qty"
+                                        />
+                                        <t
+                                            t-set="carrier"
+                                            t-value="l1_item['operations'][:1].picking_id.carrier_id"
+                                        />
+                                        <tr>
+                                            <td>
+                                                <span t-field="product.display_name" />
+                                            </td>
+                                            <td>
+                                                <span t-esc="carrier.name" />
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-esc="qty" />
+                                            </td>
+                                            <!--<td>stock error<br/>breakage-->
+                                            <!--</td>-->
+                                            <tr
+                                                align="left"
+                                                t-if="product.description_warehouse"
+                                            >
+                                                <td colspan="4">
+                                                    <pre class="description ">
+                                                        <span
+                                                            t-esc="product.description_warehouse"
+                                                        />
+                                                    </pre>
+                                                </td>
+                                            </tr>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td />
+                                        <td id="total_label" class="text-right">
+                                            <strong>Total:</strong>
+                                        </td>
+                                        <td id="total_qty" class="text-right">
+                                            <strong t-esc="total_qty" />
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </t>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
