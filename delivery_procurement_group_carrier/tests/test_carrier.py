@@ -1,45 +1,50 @@
 # Copyright 2020 Camptocamp (https://www.camptocamp.com)
 # Copyright 2020 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
+# Copyright 2022 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo.tests import tagged
-
-from odoo.addons.sale.tests.common import TestSaleCommonBase
+from odoo.tests.common import TransactionCase
 
 
-@tagged("post_install", "-at_install")
-class TestProcurementGroupCarrier(TestSaleCommonBase):
-    # FIXME: TestSale is very heavy and create tons of records w/ no tracking disable
-    # for every test. Move to SavepointCase!
-    def setUp(self):
-        super().setUp()
-        self.carrier1 = self.env["delivery.carrier"].create(
+class TestProcurementGroupCarrier(TransactionCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
+        cls.carrier1 = cls.env["delivery.carrier"].create(
             {
                 "name": "My Test Carrier",
-                "product_id": self.env.ref("delivery.product_product_delivery").id,
+                "product_id": cls.env.ref("delivery.product_product_delivery").id,
             }
         )
-        self.partner = self.env["res.partner"].create({"name": "Test Partner"})
+        cls.partner = cls.env["res.partner"].create({"name": "Test Partner"})
 
     def test_sale_procurement_group_carrier(self):
         """Check the SO procurement group contains the carrier on SO confirmation"""
         product = self.env.ref("product.product_delivery_01")
+
         sale_order_line_vals = {
-            "name": product.name,
             "product_id": product.id,
-            "product_uom_qty": 1,
-            "product_uom": product.uom_id.id,
-            "price_unit": product.list_price,
         }
         sale_order_vals = {
             "partner_id": self.partner.id,
-            "partner_invoice_id": self.partner.id,
-            "partner_shipping_id": self.partner.id,
-            "carrier_id": self.carrier1.id,
             "order_line": [(0, 0, sale_order_line_vals)],
-            "pricelist_id": self.env.ref("product.list0").id,
         }
-        so = self.env["sale.order"].create(sale_order_vals)
-        so.action_confirm()
-        self.assertTrue(so.picking_ids)
-        self.assertEqual(so.procurement_group_id.carrier_id, so.carrier_id)
+        sale = self.env["sale.order"].create(sale_order_vals)
+
+        wiz_action = sale.action_open_delivery_wizard()
+        choose_delivery_carrier = (
+            self.env[wiz_action["res_model"]]
+            .with_context(**wiz_action["context"])
+            .create({"carrier_id": self.carrier1.id, "order_id": sale.id})
+        )
+        choose_delivery_carrier.button_confirm()
+        sale.action_confirm()
+        self.assertTrue(sale.picking_ids)
+        self.assertTrue(sale.procurement_group_id.carrier_id)
+        self.assertEqual(sale.procurement_group_id.carrier_id, sale.carrier_id)
+
+        # Set SO to draft
+        # Check procurement group is reset
+        sale.action_draft()
+        self.assertFalse(sale.procurement_group_id)
