@@ -22,7 +22,13 @@ msgid ""
 msgstr ""
 
 #. module: stock_restrict_lot
+#: model_terms:ir.ui.view,arch_db:stock_restrict_lot.custom_stock_picking_search_view
+msgid "Lot"
+msgstr ""
+
+#. module: stock_restrict_lot
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_stock_move__restrict_lot_id
+#: model:ir.model.fields,field_description:stock_restrict_lot.field_stock_picking__restrict_lot_id
 msgid "Restrict Lot"
 msgstr ""
 
@@ -34,4 +40,9 @@ msgstr ""
 #. module: stock_restrict_lot
 #: model:ir.model,name:stock_restrict_lot.model_stock_rule
 msgid "Stock Rule"
+msgstr ""
+
+#. module: stock_restrict_lot
+#: model:ir.model,name:stock_restrict_lot.model_stock_picking
+msgid "Transfer"
 msgstr ""
