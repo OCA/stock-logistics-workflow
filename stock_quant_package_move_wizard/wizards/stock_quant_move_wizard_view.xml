@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copyright 2022 Akretion France (http://www.akretion.com/)
+  @author: Alexis de Lattre <alexis.delattre@akretion.com>
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+
+
+<record id="stock_quant_move_wizard_form" model="ir.ui.view">
+    <field name="model">stock.quant.move.wizard</field>
+    <field name="arch" type="xml">
+        <form>
+            <group name="main">
+                <field name="company_id" invisible="1" />
+                <field
+                        name="picking_type_id"
+                        options="{'no_open': True, 'no_create': True}"
+                    />
+                <field
+                        name="location_dest_id"
+                        options="{'no_open': True, 'no_create': True}"
+                    />
+                <field name="origin" />
+                <field name="line_ids" nolabel="1" colspan="2">
+                    <tree editable="bottom" create="0">
+                        <field name="quant_id" invisible="1" />
+                        <field name="src_location_id" />
+                        <field name="product_id" />
+                        <field name="lot_id" groups="stock.group_production_lot" />
+                        <field name="quant_quantity" sum="1" />
+                        <field name="quantity" sum="1" />
+                        <field name="uom_id" groups="uom.group_uom" string="Unit" />
+                    </tree>
+                </field>
+            </group>
+            <footer>
+                <button name="run" string="Move" type="object" class="btn-primary" />
+                <button string="Cancel" special="cancel" />
+            </footer>
+        </form>
+    </field>
+</record>
+
+<record id="stock_quant_move_wizard_action" model="ir.actions.act_window">
+    <field name="name">Move to Another Location</field>
+    <field name="res_model">stock.quant.move.wizard</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+    <field name="binding_model_id" ref="stock.model_stock_quant" />
+    <field name="binding_view_types">list</field>
+</record>
+
+</odoo>

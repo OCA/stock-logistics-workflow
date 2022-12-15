@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_quant_move_wizard,Full access on stock.quant.move.wizard,model_stock_quant_move_wizard,stock.group_stock_user,1,1,1,1
+access_stock_quant_move_wizard_line,Full access on stock.quant.move.wizard.line,model_stock_quant_move_wizard_line,stock.group_stock_user,1,1,1,1
