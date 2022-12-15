@@ -9,4 +9,5 @@
     "license": "AGPL-3",
     "installable": True,
     "depends": ["stock"],
+    "data": ["views/stock_move_views.xml", "views/stock_picking.xml"],
 }
