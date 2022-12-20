@@ -40,13 +40,16 @@ class StockPickingImportSerialNumber(models.TransientModel):
         string="Column index for product", default=0
     )
     sn_serial_column_index = fields.Integer(string="Column index for S/N", default="1")
+    process_only_lot_available = fields.Boolean(default=True)
 
     def action_import(self):
-        if self.picking_ids.filtered(lambda p: not p.picking_type_id.use_create_lots):
+        if self.picking_ids.filtered(
+            lambda p: not p.picking_type_id.import_lot_from_file
+        ):
             raise UserError(
                 _(
                     "You only can import S/N for picking operations with"
-                    " creation lots checked"
+                    " import lots checked"
                 )
             )
         if not self.data_file:
@@ -61,7 +64,7 @@ class StockPickingImportSerialNumber(models.TransientModel):
             for picking in self.picking_ids:
                 move_lines = picking.mapped("move_line_ids").filtered(
                     lambda ln: ln.product_id.tracking == "serial"
-                    and ln.picking_id.picking_type_id.use_create_lots
+                    and ln.picking_id.picking_type_id.import_lot_from_file
                 )
                 self._import_serial_number(xl_sheet, move_lines, picking)
         self.data_file = False
@@ -78,30 +81,92 @@ class StockPickingImportSerialNumber(models.TransientModel):
         products = self.env["product.product"].search(
             [(self.sn_search_product_by_field, "in", list(product_file_set))]
         )
+        assigned_sml = set()
         for item in serial_list:
+            lot_name = item[1]
             product = products.filtered(
                 lambda p: p[self.sn_search_product_by_field] == item[0]
             )
-            if picking.picking_type_id.show_reserved:
-                smls = stock_move_lines.filtered(lambda ln: ln.product_id == product)
-                for sml in smls:
-                    if not sml.lot_name or self.overwrite_serial:
-                        sml.lot_name = item[1]
-                        sml.qty_done = 1.0
-                        # Only assign one serial
-                        break
-            # TODO: Check if product is present on initial demand??
-            # elif product and picking.move_lines.filtered(lambda ln: ln.product_id == product)
-            elif product:
-                self.env["stock.move.line"].create(
-                    {
-                        "picking_id": picking.id,
-                        "location_id": picking.location_id.id,
-                        "location_dest_id": picking.location_dest_id.id,
-                        "product_id": product.id,
-                        "product_uom_id": product.uom_id.id,
-                        "lot_name": item[1],
-                        "product_uom_qty": 0.0,
-                        "qty_done": 1.0,
-                    }
+            if picking.import_lot_from_file:
+                self._assign_lot(
+                    picking, product, lot_name, stock_move_lines, assigned_sml
                 )
+
+    def _assign_lot(self, picking, product, lot_name, stock_move_lines, assigned_sml):
+        # Exclude smls with a lot_name assigned
+        domain = [("product_id", "=", product.id), ("lot_name", "=", False)]
+        if self.overwrite_serial:
+            domain.remove(("lot_name", "=", False))
+        smls = stock_move_lines.filtered_domain(domain)
+
+        if picking.picking_type_code == "incoming":
+            if picking.picking_type_id.show_reserved:
+                for sml in smls:
+                    if not sml.lot_name or (
+                        self.overwrite_serial and sml.id not in assigned_sml
+                    ):
+                        sml.lot_name = lot_name
+                        sml.qty_done = 1.0
+                        assigned_sml.add(sml.id)
+                        break
+            elif product:
+                self._create_new_stock_move_line(
+                    picking, product, lot_name, assigned_sml
+                )
+        else:
+            # Internal transfers or outgoing pickings
+            sml = smls.filtered(
+                lambda ln: ln.product_id == product and ln.lot_id.name == lot_name
+            )
+            if sml:
+                sml.qty_done = 1.0
+                assigned_sml.add(sml.id)
+            else:
+                self._create_new_stock_move_line(
+                    picking, product, lot_name, assigned_sml, search_lot=True
+                )
+
+    def _create_new_stock_move_line(
+        self, picking, product, lot_name, assigned_sml, search_lot=False
+    ):
+        lot = False
+        quant_available = self.env["stock.quant"].browse()
+        if search_lot:
+            # For use case of internal transfers or outgoing picking the lots of file
+            # must be exists
+            lot = self.env["stock.production.lot"].search(
+                [("product_id", "=", product.id), ("name", "=", lot_name)]
+            )
+            if lot:
+                # Get lot available in source picking location
+                quant_available = self.env["stock.quant"]._gather(
+                    product, picking.location_id, lot_id=lot
+                )
+                if self.process_only_lot_available and not quant_available:
+                    return False
+                    # raise UserError(_("There are not quantity available on "
+                    #                   "source picking location for product '%s'
+                    #                   and lot '%s'" % (product.name, lot_name)))
+            else:
+                # TODO: What to do in this case.
+                # Raise an error or continue
+                # raise UserError(_("Lots not found"))
+                return False
+        move = picking.move_lines.filtered(lambda ln: ln.product_id == product)
+        vals = {
+            "picking_id": picking.id,
+            "location_id": quant_available.location_id.id or picking.location_id.id,
+            "location_dest_id": picking.location_dest_id.id,
+            "product_id": product.id,
+            "product_uom_id": product.uom_id.id,
+            "lot_name": lot_name,
+            "qty_done": 1.0,
+            "move_id": move[:1].id,
+        }
+        # To display in suggested move lines
+        if not picking.picking_type_id.show_reserved:
+            vals["product_uom_qty"] = 0.0
+        if lot:
+            vals["lot_id"] = lot.id
+        sml = self.env["stock.move.line"].create(vals)
+        assigned_sml.add(sml.id)

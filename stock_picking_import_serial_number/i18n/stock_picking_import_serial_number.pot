@@ -6,6 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-08-14 19:01+0000\n"
+"PO-Revision-Date: 2022-08-14 19:01+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -87,6 +89,12 @@ msgid "ID"
 msgstr ""
 
 #. module: stock_picking_import_serial_number
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking__import_lot_from_file
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_type__import_lot_from_file
+msgid "Import Lot From File"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
 #: model:ir.actions.act_window,name:stock_picking_import_serial_number.action_import_serial_number
 #: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.res_config_settings_view_form
 #: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.stock_picking_import_serial_number_wiz
@@ -125,6 +133,16 @@ msgid "Picking"
 msgstr ""
 
 #. module: stock_picking_import_serial_number
+#: model:ir.model,name:stock_picking_import_serial_number.model_stock_picking_type
+msgid "Picking Type"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz__process_only_lot_available
+msgid "Process Only Lot Available"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
 #: model:ir.model.fields.selection,name:stock_picking_import_serial_number.selection__res_config_settings__default_sn_search_product_by_field__default_code
 #: model:ir.model.fields.selection,name:stock_picking_import_serial_number.selection__stock_picking_import_serial_number_wiz__sn_search_product_by_field__default_code
 msgid "Reference"
@@ -152,6 +170,11 @@ msgid "Select the index file column which contains the serial numbers info"
 msgstr ""
 
 #. module: stock_picking_import_serial_number
+#: model:ir.model,name:stock_picking_import_serial_number.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
 #: code:addons/stock_picking_import_serial_number/wizard/import_serial_number_wizard.py:0
 #, python-format
 msgid "You must upload file to import records"
@@ -161,7 +184,7 @@ msgstr ""
 #: code:addons/stock_picking_import_serial_number/wizard/import_serial_number_wizard.py:0
 #, python-format
 msgid ""
-"You only can import S/N for picking operations with creation lots checked"
+"You only can import S/N for picking operations with import lots checked"
 msgstr ""
 
 #. module: stock_picking_import_serial_number

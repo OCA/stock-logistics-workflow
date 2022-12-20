@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-04 10:48+0000\n"
-"PO-Revision-Date: 2022-05-04 12:49+0200\n"
+"POT-Creation-Date: 2022-08-14 19:01+0000\n"
+"PO-Revision-Date: 2022-08-14 21:02+0200\n"
 "Last-Translator: Sergio Teruel <sergio.teruel@tecnativa.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #. module: stock_picking_import_serial_number
 #: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.res_config_settings_view_form
@@ -92,7 +92,13 @@ msgstr "Nombre de archivo"
 #. module: stock_picking_import_serial_number
 #: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz__id
 msgid "ID"
-msgstr ""
+msgstr "ID (identificación)"
+
+#. module: stock_picking_import_serial_number
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking__import_lot_from_file
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_type__import_lot_from_file
+msgid "Import Lot From File"
+msgstr "Importar lotes desde archivo"
 
 #. module: stock_picking_import_serial_number
 #: model:ir.actions.act_window,name:stock_picking_import_serial_number.action_import_serial_number
@@ -133,6 +139,16 @@ msgid "Picking"
 msgstr "Albarán"
 
 #. module: stock_picking_import_serial_number
+#: model:ir.model,name:stock_picking_import_serial_number.model_stock_picking_type
+msgid "Picking Type"
+msgstr "Tipo de operación"
+
+#. module: stock_picking_import_serial_number
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz__process_only_lot_available
+msgid "Process Only Lot Available"
+msgstr "Procesar solo lotes disponibles"
+
+#. module: stock_picking_import_serial_number
 #: model:ir.model.fields.selection,name:stock_picking_import_serial_number.selection__res_config_settings__default_sn_search_product_by_field__default_code
 #: model:ir.model.fields.selection,name:stock_picking_import_serial_number.selection__stock_picking_import_serial_number_wiz__sn_search_product_by_field__default_code
 msgid "Reference"
@@ -163,6 +179,11 @@ msgstr ""
 "serie"
 
 #. module: stock_picking_import_serial_number
+#: model:ir.model,name:stock_picking_import_serial_number.model_stock_picking
+msgid "Transfer"
+msgstr "Albarán"
+
+#. module: stock_picking_import_serial_number
 #: code:addons/stock_picking_import_serial_number/wizard/import_serial_number_wizard.py:0
 #, python-format
 msgid "You must upload file to import records"
@@ -171,17 +192,13 @@ msgstr "Debe de subir un fichero para importar registros"
 #. module: stock_picking_import_serial_number
 #: code:addons/stock_picking_import_serial_number/wizard/import_serial_number_wizard.py:0
 #, python-format
-msgid "You only can import S/N for incoming moves"
-msgstr "Solo puede importar S/N para albaranes de entrada"
-
-#. module: stock_picking_import_serial_number
-#: code:addons/stock_picking_import_serial_number/wizard/import_serial_number_wizard.py:0
-#, python-format
-msgid ""
-"You only can import S/N for picking operations with creation lots checked"
-msgstr "Solo puede importar S/N para operaciones con creación de lotes marcado"
+msgid "You only can import S/N for picking operations with import lots checked"
+msgstr "Solo puede importar S/N para operaciones con importar lotes marcado"
 
 #. module: stock_picking_import_serial_number
 #: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.stock_picking_import_serial_number_wiz
 msgid "_Cancel"
 msgstr "_Cancelar"
+
+#~ msgid "You only can import S/N for incoming moves"
+#~ msgstr "Solo puede importar S/N para albaranes de entrada"
