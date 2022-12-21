@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <template id="report_delivery_document" inherit_id="stock.report_delivery_document">
+    <template
+        id="report_delivery_document"
+        inherit_id="stock.report_delivery_document"
+        priority="120"
+    >
         <div class="page" position="before">
             <t t-set="report_lines" t-value="o.get_delivery_report_lines()" />
         </div>
@@ -149,6 +153,7 @@
     <template
         id="report_delivery_document_inherit_sale_stock"
         inherit_id="sale_stock.report_delivery_document_inherit_sale_stock"
+        priority="120"
     >
         <!-- Remove the customer reference in the header if there is more than one -->
         <xpath
