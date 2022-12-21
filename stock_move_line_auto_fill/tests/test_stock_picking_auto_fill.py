@@ -7,58 +7,61 @@ from odoo.tests import Form, common
 
 @common.tagged("-at_install", "post_install")
 class TestStockPicking(common.TransactionCase):
-    def setUp(self):
-        super(TestStockPicking, self).setUp()
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
 
         # models
-        self.picking_model = self.env["stock.picking"]
-        self.move_model = self.env["stock.move"]
+        cls.picking_model = cls.env["stock.picking"]
+        cls.move_model = cls.env["stock.move"]
 
         # warehouse and picking types
-        self.warehouse = self.env.ref("stock.stock_warehouse_shop0")
-        self.picking_type_in = self.env.ref("stock.chi_picking_type_in")
-        self.picking_type_out = self.env.ref("stock.chi_picking_type_out")
-        self.supplier_location = self.env.ref("stock.stock_location_suppliers")
-        self.customer_location = self.env.ref("stock.stock_location_customers")
+        cls.warehouse = cls.env.ref("stock.stock_warehouse_shop0")
+        cls.picking_type_in = cls.env.ref("stock.chi_picking_type_in")
+        cls.picking_type_out = cls.env.ref("stock.chi_picking_type_out")
+        cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
+        cls.customer_location = cls.env.ref("stock.stock_location_customers")
 
         # Allow all companies for OdooBot user and set default user company
         # to warehouse company
-        companies = self.env["res.company"].search([])
-        self.env.user.company_ids = [(6, 0, companies.ids)]
-        self.env.user.company_id = self.warehouse.company_id
+        companies = cls.env["res.company"].search([])
+        cls.env.user.company_ids = [(6, 0, companies.ids)]
+        cls.env.user.company_id = cls.warehouse.company_id
 
         # products
-        self.product_8 = self.env.ref("product.product_product_8")
-        self.product_9 = self.env.ref("product.product_product_9")
-        self.product_10 = self.env.ref("product.product_product_10")
-        self.product_11 = self.env.ref("product.product_product_11")
-        self.product_12 = self.env.ref("product.product_product_12")
+        cls.product_8 = cls.env.ref("product.product_product_8")
+        cls.product_9 = cls.env.ref("product.product_product_9")
+        cls.product_10 = cls.env.ref("product.product_product_10")
+        cls.product_11 = cls.env.ref("product.product_product_11")
+        cls.product_12 = cls.env.ref("product.product_product_12")
 
         # supplier
-        self.supplier = self.env.ref("base.res_partner_1")
+        cls.supplier = cls.env.ref("base.res_partner_1")
         # customer
-        self.customer = self.env.ref("base.res_partner_12")
+        cls.customer = cls.env.ref("base.res_partner_12")
 
-        self.picking = self.picking_model.with_context(
-            default_picking_type_id=self.picking_type_in.id
+        cls.picking = cls.picking_model.with_context(
+            default_picking_type_id=cls.picking_type_in.id
         ).create(
             {
-                "partner_id": self.supplier.id,
-                "picking_type_id": self.picking_type_in.id,
-                "location_id": self.supplier_location.id,
+                "partner_id": cls.supplier.id,
+                "picking_type_id": cls.picking_type_in.id,
+                "location_id": cls.supplier_location.id,
             }
         )
-        self.picking_out = self.picking_model.with_context(
-            default_picking_type_id=self.picking_type_out.id
+        cls.picking_out = cls.picking_model.with_context(
+            default_picking_type_id=cls.picking_type_out.id
         ).create(
             {
-                "partner_id": self.customer.id,
-                "picking_type_id": self.picking_type_out.id,
-                "location_id": self.picking_type_out.default_location_src_id.id,
-                "location_dest_id": self.customer_location.id,
+                "partner_id": cls.customer.id,
+                "picking_type_id": cls.picking_type_out.id,
+                "location_id": cls.picking_type_out.default_location_src_id.id,
+                "location_dest_id": cls.customer_location.id,
             }
         )
-        self.dozen = self.env.ref("uom.product_uom_dozen")
+        cls.dozen = cls.env.ref("uom.product_uom_dozen")
 
     def test_compute_action_pack_operation_auto_fill_allowed(self):
 
