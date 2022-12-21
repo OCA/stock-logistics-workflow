@@ -112,7 +112,7 @@ class TestMergeWizard(SavepointCase):
                 "something_todo": True,
             },
         )
-        all_moves = self.all_pickings_partner1.move_lines
+        all_moves = self.all_pickings_partner1.move_ids
         # merge and ensure we are left w/ one picking only
         wiz.action_merge()
         remaining_pickings = all_moves.mapped("picking_id")
@@ -206,7 +206,7 @@ class TestMergeWizard(SavepointCase):
                 "something_todo": True,
             },
         )
-        all_moves = all_pickings.move_lines
+        all_moves = all_pickings.move_ids
         # merge and ensure we are left w/ one picking only
         wiz.action_merge()
         remaining_pickings = all_moves.mapped("picking_id")
@@ -220,16 +220,16 @@ class TestMergeWizard(SavepointCase):
         self.all_pickings_partner1[0].carrier_id = self.carrier1
         self.all_pickings_partner1[1].carrier_id = self.carrier2
         self.all_pickings_partner1[2].carrier_id = self.carrier2
-        self.all_pickings_partner1[0].move_lines.group_id.carrier_id = self.carrier1
-        self.all_pickings_partner1[1].move_lines.group_id.carrier_id = self.carrier2
-        self.all_pickings_partner1[2].move_lines.group_id.carrier_id = self.carrier2
+        self.all_pickings_partner1[0].move_ids.group_id.carrier_id = self.carrier1
+        self.all_pickings_partner1[1].move_ids.group_id.carrier_id = self.carrier2
+        self.all_pickings_partner1[2].move_ids.group_id.carrier_id = self.carrier2
 
         self.all_pickings_partner2[0].carrier_id = self.carrier1
         self.all_pickings_partner2[1].carrier_id = self.carrier2
         self.all_pickings_partner2[2].carrier_id = self.carrier1
-        self.all_pickings_partner2[0].move_lines.group_id.carrier_id = self.carrier1
-        self.all_pickings_partner2[1].move_lines.group_id.carrier_id = self.carrier2
-        self.all_pickings_partner2[2].move_lines.group_id.carrier_id = self.carrier1
+        self.all_pickings_partner2[0].move_ids.group_id.carrier_id = self.carrier1
+        self.all_pickings_partner2[1].move_ids.group_id.carrier_id = self.carrier2
+        self.all_pickings_partner2[2].move_ids.group_id.carrier_id = self.carrier1
 
         all_pickings = self.all_pickings_partner1 + self.all_pickings_partner2
         wiz = self._get_wizard(all_pickings.ids)
@@ -280,7 +280,7 @@ class TestMergeWizard(SavepointCase):
                 "something_todo": True,
             },
         )
-        all_moves = all_pickings.move_lines
+        all_moves = all_pickings.move_ids
         # merge and ensure we are left w/ one picking only
         wiz.action_merge()
         remaining_pickings = all_moves.mapped("picking_id")
