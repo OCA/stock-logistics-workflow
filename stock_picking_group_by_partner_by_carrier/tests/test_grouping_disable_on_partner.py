@@ -1,11 +1,13 @@
 # Copyright 2020 Camptocamp (https://www.camptocamp.com)
 # Copyright 2020 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+from odoo.fields import first
+from odoo.tests.common import TransactionCase
 
 from .common import TestGroupByBase
 
 
-class TestGroupByDisabledOnPartner(TestGroupByBase):
+class TestGroupByDisabledOnPartner(TestGroupByBase, TransactionCase):
     """Check we fallback on Odoo standard behavior if we disable the grouping
     feature on the partner.
 
@@ -13,9 +15,10 @@ class TestGroupByDisabledOnPartner(TestGroupByBase):
     test assertions being different.
     """
 
-    def setUp(self):
-        super().setUp()
-        self.partner.disable_picking_grouping = True
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.partner.disable_picking_grouping = True
 
     def test_sale_stock_merge_same_partner_no_carrier(self):
         """2 sale orders for the same partner, without carrier
@@ -60,7 +63,7 @@ class TestGroupByDisabledOnPartner(TestGroupByBase):
         so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
         so2.action_confirm()
         pick = so1.picking_ids
-        move = pick.move_lines[0]
+        move = first(pick.move_ids)
         move.quantity_done = 5
         pick.with_context(cancel_backorder=False)._action_done()
         self.assertFalse(so2.picking_ids & so1.picking_ids)
@@ -79,11 +82,11 @@ class TestGroupByDisabledOnPartner(TestGroupByBase):
         self.assertTrue(so1.picking_ids)
         self.assertTrue(so2.picking_ids)
         self.assertNotEqual(so1.picking_ids, so2.picking_ids)
-        so1.action_cancel()
+        so1._action_cancel()
         self.assertEqual(so1.picking_ids.state, "cancel")
         self.assertNotEqual(so2.picking_ids.state, "cancel")
-        so1_moves = so1.picking_ids.move_lines
-        so2_moves = so2.picking_ids.move_lines
+        so1_moves = so1.picking_ids.move_ids
+        so2_moves = so2.picking_ids.move_ids
         self.assertEqual(so1_moves.mapped("state"), ["cancel"])
         self.assertEqual(so2_moves.mapped("state"), ["confirmed"])
         self.assertEqual(so1.state, "cancel")
@@ -101,11 +104,11 @@ class TestGroupByDisabledOnPartner(TestGroupByBase):
         self.assertTrue(so1.picking_ids)
         self.assertTrue(so2.picking_ids)
         self.assertNotEqual(so1.picking_ids, so2.picking_ids)
-        so2.action_cancel()
+        so2._action_cancel()
         self.assertNotEqual(so1.picking_ids.state, "cancel")
         self.assertEqual(so2.picking_ids.state, "cancel")
-        so1_moves = so1.picking_ids.move_lines
-        so2_moves = so2.picking_ids.move_lines
+        so1_moves = so1.picking_ids.move_ids
+        so2_moves = so2.picking_ids.move_ids
         self.assertEqual(so1_moves.mapped("state"), ["confirmed"])
         self.assertEqual(so2_moves.mapped("state"), ["cancel"])
         self.assertEqual(so1.state, "sale")
@@ -174,7 +177,7 @@ class TestGroupByDisabledOnPartner(TestGroupByBase):
         so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
         so2.action_confirm()
         self.assertFalse(so1.picking_ids & so2.picking_ids)
-        so1.action_cancel()
+        so1._action_cancel()
         self.assertEqual(so1.state, "cancel")
         self.assertEqual(so1.picking_ids.mapped("state"), ["cancel", "cancel"])
         self.assertNotEqual(so2.state, "cancel")
@@ -191,7 +194,7 @@ class TestGroupByDisabledOnPartner(TestGroupByBase):
         so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
         so2.action_confirm()
         self.assertFalse(so1.picking_ids & so2.picking_ids)
-        so2.action_cancel()
+        so2._action_cancel()
         self.assertEqual(so2.state, "cancel")
         self.assertEqual(so2.picking_ids.mapped("state"), ["cancel", "cancel"])
         self.assertNotEqual(so1.state, "cancel")
@@ -208,7 +211,7 @@ class TestGroupByDisabledOnPartner(TestGroupByBase):
         so1.action_confirm()
         so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
         so2.action_confirm()
-        so1.action_cancel()
+        so1._action_cancel()
         # ship & pick should not be shared between so1 and so2
         self.assertFalse(so1.picking_ids & so2.picking_ids)
 
@@ -224,7 +227,7 @@ class TestGroupByDisabledOnPartner(TestGroupByBase):
         so1.action_confirm()
         so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
         so2.action_confirm()
-        so2.action_cancel()
+        so2._action_cancel()
         # ship & pick should not be shared between so1 and so2
         self.assertFalse(so1.picking_ids & so2.picking_ids)
 
@@ -240,7 +243,7 @@ class TestGroupByDisabledOnPartner(TestGroupByBase):
         so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
         so2.action_confirm()
         self.assertFalse(so1.picking_ids & so2.picking_ids)
-        so1.action_cancel()
+        so1._action_cancel()
         so3 = self._get_new_sale_order(amount=12, carrier=self.carrier1)
         so3.action_confirm()
         self.assertFalse(so1.picking_ids & so2.picking_ids & so3.picking_ids)
@@ -261,7 +264,7 @@ class TestGroupByDisabledOnPartner(TestGroupByBase):
         # the group is the same on the move lines and picking
         picking1 = so1.picking_ids
         picking2 = so2.picking_ids
-        self.assertEqual(picking1.group_id, picking1.move_lines.group_id)
+        self.assertEqual(picking1.group_id, picking1.move_ids.group_id)
         group1 = picking1.group_id
         group2 = picking2.group_id
         # each group is related only to the relevant sale order
@@ -281,12 +284,12 @@ class TestGroupByDisabledOnPartner(TestGroupByBase):
         # picking.picking_type_id.group_pickings = False
         self._update_qty_in_location(
             picking.location_id,
-            so.order_line[0].product_id,
-            so.order_line[0].product_uom_qty,
+            first(so.order_line).product_id,
+            first(so.order_line).product_uom_qty,
         )
         picking.action_assign()
-        line = picking.move_lines[0].move_line_ids
-        line.qty_done = line.product_uom_qty / 2
+        line = first(picking.move_ids).move_line_ids
+        line.qty_done = line.reserved_uom_qty / 2
         picking._action_done()
         self.assertEqual(picking.state, "done")
         self.assertTrue(picking.backorder_ids)

@@ -1,10 +1,12 @@
 # Copyright 2021 Camptocamp (https://www.camptocamp.com)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+from odoo.tests.common import TransactionCase
+
 from .common import TestGroupByBase
 
 
-class TestReport(TestGroupByBase):
+class TestReport(TestGroupByBase, TransactionCase):
     def _set_qty_only_in_location(self, location, product, qty):
         for other_location in self.env["stock.location"].search(
             [("usage", "!=", "view"), ("id", "!=", location.id)]
@@ -138,10 +140,10 @@ class TestReport(TestGroupByBase):
         self.assertFalse(res[2].id)
         self.assertTrue(res[3].id)
         # Deliver and test again
-        line = picking.move_lines[0].move_line_ids
-        line.qty_done = line.product_uom_qty
-        line = picking.move_lines[1].move_line_ids
-        line.qty_done = line.product_uom_qty
+        line = picking.move_ids[0].move_line_ids
+        line.qty_done = line.reserved_uom_qty
+        line = picking.move_ids[1].move_line_ids
+        line.qty_done = line.reserved_uom_qty
         res = picking._action_done()
         self.assertEqual(picking.state, "done")
         res = picking.get_delivery_report_lines()
