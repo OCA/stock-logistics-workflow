@@ -10,7 +10,7 @@ class StockMoveChangeSourceLocation(models.TransientModel):
     _description = "Stock Move Change Source Location Wizard"
 
     def _prepare_default_values(self, picking):
-        warehouse = picking.location_id.get_warehouse()
+        warehouse = picking.location_id.warehouse_id
         return {"warehouse_view_location_id": warehouse.view_location_id.id}
 
     @api.model
@@ -36,7 +36,7 @@ class StockMoveChangeSourceLocation(models.TransientModel):
     def _get_allowed_new_location_domain(self):
         stock_picking_obj = self.env["stock.picking"]
         picking = stock_picking_obj.browse(self.env.context.get("active_ids", []))
-        warehouse = picking.location_id.get_warehouse()
+        warehouse = picking.location_id.warehouse_id
         return [
             ("id", "child_of", warehouse.view_location_id.id),
             ("usage", "=", "internal"),

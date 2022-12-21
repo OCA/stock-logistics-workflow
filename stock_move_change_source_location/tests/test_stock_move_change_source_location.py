@@ -2,10 +2,10 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import UserError
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestStockMoveChangeSourceLocation(SavepointCase):
+class TestStockMoveChangeSourceLocation(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super(TestStockMoveChangeSourceLocation, cls).setUpClass()
@@ -17,7 +17,10 @@ class TestStockMoveChangeSourceLocation(SavepointCase):
         cls.Product = cls.env["product.template"]
         cls.Wizard = cls.env["stock.move.change.source.location.wizard"]
         cls.warehouse = cls.env["stock.warehouse"].create(
-            {"name": "warehouse - test", "code": "WH-TEST"}
+            {
+                "name": "warehouse - test",
+                "code": "WH-TEST",
+            }
         )
 
         # cls.warehouse.lot_stock_id.id
@@ -56,6 +59,8 @@ class TestStockMoveChangeSourceLocation(SavepointCase):
                             "product_id": cls.product.product_variant_ids.id,
                             "product_uom_qty": 20.0,
                             "product_uom": cls.product.uom_id.id,
+                            "location_id": cls.warehouse.lot_stock_id.id,
+                            "location_dest_id": cls.warehouse.wh_output_stock_loc_id.id,
                         },
                     ),
                     (
@@ -66,6 +71,8 @@ class TestStockMoveChangeSourceLocation(SavepointCase):
                             "product_id": cls.product2.product_variant_ids.id,
                             "product_uom_qty": 60.0,
                             "product_uom": cls.product.uom_id.id,
+                            "location_id": cls.warehouse.lot_stock_id.id,
+                            "location_dest_id": cls.warehouse.wh_output_stock_loc_id.id,
                         },
                     ),
                 ],
@@ -73,26 +80,14 @@ class TestStockMoveChangeSourceLocation(SavepointCase):
         )
 
     def qty_on_hand(self, product):
-        wiz = self.env["stock.inventory"].create(
+        self.env["stock.quant"].create(
             {
-                "name": "Stock Inventory",
-                "product_ids": [(4, product.id, 0)],
-                "line_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "product_id": product.id,
-                            "product_uom_id": product.uom_id.id,
-                            "product_qty": 200,
-                            "location_id": self.warehouse.lot_stock_id.id,
-                        },
-                    ),
-                ],
+                "product_id": product.id,
+                "product_uom_id": product.uom_id.id,
+                "inventory_quantity": 200,
+                "location_id": self.warehouse.lot_stock_id.id,
             }
-        )
-        wiz.action_start()
-        wiz.action_validate()
+        ).action_apply_inventory()
 
     def test_stock_move_change_source_location_all(self):
         self.qty_on_hand(self.product.product_variant_ids)
@@ -108,7 +103,7 @@ class TestStockMoveChangeSourceLocation(SavepointCase):
         move_lines = self.picking.mapped("move_lines")
         self.assertEqual(
             wiz.warehouse_view_location_id,
-            self.picking.location_id.get_warehouse().view_location_id,
+            self.picking.location_id.warehouse_id.view_location_id,
         )
         self.assertEqual(wiz.old_location_id, move_lines[:1].location_id)
         wiz.action_apply()
