@@ -25,14 +25,14 @@ class StockMove(models.Model):
             res.update({"qty_done": res.get("reserved_uom_qty", 0.0)})
         return res
 
-    def _action_assign(self):
+    def _action_assign(self, force_qty=False):
         """
         Update stock move line quantity done field with reserved quantity.
         This method take into account incoming and outgoing moves.
         We can not use _prepare_move_line_vals method because this method only
         is called for a new lines.
         """
-        res = super()._action_assign()
+        res = super()._action_assign(force_qty=force_qty)
         for line in self.filtered(
             lambda m: m.state
             in ["confirmed", "assigned", "waiting", "partially_available"]
