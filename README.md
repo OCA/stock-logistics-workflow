@@ -50,7 +50,7 @@ addon | version | maintainers | summary
 [stock_picking_line_sequence](stock_picking_line_sequence/) | 12.0.1.2.0 |  | Manages the order of stock moves by displaying its sequence
 [stock_picking_mass_action](stock_picking_mass_action/) | 12.0.1.1.2 |  | Stock Picking Mass Action
 [stock_picking_operation_quick_change](stock_picking_operation_quick_change/) | 12.0.1.0.0 |  | Change location of all picking operations
-[stock_picking_package_preparation](stock_picking_package_preparation/) | 12.0.1.0.2 |  | Stock Picking Package Preparation
+[stock_picking_package_preparation](stock_picking_package_preparation/) | 12.0.1.0.3 |  | Stock Picking Package Preparation
 [stock_picking_package_preparation_line](stock_picking_package_preparation_line/) | 12.0.1.0.2 |  | Stock Picking Package Preparation Line
 [stock_picking_product_assortment](stock_picking_product_assortment/) | 12.0.1.0.0 | [![CarlosRoca13](https://github.com/CarlosRoca13.png?size=30px)](https://github.com/CarlosRoca13) | Stock Picking Product Assortment
 [stock_picking_product_link](stock_picking_product_link/) | 12.0.1.1.0 | [![robinkeunen](https://github.com/robinkeunen.png?size=30px)](https://github.com/robinkeunen) | Adds a "Product" smart button on stock pickings.
