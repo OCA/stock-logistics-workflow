@@ -19,9 +19,6 @@ class StockPicking(models.Model):
         compute="_compute_sale_ids",
         store=True,
     )
-    # don't copy the printed state of a picking otherwise the backorder of a
-    # printed picking becomes printed
-    printed = fields.Boolean(copy=False)
     canceled_by_merge = fields.Boolean(
         default=False,
         help="Technical field. Indicates the transfer is"
