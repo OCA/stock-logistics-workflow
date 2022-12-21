@@ -32,7 +32,20 @@ class StockPickingMergeWizard(TransientModel):
     nothing_todo = fields.Boolean(compute="_compute_info")
     show_discarded_detail = fields.Boolean(default=False)
 
-    @api.depends("selected_picking_ids")
+    @api.model
+    def _get_compute_valid_picking_ids_depends(self):
+        return [
+            "selected_picking_ids",
+            "selected_picking_ids.picking_type_id.group_pickings",
+            "selected_picking_ids.state",
+            "selected_picking_ids.printed",
+            "selected_picking_ids.partner_id",
+            "selected_picking_ids.carrier_id",
+            "selected_picking_ids.location_id",
+            "selected_picking_ids.location_dest_id",
+        ]
+
+    @api.depends(lambda self: self._get_compute_valid_picking_ids_depends())
     def _compute_pickings(self):
         for rec in self:
             valid_pickings = rec._valid_pickings()
@@ -73,9 +86,10 @@ class StockPickingMergeWizard(TransientModel):
     @api.depends("valid_picking_ids")
     def _compute_info(self):
         tmpl = self._get_info_template()
+        qweb = self.env["ir.qweb"]
         for rec in self:
             info = rec._get_grouping_info()
-            rec.details = tmpl._render(info)
+            rec.details = qweb._render(tmpl, info)
             rec.nothing_todo = not info["something_todo"]
 
     def _get_grouping_info(self):
@@ -109,15 +123,13 @@ class StockPickingMergeWizard(TransientModel):
 
     def _get_info_template(self):
         mod = "stock_picking_group_by_partner_by_carrier"
-        return self.env.ref(mod + ".stock_picking_merge_wiz_info")
+        return mod + ".stock_picking_merge_wiz_info"
 
     def action_merge(self):
         self.ensure_one()
         if self.nothing_todo:
             raise exceptions.UserError(_("No picking can be merged!"))
-        # Make sure valid pickings are still valid
-        self._compute_pickings()
-        moves = self.valid_picking_ids.mapped("move_lines")
+        moves = self.valid_picking_ids.mapped("move_ids")
         moves.write({"picking_id": False})
         moves.with_context(picking_manual_merge=True)._assign_picking()
         # Cancel old pickings left w/out moves if needed

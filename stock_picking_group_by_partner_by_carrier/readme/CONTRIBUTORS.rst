@@ -5,3 +5,5 @@
   * Jacques-Etienne Baudoux <je@bcim.be>
 
 * Phuc Tran Thanh <phuc@trobz.com>
+
+* Denis Roussel <denis.roussel@acsone.eu>

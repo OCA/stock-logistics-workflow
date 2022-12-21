@@ -1,33 +1,30 @@
 # Copyright 2020 Camptocamp (https://www.camptocamp.com)
 # Copyright 2020 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+from odoo.tests.common import Form
 
 
-from odoo.tests import tagged
-
-from odoo.addons.sale.tests.common import TestSaleCommonBase
-
-
-@tagged("post_install", "-at_install")
-class TestGroupByBase(TestSaleCommonBase):
-    # FIXME: TestSale is very heavy and create tons of records w/ no tracking disable
-    # for every test. Move to SavepointCase!
-    def setUp(self):
-        super().setUp()
-        self.carrier1 = self.env["delivery.carrier"].create(
+class TestGroupByBase:
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
+        cls.carrier1 = cls.env["delivery.carrier"].create(
             {
                 "name": "My Test Carrier",
-                "product_id": self.env.ref("delivery.product_product_delivery").id,
+                "product_id": cls.env.ref("delivery.product_product_delivery").id,
             }
         )
-        self.carrier2 = self.env["delivery.carrier"].create(
+        cls.carrier2 = cls.env["delivery.carrier"].create(
             {
                 "name": "My Other Test Carrier",
-                "product_id": self.env.ref("delivery.product_product_delivery").id,
+                "product_id": cls.env.ref("delivery.product_product_delivery").id,
             }
         )
-        self.env.ref("stock.warehouse0").group_shippings = True
-        self.partner = self.env["res.partner"].create({"name": "Test Partner"})
+        cls.env.ref("stock.warehouse0").group_shippings = True
+        cls.partner = cls.env["res.partner"].create({"name": "Test Partner"})
+        cls.product = cls.env.ref("product.product_delivery_01")
+        cls.warehouse = cls.env.ref("stock.warehouse0")
 
     def _update_qty_in_location(self, location, product, quantity):
         quants = self.env["stock.quant"]._gather(product, location, strict=True)
@@ -35,15 +32,11 @@ class TestGroupByBase(TestSaleCommonBase):
         quantity -= sum(quants.mapped("quantity"))
         self.env["stock.quant"]._update_available_quantity(product, location, quantity)
 
-    def _prepare_new_sale_order_line(self, amount=10.0):
-        product = self.env.ref("product.product_delivery_01")
-        return {
-            "name": product.name,
-            "product_id": product.id,
-            "product_uom_qty": amount,
-            "product_uom": product.uom_id.id,
-            "price_unit": product.list_price,
-        }
+    def _set_line(self, sale_form, amount=10.0):
+        with sale_form.order_line.new() as line_form:
+            line_form.product_id = self.product
+            line_form.product_uom_qty = amount
+        # return line_form.save()
 
     def _get_new_sale_order(self, amount=10.0, partner=None, carrier=None):
         """Creates and returns a sale order with one default order line.
@@ -55,19 +48,22 @@ class TestGroupByBase(TestSaleCommonBase):
         if carrier is None:
             carrier_id = False
         else:
-            carrier_id = carrier.id
-        sale_order_vals = {
-            "partner_id": partner.id,
-            "partner_invoice_id": partner.id,
-            "partner_shipping_id": partner.id,
-            "carrier_id": carrier_id,
-            "order_line": [(0, 0, self._prepare_new_sale_order_line(amount))],
-            "pricelist_id": self.env.ref("product.list0").id,
-        }
-        sale_order = self.env["sale.order"].create(sale_order_vals)
-        return sale_order
+            carrier_id = carrier
+        with Form(self.env["sale.order"]) as sale_form:
+            sale_form.partner_id = partner
+            self._set_line(sale_form, amount)
+        sale = sale_form.save()
+        if carrier:
+            wiz_action = sale.action_open_delivery_wizard()
+            choose_delivery_carrier = (
+                self.env[wiz_action["res_model"]]
+                .with_context(**wiz_action["context"])
+                .create({"carrier_id": carrier_id.id, "order_id": sale.id})
+            )
+            choose_delivery_carrier.button_confirm()
+        return sale
 
     def _validate_transfer(self, picking):
         for move_line in picking.move_line_ids:
-            move_line.qty_done = move_line.product_uom_qty
+            move_line.qty_done = move_line.reserved_uom_qty
         picking._action_done()

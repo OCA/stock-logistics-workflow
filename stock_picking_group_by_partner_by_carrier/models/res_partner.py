@@ -1,7 +1,7 @@
 # Copyright 2021 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class ResPartner(models.Model):
@@ -12,7 +12,6 @@ class ResPartner(models.Model):
         default=False,
     )
 
+    @api.model
     def _commercial_fields(self):
-        return super(ResPartner, self)._commercial_fields() + [
-            "disable_picking_grouping"
-        ]
+        return super()._commercial_fields() + ["disable_picking_grouping"]

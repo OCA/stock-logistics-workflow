@@ -2,7 +2,7 @@
 <odoo>
     <template id="stock_picking_merge_wiz_info">
         <div class="alert alert-warning" role="alert" t-if="not something_todo">
-          Sorry, nothing to be done here.
+            Sorry, nothing to be done here.
         </div>
         <div class="alert alert-info" role="alert">
             <h4 class="alert-heading">Forecasted grouping</h4>
