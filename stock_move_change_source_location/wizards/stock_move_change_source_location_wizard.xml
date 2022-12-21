@@ -25,7 +25,7 @@
                         options="{'no_create': True}"
                         domain="[('picking_id', '=', active_id)]"
                     >
-                        <tree string="Move lines">
+                        <tree>
                             <field name="picking_id" />
                             <field name="state" />
                             <field name="product_id" />

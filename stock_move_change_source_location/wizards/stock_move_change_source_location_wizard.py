@@ -9,19 +9,6 @@ class StockMoveChangeSourceLocation(models.TransientModel):
     _name = "stock.move.change.source.location.wizard"
     _description = "Stock Move Change Source Location Wizard"
 
-    def _prepare_default_values(self, picking):
-        warehouse = picking.location_id.get_warehouse()
-        return {"warehouse_view_location_id": warehouse.view_location_id.id}
-
-    @api.model
-    def default_get(self, fields):
-        res = super().default_get(fields)
-        active_model = self.env.context["active_model"]
-        active_ids = self.env.context["active_ids"] or []
-        picking = self.env[active_model].browse(active_ids)
-        res.update(self._prepare_default_values(picking))
-        return res
-
     def _default_old_location_id(self):
         stock_picking_obj = self.env["stock.picking"]
         pickings = stock_picking_obj.browse(self.env.context["active_ids"])
@@ -36,14 +23,11 @@ class StockMoveChangeSourceLocation(models.TransientModel):
     def _get_allowed_new_location_domain(self):
         stock_picking_obj = self.env["stock.picking"]
         picking = stock_picking_obj.browse(self.env.context.get("active_ids", []))
-        warehouse = picking.location_id.get_warehouse()
+        warehouse = picking.location_id.warehouse_id
         return [
             ("id", "child_of", warehouse.view_location_id.id),
             ("usage", "=", "internal"),
         ]
-
-    def _get_allowed_states(self):
-        return ["waiting", "partially_available", "confirmed", "assigned"]
 
     warehouse_view_location_id = fields.Many2one(
         comodel_name="stock.location",
@@ -75,6 +59,22 @@ class StockMoveChangeSourceLocation(models.TransientModel):
         help="Select which kind of selection of the moves you want to do",
     )
     move_lines = fields.Many2many("stock.move", string="Move lines")
+
+    def _prepare_default_values(self, picking):
+        warehouse = picking.location_id.warehouse_id
+        return {"warehouse_view_location_id": warehouse.view_location_id.id}
+
+    @api.model
+    def default_get(self, fields_list):
+        res = super().default_get(fields_list)
+        active_model = self.env.context["active_model"]
+        active_ids = self.env.context["active_ids"] or []
+        picking = self.env[active_model].browse(active_ids)
+        res.update(self._prepare_default_values(picking))
+        return res
+
+    def _get_allowed_states(self):
+        return ["waiting", "partially_available", "confirmed", "assigned"]
 
     def _check_allowed_pickings(self, pickings):
         forbidden_pickings = pickings.filtered(
@@ -134,6 +134,6 @@ class StockMoveChangeSourceLocation(models.TransientModel):
         moves_to_change._do_unreserve()
         # Change source location
         moves_to_change.write(vals)
-        # Check availability afterwards
+        # Check availability afterward
         moves_to_change._action_assign()
         return {"type": "ir.actions.act_window_close"}
