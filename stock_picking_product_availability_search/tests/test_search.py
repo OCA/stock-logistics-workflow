@@ -30,29 +30,31 @@ class TestSearch(TransactionCase):
             }
         )
         # Create some incoming pickings
-        cls.picking_in_draft = cls._create_picking(type="in", confirm=False)
-        cls.picking_in_confirm = cls._create_picking(type="in", confirm=True)
-        cls.picking_in_done = cls._create_picking(type="in", confirm=True)
+        cls.picking_in_draft = cls._create_picking(picking_type="in", confirm=False)
+        cls.picking_in_confirm = cls._create_picking(picking_type="in", confirm=True)
+        cls.picking_in_done = cls._create_picking(picking_type="in", confirm=True)
         cls._picking_action_done(cls.picking_in_done)
         # Create some outgoing pickings
-        cls.picking_out_draft = cls._create_picking(type="out")
-        cls.picking_out_confirm = cls._create_picking(type="out", confirm=True)
-        cls.picking_out_done = cls._create_picking(type="out", confirm=True)
+        cls.picking_out_draft = cls._create_picking(picking_type="out")
+        cls.picking_out_confirm = cls._create_picking(picking_type="out", confirm=True)
+        cls.picking_out_done = cls._create_picking(picking_type="out", confirm=True)
         cls.picking_out_unavailable = cls._create_picking(
-            type="out", quantity=500.0, confirm=True
+            picking_type="out", quantity=500.0, confirm=True
         )
         cls._picking_action_done(cls.picking_out_done)
 
     @classmethod
-    def _create_picking(cls, type="out", product=None, quantity=1.0, confirm=False):
-        assert type in ("in", "out")
+    def _create_picking(
+        cls, picking_type="out", product=None, quantity=1.0, confirm=False
+    ):
+        assert picking_type in ("in", "out")
         if product is None:
             product = cls.product
         vals = {
             "partner_id": cls.partner.id,
-            "picking_type_id": getattr(cls, f"picking_type_{type}").id,
+            "picking_type_id": getattr(cls, f"picking_type_{picking_type}").id,
         }
-        if type == "out":
+        if picking_type == "out":
             vals.update(
                 {
                     "location_id": cls.location_stock.id,
