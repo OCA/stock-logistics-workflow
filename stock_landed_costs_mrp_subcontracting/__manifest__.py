@@ -11,6 +11,6 @@
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "depends": ["mrp_subcontracting", "stock_landed_costs"],
+    "depends": ["mrp_subcontracting_account", "stock_landed_costs"],
     "post_init_hook": "post_init_hook",
 }
