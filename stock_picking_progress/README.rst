@@ -76,10 +76,13 @@ promote its widespread use.
 .. |maintainer-mmequignon| image:: https://github.com/mmequignon.png?size=40px
     :target: https://github.com/mmequignon
     :alt: mmequignon
+.. |maintainer-JuMiSanAr| image:: https://github.com/JuMiSanAr.png?size=40px
+    :target: https://github.com/JuMiSanAr
+    :alt: JuMiSanAr
 
-Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
+Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-mmequignon| 
+|maintainer-mmequignon| |maintainer-JuMiSanAr| 
 
 This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/14.0/stock_picking_progress>`_ project on GitHub.
 
