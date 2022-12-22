@@ -1,31 +1,68 @@
 # Copyright 2022 ForgeFlow, S.L.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+from odoo.tests import Form, tagged
 
-from odoo.tests import Form
-from odoo.tests.common import SavepointCase
+from odoo.addons.stock_account.tests.test_anglo_saxon_valuation_reconciliation_common import (
+    ValuationReconciliationTestCommon,
+)
 
 
-class TestStockAutoMove(SavepointCase):
+@tagged("post_install", "-at_install")
+class TestStockLandedCostsMrpSubcontracting(ValuationReconciliationTestCommon):
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
+    def setUpClass(cls, chart_template_ref=None):
+        super().setUpClass(chart_template_ref=chart_template_ref)
+        # Get required Model
+        cls.account_model = cls.env["account.account"].sudo()
+        cls.quant_model = cls.env["stock.quant"]
+        # Get required Model data
+        # Extend the permissions of the user testing
+        cls.env.user.groups_id |= cls.env.ref("stock.group_stock_manager")
         # Activate the subcontracting flag in the res.config.settings.
         # - On install mrp_subcontracting all companies activated this feature
         # Create a vendor that will be in charge of the subcontracting.
-        cls.stock_location = cls.env.ref("stock.stock_location_stock")
         cls.subcontracting_vendor = cls.env["res.partner"].create(
             {"name": "subcontracting_vendor"}
         )
+        cls.wh = cls.env["stock.warehouse"].search(
+            [("company_id", "=", cls.env.company.id)], limit=1
+        )
+        cls.stock_location = cls.wh.lot_stock_id
         # Create a vendor that will be in charge of the additional landed costs.
         cls.costs_vendor = cls.env["res.partner"].create({"name": "costs_vendor"})
         # Create a product category with costing method FIFO and inventory
         # valuation = automated.
-        cls.category_fifo_automated = cls.env["product.category"].create(
-            {
-                "name": "category_fifo_automated",
-                "property_cost_method": "fifo",
-                "property_valuation": "real_time",
-            }
+        cls.valuation_acc = cls.company_data["default_account_stock_valuation"]
+        cls.input_acc = cls.company_data["default_account_stock_in"]
+        cls.output_acc = cls.company_data["default_account_stock_out"]
+        cls.category_fifo_automated = (
+            cls.env["product.category"]
+            .with_company(cls.env.company)
+            .create(
+                {
+                    "name": "category_fifo_automated",
+                    "property_cost_method": "fifo",
+                    "property_valuation": "real_time",
+                    "property_stock_valuation_account_id": cls.valuation_acc.id,
+                    "property_stock_account_input_categ_id": cls.input_acc.id,
+                    "property_stock_account_output_categ_id": cls.output_acc.id,
+                }
+            )
+        )
+
+        cls.category_landed_costs = (
+            cls.env["product.category"]
+            .with_company(cls.env.company)
+            .create(
+                {
+                    "name": "category_landed_costs",
+                    "property_cost_method": "standard",
+                    "property_valuation": "manual_periodic",
+                    "property_stock_valuation_account_id": cls.valuation_acc.id,
+                    "property_stock_account_input_categ_id": cls.input_acc.id,
+                    "property_stock_account_output_categ_id": cls.output_acc.id,
+                }
+            )
         )
         # Create a product that will be the subcontracted, using the category
         # that was created. Add the buy route
@@ -71,7 +108,7 @@ class TestStockAutoMove(SavepointCase):
             }
         )
         # Add 1 units to the stock on hand for the component.
-        cls.env["stock.quant"]._update_available_quantity(
+        cls.quant_model.with_user(cls.env.user)._update_available_quantity(
             cls.product_component, cls.stock_location, 1.0
         )
         # Create a bill of materials of type subcontracting and add the above
@@ -91,10 +128,24 @@ class TestStockAutoMove(SavepointCase):
             {
                 "name": "product_landed_cost",
                 "type": "service",
-                "categ_id": cls.env.ref("product.product_category_all").id,
+                "categ_id": cls.category_landed_costs.id,
                 "landed_cost_ok": True,
             }
         )
+
+    @classmethod
+    def _create_account(cls, acc_type, name, code, company, reconcile=False):
+        """Create an account."""
+        account = cls.account_model.create(
+            {
+                "name": name,
+                "code": code,
+                "user_type_id": acc_type.id,
+                "company_id": company.id,
+                "reconcile": reconcile,
+            }
+        )
+        return account
 
     def done_picking(self, picking):
         picking.action_confirm()
@@ -137,6 +188,20 @@ class TestStockAutoMove(SavepointCase):
         self.assertEqual(self.product_subcontracted.standard_price, 20.0)
         # Create a vendor bill for the landed costs. Add the landed cost
         # vendor and add a line with the landed cost product, with cost $10.
+        self.product_landed_cost.with_company(self.env.company).categ_id.write(
+            {
+                "property_stock_valuation_account_id": self.valuation_acc.id,
+                "property_stock_account_input_categ_id": self.input_acc.id,
+                "property_stock_account_output_categ_id": self.output_acc.id,
+            }
+        )
+        self.product_subcontracted.with_company(self.env.company).categ_id.write(
+            {
+                "property_stock_valuation_account_id": self.valuation_acc.id,
+                "property_stock_account_input_categ_id": self.input_acc.id,
+                "property_stock_account_output_categ_id": self.output_acc.id,
+            }
+        )
         move_form = Form(
             self.env["account.move"].with_context(default_move_type="in_invoice")
         )
