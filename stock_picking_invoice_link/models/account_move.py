@@ -50,20 +50,6 @@ class AccountMove(models.Model):
             result["res_id"] = self.picking_ids.id
         return result
 
-    def _reverse_move_vals(self, default_values, cancel=True):
-        move_vals = super()._reverse_move_vals(default_values, cancel=cancel)
-        # Invoice returned moves marked as to_refund
-        for line_command in move_vals.get("line_ids", []):
-            line_vals = line_command[2]
-            product_id = line_vals.get("product_id", False)
-            if product_id:
-                stock_moves = self.line_ids.filtered(
-                    lambda l: l.product_id.id == product_id
-                ).mapped("move_line_ids")
-                if stock_moves:
-                    line_vals["move_line_ids"] = [(4, m.id) for m in stock_moves]
-        return move_vals
-
 
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
