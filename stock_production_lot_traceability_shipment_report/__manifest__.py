@@ -5,7 +5,7 @@
 {
     "name": "Stock Lot Shipment Traceability",
     "summary": "Show the Shipments directly or indirectly involving a Lot/SN",
-    "version": "12.0.1.0.0",
+    "version": "15.0.1.0.0",
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "maintainers": ["ivantodorovich"],
     "website": "https://github.com/OCA/stock-logistics-workflow",

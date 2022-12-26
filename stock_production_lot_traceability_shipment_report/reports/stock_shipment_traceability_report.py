@@ -4,7 +4,7 @@
 
 from textwrap import dedent, indent
 
-from odoo import api, fields, models, tools
+from odoo import fields, models, tools
 
 
 class StockMoveLineDeliveryReport(models.Model):
@@ -194,7 +194,6 @@ class StockMoveLineDeliveryReport(models.Model):
             )
         )
 
-    @api.model_cr
     def init(self):
         tools.drop_view_if_exists(self.env.cr, self._table)
         self.env.cr.execute(

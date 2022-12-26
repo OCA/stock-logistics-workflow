@@ -37,7 +37,6 @@
     >
         <field name="name">Shipment Traceability Report</field>
         <field name="res_model">stock.shipment.traceability.report.wizard</field>
-        <field name="view_type">form</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>

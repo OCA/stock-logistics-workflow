@@ -48,10 +48,9 @@ class StockTraceabilityDeliveryReportWizard(models.TransientModel):
         lines = self._get_affected_move_lines()
         if not lines:  # pragma: no cover
             raise UserError(_("There isn't any shipment involving this lot."))
-        action = self.env["ir.actions.act_window"].for_xml_id(
-            "stock_production_lot_traceability_shipment_report",
-            "action_stock_shipment_traceability_report",
-        )
-        action["display_name"] = "%s (%s)" % (action["name"], self.lot_id.display_name)
+        module = "stock_production_lot_traceability_shipment_report"
+        xml_id = "action_stock_shipment_traceability_report"
+        action = self.env["ir.actions.act_window"]._for_xml_id(f"{module}.{xml_id}")
+        action["display_name"] += f" ({self.lot_id.display_name})"
         action["domain"] = [("id", "in", lines.ids)]
         return action
