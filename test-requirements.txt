@@ -1,1 +1,3 @@
 odoo-test-helper
+
+odoo-addon-stock_production_lot_traceability @git+https://github.com/OCA/stock-logistics-workflow@refs/pull/1174/head#subdirectory=setup/stock_production_lot_traceability
