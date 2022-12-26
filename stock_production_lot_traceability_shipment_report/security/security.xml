@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2022 Camptocamp SA (https://www.camptocamp.com).
+    @author Iván Todorovich <ivan.todorovich@camptocamp.com>
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+
+    <record id="access_stock_shipment_traceability_report_rule_multi_company" model="ir.rule">
+        <field name="name">Analysis on received/delivered stock lines: Multi-company</field>
+        <field name="model_id" ref="model_stock_shipment_traceability_report"/>
+        <field name="domain_force">[('company_id', 'child_of', [user.company_id.id])]</field>
+    </record>
+
+</odoo>

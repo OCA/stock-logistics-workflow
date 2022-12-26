@@ -1,0 +1,1 @@
+from . import stock_shipment_traceability_report_wizard
