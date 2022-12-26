@@ -9,21 +9,11 @@ class TestStockLotTraceability(CommonStockLotTraceabilityCase):
     def test_produce_lots(self):
         """Test the Produced Lots/Serial Numbers field"""
         self.assertEqual(
-            self.product1_lot1.produce_lot_ids,
-            self.product2_lot1 + self.product3_lot1
+            self.product1_lot1.produce_lot_ids, self.product2_lot1 + self.product3_lot1
         )
-        self.assertEqual(
-            self.product1_lot1.produce_lot_count,
-            2
-        )
-        self.assertEqual(
-            self.product2_lot1.produce_lot_ids,
-            self.product3_lot1
-        )
-        self.assertEqual(
-            self.product2_lot1.produce_lot_count,
-            1
-        )
+        self.assertEqual(self.product1_lot1.produce_lot_count, 2)
+        self.assertEqual(self.product2_lot1.produce_lot_ids, self.product3_lot1)
+        self.assertEqual(self.product2_lot1.produce_lot_count, 1)
         self.assertFalse(self.product3_lot1.produce_lot_ids)
         self.assertFalse(self.product3_lot1.produce_lot_count)
 
@@ -31,28 +21,17 @@ class TestStockLotTraceability(CommonStockLotTraceabilityCase):
         """Test the Consumed Lots/Serial Numbers field"""
         self.assertFalse(self.product1_lot1.consume_lot_ids)
         self.assertFalse(self.product1_lot1.consume_lot_count)
+        self.assertEqual(self.product2_lot1.consume_lot_ids, self.product1_lot1)
+        self.assertEqual(self.product2_lot1.consume_lot_count, 1)
         self.assertEqual(
-            self.product2_lot1.consume_lot_ids,
-            self.product1_lot1
+            self.product3_lot1.consume_lot_ids, self.product1_lot1 + self.product2_lot1
         )
-        self.assertEqual(
-            self.product2_lot1.consume_lot_count,
-            1
-        )
-        self.assertEqual(
-            self.product3_lot1.consume_lot_ids,
-            self.product1_lot1 + self.product2_lot1
-        )
-        self.assertEqual(
-            self.product3_lot1.consume_lot_count,
-            2
-        )
+        self.assertEqual(self.product3_lot1.consume_lot_count, 2)
 
     def test_cache_invalidation(self):
         """Test that cache is invalidated when stock.move.line(s) are modified"""
         self.assertEqual(
-            self.product1_lot1.produce_lot_ids,
-            self.product2_lot1 + self.product3_lot1
+            self.product1_lot1.produce_lot_ids, self.product2_lot1 + self.product3_lot1
         )
         self._do_stock_move(
             self.product2,
@@ -69,12 +48,11 @@ class TestStockLotTraceability(CommonStockLotTraceabilityCase):
         )
         self.assertEqual(
             self.product1_lot1.produce_lot_ids,
-            self.product2_lot1 + self.product3_lot1 + self.product3_lot2
+            self.product2_lot1 + self.product3_lot1 + self.product3_lot2,
         )
         new_moves[0].move_line_ids.consume_line_ids = [(5,)]
         self.assertEqual(
-            self.product1_lot1.produce_lot_ids,
-            self.product2_lot1 + self.product3_lot1
+            self.product1_lot1.produce_lot_ids, self.product2_lot1 + self.product3_lot1
         )
 
     def test_action_view_produce_lots(self):

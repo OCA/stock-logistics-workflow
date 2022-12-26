@@ -100,15 +100,19 @@ class CommonStockLotTraceabilityCase(SavepointCase):
                 "location_id": location_from.id,
                 "location_dest_id": location_dest.id,
                 "move_line_ids": [
-                    (0, 0, {
-                        "product_id": product.id,
-                        "product_uom_id": product.uom_id.id,
-                        "qty_done": qty,
-                        "lot_id": lot.id,
-                        "location_id": location_from.id,
-                        "location_dest_id": location_dest.id,
-                    })
-                ]
+                    (
+                        0,
+                        0,
+                        {
+                            "product_id": product.id,
+                            "product_uom_id": product.uom_id.id,
+                            "qty_done": qty,
+                            "lot_id": lot.id,
+                            "location_id": location_from.id,
+                            "location_dest_id": location_dest.id,
+                        },
+                    )
+                ],
             }
         )
         if validate:
