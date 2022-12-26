@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo.tests import Form
+
 from odoo.addons.stock_production_lot_traceability.tests.common import (
     CommonStockLotTraceabilityCase,
 )

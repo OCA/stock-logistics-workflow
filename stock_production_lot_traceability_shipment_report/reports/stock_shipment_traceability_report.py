@@ -2,8 +2,9 @@
 # @author Iván Todorovich <ivan.todorovich@camptocamp.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from textwrap import indent, dedent
-from odoo import models, fields, tools, api
+from textwrap import dedent, indent
+
+from odoo import api, fields, models, tools
 
 
 class StockMoveLineDeliveryReport(models.Model):
@@ -134,8 +135,7 @@ class StockMoveLineDeliveryReport(models.Model):
 
     def _select(self):
         indented_expressions = (
-            indent(expr, "    ")
-            for expr in self._select_expressions()
+            indent(expr, "    ") for expr in self._select_expressions()
         )
         return "SELECT\n%s" % ",\n".join(indented_expressions)
 

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!--
     Copyright 2022 Camptocamp SA (https://www.camptocamp.com).
     @author Iván Todorovich <ivan.todorovich@camptocamp.com>
@@ -19,14 +19,22 @@
                     </group>
                 </group>
                 <footer>
-                    <button string="Confirm" name="confirm" type="object" class="btn-primary"/>
-                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                    <button
+                        string="Confirm"
+                        name="confirm"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" special="cancel" class="btn-secondary" />
                 </footer>
             </form>
         </field>
     </record>
 
-    <record id="action_stock_shipment_traceability_report_wizard" model="ir.actions.act_window">
+    <record
+        id="action_stock_shipment_traceability_report_wizard"
+        model="ir.actions.act_window"
+    >
         <field name="name">Shipment Traceability Report</field>
         <field name="res_model">stock.shipment.traceability.report.wizard</field>
         <field name="view_type">form</field>

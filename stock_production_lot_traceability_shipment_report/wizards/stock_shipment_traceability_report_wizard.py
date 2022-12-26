@@ -2,7 +2,7 @@
 # @author Iván Todorovich <ivan.todorovich@camptocamp.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import models, fields, api, _
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -50,7 +50,7 @@ class StockTraceabilityDeliveryReportWizard(models.TransientModel):
             raise UserError(_("There isn't any shipment involving this lot."))
         action = self.env["ir.actions.act_window"].for_xml_id(
             "stock_production_lot_traceability_shipment_report",
-            "action_stock_shipment_traceability_report"
+            "action_stock_shipment_traceability_report",
         )
         action["display_name"] = "%s (%s)" % (action["name"], self.lot_id.display_name)
         action["domain"] = [("id", "in", lines.ids)]
