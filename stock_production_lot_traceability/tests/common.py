@@ -2,10 +2,10 @@
 # @author Iván Todorovich <ivan.todorovich@camptocamp.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo.tests import SavepointCase
+from odoo.tests import TransactionCase
 
 
-class CommonStockLotTraceabilityCase(SavepointCase):
+class CommonStockLotTraceabilityCase(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -25,25 +25,48 @@ class CommonStockLotTraceabilityCase(SavepointCase):
         # - We have/produce two lots for each product
         cls.product1_lot1, cls.product1_lot2 = cls.env["stock.production.lot"].create(
             [
-                {"name": "Product 1 Lot 1", "product_id": cls.product1.id},
-                {"name": "Product 1 Lot 2", "product_id": cls.product1.id},
+                {
+                    "name": "Product 1 Lot 1",
+                    "product_id": cls.product1.id,
+                    "company_id": cls.env.company.id,
+                },
+                {
+                    "name": "Product 1 Lot 2",
+                    "product_id": cls.product1.id,
+                    "company_id": cls.env.company.id,
+                },
             ]
         )
         cls.product2_lot1, cls.product2_lot2 = cls.env["stock.production.lot"].create(
             [
-                {"name": "Product 2 Lot 1", "product_id": cls.product2.id},
-                {"name": "Product 2 Lot 2", "product_id": cls.product2.id},
+                {
+                    "name": "Product 2 Lot 1",
+                    "product_id": cls.product2.id,
+                    "company_id": cls.env.company.id,
+                },
+                {
+                    "name": "Product 2 Lot 2",
+                    "product_id": cls.product2.id,
+                    "company_id": cls.env.company.id,
+                },
             ]
         )
         cls.product3_lot1, cls.product3_lot2 = cls.env["stock.production.lot"].create(
             [
-                {"name": "Product 3 Lot 1", "product_id": cls.product3.id},
-                {"name": "Product 3 Lot 2", "product_id": cls.product3.id},
+                {
+                    "name": "Product 3 Lot 1",
+                    "product_id": cls.product3.id,
+                    "company_id": cls.env.company.id,
+                },
+                {
+                    "name": "Product 3 Lot 2",
+                    "product_id": cls.product3.id,
+                    "company_id": cls.env.company.id,
+                },
             ]
         )
         cls.location_supplier = cls.env.ref("stock.stock_location_suppliers")
         cls.location_stock = cls.env.ref("stock.stock_location_stock")
-        cls.location_production = cls.env.ref("stock.location_production")
         cls._do_stock_move(
             cls.product1,
             cls.product1_lot1,
@@ -131,7 +154,7 @@ class CommonStockLotTraceabilityCase(SavepointCase):
                 consume_lot,
                 consume_qty,
                 cls.location_stock,
-                cls.location_production,
+                product.property_stock_production,
                 validate=validate,
             )
         # Do the actual production
@@ -139,7 +162,7 @@ class CommonStockLotTraceabilityCase(SavepointCase):
             product,
             lot,
             qty,
-            cls.location_production,
+            product.property_stock_production,
             cls.location_stock,
             validate=validate,
         )
