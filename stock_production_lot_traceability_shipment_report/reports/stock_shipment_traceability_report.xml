@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2022 Camptocamp SA (https://www.camptocamp.com).
+    @author Iván Todorovich <ivan.todorovich@camptocamp.com>
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+
+    <record id="view_stock_shipment_traceability_report_pivot" model="ir.ui.view">
+        <field name="model">stock.shipment.traceability.report</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="partner_id" type="row" />
+                <field name="product_uom_qty" type="measure" />
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_stock_shipment_traceability_report_tree" model="ir.ui.view">
+        <field name="model">stock.shipment.traceability.report</field>
+        <field name="arch" type="xml">
+            <tree decoration-danger="kind in ('in_return', 'out_return')" decoration-success="kind == 'reception'">
+                <field name="kind"/>
+                <field name="date"/>
+                <field name="picking_id"/>
+                <field name="product_id"/>
+                <field name="lot_id"/>
+                <field name="product_uom_qty_directed" string="Quantity"/>
+                <field name="product_uom_id"/>
+                <field name="partner_id"/>
+                <field name="origin"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_stock_shipment_traceability_report_search" model="ir.ui.view">
+        <field name="model">stock.shipment.traceability.report</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="product_id"/>
+                <field name="partner_id"/>
+                <field name="date"/>
+                <field name="direction"/>
+                <group expand="1" string="Group By">
+                    <filter string="Product" name="Product" context="{'group_by':'product_id'}"/>
+                    <filter string="Partner" name="partner" context="{'group_by':'partner_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_stock_shipment_traceability_report" model="ir.actions.act_window">
+        <field name="name">Shipment Traceability Report</field>
+        <field name="res_model">stock.shipment.traceability.report</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,pivot</field>
+        <field name="target">main</field>
+    </record>
+
+</odoo>
