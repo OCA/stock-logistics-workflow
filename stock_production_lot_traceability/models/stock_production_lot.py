@@ -33,6 +33,9 @@ class StockProductionLot(models.Model):
         """Compute the lots that were produced from this lot."""
         data = {}
         if self.ids:
+            self.env["stock.move.line"].flush(
+                ["state", "lot_id", "produce_line_ids", "consume_line_ids"]
+            )
             self.env.cr.execute(
                 """
                     WITH RECURSIVE produce_lots AS (
@@ -93,6 +96,9 @@ class StockProductionLot(models.Model):
         """Compute the lots that were consumed to produce this lot."""
         data = {}
         if self.ids:
+            self.env["stock.move.line"].flush(
+                ["state", "lot_id", "produce_line_ids", "consume_line_ids"]
+            )
             self.env.cr.execute(
                 """
                     WITH RECURSIVE consume_lots AS (
@@ -150,8 +156,8 @@ class StockProductionLot(models.Model):
             rec.consume_lot_count = len(consume_lot_ids)
 
     def action_view_produce_lots(self):
-        action = self.env["ir.actions.act_window"].for_xml_id(
-            "stock", "action_production_lot_form"
+        action = self.env["ir.actions.act_window"]._for_xml_id(
+            "stock.action_production_lot_form"
         )
         action["context"] = {}
         action["domain"] = [("id", "in", self.produce_lot_ids.ids)]
@@ -159,8 +165,8 @@ class StockProductionLot(models.Model):
         return action
 
     def action_view_consume_lots(self):
-        action = self.env["ir.actions.act_window"].for_xml_id(
-            "stock", "action_production_lot_form"
+        action = self.env["ir.actions.act_window"]._for_xml_id(
+            "stock.action_production_lot_form"
         )
         action["context"] = {}
         action["domain"] = [("id", "in", self.consume_lot_ids.ids)]
