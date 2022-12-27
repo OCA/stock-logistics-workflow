@@ -7,3 +7,4 @@
 * Holger Brunn <mail@hunki-enterprises.com>
 * Rujia Liu <rujial@roof.co.nz>
 * Bernat Puig <bernat.puig@forgeflow.com>
+* Pimolnat Suntian <pimolnats@ecosoft.co.th>

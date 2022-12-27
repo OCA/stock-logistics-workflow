@@ -58,8 +58,8 @@ class TestStockSplitPicking(TransactionCase):
 
         # We have a picking with 4 units in state assigned
         self.assertAlmostEqual(move_line.qty_done, 4.0)
-        self.assertAlmostEqual(move_line.product_qty, 4.0)
-        self.assertAlmostEqual(move_line.product_uom_qty, 4.0)
+        self.assertAlmostEqual(move_line.reserved_qty, 4.0)
+        self.assertAlmostEqual(move_line.reserved_uom_qty, 4.0)
 
         self.assertAlmostEqual(self.move.quantity_done, 4.0)
         self.assertAlmostEqual(self.move.product_qty, 4.0)
@@ -75,12 +75,12 @@ class TestStockSplitPicking(TransactionCase):
         )
 
         self.assertAlmostEqual(move_line.qty_done, 0.0)
-        self.assertAlmostEqual(move_line.product_qty, 6.0)
-        self.assertAlmostEqual(move_line.product_uom_qty, 6.0)
+        self.assertAlmostEqual(move_line.reserved_qty, 6.0)
+        self.assertAlmostEqual(move_line.reserved_uom_qty, 6.0)
 
-        self.assertAlmostEqual(new_picking.move_lines.quantity_done, 0.0)
-        self.assertAlmostEqual(new_picking.move_lines.product_qty, 6.0)
-        self.assertAlmostEqual(new_picking.move_lines.product_uom_qty, 6.0)
+        self.assertAlmostEqual(new_picking.move_ids.quantity_done, 0.0)
+        self.assertAlmostEqual(new_picking.move_ids.product_qty, 6.0)
+        self.assertAlmostEqual(new_picking.move_ids.product_uom_qty, 6.0)
 
         self.assertEqual(new_picking.state, "assigned")
 
@@ -111,8 +111,8 @@ class TestStockSplitPicking(TransactionCase):
     def test_stock_picking_split_off_moves(self):
         with self.assertRaises(UserError):
             # fails because we can't split off all lines
-            self.picking._split_off_moves(self.picking.move_lines)
+            self.picking._split_off_moves(self.picking.move_ids)
         with self.assertRaises(UserError):
             # fails because we can't split cancelled pickings
             self.picking.action_cancel()
-            self.picking._split_off_moves(self.picking.move_lines)
+            self.picking._split_off_moves(self.picking.move_ids)
