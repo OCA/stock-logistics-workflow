@@ -29,7 +29,7 @@ class StockPicking(models.Model):
 
             # Split moves considering the qty_done on moves
             new_moves = self.env["stock.move"]
-            for move in picking.move_lines:
+            for move in picking.move_ids:
                 rounding = move.product_uom.rounding
                 qty_done = move.quantity_done
                 qty_initial = move.product_uom_qty
@@ -43,11 +43,13 @@ class StockPicking(models.Model):
                     )
                     new_move_vals = move._split(qty_uom_split)
                     for move_line in move.move_line_ids:
-                        if move_line.product_qty and move_line.qty_done:
+                        if move_line.reserved_qty and move_line.qty_done:
                             # To avoid an error
                             # when picking is partially available
                             try:
-                                move_line.write({"product_uom_qty": move_line.qty_done})
+                                move_line.write(
+                                    {"reserved_uom_qty": move_line.qty_done}
+                                )
                             except UserError:
                                 continue
                     new_move = self.env["stock.move"].create(new_move_vals)
@@ -71,7 +73,7 @@ class StockPicking(models.Model):
             dict(
                 {
                     "name": "/",
-                    "move_lines": [],
+                    "move_ids": [],
                     "move_line_ids": [],
                     "backorder_id": self.id,
                 },
@@ -80,12 +82,8 @@ class StockPicking(models.Model):
         )
         self.message_post(
             body=_(
-                'The backorder <a href="#" '
-                'data-oe-model="stock.picking" '
-                'data-oe-id="%(id)d">%(name)s</a> has been created.'
-            ),
-            id=backorder_picking.id,
-            name=backorder_picking.name,
+                "The backorder %s has been created.", backorder_picking._get_html_link()
+            )
         )
         return backorder_picking
 
@@ -100,7 +98,7 @@ class StockPicking(models.Model):
                     )
                 )
             new_picking = new_picking or this._create_split_backorder()
-            if not this.move_lines - moves:
+            if not this.move_ids - moves:
                 raise UserError(
                     _("Cannot split off all moves from picking %s") % this.name
                 )
