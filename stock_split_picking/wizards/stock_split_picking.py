@@ -39,7 +39,7 @@ class StockSplitPicking(models.TransientModel):
         """
         new_pickings = self.env["stock.picking"]
         for picking in self.mapped("picking_ids"):
-            for move in picking.move_lines[1:]:
+            for move in picking.move_ids[1:]:
                 new_pickings += picking._split_off_moves(move)
         return self._picking_action(new_pickings)
 
