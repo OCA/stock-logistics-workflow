@@ -1,0 +1,107 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_picking_invoice_link
+#
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
+# Bole <bole@dajmi5.com>, 2018
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-02-28 03:51+0000\n"
+"PO-Revision-Date: 2021-10-08 12:34+0000\n"
+"Last-Translator: Matija Krolo <matija.krolo@ecodica.eu>\n"
+"Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
+"Language: hr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.3.2\n"
+
+#. module: stock_picking_invoice_link
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move__invoice_line_ids
+msgid "Invoice Line"
+msgstr "Stavka računa"
+
+#. module: stock_picking_invoice_link
+#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_move_form
+#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_move_picking_form
+msgid "Invoice Lines"
+msgstr "Stavke računa"
+
+#. module: stock_picking_invoice_link
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking__invoice_ids
+#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
+msgid "Invoices"
+msgstr "Računi"
+
+#. module: stock_picking_invoice_link
+#: model:ir.model,name:stock_picking_invoice_link.model_account_move
+msgid "Journal Entries"
+msgstr ""
+
+#. module: stock_picking_invoice_link
+#: model:ir.model,name:stock_picking_invoice_link.model_account_move_line
+msgid "Journal Item"
+msgstr ""
+
+#. module: stock_picking_invoice_link
+#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.invoice_form
+msgid "Pickings"
+msgstr "Otpreme"
+
+#. module: stock_picking_invoice_link
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move__picking_ids
+msgid "Related Pickings"
+msgstr "Povezane otpreme"
+
+#. module: stock_picking_invoice_link
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move_line__move_line_ids
+msgid "Related Stock Moves"
+msgstr "Povezana skladišna kretanja"
+
+#. module: stock_picking_invoice_link
+#: model:ir.model.fields,help:stock_picking_invoice_link.field_account_move__picking_ids
+msgid ""
+"Related pickings (only when the invoice has been generated from a sale "
+"order)."
+msgstr "Povezane otpreme (samo kad je račun napravljen iz prodajnog naloga)"
+
+#. module: stock_picking_invoice_link
+#: model:ir.model.fields,help:stock_picking_invoice_link.field_account_move_line__move_line_ids
+msgid ""
+"Related stock moves (only when the invoice has been generated from a sale "
+"order)."
+msgstr ""
+"Povezana skladišna kretanja (samo kad je račun napravljen iz prodajnog "
+"naloga)"
+
+#. module: stock_picking_invoice_link
+#: model:ir.model,name:stock_picking_invoice_link.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Stavke prodajnog naloga"
+
+#. module: stock_picking_invoice_link
+#: model:ir.model,name:stock_picking_invoice_link.model_stock_move
+msgid "Stock Move"
+msgstr "Skladišno kretanje"
+
+#. module: stock_picking_invoice_link
+#: model:ir.model,name:stock_picking_invoice_link.model_stock_picking
+msgid "Transfer"
+msgstr "Prijenos"
+
+#. module: stock_picking_invoice_link
+#: code:addons/stock_picking_invoice_link/models/stock_move.py:0
+#, python-format
+msgid "You can not modify an invoiced stock move"
+msgstr ""
+
+#~ msgid "Invoice"
+#~ msgstr "Račun"
+
+#~ msgid "View Invoice"
+#~ msgstr "Vidi račun"

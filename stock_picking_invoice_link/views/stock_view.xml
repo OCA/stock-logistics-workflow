@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- stock.picking -->
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="name">stock_picking_invoice_link.stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <field name="invoice_ids" invisible="1" />
+                <button
+                    type="object"
+                    name="action_view_invoice"
+                    class="oe_stat_button"
+                    icon="fa-pencil-square-o"
+                    attrs="{'invisible': [('invoice_count', '=', 0)]}"
+                >
+                    <field name="invoice_count" widget="statinfo" string="Invoice" />
+                </button>
+            </div>
+        </field>
+    </record>
+    <!-- stock.move -->
+    <record id="view_move_form" model="ir.ui.view">
+        <field name="name">stock_picking_invoice_link.stock.move.form</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_form" />
+        <field name="arch" type="xml">
+            <group name="linked_group" position="after">
+                <field name="invoice_line_ids" inivisible="1" />
+                <group
+                    name="invoice_line"
+                    string="Invoice Lines"
+                    colspan="2"
+                    attrs="{'invisible':[('invoice_line_ids', '=', [])]}"
+                >
+                    <field
+                        name="invoice_line_ids"
+                        nolabel="1"
+                        groups="account.group_account_invoice"
+                        widget="one2many_list"
+                    />
+                </group>
+            </group>
+        </field>
+    </record>
+    <record id="view_move_picking_form" model="ir.ui.view">
+        <field name="name">stock_picking_invoice_link.stock.move.picking.form</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_form" />
+        <field name="arch" type="xml">
+            <group position="after">
+                <field name="invoice_line_ids" inivisible="1" />
+                <group
+                    name="invoice_line"
+                    string="Invoice Lines"
+                    attrs="{'invisible':[('invoice_line_ids', '=', [])]}"
+                >
+                    <field
+                        name="invoice_line_ids"
+                        nolabel="1"
+                        groups="account.group_account_invoice"
+                        widget="one2many_list"
+                    />
+                </group>
+            </group>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,107 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_picking_invoice_link
+#
+# Translators:
+# Pedro Castro Silva <pedrocs@exo.pt>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-18 03:48+0000\n"
+"PO-Revision-Date: 2021-01-16 20:44+0000\n"
+"Last-Translator: Pedro Castro Silva <pedrocs@exo.pt>\n"
+"Language-Team: Portuguese (https://www.transifex.com/oca/teams/23907/pt/)\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Weblate 4.3.2\n"
+
+#. module: stock_picking_invoice_link
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move__invoice_line_ids
+msgid "Invoice Line"
+msgstr "Linha de Fatura"
+
+#. module: stock_picking_invoice_link
+#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_move_form
+#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_move_picking_form
+msgid "Invoice Lines"
+msgstr "Linhas de Faturas"
+
+#. module: stock_picking_invoice_link
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking__invoice_ids
+#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
+msgid "Invoices"
+msgstr "Faturas"
+
+#. module: stock_picking_invoice_link
+#: model:ir.model,name:stock_picking_invoice_link.model_account_move
+msgid "Journal Entries"
+msgstr "Lançamentos do Diário"
+
+#. module: stock_picking_invoice_link
+#: model:ir.model,name:stock_picking_invoice_link.model_account_move_line
+msgid "Journal Item"
+msgstr "Itens do Diário"
+
+#. module: stock_picking_invoice_link
+#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.invoice_form
+msgid "Pickings"
+msgstr "Operações de Stock"
+
+#. module: stock_picking_invoice_link
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move__picking_ids
+msgid "Related Pickings"
+msgstr "Operações de Stock Relacionadas"
+
+#. module: stock_picking_invoice_link
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move_line__move_line_ids
+msgid "Related Stock Moves"
+msgstr "Movimentos de Stock Relacionados"
+
+#. module: stock_picking_invoice_link
+#: model:ir.model.fields,help:stock_picking_invoice_link.field_account_move__picking_ids
+msgid ""
+"Related pickings (only when the invoice has been generated from a sale "
+"order)."
+msgstr ""
+"Operações de stock relacionadas (apenas quando a fatura foi gerada a partir "
+"de uma encomenda de venda)."
+
+#. module: stock_picking_invoice_link
+#: model:ir.model.fields,help:stock_picking_invoice_link.field_account_move_line__move_line_ids
+msgid ""
+"Related stock moves (only when the invoice has been generated from a sale "
+"order)."
+msgstr ""
+"Movimentos de stock relacionados (apenas quando a fatura foi gerada a partir "
+"de uma encomenda de venda)."
+
+#. module: stock_picking_invoice_link
+#: model:ir.model,name:stock_picking_invoice_link.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Linha de Encomenda de Venda"
+
+#. module: stock_picking_invoice_link
+#: model:ir.model,name:stock_picking_invoice_link.model_stock_move
+msgid "Stock Move"
+msgstr "Movimento de Stock"
+
+#. module: stock_picking_invoice_link
+#: model:ir.model,name:stock_picking_invoice_link.model_stock_picking
+msgid "Transfer"
+msgstr "Transferência"
+
+#. module: stock_picking_invoice_link
+#: code:addons/stock_picking_invoice_link/models/stock_move.py:0
+#, python-format
+msgid "You can not modify an invoiced stock move"
+msgstr "Não pode modificar um movimento de stock faturado"
+
+#~ msgid "Invoice"
+#~ msgstr "Fatura"
+
+#~ msgid "View Invoice"
+#~ msgstr "Ver Fatura"
