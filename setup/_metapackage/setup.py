@@ -27,6 +27,7 @@ setuptools.setup(
         'odoo14-addon-stock_lot_scrap',
         'odoo14-addon-stock_move_assign_picking_hook',
         'odoo14-addon-stock_move_change_source_location',
+        'odoo14-addon-stock_move_forced_lot',
         'odoo14-addon-stock_move_line_auto_fill',
         'odoo14-addon-stock_move_quick_lot',
         'odoo14-addon-stock_no_negative',
