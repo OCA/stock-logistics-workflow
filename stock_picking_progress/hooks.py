@@ -79,9 +79,9 @@ def setup_picking_progress(cr):
         UPDATE stock_picking p
         SET progress = subquery.avg_progress
         FROM (
-            SELECT sml.picking_id, avg(sml.progress) as avg_progress
-            FROM stock_move_line sml
-            GROUP BY sml.picking_id
+            SELECT sm.picking_id, avg(sm.progress) as avg_progress
+            FROM stock_move sm
+            GROUP BY sm.picking_id
         ) as subquery
         WHERE p.id = subquery.picking_id;
     """

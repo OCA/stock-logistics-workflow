@@ -16,64 +16,64 @@ class TestPickingProgress(SavepointCase):
         cls.picking = picking.copy({"move_lines": [], "move_line_ids": []})
         cls.product = cls.env.ref("product.consu_delivery_01")
         cls.uom = cls.product.uom_id
-        cls.move_line_model = cls.env["stock.move.line"]
 
-    def add_line(self):
+    def add_move(self, name):
         data = {
+            "name": name,
             "product_id": self.product.id,
             "product_uom_qty": 10,
+            "product_uom": self.uom.id,
             "picking_id": self.picking.id,
-            "product_uom_id": self.uom.id,
             "location_id": self.picking.location_id.id,
             "location_dest_id": self.picking.location_dest_id.id,
         }
-        return self.move_line_model.create(data)
+        return self.env["stock.move"].create(data)
 
-    def set_qty_done(self, move_lines, qty=None):
-        for move_line in move_lines:
+    def set_quantity_done(self, moves, qty=None):
+        for move in moves:
             if qty is None:
-                qty_done = move_line.product_uom_qty
+                quantity_done = move.product_uom_qty
             else:
-                qty_done = qty
-            move_line.qty_done = qty_done
+                quantity_done = qty
+            move.quantity_done = quantity_done
 
     def test_progress(self):
-        # No line, progress is 0%
-        self.assertEqual(self.picking.progress, 0.0)
-        # Add a new line, no qty done: progress 0%
-        line1 = self.add_line()
-        self.assertEqual(self.picking.progress, 0.0)
-        # Set qty_done to 5.0 (half done), both line and picking are 50% done
-        self.set_qty_done(line1, 5.0)
-        self.assertEqual(self.picking.progress, 50.0)
-        self.assertEqual(line1.progress, 50.0)
-        # Add a new line:
-        # line1 progress is still 50%
-        # line2 progress is 0%
-        # picking progress is 25%
-        line2 = self.add_line()
-        self.assertEqual(self.picking.progress, 25.0)
-        self.assertEqual(line1.progress, 50.0)
-        self.assertEqual(line2.progress, 0.0)
-        # Set qty_done = 10.0 on line 2
-        # line1 progress is still 50%
-        # line2 progress is 100%
-        # picking progress is 75%
-        self.set_qty_done(line2)
-        self.assertEqual(self.picking.progress, 75.0)
-        self.assertEqual(line2.progress, 100.0)
-        # Set qty_done = 10.0 on line 1
-        # line1 progress is 100%
-        # line2 progress is still 100%
-        # picking progress is 100%
-        self.set_qty_done(line1)
+        # No move, progress is 100%
         self.assertEqual(self.picking.progress, 100.0)
-        self.assertEqual(line1.progress, 100.0)
-        # Set qty_done = 0.0 on both lines
-        # line1 progress is 0%
-        # line2 progress is still 0%
+        # Add a new move, no qty done: progress 0%
+        move1 = self.add_move("Move 1")
+        self.assertEqual(self.picking.progress, 0.0)
+        # Set quantity_done to 5.0 (half done), both move and picking are 50% done
+        self.set_quantity_done(move1, 5.0)
+        self.assertEqual(self.picking.progress, 50.0)
+        self.assertEqual(move1.progress, 50.0)
+        # Add a new move:
+        # move1 progress is still 50%
+        # move2 progress is 0%
+        # picking progress is 25%
+        move2 = self.add_move("Move 2")
+        self.assertEqual(self.picking.progress, 25.0)
+        self.assertEqual(move1.progress, 50.0)
+        self.assertEqual(move2.progress, 0.0)
+        # Set quantity_done = 10.0 on move 2
+        # move1 progress is still 50%
+        # move2 progress is 100%
+        # picking progress is 75%
+        self.set_quantity_done(move2)
+        self.assertEqual(self.picking.progress, 75.0)
+        self.assertEqual(move2.progress, 100.0)
+        # Set quantity_done = 10.0 on move 1
+        # move1 progress is 100%
+        # move2 progress is still 100%
+        # picking progress is 100%
+        self.set_quantity_done(move1)
+        self.assertEqual(self.picking.progress, 100.0)
+        self.assertEqual(move1.progress, 100.0)
+        # Set quantity_done = 0.0 on both move
+        # move1 progress is 0%
+        # move2 progress is still 0%
         # picking progress is 0%
-        self.set_qty_done(self.picking.move_line_ids, 0.0)
-        self.assertEqual(line1.progress, 0.0)
-        self.assertEqual(line2.progress, 0.0)
+        self.set_quantity_done(self.picking.move_lines, 0.0)
+        self.assertEqual(move1.progress, 0.0)
+        self.assertEqual(move2.progress, 0.0)
         self.assertEqual(self.picking.progress, 0.0)
