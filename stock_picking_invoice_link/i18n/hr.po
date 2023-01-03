@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-28 03:51+0000\n"
-"PO-Revision-Date: 2021-10-08 12:34+0000\n"
-"Last-Translator: Matija Krolo <matija.krolo@ecodica.eu>\n"
+"PO-Revision-Date: 2023-01-04 02:41+0000\n"
+"Last-Translator: Bole <bole@dajmi5.com>\n"
 "Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
 "Language: hr\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.3.2\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move__invoice_line_ids
@@ -41,12 +41,12 @@ msgstr "Računi"
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_move
 msgid "Journal Entries"
-msgstr ""
+msgstr "Stavke dnevnika"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_move_line
 msgid "Journal Item"
-msgstr ""
+msgstr "Stavka dnevnika"
 
 #. module: stock_picking_invoice_link
 #: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.invoice_form
@@ -98,7 +98,7 @@ msgstr "Prijenos"
 #: code:addons/stock_picking_invoice_link/models/stock_move.py:0
 #, python-format
 msgid "You can not modify an invoiced stock move"
-msgstr ""
+msgstr "Nije moguće mijenjati skladišno kretanje iz kojeg je napravljen račun"
 
 #~ msgid "Invoice"
 #~ msgstr "Račun"
