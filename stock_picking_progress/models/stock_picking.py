@@ -22,4 +22,4 @@ class StockPicking(models.Model):
             if lines_progress:
                 record.progress = sum(lines_progress) / len(lines_progress)
             else:
-                record.progress = 0
+                record.progress = 100

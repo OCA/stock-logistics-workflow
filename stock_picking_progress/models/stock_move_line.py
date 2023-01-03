@@ -26,6 +26,6 @@ class StockMoveLine(models.Model):
                 continue
             rounding = record.product_uom_id.rounding
             if float_is_zero(record.product_uom_qty, precision_rounding=rounding):
-                record.progress = 0
+                record.progress = 100
             else:
                 record.progress = (record.qty_done / record.product_uom_qty) * 100
