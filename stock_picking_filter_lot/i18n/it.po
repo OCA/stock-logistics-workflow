@@ -7,28 +7,29 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-29 11:57+0000\n"
-"PO-Revision-Date: 2018-01-29 11:57+0000\n"
-"Last-Translator: Simone Rubino <simone.rubino@agilebg.com>\n"
+"PO-Revision-Date: 2023-01-03 18:44+0000\n"
+"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: \n"
-"Language: \n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. module: stock_picking_filter_lot
 #: model:ir.model.fields,field_description:stock_picking_filter_lot.field_stock_move_line__display_name
 #: model:ir.model.fields,field_description:stock_picking_filter_lot.field_stock_picking_type__display_name
 #: model:ir.model.fields,field_description:stock_picking_filter_lot.field_stock_production_lot__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: stock_picking_filter_lot
 #: model:ir.model.fields,field_description:stock_picking_filter_lot.field_stock_move_line__id
 #: model:ir.model.fields,field_description:stock_picking_filter_lot.field_stock_picking_type__id
 #: model:ir.model.fields,field_description:stock_picking_filter_lot.field_stock_production_lot__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_picking_filter_lot
 #: model:ir.model.fields,help:stock_picking_filter_lot.field_stock_move_line__picking_type_use_filter_lots
