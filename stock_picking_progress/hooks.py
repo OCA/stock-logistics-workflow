@@ -23,7 +23,7 @@ def setup_move_line_progress(cr):
         UPDATE stock_move_line
         SET progress = CASE
             WHEN (state = 'done') THEN 100
-            WHEN (product_uom_qty IS NULL or product_uom_qty = 0.0) THEN 0.0
+            WHEN (product_uom_qty IS NULL or product_uom_qty = 0.0) THEN 100.0
             ELSE (qty_done / product_uom_qty) * 100
         END;
     """
@@ -47,7 +47,7 @@ def setup_move_progress(cr):
         SET progress = CASE
             WHEN (state = 'done') THEN 100
             WHEN (state in ('draft', 'confirmed')) THEN 0.0
-            WHEN (product_uom_qty IS NULL or product_uom_qty = 0.0) THEN 0.0
+            WHEN (product_uom_qty IS NULL or product_uom_qty = 0.0) THEN 100.0
         END;
     """
     logger.info("filling up %s on %s", column, table)
@@ -79,9 +79,9 @@ def setup_picking_progress(cr):
         UPDATE stock_picking p
         SET progress = subquery.avg_progress
         FROM (
-            SELECT sml.picking_id, avg(sml.progress) as avg_progress
-            FROM stock_move_line sml
-            GROUP BY sml.picking_id
+            SELECT sm.picking_id, avg(sm.progress) as avg_progress
+            FROM stock_move sm
+            GROUP BY sm.picking_id
         ) as subquery
         WHERE p.id = subquery.picking_id;
     """
