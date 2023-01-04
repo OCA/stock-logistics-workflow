@@ -239,3 +239,35 @@ class TestRestrictLot(SavepointCase):
         assert_move_line_per_lot_and_location(
             pick.move_line_ids_without_package, lot2, location_2, 25
         )
+
+    def test_compute_quantites(self):
+        move = self.env["stock.move"].create(
+            {
+                "product_id": self.product.id,
+                "location_id": self.output_loc.id,
+                "location_dest_id": self.customer_loc.id,
+                "product_uom_qty": 1,
+                "product_uom": self.product.uom_id.id,
+                "name": "test",
+                "procure_method": "make_to_order",
+                "warehouse_id": self.warehouse.id,
+                "route_ids": [(6, 0, self.warehouse.delivery_route_id.ids)],
+                "restrict_lot_id": self.lot.id,
+            }
+        )
+        move._action_confirm()
+
+        lot2 = self.lot.copy({"name": "lot2"})
+        move2 = move.copy()
+        move2.restrict_lot_id = lot2.id
+        move2._action_confirm()
+
+        product = move.product_id
+        self.assertEqual(product.outgoing_qty, 2)
+        product.invalidate_cache()
+        product = product.with_context(lot_id=self.lot.id)
+        self.assertEqual(product.outgoing_qty, 1)
+
+        product.invalidate_cache()
+        product = product.with_context(lot_id=lot2.id)
+        self.assertEqual(product.outgoing_qty, 1)
