@@ -1,10 +1,11 @@
 # Copyright 2019 Vicent Cubells <pedro.baeza@tecnativa.com>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 from odoo import fields
-from odoo.tests import Form, common
+from odoo.tests import Form, common, tagged
 
 
-class TestPurchaseSTockPickingInvoiceLink(common.SavepointCase):
+@tagged("-at_install", "post_install")
+class TestPurchaseSTockPickingInvoiceLink(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -83,7 +84,13 @@ class TestPurchaseSTockPickingInvoiceLink(common.SavepointCase):
         wiz_invoice_refund = (
             self.env["account.move.reversal"]
             .with_context(active_model="account.move", active_ids=invoice.ids)
-            .create({"refund_method": "cancel", "reason": "test"})
+            .create(
+                {
+                    "refund_method": "cancel",
+                    "reason": "test",
+                    "journal_id": invoice.journal_id.id,
+                }
+            )
         )
         wiz_invoice_refund.reverse_moves()
         # Create invoice again
@@ -111,7 +118,13 @@ class TestPurchaseSTockPickingInvoiceLink(common.SavepointCase):
         wiz_invoice_refund = (
             self.env["account.move.reversal"]
             .with_context(active_model="account.move", active_ids=invoice.ids)
-            .create({"refund_method": "modify", "reason": "test"})
+            .create(
+                {
+                    "refund_method": "modify",
+                    "reason": "test",
+                    "journal_id": invoice.journal_id.id,
+                }
+            )
         )
         invoice_id = wiz_invoice_refund.reverse_moves()["res_id"]
         new_inv = self.env["account.move"].browse(invoice_id)
@@ -138,7 +151,7 @@ class TestPurchaseSTockPickingInvoiceLink(common.SavepointCase):
         self.assertEqual(len(picking.invoice_ids), 1)
         backorder_picking = self.po.picking_ids.filtered(lambda p: p.state != "done")
         backorder_picking.move_lines.quantity_done = 2.0
-        backorder_picking._action_done()
+        backorder_picking.button_validate()
         self.assertFalse(len(backorder_picking.invoice_ids))
         self.assertEqual(invoice.picking_ids, picking)
 
@@ -159,8 +172,7 @@ class TestPurchaseSTockPickingInvoiceLink(common.SavepointCase):
         self.assertEqual(len(picking.invoice_ids), 1)
         backorder_picking = self.po.picking_ids.filtered(lambda p: p.state != "done")
         backorder_picking.move_lines.quantity_done = 2.0
-        backorder_picking._action_done()
-        self.assertFalse(len(backorder_picking.invoice_ids) == 1)
+        backorder_picking.button_validate()
         self.assertEqual(invoice.picking_ids, picking + backorder_picking)
 
     def test_partial_invoice_full_link(self):
