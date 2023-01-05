@@ -4,6 +4,7 @@
   * Ernesto Tejeda
   * Pedro M. Baeza
   * Carlos Roca
+  * Stefan Ungureanu
 
 * `Obertix <https://www.obertix.net>`_
 
