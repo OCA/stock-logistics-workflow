@@ -66,6 +66,7 @@ addon | version | maintainers | summary
 [stock_picking_show_backorder](stock_picking_show_backorder/) | 12.0.1.0.0 |  | Provides a new field on stock pickings, allowing to display the corresponding backorders.
 [stock_picking_show_return](stock_picking_show_return/) | 12.0.2.0.0 |  | Show returns on stock pickings
 [stock_picking_whole_scrap](stock_picking_whole_scrap/) | 12.0.1.0.0 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Create whole scrap from a picking for move lines
+[stock_production_lot_traceability](stock_production_lot_traceability/) | 12.0.1.0.0 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Drill down/up the lots produced or consumed
 [stock_return_request](stock_return_request/) | 12.0.1.0.2 |  | Stock Return Request
 [stock_shifting_end_of_lot](stock_shifting_end_of_lot/) | 12.0.1.0.2 | [![bealdav](https://github.com/bealdav.png?size=30px)](https://github.com/bealdav) | Move product lot quantity rest to another location
 [stock_split_picking](stock_split_picking/) | 12.0.2.0.0 |  | Split a picking in two not transferred pickings
