@@ -12,6 +12,7 @@ setuptools.setup(
         'odoo-addon-sale_line_returned_qty>=15.0dev,<15.1dev',
         'odoo-addon-stock_lot_on_hand_first>=15.0dev,<15.1dev',
         'odoo-addon-stock_lot_product_qty_search>=15.0dev,<15.1dev',
+        'odoo-addon-stock_move_line_auto_fill>=15.0dev,<15.1dev',
         'odoo-addon-stock_no_negative>=15.0dev,<15.1dev',
         'odoo-addon-stock_owner_restriction>=15.0dev,<15.1dev',
         'odoo-addon-stock_picking_auto_create_lot>=15.0dev,<15.1dev',
