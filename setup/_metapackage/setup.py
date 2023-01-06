@@ -17,6 +17,7 @@ setuptools.setup(
         'odoo14-addon-purchase_stock_picking_invoice_link',
         'odoo14-addon-sale_line_returned_qty',
         'odoo14-addon-sale_line_returned_qty_mrp',
+        'odoo14-addon-sale_order_global_stock_route',
         'odoo14-addon-sale_stock_mto_as_mts_orderpoint',
         'odoo14-addon-stock_auto_move',
         'odoo14-addon-stock_delivery_note',
