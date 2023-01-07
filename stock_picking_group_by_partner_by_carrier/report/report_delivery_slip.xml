@@ -14,8 +14,9 @@
 
         <xpath
             expr='//table[@name="stock_move_table"]/tbody/tr//span[@t-field="move.product_id"]/..'
-            position="replace"
+                        position="attributes"
         >
+            <attribute name="t-if">False</attribute>
             <t t-if="move.id">
                 <td>
                     <span t-field="move.product_id" />
@@ -161,7 +162,13 @@
         <!-- Replace the customer refs with the one based on the move line displayed -->
         <xpath
             expr='//p[@t-field="o.sudo().sale_id.client_order_ref"]'
-            position="replace"
+            position="attributes"
+        >
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath
+            expr='//p[@t-field="o.sudo().sale_id.client_order_ref"]'
+            position="after"
         >
             <p>
                 <t t-out="o.get_customer_refs().pop()" />
