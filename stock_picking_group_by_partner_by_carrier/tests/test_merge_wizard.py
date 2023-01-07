@@ -104,7 +104,7 @@ class TestMergeWizard(TransactionCase):
                     {
                         "carrier": self.no_carrier,
                         "partner": self.partner1,
-                        "pickings": tuple([x for x in valid_expected]),
+                        "pickings": tuple(x for x in valid_expected),
                         "has_todo": True,
                     }
                 ],
@@ -138,7 +138,7 @@ class TestMergeWizard(TransactionCase):
                     {
                         "carrier": self.no_carrier,
                         "partner": self.partner1,
-                        "pickings": tuple([x for x in valid_expected]),
+                        "pickings": tuple(x for x in valid_expected),
                         "has_todo": True,
                     }
                 ],
@@ -164,7 +164,7 @@ class TestMergeWizard(TransactionCase):
                     {
                         "carrier": self.no_carrier,
                         "partner": self.partner1,
-                        "pickings": tuple([x for x in valid_expected]),
+                        "pickings": tuple(x for x in valid_expected),
                         "has_todo": False,
                     }
                 ],
@@ -192,13 +192,13 @@ class TestMergeWizard(TransactionCase):
                     {
                         "carrier": self.no_carrier,
                         "partner": self.partner1,
-                        "pickings": tuple([x for x in self.all_pickings_partner1]),
+                        "pickings": tuple(x for x in self.all_pickings_partner1),
                         "has_todo": True,
                     },
                     {
                         "carrier": self.no_carrier,
                         "partner": self.partner2,
-                        "pickings": tuple([x for x in self.all_pickings_partner2]),
+                        "pickings": tuple(x for x in self.all_pickings_partner2),
                         "has_todo": True,
                     },
                 ],
@@ -246,32 +246,32 @@ class TestMergeWizard(TransactionCase):
                     {
                         "carrier": self.carrier1,
                         "partner": self.partner1,
-                        "pickings": tuple([x for x in self.all_pickings_partner1[:1]]),
+                        "pickings": tuple(x for x in self.all_pickings_partner1[:1]),
                         # Only one picking, nothing to do
                         "has_todo": False,
                     },
                     {
                         "carrier": self.carrier2,
                         "partner": self.partner1,
-                        "pickings": tuple([x for x in self.all_pickings_partner1[1:]]),
+                        "pickings": tuple(x for x in self.all_pickings_partner1[1:]),
                         "has_todo": True,
                     },
                     {
                         "carrier": self.carrier1,
                         "partner": self.partner2,
                         "pickings": tuple(
-                            [
+                            
                                 x
                                 for x in self.all_pickings_partner2
                                 - self.all_pickings_partner2[1]
-                            ]
+                            
                         ),
                         "has_todo": True,
                     },
                     {
                         "carrier": self.carrier2,
                         "partner": self.partner2,
-                        "pickings": tuple([x for x in self.all_pickings_partner2[1:2]]),
+                        "pickings": tuple(x for x in self.all_pickings_partner2[1:2]),
                         # Only one picking, nothing to do
                         "has_todo": False,
                     },
