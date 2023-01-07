@@ -14,7 +14,7 @@
 
         <xpath
             expr='//table[@name="stock_move_table"]/tbody/tr//span[@t-field="move.product_id"]/..'
-                        position="attributes"
+            position="attributes"
         >
             <attribute name="t-if">False</attribute>
             <t t-if="move.id">
