@@ -50,7 +50,7 @@
                             </t>
                             <span
                                 t-if="len(group.pickings) > 20"
-                                t-out="'&amp;hellip;'"
+                                    t-out="'&amp;hellip;'"
                             />
                         </p>
                     </li>
