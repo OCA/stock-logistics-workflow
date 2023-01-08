@@ -25,7 +25,7 @@
             </t>
             <t t-else="">
                 <th>
-                    <span t-esc="move.description_picking" />
+                    <span t-out="move.description_picking" />
                 </th>
             </t>
         </xpath>
