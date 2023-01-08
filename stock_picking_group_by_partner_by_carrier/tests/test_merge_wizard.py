@@ -4,11 +4,11 @@
 
 
 from odoo import exceptions
-from odoo.tests.common import SavepointCase, tagged
+from odoo.tests.common import TransactionCase, tagged
 
 
 @tagged("post_install", "-at_install")
-class TestMergeWizard(SavepointCase):
+class TestMergeWizard(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -260,11 +260,9 @@ class TestMergeWizard(SavepointCase):
                         "carrier": self.carrier1,
                         "partner": self.partner2,
                         "pickings": tuple(
-                            
-                                x
-                                for x in self.all_pickings_partner2
-                                - self.all_pickings_partner2[1]
-                            
+                            x
+                            for x in self.all_pickings_partner2
+                            - self.all_pickings_partner2[1]
                         ),
                         "has_todo": True,
                     },

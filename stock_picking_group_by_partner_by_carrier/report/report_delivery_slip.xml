@@ -11,10 +11,9 @@
         >
             <attribute name="t-value">report_lines</attribute>
         </xpath>
-
         <xpath
             expr='//table[@name="stock_move_table"]/tbody/tr//span[@t-field="move.product_id"]/..'
-            position="replace"
+            position="after"
         >
             <t t-if="move.id">
                 <td>
@@ -161,11 +160,9 @@
         <!-- Replace the customer refs with the one based on the move line displayed -->
         <xpath
             expr='//p[@t-field="o.sudo().sale_id.client_order_ref"]'
-            position="replace"
+            position="attributes"
         >
-            <p>
-                <t t-esc="o.get_customer_refs().pop()" />
-            </p>
+            <attribute name="t-if">False</attribute>
         </xpath>
     </template>
 </odoo>
