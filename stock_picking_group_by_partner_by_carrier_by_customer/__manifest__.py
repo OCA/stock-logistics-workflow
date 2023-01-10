@@ -13,6 +13,7 @@
     "depends": [
         "stock_picking_group_by_partner_by_carrier",
         "sale_procurement_customer",
+        "stock_picking_group_by_base",
     ],
     "data": [
         "views/stock_picking_type.xml",
