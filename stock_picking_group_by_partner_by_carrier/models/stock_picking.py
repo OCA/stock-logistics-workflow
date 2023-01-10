@@ -25,6 +25,23 @@ class StockPicking(models.Model):
         " canceled because it was left empty after a manual merge.",
     )
 
+    @api.model
+    def _get_index_for_grouping_fields(self):
+        """
+        This tuple is intended to be overriden in order to add fields
+        used in groupings
+        """
+        res = super()._get_index_for_grouping_fields()
+        if "carrier_id" not in res:
+            res.append("carrier_id")
+        return res
+
+    def init(self):
+        """
+        This has to be called in every overriding module
+        """
+        self._create_index_for_grouping()
+
     @api.depends("canceled_by_merge")
     def _compute_state(self):
         super()._compute_state()
