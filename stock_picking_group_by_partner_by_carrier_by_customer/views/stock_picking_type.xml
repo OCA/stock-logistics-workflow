@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2022 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model='ir.ui.view' id="view_picking_type_form">
+        <field name="name">Operation Types</field>
+        <field name="model">stock.picking.type</field>
+        <field
+            name="inherit_id"
+            ref="stock_picking_group_by_partner_by_carrier.view_picking_type_form"
+        />
+        <field name="arch" type="xml">
+            <field name="group_pickings" position="after">
+                <field
+                    name="group_pickings_by_customer"
+                    groups="base.group_no_one"
+                    attrs="{'invisible': [('group_pickings', '=', False)]}"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>
