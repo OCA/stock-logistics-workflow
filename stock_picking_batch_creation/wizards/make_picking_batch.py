@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -271,7 +270,7 @@ class MakePickingBatch(models.TransientModel):
         return selected_pickings, unselected_pickings, used_nbr_bins
 
     def _lock_selected_picking(self, picking):
-        """ Method hook called to lock the selected picking and ensure that
+        """Method hook called to lock the selected picking and ensure that
         nothing has changed in the timelapse between the search request and
         the addition to the batch that will prevent a normal commit of the
         transaction. If nothing is returned by the method, the selected picking

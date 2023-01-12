@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -20,10 +19,12 @@ class StockPickingWave(models.Model):
         states={"draft": [("readonly", False)], "in_progress": [("readonly", False)]},
     )
     wave_weight = fields.Float(
-        string="Total weight", help="Indicates total weight of transfers included.",
+        string="Total weight",
+        help="Indicates total weight of transfers included.",
     )
     wave_volume = fields.Float(
-        string="Total volume", help="Indicates total volume of transfers included.",
+        string="Total volume",
+        help="Indicates total volume of transfers included.",
     )
     wave_nbr_bins = fields.Integer(
         string="Number of compartments",

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -26,10 +25,12 @@ class StockPicking(models.Model):
         copy=False,
     )
     total_weight_batch_picking = fields.Float(
-        string="Weight", help="Indicates total weight of transfers included.",
+        string="Weight",
+        help="Indicates total weight of transfers included.",
     )
     total_volume_batch_picking = fields.Float(
-        string="Volume", help="Indicates total volume of transfers included.",
+        string="Volume",
+        help="Indicates total volume of transfers included.",
     )
     nbr_bins_batch_picking = fields.Integer(
         string="Number of compartments",
