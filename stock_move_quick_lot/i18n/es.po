@@ -18,7 +18,7 @@ msgstr ""
 "X-Generator: Poedit 1.8.7.1\n"
 
 #. module: stock_move_quick_lot
-#: model:ir.model.fields,field_description:stock_move_quick_lot.field_stock_move__life_date
+#: model:ir.model.fields,field_description:stock_move_quick_lot.field_stock_move__expiration_date
 msgid "End of Life Date"
 msgstr "Fecha de caducidad"
 
@@ -45,7 +45,7 @@ msgid "Stock Move"
 msgstr ""
 
 #. module: stock_move_quick_lot
-#: model:ir.model.fields,help:stock_move_quick_lot.field_stock_move__life_date
+#: model:ir.model.fields,help:stock_move_quick_lot.field_stock_move__expiration_date
 msgid ""
 "This is the date on which the goods with this Serial Number may become "
 "dangerous and must not be consumed."
