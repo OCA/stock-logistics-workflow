@@ -4,7 +4,7 @@
 import math
 from collections import defaultdict
 
-from odoo import api, fields, models, tools
+from odoo import fields, models, tools
 
 from ..exceptions import NoPickingCandidateError, NoSuitableDeviceError
 
@@ -12,6 +12,7 @@ from ..exceptions import NoPickingCandidateError, NoSuitableDeviceError
 class MakePickingBatch(models.TransientModel):
 
     _name = "make.picking.batch"
+    _description = "Make a batch picking wizard"
 
     picking_type_ids = fields.Many2many(
         comodel_name="stock.picking.type",
@@ -41,14 +42,13 @@ class MakePickingBatch(models.TransientModel):
         help="All the pickings related to one partner will be put in one bin",
     )
 
-    @api.multi
     def create_batch(self):
         self.ensure_one()
         batch = self._create_batch(raise_if_not_possible=True)
         action = {
             "type": "ir.actions.act_window",
             "name": batch.name,
-            "res_model": "stock.picking.wave",
+            "res_model": "stock.picking.batch",
             "res_id": batch.id,
             "view_mode": "form",
             "target": "current",
@@ -64,7 +64,7 @@ class MakePickingBatch(models.TransientModel):
         domain = [
             ("picking_type_id", "in", self.picking_type_ids.ids),
             ("state", "in", ("partially_available", "assigned")),
-            ("wave_id", "=", False),
+            ("batch_id", "=", False),
             ("user_id", "=", user.id if user else False),
         ]
         if not user:
@@ -140,7 +140,7 @@ class MakePickingBatch(models.TransientModel):
         if not candidates_pickings_to_batch:
             if raise_if_not_possible:
                 raise NoPickingCandidateError()
-            return self.env["stock.picking.wave"].browse()
+            return self.env["stock.picking.batch"].browse()
 
         (
             device,
@@ -150,7 +150,7 @@ class MakePickingBatch(models.TransientModel):
         if not device:
             if raise_if_not_possible:
                 raise NoSuitableDeviceError(candidates_pickings_to_batch)
-            return self.env["stock.picking.wave"].browse()
+            return self.env["stock.picking.batch"].browse()
 
         (selected_pickings, unselected_pickings, used_nbr_bins) = self._apply_limits(
             candidates_pickings_to_batch, device
@@ -160,10 +160,12 @@ class MakePickingBatch(models.TransientModel):
         if not selected_pickings:
             if raise_if_not_possible:
                 raise NoPickingCandidateError()
-            return self.env["stock.picking.wave"].browse()
+            return self.env["stock.picking.batch"].browse()
         vals = self._create_batch_values(user, device, selected_pickings)
-        batch = self.env["stock.picking.wave"].create(vals)
-        batch._init_wave_info(used_nbr_bins)
+        batch = self.env["stock.picking.batch"].create(vals)
+        batch._init_batch_info(used_nbr_bins)
+        # Propagate user on selected pickings
+        batch.picking_ids.write({"user_id": user.id})
         return batch
 
     def _precision_weight(self):
@@ -299,4 +301,5 @@ class MakePickingBatch(models.TransientModel):
             "user_id": user.id,
             "state": "draft",
             "picking_device_id": device.id if device else None,
+            "is_wave": True,
         }

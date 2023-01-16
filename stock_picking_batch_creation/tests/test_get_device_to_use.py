@@ -29,7 +29,7 @@ class TestGetDeviceToUse(ClusterPickingCommonFeatures):
             }
         )
 
-        candidates_pickings = make_picking_batch._search_pickings()
+        candidates_pickings = make_picking_batch._candidates_pickings_to_batch()
         for picking in candidates_pickings:
             device = make_picking_batch._compute_device_to_use(picking)
             if device:
@@ -63,7 +63,7 @@ class TestGetDeviceToUse(ClusterPickingCommonFeatures):
                 ],
             }
         )
-        candidates_pickings = make_picking_batch._search_pickings()
+        candidates_pickings = make_picking_batch._candidates_pickings_to_batch()
         for picking in candidates_pickings:
             device = make_picking_batch._compute_device_to_use(picking)
             if device:

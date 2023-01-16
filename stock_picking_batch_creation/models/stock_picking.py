@@ -12,7 +12,7 @@ class StockPicking(models.Model):
     picking_device_id = fields.Many2one(
         "stock.device.type",
         string="Device for the picking",
-        related="wave_id.picking_device_id",
+        related="batch_id.picking_device_id",
         readonly=True,
     )
 
@@ -20,12 +20,11 @@ class StockPicking(models.Model):
         "res.users",
         string="Responsible",
         readonly=True,
-        related="wave_id.user_id",
-        store=True,
+        default=lambda p: p.batch_id.user_id,
         copy=False,
     )
     total_weight_batch_picking = fields.Float(
-        string="Weight",
+        string="Total Weight for transfers",
         help="Indicates total weight of transfers included.",
     )
     total_volume_batch_picking = fields.Float(
@@ -78,33 +77,30 @@ class StockPicking(models.Model):
     def _get_total_weight_batch_picking(self):
         self.ensure_one()
         weight = 0.0
-        for line in self.move_lines.filtered(lambda m: m.reserved_quant_ids):
+        for line in self.move_ids.filtered(lambda m: m.reserved_availability):
             weight += line.product_id.get_total_weight_from_packaging(
-                sum(line.mapped("reserved_quant_ids.qty"))
+                line.reserved_availability
             )
         return weight
 
     def _get_total_volume_batch_picking(self):
         self.ensure_one()
         volume = 0.0
-        with self.env["product.product"].product_qty_by_packaging_arg_ctx(
-            packaging_filter=lambda p: p.volume
-        ):
-            for line in self.move_lines.filtered(lambda m: m.reserved_quant_ids):
-                product = line.product_id
-                packagings_with_volume = product.product_qty_by_packaging(
-                    sum(line.mapped("reserved_quant_ids.qty"))
-                )
-                for packaging_info in packagings_with_volume:
-                    if packaging_info.get("is_unit"):
-                        pack_volume = product.volume
-                    else:
-                        packaging = self.env["product.packaging"].browse(
-                            packaging_info["id"]
-                        )
-                        pack_volume = packaging.volume
+        for line in self.move_ids.filtered(lambda m: m.reserved_availability):
+            product = line.product_id.with_context(_packaging_filter=lambda p: p.volume)
+            packagings_with_volume = product.product_qty_by_packaging(
+                line.reserved_availability
+            )
+            for packaging_info in packagings_with_volume:
+                if packaging_info.get("is_unit"):
+                    pack_volume = product.volume
+                else:
+                    packaging = self.env["product.packaging"].browse(
+                        packaging_info["id"]
+                    )
+                    pack_volume = packaging.volume
 
-                    volume += pack_volume * packaging_info["qty"]
+                volume += pack_volume * packaging_info["qty"]
         return volume
 
     def _get_nbr_bin_batch_for_device(self, device):
@@ -118,7 +114,7 @@ class StockPicking(models.Model):
             nbr_bins = 1
         return nbr_bins
 
-    @api.depends("pack_operation_ids")
+    @api.depends("move_line_ids")
     def _compute_nbr_picking_lines(self):
         for rec in self:
-            rec.nbr_picking_lines = len(rec.pack_operation_ids)
+            rec.nbr_picking_lines = len(rec.move_line_ids)

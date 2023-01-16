@@ -18,14 +18,14 @@
         "product_total_weight_from_packaging",  # OCA/product-attribute
         "stock",
         "stock_packaging_calculator",  # OCA/stock-logistics-warehouse
-        "stock_picking_wave",
+        "stock_picking_batch",
     ],
     "data": [
         "views/stock_device_type.xml",
-        "views/stock_picking_wave.xml",
+        "views/stock_picking_batch.xml",
         "views/stock_picking.xml",
         "wizards/make_picking_batch.xml",
         "security/ir.model.access.csv",
     ],
-    "development_status": "Alpha",
+    "development_status": "Beta",
 }

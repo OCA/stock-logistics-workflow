@@ -23,7 +23,7 @@ class TestClusteringConditions(ClusterPickingCommonFeatures):
         cls.p5 = cls._create_product("Unittest P5", 1, 4, 1, 1)
 
     def test_device_with_one_bin(self):
-        candidates_pickings = self.make_picking_batch._search_pickings()
+        candidates_pickings = self.make_picking_batch._candidates_pickings_to_batch()
         device = self.make_picking_batch._compute_device_to_use(candidates_pickings[0])
         (
             selected_pickings,
@@ -36,10 +36,22 @@ class TestClusteringConditions(ClusterPickingCommonFeatures):
     def test_put_3_pickings_in_one_cluster(self):
         self._set_quantity_in_stock(self.stock_location, self.p5)
         self.p1.write(
-            {"volume": 5.0, "length": 5, "height": 1, "width": 1, "weight": 1}
+            {
+                "volume": 5.0,
+                "product_length": 5,
+                "product_height": 1,
+                "product_width": 1,
+                "weight": 1,
+            }
         )
         self.p2.write(
-            {"volume": 5.0, "length": 5, "height": 1, "width": 1, "weight": 1}
+            {
+                "volume": 5.0,
+                "product_length": 5,
+                "product_height": 1,
+                "product_width": 1,
+                "weight": 1,
+            }
         )
         picks = self._get_picks_by_type(self.picking_type_1)
         self._add_product_to_picking(picks[0], self.p5)
@@ -47,7 +59,7 @@ class TestClusteringConditions(ClusterPickingCommonFeatures):
         self._create_picking_pick_and_assign(
             self.picking_type_1.id, products=self.p1 | self.p5
         )
-        candidates_pickings = self.make_picking_batch._search_pickings()
+        candidates_pickings = self.make_picking_batch._candidates_pickings_to_batch()
         device = self.make_picking_batch._compute_device_to_use(candidates_pickings[0])
         (
             selected_pickings,
@@ -61,13 +73,31 @@ class TestClusteringConditions(ClusterPickingCommonFeatures):
 
     def test_no_device_for_clustering(self):
         self.p1.write(
-            {"volume": 200.0, "length": 200, "height": 1, "width": 1, "weight": 1}
+            {
+                "volume": 200.0,
+                "product_length": 200,
+                "product_height": 1,
+                "product_width": 1,
+                "weight": 1,
+            }
         )
         self.p2.write(
-            {"volume": 200.0, "length": 200, "height": 1, "width": 1, "weight": 1}
+            {
+                "volume": 200.0,
+                "product_length": 200,
+                "product_height": 1,
+                "product_width": 1,
+                "weight": 1,
+            }
         )
         self.p5.write(
-            {"volume": 200.0, "length": 200, "height": 1, "width": 1, "weight": 1}
+            {
+                "volume": 200.0,
+                "product_length": 200,
+                "product_height": 1,
+                "product_width": 1,
+                "weight": 1,
+            }
         )
 
         self._set_quantity_in_stock(self.stock_location, self.p5)
@@ -76,7 +106,7 @@ class TestClusteringConditions(ClusterPickingCommonFeatures):
         self._create_picking_pick_and_assign(
             self.picking_type_1.id, products=self.p1 | self.p5
         )
-        candidates_pickings = self.make_picking_batch._search_pickings()
+        candidates_pickings = self.make_picking_batch._candidates_pickings_to_batch()
         for picking in candidates_pickings:
             device = self.make_picking_batch._compute_device_to_use(picking)
             if device:
@@ -88,13 +118,31 @@ class TestClusteringConditions(ClusterPickingCommonFeatures):
 
     def test_one_picking_on_another_device(self):
         self.p1.write(
-            {"volume": 10.0, "length": 10, "height": 1, "width": 1, "weight": 1}
+            {
+                "volume": 10.0,
+                "product_length": 10,
+                "product_height": 1,
+                "product_width": 1,
+                "weight": 1,
+            }
         )
         self.p2.write(
-            {"volume": 10.0, "length": 10, "height": 1, "width": 1, "weight": 1}
+            {
+                "volume": 10.0,
+                "product_length": 10,
+                "product_height": 1,
+                "product_width": 1,
+                "weight": 1,
+            }
         )
         self.p5.write(
-            {"volume": 120.0, "length": 120, "height": 1, "width": 1, "weight": 1}
+            {
+                "volume": 120.0,
+                "product_length": 120,
+                "product_height": 1,
+                "product_width": 1,
+                "weight": 1,
+            }
         )
         self._set_quantity_in_stock(self.stock_location, self.p5)
         self.device1.write({"nbr_bins": 8})
@@ -104,7 +152,7 @@ class TestClusteringConditions(ClusterPickingCommonFeatures):
         pick_on_another_device = self.env["stock.picking"].search(
             [("product_id", "=", self.p5.id)]
         )
-        candidates_pickings = self.make_picking_batch._search_pickings()
+        candidates_pickings = self.make_picking_batch._candidates_pickings_to_batch()
         device = self.make_picking_batch._compute_device_to_use(candidates_pickings[0])
         (
             selected_pickings,
@@ -138,16 +186,30 @@ class TestClusteringConditions(ClusterPickingCommonFeatures):
             }
         )
         self.p1.write(
-            {"volume": 0.0, "length": 0, "height": 0, "width": 0, "weight": 1}
+            {
+                "volume": 0.0,
+                "product_length": 0,
+                "product_height": 0,
+                "product_width": 0,
+                "weight": 1,
+            }
         )
         self.p2.write(
-            {"volume": 0.0, "length": 0, "height": 0, "width": 0, "weight": 1}
+            {
+                "volume": 0.0,
+                "product_length": 0,
+                "product_height": 0,
+                "product_width": 0,
+                "weight": 1,
+            }
         )
         self._create_picking_pick_and_assign(
             self.picking_type_1.id, products=self.p1 | self.p2
         )
         make_picking_batch_volume_zero.write({"maximum_number_of_preparation_lines": 6})
-        candidates_pickings = make_picking_batch_volume_zero._search_pickings()
+        candidates_pickings = (
+            make_picking_batch_volume_zero._candidates_pickings_to_batch()
+        )
         device = make_picking_batch_volume_zero._compute_device_to_use(
             candidates_pickings[0]
         )
@@ -157,7 +219,7 @@ class TestClusteringConditions(ClusterPickingCommonFeatures):
         self.assertEqual(len(selected_pickings), 4)
 
         # All picks have a volume of 0 : they should each occupy one bin
-        self.assertEqual(batch.wave_nbr_bins, len(selected_pickings))
+        self.assertEqual(batch.batch_nbr_bins, len(selected_pickings))
 
     def test_user_propagates_on_pickings(self):
         batch = self.make_picking_batch._create_batch()
@@ -175,20 +237,38 @@ class TestClusteringConditions(ClusterPickingCommonFeatures):
         total_weight_pickings = 0
         total_volume_pickings = 0
         self.p3.write(
-            {"volume": 10.0, "length": 10, "height": 1, "width": 1, "weight": 1}
+            {
+                "volume": 10.0,
+                "product_length": 10,
+                "product_height": 1,
+                "product_width": 1,
+                "weight": 1,
+            }
         )
         self.p4.write(
-            {"volume": 10.0, "length": 10, "height": 1, "width": 1, "weight": 1}
+            {
+                "volume": 10.0,
+                "product_length": 10,
+                "product_height": 1,
+                "product_width": 1,
+                "weight": 1,
+            }
         )
         self.p5.write(
-            {"volume": 10.0, "length": 10, "height": 1, "width": 1, "weight": 1}
+            {
+                "volume": 10.0,
+                "product_length": 10,
+                "product_height": 1,
+                "product_width": 1,
+                "weight": 1,
+            }
         )
         self._create_picking_pick_and_assign(
             self.picking_type_2.id, products=self.p3 | self.p4 | self.p5
         )
         picks = self._get_picks_by_type(self.picking_type_2)
-        pick = picks.filtered(lambda p: len(p.move_lines) == 3)
-        move_line = pick.move_lines[0]
+        pick = picks.filtered(lambda p: len(p.move_ids) == 3)
+        move = pick.move_ids[0]
         make_picking_batch = self.makePickingBatch.create(
             {
                 "user_id": self.env.user.id,
@@ -203,21 +283,33 @@ class TestClusteringConditions(ClusterPickingCommonFeatures):
         batch = make_picking_batch._create_batch()
         self.assertTrue(batch.picking_ids)
         for pick in batch.picking_ids:
-            for move_line in pick.move_lines:
-                total_weight_pickings += move_line.product_id.weight
-                total_volume_pickings += move_line.product_id.volume
-        move_line_volume = move_line.product_id.volume
-        move_line_weight = move_line.product_id.weight
-        self.assertEqual(batch.wave_volume, total_volume_pickings - move_line_volume)
-        self.assertEqual(batch.wave_weight, total_weight_pickings - move_line_weight)
+            for move in pick.move_ids:
+                total_weight_pickings += move.product_id.weight
+                total_volume_pickings += move.product_id.volume
+        move_volume = move.product_id.volume
+        move_weight = move.product_id.weight
+        self.assertEqual(batch.batch_volume, total_volume_pickings - move_volume)
+        self.assertEqual(batch.batch_weight, total_weight_pickings - move_weight)
 
     def test_several_pickings_one_partner_one_bin_occupied(self):
         self.device1.write({"nbr_bins": 8, "min_volume": 0, "max_volume": 300})
         self.p1.write(
-            {"volume": 1.0, "length": 1, "height": 1, "width": 1, "weight": 1}
+            {
+                "volume": 1.0,
+                "product_length": 1,
+                "product_height": 1,
+                "product_width": 1,
+                "weight": 1,
+            }
         )
         self.p2.write(
-            {"volume": 1.0, "length": 1, "height": 1, "width": 1, "weight": 1}
+            {
+                "volume": 1.0,
+                "product_length": 1,
+                "product_height": 1,
+                "product_width": 1,
+                "weight": 1,
+            }
         )
         self.make_picking_batch.write(
             {
@@ -230,15 +322,27 @@ class TestClusteringConditions(ClusterPickingCommonFeatures):
         selected_pickings = batch.picking_ids
         self.assertTrue(selected_pickings)
         self.assertEqual(len(selected_pickings), 3)
-        self.assertEqual(batch.wave_nbr_bins, 1)
+        self.assertEqual(batch.batch_nbr_bins, 1)
 
     def test_several_pickings_one_partner_two_bin_occupied(self):
         self.device3.write({"nbr_bins": 8, "min_volume": 0, "max_volume": 300})
         self.p1.write(
-            {"volume": 1.0, "length": 1, "height": 1, "width": 1, "weight": 1}
+            {
+                "volume": 1.0,
+                "product_length": 1,
+                "product_height": 1,
+                "product_width": 1,
+                "weight": 1,
+            }
         )
         self.p2.write(
-            {"volume": 35.0, "length": 35, "height": 1, "width": 1, "weight": 1}
+            {
+                "volume": 35.0,
+                "product_length": 35,
+                "product_height": 1,
+                "product_width": 1,
+                "weight": 1,
+            }
         )
         self.make_picking_batch.write(
             {
@@ -251,15 +355,27 @@ class TestClusteringConditions(ClusterPickingCommonFeatures):
         selected_pickings = batch.picking_ids
         self.assertTrue(selected_pickings)
         self.assertEqual(len(selected_pickings), 3)
-        self.assertEqual(batch.wave_nbr_bins, 2)
+        self.assertEqual(batch.batch_nbr_bins, 2)
 
     def test_several_pickings_two_partner_two_bin_occupied(self):
         self.device1.write({"nbr_bins": 8, "min_volume": 0, "max_volume": 300})
         self.p1.write(
-            {"volume": 1.0, "length": 1, "height": 1, "width": 1, "weight": 1}
+            {
+                "volume": 1.0,
+                "product_length": 1,
+                "product_height": 1,
+                "product_width": 1,
+                "weight": 1,
+            }
         )
         self.p2.write(
-            {"volume": 1.0, "length": 1, "height": 1, "width": 1, "weight": 1}
+            {
+                "volume": 1.0,
+                "product_length": 1,
+                "product_height": 1,
+                "product_width": 1,
+                "weight": 1,
+            }
         )
         partner2 = self.env["res.partner"].create(
             {"name": "other partner", "ref": "98098769876"}
@@ -278,18 +394,36 @@ class TestClusteringConditions(ClusterPickingCommonFeatures):
         selected_pickings = batch.picking_ids
         self.assertTrue(selected_pickings)
         self.assertEqual(len(selected_pickings), 4)
-        self.assertEqual(batch.wave_nbr_bins, 2)
+        self.assertEqual(batch.batch_nbr_bins, 2)
 
     def test_several_pickings_one_partner_volume_outreached_on_one_picking(self):
 
         self.p1.write(
-            {"volume": 1.0, "length": 1, "height": 1, "width": 1, "weight": 1}
+            {
+                "volume": 1.0,
+                "product_length": 1,
+                "product_height": 1,
+                "product_width": 1,
+                "weight": 1,
+            }
         )
         self.p2.write(
-            {"volume": 1.0, "length": 1, "height": 1, "width": 1, "weight": 1}
+            {
+                "volume": 1.0,
+                "product_length": 1,
+                "product_height": 1,
+                "product_width": 1,
+                "weight": 1,
+            }
         )
         self.p5.write(
-            {"volume": 200.0, "length": 200, "height": 1, "width": 1, "weight": 1}
+            {
+                "volume": 200.0,
+                "product_length": 200,
+                "product_height": 1,
+                "product_width": 1,
+                "weight": 1,
+            }
         )
 
         self._set_quantity_in_stock(self.stock_location, self.p5)
@@ -310,4 +444,4 @@ class TestClusteringConditions(ClusterPickingCommonFeatures):
         selected_pickings = batch.picking_ids
         self.assertTrue(selected_pickings)
         self.assertEqual(len(selected_pickings), 4)
-        self.assertEqual(batch.wave_nbr_bins, 2)
+        self.assertEqual(batch.batch_nbr_bins, 2)

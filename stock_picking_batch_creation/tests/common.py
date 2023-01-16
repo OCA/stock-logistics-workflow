@@ -1,10 +1,10 @@
 # Copyright 2021 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class ClusterPickingCommonFeatures(SavepointCase):
+class ClusterPickingCommonFeatures(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super(ClusterPickingCommonFeatures, cls).setUpClass()
@@ -12,8 +12,8 @@ class ClusterPickingCommonFeatures(SavepointCase):
         cls.partner1 = cls._create_partner("Unittest partner", "12344566777878")
         cls.stock_location = cls.env.ref("stock.stock_location_stock")
         cls.location_out = cls.env.ref("stock.stock_location_output")
-        cls.uom_id = cls.env.ref("product.product_uom_unit").id
-        cls.uom_m = cls.env["product.uom"].search([("name", "=", "m")])
+        cls.uom_id = cls.env.ref("uom.product_uom_unit").id
+        cls.uom_m = cls.env["uom.uom"].search([("name", "=", "m")])
 
         cls.p1 = cls._create_product("Unittest P1", 10.0, 10.0, 1, 1)
         cls.p2 = cls._create_product("Unittest P2", 20.0, 20.0, 1, 1)
@@ -29,7 +29,7 @@ class ClusterPickingCommonFeatures(SavepointCase):
         cls.warehouse_1 = cls.env.ref("stock.warehouse0")
         picking_sequence = cls.warehouse_1.pick_type_id.sequence_id
 
-        cls.device1 = cls._create_device("device1", 2, 50, 100, 6, 100)
+        cls.device1 = cls._create_device("device1", 5, 50, 100, 6, 100)
         cls.device2 = cls._create_device("device2", 70, 190, 250, 10, 70)
         cls.device3 = cls._create_device("device3", 30, 100, 150, 1, 50)
         cls.device4 = cls._create_device("device4", 30, 100, 150, 3, 100)
@@ -45,6 +45,7 @@ class ClusterPickingCommonFeatures(SavepointCase):
                 "color": 7,
                 "sequence": 4,
                 "sequence_id": picking_sequence.id,
+                "sequence_code": "test1",
             }
         )
         cls.picking_type_2 = cls.env["stock.picking.type"].create(
@@ -56,6 +57,7 @@ class ClusterPickingCommonFeatures(SavepointCase):
                 "color": 7,
                 "sequence": 4,
                 "sequence_id": picking_sequence.id,
+                "sequence_code": "test2",
             }
         )
 
@@ -81,25 +83,13 @@ class ClusterPickingCommonFeatures(SavepointCase):
     @classmethod
     def _set_quantity_in_stock(cls, location, product, qty=10):
 
-        inventory = cls.env["stock.inventory"].create(
+        cls.env["stock.quant"].create(
             {
-                "name": "Test",
-                "filter": "product",
                 "location_id": location.id,
                 "product_id": product.id,
+                "inventory_quantity": qty,
             }
-        )
-        inventory.prepare_inventory()
-        inventory.line_ids.unlink()
-        inventory.line_ids.create(
-            {
-                "product_id": product.id,
-                "product_qty": qty,
-                "inventory_id": inventory.id,
-                "location_id": location.id,
-            }
-        )
-        inventory.action_done()
+        ).action_apply_inventory()
 
     @classmethod
     def _create_partner(cls, name, ref):
@@ -120,9 +110,9 @@ class ClusterPickingCommonFeatures(SavepointCase):
                 "uom_id": uom_id,
                 "type": product_type,
                 "weight": weight,
-                "length": length,
-                "height": height,
-                "width": width,
+                "product_length": length,
+                "product_height": height,
+                "product_width": width,
                 "volume": volume,
                 "dimensional_uom_id": cls.uom_m.id,
             }
@@ -160,7 +150,7 @@ class ClusterPickingCommonFeatures(SavepointCase):
             "picking_type_id": picking_type_id,
             "location_id": cls.env.ref("stock.stock_location_stock").id,
             "location_dest_id": warehouse.wh_output_stock_loc_id.id,
-            "move_lines": [
+            "move_ids": [
                 (
                     0,
                     0,
@@ -172,7 +162,7 @@ class ClusterPickingCommonFeatures(SavepointCase):
                         "product_uom": p.uom_id.id,
                         "location_id": cls.env.ref("stock.stock_location_stock").id,
                         "location_dest_id": warehouse.wh_output_stock_loc_id.id,
-                        "priority": priority,
+                        "sequence": priority,
                     },
                 )
                 for p in products
@@ -181,7 +171,6 @@ class ClusterPickingCommonFeatures(SavepointCase):
         picking = cls.env["stock.picking"].create(picking_values)
         picking.action_confirm()
         picking.action_assign()
-        picking.force_assign()
         return picking
 
     @classmethod
@@ -190,7 +179,7 @@ class ClusterPickingCommonFeatures(SavepointCase):
         src_location = cls.env.ref("stock.stock_location_stock").id
         picking.write(
             {
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
@@ -202,7 +191,7 @@ class ClusterPickingCommonFeatures(SavepointCase):
                             "product_uom": product.uom_id.id,
                             "location_id": src_location,
                             "location_dest_id": dest_location,
-                            "priority": "3",
+                            "sequence": "3",
                         },
                     )
                 ]
@@ -210,7 +199,6 @@ class ClusterPickingCommonFeatures(SavepointCase):
         )
         picking.action_confirm()
         picking.action_assign()
-        picking.force_assign()
 
     @classmethod
     def _get_picks_by_type(cls, picking_type):

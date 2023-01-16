@@ -38,12 +38,13 @@
             </form>
         </field>
     </record>
-    <act_window
-        id="stock_device_type_act_window"
-        name="Stock Device Type"
-        res_model="stock.device.type"
-        view_mode="tree,form"
-    />
+
+    <record model="ir.actions.act_window" id="stock_device_type_act_window">
+        <field name="name">Stock Device Type</field>
+        <field name="res_model">stock.device.type</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="stock_device_type_tree_view" />
+    </record>
     <menuitem
         id="menu_stock_device_types"
         name="Device Types"
