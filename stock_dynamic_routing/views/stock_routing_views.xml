@@ -22,13 +22,18 @@
                         <group name="picking_type">
                             <field name="picking_type_id" />
                         </group>
-                        <group name="routing_message">
-                            <field name="routing_message" nolabel="1" />
+                        <group>
+                            <div colspan="2">
+                                <label for="routing_message" invisible="1" />
+                                <div>
+                                    <field name="routing_message" readonly="1" />
+                                </div>
+                            </div>
                         </group>
                     </group>
                     <field name="active" invisible="1" />
-                    <group string="Routing Rules" name="rule">
-                        <field name="rule_ids" nolabel="1">
+                    <group string="Routing" name="rule">
+                        <field name="rule_ids">
                             <tree>
                                 <field name="sequence" widget="handle" />
                                 <field name="method" />

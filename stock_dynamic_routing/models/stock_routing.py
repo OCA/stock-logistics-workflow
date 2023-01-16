@@ -39,7 +39,9 @@ class StockRouting(models.Model):
     sequence = fields.Integer(default=lambda self: self._default_sequence())
     active = fields.Boolean(default=True)
     rule_ids = fields.One2many(
-        comodel_name="stock.routing.rule", inverse_name="routing_id"
+        string="Routing Rules",
+        comodel_name="stock.routing.rule",
+        inverse_name="routing_id",
     )
     routing_message = fields.Html(compute="_compute_routing_message")
 
