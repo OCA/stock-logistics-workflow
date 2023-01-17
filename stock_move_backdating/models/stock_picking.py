@@ -2,11 +2,33 @@
 # Copyright 2023 Simone Rubino - TAKOBI
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import api, models
+from odoo import api, fields, models
 
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"
+
+    date_backdating = fields.Datetime(
+        string='Forced Effective Date',
+        help="The Actual Movement Date of the Operations "
+             "only if they have all the same value.",
+        compute='_compute_date_backdating',
+        store=True,
+    )
+
+    @api.depends(
+        'move_line_ids.date_backdating',
+    )
+    def _compute_date_backdating(self):
+        for picking in self:
+            move_lines = picking.move_line_ids
+            move_lines_back_dates = move_lines.mapped('date_backdating')
+            move_lines_back_date = set(move_lines_back_dates)
+            if len(move_lines_back_date) == 1:
+                date_backdating = move_lines_back_date.pop()
+            else:
+                date_backdating = False
+            picking.date_backdating = date_backdating
 
     def _backdating_update_picking_date(self):
         """Set date_done as the youngest date among the done moves."""
