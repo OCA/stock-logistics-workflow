@@ -17,7 +17,7 @@ Stock Picking Warn Message
     :target: https://github.com/OCA/stock-logistics-workflow/tree/15.0/stock_picking_warn_message
     :alt: OCA/stock-logistics-workflow
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-15.0/stock-logistics-workflow-15.0-stock_picking_warn_message
+    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-15-0/stock-logistics-workflow-15-0-stock_picking_warn_message
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
     :target: https://runbot.odoo-community.org/runbot/154/15.0
