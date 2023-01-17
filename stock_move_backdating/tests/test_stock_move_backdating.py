@@ -125,6 +125,19 @@ class TestStockMoveBackdating(tests.SavepointCase):
     def _check_account_move_date(self, account_move, date):
         self.assertEqual(account_move.date, date.date())
 
+    def _check_picking_date(self, picking, datetime_backdating_list):
+        max_datetime = max(datetime_backdating_list)
+        max_date = max_datetime.date()
+        self.assertEqual(picking.date_done.date(), max_date)
+
+        picking_back_date = picking.date_backdating
+        if len(datetime_backdating_list) == 1:
+            picking_back_date = picking_back_date.date()
+            datetime_backdating = datetime_backdating_list[0]
+            self.assertEqual(datetime_backdating.date(), picking_back_date)
+        else:
+            self.assertFalse(picking_back_date)
+
     def _search_account_move(self, move):
         account_move = self.env['account.move'].search(
             [
@@ -211,6 +224,4 @@ class TestStockMoveBackdating(tests.SavepointCase):
             for quant in quants:
                 self.assertEqual(quant.in_date.date(), move_date_backdating)
 
-        max_datetime = max(datetime_backdating_list)
-        max_date = max_datetime.date()
-        self.assertEqual(picking.date_done.date(), max_date)
+        self._check_picking_date(picking, datetime_backdating_list)
