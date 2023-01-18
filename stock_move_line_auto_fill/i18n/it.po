@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-03 03:55+0000\n"
-"PO-Revision-Date: 2022-12-18 20:45+0000\n"
-"Last-Translator: Sergio Corato <sergiocorato@gmail.com>\n"
+"PO-Revision-Date: 2023-01-18 12:00+0000\n"
+"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -69,7 +69,7 @@ msgstr "Tipo Trasferimento"
 #. module: stock_move_line_auto_fill
 #: model:ir.model,name:stock_move_line_auto_fill.model_stock_move
 msgid "Stock Move"
-msgstr "Movimento di Magazzino"
+msgstr "Movimento di magazzino"
 
 #. module: stock_move_line_auto_fill
 #: model_terms:ir.ui.view,arch_db:stock_move_line_auto_fill.stock_picking_form_view
@@ -97,4 +97,4 @@ msgstr ""
 #. module: stock_move_line_auto_fill
 #: model:ir.model,name:stock_move_line_auto_fill.model_stock_picking
 msgid "Transfer"
-msgstr "Trasferisci"
+msgstr "Trasferimento"
