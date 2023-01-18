@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-11 10:21+0000\n"
-"PO-Revision-Date: 2022-12-29 00:22+0000\n"
+"PO-Revision-Date: 2023-01-18 18:44+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -213,8 +213,6 @@ msgstr "Numero di azioni"
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__message_has_error_counter
-#, fuzzy
-#| msgid "Number of error"
 msgid "Number of errors"
 msgstr "Numero di errori"
 
@@ -295,10 +293,8 @@ msgstr "Reimposta a bozza"
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__message_has_sms_error
-#, fuzzy
-#| msgid "Message Delivery error"
 msgid "SMS Delivery error"
-msgstr "Errore di consegna messaggio"
+msgstr "Errore di consegna SMS"
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__date_done
