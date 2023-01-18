@@ -9,7 +9,7 @@ from odoo.tools.safe_eval import safe_eval
 
 
 @tagged("post_install", "-at_install")
-class TestStockLotScrap(common.SavepointCase):
+class TestStockLotScrap(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
