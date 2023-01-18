@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 12.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-23 11:56+0000\n"
-"PO-Revision-Date: 2021-06-29 10:48+0000\n"
+"PO-Revision-Date: 2023-01-18 12:00+0000\n"
 "Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.2\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. module: stock_picking_show_return
 #: model_terms:ir.ui.view,arch_db:stock_picking_show_return.view_picking_form
@@ -42,4 +42,4 @@ msgstr "Picking originario"
 #. module: stock_picking_show_return
 #: model:ir.model,name:stock_picking_show_return.model_stock_picking
 msgid "Transfer"
-msgstr "Trasferisci"
+msgstr "Trasferimento"
