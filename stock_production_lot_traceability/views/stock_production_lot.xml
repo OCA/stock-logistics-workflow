@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2022 Camptocamp SA (https://www.camptocamp.com).
+    @author Iván Todorovich <ivan.todorovich@camptocamp.com>
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+
+    <record model="ir.ui.view" id="view_production_lot_form">
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form" />
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button
+                    type="object"
+                    name="action_view_consume_lots"
+                    icon="fa-level-up"
+                    attrs="{'invisible': [('consume_lot_count', '=', 0)]}"
+                >
+                    <field
+                        string="Consumed"
+                        name="consume_lot_count"
+                        widget="statinfo"
+                    />
+                </button>
+                <button
+                    type="object"
+                    name="action_view_produce_lots"
+                    icon="fa-level-down"
+                    attrs="{'invisible': [('produce_lot_count', '=', 0)]}"
+                >
+                    <field
+                        string="Produced"
+                        name="produce_lot_count"
+                        widget="statinfo"
+                    />
+                </button>
+            </div>
+        </field>
+    </record>
+
+</odoo>
