@@ -89,7 +89,7 @@ class TestReport(TestGroupByBase):
         self.assertEqual(len(so1.picking_ids.ids), len(so2.picking_ids.ids))
         self.assertEqual(len(so1.picking_ids), 1)
         picking = so1.picking_ids
-        self.assertEqual(len(picking.move_line_ids), 2)
+        self.assertEqual(len(picking.move_line_ids), 1)
 
         remaining_data = report.get_remaining_to_deliver(picking)
         self.assertEqual(len(remaining_data), 0)
