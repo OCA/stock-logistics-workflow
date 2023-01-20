@@ -38,6 +38,7 @@ setuptools.setup(
         'odoo-addon-stock_picking_warn_message>=15.0dev,<15.1dev',
         'odoo-addon-stock_picking_whole_scrap>=15.0dev,<15.1dev',
         'odoo-addon-stock_production_lot_active>=15.0dev,<15.1dev',
+        'odoo-addon-stock_production_lot_traceability>=15.0dev,<15.1dev',
         'odoo-addon-stock_push_delay>=15.0dev,<15.1dev',
         'odoo-addon-stock_putaway_hook>=15.0dev,<15.1dev',
         'odoo-addon-stock_restrict_lot>=15.0dev,<15.1dev',
