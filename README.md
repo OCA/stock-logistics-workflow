@@ -51,6 +51,7 @@ addon | version | maintainers | summary
 [stock_picking_warn_message](stock_picking_warn_message/) | 15.0.1.0.1 |  | Add a popup warning on picking to ensure warning is populated
 [stock_picking_whole_scrap](stock_picking_whole_scrap/) | 15.0.1.0.1 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Create whole scrap from a picking for move lines
 [stock_production_lot_active](stock_production_lot_active/) | 15.0.1.0.2 | [![ThomasBinsfeld](https://github.com/ThomasBinsfeld.png?size=30px)](https://github.com/ThomasBinsfeld) | Allow to archive/unarchive a lot.
+[stock_production_lot_traceability](stock_production_lot_traceability/) | 15.0.1.0.0 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Drill down/up the lots produced or consumed
 [stock_push_delay](stock_push_delay/) | 15.0.1.0.0 |  | Manual evaluation of Push rules
 [stock_putaway_hook](stock_putaway_hook/) | 15.0.1.0.0 |  | Add hooks allowing modules to add more putaway strategies
 [stock_restrict_lot](stock_restrict_lot/) | 15.0.0.0.2 | [![florian-dacosta](https://github.com/florian-dacosta.png?size=30px)](https://github.com/florian-dacosta) | Base module that add back the concept of restrict lot on stock move
