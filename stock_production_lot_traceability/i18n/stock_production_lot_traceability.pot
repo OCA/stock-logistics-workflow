@@ -1,0 +1,76 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_production_lot_traceability
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_production_lot_traceability
+#: model_terms:ir.ui.view,arch_db:stock_production_lot_traceability.view_production_lot_form
+msgid "Consumed"
+msgstr ""
+
+#. module: stock_production_lot_traceability
+#: code:addons/stock_production_lot_traceability/models/stock_production_lot.py:0
+#, python-format
+msgid "Consumed Lots"
+msgstr ""
+
+#. module: stock_production_lot_traceability
+#: model:ir.model.fields,field_description:stock_production_lot_traceability.field_stock_production_lot__consume_lot_ids
+msgid "Consumed Lots/Serial Numbers"
+msgstr ""
+
+#. module: stock_production_lot_traceability
+#: model:ir.model.fields,field_description:stock_production_lot_traceability.field_stock_production_lot__consume_lot_count
+msgid "Consumed Lots/Serial Numbers Count"
+msgstr ""
+
+#. module: stock_production_lot_traceability
+#: model:ir.model,name:stock_production_lot_traceability.model_stock_production_lot
+msgid "Lot/Serial"
+msgstr ""
+
+#. module: stock_production_lot_traceability
+#: model:ir.model.fields,help:stock_production_lot_traceability.field_stock_production_lot__consume_lot_ids
+msgid "Lots that were directly or indirectly consumed to produce this lot"
+msgstr ""
+
+#. module: stock_production_lot_traceability
+#: model:ir.model.fields,help:stock_production_lot_traceability.field_stock_production_lot__produce_lot_ids
+msgid "Lots that were directly or indirectly produced from this lot"
+msgstr ""
+
+#. module: stock_production_lot_traceability
+#: model_terms:ir.ui.view,arch_db:stock_production_lot_traceability.view_production_lot_form
+msgid "Produced"
+msgstr ""
+
+#. module: stock_production_lot_traceability
+#: code:addons/stock_production_lot_traceability/models/stock_production_lot.py:0
+#, python-format
+msgid "Produced Lots"
+msgstr ""
+
+#. module: stock_production_lot_traceability
+#: model:ir.model.fields,field_description:stock_production_lot_traceability.field_stock_production_lot__produce_lot_ids
+msgid "Produced Lots/Serial Numbers"
+msgstr ""
+
+#. module: stock_production_lot_traceability
+#: model:ir.model.fields,field_description:stock_production_lot_traceability.field_stock_production_lot__produce_lot_count
+msgid "Produced Lots/Serial Numbers Count"
+msgstr ""
+
+#. module: stock_production_lot_traceability
+#: model:ir.model,name:stock_production_lot_traceability.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
