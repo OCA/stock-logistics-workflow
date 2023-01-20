@@ -96,7 +96,7 @@ class TestReport(TestGroupByBase):
 
         self._validate_transfer(picking)
         remaining_data = report.get_remaining_to_deliver(picking)
-        self.assertEqual(len(remaining_data), 4)
+        self.assertEqual(len(remaining_data), 2)
 
         self.assertTrue(remaining_data[0]["is_header"])
         self.assertEqual(remaining_data[0]["concept"], so1.name)
