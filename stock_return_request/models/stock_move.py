@@ -24,6 +24,7 @@ class StockMove(models.Model):
     def _compute_qty_returnable(self):
         """Looks for chained returned moves to compute how much quantity
         from the original can be returned"""
+        self.qty_returnable = 0
         for move in self.filtered(lambda x: x.state not in ["draft", "cancel"]):
             if not move.returned_move_ids:
                 if move.state == "done":
