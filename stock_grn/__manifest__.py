@@ -4,7 +4,7 @@
 
 {
     "name": "Goods Received Note",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.0.1",
     "author": "BCIM, ACSONE SA/NV, Odoo Community Association (OCA)",
     "category": "Delivery",
     "depends": ["stock"],
