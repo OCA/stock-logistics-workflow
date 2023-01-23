@@ -6,8 +6,6 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-19 15:01+0000\n"
-"PO-Revision-Date: 2022-12-19 15:01+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -155,7 +153,7 @@ msgstr ""
 #. module: stock_grn
 #: model_terms:ir.ui.view,arch_db:stock_grn.stock_move_search_view
 #: model_terms:ir.ui.view,arch_db:stock_grn.view_picking_withgrn_search
-msgid "Not Received"
+msgid "Not Received (GRN)"
 msgstr ""
 
 #. module: stock_grn
@@ -176,7 +174,7 @@ msgstr ""
 #. module: stock_grn
 #: model_terms:ir.ui.view,arch_db:stock_grn.stock_move_search_view
 #: model_terms:ir.ui.view,arch_db:stock_grn.view_picking_withgrn_search
-msgid "Received"
+msgid "Received (GRN)"
 msgstr ""
 
 #. module: stock_grn
@@ -202,6 +200,11 @@ msgid "Supplier delivery note number"
 msgstr ""
 
 #. module: stock_grn
+#: model:ir.model.constraint,message:stock_grn.constraint_stock_grn_type_name_uniq
+msgid "This GRN type name already exists !"
+msgstr ""
+
+#. module: stock_grn
 #: model:ir.model,name:stock_grn.model_stock_picking
 msgid "Transfer"
 msgstr ""
@@ -218,5 +221,5 @@ msgstr ""
 
 #. module: stock_grn
 #: model:ir.model,name:stock_grn.model_stock_grn_type
-msgid "stock.grn.type"
+msgid "Type of goods received note"
 msgstr ""
