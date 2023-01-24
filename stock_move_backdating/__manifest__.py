@@ -19,6 +19,7 @@
     ],
     'data': [
         'wizards/fill_date_backdating.xml',
+        'views/stock_inventory_views.xml',
         'views/stock_picking.xml',
     ],
     'installable': True,
