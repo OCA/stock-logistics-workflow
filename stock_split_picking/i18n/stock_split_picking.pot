@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -19,12 +19,14 @@ msgid "Cancel"
 msgstr ""
 
 #. module: stock_split_picking
+#. odoo-python
 #: code:addons/stock_split_picking/models/stock_picking.py:0
 #, python-format
 msgid "Cannot split off all moves from picking %s"
 msgstr ""
 
 #. module: stock_split_picking
+#. odoo-python
 #: code:addons/stock_split_picking/models/stock_picking.py:0
 #, python-format
 msgid "Cannot split picking {name} in state {state}"
@@ -76,6 +78,7 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: stock_split_picking
+#. odoo-python
 #: code:addons/stock_split_picking/models/stock_picking.py:0
 #, python-format
 msgid "Mark as todo this picking please."
@@ -123,11 +126,10 @@ msgid "Split pickings"
 msgstr ""
 
 #. module: stock_split_picking
+#. odoo-python
 #: code:addons/stock_split_picking/models/stock_picking.py:0
 #, python-format
-msgid ""
-"The backorder <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-"
-"id=\"%(id)d\">%(name)s</a> has been created."
+msgid "The backorder %s has been created."
 msgstr ""
 
 #. module: stock_split_picking
@@ -141,6 +143,7 @@ msgid "Unit of Measure"
 msgstr ""
 
 #. module: stock_split_picking
+#. odoo-python
 #: code:addons/stock_split_picking/models/stock_picking.py:0
 #, python-format
 msgid ""
