@@ -13,6 +13,21 @@ from .stock_move_line import check_date
 class StockMove(models.Model):
     _inherit = "stock.move"
 
+    def _backdating_account_moves(self):
+        """Set date on linked account.move same for each move in `self`."""
+        picking_account_moves = self.env['account.move'].search(
+            [
+                ('stock_move_id', 'in', self.ids),
+            ],
+        )
+        for stock_move in self:
+            move_account_moves = picking_account_moves.filtered(
+                lambda am: am.stock_move_id == stock_move
+            )
+            move_account_moves.update({
+                'date': stock_move.date.date(),
+            })
+
     def _backdating_action_done(self, moves_todo):
         """Process the moves one by one, backdating the ones that need to."""
         for move in self:
