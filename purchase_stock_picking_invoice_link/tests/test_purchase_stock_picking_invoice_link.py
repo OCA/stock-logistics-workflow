@@ -24,7 +24,7 @@ class TestPurchaseSTockPickingInvoiceLink(common.TransactionCase):
         # Validate shipment
         picking = self.po.picking_ids[0]
         # Process pickings
-        picking.move_lines.quantity_done = 1.0
+        picking.move_line_ids.qty_done = 1.0
         picking.button_validate()
         # Create and post invoice
         inv_action = self.po.action_create_invoice()
@@ -36,8 +36,10 @@ class TestPurchaseSTockPickingInvoiceLink(common.TransactionCase):
         self.assertEqual(len(invoice.invoice_line_ids), 1)
         line = invoice.invoice_line_ids
         # Move lines are set in invoice lines
-        self.assertEqual(len(line.mapped("move_line_ids")), 1)
-        self.assertEqual(line.mapped("move_line_ids"), picking.move_lines)
+        self.assertEqual(len(line.mapped("move_line_ids").mapped("move_line_ids")), 1)
+        self.assertEqual(
+            line.mapped("move_line_ids").mapped("move_line_ids"), picking.move_line_ids
+        )
         # Invoices are set in pickings
         self.assertEqual(picking.invoice_ids, invoice)
 
@@ -53,14 +55,16 @@ class TestPurchaseSTockPickingInvoiceLink(common.TransactionCase):
         # Validate shipment
         picking = self.po.picking_ids[0]
         # Process pickings
-        picking.move_lines.quantity_done = 1.0
+        picking.move_line_ids.qty_done = 1.0
         picking.button_validate()
         # Only one invoice line has been created
         self.assertEqual(len(invoice.invoice_line_ids), 1)
         line = invoice.invoice_line_ids
         # Move lines are set in invoice lines
-        self.assertEqual(len(line.mapped("move_line_ids")), 1)
-        self.assertEqual(line.mapped("move_line_ids"), picking.move_lines)
+        self.assertEqual(len(line.mapped("move_line_ids").mapped("move_line_ids")), 1)
+        self.assertEqual(
+            line.mapped("move_line_ids").mapped("move_line_ids"), picking.move_line_ids
+        )
         self.assertEqual(len(invoice.picking_ids), 1)
         # Invoices are set in pickings
         self.assertEqual(picking.invoice_ids, invoice)
@@ -73,7 +77,7 @@ class TestPurchaseSTockPickingInvoiceLink(common.TransactionCase):
         # Validate shipment
         picking = self.po.picking_ids[0]
         # Process pickings
-        picking.move_lines.quantity_done = 1.0
+        picking.move_line_ids.qty_done = 1.0
         picking.button_validate()
         # Create invoice
         inv_action = self.po.action_create_invoice()
@@ -107,7 +111,7 @@ class TestPurchaseSTockPickingInvoiceLink(common.TransactionCase):
         # Validate shipment
         picking = self.po.picking_ids[0]
         # Process pickings
-        picking.move_lines.quantity_done = 1.0
+        picking.move_line_ids.qty_done = 1.0
         picking.button_validate()
         # Create invoice
         inv_action = self.po.action_create_invoice()
@@ -139,7 +143,7 @@ class TestPurchaseSTockPickingInvoiceLink(common.TransactionCase):
         self.po.order_line.product_qty = 10
         self.po.button_confirm()
         picking = self.po.picking_ids[0]
-        picking.move_lines.quantity_done = 8.0
+        picking.move_line_ids.qty_done = 8.0
         picking._action_done()
         wiz = self.env["stock.backorder.confirmation"].create(
             {"pick_ids": [(4, picking.id)]}
@@ -150,7 +154,7 @@ class TestPurchaseSTockPickingInvoiceLink(common.TransactionCase):
         self.assertEqual(invoice.picking_ids, picking)
         self.assertEqual(len(picking.invoice_ids), 1)
         backorder_picking = self.po.picking_ids.filtered(lambda p: p.state != "done")
-        backorder_picking.move_lines.quantity_done = 2.0
+        backorder_picking.move_line_ids.qty_done = 2.0
         backorder_picking.button_validate()
         self.assertFalse(len(backorder_picking.invoice_ids))
         self.assertEqual(invoice.picking_ids, picking)
@@ -160,7 +164,7 @@ class TestPurchaseSTockPickingInvoiceLink(common.TransactionCase):
         self.po.order_line.product_qty = 10
         self.po.button_confirm()
         picking = self.po.picking_ids[0]
-        picking.move_lines.quantity_done = 8.0
+        picking.move_line_ids.qty_done = 8.0
         picking._action_done()
         wiz = self.env["stock.backorder.confirmation"].create(
             {"pick_ids": [(4, picking.id)]}
@@ -171,7 +175,7 @@ class TestPurchaseSTockPickingInvoiceLink(common.TransactionCase):
         self.assertEqual(invoice.picking_ids, picking)
         self.assertEqual(len(picking.invoice_ids), 1)
         backorder_picking = self.po.picking_ids.filtered(lambda p: p.state != "done")
-        backorder_picking.move_lines.quantity_done = 2.0
+        backorder_picking.move_line_ids.qty_done = 2.0
         backorder_picking.button_validate()
         self.assertEqual(invoice.picking_ids, picking + backorder_picking)
 
@@ -183,7 +187,7 @@ class TestPurchaseSTockPickingInvoiceLink(common.TransactionCase):
         self.po.order_line.product_qty = 2.0
         self.po.button_confirm()
         picking = self.po.picking_ids[0]
-        picking.move_lines.quantity_done = 2.0
+        picking.move_line_ids.qty_done = 2.0
         picking._action_done()
         # Create invoice
         inv_action = self.po.action_create_invoice()
