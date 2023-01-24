@@ -23,15 +23,17 @@ msgid "Cancel"
 msgstr ""
 
 #. module: stock_split_picking
+#. odoo-python
 #: code:addons/stock_split_picking/models/stock_picking.py:0
 #, python-format
 msgid "Cannot split off all moves from picking %s"
 msgstr ""
 
 #. module: stock_split_picking
+#. odoo-python
 #: code:addons/stock_split_picking/models/stock_picking.py:0
 #, python-format
-msgid "Cannot split picking %s in state %s"
+msgid "Cannot split picking {name} in state {state}"
 msgstr ""
 
 #. module: stock_split_picking
@@ -47,11 +49,6 @@ msgstr ""
 #. module: stock_split_picking
 #: model_terms:ir.ui.view,arch_db:stock_split_picking.view_stock_split_picking
 msgid "Date"
-msgstr ""
-
-#. module: stock_split_picking
-#: model_terms:ir.ui.view,arch_db:stock_split_picking.view_stock_split_picking
-msgid "Date Expected"
 msgstr ""
 
 #. module: stock_split_picking
@@ -85,6 +82,7 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: stock_split_picking
+#. odoo-python
 #: code:addons/stock_split_picking/models/stock_picking.py:0
 #, python-format
 msgid "Mark as todo this picking please."
@@ -98,11 +96,6 @@ msgstr ""
 #. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking__move_ids
 msgid "Move"
-msgstr ""
-
-#. module: stock_split_picking
-#: model_terms:ir.ui.view,arch_db:stock_split_picking.view_stock_split_picking
-msgid "Moves"
 msgstr ""
 
 #. module: stock_split_picking
@@ -137,14 +130,11 @@ msgid "Split pickings"
 msgstr ""
 
 #. module: stock_split_picking
+#. odoo-python
 #: code:addons/stock_split_picking/models/stock_picking.py:0
 #, python-format
-msgid ""
-"The backorder <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d"
-"\">%s</a> has been created."
+msgid "The backorder %s has been created."
 msgstr ""
-"تم إنشاء الشحنة المؤجّلة <a href=\"#\" data-oe-model=\"stock.picking\" data-"
-"oe-id=\"%d\">%s</a>."
 
 #. module: stock_split_picking
 #: model:ir.model,name:stock_split_picking.model_stock_picking
@@ -157,6 +147,7 @@ msgid "Unit of Measure"
 msgstr ""
 
 #. module: stock_split_picking
+#. odoo-python
 #: code:addons/stock_split_picking/models/stock_picking.py:0
 #, python-format
 msgid ""
@@ -169,6 +160,14 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock_split_picking.view_stock_split_picking
 msgid "or"
 msgstr ""
+
+#, python-format
+#~ msgid ""
+#~ "The backorder <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id="
+#~ "\"%d\">%s</a> has been created."
+#~ msgstr ""
+#~ "تم إنشاء الشحنة المؤجّلة <a href=\"#\" data-oe-model=\"stock.picking\" "
+#~ "data-oe-id=\"%d\">%s</a>."
 
 #~ msgid "Are you sure you want to split current picking?"
 #~ msgstr "هل أنت متأكد أنّك تريد تقسيم الشحنة؟"
