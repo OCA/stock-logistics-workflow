@@ -20,6 +20,7 @@ setuptools.setup(
         'odoo-addon-stock_quant_package_product_packaging>=16.0dev,<16.1dev',
         'odoo-addon-stock_receipt_lot_info>=16.0dev,<16.1dev',
         'odoo-addon-stock_restrict_lot>=16.0dev,<16.1dev',
+        'odoo-addon-stock_split_picking>=16.0dev,<16.1dev',
     ],
     classifiers=[
         'Programming Language :: Python',
