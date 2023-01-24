@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="stock_picking_type_form_view">
+        <field
+            name="name"
+        >stock.picking.type.form (in stock_picking_backorder_reason)</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form" />
+        <field name="arch" type="xml">
+            <group name="stock_picking_type_lot" position="after">
+                <group
+                    string="Backorder Reason"
+                    name="stock_picking_type_backorder_reason"
+                >
+                    <field name="backorder_reason" />
+                    <field
+                        name="backorder_reason_sale"
+                        attrs="{'invisible': [('backorder_reason', '=', False)]}"
+                    />
+                    <field
+                        name="backorder_reason_purchase"
+                        attrs="{'invisible': [('backorder_reason', '=', False)]}"
+                    />
+                </group>
+            </group>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="stock_picking_type_search_view">
+        <field
+            name="name"
+        >stock.picking.type.search (in stock_picking_backorder_reason)</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_pickingtype_filter" />
+        <field name="arch" type="xml">
+            <filter name="inactive" position="after">
+                <filter
+                    string="Has Backorder Reason"
+                    name="backorder_reason"
+                    domain="[('backorder_reason','=',True)]"
+                />
+            </filter>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="stock_picking_type_tree_view">
+        <field
+            name="name"
+        >stock.picking.type.tree (in stock_picking_backorder_reason)</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_tree" />
+        <field name="arch" type="xml">
+            <field name="warehouse_id" position="after">
+                <field name="backorder_reason" optional="hide" />
+            </field>
+        </field>
+    </record>
+
+</odoo>

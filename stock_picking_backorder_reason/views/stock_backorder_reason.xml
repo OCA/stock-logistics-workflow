@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="stock_backorder_reason_form_view">
+        <field
+            name="name"
+        >stock.backorder.reason.form (in stock_picking_backorder_reason)</field>
+        <field name="model">stock.backorder.reason</field>
+        <field name="arch" type="xml">
+            <form>
+                <header />
+                <group>
+                    <group>
+                        <field name="name" />
+                        <field name="backorder_action_to_do" />
+                    </group>
+                </group>
+                <footer />
+            </form>
+
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="stock_backorder_reason_search_view">
+        <field
+            name="name"
+        >stock.backorder.reason.search (in stock_picking_backorder_reason)</field>
+        <field name="model">stock.backorder.reason</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="backorder_action_to_do" />
+                <separator />
+                <group expand="0" string="Group By">
+                    <filter
+                        string="Backorder Action"
+                        name="group_backorder"
+                        domain="[]"
+                        context="{'group_by':'backorder_action_to_do'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="stock_backorder_reason_tree_view">
+        <field
+            name="name"
+        >stock.backorder.reason.tree (in stock_picking_backorder_reason)</field>
+        <field name="model">stock.backorder.reason</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="backorder_action_to_do" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="stock_backorder_reason_act_window">
+        <field name="name">Backorder Reasons</field>
+        <field name="res_model">stock.backorder.reason</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <record model="ir.ui.menu" id="stock_backorder_reason_menu">
+        <field name="name">Backorder Reasons</field>
+        <field name="parent_id" ref="stock.menu_warehouse_config" />
+        <field name="action" ref="stock_backorder_reason_act_window" />
+        <field name="groups_id" eval="[(4, ref('stock.group_stock_manager'))]" />
+        <field name="sequence" eval="30" />
+    </record>
+</odoo>

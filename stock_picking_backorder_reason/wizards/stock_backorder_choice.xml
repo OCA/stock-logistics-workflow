@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). -->
+<odoo>
+    <record id="stock_backorder_choice_view_form" model="ir.ui.view">
+        <field name="name">stock.backorder.reason.choice.form</field>
+        <field name="model">stock.backorder.reason.choice</field>
+        <field name="arch" type="xml">
+            <form string="Backorder">
+                <p class="oe_grey">
+                    Please fill in a reason for backorder. You can see the further action that will
+                    result in choosing that reason.
+                </p>
+                <group name="main">
+                    <group>
+                        <field
+                            name="reason_id"
+                            options="{'no_open':True, 'no_create':True}"
+                        />
+                    </group>
+                    <group>
+                        <field name="backorder_action_to_do" />
+                    </group>
+                </group>
+                <footer>
+                    <button
+                        name="apply"
+                        string="Apply"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
