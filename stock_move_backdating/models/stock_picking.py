@@ -46,18 +46,7 @@ class StockPicking(models.Model):
         """Set date on linked account.move same as date on stock.move."""
         self.ensure_one()
         stock_moves = self.move_lines
-        picking_account_moves = self.env['account.move'].search(
-            [
-                ('stock_move_id', 'in', stock_moves.ids),
-            ],
-        )
-        for stock_move in stock_moves:
-            move_account_moves = picking_account_moves.filtered(
-                lambda am: am.stock_move_id == stock_move
-            )
-            move_account_moves.update({
-                'date': stock_move.date.date(),
-            })
+        stock_moves._backdating_account_moves()
         return True
 
     @api.multi
