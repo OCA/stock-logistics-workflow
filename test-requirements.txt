@@ -1,1 +1,4 @@
 odoo-test-helper
+
+# Remove this
+odoo-addon-stock-picking-backorder-reason @ git+https://github.com/OCA/stock-logistics-workflow.git@refs/pull/1199/head#subdirectory=setup/stock_picking_backorder_reason
