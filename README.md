@@ -94,7 +94,7 @@ addon | version | maintainers | summary
 [stock_quant_package_dimension](stock_quant_package_dimension/) | 13.0.1.1.0 |  | Use dimensions on packages
 [stock_quant_package_dimension_total_weight_from_packaging](stock_quant_package_dimension_total_weight_from_packaging/) | 13.0.1.1.0 |  | Estimated weight of a package
 [stock_quant_package_product_packaging](stock_quant_package_product_packaging/) | 13.0.1.1.0 |  | Use product packagings on packages
-[stock_return_request](stock_return_request/) | 13.0.1.1.0 |  | Stock Return Request
+[stock_return_request](stock_return_request/) | 13.0.1.1.1 |  | Stock Return Request
 [stock_scrap_cancel](stock_scrap_cancel/) | 13.0.1.0.0 | [![victoralmau](https://github.com/victoralmau.png?size=30px)](https://github.com/victoralmau) | Stock Scrap Cancel
 [stock_split_picking](stock_split_picking/) | 13.0.2.1.0 |  | Split a picking in two not transferred pickings
 [stock_valuation_layer_usage](stock_valuation_layer_usage/) | 13.0.1.1.0 |  | Trace where has the stock valuation been used in, including the quantities taken.
