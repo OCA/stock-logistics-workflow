@@ -30,15 +30,24 @@ class StockPickingType(models.Model):
 
     @api.depends("backorder_reason")
     def _compute_backorder_reason_sale(self):
-        activated_types = self.filtered("backorder_reason_sale")
-        to_deactivate = activated_types.filtered(lambda t: not t.backorder_reason)
-        to_deactivate.update({"backorder_reason_sale": False})
+        # If backorder_reason is set to False, set it False on specific field
+        to_deactivate_ids = set()
+        for picking_type in self:
+            if picking_type.backorder_reason_sale and not picking_type.backorder_reason:
+                to_deactivate_ids.add(picking_type.id)
+        self.browse(to_deactivate_ids).update({"backorder_reason_sale": False})
 
     @api.depends("backorder_reason")
     def _compute_backorder_reason_purchase(self):
-        activated_types = self.filtered("backorder_reason_purchase")
-        to_deactivate = activated_types.filtered(lambda t: not t.backorder_reason)
-        to_deactivate.update({"backorder_reason_purchase": False})
+        # If backorder_reason is set to False, set it False on specific field
+        to_deactivate_ids = set()
+        for picking_type in self:
+            if (
+                picking_type.backorder_reason_purchase
+                and not picking_type.backorder_reason
+            ):
+                to_deactivate_ids.add(picking_type.id)
+        self.browse(to_deactivate_ids).update({"backorder_reason_purchase": False})
 
     @api.constrains(
         "backorder_reason", "backorder_reason_sale", "backorder_reason_purchase"
