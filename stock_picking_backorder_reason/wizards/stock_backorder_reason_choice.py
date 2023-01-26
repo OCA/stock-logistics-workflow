@@ -16,7 +16,7 @@ class StockBackorderReasonChoice(models.TransientModel):
         ondelete="cascade",
     )
     backorder_action_to_do = fields.Selection(
-        related="reason_id.backorder_action_to_do", readonly=True
+        related="reason_id.backorder_action_to_do",
     )
     picking_ids = fields.Many2many(
         comodel_name="stock.picking",
@@ -74,6 +74,11 @@ class StockBackorderReasonChoice(models.TransientModel):
                 keep_backorder_pickings = pickings.filtered(
                     lambda picking: picking.backorder_reason_strategy == "create"
                 )
+            elif not wizard.backorder_action_to_do:
+                # Let do the normal way
+                return pickings.with_context(
+                    skip_backorder_reason=True
+                )._pre_action_done_hook()
             pickings_to_cancel = pickings - keep_backorder_pickings
             if keep_backorder_pickings:
                 backorder_wizard = confirmation_obj.create(
@@ -88,3 +93,4 @@ class StockBackorderReasonChoice(models.TransientModel):
                 backorder_wizard.with_context(
                     skip_backorder_reason=True
                 ).process_cancel_backorder()
+        return True

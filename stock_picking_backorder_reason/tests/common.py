@@ -126,6 +126,9 @@ class TestPickingBackorder:
         )
 
     def _check_backorder_behavior(self):
+        # Here we define the behaviors for the different strategies and check
+        # if everything is done in the expected way
+
         # Define the backorder behavior on partner
         self.partner.purchase_reason_backorder_strategy = self.purchase_backorder
         self.partner.sale_reason_backorder_strategy = self.sale_backorder
@@ -142,7 +145,14 @@ class TestPickingBackorder:
         wizard = self.backorder_choice_model.with_context(**result["context"]).create(
             {"reason_id": self.backorder_reason.id}
         )
-        wizard.apply()
+        result = wizard.apply()
+
+        if not self.backorder_action:
+            # We are in the case the action should come from the picking type
+            # and let the core feature happen
+            self.assertTrue(result)
+            self.assertEqual("stock.backorder.confirmation", result.get("res_model"))
+            return
 
         # Search created backorder
         self.backorder = self.stock_picking_model.search(
@@ -158,6 +168,12 @@ class TestPickingBackorder:
         keep_backorder = self.backorder_action == "create" or (
             self.backorder_action == "use_partner_option" and partner_option_create
         )
+
+        # Check picking chatter has the backorder reason
+        message = self.picking.message_ids.filtered(
+            lambda message: self.backorder_reason.name in message.body
+        )
+        self.assertTrue(message)
 
         # Check picking values
         if keep_backorder:

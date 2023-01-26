@@ -25,6 +25,12 @@ class TestPickingBackorder(TestPickingBackorder, TransactionCase):
         self.picking.picking_type_id.backorder_reason = False
         self.assertFalse(self.picking.backorder_reason_strategy)
 
+    def test_picking_backorder_no_strategy(self):
+        # Change the reason and remove the action to do
+        # The result should be the normal backorder confirmation
+        self.backorder_action = False
+        self._check_backorder_behavior()
+
     def test_purchase_picking_backorder_create_backorder_cancel(self):
         self.backorder_action = "create"
         self.purchase_backorder = "cancel"

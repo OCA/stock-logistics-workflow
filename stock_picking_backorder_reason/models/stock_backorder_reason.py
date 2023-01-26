@@ -18,5 +18,8 @@ class StockBackorderReason(models.Model):
             ("cancel", "Cancel backorder"),
             ("use_partner_option", "Use partner option"),
         ],
-        default="picking_type",
+        default="create",
+        help="Choose here a backorder strategy to apply when this reason is selected."
+        "If you don't set an action to do, the reason will be only put in concerned"
+        "pickings chatter.",
     )

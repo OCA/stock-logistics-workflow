@@ -9,7 +9,7 @@
             <form string="Backorder">
                 <p class="oe_grey">
                     Please fill in a reason for backorder. You can see the further action that will
-                    result in choosing that reason.
+                    result in choosing that reason if filled in in reason.
                 </p>
                 <group name="main">
                     <group>
@@ -19,7 +19,10 @@
                         />
                     </group>
                     <group>
-                        <field name="backorder_action_to_do" />
+                        <field
+                            name="backorder_action_to_do"
+                            attrs="{'invisible': [('backorder_action_to_do', '=', False)]}"
+                        />
                     </group>
                 </group>
                 <footer>
