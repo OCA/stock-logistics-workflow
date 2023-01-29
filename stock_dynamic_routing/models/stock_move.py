@@ -58,9 +58,9 @@ class StockMove(models.Model):
         self._apply_routing_rule_pull(moves_with_routing_details)
         self._apply_routing_rule_push(moves_with_routing_details)
 
-    def _action_assign(self):
+    def _action_assign(self, force_qty=False):
         if self.env.context.get("exclude_apply_dynamic_routing"):
-            return super()._action_assign()
+            return super()._action_assign(force_qty=force_qty)
         else:
             # these methods will call _action_assign in a savepoint
             # and modify the routing if necessary
