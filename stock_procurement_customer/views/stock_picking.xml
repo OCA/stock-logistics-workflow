@@ -8,11 +8,20 @@
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.view_picking_form" />
         <field name="arch" type="xml">
+            <label for="partner_id" position="after">
+                <field name="customer_id_visible" invisible="1" />
+                <label
+                    for="customer_id"
+                    string="Customer Address"
+                    style="font-weight:bold;"
+                    attrs="{'invisible': [('customer_id_visible', '=', False)]}"
+                />
+            </label>
             <field name="partner_id" position="after">
                 <field
                     name="customer_id"
                     nolabel="1"
-                    attrs="{'invisible': [('partner_id', '=', customer_id)]}"
+                    attrs="{'invisible': [('customer_id_visible', '=', False)]}"
                 />
             </field>
         </field>

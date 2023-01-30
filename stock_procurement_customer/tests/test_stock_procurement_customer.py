@@ -13,6 +13,12 @@ class TestProcurementCustomer(TransactionCase):
                 "name": "Test Partner",
             }
         )
+        # The partner from the picking (core)
+        cls.partner_picking = cls.env["res.partner"].create(
+            {
+                "name": "Test Partner picking",
+            }
+        )
         cls.procurement = cls.env["procurement.group"].create(
             {
                 "name": "Customer Procurement",
@@ -36,6 +42,7 @@ class TestProcurementCustomer(TransactionCase):
                 "product_id": cls.product.id,
                 "product_uom_qty": 1.0,
                 "group_id": cls.procurement.id,
+                "partner_id": cls.partner_picking.id,
             }
         )
 
@@ -48,3 +55,9 @@ class TestProcurementCustomer(TransactionCase):
         self.move._action_confirm()
         self.assertTrue(self.move.picking_id)
         self.assertEqual(self.move.picking_id.customer_id, self.partner)
+
+        self.assertNotEqual(
+            self.move.picking_id.partner_id,
+            self.move.picking_id.customer_id,
+        )
+        self.assertTrue(self.move.picking_id.customer_id_visible)
