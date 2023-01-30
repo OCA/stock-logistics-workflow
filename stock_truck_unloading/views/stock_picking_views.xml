@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//group/field[@name='backorder_id']" position="after">
+                <field name="manage_truck_arrival"/>
+                <field name="is_arrived" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='origin']" position="before">
+                <field name="date_truck_arrival" attrs="{'invisible': [('manage_truck_arrival', '=', False)]}" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_picking_form_button_truck_arrived" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <header position="inside">
+                <button name="do_truck_arrived" type="object" string="Truck Arrived" attrs="{'invisible': [('manage_truck_arrival', '=', False)]}" />
+            </header>
+        </field>
+    </record>
+
+    <record id="vpicktree" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree" />
+        <field name="arch" type="xml">
+            <xpath expr="//tree/header/button" position="after">
+                <button name="do_truck_arrived" type="object" string="Truck Arrived"/>
+            </xpath>
+
+            <xpath expr="//tree/field[@name='json_popover']" position="after">
+                <field name="is_arrived" attrs="{'invisible': [('manage_truck_arrival', '=', False)]}" />
+                <field name="manage_truck_arrival" invisible="1"/>
+                <field name="date_truck_arrival" attrs="{'invisible': [('manage_truck_arrival', '=', False)]}" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_truck_arrived" model="ir.actions.server">
+        <field name="name">Truck Arrived</field>
+        <field name="model_id" ref="stock.model_stock_picking"/>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+        if records:
+            records.do_truck_arrived()
+        </field>
+    </record>
+
+    <record id="view_picking_form_sheet" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet/div[@name='button_box']" position="before">
+                <widget name="web_ribbon" title="Goods Received" bg_color="bg-success" attrs="{'invisible': [('is_arrived', '=', False)]}" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

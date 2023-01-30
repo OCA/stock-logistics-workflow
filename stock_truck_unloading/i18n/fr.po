@@ -1,0 +1,78 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_truck_unloading
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-13 11:53+0000\n"
+"PO-Revision-Date: 2023-01-13 11:53+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_truck_unloading
+#: model:ir.model.fields,field_description:stock_truck_unloading.field_stock_picking__assigned_attachment_ids
+msgid "Assigned Attachments"
+msgstr ""
+
+#. module: stock_truck_unloading
+#: model:ir.model.fields,field_description:stock_truck_unloading.field_stock_picking__date_truck_arrival
+msgid "Date Truck Arrival"
+msgstr "Date Arrivée Camion"
+
+#. module: stock_truck_unloading
+#: model:ir.model.fields,field_description:stock_truck_unloading.field_stock_picking__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: stock_truck_unloading
+#: model_terms:ir.ui.view,arch_db:stock_truck_unloading.view_picking_form_sheet
+msgid "Goods Received"
+msgstr "Marchandise Réceptionnée"
+
+#. module: stock_truck_unloading
+#: model:ir.model.fields,field_description:stock_truck_unloading.field_stock_picking__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_truck_unloading
+#: model:ir.model.fields,field_description:stock_truck_unloading.field_stock_picking__is_arrived
+msgid "Is Arrived"
+msgstr "Est Arrivé"
+
+#. module: stock_truck_unloading
+#: model:ir.model.fields,field_description:stock_truck_unloading.field_stock_picking____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: stock_truck_unloading
+#: model:ir.model.fields,field_description:stock_truck_unloading.field_stock_picking__manage_truck_arrival
+msgid "Manage Truck Arrival"
+msgstr "Gérer temps déchargement"
+
+#. module: stock_truck_unloading
+#: model:ir.model,name:stock_truck_unloading.model_stock_picking
+msgid "Transfer"
+msgstr "Transfert"
+
+#. module: stock_truck_unloading
+#: model:ir.actions.server,name:stock_truck_unloading.action_truck_arrived
+#: model_terms:ir.ui.view,arch_db:stock_truck_unloading.view_picking_form_button_truck_arrived
+#: model_terms:ir.ui.view,arch_db:stock_truck_unloading.vpicktree
+msgid "Truck Arrived"
+msgstr "Camion Arrivé"
+
+#. module: stock_truck_unloading
+#: code:addons/stock_truck_unloading/models/stock_picking.py:0
+#, python-format
+msgid ""
+"You can not declare a truck arrival for a line where the option 'Manage "
+"Truck Arrival' is not checked. Line concerned by the error : "
+msgstr ""
+"Vous ne pouvez pas déclarer que le camion est arrivé pour une ligne ne possédant pas l'option 'Gérer "
+"temps déchargement'. La ligne concernée par l'erreur est : "
