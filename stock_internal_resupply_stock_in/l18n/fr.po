@@ -1,0 +1,74 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_internal_resupply_stock_in
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-30 21:01+0000\n"
+"PO-Revision-Date: 2023-01-30 22:03+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 3.1.1\n"
+
+#. module: stock_internal_resupply_stock_in
+#: model:ir.model.fields,field_description:stock_internal_resupply_stock_in.field_stock_picking_type__count_picking_stock_in
+msgid "Count Picking Stock In"
+msgstr "Transfert Stock In"
+
+#. module: stock_internal_resupply_stock_in
+#: model:ir.model.fields,field_description:stock_internal_resupply_stock_in.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:stock_internal_resupply_stock_in.field_stock_picking_type__display_name
+#: model:ir.model.fields,field_description:stock_internal_resupply_stock_in.field_stock_warehouse__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: stock_internal_resupply_stock_in
+#: model:ir.model.fields,field_description:stock_internal_resupply_stock_in.field_stock_picking__id
+#: model:ir.model.fields,field_description:stock_internal_resupply_stock_in.field_stock_picking_type__id
+#: model:ir.model.fields,field_description:stock_internal_resupply_stock_in.field_stock_warehouse__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_internal_resupply_stock_in
+#: model:ir.model.fields,field_description:stock_internal_resupply_stock_in.field_stock_picking____last_update
+#: model:ir.model.fields,field_description:stock_internal_resupply_stock_in.field_stock_picking_type____last_update
+#: model:ir.model.fields,field_description:stock_internal_resupply_stock_in.field_stock_warehouse____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: stock_internal_resupply_stock_in
+#: model:ir.model,name:stock_internal_resupply_stock_in.model_stock_picking_type
+msgid "Picking Type"
+msgstr "Type de Transfert"
+
+#. module: stock_internal_resupply_stock_in
+#: model_terms:ir.ui.view,arch_db:stock_internal_resupply_stock_in.stock_picking_type_view_kanban
+msgid "Replenish"
+msgstr "Réappro"
+
+#. module: stock_internal_resupply_stock_in
+#: code:addons/stock_internal_resupply_stock_in/models/stock_warehouse.py:0
+#, python-format
+msgid ""
+"The receipt of goods must be done in 2 stepsin order to be able to make "
+"replenishments via a another warehouse of the company."
+msgstr ""
+"La réception des marchandises doit se faire en 2 étapes afin de pouvoir "
+"faire des réapprovisionnements via un  autre entrepôt de la société."
+
+#. module: stock_internal_resupply_stock_in
+#: model:ir.model,name:stock_internal_resupply_stock_in.model_stock_picking
+msgid "Transfer"
+msgstr "Transfert"
+
+#. module: stock_internal_resupply_stock_in
+#: model:ir.model,name:stock_internal_resupply_stock_in.model_stock_warehouse
+msgid "Warehouse"
+msgstr "Entrepôt"

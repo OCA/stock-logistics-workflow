@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright (C) 2023 Akretion (<http://www.akretion.com>).
+     @author Kévin Roche <kevin.roche@akretion.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="stock_picking_type_view_kanban">
+        <field name="name">stock.picking.type.kanban</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.stock_picking_type_kanban" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//div[@t-if='record.count_picking_waiting.raw_value > 0']"
+                position="before"
+            >
+                <div t-if="record.count_picking_stock_in.raw_value > 0" class="row">
+                    <div class="col-12">
+                        <a
+                            class="oe_kanban_stock_picking_type_list"
+                            name="get_action_picking_tree_stock_in"
+                            type="object"
+                            style="color:#fd7e14;"
+                        >
+                            <field name="count_picking_stock_in" /> Replenish</a>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
