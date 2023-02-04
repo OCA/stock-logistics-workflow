@@ -10,45 +10,36 @@
         <field name="arch" type="xml">
             <form string="Make Picking Batch">
                 <group>
-                    <label for="picking_type_ids" colspan="2" />
-                    <div colspan="2">
-                        <field name="picking_type_ids" widget="many2many_tags">
-                        </field>
-                    </div>
-                    <label for="stock_device_type_ids" colspan="2" />
-                    <div colspan="2">
-                        <field name="stock_device_type_ids">
+                    <group string="Criteria" name="criteria" colspan="4">
+                        <field name="user_id" />
+                        <field name="picking_type_ids" widget="many2many_tags" />
+                        <field name="maximum_number_of_preparation_lines" />
+                    </group>
+                    <group name="devices">
+                        <label for="stock_device_type_ids" colspan="4" />
+                        <field name="stock_device_type_ids" nolabel="1" colspan="4">
                             <tree>
                                 <field name="name" />
                                 <field name="sequence" />
                             </tree>
                         </field>
-                    </div>
-                    <label for="user_id" colspan="2" />
-                    <div colspan="2">
-                        <field name="user_id">
-                        </field>
-                    </div>
-                    <label for="maximum_number_of_preparation_lines" colspan="2" />
-                    <div colspan="2">
-                        <field name="maximum_number_of_preparation_lines">
-                        </field>
-                    </div>
-                    <label for="group_pickings_by_partner" colspan="2" />
-                    <div colspan="2">
-                        <field name="group_pickings_by_partner">
-                        </field>
-                    </div>
+                    </group>
+                    <group string="Advanced" name="advanced" colspan="4">
+                        <field name="group_pickings_by_partner" />
+                    </group>
+                    <group string="Diagnostic" name="debug" colspan="4">
+                        <field name="add_picking_list_in_error" />
+                    </group>
                 </group>
-                <footer>
-                    <button
+                    <footer>
+                        <button
                         name="create_batch"
                         string="Create batch picking"
                         class="btn-primary"
                         type="object"
                     />
-                    <button string="Cancel" class="btn-default" special="cancel" />
-                </footer>
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
             </form>
         </field>
     </record>

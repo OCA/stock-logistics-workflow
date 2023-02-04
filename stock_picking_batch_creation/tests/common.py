@@ -29,12 +29,54 @@ class ClusterPickingCommonFeatures(TransactionCase):
         cls.warehouse_1 = cls.env.ref("stock.warehouse0")
         picking_sequence = cls.warehouse_1.pick_type_id.sequence_id
 
-        cls.device1 = cls._create_device("device1", 5, 50, 100, 6, 100)
-        cls.device2 = cls._create_device("device2", 70, 190, 250, 10, 70)
-        cls.device3 = cls._create_device("device3", 30, 100, 150, 1, 50)
-        cls.device4 = cls._create_device("device4", 30, 100, 150, 3, 100)
-        cls.device5 = cls._create_device("device5", 10, 70, 100, 10, 70)
-        cls.device6 = cls._create_device("device6", 50, 200, 300, 15, 50)
+        cls.device1 = cls._create_device(
+            "device1",
+            min_volume=5,
+            max_volume=50,
+            max_weight=100,
+            nbr_bins=6,
+            sequence=100,
+        )
+        cls.device2 = cls._create_device(
+            "device2",
+            min_volume=70,
+            max_volume=190,
+            max_weight=250,
+            nbr_bins=10,
+            sequence=70,
+        )
+        cls.device3 = cls._create_device(
+            "device3",
+            min_volume=30,
+            max_volume=100,
+            max_weight=150,
+            nbr_bins=1,
+            sequence=50,
+        )
+        cls.device4 = cls._create_device(
+            "device4",
+            min_volume=30,
+            max_volume=100,
+            max_weight=150,
+            nbr_bins=3,
+            sequence=100,
+        )
+        cls.device5 = cls._create_device(
+            "device5",
+            min_volume=10,
+            max_volume=70,
+            max_weight=100,
+            nbr_bins=10,
+            sequence=70,
+        )
+        cls.device6 = cls._create_device(
+            "device6",
+            min_volume=50,
+            max_volume=200,
+            max_weight=300,
+            nbr_bins=15,
+            sequence=50,
+        )
 
         cls.picking_type_1 = cls.env["stock.picking.type"].create(
             {
@@ -61,24 +103,29 @@ class ClusterPickingCommonFeatures(TransactionCase):
             }
         )
 
+        # the processing order for picks of type 1 will be:
+        # pick3 (priority), pick1 (lower id), pick2
         cls.pick1 = cls._create_picking_pick_and_assign(
-            cls.picking_type_1.id, priority="0"
+            cls.picking_type_1.id,
         )
         cls.pick2 = cls._create_picking_pick_and_assign(
             cls.picking_type_1.id, products=cls.p2
         )
         cls.pick3 = cls._create_picking_pick_and_assign(
-            cls.picking_type_1.id, priority="3", products=cls.p1 | cls.p2
+            cls.picking_type_1.id, priority="1", products=cls.p1 | cls.p2
         )
-        cls.pick4 = cls._create_picking_pick_and_assign(
-            cls.picking_type_2.id, products=cls.p3
+        cls.make_picking_batch = cls.makePickingBatch.create(
+            {
+                "user_id": cls.env.user.id,
+                "picking_type_ids": [(4, cls.picking_type_1.id)],
+                "stock_device_type_ids": [
+                    (4, cls.device1.id),
+                    (4, cls.device2.id),
+                    (4, cls.device3.id),
+                ],
+            }
         )
-        cls.pick5 = cls._create_picking_pick_and_assign(
-            cls.picking_type_2.id, priority="3", products=cls.p4
-        )
-        cls.pick6 = cls._create_picking_pick_and_assign(
-            cls.picking_type_2.id, priority="0", products=cls.p3 | cls.p4
-        )
+        cls.picks = cls.pick1 | cls.pick2 | cls.pick3
 
     @classmethod
     def _set_quantity_in_stock(cls, location, product, qty=10):
@@ -142,7 +189,7 @@ class ClusterPickingCommonFeatures(TransactionCase):
         if not products:
             products = cls.p1
         if not priority:
-            priority = "1"
+            priority = "0"
         if not warehouse:
             warehouse = cls.warehouse_1
         picking_values = {
@@ -150,6 +197,7 @@ class ClusterPickingCommonFeatures(TransactionCase):
             "picking_type_id": picking_type_id,
             "location_id": cls.env.ref("stock.stock_location_stock").id,
             "location_dest_id": warehouse.wh_output_stock_loc_id.id,
+            "priority": priority,
             "move_ids": [
                 (
                     0,
@@ -162,7 +210,6 @@ class ClusterPickingCommonFeatures(TransactionCase):
                         "product_uom": p.uom_id.id,
                         "location_id": cls.env.ref("stock.stock_location_stock").id,
                         "location_dest_id": warehouse.wh_output_stock_loc_id.id,
-                        "sequence": priority,
                     },
                 )
                 for p in products

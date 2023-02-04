@@ -5,6 +5,7 @@ import math
 from collections import defaultdict
 
 from odoo import fields, models, tools
+from odoo.osv.expression import AND, OR, expression
 
 from ..exceptions import NoPickingCandidateError, NoSuitableDeviceError
 
@@ -30,7 +31,9 @@ class MakePickingBatch(models.TransientModel):
         string="Default device types",
         help="Default list of eligible device types when creating a batch transfer",
     )
-    user_id = fields.Many2one("res.users", string="Responsible")
+    user_id = fields.Many2one(
+        "res.users", string="Responsible", default=lambda self: self.env.user
+    )
     maximum_number_of_preparation_lines = fields.Integer(
         default=20,
         string="Maximum number of preparation lines for the batch",
@@ -39,8 +42,42 @@ class MakePickingBatch(models.TransientModel):
     group_pickings_by_partner = fields.Boolean(
         default=False,
         string="Group pickings by partner",
-        help="All the pickings related to one partner will be put in one bin",
+        help="All the pickings related to one partner will be put into the same bins",
     )
+    picking_locking_mode = fields.Selection(
+        selection=[
+            ("sql_for_update_skip_locked", "SQL FOR UPDATE SKIP LOCKED"),
+        ],
+        default=None,
+        string="Picking locking mode",
+        help="Define the way the system will search and lock the pickings. "
+        "In the same time, picking already locked by another transaction will "
+        "be skipped. This should reduce the risk of deadlocks if 2 users "
+        "try to create a batch at the same time.",
+    )
+    add_picking_list_in_error = fields.Boolean(
+        default=False,
+        string="Add all the names of the pickings in error message",
+        help="If not suitable device is provided for the pickings candidates, "
+        "the error message will contain the list of the pickings names. In some"
+        "cases, this list can be very long. That's why this option is unchecked"
+        "by default.",
+    )
+
+    __slots__ = (
+        "_volume_by_partners",
+        "_device",
+        "_remaining_weight",
+        "_remaining_nbr_picking_lines",
+        "_selected_picking_ids",
+        "_first_picking",
+        "_remaining_nbr_bins",
+        "_previous_selected_picking",
+    )
+
+    def __init__(self, env, ids=(), prefetch_ids=()):
+        super().__init__(env, ids=ids, prefetch_ids=prefetch_ids)
+        self._reset_counters()
 
     def create_batch(self):
         self.ensure_one()
@@ -55,46 +92,177 @@ class MakePickingBatch(models.TransientModel):
         }
         return action
 
-    def _search_pickings(self, user=None):
-        domain = self._search_pickings_domain(user=user)
-        pickings = self.env["stock.picking"].search(domain)
-        return pickings
+    def _reset_counters(self):
+        self._volume_by_partners = defaultdict(lambda: 0)
+        self._device = None
+        self._remaining_weight = 0
+        self._remaining_nbr_picking_lines = 0
+        self._selected_picking_ids = []
+        self._first_picking = None
+        self._remaining_nbr_bins = None
+        self._previous_selected_picking = None
 
-    def _search_pickings_domain(self, user=None):
+    def _get_picking_order_by(self):
+        self.ensure_one()
+        # we try to process first the pickings assigned to the user
+        # then the pickings which are not assigned to any user
+        # IN postgres, NULL values values sort as if larger than any non-null value;
+        # that is, NULLS FIRST is the default for DESC order, and NULLS LAST otherwise
+        # https://www.postgresql.org/docs/current/queries-order.html
+        # so we need to sort user_id asc to have NULLS LAST
+        if self.group_pickings_by_partner:
+            return "user_id asc, priority desc, scheduled_date asc, partner_id desc, id asc"
+        return "user_id asc, priority desc, scheduled_date asc, id asc"
+
+    def _get_picking_domain_common(self):
         domain = [
-            ("picking_type_id", "in", self.picking_type_ids.ids),
             ("state", "in", ("partially_available", "assigned")),
             ("batch_id", "=", False),
-            ("user_id", "=", user.id if user else False),
+            ("user_id", "in", [self.user_id.id, False] if self.user_id else [False]),
         ]
-        if not user:
-            domain.append(("printed", "=", False))
         return domain
 
-    def _candidates_pickings_to_batch(self, user=None):
-        candidates_pickings = self._search_pickings(user=user)
-        if not candidates_pickings:
-            candidates_pickings = self._search_pickings()
-        candidates_pickings.sorted(lambda pick: pick.partner_id.id)
-        return candidates_pickings
+    def _get_picking_domain_for_first(self):
+        domain = self._get_picking_domain_common()
+        return AND(
+            [
+                domain,
+                [
+                    ("picking_type_id", "in", self.picking_type_ids.ids),
+                    (
+                        "nbr_picking_lines",
+                        "<=",
+                        self.maximum_number_of_preparation_lines,
+                    ),
+                ],
+            ]
+        )
+
+    def _get_picking_domain_for_device(self, device):
+        return [
+            ("volume", ">=", device.min_volume),
+            ("volume", "<=", device.max_volume),
+            ("weight", "<=", device.max_weight),
+        ]
+
+    def _get_picking_domain_for_additional(self):
+        """Provides the domain expressing the additional constraints to apply to
+        get the next picking to add to the batch.
+        """
+        excluded_ids = self._selected_picking_ids
+        domain = [
+            (
+                "nbr_picking_lines",
+                "<=",
+                self._remaining_nbr_picking_lines,
+            ),
+            ("id", "not in", excluded_ids),
+            ("weight", "<=", self._remaining_weight),
+            ("picking_type_id", "=", self._first_picking.picking_type_id.id),
+        ]
+        volume_domains = [
+            [
+                ("volume", "<=", self._get_remaining_volume()),
+            ]
+        ]
+        if self.group_pickings_by_partner:
+            # in case of grouping by partner, we allow to group picking into
+            # the same bins. That means that the volume available for the
+            # partner does not depend on the volume of remaining bins only
+            # but also on the remaining volume into the bins already used by
+            # the partner. Since results are sorted by partner, the search
+            # takes as partner the partner of the previous picking.
+            previous_picking = self._previous_selected_picking
+            previous_partner = previous_picking.partner_id
+            volume_domains.append(
+                [
+                    ("partner_id", "=", previous_partner.id),
+                    (
+                        "volume",
+                        "<=",
+                        self._get_remaining_volume(previous_partner),
+                    ),
+                ]
+            )
+        return AND([domain, OR(volume_domains)])
+
+    def _execute_search_pickings(self, domain, limit=None):
+        """Hook to allow to override the search of pickings
+
+        :param domain: domain to search pickings
+        :param limit: number of pickings to search
+
+        :return: recordset of pickings
+        """
+        if self.picking_locking_mode == "sql_for_update_skip_locked":
+            # we all transform our domain expression into a raw sql expression
+            # to be able to use the FOR UPDATE NO WAIT clause
+            # we use the same order as the orm to be sure to have the same result
+            # as the orm
+            Picking = self.env["stock.picking"]
+            query = expression(domain, Picking).query
+            Picking._apply_ir_rules(query, "read")
+            query.order = self._get_picking_order_by()
+            if limit:
+                query.limit = limit
+            query_str, params = query.select("id")
+            query_str = f"{query_str} FOR UPDATE SKIP LOCKED"
+            self.env.cr.execute(query_str, params)
+            picking_ids = [row[0] for row in self.env.cr.fetchall()]
+            return self.env["stock.picking"].browse(picking_ids)
+
+        return self.env["stock.picking"].search(
+            domain, order=self._get_picking_order_by(), limit=limit
+        )
+
+    def _get_first_picking(self):
+        domain = self._get_picking_domain_for_first()
+        device_domains = []
+        for device in self.stock_device_type_ids:
+            device_domains.append(self._get_picking_domain_for_device(device))
+        domain = AND([domain, OR(device_domains)])
+        return self._execute_search_pickings(domain, limit=1)
+
+    def _get_additional_picking(self):
+        """Get the next picking to add to the batch."""
+        domain = self._get_picking_domain_for_additional()
+        domain = AND([domain, self._get_picking_domain_common()])
+        return self._execute_search_pickings(domain, limit=1)
+
+    def _get_remaining_volume(self, partner=False):
+        """Get the remaining volume for the current device according to the
+        number of free bins.
+
+        :param partner: if set, the remaining volume will add to the volume available
+        if free bins the volume remaining in the bins already used by the partner
+        """
+        remaining_volume = self._remaining_nbr_bins * self._device.volume_per_bin
+        if partner:
+            # for a partner we must take into account the remaining volume in
+            # bins already used by the partner and the volume of the remaining
+            # bins
+            partner_volume = self._volume_by_partners[partner.id]
+            partner_nbr_bins_used = math.ceil(
+                partner_volume / self._device.volume_per_bin
+            )
+            partner_remaining_volume_in_bins = (
+                partner_nbr_bins_used * self._device.volume_per_bin
+            ) - partner_volume
+            remaining_volume += partner_remaining_volume_in_bins
+        return remaining_volume
 
     def _compute_device_to_use(self, picking):
         available_devices = self.stock_device_type_ids.sorted(lambda d: d.sequence)
-        # disable prefetch to ensure we compute weight and volume only
-        # for one picking at a time
-        picking = picking.with_prefetch()
-        picking._init_dimension_fields()
-
         for device in available_devices:
             if (
                 self._volume_condition_for_device_choice(
                     device.min_volume,
-                    picking.total_volume_batch_picking,
+                    picking.volume,
                     device.max_volume,
                 )
                 and tools.float_compare(
                     device.max_weight,
-                    picking.total_weight_batch_picking,
+                    picking.weight,
                     precision_digits=self._precision_volume(),
                 )
                 > 0
@@ -109,67 +277,44 @@ class MakePickingBatch(models.TransientModel):
         upper_bound = tools.float_compare(max_volume, picking_volume, 2) >= 0
         return lower_bound and upper_bound
 
-    def _get_first_suitable_device_and_picks(self, pickings):
-        """Get the first suitable device and the list of pickings where all the
-        pickings before the first one providing a suitable device are removed
-        """
-        selected_device = None
-        suitable_pick_ids = []
-        for pick in pickings:
-            if not self._lock_selected_picking(pick):
-                continue
-            device = self._compute_device_to_use(pick)
-            if device and not selected_device:
-                selected_device = device
-            if device and device == selected_device:
-                suitable_pick_ids.append(pick.id)
-
-        if selected_device:
-            return (
-                selected_device,
-                self.env["stock.picking"].browse(suitable_pick_ids),
-            )
-        return (
-            self.env["stock.device.type"].browse(),
-            self.env["stock.picking"].browse(),
-        )
+    def _raise_create_batch_not_possible(self):
+        """Raise the correct error to desrcibe why it's not possible to
+        create a batch."""
+        # At this stage we know that there is no picking to process
+        # at least for the list of devices. To provide to the user
+        # the right information about the reason why there is no picking
+        # we check if there is a candidate pickings without device
+        # constrains. If not, we raise an error to inform the user that there
+        # is no picking to process otherwise we raise an error to inform the
+        # user that there is not suitable device to process the pickings.
+        domain = self._get_picking_domain_common()
+        limit = 1
+        if self.add_picking_list_in_error:
+            limit = None
+        candidates = self.env["stock.picking"].search(domain, limit=limit)
+        if candidates:
+            pickings = candidates if self.add_picking_list_in_error else None
+            raise NoSuitableDeviceError(pickings=pickings)
+        raise NoPickingCandidateError()
 
     def _create_batch(self, raise_if_not_possible=False):
-        user = self.user_id if self.user_id else self.env.user
-        candidates_pickings_to_batch = self._candidates_pickings_to_batch(user=user)
-        if not candidates_pickings_to_batch:
+        """Create a batch transfer."""
+        self._reset_counters()
+        # first we try to get the first picking for the user
+        first_picking = self._get_first_picking()
+        if not first_picking:
             if raise_if_not_possible:
-                raise NoPickingCandidateError()
+                self._raise_create_batch_not_possible()
             return self.env["stock.picking.batch"].browse()
-
-        (
-            device,
-            candidates_pickings_to_batch,
-        ) = self._get_first_suitable_device_and_picks(candidates_pickings_to_batch)
-
-        if not device:
-            if raise_if_not_possible:
-                raise NoSuitableDeviceError(candidates_pickings_to_batch)
-            return self.env["stock.picking.batch"].browse()
-
-        (selected_pickings, unselected_pickings, used_nbr_bins) = self._apply_limits(
-            candidates_pickings_to_batch, device
-        )
-        if not selected_pickings:
-            selected_pickings = unselected_pickings[:1]
-        if not selected_pickings:
-            if raise_if_not_possible:
-                raise NoPickingCandidateError()
-            return self.env["stock.picking.batch"].browse()
-        vals = self._create_batch_values(user, device, selected_pickings)
+        device = self._compute_device_to_use(first_picking)
+        self._init_counters(first_picking, device)
+        self._apply_limits()
+        vals = self._create_batch_values()
         batch = self.env["stock.picking.batch"].create(vals)
-        batch._init_batch_info(used_nbr_bins)
         # Propagate user on selected pickings
-        batch.picking_ids.write({"user_id": user.id})
+        if self.user_id:
+            batch.picking_ids.write({"user_id": self.user_id.id})
         return batch
-
-    def _precision_weight(self):
-        return self.env["decimal.precision"].precision_get("Product Unit of Measure")
 
     def _precision_volume(self):
         return max(
@@ -177,129 +322,94 @@ class MakePickingBatch(models.TransientModel):
             self.env["decimal.precision"].precision_get("Product Unit of Measure") * 2,
         )
 
-    def _apply_limits(self, pickings, device, max_pickings=0):
-        """
-        Once we have the candidates pickings for clustering,
-        we need to decide when to stop the cluster (i.e.,
-        when to stop adding pickings in it)
-        We add pickings in the cluster as long as the conditions are respected
-        """
-        selected_picking_ids = []
-        total_weight = 0.0
-        total_volume = 0.0
-        total_nbr_picking_lines = 0
-        precision_weight = self._precision_weight()
-        precision_volume = self._precision_volume()
+    def _init_counters(self, first_picking, device):
+        """Initialize the counters used to compute the batch.
+        This method is called at the beginning of the batch creation. It allows
+        to initialize the counters used to filter the pickings to add to the
+        batch.
 
-        def gt(value1, value2, digits):
-            """Return True if value1 is greater than value2"""
-            return tools.float_compare(value1, value2, precision_digits=digits) == 1
+        :param first_picking: the first picking to add to the batch
+        :param device: the device to use to prepare the batch
+        """
+        self._device = device
+        self._remaining_weight = device.max_weight - first_picking.weight
+        self._remaining_nbr_picking_lines = (
+            self.maximum_number_of_preparation_lines - first_picking.nbr_picking_lines
+        )
+        self._selected_picking_ids = [first_picking.id]
+        self._first_picking = first_picking
+        nbr_bins = self._get_nbr_bins_for_picking(first_picking)
+        self._remaining_nbr_bins = device.nbr_bins - nbr_bins
+        self._previous_selected_picking = first_picking
 
-        # # Add pickings to the first one as long as
-        # # - total volume is not outreached
-        # # - total weight is not outreached
-        # # - maximum number of preparation lines is not outreached
-        # # - numbers of bins available is greater than 0
-        # # - The device for the current picking is supposed to be
-        available_nbr_bins = device.nbr_bins
-        volume_by_partners = defaultdict(lambda: 0)
-        for picking in pickings:
-            if not self._lock_selected_picking(picking):
-                continue
-            if available_nbr_bins == 0:
+    def _get_nbr_bins_for_picking(self, picking):
+        """Get the number of bins used by the picking.
+        If the pickings are grouped by partner, we compute the number of new bins
+        required to add the picking to the batch. To do so, each time we add a
+        picking for a partner, we sum the volume of the current picking to
+        the volume of the previous pickings for the same partner stored in
+        self._volume_by_partners. (the self._volume_by_partners is updated
+        with this new value). The number of bins required to store the new
+        picking is the difference between the number of bins required to store
+        the previous volume and the number of bins required to store the new
+        volume.
+
+        :param picking: picking to get the number of bins
+        """
+        nbr_bins = picking._get_nbr_bins_for_device(self._device)
+        if self.group_pickings_by_partner:
+            picking_volume = picking.volume
+            if not picking_volume:
+                # if a picking has no volume defined we use the volume per bin
+                # of the device by convention a picking without volume fill a complete
+                # bin
+                picking_volume = self._device.volume_per_bin
+            old_volume = self._volume_by_partners[picking.partner_id]
+            new_volume = picking_volume + old_volume
+            nbr_bins = math.ceil(new_volume / self._device.volume_per_bin) - math.ceil(
+                old_volume / self._device.volume_per_bin
+            )
+            self._volume_by_partners[picking.partner_id] = new_volume
+        return nbr_bins
+
+    def _add_picking(self, picking):
+        """Add a picking to the batch.
+        At the same time, we update the counters to decrement the remaining
+        resources available for the batch.
+
+        :param picking: picking to add to the batch
+        """
+        self._selected_picking_ids.append(picking.id)
+        self._remaining_weight -= picking.weight
+        self._remaining_nbr_picking_lines -= picking.nbr_picking_lines
+        nbr_bins = self._get_nbr_bins_for_picking(picking)
+        self._remaining_nbr_bins -= nbr_bins
+        self._previous_selected_picking = picking
+
+    def _apply_limits(self):
+        """
+        Once we get the first picking and the device to use, we look
+        for other pickings to add to the batch. We add pickings as long as the
+        conditions are respected.
+        """
+        picking = self._first_picking
+        while picking:
+            if self._remaining_nbr_bins == 0:
                 break
+            picking = self._get_additional_picking()
+            if picking:
+                self._add_picking(picking)
 
-            if max_pickings and len(selected_picking_ids) == max_pickings:
-                # selected enough!
-                break
-
-            # Check that the picking can go on the selected device
-            picking_device = self._compute_device_to_use(picking)
-            if device != picking_device:
-                continue
-            picking._init_nbr_bins_on_device_field(device)
-
-            nbr_bins = picking.nbr_bins_batch_picking
-            old_volume = volume_by_partners[picking.partner_id]
-            new_volume = old_volume + picking.total_volume_batch_picking
-            if self.group_pickings_by_partner:
-                nbr_bins = math.ceil(new_volume / device.volume_per_bin) - math.ceil(
-                    old_volume / device.volume_per_bin
-                )
-
-            available_bins_outreached = available_nbr_bins - nbr_bins < 0
-            if available_bins_outreached:
-                continue
-
-            weight_limit_outreached = device.max_weight and gt(
-                total_weight + picking.total_weight_batch_picking,
-                device.max_weight,
-                precision_weight,
-            )
-            if weight_limit_outreached:
-                continue
-
-            volume_limit_outreached = device.max_volume and gt(
-                total_volume + picking.total_volume_batch_picking,
-                device.max_volume,
-                precision_volume,
-            )
-            if volume_limit_outreached:
-                continue
-
-            nbr_lines_limit_outreached = (
-                self.maximum_number_of_preparation_lines
-                and gt(
-                    total_nbr_picking_lines + picking.nbr_picking_lines,
-                    self.maximum_number_of_preparation_lines,
-                    1,
-                )
-            )
-            if nbr_lines_limit_outreached:
-                continue
-
-            # All conditions are OK : we keep the picking in the cluster
-            selected_picking_ids.append(picking.id)
-            total_weight += picking.total_weight_batch_picking
-            total_volume += picking.total_volume_batch_picking
-            total_nbr_picking_lines += picking.nbr_picking_lines
-            available_nbr_bins -= nbr_bins
-            volume_by_partners[picking.partner_id] = new_volume
-
-        selected_pickings = self.env["stock.picking"].browse(selected_picking_ids)
-        unselected_pickings = pickings - selected_pickings
-        used_nbr_bins = device.nbr_bins - available_nbr_bins
-        return selected_pickings, unselected_pickings, used_nbr_bins
-
-    def _lock_selected_picking(self, picking):
-        """Method hook called to lock the selected picking and ensure that
-        nothing has changed in the timelapse between the search request and
-        the addition to the batch that will prevent a normal commit of the
-        transaction. If nothing is returned by the method, the selected picking
-        will not be added to the batch.
-        Implementation example:
-        .. code-block:: python
-             self.env.cr.execute('''
-                SELECT
-                    id
-                FROM
-                    stock_picking
-                WHERE
-                    id = %s
-                FOR UPDATE OF stock_picking SKIP LOCKED;
-            ''', (picking.id, ))
-            _id = [r[0] for r in self.env.cr.fetchall()]
-            if _id:
-                return self.env["stock.picking"].browse(_id)
-            return None
-        """
-        return picking
-
-    def _create_batch_values(self, user, device, pickings):
+    def _create_batch_values(self):
+        selected_pickings = self.env["stock.picking"].browse(self._selected_picking_ids)
         return {
-            "picking_ids": [(6, 0, pickings.ids)],
-            "user_id": user.id,
+            "picking_ids": [(6, 0, selected_pickings.ids)],
+            "user_id": self.user_id.id,
             "state": "draft",
-            "picking_device_id": device.id if device else None,
+            "picking_device_id": self._device.id if self._device else None,
             "is_wave": True,
+            "batch_weight": sum(selected_pickings.mapped("weight")),
+            "batch_volume": sum(selected_pickings.mapped("volume")),
+            "batch_nbr_bins": self._device.nbr_bins - self._remaining_nbr_bins,
+            "batch_nbr_lines": sum(selected_pickings.mapped("nbr_picking_lines")),
         }

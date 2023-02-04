@@ -15,7 +15,10 @@ class NoPickingCandidateError(UserError):
 class NoSuitableDeviceError(UserError):
     def __init__(self, pickings):
         self.pickings = pickings
-        super(NoSuitableDeviceError, self).__init__(
-            _("no device found for batch picking. Pickings %s do not match any device")
-            % self.pickings.mapped("name")
-        )
+        message = _("No device found for batch picking.")
+        if pickings:
+            message += _(
+                " Pickings %{names}s do not match any device",
+                names=", ".join(self.pickings.mapped("name")),
+            )
+        super(NoSuitableDeviceError, self).__init__(message)

@@ -25,22 +25,6 @@ class StockPickingBatch(models.Model):
         help="Indicates the picking lines ready for preparation.",
     )
 
-    def _init_batch_info(self, used_nbr_bins):
-        """Store initial result of the batch computation"""
-        self.ensure_one()
-        pickings = self.picking_ids.with_prefetch()
-        info = {
-            "batch_weight": sum(
-                [picking.total_weight_batch_picking for picking in pickings]
-            ),
-            "batch_volume": sum(
-                [picking.total_volume_batch_picking for picking in pickings]
-            ),
-            "batch_nbr_bins": used_nbr_bins,
-            "batch_nbr_lines": sum([picking.nbr_picking_lines for picking in pickings]),
-        }
-        self.write(info)
-
     def write(self, vals):
         res = super(StockPickingBatch, self).write(vals)
         for rec in self:

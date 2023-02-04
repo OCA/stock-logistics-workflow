@@ -13,12 +13,9 @@
     "application": False,
     "installable": True,
     "depends": [
-        "product_packaging_dimension",  # OCA/product-attribute
-        "product_dimension",
-        "product_total_weight_from_packaging",  # OCA/product-attribute
-        "stock",
-        "stock_packaging_calculator",  # OCA/stock-logistics-warehouse
+        "delivery",  # weight on picking
         "stock_picking_batch",
+        "stock_picking_volume",  # OCA/stock-logistics-warehouse
     ],
     "data": [
         "views/stock_device_type.xml",
@@ -28,4 +25,6 @@
         "security/ir.model.access.csv",
     ],
     "development_status": "Beta",
+    "maintainers": ["lmignon"],
+    "pre_init_hook": "pre_init_hook",
 }
