@@ -37,7 +37,7 @@ addon | version | maintainers | summary
 [stock_picking_batch_extended_account_sale_type](stock_picking_batch_extended_account_sale_type/) | 15.0.1.0.0 | [![ernestotejeda](https://github.com/ernestotejeda.png?size=30px)](https://github.com/ernestotejeda) | Generates invoices when batch is set to Done state
 [stock_picking_filter_lot](stock_picking_filter_lot/) | 15.0.1.0.1 |  | In picking out lots' selection, filter lots based on their location
 [stock_picking_info_lot](stock_picking_info_lot/) | 15.0.1.0.0 |  | Add lot information on Stock Transfer lines
-[stock_picking_invoice_link](stock_picking_invoice_link/) | 15.0.1.0.1 |  | Adds link between pickings and invoices
+[stock_picking_invoice_link](stock_picking_invoice_link/) | 15.0.1.0.2 |  | Adds link between pickings and invoices
 [stock_picking_mass_action](stock_picking_mass_action/) | 15.0.1.0.1 |  | Stock Picking Mass Action
 [stock_picking_product_assortment](stock_picking_product_assortment/) | 15.0.1.0.0 | [![CarlosRoca13](https://github.com/CarlosRoca13.png?size=30px)](https://github.com/CarlosRoca13) | Stock Picking Product Assortment
 [stock_picking_product_availability_inline](stock_picking_product_availability_inline/) | 15.0.1.0.0 |  | Show product availability in product drop-down in stock picking form view.
