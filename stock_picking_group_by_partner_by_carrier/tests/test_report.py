@@ -86,17 +86,17 @@ class TestReport(TestGroupByBase):
         so1.action_confirm()
         so2.action_confirm()
 
-        self.assertEqual(len(so1.picking_ids.ids), len(so2.picking_ids.ids))
+        self.assertEqual(set(so1.picking_ids.ids), set(so2.picking_ids.ids))
         self.assertEqual(len(so1.picking_ids), 1)
         picking = so1.picking_ids
-        self.assertEqual(len(picking.move_line_ids), 1)
+        self.assertEqual(len(picking.move_line_ids), 2)
 
         remaining_data = report.get_remaining_to_deliver(picking)
         self.assertEqual(len(remaining_data), 0)
 
         self._validate_transfer(picking)
         remaining_data = report.get_remaining_to_deliver(picking)
-        self.assertEqual(len(remaining_data), 2)
+        self.assertEqual(len(remaining_data), 4)
 
         self.assertTrue(remaining_data[0]["is_header"])
         self.assertEqual(remaining_data[0]["concept"], so1.name)
