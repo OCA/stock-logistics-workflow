@@ -1,10 +1,10 @@
-# Copyright 2021 Tecnativa - Víctor Martínez
+# Copyright 2021-2023 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 
 from odoo.tests import Form, common
 
 
-class TestPurchaseOrder(common.SavepointCase):
+class TestPurchaseOrder(common.TransactionCase):
     def setUp(self):
         super().setUp()
         self.company = self.env.ref("base.main_company")
