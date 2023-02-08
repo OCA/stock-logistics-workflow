@@ -1,4 +1,4 @@
-# Copyright 2021 Tecnativa - Víctor Martínez
+# Copyright 2021-2023 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo import fields, models
 
@@ -32,7 +32,7 @@ class PurchaseOrder(models.Model):
         self.ensure_one()
         landed_cost = (
             self.env["stock.landed.cost"]
-            .with_context(force_company=self.company_id.id)
+            .with_company(self.company_id)
             .create(self._prepare_landed_cost_values(picking))
         )
         self.write({"landed_cost_ids": [(4, landed_cost.id)]})
@@ -49,7 +49,9 @@ class PurchaseOrder(models.Model):
         return res
 
     def action_view_stock_landed_cost(self):
-        action = self.env.ref("stock_landed_costs.action_stock_landed_cost").read()[0]
+        action = self.env["ir.actions.act_window"]._for_xml_id(
+            "stock_landed_costs.action_stock_landed_cost"
+        )
         action["context"] = {"search_default_purchase_id": self.id}
         return action
 
@@ -59,10 +61,11 @@ class PurchaseOrderLine(models.Model):
 
     def _create_or_update_picking(self):
         all_pickings = self.mapped("order_id.picking_ids")
-        super()._create_or_update_picking()
+        res = super()._create_or_update_picking()
         for order in self.mapped("order_id"):
             order_pickings = order.picking_ids - all_pickings
             if order_pickings:
                 order._create_picking_with_stock_landed_cost(
                     fields.first(order_pickings)
                 )
+        return res
