@@ -152,9 +152,9 @@ class StockBatchPickingCreator(models.TransientModel):
 
     def action_view_batch_picking(self, batch_pickings):
         if len(batch_pickings) > 1:
-            action = self.env.ref(
+            action = self.env["ir.actions.act_window"]._for_xml_id(
                 "stock_picking_batch_extended.action_stock_batch_picking_tree"
-            ).read()[0]
+            )
             action["domain"] = [("id", "in", batch_pickings.ids)]
         else:
             action = batch_pickings.get_formview_action()
