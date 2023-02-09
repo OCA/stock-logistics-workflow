@@ -39,7 +39,7 @@ addon | version | maintainers | summary
 [stock_lot_on_hand_first](stock_lot_on_hand_first/) | 14.0.1.0.0 | [![grindtildeath](https://github.com/grindtildeath.png?size=30px)](https://github.com/grindtildeath) | Allows to display lots on hand first in M2o fields
 [stock_lot_product_qty_search](stock_lot_product_qty_search/) | 14.0.1.0.0 | [![grindtildeath](https://github.com/grindtildeath.png?size=30px)](https://github.com/grindtildeath) | Allows to search on Quantity field of Lot/Serial Numbers
 [stock_lot_production_date](stock_lot_production_date/) | 14.0.1.0.0 |  | Stock Lot Production Date
-[stock_lot_scrap](stock_lot_scrap/) | 14.0.1.0.1 |  | This module adds a button in Production Lot/Serial Number view form to Scrap all products contained.
+[stock_lot_scrap](stock_lot_scrap/) | 14.0.1.0.2 |  | This module adds a button in Production Lot/Serial Number view form to Scrap all products contained.
 [stock_move_assign_picking_hook](stock_move_assign_picking_hook/) | 14.0.1.1.1 |  | Stock Move picking assignment hook
 [stock_move_change_source_location](stock_move_change_source_location/) | 14.0.1.0.0 |  | This module allows you to change the source location of a stock move from the picking
 [stock_move_forced_lot](stock_move_forced_lot/) | 14.0.1.0.0 |  | This module allows you to set a lot_id in a procurement to force the stock move generated to only reserve the selected lot.
@@ -51,7 +51,7 @@ addon | version | maintainers | summary
 [stock_picking_auto_create_lot](stock_picking_auto_create_lot/) | 14.0.1.0.0 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Auto create lots for incoming pickings
 [stock_picking_back2draft](stock_picking_back2draft/) | 14.0.1.0.0 |  | Reopen cancelled pickings
 [stock_picking_backorder_strategy](stock_picking_backorder_strategy/) | 14.0.1.0.0 | [![rousseldenis](https://github.com/rousseldenis.png?size=30px)](https://github.com/rousseldenis) [![mgosai](https://github.com/mgosai.png?size=30px)](https://github.com/mgosai) | Picking backordering strategies
-[stock_picking_batch_extended](stock_picking_batch_extended/) | 14.0.1.0.0 | [![gurneyalex](https://github.com/gurneyalex.png?size=30px)](https://github.com/gurneyalex) [![carlosdauden](https://github.com/carlosdauden.png?size=30px)](https://github.com/carlosdauden) [![i-vyshnevska](https://github.com/i-vyshnevska.png?size=30px)](https://github.com/i-vyshnevska) | Allows manage a lot of pickings in batch
+[stock_picking_batch_extended](stock_picking_batch_extended/) | 14.0.1.0.1 | [![gurneyalex](https://github.com/gurneyalex.png?size=30px)](https://github.com/gurneyalex) [![carlosdauden](https://github.com/carlosdauden.png?size=30px)](https://github.com/carlosdauden) [![i-vyshnevska](https://github.com/i-vyshnevska.png?size=30px)](https://github.com/i-vyshnevska) | Allows manage a lot of pickings in batch
 [stock_picking_cancel_reason](stock_picking_cancel_reason/) | 14.0.1.0.0 |  | Stock Picking Cancel Reason
 [stock_picking_filter_lot](stock_picking_filter_lot/) | 14.0.2.0.0 |  | In picking out lots' selection, filter lots based on their location
 [stock_picking_group_by_partner_by_carrier](stock_picking_group_by_partner_by_carrier/) | 14.0.1.4.2 |  | Stock Picking: group by partner and carrier
