@@ -95,7 +95,9 @@ class StockProductionLot(models.Model):
                 self._prepare_scrap_vals(quant, scrap_location_id),
             )
             scraps |= scrap
-        result = self.env.ref("stock.action_stock_scrap").read()[0]
+        result = self.env["ir.actions.act_window"]._for_xml_id(
+            "stock.action_stock_scrap"
+        )
         result["context"] = self.env.context
         if len(scraps) != 1:
             result["domain"] = "[('id', 'in', %s)]" % scraps.ids
