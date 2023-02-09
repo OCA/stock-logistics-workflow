@@ -1,0 +1,12 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <group name="other_infos" position="inside">
+                <field name="remote_scale_id" />
+            </group>
+        </field>
+    </record>
+</odoo>

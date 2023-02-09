@@ -1,0 +1,36 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_stock_move_line_detailed_operation_tree" model="ir.ui.view">
+        <field name="model">stock.move.line</field>
+        <field
+            name="inherit_id"
+            ref="stock.view_stock_move_line_detailed_operation_tree"
+        />
+        <field name="arch" type="xml">
+            <field name="qty_done" position="before">
+                <field name="remote_scale_id" optional="hide" />
+            </field>
+            <field name="qty_done" position="attributes">
+                <attribute name="widget">remote_measure</attribute>
+                <attribute
+                    name="options"
+                >{'remote_device_field': 'remote_scale_id', 'uom_field': 'product_uom_id', 'default_user_device': True, 'allow_additive_measure': True}</attribute>
+            </field>
+        </field>
+    </record>
+    <record id="view_stock_move_line_operation_tree" model="ir.ui.view">
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_stock_move_line_operation_tree" />
+        <field name="arch" type="xml">
+            <field name="qty_done" position="before">
+                <field name="remote_scale_id" optional="hide" />
+            </field>
+            <field name="qty_done" position="attributes">
+                <attribute name="widget">remote_measure</attribute>
+                <attribute
+                    name="options"
+                >{'remote_device_field': 'remote_scale_id', 'uom_field': 'product_uom_id', 'default_user_device': True, 'allow_additive_measure': True}</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>
