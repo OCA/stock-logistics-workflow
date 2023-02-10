@@ -65,7 +65,7 @@ addon | version | maintainers | summary
 [stock_picking_product_link](stock_picking_product_link/) | 14.0.1.0.0 | [![robinkeunen](https://github.com/robinkeunen.png?size=30px)](https://github.com/robinkeunen) | Adds a "Product" smart button on stock pickings.
 [stock_picking_progress](stock_picking_progress/) | 14.0.1.2.0 | [![mmequignon](https://github.com/mmequignon.png?size=30px)](https://github.com/mmequignon) [![JuMiSanAr](https://github.com/JuMiSanAr.png?size=30px)](https://github.com/JuMiSanAr) | Compute the stock.picking progression
 [stock_picking_purchase_order_link](stock_picking_purchase_order_link/) | 14.0.1.0.1 |  | Link between picking and purchase order
-[stock_picking_quick](stock_picking_quick/) | 14.0.1.0.3 | [![PierrickBrun](https://github.com/PierrickBrun.png?size=30px)](https://github.com/PierrickBrun) [![bealdav](https://github.com/bealdav.png?size=30px)](https://github.com/bealdav) | Quick Stock Picking
+[stock_picking_quick](stock_picking_quick/) | 14.0.1.0.4 | [![PierrickBrun](https://github.com/PierrickBrun.png?size=30px)](https://github.com/PierrickBrun) [![bealdav](https://github.com/bealdav.png?size=30px)](https://github.com/bealdav) | Quick Stock Picking
 [stock_picking_restrict_cancel_with_orig_move](stock_picking_restrict_cancel_with_orig_move/) | 14.0.1.0.1 |  | Restrict cancellation of dest moves according to origin.
 [stock_picking_return_show_lot](stock_picking_return_show_lot/) | 14.0.1.0.1 |  | This module allows to show lots in the picking return wizard before " "return picking creation.
 [stock_picking_sale_order_link](stock_picking_sale_order_link/) | 14.0.1.0.1 |  | Link between picking and sale order
