@@ -27,5 +27,4 @@ class StockMove(models.Model):
 
     product_customer_code = fields.Char(
         compute="_compute_product_customer_code",
-        string="Product Customer Code",
     )
