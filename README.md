@@ -32,6 +32,7 @@ addon | version | maintainers | summary
 [sale_line_returned_qty_mrp](sale_line_returned_qty_mrp/) | 14.0.1.0.1 |  | Track returned quantity of sale order lines for BoM products.
 [sale_order_global_stock_route](sale_order_global_stock_route/) | 14.0.1.0.1 |  | Add the possibility to choose one warehouse path for an order
 [sale_stock_mto_as_mts_orderpoint](sale_stock_mto_as_mts_orderpoint/) | 14.0.1.0.1 |  | Materialize need from MTO route through orderpoint
+[stock_account_product_run_fifo_hook](stock_account_product_run_fifo_hook/) | 14.0.1.0.0 |  | Add more flexibility in the run fifo method.
 [stock_auto_move](stock_auto_move/) | 14.0.1.0.0 |  | Automatic Move Processing
 [stock_delivery_note](stock_delivery_note/) | 14.0.1.0.1 |  | This module allows to fill in a delivery note that will be displayed on delivery report
 [stock_landed_costs_mrp_subcontracting](stock_landed_costs_mrp_subcontracting/) | 14.0.1.1.0 |  | When using Subcontracting, use the incoming shipment in landed costs
@@ -83,6 +84,7 @@ addon | version | maintainers | summary
 [stock_scheduler_assignation_horizon](stock_scheduler_assignation_horizon/) | 14.0.1.0.0 |  | Set a timeframe limit to the delivery scheduler
 [stock_split_picking](stock_split_picking/) | 14.0.1.1.0 |  | Split a picking in two not transferred pickings
 [stock_valuation_layer_by_category](stock_valuation_layer_by_category/) | 14.0.1.0.0 |  | Display stock valuation layer by category
+[stock_valuation_layer_usage](stock_valuation_layer_usage/) | 14.0.1.0.0 |  | Trace where has the stock valuation been used in, including the quantities taken.
 [stock_valuation_no_developer_mode](stock_valuation_no_developer_mode/) | 14.0.1.0.1 |  | Stock valuation layer no developer mode
 
 [//]: # (end addons)
