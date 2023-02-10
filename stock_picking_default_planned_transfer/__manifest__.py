@@ -5,7 +5,7 @@
 {
     "name": "Stock Picking Default Planned Transfer",
     "summary": "Set Planned Transfer as Default from Inventory Views",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "category": "Warehouse Management",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Akretion, Odoo Community Association (OCA)",
