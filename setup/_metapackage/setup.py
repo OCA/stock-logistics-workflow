@@ -19,6 +19,7 @@ setuptools.setup(
         'odoo14-addon-sale_line_returned_qty_mrp',
         'odoo14-addon-sale_order_global_stock_route',
         'odoo14-addon-sale_stock_mto_as_mts_orderpoint',
+        'odoo14-addon-stock_account_product_run_fifo_hook',
         'odoo14-addon-stock_auto_move',
         'odoo14-addon-stock_delivery_note',
         'odoo14-addon-stock_landed_costs_mrp_subcontracting',
@@ -70,6 +71,7 @@ setuptools.setup(
         'odoo14-addon-stock_scheduler_assignation_horizon',
         'odoo14-addon-stock_split_picking',
         'odoo14-addon-stock_valuation_layer_by_category',
+        'odoo14-addon-stock_valuation_layer_usage',
         'odoo14-addon-stock_valuation_no_developer_mode',
     ],
     classifiers=[
