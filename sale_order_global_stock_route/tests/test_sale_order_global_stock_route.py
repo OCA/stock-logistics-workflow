@@ -5,44 +5,45 @@ from odoo.tests.common import TransactionCase
 
 
 class SaleOrderGlobalStockRouteTest(TransactionCase):
-    def setUp(self):
-        super(SaleOrderGlobalStockRouteTest, self).setUp()
-        self.partner = self.env["res.partner"].create({"name": "Test"})
-        self.product1 = self.env["product.product"].create(
+    @classmethod
+    def setUpClass(cls):
+        super(SaleOrderGlobalStockRouteTest, cls).setUpClass()
+        cls.partner = cls.env["res.partner"].create({"name": "Test"})
+        cls.product1 = cls.env["product.product"].create(
             {"name": "test_product1", "type": "product"}
         )
-        self.product2 = self.env["product.product"].create(
+        cls.product2 = cls.env["product.product"].create(
             {"name": "test_product2", "type": "product"}
         )
-        self.route1 = self.env["stock.location.route"].create(
+        cls.route1 = cls.env["stock.location.route"].create(
             {"name": "test_route_1", "sale_selectable": "True"}
         )
-        self.route2 = self.env["stock.location.route"].create(
+        cls.route2 = cls.env["stock.location.route"].create(
             {"name": "test_route_2", "sale_selectable": "True"}
         )
-        self.order = self.env["sale.order"].create(
+        cls.order = cls.env["sale.order"].create(
             [
                 {
-                    "partner_id": self.partner.id,
+                    "partner_id": cls.partner.id,
                     "order_line": [
                         (
                             0,
                             0,
                             {
-                                "name": self.product1.name,
-                                "product_id": self.product1.id,
+                                "name": cls.product1.name,
+                                "product_id": cls.product1.id,
                                 "product_uom_qty": 1,
-                                "product_uom": self.product1.uom_id.id,
+                                "product_uom": cls.product1.uom_id.id,
                             },
                         ),
                         (
                             0,
                             0,
                             {
-                                "name": self.product2.name,
-                                "product_id": self.product2.id,
+                                "name": cls.product2.name,
+                                "product_id": cls.product2.id,
                                 "product_uom_qty": 1,
-                                "product_uom": self.product2.uom_id.id,
+                                "product_uom": cls.product2.uom_id.id,
                             },
                         ),
                     ],
