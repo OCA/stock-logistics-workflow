@@ -3,7 +3,7 @@
 {
     "name": "Stock Lot Production Date",
     "Summary": "Set a production date on lot.",
-    "version": "14.0.1.0.0",
+    "version": "16.0.1.0.0",
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "category": "Warehouse Management",
