@@ -4,7 +4,7 @@
 {
     "name": "Sale Order Global Stock Route",
     "summary": "Add the possibility to choose one warehouse path for an order",
-    "version": "14.0.1.0.1",
+    "version": "15.0.1.0.0",
     "development_status": "Beta",
     "category": "Warehouse",
     "website": "https://github.com/OCA/stock-logistics-workflow",
