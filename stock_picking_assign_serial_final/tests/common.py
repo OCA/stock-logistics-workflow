@@ -17,7 +17,7 @@ class CommonStockPickingAssignSerialFinal(object):
     def _create_product(cls, tracking="serial", auto=True):
         name = "{tracking} - {auto}".format(tracking=tracking, auto=auto)
         return cls.env["product.product"].create(
-            {"name": name, "type": "product", "tracking": tracking}
+            {"name": name, "detailed_type": "product", "tracking": tracking}
         )
 
     @classmethod

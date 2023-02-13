@@ -1,11 +1,13 @@
 # Copyright 2022 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo.tests import SavepointCase
+from odoo.tests import TransactionCase
 
 from .common import CommonStockPickingAssignSerialFinal
 
 
-class TestStockPickingAutoCreateLot(CommonStockPickingAssignSerialFinal, SavepointCase):
+class TestStockPickingAutoCreateLot(
+    CommonStockPickingAssignSerialFinal, TransactionCase
+):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
