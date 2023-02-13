@@ -20,8 +20,7 @@ class SaleOrder(models.Model):
         """We could do sale order line route_id field compute store writable.
         But this field is created by Odoo so I prefer not modify it.
         """
-        for line in self.order_line:
-            line.route_id = line.order_id.route_id
+        self.order_line.route_id = self.route_id
 
     def write(self, vals):
         res = super().write(vals)
@@ -32,22 +31,21 @@ class SaleOrder(models.Model):
             lines.write({"route_id": vals["route_id"]})
         return res
 
+    class SaleOrderLine(models.Model):
+        _inherit = "sale.order.line"
 
-class SaleOrderLine(models.Model):
-    _inherit = "sale.order.line"
+        @api.onchange("product_id")
+        def product_id_change(self):
+            res = super().product_id_change()
+            if self.order_id.route_id:
+                self.route_id = self.order_id.route_id
+            return res
 
-    @api.onchange("product_id")
-    def product_id_change(self):
-        res = super().product_id_change()
-        if self.order_id.route_id:
-            self.route_id = self.order_id.route_id
-        return res
-
-    @api.model_create_multi
-    def create(self, vals_list):
-        for vals in vals_list:
-            if not vals.get("route_id", False):
-                order = self.env["sale.order"].browse(vals["order_id"])
-                if order.route_id:
-                    vals["route_id"] = order.route_id.id
-        return super().create(vals_list)
+        @api.model_create_multi
+        def create(self, vals_list):
+            for vals in vals_list:
+                if not vals.get("route_id", False):
+                    order = self.env["sale.order"].browse(vals["order_id"])
+                    if order.route_id:
+                        vals["route_id"] = order.route_id.id
+            return super().create(vals_list)
