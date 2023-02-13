@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class StockProductionLot(models.Model):
-    _inherit = "stock.production.lot"
+    _inherit = "stock.lot"
 
     production_date = fields.Datetime(
         help="This is the date when the goods with this lot/serial number have been produced."
