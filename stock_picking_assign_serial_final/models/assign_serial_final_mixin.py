@@ -12,7 +12,9 @@ class AssignSerialFinalMixin(models.AbstractModel):
 
     final_serial_number = fields.Char("Final SN")
     next_serial_count = fields.Integer(
-        compute="_compute_next_serial_count", store=True, readonly=False,
+        compute="_compute_next_serial_count",
+        store=True,
+        readonly=False,
     )
 
     @api.depends(lambda x: x._get_next_serial_depends())
