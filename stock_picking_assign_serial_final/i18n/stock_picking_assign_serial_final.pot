@@ -1,0 +1,62 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_assign_serial_final
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_assign_serial_final
+#: model:ir.model.fields,field_description:stock_picking_assign_serial_final.field_assign_serial_final_mixin__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_picking_assign_serial_final
+#: model:ir.model.fields,field_description:stock_picking_assign_serial_final.field_assign_serial_final_mixin__final_serial_number
+#: model:ir.model.fields,field_description:stock_picking_assign_serial_final.field_stock_assign_serial__final_serial_number
+#: model:ir.model.fields,field_description:stock_picking_assign_serial_final.field_stock_move__final_serial_number
+msgid "Final SN"
+msgstr ""
+
+#. module: stock_picking_assign_serial_final
+#: model:ir.model.fields,field_description:stock_picking_assign_serial_final.field_assign_serial_final_mixin__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_picking_assign_serial_final
+#: model:ir.model.fields,field_description:stock_picking_assign_serial_final.field_assign_serial_final_mixin____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_picking_assign_serial_final
+#: model:ir.model,name:stock_picking_assign_serial_final.model_assign_serial_final_mixin
+msgid "Mixin for assign last S/N"
+msgstr ""
+
+#. module: stock_picking_assign_serial_final
+#: model:ir.model.fields,field_description:stock_picking_assign_serial_final.field_assign_serial_final_mixin__next_serial_count
+msgid "Next Serial Count"
+msgstr ""
+
+#. module: stock_picking_assign_serial_final
+#: model:ir.model.fields,field_description:stock_picking_assign_serial_final.field_stock_assign_serial__next_serial_count
+#: model:ir.model.fields,field_description:stock_picking_assign_serial_final.field_stock_move__next_serial_count
+msgid "Number of SN"
+msgstr ""
+
+#. module: stock_picking_assign_serial_final
+#: model:ir.model,name:stock_picking_assign_serial_final.model_stock_assign_serial
+msgid "Stock Assign Serial Numbers"
+msgstr ""
+
+#. module: stock_picking_assign_serial_final
+#: model:ir.model,name:stock_picking_assign_serial_final.model_stock_move
+msgid "Stock Move"
+msgstr ""

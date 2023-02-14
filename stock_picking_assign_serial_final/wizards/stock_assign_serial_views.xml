@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_assign_serial_numbers" model="ir.ui.view">
+        <field name="model">stock.assign.serial</field>
+        <field name="inherit_id" ref="stock.view_assign_serial_numbers" />
+        <field name="arch" type="xml">
+            <field name="next_serial_number" position="after">
+                <field name="final_serial_number" />
+            </field>
+        </field>
+    </record>
+    <record id="view_stock_move_operations" model="ir.ui.view">
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_stock_move_operations" />
+        <field name="arch" type="xml">
+            <field name="next_serial" position="after">
+                <field
+                    name="final_serial_number"
+                    attrs="{'invisible': [('display_assign_serial', '=', False)]}"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>
