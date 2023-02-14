@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id='view_stock_landed_cost_ext_form' model='ir.ui.view'>
+        <field name="name">stock.landed.cost.ext.form</field>
+        <field name="model">stock.landed.cost</field>
+        <field name="inherit_id" ref="stock_landed_costs.view_stock_landed_cost_form" />
+        <field name="arch" type="xml">
+            <button name="button_validate" position="attributes">
+                <attribute
+                    name="groups"
+                >stock_landed_costs_security.group_stock_landed_costs_security_user,stock.group_stock_manager
+                </attribute>
+            </button>
+        </field>
+    </record>
+    <record id="stock_landed_costs.account_view_move_form_inherited" model="ir.ui.view">
+        <field
+            name="groups_id"
+            eval="[(4, ref('stock_landed_costs_security.group_stock_landed_costs_security_user'))]"
+        />
+    </record>
+    <record id="account_view_move_form_inherited" model="ir.ui.view">
+        <field name="model">account.move</field>
+        <field
+            name="inherit_id"
+            ref="stock_landed_costs.account_view_move_form_inherited"
+        />
+        <field name="arch" type="xml">
+            <button name="action_view_landed_costs" position="attributes">
+                <attribute
+                    name="groups"
+                >stock_landed_costs_security.group_stock_landed_costs_security_user
+                </attribute>
+            </button>
+            <button name="button_create_landed_costs" position="attributes">
+                <attribute
+                    name="groups"
+                    add="stock_landed_costs_security.group_stock_landed_costs_security_user"
+                    separator=","
+                />
+            </button>
+        </field>
+    </record>
+
+    <menuitem
+        name="Landed Costs"
+        id="menu_landed_costs"
+        sequence="30"
+        action="stock_landed_costs.action_stock_landed_cost"
+        groups="stock_landed_costs_security.group_stock_landed_costs_security_user"
+        web_icon="stock_landed_costs_security,static/description/icon.png"
+    />
+</odoo>
