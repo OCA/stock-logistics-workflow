@@ -1,11 +1,11 @@
 # Copyright 2022 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo.tests import Form, SavepointCase, tagged
+from odoo.tests import Form, TransactionCase, tagged
 
 
 @tagged("post_install", "-at_install")
-class TestStockPickingProductAssortmentAvailabilityInline(SavepointCase):
+class TestStockPickingProductAssortmentAvailabilityInline(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

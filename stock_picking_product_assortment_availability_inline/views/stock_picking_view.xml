@@ -5,20 +5,11 @@
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.view_picking_form" />
         <field name="arch" type="xml">
-            <xpath
-                expr="//field[@name='product_has_both_assortment_id']"
-                position="attributes"
-            >
-                <attribute
-                    name="context"
-                    operation="python_dict"
-                    key="sp_product_stock_inline"
-                >True</attribute>
-                <attribute
-                    name="context"
-                    operation="python_dict"
-                    key="warehouse"
-                >parent.picking_type_warehouse_id</attribute>            </xpath>
+            <xpath expr="//field[@name='assortment_product_id']" position="attributes">
+                <attribute name="context" operation="update">
+                    {'sp_product_stock_inline': True, 'warehouse': parent.picking_type_warehouse_id}
+                </attribute>
+            </xpath>
         </field>
     </record>
 
@@ -30,20 +21,10 @@
             ref="stock.view_stock_move_line_detailed_operation_tree"
         />
         <field name="arch" type="xml">
-            <xpath
-                expr="//field[@name='product_has_both_assortment_id']"
-                position="attributes"
-            >
-                <attribute
-                    name="context"
-                    operation="python_dict"
-                    key="sp_product_stock_inline"
-                >True</attribute>
-                <attribute
-                    name="context"
-                    operation="python_dict"
-                    key="warehouse"
-                >parent.picking_type_warehouse_id</attribute>
+            <xpath expr="//field[@name='assortment_product_id']" position="attributes">
+                <attribute name="context" operation="update">
+                    {'sp_product_stock_inline': True, 'warehouse': parent.picking_type_warehouse_id}
+                </attribute>
             </xpath>
         </field>
     </record>
