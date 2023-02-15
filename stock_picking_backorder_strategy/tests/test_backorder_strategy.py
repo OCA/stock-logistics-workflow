@@ -68,7 +68,7 @@ class TestBackorderStrategy(common.SavepointCase):
         if len(backorder):
             self.assertFalse(backorder)
             states = list(set(self.picking.move_lines.mapped("state")))
-            self.assertEquals(
+            self.assertEqual(
                 "done",
                 self.picking.state,
             )
