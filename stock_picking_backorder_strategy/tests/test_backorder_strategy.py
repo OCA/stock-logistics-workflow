@@ -1,10 +1,10 @@
 # Copyright 2018 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests import common
+from odoo.tests.common import TransactionCase
 
 
-class TestBackorderStrategy(common.SavepointCase):
+class TestBackorderStrategy(TransactionCase):
     @classmethod
     def setUpClass(cls):
         """Create the picking."""
