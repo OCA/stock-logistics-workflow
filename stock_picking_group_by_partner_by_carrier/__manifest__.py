@@ -11,7 +11,6 @@
     "category": "Warehouse Management",
     "depends": [
         "delivery_procurement_group_carrier",
-        "stock_move_assign_picking_hook",
     ],
     "data": [
         "views/res_partner.xml",
