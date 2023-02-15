@@ -18,26 +18,11 @@ msgstr ""
 "X-Generator: Poedit 2.3\n"
 
 #. module: stock_picking_assign_serial_final
-#: model:ir.model.fields,field_description:stock_picking_assign_serial_final.field_assign_serial_final_mixin__display_name
-msgid "Display Name"
-msgstr "Nombre a mostrar"
-
-#. module: stock_picking_assign_serial_final
 #: model:ir.model.fields,field_description:stock_picking_assign_serial_final.field_assign_serial_final_mixin__final_serial_number
 #: model:ir.model.fields,field_description:stock_picking_assign_serial_final.field_stock_assign_serial__final_serial_number
 #: model:ir.model.fields,field_description:stock_picking_assign_serial_final.field_stock_move__final_serial_number
 msgid "Final SN"
 msgstr "Último NS"
-
-#. module: stock_picking_assign_serial_final
-#: model:ir.model.fields,field_description:stock_picking_assign_serial_final.field_assign_serial_final_mixin__id
-msgid "ID"
-msgstr "ID (identificación)"
-
-#. module: stock_picking_assign_serial_final
-#: model:ir.model.fields,field_description:stock_picking_assign_serial_final.field_assign_serial_final_mixin____last_update
-msgid "Last Modified on"
-msgstr "Última modificación el"
 
 #. module: stock_picking_assign_serial_final
 #: model:ir.model,name:stock_picking_assign_serial_final.model_assign_serial_final_mixin
@@ -64,3 +49,12 @@ msgstr "Asignar números de serie"
 #: model:ir.model,name:stock_picking_assign_serial_final.model_stock_move
 msgid "Stock Move"
 msgstr "Movimiento de existencias"
+
+#~ msgid "Display Name"
+#~ msgstr "Nombre a mostrar"
+
+#~ msgid "ID"
+#~ msgstr "ID (identificación)"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Última modificación el"
