@@ -21,6 +21,7 @@ setuptools.setup(
         'odoo14-addon-sale_stock_mto_as_mts_orderpoint',
         'odoo14-addon-stock_account_product_run_fifo_hook',
         'odoo14-addon-stock_auto_move',
+        'odoo14-addon-stock_dangerous_goods',
         'odoo14-addon-stock_delivery_note',
         'odoo14-addon-stock_landed_costs_mrp_subcontracting',
         'odoo14-addon-stock_lock_lot',
