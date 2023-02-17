@@ -24,6 +24,7 @@ addon | version | maintainers | summary
 [delivery_procurement_group_carrier](delivery_procurement_group_carrier/) | 15.0.1.0.0 |  | Delivery Procurement Group Carrier
 [purchase_stock_picking_invoice_link](purchase_stock_picking_invoice_link/) | 15.0.1.0.0 |  | Adds link between purchases, pickings and invoices
 [sale_line_returned_qty](sale_line_returned_qty/) | 15.0.1.0.0 |  | Track returned quantity of sale order lines.
+[sale_order_global_stock_route](sale_order_global_stock_route/) | 15.0.1.0.0 |  | Add the possibility to choose one warehouse path for an order
 [stock_landed_costs_purchase_auto](stock_landed_costs_purchase_auto/) | 15.0.1.0.0 | [![victoralmau](https://github.com/victoralmau.png?size=30px)](https://github.com/victoralmau) | Stock landed costs purchase auto
 [stock_landed_costs_security](stock_landed_costs_security/) | 15.0.1.0.0 | [![cesar-tecnativa](https://github.com/cesar-tecnativa.png?size=30px)](https://github.com/cesar-tecnativa) | Stock landed costs security
 [stock_lot_on_hand_first](stock_lot_on_hand_first/) | 15.0.1.0.0 | [![grindtildeath](https://github.com/grindtildeath.png?size=30px)](https://github.com/grindtildeath) | Allows to display lots on hand first in M2o fields
