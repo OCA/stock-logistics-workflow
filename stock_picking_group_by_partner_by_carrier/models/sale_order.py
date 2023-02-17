@@ -14,6 +14,7 @@ class SaleOrder(models.Model):
                 SaleOrder,
                 sale_order.with_context(cancel_sale_group_ids=proc_groups.ids),
             ).action_cancel()
+        return True
 
     def get_name_for_delivery_line(self):
         """Get the name for the sale order displayed on the delivery note"""

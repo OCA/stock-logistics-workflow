@@ -26,6 +26,8 @@ class StockPicking(models.Model):
         for picking in self:
             if picking.canceled_by_merge:
                 picking.state = "cancel"
+        return True
+
 
     def _check_emptyness_after_merge(self):
         """Handle pickings emptied during a manual merge."""
