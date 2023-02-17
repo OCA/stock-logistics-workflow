@@ -98,6 +98,7 @@ class StockPicking(models.Model):
             return False
         if self.picking_type_id.code != "outgoing":
             return False
+
         group_pickings = self.move_lines.group_id.picking_ids.filtered(
             # Do no longer modify a printed or done transfer: they are
             # started and their group is now fixed. It prevents keeping
@@ -107,6 +108,7 @@ class StockPicking(models.Model):
         moves = group_pickings.move_lines
         base_group = self.group_id
 
+        print("******************** _merge_procurement_groups")
         # If we have moves of different procurement groups, it means moves
         # have been merged in the same picking. In this case a new
         # procurement group is required

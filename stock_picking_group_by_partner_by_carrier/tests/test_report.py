@@ -85,8 +85,7 @@ class TestReport(TestGroupByBase):
 
         so1.action_confirm()
         so2.action_confirm()
-        print so1.picking_ids.ids
-        print so2.picking_ids.ids
+
         self.assertEqual(set(so1.picking_ids.ids), set(so2.picking_ids.ids))
         self.assertEqual(len(so1.picking_ids), 1)
         picking = so1.picking_ids
