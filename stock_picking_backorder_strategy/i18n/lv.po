@@ -25,12 +25,12 @@ msgid "Backorder Strategy"
 msgstr ""
 
 #. module: stock_picking_backorder_strategy
-#: selection:stock.picking.type,backorder_strategy:0
+#: model:ir.model.fields.selection,name:stock_picking_backorder_strategy.selection__stock_picking_type__backorder_strategy__cancel
 msgid "Cancel"
 msgstr "Atcelt"
 
 #. module: stock_picking_backorder_strategy
-#: selection:stock.picking.type,backorder_strategy:0
+#: model:ir.model.fields.selection,name:stock_picking_backorder_strategy.selection__stock_picking_type__backorder_strategy__create
 msgid "Create"
 msgstr ""
 
@@ -40,12 +40,12 @@ msgid "Define what to do with backorder"
 msgstr ""
 
 #. module: stock_picking_backorder_strategy
-#: selection:stock.picking.type,backorder_strategy:0
+#: model:ir.model.fields.selection,name:stock_picking_backorder_strategy.selection__stock_picking_type__backorder_strategy__manual
 msgid "Manual"
 msgstr ""
 
 #. module: stock_picking_backorder_strategy
-#: selection:stock.picking.type,backorder_strategy:0
+#: model:ir.model.fields.selection,name:stock_picking_backorder_strategy.selection__stock_picking_type__backorder_strategy__no_create
 msgid "No create"
 msgstr ""
 
