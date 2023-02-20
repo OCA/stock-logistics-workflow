@@ -33,6 +33,7 @@ setuptools.setup(
         'odoo-addon-stock_picking_line_sequence>=15.0dev,<15.1dev',
         'odoo-addon-stock_picking_mass_action>=15.0dev,<15.1dev',
         'odoo-addon-stock_picking_product_assortment>=15.0dev,<15.1dev',
+        'odoo-addon-stock_picking_product_assortment_availability_inline>=15.0dev,<15.1dev',
         'odoo-addon-stock_picking_product_availability_inline>=15.0dev,<15.1dev',
         'odoo-addon-stock_picking_product_availability_search>=15.0dev,<15.1dev',
         'odoo-addon-stock_picking_purchase_order_link>=15.0dev,<15.1dev',
