@@ -22,11 +22,11 @@ class StockPicking(models.Model):
 
     @api.depends("canceled_by_merge")
     def _compute_state(self):
-        super()._compute_state()
+        res = super()._compute_state()
         for picking in self:
             if picking.canceled_by_merge:
                 picking.state = "cancel"
-        return True
+        return res
 
 
     def _check_emptyness_after_merge(self):
