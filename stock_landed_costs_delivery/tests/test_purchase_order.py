@@ -8,7 +8,7 @@ class TestPurchaseOrder(test_purchase_order.TestPurchaseOrder):
     def setUp(self):
         super().setUp()
         product_carrier = self.env["product.product"].create(
-            {"name": "Carrier", "type": "service"}
+            {"name": "Carrier", "detailed_type": "service"}
         )
         self.carrier = self.env["delivery.carrier"].create(
             {
