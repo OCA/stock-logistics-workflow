@@ -9,24 +9,43 @@ from odoo import models
 class StockMove(models.Model):
     _inherit = "stock.move"
 
-    def _action_assign(self):
-        # Split moves by picking type owner behavior restriction to process
-        # moves depending of their owners
-        moves = self.filtered(
+    def _get_moves_to_assign_with_standard_behavior(self):
+        """This method is expected to be extended as necessary. e.g. you may not want to
+        handle subcontracting receipts (whose picking type is normal incoming receipt
+        unless configured otherwise) with standard behavior, and you can filter out
+        those moves.
+        """
+        return self.filtered(
             lambda m: m.picking_type_id.owner_restriction == "standard_behavior"
         )
-        res = super(StockMove, moves)._action_assign()
+
+    def _get_owner_for_assign(self):
+        """This method is expected to be extended as necessary. e.g. different logic
+        needs to be applied for moves in manufacturing orders.
+        """
+        self.ensure_one()
+        partner = self.move_dest_ids.picking_id.owner_id
+        if not partner:
+            partner = self.picking_id.owner_id or self.picking_id.partner_id
+        return partner
+
+    def _action_assign(self, force_qty=False):
+        # Split moves by picking type owner behavior restriction to process
+        # moves depending of their owners
+        moves = self._get_moves_to_assign_with_standard_behavior()
+        res = super(StockMove, moves)._action_assign(force_qty=force_qty)
         dict_key = defaultdict(lambda: self.env["stock.move"])
         for move in self - moves:
             if move.picking_type_id.owner_restriction == "unassigned_owner":
                 dict_key[False] |= move
             else:
-                dict_key[move.picking_id.owner_id or move.picking_id.partner_id] |= move
+                partner = move._get_owner_for_assign()
+                dict_key[partner] |= move
         for owner_id, moves_to_assign in dict_key.items():
             super(
                 StockMove,
                 moves_to_assign.with_context(force_restricted_owner_id=owner_id),
-            )._action_assign()
+            )._action_assign(force_qty=force_qty)
         return res
 
     def _update_reserved_quantity(
