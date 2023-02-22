@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-23 11:56+0000\n"
-"PO-Revision-Date: 2023-01-03 13:46+0000\n"
+"PO-Revision-Date: 2023-02-22 13:22+0000\n"
 "Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -329,7 +329,7 @@ msgstr ""
 #. module: stock_batch_picking
 #: model:ir.model,name:stock_batch_picking.model_stock_picking
 msgid "Transfer"
-msgstr "Trasferisci"
+msgstr "Trasferimento"
 
 #. module: stock_batch_picking
 #: model:ir.ui.view,arch_db:stock_batch_picking.stock_batch_picking_search
