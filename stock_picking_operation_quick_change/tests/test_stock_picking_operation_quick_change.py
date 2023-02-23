@@ -48,7 +48,7 @@ class TestOperationQuickChange(TransactionCase):
                 "location_id": self.warehouse.lot_stock_id.id,
                 "location_dest_id": self.warehouse.wh_output_stock_loc_id.id,
                 "picking_type_id": self.picking_type.id,
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
@@ -98,11 +98,11 @@ class TestOperationQuickChange(TransactionCase):
             active_model=self.picking._name,
             active_ids=self.picking.ids,
         ).create({"new_location_dest_id": new_location_dest_id.id, "change_all": True})
-        move_lines = self.picking.mapped("move_line_ids")
+        move_lines = self.picking.move_line_ids
         self.assertEqual(wiz.location_dest_id, self.picking.location_dest_id)
         self.assertEqual(wiz.old_location_dest_id, move_lines[:1].location_dest_id)
         wiz.action_apply()
-        move_lines = self.picking.mapped("move_line_ids.location_dest_id")
+        move_lines = self.picking.move_line_ids.location_dest_id
         self.assertEqual(len(move_lines), 1)
 
     def test_picking_operation_change_location_dest(self):
@@ -119,7 +119,7 @@ class TestOperationQuickChange(TransactionCase):
             }
         )
         self.picking.action_assign()
-        move_lines = self.picking.mapped("move_line_ids")
+        move_lines = self.picking.move_line_ids
         move_lines[:1].write({"location_dest_id": other_location_dest_id.id})
         wiz = self.Wizard.with_context(
             active_model=self.picking._name,
@@ -131,12 +131,12 @@ class TestOperationQuickChange(TransactionCase):
             }
         )
         wiz.action_apply()
-        move_lines = self.picking.mapped("move_line_ids.location_dest_id")
+        move_lines = self.picking.move_line_ids.location_dest_id
         self.assertEqual(len(move_lines), 2)
 
     def test_picking_operation_change_location_dest_failed(self):
         self.picking.action_assign()
-        for move in self.picking.move_lines:
+        for move in self.picking.move_ids:
             move.quantity_done = 1
         self.picking._action_done()
         new_location_dest_id = self.Location.create(
