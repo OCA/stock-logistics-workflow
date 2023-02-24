@@ -19,6 +19,11 @@ class StockMove(models.Model):
         return self._domain_search_picking_for_assignation_default()
 
     def _domain_search_picking_for_assignation_default(self):
+        # The hook has been backported into Odoo v14
+        # https://github.com/odoo/odoo/pull/111668
+        # Making this module obsolete.
+        if hasattr(self, "_search_picking_for_assignation_domain"):
+            return self._search_picking_for_assignation_domain()
         return [
             ("group_id", "=", self.group_id.id),
             ("location_id", "=", self.location_id.id),
