@@ -42,7 +42,7 @@ addon | version | maintainers | summary
 [stock_lot_product_qty_search](stock_lot_product_qty_search/) | 14.0.1.0.0 | [![grindtildeath](https://github.com/grindtildeath.png?size=30px)](https://github.com/grindtildeath) | Allows to search on Quantity field of Lot/Serial Numbers
 [stock_lot_production_date](stock_lot_production_date/) | 14.0.1.0.0 |  | Stock Lot Production Date
 [stock_lot_scrap](stock_lot_scrap/) | 14.0.1.0.2 |  | This module adds a button in Production Lot/Serial Number view form to Scrap all products contained.
-[stock_move_assign_picking_hook](stock_move_assign_picking_hook/) | 14.0.1.1.1 |  | Stock Move picking assignment hook
+[stock_move_assign_picking_hook](stock_move_assign_picking_hook/) | 14.0.1.1.2 |  | Stock Move picking assignment hook
 [stock_move_change_source_location](stock_move_change_source_location/) | 14.0.1.0.0 |  | This module allows you to change the source location of a stock move from the picking
 [stock_move_forced_lot](stock_move_forced_lot/) | 14.0.1.0.0 |  | This module allows you to set a lot_id in a procurement to force the stock move generated to only reserve the selected lot.
 [stock_move_line_auto_fill](stock_move_line_auto_fill/) | 14.0.1.0.0 |  | Stock Move Line auto fill
