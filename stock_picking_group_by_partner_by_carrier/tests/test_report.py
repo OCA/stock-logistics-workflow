@@ -1,10 +1,12 @@
 # Copyright 2021 Camptocamp (https://www.camptocamp.com)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+from odoo.tests.common import TransactionCase
+
 from .common import TestGroupByBase
 
 
-class TestReport(TestGroupByBase):
+class TestReport(TestGroupByBase,TransactionCase):
     def _set_qty_only_in_location(self, location, product, qty):
         for other_location in self.env["stock.location"].search(
             [("usage", "!=", "view"), ("id", "!=", location.id)]
