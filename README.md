@@ -22,6 +22,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [purchase_stock_picking_invoice_link](purchase_stock_picking_invoice_link/) | 16.0.1.0.0 |  | Adds link between purchases, pickings and invoices
+[stock_delivery_note](stock_delivery_note/) | 16.0.1.0.0 |  | This module allows to fill in a delivery note that will be displayed on delivery report
 [stock_grn](stock_grn/) | 16.0.1.0.1 |  | Goods Received Note
 [stock_move_line_auto_fill](stock_move_line_auto_fill/) | 16.0.1.0.2 |  | Stock Move Line auto fill
 [stock_no_negative](stock_no_negative/) | 16.0.1.0.1 |  | Disallow negative stock levels by default
