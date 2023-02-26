@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo-addon-purchase_stock_picking_invoice_link>=16.0dev,<16.1dev',
+        'odoo-addon-stock_delivery_note>=16.0dev,<16.1dev',
         'odoo-addon-stock_grn>=16.0dev,<16.1dev',
         'odoo-addon-stock_move_line_auto_fill>=16.0dev,<16.1dev',
         'odoo-addon-stock_no_negative>=16.0dev,<16.1dev',
