@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_move_delay_report_user,stock.move.delay.report.user,model_stock_move_delay_report,base.group_user,1,0,0,0
+access_stock_move_delay_report_manager,stock.move.delay.report.manager,model_stock_move_delay_report,base.group_system,1,1,1,1
