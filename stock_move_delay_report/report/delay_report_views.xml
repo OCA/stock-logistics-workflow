@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+      <record id="stock_move_delay_report_pivot_view" model="ir.ui.view">
+           <field name="name">stock.move.delay.report.pivot</field>
+           <field name="model">stock.move.delay.report</field>
+           <field name="arch" type="xml">
+               <pivot string="Delay Analysis" disable_linking="True" sample="1">
+                   <field name="responsible_id" type="row" />
+                   <field name="date_delay" type="measure" string="Mean Days Delay" />
+                   <field name="done_on_time" type="measure" />
+               </pivot>
+           </field>
+      </record>
+
+      <record id="stock_move_delay_report_graph_view" model="ir.ui.view">
+           <field name="name">stock.move.delay.report.graph</field>
+           <field name="model">stock.move.delay.report</field>
+           <field name="arch" type="xml">
+               <graph
+                string="Delay Analysis"
+                type="line"
+                sample="1"
+                disable_linking="1"
+            >
+                   <field name="responsible_id" type="row" />
+                   <field name="date_delay" type="measure" string="Mean Days Delay" />
+               </graph>
+           </field>
+      </record>
+
+      <record id="stock_move_delay_report_tree_view" model="ir.ui.view">
+        <field name="name">stock.move.delay.report.tree</field>
+        <field name="model">stock.move.delay.report</field>
+        <field name="arch" type="xml">
+            <tree create="0">
+                <field name="responsible_id" />
+                <field name="date" />
+                <field name="move_id" />
+                <field name="product_id" />
+                <field name="product_uom" optional="0" />
+                <field name="reference" />
+                <field name="location_src_id" />
+                <field name="location_dest_id" />
+                <field name="date_delay" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="stock_move_delay_report_search_view" model="ir.ui.view">
+        <field name="name">stock.move.delay.report.search</field>
+        <field name="model">stock.move.delay.report</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="responsible_id" />
+                <filter
+                    name="group_responsible_id"
+                    string="Responsible"
+                    icon="terp-partner"
+                    context="{'group_by':'responsible_id'}"
+                />
+            </search>
+        </field>
+    </record>
+
+      <record id="action_stock_move_delay_report" model="ir.actions.act_window">
+          <field name="name">Delay Analysis</field>
+          <field name="res_model">stock.move.delay.report</field>
+          <field name="view_mode">graph,pivot,tree</field>
+          <field name="search_view_id" ref="stock_move_delay_report_search_view" />
+          <field name="context">{
+            'search_default_group_responsible_id': 1,
+            }</field>
+          <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No data yet!
+              </p><p>
+                Complete a new stock move
+              </p>
+          </field>
+      </record>
+
+      <menuitem
+        action="action_stock_move_delay_report"
+        id="menu_stock_move_delay_report"
+        parent="stock.menu_warehouse_report"
+        sequence="140"
+    />
+
+</odoo>
