@@ -122,6 +122,7 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
         so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
         so2.action_confirm()
         pick = so1.picking_ids
+        print(pick)
         move = first(pick.move_ids)
         move.quantity_done = 5
         pick.with_context(cancel_backorder=False)._action_done()
