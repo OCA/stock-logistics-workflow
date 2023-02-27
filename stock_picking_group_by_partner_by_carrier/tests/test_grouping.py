@@ -10,6 +10,7 @@ from .common import TestGroupByBase
 class TestGroupBy(TestGroupByBase, TransactionCase):
     def test_sale_stock_merge_same_partner_no_carrier(self):
         """2 sale orders for the same partner, without carrier
+
         -> the pickings are merged"""
         so1 = self._get_new_sale_order()
         so2 = self._get_new_sale_order(amount=11)
@@ -20,6 +21,7 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
 
     def test_sale_stock_merge_same_carrier(self):
         """2 sale orders for the same partner, with same carrier
+
         -> the pickings are merged"""
         so1 = self._get_new_sale_order(carrier=self.carrier1)
         so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
@@ -34,6 +36,7 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
 
     def test_sale_stock_no_merge_different_carrier(self):
         """2 sale orders for the same partner, with different carriers
+
         -> the pickings are not merged"""
         so1 = self._get_new_sale_order(carrier=self.carrier1)
         so2 = self._get_new_sale_order(amount=11, carrier=self.carrier2)
@@ -47,6 +50,7 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
 
     def test_sale_stock_no_merge_carrier_set_only_on_one(self):
         """2 sale orders for the same partner, one with the other without
+
         -> the pickings are not merged"""
         so1 = self._get_new_sale_order(carrier=self.carrier1)
         so2 = self._get_new_sale_order(amount=11, carrier=None)
@@ -59,7 +63,9 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
     def test_sale_stock_no_merge_same_carrier_picking_policy_one(self):
         """2 sale orders for the same partner, with same carrier, deliver at
         once picking policy
+
         -> the pickings are not merged
+
         """
         so1 = self._get_new_sale_order(carrier=self.carrier1)
         so1.picking_policy = "one"
@@ -78,7 +84,9 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
     def test_sale_stock_no_merge_same_carrier_mixed_picking_policy(self):
         """2 sale orders for the same partner, with same carrier, deliver at once
         picking policy for the 1st sale order.
+
         -> the pickings are not merged
+
         """
         so1 = self._get_new_sale_order(carrier=self.carrier1)
         so1.picking_policy = "one"
@@ -104,7 +112,9 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
     def test_backorder_picking_merge(self):
         """1st sale order ship is printed, 2nd sale order not merged.
         Partial delivery of so1
+
         -> backorder is merged with so2 picking
+
         """
         so1 = self._get_new_sale_order(carrier=self.carrier1)
         so1.action_confirm()
@@ -120,6 +130,7 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
 
     def test_cancelling_sale_order1(self):
         """1st sale order is cancelled
+
         -> picking is still todo with only 1 stock move todo"""
         so1 = self._get_new_sale_order(carrier=self.carrier1)
         so1.action_confirm()
@@ -140,6 +151,7 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
 
     def test_cancelling_sale_order1_before_create_order2(self):
         """1st sale order is cancelled
+
         -> picking is still todo with only 1 stock move todo"""
         so1 = self._get_new_sale_order(carrier=self.carrier1)
         so1.action_confirm()
@@ -152,6 +164,7 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
 
     def test_cancelling_sale_order2(self):
         """2nd sale order is cancelled
+
         -> picking is still todo with only 1 stock move todo"""
         so1 = self._get_new_sale_order(carrier=self.carrier1)
         so1.action_confirm()
@@ -172,6 +185,7 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
 
     def test_delivery_multi_step(self):
         """the warehouse uses pick + ship
+
         -> shippings are grouped, pickings are not"""
         self.warehouse.delivery_steps = "pick_ship"
         so1 = self._get_new_sale_order(carrier=self.carrier1)
@@ -218,7 +232,9 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
 
     def test_delivery_multi_step_group_pick(self):
         """the warehouse uses pick + ship (with grouping enabled on pick)
+
         -> shippings are grouped, as well as pickings
+
         Note that the grouping of pickings cannot be enabled, the grouping
         option is only visible on the outgoing picking types. Grouping
         conditions are based on some data that are only available on the
@@ -253,6 +269,7 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
 
     def test_delivery_multi_step_cancel_so1(self):
         """the warehouse uses pick + ship. Cancel SO1
+
         -> shippings are grouped, pickings are not"""
         self.warehouse.delivery_steps = "pick_ship"
         rule = self.env["procurement.group"]._get_rule(
@@ -277,6 +294,7 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
 
     def test_delivery_multi_step_cancel_so2(self):
         """the warehouse uses pick + ship. Cancel SO2
+
         -> shippings are grouped, pickings are not"""
         self.warehouse.delivery_steps = "pick_ship"
         rule = self.env["procurement.group"]._get_rule(
@@ -301,6 +319,7 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
 
     def test_delivery_multi_step_group_pick_cancel_so1(self):
         """the warehouse uses pick + ship (with grouping enabled on pick)
+
         -> shippings are grouped, as well as pickings"""
         self.warehouse.delivery_steps = "pick_ship"
         self.warehouse.pick_type_id.group_pickings = True
@@ -330,6 +349,7 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
 
     def test_delivery_multi_step_group_pick_cancel_so2(self):
         """the warehouse uses pick + ship (with grouping enabled on pick)
+
         -> shippings are grouped, as well as pickings"""
         self.warehouse.delivery_steps = "pick_ship"
         self.warehouse.pick_type_id.group_pickings = True
@@ -359,6 +379,7 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
 
     def test_delivery_multi_step_cancel_so1_create_so3(self):
         """the warehouse uses pick + ship. Cancel SO1, create SO3
+
         -> shippings are grouped, pickings are not"""
         self.warehouse.delivery_steps = "pick_ship"
         rule = self.env["procurement.group"]._get_rule(
@@ -384,6 +405,7 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
 
     def test_delivery_mult_step_cancelling_sale_order1_before_create_order2(self):
         """1st sale order is cancelled
+
         -> picking is still todo with only 1 stock move todo"""
         so1 = self._get_new_sale_order(carrier=self.carrier1)
         so1.action_confirm()
@@ -396,6 +418,7 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
 
     def test_sale_stock_merge_procurement_group(self):
         """sales orders moves are merged, procurement groups are merged
+
         Ensure that the procurement group is linked with both SO
         and we find the stock.picking records from the SO.
         Ensure that printed transfers keep their procurement group.
