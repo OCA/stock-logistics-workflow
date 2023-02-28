@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <record id="stock_picking_to_batch_form" model="ir.ui.view">
+    <record model="ir.ui.view" id="stock_picking_to_batch_form">
         <field name="model">stock.picking.to.batch</field>
         <field
             name="inherit_id"
@@ -27,13 +27,20 @@
                     string="Create multiple batch picking grouped by..."
                     attrs="{'invisible': ['|', ('batch_by_group', '=', False), ('mode', '=', 'existing')]}"
                 >
-                    <field name="group_field_ids" nolabel="1">
+                    <field name="group_field_ids" nolabel="1" colspan="2">
                         <tree editable="bottom">
                             <field name="sequence" widget="handle" />
                             <field name="field_id" options="{'no_create': True}" />
                         </tree>
                     </field>
                 </group>
+            </xpath>
+            <xpath expr="//button[@name='attach_pickings']" position="after">
+                <button
+                    name="action_create_batch_with_mode_existing"
+                    string="Add to existing batch"
+                    attrs="{'invisible': [('mode', '=', 'create')]}"
+                />
             </xpath>
             <xpath expr="//button[@name='attach_pickings']" position="attributes">
                 <attribute name="name">action_create_batch</attribute>

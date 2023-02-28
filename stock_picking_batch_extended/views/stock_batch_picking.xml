@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <record model="ir.ui.view" id="stock_picking_batch_form">
+    <record model="ir.ui.view" id="stock_picking_batch_form_inherit">
+        <field name="name">stock.picking.batch.form.inherit</field>
         <field name="model">stock.picking.batch</field>
         <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_form" />
         <field name="arch" type="xml">
@@ -77,13 +78,13 @@
                 <field name="scheduled_date" />
             </field>
             <filter name="state" position="after">
-                    <filter
+                <filter
                     name="scheduled_date"
                     string="Scheduled Date"
                     context="{'group_by':'scheduled_date'}"
                 />
             </filter>
-            <xpath expr="//group" position="after">
+            <filter name="activities_overdue" position="before">
                 <filter
                     name="my_batch"
                     string="My batches"
@@ -94,7 +95,8 @@
                     string="Unassigned"
                     domain="[('user_id','=', False)]"
                 />
-            </xpath>
+                <separator />
+            </filter>
         </field>
     </record>
 

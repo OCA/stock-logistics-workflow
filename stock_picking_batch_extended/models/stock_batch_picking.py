@@ -1,6 +1,8 @@
 # Copyright 2012-2014 Alexandre Fayolle, Camptocamp SA
 # Copyright 2018-2020 Tecnativa - Carlos Dauden
+# Copyright 2023 FactorLibre - Boris Alias
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
@@ -23,7 +25,9 @@ class StockPickingBatch(models.Model):
         default=fields.Date.context_today,
         help="date on which the batch picking is to be processed",
     )
+
     user_id = fields.Many2one(index=True)
+
     use_oca_batch_validation = fields.Boolean(
         default=lambda self: self.env.company.use_oca_batch_validation,
         copy=False,
@@ -36,7 +40,9 @@ class StockPickingBatch(models.Model):
         domain=[("state", "not in", ("cancel", "done"))],
         help="List of active picking managed by this batch.",
     )
+
     notes = fields.Text(help="free form remarks")
+
     entire_package_ids = fields.Many2many(
         comodel_name="stock.quant.package",
         compute="_compute_entire_package_ids",
@@ -60,9 +66,9 @@ class StockPickingBatch(models.Model):
             batch.update(
                 {
                     "entire_package_ids": batch.use_oca_batch_validation
-                    and batch.picking_ids.mapped("entire_package_ids" or False),
+                    and batch.picking_ids.mapped("package_ids" or False),
                     "entire_package_detail_ids": batch.use_oca_batch_validation
-                    and batch.picking_ids.mapped("entire_package_detail_ids" or False),
+                    and batch.picking_ids.mapped("package_ids" or False),
                 }
             )
 
@@ -99,6 +105,22 @@ class StockPickingBatch(models.Model):
     def remove_undone_pickings(self):
         """Remove of this batch all pickings which state is not done / cancel."""
         self.mapped("active_picking_ids").write({"batch_id": False})
+        self.verify_state()
+
+    def verify_state(self):
+        batchs = self.search(
+            [("id", "in", self.ids), ("state", "not in", ["cancel", "done"])]
+        )
+
+        for batch in batchs:
+            # Cancels automatically the batch picking if all its transfers are cancelled.
+            if all(picking.state == "cancel" for picking in batch.picking_ids):
+                batch.state = "cancel"
+            # Batch picking is marked as done if all its not canceled transfers are done.
+            elif all(
+                picking.state in ["cancel", "done"] for picking in batch.picking_ids
+            ):
+                batch.state = "done"
 
     def action_view_stock_picking(self):
         """This function returns an action that display existing pickings of

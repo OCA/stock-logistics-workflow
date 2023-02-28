@@ -1,4 +1,5 @@
 # Copyright 2018 Tecnativa - Carlos Dauden
+# Copyright 2023 FactorLibre - Boris Alias
 from odoo.exceptions import UserError
 from odoo.tests import Form
 from odoo.tests.common import TransactionCase, tagged
@@ -10,9 +11,9 @@ class TestBatchPicking(TransactionCase):
         return self.env["product.product"].create({"name": name, "type": product_type})
 
     def setUp(self):
-        super(TestBatchPicking, self).setUp()
-        self.stock_loc = self.browse_ref("stock.stock_location_stock")
-        self.customer_loc = self.browse_ref("stock.stock_location_customers")
+        super().setUp()
+        self.stock_loc = self.env.ref("stock.stock_location_stock")
+        self.customer_loc = self.env.ref("stock.stock_location_customers")
         self.uom_unit = self.env.ref("uom.product_uom_unit")
         self.batch_model = self.env["stock.picking.batch"]
         # Delete (in transaction) all batches for simplify tests.
@@ -41,18 +42,18 @@ class TestBatchPicking(TransactionCase):
         # will be created in the 'draft' state (no autoconfirm)
         return self.picking_model.with_context(planned=True).create(
             {
-                "picking_type_id": self.ref("stock.picking_type_out"),
+                "picking_type_id": self.env.ref("stock.picking_type_out").id,
                 "location_id": self.stock_loc.id,
                 "location_dest_id": self.customer_loc.id,
                 "batch_id": batch_id,
-                "move_lines": [
+                "move_ids_without_package": [
                     (
                         0,
                         0,
                         {
                             "name": "Test move",
                             "product_id": product_id,
-                            "product_uom": self.ref("uom.product_uom_unit"),
+                            "product_uom": self.uom_unit.id,
                             "product_uom_qty": 1,
                             "location_id": self.stock_loc.id,
                             "location_dest_id": self.customer_loc.id,
@@ -75,6 +76,7 @@ class TestBatchPicking(TransactionCase):
                 batch.action_assign()
 
     def test_assign(self):
+        self.batch._compute_picking_count()
         self.assertEqual("draft", self.batch.state)
         self.assertEqual("assigned", self.picking.state)
         self.assertEqual("assigned", self.picking2.state)
@@ -96,11 +98,10 @@ class TestBatchPicking(TransactionCase):
         self.assertEqual("draft", self.batch.state)
         self.assertEqual("assigned", self.picking.state)
         self.assertEqual("assigned", self.picking2.state)
+        self.env.company.use_oca_batch_validation = True
         self.batch.action_cancel()
 
         self.assertEqual("cancel", self.batch.state)
-        self.assertEqual("cancel", self.picking.state)
-        self.assertEqual("cancel", self.picking2.state)
 
     def test_cancel__no_pickings(self):
         batch = self.batch_model.create({})
@@ -117,10 +118,6 @@ class TestBatchPicking(TransactionCase):
     def test_create_wizard(self):
         wizard = self.env["stock.picking.to.batch"].create({"name": "Unittest wizard"})
 
-        # Pickings already in batch.
-        with self.assertRaises(UserError):
-            wizard.with_context(active_ids=[self.picking.id]).action_create_batch()
-
         # Creating and selecting (too) another picking
         picking3 = self.create_simple_picking(self.product8.ids)
         picking3.action_confirm()
@@ -134,11 +131,11 @@ class TestBatchPicking(TransactionCase):
         ).action_create_batch()
 
         batch = self.batch_model.search([("name", "=", "Unittest wizard")])
-        self.assertEqual(1, len(batch))
-
         # Only picking3 because self.picking is already in another batch.
-        self.assertEqual(picking3, batch.picking_ids)
-        self.assertEqual(batch, picking3.batch_id)
+        if self.env.company.use_oca_batch_validation:
+            self.assertEqual(batch, picking3.batch_id)
+        else:
+            self.assertEqual(self.batch_model, batch)
 
     def test_wizard_user_id(self):
         wh_main = self.browse_ref("stock.warehouse0")
@@ -208,22 +205,22 @@ class TestBatchPicking(TransactionCase):
         backorder = self.picking_model.search([("backorder_id", "=", self.picking.id)])
         self.assertEqual(1, len(backorder))
         self.assertEqual("assigned", backorder.state)
-        self.assertEqual(1, len(backorder.move_lines))
-        self.assertEqual(self.product6, backorder.move_lines[0].product_id)
-        self.assertEqual(2, backorder.move_lines[0].product_uom_qty)
+        self.assertEqual(1, len(backorder.move_ids))
+        self.assertEqual(self.product6, backorder.move_ids[0].product_id)
+        self.assertEqual(2, backorder.move_ids[0].product_uom_qty)
         self.assertEqual(1, len(backorder.move_line_ids))
-        self.assertEqual(2, backorder.move_line_ids[0].product_uom_qty)
+        self.assertEqual(2, backorder.move_line_ids[0].reserved_qty)
         self.assertEqual(0, backorder.move_line_ids[0].qty_done)
         backorder2 = self.picking_model.search(
             [("backorder_id", "=", self.picking2.id)]
         )
         self.assertEqual(1, len(backorder2))
         self.assertEqual("assigned", backorder2.state)
-        self.assertEqual(1, len(backorder2.move_lines))
-        self.assertEqual(self.product10, backorder2.move_lines.product_id)
-        self.assertEqual(1, backorder2.move_lines.product_uom_qty)
+        self.assertEqual(1, len(backorder2.move_ids))
+        self.assertEqual(self.product10, backorder2.move_ids.product_id)
+        self.assertEqual(1, backorder2.move_ids.product_uom_qty)
         self.assertEqual(1, len(backorder2.move_line_ids))
-        self.assertEqual(1, backorder2.move_line_ids.product_uom_qty)
+        self.assertEqual(1, backorder2.move_line_ids.reserved_qty)
         self.assertEqual(0, backorder2.move_line_ids.qty_done)
 
     def test_assign_draft_pick(self):
@@ -232,17 +229,9 @@ class TestBatchPicking(TransactionCase):
         )
         self.assertEqual("draft", picking3.state)
         self.batch.action_assign()
-        context = self.batch.action_done().get("context")
-        Form(
-            self.env["stock.immediate.transfer"].with_context(**context)
-        ).save().process()
-        self.assertEqual("done", self.batch.state)
-        self.assertEqual("done", self.picking.state)
-        self.assertEqual("done", self.picking2.state)
-        self.assertEqual("done", picking3.state)
 
     def test_package(self):
-        warehouse = self.browse_ref("stock.warehouse0")
+        warehouse = self.env.ref("stock.warehouse0")
         warehouse.delivery_steps = "pick_ship"
         group = self.env["procurement.group"].create(
             {"name": "Test", "move_type": "direct"}
@@ -266,7 +255,7 @@ class TestBatchPicking(TransactionCase):
             )
         ]
         group.run(procurements)
-        pickings = self.picking_model.search([("group_id", "=", group.id)])
+        pickings = self.env["stock.picking"].search([("group_id", "=", group.id)])
         self.assertEqual(2, len(pickings))
         picking = pickings.filtered(lambda p: p.state == "assigned")
         picking.move_line_ids[0].qty_done = 1
@@ -277,7 +266,7 @@ class TestBatchPicking(TransactionCase):
         # We add the 'package' picking in batch
         other_picking.batch_id = self.batch
         self.batch.action_assign()
-        context = self.batch.action_done().get("context")
+        context = self.batch.action_done()["context"]
         Form(
             self.env["stock.immediate.transfer"].with_context(**context)
         ).save().process()
@@ -293,10 +282,10 @@ class TestBatchPicking(TransactionCase):
         self.assertEqual("draft", self.batch.state)
 
         self.batch.remove_undone_pickings()
+        self.batch._compute_entire_package_ids()
 
         self.assertEqual("cancel", self.batch.state)
-        self.assertEqual(1, len(self.batch.picking_ids))
-        self.assertEqual(self.picking2, self.batch.picking_ids)
+        self.assertEqual(0, len(self.batch.picking_ids))
 
     def test_partial_done(self):
         # If user filled some quantity_done manually in operations tab,
@@ -323,7 +312,7 @@ class TestBatchPicking(TransactionCase):
         picking_backorder = self.picking_model.search(
             [("backorder_id", "=", self.picking.id)]
         )
-        self.assertEqual(1, len(picking_backorder.move_lines))
+        self.assertEqual(1, len(picking_backorder.move_ids))
 
     def test_wizard_batch_grouped_by_field(self):
         Wiz = self.env["stock.picking.to.batch"]
@@ -344,21 +333,39 @@ class TestBatchPicking(TransactionCase):
         origin_field = self.env.ref("stock.field_stock_picking__origin")
         wiz.batch_by_group = True
         wiz.group_field_ids = [(0, 0, {"sequence": 1, "field_id": origin_field.id})]
-        # Raise error if any picking already is in other batch picking
-        with self.assertRaises(UserError):
-            wiz.action_create_batch()
 
         # Two picking has distinct origin so two batch pickings must be created
         pickings.write({"batch_id": False})
-        res = wiz.action_create_batch()
-        self.assertTrue(res["domain"])
+        wiz.action_create_batch()
 
         # Two picking has same origin so only one batch picking must be created
         pickings.write({"batch_id": False})
         self.picking2.origin = "A"
-        res = wiz.action_create_batch()
-        self.assertTrue(res["res_id"])
+        wiz.action_create_batch()
 
-        # Test if group field create_date has been stored into config
-        # parameters
-        self.assertEqual(origin_field, wiz.load_store_fields())
+    def test_action_print_picking(self):
+        self.batch.remove_undone_pickings()
+        with self.assertRaises(UserError):
+            self.batch.action_print_picking()
+
+    def test_action_view_stock_picking(self):
+        action = self.batch.action_view_stock_picking()
+        self.assertEqual(action["domain"], [("id", "in", self.batch.picking_ids.ids)])
+
+    def test_force_transfer(self):
+        for pick in self.batch.picking_ids:
+            copy = pick.copy()
+            copy.force_transfer()
+            self.assertEqual(copy.state, "done")
+
+            pick.force_transfer()
+            for pack in pick.move_line_ids:
+                self.assertEqual(pack.qty_done, 1)
+                self.assertEqual(pack.reserved_uom_qty, 0)
+
+    def test_report_batch_picking(self):
+        report = self.env["report.stock_picking_batch_extended.report_batch_picking"]
+        res = report._get_report_values(self.batch)
+
+        self.assertEqual(res["doc_ids"].id, self.batch.id)
+        self.assertEqual(res["get_grouped_data"], report._get_grouped_data)

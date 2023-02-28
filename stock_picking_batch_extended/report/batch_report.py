@@ -1,9 +1,10 @@
 # Copyright 2018 Tecnativa - Carlos Dauden
+# Copyright 2023 FactorLibre - Boris Alias
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 import logging
 
-from odoo import api, fields, models
-from odoo.tools import float_is_zero
+from odoo import fields, models
+from odoo.tools.float_utils import float_is_zero
 
 _logger = logging.getLogger(__name__)
 
@@ -12,15 +13,12 @@ class ReportPrintBatchPicking(models.AbstractModel):
     _name = "report.stock_picking_batch_extended.report_batch_picking"
     _description = "Report for Batch Picking"
 
-    @api.model
     def key_level_0(self, operation):
         return operation.location_id.id, operation.location_dest_id.id
 
-    @api.model
     def key_level_1(self, operation):
         return operation.product_id.id
 
-    @api.model
     def new_level_0(self, operation):
         level_0_name = "{} \u21E8 {}".format(
             operation.location_id.name_get()[0][1],
@@ -33,18 +31,16 @@ class ReportPrintBatchPicking(models.AbstractModel):
             "l1_items": {},
         }
 
-    @api.model
     def _get_operation_qty(self, operation):
         return (
             float_is_zero(
-                operation.product_qty,
+                operation.qty_done,
                 precision_rounding=operation.product_uom_id.rounding,
             )
             and operation.qty_done
-            or operation.product_qty
+            or operation.qty_done
         )
 
-    @api.model
     def new_level_1(self, operation):
         return {
             "product": operation.product_id,
@@ -52,12 +48,10 @@ class ReportPrintBatchPicking(models.AbstractModel):
             "operations": operation,
         }
 
-    @api.model
     def update_level_1(self, group_dict, operation):
         group_dict["product_qty"] += self._get_operation_qty(operation)
         group_dict["operations"] += operation
 
-    @api.model
     def sort_level_0(self, rec_list):
         return sorted(
             rec_list,
@@ -69,14 +63,12 @@ class ReportPrintBatchPicking(models.AbstractModel):
             ),
         )
 
-    @api.model
     def sort_level_1(self, rec_list):
         return sorted(
             rec_list,
             key=lambda rec: (rec["product"].default_code or "", rec["product"].id),
         )
 
-    @api.model
     def _get_grouped_data(self, batch):
         grouped_data = {}
         for op in batch.move_line_ids:
@@ -92,17 +84,18 @@ class ReportPrintBatchPicking(models.AbstractModel):
             grouped_data[l0_key]["l1_items"] = self.sort_level_1(
                 grouped_data[l0_key]["l1_items"].values()
             )
-        return self.sort_level_0(grouped_data.values())
+        return self.sort_level_0(list(grouped_data.values()))
 
-    @api.model
     def _get_report_values(self, docids, data=None):
         model = "stock.picking.batch"
         docs = self.env[model].browse(docids)
+        report_name = "stock_picking_batch_extended.report_batch_picking"
         return {
             "doc_ids": docids,
             "doc_model": model,
-            "data": data,
             "docs": docs,
+            "data": data,
+            "report_name": report_name,
             "get_grouped_data": self._get_grouped_data,
             "now": fields.Datetime.now,
         }

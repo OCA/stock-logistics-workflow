@@ -27,3 +27,7 @@
 * `Trobz <https://trobz.com>`_:
 
     * Son Ho <sonhd@trobz.com>
+
+* `Factor Libre <https://factorlibre.com>`_:
+
+  * Boris Alias
