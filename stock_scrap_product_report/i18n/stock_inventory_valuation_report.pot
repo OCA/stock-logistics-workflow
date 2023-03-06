@@ -125,6 +125,11 @@ msgid "Name"
 msgstr ""
 
 #. module: stock_scrap_product_report
+#: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard_view__origin
+msgid "Origin"
+msgstr ""
+
+#. module: stock_scrap_product_report
 #: model:ir.model.fields,field_description:stock_scrap_product_report.field_stock_scrap_product_wizard_view__qty_at_date
 msgid "Qty At Date"
 msgstr ""

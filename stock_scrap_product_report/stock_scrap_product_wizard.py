@@ -42,6 +42,7 @@ class StockScrapProductWizardView(models.TransientModel):
     cost_method = fields.Char()
     categ_name = fields.Char()
     date = fields.Datetime()
+    origin = fields.Char()
 
 class StockScrapProductWizard(models.TransientModel):
     _name = 'stock.scrap.product.wizard'
@@ -75,11 +76,11 @@ class StockScrapProductWizard(models.TransientModel):
                 self.env.user.company_id.id,
                 date=move_line.date)
             line = self.parse_line(
-                product, standard_price, move_line.qty_done, move_line.date)
+                product, standard_price, move_line.qty_done, move_line.date, move_line)
             self.results += ReportLine.new(line)
 
     @api.model
-    def parse_line(self, product, standard_price, qty, date):
+    def parse_line(self, product, standard_price, qty, date, move_line):
         line = {
             'name': product.name,
             'reference': product.default_code,
@@ -93,6 +94,7 @@ class StockScrapProductWizard(models.TransientModel):
             'cost_method': product.cost_method,
             'categ_name': product.categ_id.name,
             'date': date,
+            'origin': ", ".join(move_line.mapped("move_id.scrap_ids.scrap_origin_id.name"))
         }
         return line
 

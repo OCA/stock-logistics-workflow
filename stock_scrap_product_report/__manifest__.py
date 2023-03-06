@@ -27,6 +27,7 @@
     'license': 'AGPL-3',
     'depends': [
         'stock_account',
+        'stock_scrap_origin',
         'report_xlsx_helper',
     ],
     'data': [

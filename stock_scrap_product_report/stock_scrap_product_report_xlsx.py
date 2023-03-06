@@ -79,7 +79,7 @@ class ReportStockScrapProductReportXlsx(models.TransientModel):
                 },
                 'width': 15,
             },
-            '8_standard_price': {
+            '80_standard_price': {
                 'header': {
                     'value': _('Cost'),
                 },
@@ -89,13 +89,22 @@ class ReportStockScrapProductReportXlsx(models.TransientModel):
                 },
                 'width': 18,
             },
-            '9_stock_value': {
+            '81_stock_value': {
                 'header': {
                     'value': _('Value'),
                 },
                 'data': {
                     'value': self._render('stock_value'),
                     'format': self.format_tcell_amount_conditional_right,
+                },
+                'width': 18,
+            },
+            '90_origin': {
+                'header': {
+                    'value': _('Origin'),
+                },
+                'data': {
+                    'value': self._render('origin'),
                 },
                 'width': 18,
             },
@@ -154,7 +163,8 @@ class ReportStockScrapProductReportXlsx(models.TransientModel):
                         'standard_price': line.standard_price or 0.00,
                         'stock_value': line.stock_value or 0.00,
                         'categ_name': line.categ_name,
-                        'date': line.date
+                        'date': line.date,
+                        'origin': line.origin or '',
                     },
                     default_format=self.format_tcell_left)
                 total += line.stock_value
