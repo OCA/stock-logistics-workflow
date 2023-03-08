@@ -8,9 +8,12 @@ from odoo import _, models
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
+    def _get_picking_send_email_template(self):
+        return self.company_id.stock_mail_confirmation_template_id
+
     def action_picking_send(self):
         self.ensure_one()
-        template = self.company_id.stock_mail_confirmation_template_id
+        template = self._get_picking_send_email_template()
         compose_form = self.env.ref(
             "mail.email_compose_message_wizard_form",
             False,
