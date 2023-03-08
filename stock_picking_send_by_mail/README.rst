@@ -73,6 +73,9 @@ Contributors
 
   * Vicent Cubells
   * Carlos Roca
+* Camptocamp <https://www.camptocamp.com>:
+
+  * Sébastien Alix
 
 Maintainers
 ~~~~~~~~~~~
