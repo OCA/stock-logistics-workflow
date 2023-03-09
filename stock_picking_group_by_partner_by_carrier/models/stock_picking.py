@@ -99,8 +99,6 @@ class StockPicking(models.Model):
 
     def _merge_procurement_groups(self):
         self.ensure_one()
-        print("*************")
-        print("entro a _merge_procurement_groups")
         if self._is_grouping_disabled():
             return False
         if self.picking_type_id.code != "outgoing":
@@ -111,14 +109,8 @@ class StockPicking(models.Model):
             # old, done sales orders in new groups forever
             lambda picking: not (picking.printed or picking.state == "done")
         )
-        print("*************")
-        print("group_pickings: ",group_pickings)
         moves = group_pickings.move_lines
-        print("*************")
-        print("moves: ", moves)
         base_group = self.group_id
-        print("*************")
-        print("base_group: ", base_group)
 
         # If we have moves of different procurement groups, it means moves
         # have been merged in the same picking. In this case a new

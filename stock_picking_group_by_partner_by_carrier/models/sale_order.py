@@ -24,7 +24,6 @@ class SaleOrder(models.Model):
     def get_name_for_delivery_line(self):
         """Get the name for the sale order displayed on the delivery note"""
         self.ensure_one()
-        print("**********","get_name_for_delivery_line")
         if self.client_order_ref:
             return self.name + " - " + self.client_order_ref
         else:
@@ -38,5 +37,4 @@ class SaleOrderLine(models.Model):
         vals = super()._prepare_procurement_group_vals()
         if not vals.get("sale_ids") and vals.get("sale_id"):
             vals["sale_ids"] = [(6, 0, [vals["sale_id"]])]
-        print("***********",vals)
         return vals
