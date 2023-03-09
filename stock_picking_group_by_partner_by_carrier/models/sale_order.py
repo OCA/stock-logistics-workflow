@@ -24,6 +24,7 @@ class SaleOrder(models.Model):
     def get_name_for_delivery_line(self):
         """Get the name for the sale order displayed on the delivery note"""
         self.ensure_one()
+        print("**********","get_name_for_delivery_line")
         if self.client_order_ref:
             return self.name + " - " + self.client_order_ref
         else:
