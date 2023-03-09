@@ -55,6 +55,19 @@ class StockMove(models.Model):
                 subtype_id=self.env.ref("mail.mt_note").id,
             )
 
+    def _search_picking_for_assignation_domain(self):
+        domain = super()._search_picking_for_assignation_domain()
+
+        if self.partner_id and (self.location_id.usage == 'transit' or self.location_dest_id.usage == 'transit'):
+            domain += [('partner_id', '=', self.partner_id.id)]
+
+        # remove group
+        domain = [x for x in domain if x[0] != "group_id"]
+
+        grouping_domain = self._assign_picking_group_domain()
+
+        return domain + grouping_domain
+
     def _domain_search_picking_for_assignation(self):
         domain = super()._domain_search_picking_for_assignation()
         if (
