@@ -4,7 +4,12 @@ from odoo import fields, models
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    picking_ids = fields.Many2many("stock.picking", string="Transfers", copy=False)
+    picking_ids = fields.Many2many(
+        comodel_name="stock.picking",
+        relation="sale_order_stock_picking_rel",
+        string="Transfers",
+        copy=False,
+    )
 
     def action_cancel(self):
         for sale_order in self:

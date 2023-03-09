@@ -13,6 +13,4 @@ class ResPartner(models.Model):
     )
 
     def _commercial_fields(self):
-        return super(ResPartner, self)._commercial_fields() + [
-            "disable_picking_grouping"
-        ]
+        return super()._commercial_fields() + ["disable_picking_grouping"]
