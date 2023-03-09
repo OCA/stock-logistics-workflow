@@ -4,12 +4,12 @@
 {
     "name": "Stock Picking Purchase Order Link",
     "summary": "Link between picking and purchase order",
-    "version": "15.0.1.0.1",
+    "version": "16.0.1.0.0",
     "license": "AGPL-3",
     "author": "ForgeFlow S.L., Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
-    "application": False,
-    "installable": True,
     "depends": ["purchase_stock"],
     "data": ["views/stock_picking_view.xml"],
+    "application": False,
+    "installable": True,
 }
