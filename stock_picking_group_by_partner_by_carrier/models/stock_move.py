@@ -68,22 +68,6 @@ class StockMove(models.Model):
 
         return domain + grouping_domain
 
-    def _domain_search_picking_for_assignation(self):
-        domain = super()._domain_search_picking_for_assignation()
-        if (
-            not self.picking_type_id.group_pickings
-            or self.partner_id.disable_picking_grouping
-            or self.group_id.sale_id.picking_policy == "one"
-        ):
-            return domain
-
-        # remove group
-        domain = [x for x in domain if x[0] != "group_id"]
-
-        grouping_domain = self._assign_picking_group_domain()
-
-        return domain + grouping_domain
-
     # TODO: this part and everything related to generic grouping
     # should be split into `stock_picking_group_by` module.
     def _assign_picking_group_domain(self):
