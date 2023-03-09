@@ -7,8 +7,6 @@ class SaleOrder(models.Model):
     picking_ids = fields.Many2many(
         comodel_name="stock.picking",
         relation="sale_order_stock_picking_rel",
-        column1="order_id",
-        column2="picking_id",
         string="Transfers",
         copy=False,
     )
