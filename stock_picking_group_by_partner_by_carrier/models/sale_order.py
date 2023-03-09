@@ -37,4 +37,5 @@ class SaleOrderLine(models.Model):
         vals = super()._prepare_procurement_group_vals()
         if not vals.get("sale_ids") and vals.get("sale_id"):
             vals["sale_ids"] = [(6, 0, [vals["sale_id"]])]
+        print("***********",vals)
         return vals
