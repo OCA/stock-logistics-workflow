@@ -10,11 +10,7 @@ from odoo import api, fields, models
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    sale_ids = fields.Many2many(
-        comodel_name="sale.order",
-        compute="_compute_sale_ids",
-        store=True,
-    )
+    sale_ids = fields.Many2many("sale.order", compute="_compute_sale_ids", store=True)
     # don't copy the printed state of a picking otherwise the backorder of a
     # printed picking becomes printed
     printed = fields.Boolean(copy=False)
@@ -26,11 +22,11 @@ class StockPicking(models.Model):
 
     @api.depends("canceled_by_merge")
     def _compute_state(self):
-        super()._compute_state()
+        res = super()._compute_state()
         for picking in self:
             if picking.canceled_by_merge:
                 picking.state = "cancel"
-        return
+        return res
 
     def _check_emptyness_after_merge(self):
         """Handle pickings emptied during a manual merge."""
@@ -82,7 +78,6 @@ class StockPicking(models.Model):
         moves = self.move_lines.filtered(lambda m: m.state != "cancel")
         origins = moves.filtered(lambda m: m.origin).mapped("origin")
         origins = sorted(list(set(origins)))
-        print(" ".join(origins))
         return " ".join(origins)
 
     def _update_merged_origin(self):
@@ -224,7 +219,6 @@ class StockPicking(models.Model):
                 return sales_and_moves
             else:
                 sales_and_moves = self.env["stock.move.line"]
-                fake_record["reserved_uom_qty"] = fake_record.pop("product_uom_qty")
                 fake_record["product_uom_id"] = fake_record.pop("product_uom")
                 for sale, sale_moves in grouped_moves:
                     if sale:
