@@ -222,6 +222,12 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
         shipping."""
         warehouse = self.env.ref("stock.warehouse0")
         warehouse.delivery_steps = "pick_ship"
+        rule = self.env["procurement.group"]._get_rule(
+            self.product,
+            self.warehouse.pick_type_id.default_location_dest_id,
+            {"warehouse_id": self.warehouse},
+        )
+        rule.propagate_carrier = False
         warehouse.pick_type_id.group_pickings = True
         so1 = self._get_new_sale_order(carrier=self.carrier1)
         so1.action_confirm()
