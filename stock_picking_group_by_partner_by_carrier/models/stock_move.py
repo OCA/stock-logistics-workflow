@@ -58,8 +58,11 @@ class StockMove(models.Model):
     def _search_picking_for_assignation_domain(self):
         domain = super()._search_picking_for_assignation_domain()
 
-        if self.partner_id and (self.location_id.usage == 'transit' or self.location_dest_id.usage == 'transit'):
-            domain += [('partner_id', '=', self.partner_id.id)]
+        if self.partner_id and (
+            self.location_id.usage == "transit"
+            or self.location_dest_id.usage == "transit"
+            ):
+                domain += [("partner_id", "=", self.partner_id.id)]
 
         # remove group
         domain = [x for x in domain if x[0] != "group_id"]
