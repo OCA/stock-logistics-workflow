@@ -61,14 +61,12 @@ class StockMove(models.Model):
         if self.partner_id and (
             self.location_id.usage == "transit"
             or self.location_dest_id.usage == "transit"
-            ):
-                domain += [("partner_id", "=", self.partner_id.id)]
+        ):
+            domain += [("partner_id", "=", self.partner_id.id)]
 
         # remove group
         domain = [x for x in domain if x[0] != "group_id"]
-
         grouping_domain = self._assign_picking_group_domain()
-
         return domain + grouping_domain
 
     # TODO: this part and everything related to generic grouping
