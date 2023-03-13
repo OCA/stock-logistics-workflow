@@ -424,4 +424,3 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
         self.assertEqual(picking.state, "done")
         self.assertTrue(picking.backorder_ids)
         self.assertNotEqual(picking, picking.backorder_ids)
-
