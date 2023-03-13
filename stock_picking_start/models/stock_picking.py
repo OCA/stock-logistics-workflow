@@ -53,13 +53,24 @@ class StockPicking(models.Model):
 
     def _inverse_started(self):
         for record in self:
+            modified = False
+            check_method = None
             if record.started:
-                record._check_action_start_allowed()
                 vals = record._prepare_start_values(record.company_id)
+                check_method = record._check_action_start_allowed
             else:
-                record._check_action_cancel_start_allowed()
                 vals = record._prepare_cancel_start_values(record.company_id)
-            record.write(vals)
+                check_method = record._check_action_cancel_start_allowed
+            modified = record._is_inverse_started_modify_origin(vals)
+            if modified:
+                check_method()
+                record.write(vals)
+
+    def _is_inverse_started_modify_origin(self, vals):
+        for k, v in vals.items():
+            if self._origin[k] != v:
+                return True
+        return False
 
     def _check_action_start_allowed(self):
         no_start_allowed = self.filtered(lambda p: not p.action_start_allowed)
@@ -87,7 +98,7 @@ class StockPicking(models.Model):
         self.ensure_one()
         value = {"printed": True}
         if company.stock_picking_assign_operator_at_start:
-            value["user_id"] = self.env.uid
+            value["user_id"] = self.env.user
         return value
 
     def _prepare_cancel_start_values(self, company):
