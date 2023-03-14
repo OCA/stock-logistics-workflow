@@ -9,9 +9,9 @@ class PurchaseOrderLine(models.Model):
     _inherit = "purchase.order.line"
 
     def _create_stock_moves(self, picking):
-        """ When creating the moves from a PO, propagate the procurement group
-            and quantity from the PO lines to the destination moves, and
-            reassign pickings.
+        """When creating the moves from a PO, propagate the procurement group
+        and quantity from the PO lines to the destination moves, and
+        reassign pickings.
         """
         moves = super(PurchaseOrderLine, self)._create_stock_moves(picking)
         for move in moves:
