@@ -1,4 +1,6 @@
 * Vincent Renaville <vincent.renaville@camptocamp.com>
 * Akim Juillerat <akim.juillerat@camptocamp.com>
 * Kitti Upariphutthiphong <kittiu@ecosoft.co.th>
-* Dung Tran <dungtd@trobz.com>
+* `Trobz <https://trobz.com>`_:
+    * Dung Tran <dungtd@trobz.com>
+    * Jack Le <anlh@trobz.com>
