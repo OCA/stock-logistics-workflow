@@ -94,7 +94,7 @@ class ResPartner(models.Model):
                 else:
                     utc_start = start_time
                     utc_end = end_time
-                if utc_start <= date_time.time() < utc_end:
+                if utc_start <= date_time.time() <= utc_end:
                     return True
         return False
 
