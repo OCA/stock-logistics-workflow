@@ -118,8 +118,13 @@ class TestPartnerDeliveryWindow(SavepointCase):
         onchange_res = picking._onchange_scheduled_date()
         self.assertIsNone(onchange_res)
         # Scheduled date is in UTC so 2020-04-02 14:00:00 == 2020-04-02 16:00:00
-        #  in Brussels which is not preferred
+        #  in Brussels which is preferred
         picking.scheduled_date = "2020-04-02 14:00:00"
+        onchange_res = picking._onchange_scheduled_date()
+        self.assertIsNone(onchange_res)
+        # Scheduled date is in UTC so 2020-04-02 14:00:01 == 2020-04-02 16:00:01
+        #  in Brussels which is preferred
+        picking.scheduled_date = "2020-04-02 14:00:01"
         onchange_res = picking._onchange_scheduled_date()
         self.assertTrue(
             isinstance(onchange_res, dict) and "warning" in onchange_res.keys()
@@ -157,6 +162,11 @@ class TestPartnerDeliveryWindow(SavepointCase):
         # Scheduled date is in UTC so 2020-03-26 15:00:00 == 2020-04-02 16:00:00
         #  in Brussels which is preferred
         picking.scheduled_date = "2020-03-26 15:00:00"
+        onchange_res = picking._onchange_scheduled_date()
+        self.assertIsNone(onchange_res)
+        # Scheduled date is in UTC so 2020-03-26 15:00:01 == 2020-04-02 16:00:01
+        #  in Brussels which is not preferred
+        picking.scheduled_date = "2020-03-26 15:00:01"
         onchange_res = picking._onchange_scheduled_date()
         self.assertTrue(
             isinstance(onchange_res, dict) and "warning" in onchange_res.keys()
