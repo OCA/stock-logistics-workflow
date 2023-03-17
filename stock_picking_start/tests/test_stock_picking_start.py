@@ -169,3 +169,30 @@ class TestStockPickinStart(TransactionCase):
             self.assigned_picking.action_cancel_start()
         self.assigned_picking.action_start()
         self.assertTrue(self.assigned_picking.action_cancel_start_allowed)
+
+    def test_create_picking_started_false(self):
+        picking = self.env["stock.picking"].create(
+            {
+                "picking_type_id": self.picking_type.id,
+                "location_id": self.loc_stock.id,
+                "location_dest_id": self.loc_customer.id,
+                "started": False,
+            }
+        )
+        self.assertFalse(picking.printed)
+
+    def test_create_picking_started_true(self):
+        with self.assertRaisesRegex(UserError, "can't be started"):
+            self.env["stock.picking"].create(
+                {
+                    "picking_type_id": self.picking_type.id,
+                    "location_id": self.loc_stock.id,
+                    "location_dest_id": self.loc_customer.id,
+                    "started": True,
+                }
+            )
+
+    def test_copy_picking_started(self):
+        self.assigned_picking.action_start()
+        new_picking = self.assigned_picking.copy()
+        self.assertFalse(new_picking.started)
