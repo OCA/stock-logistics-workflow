@@ -31,7 +31,7 @@ addon | version | maintainers | summary
 [stock_picking_back2draft](stock_picking_back2draft/) | 16.0.1.0.0 |  | Reopen cancelled pickings
 [stock_picking_invoice_link](stock_picking_invoice_link/) | 16.0.1.0.1 |  | Adds link between pickings and invoices
 [stock_picking_sale_order_link](stock_picking_sale_order_link/) | 16.0.1.0.0 |  | Link between picking and sale order
-[stock_picking_start](stock_picking_start/) | 16.0.1.0.1 |  | Add button to start picking
+[stock_picking_start](stock_picking_start/) | 16.0.1.0.2 |  | Add button to start picking
 [stock_putaway_hook](stock_putaway_hook/) | 16.0.1.0.0 |  | Add hooks allowing modules to add more putaway strategies
 [stock_quant_package_dimension](stock_quant_package_dimension/) | 16.0.1.0.0 |  | Use dimensions on packages
 [stock_quant_package_product_packaging](stock_quant_package_product_packaging/) | 16.0.1.0.1 |  | Use product packagings on packages
