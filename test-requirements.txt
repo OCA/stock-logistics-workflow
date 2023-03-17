@@ -1,1 +1,2 @@
 odoo-test-helper
+odoo-addon-purchase_line_procurement_group @ git+https://github.com/OCA/purchase-workflow.git@refs/pull/1806/head#subdirectory=setup/purchase_line_procurement_group
