@@ -6,7 +6,7 @@
     "summary": """
         This addon propagate the picking type of the original move to all next moves
         created from procurement""",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.0.1",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
