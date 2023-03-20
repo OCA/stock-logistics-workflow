@@ -3,7 +3,7 @@
 {
     "name": "Mass Scrap",
     "summary": "Add wizard to mass scrap expired products",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "category": "Inventory",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Camptocamp, Odoo Community Association (OCA)",
