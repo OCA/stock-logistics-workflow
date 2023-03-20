@@ -29,6 +29,7 @@ setuptools.setup(
         'odoo14-addon-stock_lot_product_qty_search',
         'odoo14-addon-stock_lot_production_date',
         'odoo14-addon-stock_lot_scrap',
+        'odoo14-addon-stock_mass_scrap',
         'odoo14-addon-stock_move_assign_picking_hook',
         'odoo14-addon-stock_move_change_source_location',
         'odoo14-addon-stock_move_forced_lot',
