@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-03-21 12:12+0000\n"
+"PO-Revision-Date: 2023-03-21 17:23+0000\n"
 "Last-Translator: FranciscoFactorLibre <francisco.santos@factorlibre.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -19,7 +19,7 @@ msgstr ""
 #. module: stock_move_propagate_first_move
 #: model:ir.model.fields,field_description:stock_move_propagate_first_move.field_stock_move__first_move_id
 msgid "First Move"
-msgstr "Primer movimiento"
+msgstr "Movimiento original"
 
 #. module: stock_move_propagate_first_move
 #: model:ir.model.fields,field_description:stock_move_propagate_first_move.field_stock_move__first_picking_type_id
