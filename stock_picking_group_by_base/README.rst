@@ -61,7 +61,6 @@ Further modules need to implement this on stock.picking model:
             "picking_type_id",
         ]
 
-
 Bug Tracker
 ===========
 
