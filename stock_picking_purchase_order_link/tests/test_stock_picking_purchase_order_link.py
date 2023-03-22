@@ -52,6 +52,6 @@ class TestStockPickingPurchaseOrderLink(TransactionCase):
             [("purchase_id", "=", purchase_order.id)]
         )
 
-    def test_picking_to_sale_order(self):
+    def test_picking_to_purchase_order(self):
         result = self.picking.action_view_purchase_order()
         self.assertEqual(result["res_id"], self.picking.purchase_id.id)
