@@ -93,6 +93,10 @@ Contributors
 
   * Pimolnat Suntian <pimolnats@ecosoft.co.th>
 
+* `Escodoo <http://escodoo.com.br>`__:
+
+  * Kaynnan Lemes <kaynnan.lemes@escodoo.com.br>
+
 Maintainers
 ~~~~~~~~~~~
 
