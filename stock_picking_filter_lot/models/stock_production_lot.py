@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class StockProductionLot(models.Model):
-    _inherit = "stock.production.lot"
+    _inherit = "stock.lot"
 
     location_ids = fields.Many2many(
         comodel_name="stock.location", compute="_compute_location_ids", store=True
