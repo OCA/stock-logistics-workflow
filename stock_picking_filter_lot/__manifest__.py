@@ -3,7 +3,7 @@
 {
     "name": "Stock picking filter lot",
     "summary": "In picking out lots' selection, filter lots based on their location",
-    "version": "15.0.1.0.1",
+    "version": "16.0.1.0.0",
     "category": "Warehouse",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Agile Business Group, Odoo Community Association (OCA)",
