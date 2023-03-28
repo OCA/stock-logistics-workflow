@@ -22,16 +22,14 @@ class StockPicking(models.Model):
 
     def _compute_returned_ids(self):
         for picking in self:
-            picking.returned_ids = picking.mapped(
-                "move_lines.returned_move_ids.picking_id"
-            )
+            picking.returned_ids = picking.move_ids.returned_move_ids.picking_id
 
-    @api.depends("move_lines.origin_returned_move_id")
+    @api.depends("move_ids.origin_returned_move_id")
     def _compute_source_picking_id(self):
         """Get source piking from this picking. Only one origin is possible."""
         for picking in self:
             picking.source_picking_id = first(
-                picking.mapped("move_lines.origin_returned_move_id.picking_id")
+                picking.move_ids.origin_returned_move_id.picking_id
             )
 
     def action_show_source_picking(self):
