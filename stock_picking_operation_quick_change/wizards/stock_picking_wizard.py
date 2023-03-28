@@ -111,17 +111,20 @@ class StockPickingOperationWizard(models.TransientModel):
             # Write all operations destination location
             move_lines.write(vals)
         else:
-            matched_op = move_lines
-            # Only write operations destination location if the location is
-            # the same that old location value
-            if self.old_location_dest_id:
-                matched_op = matched_op.filtered(
-                    lambda x: x.location_dest_id == self.old_location_dest_id
-                )
-            # Only write operations destination location if the product is the same
-            if self.product_id:
-                matched_op = matched_op.filtered(
-                    lambda x: x.product_id == self.product_id
-                )
+            matched_op = self.filter_move_line(move_lines)
             matched_op.write(vals)
         return {"type": "ir.actions.act_window_close"}
+
+    def filter_move_line(self, move_lines):
+        # Only write operations destination location if the location is
+        # the same that old location value
+        if self.old_location_dest_id:
+            move_lines = move_lines.filtered(
+                lambda x: x.location_dest_id == self.old_location_dest_id
+            )
+        # Only write operations destination location if the product is the same
+        if self.product_id:
+            move_lines = move_lines.filtered(
+                lambda x: x.product_id == self.product_id
+            )
+        return move_lines
