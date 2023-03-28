@@ -1,33 +1,33 @@
 # Copyright 2014-2017 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from odoo import Command
 from odoo.tests.common import Form, TransactionCase, tagged
 
 
 @tagged("post_install", "-at_install")
 class TestStockPickingShowReturn(TransactionCase):
-    def setUp(self):
-        super(TestStockPickingShowReturn, self).setUp()
-        self.product = self.env["product.product"].create({"name": "Test product"})
-        picking_type = self.env.ref("stock.picking_type_internal")
-        self.picking = self.env["stock.picking"].create(
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.product = cls.env["product.product"].create({"name": "Test product"})
+        picking_type = cls.env.ref("stock.picking_type_internal")
+        cls.picking = cls.env["stock.picking"].create(
             {
                 "picking_type_id": picking_type.id,
                 "location_id": picking_type.default_location_src_id.id,
                 "location_dest_id": picking_type.default_location_dest_id.id,
-                "move_lines": [
-                    (
-                        0,
-                        0,
+                "move_ids": [
+                    Command.create(
                         {
-                            "name": self.product.name,
+                            "name": cls.product.name,
                             "location_id": picking_type.default_location_src_id.id,
                             "location_dest_id": picking_type.default_location_dest_id.id,
-                            "product_id": self.product.id,
-                            "product_uom": self.product.uom_id.id,
+                            "product_id": cls.product.id,
+                            "product_uom": cls.product.uom_id.id,
                             "product_uom_qty": 1,
-                        },
-                    )
+                        }
+                    ),
                 ],
             }
         )
