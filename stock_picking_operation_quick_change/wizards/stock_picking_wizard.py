@@ -124,7 +124,5 @@ class StockPickingOperationWizard(models.TransientModel):
             )
         # Only write operations destination location if the product is the same
         if self.product_id:
-            move_lines = move_lines.filtered(
-                lambda x: x.product_id == self.product_id
-            )
+            move_lines = move_lines.filtered(lambda x: x.product_id == self.product_id)
         return move_lines
