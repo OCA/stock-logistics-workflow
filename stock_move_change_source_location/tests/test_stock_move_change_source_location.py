@@ -50,7 +50,7 @@ class TestStockMoveChangeSourceLocation(TransactionCase):
                 "location_id": cls.warehouse.lot_stock_id.id,
                 "location_dest_id": cls.warehouse.wh_output_stock_loc_id.id,
                 "picking_type_id": cls.picking_type.id,
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
@@ -100,14 +100,14 @@ class TestStockMoveChangeSourceLocation(TransactionCase):
             active_model=self.picking._name,
             active_ids=self.picking.ids,
         ).create({"new_location_id": new_location_id.id, "moves_to_change": "all"})
-        move_lines = self.picking.mapped("move_lines")
+        move_lines = self.picking.mapped("move_ids")
         self.assertEqual(
             wiz.warehouse_view_location_id,
             self.picking.location_id.warehouse_id.view_location_id,
         )
         self.assertEqual(wiz.old_location_id, move_lines[:1].location_id)
         wiz.action_apply()
-        move_lines = self.picking.mapped("move_lines.location_id")
+        move_lines = self.picking.mapped("move_ids.location_id")
         self.assertEqual(len(move_lines), 1)
 
     def test_stock_move_change_source_location_matched(self):
@@ -121,7 +121,7 @@ class TestStockMoveChangeSourceLocation(TransactionCase):
             {"name": "Shelf 2", "location_id": self.warehouse.lot_stock_id.id}
         )
         self.picking.action_assign()
-        move_lines = self.picking.mapped("move_lines")
+        move_lines = self.picking.mapped("move_ids")
         move_lines[:1].write({"location_id": other_location_id.id})
         wiz = self.Wizard.with_context(
             active_model=self.picking._name,
@@ -134,7 +134,7 @@ class TestStockMoveChangeSourceLocation(TransactionCase):
             }
         )
         wiz.action_apply()
-        move_lines = self.picking.mapped("move_lines.location_id")
+        move_lines = self.picking.mapped("move_ids.location_id")
         self.assertEqual(len(move_lines), 2)
 
     def test_stock_move_change_source_location_manual(self):
@@ -151,20 +151,20 @@ class TestStockMoveChangeSourceLocation(TransactionCase):
             {
                 "new_location_id": new_location_id.id,
                 "moves_to_change": "manual",
-                "move_lines": [(6, 0, self.picking.move_lines[0].ids)],
+                "move_lines": [(6, 0, self.picking.move_ids[0].ids)],
             }
         )
-        move_lines = self.picking.mapped("move_lines")
+        move_lines = self.picking.mapped("move_ids")
         self.assertEqual(wiz.old_location_id, move_lines[:1].location_id)
         wiz.action_apply()
-        move_lines = self.picking.mapped("move_lines.location_id")
+        move_lines = self.picking.mapped("move_ids.location_id")
         self.assertEqual(len(move_lines), 2)
 
     def test_stock_move_change_source_location_failed(self):
         self.qty_on_hand(self.product.product_variant_ids)
         self.qty_on_hand(self.product2.product_variant_ids)
         self.picking.action_assign()
-        for move in self.picking.move_lines:
+        for move in self.picking.move_ids:
             move.quantity_done = 1
         self.picking._action_done()
         new_location_id = self.Location.create(

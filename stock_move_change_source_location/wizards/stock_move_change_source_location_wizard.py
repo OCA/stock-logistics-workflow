@@ -25,13 +25,13 @@ class StockMoveChangeSourceLocation(models.TransientModel):
     def _default_old_location_id(self):
         stock_picking_obj = self.env["stock.picking"]
         pickings = stock_picking_obj.browse(self.env.context["active_ids"])
-        first_move_line = pickings.mapped("move_lines")[:1]
+        first_move_line = pickings.mapped("move_ids")[:1]
         return first_move_line.location_id.id
 
     def _get_allowed_old_location_domain(self):
         stock_picking_obj = self.env["stock.picking"]
         pickings = stock_picking_obj.browse(self.env.context.get("active_ids", []))
-        return [("id", "in", pickings.mapped("move_lines.location_id").ids)]
+        return [("id", "in", pickings.mapped("move_ids.location_id").ids)]
 
     def _get_allowed_new_location_domain(self):
         stock_picking_obj = self.env["stock.picking"]
@@ -113,7 +113,7 @@ class StockMoveChangeSourceLocation(models.TransientModel):
         stock_picking_obj = self.env["stock.picking"]
         pickings = stock_picking_obj.browse(self.env.context["active_ids"])
         self._check_allowed_pickings(pickings)
-        move_lines = pickings.mapped("move_lines")
+        move_lines = pickings.mapped("move_ids")
 
         vals = {"location_id": self.new_location_id.id}
         if self.moves_to_change == "all":
