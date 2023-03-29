@@ -12,20 +12,22 @@ class StockPicking(models.Model):
 
     _inherit = "stock.picking"
 
+    def _check_split_process(self):
+        # Check the picking state and condition before split
+        if self.state == "draft":
+            raise UserError(_("Mark as todo this picking please."))
+        if all([x.qty_done == 0.0 for x in self.move_line_ids]):
+            raise UserError(
+                _(
+                    "You must enter done quantity in order to split your "
+                    "picking in several ones."
+                )
+            )
+
     def split_process(self):
         """Use to trigger the wizard from button with correct context"""
         for picking in self:
-
-            # Check the picking state and condition before split
-            if picking.state == "draft":
-                raise UserError(_("Mark as todo this picking please."))
-            if all([x.qty_done == 0.0 for x in picking.move_line_ids]):
-                raise UserError(
-                    _(
-                        "You must enter done quantity in order to split your "
-                        "picking in several ones."
-                    )
-                )
+            picking._check_split_process()
 
             # Split moves considering the qty_done on moves
             new_moves = self.env["stock.move"]
