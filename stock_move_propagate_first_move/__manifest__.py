@@ -13,4 +13,5 @@
     "depends": ["stock"],
     "data": ["views/stock_move.xml"],
     "demo": [],
+    "pre_init_hook": "pre_init_hook",
 }
