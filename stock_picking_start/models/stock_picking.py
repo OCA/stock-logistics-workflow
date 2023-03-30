@@ -22,9 +22,7 @@ class StockPicking(models.Model):
     )
 
     started = fields.Boolean(
-        compute="_compute_started",
-        inverse="_inverse_started",
-        store=True,
+        compute="_compute_started", inverse="_inverse_started", store=True
     )
 
     def _default_user_id(self):
