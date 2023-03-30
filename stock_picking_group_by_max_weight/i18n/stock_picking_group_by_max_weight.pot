@@ -1,0 +1,46 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_group_by_max_weight
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_group_by_max_weight
+#: model:ir.model.fields,field_description:stock_picking_group_by_max_weight.field_stock_picking__assignation_max_weight
+msgid "Assignation Max Weight"
+msgstr ""
+
+#. module: stock_picking_group_by_max_weight
+#: model:ir.model.fields,field_description:stock_picking_group_by_max_weight.field_stock_picking_type__group_pickings_maxweight
+msgid "Max Weight"
+msgstr ""
+
+#. module: stock_picking_group_by_max_weight
+#: model:ir.model,name:stock_picking_group_by_max_weight.model_stock_picking_type
+msgid "Picking Type"
+msgstr ""
+
+#. module: stock_picking_group_by_max_weight
+#: model:ir.model,name:stock_picking_group_by_max_weight.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_picking_group_by_max_weight
+#: model:ir.model.fields,help:stock_picking_group_by_max_weight.field_stock_picking__assignation_max_weight
+msgid ""
+"Technical field that represent the maximum weight for a move thatis "
+"acceptable for this picking assignation"
+msgstr ""
+
+#. module: stock_picking_group_by_max_weight
+#: model:ir.model,name:stock_picking_group_by_max_weight.model_stock_picking
+msgid "Transfer"
+msgstr ""
