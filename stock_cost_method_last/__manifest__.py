@@ -4,7 +4,7 @@
 
 {
     "name": "Last Price Costing Method",
-    "version": "14.0.1.0.0",
+    "version": "16.0.1.0.0",
     "category": "Warehouse",
     "license": "AGPL-3",
     "summary": "Add a new Costing Method 'Last Price'",
