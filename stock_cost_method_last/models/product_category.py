@@ -6,7 +6,8 @@ from odoo import fields, models
 
 
 class ProductCategory(models.Model):
-    _inherit = 'product.category'
+    _inherit = "product.category"
 
     property_cost_method = fields.Selection(
-        selection_add=[('last', 'Last Price')], ondelete={"last": "set default"})
+        selection_add=[("last", "Last Price")], ondelete={"last": "set default"}
+    )
