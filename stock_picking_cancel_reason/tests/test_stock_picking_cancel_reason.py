@@ -22,7 +22,7 @@ class TestStockPickingCancelReason(TransactionCase):
                 "picking_type_id": picking_type_out.id,
                 "location_id": stock_location.id,
                 "location_dest_id": customer_location.id,
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
@@ -38,6 +38,7 @@ class TestStockPickingCancelReason(TransactionCase):
                 ],
             }
         )
+        self.stock_picking1 = self.stock_picking.copy()
 
     def test_stock_picking_cancel_reason(self):
         """
@@ -55,3 +56,10 @@ class TestStockPickingCancelReason(TransactionCase):
             self.stock_picking.state, "cancel", "the stock picking should be canceled"
         )
         self.assertEqual(self.stock_picking.cancel_reason_id.id, self.reason.id)
+        context = {
+            "active_model": "stock.picking",
+            "active_ids": [self.stock_picking.id, self.stock_picking1.id],
+        }
+        wizard = StockPickingCancel.create({"reason_id": self.reason.id})
+        with self.assertRaises(AssertionError):
+            wizard.with_context(**context).confirm_cancel()
