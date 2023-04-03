@@ -50,7 +50,7 @@ class TestStockPickingCancelReason(TransactionCase):
             "active_ids": [self.stock_picking.id],
         }
         wizard = StockPickingCancel.create({"reason_id": self.reason.id})
-        wizard.with_context(context).confirm_cancel()
+        wizard.with_context(**context).confirm_cancel()
         self.assertEqual(
             self.stock_picking.state, "cancel", "the stock picking should be canceled"
         )
