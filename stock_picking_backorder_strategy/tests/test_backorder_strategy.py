@@ -66,7 +66,7 @@ class TestBackorderStrategy(TransactionCase):
         self._process_picking()
         backorder = self.picking_obj.search([("backorder_id", "=", self.picking.id)])
         self.assertFalse(backorder)
-        states = list(set(self.picking.move_lines.mapped("state")))
+        states = list(set(self.picking.move_ids.mapped("state")))
         self.assertEqual(
             "done",
             self.picking.state,
