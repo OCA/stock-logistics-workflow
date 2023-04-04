@@ -35,7 +35,7 @@ class CommonStockPickingAutoCreateLot(object):
 
     @classmethod
     def _create_picking(cls):
-        cls.picking = (
+        return (
             cls.env["stock.picking"]
             .with_context(default_picking_type_id=cls.picking_type_in.id)
             .create(
@@ -48,14 +48,16 @@ class CommonStockPickingAutoCreateLot(object):
         )
 
     @classmethod
-    def _create_move(cls, product=None, qty=1.0):
-        location_dest = cls.picking.picking_type_id.default_location_dest_id
-        cls.move = cls.env["stock.move"].create(
+    def _create_move(cls, product=None, qty=1.0, picking=None):
+        if picking is None:
+            picking = cls.picking
+        location_dest = picking.picking_type_id.default_location_dest_id
+        return cls.env["stock.move"].create(
             {
                 "name": "test-{product}".format(product=product.name),
                 "product_id": product.id,
-                "picking_id": cls.picking.id,
-                "picking_type_id": cls.picking.picking_type_id.id,
+                "picking_id": picking.id,
+                "picking_type_id": picking.picking_type_id.id,
                 "product_uom_qty": qty,
                 "product_uom": product.uom_id.id,
                 "location_id": cls.supplier_location.id,

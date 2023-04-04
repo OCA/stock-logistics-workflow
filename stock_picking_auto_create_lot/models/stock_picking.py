@@ -17,7 +17,10 @@ class StockPicking(models.Model):
                 not x.lot_id
                 and not x.lot_name
                 and x.product_id.tracking != "none"
-                and x.product_id.auto_create_lot
+                and (
+                    x.product_id.auto_create_lot
+                    or x.picking_type_id.auto_create_lot_for_all_products
+                )
             )
         )
         lines.set_lot_auto()
