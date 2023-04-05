@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-04-04 15:24+0000\n"
+"PO-Revision-Date: 2023-04-05 09:18+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -159,17 +159,17 @@ msgstr ""
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__message_follower_ids
 msgid "Followers"
-msgstr "Follower"
+msgstr "Seguito da"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__message_channel_ids
 msgid "Followers (Channels)"
-msgstr "Follower (canali)"
+msgstr "Seguito da (canali)"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__message_partner_ids
 msgid "Followers (Partners)"
-msgstr "Follower (partner)"
+msgstr "Seguito da (partner)"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__id
