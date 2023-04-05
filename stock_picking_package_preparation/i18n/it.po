@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-11 10:21+0000\n"
-"PO-Revision-Date: 2023-03-30 14:26+0000\n"
+"PO-Revision-Date: 2023-04-05 09:18+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -110,17 +110,17 @@ msgstr "Bozza"
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__message_follower_ids
 msgid "Followers"
-msgstr "Follower"
+msgstr "Seguito da"
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__message_channel_ids
 msgid "Followers (Channels)"
-msgstr "Follower (canali)"
+msgstr "Seguito da (canali)"
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__message_partner_ids
 msgid "Followers (Partners)"
-msgstr "Follower (partner)"
+msgstr "Seguito da (partner)"
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__id
