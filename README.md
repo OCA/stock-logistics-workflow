@@ -65,6 +65,7 @@ addon | version | maintainers | summary
 [stock_picking_send_by_mail](stock_picking_send_by_mail/) | 12.0.1.1.0 |  | Send stock picking by email
 [stock_picking_show_backorder](stock_picking_show_backorder/) | 12.0.1.0.0 |  | Provides a new field on stock pickings, allowing to display the corresponding backorders.
 [stock_picking_show_return](stock_picking_show_return/) | 12.0.2.0.0 |  | Show returns on stock pickings
+[stock_picking_tier_validation](stock_picking_tier_validation/) | 12.0.1.0.0 |  | Extends the functionality of Transfers to support a tier validation process.
 [stock_picking_whole_scrap](stock_picking_whole_scrap/) | 12.0.1.0.0 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Create whole scrap from a picking for move lines
 [stock_production_lot_traceability](stock_production_lot_traceability/) | 12.0.1.0.1 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Drill down/up the lots produced or consumed
 [stock_return_request](stock_return_request/) | 12.0.1.0.2 |  | Stock Return Request
