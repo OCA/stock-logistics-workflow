@@ -14,8 +14,10 @@ include_wkhtmltopdf: false
 odoo_version: 14.0
 org_name: Odoo Community Association (OCA)
 org_slug: OCA
-rebel_module_groups: []
-repo_description: 'TODO: add repo description.'
+rebel_module_groups:
+- product_expiry_simple
+- stock_mass_scrap,stock_move_quick_lot
+repo_description: Odoo Stock, Workflow and Organization
 repo_name: stock-logistics-workflow
 repo_slug: stock-logistics-workflow
 repo_website: https://github.com/OCA/stock-logistics-workflow
