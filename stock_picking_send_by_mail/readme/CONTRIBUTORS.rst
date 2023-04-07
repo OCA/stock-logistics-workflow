@@ -3,3 +3,4 @@
 
   * Vicent Cubells
   * Carlos Roca
+* Moaad Bourhim <moaad.bourhim@gmail.com>
