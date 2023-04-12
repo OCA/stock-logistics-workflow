@@ -18,6 +18,7 @@ setuptools.setup(
         'odoo-addon-stock_no_negative>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_auto_create_lot>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_back2draft>=16.0dev,<16.1dev',
+        'odoo-addon-stock_picking_filter_lot>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_group_by_base>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_group_by_max_weight>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_invoice_link>=16.0dev,<16.1dev',
