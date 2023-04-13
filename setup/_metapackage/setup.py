@@ -18,6 +18,7 @@ setuptools.setup(
         'odoo-addon-stock_landed_costs_security>=15.0dev,<15.1dev',
         'odoo-addon-stock_lot_on_hand_first>=15.0dev,<15.1dev',
         'odoo-addon-stock_lot_product_qty_search>=15.0dev,<15.1dev',
+        'odoo-addon-stock_move_change_source_location>=15.0dev,<15.1dev',
         'odoo-addon-stock_move_line_auto_fill>=15.0dev,<15.1dev',
         'odoo-addon-stock_move_quick_lot>=15.0dev,<15.1dev',
         'odoo-addon-stock_no_negative>=15.0dev,<15.1dev',
