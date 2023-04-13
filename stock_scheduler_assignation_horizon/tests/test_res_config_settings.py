@@ -9,41 +9,40 @@ from .test_res_config_settings_common import ResConfigSettingsCase
 
 
 class DeliverySchedulerLimitCase(ResConfigSettingsCase):
-    def test_settings_applied_to_company(self):
-        self.assertEqual(self.company.is_moves_assignation_limited, True)
-        self.assertEqual(self.company.moves_assignation_horizon, 2)
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.location = cls.env.ref("stock.stock_location_stock")
+        cls.location_dest = cls.env.ref("stock.stock_location_customers")
 
-    def test_assignation_horizon_negative_value(self):
-        with self.assertRaises(ValidationError) as context:
-            self.settings.moves_assignation_horizon = -3
-        self.assertEqual(
-            "The assignation horizon cannot be negative", str(context.exception)
-        )
-
-    def test_delivery_scheduler_horizon_limit(self):
-        self.location = self.env.ref("stock.stock_location_stock")
-        self.location_dest = self.env.ref("stock.stock_location_customers")
-
-        self.product_1 = self.env["product.product"].create(
+        cls.product_1 = cls.env["product.product"].create(
             {
                 "name": "Test Product 1",
                 "type": "product",
             }
         )
-        self.env["stock.quant"].with_context(inventory_mode=True).create(
+        cls.env["stock.quant"].with_context(inventory_mode=True).create(
             {
-                "product_id": self.product_1.id,
-                "location_id": self.location.id,
+                "product_id": cls.product_1.id,
+                "location_id": cls.location.id,
                 "inventory_quantity": 100,
             }
         )
 
+    def test_assignation_horizon_negative_value(self):
+        with self.assertRaises(ValidationError) as context:
+            self.settings.stock_horizon_move_assignation_limit = -3
+        self.assertEqual(
+            "The assignation horizon cannot be negative", str(context.exception)
+        )
+
+    def test_delivery_scheduler_horizon_limit(self):
         picking_1 = self._create_picking(days_horizon=1)
         picking_2 = self._create_picking(days_horizon=3)
         picking_1.action_confirm()
         picking_2.action_confirm()
 
-        self.env["procurement.group"].run_scheduler(company_id=self.company.id)
+        self.env["procurement.group"].run_scheduler()
 
         self.assertEqual(picking_1.state, "assigned")
         self.assertEqual(picking_2.state, "confirmed")

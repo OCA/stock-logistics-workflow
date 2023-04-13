@@ -3,14 +3,16 @@
 {
     "name": "Scheduler assignation horizon",
     "summary": "Set a timeframe limit to the delivery scheduler",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "category": "Inventory",
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "license": "AGPL-3",
+    "development_status": "Alpha",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": ["stock"],
     "external_dependencies": {"python": ["pytz"]},
     "data": [
         "views/res_config_settings_views.xml",
+        "data/ir_config_parameter.xml",
     ],
 }

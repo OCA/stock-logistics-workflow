@@ -13,12 +13,12 @@
                 >
                     <div class="col-12 col-lg-6 o_setting_box">
                         <div class="o_setting_left_pane">
-                            <field name="is_moves_assignation_limited" />
+                            <field name="stock_horizon_move_assignation" />
                         </div>
-                        <div class="o_setting_right_pane">
-                            <label for="is_moves_assignation_limited" />
+                         <div class="o_setting_right_pane">
+                            <label for="stock_horizon_move_assignation" />
                             <span
-                                class="fa fa-lg fa-building-o"
+                                class="fa fa-lg"
                                 title="Values set here are company-specific."
                                 aria-label="Values set here are company-specific."
                                 groups="base.group_multi_company"
@@ -28,12 +28,16 @@
                                 Do not schedule delivery before horizon timeframe
                             </div>
                         </div>
-                        <div class="o_setting_right_pane">
-                            <label for="moves_assignation_horizon" />
+
+                        <div
+                            class="o_setting_right_pane"
+                            attrs="{'invisible': [('stock_horizon_move_assignation','=',False)]}"
+                        >
+                            <label for="stock_horizon_move_assignation_limit" />
                             <div class="text-muted">
                                 Horizon timeframe (in days)
                             </div>
-                            <field name="moves_assignation_horizon" />
+                            <field name="stock_horizon_move_assignation_limit" />
                         </div>
                     </div>
                 </div>
