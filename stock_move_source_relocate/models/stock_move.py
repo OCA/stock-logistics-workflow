@@ -1,8 +1,9 @@
 # Copyright 2020 Camptocamp SA
+# Copyright 2023 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 
 from odoo import models
-from odoo.tools.float_utils import float_is_zero
+from odoo.tools.float_utils import float_compare
 
 
 class StockMove(models.Model):
@@ -35,37 +36,30 @@ class StockMove(models.Model):
             )
 
     def _apply_source_relocate_rule(self, relocation, reserved_availability, roundings):
-        relocated = self.env["stock.move"].browse()
-
+        self.ensure_one()
         rounding = roundings[self]
-        if not reserved_availability[self]:
+        qty_reserved = reserved_availability[self]
+        if float_compare(qty_reserved, 0, precision_rounding=rounding) == 0:
             # nothing could be reserved, however, we want to source the
             # move on the specific relocation (for replenishment), so
             # update it's source location
             self.location_id = relocation.relocate_location_id
-            relocated = self
-        else:
-            missing_reserved_uom_quantity = (
-                self.product_uom_qty - reserved_availability[self]
-            )
-            need = self.product_uom._compute_quantity(
-                missing_reserved_uom_quantity,
-                self.product_id.uom_id,
-                rounding_method="HALF-UP",
-            )
+            return self
 
-            if float_is_zero(need, precision_rounding=rounding):
-                return relocated
+        missing_reserved_uom_quantity = self.product_uom_qty - qty_reserved
+        need = self.product_uom._compute_quantity(
+            missing_reserved_uom_quantity,
+            self.product_id.uom_id,
+            rounding_method="HALF-UP",
+        )
+        if float_compare(need, 0, precision_rounding=rounding) <= 0:
+            return self.env["stock.move"].browse()
 
-            # A part of the quantity could be reserved in the original
-            # location, so keep this part in the move and split the rest
-            # in a new move, where will take the goods in the relocation
-            new_move = self  # fallback if no split occurs
-            new_move_vals = self._split(need)
-            if new_move_vals:
-                new_move = self.create(new_move_vals)
-                new_move._action_confirm(merge=False)
-            new_move.location_id = relocation.relocate_location_id
-            self._action_assign()
-            relocated = new_move
-        return relocated
+        # A part of the quantity could be reserved in the original
+        # location, so keep this part in the move and split the rest
+        # in a new move, where will take the goods in the relocation
+        new_move = self.create(self._split(need))
+        new_move._action_confirm(merge=False)
+        new_move.location_id = relocation.relocate_location_id
+        self._action_assign()
+        return new_move
