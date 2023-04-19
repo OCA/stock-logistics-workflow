@@ -377,9 +377,7 @@ class StockValuationLayer(models.Model):
             # Update product standard price if it is modified
             if float_compare(
                 previous_unit_cost,
-                line.product_id.with_context(
-                    force_company=line.company_id.id
-                ).standard_price,
+                line.product_id.with_company(line.company_id.id).standard_price,
                 precision_digits=precision_price,
             ):
                 line.product_id.with_company(line.company_id.id).with_context(

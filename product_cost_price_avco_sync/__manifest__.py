@@ -1,5 +1,6 @@
 # Copyright 2020 Tecnativa - Carlos Dauden
 # Copyright 2020 Tecnativa - Sergio Teruel
+# Copyright 2023 Aures Tic - Jose Zambudio
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Product cost price avco sync",

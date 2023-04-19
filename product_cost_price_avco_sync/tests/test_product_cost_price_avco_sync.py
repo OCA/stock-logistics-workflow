@@ -4,13 +4,13 @@
 import logging
 from time import sleep
 
-from odoo.tests.common import TransactionCase, tagged
+from odoo.tests.common import SavepointCase, tagged
 
 _logger = logging.getLogger(__name__)
 
 
 @tagged("-at_install", "post_install")
-class TestProductCostPriceAvcoSync(TransactionCase):
+class TestProductCostPriceAvcoSync(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super(TestProductCostPriceAvcoSync, cls).setUpClass()
