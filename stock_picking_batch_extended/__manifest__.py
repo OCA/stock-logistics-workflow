@@ -5,7 +5,7 @@
 {
     "name": "Stock batch picking extended",
     "summary": "Allows manage a lot of pickings in batch",
-    "version": "15.0.2.1.0",
+    "version": "15.0.2.2.0",
     "author": "Camptocamp, " "Tecnativa, " "Odoo Community Association (OCA)",
     "development_status": "Mature",
     "maintainers": ["gurneyalex", "carlosdauden", "i-vyshnevska"],
@@ -18,6 +18,7 @@
         "views/stock_batch_picking.xml",
         "views/product_product.xml",
         "views/report_batch_picking.xml",
+        "views/stock_picking_views.xml",
         "views/stock_warehouse.xml",
         "views/res_config_settings_views.xml",
         "wizard/stock_picking_to_batch_views.xml",
