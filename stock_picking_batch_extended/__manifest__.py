@@ -18,6 +18,7 @@
         "views/stock_batch_picking.xml",
         "views/product_product.xml",
         "views/report_batch_picking.xml",
+        "views/stock_picking_views.xml",
         "views/stock_warehouse.xml",
         "views/res_config_settings_views.xml",
         "wizard/stock_picking_to_batch_views.xml",
