@@ -3,3 +3,6 @@
 * Pimolnat Suntian <pimolnats@ecosoft.co.th>
 * Denis Roussel <denis.roussel@acsone.eu>
 * Valentin Vinagre <valentin.vinagre@sygel.es>
+* `Quartile <https://www.quartile.co>`__:
+
+  * Aung Ko Ko Lin
