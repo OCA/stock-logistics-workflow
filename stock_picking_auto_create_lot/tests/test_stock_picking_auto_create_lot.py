@@ -2,7 +2,7 @@
 # Copyright 2020 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo.exceptions import UserError
-from odoo.tests import TransactionCase
+from odoo.tests import Form, TransactionCase
 
 from .common import CommonStockPickingAutoCreateLot
 
@@ -34,7 +34,6 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
             lambda m: m.product_id == self.product_serial_not_auto
         )
         self.assertTrue(move.display_assign_serial)
-
         # Assign manual serials
         for line in move.move_line_ids:
             line.lot_id = self.lot_obj.create(line._prepare_auto_lot_values())
@@ -144,3 +143,21 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
             [("product_id", "=", self.product_serial.id)]
         )
         self.assertEqual(len(lot), 6)
+
+    def test_immediate_validate_tracked_move_with_auto_create_lot(self):
+        # Clear existing move if not the picking will open backorder wizard because
+        # when we manually assign lot for serial_not_auto product, other products still
+        # have 0 done qty.
+        self.picking.move_ids = False
+        self._create_move(product=self.product_serial, qty=4.0)
+        self.picking.action_assign()
+        immediate_wizard = self.picking.button_validate()
+        self.assertEqual(immediate_wizard.get("res_model"), "stock.immediate.transfer")
+        immediate_wizard_form = Form(
+            self.env[immediate_wizard["res_model"]].with_context(
+                **immediate_wizard["context"]
+            )
+        ).save()
+        immediate_wizard_form.process()
+        # Confirm that validation is not blocked, for example, by create-backorder wizard.
+        self.assertEqual(self.picking.state, "done")
