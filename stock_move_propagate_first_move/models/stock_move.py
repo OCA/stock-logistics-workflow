@@ -12,6 +12,7 @@ class StockMove(models.Model):
         comodel_name="stock.move",
         string="First Move",
         readonly=True,
+        index=True,
         help="The original move which generated this one.",
     )
     first_picking_type_id = fields.Many2one(
