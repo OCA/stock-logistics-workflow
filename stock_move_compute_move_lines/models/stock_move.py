@@ -1,5 +1,4 @@
-# Copyright 2016 Cyril Gaudin, Camptocamp SA
-# Copyright 2018 Tecnativa - Carlos Dauden
+# Copyright 2023 FactorLibre - Boris Alias
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models

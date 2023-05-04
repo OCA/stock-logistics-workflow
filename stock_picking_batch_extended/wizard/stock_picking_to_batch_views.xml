@@ -35,13 +35,6 @@
                     </field>
                 </group>
             </xpath>
-            <xpath expr="//button[@name='attach_pickings']" position="after">
-                <button
-                    name="action_create_batch_with_mode_existing"
-                    string="Add to existing batch"
-                    attrs="{'invisible': [('mode', '=', 'create')]}"
-                />
-            </xpath>
             <xpath expr="//button[@name='attach_pickings']" position="attributes">
                 <attribute name="name">action_create_batch</attribute>
             </xpath>

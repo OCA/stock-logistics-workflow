@@ -23,6 +23,7 @@
   * Carlos Dauden
   * Sergio Teruel
   * César A. Sánchez
+  * Stefan Ungureanu
 
 * `Trobz <https://trobz.com>`_:
 

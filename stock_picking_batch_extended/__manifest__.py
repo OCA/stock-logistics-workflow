@@ -26,4 +26,6 @@
         "wizard/stock_picking_to_batch_views.xml",
     ],
     "license": "AGPL-3",
+    "installable": True,
+    "post_init_hook": "post_init_hook",
 }

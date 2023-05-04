@@ -1,4 +1,3 @@
-# Copyright 2018 Tecnativa - Carlos Dauden
 # Copyright 2023 FactorLibre - Boris Alias
 from odoo.tests.common import TransactionCase
 

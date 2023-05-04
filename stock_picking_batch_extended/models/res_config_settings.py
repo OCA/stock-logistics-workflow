@@ -1,5 +1,4 @@
 # Copyright 2019 Camptocamp - Iryna Vyshnevska
-# Copyright 2023 FactorLibre - Boris Alias
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from odoo import fields, models
