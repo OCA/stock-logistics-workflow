@@ -68,14 +68,19 @@ class StockPicking(models.Model):
     def _get_is_completed_domain(self):
         return [
             ("move_ids.quantity_done", ">", 0),
-            ("state", "not in", ["done", "cancel"]),
+            ("state", "=", "assigned"),
         ]
 
     def _get_is_not_completed_domain(self):
+        """
+        Limit the returned pickings to assigned ones when searching
+        in order to avoid performances problems.
+        In fact, with this filter, we want to display the assigned pickings
+        that have not been completed yet.
+        """
         return [
-            "|",
             ("move_ids.quantity_done", "=", 0),
-            ("state", "in", ["done", "cancel"]),
+            ("state", "=", "assigned"),
         ]
 
     def _search_is_completed(self, operator, value):
