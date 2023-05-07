@@ -44,6 +44,7 @@ addon | version | maintainers | summary
 [sale_stock_mto_as_mts_orderpoint](sale_stock_mto_as_mts_orderpoint/) | 13.0.1.2.3 |  | Materialize need from MTO route through orderpoint
 [stock_account_product_run_fifo_hook](stock_account_product_run_fifo_hook/) | 13.0.1.1.0 |  | Add more flexibility in the run fifo method.
 [stock_auto_move](stock_auto_move/) | 13.0.1.0.0 |  | Automatic Move Processing
+[stock_deferred_assign](stock_deferred_assign/) | 13.0.1.0.0 | [![carlosdauden](https://github.com/carlosdauden.png?size=30px)](https://github.com/carlosdauden) | Assign/Reserve stock moves when scheduled date is after today - config days
 [stock_landed_costs_currency](stock_landed_costs_currency/) | 13.0.1.0.0 |  | Stock Landed Costs Currency
 [stock_landed_costs_delivery](stock_landed_costs_delivery/) | 13.0.1.0.0 | [![victoralmau](https://github.com/victoralmau.png?size=30px)](https://github.com/victoralmau) | Stock landed costs delivery
 [stock_landed_costs_purchase_auto](stock_landed_costs_purchase_auto/) | 13.0.1.0.0 | [![victoralmau](https://github.com/victoralmau.png?size=30px)](https://github.com/victoralmau) | Stock landed costs purchase auto
