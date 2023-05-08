@@ -115,7 +115,9 @@ class TestBatchPicking(TransactionCase):
         self.assertFalse(copy.batch_id)
 
     def test_create_wizard(self):
-        wizard = self.env["stock.picking.to.batch"].create({"name": "Unittest wizard"})
+        wizard = self.env["stock.picking.to.batch"].create(
+            {"name": "Unittest wizard", "mode": "new"}
+        )
 
         # Pickings already in batch.
         with self.assertRaises(UserError):
@@ -144,7 +146,7 @@ class TestBatchPicking(TransactionCase):
         wh_main = self.browse_ref("stock.warehouse0")
 
         wizard_model = self.env["stock.picking.to.batch"]
-        wizard = wizard_model.create({"name": "Unittest wizard"})
+        wizard = wizard_model.create({"name": "Unittest wizard", "mode": "new"})
         self.assertFalse(wizard.user_id)
 
         wh_main.default_user_id = self.env.user
@@ -332,7 +334,7 @@ class TestBatchPicking(TransactionCase):
         pickings = self.picking + self.picking2
 
         wiz = Wiz.with_context(active_ids=pickings.ids).create(
-            {"name": "Unittest wizard"}
+            {"name": "Unittest wizard", "mode": "new"}
         )
         # Read values from config parameters, before first execution there
         # are no values
