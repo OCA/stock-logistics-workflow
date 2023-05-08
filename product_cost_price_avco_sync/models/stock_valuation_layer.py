@@ -46,7 +46,7 @@ class StockValuationLayer(models.Model):
             "skip_avco_sync"
         ):
             for svl in self:
-                for field_name in vals.keys():
+                for field_name in set(vals.keys()) & {"unit_cost", "quantity"}:
                     svl_previous_vals[svl.id][field_name] = svl[field_name]
         res = super().write(vals)
         if svl_previous_vals:
@@ -66,14 +66,14 @@ class StockValuationLayer(models.Model):
             .search(domain, order="create_date, id")
         )
 
-    @api.model
-    def get_avco_svl_qty_unit_cost(self, line, svl, vals):
-        if svl.id == line.id:
+    def get_avco_svl_qty_unit_cost(self, line, vals):
+        self.ensure_one()
+        if self.id == line.id:
             qty = vals.get("quantity", line.quantity)
             unit_cost = vals.get("unit_cost", line.unit_cost)
         else:
-            qty = svl.quantity
-            unit_cost = svl.unit_cost
+            qty = self.quantity
+            unit_cost = self.unit_cost
         return qty, unit_cost
 
     @api.model
@@ -238,14 +238,28 @@ class StockValuationLayer(models.Model):
             if vals:
                 svl.with_context(skip_avco_sync=True).write(vals)
 
+    def _preprocess_main_svl_line(self):
+        """This method serves for doing any stuff before processing the SVL, and it
+        also allows to skip the line returning True.
+        """
+        return False
+
+    def _preprocess_rest_svl_to_sync(self, svls_dic):
+        """This method serves for doing any stuff before processing subsequent SVLs that
+        are being synced, and it also allows to skip the line returning True.
+        """
+        return False
+
     def cost_price_avco_sync(self, vals, svl_previous_vals):  # noqa: C901
         dp_obj = self.env["decimal.precision"]
         precision_qty = dp_obj.precision_get("Product Unit of Measure")
         precision_price = dp_obj.precision_get("Product Price")
-        landed_cost_installed = "stock_landed_cost_id" in self
         for line in self.sorted(key=lambda l: (l.create_date, l.id)):
-            if line.product_id.cost_method != "average" or (
-                landed_cost_installed and line.stock_landed_cost_id
+            bypass = line._preprocess_main_svl_line()
+            if (
+                line.product_id.cost_method != "average"
+                or line.stock_valuation_layer_id
+                or bypass
             ):
                 continue
             previous_unit_cost = previous_qty = 0.0
@@ -257,15 +271,17 @@ class StockValuationLayer(models.Model):
             unit_cost_processed = False
             svls_dic = OrderedDict()
             for svl in svls_to_avco_sync:
+                if svl._preprocess_rest_svl_to_sync(svls_dic):
+                    continue
                 # Compatibility with landed cost
-                if landed_cost_installed and svl.stock_landed_cost_id:
-                    linked_layer = svl.stock_move_id.stock_valuation_layer_ids[:1]
+                if svl.stock_valuation_layer_id:
+                    linked_layer = svl.stock_valuation_layer_id
                     cost_to_add = svl.value
                     if cost_to_add and previous_qty:
                         previous_unit_cost += cost_to_add / previous_qty
                         svls_dic[linked_layer]["remaining_value"] += cost_to_add
                     continue
-                qty, unit_cost = self.get_avco_svl_qty_unit_cost(line, svl, vals)
+                qty, unit_cost = svl.get_avco_svl_qty_unit_cost(line, vals)
                 svls_dic[svl] = {
                     "id": svl.id,
                     "quantity": qty,
