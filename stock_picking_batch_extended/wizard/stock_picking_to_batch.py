@@ -119,10 +119,10 @@ class StockPickingToBatch(models.TransientModel):
         For OCA approach:
          Create a batch picking  with selected pickings after having checked
          that they are not already in another batch or done/cancel.
-        For non OCA approach:
+        For non OCA approach or add to existing batch picking:
          Call to original method
         """
-        if not self.env.company.use_oca_batch_validation:
+        if not self.env.company.use_oca_batch_validation or self.mode != "new":
             return self.attach_pickings()
         domain = [
             ("id", "in", self.env.context["active_ids"]),
@@ -140,6 +140,14 @@ class StockPickingToBatch(models.TransientModel):
             group_fields = [f.field_id.id for f in self.group_field_ids]
             self.env["ir.config_parameter"].sudo().set_param(
                 self._group_field_param, group_fields
+            )
+        # Ensure that the group field is empty upon the next execution
+        elif (
+            self.env["ir.config_parameter"].sudo().get_param(self._group_field_param)
+            != "[]"
+        ):
+            self.env["ir.config_parameter"].sudo().set_param(
+                self._group_field_param, []
             )
         return self.action_view_batch_picking(batchs)
 
