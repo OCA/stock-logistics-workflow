@@ -19,6 +19,7 @@ class TestProductSupplierinfoForCustomerPicking(TransactionCase):
                         {
                             "name": self.agrolait.id,
                             "product_code": "test_agrolait",
+                            "product_name": "test prod name 1",
                         },
                     ),
                     (
@@ -27,6 +28,7 @@ class TestProductSupplierinfoForCustomerPicking(TransactionCase):
                         {
                             "name": self.gemini.id,
                             "product_code": "test_gemini",
+                            "product_name": "test prod name 2",
                         },
                     ),
                 ],
@@ -64,6 +66,7 @@ class TestProductSupplierinfoForCustomerPicking(TransactionCase):
         move = delivery_picking.move_lines[0]
         move._compute_product_customer_code()
         self.assertEqual(move.product_customer_code, "test_agrolait")
+        self.assertEqual(move.product_customer_name, "test prod name 1")
 
     def test_product_supplierinfo_two_costumers(self):
         delivery_picking = self.env["stock.picking"].new(
@@ -96,3 +99,4 @@ class TestProductSupplierinfoForCustomerPicking(TransactionCase):
         move = delivery_picking.move_lines[0]
         move._compute_product_customer_code()
         self.assertEqual(move.product_customer_code, "test_gemini")
+        self.assertEqual(move.product_customer_name, "test prod name 2")
