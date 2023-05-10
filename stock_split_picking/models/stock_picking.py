@@ -24,6 +24,19 @@ class StockPicking(models.Model):
                 )
             )
 
+        if all(
+            [
+                x.qty_done == x.product_uom_qty
+                for x in self.move_line_ids.filtered(lambda m: m.qty_done != 0.0)
+            ]
+        ):
+            raise UserError(
+                _(
+                    "All done quantities are equal to initial ones. You must choose "
+                    "another option in order to split your picking in several ones."
+                )
+            )
+            
     def split_process(self):
         """Use to trigger the wizard from button with correct context"""
         for picking in self:
