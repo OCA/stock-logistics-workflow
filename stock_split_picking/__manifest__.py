@@ -7,7 +7,7 @@
 {
     "name": "Split picking",
     "summary": "Split a picking in two not transferred pickings",
-    "version": "15.0.1.1.1",
+    "version": "15.0.1.1.2",
     "category": "Inventory",
     "author": "Camptocamp, "
     "Tecnativa, "
