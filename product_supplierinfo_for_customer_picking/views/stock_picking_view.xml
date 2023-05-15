@@ -12,14 +12,35 @@
                 expr="//notebook/page/field[@name='move_ids_without_package']/form//field[@name='product_id']"
                 position="after"
             >
-                <field name="product_customer_code" />
+                <field name="product_customer_name" optional="hide" />
+                <field name="product_customer_code" optional="hide" />
+                <field name="partner_id" invisible="1" />
             </xpath>
             <xpath
                 expr="//notebook/page/field[@name='move_ids_without_package']/tree/field[@name='product_id']"
                 position="after"
             >
-                <field name="product_customer_code" />
+                <field name="product_customer_name" optional="hide" />
+                <field name="product_customer_code" optional="hide" />
+                <field name="partner_id" invisible="1" />
             </xpath>
+            <xpath
+                expr="//notebook/page/field[@name='move_ids_without_package']/tree/field[@name='product_id']"
+                position="attributes"
+            >
+                <attribute
+                    name="context"
+                >{'default_type': 'product', 'partner_id': parent.partner_id}</attribute>
+            </xpath>
+            <xpath
+                expr="//notebook/page/field[@name='move_ids_without_package']/form//field[@name='product_id']"
+                position="attributes"
+            >
+                <attribute
+                    name="context"
+                >{'default_type': 'product', 'partner_id': partner_id}</attribute>
+            </xpath>
+
         </field>
     </record>
 
