@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-01-15 14:28+0000\n"
-"PO-Revision-Date: 2023-05-09 15:34+0000\n"
+"PO-Revision-Date: 2023-05-17 03:53+0000\n"
 "Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: \n"
 "Language: it\n"
@@ -20,17 +20,17 @@ msgstr ""
 #. module: product_supplierinfo_for_customer_picking
 #: model:ir.model.fields,field_description:product_supplierinfo_for_customer_picking.field_stock_move__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: product_supplierinfo_for_customer_picking
 #: model:ir.model.fields,field_description:product_supplierinfo_for_customer_picking.field_stock_move__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: product_supplierinfo_for_customer_picking
 #: model:ir.model.fields,field_description:product_supplierinfo_for_customer_picking.field_stock_move____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: product_supplierinfo_for_customer_picking
 #: model:ir.model.fields,field_description:product_supplierinfo_for_customer_picking.field_stock_move__product_customer_code
@@ -40,7 +40,7 @@ msgstr "Codice cliente prodotto"
 #. module: product_supplierinfo_for_customer_picking
 #: model:ir.model.fields,field_description:product_supplierinfo_for_customer_picking.field_stock_move__product_customer_name
 msgid "Product Customer Name"
-msgstr ""
+msgstr "Nome prodotto cliente"
 
 #. module: product_supplierinfo_for_customer_picking
 #: model:ir.model,name:product_supplierinfo_for_customer_picking.model_stock_move
