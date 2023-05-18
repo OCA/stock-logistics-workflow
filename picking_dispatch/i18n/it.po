@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-18 01:44+0000\n"
-"PO-Revision-Date: 2023-05-17 16:35+0000\n"
+"PO-Revision-Date: 2023-05-18 19:35+0000\n"
 "Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/"
 "OCA-stock-logistics-workflow-8-0/language/it/)\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.16.4\n"
 
 #. module: picking_dispatch
 #: code:addons/picking_dispatch/wizard/create_dispatch.py:97
@@ -495,7 +495,7 @@ msgstr "Movimento di magazzino"
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form
 msgid "Stock Moves"
-msgstr "Movimenti di Magazzino"
+msgstr "Movimenti di magazzino"
 
 #. module: picking_dispatch
 #: help:picking.dispatch.creator,picker_id:0
