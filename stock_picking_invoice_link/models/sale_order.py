@@ -12,7 +12,7 @@ class SaleOrderLine(models.Model):
     def get_stock_moves_link_invoice(self):
         moves_linked = self.env["stock.move"]
         to_invoice = self.qty_to_invoice
-        for stock_move in self.move_ids.sorted(
+        for stock_move in self.move_ids.filtered(lambda sm: sm.state == "done").sorted(
             lambda m: (m.write_date, m.id), reverse=True
         ):
             if (
