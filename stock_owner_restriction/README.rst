@@ -23,7 +23,7 @@ Stock Owner Restriction
     :target: https://runbot.odoo-community.org/runbot/154/15.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5|
+|badge1| |badge2| |badge3| |badge4| |badge5| 
 
 This module extends the functionality of stock module to allow restriction
 of product quantities (quants) for stock operations such as reserve quantities
@@ -113,10 +113,6 @@ Contributors
     * Sergio Teruel
     * César A. Sánchez
     * Luis D. Lafaurie
-
-* `Studio73 <https://www.studio73.es>`_:
-
-    * Ferran Mora
 
 Maintainers
 ~~~~~~~~~~~
