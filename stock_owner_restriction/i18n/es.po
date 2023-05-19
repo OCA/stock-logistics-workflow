@@ -20,8 +20,8 @@ msgstr ""
 #. module: stock_owner_restriction
 #: model:ir.model.fields,field_description:stock_owner_restriction.field_stock_picking__owner_restriction
 #: model:ir.model.fields,field_description:stock_owner_restriction.field_stock_picking_type__owner_restriction
-msgid "Owner restriction"
-msgstr "Restricción de cantidad disponible"
+msgid "Owner Restriction"
+msgstr ""
 
 #. module: stock_owner_restriction
 #: model_terms:ir.ui.view,arch_db:stock_owner_restriction.view_picking_type_form
@@ -37,6 +37,11 @@ msgstr "Tipo de operación"
 #: model:ir.model.fields.selection,name:stock_owner_restriction.selection__stock_picking_type__owner_restriction__picking_partner
 msgid "Picking partner"
 msgstr "Dirección de entrega del albarán"
+
+#. module: stock_owner_restriction
+#: model:ir.model.fields.selection,name:stock_owner_restriction.selection__stock_picking_type__owner_restriction__partner_or_unassigned
+msgid "Picking partner or unassigned owner"
+msgstr ""
 
 #. module: stock_owner_restriction
 #: model:ir.model,name:stock_owner_restriction.model_product_product
@@ -67,3 +72,6 @@ msgstr "Transferir"
 #: model:ir.model.fields.selection,name:stock_owner_restriction.selection__stock_picking_type__owner_restriction__unassigned_owner
 msgid "Unassigned owner"
 msgstr "Propietario no asignado"
+
+#~ msgid "Owner restriction"
+#~ msgstr "Restricción de cantidad disponible"
