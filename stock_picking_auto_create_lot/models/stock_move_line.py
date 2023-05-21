@@ -8,12 +8,11 @@ class StockMoveLine(models.Model):
 
     _inherit = "stock.move.line"
 
-    def _prepare_auto_lot_values(self):
-        """
-        Prepare multi valued lots per line to use multi creation.
-        """
-        self.ensure_one()
-        return {"product_id": self.product_id.id, "company_id": self.company_id.id}
+    def _get_value_production_lot(self):
+        res = super()._get_value_production_lot()
+        if "name" in res and not res["name"]:
+            del res["name"]
+        return res
 
     def set_lot_auto(self):
         """
@@ -25,7 +24,8 @@ class StockMoveLine(models.Model):
         stock_lot_obj = self.env["stock.lot"]
         lots_by_product = dict()
         for line in self:
-            values.append(line._prepare_auto_lot_values())
+            # Prepare multi valued lots per line to use multi creation.
+            values.append(line._get_value_production_lot())
         lots = stock_lot_obj.create(values)
         for lot in lots:
             if lot.product_id.id not in lots_by_product:
