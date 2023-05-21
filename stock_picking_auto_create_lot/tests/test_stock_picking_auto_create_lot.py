@@ -36,7 +36,7 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
         self.assertTrue(move.display_assign_serial)
         # Assign manual serials
         for line in move.move_line_ids:
-            line.lot_id = self.lot_obj.create(line._prepare_auto_lot_values())
+            line.lot_id = self.lot_obj.create(line._get_value_production_lot())
 
         self.picking.button_validate()
         lot = self.env["stock.lot"].search([("product_id", "=", self.product.id)])
@@ -88,7 +88,7 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
 
         # Assign manual serials
         for line in moves.mapped("move_line_ids"):
-            line.lot_id = self.lot_obj.create(line._prepare_auto_lot_values())
+            line.lot_id = self.lot_obj.create(line._get_value_production_lot())
 
         self.picking.button_validate()
         for line in moves.mapped("move_line_ids"):
