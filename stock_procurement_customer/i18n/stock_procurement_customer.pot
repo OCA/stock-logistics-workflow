@@ -1,0 +1,51 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_procurement_customer
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_procurement_customer
+#: model:ir.model.fields,field_description:stock_procurement_customer.field_procurement_group__customer_id
+#: model:ir.model.fields,field_description:stock_procurement_customer.field_stock_picking__customer_id
+msgid "Customer"
+msgstr ""
+
+#. module: stock_procurement_customer
+#: model_terms:ir.ui.view,arch_db:stock_procurement_customer.stock_picking_form_view
+msgid "Customer Address"
+msgstr ""
+
+#. module: stock_procurement_customer
+#: model:ir.model.fields,field_description:stock_procurement_customer.field_stock_picking__customer_id_visible
+msgid "Customer Id Visible"
+msgstr ""
+
+#. module: stock_procurement_customer
+#: model:ir.model,name:stock_procurement_customer.model_procurement_group
+msgid "Procurement Group"
+msgstr ""
+
+#. module: stock_procurement_customer
+#: model:ir.model,name:stock_procurement_customer.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_procurement_customer
+#: model:ir.model.fields,help:stock_procurement_customer.field_stock_picking__customer_id_visible
+msgid ""
+"Technical field in order to say if the customer field should be visible."
+msgstr ""
+
+#. module: stock_procurement_customer
+#: model:ir.model,name:stock_procurement_customer.model_stock_picking
+msgid "Transfer"
+msgstr ""
