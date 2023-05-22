@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2022 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="procurement_group_form_view">
+        <field
+            name="name"
+        >procurement.group.form (in stock_procurement_customer)</field>
+        <field name="model">procurement.group</field>
+        <field name="inherit_id" ref="stock.procurement_group_form_view" />
+        <field name="arch" type="xml">
+            <field name="move_type" position="after">
+                <field name="customer_id" />
+            </field>
+        </field>
+    </record>
+
+</odoo>
