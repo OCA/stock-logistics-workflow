@@ -64,6 +64,10 @@ After having created a batch with a list of stock picking, you can:
    :width: 80 %
    :align: center
 
+Due to the modifications in v16, when performing actions with a specific picking, it is removed from 
+the grouping. If the action is generated within the grouping, the pickings will still retain the 
+grouping, as in previous versions.
+
 **Table of contents**
 
 .. contents::

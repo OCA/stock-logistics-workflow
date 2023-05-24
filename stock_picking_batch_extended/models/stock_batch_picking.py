@@ -1,6 +1,8 @@
 # Copyright 2012-2014 Alexandre Fayolle, Camptocamp SA
 # Copyright 2018-2020 Tecnativa - Carlos Dauden
+# Copyright 2023 FactorLibre - Boris Alias
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
@@ -60,9 +62,9 @@ class StockPickingBatch(models.Model):
             batch.update(
                 {
                     "entire_package_ids": batch.use_oca_batch_validation
-                    and batch.picking_ids.mapped("entire_package_ids" or False),
+                    and batch.picking_ids.mapped("package_ids" or False),
                     "entire_package_detail_ids": batch.use_oca_batch_validation
-                    and batch.picking_ids.mapped("entire_package_detail_ids" or False),
+                    and batch.picking_ids.mapped("package_ids" or False),
                 }
             )
 

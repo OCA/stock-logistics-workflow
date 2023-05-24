@@ -1,9 +1,10 @@
 # Copyright 2018 Tecnativa - Carlos Dauden
+# Copyright 2023 FactorLibre - Boris Alias
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 import logging
 
 from odoo import api, fields, models
-from odoo.tools import float_is_zero
+from odoo.tools.float_utils import float_is_zero
 
 _logger = logging.getLogger(__name__)
 
@@ -37,11 +38,11 @@ class ReportPrintBatchPicking(models.AbstractModel):
     def _get_operation_qty(self, operation):
         return (
             float_is_zero(
-                operation.product_qty,
+                operation.qty_done,
                 precision_rounding=operation.product_uom_id.rounding,
             )
             and operation.qty_done
-            or operation.product_qty
+            or operation.qty_done
         )
 
     @api.model
