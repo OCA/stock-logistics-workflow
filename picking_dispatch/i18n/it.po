@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-18 01:44+0000\n"
-"PO-Revision-Date: 2023-05-18 19:35+0000\n"
+"PO-Revision-Date: 2023-05-24 18:12+0000\n"
 "Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/"
 "OCA-stock-logistics-workflow-8-0/language/it/)\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.16.4\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: picking_dispatch
 #: code:addons/picking_dispatch/wizard/create_dispatch.py:97
@@ -32,7 +32,7 @@ msgstr ""
 #. module: picking_dispatch
 #: view:stock.picking:picking_dispatch.view_picking_form
 msgid "Additional Info"
-msgstr "Informazioni addizionali"
+msgstr "Informazioni aggiuntive"
 
 #. module: picking_dispatch
 #: code:addons/picking_dispatch/wizard/dispatch_start.py:47
