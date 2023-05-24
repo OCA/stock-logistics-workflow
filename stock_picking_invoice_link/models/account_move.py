@@ -5,6 +5,8 @@
 # Copyright 2020 Manuel Calero - Tecnativa
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
+from collections import defaultdict
+
 from odoo import api, fields, models
 
 
@@ -52,14 +54,18 @@ class AccountMove(models.Model):
 
     def _reverse_move_vals(self, default_values, cancel=True):
         move_vals = super()._reverse_move_vals(default_values, cancel=cancel)
+        product_dic = defaultdict(int)
         # Invoice returned moves marked as to_refund
         for line_command in move_vals.get("line_ids", []):
             line_vals = line_command[2]
             product_id = line_vals.get("product_id", False)
             if product_id:
-                stock_moves = self.line_ids.filtered(
+                position = product_dic[product_id]
+                product_line = self.line_ids.filtered(
                     lambda l: l.product_id.id == product_id
-                ).mapped("move_line_ids")
+                )[position]
+                product_dic[product_id] += 1
+                stock_moves = product_line.mapped("move_line_ids")
                 if stock_moves:
                     line_vals["move_line_ids"] = [(4, m.id) for m in stock_moves]
         return move_vals
