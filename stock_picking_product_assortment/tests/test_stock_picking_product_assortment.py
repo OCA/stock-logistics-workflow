@@ -11,8 +11,6 @@ class TestStockPickingProductAssortment(TransactionCase):
         self.product_obj = self.env["product.template"]
         self.stock_picking_obj = self.env["stock.picking"]
         self.pick_type_out = self.env.ref("stock.picking_type_out")
-        self.stock_location = self.env.ref("stock.stock_location_stock")
-        self.customers_location = self.env.ref("stock.stock_location_customers")
         self.product_category = self.env["product.category"].create(
             {"name": "Test Product category"}
         )
@@ -51,8 +49,6 @@ class TestStockPickingProductAssortment(TransactionCase):
         stock_picking_form = Form(self.stock_picking_obj)
         stock_picking_form.partner_id = self.partner_1
         stock_picking_form.picking_type_id = self.pick_type_out
-        stock_picking_form.location_id = self.stock_location
-        stock_picking_form.location_dest_id = self.customers_location
         with stock_picking_form.move_ids_without_package.new() as move_id:
             move_id.assortment_product_id = self.product_1.product_variant_id
             self.assertEqual(move_id.product_id, self.product_1.product_variant_id)
@@ -75,8 +71,6 @@ class TestStockPickingProductAssortment(TransactionCase):
         stock_picking_form = Form(self.stock_picking_obj)
         stock_picking_form.partner_id = self.partner_1
         stock_picking_form.picking_type_id = self.pick_type_out
-        stock_picking_form.location_id = self.stock_location
-        stock_picking_form.location_dest_id = self.customers_location
         with stock_picking_form.move_ids_without_package.new() as move_id:
             move_id.assortment_product_id = self.product_1.product_variant_id
             self.assertEqual(move_id.product_id, self.product_1.product_variant_id)
@@ -90,8 +84,6 @@ class TestStockPickingProductAssortment(TransactionCase):
         stock_picking_form = Form(self.stock_picking_obj)
         stock_picking_form.partner_id = self.partner_2
         stock_picking_form.picking_type_id = self.pick_type_out
-        stock_picking_form.location_id = self.stock_location
-        stock_picking_form.location_dest_id = self.customers_location
         with stock_picking_form.move_ids_without_package.new() as move_id:
             move_id.assortment_product_id = self.product_1.product_variant_id
             self.assertEqual(move_id.product_id, self.product_1.product_variant_id)
