@@ -30,6 +30,7 @@ class StockMove(models.Model):
 
     def _backdating_action_done(self, moves_todo):
         """Process the moves one by one, backdating the ones that need to."""
+        moves_todo_ids = set(moves_todo.ids)
         for move in self:
             move_line = first(move.move_line_ids)
             date_backdating = move_line.date_backdating
@@ -38,7 +39,8 @@ class StockMove(models.Model):
                     date_backdating=date_backdating,
                 )
 
-            moves_todo |= super(StockMove, move)._action_done()
+            move_todo = super(StockMove, move)._action_done()
+            moves_todo_ids.update(move_todo.ids)
 
             # overwrite date field where applicable
             date_backdating = move_line.date_backdating
@@ -48,7 +50,7 @@ class StockMove(models.Model):
                 move.move_line_ids.update({
                     'date': date_backdating,
                 })
-        return moves_todo
+        return self.browse(moves_todo_ids)
 
     @api.multi
     def _action_done(self):
