@@ -31,6 +31,7 @@ addon | version | maintainers | summary
 [stock_dropshipping_whole_supplier](stock_dropshipping_whole_supplier/) | 12.0.1.0.0 |  | When sale order with a dropship product, dropship all goods
 [stock_landed_costs_currency](stock_landed_costs_currency/) | 12.0.1.0.0 |  | Stock Landed Costs Currency
 [stock_lot_scrap](stock_lot_scrap/) | 12.0.1.0.0 |  | This module adds a button in Production Lot/Serial Number view form to Scrap all products contained.
+[stock_move_backdating](stock_move_backdating/) | 12.0.1.0.0 |  | Stock Move Backdating
 [stock_move_line_auto_fill](stock_move_line_auto_fill/) | 12.0.2.0.3 |  | Stock Move Line auto fill
 [stock_move_manual_lot](stock_move_manual_lot/) | 12.0.1.0.0 |  | Force the user to manually select a lot
 [stock_move_quick_lot](stock_move_quick_lot/) | 12.0.1.0.1 |  | Set lot name and end date directly on picking operations
