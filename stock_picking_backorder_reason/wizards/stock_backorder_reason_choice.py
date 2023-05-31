@@ -87,9 +87,9 @@ class StockBackorderReasonChoice(models.TransientModel):
                 backorder_wizard.with_context(skip_backorder_reason=True).process()
 
             if pickings_to_cancel:
-                backorder_wizard = confirmation_obj.create(
-                    wizard._prepare_backorder_confirmation(pickings_to_cancel)
-                )
+                backorder_wizard = confirmation_obj.with_context(
+                    default_pick_ids=pickings_to_cancel.ids
+                ).create(wizard._prepare_backorder_confirmation(pickings_to_cancel))
                 backorder_wizard.with_context(
                     skip_backorder_reason=True
                 ).process_cancel_backorder()
