@@ -62,7 +62,9 @@ class StockPicking(models.Model):
 
     def _pre_action_done_hook(self):
         if not self.env.context.get("skip_backorder_reason"):
-            pickings_with_reason = self._check_backorder_reason()
+            # Check if backorder is needed and then if reason is needed
+            pickings_with_backorder = self._check_backorder()
+            pickings_with_reason = pickings_with_backorder._check_backorder_reason()
             if pickings_with_reason:
                 return pickings_with_reason._action_backorder_reason(
                     show_transfers=self._should_show_transfers()

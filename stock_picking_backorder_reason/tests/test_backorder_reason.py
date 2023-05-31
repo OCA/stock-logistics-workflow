@@ -36,3 +36,41 @@ class TestPickingBackorder(TestPickingBackorder, TransactionCase):
         self.env.company.partner_purchase_backorder_default_strategy = "cancel"
         partner = self.partner_model.create({"name": "Test Cancel"})
         self.assertEqual("cancel", partner.purchase_reason_backorder_strategy)
+
+    def test_no_backorder(self):
+        """
+        Create a stock picking
+        Validate the whole lines
+        Try to validate the picking.
+        The result should be True (and not the backorder wizard)
+        """
+
+        self.picking = self.stock_picking_model.create(
+            {
+                "picking_type_id": self.picking_type_in.id,
+                "location_id": self.supplier_location.id,
+                "location_dest_id": self.stock_location.id,
+                "partner_id": self.partner.id,
+                "move_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "a move",
+                            "product_id": self.product.id,
+                            "product_uom_qty": 10,
+                            "product_uom": self.product.uom_id.id,
+                            "location_id": self.supplier_location.id,
+                            "location_dest_id": self.stock_location.id,
+                        },
+                    )
+                ],
+            }
+        )
+
+        self.picking.action_confirm()
+        self.picking.action_assign()
+        self.picking.move_line_ids.write({"qty_done": 10.0})
+
+        result = self.picking.button_validate()
+        self.assertTrue(isinstance(result, bool) and result)
