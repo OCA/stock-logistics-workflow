@@ -1,9 +1,9 @@
 # Copyright 2022 ACSONE SA/NV
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 
-
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+from odoo.models import BaseModel
 
 
 class StockPicking(models.Model):
@@ -66,7 +66,13 @@ class StockPicking(models.Model):
 
     def _is_inverse_started_modify_origin(self, vals):
         for k, v in vals.items():
-            if self._origin[k] != v:
+            if isinstance(self._origin[k], BaseModel) and not self._origin[k]:
+                # We evaluate fields that are browse records as
+                # void browse record != False
+                value = False
+            else:
+                value = self._origin[k]
+            if value != v:
                 return True
         return False
 
