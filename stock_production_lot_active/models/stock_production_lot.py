@@ -10,9 +10,9 @@ class StockProductionLot(models.Model):
 
     def write(self, vals):
         for record in self:
-            if record.active and record.product_qty and vals.get('active') == False:
+            if record.active and record.product_qty and not vals.get("active"):
                 raise UserError(_("This product has stock: %s", record.product_id.name))
-            super(StockProductionLot, self).write(vals)
+            return super(StockProductionLot, self).write(vals)
 
     active = fields.Boolean(default=True)
 
