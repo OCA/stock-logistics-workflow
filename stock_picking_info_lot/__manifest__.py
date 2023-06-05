@@ -5,7 +5,7 @@
     "license": "AGPL-3",
     "author": "S.P.O.C., Odoo Community Association (OCA)",
     "category": "Warehouse",
-    "version": "15.0.1.0.0",
+    "version": "16.0.1.0.0",
     "application": False,
     "installable": True,
     "depends": ["stock"],
