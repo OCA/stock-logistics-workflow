@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 
 from odoo.exceptions import UserError
-from odoo.tests.common import TransactionCase
+from odoo.tests.common import Form, TransactionCase
 
 
 class TestStockPickinStart(TransactionCase):
@@ -196,3 +196,14 @@ class TestStockPickinStart(TransactionCase):
         self.assigned_picking.action_start()
         new_picking = self.assigned_picking.copy()
         self.assertFalse(new_picking.started)
+
+    def test_picking_creation(self):
+        # Activate the user change at start
+        # Check the picking can be created
+        self.env.company.stock_picking_assign_operator_at_start = True
+        picking_form = Form(
+            self.env["stock.picking"].with_context(
+                default_picking_type_id=self.env.ref("stock.picking_type_in").id
+            )
+        )
+        picking_form.save()
