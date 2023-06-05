@@ -1,11 +1,18 @@
 # Copyright 2020 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
+from odoo.exceptions import UserError
 
 
 class StockProductionLot(models.Model):
     _inherit = "stock.lot"
+
+    def write(self, vals):
+        for record in self:
+            if record.active and record.product_qty:
+                raise UserError(_('This product has stock: %s', record.product_id.name))
+            return super(StockProductionLot, self).write(vals)
 
     active = fields.Boolean(default=True)
 
