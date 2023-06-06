@@ -9,10 +9,14 @@ class StockProductionLot(models.Model):
     _inherit = "stock.lot"
 
     def write(self, vals):
+        error = ""
         for record in self:
             if record.active and record.product_qty and not vals.get("active"):
-                raise UserError(_("This product has stock: %s", record.product_id.name))
-            return super(StockProductionLot, self).write(vals)
+                error += _("This product has stock: %s \n", record.product_id.name)
+            else:
+                return super(StockProductionLot, self).write(vals)
+        if error:
+            raise UserError(error)
 
     active = fields.Boolean(default=True)
 
