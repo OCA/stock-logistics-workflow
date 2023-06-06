@@ -10,12 +10,14 @@
         <field name="arch" type="xml">
             <field name="partner_id" position="after">
                 <field name="customer_id_visible" invisible="1" />
-                <div class="o_td_label">
+                <div
+                    class="o_td_label"
+                    attrs="{'invisible': [('customer_id_visible', '=', False)]}"
+                >
                     <label
                         for="customer_id"
                         string="Customer Address"
                         style="font-weight:bold;"
-                        attrs="{'invisible': [('customer_id_visible', '=', False)]}"
                     />
                 </div>
                 <field
