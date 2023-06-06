@@ -8,18 +8,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2016-05-03 14:10+0000\n"
-"Last-Translator: <>\n"
+"PO-Revision-Date: 2023-06-06 17:09+0000\n"
+"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_picking_back2draft
 #: model:ir.ui.view,arch_db:stock_picking_back2draft.view_picking_form_reopen
 msgid "Back to draft"
-msgstr "Reimposta a bozza"
+msgstr "Ritorna a bozza"
 
 #. module: stock_picking_back2draft
 #: model:ir.model,name:stock_picking_back2draft.model_stock_move
