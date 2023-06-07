@@ -33,7 +33,7 @@ class TestMassAction(common.TransactionCase):
                 "picking_type_id": picking_type_out.id,
                 "location_id": stock_location.id,
                 "location_dest_id": customer_location.id,
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
@@ -70,7 +70,7 @@ class TestMassAction(common.TransactionCase):
             {"picking_ids": [(4, self.picking.id)]}
         )
         wiz_tranfer.confirm = True
-        for line in self.picking.move_lines:
+        for line in self.picking.move_ids:
             line.quantity_done = line.product_uom_qty
         wiz_tranfer.mass_action()
         self.assertEqual(self.picking.state, "done")
@@ -103,6 +103,6 @@ class TestMassAction(common.TransactionCase):
             {"picking_ids": [(4, self.picking.id)], "confirm": True, "transfer": True}
         )
         self.picking.action_assign()
-        self.picking.move_lines[0].quantity_done = 30
+        self.picking.move_ids[0].quantity_done = 30
         res = wiz_tranfer.mass_action()
         self.assertEqual(res["res_model"], "stock.backorder.confirmation")
