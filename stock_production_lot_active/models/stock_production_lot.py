@@ -7,7 +7,20 @@ from odoo import api, fields, models
 class StockProductionLot(models.Model):
     _inherit = "stock.lot"
 
+    @api.depends("quant_ids")
+    def _compute_has_stock(self):
+        for record in self:
+            if record.quant_ids:
+                record.has_stock = True
+            else:
+                record.has_stock = False
+
     active = fields.Boolean(default=True)
+    has_stock = fields.Boolean(
+        string="Has stock",
+        compute="_compute_has_stock",
+        store=True
+    )
 
     @api.constrains("name", "product_id", "company_id")
     def _check_unique_lot(self):
