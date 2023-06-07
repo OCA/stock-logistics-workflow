@@ -17,9 +17,7 @@ class StockProductionLot(models.Model):
 
     active = fields.Boolean(default=True)
     has_stock = fields.Boolean(
-        string="Has stock",
-        compute="_compute_has_stock",
-        store=True
+        string="Has stock", compute="_compute_has_stock", store=True
     )
 
     @api.constrains("name", "product_id", "company_id")

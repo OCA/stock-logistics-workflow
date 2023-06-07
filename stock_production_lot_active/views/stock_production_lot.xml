@@ -44,7 +44,11 @@
                 />
             </field>
             <search>
-                <filter name="has_stock" string="Has stock" context="{'group_by':'has_stock'}"/>
+                <filter
+                    name="has_stock"
+                    string="Has stock"
+                    context="{'group_by':'has_stock'}"
+                />
             </search>
         </field>
     </record>
