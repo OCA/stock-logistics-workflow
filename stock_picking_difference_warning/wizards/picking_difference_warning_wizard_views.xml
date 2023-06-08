@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="picking_difference_warning_wizard_view_form" model="ir.ui.view">
+        <field name="name">picking.difference.warning.wizard.view.form</field>
+        <field name="model">picking.difference.warning.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="picking_ids" invisible="1" />
+                <p
+                >There are some differences between the original quantity and the quantity done.</p>
+                <p>Do you want to validate the picking anyway?</p>
+                <field name="picking_difference_warning_line_ids" nolabel="1">
+                    <tree
+                        decoration-success="difference &gt; 0"
+                        decoration-danger="difference &lt; 0"
+                    >
+                        <field name="move_id" invisible="1" />
+                        <field name="picking_id" />
+                        <field name="product_id" />
+                        <field name="quantity_done" />
+                        <field name="original_qty" />
+                        <field name="difference" />
+                    </tree>
+                </field>
+                <footer>
+                    <button
+                        name="action_validate"
+                        string="Validate"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>
