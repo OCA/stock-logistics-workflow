@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-11 10:29+0000\n"
-"PO-Revision-Date: 2023-06-07 13:16+0000\n"
+"PO-Revision-Date: 2023-06-08 09:15+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: \n"
 "Language: it\n"
@@ -68,12 +68,12 @@ msgstr "Ultima modifica il"
 #. module: stock_move_backdating
 #: model:ir.model.fields,field_description:stock_move_backdating.field_fill_date_backdating_write_uid
 msgid "Last Updated by"
-msgstr "Ultima modifica di"
+msgstr "Ultimo aggiornamento di"
 
 #. module: stock_move_backdating
 #: model:ir.model.fields,field_description:stock_move_backdating.field_fill_date_backdating_write_date
 msgid "Last Updated on"
-msgstr "Ultima modifica il"
+msgstr "Ultimo aggiornamento il"
 
 #. module: stock_move_backdating
 #: model:ir.model,name:stock_move_backdating.model_stock_pack_operation
