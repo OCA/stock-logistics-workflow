@@ -121,4 +121,19 @@ class StockMove(models.Model):
                 [[("id", "in", move_ids)], self._consolidate_priority_domain()]
             )
         )
-        moves.picking_id.write(self._consolidate_priority_values())
+        for move in moves:
+            # Flag the move as urgent.
+            move.write(self._consolidate_priority_values())
+        for picking in moves.picking_id:
+            # Flag the picking as urgent if it only contains urgent moves.
+            picking_moves = picking.move_lines.filtered(
+                lambda m: m.state not in ("cancel", "done")
+            )
+            if (
+                all(
+                    m.priority == self._consolidate_priority_value
+                    for m in picking_moves
+                )
+                and picking.priority is not self._consolidate_priority_value
+            ):
+                picking.write(self._consolidate_priority_values())
