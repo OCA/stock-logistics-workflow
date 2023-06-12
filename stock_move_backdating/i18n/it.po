@@ -7,13 +7,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-24 11:45+0000\n"
-"PO-Revision-Date: 2023-01-24 11:45+0000\n"
-"Last-Translator: Simone Rubino <sir@takobi.online>\n"
+"PO-Revision-Date: 2023-06-12 11:08+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: \n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_move_backdating
 #: model:ir.model.fields,field_description:stock_move_backdating.field_stock_inventory__date_backdating
@@ -107,7 +109,7 @@ msgstr "Quanti"
 #. module: stock_move_backdating
 #: model:ir.model,name:stock_move_backdating.model_stock_move
 msgid "Stock Move"
-msgstr "Movimento Magazzino"
+msgstr "Movimento di magazzino"
 
 #. module: stock_move_backdating
 #: model:ir.model.fields,help:stock_move_backdating.field_stock_picking__date_backdating
