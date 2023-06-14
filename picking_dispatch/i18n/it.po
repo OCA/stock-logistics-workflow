@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-18 01:44+0000\n"
-"PO-Revision-Date: 2023-06-13 16:11+0000\n"
+"PO-Revision-Date: 2023-06-14 14:11+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/"
 "OCA-stock-logistics-workflow-8-0/language/it/)\n"
@@ -260,7 +260,7 @@ msgstr "ID"
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
 #: selection:picking.dispatch,state:0
 msgid "In Progress"
-msgstr "In Corso"
+msgstr "In corso"
 
 #. module: picking_dispatch
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_search
