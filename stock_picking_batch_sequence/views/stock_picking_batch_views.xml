@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!--  View used by stock_picking_batch Odoo module  -->
+    <record id="view_picking_tree_batch" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock_picking_batch.view_picking_tree_batch" />
+        <field name="arch" type="xml">
+            <xpath expr="/tree/field[@name='name']" position="before">
+                <field name="sequence" widget="handle" />
+            </xpath>
+        </field>
+    </record>
+
+    <!--  View used by stock_picking_batch_extended OCA module  -->
+    <record id="vpicktree" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree" />
+        <field name="arch" type="xml">
+            <xpath expr="/tree/field[@name='priority']" position="before">
+                <field name="sequence" widget="handle" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_picking_move_tree_inherited" model="ir.ui.view">
+        <field name="model">stock.move</field>
+        <field
+            name="inherit_id"
+            ref="stock_picking_batch.view_picking_move_tree_inherited"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <field name="sequence" invisible="1" />
+                <field name="picking_sequence" invisible="1" />
+            </xpath>
+            <xpath expr="//tree" position="attributes">
+                <attribute name="default_order">picking_sequence,sequence,id</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_move_line_tree">
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock_picking_batch.view_move_line_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <field name="picking_sequence" invisible="1" />
+            </xpath>
+            <xpath expr="//tree" position="attributes">
+                <attribute
+                    name="default_order"
+                >picking_sequence, result_package_id desc, location_id asc, location_dest_id asc, picking_id asc, id</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
