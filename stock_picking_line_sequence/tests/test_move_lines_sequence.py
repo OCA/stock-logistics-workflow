@@ -25,7 +25,7 @@ class TestStockMove(common.TransactionCase):
                 "picking_type_id": self.picking_type_in.id,
                 "location_id": self.supplier_location.id,
                 "location_dest_id": self.customer_location.id,
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
@@ -71,21 +71,21 @@ class TestStockMove(common.TransactionCase):
 
         self.picking = self._create_picking()
         self.picking._compute_max_line_sequence()
-        self.picking.move_lines.write({"product_uom_qty": 10.0})
+        self.picking.move_ids.write({"product_uom_qty": 10.0})
         self.picking2 = self.picking.copy()
         self.assertEqual(
-            self.picking2[0].move_lines[0].sequence,
-            self.picking.move_lines[0].sequence,
+            self.picking2[0].move_ids[0].sequence,
+            self.picking.move_ids[0].sequence,
             "The Sequence is not copied properly",
         )
         self.assertEqual(
-            self.picking2[0].move_lines[1].sequence,
-            self.picking.move_lines[1].sequence,
+            self.picking2[0].move_ids[1].sequence,
+            self.picking.move_ids[1].sequence,
             "The Sequence is not copied properly",
         )
         self.assertEqual(
-            self.picking2[0].move_lines[2].sequence,
-            self.picking.move_lines[2].sequence,
+            self.picking2[0].move_ids[2].sequence,
+            self.picking.move_ids[2].sequence,
             "The Sequence is not copied properly",
         )
 
@@ -105,10 +105,10 @@ class TestStockMove(common.TransactionCase):
         backorder_wiz.process()
         picking_backorder = self.Picking.search([("backorder_id", "=", picking.id)])
         self.assertEqual(
-            picking_backorder[0].move_lines[1].sequence, 3, "Backorder wrong sequence"
+            picking_backorder[0].move_ids[1].sequence, 3, "Backorder wrong sequence"
         )
         self.assertEqual(
-            picking_backorder[0].move_lines[0].sequence, 1, "Backorder wrong sequence"
+            picking_backorder[0].move_ids[0].sequence, 1, "Backorder wrong sequence"
         )
 
     def test_move_lines_aggregated(self):
