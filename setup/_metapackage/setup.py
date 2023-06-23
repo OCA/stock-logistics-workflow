@@ -27,6 +27,7 @@ setuptools.setup(
         'odoo-addon-stock_picking_invoice_link>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_purchase_order_link>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_sale_order_link>=16.0dev,<16.1dev',
+        'odoo-addon-stock_picking_show_backorder>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_show_return>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_start>=16.0dev,<16.1dev',
         'odoo-addon-stock_procurement_customer>=16.0dev,<16.1dev',
