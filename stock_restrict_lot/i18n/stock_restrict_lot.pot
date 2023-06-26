@@ -14,12 +14,14 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_restrict_lot
+#: model:ir.model.fields,field_description:stock_restrict_lot.field_product_product__display_name
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_stock_move__display_name
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_stock_rule__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: stock_restrict_lot
+#: model:ir.model.fields,field_description:stock_restrict_lot.field_product_product__id
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_stock_move__id
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_stock_rule__id
 msgid "ID"
@@ -33,9 +35,15 @@ msgid ""
 msgstr ""
 
 #. module: stock_restrict_lot
+#: model:ir.model.fields,field_description:stock_restrict_lot.field_product_product____last_update
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_stock_move____last_update
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_stock_rule____last_update
 msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_restrict_lot
+#: model:ir.model,name:stock_restrict_lot.model_product_product
+msgid "Product"
 msgstr ""
 
 #. module: stock_restrict_lot
