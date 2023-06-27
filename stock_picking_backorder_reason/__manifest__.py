@@ -16,6 +16,7 @@
     "data": [
         "views/res_config_settings.xml",
         "views/stock_picking_type.xml",
+        "views/res_partner.xml",
         "security/stock_backorder_reason.xml",
         "views/stock_backorder_reason.xml",
         "wizards/stock_backorder_choice.xml",
