@@ -4,7 +4,7 @@
         <field name="model">stock.picking.type</field>
         <field name="inherit_id" ref="stock.view_picking_type_form" />
         <field name="arch" type="xml">
-            <xpath expr="//sheet/group[2]" position="inside">
+            <xpath expr="//sheet//group[@name='second']" position="inside">
                 <group name="owner_restriction" string="Owner settings">
                     <field name="owner_restriction" />
                 </group>
