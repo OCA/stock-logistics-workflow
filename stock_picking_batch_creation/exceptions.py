@@ -18,7 +18,7 @@ class NoSuitableDeviceError(UserError):
         message = _("No device found for batch picking.")
         if pickings:
             message += _(
-                " Pickings %{names}s do not match any device",
+                " Pickings %(names)s do not match any device",
                 names=", ".join(self.pickings.mapped("name")),
             )
         super(NoSuitableDeviceError, self).__init__(message)
