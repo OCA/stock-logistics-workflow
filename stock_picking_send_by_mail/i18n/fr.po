@@ -10,14 +10,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-09-02 02:50+0000\n"
-"PO-Revision-Date: 2017-09-02 02:50+0000\n"
-"Last-Translator: Quentin THEURET <odoo@kerpeo.com>, 2017\n"
+"PO-Revision-Date: 2023-06-29 17:09+0000\n"
+"Last-Translator: Quentin Dupont <perso@quentindupont.fr>\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_picking_send_by_mail
 #: model:mail.template,body_html:stock_picking_send_by_mail.email_template_stock_picking
@@ -182,7 +183,7 @@ msgstr "Écrire le courriel"
 #. module: stock_picking_send_by_mail
 #: model_terms:ir.ui.view,arch_db:stock_picking_send_by_mail.view_picking_form
 msgid "Send by Email"
-msgstr "Envoyé par courriel"
+msgstr "Envoyer par courriel"
 
 #. module: stock_picking_send_by_mail
 #: model:ir.model,name:stock_picking_send_by_mail.model_stock_picking
