@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-06-28 14:09+0000\n"
+"PO-Revision-Date: 2023-06-29 10:09+0000\n"
 "Last-Translator: Bole <bole@dajmi5.com>\n"
 "Language-Team: none\n"
 "Language: hr\n"
@@ -75,12 +75,12 @@ msgstr "Proizvod"
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_product_category
 msgid "Product Category"
-msgstr ""
+msgstr "Kategorija proizvoda"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_stock_quant
 msgid "Quants"
-msgstr ""
+msgstr "Količine"
 
 #. module: stock_no_negative
 #. odoo-python
@@ -92,3 +92,7 @@ msgid ""
 " location '{complete_name}' and negative stock is not allowed for this "
 "product and/or location."
 msgstr ""
+"Nije moguće potvrditi ovu skladišnu operaciju jer bi količine proizvoda "
+"'{name}'{name_lot} na stanju postale negativne ({q_quantity}) na skladišnoj "
+"lokaciji '{complete_name}' a negativna zaliha nije dozvoljena za taj "
+"proizvod i/ili lokaciju."
