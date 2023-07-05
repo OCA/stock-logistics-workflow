@@ -78,6 +78,7 @@ addon | version | maintainers | summary
 [stock_picking_operation_quick_change](stock_picking_operation_quick_change/) | 13.0.1.1.0 |  | Change location of all picking operations
 [stock_picking_package_preparation](stock_picking_package_preparation/) | 13.0.1.0.0 |  | Stock Picking Package Preparation
 [stock_picking_product_assortment](stock_picking_product_assortment/) | 13.0.1.0.0 | [![CarlosRoca13](https://github.com/CarlosRoca13.png?size=30px)](https://github.com/CarlosRoca13) | Stock Picking Product Assortment
+[stock_picking_product_assortment_availability_inline](stock_picking_product_assortment_availability_inline/) | 13.0.1.0.0 | [![Sergio-teruel](https://github.com/Sergio-teruel.png?size=30px)](https://github.com/Sergio-teruel) | Glue module to display stock available when an assortment is defined for a partner
 [stock_picking_product_availability_inline](stock_picking_product_availability_inline/) | 13.0.1.1.1 |  | Show product availability in product drop-down in stock picking form view.
 [stock_picking_purchase_order_link](stock_picking_purchase_order_link/) | 13.0.1.0.0 |  | Link between picking and purchase order
 [stock_picking_restrict_cancel_with_orig_move](stock_picking_restrict_cancel_with_orig_move/) | 13.0.1.0.1 |  | Restrict cancellation of dest moves according to origin.
