@@ -407,7 +407,7 @@ class MakePickingBatch(models.TransientModel):
             "user_id": self.user_id.id,
             "state": "draft",
             "picking_device_id": self._device.id if self._device else None,
-            "is_wave": True,
+            "is_wave": False,
             "batch_weight": sum(selected_pickings.mapped("weight")),
             "batch_volume": sum(selected_pickings.mapped("volume")),
             "batch_nbr_bins": self._device.nbr_bins - self._remaining_nbr_bins,
