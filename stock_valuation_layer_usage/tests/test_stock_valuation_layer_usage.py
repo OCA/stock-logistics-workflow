@@ -31,9 +31,9 @@ class TestStockValuationLayerUsage(TransactionCase):
         cls.stock_location_customer_id = cls.env.ref("stock.stock_location_customers")
         cls.stock_location_supplier_id = cls.env.ref("stock.stock_location_suppliers")
         # Account types
-        expense_type = cls.env.ref("account.data_account_type_expenses")
-        equity_type = cls.env.ref("account.data_account_type_equity")
-        asset_type = cls.env.ref("account.data_account_type_fixed_assets")
+        equity_type = "equity"
+        expense_type = "expense"
+        asset_type = "asset_fixed"
         # Create account for Goods Received Not Invoiced
         name = "Goods Received Not Invoiced"
         code = "grni"
@@ -97,7 +97,7 @@ class TestStockValuationLayerUsage(TransactionCase):
             {
                 "name": name,
                 "code": code,
-                "user_type_id": acc_type.id,
+                "account_type": acc_type,
                 "company_id": company.id,
             }
         )
@@ -151,7 +151,7 @@ class TestStockValuationLayerUsage(TransactionCase):
                 "picking_type_id": self.stock_picking_type_out.id,
                 "location_id": self.stock_location_id.id,
                 "location_dest_id": self.stock_location_customer_id.id,
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
@@ -181,7 +181,7 @@ class TestStockValuationLayerUsage(TransactionCase):
                 "picking_type_id": self.stock_picking_type_out.id,
                 "location_id": self.stock_location_supplier_id.id,
                 "location_dest_id": self.stock_location_customer_id.id,
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
@@ -207,7 +207,7 @@ class TestStockValuationLayerUsage(TransactionCase):
                 "picking_type_id": self.stock_picking_type_in.id,
                 "location_id": self.stock_location_supplier_id.id,
                 "location_dest_id": self.stock_location_id.id,
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
@@ -231,7 +231,7 @@ class TestStockValuationLayerUsage(TransactionCase):
         """Do picking with only one move on the given date."""
         picking.action_confirm()
         picking.action_assign()
-        picking.move_lines.quantity_done = qty
+        picking.move_ids.quantity_done = qty
         res = picking.button_validate()
         if isinstance(res, dict) and res:
             backorder_wiz_id = res["res_id"]
@@ -265,7 +265,7 @@ class TestStockValuationLayerUsage(TransactionCase):
         self.assertEqual(balance_grni, -10.0)
 
         # There's a stock valuation layer associated to this product
-        move = in_picking.move_lines
+        move = in_picking.move_ids
         layer = self.layer_model.search([("stock_move_id", "=", move.id)])
         self.assertEqual(len(layer), 1)
         self.assertEqual(layer.remaining_qty, 1.0)
@@ -278,7 +278,7 @@ class TestStockValuationLayerUsage(TransactionCase):
         self.assertEqual(layer.remaining_qty, 0.0)
         self.assertEqual(layer.remaining_value, 0.0)
         # The original layer is referenced in the outbound move
-        layer_usage = out_picking.move_lines.layer_usage_ids
+        layer_usage = out_picking.move_ids.layer_usage_ids
         self.assertEqual(len(layer_usage), 1)
         self.assertEqual(layer_usage.quantity, 1.0)
         self.assertEqual(layer_usage.value, 10.0)
@@ -312,7 +312,7 @@ class TestStockValuationLayerUsage(TransactionCase):
         self.assertEqual(balance_gdni, 10.0)
 
         # There are two a stock valuation layers associated to this product
-        move = dropship_picking.move_lines
+        move = dropship_picking.move_ids
         layers = self.layer_model.search([("stock_move_id", "=", move.id)])
         self.assertEqual(len(layers), 2)
         in_layer = layers.filtered(lambda l: l.quantity > 0)
@@ -338,17 +338,17 @@ class TestStockValuationLayerUsage(TransactionCase):
     def test_03_revaluation_of_negative_fifo(self):
         out_picking = self._create_delivery(self.product, 10)
         self._do_picking(out_picking, fields.Datetime.now(), 10.0)
-        out_layer = out_picking.move_lines.stock_valuation_layer_ids
+        out_layer = out_picking.move_ids.stock_valuation_layer_ids
         remaining_qty = sum(
-            out_picking.move_lines.stock_valuation_layer_ids.mapped("remaining_qty")
+            out_picking.move_ids.stock_valuation_layer_ids.mapped("remaining_qty")
         )
         self.assertTrue(remaining_qty < 0.0)
         in_picking = self._create_receipt(self.product, 10.0)
         self._do_picking(in_picking, fields.Datetime.now(), 10.0)
-        in_layer = in_picking.move_lines.stock_valuation_layer_ids
+        in_layer = in_picking.move_ids.stock_valuation_layer_ids
         out_picking = self.env["stock.picking"].browse(out_picking.id)
         remaining_qty = sum(
-            out_picking.move_lines.stock_valuation_layer_ids.mapped("remaining_qty")
+            out_picking.move_ids.stock_valuation_layer_ids.mapped("remaining_qty")
         )
         self.assertEqual(remaining_qty, 0)
         self.assertEqual(
