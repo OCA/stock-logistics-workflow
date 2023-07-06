@@ -26,6 +26,7 @@ setuptools.setup(
         'odoo-addon-stock_picking_group_by_max_weight>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_info_lot>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_invoice_link>=16.0dev,<16.1dev',
+        'odoo-addon-stock_picking_kind>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_purchase_order_link>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_sale_order_link>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_show_backorder>=16.0dev,<16.1dev',
