@@ -2,7 +2,7 @@
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 {
     "name": "Stock Landed Costs Currency",
-    "version": "13.0.1.0.0",
+    "version": "16.0.1.0.0",
     "author": "Komit Consulting, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "category": "Stock Accounting",

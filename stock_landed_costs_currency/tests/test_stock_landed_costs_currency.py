@@ -3,11 +3,12 @@
 from odoo.tests import common
 
 
-class TestStockLandedCostsCurrency(common.SavepointCase):
+class TestStockLandedCostsCurrency(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
-        super(TestStockLandedCostsCurrency, cls).setUpClass()
+        super().setUpClass()
         cls.usd_currency = cls.env.ref("base.USD")
+        cls.eur_currency = cls.env.ref("base.EUR")
         cls.slc_env = cls.env["stock.landed.cost"]
         cls.slcl_env = cls.env["stock.landed.cost.lines"]
         cls.company = cls.env.ref("base.main_company")
@@ -38,6 +39,9 @@ class TestStockLandedCostsCurrency(common.SavepointCase):
         )
         cls.env["res.currency.rate"].create(
             {"name": cls.convert_date, "currency_id": cls.usd_currency.id, "rate": 1.12}
+        )
+        cls.env["res.currency.rate"].create(
+            {"name": cls.convert_date, "currency_id": cls.eur_currency.id, "rate": 1.0}
         )
         cls.landed_cost = cls.slc_env.create(
             {
@@ -107,6 +111,18 @@ class TestStockLandedCostsCurrency(common.SavepointCase):
 
         self.assertEqual(cost_line.price_unit, expected_value)
 
+    def test_change_journal_no_currency_landed_cost(self):
+        self.landed_cost.currency_id = self.usd_currency.id
+        self.journal.currency_id = False
+        self.landed_cost._onchange_account_journal_id()
+        self.assertEqual(self.usd_currency, self.landed_cost.currency_id)
+
+    def test_no_journal_check_currency_landed_cost(self):
+        self.landed_cost.currency_id = self.usd_currency.id
+        self.landed_cost.account_journal_id = False
+        self.landed_cost._onchange_account_journal_id()
+        self.assertEqual(self.usd_currency, self.landed_cost.currency_id)
+
     def test_change_currency_landed_cost(self):
         self.landed_cost.write({"currency_id": self.usd_currency.id})
         self.landed_cost._onchange_currency_id()
@@ -120,6 +136,18 @@ class TestStockLandedCostsCurrency(common.SavepointCase):
         )
 
         self.assertEqual(cost_line.price_unit, expected_value)
+        # Landed cost currency is the same as company currency
+        self.landed_cost.currency_id = self.company.currency_id
+        self.landed_cost._onchange_currency_id()
+        self.assertEqual(
+            self.landed_cost.cost_lines[0].price_unit, cost_line.price_unit
+        )
+        # Landed cost currency is different as company currency
+        self.landed_cost.currency_id = self.eur_currency
+        self.landed_cost._onchange_currency_id()
+        self.assertEqual(
+            self.landed_cost.cost_lines[0].price_unit, cost_line.price_unit
+        )
 
     def test_change_product_landed_cost(self):
         cost_line = self.landed_cost.cost_lines[0]
