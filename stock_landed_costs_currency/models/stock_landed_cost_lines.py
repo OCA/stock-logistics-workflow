@@ -25,6 +25,6 @@ class LandedCostLine(models.Model):
 
     @api.onchange("product_id")
     def onchange_product_id(self):
-        res = super(LandedCostLine, self).onchange_product_id()
+        res = super().onchange_product_id()
         self.currency_price_unit = self.price_unit
         return res

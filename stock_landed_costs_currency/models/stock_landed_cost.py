@@ -9,8 +9,8 @@ class LandedCost(models.Model):
     currency_id = fields.Many2one(
         comodel_name="res.currency",
         required=True,
-        related="",
-        default=lambda self: self.env.user.company_id.currency_id,
+        related=None,
+        default=lambda self: self.env.company.currency_id,
     )
 
     @api.onchange("account_journal_id")
