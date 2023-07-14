@@ -18,8 +18,8 @@ class TestStockQuantPackageCommon(TransactionCase):
             {
                 "weight": 1,
                 "packaging_ids": [
-                    (0, 0, {"name": "Small Box", "qty": "1", "max_weight": "2"}),
-                    (0, 0, {"name": "Box", "qty": "5", "max_weight": "7"}),
+                    (0, 0, {"name": "Small Box", "qty": "1", "weight": "2"}),
+                    (0, 0, {"name": "Box", "qty": "5", "weight": "7"}),
                 ],
             }
         )
