@@ -18,7 +18,7 @@ class TestStockQuantPackageProductPackaging(common.TestStockQuantPackageCommon):
                 "packaging_length": 12,
                 "width": 13,
                 "height": 14,
-                "max_weight": 15,
+                "weight": 15,
             }
         )
         cls.uom_cm = cls.env["uom.uom"].search([("name", "=", "cm")], limit=1)

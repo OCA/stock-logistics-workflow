@@ -116,7 +116,7 @@ class StockQuantPackage(models.Model):
             "packaging_length": "pack_length",
             "width": "width",
             "height": "height",
-            "max_weight": "pack_weight",
+            "weight": "pack_weight",
             "length_uom_id": "length_uom_id",
             "weight_uom_id": "weight_uom_id",
             "volume_uom_id": "volume_uom_id",
