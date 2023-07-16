@@ -14,5 +14,4 @@
     "depends": ["stock"],
     "data": ["views/stock_picking.xml"],
     "pre_init_hook": "pre_init_hook",
-    "post_init_hook": "post_init_hook",
 }
