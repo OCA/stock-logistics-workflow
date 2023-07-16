@@ -11,13 +11,13 @@ class StockPicking(models.Model):
         compute="_compute_progress", store=True, group_operator="avg"
     )
 
-    @api.depends("move_lines", "move_lines.progress")
+    @api.depends("move_ids", "move_ids.progress")
     def _compute_progress(self):
         for record in self:
             if record.state == "done":
                 record.progress = 100
                 continue
-            moves_progress = record.move_lines.mapped("progress")
+            moves_progress = record.move_ids.mapped("progress")
             # Avoid dividing by 0
             if moves_progress:
                 record.progress = sum(moves_progress) / len(moves_progress)

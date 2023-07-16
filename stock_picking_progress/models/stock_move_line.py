@@ -13,10 +13,10 @@ class StockMoveLine(models.Model):
     )
 
     @api.depends(
-        "product_uom_qty",
+        "qty_done",
         "product_uom_id",
         "product_uom_id.rounding",
-        "qty_done",
+        "reserved_qty",
         "state",
     )
     def _compute_progress(self):
@@ -25,7 +25,7 @@ class StockMoveLine(models.Model):
                 record.progress = 100
                 continue
             rounding = record.product_uom_id.rounding
-            if float_is_zero(record.product_uom_qty, precision_rounding=rounding):
+            if float_is_zero(record.reserved_qty, precision_rounding=rounding):
                 record.progress = 100
             else:
-                record.progress = (record.qty_done / record.product_uom_qty) * 100
+                record.progress = (record.qty_done / record.reserved_qty) * 100

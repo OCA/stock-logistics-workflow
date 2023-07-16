@@ -23,8 +23,8 @@ def setup_move_line_progress(cr):
         UPDATE stock_move_line
         SET progress = CASE
             WHEN (state = 'done') THEN 100
-            WHEN (product_uom_qty IS NULL or product_uom_qty = 0.0) THEN 100.0
-            ELSE (qty_done / product_uom_qty) * 100
+            WHEN (reserved_qty IS NULL or reserved_qty = 0.0) THEN 100.0
+            ELSE (qty_done / reserved_qty) * 100
         END;
     """
     logger.info("filling up %s on %s", column, table)

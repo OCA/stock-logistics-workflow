@@ -1,10 +1,10 @@
 # Copyright 2022 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestPickingProgress(SavepointCase):
+class TestPickingProgress(TransactionCase):
     at_install = False
     post_install = True
 
@@ -13,7 +13,7 @@ class TestPickingProgress(SavepointCase):
         super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         picking = cls.env.ref("stock.outgoing_shipment_main_warehouse")
-        cls.picking = picking.copy({"move_lines": [], "move_line_ids": []})
+        cls.picking = picking.copy({"move_ids": [], "move_line_ids": []})
         cls.product = cls.env.ref("product.consu_delivery_01")
         cls.uom = cls.product.uom_id
 
@@ -73,7 +73,7 @@ class TestPickingProgress(SavepointCase):
         # move1 progress is 0%
         # move2 progress is still 0%
         # picking progress is 0%
-        self.set_quantity_done(self.picking.move_lines, 0.0)
+        self.set_quantity_done(self.picking.move_ids, 0.0)
         self.assertEqual(move1.progress, 0.0)
         self.assertEqual(move2.progress, 0.0)
         self.assertEqual(self.picking.progress, 0.0)
