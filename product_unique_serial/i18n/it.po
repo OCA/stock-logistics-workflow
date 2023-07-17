@@ -10,15 +10,16 @@ msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-22 18:05+0000\n"
-"PO-Revision-Date: 2016-06-06 07:18+0000\n"
-"Last-Translator: Paolo Valier\n"
-"Language-Team: Italian (http://www.transifex.com/oca/OCA-stock-logistics-"
-"workflow-8-0/language/it/)\n"
+"PO-Revision-Date: 2023-07-17 17:13+0000\n"
+"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
+"Language-Team: Italian (http://www.transifex.com/oca/"
+"OCA-stock-logistics-workflow-8-0/language/it/)\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: product_unique_serial
 #: help:product.template,lot_unique_ok:0
@@ -67,7 +68,7 @@ msgstr ""
 #. module: product_unique_serial
 #: model:ir.model,name:product_unique_serial.model_product_template
 msgid "Product Template"
-msgstr "Template Prodotto"
+msgstr "Modello prodotto"
 
 #. module: product_unique_serial
 #: code:addons/product_unique_serial/models/stock_move.py:49
