@@ -14,4 +14,5 @@
     "depends": ["stock"],
     "data": ["views/stock_picking.xml"],
     "pre_init_hook": "pre_init_hook",
+    "external_dependencies": {"python": ["openupgradelib"]},
 }
