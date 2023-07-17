@@ -6,22 +6,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-04-17 16:40+0000\n"
-"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"PO-Revision-Date: 2023-07-17 14:10+0000\n"
+"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_picking_auto_create_lot
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot.field_product_product__auto_create_lot
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot.field_product_template__auto_create_lot
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot.field_stock_picking_type__auto_create_lot
 msgid "Auto Create Lot"
-msgstr "Auto Creazione Lotto"
+msgstr "Creazione automatica lotto"
 
 #. module: stock_picking_auto_create_lot
 #: model:ir.model,name:stock_picking_auto_create_lot.model_stock_picking_type
