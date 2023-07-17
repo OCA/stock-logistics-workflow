@@ -90,16 +90,6 @@ class StockPickingOperationWizard(models.TransientModel):
                 )
                 % ",".join(self._get_allowed_picking_states())
             )
-        pickings_with_chained_moves = pickings.filtered(
-            lambda x: x.move_lines.mapped("move_dest_ids")
-        )
-        if pickings_with_chained_moves:
-            raise UserError(
-                _(
-                    "You cannot change destination location if any of the moves "
-                    "has a destination move."
-                )
-            )
 
     def action_apply(self):
         stock_picking_obj = self.env["stock.picking"]
