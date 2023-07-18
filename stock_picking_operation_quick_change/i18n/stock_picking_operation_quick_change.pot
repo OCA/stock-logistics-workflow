@@ -134,14 +134,6 @@ msgid ""
 msgstr ""
 
 #. module: stock_picking_operation_quick_change
-#: code:addons/stock_picking_operation_quick_change/wizards/stock_picking_wizard.py:0
-#, python-format
-msgid ""
-"You cannot change destination location if any of the moves has a destination"
-" move."
-msgstr ""
-
-#. module: stock_picking_operation_quick_change
 #: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
 msgid "or"
 msgstr ""
