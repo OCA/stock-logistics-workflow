@@ -143,16 +143,14 @@ msgstr ""
 "picking não estiver em %s"
 
 #. module: stock_picking_operation_quick_change
-#: code:addons/stock_picking_operation_quick_change/wizards/stock_picking_wizard.py:0
-#, python-format
-msgid ""
-"You cannot change destination location if any of the moves has a destination "
-"move."
-msgstr ""
-"Você não pode alterar a localização de destino se alguma das movimentações "
-"tiver uma movimentação de destino."
-
-#. module: stock_picking_operation_quick_change
 #: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
 msgid "or"
 msgstr "ou"
+
+#, python-format
+#~ msgid ""
+#~ "You cannot change destination location if any of the moves has a "
+#~ "destination move."
+#~ msgstr ""
+#~ "Você não pode alterar a localização de destino se alguma das "
+#~ "movimentações tiver uma movimentação de destino."

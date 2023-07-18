@@ -148,16 +148,14 @@ msgstr ""
 "%s ist."
 
 #. module: stock_picking_operation_quick_change
-#: code:addons/stock_picking_operation_quick_change/wizards/stock_picking_wizard.py:0
-#, fuzzy, python-format
-msgid ""
-"You cannot change destination location if any of the moves has a destination "
-"move."
-msgstr ""
-"Sie dürfen den Vorgangs-Ziellagerort, wenn der Status der Umlagerung nicht "
-"%s ist."
-
-#. module: stock_picking_operation_quick_change
 #: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
 msgid "or"
 msgstr "oder"
+
+#, fuzzy, python-format
+#~ msgid ""
+#~ "You cannot change destination location if any of the moves has a "
+#~ "destination move."
+#~ msgstr ""
+#~ "Sie dürfen den Vorgangs-Ziellagerort, wenn der Status der Umlagerung "
+#~ "nicht %s ist."
