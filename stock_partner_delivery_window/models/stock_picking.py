@@ -33,10 +33,11 @@ class StockPicking(models.Model):
             ).format(formatted_scheduled_date, scheduled_date.weekday())
         else:
             delivery_windows_strings = []
-            for w in partner.get_delivery_windows().get(partner.id):
-                delivery_windows_strings.append(
-                    "  * {} ({})".format(w.display_name, partner.tz)
-                )
+            if partner:
+                for w in partner.get_delivery_windows().get(partner.id):
+                    delivery_windows_strings.append(
+                        "  * {} ({})".format(w.display_name, partner.tz)
+                    )
             message = _(
                 "The scheduled date is %s (%s), but the partner is "
                 "set to prefer deliveries on following time windows:\n%s"
