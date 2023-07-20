@@ -103,7 +103,7 @@ class TestClusteringConditions(ClusterPickingCommonFeatures):
         message = "No device found for batch picking."
         with self.assertRaises(NoSuitableDeviceError) as cm:
             self.make_picking_batch._create_batch(raise_if_not_possible=True)
-            self.assertEqual(cm.exception.name, message)
+            self.assertEqual(cm.exception, message)
 
         # Display picking names in exception
         self.make_picking_batch.add_picking_list_in_error = True
@@ -112,7 +112,7 @@ class TestClusteringConditions(ClusterPickingCommonFeatures):
             self.make_picking_batch._create_batch(raise_if_not_possible=True)
         self.assertIn(
             self.pick1.name,
-            cm.exception.name,
+            repr(cm.exception),
         )
 
     def test_one_picking_on_another_device(self):
