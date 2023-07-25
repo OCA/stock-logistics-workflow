@@ -3,10 +3,14 @@
 {
     "name": "Enforce manually selected lot",
     "summary": "Force the user to manually select a lot",
-    "version": "12.0.1.0.0",
+    "version": "12.0.1.1.0",
     "category": "Stock",
     "website": "https://github.com/OCA/stock-logistics-workflow",
-    "author": "Hunki Enterprises BV, Odoo Community Association (OCA)",
+    "author": (
+        "Hunki Enterprises BV,"
+        "Opener B.V.,"
+        "Odoo Community Association (OCA)"
+    ),
     "license": "AGPL-3",
     "installable": True,
     "depends": [
