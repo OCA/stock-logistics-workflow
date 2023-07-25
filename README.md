@@ -33,7 +33,7 @@ addon | version | maintainers | summary
 [stock_lot_scrap](stock_lot_scrap/) | 12.0.1.0.0 |  | This module adds a button in Production Lot/Serial Number view form to Scrap all products contained.
 [stock_move_backdating](stock_move_backdating/) | 12.0.1.0.1 |  | Stock Move Backdating
 [stock_move_line_auto_fill](stock_move_line_auto_fill/) | 12.0.2.0.3 |  | Stock Move Line auto fill
-[stock_move_manual_lot](stock_move_manual_lot/) | 12.0.1.0.0 |  | Force the user to manually select a lot
+[stock_move_manual_lot](stock_move_manual_lot/) | 12.0.1.1.0 |  | Force the user to manually select a lot
 [stock_move_quick_lot](stock_move_quick_lot/) | 12.0.1.0.1 |  | Set lot name and end date directly on picking operations
 [stock_no_negative](stock_no_negative/) | 12.0.1.2.0 | [![luisg123v](https://github.com/luisg123v.png?size=30px)](https://github.com/luisg123v) | Disallow negative stock levels by default
 [stock_picking_auto_create_lot](stock_picking_auto_create_lot/) | 12.0.1.0.0 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Auto create lots for incoming pickings
