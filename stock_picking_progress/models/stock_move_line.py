@@ -15,7 +15,6 @@ class StockMoveLine(models.Model):
     @api.depends(
         "qty_done",
         "product_uom_id",
-        "product_uom_id.rounding",
         "reserved_qty",
         "state",
     )
