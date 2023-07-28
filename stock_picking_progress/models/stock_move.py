@@ -15,7 +15,6 @@ class StockMove(models.Model):
     @api.depends(
         "product_uom_qty",
         "product_uom",
-        "product_uom.rounding",
         "quantity_done",
         "state",
     )
