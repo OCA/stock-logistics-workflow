@@ -7,9 +7,9 @@ Delivery Procurement Group Carrier
    !! changes will be overwritten.                   !!
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-.. |badge1| image:: https://img.shields.io/badge/maturity-Alpha-red.png
+.. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
-    :alt: Alpha
+    :alt: Beta
 .. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
@@ -19,9 +19,9 @@ Delivery Procurement Group Carrier
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
     :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-14-0/stock-logistics-workflow-14-0-delivery_procurement_group_carrier
     :alt: Translate me on Weblate
-.. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/154/14.0
-    :alt: Try me on Runbot
+.. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
+    :target: https://runboat.odoo-community.org/webui/builds.html?repo=OCA/stock-logistics-workflow&target_branch=14.0
+    :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
@@ -35,11 +35,6 @@ in OCA/wms.
 The carrier on the procurement group is also used for grouping several SO in a
 same delivery by carrier. See the module
 stock_picking_group_by_partner_by_carrier in this repository.
-
-.. IMPORTANT::
-   This is an alpha version, the data model and design can change at any time without warning.
-   Only for development or testing purpose, do not use in production.
-   `More details on development status <https://odoo-community.org/page/development-status>`_
 
 **Table of contents**
 
@@ -64,6 +59,7 @@ Authors
 
 * Camptocamp
 * BCIM
+* MT Software
 
 Contributors
 ~~~~~~~~~~~~
@@ -75,6 +71,7 @@ Contributors
   * Jacques-Etienne Baudoux <je@bcim.be>
 * TROBZ:
   * Phuc Tran Thanh <phuc@trobz.com>
+* Michael Tietz (MT Software) <mtietz@mt-software.de>
 
 Other credits
 ~~~~~~~~~~~~~
