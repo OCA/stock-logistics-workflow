@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 Raumschmiede Gmbh
+     Copyright 2023 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="view_picking_type_form" model="ir.ui.view">
+        <field name="name">auto create package</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='show_entire_packs']" position="after">
+                <field name="automatic_package_creation_mode" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
