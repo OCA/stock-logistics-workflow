@@ -1,0 +1,79 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_auto_create_package
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_auto_create_package
+#: model:ir.model.fields,field_description:stock_picking_auto_create_package.field_stock_picking_type__automatic_package_creation_mode
+msgid "Automatic Package Creation Mode"
+msgstr ""
+
+#. module: stock_picking_auto_create_package
+#: model:ir.model.fields,help:stock_picking_auto_create_package.field_stock_picking_type__automatic_package_creation_mode
+msgid ""
+"Automatically create the delivery packages. Any lines not in a package will "
+"automaticaly be packaged."
+msgstr ""
+
+#. module: stock_picking_auto_create_package
+#: code:addons/stock_picking_auto_create_package/models/stock_picking.py:0
+#, python-format
+msgid ""
+"Cannot create a package for the product %s as no product packaging is "
+"defined"
+msgstr ""
+
+#. module: stock_picking_auto_create_package
+#: model:ir.model.fields,field_description:stock_picking_auto_create_package.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:stock_picking_auto_create_package.field_stock_picking_type__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_picking_auto_create_package
+#: model:ir.model.fields,field_description:stock_picking_auto_create_package.field_stock_picking__id
+#: model:ir.model.fields,field_description:stock_picking_auto_create_package.field_stock_picking_type__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_picking_auto_create_package
+#: model:ir.model.fields,field_description:stock_picking_auto_create_package.field_stock_picking____last_update
+#: model:ir.model.fields,field_description:stock_picking_auto_create_package.field_stock_picking_type____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_picking_auto_create_package
+#: model:ir.model.fields.selection,name:stock_picking_auto_create_package.selection__stock_picking_type__automatic_package_creation_mode__packaging
+msgid "Per Smallest Packaging"
+msgstr ""
+
+#. module: stock_picking_auto_create_package
+#: model:ir.model,name:stock_picking_auto_create_package.model_stock_picking_type
+msgid "Picking Type"
+msgstr ""
+
+#. module: stock_picking_auto_create_package
+#: model:ir.model.fields.selection,name:stock_picking_auto_create_package.selection__stock_picking_type__automatic_package_creation_mode__single
+msgid "Single Package"
+msgstr ""
+
+#. module: stock_picking_auto_create_package
+#: code:addons/stock_picking_auto_create_package/models/stock_picking.py:0
+#, python-format
+msgid ""
+"The done quantity of the product %s is not a multiple of product packaging"
+msgstr ""
+
+#. module: stock_picking_auto_create_package
+#: model:ir.model,name:stock_picking_auto_create_package.model_stock_picking
+msgid "Transfer"
+msgstr ""
