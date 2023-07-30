@@ -39,6 +39,7 @@ setuptools.setup(
         'odoo14-addon-stock_owner_restriction',
         'odoo14-addon-stock_partner_delivery_window',
         'odoo14-addon-stock_picking_auto_create_lot',
+        'odoo14-addon-stock_picking_auto_create_package',
         'odoo14-addon-stock_picking_back2draft',
         'odoo14-addon-stock_picking_backorder_strategy',
         'odoo14-addon-stock_picking_batch_extended',
