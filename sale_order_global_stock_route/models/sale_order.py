@@ -8,7 +8,7 @@ class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     route_id = fields.Many2one(
-        comodel_name="stock.location.route",
+        comodel_name="stock.route",
         string="Route",
         domain=[("sale_selectable", "=", True)],
         help="When you change this field all the lines will be changed."
@@ -35,11 +35,9 @@ class SaleOrder(models.Model):
         _inherit = "sale.order.line"
 
         @api.onchange("product_id")
-        def product_id_change(self):
-            res = super().product_id_change()
+        def global_stock_route_product_id_change(self):
             if self.order_id.route_id:
                 self.route_id = self.order_id.route_id
-            return res
 
         @api.model_create_multi
         def create(self, vals_list):
