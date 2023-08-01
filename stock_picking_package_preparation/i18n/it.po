@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-08 17:05+0000\n"
-"PO-Revision-Date: 2023-05-25 12:10+0000\n"
+"PO-Revision-Date: 2023-08-01 12:12+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/"
 "OCA-stock-logistics-workflow-8-0/language/it/)\n"
@@ -229,7 +229,7 @@ msgstr "ID operazione pacco"
 #: model:ir.model,name:stock_picking_package_preparation.model_stock_picking_package_preparation
 #: view:stock.picking.package.preparation:stock_picking_package_preparation.stock_picking_package_preparation_form
 msgid "Package Preparation"
-msgstr "Preparazione pacco"
+msgstr "Preparazione collo"
 
 #. module: stock_picking_package_preparation
 #: model:ir.actions.act_window,name:stock_picking_package_preparation.action_stock_picking_package_preparation
