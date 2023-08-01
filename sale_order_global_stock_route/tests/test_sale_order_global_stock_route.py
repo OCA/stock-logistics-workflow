@@ -15,10 +15,10 @@ class SaleOrderGlobalStockRouteTest(TransactionCase):
         cls.product2 = cls.env["product.product"].create(
             {"name": "test_product2", "type": "product"}
         )
-        cls.route1 = cls.env["stock.location.route"].create(
+        cls.route1 = cls.env["stock.route"].create(
             {"name": "test_route_1", "sale_selectable": "True"}
         )
-        cls.route2 = cls.env["stock.location.route"].create(
+        cls.route2 = cls.env["stock.route"].create(
             {"name": "test_route_2", "sale_selectable": "True"}
         )
         cls.order = cls.env["sale.order"].create(
@@ -60,7 +60,7 @@ class SaleOrderGlobalStockRouteTest(TransactionCase):
     def test_global_route02(self):
         self.order["route_id"] = self.route1.id
         for line in self.order.order_line:
-            line.product_id_change()
+            line.global_stock_route_product_id_change()
             self.assertTrue(line.route_id == self.route1)
 
     def test_routes_without_onchange(self):
