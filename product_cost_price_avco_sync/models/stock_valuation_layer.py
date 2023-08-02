@@ -6,7 +6,7 @@ from collections import OrderedDict, defaultdict
 
 from odoo import _, api, models
 from odoo.exceptions import ValidationError
-from odoo.tools import float_compare, float_round
+from odoo.tools import float_compare, float_is_zero, float_round
 
 
 class ProductProduct(models.Model):
@@ -225,13 +225,21 @@ class StockValuationLayer(models.Model):
         for svl, svl_dic in svls_dic.items():
             vals = {}
             for field_name, new_value in svl_dic.items():
-                if float_compare(
+                if field_name == "id":
+                    continue
+                # Currency decimal precision for values and high precision to others
+                elif field_name in ("unit_cost", "value", "remaining_value"):
+                    prec_digits = svl.currency_id.decimal_places
+                else:
+                    prec_digits = 8
+                if svl[field_name] != 0.0 and float_is_zero(
+                    new_value, precision_digits=prec_digits
+                ):
+                    vals[field_name] = 0.0
+                elif float_compare(
                     svl[field_name],
                     new_value,
-                    # Currency decimal precision for values and high precision to others
-                    precision_digits=svl.currency_id.decimal_places
-                    if field_name in ("unit_cost", "value", "remaining_value")
-                    else 8,
+                    precision_digits=prec_digits,
                 ):
                     vals[field_name] = new_value
             # Write modified fields
