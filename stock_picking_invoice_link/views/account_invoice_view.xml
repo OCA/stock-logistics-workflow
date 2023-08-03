@@ -15,6 +15,7 @@
                     class="oe_stat_button"
                     icon="fa-truck"
                     attrs="{'invisible': [('delivery_count', '=', 0)]}"
+                    groups="stock.group_stock_user"
                 >
                     <field name="delivery_count" widget="statinfo" string="Delivery" />
                 </button>
