@@ -44,6 +44,16 @@ class MakePickingBatch(models.TransientModel):
         string="Group pickings by partner",
         help="All the pickings related to one partner will be put into the same bins",
     )
+    restrict_to_same_priority = fields.Boolean(
+        default=False,
+        string="Restrict to the same priority",
+        help="Only the pickings with the same priority will be selected for this batch.",
+    )
+    restrict_to_same_partner = fields.Boolean(
+        default=False,
+        string="Restrict to the same partner",
+        help="Only the pickings with the same partner will be selected for this batch.",
+    )
     picking_locking_mode = fields.Selection(
         selection=[
             ("sql_for_update_skip_locked", "SQL FOR UPDATE SKIP LOCKED"),
@@ -160,6 +170,11 @@ class MakePickingBatch(models.TransientModel):
             ("weight", "<=", self._remaining_weight),
             ("picking_type_id", "=", self._first_picking.picking_type_id.id),
         ]
+        previous_picking = self._previous_selected_picking
+        if self.restrict_to_same_priority:
+            domain.append(("priority", "=", previous_picking.priority))
+        if self.restrict_to_same_partner:
+            domain.append(("partner_id", "=", previous_picking.partner_id.id))
         volume_domains = [
             [
                 ("volume", "<=", self._get_remaining_volume()),
@@ -172,7 +187,6 @@ class MakePickingBatch(models.TransientModel):
             # but also on the remaining volume into the bins already used by
             # the partner. Since results are sorted by partner, the search
             # takes as partner the partner of the previous picking.
-            previous_picking = self._previous_selected_picking
             previous_partner = previous_picking.partner_id
             volume_domains.append(
                 [
