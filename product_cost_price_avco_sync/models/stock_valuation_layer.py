@@ -221,7 +221,7 @@ class StockValuationLayer(models.Model):
             accumulated_value = accumulated_value + svl_dic["value"]
 
     @api.model
-    def update_avco_svl_modified(self, svls_dic):
+    def update_avco_svl_modified(self, svls_dic, skip_avco_sync=True):
         for svl, svl_dic in svls_dic.items():
             vals = {}
             for field_name, new_value in svl_dic.items():
@@ -244,7 +244,7 @@ class StockValuationLayer(models.Model):
                     vals[field_name] = new_value
             # Write modified fields
             if vals:
-                svl.with_context(skip_avco_sync=True).write(vals)
+                svl.with_context(skip_avco_sync=skip_avco_sync).write(vals)
 
     def _preprocess_main_svl_line(self):
         """This method serves for doing any stuff before processing the SVL, and it
@@ -252,7 +252,7 @@ class StockValuationLayer(models.Model):
         """
         return False
 
-    def _preprocess_rest_svl_to_sync(self, svls_dic):
+    def _preprocess_rest_svl_to_sync(self, svls_dic, preprocess_svl_dic):
         """This method serves for doing any stuff before processing subsequent SVLs that
         are being synced, and it also allows to skip the line returning True.
         """
@@ -278,8 +278,11 @@ class StockValuationLayer(models.Model):
             inventory_processed = False
             unit_cost_processed = False
             svls_dic = OrderedDict()
+            # SVLS that need to be written in a previous process before processing
+            # the other SVLS.
+            preprocess_svl_dic = OrderedDict()
             for svl in svls_to_avco_sync:
-                if svl._preprocess_rest_svl_to_sync(svls_dic):
+                if svl._preprocess_rest_svl_to_sync(svls_dic, preprocess_svl_dic):
                     continue
                 # Compatibility with landed cost
                 if svl.stock_valuation_layer_id:
@@ -396,6 +399,7 @@ class StockValuationLayer(models.Model):
                 # Incoming or Outgoing moves without quantity and unit_cost
                 elif not qty and svl.stock_move_id:
                     svl_dic["value"] = 0.0
+            line.update_avco_svl_modified(preprocess_svl_dic, skip_avco_sync=False)
             # Reprocess svls to set manual adjust values take into account all vacuums
             self.process_avco_svl_manual_adjustements(svls_dic)
             # Update product standard price if it is modified
