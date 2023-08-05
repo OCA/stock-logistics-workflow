@@ -24,13 +24,14 @@ class StockPicking(models.Model):
                 )
             )
 
-    def split_process(self):
+    def split_process(self, keep_lines=False):
         """Use to trigger the wizard from button with correct context"""
         for picking in self:
             picking._check_split_process()
 
             # Split moves considering the qty_done on moves
             new_moves = self.env["stock.move"]
+            new_move_lines = self.env["stock.move.line"]
             for move in picking.move_ids:
                 rounding = move.product_uom.rounding
                 qty_done = move.quantity_done
@@ -48,17 +49,26 @@ class StockPicking(models.Model):
                         qty_uom_split
                     )
                     if new_move_vals:
+                        new_move_line_vals = []
                         for move_line in move.move_line_ids:
                             if move_line.reserved_qty and move_line.qty_done:
-                                # To avoid an error
-                                # when picking is partially available
-                                try:
-                                    move_line.write(
-                                        {"reserved_uom_qty": move_line.qty_done}
-                                    )
-                                except UserError:
-                                    continue
+                                if keep_lines:
+                                    new_move_line_vals += move_line._split(move_line.qty_done)
+                                else:
+                                    # To avoid an error
+                                    # when picking is partially available
+                                    try:
+                                        move_line.write(
+                                            {"reserved_uom_qty": move_line.qty_done}
+                                        )
+                                    except UserError:
+                                        continue
+
+                        # Create new move and move lines
                         new_move = self.env["stock.move"].create(new_move_vals)
+                        for vals in new_move_line_vals:
+                            vals['move_id'] = new_move.id
+                        new_move_lines |= self.env["stock.move.line"].create(new_move_line_vals)
                     else:
                         new_move = move
                     new_move._action_confirm(merge=False)
@@ -68,10 +78,12 @@ class StockPicking(models.Model):
             if new_moves:
                 backorder_picking = picking._create_split_backorder()
                 new_moves.write({"picking_id": backorder_picking.id})
-                new_moves.mapped("move_line_ids").write(
-                    {"picking_id": backorder_picking.id}
-                )
-                new_moves._action_assign()
+                if new_move_lines:
+                    new_move_lines.write({"picking_id": backorder_picking.id})
+                    new_moves._recompute_state()
+                else:
+                    new_moves._action_assign()
+                return backorder_picking
 
     def _create_split_backorder(self, default=None):
         """Copy current picking with defaults passed, post message about
