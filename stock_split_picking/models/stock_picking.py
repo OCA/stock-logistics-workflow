@@ -33,16 +33,9 @@ class StockPicking(models.Model):
             new_moves = self.env["stock.move"]
             new_move_lines = self.env["stock.move.line"]
             for move in picking.move_ids:
-                rounding = move.product_uom.rounding
-                qty_done = move.quantity_done
-                qty_initial = move.product_uom_qty
-                qty_diff_compare = float_compare(
-                    qty_done, qty_initial, precision_rounding=rounding
-                )
-                if qty_diff_compare < 0:
-                    qty_split = qty_initial - qty_done
+                if move.quantity_done:
                     qty_uom_split = move.product_uom._compute_quantity(
-                        qty_split, move.product_id.uom_id, rounding_method="HALF-UP"
+                        move.quantity_done, move.product_id.uom_id, rounding_method="HALF-UP"
                     )
                     # Empty list is returned for moves with zero qty_done.
                     new_move_vals = move.with_context(cancel_backorder=False)._split(
