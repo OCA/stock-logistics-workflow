@@ -2,10 +2,10 @@
 # Copyright 2017 Tecnativa - David Vidal
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests import common
+from odoo.tests.common import TransactionCase
 
 
-class TestStockPickingCustomerRef(common.SavepointCase):
+class TestStockPickingCustomerRef(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super(TestStockPickingCustomerRef, cls).setUpClass()
@@ -63,15 +63,14 @@ class TestStockPickingCustomerRef(common.SavepointCase):
                 "picking_type_id": self.picking_type_id.id,
                 "location_id": self.location_id.id,
                 "location_dest_id": self.location_dest_id.id,
-                "move_lines": [
+                "move_line_ids": [
                     (
                         0,
                         0,
                         {
                             "product_id": self.product.id,
-                            "name": self.product.name,
-                            "product_uom": self.env.ref("uom.product_uom_unit").id,
-                            "product_uom_qty": 50.0,
+                            "product_uom_id": self.env.ref("uom.product_uom_unit").id,
+                            "reserved_uom_qty": 50.0,
                             "picking_type_id": self.picking_type_id.id,
                             "location_id": self.location_id.id,
                             "location_dest_id": self.location_dest_id.id,
