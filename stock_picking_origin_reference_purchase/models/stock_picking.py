@@ -15,7 +15,7 @@ class StockPicking(models.Model):
 
     @api.depends(lambda x: x._get_depends_compute_origin_reference())
     def _compute_origin_reference(self):
-        super()._compute_origin_reference()
+        res = super()._compute_origin_reference()
         for picking in self:
             if not picking.origin_reference:
                 rel_purchase = self.env[PO_MODEL_NAME].search(
@@ -26,3 +26,4 @@ class StockPicking(models.Model):
                         PO_MODEL_NAME,
                         rel_purchase.id,
                     )
+        return res
