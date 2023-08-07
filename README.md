@@ -53,6 +53,7 @@ addon | version | maintainers | summary
 [stock_picking_operation_quick_change](stock_picking_operation_quick_change/) | 15.0.1.1.1 |  | Change location of all picking operations
 [stock_picking_origin_reference](stock_picking_origin_reference/) | 15.0.1.0.0 |  | Add clickable button to the Transfer Source Document.
 [stock_picking_origin_reference_purchase](stock_picking_origin_reference_purchase/) | 15.0.1.0.0 |  | Transfer to Purchase Order navigation from the Source Document.
+[stock_picking_origin_reference_sale](stock_picking_origin_reference_sale/) | 15.0.1.0.0 |  | Transfer to Sales Order navigation from the Source Document.
 [stock_picking_product_assortment](stock_picking_product_assortment/) | 15.0.1.0.0 | [![CarlosRoca13](https://github.com/CarlosRoca13.png?size=30px)](https://github.com/CarlosRoca13) | Stock Picking Product Assortment
 [stock_picking_product_assortment_availability_inline](stock_picking_product_assortment_availability_inline/) | 15.0.1.0.0 | [![Sergio-teruel](https://github.com/Sergio-teruel.png?size=30px)](https://github.com/Sergio-teruel) | Glue module to display stock available when an assortment is defined for a partner
 [stock_picking_product_availability_inline](stock_picking_product_availability_inline/) | 15.0.1.0.0 |  | Show product availability in product drop-down in stock picking form view.
