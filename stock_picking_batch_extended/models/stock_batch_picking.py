@@ -1,14 +1,13 @@
 # Copyright 2012-2014 Alexandre Fayolle, Camptocamp SA
 # Copyright 2018-2020 Tecnativa - Carlos Dauden
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import _, api, fields, models
+from odoo import _, fields, models
 from odoo.exceptions import UserError
 
 
 class StockPickingBatch(models.Model):
     """This object allow to manage multiple stock.picking at the same time."""
 
-    # renamed stock.batch.picking -> stock.picking.batch
     _inherit = "stock.picking.batch"
 
     name = fields.Char(
@@ -37,34 +36,10 @@ class StockPickingBatch(models.Model):
         help="List of active picking managed by this batch.",
     )
     notes = fields.Text(help="free form remarks")
-    entire_package_ids = fields.Many2many(
-        comodel_name="stock.quant.package",
-        compute="_compute_entire_package_ids",
-        help="Those are the entire packages of a picking shown in the view of "
-        "operations",
-    )
-    entire_package_detail_ids = fields.Many2many(
-        comodel_name="stock.quant.package",
-        compute="_compute_entire_package_ids",
-        help="Those are the entire packages of a picking shown in the view of "
-        "detailed operations",
-    )
     picking_count = fields.Integer(
         string="# Pickings",
         compute="_compute_picking_count",
     )
-
-    @api.depends("picking_ids")
-    def _compute_entire_package_ids(self):
-        for batch in self:
-            batch.update(
-                {
-                    "entire_package_ids": batch.use_oca_batch_validation
-                    and batch.picking_ids.mapped("entire_package_ids" or False),
-                    "entire_package_detail_ids": batch.use_oca_batch_validation
-                    and batch.picking_ids.mapped("entire_package_detail_ids" or False),
-                }
-            )
 
     def _compute_picking_count(self):
         """Calculate number of pickings."""
