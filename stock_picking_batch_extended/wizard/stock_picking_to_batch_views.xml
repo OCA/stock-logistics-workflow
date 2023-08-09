@@ -27,7 +27,7 @@
                     string="Create multiple batch picking grouped by..."
                     attrs="{'invisible': ['|', ('batch_by_group', '=', False), ('mode', '=', 'existing')]}"
                 >
-                    <field name="group_field_ids" nolabel="1">
+                    <field name="group_field_ids" nolabel="1" colspan="2">
                         <tree editable="bottom">
                             <field name="sequence" widget="handle" />
                             <field name="field_id" options="{'no_create': True}" />
