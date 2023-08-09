@@ -3,7 +3,7 @@
 import logging
 
 from odoo import api, fields, models
-from odoo.tools import float_is_zero
+from odoo.tools.float_utils import float_is_zero
 
 _logger = logging.getLogger(__name__)
 
@@ -37,11 +37,11 @@ class ReportPrintBatchPicking(models.AbstractModel):
     def _get_operation_qty(self, operation):
         return (
             float_is_zero(
-                operation.product_qty,
+                operation.reserved_qty,
                 precision_rounding=operation.product_uom_id.rounding,
             )
             and operation.qty_done
-            or operation.product_qty
+            or operation.reserved_qty
         )
 
     @api.model

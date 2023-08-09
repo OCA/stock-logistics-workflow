@@ -17,7 +17,7 @@
                 />
                 <button
                     name="action_print_picking"
-                    string="Print"
+                    string="Print Pickings"
                     type="object"
                     class="oe_highlight"
                     attrs="{'invisible': [('use_oca_batch_validation', '!=', True)]}"

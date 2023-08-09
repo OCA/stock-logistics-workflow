@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -40,6 +40,7 @@ msgid "Active Pickings"
 msgstr ""
 
 #. module: stock_picking_batch_extended
+#. odoo-python
 #: code:addons/stock_picking_batch_extended/wizard/stock_picking_to_batch.py:0
 #, python-format
 msgid ""
@@ -129,16 +130,6 @@ msgid "Display Name"
 msgstr ""
 
 #. module: stock_picking_batch_extended
-#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__entire_package_ids
-msgid "Entire Package"
-msgstr ""
-
-#. module: stock_picking_batch_extended
-#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__entire_package_detail_ids
-msgid "Entire Package Detail"
-msgstr ""
-
-#. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__field_id
 msgid "Field to group"
 msgstr ""
@@ -205,11 +196,6 @@ msgid "Name of the batch picking"
 msgstr ""
 
 #. module: stock_picking_batch_extended
-#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__name
-msgid "Name of the batch transfer"
-msgstr ""
-
-#. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__notes
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_to_batch__notes
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
@@ -217,15 +203,10 @@ msgid "Notes"
 msgstr ""
 
 #. module: stock_picking_batch_extended
+#. odoo-python
 #: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:0
 #, python-format
 msgid "Nothing to print."
-msgstr ""
-
-#. module: stock_picking_batch_extended
-#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__user_id
-#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_to_batch__user_id
-msgid "Person responsible for this batch transfer"
 msgstr ""
 
 #. module: stock_picking_batch_extended
@@ -254,11 +235,6 @@ msgid "Pickings Order"
 msgstr ""
 
 #. module: stock_picking_batch_extended
-#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
-msgid "Print"
-msgstr ""
-
-#. module: stock_picking_batch_extended
 #: model:ir.actions.server,name:stock_picking_batch_extended.action_print_batch_delivery_slip
 msgid "Print Delivery Slip"
 msgstr ""
@@ -269,9 +245,18 @@ msgid "Print Picking Operations"
 msgstr ""
 
 #. module: stock_picking_batch_extended
-#: model:ir.model,name:stock_picking_batch_extended.model_product_product
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
+msgid "Print Pickings"
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
 msgid "Product"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model,name:stock_picking_batch_extended.model_product_product
+msgid "Product Variant"
 msgstr ""
 
 #. module: stock_picking_batch_extended
@@ -318,19 +303,6 @@ msgstr ""
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.product_normal_form_view
 msgid "This note will show up on the batch picking printout."
-msgstr ""
-
-#. module: stock_picking_batch_extended
-#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__entire_package_detail_ids
-msgid ""
-"Those are the entire packages of a picking shown in the view of detailed "
-"operations"
-msgstr ""
-
-#. module: stock_picking_batch_extended
-#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__entire_package_ids
-msgid ""
-"Those are the entire packages of a picking shown in the view of operations"
 msgstr ""
 
 #. module: stock_picking_batch_extended
