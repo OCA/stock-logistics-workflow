@@ -88,30 +88,38 @@ class StockPickingToBatch(models.TransientModel):
             "or are in a wrong state."
         )
 
+    def confirm_batch_picking(self, batch):
+        if self.mode == "new" and not self.is_create_draft:
+            batch.action_confirm()
+
+    def create_batch_picking(self):
+        return self.env["stock.picking.batch"].create(
+            self._prepare_stock_batch_picking()
+        )
+
     def create_simple_batch(self, domain):
         """Create one batch picking with all pickings"""
         pickings = self.env["stock.picking"].search(domain)
         if not pickings:
             raise UserError(self._raise_message_error())
-        batch = self.env["stock.picking.batch"].create(
-            self._prepare_stock_batch_picking()
-        )
-        pickings.write({"batch_id": batch.id})
-        return batch
+        new_batch = self.create_batch_picking()
+        pickings.write({"batch_id": new_batch.id})
+        self.confirm_batch_picking(new_batch)
+        return new_batch
 
     def create_multiple_batch(self, domain):
         """Create n batch pickings by grouped fields selected"""
         StockPicking = self.env["stock.picking"]
         groupby = [f.field_id.name for f in self.group_field_ids]
-        pickings_grouped = StockPicking.read_group(domain, groupby, groupby)
+        pickings_grouped = StockPicking.read_group(domain, groupby, groupby, lazy=False)
         if not pickings_grouped:
             raise UserError(self._raise_message_error())
         batchs = self.env["stock.picking.batch"].browse()
         for group in pickings_grouped:
-            batchs += self.env["stock.picking.batch"].create(
-                self._prepare_stock_batch_picking()
-            )
-            StockPicking.search(group["__domain"]).write({"batch_id": batchs[-1:].id})
+            batchs += self.create_batch_picking()
+            new_batch = batchs[-1:]
+            StockPicking.search(group["__domain"]).write({"batch_id": new_batch.id})
+            self.confirm_batch_picking(new_batch)
         return batchs
 
     def action_create_batch(self):
