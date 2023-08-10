@@ -250,6 +250,12 @@ class StockValuationLayer(models.Model):
         """
         return False
 
+    def _postprocess_rest_svl_to_sync(self, svls_dic, postprocess_svl_dic):
+        """This method serves for doing any stuff after processing an SVL that
+        is being synced.
+        """
+        return True
+
     def cost_price_avco_sync(self, vals, svl_previous_vals):  # noqa: C901
         dp_obj = self.env["decimal.precision"]
         precision_qty = dp_obj.precision_get("Product Unit of Measure")
@@ -273,6 +279,7 @@ class StockValuationLayer(models.Model):
             # SVLS that need to be written in a previous process before processing
             # the other SVLS.
             preprocess_svl_dic = OrderedDict()
+            postprocess_svl_dic = OrderedDict()
             for svl in svls_to_avco_sync:
                 if svl._preprocess_rest_svl_to_sync(svls_dic, preprocess_svl_dic):
                     continue
@@ -386,6 +393,7 @@ class StockValuationLayer(models.Model):
                 # Incoming or Outgoing moves without quantity and unit_cost
                 elif not qty and svl.stock_move_id:
                     svl_dic["value"] = 0.0
+                svl._postprocess_rest_svl_to_sync(svls_dic, postprocess_svl_dic)
             line.update_avco_svl_modified(preprocess_svl_dic, skip_avco_sync=False)
             # Reprocess svls to set manual adjust values take into account all vacuums
             self.process_avco_svl_manual_adjustements(svls_dic)
@@ -408,6 +416,8 @@ class StockValuationLayer(models.Model):
                 svl_dic["value"] = svl_dic["quantity"] * svl_dic["unit_cost"]
             # Write changes in db
             line.update_avco_svl_modified(svls_dic)
+            # Update postprocessed lines
+            line.update_avco_svl_modified(postprocess_svl_dic, skip_avco_sync=False)
             # Update unit_cost for incoming stock moves
             if (
                 line.stock_move_id
