@@ -1,0 +1,1 @@
+from . import test_product_cost_price_avco_sync_mrp
