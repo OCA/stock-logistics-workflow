@@ -12,6 +12,12 @@ class StockPicking(models.Model):
         " canceled because it was left empty after a dynamic routing.",
     )
 
+    def _check_entire_pack(self):
+        # This can be dropped in v16 as part of odoo standard
+        if self.env.context.get("bypass_entire_pack"):
+            return
+        return super()._check_entire_pack()
+
     @api.depends("canceled_by_routing")
     def _compute_state(self):
         res = super()._compute_state()

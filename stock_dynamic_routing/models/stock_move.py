@@ -1,6 +1,7 @@
 # Copyright 2019-2020 Camptocamp (https://www.camptocamp.com)
 # Copyright 2021 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
+import logging
 import uuid
 from collections import OrderedDict, defaultdict, namedtuple
 
@@ -8,6 +9,8 @@ from psycopg2 import sql
 
 from odoo import models
 from odoo.tools.float_utils import float_compare
+
+_logger = logging.getLogger(__name__)
 
 
 class StockMove(models.Model):
@@ -119,7 +122,8 @@ class StockMove(models.Model):
         self.env.cr.execute(
             sql.SQL("SAVEPOINT {}").format(sql.Identifier(savepoint_name))
         )
-        super()._action_assign()
+        _logger.debug("Prepare pull re-routing")
+        super(StockMove, self.with_context(bypass_entire_pack=True))._action_assign()
 
         moves_routing = self._routing_compute_rules()
         if not any(
@@ -132,8 +136,10 @@ class StockMove(models.Model):
             self.env.cr.execute(
                 sql.SQL("RELEASE SAVEPOINT {}").format(sql.Identifier(savepoint_name))
             )
+            self.mapped("picking_id")._check_entire_pack()
             return {}
 
+        _logger.debug("Rollback computation for applying pull re-routing")
         # rollback _action_assign, it'll be called again after the routing
         self.env.clear()
         # pylint: disable=sql-injection
@@ -391,6 +397,7 @@ class StockMove(models.Model):
         new move but switch the source location of the current move.  This
         might trigger a new routing on the destination move.
         """
+        next_move_in_chain_ids = []
         for move in self:
             origmoves_by_location = OrderedDict()
             for orig_move in move.move_orig_ids:
@@ -423,7 +430,15 @@ class StockMove(models.Model):
                     # we have a different routing
                     move.move_orig_ids -= orig_moves
                     split_move.move_orig_ids = orig_moves
-                split_move.location_id = location_id
+                if split_move.location_id != location_id:
+                    split_move.with_context(
+                        __applying_routing_rule=True
+                    ).location_id = location_id
+                next_move_in_chain_ids.append(split_move.id)
+        # Apply dynamic routing on next waiting moves in the chain
+        self.browse(next_move_in_chain_ids).filtered(
+            lambda r: r.state == "waiting"
+        )._chain_apply_routing()
 
     def _apply_routing_rule_push(self, routing_details):
         """Apply push dynamic routing

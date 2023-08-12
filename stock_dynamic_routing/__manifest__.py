@@ -2,7 +2,8 @@
 {
     "name": "Stock Dynamic Routing",
     "summary": "Dynamic routing of stock moves",
-    "author": "Camptocamp, Odoo Community Association (OCA)",
+    "author": "Camptocamp, BCIM, Odoo Community Association (OCA)",
+    "maintainers": ["jbaudoux"],
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "category": "Warehouse Management",
     "version": "18.0.1.0.0",
