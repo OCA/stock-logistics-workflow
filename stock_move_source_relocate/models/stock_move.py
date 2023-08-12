@@ -1,9 +1,13 @@
 # Copyright 2020 Camptocamp SA
 # Copyright 2023 Michael Tietz (MT Software) <mtietz@mt-software.de>
+# Copyright 2023 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
+import logging
 
 from odoo import models
 from odoo.tools.float_utils import float_compare
+
+_logger = logging.getLogger(__name__)
 
 
 class StockMove(models.Model):
@@ -18,22 +22,33 @@ class StockMove(models.Model):
         unconfirmed_moves = unconfirmed_moves.filtered(
             lambda m: m.state in ["confirmed", "partially_available"]
         )
-        unconfirmed_moves._apply_source_relocate()
+        if unconfirmed_moves:
+            unconfirmed_moves._apply_source_relocate()
 
     def _apply_source_relocate(self):
         # Read the `reserved_availability` field of the moves out of the loop
         # to prevent unwanted cache invalidation when actually reserving.
         reserved_availability = {move: move.reserved_availability for move in self}
         roundings = {move: move.product_id.uom_id.rounding for move in self}
+        relocated_ids = []
+        _logger.debug(
+            "Try to relocate moves of operation type (%s)"
+            % ", ".join(self.picking_type_id.mapped("name"))
+        )
         for move in self:
             # We don't need to ignore moves with "_should_bypass_reservation()
             # is True" because they are reserved at this point.
             relocation = self.env["stock.source.relocate"]._rule_for_move(move)
             if not relocation or relocation.relocate_location_id == move.location_id:
                 continue
-            move._apply_source_relocate_rule(
+            relocated = move._apply_source_relocate_rule(
                 relocation, reserved_availability, roundings
             )
+            if relocated:
+                relocated_ids.append(relocated.id)
+        if relocated_ids:
+            _logger.debug("Relocated moves %s" % relocated_ids)
+            self.browse(relocated_ids)._after_apply_source_relocate_rule()
 
     def _apply_source_relocate_rule(self, relocation, reserved_availability, roundings):
         self.ensure_one()
@@ -63,3 +78,7 @@ class StockMove(models.Model):
         new_move.location_id = relocation.relocate_location_id
         self._action_assign()
         return new_move
+
+    def _after_apply_source_relocate_rule(self):
+        # Hook for stock_dynamic_routing
+        return
