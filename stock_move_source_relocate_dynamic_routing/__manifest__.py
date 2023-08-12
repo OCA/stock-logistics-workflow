@@ -2,7 +2,8 @@
 {
     "name": "Stock Source Relocate - Dynamic Routing",
     "summary": "Glue module",
-    "author": "Camptocamp, Odoo Community Association (OCA)",
+    "author": "Camptocamp, BCIM, Odoo Community Association (OCA)",
+    "maintainers": ["jbaudoux"],
     "website": "https://github.com/OCA/wms",
     "category": "Warehouse Management",
     "version": "14.0.1.0.1",
@@ -12,5 +13,5 @@
     "data": ["views/stock_routing_views.xml", "views/stock_source_relocate_views.xml"],
     "auto_install": True,
     "installable": True,
-    "development_status": "Alpha",
+    "development_status": "Beta",
 }
