@@ -256,6 +256,7 @@ msgstr ""
 
 #. module: stock_dynamic_routing
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__routing_id
+#: model_terms:ir.ui.view,arch_db:stock_dynamic_routing.view_stock_routing_form
 msgid "Routing"
 msgstr ""
 
@@ -270,18 +271,13 @@ msgid "Routing Rule"
 msgstr ""
 
 #. module: stock_dynamic_routing
-#: model_terms:ir.ui.view,arch_db:stock_dynamic_routing.view_stock_routing_form
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing__rule_ids
 msgid "Routing Rules"
 msgstr ""
 
 #. module: stock_dynamic_routing
 #: model:ir.model.fields,help:stock_dynamic_routing.field_stock_routing_rule__routing_picking_type_id
 msgid "Routing applied only on moves of this operation type."
-msgstr ""
-
-#. module: stock_dynamic_routing
-#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing__rule_ids
-msgid "Rule"
 msgstr ""
 
 #. module: stock_dynamic_routing
