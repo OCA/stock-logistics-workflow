@@ -298,6 +298,7 @@ msgstr "Inserción"
 
 #. module: stock_dynamic_routing
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__routing_id
+#: model_terms:ir.ui.view,arch_db:stock_dynamic_routing.view_stock_routing_form
 msgid "Routing"
 msgstr "Rutas"
 
@@ -312,7 +313,7 @@ msgid "Routing Rule"
 msgstr "Regla de Enrutamiento"
 
 #. module: stock_dynamic_routing
-#: model_terms:ir.ui.view,arch_db:stock_dynamic_routing.view_stock_routing_form
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing__rule_ids
 msgid "Routing Rules"
 msgstr "Reglas de Rutas"
 
@@ -321,11 +322,6 @@ msgstr "Reglas de Rutas"
 msgid "Routing applied only on moves of this operation type."
 msgstr ""
 "El enrutamiento se aplica solo en movimientos de este tipo de operación."
-
-#. module: stock_dynamic_routing
-#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing__rule_ids
-msgid "Rule"
-msgstr "Regla"
 
 #. module: stock_dynamic_routing
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing__sequence
@@ -366,3 +362,6 @@ msgstr ""
 #: model:ir.model,name:stock_dynamic_routing.model_stock_picking
 msgid "Transfer"
 msgstr "Transferencia"
+
+#~ msgid "Rule"
+#~ msgstr "Regla"
