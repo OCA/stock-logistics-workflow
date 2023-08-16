@@ -41,7 +41,7 @@ class TestStockPickingWarnMessage(TransactionCase):
                 "picking_type_id": self.picking_type_out.id,
                 "location_id": self.picking_type_out.default_location_src_id.id,
                 "location_dest_id": self.customer_location.id,
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
@@ -67,7 +67,7 @@ class TestStockPickingWarnMessage(TransactionCase):
                 "picking_type_id": self.picking_type_out.id,
                 "location_id": self.picking_type_out.default_location_src_id.id,
                 "location_dest_id": self.customer_location.id,
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
@@ -94,7 +94,7 @@ class TestStockPickingWarnMessage(TransactionCase):
                 "picking_type_id": self.picking_type_out.id,
                 "location_id": self.picking_type_out.default_location_src_id.id,
                 "location_dest_id": self.customer_location.id,
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
