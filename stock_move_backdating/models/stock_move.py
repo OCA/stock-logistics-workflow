@@ -8,7 +8,7 @@
 from odoo import models
 from odoo.fields import first
 
-from ..utils import check_date
+from .stock_move_line import check_date
 
 
 class StockMove(models.Model):
@@ -27,7 +27,6 @@ class StockMove(models.Model):
             )
             move_account_moves.update(
                 {
-                    "name": False,
                     "date": stock_move.date.date(),
                 }
             )
@@ -58,7 +57,8 @@ class StockMove(models.Model):
                 )
         return self.browse(moves_todo_ids)
 
-    def _action_done(self, cancel_backorder=False):
+    @api.multi
+    def _action_done(self):
         moves_todo = self.env["stock.move"]
         has_move_lines_to_backdate = any(self.mapped("move_line_ids.date_backdating"))
         if not has_move_lines_to_backdate:
