@@ -15,6 +15,7 @@ class TestStockQuantPackageProductPackaging(common.TestStockQuantPackageCommon):
                 "name": "10 pack",
                 "product_id": cls.product.id,
                 "qty": 10,
+                "weight": 1.0,
                 "packaging_length": 12,
                 "width": 13,
                 "height": 14,
@@ -53,6 +54,7 @@ class TestStockQuantPackageProductPackaging(common.TestStockQuantPackageCommon):
         )
 
     def test_package_estimated_pack_weight_kg(self):
+        self.package.product_packaging_id = self.packaging
         self.env["stock.quant"]._update_available_quantity(
             self.product,
             self.wh.out_type_id.default_location_src_id,
@@ -60,7 +62,7 @@ class TestStockQuantPackageProductPackaging(common.TestStockQuantPackageCommon):
             package_id=self.package,
         )
         # Weight are taken from product, like the delivery module
-        self.assertEqual(self.package.estimated_pack_weight_kg, 7)
+        self.assertEqual(self.package.estimated_pack_weight_kg, 8.0)
         self.move._action_assign()
         for line in self.move.move_line_ids:
             line.qty_done = line.reserved_qty
@@ -68,5 +70,5 @@ class TestStockQuantPackageProductPackaging(common.TestStockQuantPackageCommon):
             self.package.with_context(
                 picking_id=self.move.picking_id.id
             ).estimated_pack_weight_kg,
-            7,
+            8.0,
         )

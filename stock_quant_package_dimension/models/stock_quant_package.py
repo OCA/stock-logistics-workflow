@@ -180,11 +180,12 @@ class StockQuantPackage(models.Model):
             picking_id
         )
         for package in self:
-            weight = 0.0
+            # Note: also include packaging weight
+            weight = package.product_packaging_id.weight
             if picking_id:  # coming from a transfer
                 move_line_ids = move_line_ids_per_package.get(package, [])
                 move_lines = self.env["stock.move.line"].browse(move_line_ids)
-                weight = package._get_weight_kg_from_move_lines(move_lines)
+                weight += package._get_weight_kg_from_move_lines(move_lines)
             else:
-                weight = package._get_weight_kg_from_quants(package.quant_ids)
+                weight += package._get_weight_kg_from_quants(package.quant_ids)
             package.estimated_pack_weight_kg = weight
