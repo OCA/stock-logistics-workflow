@@ -6,7 +6,7 @@
 from datetime import datetime, timedelta
 from itertools import zip_longest
 
-from odoo import tests
+from odoo import fields, tests
 from odoo.fields import first
 from odoo.tests import Form
 
@@ -101,18 +101,20 @@ class TestCommon(tests.SavepointCase):
         self.assertEqual(len(account_moves), len(stock_moves))
 
     def _check_account_move_date(self, account_move, date):
-        self.assertEqual(account_move.date, date.date())
+        self.assertEqual(account_move.date, fields.Date.context_today(self, date))
 
     def _check_picking_date(self, picking, datetime_backdating_list):
         max_datetime = max(datetime_backdating_list)
-        max_date = max_datetime.date()
-        self.assertEqual(picking.date_done.date(), max_date)
+        max_date = fields.Date.context_today(self, max_datetime)
+        self.assertEqual(fields.Date.context_today(self, picking.date_done), max_date)
 
         picking_back_date = picking.date_backdating
         if len(datetime_backdating_list) == 1:
-            picking_back_date = picking_back_date.date()
+            picking_back_date = fields.Date.context_today(self, picking_back_date)
             datetime_backdating = datetime_backdating_list[0]
-            self.assertEqual(datetime_backdating.date(), picking_back_date)
+            self.assertEqual(
+                fields.Date.context_today(self, datetime_backdating), picking_back_date
+            )
         else:
             self.assertFalse(picking_back_date)
 
@@ -156,9 +158,16 @@ class TestCommon(tests.SavepointCase):
 
             stock_move_line = self._get_corresponding_move_line(stock_move)
             move_datetime_backdating = stock_move_line.date_backdating
-            move_date_backdating = move_datetime_backdating.date()
-            self.assertEqual(stock_move.date.date(), move_date_backdating)
-            self.assertEqual(stock_move_line.date.date(), move_date_backdating)
+            move_date_backdating = fields.Date.context_today(
+                self, move_datetime_backdating
+            )
+            self.assertEqual(
+                fields.Date.context_today(self, stock_move.date), move_date_backdating
+            )
+            self.assertEqual(
+                fields.Date.context_today(self, stock_move_line.date),
+                move_date_backdating,
+            )
 
             # Get the quant that originated the quantity moved
             quants = self.env["stock.quant"]._gather(
@@ -166,7 +175,9 @@ class TestCommon(tests.SavepointCase):
                 stock_move.location_id,
             )
             for quant in quants:
-                self.assertEqual(quant.in_date.date(), move_date_backdating)
+                self.assertEqual(
+                    fields.Date.context_today(self, quant.in_date), move_date_backdating
+                )
 
             # Get the quant that received the quantity moved
             quants = self.env["stock.quant"]._gather(
@@ -174,7 +185,9 @@ class TestCommon(tests.SavepointCase):
                 stock_move.location_dest_id,
             )
             for quant in quants:
-                self.assertEqual(quant.in_date.date(), move_date_backdating)
+                self.assertEqual(
+                    fields.Date.context_today(self, quant.in_date), move_date_backdating
+                )
 
     def _transfer_picking_with_dates(self, *datetime_backdating_list):
         """

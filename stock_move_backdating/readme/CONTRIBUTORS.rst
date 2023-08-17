@@ -5,3 +5,7 @@
 * `TAKOBI <https://takobi.online>`_:
 
   * Simone Rubino <sir@takobi.online>
+
+* `Ecosoft <http://ecosoft.co.th>`__:
+
+  * Pimolnat Suntian <pimolnats@ecosoft.co.th>
