@@ -26,12 +26,6 @@
                     help="Fill Actual Movement Date of all operations"
                 />
             </xpath>
-            <xpath
-                expr="//field[@name='move_line_ids_without_package']//field[@name='product_id']"
-                position="after"
-            >
-                <field name="date_backdating" />
-            </xpath>
             <field name="date_done" position="after">
                 <field
                     name="date_backdating"
