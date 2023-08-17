@@ -1,8 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2018 Alex Comba - Agile Business Group
      Copyright 2023 Simone Rubino - TAKOBI
      License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
-
 <odoo>
     <record id="view_fill_backdating" model="ir.ui.view">
         <field name="name">Fill Actual Movement Date</field>
@@ -10,10 +9,15 @@
         <field name="arch" type="xml">
             <form string="Fill Actual Movement Date">
                 <group>
-                    <field name="date_backdating"/>
+                    <field name="date_backdating" />
                 </group>
                 <footer>
-                    <button name="fill_date_backdating" string="_Apply" type="object" class="btn-primary"/>
+                    <button
+                        name="fill_date_backdating"
+                        string="_Apply"
+                        type="object"
+                        class="btn-primary"
+                    />
                     <button string="Cancel" class="btn-default" special="cancel" />
                 </footer>
             </form>
