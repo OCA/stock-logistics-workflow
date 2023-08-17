@@ -1054,3 +1054,58 @@ class TestRoutingPull(TestRoutingPullCommon):
                 {"location_id": self.location_hb_1_2.id, "quantity": 7},
             ],
         )
+
+    def test_route_waiting_moves(self):
+        """Routing of waiting moves.
+
+        When the initial move is rerouted, the waiting moves in the chain
+        are also rerouted in cascade even if the destination location of the
+        initial move is not changed.
+        """
+        # make a routing that does not change locations
+        self.pick_type_routing_op.write(
+            {
+                "default_location_src_id": (
+                    self.wh.pick_type_id.default_location_src_id
+                ),
+                "default_location_dest_id": (
+                    self.wh.pick_type_id.default_location_dest_id
+                ),
+            }
+        )
+        self.routing.location_id = (
+            self.pick_type_routing_op.default_location_src_id.id,
+        )
+        out_type_routing = self.wh.out_type_id.copy(
+            {"name": "OUTP Routing", "sequence_code": "WH/OUTP"}
+        )
+        self.env["stock.routing"].create(
+            {
+                "location_id": out_type_routing.default_location_src_id.id,
+                "picking_type_id": self.wh.out_type_id.id,
+                "rule_ids": [
+                    (0, 0, {"method": "pull", "picking_type_id": out_type_routing.id})
+                ],
+            }
+        )
+        pick_picking, customer_picking = self._create_pick_ship(
+            self.wh, [(self.product1, 10)]
+        )
+        self._update_product_qty_in_location(self.location_shelf_1, self.product1, 20.0)
+        pick_picking.action_assign()
+        new_cust_picking = self.env["stock.picking"].search(
+            [("picking_type_id", "=", out_type_routing.id)]
+        )
+
+        self.assertEqual(len(new_cust_picking), 1)
+        self.assertRecordValues(
+            new_cust_picking,
+            [
+                {
+                    "state": "waiting",
+                    "location_id": self.wh.wh_output_stock_loc_id.id,
+                    "location_dest_id": self.customer_loc.id,
+                    "picking_type_id": out_type_routing.id,
+                }
+            ],
+        )
