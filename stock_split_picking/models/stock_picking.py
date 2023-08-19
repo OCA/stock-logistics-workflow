@@ -24,7 +24,7 @@ class StockPicking(models.Model):
                 )
             )
 
-    def split_process(self, keep_lines=False):
+    def split_process(self):
         """Use to trigger the wizard from button with correct context"""
         for picking in self:
             picking._check_split_process()
@@ -45,17 +45,7 @@ class StockPicking(models.Model):
                         new_move_line_vals = []
                         for move_line in move.move_line_ids:
                             if move_line.reserved_qty and move_line.qty_done:
-                                if keep_lines:
-                                    new_move_line_vals += move_line._split(move_line.qty_done)
-                                else:
-                                    # To avoid an error
-                                    # when picking is partially available
-                                    try:
-                                        move_line.write(
-                                            {"reserved_uom_qty": move_line.qty_done}
-                                        )
-                                    except UserError:
-                                        continue
+                                new_move_line_vals += move_line._split(move_line.qty_done)
 
                         # Create new move and move lines
                         new_move = self.env["stock.move"].create(new_move_vals)
