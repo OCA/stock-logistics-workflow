@@ -116,7 +116,7 @@ class TestStockPickingTierValidation(TransactionCase):
                 "picking_type_id": self.picking_type.id,
                 "location_id": self.src_location.id,
                 "location_dest_id": self.cust_location.id,
-                "review_ids": [(0, 0, {"status": 'pending'})],
+                "review_ids": [(0, 0, {"status": "pending"})],
                 "need_validation": True,
             }
         )
