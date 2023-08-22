@@ -31,4 +31,3 @@ class StockPicking(models.Model):
                     _("A validation process is still open for at least one record.")
                 )
         return super().button_validate()
-
