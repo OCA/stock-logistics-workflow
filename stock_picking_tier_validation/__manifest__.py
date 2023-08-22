@@ -5,7 +5,7 @@
     "name": "Stock Picking Tier Validation",
     "summary": "Extends the functionality of Transfers to "
     "support a tier validation process.",
-    "version": "16.0",
+    "version": "16.0.1.0.0",
     "category": "Warehouse Management",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Ecosoft, Odoo Community Association (OCA)",
