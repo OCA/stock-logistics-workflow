@@ -89,8 +89,8 @@ class TestStockPickingTierValidation(common.SavepointCase):
         picking = self.stock_picking_model.create(
             {
                 # Set up the required fields for testing
-               # ...
-               "review_ids": [(0, 0, {"validated": False})],
+                # ...
+                "review_ids": [(0, 0, {"validated": False})],
                 "validated": False,
             }
         )
