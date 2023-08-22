@@ -7,9 +7,9 @@ Stock Source Relocate - Dynamic Routing
    !! changes will be overwritten.                   !!
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-.. |badge1| image:: https://img.shields.io/badge/maturity-Alpha-red.png
+.. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
-    :alt: Alpha
+    :alt: Beta
 .. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
@@ -27,11 +27,6 @@ Stock Source Relocate - Dynamic Routing
 
 Glue module between ``stock_move_source_relocate`` and
 ``stock_dynamic_routing``.
-
-.. IMPORTANT::
-   This is an alpha version, the data model and design can change at any time without warning.
-   Only for development or testing purpose, do not use in production.
-   `More details on development status <https://odoo-community.org/page/development-status>`_
 
 **Table of contents**
 
@@ -55,11 +50,13 @@ Authors
 ~~~~~~~
 
 * Camptocamp
+* BCIM
 
 Contributors
 ~~~~~~~~~~~~
 
 * Guewen Baconnier <guewen.baconnier@camptocamp.com>
+* Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 
 Maintainers
 ~~~~~~~~~~~
@@ -73,6 +70,14 @@ This module is maintained by the OCA.
 OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
+
+.. |maintainer-jbaudoux| image:: https://github.com/jbaudoux.png?size=40px
+    :target: https://github.com/jbaudoux
+    :alt: jbaudoux
+
+Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
+
+|maintainer-jbaudoux| 
 
 This module is part of the `OCA/wms <https://github.com/OCA/wms/tree/14.0/stock_move_source_relocate_dynamic_routing>`_ project on GitHub.
 
