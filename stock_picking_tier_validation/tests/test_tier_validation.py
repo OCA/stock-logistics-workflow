@@ -3,18 +3,21 @@
 
 
 from odoo.exceptions import ValidationError
-from odoo.tests import common
-from odoo.tests.common import tagged
+from odoo.tests.common import tagged,TransactionCase
 
 from .common import setup_test_model, teardown_test_model
 from .tier_validation_tester import TierValidationTester
 
 
 @tagged("post_install", "-at_install")
-class TestStockPickingTierValidation(common.SavepointCase):
+class TestStockPickingTierValidation(TransactionCase):
     def setUp(self):
         super(TestStockPickingTierValidation, self).setUp()
         self.stock_picking_model = self.env["stock.picking"]
+        self.partner = self.env.ref("base.res_partner_2")
+        self.picking_type = self.env.ref("stock.picking_type_out")
+        self.src_location = self.env.ref("stock.stock_location_stock")
+        self.cust_location = self.env.ref("stock.stock_location_customers")
 
     @classmethod
     def setUpClass(cls):
@@ -74,7 +77,10 @@ class TestStockPickingTierValidation(common.SavepointCase):
         picking = self.stock_picking_model.create(
             {
                 # Set up the required fields for testing
-                # ...
+                "partner_id": self.partner.id,
+                "picking_type_id": self.picking_type.id,
+                "location_id": self.src_location.id,
+                "location_dest_id": self.cust_location.id,
                 "need_validation": True,
             }
         )
@@ -89,7 +95,10 @@ class TestStockPickingTierValidation(common.SavepointCase):
         picking = self.stock_picking_model.create(
             {
                 # Set up the required fields for testing
-                # ...
+                "partner_id": self.partner.id,
+                "picking_type_id": self.picking_type.id,
+                "location_id": self.src_location.id,
+                "location_dest_id": self.cust_location.id,
                 "review_ids": [(0, 0, {"validated": False})],
                 "validated": False,
             }
@@ -106,7 +115,10 @@ class TestStockPickingTierValidation(common.SavepointCase):
         picking = self.stock_picking_model.create(
             {
                 # Set up the required fields for testing
-                # ...
+                "partner_id": self.partner.id,
+                "picking_type_id": self.picking_type.id,
+                "location_id": self.src_location.id,
+                "location_dest_id": self.cust_location.id,
                 "need_validation": False,
             }
         )
