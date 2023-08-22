@@ -1,7 +1,7 @@
 # Copyright 2021 Ecosoft Co., Ltd. (http://ecosoft.co.th)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, models
+from odoo import _, api, models
 from odoo.exceptions import ValidationError
 
 
@@ -31,3 +31,4 @@ class StockPicking(models.Model):
                     _("A validation process is still open for at least one record.")
                 )
         return super().button_validate()
+

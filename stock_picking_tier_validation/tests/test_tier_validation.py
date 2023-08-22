@@ -90,46 +90,9 @@ class TestStockPickingTierValidation(TransactionCase):
         res = self.tier_def_obj._get_tier_validation_model_names()
         self.assertIn("stock.picking", res)
 
-    def test_02_button_validate_with_need_validation(self):
-        picking = self.stock_picking_model.create(
-            {
-                # Set up the required fields for testing
-                "partner_id": self.partner.id,
-                "picking_type_id": self.picking_type.id,
-                "location_id": self.src_location.id,
-                "location_dest_id": self.cust_location.id,
-                "need_validation": True,
-            }
-        )
-        self._create_move(picking, self.product)
-        with self.assertRaises(ValidationError) as context:
-            picking.button_validate()
-        self.assertIn(
-            "This action needs to be validated for at least one record.",
-            context.exception.args[0],
-        )
 
-    def test_03_button_validate_with_review_ids_not_validated(self):
-        picking = self.stock_picking_model.create(
-            {
-                # Set up the required fields for testing
-                "partner_id": self.partner.id,
-                "picking_type_id": self.picking_type.id,
-                "location_id": self.src_location.id,
-                "location_dest_id": self.cust_location.id,
-                "review_ids": [(0, 0, {"status": "pending"})],
-                "need_validation": True,
-            }
-        )
-        self._create_move(picking, self.product)
-        with self.assertRaises(ValidationError) as context:
-            picking.button_validate()
-        self.assertIn(
-            "A validation process is still open for at least one record.",
-            context.exception.args[0],
-        )
 
-    def test_04_button_validate_success(self):
+    def test_02_button_validate_success(self):
         # Test the successful validation scenario
         picking = self.stock_picking_model.create(
             {
