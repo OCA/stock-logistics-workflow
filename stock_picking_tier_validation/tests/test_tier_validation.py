@@ -2,7 +2,6 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 
-from odoo.exceptions import ValidationError
 from odoo.tests.common import TransactionCase, tagged
 
 from .common import setup_test_model, teardown_test_model
@@ -89,8 +88,6 @@ class TestStockPickingTierValidation(TransactionCase):
         to request a validation, the action can be done straight forward."""
         res = self.tier_def_obj._get_tier_validation_model_names()
         self.assertIn("stock.picking", res)
-
-
 
     def test_02_button_validate_success(self):
         # Test the successful validation scenario
