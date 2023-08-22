@@ -106,3 +106,4 @@ class TestStockPickingTierValidation(common.SavepointCase):
 
         # Call the button_validate method and ensure it completes without raising an exception
         picking.button_validate()
+        
