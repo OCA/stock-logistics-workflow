@@ -3,7 +3,7 @@
 
 
 from odoo.exceptions import ValidationError
-from odoo.tests.common import tagged,TransactionCase
+from odoo.tests.common import TransactionCase, tagged
 
 from .common import setup_test_model, teardown_test_model
 from .tier_validation_tester import TierValidationTester
