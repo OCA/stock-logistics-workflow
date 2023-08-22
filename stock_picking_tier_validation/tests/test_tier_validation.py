@@ -82,7 +82,7 @@ class TestStockPickingTierValidation(TransactionCase):
                 "location_dest_id": dest_location.id,
             }
         )
-    
+
     def test_01_tier_definition_models(self):
         """When the user can validate all future reviews, it is not needed
         to request a validation, the action can be done straight forward."""
