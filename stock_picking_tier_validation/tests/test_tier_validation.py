@@ -18,6 +18,7 @@ class TestStockPickingTierValidation(TransactionCase):
         self.picking_type = self.env.ref("stock.picking_type_out")
         self.src_location = self.env.ref("stock.stock_location_stock")
         self.cust_location = self.env.ref("stock.stock_location_customers")
+        self.product = self.env.ref("product.product_product_25")
 
     @classmethod
     def setUpClass(cls):
@@ -67,6 +68,21 @@ class TestStockPickingTierValidation(TransactionCase):
         teardown_test_model(cls.env, [TierValidationTester])
         super(TestStockPickingTierValidation, cls).tearDownClass()
 
+    def _create_move(self, picking, product, quantity=1.0):
+        src_location = self.env.ref("stock.stock_location_stock")
+        dest_location = self.env.ref("stock.stock_location_customers")
+        return self.env["stock.move"].create(
+            {
+                "name": "/",
+                "picking_id": picking.id,
+                "product_id": product.id,
+                "product_uom_qty": quantity,
+                "product_uom": product.uom_id.id,
+                "location_id": src_location.id,
+                "location_dest_id": dest_location.id,
+            }
+        )
+    
     def test_01_tier_definition_models(self):
         """When the user can validate all future reviews, it is not needed
         to request a validation, the action can be done straight forward."""
@@ -84,6 +100,7 @@ class TestStockPickingTierValidation(TransactionCase):
                 "need_validation": True,
             }
         )
+        self._create_move(picking, self.product)
         with self.assertRaises(ValidationError) as context:
             picking.button_validate()
         self.assertIn(
@@ -103,6 +120,7 @@ class TestStockPickingTierValidation(TransactionCase):
                 "validated": False,
             }
         )
+        self._create_move(picking, self.product)
         with self.assertRaises(ValidationError) as context:
             picking.button_validate()
         self.assertIn(
@@ -122,6 +140,6 @@ class TestStockPickingTierValidation(TransactionCase):
                 "need_validation": False,
             }
         )
-
+        self._create_move(picking, self.product)
         # Call the button_validate method and ensure it completes without raising an exception
         picking.button_validate()
