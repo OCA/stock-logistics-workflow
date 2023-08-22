@@ -105,9 +105,9 @@ class TestStockPickingTierValidation(common.SavepointCase):
         # Test the successful validation scenario
         picking = self.stock_picking_model.create(
             {
-            # Set up the required fields for testing
-            # ...
-            "need_validation": False,
+                # Set up the required fields for testing
+                # ...
+                "need_validation": False,
             }
         )
 
