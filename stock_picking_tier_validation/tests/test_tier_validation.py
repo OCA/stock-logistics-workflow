@@ -1,9 +1,10 @@
 # Copyright 2021 Ecosoft Co., Ltd. (http://ecosoft.co.th)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+
+from odoo.exceptions import ValidationError
 from odoo.tests import common
 from odoo.tests.common import tagged
-from odoo.exceptions import ValidationError
 
 from .common import setup_test_model, teardown_test_model
 from .tier_validation_tester import TierValidationTester
@@ -70,11 +71,13 @@ class TestStockPickingTierValidation(common.SavepointCase):
         self.assertIn("stock.picking", res)
 
     def test_02_button_validate_with_need_validation(self):
-        picking = self.stock_picking_model.create({
-            # Set up the required fields for testing
-            # ...
-            "need_validation": True,
-        })
+        picking = self.stock_picking_model.create(
+            {
+                # Set up the required fields for testing
+                # ...
+                "need_validation": True,
+            }
+        )
         with self.assertRaises(ValidationError) as context:
             picking.button_validate()
         self.assertIn(
@@ -83,12 +86,14 @@ class TestStockPickingTierValidation(common.SavepointCase):
         )
 
     def test_03_button_validate_with_review_ids_not_validated(self):
-        picking = self.stock_picking_model.create({
-            # Set up the required fields for testing
-            # ...
-            "review_ids": [(0, 0, {"validated": False})],
-            "validated": False,
-        })
+        picking = self.stock_picking_model.create(
+            {
+                # Set up the required fields for testing
+               # ...
+               "review_ids": [(0, 0, {"validated": False})],
+                "validated": False,
+            }
+        )
         with self.assertRaises(ValidationError) as context:
             picking.button_validate()
         self.assertIn(
@@ -98,11 +103,13 @@ class TestStockPickingTierValidation(common.SavepointCase):
 
     def test_04_button_validate_success(self):
         # Test the successful validation scenario
-        picking = self.stock_picking_model.create({
+        picking = self.stock_picking_model.create(
+            {
             # Set up the required fields for testing
             # ...
             "need_validation": False,
-        })
+            }
+        )
 
         # Call the button_validate method and ensure it completes without raising an exception
         picking.button_validate()
