@@ -26,6 +26,7 @@ addon | version | maintainers | summary
 [sale_line_returned_qty](sale_line_returned_qty/) | 15.0.1.0.0 |  | Track returned quantity of sale order lines.
 [sale_line_returned_qty_mrp](sale_line_returned_qty_mrp/) | 15.0.1.0.1 |  | Track returned quantity of sale order lines for BoM products.
 [sale_order_global_stock_route](sale_order_global_stock_route/) | 15.0.1.0.0 |  | Add the possibility to choose one warehouse path for an order
+[stock_account_product_run_fifo_hook](stock_account_product_run_fifo_hook/) | 15.0.1.0.0 |  | Add more flexibility in the run fifo method.
 [stock_delivery_note](stock_delivery_note/) | 15.0.1.0.0 |  | This module allows to fill in a delivery note that will be displayed on delivery report
 [stock_landed_costs_delivery](stock_landed_costs_delivery/) | 15.0.1.0.0 | [![victoralmau](https://github.com/victoralmau.png?size=30px)](https://github.com/victoralmau) | Stock landed costs delivery
 [stock_landed_costs_purchase_auto](stock_landed_costs_purchase_auto/) | 15.0.1.0.0 | [![victoralmau](https://github.com/victoralmau.png?size=30px)](https://github.com/victoralmau) | Stock landed costs purchase auto
@@ -73,6 +74,7 @@ addon | version | maintainers | summary
 [stock_restrict_lot](stock_restrict_lot/) | 15.0.0.0.2 | [![florian-dacosta](https://github.com/florian-dacosta.png?size=30px)](https://github.com/florian-dacosta) | Base module that add back the concept of restrict lot on stock move
 [stock_return_request](stock_return_request/) | 15.0.1.0.0 |  | Stock Return Request
 [stock_split_picking](stock_split_picking/) | 15.0.1.1.2 |  | Split a picking in two not transferred pickings
+[stock_valuation_layer_usage](stock_valuation_layer_usage/) | 15.0.1.0.0 |  | Trace where has the stock valuation been used in, including the quantities taken.
 
 [//]: # (end addons)
 
