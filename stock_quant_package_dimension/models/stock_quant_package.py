@@ -20,7 +20,7 @@ class StockQuantPackage(models.Model):
     )
     estimated_pack_weight_kg = fields.Float(
         "Estimated weight (in kg)",
-        digits="Product Unit of Measure",
+        digits="Stock Weight",
         compute="_compute_estimated_pack_weight_kg",
         help="Based on the weight of the product.",
     )
