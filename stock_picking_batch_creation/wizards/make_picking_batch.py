@@ -5,6 +5,7 @@ import math
 from collections import defaultdict
 
 from odoo import fields, models, tools
+from odoo.exceptions import UserError
 from odoo.osv.expression import AND, OR, expression
 
 from ..exceptions import NoPickingCandidateError, NoSuitableDeviceError
@@ -91,7 +92,10 @@ class MakePickingBatch(models.TransientModel):
 
     def create_batch(self):
         self.ensure_one()
-        batch = self._create_batch(raise_if_not_possible=True)
+        try:
+            batch = self._create_batch(raise_if_not_possible=True)
+        except (NoPickingCandidateError, NoSuitableDeviceError) as error:
+            raise UserError(error.name) from error
         action = {
             "type": "ir.actions.act_window",
             "name": batch.name,
