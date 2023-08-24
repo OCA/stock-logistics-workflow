@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.negative.qty</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="stock.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='operations_setting_container']" position="inside">
+                    <div class="col-12 col-lg-6 o_setting_box" id="negative_qty">
+                        <div class="o_setting_right_pane">
+                            <div class="mt8">
+                                <div>
+                                    <label for="prevent_negative_quantity_on"/>
+                                    <div class="text-muted">
+                                        Stage in picking when negative quantity prevention should occur.
+                                    </div>
+                                </div>
+                                <div>
+                                    <field name="prevent_negative_quantity_on"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
