@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record
+        id="stock_scrap_tier_validation_requested"
+        model="mail.message.subtype"
+        forcecreate="1"
+    >
+        <field name="name">Tier Validation Requested</field>
+        <field name="res_model">stock.scrap</field>
+        <field name="internal">True</field>
+    </record>
+    <record
+        id="stock_scrap_tier_validation_accepted"
+        model="mail.message.subtype"
+        forcecreate="1"
+    >
+        <field name="name">Tier Validation Accepted Notification</field>
+        <field name="res_model">stock.scrap</field>
+        <field name="internal">True</field>
+    </record>
+    <record
+        id="stock_scrap_tier_validation_rejected"
+        model="mail.message.subtype"
+        forcecreate="1"
+    >
+        <field name="name">Tier Validation Rejected Notification</field>
+        <field name="res_model">stock.scrap</field>
+        <field name="internal">True</field>
+    </record>
+</odoo>
