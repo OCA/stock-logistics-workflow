@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="stock_picking_type_form_view">
+        <field
+            name="name"
+        >stock.picking.type.form (in stock_picking_grn_mandatory)</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='use_create_lots']/parent::group"
+                position="after"
+            >
+                <group name="grn_mandatory" string="GRN (Mandatory)">
+                    <field name="is_grn_mandatory" />
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
