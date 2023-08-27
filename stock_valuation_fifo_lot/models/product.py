@@ -25,9 +25,16 @@ class ProductProduct(models.Model):
             )
         )
         if sort_by == "lot_create_date":
-            all_candidates = all_candidates.sorted(
-                lambda l: min(l.lot_ids.mapped("create_date"))
-            )
+
+            def sorting_key(candidate):
+                if len(candidate.lot_ids) > 1:
+                    return min(candidate.lot_ids.mapped("create_date"))
+                elif candidate.lot_ids:
+                    return candidate.lot_ids[0].create_date
+                else:
+                    return candidate.create_date
+
+            all_candidates = all_candidates.sorted(key=sorting_key)
         elif sort_by is not None:
             all_candidates = self._sort_by_all_candidates(all_candidates, sort_by)
         return all_candidates
