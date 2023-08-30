@@ -3,7 +3,7 @@
 {
     "name": "Stock Quant Package Dimension Total Weight From Packaging",
     "summary": "Estimated weight of a package",
-    "version": "14.0.1.1.0",
+    "version": "16.0.1.0.0",
     "development_status": "Alpha",
     "category": "Warehouse Management",
     "website": "https://github.com/OCA/stock-logistics-workflow",
