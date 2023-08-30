@@ -2,3 +2,4 @@
 * `Trobz <https://trobz.com>`_:
 * Nguyen Hoang Hiep <hiepnh@trobz.com>
 * Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
+* Duong (Tran Quoc) <duongtq@trobz.com>

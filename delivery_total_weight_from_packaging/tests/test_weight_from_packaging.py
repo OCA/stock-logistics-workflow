@@ -19,7 +19,7 @@ class TestWeight(TestShippingWeightCommon):
         picking = self.move.picking_id
         picking.action_assign()
         for line in picking.move_line_ids:
-            line.qty_done = line.product_qty
+            line.qty_done = line.reserved_uom_qty
         self.assertEqual(self.move.picking_id.weight_bulk, 16 * 2)
 
     def test_picking_shipping_weight(self):
@@ -49,7 +49,7 @@ class TestWeight(TestShippingWeightCommon):
         picking = self.move.picking_id
         picking.action_assign()
         for line in picking.move_line_ids:
-            line.qty_done = line.product_qty
+            line.qty_done = line.reserved_uom_qty
         self.assertTrue(picking.package_ids)
         self.assertTrue(picking.move_ids_without_package)
         # Check shipping weight knowing there is no shipping weight on the package

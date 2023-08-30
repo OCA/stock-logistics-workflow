@@ -14,7 +14,7 @@ class StockQuantPackage(models.Model):
         compute="_compute_shipping_weight", readonly=False, store=True
     )
 
-    @api.depends("quant_ids")
+    @api.depends("quant_ids", "package_type_id")
     @api.depends_context("picking_id")
     def _compute_weight(self):
         # Override method from `delivery` module to compute a more accurate
