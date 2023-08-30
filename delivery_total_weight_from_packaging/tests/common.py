@@ -1,10 +1,10 @@
 # Copyright 2020 Camptocamp SA (http://www.camptocamp.com)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestShippingWeightCommon(SavepointCase):
+class TestShippingWeightCommon(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -19,8 +19,8 @@ class TestShippingWeightCommon(SavepointCase):
                 "type": "product",
                 "weight": 1,
                 "packaging_ids": [
-                    (0, 0, {"name": "Small Box", "qty": "1", "max_weight": "2"}),
-                    (0, 0, {"name": "Box", "qty": "5", "max_weight": "7"}),
+                    (0, 0, {"name": "Small Box", "qty": "1", "weight": "2"}),
+                    (0, 0, {"name": "Box", "qty": "5", "weight": "7"}),
                 ],
             }
         )
