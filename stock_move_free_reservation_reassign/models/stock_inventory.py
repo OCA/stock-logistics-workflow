@@ -4,11 +4,10 @@
 from odoo import models
 
 
-class StockQuant(models.Model):
+class StockInventory(models.Model):
+    _inherit = "stock.inventory"
 
-    _inherit = "stock.quant"
-
-    def _apply_inventory(self):
+    def _action_done(self):
         if (
             not self.env["ir.config_parameter"]
             .sudo()
@@ -18,12 +17,12 @@ class StockQuant(models.Model):
                 False,
             )
         ):
-            return super()._apply_inventory()
+            return super()._action_done()
 
         with self.env[
             "stock.move.line"
         ]._get_move_free_reservation_ids() as move_to_reassign_ids:
-            res = super()._apply_inventory()
+            res = super()._action_done()
         if move_to_reassign_ids:
             self.env["stock.move"].browse(move_to_reassign_ids)._action_assign()
         return res

@@ -1,10 +1,10 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import TransactionCase
+from odoo.tests.common import SavepointCase
 
 
-class TestStockMoveFreeReservationReassign(TransactionCase):
+class TestStockMoveFreeReservationReassign(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -41,18 +41,26 @@ class TestStockMoveFreeReservationReassign(TransactionCase):
     @classmethod
     def _make_location_inventory(cls, product, location, quantity: float):
         """Make an inventory for the given product in the given location"""
-        inventory_quant = (
-            cls.env["stock.quant"]
-            .with_context(inventory_mode=True)
-            .create(
-                {
-                    "location_id": location.id,
-                    "product_id": product.id,
-                    "inventory_quantity": quantity,
-                }
-            )
+        inventory = cls.env["stock.inventory"].create(
+            {
+                "name": "Test Inventory",
+                "product_ids": [(6, 0, product.ids)],
+                "state": "confirm",
+                "line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "product_qty": quantity,
+                            "location_id": location.id,
+                            "product_id": product.id,
+                            "product_uom_id": product.uom_id.id,
+                        },
+                    )
+                ],
+            }
         )
-        inventory_quant.action_apply_inventory()
+        inventory.action_validate()
 
     @classmethod
     def _create_move_picking_out(cls, product, quantity: float):
