@@ -340,7 +340,10 @@ class StockValuationLayer(models.Model):
                 elif f_compare > 0:
                     total_qty = previous_qty + qty
                     # Return moves
-                    if not svl.stock_move_id or svl.stock_move_id.move_orig_ids:
+                    if (
+                        not svl.stock_move_id
+                        or svl.stock_move_id.origin_returned_move_id
+                    ):
                         svl.update_avco_svl_values(
                             svl_dic, unit_cost=previous_unit_cost
                         )
