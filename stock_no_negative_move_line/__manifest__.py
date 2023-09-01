@@ -1,20 +1,24 @@
-# -*- coding: utf-8 -*-
 {
-    'name': "stock_no_negative_move_line",
+    "name": "Stock No Negative Move Line",
 
-    'summary': """Disallow negative stock levels by move line and validating""",
+    "summary": """
+        Disable negative stock on move line
+    """,
 
-    'description': """Disallow negative stock levels by move line and validating""",
+    "description": """
+        Disable negative stock when updating move line done quantity.
+        This will prevent negative stock on move line level.
+    """,
 
-    'author': "Rooteam",
-    'website': "http://www.rooteam.com",
+    "author": "Rooteam, Odoo Community Association (OCA)",
+    "website": "https://github.com/OCA/stock-logistics-workflow",
 
-    'category': "Inventory, Logistic, Storage",
-    "version": "15.0.1.0.0",
-    'license': 'AGPL-3',
-    'depends': ['stock_no_negative'],
+    "category": "Inventory, Logistic, Storage",
+    "license": "AGPL-3",
+    "version": "15.0.1.0.1",
 
-    'data': [
-        'views/res_config_settings_views.xml',
+    "depends": [
+        "base",
+        "stock_no_negative",
     ],
 }

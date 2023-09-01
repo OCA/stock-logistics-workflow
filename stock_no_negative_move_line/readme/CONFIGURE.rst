@@ -19,7 +19,3 @@ For individual locations:
 #. Go to *Inventory / Configuration / Warehouse Management / Locations* and
    activate the option the option *Allow Negative Stock* for the locations you
    choose.
-
-To toggle between on move line vs on validation, go to
-*Settings / Inventory / Operations / Prevent Negative Quantity on*
-and set it to move line.
