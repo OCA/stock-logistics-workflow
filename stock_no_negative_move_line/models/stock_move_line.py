@@ -1,6 +1,6 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
-from odoo.tools import float_compare, float_round
+from odoo.tools import float_compare, float_round, config
 
 class StockMoveLine(models.Model):
     _inherit = 'stock.move.line'
@@ -20,6 +20,12 @@ class StockMoveLine(models.Model):
 
     def _will_cause_negative(self, qty=None, location_id=None, lot_id=None, package_id=None):
         self.ensure_one()
+
+        check_negative_qty = (
+            config["test_enable"] and self.env.context.get("test_stock_no_negative")
+        ) or not config["test_enable"]
+        if not check_negative_qty:
+            return
 
         is_forbidden = (
             not self.product_id.allow_negative_stock

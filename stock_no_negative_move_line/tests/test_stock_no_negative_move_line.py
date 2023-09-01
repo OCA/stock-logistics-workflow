@@ -86,7 +86,7 @@ class TestStockNoNegativeMoveLine(TransactionCase):
         self.stock_picking.action_confirm()
         with self.assertRaises(ValidationError):
             self.stock_move_line.write({'qty_done': 150.0})
-            self.stock_move_line._will_cause_negative()
+            self.stock_move_line.with_context(test_stock_no_negative=True)._will_cause_negative()
 
     def test_allow_negative_stock_product_on_move_line(self):
         """Assert that negative stock levels are allowed on move line update when
@@ -97,7 +97,7 @@ class TestStockNoNegativeMoveLine(TransactionCase):
         self.stock_picking.action_confirm()
 
         self.stock_move_line.write({'qty_done': 150.0})
-        self.stock_move_line._will_cause_negative()
+        self.stock_move_line.with_context(test_stock_no_negative=True)._will_cause_negative()
         self.stock_picking._action_done()
 
         quant = self.env['stock.quant']._gather(
@@ -114,7 +114,7 @@ class TestStockNoNegativeMoveLine(TransactionCase):
         self.stock_move_line.location_id.allow_negative_stock = True
         self.stock_picking.action_confirm()
         self.stock_move_line.write({'qty_done': 150.0})
-        self.stock_move_line._will_cause_negative()
+        self.stock_move_line.with_context(test_stock_no_negative=True)._will_cause_negative()
         self.stock_picking._action_done()
         quant = self.env['stock.quant']._gather(
             self.product, self.location_id, lot_id=self.stock_move_line.lot_id,
@@ -128,3 +128,11 @@ class TestStockNoNegativeMoveLine(TransactionCase):
         self.stock_move_line.write({'qty_done': 150.0})
         with self.assertRaises(ValidationError):
             self.stock_picking.with_context(test_stock_no_negative=True).button_validate()
+
+    def test_negative_prevention_on_lot(self):
+        """Assert that negative stock levels are prevented on lot update"""
+        self.stock_picking.action_confirm()
+        self.stock_move_line.write({'qty_done': 150.0})
+        with self.assertRaises(ValidationError):
+            self.stock_move_line.lot_id = self.env['stock.production.lot'].create({'name': 'test_lot'})
+            self.stock_move_line.with_context(test_stock_no_negative=True)._will_cause_negative()
