@@ -18,17 +18,59 @@ msgstr ""
 "X-Generator: Poedit 2.0.6\n"
 
 #. module: product_cost_price_avco_sync
-#: model:ir.model,name:product_cost_price_avco_sync.model_stock_move
-msgid "Stock Move"
-msgstr "Movimiento de existencias"
+#: model:ir.model.fields,field_description:product_cost_price_avco_sync.field_product_product__display_name
+#: model:ir.model.fields,field_description:product_cost_price_avco_sync.field_stock_move_line__display_name
+#: model:ir.model.fields,field_description:product_cost_price_avco_sync.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:product_cost_price_avco_sync.field_stock_valuation_layer__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: product_cost_price_avco_sync
+#: model:ir.model.fields,field_description:product_cost_price_avco_sync.field_product_product__id
+#: model:ir.model.fields,field_description:product_cost_price_avco_sync.field_stock_move_line__id
+#: model:ir.model.fields,field_description:product_cost_price_avco_sync.field_stock_picking__id
+#: model:ir.model.fields,field_description:product_cost_price_avco_sync.field_stock_valuation_layer__id
+msgid "ID"
+msgstr ""
+
+#. module: product_cost_price_avco_sync
+#: model:ir.model.fields,field_description:product_cost_price_avco_sync.field_product_product____last_update
+#: model:ir.model.fields,field_description:product_cost_price_avco_sync.field_stock_move_line____last_update
+#: model:ir.model.fields,field_description:product_cost_price_avco_sync.field_stock_picking____last_update
+#: model:ir.model.fields,field_description:product_cost_price_avco_sync.field_stock_valuation_layer____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: product_cost_price_avco_sync
+#: code:addons/product_cost_price_avco_sync/models/stock_valuation_layer.py:0
+#, python-format
+msgid ""
+"More than one stock move line to assign the new stock valuation layer "
+"quantity"
+msgstr ""
+
+#. module: product_cost_price_avco_sync
+#: model:ir.model,name:product_cost_price_avco_sync.model_product_product
+msgid "Product"
+msgstr "Producto"
+
+#. module: product_cost_price_avco_sync
+#: model:ir.model,name:product_cost_price_avco_sync.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: product_cost_price_avco_sync
+#: model:ir.model,name:product_cost_price_avco_sync.model_stock_valuation_layer
+msgid "Stock Valuation Layer"
+msgstr ""
 
 #. module: product_cost_price_avco_sync
 #: model:ir.model,name:product_cost_price_avco_sync.model_stock_picking
 msgid "Transfer"
 msgstr "Transferir"
 
-#~ msgid "Product"
-#~ msgstr "Producto"
+#~ msgid "Stock Move"
+#~ msgstr "Movimiento de existencias"
 
 #~ msgid "Purchase Order Line"
 #~ msgstr "Línea pedido de compra"
