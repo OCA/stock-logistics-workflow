@@ -12,6 +12,7 @@ setuptools.setup(
         'odoo14-addon-delivery_procurement_group_carrier',
         'odoo14-addon-delivery_total_weight_from_packaging',
         'odoo14-addon-procurement_auto_create_group_carrier',
+        'odoo14-addon-product_cost_price_avco_sync',
         'odoo14-addon-product_supplierinfo_for_customer_picking',
         'odoo14-addon-product_supplierinfo_picking',
         'odoo14-addon-purchase_stock_picking_invoice_link',
