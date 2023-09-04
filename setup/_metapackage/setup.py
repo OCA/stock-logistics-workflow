@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo-addon-delivery_procurement_group_carrier>=15.0dev,<15.1dev',
+        'odoo-addon-product_cost_price_avco_sync>=15.0dev,<15.1dev',
         'odoo-addon-purchase_stock_picking_invoice_link>=15.0dev,<15.1dev',
         'odoo-addon-sale_line_returned_qty>=15.0dev,<15.1dev',
         'odoo-addon-sale_line_returned_qty_mrp>=15.0dev,<15.1dev',
