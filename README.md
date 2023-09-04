@@ -25,7 +25,7 @@ addon | version | maintainers | summary
 [delivery_procurement_group_carrier](delivery_procurement_group_carrier/) | 14.0.1.1.1 |  | Delivery Procurement Group Carrier
 [delivery_total_weight_from_packaging](delivery_total_weight_from_packaging/) | 14.0.1.0.1 |  | Include packaging weight on move, transfer and package.
 [procurement_auto_create_group_carrier](procurement_auto_create_group_carrier/) | 14.0.1.1.0 |  | Procurement Auto Create Group Carrier
-[product_cost_price_avco_sync](product_cost_price_avco_sync/) | 14.0.1.0.0 | [![carlosdauden](https://github.com/carlosdauden.png?size=30px)](https://github.com/carlosdauden) [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Set product cost price from updated moves
+[product_cost_price_avco_sync](product_cost_price_avco_sync/) | 14.0.1.0.1 | [![carlosdauden](https://github.com/carlosdauden.png?size=30px)](https://github.com/carlosdauden) [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Set product cost price from updated moves
 [product_supplierinfo_for_customer_picking](product_supplierinfo_for_customer_picking/) | 14.0.1.1.0 |  | This module makes the product customer code visible in the stock moves of a picking.
 [product_supplierinfo_picking](product_supplierinfo_picking/) | 14.0.1.0.0 |  | This module makes the product supplier code visible in the stock moves of a picking.
 [purchase_stock_picking_invoice_link](purchase_stock_picking_invoice_link/) | 14.0.1.1.0 |  | Adds link between purchases, pickings and invoices
