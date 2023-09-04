@@ -18,17 +18,35 @@ msgstr ""
 "X-Generator: Poedit 2.0.6\n"
 
 #. module: product_cost_price_avco_sync
-#: model:ir.model,name:product_cost_price_avco_sync.model_stock_move
-msgid "Stock Move"
-msgstr "Movimiento de existencias"
+#: code:addons/product_cost_price_avco_sync/models/stock_valuation_layer.py:0
+#, python-format
+msgid ""
+"More than one stock move line to assign the new stock valuation layer "
+"quantity"
+msgstr ""
+
+#. module: product_cost_price_avco_sync
+#: model:ir.model,name:product_cost_price_avco_sync.model_product_product
+msgid "Product"
+msgstr "Producto"
+
+#. module: product_cost_price_avco_sync
+#: model:ir.model,name:product_cost_price_avco_sync.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: product_cost_price_avco_sync
+#: model:ir.model,name:product_cost_price_avco_sync.model_stock_valuation_layer
+msgid "Stock Valuation Layer"
+msgstr ""
 
 #. module: product_cost_price_avco_sync
 #: model:ir.model,name:product_cost_price_avco_sync.model_stock_picking
 msgid "Transfer"
 msgstr "Transferir"
 
-#~ msgid "Product"
-#~ msgstr "Producto"
+#~ msgid "Stock Move"
+#~ msgstr "Movimiento de existencias"
 
 #~ msgid "Purchase Order Line"
 #~ msgstr "Línea pedido de compra"
