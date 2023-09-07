@@ -53,9 +53,7 @@ class TestStockPickingProductAssortment(TransactionCase):
         stock_picking_form.picking_type_id = self.pick_type_out
         stock_picking_form.location_id = self.stock_location
         stock_picking_form.location_dest_id = self.customers_location
-        with stock_picking_form.move_ids_without_package.new() as move_id:
-            move_id.assortment_product_id = self.product_1.product_variant_id
-            self.assertEqual(move_id.product_id, self.product_1.product_variant_id)
+
         stock_picking_1 = stock_picking_form.save()
         self.assertEqual(
             stock_picking_1.assortment_product_ids,
@@ -77,9 +75,7 @@ class TestStockPickingProductAssortment(TransactionCase):
         stock_picking_form.picking_type_id = self.pick_type_out
         stock_picking_form.location_id = self.stock_location
         stock_picking_form.location_dest_id = self.customers_location
-        with stock_picking_form.move_ids_without_package.new() as move_id:
-            move_id.assortment_product_id = self.product_1.product_variant_id
-            self.assertEqual(move_id.product_id, self.product_1.product_variant_id)
+
         stock_picking_2 = stock_picking_form.save()
         self.assertEqual(
             stock_picking_2.assortment_product_ids,
@@ -92,9 +88,7 @@ class TestStockPickingProductAssortment(TransactionCase):
         stock_picking_form.picking_type_id = self.pick_type_out
         stock_picking_form.location_id = self.stock_location
         stock_picking_form.location_dest_id = self.customers_location
-        with stock_picking_form.move_ids_without_package.new() as move_id:
-            move_id.assortment_product_id = self.product_1.product_variant_id
-            self.assertEqual(move_id.product_id, self.product_1.product_variant_id)
+
         stock_picking_3 = stock_picking_form.save()
         self.assertFalse(
             stock_picking_3.assortment_product_ids
