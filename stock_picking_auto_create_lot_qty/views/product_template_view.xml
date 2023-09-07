@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2018 Tecnativa - Sergio Teruel
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="view_template_property_form" model="ir.ui.view">
+        <field name="name">Product template Secondary Unit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="stock.view_template_property_form" />
+        <field name="arch" type="xml">
+            <field name="auto_create_lot" position="after">
+                <field
+                    name="create_lot_every_n"
+                    attrs="{'invisible':[
+                    '|',
+                        ('auto_create_lot', '=', False),
+                        ('tracking', '!=', 'lot'),
+                    ]}"
+                />
+                <field name="main_uom_category_id" invisible="1" />
+                <field
+                    name="batch_uom_id"
+                    attrs="{
+                        'invisible':[('auto_create_lot', '=', False)],
+                        'required': [('auto_create_lot', '!=', False)],
+                    }"
+                    groups="uom.group_uom"
+                    options="{'no_create': True}"
+                    domain="[('category_id', '=', main_uom_category_id)]"
+                />
+                <field
+                    name="only_multiples_allowed"
+                    attrs="{'invisible':[
+                    '|',
+                        ('auto_create_lot', '=', False),
+                        ('tracking', '!=', 'lot'),
+                    ]}"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>
