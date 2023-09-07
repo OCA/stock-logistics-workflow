@@ -1,4 +1,5 @@
 # Copyright 2020 Tecnativa - Carlos Roca
+# Copyright 2023 Tecnativa - Sergio Teruel
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 from odoo import api, fields, models
 from odoo.osv import expression
@@ -19,20 +20,15 @@ class StockPicking(models.Model):
         # If we don't initialize the fields we get an error with NewId
         self.assortment_product_ids = self.env["product.product"]
         self.has_assortment = False
-        for record in self:
-            if record.partner_id and record.picking_type_id.code == "outgoing":
-                # As all_partner_ids can't be a stored field
-                filters = self.env["ir.filters"].search(
-                    [
-                        (
-                            "all_partner_ids",
-                            "in",
-                            (self.partner_id + self.partner_id.parent_id).ids,
-                        ),
-                    ]
+        product_domain = []
+        partners = self.partner_id + self.partner_id.parent_id
+        if partners:
+            for ir_filter in partners.applied_assortment_ids:
+                product_domain = expression.AND(
+                    [product_domain, ir_filter._get_eval_domain()]
                 )
-                domain = []
-                for fil in filters:
-                    domain = expression.AND([domain, fil._get_eval_domain()])
+            if product_domain:
+                self.assortment_product_ids = self.env["product.product"].search(
+                    product_domain
+                )
                 self.has_assortment = True
-                self.assortment_product_ids = self.env["product.product"].search(domain)
