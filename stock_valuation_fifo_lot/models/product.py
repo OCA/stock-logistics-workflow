@@ -93,7 +93,7 @@ class ProductProduct(models.Model):
                     ):
                         break
 
-                if qty_to_take_on_candidates > 0:
+                if candidates and qty_to_take_on_candidates > 0:
                     tmp_value += abs(candidate.unit_cost * -qty_to_take_on_candidates)
                     tmp_remaining_qty += qty_to_take_on_candidates
 
@@ -101,9 +101,10 @@ class ProductProduct(models.Model):
             all_candidates = self._get_all_candidates(
                 company, sort_by="lot_create_date"
             )
+            new_standard_price = 0.0
             if all_candidates:
                 new_standard_price = all_candidates[0].unit_cost
-            else:
+            elif candidates:
                 new_standard_price = candidate.unit_cost
 
             # Update standard price
