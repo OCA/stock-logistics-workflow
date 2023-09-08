@@ -1,0 +1,1 @@
+from . import test_stock_move_source_picking_type
