@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="stock_picking_batch_form">
+        <field name="model">stock.picking.batch</field>
+        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_form" />
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="use_oca_batch_validation" invisible="1" />
+            </field>
+            <xpath expr="//header//field[@name='state']" position="before">
+                <button
+                    name="remove_undone_pickings"
+                    string="Remove Undone"
+                    type="object"
+                    attrs="{'invisible': ['|',('active_picking_ids', '=', []),('use_oca_batch_validation', '!=', True)]}"
+                    confirm="All undone pickings from this batch will be removed, are you sure?"
+                />
+                <button
+                    name="action_print_picking"
+                    string="Print Pickings"
+                    type="object"
+                    class="oe_highlight"
+                    attrs="{'invisible': [('use_oca_batch_validation', '!=', True)]}"
+                />
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button
+                    name="action_view_stock_picking"
+                    class="oe_stat_button"
+                    icon="fa-truck"
+                    type="object"
+                >
+                    <field string="Pickings" name="picking_count" widget="statinfo" />
+                </button>
+            </xpath>
+            <field name="picking_ids" position="before">
+                <field name="active_picking_ids" invisible="True" />
+                <button
+                    name="remove_undone_pickings"
+                    string="Remove Undone"
+                    type="object"
+                    class="oe_link"
+                    attrs="{'invisible': [('active_picking_ids', '=', [])]}"
+                    confirm="All undone pickings from this batch will be removed, are you sure?"
+                />
+            </field>
+            <xpath expr="//field[@name='picking_ids']/.." position="after">
+                <page string='Notes'>
+                    <field name='notes' colspan='4' nolabel='1' />
+                </page>
+            </xpath>
+            <field name="user_id" position="after">
+                <field name="date" />
+            </field>
+            <xpath expr="//field[@name='picking_ids']" position="attributes">
+                <attribute
+                    name="context"
+                >{'form_view_ref': 'stock_picking_batch.view_picking_form_inherited', 'tree_view_ref': 'stock.vpicktree'}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="stock_picking_batch_tree">
+        <field name="model">stock.picking.batch</field>
+        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_tree" />
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="picking_count" optional="show" />
+            </field>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="stock_picking_batch_filter">
+        <field name="model">stock.picking.batch</field>
+        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_filter" />
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="scheduled_date" />
+            </field>
+            <filter name="state" position="after">
+                    <filter
+                    name="scheduled_date"
+                    string="Scheduled Date"
+                    context="{'group_by':'scheduled_date'}"
+                />
+            </filter>
+            <xpath expr="//group" position="after">
+                <filter
+                    name="my_batch"
+                    string="My batches"
+                    domain="[('user_id','=', uid)]"
+                />
+                <filter
+                    name="no_user_id"
+                    string="Unassigned"
+                    domain="[('user_id','=', False)]"
+                />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

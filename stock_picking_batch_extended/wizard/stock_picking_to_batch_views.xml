@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="stock_picking_to_batch_form" model="ir.ui.view">
+        <field name="model">stock.picking.to.batch</field>
+        <field
+            name="inherit_id"
+            ref="stock_picking_batch.stock_picking_to_batch_form"
+        />
+        <field name="arch" type="xml">
+            <field name="batch_id" position="before">
+                <field name="name" attrs="{'invisible': [('mode', '=', 'existing')]}" />
+            </field>
+            <xpath expr="//field[@name='user_id']/.." position="after">
+                <label for="notes" attrs="{'invisible': [('mode', '=', 'existing')]}" />
+                <field
+                    name="notes"
+                    attrs="{'invisible': [('mode', '=', 'existing')]}"
+                />
+            </xpath>
+            <xpath expr="//field[@name='user_id']/../.." position="after">
+                <group attrs="{'invisible': [('mode', '=', 'existing')]}">
+                    <group>
+                        <field name="batch_by_group" />
+                    </group>
+                </group>
+                <group
+                    string="Create multiple batch picking grouped by..."
+                    attrs="{'invisible': ['|', ('batch_by_group', '=', False), ('mode', '=', 'existing')]}"
+                >
+                    <field name="group_field_ids" nolabel="1" colspan="2">
+                        <tree editable="bottom">
+                            <field name="sequence" widget="handle" />
+                            <field name="field_id" options="{'no_create': True}" />
+                        </tree>
+                    </field>
+                </group>
+            </xpath>
+            <xpath expr="//button[@name='attach_pickings']" position="attributes">
+                <attribute name="name">action_create_batch</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
