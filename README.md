@@ -23,6 +23,7 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [delivery_procurement_group_carrier](delivery_procurement_group_carrier/) | 16.0.1.0.0 |  | Delivery Procurement Group Carrier
 [purchase_stock_picking_invoice_link](purchase_stock_picking_invoice_link/) | 16.0.1.0.0 |  | Adds link between purchases, pickings and invoices
+[stock_account_product_run_fifo_hook](stock_account_product_run_fifo_hook/) | 16.0.1.0.0 |  | Add more flexibility in the run fifo method.
 [stock_delivery_note](stock_delivery_note/) | 16.0.1.0.0 |  | This module allows to fill in a delivery note that will be displayed on delivery report
 [stock_grn](stock_grn/) | 16.0.1.0.1 |  | Goods Received Note
 [stock_landed_costs_currency](stock_landed_costs_currency/) | 16.0.1.0.0 |  | Stock Landed Costs Currency
