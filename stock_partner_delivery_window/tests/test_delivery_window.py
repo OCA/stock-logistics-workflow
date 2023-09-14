@@ -2,10 +2,10 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from freezegun import freeze_time
 
-from odoo.tests import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestPartnerDeliveryWindow(SavepointCase):
+class TestPartnerDeliveryWindow(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
