@@ -1,5 +1,6 @@
 # Copyright 2020 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
+import warnings
 from collections import defaultdict
 from datetime import time
 
@@ -99,9 +100,19 @@ class ResPartner(models.Model):
         return False
 
     def _get_delivery_time_format_string(self):
-        return _("From %s to %s")
+        warnings.warn(
+            "Method `_get_delivery_time_format_string` will be deprecated in the next version",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        return _("From {} to {}")
 
     def get_delivery_time_description(self):
+        warnings.warn(
+            "Method `get_delivery_time_description` will be deprecated in the next version",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         res = dict()
         day_translated_values = dict(
             self.env["time.weekday"]._fields["name"]._description_selection(self.env)
@@ -148,7 +159,7 @@ class ResPartner(models.Model):
             opening_times_description = list()
             for day_name, time_list in opening_times.items():
                 opening_times_description.append(
-                    _("%s: %s") % (day_name, _(", ").join(time_list))
+                    _("{}: {}").format(day_name, _(", ").join(time_list))
                 )
             res[partner.id] = "\n".join(opening_times_description)
         return res
