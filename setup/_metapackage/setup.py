@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo-addon-delivery_procurement_group_carrier>=16.0dev,<16.1dev',
         'odoo-addon-purchase_stock_picking_invoice_link>=16.0dev,<16.1dev',
+        'odoo-addon-stock_account_product_run_fifo_hook>=16.0dev,<16.1dev',
         'odoo-addon-stock_delivery_note>=16.0dev,<16.1dev',
         'odoo-addon-stock_grn>=16.0dev,<16.1dev',
         'odoo-addon-stock_landed_costs_currency>=16.0dev,<16.1dev',
