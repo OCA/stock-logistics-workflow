@@ -47,6 +47,7 @@ msgid "Active Pickings"
 msgstr "Coletas Ativas"
 
 #. module: stock_picking_batch_extended
+#. odoo-python
 #: code:addons/stock_picking_batch_extended/wizard/stock_picking_to_batch.py:0
 #, python-format
 msgid ""
@@ -137,16 +138,6 @@ msgid "Display Name"
 msgstr "Exibir Nome"
 
 #. module: stock_picking_batch_extended
-#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__entire_package_ids
-msgid "Entire Package"
-msgstr "Pacote Completo"
-
-#. module: stock_picking_batch_extended
-#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__entire_package_detail_ids
-msgid "Entire Package Detail"
-msgstr "Detalhe do Pacote Completo"
-
-#. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__field_id
 msgid "Field to group"
 msgstr "Campo para agrupar"
@@ -214,11 +205,6 @@ msgid "Name of the batch picking"
 msgstr "Nome da coleta em lote"
 
 #. module: stock_picking_batch_extended
-#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__name
-msgid "Name of the batch transfer"
-msgstr ""
-
-#. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__notes
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_to_batch__notes
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
@@ -226,16 +212,11 @@ msgid "Notes"
 msgstr "Observações"
 
 #. module: stock_picking_batch_extended
+#. odoo-python
 #: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:0
 #, python-format
 msgid "Nothing to print."
 msgstr "Nada a imprimir."
-
-#. module: stock_picking_batch_extended
-#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__user_id
-#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_to_batch__user_id
-msgid "Person responsible for this batch transfer"
-msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
@@ -263,11 +244,6 @@ msgid "Pickings Order"
 msgstr "Ordem de Coleta"
 
 #. module: stock_picking_batch_extended
-#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
-msgid "Print"
-msgstr "Imprimir"
-
-#. module: stock_picking_batch_extended
 #: model:ir.actions.server,name:stock_picking_batch_extended.action_print_batch_delivery_slip
 msgid "Print Delivery Slip"
 msgstr "Guia de Entrega de Impressão"
@@ -278,10 +254,19 @@ msgid "Print Picking Operations"
 msgstr "Imprimir Operações de Coleta"
 
 #. module: stock_picking_batch_extended
-#: model:ir.model,name:stock_picking_batch_extended.model_product_product
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
+msgid "Print Pickings"
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
 msgid "Product"
 msgstr "Produto"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model,name:stock_picking_batch_extended.model_product_product
+msgid "Product Variant"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
@@ -330,23 +315,6 @@ msgid "This note will show up on the batch picking printout."
 msgstr "Esta observação será exibida na impressão da coleta em lote."
 
 #. module: stock_picking_batch_extended
-#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__entire_package_detail_ids
-msgid ""
-"Those are the entire packages of a picking shown in the view of detailed "
-"operations"
-msgstr ""
-"Esses são os pacotes completos de uma coleta, mostrados na exibição de "
-"operações detalhadas"
-
-#. module: stock_picking_batch_extended
-#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__entire_package_ids
-msgid ""
-"Those are the entire packages of a picking shown in the view of operations"
-msgstr ""
-"Esses são os pacotes completos de uma coleta mostrados na exibição de "
-"operações"
-
-#. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_filter
 msgid "Unassigned"
 msgstr "Não atribuído"
@@ -392,6 +360,28 @@ msgstr "comentários em forma livre"
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_warehouse__default_user_id
 msgid "the user to which the batch pickings are assigned by default"
 msgstr "o usuário ao qual as coletas em lote são atribuídas por padrão"
+
+#~ msgid "Entire Package"
+#~ msgstr "Pacote Completo"
+
+#~ msgid "Entire Package Detail"
+#~ msgstr "Detalhe do Pacote Completo"
+
+#~ msgid "Print"
+#~ msgstr "Imprimir"
+
+#~ msgid ""
+#~ "Those are the entire packages of a picking shown in the view of detailed "
+#~ "operations"
+#~ msgstr ""
+#~ "Esses são os pacotes completos de uma coleta, mostrados na exibição de "
+#~ "operações detalhadas"
+
+#~ msgid ""
+#~ "Those are the entire packages of a picking shown in the view of operations"
+#~ msgstr ""
+#~ "Esses são os pacotes completos de uma coleta mostrados na exibição de "
+#~ "operações"
 
 #~ msgid "Add to new Batch"
 #~ msgstr "Adicionar ao novo lote"
