@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_picking_type_form" model="ir.ui.view">
+        <field name="name">stock.picking.type.form</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='code']/.." position="inside">
+                <field
+                    name="inter_warehouse_transfer"
+                    string="Use for Inter-warehouse transfer"
+                    attrs="{'invisible': [('code', '!=', 'internal')]}"
+                />
+                <field
+                    name="disable_merge_picking_moves"
+                    attrs="{'invisible': [('inter_warehouse_transfer', '=', False)]}"
+                />
+            </xpath>
+            <field name="warehouse_id" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'required': [('inter_warehouse_transfer', '=', True)]}</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>

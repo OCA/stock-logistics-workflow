@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <field name="partner_id" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'required': [('type_inter_warehouse_transfer','=',True)]}</attribute>
+                <attribute
+                    name="domain"
+                >[('id', 'in', inter_warehouse_contact_domain_ids)]</attribute>
+            </field>
+            <field name="partner_id" position="after">
+                <field name="type_inter_warehouse_transfer" invisible="1" />
+                <field name="inter_warehouse_contact_domain_ids" invisible="1" />
+            </field>
+        </field>
+    </record>
+</odoo>

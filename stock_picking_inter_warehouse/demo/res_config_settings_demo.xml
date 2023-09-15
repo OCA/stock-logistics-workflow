@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="res_config_settings_inter_warehouse" model="res.config.settings">
+        <field name="group_stock_multi_locations" eval="True" />
+        <field name="group_stock_adv_location" eval="True" />
+    </record>
+    <function model="res.config.settings" name="execute">
+        <value
+            model="res.config.settings"
+            search="[('id', '=', ref('res_config_settings_inter_warehouse'))]"
+        />
+    </function>
+
+</odoo>
