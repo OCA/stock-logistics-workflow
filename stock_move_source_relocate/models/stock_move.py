@@ -26,6 +26,10 @@ class StockMove(models.Model):
             unconfirmed_moves._apply_source_relocate()
 
     def _apply_source_relocate(self):
+        """Apply relocation rules.
+
+        Returns the recordset of confirmed and partially available moves
+        """
         # Read the `reserved_availability` field of the moves out of the loop
         # to prevent unwanted cache invalidation when actually reserving.
         reserved_availability = {move: move.reserved_availability for move in self}
@@ -35,20 +39,26 @@ class StockMove(models.Model):
             "Try to relocate moves of operation type (%s)"
             % ", ".join(self.picking_type_id.mapped("name"))
         )
+        res_ids = []
         for move in self:
             # We don't need to ignore moves with "_should_bypass_reservation()
             # is True" because they are reserved at this point.
             relocation = self.env["stock.source.relocate"]._rule_for_move(move)
             if not relocation or relocation.relocate_location_id == move.location_id:
+                res_ids.append(move.id)
                 continue
             relocated = move._apply_source_relocate_rule(
                 relocation, reserved_availability, roundings
             )
             if relocated:
                 relocated_ids.append(relocated.id)
+                res_ids.append(relocated.id)
+            else:
+                res_ids.append(move.id)
         if relocated_ids:
             _logger.debug("Relocated moves %s" % relocated_ids)
             self.browse(relocated_ids)._after_apply_source_relocate_rule()
+        return self.browse(res_ids)
 
     def _apply_source_relocate_rule(self, relocation, reserved_availability, roundings):
         self.ensure_one()
