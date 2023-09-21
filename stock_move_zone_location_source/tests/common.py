@@ -22,13 +22,20 @@ class ZoneLocationSourceCommon:
 
         #                                  WH (view)
         #
-        #   FOOD(view/zone/source)     STOCK (zone/source)   PHARMA(view/zone/source)
+        #                                    STOCK
+        #
+        #
+        #   FOOD(view/zone/source)                          PHARMA(view/zone/source)
         #
         #            FOOD 1                                           PHARMA 1
 
         # Set delivery in three steps in order to check
         # the good origin
         cls.warehouse.delivery_steps = "pick_pack_ship"
+
+        # Set Stock location as source too (for products that do not come from sub zones)
+        cls.warehouse.lot_stock_id.is_zone = True
+        cls.warehouse.lot_stock_id.is_considered_as_source = True
 
         # Create several picking zones (e.g.: Pharmaceutical, Food)
         cls.pharma_location = cls.Location.create(
@@ -73,9 +80,7 @@ class ZoneLocationSourceCommon:
                 "location_id": cls.food_location.id,
             }
         )
-        # Set stock as source too
-        cls.warehouse.lot_stock_id.is_zone = True
-        cls.warehouse.lot_stock_id.is_considered_as_source = True
+
         cls.food_type = cls.PickingType.create(
             {
                 "name": "Picking Food",
@@ -128,7 +133,7 @@ class ZoneLocationSourceCommon:
                 "name": "Pharma > Pack",
                 "location_dest_id": cls.warehouse.wh_pack_stock_loc_id.id,
                 "procure_method": "make_to_stock",
-                "location_src_id": cls.pharma_location.id,
+                "location_src_id": cls.warehouse.lot_stock_id.id,
                 "action": "pull",
                 "route_id": cls.pharma_route.id,
                 "picking_type_id": cls.pharma_type.id,
@@ -140,7 +145,7 @@ class ZoneLocationSourceCommon:
                 "name": "Food > Pack",
                 "location_dest_id": cls.warehouse.wh_pack_stock_loc_id.id,
                 "procure_method": "make_to_stock",
-                "location_src_id": cls.food_location.id,
+                "location_src_id": cls.warehouse.lot_stock_id.id,
                 "action": "pull",
                 "route_id": cls.food_route.id,
                 "picking_type_id": cls.food_type.id,

@@ -20,7 +20,7 @@ class StockMove(models.Model):
         # that is considered as the the source one
         # WARNING: The first call should be done with a single recordset
         all_moves = self.filtered(
-            "location_id.zone_location_id.is_considered_as_source"
+            "move_line_ids.location_id.zone_location_id.is_considered_as_source"
         )
         unvisited_moves = (self - visited) if visited else self
         for move in unvisited_moves:
@@ -30,6 +30,7 @@ class StockMove(models.Model):
     @api.depends("move_orig_ids")
     def _compute_source_zone_location_ids(self):
         for move in self:
+            source_move = move._find_source_zone_location_move()
             move.source_zone_location_ids = (
-                move._find_source_zone_location_move().location_id.zone_location_id
+                source_move.move_line_ids.location_id.zone_location_id
             )
