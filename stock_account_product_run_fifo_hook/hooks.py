@@ -161,6 +161,9 @@ def post_load_hook():
             tmp_value = 0
             taken_data = {}
             for candidate in candidates:
+                if not candidate.remaining_qty:
+                    # if remaining qty is zero we cannot vacuum it
+                    continue
                 qty_taken_on_candidate = min(
                     candidate.remaining_qty, qty_to_take_on_candidates
                 )
