@@ -22,6 +22,28 @@ msgstr ""
 "X-Generator: Weblate 4.14.1\n"
 
 #. module: stock_picking_invoice_link
+#: model:ir.model,name:stock_picking_invoice_link.model_account_move_reversal
+msgid "Account Move Reversal"
+msgstr ""
+
+#. module: stock_picking_invoice_link
+#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.invoice_form
+msgid "Delivery"
+msgstr ""
+
+#. module: stock_picking_invoice_link
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_bank_statement_line__delivery_count
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move__delivery_count
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_payment__delivery_count
+msgid "Delivery Orders"
+msgstr ""
+
+#. module: stock_picking_invoice_link
+#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
+msgid "Invoice"
+msgstr "Račun"
+
+#. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move__invoice_line_ids
 msgid "Invoice Line"
 msgstr "Stavka računa"
@@ -34,14 +56,18 @@ msgstr "Stavke računa"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking__invoice_ids
-#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
 msgid "Invoices"
 msgstr "Računi"
 
 #. module: stock_picking_invoice_link
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking__invoice_count
+msgid "Invoices Orders"
+msgstr ""
+
+#. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_move
-msgid "Journal Entries"
-msgstr "Stavke dnevnika"
+msgid "Journal Entry"
+msgstr ""
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_move_line
@@ -49,12 +75,9 @@ msgid "Journal Item"
 msgstr "Stavka dnevnika"
 
 #. module: stock_picking_invoice_link
-#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.invoice_form
-msgid "Pickings"
-msgstr "Otpreme"
-
-#. module: stock_picking_invoice_link
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_bank_statement_line__picking_ids
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move__picking_ids
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_payment__picking_ids
 msgid "Related Pickings"
 msgstr "Povezane otpreme"
 
@@ -64,7 +87,9 @@ msgid "Related Stock Moves"
 msgstr "Povezana skladišna kretanja"
 
 #. module: stock_picking_invoice_link
+#: model:ir.model.fields,help:stock_picking_invoice_link.field_account_bank_statement_line__picking_ids
 #: model:ir.model.fields,help:stock_picking_invoice_link.field_account_move__picking_ids
+#: model:ir.model.fields,help:stock_picking_invoice_link.field_account_payment__picking_ids
 msgid ""
 "Related pickings (only when the invoice has been generated from a sale "
 "order)."
@@ -95,13 +120,17 @@ msgid "Transfer"
 msgstr "Prijenos"
 
 #. module: stock_picking_invoice_link
+#. odoo-python
 #: code:addons/stock_picking_invoice_link/models/stock_move.py:0
 #, python-format
 msgid "You can not modify an invoiced stock move"
 msgstr "Nije moguće mijenjati skladišno kretanje iz kojeg je napravljen račun"
 
-#~ msgid "Invoice"
-#~ msgstr "Račun"
+#~ msgid "Journal Entries"
+#~ msgstr "Stavke dnevnika"
+
+#~ msgid "Pickings"
+#~ msgstr "Otpreme"
 
 #~ msgid "View Invoice"
 #~ msgstr "Vidi račun"
