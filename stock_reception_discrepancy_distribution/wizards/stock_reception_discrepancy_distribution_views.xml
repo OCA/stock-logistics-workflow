@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="stock_reception_discrepancy_distribution_wiz" model="ir.ui.view">
+        <field name="name">stock.reception.discrepancy.distribution.wiz</field>
+        <field name="model">stock.reception.discrepancy.distribution.wiz</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="product_id" options="{'no_open': True}" />
+                    </group>
+                    <group col="4">
+                        <label for="move_qty_done" />
+                        <div class="o_row">
+                            <span><field
+                                    name="move_qty_done"
+                                    readonly="1"
+                                    nolabel="1"
+                                /></span>
+                            <span><field
+                                    name="product_uom"
+                                    readonly="1"
+                                    nolabel="1"
+                                    options="{'no_open': True}"
+                                /></span>
+                        </div>
+                        <label for="move_dest_demand" />
+                        <div class="o_row">
+                            <span><field
+                                    name="move_dest_demand"
+                                    readonly="1"
+                                    nolabel="1"
+                                    decoration-success="move_qty_done == move_dest_demand"
+                                    decoration-warning="move_qty_done &gt; move_dest_demand"
+                                    decoration-danger="move_qty_done &lt; move_dest_demand"
+                                /></span>
+                            <span><field
+                                    name="product_uom"
+                                    readonly="1"
+                                    nolabel="1"
+                                    options="{'no_open': True}"
+                                /></span>
+                        </div>
+                        <label for="over_quantity" />
+                        <div class="o_row">
+                            <span><field
+                                    name="over_quantity"
+                                    readonly="1"
+                                    nolabel="1"
+                                    decoration-success="move_qty_done == move_dest_demand"
+                                    decoration-warning="move_qty_done &gt; move_dest_demand"
+                                    decoration-danger="move_qty_done &lt; move_dest_demand"
+                                /></span>
+                            <span><field
+                                    name="product_uom"
+                                    readonly="1"
+                                    nolabel="1"
+                                    options="{'no_open': True}"
+                                /></span>
+                        </div>
+                    </group>
+                </group>
+                <group string="Destination stock moves">
+                    <field name="move_dest_ids" nolabel="1">
+                        <tree editable="top" create="false" delete="false">
+                            <field
+                                name="product_id"
+                                readonly="1"
+                                options="{'no_open': True}"
+                                invisible="1"
+                            />
+                            <field
+                                name="picking_id"
+                                readonly="1"
+                                options="{'no_open': True}"
+                            />
+                            <field
+                                name="partner_id"
+                                readonly="1"
+                                options="{'no_open': True}"
+                            />
+                            <field
+                                name="product_uom_qty"
+                                attrs="{'readonly': [('state', 'in', ['done', 'cancel'])]}"
+                                sum="Total"
+                            />
+                            <field
+                                name="product_uom"
+                                readonly="1"
+                                options="{'no_open': True}"
+                            />
+                            <field name="state" invisible="0" optional="hidden" />
+                        </tree>
+                    </field>
+                </group>
+                <field name="move_id" invisible="1" />
+                <footer>
+                    <button
+                        name="action_confirm"
+                        type="object"
+                        string="Confirm"
+                        class="btn-primary"
+                    /> or <button special="cancel" class="oe_link" string="Cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>
