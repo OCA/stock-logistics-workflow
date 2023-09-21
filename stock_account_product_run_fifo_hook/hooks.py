@@ -166,10 +166,12 @@ def post_load_hook():
                 )
                 taken_data[candidate.id] = {"quantity": qty_taken_on_candidate}
                 qty_taken_on_candidates += qty_taken_on_candidate
-
-                candidate_unit_cost = (
-                    candidate.remaining_value / candidate.remaining_qty
-                )
+                if candidate.remaining_qty:
+                    candidate_unit_cost = (
+                        candidate.remaining_value / candidate.remaining_qty
+                    )
+                else:
+                    candidate_unit_cost = 0.0
                 value_taken_on_candidate = qty_taken_on_candidate * candidate_unit_cost
                 value_taken_on_candidate = candidate.currency_id.round(
                     value_taken_on_candidate
