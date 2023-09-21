@@ -25,5 +25,7 @@ class StockQuant(models.Model):
         ]._get_move_free_reservation_ids() as move_to_reassign_ids:
             res = super()._apply_inventory()
         if move_to_reassign_ids:
-            self.env["stock.move"].browse(move_to_reassign_ids)._action_assign()
+            self.env["stock.move"].browse(move_to_reassign_ids).with_context(
+                inventory_mode=False
+            )._action_assign()
         return res
