@@ -1,0 +1,76 @@
+<odoo>
+    <record id="stock_valuation_layer_usage_form" model="ir.ui.view">
+        <field name="name">stock.valuation.layer.usage.form</field>
+        <field name="model">stock.valuation.layer.usage</field>
+        <field name="arch" type="xml">
+            <form edit="0" create="0">
+                <sheet>
+                    <group>
+                        <field name="product_id" />
+                        <field name="stock_move_id" />
+                        <field name="stock_valuation_layer_id" />
+                        <field name="dest_stock_valuation_layer_id" />
+                        <field name="quantity" />
+                        <field name="value" />
+                        <field name="company_id" groups="base.group_multi_company" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="stock_valuation_layer_usage_tree" model="ir.ui.view">
+        <field name="name">stock.valuation.layer.usage.tree</field>
+        <field name="model">stock.valuation.layer.usage</field>
+        <field name="arch" type="xml">
+            <tree edit="0" create="0">
+                <field name="product_id" />
+                <field name="stock_valuation_layer_id" />
+                <field name="dest_stock_valuation_layer_id" />
+                <field name="stock_move_id" />
+                <field name="quantity" sum="Quantity" />
+                <field name="value" sum="Value" />
+                <field name="company_id" groups="base.group_multi_company" />
+            </tree>
+        </field>
+    </record>
+    <record id="stock_valuation_layer_usage_search" model="ir.ui.view">
+        <field name="name">stock.valuation.layer.usage.search</field>
+        <field name="model">stock.valuation.layer.usage</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="product_id" />
+                <field name="stock_valuation_layer_id" />
+                <field name="dest_stock_valuation_layer_id" />
+                <field name="stock_move_id" />
+                <field name="quantity" />
+                <field name="value" />
+                <field name="company_id" groups="base.group_multi_company" />
+            </search>
+        </field>
+    </record>
+    <record id="stock_valuation_layer_usage_pivot" model="ir.ui.view">
+        <field name="name">stock.valuation.layer.usage.pivot</field>
+        <field name="model">stock.valuation.layer.usage</field>
+        <field name="arch" type="xml">
+            <pivot string="Stock Valuation Layer Usage Analysis">
+                <field name="product_id" type="row" />
+                <field name="quantity" type="measure" />
+                <field name="value" type="measure" />
+            </pivot>
+        </field>
+    </record>
+    <record id="stock_valuation_layer_usage_action" model="ir.actions.act_window">
+        <field name="name">Stock Valuation Layer Usages</field>
+        <field name="res_model">stock.valuation.layer.usage</field>
+        <field name="view_mode">tree,form,pivot</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_id" ref="stock_valuation_layer_usage_tree" />
+        <field name="search_view_id" ref="stock_valuation_layer_usage_search" />
+    </record>
+    <menuitem
+        action="stock_valuation_layer_usage_action"
+        id="stock_valuation_layer_usage_menu"
+        parent="stock.menu_warehouse_report"
+        groups="base.group_no_one"
+    />
+</odoo>
