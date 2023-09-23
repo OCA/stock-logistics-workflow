@@ -84,8 +84,10 @@ class StockPicking(models.Model):
         for rec in self:
             current_sequence = 1
             for line in rec.move_ids_without_package:
-                line.sequence = current_sequence
-                current_sequence += 1
+                # Check if the record ID is an integer (real ID) or a string (virtual ID)
+                if isinstance(line.id, int):
+                    line.sequence = current_sequence
+                    current_sequence += 1
 
     def copy(self, default=None):
         return super(StockPicking, self.with_context(keep_line_sequence=True)).copy(
