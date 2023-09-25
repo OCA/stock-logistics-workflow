@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-08 17:05+0000\n"
-"PO-Revision-Date: 2023-08-01 12:12+0000\n"
+"PO-Revision-Date: 2023-10-09 09:13+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/"
 "OCA-stock-logistics-workflow-8-0/language/it/)\n"
@@ -123,6 +123,8 @@ msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
 msgstr ""
+"Contiene il riepilogo Chatter (numero di messaggi, ...). Questa sintesi è "
+"direttamente in formato HTML, al fine di essere inserita nelle viste kanban."
 
 #. module: stock_picking_package_preparation
 #: field:stock.picking.package.preparation,id:0
@@ -141,6 +143,9 @@ msgid ""
 "was moved entirely.  If there is a product and a source package, the product "
 "was taken from the source package."
 msgstr ""
+"Se non è presente alcun prodotto ma è presente un collo origine, "
+"quest'ultimo è stato interamente trasferito.  Se è presente un prodotto e un "
+"collo origine, il prodotto è stato prelevato dal collo origine."
 
 #. module: stock_picking_package_preparation
 #: selection:stock.picking.package.preparation,state:0
