@@ -72,6 +72,7 @@ addon | version | maintainers | summary
 [stock_production_lot_traceability](stock_production_lot_traceability/) | 15.0.1.0.1 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Drill down/up the lots produced or consumed
 [stock_push_delay](stock_push_delay/) | 15.0.1.0.0 |  | Manual evaluation of Push rules
 [stock_putaway_hook](stock_putaway_hook/) | 15.0.1.0.0 |  | Add hooks allowing modules to add more putaway strategies
+[stock_reception_discrepancy_distribution](stock_reception_discrepancy_distribution/) | 15.0.1.0.0 |  | Change demand in stock moves linked to reception one
 [stock_restrict_lot](stock_restrict_lot/) | 15.0.0.0.2 | [![florian-dacosta](https://github.com/florian-dacosta.png?size=30px)](https://github.com/florian-dacosta) | Base module that add back the concept of restrict lot on stock move
 [stock_return_request](stock_return_request/) | 15.0.1.0.0 |  | Stock Return Request
 [stock_scrap_tier_validation](stock_scrap_tier_validation/) | 15.0.1.0.0 |  | Stock Scrap Tier Validation
