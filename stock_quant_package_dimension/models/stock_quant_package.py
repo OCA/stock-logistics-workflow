@@ -61,7 +61,6 @@ class StockQuantPackage(models.Model):
     weight_uom_name = fields.Char(
         # Same as product.packing
         string="Weight unit of measure label",
-        related="weight_uom_id.name",
         readonly=True,
     )
 
@@ -84,6 +83,13 @@ class StockQuantPackage(models.Model):
         related="volume_uom_id.name",
         readonly=True,
     )
+
+    @api.depends("weight_uom_id.name")
+    def _compute_weight_uom_name(self):
+        # Don't use a related here as the original default value
+        # causes warnings (Redundant default on related fields are not wanted)
+        for package in self:
+            package.weight_uom_name = package.weight_uom_id.name
 
     @api.depends("pack_length", "width", "height")
     def _compute_volume(self):
