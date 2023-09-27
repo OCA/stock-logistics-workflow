@@ -6,7 +6,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "Stock Picking Customer Reference",
-    "version": "16.0.1.0.0",
+    "version": "15.0.1.0.0",
     "category": "Warehouse",
     "author": "AvanzOSC," "Tecnativa," "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
