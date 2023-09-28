@@ -70,7 +70,7 @@ class TestStockOwnerRestriction(TransactionCase):
         # context depends of product qty_available
         self.assertEqual(
             self.product.with_context(
-                force_restricted_owner_id=self.owner.id
+                force_restricted_owner_id=self.owner
             ).qty_available,
             500.00,
         )
@@ -166,3 +166,29 @@ class TestStockOwnerRestriction(TransactionCase):
             [("id", "=", self.product.id), ("qty_available", ">", 499.00)]
         )
         self.assertTrue(products)
+
+    def test_update_available_quantity(self):
+        self.env["stock.quant"].with_context(
+            force_restricted_owner_id=self.owner
+        )._update_available_quantity(
+            self.product, self.picking_type_out.default_location_src_id, 100
+        )
+        self.assertEqual(self.product.qty_available, 500.00)
+        # Invalidate the cache of the product record to ensure qty_available is recalculated
+        self.product.invalidate_recordset()
+        self.assertEqual(
+            self.product.with_context(skip_restricted_owner=True).qty_available, 1100.00
+        )
+
+    def test_update_reserved_quantity(self):
+        self.env["stock.quant"].with_context(
+            force_restricted_owner_id=self.owner
+        )._update_reserved_quantity(
+            self.product, self.picking_type_out.default_location_src_id, 100
+        )
+        self.assertEqual(self.product.qty_available, 500.00)
+        # Invalidate the cache of the product record to ensure qty_available is recalculated
+        self.product.invalidate_recordset()
+        self.assertEqual(
+            self.product.with_context(skip_restricted_owner=True).qty_available, 1000.00
+        )

@@ -14,12 +14,12 @@ class ProductProduct(models.Model):
             return super()._compute_quantities_dict(
                 lot_id, owner_id, package_id, from_date=from_date, to_date=to_date
             )
-        restricted_owner_id = self.env.context.get("force_restricted_owner_id", None)
-        if owner_id is None and restricted_owner_id is None:
+        restricted_owner = self.env.context.get("force_restricted_owner_id", None)
+        if owner_id is None and restricted_owner is None:
             # Force owner to False if is None
             owner_id = False
-        elif restricted_owner_id:
-            owner_id = restricted_owner_id
+        elif restricted_owner:
+            owner_id = restricted_owner.id
         return super()._compute_quantities_dict(
             lot_id, owner_id, package_id, from_date=from_date, to_date=to_date
         )
