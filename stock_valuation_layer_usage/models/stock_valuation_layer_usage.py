@@ -24,7 +24,7 @@ class StockValuationLayerUsage(models.Model):
     dest_stock_valuation_layer_id = fields.Many2one(
         comodel_name="stock.valuation.layer",
         string="Destination Stock Valuation Layer",
-        help="Valuation Layer that was used",
+        help="Valuation Layer that used it",
         required=False,
     )
     company_id = fields.Many2one("res.company", "Company", readonly=True, required=True)
