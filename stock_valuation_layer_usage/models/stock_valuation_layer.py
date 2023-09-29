@@ -134,3 +134,13 @@ class StockValuationLayer(models.Model):
             if self.env.context.get("taken_data"):
                 self._process_taken_data(self.env.context.get("taken_data"), rec)
         return res
+
+    @api.depends("stock_move_id")
+    def name_get(self):
+        names = super(StockValuationLayer, self).name_get()
+        res = []
+        for name in names:
+            rec = self.browse(name[0])
+            name = rec.stock_move_id.name_get()[0][1] if rec.stock_move_id else name[1]
+            res += [(rec.id, name)]
+        return res
