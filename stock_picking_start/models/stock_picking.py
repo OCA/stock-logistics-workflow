@@ -102,7 +102,7 @@ class StockPicking(models.Model):
         self.ensure_one()
         value = {"printed": True}
         if company.stock_picking_assign_operator_at_start:
-            value["user_id"] = self.env.user
+            value["user_id"] = self.env.user.id
         return value
 
     def _prepare_cancel_start_values(self, company):
