@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2021 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="stock_picking_wave_form_view">
+        <field name="model">stock.picking.batch</field>
+        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[1]" position="before">
+                <field name="action_start_allowed" invisible="1" />
+                <button
+                    name="action_start"
+                    string="Start"
+                    type="object"
+                    attrs="{'invisible': [('action_start_allowed', '!=', True)]}"
+                    class="oe_highlight"
+                />
+            </xpath>
+            <div name="button_box" position="after">
+                <field name="started" invisible="1" />
+                <widget
+                    name="web_ribbon"
+                    title="Started"
+                    bg_color="bg-success"
+                    attrs="{'invisible': [('started', '=', False)]}"
+                />
+            </div>
+            <xpath expr="//header/button[last()]" position="after">
+                <field name="action_cancel_start_allowed" invisible="1" />
+                <button
+                    name="action_cancel_start"
+                    string="Cancel Start"
+                    type="object"
+                    attrs="{'invisible': [('action_cancel_start_allowed', '!=', True)]}"
+                />
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_picking_batch_internal_search">
+        <field name="model">stock.picking.batch</field>
+        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_filter" />
+        <field name="arch" type="xml">
+            <filter name="my_transfers" position="after">
+                <filter
+                    name="started"
+                    string="Started"
+                    domain="[('started', '=', True)]"
+                />
+            </filter>
+        </field>
+    </record>
+    <record id="stock_picking_batch_tree_view" model="ir.ui.view">
+        <field name="model">stock.picking.batch</field>
+        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_tree" />
+        <field name="arch" type="xml">
+            <tree position="attributes">
+                <attribute name="decoration-success">started</attribute>
+            </tree>
+            <tree position="inside">
+                <field name="started" invisible="1" />
+            </tree>
+        </field>
+    </record>
+</odoo>
