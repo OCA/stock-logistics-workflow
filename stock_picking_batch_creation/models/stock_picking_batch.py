@@ -24,10 +24,3 @@ class StockPickingBatch(models.Model):
         string="Number of picking lines",
         help="Indicates the picking lines ready for preparation.",
     )
-
-    def write(self, vals):
-        res = super(StockPickingBatch, self).write(vals)
-        for rec in self:
-            if "user_id" in vals.keys():
-                rec.picking_ids.write({"user_id": vals["user_id"]})
-        return res

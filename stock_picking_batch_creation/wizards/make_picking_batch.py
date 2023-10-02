@@ -329,9 +329,6 @@ class MakePickingBatch(models.TransientModel):
         self._apply_limits()
         vals = self._create_batch_values()
         batch = self.env["stock.picking.batch"].create(vals)
-        # Propagate user on selected pickings
-        if self.user_id:
-            batch.picking_ids.write({"user_id": self.user_id.id})
         return batch
 
     def _precision_volume(self):
