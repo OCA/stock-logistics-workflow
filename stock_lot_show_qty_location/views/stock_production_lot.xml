@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_production_lot_form" model="ir.ui.view">
+        <field name="name">stock.production.lot.form</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='main_group']/group[2]" position="inside">
+                <field name="location_ids" widget="many2many_tags" optional="hide" />
+                <field name="product_qty" />
+                <field name="qty_available" />
+            </xpath>
+            <field name="product_id" position="after">
+            </field>
+        </field>
+    </record>
+
+    <record id="view_production_lot_tree" model="ir.ui.view">
+        <field name="name">stock.production.lot.tree</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_tree" />
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="location_ids" widget="many2many_tags" optional="hide" />
+                <field name="product_qty" optional="hide" />
+                <field name="qty_available" optional="hide" />
+            </field>
+        </field>
+    </record>
+
+    <record id="search_product_lot_filter_inherit" model="ir.ui.view">
+        <field name="name">Production Lots Filter</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.search_product_lot_filter" />
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <filter
+                    name="qty_available"
+                    string="Available"
+                    domain="[('qty_available', '&gt;', 0)]"
+                />
+            </field>
+        </field>
+    </record>
+
+</odoo>
