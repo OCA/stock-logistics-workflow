@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-09-20 17:48+0000\n"
+"PO-Revision-Date: 2023-10-09 09:09+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -49,7 +49,7 @@ msgstr "Ultima modifica il"
 #: model_terms:ir.ui.view,arch_db:stock_move_source_relocate_dynamic_routing.view_stock_routing_form
 #, python-format
 msgid "Source Relocation"
-msgstr "Ridisposizione origine"
+msgstr "Trasferimento origine"
 
 #. module: stock_move_source_relocate_dynamic_routing
 #: model:ir.model,name:stock_move_source_relocate_dynamic_routing.model_stock_routing
@@ -64,4 +64,4 @@ msgstr "Movimento di magazzino"
 #. module: stock_move_source_relocate_dynamic_routing
 #: model:ir.model,name:stock_move_source_relocate_dynamic_routing.model_stock_source_relocate
 msgid "Stock Move Source Relocate"
-msgstr "Movimento di magazzino ridisposizione origine"
+msgstr "Movimento di magazzino trasferimento origine"
