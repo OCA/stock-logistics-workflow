@@ -1,12 +1,13 @@
 # Copyright 2022 Tecnativa - Sergio Teruel
+# Copyright 2023 Tecnativa - Carolina Fernandez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo.exceptions import UserError
-from odoo.tests import SavepointCase
+from odoo.tests import TransactionCase
 
 from .common import CommonStockPickingImportSerial
 
 
-class TestStockPickingImportSN(CommonStockPickingImportSerial, SavepointCase):
+class TestStockPickingImportSN(CommonStockPickingImportSerial, TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

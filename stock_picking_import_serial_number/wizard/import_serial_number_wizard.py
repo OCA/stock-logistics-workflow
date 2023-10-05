@@ -1,4 +1,5 @@
 # Copyright 2022 Tecnativa - Sergio Teruel
+# Copyright 2023 Tecnativa - Carolina Fernandez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 import base64
 
@@ -28,7 +29,7 @@ class StockPickingImportSerialNumber(models.TransientModel):
 
     picking_ids = fields.Many2many("stock.picking")
     data_file = fields.Binary(string="File to import")
-    filename = fields.Char(string="Filename")
+    filename = fields.Char()
     overwrite_serial = fields.Boolean()
     # Fields filled by settings. This names are special
     sn_search_product_by_field = fields.Selection(
