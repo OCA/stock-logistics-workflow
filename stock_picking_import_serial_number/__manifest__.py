@@ -1,10 +1,11 @@
 # Copyright 2022 Tecnativa - Sergio Teruel
+# Copyright 2023 Tecnativa - Carolina Fernandez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Stock Picking Import Serial Numbers",
     "summary": "Import S/N from excel file for incoming pickings",
-    "version": "14.0.1.0.0",
-    "development_status": "Beta",
+    "version": "15.0.1.0.0",
+    "development_status": "Production/Stable",
     "category": "stock",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Tecnativa, Odoo Community Association (OCA)",
