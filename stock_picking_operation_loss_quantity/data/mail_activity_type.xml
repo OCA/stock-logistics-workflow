@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo noupdate="1">
+   <record id="loss_picking_notification" model="mail.activity.type">
+      <field name="name">Loss Pickings</field>
+      <field name="res_model">stock.picking</field>
+      <field name="summary">Loss picking: a loss picking has been created</field>
+   </record>
+</odoo>
