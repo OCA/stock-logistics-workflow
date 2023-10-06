@@ -14,4 +14,14 @@
         <field name="perm_write" eval="1" />
         <field name="perm_unlink" eval="1" />
     </record>
+
+    <data noupdate="1">
+        <!-- Group for activities notifications -->
+
+        <record model="res.groups" id="group_loss_notification">
+            <field name="name">Picking Loss Notifications</field>
+            <field name="category_id" ref="base.module_category_hidden" />
+        </record>
+    </data>
+
 </odoo>

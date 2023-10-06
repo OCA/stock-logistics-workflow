@@ -59,6 +59,7 @@ class TestQuantityLoss(OperationLossQuantityCommon, TransactionCase):
         line_2.qty_done = 1.0
         line_3.qty_done = 1.0
 
+        # Do the operation with demo user
         line_2.action_loss_quantity()
 
         # Check new pack operation
@@ -90,6 +91,10 @@ class TestQuantityLoss(OperationLossQuantityCommon, TransactionCase):
 
         self.assertEqual(line.state, "assigned")
         self.assertEqual(line.reserved_uom_qty, 2)
+
+        # Check activity is generated
+        self.assertTrue(loss_pickings.activity_ids)
+        self.assertEqual(self.user_demo, loss_pickings.activity_user_id)
 
     def test_loss_line_no_tracking_multi(self):
         """
