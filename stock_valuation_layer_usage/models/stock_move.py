@@ -16,6 +16,18 @@ class StockMove(models.Model):
         "including the quantities taken.",
     )
 
+    def _create_out_svl(self, forced_quantity=None):
+        layers = self.env["stock.valuation.layer"]
+        for move in self:
+            move = move.with_context(
+                used_in_move_id=move.id, reserved_from=move.move_orig_ids.ids
+            )
+            layer = super(StockMove, move)._create_out_svl(
+                forced_quantity=forced_quantity
+            )
+            layers |= layer
+        return layers
+
     def _create_dropshipped_svl(self, forced_quantity=None):
         layers = super(StockMove, self)._create_dropshipped_svl(
             forced_quantity=forced_quantity
