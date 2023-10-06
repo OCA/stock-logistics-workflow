@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.model.access" id="access_account_invoice_print">
+        <field name="name">stock_picking_operation_loss_quantity access</field>
+        <field
+            name="model_id"
+            ref="stock_picking_operation_loss_quantity.model_stock_picking_operation_loss_quantity"
+        />
+        <field name="group_id" ref="stock.group_stock_user" />
+        <field name="perm_read" eval="1" />
+        <field name="perm_create" eval="1" />
+        <field name="perm_write" eval="1" />
+        <field name="perm_unlink" eval="1" />
+    </record>
+</odoo>

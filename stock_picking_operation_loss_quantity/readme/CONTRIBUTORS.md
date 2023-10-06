@@ -1,0 +1,3 @@
+- Jacques-Etienne Baudoux <je@bcim.be>
+- Sylvain Van Hoof <sylvain@okia.be>
+- Denis Roussel <denis.roussel@acsone.eu>
