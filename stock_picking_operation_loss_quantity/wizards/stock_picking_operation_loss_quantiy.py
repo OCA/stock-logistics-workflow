@@ -81,6 +81,25 @@ class StockPickingOperationLossQuantity(models.TransientModel):
         """
         return ["product_id", "location_id", "lot_id", "owner_id"]
 
+    def _get_loss_notification_name(self, loss_picking):
+        return loss_picking.name
+
+    def _schedule_loss_activity(self, loss_picking):
+        group = self.env.ref(
+            "stock_picking_operation_loss_quantity.group_loss_notification",
+            raise_if_not_found=False,
+        )
+        if not group:
+            return
+        ref = "stock_picking_operation_loss_quantity.loss_picking_notification"
+        summary = self._get_loss_notification_name(loss_picking)
+        for user in group.users:
+            loss_picking.activity_schedule(
+                act_type_xmlid=ref,
+                summary=summary,
+                user_id=user.id,
+            )
+
     def _lose_quantity(self, raise_if_nothing_for_loss=True):
         """
         This is the main function to call in order to declare a loss.
@@ -117,4 +136,5 @@ class StockPickingOperationLossQuantity(models.TransientModel):
             lines._split_for_loss()
             loss_picking = lines._create_loss_picking(group_key)
             self._validate_loss_picking(loss_picking)
+            self._schedule_loss_activity(loss_picking)
             lines.unlink()
