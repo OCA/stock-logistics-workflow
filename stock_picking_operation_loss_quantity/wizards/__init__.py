@@ -1,0 +1,1 @@
+from . import stock_picking_operation_loss_quantiy

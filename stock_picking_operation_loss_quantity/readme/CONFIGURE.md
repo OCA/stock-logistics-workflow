@@ -1,0 +1,4 @@
+- Go to Inventory > Configuration > Settings > Warehouse
+- Enable 'Storage Locations' and 'Multi-Step Routes'.
+- Go To Inventory > Configuration > Warehouse Management > Warehouses
+- On the selected Warehouse, check the 'Enable the Loss feature' under 'Loss' section.
