@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="stock_warehouse_form_view">
+        <field
+            name="name"
+        >stock.warehouse.form (in stock_picking_operation_loss_quantity)</field>
+        <field name="model">stock.warehouse</field>
+        <field name="inherit_id" ref="stock.view_warehouse" />
+        <field name="arch" type="xml">
+            <group name="group_resupply" position="after">
+                <group name="group_loss" string="Loss">
+                    <field name="use_loss_picking" />
+                </group>
+            </group>
+            <field name="lot_stock_id" position="after">
+                <field name="loss_location_id" readonly="1" />
+            </field>
+            <field name="out_type_id" position="after">
+                <field name="loss_type_id" readonly="1" />
+            </field>
+        </field>
+    </record>
+</odoo>
