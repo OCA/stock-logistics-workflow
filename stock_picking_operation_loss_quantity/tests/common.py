@@ -50,6 +50,13 @@ class OperationLossQuantityCommon:
         cls.warehouse = wh
         cls.warehouse.use_loss_picking = True
 
+        # Set user in notification group
+        group = cls.env.ref(
+            "stock_picking_operation_loss_quantity.group_loss_notification"
+        )
+        cls.user_demo = cls.env.ref("base.user_demo")
+        group.users += cls.user_demo
+
     @classmethod
     def initiate_values(cls):
         cls.product_1_lotA = cls.env["stock.lot"].create(
