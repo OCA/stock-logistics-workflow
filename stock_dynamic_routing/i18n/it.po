@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-09-20 05:02+0000\n"
+"PO-Revision-Date: 2023-10-09 07:59+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -109,8 +109,8 @@ msgid ""
 "Domain based on Stock Moves, to define if the routing rule is applicable or "
 "not."
 msgstr ""
-"Dominio in base al movimento di magazzino per definire se la regola della "
-"rotta è applicabile o meno."
+"Dominio basato sui movimenti dimagazzino, per definire se laregola di "
+"instradameNto è applicabile o meno."
 
 #. module: stock_dynamic_routing
 #: model:ir.actions.act_window,name:stock_dynamic_routing.action_stock_routing
@@ -229,12 +229,12 @@ msgstr "Ubicazione"
 #. module: stock_dynamic_routing
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__location_dest_id
 msgid "Location Dest"
-msgstr "Ubicazione dest."
+msgstr "Ubicazione destinazione"
 
 #. module: stock_dynamic_routing
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__location_src_id
 msgid "Location Src"
-msgstr "Ubicazione sor."
+msgstr "Ubicazione origine"
 
 #. module: stock_dynamic_routing
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__method
