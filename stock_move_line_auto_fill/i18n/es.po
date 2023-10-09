@@ -52,6 +52,13 @@ msgid "Avoid auto-assignment of lots"
 msgstr "Evitar asignación automática de lotes"
 
 #. module: stock_move_line_auto_fill
+#: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_move__display_name
+#: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking_type__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_move_line_auto_fill
 #: code:addons/stock_move_line_auto_fill/models/stock_picking.py:0
 #, python-format
 msgid ""
@@ -61,6 +68,20 @@ msgstr ""
 "Llenar las operaciosn de forma automática no es posible, posiblemente los "
 "movimientos no están en el estado correcto (Parcialmente disponible o "
 "Disponible)."
+
+#. module: stock_move_line_auto_fill
+#: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_move__id
+#: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking__id
+#: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking_type__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_move_line_auto_fill
+#: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_move____last_update
+#: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking____last_update
+#: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking_type____last_update
+msgid "Last Modified on"
+msgstr ""
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model,name:stock_move_line_auto_fill.model_stock_picking_type
