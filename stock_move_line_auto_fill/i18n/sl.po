@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_move_line_auto_fill
+# 	* stock_move_line_auto_fill
 #
 msgid ""
 msgstr ""
@@ -51,7 +51,9 @@ msgstr "Izogibanje samo-dodeljevanju lotov"
 #. module: stock_move_line_auto_fill
 #: code:addons/stock_move_line_auto_fill/models/stock_picking.py:36
 #, python-format
-msgid "Filling the operations automatically is not possible, perhaps the pickings aren't in the right state (Partially available or available)."
+msgid ""
+"Filling the operations automatically is not possible, perhaps the pickings "
+"aren't in the right state (Partially available or available)."
 msgstr ""
 "Samodejno izpolnjevanje operacij ni mogoče. Dobavnice mogoče niso v pravem "
 "stanju (delno na voljo ali na voljo)."
@@ -68,7 +70,9 @@ msgstr "Premik zaloge"
 
 #. module: stock_move_line_auto_fill
 #: model_terms:ir.ui.view,arch_db:stock_move_line_auto_fill.stock_picking_form_view
-msgid "This button will automatically fill all operations that have no tracking set on the product, no processed qty and no selected package."
+msgid ""
+"This button will automatically fill all operations that have no tracking set "
+"on the product, no processed qty and no selected package."
 msgstr ""
 "Ta gumb bo samodejno izpolnil vse operacije, ki nimajo nastavljene "
 "sledljivosti na proizvodu, brez procesirane količine in brez izbranega "
@@ -77,7 +81,8 @@ msgstr ""
 #. module: stock_move_line_auto_fill
 #: model:ir.model.fields,help:stock_move_line_auto_fill.field_stock_picking__auto_fill_operation
 #: model:ir.model.fields,help:stock_move_line_auto_fill.field_stock_picking_type__auto_fill_operation
-msgid "To auto fill done quantity in picking document.\n"
+msgid ""
+"To auto fill done quantity in picking document.\n"
 "- If checked, auto fill done quantity automatically\n"
 "- If unchecked, show button AutoFill for user to do the auto fill manually"
 msgstr ""
