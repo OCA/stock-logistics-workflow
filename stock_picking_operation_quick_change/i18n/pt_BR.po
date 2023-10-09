@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_picking_operation_quick_change
+# 	* stock_picking_operation_quick_change
 #
 msgid ""
 msgstr ""
@@ -48,7 +48,8 @@ msgstr "Alterar Localização de Destino da Operação"
 
 #. module: stock_picking_operation_quick_change
 #: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
-msgid "Change the destination location.\n"
+msgid ""
+"Change the destination location.\n"
 "                    <br/>"
 msgstr ""
 "Mude a localização de destino.\n"
@@ -119,7 +120,9 @@ msgstr "Assistente de Operação de Coleta de Estoque"
 #. module: stock_picking_operation_quick_change
 #: code:addons/stock_picking_operation_quick_change/wizards/stock_picking_wizard.py:66
 #, python-format
-msgid "You can not change operations destination location if picking state is not in %s"
+msgid ""
+"You can not change operations destination location if picking state is not "
+"in %s"
 msgstr ""
 "Você não pode alterar o local de destino das operações se o estado de "
 "picking não estiver em %s"
@@ -127,7 +130,9 @@ msgstr ""
 #. module: stock_picking_operation_quick_change
 #: code:addons/stock_picking_operation_quick_change/wizards/stock_picking_wizard.py:73
 #, python-format
-msgid "You cannot change destination location if any of the moves has a destination move."
+msgid ""
+"You cannot change destination location if any of the moves has a destination "
+"move."
 msgstr ""
 "Você não pode alterar a localização de destino se alguma das movimentações "
 "tiver uma movimentação de destino."
