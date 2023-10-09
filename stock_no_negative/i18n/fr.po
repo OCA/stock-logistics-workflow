@@ -21,10 +21,11 @@ msgstr ""
 "X-Generator: Weblate 4.3.2\n"
 
 #. module: stock_no_negative
+#. odoo-python
 #: code:addons/stock_no_negative/models/stock_quant.py:0
 #, python-format
-msgid " lot '%s'"
-msgstr " lot '%s'"
+msgid " lot {}"
+msgstr ""
 
 #. module: stock_no_negative
 #: model:ir.model.fields,field_description:stock_no_negative.field_product_category__allow_negative_stock
@@ -75,14 +76,14 @@ msgid "Inventory Locations"
 msgstr "Emplacements d'inventaire"
 
 #. module: stock_no_negative
+#: model:ir.model,name:stock_no_negative.model_product_template
+msgid "Product"
+msgstr ""
+
+#. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_product_category
 msgid "Product Category"
 msgstr "Catégorie d'article"
-
-#. module: stock_no_negative
-#: model:ir.model,name:stock_no_negative.model_product_template
-msgid "Product Template"
-msgstr "Modèle d'article"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_stock_quant
@@ -90,13 +91,29 @@ msgid "Quants"
 msgstr "Quants"
 
 #. module: stock_no_negative
+#. odoo-python
 #: code:addons/stock_no_negative/models/stock_quant.py:0
 #, python-format
 msgid ""
 "You cannot validate this stock operation because the stock level of the "
-"product '%s'%s would become negative (%s) on the stock location '%s' and "
-"negative stock is not allowed for this product and/or location."
+"product '{name}'{name_lot} would become negative ({q_quantity}) on the stock "
+"location '{complete_name}' and negative stock is not allowed for this "
+"product and/or location."
 msgstr ""
-"Impossible de valider cette opération car le niveau de stock de ce produit "
-"%s'%s deviendrait négative(%s) dans l'emplacement du stock '%s'. Un stock "
-"négatif n'est pas permis pour ce produit."
+
+#, python-format
+#~ msgid " lot '%s'"
+#~ msgstr " lot '%s'"
+
+#~ msgid "Product Template"
+#~ msgstr "Modèle d'article"
+
+#, python-format
+#~ msgid ""
+#~ "You cannot validate this stock operation because the stock level of the "
+#~ "product '%s'%s would become negative (%s) on the stock location '%s' and "
+#~ "negative stock is not allowed for this product and/or location."
+#~ msgstr ""
+#~ "Impossible de valider cette opération car le niveau de stock de ce "
+#~ "produit %s'%s deviendrait négative(%s) dans l'emplacement du stock '%s'. "
+#~ "Un stock négatif n'est pas permis pour ce produit."
