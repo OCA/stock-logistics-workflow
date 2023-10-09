@@ -1,4 +1,5 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
+# Copyright 2023 Moduon
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import models
@@ -20,8 +21,12 @@ class StockPicking(models.Model):
         sales_to_invoice = sales.filtered(lambda so: so.invoice_status == "to invoice")
         if not sales_to_invoice:
             return result
-        self.env["sale.advance.payment.inv"].create({}).with_context(
+        self.env["sale.advance.payment.inv"].with_context(
             active_model="sale.order", active_ids=sales_to_invoice.ids
+        ).create(
+            {
+                "advance_payment_method": "delivered",
+            }
         ).create_invoices()
         sales_to_invoice.mapped("invoice_ids").filtered(
             lambda r: r.state == "draft",
