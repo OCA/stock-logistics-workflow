@@ -87,7 +87,10 @@ msgid "Discard"
 msgstr "Descartar"
 
 #. module: stock_checkout_sync
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_move__display_name
 #: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_move_checkout_sync__display_name
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_picking_type__display_name
 msgid "Display Name"
 msgstr "Mostrar Nombre"
 
@@ -97,12 +100,18 @@ msgid "Done Dest Picking"
 msgstr "Entrega de Destino Realizada"
 
 #. module: stock_checkout_sync
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_move__id
 #: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_move_checkout_sync__id
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_picking__id
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_picking_type__id
 msgid "ID"
 msgstr "ID"
 
 #. module: stock_checkout_sync
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_move____last_update
 #: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_move_checkout_sync____last_update
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_picking____last_update
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_picking_type____last_update
 msgid "Last Modified on"
 msgstr "Última Modificación el"
 
@@ -201,8 +210,10 @@ msgstr "Unidad de Medida"
 #. module: stock_checkout_sync
 #: model_terms:ir.ui.view,arch_db:stock_checkout_sync.view_stock_move_checkout_sync
 msgid ""
-"Use this assistant to select a checkout location for all the moves going to the same operation (including in other transfers).\n"
-"                    The destination location of the moves below will be updated with the selected location."
+"Use this assistant to select a checkout location for all the moves going to "
+"the same operation (including in other transfers).\n"
+"                    The destination location of the moves below will be "
+"updated with the selected location."
 msgstr ""
 "Utilice este asistente para seleccionar una ubicación de checkout para todos "
 "los movimientos que van a la misma operación (incluso en otras "
@@ -214,8 +225,8 @@ msgstr ""
 #: model:ir.model.fields,help:stock_checkout_sync.field_stock_picking_type__checkout_sync
 msgid ""
 "When checked, a button on transfers allow users to select a single location "
-"for all moves reaching this operation type. On selection, all the move lines"
-" are updated with the same destination."
+"for all moves reaching this operation type. On selection, all the move lines "
+"are updated with the same destination."
 msgstr ""
 "Cuando está marcado, un botón en transferencias permite a los usuarios "
 "seleccionar una única ubicación para todos los movimientos que llegan a este "
