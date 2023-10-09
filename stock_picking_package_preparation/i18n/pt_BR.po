@@ -213,7 +213,6 @@ msgstr "Número de Ações"
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__message_has_error_counter
 #, fuzzy
-#| msgid "Number of error"
 msgid "Number of errors"
 msgstr "Número de Erros"
 
@@ -296,7 +295,6 @@ msgstr "Redefinir como rascunho"
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__message_has_sms_error
 #, fuzzy
-#| msgid "Message Delivery error"
 msgid "SMS Delivery error"
 msgstr "Erro na entrega da mensagem"
 
@@ -336,6 +334,16 @@ msgstr "Mensagens não lidas"
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__message_unread_counter
 msgid "Unread Messages Counter"
 msgstr "Contador de Mensagens Não Lidas"
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: stock_picking_package_preparation
+#: model:ir.model.fields,help:stock_picking_package_preparation.field_stock_picking_package_preparation__website_message_ids
+msgid "Website communication history"
+msgstr ""
 
 #. module: stock_picking_package_preparation
 #: model:ir.model.fields,field_description:stock_picking_package_preparation.field_stock_picking_package_preparation__weight
