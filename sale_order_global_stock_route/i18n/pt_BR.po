@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* sale_order_global_stock_route
+# 	* sale_order_global_stock_route
 #
 msgid ""
 msgstr ""
@@ -33,7 +33,9 @@ msgstr "Linha de Pedido de Venda"
 
 #. module: sale_order_global_stock_route
 #: model:ir.model.fields,help:sale_order_global_stock_route.field_sale_order__route_id
-msgid "When you change this field all the lines will be changed. After use it you will be able to change each line."
+msgid ""
+"When you change this field all the lines will be changed. After use it you "
+"will be able to change each line."
 msgstr ""
 "Quando você altera este campo, todas as linhas serão alteradas. Após o uso, "
 "você poderá alterar cada linha."
