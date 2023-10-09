@@ -49,11 +49,13 @@ msgstr "允许此类别库存商品的库存量为负数。"
 #: model:ir.model.fields,help:stock_no_negative.field_product_product__allow_negative_stock
 #: model:ir.model.fields,help:stock_no_negative.field_product_template__allow_negative_stock
 msgid ""
-"If this option is not active on this product nor on its product category and"
-" that this product is a stockable product, then the validation of the "
-"related stock moves will be blocked if the stock level becomes negative with"
-" the stock move."
-msgstr "如果此选项在该产品或其产品类别上均未启用，并且该产品是可库存产品，则当仓库作业导致库存量变为负数时将不允许对相关作业确认。"
+"If this option is not active on this product nor on its product category and "
+"that this product is a stockable product, then the validation of the related "
+"stock moves will be blocked if the stock level becomes negative with the "
+"stock move."
+msgstr ""
+"如果此选项在该产品或其产品类别上均未启用，并且该产品是可库存产品，则当仓库作"
+"业导致库存量变为负数时将不允许对相关作业确认。"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_stock_location
