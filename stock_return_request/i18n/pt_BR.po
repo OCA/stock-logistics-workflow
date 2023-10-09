@@ -23,21 +23,13 @@ msgid ""
 "\n"
 "                You cannot have two open Stock Return Requests with the "
 "same\n"
-"                product (%s), locations (%s, %s) partner (%s) and lot.\n"
+"                product ({product_id}), locations ({return_from_location},\n"
+"                 {return_to_location}) partner ({partner_id}) and lot.\n"
 "\n"
 "                Please first validate the first return request with this\n"
 "                product before creating a new one.\n"
 "                "
 msgstr ""
-"\n"
-"                Você não pode ter duas Solicitações de devolução de estoque "
-"abertas com o mesmo\n"
-"                 produto (%s), locais (%s,%s) parceiros (%s) e lote.\n"
-"\n"
-"                 Antes, valide a primeira requisição de devolução com este "
-"produto\n"
-"                 antes de criar um novo.\n"
-"                "
 
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.report_stock_return_request_document
@@ -152,8 +144,6 @@ msgid "Default unit of measure used for all stock operations."
 msgstr "Unidade de medida padrão usada para todas as operações de estoque."
 
 #. module: stock_return_request
-#: model:ir.model.fields,field_description:stock_return_request.field_stock_move__display_name
-#: model:ir.model.fields,field_description:stock_return_request.field_stock_picking__display_name
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__display_name
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line__display_name
 #: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot__display_name
@@ -176,11 +166,6 @@ msgid "Followers"
 msgstr "Seguidores"
 
 #. module: stock_return_request
-#: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__message_channel_ids
-msgid "Followers (Channels)"
-msgstr "Seguidores (Canais)"
-
-#. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__message_partner_ids
 msgid "Followers (Partners)"
 msgstr "Seguidores (Parceiros)"
@@ -191,8 +176,11 @@ msgid "Font awesome icon e.g. fa-tasks"
 msgstr ""
 
 #. module: stock_return_request
-#: model:ir.model.fields,field_description:stock_return_request.field_stock_move__id
-#: model:ir.model.fields,field_description:stock_return_request.field_stock_picking__id
+#: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__id
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line__id
 #: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot__id
@@ -231,14 +219,10 @@ msgstr "É Seguidor"
 #, python-format
 msgid ""
 "It wasn't possible to assign stock for this returns:\n"
-"%s"
+"{failed_moves_str}"
 msgstr ""
-"Não foi possível atribuir estoque para esses retornos:\n"
-"%s"
 
 #. module: stock_return_request
-#: model:ir.model.fields,field_description:stock_return_request.field_stock_move____last_update
-#: model:ir.model.fields,field_description:stock_return_request.field_stock_picking____last_update
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request____last_update
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line____last_update
 #: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot____last_update
@@ -330,12 +314,10 @@ msgstr "Tipo da Próxima Atividade"
 #, python-format
 msgid ""
 "Not enough moves to return this product.\n"
-"It wasn't possible to find enough moves to return %f %sof %s. A maximum of "
-"%f can be returned."
+"It wasn't possible to find enough moves to return {line_quantity} "
+"{line_product_uom_id_name}of {line_product_id_displayname}. A maximum of "
+"{qty_found} can be returned."
 msgstr ""
-"Movimentações insuficientes para devolver este produto.\n"
-"Não foi possível encontrar movimentações suficientes para retornar%f%sde%s. "
-"Um máximo de %f pode ser retornado."
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__message_needaction_counter
@@ -459,6 +441,11 @@ msgid "Return Requests"
 msgstr "Requisições de Retorno"
 
 #. module: stock_return_request
+#: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__return_type
+msgid "Return Type"
+msgstr ""
+
+#. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__return_from_location
 msgid "Return from"
 msgstr "Retorno de"
@@ -498,11 +485,6 @@ msgstr "Retornar para Fornecedor"
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__return_to_location
 msgid "Return to this location"
 msgstr "Retornar para esta localização"
-
-#. module: stock_return_request
-#: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__return_type
-msgid "Return type"
-msgstr "Tipo de Retorno"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line__returnable_move_ids
@@ -584,11 +566,6 @@ msgid "Stock Return Request Report"
 msgstr "Relatório de Requisições de Retorno de Estoque"
 
 #. module: stock_return_request
-#: model_terms:ir.ui.view,arch_db:stock_return_request.view_stock_return_request_tree
-msgid "Stock Return Requests"
-msgstr "Requisições de Retorno de Estoque"
-
-#. module: stock_return_request
 #: code:addons/stock_return_request/models/stock_return_request.py:0
 #, python-format
 msgid "Suggest Lot"
@@ -638,8 +615,8 @@ msgstr "Eles estarão visíveis no relatório"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__to_refund
-msgid "To refund"
-msgstr "A reembolsar"
+msgid "To Refund"
+msgstr ""
 
 #. module: stock_return_request
 #: model:ir.model.fields.selection,name:stock_return_request.selection__suggest_return_request_lot__lot_suggestion_mode__sum
@@ -710,6 +687,57 @@ msgstr ""
 #: model:ir.model.fields,help:stock_return_request.field_suggest_return_request_lot__suggested_lot_detail
 msgid "You can return these lots"
 msgstr "Você pode retornar esses lotes"
+
+#, python-format
+#~ msgid ""
+#~ "\n"
+#~ "                You cannot have two open Stock Return Requests with the "
+#~ "same\n"
+#~ "                product (%s), locations (%s, %s) partner (%s) and lot.\n"
+#~ "\n"
+#~ "                Please first validate the first return request with this\n"
+#~ "                product before creating a new one.\n"
+#~ "                "
+#~ msgstr ""
+#~ "\n"
+#~ "                Você não pode ter duas Solicitações de devolução de "
+#~ "estoque abertas com o mesmo\n"
+#~ "                 produto (%s), locais (%s,%s) parceiros (%s) e lote.\n"
+#~ "\n"
+#~ "                 Antes, valide a primeira requisição de devolução com "
+#~ "este produto\n"
+#~ "                 antes de criar um novo.\n"
+#~ "                "
+
+#~ msgid "Followers (Channels)"
+#~ msgstr "Seguidores (Canais)"
+
+#, python-format
+#~ msgid ""
+#~ "It wasn't possible to assign stock for this returns:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Não foi possível atribuir estoque para esses retornos:\n"
+#~ "%s"
+
+#, python-format
+#~ msgid ""
+#~ "Not enough moves to return this product.\n"
+#~ "It wasn't possible to find enough moves to return %f %sof %s. A maximum "
+#~ "of %f can be returned."
+#~ msgstr ""
+#~ "Movimentações insuficientes para devolver este produto.\n"
+#~ "Não foi possível encontrar movimentações suficientes para retornar%f%sde"
+#~ "%s. Um máximo de %f pode ser retornado."
+
+#~ msgid "Return type"
+#~ msgstr "Tipo de Retorno"
+
+#~ msgid "Stock Return Requests"
+#~ msgstr "Requisições de Retorno de Estoque"
+
+#~ msgid "To refund"
+#~ msgstr "A reembolsar"
 
 #~ msgid "If checked new messages require your attention."
 #~ msgstr "Se marcada, novas mensagens requerem sua atenção."
