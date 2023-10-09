@@ -31,7 +31,7 @@ msgstr ""
 #. module: stock_split_picking
 #: code:addons/stock_split_picking/models/stock_picking.py:0
 #, python-format
-msgid "Cannot split picking %s in state %s"
+msgid "Cannot split picking {name} in state {state}"
 msgstr ""
 
 #. module: stock_split_picking
@@ -47,11 +47,6 @@ msgstr ""
 #. module: stock_split_picking
 #: model_terms:ir.ui.view,arch_db:stock_split_picking.view_stock_split_picking
 msgid "Date"
-msgstr ""
-
-#. module: stock_split_picking
-#: model_terms:ir.ui.view,arch_db:stock_split_picking.view_stock_split_picking
-msgid "Date Expected"
 msgstr ""
 
 #. module: stock_split_picking
@@ -101,11 +96,6 @@ msgid "Move"
 msgstr ""
 
 #. module: stock_split_picking
-#: model_terms:ir.ui.view,arch_db:stock_split_picking.view_stock_split_picking
-msgid "Moves"
-msgstr ""
-
-#. module: stock_split_picking
 #: model:ir.model.fields.selection,name:stock_split_picking.selection__stock_split_picking__mode__move
 msgid "One picking per move"
 msgstr ""
@@ -140,11 +130,9 @@ msgstr ""
 #: code:addons/stock_split_picking/models/stock_picking.py:0
 #, python-format
 msgid ""
-"The backorder <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d"
-"\">%s</a> has been created."
+"The backorder <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id="
+"\"%(id)d\">%(name)s</a> has been created."
 msgstr ""
-"La orden pendiente <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id="
-"\"%d\">%s</a> ha sido creada."
 
 #. module: stock_split_picking
 #: model:ir.model,name:stock_split_picking.model_stock_picking
@@ -167,6 +155,14 @@ msgstr "Debe ingresar la cantidad hecha para dividir el albarán en varios."
 #: model_terms:ir.ui.view,arch_db:stock_split_picking.view_stock_split_picking
 msgid "or"
 msgstr ""
+
+#, python-format
+#~ msgid ""
+#~ "The backorder <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id="
+#~ "\"%d\">%s</a> has been created."
+#~ msgstr ""
+#~ "La orden pendiente <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-"
+#~ "id=\"%d\">%s</a> ha sido creada."
 
 #~ msgid "Are you sure you want to split current picking?"
 #~ msgstr "¿Está seguro de querer dividir el albarán actual?"
