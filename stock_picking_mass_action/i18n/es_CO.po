@@ -53,11 +53,13 @@ msgid "Created on"
 msgstr "Creado"
 
 #. module: stock_picking_mass_action
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking__display_name
 #: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action__display_name
 msgid "Display Name"
 msgstr "Nombre Público"
 
 #. module: stock_picking_mass_action
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking__id
 #: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action__id
 msgid "ID"
 msgstr "ID"
@@ -69,6 +71,7 @@ msgid "Immediate Transfer?"
 msgstr ""
 
 #. module: stock_picking_mass_action
+#: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking____last_update
 #: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action____last_update
 msgid "Last Modified on"
 msgstr "Última Modificación el"
