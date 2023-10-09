@@ -63,6 +63,7 @@ msgid "Created on"
 msgstr "Creado el"
 
 #. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_move__display_name
 #: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__display_name
 msgid "Display Name"
 msgstr "Mostrar Nombre"
@@ -76,11 +77,13 @@ msgstr ""
 "aplicable o no."
 
 #. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_move__id
 #: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__id
 msgid "ID"
 msgstr "ID"
 
 #. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_move____last_update
 #: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate____last_update
 msgid "Last Modified on"
 msgstr "Última Modificación el"
