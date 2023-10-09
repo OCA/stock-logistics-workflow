@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_change_price_at_date
+# 	* stock_change_price_at_date
 #
 msgid ""
 msgstr ""
@@ -44,7 +44,9 @@ msgstr "A data escolhida deve ser hoje ou no passado!"
 
 #. module: stock_change_price_at_date
 #: model:ir.model.fields,help:stock_change_price_at_date.field_stock_change_standard_price__date
-msgid "The date used to create account moves. If empty, assumes today.Cannot be a date in the future."
+msgid ""
+"The date used to create account moves. If empty, assumes today.Cannot be a "
+"date in the future."
 msgstr ""
 "A data usada para criar movimentações de conta. Se vazio, assume hoje. Não "
 "pode ser uma data futura."
