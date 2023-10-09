@@ -20,18 +20,30 @@ msgstr ""
 "%100==4 ? 2 : 3);\n"
 
 #. module: stock_auto_move
-#: model:procurement.rule,name:stock_auto_move.procurement_rule_a_to_b
+#: model:stock.rule,name:stock_auto_move.stock_rule_a_to_b
 msgid "1 => 2 with auto_move"
 msgstr "1 => 2 z auto_move"
 
 #. module: stock_auto_move
-#: model:ir.model.fields,field_description:stock_auto_move.field_procurement_rule_auto_move
-#: model:ir.model.fields,field_description:stock_auto_move.field_stock_move_auto_move
+#: model:ir.model.fields,field_description:stock_auto_move.field_stock_move__auto_move
+#: model:ir.model.fields,field_description:stock_auto_move.field_stock_rule__auto_move
 msgid "Automatic move"
 msgstr "Samodejni premik"
 
 #. module: stock_auto_move
-#: model:ir.model.fields,help:stock_auto_move.field_procurement_rule_auto_move
+#: model:ir.model.fields,field_description:stock_auto_move.field_stock_move__display_name
+#: model:ir.model.fields,field_description:stock_auto_move.field_stock_rule__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_auto_move
+#: model:ir.model.fields,field_description:stock_auto_move.field_stock_move__id
+#: model:ir.model.fields,field_description:stock_auto_move.field_stock_rule__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_auto_move
+#: model:ir.model.fields,help:stock_auto_move.field_stock_rule__auto_move
 msgid ""
 "If this option is selected, the generated move will be automatically "
 "processed as soon as the products are available. This can be useful for "
@@ -42,7 +54,7 @@ msgstr ""
 "premiki, kjer ne želimo ukrepov operaterja."
 
 #. module: stock_auto_move
-#: model:ir.model.fields,help:stock_auto_move.field_stock_move_auto_move
+#: model:ir.model.fields,help:stock_auto_move.field_stock_move__auto_move
 msgid ""
 "If this option is selected, the move will be automatically processed as soon "
 "as the products are available."
@@ -51,33 +63,9 @@ msgstr ""
 "proizvodi na voljo."
 
 #. module: stock_auto_move
-#: model:stock.location,name:stock_auto_move.stock_location_a
-msgid "Location 1"
-msgstr "Lokacija 1"
-
-#. module: stock_auto_move
-#: model:stock.location,name:stock_auto_move.stock_location_b
-msgid "Location 2"
-msgstr "Lokacija 2"
-
-#. module: stock_auto_move
-#: model:stock.location,name:stock_auto_move.stock_location_c
-msgid "Location 3"
-msgstr "Lokacija 3"
-
-#. module: stock_auto_move
-#: model:ir.model,name:stock_auto_move.model_procurement_order
-msgid "Procurement"
-msgstr "Oskrbovanje"
-
-#. module: stock_auto_move
-#: model:ir.model,name:stock_auto_move.model_procurement_rule
-msgid "Procurement Rule"
-msgstr "Oskrbovalno pravilo"
-
-#. module: stock_auto_move
-#: model:ir.model,name:stock_auto_move.model_stock_location_path
-msgid "Pushed Flow"
+#: model:ir.model.fields,field_description:stock_auto_move.field_stock_move____last_update
+#: model:ir.model.fields,field_description:stock_auto_move.field_stock_rule____last_update
+msgid "Last Modified on"
 msgstr ""
 
 #. module: stock_auto_move
@@ -86,6 +74,31 @@ msgid "Stock Move"
 msgstr "Premik zaloge"
 
 #. module: stock_auto_move
+#: model:ir.model,name:stock_auto_move.model_stock_rule
+msgid "Stock Rule"
+msgstr ""
+
+#. module: stock_auto_move
+#: model:stock.rule,name:stock_auto_move.auto_location_path
+msgid "Test push route 3=>1"
+msgstr ""
+
+#. module: stock_auto_move
 #: model:stock.location.route,name:stock_auto_move.test_route
 msgid "Test route"
 msgstr "Testna proga"
+
+#~ msgid "Location 1"
+#~ msgstr "Lokacija 1"
+
+#~ msgid "Location 2"
+#~ msgstr "Lokacija 2"
+
+#~ msgid "Location 3"
+#~ msgstr "Lokacija 3"
+
+#~ msgid "Procurement"
+#~ msgstr "Oskrbovanje"
+
+#~ msgid "Procurement Rule"
+#~ msgstr "Oskrbovalno pravilo"
