@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_move_backdating
+# 	* stock_move_backdating
 #
 msgid ""
 msgstr ""
@@ -113,8 +113,11 @@ msgstr "Movimento di magazzino"
 
 #. module: stock_move_backdating
 #: model:ir.model.fields,help:stock_move_backdating.field_stock_picking__date_backdating
-msgid "The Actual Movement Date of the Operations only if they have all the same value."
-msgstr "La data effettiva delle operazioni solo se comune a tutte le operazioni."
+msgid ""
+"The Actual Movement Date of the Operations only if they have all the same "
+"value."
+msgstr ""
+"La data effettiva delle operazioni solo se comune a tutte le operazioni."
 
 #. module: stock_move_backdating
 #: model:ir.model,name:stock_move_backdating.model_stock_picking
