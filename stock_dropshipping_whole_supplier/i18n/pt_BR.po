@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_dropshipping_whole_supplier
+# 	* stock_dropshipping_whole_supplier
 #
 msgid ""
 msgstr ""
@@ -30,8 +30,10 @@ msgstr "Produto de Remessa Direta"
 #. module: stock_dropshipping_whole_supplier
 #: model:ir.model.fields,help:stock_dropshipping_whole_supplier.field_res_partner__allow_whole_order_dropshipping
 #: model:ir.model.fields,help:stock_dropshipping_whole_supplier.field_res_users__allow_whole_order_dropshipping
-msgid "If checked and at least one dropshipping product required for a sale,\n"
-"whole furnitures of this vendor will be delivered in dropshipping flow whether routes defined in product."
+msgid ""
+"If checked and at least one dropshipping product required for a sale,\n"
+"whole furnitures of this vendor will be delivered in dropshipping flow "
+"whether routes defined in product."
 msgstr ""
 "Se marcado e pelo menos um produto de remessa direta, necessário para uma "
 "venda, todos os produtos desse fornecedor serão entregues na forma remessa "
