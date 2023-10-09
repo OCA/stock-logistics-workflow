@@ -43,10 +43,35 @@ msgid "<strong>Total:</strong>"
 msgstr "<strong>Datum:</strong>"
 
 #. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__active_picking_ids
 #, fuzzy
 msgid "Active Pickings"
 msgstr "Kommissionierscheine"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.actions.act_window,name:stock_picking_batch_extended.batch_picking_create_act_window
@@ -89,8 +114,13 @@ msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.view_create_batch_picking
-msgid "Assign picking operations to an employee."
-msgstr "Kommissionierungen einem Mitarbeiter zuweisen."
+msgid "Assign picking operations to an employee"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields.selection,name:stock_picking_batch_extended.selection__stock_picking_batch__state__assigned
@@ -226,9 +256,15 @@ msgid "Detailed operations"
 msgstr "Vorgänge"
 
 #. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_product_product__display_name
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_report_stock_picking_batch_extended_report_batch_picking__display_name
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_res_company__display_name
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__display_name
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator__display_name
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__display_name
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_warehouse__display_name
 msgid "Display Name"
 msgstr "Angezeigter Name"
 
@@ -250,6 +286,26 @@ msgstr ""
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__field_id
 msgid "Field to group"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__message_channel_ids
+msgid "Followers (Channels)"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
 msgstr ""
 
 #. module: stock_picking_batch_extended
@@ -275,11 +331,39 @@ msgid "Group by picking field"
 msgstr ""
 
 #. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_product_product__id
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_report_stock_picking_batch_extended_report_batch_picking__id
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_res_company__id
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_res_config_settings__id
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking__id
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__id
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator__id
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__id
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_warehouse__id
 msgid "ID"
 msgstr "ID"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__message_needaction
+#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__message_unread
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__message_has_error
+#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch_creator__group_field_ids
@@ -292,9 +376,20 @@ msgid "Initial Demand"
 msgstr ""
 
 #. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_product_product____last_update
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_report_stock_picking_batch_extended_report_batch_picking____last_update
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_res_company____last_update
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_res_config_settings____last_update
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking____last_update
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch____last_update
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator____last_update
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field____last_update
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_warehouse____last_update
 msgid "Last Modified on"
 msgstr "Zuletzt geändert am"
 
@@ -311,9 +406,34 @@ msgid "Last Updated on"
 msgstr "Zuletzt aktualisiert am"
 
 #. module: stock_picking_batch_extended
+#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__active_picking_ids
+msgid "List of active picking managed by this batch."
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__picking_ids
 msgid "List of picking managed by this batch."
 msgstr "Liste der Kommissionierungen, die in diesem Stapel geführt werden."
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__message_main_attachment_id
+msgid "Main Attachment"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_search
@@ -336,6 +456,21 @@ msgid "Name of the batch transfer"
 msgstr ""
 
 #. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__notes
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator__notes
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
@@ -346,6 +481,31 @@ msgstr "Notizen"
 #: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:0
 #, python-format
 msgid "Nothing to print."
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__message_unread_counter
+msgid "Number of unread messages"
 msgstr ""
 
 #. module: stock_picking_batch_extended
@@ -445,6 +605,16 @@ msgid "Reserved"
 msgstr "Reserviere Alle"
 
 #. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__activity_user_id
+msgid "Responsible User"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__sequence
 msgid "Sequence"
 msgstr ""
@@ -454,6 +624,15 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_search
 msgid "State"
 msgstr "Status"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
@@ -507,6 +686,11 @@ msgid "Transfer"
 msgstr "Umlagern"
 
 #. module: stock_picking_batch_extended
+#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_search
 msgid "Unassigned"
 msgstr "Nicht zugeordnet"
@@ -514,6 +698,16 @@ msgstr "Nicht zugeordnet"
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
 msgid "Unit of Measure"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__message_unread
+msgid "Unread Messages"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__message_unread_counter
+msgid "Unread Messages Counter"
 msgstr ""
 
 #. module: stock_picking_batch_extended
@@ -549,6 +743,16 @@ msgid "Warehouse Description"
 msgstr "Warenlager-Beschreibung"
 
 #. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.view_create_batch_picking
 msgid "_Create"
 msgstr "_Anlegen"
@@ -582,6 +786,9 @@ msgstr "Der Anwender, dem die Stapel per Vorgabe zugeordnet werden"
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__user_id
 msgid "the user to which the pickings are assigned"
 msgstr "Der Anwender, dem die Stapel zugewiesen sind"
+
+#~ msgid "Assign picking operations to an employee."
+#~ msgstr "Kommissionierungen einem Mitarbeiter zuweisen."
 
 #, fuzzy
 #~ msgid "Batch Picking Name"
