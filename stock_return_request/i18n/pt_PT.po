@@ -21,7 +21,8 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"                You cannot have two open Stock Return Requests with the same\n"
+"                You cannot have two open Stock Return Requests with the "
+"same\n"
 "                product (%s), locations (%s, %s) partner (%s) and lot.\n"
 "\n"
 "                Please first validate the first return request with this\n"
@@ -297,8 +298,6 @@ msgstr ""
 
 #. module: stock_return_request
 #: code:addons/stock_return_request/models/stock_return_request.py:0
-#: code:addons/stock_return_request/models/stock_return_request.py:0
-#: code:addons/stock_return_request/models/stock_return_request.py:0
 #, python-format
 msgid "New"
 msgstr ""
@@ -328,7 +327,8 @@ msgstr ""
 #, python-format
 msgid ""
 "Not enough moves to return this product.\n"
-"It wasn't possible to find enough moves to return %f %sof %s. A maximum of %f can be returned."
+"It wasn't possible to find enough moves to return %f %sof %s. A maximum of "
+"%f can be returned."
 msgstr ""
 
 #. module: stock_return_request
