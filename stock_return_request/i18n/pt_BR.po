@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_return_request
+# 	* stock_return_request
 #
 msgid ""
 msgstr ""
@@ -19,8 +19,10 @@ msgstr ""
 #. module: stock_return_request
 #: code:addons/stock_return_request/models/stock_return_request.py:527
 #, python-format
-msgid "\n"
-"                You cannot have two open Stock Return Requests with the same\n"
+msgid ""
+"\n"
+"                You cannot have two open Stock Return Requests with the "
+"same\n"
 "                product (%s), locations (%s, %s) partner (%s) and lot.\n"
 "\n"
 "                Please first validate the first return request with this\n"
@@ -201,7 +203,8 @@ msgstr "É Seguidor"
 #. module: stock_return_request
 #: code:addons/stock_return_request/models/stock_return_request.py:306
 #, python-format
-msgid "It wasn't possible to assign stock for this returns:\n"
+msgid ""
+"It wasn't possible to assign stock for this returns:\n"
 "%s"
 msgstr ""
 "Não foi possível atribuir estoque para esses retornos:\n"
@@ -294,8 +297,10 @@ msgstr "Tipo da Próxima Atividade"
 #. module: stock_return_request
 #: code:addons/stock_return_request/models/stock_return_request.py:507
 #, python-format
-msgid "Not enough moves to return this product.\n"
-"It wasn't possible to find enough moves to return %f %sof %s. A maximum of %f can be returned."
+msgid ""
+"Not enough moves to return this product.\n"
+"It wasn't possible to find enough moves to return %f %sof %s. A maximum of "
+"%f can be returned."
 msgstr ""
 "Movimentações insuficientes para devolver este produto.\n"
 "Não foi possível encontrar movimentações suficientes para retornar%f%sde%s. "
@@ -520,7 +525,8 @@ msgstr "Estado"
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__activity_state
-msgid "Status based on activities\n"
+msgid ""
+"Status based on activities\n"
 "Overdue: Due date is already passed\n"
 "Today: Activity date is today\n"
 "Planned: Future activities."
@@ -584,7 +590,8 @@ msgstr "Lotes Sugeridos para esta Linha de Requisição de Retorno"
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__return_type
-msgid "Supplier - Search for incoming moves from this supplier\n"
+msgid ""
+"Supplier - Search for incoming moves from this supplier\n"
 "Customer - Search for outgoing moves to this customer\n"
 "Internal - Search for outgoing moves to this location."
 msgstr ""
@@ -665,10 +672,12 @@ msgstr "Histórico de comunicação através do site"
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__show_to_refund
-msgid "Whether to show it or not depending on the availability ofthe stock_account module (so a bridge module is not necessary)"
+msgid ""
+"Whether to show it or not depending on the availability ofthe stock_account "
+"module (so a bridge module is not necessary)"
 msgstr ""
-"Deve ser exibido ou não, dependendo da disponibilidade do módulo \""
-"stock_account\" (portanto, um módulo ponte não é necessário)"
+"Deve ser exibido ou não, dependendo da disponibilidade do módulo "
+"\"stock_account\" (portanto, um módulo ponte não é necessário)"
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_suggest_return_request_lot__suggested_lot
