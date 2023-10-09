@@ -137,11 +137,11 @@ msgstr "出庫予定の分割"
 #: code:addons/stock_split_picking/models/stock_picking.py:0
 #, python-format
 msgid ""
-"The backorder <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-"
-"id=\"%d\">%s</a> has been created."
+"The backorder <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d"
+"\">%s</a> has been created."
 msgstr ""
-"バックオーダー <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%"
-"d\">%s</a> が作成されました。"
+"バックオーダー <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d"
+"\">%s</a> が作成されました。"
 
 #. module: stock_split_picking
 #: model:ir.model,name:stock_split_picking.model_stock_picking

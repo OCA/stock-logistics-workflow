@@ -50,11 +50,7 @@ msgid "Date"
 msgstr ""
 
 #. module: stock_split_picking
-#: model_terms:ir.ui.view,arch_db:stock_split_picking.view_stock_split_picking
-msgid "Date Expected"
-msgstr ""
-
-#. module: stock_split_picking
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_picking__display_name
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking__display_name
 msgid "Display Name"
 msgstr ""
@@ -65,11 +61,13 @@ msgid "Done quantities"
 msgstr ""
 
 #. module: stock_split_picking
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_picking__id
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking__id
 msgid "ID"
 msgstr ""
 
 #. module: stock_split_picking
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_picking____last_update
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking____last_update
 msgid "Last Modified on"
 msgstr ""
