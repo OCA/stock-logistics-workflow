@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* purchase_stock_picking_restrict_cancel
+# 	* purchase_stock_picking_restrict_cancel
 #
 msgid ""
 msgstr ""
