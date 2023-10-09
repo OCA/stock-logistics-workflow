@@ -26,12 +26,12 @@ msgid "Backorder Strategy"
 msgstr "Stratégie de reliquats"
 
 #. module: stock_picking_backorder_strategy
-#: selection:stock.picking.type,backorder_strategy:0
+#: model:ir.model.fields.selection,name:stock_picking_backorder_strategy.selection__stock_picking_type__backorder_strategy__cancel
 msgid "Cancel"
 msgstr "Annulé"
 
 #. module: stock_picking_backorder_strategy
-#: selection:stock.picking.type,backorder_strategy:0
+#: model:ir.model.fields.selection,name:stock_picking_backorder_strategy.selection__stock_picking_type__backorder_strategy__create
 msgid "Create"
 msgstr "Créer"
 
@@ -41,12 +41,33 @@ msgid "Define what to do with backorder"
 msgstr "Indique ce qu'il faut faire des reliquats"
 
 #. module: stock_picking_backorder_strategy
-#: selection:stock.picking.type,backorder_strategy:0
+#: model:ir.model.fields,field_description:stock_picking_backorder_strategy.field_stock_move__display_name
+#: model:ir.model.fields,field_description:stock_picking_backorder_strategy.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:stock_picking_backorder_strategy.field_stock_picking_type__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_picking_backorder_strategy
+#: model:ir.model.fields,field_description:stock_picking_backorder_strategy.field_stock_move__id
+#: model:ir.model.fields,field_description:stock_picking_backorder_strategy.field_stock_picking__id
+#: model:ir.model.fields,field_description:stock_picking_backorder_strategy.field_stock_picking_type__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_picking_backorder_strategy
+#: model:ir.model.fields,field_description:stock_picking_backorder_strategy.field_stock_move____last_update
+#: model:ir.model.fields,field_description:stock_picking_backorder_strategy.field_stock_picking____last_update
+#: model:ir.model.fields,field_description:stock_picking_backorder_strategy.field_stock_picking_type____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_picking_backorder_strategy
+#: model:ir.model.fields.selection,name:stock_picking_backorder_strategy.selection__stock_picking_type__backorder_strategy__manual
 msgid "Manual"
 msgstr ""
 
 #. module: stock_picking_backorder_strategy
-#: selection:stock.picking.type,backorder_strategy:0
+#: model:ir.model.fields.selection,name:stock_picking_backorder_strategy.selection__stock_picking_type__backorder_strategy__no_create
 msgid "No create"
 msgstr "Ne pas créer"
 
