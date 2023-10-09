@@ -10,8 +10,8 @@ msgstr ""
 "POT-Creation-Date: 2016-05-04 02:49+0000\n"
 "PO-Revision-Date: 2022-10-21 14:43+0000\n"
 "Last-Translator: Maria Sparenberg <maria.sparenberg@gmx.net>\n"
-"Language-Team: German (http://www.transifex.com/oca/"
-"OCA-stock-logistics-workflow-8-0/language/de/)\n"
+"Language-Team: German (http://www.transifex.com/oca/OCA-stock-logistics-"
+"workflow-8-0/language/de/)\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,6 +23,24 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock_picking_back2draft.view_picking_form_reopen
 msgid "Back to draft"
 msgstr "Auf Entwurf zurücksetzen"
+
+#. module: stock_picking_back2draft
+#: model:ir.model.fields,field_description:stock_picking_back2draft.field_stock_move__display_name
+#: model:ir.model.fields,field_description:stock_picking_back2draft.field_stock_picking__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_picking_back2draft
+#: model:ir.model.fields,field_description:stock_picking_back2draft.field_stock_move__id
+#: model:ir.model.fields,field_description:stock_picking_back2draft.field_stock_picking__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_picking_back2draft
+#: model:ir.model.fields,field_description:stock_picking_back2draft.field_stock_move____last_update
+#: model:ir.model.fields,field_description:stock_picking_back2draft.field_stock_picking____last_update
+msgid "Last Modified on"
+msgstr ""
 
 #. module: stock_picking_back2draft
 #: model:ir.model,name:stock_picking_back2draft.model_stock_move
