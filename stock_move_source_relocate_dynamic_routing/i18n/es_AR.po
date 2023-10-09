@@ -17,11 +17,32 @@ msgstr ""
 "X-Generator: Weblate 4.3.2\n"
 
 #. module: stock_move_source_relocate_dynamic_routing
+#: model:ir.model.fields,field_description:stock_move_source_relocate_dynamic_routing.field_stock_move__display_name
+#: model:ir.model.fields,field_description:stock_move_source_relocate_dynamic_routing.field_stock_routing__display_name
+#: model:ir.model.fields,field_description:stock_move_source_relocate_dynamic_routing.field_stock_source_relocate__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_move_source_relocate_dynamic_routing
 #: code:addons/stock_move_source_relocate_dynamic_routing/models/stock_source_relocate.py:0
 #: model_terms:ir.ui.view,arch_db:stock_move_source_relocate_dynamic_routing.view_stock_source_relocate_form
 #, python-format
 msgid "Dynamic Routing"
 msgstr "Rutas Dinámicas"
+
+#. module: stock_move_source_relocate_dynamic_routing
+#: model:ir.model.fields,field_description:stock_move_source_relocate_dynamic_routing.field_stock_move__id
+#: model:ir.model.fields,field_description:stock_move_source_relocate_dynamic_routing.field_stock_routing__id
+#: model:ir.model.fields,field_description:stock_move_source_relocate_dynamic_routing.field_stock_source_relocate__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_move_source_relocate_dynamic_routing
+#: model:ir.model.fields,field_description:stock_move_source_relocate_dynamic_routing.field_stock_move____last_update
+#: model:ir.model.fields,field_description:stock_move_source_relocate_dynamic_routing.field_stock_routing____last_update
+#: model:ir.model.fields,field_description:stock_move_source_relocate_dynamic_routing.field_stock_source_relocate____last_update
+msgid "Last Modified on"
+msgstr ""
 
 #. module: stock_move_source_relocate_dynamic_routing
 #: code:addons/stock_move_source_relocate_dynamic_routing/models/stock_routing.py:0
