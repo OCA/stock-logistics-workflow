@@ -11,8 +11,8 @@ msgstr ""
 "POT-Creation-Date: 2017-12-03 03:56+0000\n"
 "PO-Revision-Date: 2020-06-23 03:19+0000\n"
 "Last-Translator: Fernando Colus <fcolus1@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
-"23907/pt_BR/)\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/"
+"teams/23907/pt_BR/)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,14 +26,40 @@ msgid "<strong>Seq.</strong>"
 msgstr "<strong>Sequência</strong>"
 
 #. module: stock_picking_line_sequence
+#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move__display_name
+#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move_line__display_name
+#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_picking__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_picking_line_sequence
 #: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move__sequence
 msgid "HiddenSequence"
 msgstr "Ocultar Sequência"
 
 #. module: stock_picking_line_sequence
+#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move__id
+#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move_line__id
+#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_picking__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_picking_line_sequence
+#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move____last_update
+#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move_line____last_update
+#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_picking____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_picking_line_sequence
 #: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_picking__max_line_sequence
 msgid "Max sequence in lines"
 msgstr "Sequência máxima em linhas"
+
+#. module: stock_picking_line_sequence
+#: model:ir.model,name:stock_picking_line_sequence.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
 
 #. module: stock_picking_line_sequence
 #: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move__sequence2
