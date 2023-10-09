@@ -211,8 +211,8 @@ msgstr ""
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
 msgid ""
-"Pickings should match these parameters: picking type is groupable, state not"
-" cancelled or done, not printed."
+"Pickings should match these parameters: picking type is groupable, state not "
+"cancelled or done, not printed."
 msgstr ""
 
 #. module: stock_picking_group_by_partner_by_carrier
