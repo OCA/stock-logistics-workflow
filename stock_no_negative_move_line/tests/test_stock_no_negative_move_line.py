@@ -136,7 +136,8 @@ class TestStockNoNegativeMoveLine(TransactionCase):
         self.assertEqual(quant.quantity, -150)
 
     def test_negative_qty_prevention_on_validation(self):
-        """Assert that negative stock levels are prevented on validation and not on move line update"""
+        """Assert that negative stock levels are prevented
+        on validation and not on move line update"""
         self.stock_picking.action_confirm()
         self.stock_move_line.write({"qty_done": 150.0})
         with self.assertRaises(ValidationError):
