@@ -181,3 +181,23 @@ class TestStockNoNegativeMoveLine(TransactionCase):
             strict=True,
         )
         self.assertEqual(quant.quantity, 0)
+
+    def test_consu_product_validation(self):
+        """Assert that negative stock levels are not prevented
+        on validation of a consu product"""
+        self.product.type = "consu"
+        self.stock_picking.action_confirm()
+        self.stock_move_line.write({"qty_done": 150.0})
+        self.stock_picking.with_context(
+            test_stock_no_negative=True
+        )._action_done()
+
+    def test_transit_location_validation(self):
+        """Assert that negative stock levels are not prevented
+        on validation of a transit location"""
+        self.location_id.usage = "transit"
+        self.stock_picking.action_confirm()
+        self.stock_move_line.write({"qty_done": 150.0})
+        self.stock_picking.with_context(
+            test_stock_no_negative=True
+        )._action_done()
