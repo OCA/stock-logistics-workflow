@@ -51,6 +51,7 @@ msgid "Avoid auto-assignment of lots"
 msgstr "Evitar asignación automática de lotes"
 
 #. module: stock_move_line_auto_fill
+#. odoo-python
 #: code:addons/stock_move_line_auto_fill/models/stock_picking.py:0
 #, python-format
 msgid ""
