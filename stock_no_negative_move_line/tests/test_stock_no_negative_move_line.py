@@ -6,74 +6,73 @@ from odoo.tests.common import TransactionCase
 
 
 class TestStockNoNegativeMoveLine(TransactionCase):
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.product_model = cls.env['product.product']
-        cls.product_ctg_model = cls.env['product.category']
-        cls.picking_type_id = cls.env.ref('stock.picking_type_out')
-        cls.location_id = cls.env.ref('stock.stock_location_stock')
-        cls.location_dest_id = cls.env.ref('stock.stock_location_customers')
+        cls.product_model = cls.env["product.product"]
+        cls.product_ctg_model = cls.env["product.category"]
+        cls.picking_type_id = cls.env.ref("stock.picking_type_out")
+        cls.location_id = cls.env.ref("stock.stock_location_stock")
+        cls.location_dest_id = cls.env.ref("stock.stock_location_customers")
         # Create product category
         cls.product_ctg = cls._create_product_category(cls)
         # Create a Product
-        cls.product = cls._create_product(cls, 'test_product1')
+        cls.product = cls._create_product(cls, "test_product1")
         cls._create_picking(cls)
 
     def _create_product_category(self):
         product_ctg = self.product_ctg_model.create(
-            {'name': 'test_product_ctg', 'allow_negative_stock': False}
+            {"name": "test_product_ctg", "allow_negative_stock": False}
         )
         return product_ctg
 
     def _create_product(self, name):
         product = self.product_model.create(
             {
-                'name': name,
-                'categ_id': self.product_ctg.id,
-                'type': 'product',
-                'allow_negative_stock': False,
+                "name": name,
+                "categ_id": self.product_ctg.id,
+                "type": "product",
+                "allow_negative_stock": False,
             }
         )
         return product
 
     def _create_picking(self):
         self.stock_picking = (
-            self.env['stock.picking']
+            self.env["stock.picking"]
             .with_context(test_stock_no_negative=True)
             .create(
                 {
-                    'picking_type_id': self.picking_type_id.id,
-                    'move_type': 'direct',
-                    'location_id': self.location_id.id,
-                    'location_dest_id': self.location_dest_id.id,
+                    "picking_type_id": self.picking_type_id.id,
+                    "move_type": "direct",
+                    "location_id": self.location_id.id,
+                    "location_dest_id": self.location_dest_id.id,
                 }
             )
         )
 
-        self.stock_move = self.env['stock.move'].create(
+        self.stock_move = self.env["stock.move"].create(
             {
-                'name': 'Test Move',
-                'product_id': self.product.id,
-                'product_uom_qty': 100.0,
-                'product_uom': self.product.uom_id.id,
-                'picking_id': self.stock_picking.id,
-                'state': 'draft',
-                'location_id': self.location_id.id,
-                'location_dest_id': self.location_dest_id.id,
+                "name": "Test Move",
+                "product_id": self.product.id,
+                "product_uom_qty": 100.0,
+                "product_uom": self.product.uom_id.id,
+                "picking_id": self.stock_picking.id,
+                "state": "draft",
+                "location_id": self.location_id.id,
+                "location_dest_id": self.location_dest_id.id,
             }
         )
 
-        self.stock_move_line = self.env['stock.move.line'].create(
+        self.stock_move_line = self.env["stock.move.line"].create(
             {
-                'product_id': self.product.id,
-                'product_uom_id': self.product.uom_id.id,
-                'picking_id': self.stock_picking.id,
-                'move_id': self.stock_move.id,
-                'location_id': self.location_id.id,
-                'location_dest_id': self.location_dest_id.id,
-                'qty_done': 0.0,
+                "product_id": self.product.id,
+                "product_uom_id": self.product.uom_id.id,
+                "picking_id": self.stock_picking.id,
+                "move_id": self.stock_move.id,
+                "location_id": self.location_id.id,
+                "location_dest_id": self.location_dest_id.id,
+                "qty_done": 0.0,
             }
         )
 
@@ -85,8 +84,10 @@ class TestStockNoNegativeMoveLine(TransactionCase):
         self.location_id.allow_negative_stock = False
         self.stock_picking.action_confirm()
         with self.assertRaises(ValidationError):
-            self.stock_move_line.write({'qty_done': 150.0})
-            self.stock_move_line.with_context(test_stock_no_negative=True)._will_cause_negative()
+            self.stock_move_line.write({"qty_done": 150.0})
+            self.stock_move_line.with_context(
+                test_stock_no_negative=True
+            )._will_cause_negative()
 
     def test_allow_negative_stock_product_on_move_line(self):
         """Assert that negative stock levels are allowed on move line update when
@@ -96,13 +97,19 @@ class TestStockNoNegativeMoveLine(TransactionCase):
         self.location_id.allow_negative_stock = False
         self.stock_picking.action_confirm()
 
-        self.stock_move_line.write({'qty_done': 150.0})
-        self.stock_move_line.with_context(test_stock_no_negative=True)._will_cause_negative()
+        self.stock_move_line.write({"qty_done": 150.0})
+        self.stock_move_line.with_context(
+            test_stock_no_negative=True
+        )._will_cause_negative()
         self.stock_picking._action_done()
 
-        quant = self.env['stock.quant']._gather(
-            self.product, self.location_id, lot_id=self.stock_move_line.lot_id,
-            package_id=self.stock_move_line.package_id, owner_id=self.stock_move_line.owner_id, strict=True
+        quant = self.env["stock.quant"]._gather(
+            self.product,
+            self.location_id,
+            lot_id=self.stock_move_line.lot_id,
+            package_id=self.stock_move_line.package_id,
+            owner_id=self.stock_move_line.owner_id,
+            strict=True,
         )
         self.assertEqual(quant.quantity, -150)
 
@@ -113,26 +120,38 @@ class TestStockNoNegativeMoveLine(TransactionCase):
         self.product.categ_id.allow_negative_stock = False
         self.stock_move_line.location_id.allow_negative_stock = True
         self.stock_picking.action_confirm()
-        self.stock_move_line.write({'qty_done': 150.0})
-        self.stock_move_line.with_context(test_stock_no_negative=True)._will_cause_negative()
+        self.stock_move_line.write({"qty_done": 150.0})
+        self.stock_move_line.with_context(
+            test_stock_no_negative=True
+        )._will_cause_negative()
         self.stock_picking._action_done()
-        quant = self.env['stock.quant']._gather(
-            self.product, self.location_id, lot_id=self.stock_move_line.lot_id,
-            package_id=self.stock_move_line.package_id, owner_id=self.stock_move_line.owner_id, strict=True
+        quant = self.env["stock.quant"]._gather(
+            self.product,
+            self.location_id,
+            lot_id=self.stock_move_line.lot_id,
+            package_id=self.stock_move_line.package_id,
+            owner_id=self.stock_move_line.owner_id,
+            strict=True,
         )
         self.assertEqual(quant.quantity, -150)
 
     def test_negative_qty_prevention_on_validation(self):
         """Assert that negative stock levels are prevented on validation and not on move line update"""
         self.stock_picking.action_confirm()
-        self.stock_move_line.write({'qty_done': 150.0})
+        self.stock_move_line.write({"qty_done": 150.0})
         with self.assertRaises(ValidationError):
-            self.stock_picking.with_context(test_stock_no_negative=True).button_validate()
+            self.stock_picking.with_context(
+                test_stock_no_negative=True
+            ).button_validate()
 
     def test_negative_prevention_on_lot(self):
         """Assert that negative stock levels are prevented on lot update"""
         self.stock_picking.action_confirm()
-        self.stock_move_line.write({'qty_done': 150.0})
+        self.stock_move_line.write({"qty_done": 150.0})
         with self.assertRaises(ValidationError):
-            self.stock_move_line.lot_id = self.env['stock.production.lot'].create({'name': 'test_lot'})
-            self.stock_move_line.with_context(test_stock_no_negative=True)._will_cause_negative()
+            self.stock_move_line.lot_id = self.env["stock.production.lot"].create(
+                {"name": "test_lot"}
+            )
+            self.stock_move_line.with_context(
+                test_stock_no_negative=True
+            )._will_cause_negative()
