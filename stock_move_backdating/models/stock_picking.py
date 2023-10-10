@@ -45,9 +45,17 @@ class StockPicking(models.Model):
         stock_moves._backdating_account_moves()
         return True
 
+    def _backdating_update_stock_valuation_layers_date(self):
+        """Set date on linked stock.valuation.layer same as date on stock.move."""
+        self.ensure_one()
+        stock_moves = self.move_lines
+        stock_moves._backdating_stock_valuation_layers()
+        return True
+
     def _action_done(self):
         result = super()._action_done()
         for picking in self:
             picking._backdating_update_picking_date()
             picking._backdating_update_account_moves_date()
+            picking._backdating_update_stock_valuation_layers_date()
         return result

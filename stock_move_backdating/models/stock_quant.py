@@ -52,7 +52,7 @@ class StockQuant(models.Model):
             if date_backdating:
                 inventory_ctx = inventory.with_context(
                     date_backdating=date_backdating,
-                    force_period_date=date_backdating.date(),
+                    force_period_date=fields.Date.context_today(self, date_backdating),
                 )
                 super(StockQuant, inventory_ctx)._apply_inventory()
                 inventory.date_backdating = False

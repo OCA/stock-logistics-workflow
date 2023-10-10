@@ -5,7 +5,7 @@
 # Copyright 2023 Simone Rubino - TAKOBI
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import models
+from odoo import fields, models
 from odoo.fields import first
 
 from .stock_move_line import check_date
@@ -27,9 +27,29 @@ class StockMove(models.Model):
             )
             move_account_moves.update(
                 {
-                    "date": stock_move.date.date(),
+                    "date": fields.Date.context_today(self, stock_move.date),
                 }
             )
+
+    def _backdating_stock_valuation_layers(self):
+        """Set date on linked stock.valuation.layer same for each move in `self`."""
+        self = self.sudo()
+        picking_stock_valuation_layers = self.env["stock.valuation.layer"].search(
+            [
+                ("stock_move_id", "in", self.ids),
+            ],
+        )
+        for stock_move in self:
+            stock_valuation_layers = picking_stock_valuation_layers.filtered(
+                lambda svl: svl.stock_move_id == stock_move
+            )
+            for svl in stock_valuation_layers:
+                self._cr.execute(
+                    """
+                    update stock_valuation_layer set create_date = %s where id = %s
+                """,
+                    (stock_move.date, svl.id),
+                )
 
     def _backdating_action_done(self, moves_todo, cancel_backorder=False):
         """Process the moves one by one, backdating the ones that need to."""
