@@ -156,3 +156,28 @@ class TestStockNoNegativeMoveLine(TransactionCase):
             self.stock_move_line.with_context(
                 test_stock_no_negative=True
             )._will_cause_negative()
+
+    def test_successful_move_validation(self):
+        """Assert that stock levels are updated successfully
+        when the validation is done on the move"""
+        self.env["stock.quant"].create({
+            "product_id": self.product.id,
+            "quantity": 100,
+            "location_id": self.location_id.id,
+        })
+
+        self.stock_picking.action_confirm()
+        self.stock_move_line.write({"qty_done": 100.0})
+        self.stock_move_line.with_context(
+            test_stock_no_negative=True
+        )._will_cause_negative()
+        self.stock_picking._action_done()
+        quant = self.env["stock.quant"]._gather(
+            self.product,
+            self.location_id,
+            lot_id=self.stock_move_line.lot_id,
+            package_id=self.stock_move_line.package_id,
+            owner_id=self.stock_move_line.owner_id,
+            strict=True,
+        )
+        self.assertEqual(quant.quantity, 0)
