@@ -48,6 +48,7 @@ msgid "Avoid auto-assignment of lots"
 msgstr "避免自动分配批次"
 
 #. module: stock_move_line_auto_fill
+#. odoo-python
 #: code:addons/stock_move_line_auto_fill/models/stock_picking.py:0
 #, python-format
 msgid ""
@@ -68,8 +69,8 @@ msgstr ""
 #. module: stock_move_line_auto_fill
 #: model_terms:ir.ui.view,arch_db:stock_move_line_auto_fill.stock_picking_form_view
 msgid ""
-"This button will automatically fill all operations that have no tracking set"
-" on the product, no processed qty and no selected package."
+"This button will automatically fill all operations that have no tracking set "
+"on the product, no processed qty and no selected package."
 msgstr ""
 
 #. module: stock_move_line_auto_fill
