@@ -52,38 +52,35 @@ class StockMove(models.Model):
                 )
 
     def _backdating_action_done(self, moves_todo, cancel_backorder=False):
-        """Process the moves one by one, backdating the ones that need to."""
+        """Process the moves, backdating the ones that need to."""
         moves_todo_ids = set(moves_todo.ids)
-        for move in self:
-            move_line = first(move.move_line_ids)
-            date_backdating = move_line.date_backdating
-            if date_backdating:
-                move = move.with_context(
-                    date_backdating=date_backdating,
-                )
-            move_todo = super(StockMove, move)._action_done(
-                cancel_backorder=cancel_backorder
+        move_line = first(self.mapped("move_line_ids"))
+        date_backdating = move_line.date_backdating
+        if date_backdating:
+            self = self.with_context(
+                date_backdating=date_backdating,
             )
-            moves_todo_ids.update(move_todo.ids)
+        move_todo = super()._action_done(cancel_backorder=cancel_backorder)
+        moves_todo_ids.update(move_todo.ids)
 
-            # overwrite date field where applicable
-            move_line = first(move.move_line_ids)
-            date_backdating = move_line.date_backdating
-            if date_backdating:
-                check_date(date_backdating)
-                move.date = date_backdating
-                move.move_line_ids.update(
-                    {
-                        "date": date_backdating,
-                    }
-                )
+        # overwrite date field where applicable
+        move_line = first(self.mapped("move_line_ids"))
+        date_backdating = move_line.date_backdating
+        if date_backdating:
+            check_date(date_backdating)
+            self.write({"date": date_backdating})
+            self.mapped("move_line_ids").update(
+                {
+                    "date": date_backdating,
+                }
+            )
         return self.browse(moves_todo_ids)
 
     def _action_done(self, cancel_backorder=False):
         moves_todo = self.env["stock.move"]
         has_move_lines_to_backdate = any(self.mapped("move_line_ids.date_backdating"))
         if not has_move_lines_to_backdate:
-            res = super(StockMove, self)._action_done(cancel_backorder=cancel_backorder)
+            res = super()._action_done(cancel_backorder=cancel_backorder)
             if res:
                 moves_todo |= res
         else:
