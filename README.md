@@ -23,6 +23,7 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [delivery_procurement_group_carrier](delivery_procurement_group_carrier/) | 15.0.1.0.0 |  | Delivery Procurement Group Carrier
 [product_cost_price_avco_sync](product_cost_price_avco_sync/) | 15.0.1.0.1 | [![carlosdauden](https://github.com/carlosdauden.png?size=30px)](https://github.com/carlosdauden) [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Set product cost price from updated moves
+[product_supplierinfo_for_customer_picking](product_supplierinfo_for_customer_picking/) | 15.0.1.0.0 |  | This module makes the product customer code visible in the stock moves of a picking.
 [purchase_stock_picking_invoice_link](purchase_stock_picking_invoice_link/) | 15.0.1.0.0 |  | Adds link between purchases, pickings and invoices
 [sale_line_returned_qty](sale_line_returned_qty/) | 15.0.1.0.0 |  | Track returned quantity of sale order lines.
 [sale_line_returned_qty_mrp](sale_line_returned_qty_mrp/) | 15.0.1.0.1 |  | Track returned quantity of sale order lines for BoM products.
