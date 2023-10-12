@@ -36,9 +36,25 @@ jobs:
       matrix:
         include:
           - container: ghcr.io/oca/oca-ci/py3.6-odoo14.0:latest
+            include: "product_expiry_simple"
             makepot: "true"
             name: test with Odoo
           - container: ghcr.io/oca/oca-ci/py3.6-ocb14.0:latest
+            include: "product_expiry_simple"
+            name: test with OCB
+          - container: ghcr.io/oca/oca-ci/py3.6-odoo14.0:latest
+            include: "stock_mass_scrap,stock_move_quick_lot"
+            makepot: "true"
+            name: test with Odoo
+          - container: ghcr.io/oca/oca-ci/py3.6-ocb14.0:latest
+            include: "stock_mass_scrap,stock_move_quick_lot"
+            name: test with OCB
+          - container: ghcr.io/oca/oca-ci/py3.6-odoo14.0:latest
+            exclude: "product_expiry_simple,stock_mass_scrap,stock_move_quick_lot"
+            makepot: "true"
+            name: test with Odoo
+          - container: ghcr.io/oca/oca-ci/py3.6-ocb14.0:latest
+            exclude: "product_expiry_simple,stock_mass_scrap,stock_move_quick_lot"
             name: test with OCB
     services:
       postgres:
@@ -49,6 +65,9 @@ jobs:
           POSTGRES_DB: odoo
         ports:
           - 5432:5432
+    env:
+      INCLUDE: "${{ matrix.include }}"
+      EXCLUDE: "${{ matrix.exclude }}"
     steps:
       - uses: actions/checkout@v2
         with:

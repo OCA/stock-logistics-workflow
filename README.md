@@ -9,7 +9,7 @@
 
 # stock-logistics-workflow
 
-TODO: add repo description.
+Odoo Stock, Workflow and Organization
 
 <!-- /!\ do not modify below this line -->
 
