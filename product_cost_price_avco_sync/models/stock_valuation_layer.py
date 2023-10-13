@@ -134,9 +134,8 @@ class StockValuationLayer(models.Model):
         svl_dic["remaining_value"] = svl_dic["remaining_qty"] * svl_dic["unit_cost"]
 
     @api.model
-    def get_avco_svl_price(
-        self, previous_unit_cost, previous_qty, unit_cost, qty, total_qty
-    ):
+    def get_avco_svl_price(self, previous_unit_cost, previous_qty, unit_cost, qty):
+        total_qty = previous_qty + qty
         return (
             (previous_unit_cost * previous_qty + unit_cost * qty) / total_qty
             if total_qty
@@ -281,16 +280,6 @@ class StockValuationLayer(models.Model):
             preprocess_svl_dic = OrderedDict()
             postprocess_svl_dic = OrderedDict()
             for svl in svls_to_avco_sync:
-                if svl._preprocess_rest_svl_to_sync(svls_dic, preprocess_svl_dic):
-                    continue
-                # Compatibility with landed cost
-                if svl.stock_valuation_layer_id:
-                    linked_layer = svl.stock_valuation_layer_id
-                    cost_to_add = svl.value
-                    if cost_to_add and previous_qty:
-                        previous_unit_cost += cost_to_add / previous_qty
-                        svls_dic[linked_layer]["remaining_value"] += cost_to_add
-                    continue
                 qty, unit_cost = svl.get_avco_svl_qty_unit_cost(line, vals)
                 svls_dic[svl] = {
                     "id": svl.id,
@@ -301,6 +290,31 @@ class StockValuationLayer(models.Model):
                     "value": svl.value,
                 }
                 svl_dic = svls_dic[svl]
+                if svl._preprocess_rest_svl_to_sync(svls_dic, preprocess_svl_dic):
+                    # The values have been processed inside (or just skipped), but
+                    # anyway we have in `svl_dic`` the proper base values, so we resync
+                    # our internal and dict variables for proper process and integrity
+                    previous_unit_cost = self.get_avco_svl_price(
+                        previous_unit_cost,
+                        previous_qty,
+                        svl_dic["unit_cost"],
+                        svl_dic["quantity"],
+                    )
+                    svl.update_avco_svl_values(
+                        svls_dic[svl], remaining_qty=svl_dic["quantity"]
+                    )
+                    previous_qty += svl_dic["quantity"]
+                    unit_cost_processed = True
+                    continue
+                # Compatibility with landed cost
+                if svl.stock_valuation_layer_id:
+                    del svls_dic[svl]
+                    linked_layer = svl.stock_valuation_layer_id
+                    cost_to_add = svl.value
+                    if cost_to_add and previous_qty:
+                        previous_unit_cost += cost_to_add / previous_qty
+                        svls_dic[linked_layer]["remaining_value"] += cost_to_add
+                    continue
                 f_compare = float_compare(qty, 0.0, precision_digits=precision_qty)
                 # Keep inventory unit_cost if not previous incoming or manual adjustment
                 if not unit_cost_processed:
@@ -338,7 +352,6 @@ class StockValuationLayer(models.Model):
                     previous_qty = previous_qty + qty
                 # Incoming line in layer
                 elif f_compare > 0:
-                    total_qty = previous_qty + qty
                     # Return moves
                     if (
                         not svl.stock_move_id
@@ -355,17 +368,13 @@ class StockValuationLayer(models.Model):
                             previous_unit_cost = unit_cost
                         else:
                             previous_unit_cost = svl.get_avco_svl_price(
-                                previous_unit_cost,
-                                previous_qty,
-                                unit_cost,
-                                qty,
-                                total_qty,
+                                previous_unit_cost, previous_qty, unit_cost, qty,
                             )
                     svl.update_avco_svl_values(svl_dic, remaining_qty=qty)
                     if previous_qty < 0:
                         # Vacuum previous product outs without stock
                         svl.vacumm_avco_svl(qty, svls_dic, vacuum_dic)
-                    previous_qty = total_qty
+                    previous_qty += qty
                 # Outgoing line in layer
                 elif f_compare < 0:
                     # Normal OUT
