@@ -145,7 +145,7 @@ class TestOperationQuickChange(TransactionCase):
         self.picking.action_assign()
         for move in self.picking.move_lines:
             move.quantity_done = 1
-        self.picking.action_done()
+        self.picking._action_done()
         new_location_dest_id = self.Location.create(
             {
                 "name": "New Test Customer Location",
