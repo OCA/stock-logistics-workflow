@@ -12,7 +12,7 @@ class ProductProduct(models.Model):
     @api.depends("stock_move_ids")
     @api.depends_context("parent_model")
     def _compute_process_qty(self):
-        res = super(ProductProduct, self)._compute_process_qty()
+        res = super()._compute_process_qty()
         if self.env.context.get("parent_model", False) == "stock.picking":
             quantities = self.env["stock.move"].read_group(
                 [
@@ -41,6 +41,6 @@ class ProductProduct(models.Model):
             )
             if picking:
                 args.append(("stock_move_ids.picking_id", "=", picking.id))
-        return super(ProductProduct, self).search(
+        return super().search(
             args, offset=offset, limit=limit, order=order, count=count
         )

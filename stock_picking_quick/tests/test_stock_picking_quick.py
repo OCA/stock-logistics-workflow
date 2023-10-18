@@ -1,40 +1,68 @@
 # @author Mourad EL HADJ MIMOUNE <mourad.elhadj.mimoune@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo.tests.common import Form, SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestQuickPicking(SavepointCase):
+class TestQuickPicking(TransactionCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.Picking = cls.env["stock.picking"]
+        cls.Product = cls.env["product.product"]
+        cls.StockMove = cls.env["stock.move"]
+        cls.location_id = cls.env.ref("stock.warehouse0").wh_output_stock_loc_id
+        cls.dest_loc = cls.env.ref("stock.stock_location_customers")
+        cls.product_id_1 = cls.env.ref("product.product_product_8")
+        cls.product_id_2 = cls.env.ref("product.product_product_11")
+
     def setUp(self):
-        super(TestQuickPicking, self).setUp()
+        super().setUp()
         # Useful models
-        self.Picking = self.env["stock.picking"]
-        self.location_id = self.env.ref("stock.warehouse0").wh_output_stock_loc_id
-        self.dest_loc = self.env.ref("stock.stock_location_customers")
-        self.product_id_1 = self.env.ref("product.product_product_8")
-        self.product_id_2 = self.env.ref("product.product_product_11")
         picking_vals = {
             "location_id": self.location_id.id,
             "location_dest_id": self.dest_loc.id,
             "picking_type_id": self.ref("stock.picking_type_out"),
         }
         self.picking = self.Picking.create(picking_vals)
-        with Form(self.picking, "stock.view_picking_form") as picking_form:
-            picking_form.location_id = self.location_id
         self.default_cont = {
             "parent_id": self.picking.id,
             "parent_model": "stock.picking",
         }
 
+    def test_quick_qty_to_process(self):
+        self.product_id_1.with_context(**self.default_cont).qty_to_process = 5.0
+
+        self.assertEqual(
+            self.product_id_1.with_context(**self.default_cont).qty_to_process, 5.0
+        )
+        self.assertEqual(self.product_id_1.qty_to_process, 0.0)
+
+    def test_quick_search(self):
+        context = self.default_cont
+        context["in_current_parent"] = True
+        self.StockMove.create(
+            {
+                "name": "test_quick",
+                "location_id": self.location_id.id,
+                "location_dest_id": self.location_id.id,
+                "product_id": self.product_id_1.id,
+                "picking_id": self.picking.id,
+            }
+        )
+        res = self.Product.with_context(**context).search([])
+
+        self.assertEqual(len(res), 1)
+
     def test_quick_picking(self):
         # test add stock.move
-        self.product_id_1.with_context(self.default_cont).qty_to_process = 5.0
+        self.product_id_1.with_context(**self.default_cont).qty_to_process = 5.0
         self.assertEqual(
             len(self.picking.move_ids_without_package),
             1,
             "Picking: no stock.move created",
         )
-        self.product_id_2.with_context(self.default_cont).qty_to_process = 6.0
+        self.product_id_2.with_context(**self.default_cont).qty_to_process = 6.0
         self.assertEqual(
             len(self.picking.move_ids_without_package),
             2,
@@ -48,8 +76,8 @@ class TestQuickPicking(SavepointCase):
                 self.assertEqual(line.product_qty, 6)
 
         # test update stock.move qty
-        self.product_id_1.with_context(self.default_cont).qty_to_process = 3.0
-        self.product_id_2.with_context(self.default_cont).qty_to_process = 2.0
+        self.product_id_1.with_context(**self.default_cont).qty_to_process = 3.0
+        self.product_id_2.with_context(**self.default_cont).qty_to_process = 2.0
         self.assertEqual(
             len(self.picking.move_ids_without_package),
             2,
