@@ -22,7 +22,7 @@ class StockLandedCost(models.Model):
         return moves
 
     def _compute_allowed_picking_ids(self):
-        super(StockLandedCost, self)._compute_allowed_picking_ids()
+        res = super(StockLandedCost, self)._compute_allowed_picking_ids()
         valued_picking_ids_per_company = defaultdict(list)
         if self.company_id:
             self.env.cr.execute(
@@ -50,3 +50,4 @@ class StockLandedCost(models.Model):
             if picking_ids:
                 additional_pickings = self.env["stock.picking"].browse(picking_ids)
                 cost.allowed_picking_ids += additional_pickings
+        return res
