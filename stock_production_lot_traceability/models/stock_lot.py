@@ -5,12 +5,12 @@
 from odoo import _, fields, models
 
 
-class StockProductionLot(models.Model):
-    _inherit = "stock.production.lot"
+class StockLot(models.Model):
+    _inherit = "stock.lot"
 
     produce_lot_ids = fields.Many2many(
         string="Produced Lots/Serial Numbers",
-        comodel_name="stock.production.lot",
+        comodel_name="stock.lot",
         compute="_compute_produce_lot_ids",
         help="Lots that were directly or indirectly produced from this lot",
     )
@@ -20,7 +20,7 @@ class StockProductionLot(models.Model):
     )
     consume_lot_ids = fields.Many2many(
         string="Consumed Lots/Serial Numbers",
-        comodel_name="stock.production.lot",
+        comodel_name="stock.lot",
         compute="_compute_consume_lot_ids",
         help="Lots that were directly or indirectly consumed to produce this lot",
     )
