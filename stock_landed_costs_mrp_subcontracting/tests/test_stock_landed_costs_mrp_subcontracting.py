@@ -81,7 +81,7 @@ class TestStockLandedCostsMrpSubcontracting(ValuationReconciliationTestCommon):
         # service.
         cls.env["product.supplierinfo"].create(
             {
-                "name": cls.subcontracting_vendor.id,
+                "partner_id": cls.subcontracting_vendor.id,
                 "price": 10,
                 "product_tmpl_id": cls.product_subcontracted.product_tmpl_id.id,
                 "delay": 1,
@@ -152,7 +152,9 @@ class TestStockLandedCostsMrpSubcontracting(ValuationReconciliationTestCommon):
         picking.action_assign()
         res_dict = picking.button_validate()
         wizard = Form(
-            self.env[(res_dict.get("res_model"))].with_context(res_dict.get("context"))
+            self.env[(res_dict.get("res_model"))].with_context(
+                **res_dict.get("context")
+            )
         ).save()
         wizard.process()
         return True
