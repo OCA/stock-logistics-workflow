@@ -59,7 +59,7 @@
         <field name="name">Stock Picking Cancel Reason</field>
         <field name="model">stock.picking.cancel.reason</field>
         <field name="arch" type="xml">
-            <tree string="Stock Picking Cancel Reasons">
+            <tree>
                 <field name="name" />
             </tree>
         </field>
