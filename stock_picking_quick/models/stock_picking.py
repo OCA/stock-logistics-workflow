@@ -30,7 +30,7 @@ class StockPicking(models.Model):
         return res
 
     def _prepare_quick_line(self, product):
-        res = super(StockPicking, self)._prepare_quick_line(product)
+        res = super()._prepare_quick_line(product)
         res["location_id"] = self.location_id.id
         res["location_dest_id"] = self.location_dest_id.id
         return res
@@ -53,13 +53,12 @@ class StockPicking(models.Model):
                 "picking_id": self.id,
             }
         )
-        res = super(StockPicking, self)._complete_quick_line_vals(
+        res = super()._complete_quick_line_vals(
             vals, lines_key="move_ids_without_package"
         )
-        res.pop("product_qty")
+        if "product_qty" in res:
+            res.pop("product_qty")
         return res
 
     def _add_quick_line(self, product, lines_key=""):
-        return super(StockPicking, self)._add_quick_line(
-            product, lines_key="move_ids_without_package"
-        )
+        return super()._add_quick_line(product, lines_key="move_ids_without_package")
