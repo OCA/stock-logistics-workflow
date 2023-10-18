@@ -4,7 +4,6 @@
         <field name="model">stock.return.request</field>
         <field name="arch" type="xml">
             <tree
-                string="Stock Return Requests"
                 decoration-muted="state=='cancel'"
                 decoration-info="state=='draft'"
                 decoration-danger="state=='confirmed'"
@@ -152,7 +151,7 @@
                                     </page>
                                  </notebook>
                             </form>
-                            <tree string="Returns" editable="bottom">
+                            <tree editable="bottom">
                                 <field name="product_id" />
                                 <field name="product_uom_id" readonly="1" />
                                 <field name="tracking" invisible="1" />

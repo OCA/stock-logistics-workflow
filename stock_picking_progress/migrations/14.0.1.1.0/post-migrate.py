@@ -3,7 +3,7 @@
 
 from odoo import SUPERUSER_ID, api
 
-from odoo.addons.stock_picking_progress.hooks import setup_move_progress_post
+from .hooks import setup_move_progress_post
 
 
 def migrate(cr, version):

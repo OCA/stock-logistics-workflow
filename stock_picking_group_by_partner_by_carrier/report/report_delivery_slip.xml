@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<!-- oca-hooks:disable=xml-dangerous-qweb-replace-low-priority -->
 <odoo>
     <template id="report_delivery_document" inherit_id="stock.report_delivery_document">
         <div class="page" position="before">
