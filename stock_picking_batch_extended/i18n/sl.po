@@ -223,11 +223,6 @@ msgid "Picked By"
 msgstr "Sestavil"
 
 #. module: stock_picking_batch_extended
-#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.res_config_settings_view_form
-msgid "Picking Batch"
-msgstr "Zbirnik dobavnic"
-
-#. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__picking_to_batch_id
 msgid "Picking To Batch"
 msgstr ""
@@ -304,11 +299,6 @@ msgid "Sequence"
 msgstr "Zaporedje"
 
 #. module: stock_picking_batch_extended
-#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.res_config_settings_view_form
-msgid "Switch behaviour bettwen Odoo and OCA for batch validation"
-msgstr "Preklop metodologije zbirnika dobav med Odoo in OCA"
-
-#. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.product_normal_form_view
 msgid "This note will show up on the batch picking printout."
 msgstr "Ta beležka bo prikazana pri izpisu zbirne dobavnice."
@@ -359,6 +349,12 @@ msgstr "opombe"
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_warehouse__default_user_id
 msgid "the user to which the batch pickings are assigned by default"
 msgstr "uporabnik, kateremu se privzeto dodeljujejo zbirniki dobav"
+
+#~ msgid "Picking Batch"
+#~ msgstr "Zbirnik dobavnic"
+
+#~ msgid "Switch behaviour bettwen Odoo and OCA for batch validation"
+#~ msgstr "Preklop metodologije zbirnika dobav med Odoo in OCA"
 
 #~ msgid "Entire Package"
 #~ msgstr "Celotna pošiljka"
