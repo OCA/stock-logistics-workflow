@@ -227,12 +227,6 @@ msgid "Picked By"
 msgstr "Kommissioniert durch"
 
 #. module: stock_picking_batch_extended
-#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.res_config_settings_view_form
-#, fuzzy
-msgid "Picking Batch"
-msgstr "Kommissionierscheine"
-
-#. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__picking_to_batch_id
 msgid "Picking To Batch"
 msgstr ""
@@ -311,11 +305,6 @@ msgid "Sequence"
 msgstr ""
 
 #. module: stock_picking_batch_extended
-#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.res_config_settings_view_form
-msgid "Switch behaviour bettwen Odoo and OCA for batch validation"
-msgstr ""
-
-#. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.product_normal_form_view
 msgid "This note will show up on the batch picking printout."
 msgstr ""
@@ -366,6 +355,10 @@ msgstr "Freitext-Bemerkungen"
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_warehouse__default_user_id
 msgid "the user to which the batch pickings are assigned by default"
 msgstr "Der Anwender, dem die Stapel per Vorgabe zugeordnet werden"
+
+#, fuzzy
+#~ msgid "Picking Batch"
+#~ msgstr "Kommissionierscheine"
 
 #~ msgid "Assign picking operations to an employee."
 #~ msgstr "Kommissionierungen einem Mitarbeiter zuweisen."
