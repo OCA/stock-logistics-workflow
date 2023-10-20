@@ -4,3 +4,8 @@
   * Pedro M. Baeza
   * Carlos Dauden
   * Sergio Teruel
+
+
+* `Moduon Team <https://www.moduon.team>`_:
+
+  * Eduardo de Miguel
