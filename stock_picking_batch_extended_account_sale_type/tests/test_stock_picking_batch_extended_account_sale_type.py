@@ -1,4 +1,5 @@
 # Copyright 2019 Sergio Teruel - Tecnativa <sergio.teruel@tecnativa.com>
+# Copyright 2023 Moduon Team - Eduardo de Miguel
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 from odoo.addons.stock_picking_batch_extended_account.tests import (
     test_stock_picking_batch_extended_account as test_bp_account,
@@ -31,6 +32,8 @@ class TestStockPickingBatchExtendedAccountSaleType(
         move_lines.qty_done = 1.0
         bp = self._create_batch_picking(pickings)
         bp.action_assign()
-        bp.action_done()
+        action_done_res = bp.action_done()
+        if action_done_res is not True:
+            self._process_immediate_transfer(action_done_res)
         self.assertFalse(self.order1.invoice_ids)
         self.assertTrue(self.order2.invoice_ids)
