@@ -1,4 +1,5 @@
 # Copyright 2022 Tecnativa - Sergio Teruel
+# Copyright 2023 Moduon Team - Eduardo de Miguel
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 from odoo.tests import Form, TransactionCase
 
@@ -17,7 +18,7 @@ class TestStockPickingBatchExtendedAccount(TransactionCase):
         cls.company = cls.env.company
         cls.env.cr.execute(
             "UPDATE res_company SET currency_id = %s WHERE id = %s",
-            [cls.env.ref("base.USD").id, cls.company.id],
+            [cls.currency_usd.id, cls.company.id],
         )
         cls.product = cls.env["product.product"].create(
             {
@@ -41,8 +42,6 @@ class TestStockPickingBatchExtendedAccount(TransactionCase):
         cls.partner2 = cls.env["res.partner"].create(
             {"name": "partner test 2", "batch_picking_auto_invoice": "no"}
         )
-        # Use OCA batch picking extended
-        cls.env.company.use_oca_batch_validation = True
 
     def _create_sale_order(self, partner):
         with Form(self.env["sale.order"]) as so_form:
@@ -56,14 +55,27 @@ class TestStockPickingBatchExtendedAccount(TransactionCase):
         # Create the BP
         with Form(
             self.env["stock.picking.to.batch"].with_context(
-                active_ids=pickings.ids, active_model="sotck.picking"
+                active_ids=pickings.ids, active_model="stock.picking"
             )
         ) as wiz_form:
-            wiz_form.name = "BP for test"
             wiz_form.mode = "new"
         wiz = wiz_form.save()
-        action = wiz.action_create_batch()
-        return self.env["stock.picking.batch"].browse(action["res_id"])
+        wiz.attach_pickings()
+        return pickings.mapped("batch_id")
+
+    def _process_immediate_transfer(self, res_action):
+        sit_model = self.env[res_action["res_model"]].with_context(
+            **res_action["context"]
+        )
+        immediate_transfer_wiz_vals = sit_model.default_get(
+            [
+                "pick_ids",
+                "show_transfers",
+                "immediate_transfer_line_ids",
+            ]
+        )
+        wiz = sit_model.create(immediate_transfer_wiz_vals)
+        return wiz.process()
 
     def test_create_invoice_from_bp_no_invoices(self):
         self.partner.batch_picking_auto_invoice = "no"
@@ -77,7 +89,9 @@ class TestStockPickingBatchExtendedAccount(TransactionCase):
         move_lines.qty_done = 1.0
         bp = self._create_batch_picking(pickings)
         bp.action_assign()
-        bp.action_done()
+        action_done_res = bp.action_done()
+        if action_done_res is not True:
+            self._process_immediate_transfer(action_done_res)
         self.assertFalse(self.order1.invoice_ids)
         self.assertFalse(self.order2.invoice_ids)
 
@@ -93,7 +107,9 @@ class TestStockPickingBatchExtendedAccount(TransactionCase):
         move_lines.qty_done = 1.0
         bp = self._create_batch_picking(pickings)
         bp.action_assign()
-        bp.action_done()
+        action_done_res = bp.action_done()
+        if action_done_res is not True:
+            self._process_immediate_transfer(action_done_res)
         self.assertTrue(self.order1.invoice_ids)
         self.assertTrue(self.order2.invoice_ids)
 
@@ -109,6 +125,8 @@ class TestStockPickingBatchExtendedAccount(TransactionCase):
         move_lines.qty_done = 1.0
         bp = self._create_batch_picking(pickings)
         bp.action_assign()
-        bp.action_done()
+        action_done_res = bp.action_done()
+        if action_done_res is not True:
+            self._process_immediate_transfer(action_done_res)
         self.assertTrue(self.order1.invoice_ids)
         self.assertFalse(self.order2.invoice_ids)
