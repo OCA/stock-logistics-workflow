@@ -3,7 +3,7 @@
 
 {
     "name": "Stock Picking Cancel Reason",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "author": "Ecosoft, Odoo Community Association (OCA)",
     "category": "Stock",
     "license": "AGPL-3",

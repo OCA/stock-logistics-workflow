@@ -7,7 +7,7 @@
         This module allows you to change the source location of a stock move from the
         picking
     """,
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "license": "AGPL-3",
     "author": "ForgeFlow S.L.,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
