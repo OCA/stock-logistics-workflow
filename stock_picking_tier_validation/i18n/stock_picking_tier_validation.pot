@@ -122,6 +122,11 @@ msgid "Validated Message"
 msgstr ""
 
 #. module: stock_picking_tier_validation
+#: model:ir.model.fields,field_description:stock_picking_tier_validation.field_stock_picking__validation_status
+msgid "Validation Status"
+msgstr ""
+
+#. module: stock_picking_tier_validation
 #: model:ir.model.fields,field_description:stock_picking_tier_validation.field_stock_picking__review_ids
 msgid "Validations"
 msgstr ""
