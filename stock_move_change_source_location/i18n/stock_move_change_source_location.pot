@@ -87,7 +87,6 @@ msgstr ""
 
 #. module: stock_move_change_source_location
 #: model:ir.model.fields,field_description:stock_move_change_source_location.field_stock_move_change_source_location_wizard__move_lines
-#: model_terms:ir.ui.view,arch_db:stock_move_change_source_location.stock_move_change_source_location_view
 msgid "Move lines"
 msgstr ""
 
