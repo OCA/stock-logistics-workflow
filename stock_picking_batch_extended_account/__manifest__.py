@@ -5,7 +5,7 @@
 {
     "name": "Stock batch picking account",
     "summary": "Generates invoices when batch is set to Done state",
-    "version": "16.0.1.0.2",
+    "version": "16.0.1.0.3",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "maintainers": ["ernestotejeda"],
     "development_status": "Beta",
