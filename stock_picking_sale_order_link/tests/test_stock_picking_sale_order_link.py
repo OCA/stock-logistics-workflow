@@ -7,17 +7,28 @@ from odoo.tests.common import TransactionCase
 
 @tagged("post_install", "-at_install")
 class TestStockPickingSaleOrderLink(TransactionCase):
-    def setUp(self):
-        super(TestStockPickingSaleOrderLink, self).setUp()
-        self.Location = self.env["stock.location"]
-        self.PickingType = self.env["stock.picking.type"]
-        self.Picking = self.env["stock.picking"]
-        self.Product = self.env["product.template"]
-        self.warehouse = self.env["stock.warehouse"].create(
+    @classmethod
+    def setUpClass(cls):
+        super(TestStockPickingSaleOrderLink, cls).setUpClass()
+        # Remove this variable in v16 and put instead:
+        # from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+        DISABLED_MAIL_CONTEXT = {
+            "tracking_disable": True,
+            "mail_create_nolog": True,
+            "mail_create_nosubscribe": True,
+            "mail_notrack": True,
+            "no_reset_password": True,
+        }
+        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
+        cls.Location = cls.env["stock.location"]
+        cls.PickingType = cls.env["stock.picking.type"]
+        cls.Picking = cls.env["stock.picking"]
+        cls.Product = cls.env["product.template"]
+        cls.warehouse = cls.env["stock.warehouse"].create(
             {"name": "warehouse - test", "code": "WH-TEST"}
         )
 
-        self.product = self.Product.create(
+        cls.product = cls.Product.create(
             {
                 "name": "Product - Test",
                 "type": "product",
@@ -25,24 +36,24 @@ class TestStockPickingSaleOrderLink(TransactionCase):
                 "standard_price": 100.00,
             }
         )
-        self.partner = self.env["res.partner"].create({"name": "Customer - test"})
-        self.picking_type = self.PickingType.search(
-            [("warehouse_id", "=", self.warehouse.id), ("code", "=", "outgoing")]
+        cls.partner = cls.env["res.partner"].create({"name": "Customer - test"})
+        cls.picking_type = cls.PickingType.search(
+            [("warehouse_id", "=", cls.warehouse.id), ("code", "=", "outgoing")]
         )
-        sale_order = self.env["sale.order"].create(
+        sale_order = cls.env["sale.order"].create(
             {
-                "partner_id": self.partner.id,
-                "partner_invoice_id": self.partner.id,
-                "partner_shipping_id": self.partner.id,
+                "partner_id": cls.partner.id,
+                "partner_invoice_id": cls.partner.id,
+                "partner_shipping_id": cls.partner.id,
                 "order_line": [
                     (
                         0,
                         0,
                         {
-                            "name": self.product.name,
-                            "product_id": self.product.product_variant_ids.id,
+                            "name": cls.product.name,
+                            "product_id": cls.product.product_variant_ids.id,
                             "product_uom_qty": 2,
-                            "product_uom": self.product.uom_id.id,
+                            "product_uom": cls.product.uom_id.id,
                             "price_unit": 100.00,
                         },
                     )
@@ -50,7 +61,7 @@ class TestStockPickingSaleOrderLink(TransactionCase):
             }
         )
         sale_order.action_confirm()
-        self.picking = self.Picking.search([("sale_id", "=", sale_order.id)])
+        cls.picking = cls.Picking.search([("sale_id", "=", sale_order.id)])
 
     def test_picking_to_sale_order(self):
         result = self.picking.action_view_sale_order()
