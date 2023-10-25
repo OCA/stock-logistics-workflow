@@ -117,10 +117,6 @@ Contributors
     * César A. Sánchez
     * Luis D. Lafaurie
 
-* `Studio73 <https://www.studio73.es>`_:
-
-    * Ferran Mora
-
 Maintainers
 ~~~~~~~~~~~
 
