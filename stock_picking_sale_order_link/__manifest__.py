@@ -4,7 +4,7 @@
 {
     "name": "Stock Picking Sale Order Link",
     "summary": "Link between picking and sale order",
-    "version": "15.0.1.0.2",
+    "version": "15.0.1.0.3",
     "category": "Inventory",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Tecnativa, Odoo Community Association (OCA)",
