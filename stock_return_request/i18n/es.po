@@ -222,7 +222,6 @@ msgstr ""
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__message_has_error
-#: model:ir.model.fields,help:stock_return_request.field_stock_return_request__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr ""
 
@@ -531,11 +530,6 @@ msgid "Returns"
 msgstr "Devoluciones"
 
 #. module: stock_return_request
-#: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr ""
-
-#. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__from_date
 msgid "Search moves up to this date"
 msgstr "Buscar hasta esta fecha"
@@ -584,11 +578,6 @@ msgstr "Solicitud de Devolución de mercancía"
 #: model:ir.actions.report,name:stock_return_request.action_report_stock_return_request
 msgid "Stock Return Request Report"
 msgstr "Stock Return Request Report"
-
-#. module: stock_return_request
-#: model_terms:ir.ui.view,arch_db:stock_return_request.view_stock_return_request_tree
-msgid "Stock Return Requests"
-msgstr "Solicitudes de Devolución de mercancía"
 
 #. module: stock_return_request
 #: code:addons/stock_return_request/models/stock_return_request.py:0
@@ -714,3 +703,6 @@ msgstr ""
 #: model:ir.model.fields,help:stock_return_request.field_suggest_return_request_lot__suggested_lot_detail
 msgid "You can return these lots"
 msgstr ""
+
+#~ msgid "Stock Return Requests"
+#~ msgstr "Solicitudes de Devolución de mercancía"

@@ -217,7 +217,6 @@ msgstr "Se marcada, novas mensagens requerem sua atenção."
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__message_has_error
-#: model:ir.model.fields,help:stock_return_request.field_stock_return_request__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Se marcada, algumas mensagens apresentam um erro de entrega."
 
@@ -525,11 +524,6 @@ msgid "Returns"
 msgstr "Retornos"
 
 #. module: stock_return_request
-#: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr ""
-
-#. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__from_date
 msgid "Search moves up to this date"
 msgstr "Buscar movimentações até esta data"
@@ -582,11 +576,6 @@ msgstr "Requisição de Retorno de Estoque"
 #: model:ir.actions.report,name:stock_return_request.action_report_stock_return_request
 msgid "Stock Return Request Report"
 msgstr "Relatório de Requisições de Retorno de Estoque"
-
-#. module: stock_return_request
-#: model_terms:ir.ui.view,arch_db:stock_return_request.view_stock_return_request_tree
-msgid "Stock Return Requests"
-msgstr "Requisições de Retorno de Estoque"
 
 #. module: stock_return_request
 #: code:addons/stock_return_request/models/stock_return_request.py:0
@@ -710,6 +699,9 @@ msgstr ""
 #: model:ir.model.fields,help:stock_return_request.field_suggest_return_request_lot__suggested_lot_detail
 msgid "You can return these lots"
 msgstr "Você pode retornar esses lotes"
+
+#~ msgid "Stock Return Requests"
+#~ msgstr "Requisições de Retorno de Estoque"
 
 #~ msgid "If checked new messages require your attention."
 #~ msgstr "Se marcada, novas mensagens requerem sua atenção."
