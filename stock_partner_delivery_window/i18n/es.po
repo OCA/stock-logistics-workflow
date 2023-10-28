@@ -84,8 +84,8 @@ msgstr "Desde"
 #. odoo-python
 #: code:addons/stock_partner_delivery_window/models/res_partner.py:0
 #, python-format
-msgid "From {} to {}"
-msgstr "Desde {} hasta {}"
+msgid "From %(start)s to %(end)s"
+msgstr "Desde %(start)s hasta %(end)s"
 
 #. module: stock_partner_delivery_window
 #: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__id
@@ -154,11 +154,11 @@ msgstr ""
 #: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
 #, python-format
 msgid ""
-"The scheduled date is {} ({}), but the partner is set to prefer deliveries "
-"on working days."
+"The scheduled date is {date} ({weekday}), but the partner is set to prefer "
+"deliveries on working days."
 msgstr ""
-"La fecha prevista es {} ({}), pero el socio está configurado para preferir "
-"las entregas en días laborables."
+"La fecha prevista es {date} ({weekday}), pero el contacto está configurado "
+"para preferir las entregas en días laborables."
 
 #. module: stock_partner_delivery_window
 #: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__time_window_weekday_ids
