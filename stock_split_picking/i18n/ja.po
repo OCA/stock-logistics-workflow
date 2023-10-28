@@ -98,11 +98,6 @@ msgid "Move"
 msgstr "移動"
 
 #. module: stock_split_picking
-#: model_terms:ir.ui.view,arch_db:stock_split_picking.view_stock_split_picking
-msgid "Moves"
-msgstr "移動"
-
-#. module: stock_split_picking
 #: model:ir.model.fields.selection,name:stock_split_picking.selection__stock_split_picking__mode__move
 msgid "One picking per move"
 msgstr "一つの在庫移動に一つの出庫予定"
@@ -164,3 +159,6 @@ msgstr "出庫予定を分割するために完了数を入力してください
 #: model_terms:ir.ui.view,arch_db:stock_split_picking.view_stock_split_picking
 msgid "or"
 msgstr ""
+
+#~ msgid "Moves"
+#~ msgstr "移動"

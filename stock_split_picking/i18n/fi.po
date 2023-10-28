@@ -100,11 +100,6 @@ msgid "Move"
 msgstr ""
 
 #. module: stock_split_picking
-#: model_terms:ir.ui.view,arch_db:stock_split_picking.view_stock_split_picking
-msgid "Moves"
-msgstr ""
-
-#. module: stock_split_picking
 #: model:ir.model.fields.selection,name:stock_split_picking.selection__stock_split_picking__mode__move
 msgid "One picking per move"
 msgstr ""
