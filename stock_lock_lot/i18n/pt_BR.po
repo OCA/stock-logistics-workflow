@@ -94,7 +94,6 @@ msgstr ""
 
 #. module: stock_lock_lot
 #: model:ir.model.fields,help:stock_lock_lot.field_stock_production_lot__message_has_error
-#: model:ir.model.fields,help:stock_lock_lot.field_stock_production_lot__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr ""
 
@@ -179,11 +178,6 @@ msgstr "Categoria do produto"
 #. module: stock_lock_lot
 #: model:ir.model,name:stock_lock_lot.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
-msgstr ""
-
-#. module: stock_lock_lot
-#: model:ir.model.fields,field_description:stock_lock_lot.field_stock_production_lot__message_has_sms_error
-msgid "SMS Delivery error"
 msgstr ""
 
 #. module: stock_lock_lot
