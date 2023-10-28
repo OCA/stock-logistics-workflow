@@ -218,7 +218,6 @@ msgstr "Si está marcado, nuevos mensajes requieren su atención."
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__message_has_error
-#: model:ir.model.fields,help:stock_return_request.field_stock_return_request__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "si está marcada, algunos mensajes tienen un error de entrega."
 
@@ -526,11 +525,6 @@ msgid "Returns"
 msgstr "Devoluciones"
 
 #. module: stock_return_request
-#: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "Error de Entrega SMS"
-
-#. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__from_date
 msgid "Search moves up to this date"
 msgstr "Buscar hasta esta fecha"
@@ -708,6 +702,9 @@ msgstr ""
 #: model:ir.model.fields,help:stock_return_request.field_suggest_return_request_lot__suggested_lot_detail
 msgid "You can return these lots"
 msgstr "Usted puede devolver estos lotes"
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "Error de Entrega SMS"
 
 #, python-format
 #~ msgid ""

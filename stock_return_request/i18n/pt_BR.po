@@ -205,7 +205,6 @@ msgstr "Se marcada, novas mensagens requerem sua atenção."
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__message_has_error
-#: model:ir.model.fields,help:stock_return_request.field_stock_return_request__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Se marcada, algumas mensagens apresentam um erro de entrega."
 
@@ -505,11 +504,6 @@ msgstr "Coletas Retornadas"
 #: model_terms:ir.ui.view,arch_db:stock_return_request.view_stock_return_request_form
 msgid "Returns"
 msgstr "Retornos"
-
-#. module: stock_return_request
-#: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr ""
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__from_date
