@@ -105,7 +105,7 @@ class ResPartner(models.Model):
             DeprecationWarning,
             stacklevel=2,
         )
-        return _("From {} to {}")
+        return _("From %(start)s to %(end)s")
 
     def get_delivery_time_description(self):
         warnings.warn(
@@ -134,10 +134,10 @@ class ResPartner(models.Model):
                         start = win.get_time_window_start_time()
                         end = win.get_time_window_end_time()
                         translated_day = day_translated_values[day.name]
-                        value = time_format_string % (
-                            short_format_time(start),
-                            short_format_time(end),
-                        )
+                        value = time_format_string % {
+                            "start": short_format_time(start),
+                            "end": short_format_time(end),
+                        }
                         opening_times[translated_day].append(value)
             elif partner.delivery_time_preference == "workdays":
                 day_windows = weekdays.filtered(lambda d: d.name in WORKDAYS)
@@ -158,9 +158,7 @@ class ResPartner(models.Model):
                     opening_times[translated_day].append(value)
             opening_times_description = list()
             for day_name, time_list in opening_times.items():
-                opening_times_description.append(
-                    _("{}: {}").format(day_name, _(", ").join(time_list))
-                )
+                opening_times_description.append(f"{day_name}: {', '.join(time_list)}")
             res[partner.id] = "\n".join(opening_times_description)
         return res
 
