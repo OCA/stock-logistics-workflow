@@ -75,7 +75,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/stock_partner_delivery_window/models/res_partner.py:0
 #, python-format
-msgid "From {} to {}"
+msgid "From %(start)s to %(end)s"
 msgstr ""
 
 #. module: stock_partner_delivery_window
@@ -138,8 +138,8 @@ msgstr ""
 #: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
 #, python-format
 msgid ""
-"The scheduled date is {} ({}), but the partner is set to prefer deliveries "
-"on working days."
+"The scheduled date is {date} ({weekday}), but the partner is set to prefer "
+"deliveries on working days."
 msgstr ""
 
 #. module: stock_partner_delivery_window
