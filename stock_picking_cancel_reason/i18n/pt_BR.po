@@ -154,7 +154,6 @@ msgstr "Razão do Cancelamento da transferência"
 #: model:ir.ui.menu,name:stock_picking_cancel_reason.menu_stock_picking_cancel_reason
 #: model_terms:ir.ui.view,arch_db:stock_picking_cancel_reason.view_stock_picking_cancel_reason_form
 #: model_terms:ir.ui.view,arch_db:stock_picking_cancel_reason.view_stock_picking_cancel_reason_search
-#: model_terms:ir.ui.view,arch_db:stock_picking_cancel_reason.view_stock_picking_cancel_reason_tree
 msgid "Stock Picking Cancel Reasons"
 msgstr "Razões de Cancelamentos das Transferências"
 
