@@ -61,11 +61,6 @@ msgid "Product Variants"
 msgstr "Variantes de produto"
 
 #. module: stock_picking_quick
-#: model_terms:ir.ui.view,arch_db:stock_picking_quick.product_tree_view4picking
-msgid "Products for picking"
-msgstr "Produtos para coleta"
-
-#. module: stock_picking_quick
 #: model:ir.model,name:stock_picking_quick.model_stock_picking
 msgid "Transfer"
 msgstr "Transferência"
@@ -74,6 +69,9 @@ msgstr "Transferência"
 #: model_terms:ir.ui.view,arch_db:stock_picking_quick.product_search_view4picking
 msgid "Use Only Available Products"
 msgstr "Use apenas produtos disponíveis"
+
+#~ msgid "Products for picking"
+#~ msgstr "Produtos para coleta"
 
 #~ msgid "Stock Moves"
 #~ msgstr "Movimentações de Estoque"

@@ -62,11 +62,6 @@ msgid "Product Variants"
 msgstr "Različice proizvodov"
 
 #. module: stock_picking_quick
-#: model_terms:ir.ui.view,arch_db:stock_picking_quick.product_tree_view4picking
-msgid "Products for picking"
-msgstr "Proizvodi za dobavnico"
-
-#. module: stock_picking_quick
 #: model:ir.model,name:stock_picking_quick.model_stock_picking
 msgid "Transfer"
 msgstr "Premestitev"
@@ -75,6 +70,9 @@ msgstr "Premestitev"
 #: model_terms:ir.ui.view,arch_db:stock_picking_quick.product_search_view4picking
 msgid "Use Only Available Products"
 msgstr "Uporabljaj le proizvode na voljo"
+
+#~ msgid "Products for picking"
+#~ msgstr "Proizvodi za dobavnico"
 
 #~ msgid "Stock Moves"
 #~ msgstr "Premiki zaloge"
