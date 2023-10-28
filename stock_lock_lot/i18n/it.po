@@ -12,8 +12,8 @@ msgstr ""
 "POT-Creation-Date: 2017-05-31 02:51+0000\n"
 "PO-Revision-Date: 2023-10-13 10:38+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
-"Language-Team: Italian (http://www.transifex.com/oca/"
-"OCA-stock-logistics-workflow-8-0/language/it/)\n"
+"Language-Team: Italian (http://www.transifex.com/oca/OCA-stock-logistics-"
+"workflow-8-0/language/it/)\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -98,7 +98,6 @@ msgstr ""
 
 #. module: stock_lock_lot
 #: model:ir.model.fields,help:stock_lock_lot.field_stock_production_lot__message_has_error
-#: model:ir.model.fields,help:stock_lock_lot.field_stock_production_lot__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr ""
 
@@ -184,11 +183,6 @@ msgstr "Categoria prodotto"
 #: model:ir.model,name:stock_lock_lot.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
 msgstr "Movimenti prodotto (riga movimento di magazzino)"
-
-#. module: stock_lock_lot
-#: model:ir.model.fields,field_description:stock_lock_lot.field_stock_production_lot__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr ""
 
 #. module: stock_lock_lot
 #: model:mail.message.subtype,description:stock_lock_lot.mt_lock_lot
