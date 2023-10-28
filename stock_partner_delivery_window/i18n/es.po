@@ -142,7 +142,8 @@ msgstr ""
 #: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
 #, python-format
 msgid ""
-"The scheduled date is {date} ({tz}), but the partner is set to prefer deliveries on following time windows:\n"
+"The scheduled date is {date} ({tz}), but the partner is set to prefer "
+"deliveries on following time windows:\n"
 "{window}"
 msgstr ""
 "La fecha prevista es {date} ({tz}), pero el socio está configurado para "
@@ -188,9 +189,11 @@ msgstr "Días laborables (de lunes a viernes)"
 #. module: stock_partner_delivery_window
 #: model:ir.model.fields,help:stock_partner_delivery_window.field_partner_delivery_time_window__tz
 msgid ""
-"When printing documents and exporting/importing data, time values are computed according to this timezone.\n"
+"When printing documents and exporting/importing data, time values are "
+"computed according to this timezone.\n"
 "If the timezone is not set, UTC (Coordinated Universal Time) is used.\n"
-"Anywhere else, time values are computed according to the time offset of your web client."
+"Anywhere else, time values are computed according to the time offset of your "
+"web client."
 msgstr ""
 "Al imprimir documentos y exportar/importar datos, los valores de la hora se "
 "calculan según esta zona horaria.\n"
