@@ -137,7 +137,6 @@ msgstr "Nome do Lote"
 
 #. module: stock_picking_batch_extended
 #: model:ir.actions.act_window,name:stock_picking_batch_extended.action_stock_batch_picking_tree
-#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_tree
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.view_create_batch_picking
 msgid "Batch Picking"
 msgstr "Coleta do Lote"
@@ -314,7 +313,6 @@ msgstr "Agrupar Por..."
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator__group_field_ids
-#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.view_create_batch_picking
 msgid "Group by field"
 msgstr "Agrupar por campo"
 
@@ -354,7 +352,6 @@ msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__message_has_error
-#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr ""
 
@@ -600,11 +597,6 @@ msgid "Responsible User"
 msgstr ""
 
 #. module: stock_picking_batch_extended
-#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr ""
-
-#. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__sequence
 msgid "Sequence"
 msgstr "Sequência"
@@ -623,11 +615,6 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
-
-#. module: stock_picking_batch_extended
-#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_form
-msgid "Stock Moves"
-msgstr "Movimentações de Estoque"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.res_config_settings_view_form
@@ -778,6 +765,9 @@ msgstr "o usuário ao qual as coletas em lote são atribuídas por padrão"
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__user_id
 msgid "the user to which the pickings are assigned"
 msgstr "o usuário ao qual as seleções de lote são atribuídas"
+
+#~ msgid "Stock Moves"
+#~ msgstr "Movimentações de Estoque"
 
 #~ msgid "Assign picking operations to an employee."
 #~ msgstr "Atribua operações de coleta a um empregado."
