@@ -143,7 +143,6 @@ msgstr "Sequenza"
 #: model:ir.actions.act_window,name:stock_move_source_relocate.action_stock_source_relocate
 #: model:ir.ui.menu,name:stock_move_source_relocate.menu_stock_source_relocate
 #: model_terms:ir.ui.view,arch_db:stock_move_source_relocate.view_stock_source_relocate_form
-#: model_terms:ir.ui.view,arch_db:stock_move_source_relocate.view_stock_source_relocate_tree
 msgid "Source Relocation"
 msgstr "Trasferimento origine"
 
@@ -179,8 +178,9 @@ msgstr ""
 "display_name}</strong> è all'interno dell'ubicazione <strong>{rule."
 "location_id.display_name}</strong> e un controllo disponibilità non riporta "
 "prenotazioni, il movimento è trasferito all'ubicazione <strong>{rule."
-"relocate_location_id.display_name}</strong> (modifica ubicazione origine).<"
-"br/>Se un movimento è parzialmente non disponibile, il movimento è diviso in "
-"due parti:<ul><li>la parte disponibile è adeguata alla quantità prenotata, e "
-"la sua ubicazione origine rimane la stessa</li> <li>la parte non disponibile "
-"è modificata in un nuovo movimento nell'ubicazione di trasferimento</li></ul>"
+"relocate_location_id.display_name}</strong> (modifica ubicazione origine)."
+"<br/>Se un movimento è parzialmente non disponibile, il movimento è diviso "
+"in due parti:<ul><li>la parte disponibile è adeguata alla quantità "
+"prenotata, e la sua ubicazione origine rimane la stessa</li> <li>la parte "
+"non disponibile è modificata in un nuovo movimento nell'ubicazione di "
+"trasferimento</li></ul>"
