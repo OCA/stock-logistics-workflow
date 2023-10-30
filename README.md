@@ -61,7 +61,7 @@ addon | version | maintainers | summary
 [stock_picking_cancel_reason](stock_picking_cancel_reason/) | 14.0.1.0.1 |  | Stock Picking Cancel Reason
 [stock_picking_default_planned_transfer](stock_picking_default_planned_transfer/) | 14.0.1.0.1 | [![Kev-Roche](https://github.com/Kev-Roche.png?size=30px)](https://github.com/Kev-Roche) | Set Planned Transfer as Default from Inventory Views
 [stock_picking_filter_lot](stock_picking_filter_lot/) | 14.0.2.0.2 |  | In picking out lots' selection, filter lots based on their location
-[stock_picking_group_by_partner_by_carrier](stock_picking_group_by_partner_by_carrier/) | 14.0.1.4.3 |  | Stock Picking: group by partner and carrier
+[stock_picking_group_by_partner_by_carrier](stock_picking_group_by_partner_by_carrier/) | 14.0.1.4.4 |  | Stock Picking: group by partner and carrier
 [stock_picking_group_by_partner_by_carrier_by_date](stock_picking_group_by_partner_by_carrier_by_date/) | 14.0.1.0.1 |  | Stock Picking: group by partner and carrier and scheduled date
 [stock_picking_import_serial_number](stock_picking_import_serial_number/) | 14.0.1.0.1 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Import S/N from excel file for incoming pickings
 [stock_picking_invoice_link](stock_picking_invoice_link/) | 14.0.1.2.2 |  | Adds link between pickings and invoices
