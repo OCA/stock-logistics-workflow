@@ -39,6 +39,7 @@ addon | version | maintainers | summary
 [stock_dangerous_goods](stock_dangerous_goods/) | 14.0.1.0.0 | [![mmequignon](https://github.com/mmequignon.png?size=30px)](https://github.com/mmequignon) | Adds utility fields to manage dangerous goods
 [stock_delivery_note](stock_delivery_note/) | 14.0.1.0.1 |  | This module allows to fill in a delivery note that will be displayed on delivery report
 [stock_landed_costs_mrp_subcontracting](stock_landed_costs_mrp_subcontracting/) | 14.0.1.1.0 |  | When using Subcontracting, use the incoming shipment in landed costs
+[stock_landed_costs_security](stock_landed_costs_security/) | 14.0.1.0.0 | [![cesar-tecnativa](https://github.com/cesar-tecnativa.png?size=30px)](https://github.com/cesar-tecnativa) | Stock landed costs security
 [stock_lock_lot](stock_lock_lot/) | 14.0.1.0.0 |  | Stock Lock Lot
 [stock_lot_on_hand_first](stock_lot_on_hand_first/) | 14.0.1.0.0 | [![grindtildeath](https://github.com/grindtildeath.png?size=30px)](https://github.com/grindtildeath) | Allows to display lots on hand first in M2o fields
 [stock_lot_product_qty_search](stock_lot_product_qty_search/) | 14.0.1.0.0 | [![grindtildeath](https://github.com/grindtildeath.png?size=30px)](https://github.com/grindtildeath) | Allows to search on Quantity field of Lot/Serial Numbers
