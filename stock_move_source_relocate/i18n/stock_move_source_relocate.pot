@@ -136,7 +136,6 @@ msgstr ""
 #: model:ir.actions.act_window,name:stock_move_source_relocate.action_stock_source_relocate
 #: model:ir.ui.menu,name:stock_move_source_relocate.menu_stock_source_relocate
 #: model_terms:ir.ui.view,arch_db:stock_move_source_relocate.view_stock_source_relocate_form
-#: model_terms:ir.ui.view,arch_db:stock_move_source_relocate.view_stock_source_relocate_tree
 msgid "Source Relocation"
 msgstr ""
 

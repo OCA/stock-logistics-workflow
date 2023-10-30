@@ -65,7 +65,7 @@
         <field name="name">stock.source.relocate</field>
         <field name="model">stock.source.relocate</field>
         <field name="arch" type="xml">
-            <tree string="Source Relocation">
+            <tree name="source-relocation">
                 <field name="sequence" widget="handle" />
                 <field name="location_id" />
                 <field name="picking_type_id" />
