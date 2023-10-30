@@ -20,7 +20,7 @@ msgstr ""
 
 #. module: stock_landed_costs_security
 #: model:ir.module.category,name:stock_landed_costs_security.stock_landed_costs_security_category
-msgid "Landing costs"
+msgid "Landed costs"
 msgstr ""
 
 #. module: stock_landed_costs_security
