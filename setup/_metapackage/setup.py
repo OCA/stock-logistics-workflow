@@ -26,6 +26,7 @@ setuptools.setup(
         'odoo14-addon-stock_dangerous_goods',
         'odoo14-addon-stock_delivery_note',
         'odoo14-addon-stock_landed_costs_mrp_subcontracting',
+        'odoo14-addon-stock_landed_costs_purchase_auto',
         'odoo14-addon-stock_landed_costs_security',
         'odoo14-addon-stock_lock_lot',
         'odoo14-addon-stock_lot_on_hand_first',
