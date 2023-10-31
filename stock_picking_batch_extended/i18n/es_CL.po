@@ -221,11 +221,6 @@ msgid "Picked By"
 msgstr "Liquidado Por"
 
 #. module: stock_picking_batch_extended
-#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.res_config_settings_view_form
-msgid "Picking Batch"
-msgstr "Lote de Despacho"
-
-#. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__picking_to_batch_id
 msgid "Picking To Batch"
 msgstr ""
@@ -302,12 +297,6 @@ msgid "Sequence"
 msgstr "Secuencia"
 
 #. module: stock_picking_batch_extended
-#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.res_config_settings_view_form
-msgid "Switch behaviour bettwen Odoo and OCA for batch validation"
-msgstr ""
-"Cambiar el comportamiento entre Odoo y OCA para la validación por lotes"
-
-#. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.product_normal_form_view
 msgid "This note will show up on the batch picking printout."
 msgstr "Esta nota aparecerá en la impresión de selección de lotes."
@@ -359,6 +348,13 @@ msgstr "comentarios de forma libre"
 msgid "the user to which the batch pickings are assigned by default"
 msgstr ""
 "el usuario al que se asignan los despachos por lotes de forma predeterminada"
+
+#~ msgid "Picking Batch"
+#~ msgstr "Lote de Despacho"
+
+#~ msgid "Switch behaviour bettwen Odoo and OCA for batch validation"
+#~ msgstr ""
+#~ "Cambiar el comportamiento entre Odoo y OCA para la validación por lotes"
 
 #~ msgid "Entire Package"
 #~ msgstr "Todo el Paquete"
