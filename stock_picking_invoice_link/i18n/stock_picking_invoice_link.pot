@@ -52,11 +52,6 @@ msgid "Invoices"
 msgstr ""
 
 #. module: stock_picking_invoice_link
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking__invoice_count
-msgid "Invoices Orders"
-msgstr ""
-
-#. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_move
 msgid "Journal Entry"
 msgstr ""
@@ -64,6 +59,11 @@ msgstr ""
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_move_line
 msgid "Journal Item"
+msgstr ""
+
+#. module: stock_picking_invoice_link
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking__invoice_count
+msgid "Number of Invoices"
 msgstr ""
 
 #. module: stock_picking_invoice_link
