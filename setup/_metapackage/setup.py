@@ -44,6 +44,7 @@ setuptools.setup(
         'odoo-addon-stock_picking_show_backorder>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_show_return>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_start>=16.0dev,<16.1dev',
+        'odoo-addon-stock_picking_warn_message>=16.0dev,<16.1dev',
         'odoo-addon-stock_procurement_customer>=16.0dev,<16.1dev',
         'odoo-addon-stock_putaway_hook>=16.0dev,<16.1dev',
         'odoo-addon-stock_quant_package_dimension>=16.0dev,<16.1dev',
