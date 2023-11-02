@@ -14,7 +14,7 @@ class StockPicking(models.Model):
         comodel_name="account.move", copy=False, string="Invoices", readonly=True
     )
     invoice_count = fields.Integer(
-        string="Invoices Orders", compute="_compute_invoice_count"
+        string="Number of Invoices", compute="_compute_invoice_count"
     )
 
     def action_view_invoice(self):
