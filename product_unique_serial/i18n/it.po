@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-22 18:05+0000\n"
-"PO-Revision-Date: 2023-07-17 17:13+0000\n"
-"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
+"PO-Revision-Date: 2023-11-02 16:38+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/"
 "OCA-stock-logistics-workflow-8-0/language/it/)\n"
 "Language: it\n"
@@ -39,7 +39,7 @@ msgstr ""
 #. module: product_unique_serial
 #: model:ir.model,name:product_unique_serial.model_stock_production_lot
 msgid "Lot/Serial"
-msgstr "Lotto/Numero di serie"
+msgstr "Lotto/seriale"
 
 #. module: product_unique_serial
 #: model:product.template,name:product_unique_serial.product_demo_2_product_template
