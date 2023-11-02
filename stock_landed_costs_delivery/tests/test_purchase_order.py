@@ -10,8 +10,14 @@ class TestPurchaseOrder(TestPurchaseOrderBase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env = cls.env(
+            context=dict(
+                cls.env.context,
+                test_stock_landed_costs_delivery=True,
+            )
+        )
         product_carrier = cls.env["product.product"].create(
-            {"name": "Carrier", "type": "service"}
+            {"name": "Carrier", "type": "service", "categ_id": cls.category.id}
         )
         cls.carrier = cls.env["delivery.carrier"].create(
             {
@@ -27,8 +33,10 @@ class TestPurchaseOrder(TestPurchaseOrderBase):
         picking = self.order.picking_ids
         lc = self.order.landed_cost_ids
         self.assertEqual(len(lc.cost_lines), 0)
+        self.assertEqual(lc.state, "draft")
         self._action_picking_validate(picking)
         self.assertEqual(len(lc.cost_lines), 1)
+        self.assertEqual(lc.state, "done")
         self.assertIn(self.carrier.product_id, lc.cost_lines.mapped("product_id"))
         lc_cost_line = lc.cost_lines.filtered(
             lambda x: x.product_id == self.carrier.product_id
@@ -42,25 +50,26 @@ class TestPurchaseOrder(TestPurchaseOrderBase):
         self.order.order_line.product_qty = 2
         self.order.button_confirm()
         picking = self.order.picking_ids
+        self.assertEqual(len(self.order.landed_cost_ids), 1)
         lc = self.order.landed_cost_ids
         self.assertEqual(len(lc.cost_lines), 0)
+        self.assertEqual(lc.state, "draft")
         for move in picking.move_ids_without_package:
             move.quantity_done = 1
         self._action_picking_validate(picking)
+        self.assertEqual(len(self.order.landed_cost_ids), 2)
+        extra_lc = self.order.landed_cost_ids - lc
         self.assertEqual(len(lc.cost_lines), 1)
-        lc_cost_lines = lc.cost_lines.filtered(
-            lambda x: x.product_id == self.carrier.product_id
-        )
-        self.assertEqual(sum(lc_cost_lines.mapped("price_unit")), 10)
+        self.assertEqual(lc.state, "done")
+        self.assertEqual(extra_lc.state, "draft")
+        self.assertEqual(lc.cost_lines.price_unit, 10)
         new_picking = self.order.picking_ids - picking
         self._action_picking_validate(new_picking)
-        self.assertEqual(len(lc.cost_lines), 2)
-        self.assertIn(self.carrier.product_id, lc.cost_lines.mapped("product_id"))
-        lc_cost_lines = lc.cost_lines.filtered(
-            lambda x: x.product_id == self.carrier.product_id
-        )
-        self.assertEqual(sum(lc_cost_lines.mapped("price_unit")), 20)
-        self.assertIn(
+        self.assertEqual(len(extra_lc.cost_lines), 1)
+        self.assertEqual(extra_lc.state, "done")
+        self.assertEqual(self.carrier.product_id, extra_lc.cost_lines.product_id)
+        self.assertEqual(extra_lc.cost_lines.price_unit, 10)
+        self.assertEqual(
             self.carrier.split_method_landed_cost_line,
-            lc_cost_lines.mapped("split_method"),
+            extra_lc.cost_lines.split_method,
         )
