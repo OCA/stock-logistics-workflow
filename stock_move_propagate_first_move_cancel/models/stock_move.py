@@ -10,9 +10,17 @@ class StockMove(models.Model):
 
     def _action_cancel(self):
         res = super()._action_cancel()
+        # This will avoid recursion in some flows
+        already_cancel_ids = self.env.context.get("first_move_cancelled_ids", [])
         moves_to_cancel = self.search(
-            [("first_move_id", "in", self.ids), ("id", "not in", self.ids)]
+            [
+                ("first_move_id", "in", self.ids),
+                ("id", "not in", self.ids),
+                ("id", "not in", already_cancel_ids),
+            ]
         )
         if moves_to_cancel:
-            return moves_to_cancel._action_cancel()
+            return moves_to_cancel.with_context(
+                first_move_cancelled_ids=moves_to_cancel.ids
+            )._action_cancel()
         return res
