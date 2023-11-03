@@ -59,11 +59,6 @@ msgid "Invoices"
 msgstr "Facturas"
 
 #. module: stock_picking_invoice_link
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking__invoice_count
-msgid "Invoices Orders"
-msgstr "Facturas de Pedidos"
-
-#. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_move
 msgid "Journal Entry"
 msgstr "Entrada Diaria"
@@ -72,6 +67,11 @@ msgstr "Entrada Diaria"
 #: model:ir.model,name:stock_picking_invoice_link.model_account_move_line
 msgid "Journal Item"
 msgstr "Apunte contable"
+
+#. module: stock_picking_invoice_link
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking__invoice_count
+msgid "Number of Invoices"
+msgstr ""
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_bank_statement_line__picking_ids
@@ -126,6 +126,9 @@ msgstr "Transferir"
 #, python-format
 msgid "You can not modify an invoiced stock move"
 msgstr "No puede modificar un movimiento de existencias facturado"
+
+#~ msgid "Invoices Orders"
+#~ msgstr "Facturas de Pedidos"
 
 #~ msgid "Journal Entries"
 #~ msgstr "Asientos contables"
