@@ -58,11 +58,6 @@ msgid "Invoices"
 msgstr "Factures"
 
 #. module: stock_picking_invoice_link
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking__invoice_count
-msgid "Invoices Orders"
-msgstr "Factures de commandes"
-
-#. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_move
 msgid "Journal Entry"
 msgstr "Pièce comptable"
@@ -71,6 +66,11 @@ msgstr "Pièce comptable"
 #: model:ir.model,name:stock_picking_invoice_link.model_account_move_line
 msgid "Journal Item"
 msgstr "Écriture comptable"
+
+#. module: stock_picking_invoice_link
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking__invoice_count
+msgid "Number of Invoices"
+msgstr ""
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_bank_statement_line__picking_ids
@@ -125,6 +125,9 @@ msgstr "Transfert"
 #, python-format
 msgid "You can not modify an invoiced stock move"
 msgstr "Vous ne pouvez pas modifier un mouvement de stock facturé"
+
+#~ msgid "Invoices Orders"
+#~ msgstr "Factures de commandes"
 
 #~ msgid "Pickings"
 #~ msgstr "Préparations"
