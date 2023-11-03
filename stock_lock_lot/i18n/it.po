@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-31 02:51+0000\n"
-"PO-Revision-Date: 2023-11-02 16:37+0000\n"
+"PO-Revision-Date: 2023-11-03 14:38+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/"
 "OCA-stock-logistics-workflow-8-0/language/it/)\n"
@@ -73,7 +73,7 @@ msgstr ""
 #. module: stock_lock_lot
 #: model:ir.model.fields,field_description:stock_lock_lot.field_stock_production_lot__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Seguito da (partner)"
 
 #. module: stock_lock_lot
 #: model:ir.model.fields,field_description:stock_lock_lot.field_product_category__id
