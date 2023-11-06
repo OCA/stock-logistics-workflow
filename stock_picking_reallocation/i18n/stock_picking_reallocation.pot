@@ -1,0 +1,275 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_reallocation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_reallocation
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_reallocation__allocation_ids
+msgid "Allocations"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model_terms:ir.ui.view,arch_db:stock_picking_reallocation.stock_picking_reallocation_form
+msgid "Cancel"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model.fields.selection,name:stock_picking_reallocation.selection__stock_picking_reallocation__state__cancel
+msgid "Cancelled"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: code:addons/stock_picking_reallocation/models/stock_picking_reallocation.py:0
+#, python-format
+msgid ""
+"Cannot allocate less in current picking (%s) than what was already done for "
+"%s (%s)"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: code:addons/stock_picking_reallocation/models/stock_picking_reallocation.py:0
+#, python-format
+msgid "Cannot reallocate a move with multiple move lines for product %s"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_allocation__create_uid
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_reallocation__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_allocation__create_date
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_reallocation__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking__current_reallocation_id
+msgid "Current Reallocation"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_allocation__quantity_1
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_reallocation__date_1
+#: model_terms:ir.ui.view,arch_db:stock_picking_reallocation.stock_picking_reallocation_form
+msgid "Date 1"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_allocation__quantity_2
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_reallocation__date_2
+#: model_terms:ir.ui.view,arch_db:stock_picking_reallocation.stock_picking_reallocation_form
+msgid "Date 2"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_allocation__quantity_3
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_reallocation__date_3
+#: model_terms:ir.ui.view,arch_db:stock_picking_reallocation.stock_picking_reallocation_form
+msgid "Date 3"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_allocation__quantity_4
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_reallocation__date_4
+#: model_terms:ir.ui.view,arch_db:stock_picking_reallocation.stock_picking_reallocation_form
+msgid "Date 4"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_allocation__quantity_5
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_reallocation__date_5
+#: model_terms:ir.ui.view,arch_db:stock_picking_reallocation.stock_picking_reallocation_form
+msgid "Date 5"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_allocation__demand
+msgid "Demand"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model_terms:ir.ui.view,arch_db:stock_picking_reallocation.stock_picking_reallocation_form
+msgid "Discard"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_allocation__display_name
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_reallocation__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model.fields.selection,name:stock_picking_reallocation.selection__stock_picking_reallocation__state__done
+msgid "Done"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model.fields.selection,name:stock_picking_reallocation.selection__stock_picking_reallocation__state__draft
+msgid "Draft"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_allocation__edited
+msgid "Edited"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking__id
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_allocation__id
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_reallocation__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_reallocation__picking_id
+msgid "Initial Picking"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking____last_update
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_allocation____last_update
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_reallocation____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_allocation__write_uid
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_reallocation__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_allocation__write_date
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_reallocation__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_allocation__move_id
+msgid "Move"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_reallocation__name
+msgid "Name"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.actions.act_window,name:stock_picking_reallocation.stock_picking_reallocation_action
+#: model_terms:ir.ui.view,arch_db:stock_picking_reallocation.stock_picking_reallocation_form
+msgid "Picking Reallocation"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_allocation__product_name
+msgid "Product"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model_terms:ir.ui.view,arch_db:stock_picking_reallocation.stock_picking_reallocation_form
+msgid "Reallocate"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_allocation__reallocation_id
+msgid "Reallocation"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model_terms:ir.ui.view,arch_db:stock_picking_reallocation.view_picking_form
+msgid "Reallocation in progress"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking__reallocation_ids
+msgid "Reallocations"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model_terms:ir.ui.view,arch_db:stock_picking_reallocation.stock_picking_reallocation_form
+msgid "Save for later"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model_terms:ir.ui.view,arch_db:stock_picking_reallocation.view_picking_form
+msgid "Start reallocation"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_reallocation__state
+msgid "Status"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model,name:stock_picking_reallocation.model_stock_picking_allocation
+msgid "Stock Picking Allocation"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model,name:stock_picking_reallocation.model_stock_picking_reallocation
+msgid "Stock Picking Reallocation"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: code:addons/stock_picking_reallocation/models/stock_picking_reallocation.py:0
+#, python-format
+msgid "There is an excess of %s in allocation of %s."
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: code:addons/stock_picking_reallocation/models/stock_picking_reallocation.py:0
+#, python-format
+msgid "There is still %s to allocate for %s."
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model.fields,help:stock_picking_reallocation.field_stock_picking_allocation__demand
+msgid ""
+"This is the quantity of products from an inventory point of view. For moves "
+"in the state 'done', this is the quantity of products that were actually "
+"moved. For other moves, this is the quantity of product that is planned to "
+"be moved. Lowering this quantity does not generate a backorder. Changing "
+"this quantity on assigned moves affects the product reservation, and should "
+"be done with care."
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: code:addons/stock_picking_reallocation/models/stock_picking_reallocation.py:0
+#, python-format
+msgid "This picking has been created from the reallocation of "
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: code:addons/stock_picking_reallocation/models/stock_picking_reallocation.py:0
+#, python-format
+msgid "This picking has been reallocated into the following pickings: "
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model,name:stock_picking_reallocation.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: model:ir.model.fields,field_description:stock_picking_reallocation.field_stock_picking_allocation__unchanged
+msgid "Unchanged"
+msgstr ""
+
+#. module: stock_picking_reallocation
+#: code:addons/stock_picking_reallocation/models/stock_picking_reallocation.py:0
+#, python-format
+msgid "You must allocate some quantity for date %d"
+msgstr ""
