@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+  <record id="stock_picking_reallocation_action" model="ir.actions.act_window">
+    <field name="name">Picking Reallocation</field>
+    <field name="res_model">stock.picking.reallocation</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+  </record>
+  <record id="stock_picking_reallocation_form" model="ir.ui.view">
+    <field name="name">stock.picking.reallocation.form</field>
+    <field name="model">stock.picking.reallocation</field>
+    <field name="arch" type="xml">
+      <form string="Picking Reallocation">
+        <div class="oe_title">
+          <h1 class="mt0">
+            <field name="name" readonly="1" />
+          </h1>
+        </div>
+        <field name="picking_id" invisible="1" />
+        <div style="font-size: 1.075rem">
+          <div style="display: inline-block" class="mr2">
+            <label for="date_1" style="display: block">Date 1</label>
+            <field name="date_1" class="oe_inline" />
+          </div>
+          <div style="display: inline-block" class="m-2">
+            <label for="date_2" style="display: block">Date 2</label>
+            <field name="date_2" class="oe_inline" />
+          </div>
+          <div style="display: inline-block" class="m-2">
+            <label
+                            for="date_3"
+                            style="display: block"
+                            attrs="{'invisible': [('date_2', '=', False), ('date_3', '=', False), ('date_4', '=', False), ('date_5', '=', False)], 'required': ['|', ('date_4', '!=', False), ('date_5', '!=', False)]}"
+                        >Date 3</label>
+            <field
+                            name="date_3"
+                            attrs="{'invisible': [('date_2', '=', False), ('date_3', '=', False), ('date_4', '=', False), ('date_5', '=', False)], 'required': ['|', ('date_4', '!=', False), ('date_5', '!=', False)]}"
+                            class="oe_inline"
+                        />
+          </div>
+          <div style="display: inline-block" class="m-2">
+            <label
+                            for="date_4"
+                            style="display: block"
+                            attrs="{'invisible': [('date_3', '=', False), ('date_4', '=', False), ('date_5', '=', False)], 'required': [('date_5', '!=', False)]}"
+                        >Date 4</label>
+            <field
+                            name="date_4"
+                            attrs="{'invisible': [('date_3', '=', False), ('date_4', '=', False), ('date_5', '=', False)], 'required': [('date_5', '!=', False)]}"
+                            class="oe_inline"
+                        />
+          </div>
+          <div style="display: inline-block" class="ml2">
+            <label
+                            for="date_5"
+                            style="display: block"
+                            attrs="{'invisible': [('date_4', '=', False), ('date_5', '=', False)]}"
+                        >Date 5</label>
+            <field
+                            name="date_5"
+                            attrs="{'invisible': [('date_4', '=', False), ('date_5', '=', False)]}"
+                            class="oe_inline"
+                        />
+          </div>
+        </div>
+        <field name="allocation_ids">
+          <tree
+                        editable="bottom"
+                        create="0"
+                        delete="0"
+                        decoration-info="edited == True"
+                        decoration-success="unchanged == True"
+                    >
+            <field name="move_id" invisible="1" />
+            <field name="edited" invisible="1" />
+            <field name="product_name" />
+            <field name="demand" decoration-bf="1" />
+            <field name="quantity_1" />
+            <field
+                            name="quantity_2"
+                            attrs="{'column_invisible': [('parent.date_2', '=', False), ('parent.date_3', '=', False), ('parent.date_4', '=', False), ('parent.date_5', '=', False)]}"
+                        />
+            <field
+                            name="quantity_3"
+                            attrs="{'column_invisible': [('parent.date_3', '=', False), ('parent.date_4', '=', False), ('parent.date_5', '=', False)]}"
+                        />
+            <field
+                            name="quantity_4"
+                            attrs="{'column_invisible': [('parent.date_4', '=', False), ('parent.date_5', '=', False)]}"
+                        />
+            <field
+                            name="quantity_5"
+                            attrs="{'column_invisible': [('parent.date_5', '=', False)]}"
+                        />
+            <field
+                            name="unchanged"
+                            attrs="{'invisible': ['|', ('edited', '=', True), ('unchanged', '=', True)]}"
+                            icon="fa-check"
+                            widget="boolean_button"
+                        />
+          </tree>
+        </field>
+
+        <footer>
+          <button
+                        name="reallocate"
+                        string="Reallocate"
+                        type="object"
+                        class="btn-primary"
+                    />
+          <button
+                        string="Save for later"
+                        type="object"
+                        special="save"
+                        class="btn-info"
+                    />
+
+          <button
+                        string="Cancel"
+                        class="btn-secondary"
+                        type="object"
+                        name="cancel"
+                        attrs="{'invisible': [('id', '=', False)]}"
+                    />
+          <button string="Discard" class="btn-secondary" special="cancel" />
+        </footer>
+      </form>
+    </field>
+  </record>
+</odoo>
