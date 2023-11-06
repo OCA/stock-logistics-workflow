@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2023 Camptocamp SA
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record id="product_packaging_delivery_form" model="ir.ui.view">
+      <field name="name">product.packaging.form.inherit</field>
+      <field name="model">product.packaging</field>
+      <field name="inherit_id" ref="delivery.product_packaging_delivery_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//label[@for='max_weight']" position="before">
+            <label for="base_weight"/>
+            <div class="o_row" name="base_weight">
+              <field name="base_weight"/>
+              <span><field name="weight_uom_name"/></span>
+            </div>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="product_packaging_delivery_tree" model="ir.ui.view">
+      <field name="name">product.packaging.tree.inherit</field>
+      <field name="model">product.packaging</field>
+      <field name="inherit_id" ref="delivery.product_packaging_delivery_tree"/>
+      <field name="arch" type="xml">
+          <field name="max_weight" position="before">
+              <field name="base_weight"/>
+          </field>
+      </field>
+    </record>
+
+</odoo>

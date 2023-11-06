@@ -33,8 +33,8 @@ class StockQuantPackage(models.Model):
             )
 
     def _get_weight_from_packaging(self):
+        weight = self.packaging_id.base_weight or 0.0
         # NOTE: code copied/pasted and adapter from `delivery`
-        weight = 0.0
         if self.env.context.get("picking_id"):
             current_picking_move_line_ids = self.env["stock.move.line"].search(
                 [
