@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-12-05 14:34+0000\n"
+"PO-Revision-Date: 2023-12-19 15:37+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -40,3 +40,8 @@ msgstr "Metodo di divisione"
 #: model:ir.model.fields,help:stock_landed_costs_delivery.field_delivery_carrier__split_method_landed_cost_line
 msgid "Split method used in landed cost lines"
 msgstr "Metodo di divisione utilizzato nelle righe costi accessori"
+
+#. module: stock_landed_costs_delivery
+#: model:ir.model,name:stock_landed_costs_delivery.model_stock_picking
+msgid "Transfer"
+msgstr "Trasferimento"

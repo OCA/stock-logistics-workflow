@@ -37,3 +37,8 @@ msgstr ""
 #: model:ir.model.fields,help:stock_landed_costs_delivery.field_delivery_carrier__split_method_landed_cost_line
 msgid "Split method used in landed cost lines"
 msgstr ""
+
+#. module: stock_landed_costs_delivery
+#: model:ir.model,name:stock_landed_costs_delivery.model_stock_picking
+msgid "Transfer"
+msgstr ""

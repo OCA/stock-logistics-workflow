@@ -22,7 +22,7 @@ class PurchaseOrder(models.Model):
         res = super()._create_delivery_line(carrier=carrier, price_unit=price_unit)
         if carrier.create_landed_cost_line:
             vals = self._prepare_landed_cost_line_delivery_values(carrier, price_unit)
-            lc = self.landed_cost_ids.filtered(lambda x: x.state == "draft")
+            lc = self.sudo().landed_cost_ids.filtered(lambda x: x.state == "draft")
             if lc:
                 lc[0].cost_lines = [(0, 0, vals)]
         return res

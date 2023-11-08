@@ -1,6 +1,8 @@
 # Copyright 2021-2023 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 
+from odoo.tests.common import users
+
 from odoo.addons.stock_landed_costs_purchase_auto.tests.common import (
     TestPurchaseOrderBase,
 )
@@ -27,6 +29,19 @@ class TestPurchaseOrder(TestPurchaseOrderBase):
             }
         )
         cls.order.carrier_id = cls.carrier
+        cls.purchase_user.write(
+            {"groups_id": [(4, cls.env.ref("stock.group_stock_user").id)]}
+        )
+
+    @users("test_purchase_user")
+    def test_order_with_lc_basic_user(self):
+        self.order = self.order.with_user(self.env.user)
+        self.order.button_confirm()
+        lc = self.order.landed_cost_ids
+        self.assertTrue(lc.state, "draft")
+        picking = self.order.picking_ids
+        self._action_picking_validate(picking)
+        self.assertTrue(lc.state, "done")
 
     def test_order_with_lc_carrier_id(self):
         self.order.button_confirm()
