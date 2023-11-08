@@ -29,13 +29,16 @@ class PurchaseOrder(models.Model):
         }
 
     def _create_picking_with_stock_landed_cost(self, picking):
+        # We need to use sudo() because only Inventory > Administrator have
+        # permissions on stock.landed.cost
         self.ensure_one()
         landed_cost = (
             self.env["stock.landed.cost"]
             .with_company(self.company_id)
+            .sudo()
             .create(self._prepare_landed_cost_values(picking))
         )
-        self.write({"landed_cost_ids": [(4, landed_cost.id)]})
+        self.sudo().write({"landed_cost_ids": [(4, landed_cost.id)]})
 
     def _create_picking(self):
         all_pickings = self.mapped("picking_ids")
