@@ -14,7 +14,7 @@ class StockPicking(models.Model):
             "test_stock_landed_costs_delivery"
         ):
             for item in self:
-                landed_cost = item.purchase_id.landed_cost_ids.filtered(
+                landed_cost = item.purchase_id.sudo().landed_cost_ids.filtered(
                     lambda x: item in x.picking_ids
                     and x.state == "draft"
                     and x.cost_lines
