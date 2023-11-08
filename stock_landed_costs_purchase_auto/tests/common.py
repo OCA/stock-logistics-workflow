@@ -1,7 +1,7 @@
 # Copyright 2021-2023 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 
-from odoo.tests import Form, common
+from odoo.tests import Form, common, new_test_user
 
 
 class TestPurchaseOrderBase(common.SavepointCase):
@@ -37,6 +37,9 @@ class TestPurchaseOrderBase(common.SavepointCase):
                 "code": "MISC-LC",
                 "company_id": cls.company.id,
             }
+        )
+        cls.purchase_user = new_test_user(
+            cls.env, login="test_purchase_user", groups="purchase.group_purchase_user"
         )
         cls.order = cls._create_purchase_order(cls)
 
