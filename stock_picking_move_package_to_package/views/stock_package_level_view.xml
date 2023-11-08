@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record
+        id="package_level_tree_view_picking_move_package_to_package"
+        model="ir.ui.view"
+    >
+        <field name="name">Package Level Tree Picking Move Package To Package</field>
+        <field name="model">stock.package_level</field>
+        <field name="inherit_id" ref="stock.package_level_tree_view_picking" />
+        <field name="arch" type="xml">
+            <field name="package_id" position="after">
+                <field
+                    name="package_dest_id"
+                    attrs="{'readonly': [('state', 'in', ('confirmed', 'assigned', 'done', 'cancel'))]}"
+                    options="{'no_create': True}"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>
