@@ -1,10 +1,18 @@
 # Copyright 2021-2023 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 
+from odoo.tests.common import users
+
 from .common import TestPurchaseOrderBase
 
 
 class TestPurchaseOrder(TestPurchaseOrderBase):
+    @users("test_purchase_user")
+    def test_order_purchase_basic_user(self):
+        self.order = self.order.with_user(self.env.user)
+        self.order.button_confirm()
+        self.assertTrue(self.order.landed_cost_ids)
+
     def test_order_lc(self):
         self.order.button_confirm()
         self.assertTrue(self.order.landed_cost_ids)
