@@ -66,6 +66,7 @@ addon | version | maintainers | summary
 [stock_picking_group_by_partner_by_carrier](stock_picking_group_by_partner_by_carrier/) | 14.0.1.4.4 |  | Stock Picking: group by partner and carrier
 [stock_picking_group_by_partner_by_carrier_by_date](stock_picking_group_by_partner_by_carrier_by_date/) | 14.0.1.0.1 |  | Stock Picking: group by partner and carrier and scheduled date
 [stock_picking_import_serial_number](stock_picking_import_serial_number/) | 14.0.1.0.1 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Import S/N from excel file for incoming pickings
+[stock_picking_inter_warehouse](stock_picking_inter_warehouse/) | 14.0.1.0.1 | [![pytech-bot](https://github.com/pytech-bot.png?size=30px)](https://github.com/pytech-bot) | Stock Picking Inter Warehouse
 [stock_picking_invoice_link](stock_picking_invoice_link/) | 14.0.1.2.2 |  | Adds link between pickings and invoices
 [stock_picking_line_sequence](stock_picking_line_sequence/) | 14.0.1.0.0 |  | Manages the order of stock moves by displaying its sequence
 [stock_picking_mass_action](stock_picking_mass_action/) | 14.0.1.0.2 |  | Stock Picking Mass Action
