@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_picking_form_putinpack_restriction" model="ir.ui.view">
+        <field name="name">view_picking_form_putinpack_restriction</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+          <xpath expr="//field[@name='use_create_lots']" position="after">
+            <field name="put_in_pack_restriction" invisible="1" />
+          </xpath>
+          <xpath
+                expr="//page[@name='detailed_operations_hidden']//button[@name='action_put_in_pack']"
+                position="attributes"
+            >
+              <attribute name="attrs">
+                {'invisible': [('put_in_pack_restriction', '=', 'no_package')]}
+              </attribute>
+            </xpath>
+        <xpath
+                expr="//page[@name='detailed_operations_shown']/button[@name='action_put_in_pack']"
+                position="attributes"
+            >
+              <attribute name="attrs">
+                {'invisible': [('put_in_pack_restriction', '=', 'no_package')]}
+              </attribute>
+            </xpath>
+            <xpath
+                expr="//page[@name='operations']/button[@name='action_put_in_pack']"
+                position="attributes"
+            >
+              <attribute name="attrs">
+                {'invisible': [('put_in_pack_restriction', '=', 'no_package')]}
+              </attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
