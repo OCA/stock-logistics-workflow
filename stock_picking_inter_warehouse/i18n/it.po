@@ -6,34 +6,36 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2023-11-13 11:41+0000\n"
+"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_picking_inter_warehouse
 #: model:ir.model,name:stock_picking_inter_warehouse.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Contatto"
 
 #. module: stock_picking_inter_warehouse
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_res_partner__default_stock_location_src_id
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_res_users__default_stock_location_src_id
 msgid "Default Source Location"
-msgstr ""
+msgstr "Ubicazione origine predefinita"
 
 #. module: stock_picking_inter_warehouse
 #: model:ir.model.fields,help:stock_picking_inter_warehouse.field_stock_warehouse__receipt_destination_location_id
 msgid "Destination location where products will be received"
-msgstr ""
+msgstr "Ubicazione di destinazione dove verranno ricevuti i prodotti"
 
 #. module: stock_picking_inter_warehouse
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_picking_type__disable_merge_picking_moves
 msgid "Disable Merge Picking Moves"
-msgstr ""
+msgstr "Disabilita aggregazione righe trasferimento"
 
 #. module: stock_picking_inter_warehouse
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_res_partner__display_name
@@ -44,12 +46,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_rule__display_name
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_warehouse__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: stock_picking_inter_warehouse
 #: model:ir.model.fields,help:stock_picking_inter_warehouse.field_stock_picking_type__disable_merge_picking_moves
 msgid "Force one reception picking for each delivery"
-msgstr ""
+msgstr "Forza un picking di ricezione per ogni picking di consegna"
 
 #. module: stock_picking_inter_warehouse
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_res_partner__id
@@ -60,45 +62,45 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_rule__id
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_warehouse__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_picking_inter_warehouse
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_picking__inter_warehouse_contact_domain_ids
 msgid "Inter Warehouse Contact Domain"
-msgstr ""
+msgstr "Dominio contatto inter-magazzini"
 
 #. module: stock_picking_inter_warehouse
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_location__inter_warehouse_partner_id
 msgid "Inter Warehouse Partner"
-msgstr ""
+msgstr "Contatto inter-magazzini"
 
 #. module: stock_picking_inter_warehouse
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_rule__inter_warehouse_src_id
 msgid "Inter Warehouse Source"
-msgstr ""
+msgstr "Origine inter-magazzini"
 
 #. module: stock_picking_inter_warehouse
 #: code:addons/stock_picking_inter_warehouse/models/stock_warehouse.py:0
 #: model:stock.location.route,name:stock_picking_inter_warehouse.stock_location_route_inter_warehouse
 #, python-format
 msgid "Inter-Warehouse"
-msgstr ""
+msgstr "Inter-magazzini"
 
 #. module: stock_picking_inter_warehouse
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_picking__type_inter_warehouse_transfer
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_picking_type__inter_warehouse_transfer
 msgid "Inter-Warehouse Transfer"
-msgstr ""
+msgstr "Trasferimento inter-magazzini"
 
 #. module: stock_picking_inter_warehouse
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_warehouse__inter_warehouse_transfers
 msgid "Inter-Warehouse Transfers"
-msgstr ""
+msgstr "Trasferimenti inter-magazzini"
 
 #. module: stock_picking_inter_warehouse
 #: model:ir.model,name:stock_picking_inter_warehouse.model_stock_location
 msgid "Inventory Locations"
-msgstr ""
+msgstr "Ubicazioni di inventario"
 
 #. module: stock_picking_inter_warehouse
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_res_partner____last_update
@@ -109,59 +111,59 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_rule____last_update
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_warehouse____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: stock_picking_inter_warehouse
 #: model:ir.model.fields,help:stock_picking_inter_warehouse.field_stock_warehouse__receipt_picking_type_id
 msgid "Operation type for incoming inter-warehouse pickings"
-msgstr ""
+msgstr "Tipo di operazione per trasferimenti inter-magazzini in entrata"
 
 #. module: stock_picking_inter_warehouse
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_warehouse__receipt_picking_partner_id
 msgid "Partner in Picking"
-msgstr ""
+msgstr "Partner nel trasferimento"
 
 #. module: stock_picking_inter_warehouse
 #: model:ir.model,name:stock_picking_inter_warehouse.model_stock_picking_type
 msgid "Picking Type"
-msgstr ""
+msgstr "Tipologia prelievo"
 
 #. module: stock_picking_inter_warehouse
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_warehouse__receipt_destination_location_id
 msgid "Receipt Destination Location"
-msgstr ""
+msgstr "Destinazione ubicazione di ricezione"
 
 #. module: stock_picking_inter_warehouse
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_warehouse__receipt_picking_type_id
 msgid "Receipt Operation Type"
-msgstr ""
+msgstr "Tipo operazione ricezione"
 
 #. module: stock_picking_inter_warehouse
 #: model:ir.model.fields,help:stock_picking_inter_warehouse.field_stock_warehouse__receipt_picking_partner_id
 msgid "Receiving picking partner"
-msgstr ""
+msgstr "Partner ricezione nel picking"
 
 #. module: stock_picking_inter_warehouse
 #: model:ir.model,name:stock_picking_inter_warehouse.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimento di magazzino"
 
 #. module: stock_picking_inter_warehouse
 #: model:ir.model,name:stock_picking_inter_warehouse.model_stock_rule
 msgid "Stock Rule"
-msgstr ""
+msgstr "Regola di giacenza"
 
 #. module: stock_picking_inter_warehouse
 #: model:ir.model,name:stock_picking_inter_warehouse.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Trasferimento"
 
 #. module: stock_picking_inter_warehouse
 #: model_terms:ir.ui.view,arch_db:stock_picking_inter_warehouse.view_picking_type_form
 msgid "Use for Inter-warehouse transfer"
-msgstr ""
+msgstr "Usa per trasferimento inter-magazzini"
 
 #. module: stock_picking_inter_warehouse
 #: model:ir.model,name:stock_picking_inter_warehouse.model_stock_warehouse
 msgid "Warehouse"
-msgstr ""
+msgstr "Magazzino"
