@@ -15,10 +15,12 @@
     ],
     "data": [
         "data/stock_location_route.xml",
-        "demo/res_config_settings_demo.xml",
-        "demo/stock_warehouse_demo.xml",
         "views/stock_picking_type_views.xml",
         "views/stock_picking_views.xml",
         "views/stock_warehouse_views.xml",
+    ],
+    "demo": [
+        "demo/res_config_settings_demo.xml",
+        "demo/stock_warehouse_demo.xml",
     ],
 }
