@@ -1,40 +1,38 @@
-# Copyright 2021 Tecnativa - Víctor Martínez
+# Copyright 2021-2023 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 
-from odoo.tests import Form, common
+from odoo.tests.common import users
+
+from .common import TestPurchaseOrderBase
 
 
-class TestPurchaseOrder(common.SavepointCase):
-    def setUp(self):
-        super().setUp()
-        self.company = self.env.ref("base.main_company")
-        self.product_storable = self.env["product.product"].create(
-            {"name": "Producto Storable", "type": "product"}
-        )
-        self.partner = self.env["res.partner"].create({"name": "Mr Odoo"})
-        self.company.lc_journal_id = self.env["account.journal"].create(
-            {
-                "name": "Test LC",
-                "type": "general",
-                "code": "MISC-LC",
-                "company_id": self.company.id,
-            }
-        )
-
-    def _create_purchase_order(self):
-        order_form = Form(self.env["purchase.order"])
-        order_form.partner_id = self.partner
-        with order_form.order_line.new() as line_form:
-            line_form.product_id = self.product_storable
-        order = order_form.save()
-        return order
+class TestPurchaseOrder(TestPurchaseOrderBase):
+    @users("test_purchase_user")
+    def test_order_purchase_basic_user(self):
+        self.order = self.order.with_user(self.env.user)
+        self.order.button_confirm()
+        self.assertTrue(self.order.landed_cost_ids)
 
     def test_order_lc(self):
-        order = self._create_purchase_order()
-        order.button_confirm()
-        self.assertTrue(order.landed_cost_ids)
-        picking = order.picking_ids[0]
-        picking.move_ids_without_package.quantity_done = 1
-        picking.button_validate()
-        lc = order.landed_cost_ids[0]
-        self.assertTrue(picking in lc.picking_ids)
+        self.order.button_confirm()
+        self.assertTrue(self.order.landed_cost_ids)
+        picking = self.order.picking_ids
+        self._action_picking_validate(picking)
+        self.assertIn(picking, self.order.mapped("landed_cost_ids.picking_ids"))
+
+    def test_order_lc_multi(self):
+        self.order.order_line.product_qty = 2
+        self.order.button_confirm()
+        self.assertEqual(len(self.order.landed_cost_ids), 1)
+        lc = self.order.landed_cost_ids
+        picking = self.order.picking_ids
+        self.assertIn(picking, lc.picking_ids)
+        for move in picking.move_ids_without_package:
+            move.quantity_done = 1
+        self._action_picking_validate(picking)
+        self.assertEqual(len(self.order.landed_cost_ids), 2)
+        new_picking = self.order.picking_ids - picking
+        self._action_picking_validate(new_picking)
+        extra_lc = self.order.landed_cost_ids - lc
+        self.assertNotIn(new_picking, lc.picking_ids)
+        self.assertIn(new_picking, extra_lc.picking_ids)
