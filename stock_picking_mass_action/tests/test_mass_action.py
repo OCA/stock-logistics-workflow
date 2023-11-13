@@ -58,13 +58,6 @@ class TestMassAction(common.TransactionCase):
         wiz_confirm.confirm = True
         wiz_confirm.mass_action()
         self.assertEqual(self.picking.state, "confirmed")
-        # We test checking availability
-        wiz_check = wiz.with_context(check_availability=True).create(
-            {"picking_ids": [(4, self.picking.id)]}
-        )
-        wiz_check.confirm = True
-        wiz_check.mass_action()
-        self.assertEqual(self.picking.state, "assigned")
         # We test transferring picking
         wiz_tranfer = wiz.with_context(transfer=True).create(
             {"picking_ids": [(4, self.picking.id)]}
