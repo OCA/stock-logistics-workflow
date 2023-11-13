@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 13.0\n"
+"Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -16,6 +16,27 @@ msgstr ""
 #. module: stock_landed_costs_delivery
 #: model:ir.model.fields,field_description:stock_landed_costs_delivery.field_delivery_carrier__create_landed_cost_line
 msgid "Allow create landed cost lines"
+msgstr ""
+
+#. module: stock_landed_costs_delivery
+#: model:ir.model.fields,field_description:stock_landed_costs_delivery.field_delivery_carrier__display_name
+#: model:ir.model.fields,field_description:stock_landed_costs_delivery.field_purchase_order__display_name
+#: model:ir.model.fields,field_description:stock_landed_costs_delivery.field_stock_picking__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_landed_costs_delivery
+#: model:ir.model.fields,field_description:stock_landed_costs_delivery.field_delivery_carrier__id
+#: model:ir.model.fields,field_description:stock_landed_costs_delivery.field_purchase_order__id
+#: model:ir.model.fields,field_description:stock_landed_costs_delivery.field_stock_picking__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_landed_costs_delivery
+#: model:ir.model.fields,field_description:stock_landed_costs_delivery.field_delivery_carrier____last_update
+#: model:ir.model.fields,field_description:stock_landed_costs_delivery.field_purchase_order____last_update
+#: model:ir.model.fields,field_description:stock_landed_costs_delivery.field_stock_picking____last_update
+msgid "Last Modified on"
 msgstr ""
 
 #. module: stock_landed_costs_delivery
@@ -36,4 +57,9 @@ msgstr ""
 #. module: stock_landed_costs_delivery
 #: model:ir.model.fields,help:stock_landed_costs_delivery.field_delivery_carrier__split_method_landed_cost_line
 msgid "Split method used in landed cost lines"
+msgstr ""
+
+#. module: stock_landed_costs_delivery
+#: model:ir.model,name:stock_landed_costs_delivery.model_stock_picking
+msgid "Transfer"
 msgstr ""
