@@ -6,7 +6,6 @@
             <form string="Mass Action for the selected stock picking">
                 <group>
                     <field name="confirm" />
-                    <field name="check_availability" />
                     <field name="transfer" />
                 </group>
                 <footer>
@@ -30,22 +29,13 @@
         <field name="target">new</field>
         <field name="binding_model_id" ref="stock.model_stock_picking" />
     </record>
-    <!-- Check Availability Action -->
-    <record id="action_check_availability" model="ir.actions.act_window">
-        <field name="name">Check Availability</field>
-        <field name="res_model">stock.picking.mass.action</field>
-        <field name="view_mode">form</field>
-        <field name="target">new</field>
-        <field name="context">{'check_availability': 1}</field>
-        <field name="binding_model_id" ref="stock.model_stock_picking" />
-    </record>
     <!-- Transfer Action -->
     <record id="action_transfer" model="ir.actions.act_window">
         <field name="name">Transfer</field>
         <field name="res_model">stock.picking.mass.action</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
-        <field name="context">{'check_availability': 1, 'transfer': 1,}</field>
+        <field name="context">{'transfer': 1}</field>
         <field name="binding_model_id" ref="stock.model_stock_picking" />
     </record>
 </odoo>
