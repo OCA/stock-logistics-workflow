@@ -4,4 +4,5 @@
   * Vicent Cubells
   * Carlos Dauden
   * Sergio Teruel
+  * Carolina Fernandez
 * Pau Sanchez (pau.sanchez@qubiq.es)
