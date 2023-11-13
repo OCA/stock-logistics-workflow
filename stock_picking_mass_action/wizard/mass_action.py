@@ -12,10 +12,6 @@ class StockPickingMassAction(TransientModel):
     _description = "Stock Picking Mass Action"
 
     @api.model
-    def _default_check_availability(self):
-        return self.env.context.get("check_availability", False)
-
-    @api.model
     def _default_transfer(self):
         return self.env.context.get("transfer", False)
 
@@ -26,11 +22,6 @@ class StockPickingMassAction(TransientModel):
         string="Mark as Todo",
         default=True,
         help="check this box if you want to mark as Todo the" " selected Pickings.",
-    )
-    check_availability = fields.Boolean(
-        default=lambda self: self._default_check_availability(),
-        help="check this box if you want to check the availability of"
-        " the selected Pickings.",
     )
     transfer = fields.Boolean(
         default=lambda self: self._default_transfer(),
@@ -55,13 +46,6 @@ class StockPickingMassAction(TransientModel):
                 lambda x: x.state == "draft"
             ).sorted(key=lambda r: r.scheduled_date)
             draft_picking_lst.action_confirm()
-
-        # check availability if asked
-        if self.check_availability:
-            pickings_to_check = self.picking_ids.filtered(
-                lambda x: x.state not in ["draft", "cancel", "done"]
-            ).sorted(key=lambda r: r.scheduled_date)
-            pickings_to_check.action_assign()
 
         # Get all pickings ready to transfer and transfer them if asked
         if self.transfer:
