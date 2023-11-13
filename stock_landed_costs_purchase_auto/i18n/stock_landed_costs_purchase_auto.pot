@@ -17,6 +17,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_purchase_order__display_name
 #: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_purchase_order_line__display_name
 #: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_stock_landed_cost__display_name
+#: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_stock_picking__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -24,6 +25,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_purchase_order__id
 #: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_purchase_order_line__id
 #: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_stock_landed_cost__id
+#: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_stock_picking__id
 msgid "ID"
 msgstr ""
 
@@ -42,6 +44,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_purchase_order____last_update
 #: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_purchase_order_line____last_update
 #: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_stock_landed_cost____last_update
+#: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_stock_picking____last_update
 msgid "Last Modified on"
 msgstr ""
 
@@ -63,4 +66,9 @@ msgstr ""
 #. module: stock_landed_costs_purchase_auto
 #: model:ir.model,name:stock_landed_costs_purchase_auto.model_stock_landed_cost
 msgid "Stock Landed Cost"
+msgstr ""
+
+#. module: stock_landed_costs_purchase_auto
+#: model:ir.model,name:stock_landed_costs_purchase_auto.model_stock_picking
+msgid "Transfer"
 msgstr ""
