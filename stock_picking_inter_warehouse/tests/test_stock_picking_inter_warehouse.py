@@ -1,6 +1,7 @@
 # Copyright 2023 Ooops404
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+from odoo.exceptions import ValidationError
 from odoo.tests import SavepointCase
 
 
@@ -111,3 +112,10 @@ class TestStockPickingInterWarehouse(SavepointCase):
         self.stock_wh1.write({"inter_warehouse_transfers": False})
         self.assertEqual(route_inter_wh_id.warehouse_ids.ids, self.stock_wh2.ids)
         self.assertEqual(len(route_inter_wh_id.rule_ids), 1)
+
+    def test_wh_unique_picking_partner(self):
+        self.stock_wh1.receipt_picking_partner_id = self.stock_wh1.company_id.partner_id
+        with self.assertRaises(ValidationError):
+            self.stock_wh2.receipt_picking_partner_id = (
+                self.stock_wh2.company_id.partner_id
+            )
