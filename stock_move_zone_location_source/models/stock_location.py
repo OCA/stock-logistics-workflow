@@ -23,3 +23,11 @@ class StockLocation(models.Model):
         self.filtered(lambda location: location.is_zone).update(
             {"is_considered_as_source": False}
         )
+
+    def _get_source_zone(self):
+        if self.is_considered_as_source:
+            return self
+        elif self.location_id:  # check parent
+            return self.location_id._get_source_zone()
+        else:
+            return self.browse()

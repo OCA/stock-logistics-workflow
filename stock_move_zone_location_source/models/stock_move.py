@@ -27,10 +27,18 @@ class StockMove(models.Model):
             all_moves |= move.move_orig_ids._find_source_zone_location_move()
         return all_moves
 
+    def _find_source_zone_locations(self, visited=None):
+        # Find the source zones if any
+        # WARNING: The first call should be done with a single recordset
+        src_zones = self.env["stock.location"].browse()
+        for zone_location in self.move_line_ids.location_id.zone_location_id:
+            src_zones |= zone_location._get_source_zone()
+        unvisited_moves = (self - visited) if visited else self
+        for move in unvisited_moves:
+            src_zones |= move.move_orig_ids._find_source_zone_locations()
+        return src_zones
+
     @api.depends("move_orig_ids")
     def _compute_source_zone_location_ids(self):
         for move in self:
-            source_move = move._find_source_zone_location_move()
-            move.source_zone_location_ids = (
-                source_move.move_line_ids.location_id.zone_location_id
-            )
+            move.source_zone_location_ids = move._find_source_zone_locations()
