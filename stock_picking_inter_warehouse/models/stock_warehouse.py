@@ -28,9 +28,7 @@ class StockWarehouse(models.Model):
     def write(self, vals):
         res = super().write(vals)
         for wh in self:
-            route_inter_warehouse = self.env.ref(
-                "stock_picking_inter_warehouse.stock_location_route_inter_warehouse"
-            )
+            route_inter_warehouse = wh.company_id.inter_warehouse_route_id
             if wh.inter_warehouse_transfers:
                 # Add the warehouse to the route
                 # for inter-warehouse transfers
@@ -62,6 +60,7 @@ class StockWarehouse(models.Model):
                             "inter_warehouse_partner_id": [
                                 (6, 0, wh.receipt_picking_partner_id.ids)
                             ],
+                            "company_id": wh.company_id.id,
                         }
                     )
 
