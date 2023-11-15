@@ -6,13 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2023-11-15 08:38+0000\n"
+"Last-Translator: Luis Brose <l.brose@intero-technologies.de>\n"
 "Language-Team: none\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_no_negative
 #. odoo-python
@@ -27,7 +29,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_no_negative.field_product_template__allow_negative_stock
 #: model:ir.model.fields,field_description:stock_no_negative.field_stock_location__allow_negative_stock
 msgid "Allow Negative Stock"
-msgstr ""
+msgstr "Negative Lagerbestände erlauben"
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_product_category__allow_negative_stock
