@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-11-15 08:38+0000\n"
+"PO-Revision-Date: 2023-11-15 11:38+0000\n"
 "Last-Translator: Luis Brose <l.brose@intero-technologies.de>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -38,6 +38,9 @@ msgid ""
 "category. The options doesn't apply to products attached to sub-categories "
 "of this category."
 msgstr ""
+"Negative Lagerbestände für lagerbare Produkte dieser Kategorie erlauben. "
+"Diese Option gilt nicht für Produkte, die zu Unterkategorien dieser "
+"Kategorie gehören."
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_stock_location__allow_negative_stock
@@ -45,6 +48,8 @@ msgid ""
 "Allow negative stock levels for the stockable products attached to this "
 "location."
 msgstr ""
+"Negative Lagerbestände für die lagerfähigen Produkte erlauben, die mit "
+"diesem Ort verbunden sind."
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_product_product__allow_negative_stock
@@ -55,26 +60,30 @@ msgid ""
 "related stock moves will be blocked if the stock level becomes negative with"
 " the stock move."
 msgstr ""
+"Wenn diese Option weder für dieses Produkt noch für seine Produktkategorie "
+"aktiviert ist und es sich bei diesem Produkt um ein lagerfähiges Produkt "
+"handelt, dann wird die Validierung der damit verbundenen Lagerbewegungen "
+"blockiert, wenn der Lagerbestand durch die Lagerbewegung negativ wird."
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_stock_location
 msgid "Inventory Locations"
-msgstr ""
+msgstr "Lagerorte"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_product_template
 msgid "Product"
-msgstr ""
+msgstr "Produkt"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_product_category
 msgid "Product Category"
-msgstr ""
+msgstr "Produktkategorie"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_stock_quant
 msgid "Quants"
-msgstr ""
+msgstr "Quanten"
 
 #. module: stock_no_negative
 #. odoo-python
@@ -86,3 +95,7 @@ msgid ""
 " location '{complete_name}' and negative stock is not allowed for this "
 "product and/or location."
 msgstr ""
+"Diese Aktion kann nicht ausgeführt werden, da der Lagerbestand von "
+"'{name}'{name_lot} im Lager '{complete_name}' negativ werden würde "
+"({q_quantity}). Negative Lagerbestände sind für dieses Produkt oder in "
+"diesem Lager nicht möglich."
