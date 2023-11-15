@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+stock_quant_package_fast_move.access_stock_quant_package_fast_move_wizard,access_stock_quant_package_fast_move_wizard,stock_quant_package_fast_move.model_stock_quant_package_fast_move_wizard,stock.group_stock_user,1,1,1,1
