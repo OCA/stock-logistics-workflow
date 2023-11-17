@@ -14,6 +14,11 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_picking_inter_warehouse
+#: model:ir.model,name:stock_picking_inter_warehouse.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: stock_picking_inter_warehouse
 #: model:ir.model,name:stock_picking_inter_warehouse.model_res_partner
 msgid "Contact"
 msgstr ""
@@ -35,6 +40,7 @@ msgid "Disable Merge Picking Moves"
 msgstr ""
 
 #. module: stock_picking_inter_warehouse
+#: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_res_company__display_name
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_res_partner__display_name
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_location__display_name
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_move__display_name
@@ -51,6 +57,7 @@ msgid "Force one reception picking for each delivery"
 msgstr ""
 
 #. module: stock_picking_inter_warehouse
+#: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_res_company__id
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_res_partner__id
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_location__id
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_move__id
@@ -72,13 +79,18 @@ msgid "Inter Warehouse Partner"
 msgstr ""
 
 #. module: stock_picking_inter_warehouse
+#: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_res_company__inter_warehouse_route_id
+msgid "Inter Warehouse Route"
+msgstr ""
+
+#. module: stock_picking_inter_warehouse
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_rule__inter_warehouse_src_id
 msgid "Inter Warehouse Source"
 msgstr ""
 
 #. module: stock_picking_inter_warehouse
+#: code:addons/stock_picking_inter_warehouse/models/res_company.py:0
 #: code:addons/stock_picking_inter_warehouse/models/stock_warehouse.py:0
-#: model:stock.location.route,name:stock_picking_inter_warehouse.stock_location_route_inter_warehouse
 #, python-format
 msgid "Inter-Warehouse"
 msgstr ""
@@ -90,6 +102,7 @@ msgid "Inter-Warehouse Transfer"
 msgstr ""
 
 #. module: stock_picking_inter_warehouse
+#: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_picking_type__warehouse_inter_warehouse_transfers
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_warehouse__inter_warehouse_transfers
 msgid "Inter-Warehouse Transfers"
 msgstr ""
@@ -100,6 +113,7 @@ msgid "Inventory Locations"
 msgstr ""
 
 #. module: stock_picking_inter_warehouse
+#: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_res_company____last_update
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_res_partner____last_update
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_location____last_update
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_move____last_update
@@ -151,8 +165,23 @@ msgid "Stock Rule"
 msgstr ""
 
 #. module: stock_picking_inter_warehouse
+#: model:ir.model.fields,help:stock_picking_inter_warehouse.field_res_company__inter_warehouse_route_id
+msgid "The route to use for inter warehouse transfers"
+msgstr ""
+
+#. module: stock_picking_inter_warehouse
 #: model:ir.model,name:stock_picking_inter_warehouse.model_stock_picking
 msgid "Transfer"
+msgstr ""
+
+#. module: stock_picking_inter_warehouse
+#: code:addons/stock_picking_inter_warehouse/models/stock_warehouse.py:0
+#, python-format
+msgid ""
+"Two warehouses cannot have the same 'Receiving picking partner':\n"
+"\n"
+" - Partner: %(partner)s\n"
+" - Warehouses: %(whs)s"
 msgstr ""
 
 #. module: stock_picking_inter_warehouse
