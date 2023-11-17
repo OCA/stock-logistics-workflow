@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-11-17 11:36+0000\n"
+"PO-Revision-Date: 2023-11-17 14:36+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -58,9 +58,9 @@ msgstr "Movimenti prodotto (riga movimento di magazzino)"
 #. module: stock_picking_info_lot
 #: model:ir.model.fields.selection,name:stock_picking_info_lot.selection__product_template__lot_info_usage__required
 msgid "Required"
-msgstr ""
+msgstr "Obbligatorio"
 
 #. module: stock_picking_info_lot
 #: model:ir.model,name:stock_picking_info_lot.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Trasferimento"
