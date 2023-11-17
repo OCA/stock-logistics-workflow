@@ -576,13 +576,11 @@ class StockReturnRequestLine(models.Model):
         if len(existing) > 1:
             raise UserError(
                 _(
-                    """
-                You cannot have two open Stock Return Requests with the same
-                product ({product_id}), locations ({return_from_location},
-                 {return_to_location}) partner ({partner_id}) and lot.\n
-                Please first validate the first return request with this
-                product before creating a new one.
-                """
+                    "You cannot have two open Stock Return Requests with the same "
+                    "product ({product_id}), locations ({return_from_location}, "
+                    "{return_to_location}) partner ({partner_id}) and lot.\n"
+                    "Please first validate the first return request with this "
+                    "product before creating a new one."
                 ).format(
                     product_id=res.product_id.display_name,
                     return_from_location=res.request_id.return_from_location.display_name,

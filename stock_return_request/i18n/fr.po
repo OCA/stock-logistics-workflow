@@ -20,15 +20,8 @@ msgstr ""
 #: code:addons/stock_return_request/models/stock_return_request.py:0
 #, python-format
 msgid ""
-"\n"
-"                You cannot have two open Stock Return Requests with the "
-"same\n"
-"                product ({product_id}), locations ({return_from_location},\n"
-"                 {return_to_location}) partner ({partner_id}) and lot.\n"
-"\n"
-"                Please first validate the first return request with this\n"
-"                product before creating a new one.\n"
-"                "
+"You cannot have two open Stock Return Requests with the same product ({product_id}), locations ({return_from_location}, {return_to_location}) partner ({partner_id}) and lot.\n"
+"Please first validate the first return request with this product before creating a new one."
 msgstr ""
 
 #. module: stock_return_request
