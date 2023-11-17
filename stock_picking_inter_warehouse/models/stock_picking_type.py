@@ -7,6 +7,9 @@ from odoo import fields, models
 class StockPickingType(models.Model):
     _inherit = "stock.picking.type"
 
+    warehouse_inter_warehouse_transfers = fields.Boolean(
+        related="warehouse_id.inter_warehouse_transfers"
+    )
     inter_warehouse_transfer = fields.Boolean(string="Inter-Warehouse Transfer")
     disable_merge_picking_moves = fields.Boolean(
         string="Disable Merge Picking Moves",
