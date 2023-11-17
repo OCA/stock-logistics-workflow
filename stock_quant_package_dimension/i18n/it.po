@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-10-18 15:37+0000\n"
+"PO-Revision-Date: 2023-11-17 14:36+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -90,48 +90,50 @@ msgstr "Unità di misura"
 #: model:ir.model.fields,help:stock_quant_package_dimension.field_stock_quant_package__length_uom_id
 msgid "UoM for pack length, height, width (based on lenght UoM)"
 msgstr ""
+"UdM per lunghezza, altezza, larghezza (basato sull'UdM della lunghezza) del "
+"pacco"
 
 #. module: stock_quant_package_dimension
 #: model:ir.model.fields,field_description:stock_quant_package_dimension.field_stock_quant_package__volume_uom_name
 msgid "Volume Unit of Measure label"
-msgstr ""
+msgstr "Etichetta unità di misura volume"
 
 #. module: stock_quant_package_dimension
 #: model:ir.model.fields,field_description:stock_quant_package_dimension.field_stock_quant_package__volume_uom_id
 msgid "Volume Units of Measure"
-msgstr ""
+msgstr "Unità di misura del volume"
 
 #. module: stock_quant_package_dimension
 #: model:ir.model.fields,help:stock_quant_package_dimension.field_stock_quant_package__weight_uom_id
 msgid "Weight Unit of Measure"
-msgstr ""
+msgstr "Unità di misura del peso"
 
 #. module: stock_quant_package_dimension
 #: model:ir.model.fields,field_description:stock_quant_package_dimension.field_stock_quant_package__weight_uom_id
 msgid "Weight Units of Measure"
-msgstr ""
+msgstr "Unità di misura del peso"
 
 #. module: stock_quant_package_dimension
 #: model:ir.model.fields,field_description:stock_quant_package_dimension.field_stock_quant_package__weight_uom_name
 msgid "Weight unit of measure label"
-msgstr ""
+msgstr "Etichetta unità di misura peso"
 
 #. module: stock_quant_package_dimension
 #: model:ir.model.fields,help:stock_quant_package_dimension.field_stock_quant_package__height
 msgid "height"
-msgstr ""
+msgstr "altezza"
 
 #. module: stock_quant_package_dimension
 #: model:ir.model.fields,help:stock_quant_package_dimension.field_stock_quant_package__pack_length
 msgid "length"
-msgstr ""
+msgstr "lunghezza"
 
 #. module: stock_quant_package_dimension
 #: model:ir.model.fields,help:stock_quant_package_dimension.field_stock_quant_package__volume
 msgid "volume"
-msgstr ""
+msgstr "volume"
 
 #. module: stock_quant_package_dimension
 #: model:ir.model.fields,help:stock_quant_package_dimension.field_stock_quant_package__width
 msgid "width"
-msgstr ""
+msgstr "larghezza"
