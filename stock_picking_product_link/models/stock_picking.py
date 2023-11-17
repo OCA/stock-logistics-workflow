@@ -13,7 +13,7 @@ class StockPicking(models.Model):
         compute="_compute_product_ids",
     )
     product_template_ids = fields.Many2many(
-        string="Products",
+        string="Product Templates",
         comodel_name="product.template",
         compute="_compute_product_ids",
     )
@@ -37,7 +37,6 @@ class StockPicking(models.Model):
             picking.product_ids = products
             picking.product_template_ids = products.mapped("product_tmpl_id")
 
-    @api.multi
     def action_view_products(self):
         self.ensure_one()
         if self.env.user.has_group("product.group_product_variant"):
