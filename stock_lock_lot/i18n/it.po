@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-31 02:51+0000\n"
-"PO-Revision-Date: 2023-11-02 16:38+0000\n"
+"PO-Revision-Date: 2023-11-17 14:34+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/"
 "OCA-stock-logistics-workflow-8-0/language/it/)\n"
@@ -171,7 +171,7 @@ msgstr "Categoria prodotto"
 #. module: stock_lock_lot
 #: model:ir.model,name:stock_lock_lot.model_stock_quant
 msgid "Quants"
-msgstr "Quantità"
+msgstr "Quanti"
 
 #. module: stock_lock_lot
 #: field:stock.production.lot,lock_reason:0
