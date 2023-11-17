@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-10-09 09:14+0000\n"
-"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
+"PO-Revision-Date: 2023-11-17 14:37+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,7 @@ msgstr " lotto '%s'"
 #: model:ir.model.fields,field_description:stock_no_negative.field_product_template__allow_negative_stock
 #: model:ir.model.fields,field_description:stock_no_negative.field_stock_location__allow_negative_stock
 msgid "Allow Negative Stock"
-msgstr "Permetti Giacenza Negativa"
+msgstr "Consenti giacenze negative"
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_product_category__allow_negative_stock
@@ -37,9 +37,9 @@ msgid ""
 "category. The options doesn't apply to products attached to sub-categories "
 "of this category."
 msgstr ""
-"Permetti livelli negativi di giacenza per i prodotti immagazzinabili in "
-"questa categoria. L'opzione non si applica ai prodotti relativi alle "
-"sottocategorie di questa categoria."
+"Consente giacenze negative per prodotti stoccabili associati a questa "
+"categoria. Questa opzione non si applica ai prodotti associati alle sotto "
+"categorie della categoria."
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_stock_location__allow_negative_stock
@@ -59,10 +59,9 @@ msgid ""
 "stock moves will be blocked if the stock level becomes negative with the "
 "stock move."
 msgstr ""
-"Se questa opzione è disattivata sia in questo prodotto che nella sua "
-"categoria prodotto ed è un prodotto immagazzinabile, la validazione dei suoi "
-"movimenti di magazzino verrà bloccata se il movimento rende la giacenza "
-"negativa."
+"Se questa opzione non è attiva nè in questo prodotto nè nella sua categoria "
+"e il prodotto è stoccabile, se la giacenza diventa negativa con il movimento "
+"di magazzino allora la validazione del relativo movimento verrà bloccata ."
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_stock_location
@@ -82,7 +81,7 @@ msgstr "Modello prodotto"
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_stock_quant
 msgid "Quants"
-msgstr "Quantità"
+msgstr "Quanti"
 
 #. module: stock_no_negative
 #: code:addons/stock_no_negative/models/stock_quant.py:39
