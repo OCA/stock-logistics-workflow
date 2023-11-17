@@ -1,10 +1,10 @@
 # Copyright 2022 Coop IT Easy SC
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo.tests import SavepointCase
+from odoo.tests import TransactionCase
 
 
-class TestStockPickingProducts(SavepointCase):
+class TestStockPickingProducts(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -19,7 +19,7 @@ class TestStockPickingProducts(SavepointCase):
         cls.customer_location = cls.env.ref("stock.stock_location_customers")
         cls.picking_type_out = cls.env.ref("stock.picking_type_out")
 
-    def _change_group_product_variant(self, value):
+    def _set_group_product_variant(self, value):
         ResConfig = self.env["res.config.settings"]
         default_values = ResConfig.default_get(list(ResConfig.fields_get()))
         default_values.update({"group_product_variant": value})
@@ -70,12 +70,11 @@ class TestStockPickingProducts(SavepointCase):
             ),
         )
         self.assertEqual(stock_picking.product_count, 2)
-        # coverage
         # Remove user from group.
-        self._change_group_product_variant(False)
+        self._set_group_product_variant(False)
         action = stock_picking.action_view_products()
         self.assertEqual(action["res_model"], "product.template")
         # Add user to group.
-        self._change_group_product_variant(True)
+        self._set_group_product_variant(True)
         action = stock_picking.action_view_products()
         self.assertEqual(action["res_model"], "product.product")
