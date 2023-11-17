@@ -8,7 +8,7 @@ from odoo.tests.common import TransactionCase
 class TestStockPickingCustomerRef(TransactionCase):
     @classmethod
     def setUpClass(cls):
-        super(TestStockPickingCustomerRef, cls).setUpClass()
+        super().setUpClass()
         cls.SaleOrderObj = cls.env["sale.order"]
 
         cls.product = cls.env["product.product"].create({"name": "Test stuff"})
