@@ -1,7 +1,8 @@
 # Copyright 2023 Ooops404
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class StockWarehouse(models.Model):
@@ -28,9 +29,7 @@ class StockWarehouse(models.Model):
     def write(self, vals):
         res = super().write(vals)
         for wh in self:
-            route_inter_warehouse = self.env.ref(
-                "stock_picking_inter_warehouse.stock_location_route_inter_warehouse"
-            )
+            route_inter_warehouse = wh.company_id.inter_warehouse_route_id
             if wh.inter_warehouse_transfers:
                 # Add the warehouse to the route
                 # for inter-warehouse transfers
@@ -62,6 +61,7 @@ class StockWarehouse(models.Model):
                             "inter_warehouse_partner_id": [
                                 (6, 0, wh.receipt_picking_partner_id.ids)
                             ],
+                            "company_id": wh.company_id.id,
                         }
                     )
 
@@ -103,3 +103,35 @@ class StockWarehouse(models.Model):
                     }
                 )
         return res
+
+    @api.onchange("inter_warehouse_transfers")
+    def _onchange_inter_warehouse_transfers(self):
+        if not self.inter_warehouse_transfers:
+            self.receipt_destination_location_id = False
+            self.receipt_picking_type_id = False
+            self.receipt_picking_partner_id = False
+
+    @api.constrains("receipt_picking_partner_id")
+    def _check_receipt_picking_partner_id(self):
+        for wh in self.filtered("receipt_picking_partner_id"):
+            wh_same_partner = self.env[self._name].search(
+                [
+                    (
+                        "receipt_picking_partner_id",
+                        "=",
+                        wh.receipt_picking_partner_id.id,
+                    ),
+                    ("id", "!=", wh.id),
+                ]
+            )
+            if wh_same_partner:
+                raise ValidationError(
+                    _(
+                        "Two warehouses cannot have the same "
+                        "'Receiving picking partner':"
+                        "\n\n - Partner: %(partner)s"
+                        "\n - Warehouses: %(whs)s",
+                        partner=wh.receipt_picking_partner_id.name,
+                        whs=",".join(x.name for x in (wh | wh_same_partner)),
+                    )
+                )

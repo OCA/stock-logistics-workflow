@@ -6,10 +6,11 @@
         <field name="inherit_id" ref="stock.view_picking_type_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='code']/.." position="inside">
+                <field name="warehouse_inter_warehouse_transfers" invisible="1" />
                 <field
                     name="inter_warehouse_transfer"
                     string="Use for Inter-warehouse transfer"
-                    attrs="{'invisible': [('code', '!=', 'internal')]}"
+                    attrs="{'invisible': ['|', ('code', '!=', 'internal'), ('warehouse_inter_warehouse_transfers', '=', False)]}"
                 />
                 <field
                     name="disable_merge_picking_moves"

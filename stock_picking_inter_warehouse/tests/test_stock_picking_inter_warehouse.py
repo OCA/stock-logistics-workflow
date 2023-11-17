@@ -1,6 +1,7 @@
 # Copyright 2023 Ooops404
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+from odoo.exceptions import ValidationError
 from odoo.tests import SavepointCase
 
 
@@ -8,21 +9,38 @@ class TestStockPickingInterWarehouse(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.Company = cls.env["res.company"]
         cls.StockWarehouse = cls.env["stock.warehouse"]
         cls.StockLocation = cls.env["stock.location"]
         cls.StockLocationRoute = cls.env["stock.location.route"]
         cls.StockPickingType = cls.env["stock.picking.type"]
 
-        cls.stock_wh1 = cls.env.ref("stock.warehouse0")
-        cls.stock_wh2 = cls.env.ref("stock_picking_inter_warehouse.stock_warehouse_wh2")
+        # Testing with a new company to make sure everything is created
+        # correctly even in multi company scenarios
+        cls.test_company = cls.Company.create({"name": "Test Company"})
+        cls.stock_wh1 = cls.StockWarehouse.search(
+            [("company_id", "=", cls.test_company.id)]
+        )
+        cls.stock_wh2 = cls.StockWarehouse.create(
+            {
+                "partner_id": cls.test_company.partner_id.id,
+                "name": "WH2 Test",
+                "code": "WH2T",
+                "company_id": cls.test_company.id,
+            }
+        )
 
-    def test_create_route(self):
+    def test_create_route_for_companies(self):
+        for company in self.Company.search([]):
+            self.assertTrue(company.inter_warehouse_route_id)
+
+    def test_configure_warehouse_for_intercompany(self):
         self.stock_wh1.write(
             {
                 "inter_warehouse_transfers": True,
                 "receipt_destination_location_id": self.stock_wh2.view_location_id.id,
                 "receipt_picking_type_id": self.stock_wh2.in_type_id.id,
-                "receipt_picking_partner_id": [(0, 0, {"name": "WH2"})],
+                "receipt_picking_partner_id": [(0, 0, {"name": "WH2 Partner Test"})],
             }
         )
 
@@ -42,9 +60,7 @@ class TestStockPickingInterWarehouse(SavepointCase):
         self.assertTrue(location_id)
 
         # And a route as well
-        route_inter_wh_id = self.env.ref(
-            "stock_picking_inter_warehouse.stock_location_route_inter_warehouse"
-        )
+        route_inter_wh_id = self.test_company.inter_warehouse_route_id
         self.assertTrue(route_inter_wh_id)
         self.assertFalse(route_inter_wh_id.product_selectable)
         self.assertFalse(route_inter_wh_id.product_categ_selectable)
@@ -78,7 +94,7 @@ class TestStockPickingInterWarehouse(SavepointCase):
                 "inter_warehouse_transfers": True,
                 "receipt_destination_location_id": self.stock_wh1.view_location_id.id,
                 "receipt_picking_type_id": self.stock_wh1.in_type_id.id,
-                "receipt_picking_partner_id": self.stock_wh1.company_id.id,
+                "receipt_picking_partner_id": self.stock_wh1.company_id.partner_id.id,
             }
         )
         self.assertEqual(len(route_inter_wh_id.warehouse_ids), 2)
@@ -111,3 +127,8 @@ class TestStockPickingInterWarehouse(SavepointCase):
         self.stock_wh1.write({"inter_warehouse_transfers": False})
         self.assertEqual(route_inter_wh_id.warehouse_ids.ids, self.stock_wh2.ids)
         self.assertEqual(len(route_inter_wh_id.rule_ids), 1)
+
+    def test_wh_unique_picking_partner(self):
+        self.stock_wh1.receipt_picking_partner_id = self.test_company.partner_id
+        with self.assertRaises(ValidationError):
+            self.stock_wh2.receipt_picking_partner_id = self.test_company.partner_id

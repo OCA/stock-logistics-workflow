@@ -21,7 +21,14 @@ class StockPicking(models.Model):
             if picking.type_inter_warehouse_transfer:
                 picking.inter_warehouse_contact_domain_ids = (
                     self.env["stock.warehouse"]
-                    .search([("id", "!=", picking.picking_type_id.warehouse_id.id)])
+                    .search(
+                        [
+                            ("id", "!=", picking.picking_type_id.warehouse_id.id),
+                            "|",
+                            ("company_id", "=", False),
+                            ("company_id", "=", self.picking_type_id.company_id.id),
+                        ]
+                    )
                     .mapped("receipt_picking_partner_id")
                 )
             else:
