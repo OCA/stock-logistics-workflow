@@ -17,6 +17,11 @@ msgstr ""
 "X-Generator: Weblate 4.17\n"
 
 #. module: stock_picking_inter_warehouse
+#: model:ir.model,name:stock_picking_inter_warehouse.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: stock_picking_inter_warehouse
 #: model:ir.model,name:stock_picking_inter_warehouse.model_res_partner
 msgid "Contact"
 msgstr "Contatto"
@@ -38,6 +43,7 @@ msgid "Disable Merge Picking Moves"
 msgstr "Disabilita aggregazione righe trasferimento"
 
 #. module: stock_picking_inter_warehouse
+#: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_res_company__display_name
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_res_partner__display_name
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_location__display_name
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_move__display_name
@@ -54,6 +60,7 @@ msgid "Force one reception picking for each delivery"
 msgstr "Forza un picking di ricezione per ogni picking di consegna"
 
 #. module: stock_picking_inter_warehouse
+#: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_res_company__id
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_res_partner__id
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_location__id
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_move__id
@@ -75,13 +82,18 @@ msgid "Inter Warehouse Partner"
 msgstr "Contatto inter-magazzini"
 
 #. module: stock_picking_inter_warehouse
+#: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_res_company__inter_warehouse_route_id
+msgid "Inter Warehouse Route"
+msgstr ""
+
+#. module: stock_picking_inter_warehouse
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_rule__inter_warehouse_src_id
 msgid "Inter Warehouse Source"
 msgstr "Origine inter-magazzini"
 
 #. module: stock_picking_inter_warehouse
+#: code:addons/stock_picking_inter_warehouse/models/res_company.py:0
 #: code:addons/stock_picking_inter_warehouse/models/stock_warehouse.py:0
-#: model:stock.location.route,name:stock_picking_inter_warehouse.stock_location_route_inter_warehouse
 #, python-format
 msgid "Inter-Warehouse"
 msgstr "Inter-magazzini"
@@ -93,6 +105,7 @@ msgid "Inter-Warehouse Transfer"
 msgstr "Trasferimento inter-magazzini"
 
 #. module: stock_picking_inter_warehouse
+#: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_picking_type__warehouse_inter_warehouse_transfers
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_warehouse__inter_warehouse_transfers
 msgid "Inter-Warehouse Transfers"
 msgstr "Trasferimenti inter-magazzini"
@@ -103,6 +116,7 @@ msgid "Inventory Locations"
 msgstr "Ubicazioni di inventario"
 
 #. module: stock_picking_inter_warehouse
+#: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_res_company____last_update
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_res_partner____last_update
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_location____last_update
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_move____last_update
@@ -154,9 +168,24 @@ msgid "Stock Rule"
 msgstr "Regola di giacenza"
 
 #. module: stock_picking_inter_warehouse
+#: model:ir.model.fields,help:stock_picking_inter_warehouse.field_res_company__inter_warehouse_route_id
+msgid "The route to use for inter warehouse transfers"
+msgstr ""
+
+#. module: stock_picking_inter_warehouse
 #: model:ir.model,name:stock_picking_inter_warehouse.model_stock_picking
 msgid "Transfer"
 msgstr "Trasferimento"
+
+#. module: stock_picking_inter_warehouse
+#: code:addons/stock_picking_inter_warehouse/models/stock_warehouse.py:0
+#, python-format
+msgid ""
+"Two warehouses cannot have the same 'Receiving picking partner':\n"
+"\n"
+" - Partner: %(partner)s\n"
+" - Warehouses: %(whs)s"
+msgstr ""
 
 #. module: stock_picking_inter_warehouse
 #: model_terms:ir.ui.view,arch_db:stock_picking_inter_warehouse.view_picking_type_form
