@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-03 03:55+0000\n"
-"PO-Revision-Date: 2023-10-29 17:40+0000\n"
+"PO-Revision-Date: 2023-11-17 14:37+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -28,27 +28,27 @@ msgstr "Azione Pack Op Auto Inserisci Permessa"
 #: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking__auto_fill_operation
 #: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking_type__auto_fill_operation
 msgid "Auto fill operations"
-msgstr "Operazioni autocompletate"
+msgstr "Operazioni autocompilate"
 
 #. module: stock_move_line_auto_fill
 #: model_terms:ir.ui.view,arch_db:stock_move_line_auto_fill.stock_picking_form_view
 msgid "AutoFill"
-msgstr "AutoCompila"
+msgstr "Autocompila"
 
 #. module: stock_move_line_auto_fill
 #: model_terms:ir.ui.view,arch_db:stock_move_line_auto_fill.view_picking_type_form_assignment
 msgid "Automation"
-msgstr "Automatico"
+msgstr "Automazione"
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model.fields,help:stock_move_line_auto_fill.field_stock_picking_type__avoid_lot_assignment
 msgid "Avoid auto fill for more line with lots product"
-msgstr "Vieta l'autocompilazione dei lotti per più righe"
+msgstr "Evita l'autocompilazione per più righe con lotti prodotto"
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking_type__avoid_lot_assignment
 msgid "Avoid auto-assignment of lots"
-msgstr "Vieta l'auto-assegnamento dei lotti"
+msgstr "Evita l'auto-assegnamento dei lotti"
 
 #. module: stock_move_line_auto_fill
 #: code:addons/stock_move_line_auto_fill/models/stock_picking.py:36
@@ -58,7 +58,7 @@ msgid ""
 "aren't in the right state (Partially available or available)."
 msgstr ""
 "Compilare le operazioni automaticamente non è possibile, forse i "
-"trasferimenti non sono nello stato corretto (Parzialmente disponibile o "
+"trasferimenti non sono nello stato corretto (parzialmente disponibile o "
 "disponibile)."
 
 #. module: stock_move_line_auto_fill
@@ -89,10 +89,10 @@ msgid ""
 "- If checked, auto fill done quantity automatically\n"
 "- If unchecked, show button AutoFill for user to do the auto fill manually"
 msgstr ""
-"Per auto compilare le quantità completare nel documento di trasferimento.\n"
-"- Se selezionato, le quantità completate saranno compilate automaticamente\n"
-"- Se non selezionato, mostra il bottone Auto Compila per lasciare completare "
-"l'operazione manualmente all'utente"
+"Per auto compilare le quantità completare nel documento di pelievo.\n"
+"- Se selezionata, le quantità completate saranno compilate automaticamente\n"
+"- Se non selezionata, mostra il pulsante Auto Compila per lasciare "
+"completare l'operazione manualmente all'utente"
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model,name:stock_move_line_auto_fill.model_stock_picking
