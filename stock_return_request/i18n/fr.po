@@ -17,14 +17,6 @@ msgstr ""
 "X-Generator: Weblate 3.10\n"
 
 #. module: stock_return_request
-#: code:addons/stock_return_request/models/stock_return_request.py:0
-#, python-format
-msgid ""
-"You cannot have two open Stock Return Requests with the same product ({product_id}), locations ({return_from_location}, {return_to_location}) partner ({partner_id}) and lot.\n"
-"Please first validate the first return request with this product before creating a new one."
-msgstr ""
-
-#. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.report_stock_return_request_document
 msgid "<span><strong>Customer Address:</strong></span>"
 msgstr "<span><strong>Adresse du client :</strong></span>"
@@ -676,6 +668,17 @@ msgstr ""
 #: model:ir.model.fields,help:stock_return_request.field_suggest_return_request_lot__suggested_lot_detail
 msgid "You can return these lots"
 msgstr "Vous pouvez retourner ces lots"
+
+#. module: stock_return_request
+#: code:addons/stock_return_request/models/stock_return_request.py:0
+#, python-format
+msgid ""
+"You cannot have two open Stock Return Requests with the same product "
+"({product_id}), locations ({return_from_location}, {return_to_location}) "
+"partner ({partner_id}) and lot.\n"
+"Please first validate the first return request with this product before "
+"creating a new one."
+msgstr ""
 
 #, python-format
 #~ msgid ""
