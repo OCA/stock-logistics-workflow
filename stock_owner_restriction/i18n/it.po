@@ -6,61 +6,63 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2023-11-17 14:36+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_owner_restriction
 #: model:ir.model.fields,field_description:stock_owner_restriction.field_stock_picking__owner_restriction
 #: model:ir.model.fields,field_description:stock_owner_restriction.field_stock_picking_type__owner_restriction
 msgid "Owner Restriction"
-msgstr ""
+msgstr "Restrizine proprietario"
 
 #. module: stock_owner_restriction
 #: model_terms:ir.ui.view,arch_db:stock_owner_restriction.view_picking_type_form
 msgid "Owner settings"
-msgstr ""
+msgstr "Impostazini proprietario"
 
 #. module: stock_owner_restriction
 #: model:ir.model,name:stock_owner_restriction.model_stock_picking_type
 msgid "Picking Type"
-msgstr ""
+msgstr "Tipologia prelievo"
 
 #. module: stock_owner_restriction
 #: model:ir.model.fields.selection,name:stock_owner_restriction.selection__stock_picking_type__owner_restriction__picking_partner
 msgid "Picking partner"
-msgstr ""
+msgstr "Partner prelievo"
 
 #. module: stock_owner_restriction
 #: model:ir.model,name:stock_owner_restriction.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Variante prodotto"
 
 #. module: stock_owner_restriction
 #: model:ir.model,name:stock_owner_restriction.model_stock_quant
 msgid "Quants"
-msgstr ""
+msgstr "Quanti"
 
 #. module: stock_owner_restriction
 #: model:ir.model.fields.selection,name:stock_owner_restriction.selection__stock_picking_type__owner_restriction__standard_behavior
 msgid "Standard behavior"
-msgstr ""
+msgstr "Comportamento standard"
 
 #. module: stock_owner_restriction
 #: model:ir.model,name:stock_owner_restriction.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimento di magazzino"
 
 #. module: stock_owner_restriction
 #: model:ir.model,name:stock_owner_restriction.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Trasferimento"
 
 #. module: stock_owner_restriction
 #: model:ir.model.fields.selection,name:stock_owner_restriction.selection__stock_picking_type__owner_restriction__unassigned_owner
 msgid "Unassigned owner"
-msgstr ""
+msgstr "Prprietario non assegnato"
