@@ -20,9 +20,9 @@ class TestStockPickingProducts(SavepointCase):
         cls.picking_type_out = cls.env.ref("stock.picking_type_out")
 
     def _change_group_product_variant(self, value):
-        ResConfig = self.env['res.config.settings']
+        ResConfig = self.env["res.config.settings"]
         default_values = ResConfig.default_get(list(ResConfig.fields_get()))
-        default_values.update({'group_product_variant': value})
+        default_values.update({"group_product_variant": value})
         ResConfig.create(default_values).execute()
 
     def test_stock_picking_product_count(self):
@@ -34,36 +34,40 @@ class TestStockPickingProducts(SavepointCase):
                 "location_dest_id": self.customer_location.id,
             }
         )
-        self.move_model.create({
-            "product_id": self.product_8.id,
-            "picking_id": stock_picking.id,
-            "product_uom_qty": 1.0,
-            "name": self.product_8.display_name,
-            "picking_type_id": self.picking_type_out.id,
-            "location_id": self.stock_location.id,
-            "location_dest_id": self.customer_location.id,
-            "product_uom": self.product_8.uom_id.id,
-        })
-        self.move_model.create({
-            "product_id": self.product_9.id,
-            "picking_id": stock_picking.id,
-            "product_uom_qty": 1.0,
-            "name": self.product_9.display_name,
-            "picking_type_id": self.picking_type_out.id,
-            "location_id": self.stock_location.id,
-            "location_dest_id": self.customer_location.id,
-            "product_uom": self.product_9.uom_id.id,
-        })
+        self.move_model.create(
+            {
+                "product_id": self.product_8.id,
+                "picking_id": stock_picking.id,
+                "product_uom_qty": 1.0,
+                "name": self.product_8.display_name,
+                "picking_type_id": self.picking_type_out.id,
+                "location_id": self.stock_location.id,
+                "location_dest_id": self.customer_location.id,
+                "product_uom": self.product_8.uom_id.id,
+            }
+        )
+        self.move_model.create(
+            {
+                "product_id": self.product_9.id,
+                "picking_id": stock_picking.id,
+                "product_uom_qty": 1.0,
+                "name": self.product_9.display_name,
+                "picking_type_id": self.picking_type_out.id,
+                "location_id": self.stock_location.id,
+                "location_dest_id": self.customer_location.id,
+                "product_uom": self.product_9.uom_id.id,
+            }
+        )
 
         self.assertEqual(
             sorted(stock_picking.product_ids.ids),
-            sorted([self.product_8.id, self.product_9.id])
+            sorted([self.product_8.id, self.product_9.id]),
         )
         self.assertEqual(
             sorted(stock_picking.product_template_ids.ids),
             sorted(
                 [self.product_8.product_tmpl_id.id, self.product_9.product_tmpl_id.id]
-            )
+            ),
         )
         self.assertEqual(stock_picking.product_count, 2)
         # coverage

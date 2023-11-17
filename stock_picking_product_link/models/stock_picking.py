@@ -21,7 +21,7 @@ class StockPicking(models.Model):
         string="Number of Products",
         compute="_compute_product_ids",
         help="""This displays the amount of products (variants) in the stock transfer.
-            The amount of product templates may be lower."""
+            The amount of product templates may be lower.""",
     )
 
     @api.depends("move_line_ids", "move_line_ids.product_id")
