@@ -6,13 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2023-11-17 11:36+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_picking_grn_mandatory
 #: model:ir.model.fields,help:stock_picking_grn_mandatory.field_stock_picking_type__is_grn_mandatory
@@ -20,30 +22,32 @@ msgid ""
 "Check this if you want user to fill in the GRN field for pickings of this "
 "type."
 msgstr ""
+"Selezionare questa opzione se si vuole che l'utente compili il campo GRN per "
+"prelievi di questo tipo."
 
 #. module: stock_picking_grn_mandatory
 #: model_terms:ir.ui.view,arch_db:stock_picking_grn_mandatory.stock_picking_type_form_view
 msgid "GRN (Mandatory)"
-msgstr ""
+msgstr "GRN (obbligatorio)"
 
 #. module: stock_picking_grn_mandatory
 #: model:ir.model.fields,field_description:stock_picking_grn_mandatory.field_stock_picking_type__is_grn_mandatory
 msgid "Is Grn Mandatory"
-msgstr ""
+msgstr "GRM è obbligatrio"
 
 #. module: stock_picking_grn_mandatory
 #: model:ir.model,name:stock_picking_grn_mandatory.model_stock_picking_type
 msgid "Picking Type"
-msgstr ""
+msgstr "Tipologia prelievo"
 
 #. module: stock_picking_grn_mandatory
 #. odoo-python
 #: code:addons/stock_picking_grn_mandatory/models/stock_picking.py:0
 #, python-format
 msgid "The picking must be linked to a Goods Received Note"
-msgstr ""
+msgstr "Il prelievo deve essere collebato alla nota di merce ricevuta"
 
 #. module: stock_picking_grn_mandatory
 #: model:ir.model,name:stock_picking_grn_mandatory.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Trasferimento"
