@@ -22,7 +22,9 @@ class StockQuant(models.Model):
             location_id,
             lot_id=lot_id,
             package_id=package_id,
-            owner_id=owner_id,
+            # Prevent a negative quant from being created with owner instead of reducing
+            # the original quant when a return is made by assigning owner
+            owner_id=owner_id if location_id.usage != "customer" else None,
             strict=strict,
         )
         restricted_owner_id = self.env.context.get("force_restricted_owner_id", None)
