@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-11-13 11:41+0000\n"
+"PO-Revision-Date: 2023-11-20 12:35+0000\n"
 "Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -19,7 +19,7 @@ msgstr ""
 #. module: stock_picking_inter_warehouse
 #: model:ir.model,name:stock_picking_inter_warehouse.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Aziende"
 
 #. module: stock_picking_inter_warehouse
 #: model:ir.model,name:stock_picking_inter_warehouse.model_res_partner
@@ -84,7 +84,7 @@ msgstr "Contatto inter-magazzini"
 #. module: stock_picking_inter_warehouse
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_res_company__inter_warehouse_route_id
 msgid "Inter Warehouse Route"
-msgstr ""
+msgstr "Percorso inter-magazzini"
 
 #. module: stock_picking_inter_warehouse
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_rule__inter_warehouse_src_id
@@ -170,7 +170,7 @@ msgstr "Regola di giacenza"
 #. module: stock_picking_inter_warehouse
 #: model:ir.model.fields,help:stock_picking_inter_warehouse.field_res_company__inter_warehouse_route_id
 msgid "The route to use for inter warehouse transfers"
-msgstr ""
+msgstr "Il percorso da usare per trasferimenti inter-magazzini"
 
 #. module: stock_picking_inter_warehouse
 #: model:ir.model,name:stock_picking_inter_warehouse.model_stock_picking
@@ -186,6 +186,11 @@ msgid ""
 " - Partner: %(partner)s\n"
 " - Warehouses: %(whs)s"
 msgstr ""
+"Due magazzini non possono avere lo stesso 'Partner ricezione trasferimenti':"
+"\n"
+"\n"
+" - Partner: %(partner)s\n"
+" - Magazzini: %(whs)s"
 
 #. module: stock_picking_inter_warehouse
 #: model_terms:ir.ui.view,arch_db:stock_picking_inter_warehouse.view_picking_type_form
