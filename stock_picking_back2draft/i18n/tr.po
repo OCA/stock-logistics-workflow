@@ -9,38 +9,39 @@ msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-14 08:48+0000\n"
-"PO-Revision-Date: 2017-01-16 19:30+0000\n"
-"Last-Translator: Ahmet Altinisik <aaltinisik@altinkaya.com.tr>\n"
-"Language-Team: Turkish (http://www.transifex.com/oca/OCA-stock-logistics-"
-"workflow-8-0/language/tr/)\n"
+"PO-Revision-Date: 2023-11-20 19:33+0000\n"
+"Last-Translator: İmat Yahya Çataklı <yahyacatakli@gmail.com>\n"
+"Language-Team: Turkish (http://www.transifex.com/oca/"
+"OCA-stock-logistics-workflow-8-0/language/tr/)\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_picking_back2draft
 #: model_terms:ir.ui.view,arch_db:stock_picking_back2draft.view_picking_form_reopen
 msgid "Back to draft"
-msgstr ""
+msgstr "Taslağa çevir"
 
 #. module: stock_picking_back2draft
 #: model:ir.model.fields,field_description:stock_picking_back2draft.field_stock_move__display_name
 #: model:ir.model.fields,field_description:stock_picking_back2draft.field_stock_picking__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Görünüm Adı"
 
 #. module: stock_picking_back2draft
 #: model:ir.model.fields,field_description:stock_picking_back2draft.field_stock_move__id
 #: model:ir.model.fields,field_description:stock_picking_back2draft.field_stock_picking__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_picking_back2draft
 #: model:ir.model.fields,field_description:stock_picking_back2draft.field_stock_move____last_update
 #: model:ir.model.fields,field_description:stock_picking_back2draft.field_stock_picking____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Son Değişiklik Zamanı"
 
 #. module: stock_picking_back2draft
 #: model:ir.model,name:stock_picking_back2draft.model_stock_move
@@ -50,13 +51,13 @@ msgstr "Stok hareketi"
 #. module: stock_picking_back2draft
 #: model:ir.model,name:stock_picking_back2draft.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Teslimat"
 
 #. module: stock_picking_back2draft
 #: code:addons/stock_picking_back2draft/models/stock_move.py:0
 #, python-format
 msgid "You can set to draft cancelled moves only"
-msgstr ""
+msgstr "Yalnızca iptal edilen hareketleri taslak olarak ayarlayabilirsiniz"
 
 #~ msgid "Picking List"
 #~ msgstr "Toplama Listesi"
