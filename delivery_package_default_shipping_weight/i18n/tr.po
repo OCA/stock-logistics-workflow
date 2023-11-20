@@ -1,0 +1,65 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* delivery_package_default_shipping_weight
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2023-11-20 19:33+0000\n"
+"Last-Translator: İmat Yahya Çataklı <yahyacatakli@gmail.com>\n"
+"Language-Team: none\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: delivery_package_default_shipping_weight
+#: model:ir.model.fields,field_description:delivery_package_default_shipping_weight.field_product_packaging__package_default_shipping_weight
+msgid "Default shipping weight"
+msgstr "Varsayılan nakliye ağırlığı"
+
+#. module: delivery_package_default_shipping_weight
+#: code:addons/delivery_package_default_shipping_weight/models/product_packaging.py:0
+#, python-format
+msgid "Default shipping weight must be a positive or null value."
+msgstr "Varsayılan sevkiyat ağırlığı pozitif veya null değer olmalıdır."
+
+#. module: delivery_package_default_shipping_weight
+#: model:ir.model.fields,field_description:delivery_package_default_shipping_weight.field_product_packaging__display_name
+#: model:ir.model.fields,field_description:delivery_package_default_shipping_weight.field_stock_quant_package__display_name
+msgid "Display Name"
+msgstr "Görünüm Adı"
+
+#. module: delivery_package_default_shipping_weight
+#: model:ir.model.fields,field_description:delivery_package_default_shipping_weight.field_product_packaging__id
+#: model:ir.model.fields,field_description:delivery_package_default_shipping_weight.field_stock_quant_package__id
+msgid "ID"
+msgstr "ID"
+
+#. module: delivery_package_default_shipping_weight
+#: model:ir.model.fields,help:delivery_package_default_shipping_weight.field_product_packaging__package_default_shipping_weight
+msgid ""
+"If set, this weight will be used as default value for Shipping weight, when "
+"this Package Type is selected on a Package."
+msgstr ""
+"İşaretlenirse, bir Paket üzerinde bu Paket Türü seçildiğinde, bu ağırlık "
+"Nakliye ağırlığı için varsayılan değer olarak kullanılır."
+
+#. module: delivery_package_default_shipping_weight
+#: model:ir.model.fields,field_description:delivery_package_default_shipping_weight.field_product_packaging____last_update
+#: model:ir.model.fields,field_description:delivery_package_default_shipping_weight.field_stock_quant_package____last_update
+msgid "Last Modified on"
+msgstr "Son düzenleme"
+
+#. module: delivery_package_default_shipping_weight
+#: model:ir.model,name:delivery_package_default_shipping_weight.model_stock_quant_package
+msgid "Packages"
+msgstr "Paketler"
+
+#. module: delivery_package_default_shipping_weight
+#: model:ir.model,name:delivery_package_default_shipping_weight.model_product_packaging
+msgid "Product Packaging"
+msgstr "Ürün Paketleme"
