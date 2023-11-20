@@ -6,72 +6,74 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2023-11-20 08:34+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn__carrier_id
 #: model_terms:ir.ui.view,arch_db:stock_grn.view_grn_search
 msgid "Carrier"
-msgstr ""
+msgstr "Trasportatore"
 
 #. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn__carrier_ref
 msgid "Carrier Id"
-msgstr ""
+msgstr "ID trasportatore"
 
 #. module: stock_grn
 #: model_terms:ir.ui.view,arch_db:stock_grn.view_grn_search
 msgid "Carrier reference"
-msgstr ""
+msgstr "Riferimento trasportatore"
 
 #. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn__company_id
 msgid "Company"
-msgstr ""
+msgstr "Azienda"
 
 #. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_picking_type__count_picking_grn
 msgid "Count Picking Grn"
-msgstr ""
+msgstr "Conteggio prelievo bolla ricezione"
 
 #. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn__create_uid
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn_type__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creato da"
 
 #. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn__create_date
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn_type__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creato il"
 
 #. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn__date
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn__description
 msgid "Description"
-msgstr ""
+msgstr "Descrizione"
 
 #. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn__display_name
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn_type__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn__from_info
 msgid "From"
-msgstr ""
+msgstr "Da"
 
 #. module: stock_grn
 #: model:ir.actions.act_window,name:stock_grn.action_picking_tree_grn
@@ -80,12 +82,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock_grn.view_grn_search
 #: model_terms:ir.ui.view,arch_db:stock_grn.view_picking_withgrn_tree
 msgid "GRN"
-msgstr ""
+msgstr "Bolla ricezione"
 
 #. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_picking__grn_date
 msgid "GRN Date"
-msgstr ""
+msgstr "Data bolla ricezione"
 
 #. module: stock_grn
 #: model:ir.actions.act_window,name:stock_grn.action_grn_view
@@ -94,133 +96,133 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_grn.field_stock_picking__grn_id
 #: model:ir.ui.menu,name:stock_grn.menu_stock_grn
 msgid "Goods Received Note"
-msgstr ""
+msgstr "Bolla ricezione merce"
 
 #. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn__type_id
 msgid "Grn Type"
-msgstr ""
+msgstr "Tipo bolla ricezione"
 
 #. module: stock_grn
 #: model_terms:ir.ui.view,arch_db:stock_grn.view_grn_search
 msgid "Group By"
-msgstr ""
+msgstr "Raggruppa per"
 
 #. module: stock_grn
 #: model_terms:ir.ui.view,arch_db:stock_grn.stock_picking_type_kanban
 msgid "Having GRN"
-msgstr ""
+msgstr "Ha bolla ricezione"
 
 #. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn__id
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn_type__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn__picking_ids
 msgid "Incoming Shipments"
-msgstr ""
+msgstr "Spedizioni in arrivo"
 
 #. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn____last_update
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn_type____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn__write_uid
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn_type__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultimo aggiornamento di"
 
 #. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn__write_date
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn_type__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultimo aggiornamento il"
 
 #. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn__name
 #: model_terms:ir.ui.view,arch_db:stock_grn.view_grn_search
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #. module: stock_grn
 #: model_terms:ir.actions.act_window,help:stock_grn.action_picking_tree_grn
 msgid "No transfer found. Let's create one!"
-msgstr ""
+msgstr "Nessun trasferimento trovato. Crearne uno!"
 
 #. module: stock_grn
 #: model_terms:ir.ui.view,arch_db:stock_grn.stock_move_search_view
 #: model_terms:ir.ui.view,arch_db:stock_grn.view_picking_withgrn_search
 msgid "Not Received (GRN)"
-msgstr ""
+msgstr "Non ricevuto (bolla ricezine)"
 
 #. module: stock_grn
 #: model:ir.model,name:stock_grn.model_stock_picking_type
 msgid "Picking Type"
-msgstr ""
+msgstr "Tipologia prelievo"
 
 #. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn__qty_box
 msgid "Qty Boxes"
-msgstr ""
+msgstr "Q.tà contenitori"
 
 #. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn__qty_pallet
 msgid "Qty Pallets"
-msgstr ""
+msgstr "Q.tà pallet"
 
 #. module: stock_grn
 #: model_terms:ir.ui.view,arch_db:stock_grn.stock_move_search_view
 #: model_terms:ir.ui.view,arch_db:stock_grn.view_picking_withgrn_search
 msgid "Received (GRN)"
-msgstr ""
+msgstr "Ricevuto (bolla ricezione)"
 
 #. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn__ref
 msgid "Reference"
-msgstr ""
+msgstr "Riferimento"
 
 #. module: stock_grn
 #: model:ir.model,name:stock_grn.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimento di magazzino"
 
 #. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn__supplier_id
 #: model_terms:ir.ui.view,arch_db:stock_grn.view_grn_search
 msgid "Supplier"
-msgstr ""
+msgstr "Fornitore"
 
 #. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn__delivery_note_supplier_number
 #: model:ir.model.fields,field_description:stock_grn.field_stock_picking__delivery_note_supplier_number
 msgid "Supplier delivery note number"
-msgstr ""
+msgstr "Numero DdT fornitore"
 
 #. module: stock_grn
 #: model:ir.model.constraint,message:stock_grn.constraint_stock_grn_type_name_uniq
 msgid "This GRN type name already exists !"
-msgstr ""
+msgstr "Questo nome tipo bolla ricezione esiste già!"
 
 #. module: stock_grn
 #: model:ir.model,name:stock_grn.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Trasferimento"
 
 #. module: stock_grn
 #: model_terms:ir.actions.act_window,help:stock_grn.action_picking_tree_grn
 msgid "Transfers allow you to move products from one location to another."
-msgstr ""
+msgstr "I trasferimento consentono di movimentare i prodotti tra le ubicazioni."
 
 #. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn_type__name
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #. module: stock_grn
 #: model:ir.model,name:stock_grn.model_stock_grn_type
 msgid "Type of goods received note"
-msgstr ""
+msgstr "Tipo bolla ricezione"
