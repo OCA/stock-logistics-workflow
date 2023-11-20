@@ -9,19 +9,20 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-18 03:48+0000\n"
-"PO-Revision-Date: 2017-12-18 03:48+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"PO-Revision-Date: 2023-11-20 19:33+0000\n"
+"Last-Translator: İmat Yahya Çataklı <yahyacatakli@gmail.com>\n"
 "Language-Team: Turkish (https://www.transifex.com/oca/teams/23907/tr/)\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_move_reversal
 msgid "Account Move Reversal"
-msgstr ""
+msgstr "Hesap Hareketi Ters Kayıt"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move__display_name
@@ -31,7 +32,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move__display_name
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Görünüm Adı"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move__id
@@ -41,34 +42,34 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move__id
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move__invoice_line_ids
 msgid "Invoice Line"
-msgstr ""
+msgstr "Fatura Satırı"
 
 #. module: stock_picking_invoice_link
 #: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_move_form
 #: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_move_picking_form
 msgid "Invoice Lines"
-msgstr ""
+msgstr "Fatura Satırları"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking__invoice_ids
 #: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
 msgid "Invoices"
-msgstr ""
+msgstr "Faturalar"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_move
 msgid "Journal Entry"
-msgstr ""
+msgstr "Yevmiye Kaydı"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_move_line
 msgid "Journal Item"
-msgstr ""
+msgstr "Yevmiye Kalemi"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move____last_update
@@ -78,24 +79,24 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move____last_update
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Son düzenleme"
 
 #. module: stock_picking_invoice_link
 #: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.invoice_form
 msgid "Pickings"
-msgstr ""
+msgstr "Teslimatlar"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_bank_statement_line__picking_ids
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move__picking_ids
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_payment__picking_ids
 msgid "Related Pickings"
-msgstr ""
+msgstr "İlişkili Teslimatlar"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move_line__move_line_ids
 msgid "Related Stock Moves"
-msgstr ""
+msgstr "İlişkili Stok Hareketleri"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,help:stock_picking_invoice_link.field_account_bank_statement_line__picking_ids
@@ -105,6 +106,8 @@ msgid ""
 "Related pickings (only when the invoice has been generated from a sale "
 "order)."
 msgstr ""
+"İlişkili Teslimatlar (yalnızca fatura, bir satış siparişinden "
+"oluşturulduğunda)."
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,help:stock_picking_invoice_link.field_account_move_line__move_line_ids
@@ -112,24 +115,26 @@ msgid ""
 "Related stock moves (only when the invoice has been generated from a sale "
 "order)."
 msgstr ""
+"İlişkili Stok Hareketleri (yalnızca fatura, bir satış siparişinden "
+"oluşturulduğunda)."
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_sale_order_line
 msgid "Sales Order Line"
-msgstr ""
+msgstr "Satış Sipariş Satırı"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_stock_move
 msgid "Stock Move"
-msgstr "Stok Taşı"
+msgstr "Stok Hareketi"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Teslimat"
 
 #. module: stock_picking_invoice_link
 #: code:addons/stock_picking_invoice_link/models/stock_move.py:0
 #, python-format
 msgid "You can not modify an invoiced stock move"
-msgstr ""
+msgstr "Faturalanmış bir stok hareketini değiştiremezsiniz"
