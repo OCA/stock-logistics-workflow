@@ -1,2 +1,1 @@
-Adds a responsible partner to the picking and subscribe them
-to notifications.
+Migration script for lecacy module stock_picking_responsible
