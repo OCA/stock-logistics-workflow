@@ -152,3 +152,18 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
             [("product_id", "=", self.product_serial.id)]
         )
         self.assertEqual(len(lot), 6)
+
+    def test_set_quantities_to_reservation(self):
+        """
+        Create a picking
+        Try to set qty_done from set_quantities_to_reservation method
+        Check if qty_done is equal to reservation quantities
+        """
+        self._create_picking()
+        self._create_move(product=self.product, qty=2.0)
+        self.picking.action_assign()
+        self.picking.action_set_quantities_to_reservation()
+        line = self.picking.move_line_ids.filtered(
+            lambda ln: ln.product_id == self.product
+        )
+        self.assertEqual(line.qty_done, 2.0)

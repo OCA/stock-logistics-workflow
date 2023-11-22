@@ -22,3 +22,21 @@ class StockMove(models.Model):
         for move in moves_not_display:
             move.display_assign_serial = False
         return
+
+    def _set_quantities_to_reservation(self):
+        """Allow complete quantities reservation if the lot will be created when
+        the picking has been validated
+        """
+        res = super()._set_quantities_to_reservation()
+        moves_to_process = self.filtered(
+            lambda mv: not mv.quantity_done
+            and mv.state in ["partially_available", "assigned"]
+            and mv.picking_type_id.use_create_lots
+            and mv.picking_type_id.auto_create_lot
+            and mv.product_id.auto_create_lot
+        )
+        for move in moves_to_process:
+            for move_line in move.move_line_ids:
+                if not move_line.lot_name:
+                    move_line.qty_done = move_line.product_uom_qty
+        return res
