@@ -19,9 +19,7 @@ class StockPicking(models.Model):
         if responsible_picking_ids:
             discussion_subtype = self.env.ref("mail.mt_comment")
             picking_subtypes = self.env["mail.message.subtype"].search(
-                [
-                    ("res_model", "=", "stock.picking"),
-                ]
+                [("res_model", "=", "stock.picking"),]
             )
             subtypes = discussion_subtype | picking_subtypes
 

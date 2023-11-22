@@ -5,9 +5,7 @@
     "name": "Stock Picking Responsible",
     "summary": "Adds a responsible partner to the picking"
     " and subscribe them to notifications.",
-    "author": "Coop IT Easy SC,"
-              " BEES coop SC,"
-              " Odoo Community Association (OCA)",
+    "author": "Coop IT Easy SC," " BEES coop SC," " Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "maintainers": ["robinkeunen"],
     "category": "Inventory",

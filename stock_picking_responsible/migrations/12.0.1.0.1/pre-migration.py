@@ -3,7 +3,9 @@
 
 
 def migrate(cr, version):
-    cr.execute("""
+    cr.execute(
+        """
         ALTER TABLE stock_picking ADD temporary_responsible int;
         UPDATE stock_picking SET temporary_responsible = responsible;
-    """)
+    """
+    )

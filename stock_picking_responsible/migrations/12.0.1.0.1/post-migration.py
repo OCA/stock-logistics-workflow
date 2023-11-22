@@ -3,7 +3,9 @@
 
 
 def migrate(cr, version):
-    cr.execute("""
+    cr.execute(
+        """
         UPDATE stock_picking SET responsible_id = temporary_responsible;
         ALTER TABLE stock_picking DROP COLUMN temporary_responsible;
-    """)
+    """
+    )
