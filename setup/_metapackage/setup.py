@@ -51,6 +51,7 @@ setuptools.setup(
         'odoo-addon-stock_procurement_customer>=16.0dev,<16.1dev',
         'odoo-addon-stock_putaway_hook>=16.0dev,<16.1dev',
         'odoo-addon-stock_quant_package_dimension>=16.0dev,<16.1dev',
+        'odoo-addon-stock_quant_package_dimension_total_weight_from_packaging>=16.0dev,<16.1dev',
         'odoo-addon-stock_quant_package_product_packaging>=16.0dev,<16.1dev',
         'odoo-addon-stock_receipt_lot_info>=16.0dev,<16.1dev',
         'odoo-addon-stock_restrict_lot>=16.0dev,<16.1dev',
