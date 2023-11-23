@@ -24,6 +24,9 @@ class StockPicking(models.Model):
         help="Technical field. Indicates the transfer is"
         " canceled because it was left empty after a manual merge.",
     )
+    # required for group_by since pickings are accessed from the procurement
+    # group in the _merge_procurement_groups method
+    group_id = fields.Many2one(index=True)
 
     @api.model
     def _get_index_for_grouping_fields(self):
