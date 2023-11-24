@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-22 18:05+0000\n"
-"PO-Revision-Date: 2023-11-17 09:33+0000\n"
+"PO-Revision-Date: 2023-11-24 10:34+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/"
 "OCA-stock-logistics-workflow-8-0/language/it/)\n"
@@ -40,7 +40,7 @@ msgstr "Trasferimento"
 #: code:addons/stock_picking_back2draft/models/stock_move.py:0
 #, python-format
 msgid "You can set to draft cancelled moves only"
-msgstr "Si può impostare a bozza solo i movimenti annullati"
+msgstr "Si possono impostare a bozza solo i movimenti annullati"
 
 #~ msgid "Picking List"
 #~ msgstr "Lista Picking"
