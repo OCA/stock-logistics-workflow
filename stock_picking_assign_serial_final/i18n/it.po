@@ -6,43 +6,45 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2023-11-24 16:34+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_picking_assign_serial_final
 #: model:ir.model.fields,field_description:stock_picking_assign_serial_final.field_assign_serial_final_mixin__final_serial_number
 #: model:ir.model.fields,field_description:stock_picking_assign_serial_final.field_stock_assign_serial__final_serial_number
 #: model:ir.model.fields,field_description:stock_picking_assign_serial_final.field_stock_move__final_serial_number
 msgid "Final SN"
-msgstr ""
+msgstr "NS finale"
 
 #. module: stock_picking_assign_serial_final
 #: model:ir.model,name:stock_picking_assign_serial_final.model_assign_serial_final_mixin
 msgid "Mixin for assign last S/N"
-msgstr ""
+msgstr "Mixin per assegnare l'ultimo N/S"
 
 #. module: stock_picking_assign_serial_final
 #: model:ir.model.fields,field_description:stock_picking_assign_serial_final.field_assign_serial_final_mixin__next_serial_count
 msgid "Next Serial Count"
-msgstr ""
+msgstr "Conteggio seriale successivo"
 
 #. module: stock_picking_assign_serial_final
 #: model:ir.model.fields,field_description:stock_picking_assign_serial_final.field_stock_assign_serial__next_serial_count
 #: model:ir.model.fields,field_description:stock_picking_assign_serial_final.field_stock_move__next_serial_count
 msgid "Number of SN"
-msgstr ""
+msgstr "Numero di NS"
 
 #. module: stock_picking_assign_serial_final
 #: model:ir.model,name:stock_picking_assign_serial_final.model_stock_assign_serial
 msgid "Stock Assign Serial Numbers"
-msgstr ""
+msgstr "Assegna numeri seriali giacrnza"
 
 #. module: stock_picking_assign_serial_final
 #: model:ir.model,name:stock_picking_assign_serial_final.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimento di magazzino"
