@@ -7,7 +7,7 @@
     "category": "Warehouse Management",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "PyTech SRL, Ooops404, Odoo Community Association (OCA)",
-    "maintainers": ["pytech-bot"],
+    "maintainers": ["aleuffre", "renda-dev"],
     "license": "AGPL-3",
     "installable": True,
     "depends": [
