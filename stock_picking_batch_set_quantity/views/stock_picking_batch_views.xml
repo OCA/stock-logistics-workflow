@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="view_picking_move_tree_inherited">
+        <field name="model">stock.move</field>
+        <field
+            name="inherit_id"
+            ref="stock_picking_batch.view_picking_move_tree_inherited"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='quantity_done']" position="attributes">
+                <attribute
+                    name="decoration-success"
+                >quantity_done &gt; 0 and quantity_done == reserved_availability</attribute>
+            </xpath>
+            <xpath expr="//field[@name='reserved_availability']" position="after">
+                <button
+                    name="action_set_quantities_to_reservation"
+                    attrs="{'invisible': [
+                            '|',
+                                ('parent.state', '!=', 'in_progress'),
+                                ('parent.show_validate', '=', False)]}"
+                    title="Set quantities"
+                    type="object"
+                    groups="stock.group_stock_user"
+                    icon="fa-arrow-right"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_move_line_tree">
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock_picking_batch.view_move_line_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_uom_qty']" position="after">
+                <button
+                    name="action_set_quantities_to_reservation"
+                    attrs="{'invisible': [
+                            '|',
+                                ('parent.state', '!=', 'in_progress'),
+                                ('parent.show_validate', '=', False)]}"
+                    title="Set quantities"
+                    type="object"
+                    groups="stock.group_stock_user"
+                    icon="fa-arrow-right"
+                />
+            </xpath>
+            <xpath expr="//field[@name='qty_done']" position="after">
+                <xpath expr="//field[@name='product_uom_id']" position="move" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
