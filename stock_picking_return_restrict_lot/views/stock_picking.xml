@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 Foodles (http://www.foodles.co).
+     @author Pierre Verkest <pierreverkest84@gmail.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+<odoo>
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field eval="12" name="priority" />
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='do_unreserve']" position="before">
+                <button
+                    name="action_stock_picking_full_return"
+                    string="Full return"
+                    attrs="{'invisible': [('state', '!=', 'done')]}"
+                    type="object"
+                    groups="base.group_user"
+                />
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="action_full_returns" model="ir.actions.server">
+        <field name="name">Full returns</field>
+        <field
+            name="help"
+        >Prepare stock picking to returns all goods using same lot.</field>
+        <field name="model_id" ref="stock.model_stock_picking" />
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.action_stock_picking_full_return()
+        </field>
+    </record>
+
+</odoo>
