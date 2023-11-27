@@ -1,0 +1,47 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* delivery_total_weight_from_packaging
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2023-11-27 19:34+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
+"Language-Team: none\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: delivery_total_weight_from_packaging
+#: model:ir.model,name:delivery_total_weight_from_packaging.model_choose_delivery_package
+msgid "Delivery Package Selection Wizard"
+msgstr "Asistente de Selección de Paquetes de Entrega"
+
+#. module: delivery_total_weight_from_packaging
+#: model:ir.model,name:delivery_total_weight_from_packaging.model_stock_quant_package
+msgid "Packages"
+msgstr "Paquetes"
+
+#. module: delivery_total_weight_from_packaging
+#: model:ir.model.fields,field_description:delivery_total_weight_from_packaging.field_stock_quant_package__shipping_weight
+msgid "Shipping Weight"
+msgstr "Peso del Envío"
+
+#. module: delivery_total_weight_from_packaging
+#: model:ir.model,name:delivery_total_weight_from_packaging.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento de Existencias"
+
+#. module: delivery_total_weight_from_packaging
+#: model:ir.model.fields,help:delivery_total_weight_from_packaging.field_stock_quant_package__shipping_weight
+msgid "Total weight of the package."
+msgstr "Peso total del paquete."
+
+#. module: delivery_total_weight_from_packaging
+#: model:ir.model,name:delivery_total_weight_from_packaging.model_stock_picking
+msgid "Transfer"
+msgstr "Trasferencia"
