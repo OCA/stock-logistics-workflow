@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 Ooops404
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='group_lot_on_delivery_slip']/../.."
+                position="after"
+            >
+                <div class="col-xs-12 col-md-12 o_setting_box">
+                    <div class="o_setting_left_pane" />
+                    <div class="o_setting_right_pane">
+                        <label for="enforce_lot_restriction_product_domain" />
+                        <field
+                            name="enforce_lot_restriction_product_domain"
+                            widget="domain"
+                            options="{'model': 'product.template'}"
+                        />
+                    </div>
+                </div>
+
+            </xpath>
+        </field>
+    </record>
+</odoo>
