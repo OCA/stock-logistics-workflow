@@ -21,7 +21,7 @@ class AccountMoveReversal(models.TransientModel):
                 reverse_moves = line.move_line_ids.mapped("returned_move_ids")
                 if reverse_moves:
                     moves.mapped("invoice_line_ids").filtered(
-                        lambda m: m.product_id == line.product_id
+                        lambda m, line=line: m.product_id == line.product_id
                     ).move_line_ids = reverse_moves
         else:
             for line in moves.mapped("invoice_line_ids"):
