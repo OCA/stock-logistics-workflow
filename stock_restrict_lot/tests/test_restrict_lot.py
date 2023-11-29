@@ -1,5 +1,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from odoo.exceptions import UserError
 from odoo.tests.common import SavepointCase
 
 
@@ -271,3 +272,45 @@ class TestRestrictLot(SavepointCase):
         product.invalidate_cache()
         product = product.with_context(lot_id=lot2.id)
         self.assertEqual(product.outgoing_qty, 1)
+
+    def test_move_validation_inconsistent_lot(self):
+        """
+        Check that an error is raised when performing a move _action_done()
+        if the lot restriction on the move is inconsistent with the
+        lot in the move line
+        """
+        lot2 = self.env["stock.production.lot"].create(
+            {
+                "name": "lot2",
+                "product_id": self.product.id,
+                "company_id": self.warehouse.company_id.id,
+            }
+        )
+        self._update_product_stock(1, lot2.id)
+
+        move = self.env["stock.move"].create(
+            {
+                "product_id": self.product.id,
+                "location_id": self.warehouse.lot_stock_id.id,
+                "location_dest_id": self.customer_loc.id,
+                "product_uom_qty": 1,
+                "product_uom": self.product.uom_id.id,
+                "name": "test",
+                "warehouse_id": self.warehouse.id,
+                "restrict_lot_id": self.lot.id,
+            }
+        )
+        move_line = self.env["stock.move.line"].create(
+            {
+                "move_id": move.id,
+                "product_id": move.product_id.id,
+                "qty_done": 1,
+                "product_uom_id": move.product_uom.id,
+                "location_id": move.location_id.id,
+                "location_dest_id": move.location_dest_id.id,
+                "lot_id": lot2.id,
+            }
+        )
+        self.assertRaises(UserError, move._action_done)
+        move_line.lot_id = self.lot
+        move._action_done()
