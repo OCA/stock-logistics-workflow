@@ -13,7 +13,6 @@ from odoo.addons.sale.tests.common import TestSaleCommon
 class TestStockPickingInvoiceLink(TestSaleCommon):
     @classmethod
     def _update_product_qty(cls, product):
-
         product_qty = cls.env["stock.change.product.qty"].create(
             {
                 "product_id": product.id,
@@ -76,7 +75,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
     @classmethod
     def setUpClass(cls, chart_template_ref=None):
         super().setUpClass(chart_template_ref=chart_template_ref)
-        for (_, i) in cls.company_data.items():
+        for _, i in cls.company_data.items():
             if "type" in i and i.type == "product":
                 cls._update_product_qty(i)
         cls.prod_order = cls.company_data["product_order_no"]
@@ -211,7 +210,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         # Create invoice
         inv = self.so._create_invoices()
         inv_line_prod_del = inv.invoice_line_ids.filtered(
-            lambda l: l.product_id == self.prod_del
+            lambda line: line.product_id == self.prod_del
         )
         self.assertEqual(
             inv_line_prod_del.move_line_ids,
@@ -228,7 +227,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
 
         # Remove product ordered line
         return_wiz.product_return_moves.filtered(
-            lambda l: l.product_id == self.prod_order
+            lambda line: line.product_id == self.prod_order
         ).unlink()
         return_wiz.product_return_moves.quantity = 1.0
         return_wiz.product_return_moves.to_refund = True
@@ -239,7 +238,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         return_pick.button_validate()
         inv = self.so._create_invoices(final=True)
         inv_line_prod_del = inv.invoice_line_ids.filtered(
-            lambda l: l.product_id == self.prod_del
+            lambda line: line.product_id == self.prod_del
         )
         self.assertEqual(inv_line_prod_del.move_line_ids, return_pick.move_ids)
 
@@ -254,7 +253,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         inv = self.so._create_invoices()
         inv.action_post()
         move_line_prod_del = pick_1.move_ids.filtered(
-            lambda l: l.product_id == self.prod_del
+            lambda line: line.product_id == self.prod_del
         )
         wiz_invoice_refund = (
             self.env["account.move.reversal"]
@@ -272,7 +271,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
             lambda i: i.move_type == "out_invoice" and i.state == "draft"
         )
         inv_line_prod_del = new_invoice.invoice_line_ids.filtered(
-            lambda l: l.product_id == self.prod_del
+            lambda line: line.product_id == self.prod_del
         )
         self.assertEqual(move_line_prod_del, inv_line_prod_del.move_line_ids)
 
@@ -344,7 +343,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         # Create invoice
         inv = self.so._create_invoices()
         inv_line_prod_del = inv.invoice_line_ids.filtered(
-            lambda l: l.product_id == self.prod_del
+            lambda line: line.product_id == self.prod_del
         )
         inv.action_post()
         self.assertEqual(
@@ -361,7 +360,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         return_wiz = return_form.save()
         # Remove product ordered line
         return_wiz.product_return_moves.filtered(
-            lambda l: l.product_id == self.prod_order
+            lambda line: line.product_id == self.prod_order
         ).unlink()
         return_wiz.product_return_moves.quantity = 1.0
         return_wiz.product_return_moves.to_refund = True
@@ -384,7 +383,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         action = wiz_invoice_refund.reverse_moves()
         invoice_refund = self.env["account.move"].browse(action["res_id"])
         inv_line_prod_del_refund = invoice_refund.invoice_line_ids.filtered(
-            lambda l: l.product_id == self.prod_del
+            lambda line: line.product_id == self.prod_del
         )
         self.assertEqual(
             inv_line_prod_del_refund.move_line_ids,
