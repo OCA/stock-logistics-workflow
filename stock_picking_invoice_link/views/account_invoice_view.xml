@@ -14,16 +14,16 @@
                     name="action_show_picking"
                     class="oe_stat_button"
                     icon="fa-truck"
-                    attrs="{'invisible': [('delivery_count', '=', 0)]}"
+                    invisible="delivery_count == 0"
                 >
                     <field name="delivery_count" widget="statinfo" string="Delivery" />
                 </button>
             </div>
             <xpath expr="//field[@name='invoice_line_ids']//tree" position="inside">
-                <field name="move_line_ids" force_save="1" invisible="1" />
+                <field name="move_line_ids" force_save="1" column_invisible="1" />
             </xpath>
             <xpath expr="//field[@name='line_ids']//tree" position="inside">
-                <field name="move_line_ids" force_save="1" invisible="1" />
+                <field name="move_line_ids" force_save="1" column_invisible="1" />
             </xpath>
         </field>
     </record>

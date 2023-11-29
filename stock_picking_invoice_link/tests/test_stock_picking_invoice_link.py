@@ -65,7 +65,6 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
                         },
                     ),
                 ],
-                "pricelist_id": cls.env.ref("product.list0").id,
                 "picking_policy": "direct",
             }
         )
@@ -100,8 +99,14 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
             lambda x: x.picking_type_code == "outgoing"
             and x.state in ("confirmed", "assigned", "partially_available")
         )
-        pick_1.move_line_ids.write({"qty_done": 1})
-        pick_1._action_done()
+        pick_1.move_line_ids.write({"quantity": 1})
+        action_data = pick_1.button_validate()
+        backorder_wizard = Form(
+            self.env["stock.backorder.confirmation"].with_context(
+                action_data["context"]
+            )
+        ).save()
+        backorder_wizard.process()
         self.assertEqual(
             self.so.invoice_status,
             "to invoice",
@@ -125,8 +130,8 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
             lambda x: x.picking_type_code == "outgoing"
             and x.state in ("confirmed", "assigned", "partially_available")
         )
-        pick_2.move_line_ids.write({"qty_done": 1})
-        pick_2._action_done()
+        pick_2.move_line_ids.write({"quantity": 1})
+        pick_2.button_validate()
         backorders = pick_obj.search([("backorder_id", "=", pick_2.id)])
         self.assertFalse(
             backorders,
@@ -197,15 +202,15 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         )
         # Try to update a picking move which has a invoice line linked
         with self.assertRaises(UserError):
-            pick_1.move_line_ids.write({"qty_done": 20.0})
+            pick_1.move_ids.write({"product_uom_qty": 20.0})
 
     def test_return_picking_to_refund(self):
         pick_1 = self.so.picking_ids.filtered(
             lambda x: x.picking_type_code == "outgoing"
             and x.state in ("confirmed", "assigned", "partially_available")
         )
-        pick_1.move_line_ids.write({"qty_done": 2})
-        pick_1._action_done()
+        pick_1.move_line_ids.write({"quantity": 2})
+        pick_1.button_validate()
 
         # Create invoice
         inv = self.so._create_invoices()
@@ -234,7 +239,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         res = return_wiz.create_returns()
         return_pick = self.env["stock.picking"].browse(res["res_id"])
         # Validate picking
-        return_pick.move_ids.quantity_done = 1.0
+        return_pick.move_ids.quantity = 1.0
         return_pick.button_validate()
         inv = self.so._create_invoices(final=True)
         inv_line_prod_del = inv.invoice_line_ids.filtered(
@@ -247,8 +252,8 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
             lambda x: x.picking_type_code == "outgoing"
             and x.state in ("confirmed", "assigned", "partially_available")
         )
-        pick_1.move_line_ids.write({"qty_done": 2})
-        pick_1._action_done()
+        pick_1.move_line_ids.write({"quantity": 2})
+        pick_1.button_validate()
         # Create invoice
         inv = self.so._create_invoices()
         inv.action_post()
@@ -260,15 +265,14 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
             .with_context(active_model="account.move", active_ids=inv.ids)
             .create(
                 {
-                    "refund_method": "modify",
                     "reason": "test",
                     "journal_id": inv.journal_id.id,
                 }
             )
         )
-        wiz_invoice_refund.reverse_moves()
+        wiz_invoice_refund.modify_moves()
         new_invoice = self.so.invoice_ids.filtered(
-            lambda i: i.move_type == "out_invoice" and i.state == "draft"
+            lambda i: i.move_type == "out_refund" and i.state == "draft"
         )
         inv_line_prod_del = new_invoice.invoice_line_ids.filtered(
             lambda line: line.product_id == self.prod_del
@@ -288,8 +292,8 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
             lambda x: x.picking_type_code == "outgoing"
             and x.state in ("confirmed", "assigned", "partially_available")
         )
-        pick_1.move_line_ids.write({"qty_done": 2})
-        pick_1._action_done()
+        pick_1.move_line_ids.write({"quantity": 2})
+        pick_1.button_validate()
         # Create invoice
         inv = self.so._create_invoices()
         inv.action_post()
@@ -299,13 +303,12 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
             .with_context(active_model="account.move", active_ids=inv.ids)
             .create(
                 {
-                    "refund_method": "cancel",
                     "reason": "test",
                     "journal_id": inv.journal_id.id,
                 }
             )
         )
-        wiz_invoice_refund.reverse_moves()
+        wiz_invoice_refund.refund_moves()
         # Create invoice again
         new_inv = self.so._create_invoices()
         new_inv.action_post()
@@ -320,8 +323,8 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
             lambda x: x.picking_type_code == "outgoing"
             and x.state in ("confirmed", "assigned", "partially_available")
         )
-        pick_1.move_line_ids.write({"qty_done": 2})
-        pick_1._action_done()
+        pick_1.move_line_ids.write({"quantity": 2})
+        pick_1.button_validate()
         # Create invoice
         inv = self.so._create_invoices()
         with Form(inv) as move_form:
@@ -338,8 +341,8 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
             lambda x: x.picking_type_code == "outgoing"
             and x.state in ("confirmed", "assigned", "partially_available")
         )
-        pick_1.move_line_ids.write({"qty_done": 2})
-        pick_1._action_done()
+        pick_1.move_line_ids.write({"quantity": 2})
+        pick_1.button_validate()
         # Create invoice
         inv = self.so._create_invoices()
         inv_line_prod_del = inv.invoice_line_ids.filtered(
@@ -367,14 +370,13 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         res = return_wiz.create_returns()
         return_pick = self.env["stock.picking"].browse(res["res_id"])
         # Validate picking
-        return_pick.move_ids.quantity_done = 1.0
+        return_pick.move_ids.quantity = 1.0
         return_pick.button_validate()
         wiz_invoice_refund = (
             self.env["account.move.reversal"]
             .with_context(active_model="account.move", active_ids=inv.ids)
             .create(
                 {
-                    "refund_method": "cancel",
                     "reason": "test",
                     "journal_id": inv.journal_id.id,
                 }
@@ -401,8 +403,8 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
             lambda x: x.picking_type_code == "outgoing"
             and x.state in ("confirmed", "assigned")
         )
-        picking.move_line_ids.write({"qty_done": 2})
-        picking._action_done()
+        picking.move_line_ids.write({"quantity": 2})
+        picking.button_validate()
         # Two invoice lines has been created, One of them related to product service
         self.assertEqual(len(invoice.invoice_line_ids), 2)
         line = invoice.invoice_line_ids
