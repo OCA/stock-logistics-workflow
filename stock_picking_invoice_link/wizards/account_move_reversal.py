@@ -6,7 +6,7 @@ from odoo import models
 class AccountMoveReversal(models.TransientModel):
     _inherit = "account.move.reversal"
 
-    def reverse_moves(self):
+    def reverse_moves(self, is_modify=False):
         """Link return moves to the lines of refund invoice"""
         action = super(
             AccountMoveReversal, self.with_context(force_copy_stock_moves=True)
@@ -15,7 +15,7 @@ class AccountMoveReversal(models.TransientModel):
             moves = self.env["account.move"].browse(action["res_id"])
         else:
             moves = self.env["account.move"].search(action["domain"])
-        if self.refund_method == "modify":
+        if is_modify:
             origin_moves = self.move_ids
             for line in origin_moves.mapped("invoice_line_ids"):
                 reverse_moves = line.move_line_ids.mapped("returned_move_ids")

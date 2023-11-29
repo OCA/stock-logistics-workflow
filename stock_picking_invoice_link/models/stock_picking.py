@@ -29,7 +29,7 @@ class StockPicking(models.Model):
             "account.action_move_out_invoice_type"
         )
         if len(self.invoice_ids) > 1:
-            result["domain"] = "[('id', 'in', %s)]" % self.invoice_ids.ids
+            result["domain"] = f"[('id', 'in', {self.invoice_ids.ids})]"
         else:
             form_view = self.env.ref(form_view_name)
             result["views"] = [(form_view.id, "form")]
