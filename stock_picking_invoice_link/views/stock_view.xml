@@ -13,7 +13,7 @@
                     name="action_view_invoice"
                     class="oe_stat_button"
                     icon="fa-pencil-square-o"
-                    attrs="{'invisible': [('invoice_count', '=', 0)]}"
+                    invisible="invoice_count == 0"
                 >
                     <field name="invoice_count" widget="statinfo" string="Invoice" />
                 </button>
@@ -32,7 +32,7 @@
                     name="invoice_line"
                     string="Invoice Lines"
                     colspan="2"
-                    attrs="{'invisible':[('invoice_line_ids', '=', [])]}"
+                    invisible="invoice_line_ids == []"
                 >
                     <field
                         name="invoice_line_ids"
@@ -54,7 +54,7 @@
                 <group
                     name="invoice_line"
                     string="Invoice Lines"
-                    attrs="{'invisible':[('invoice_line_ids', '=', [])]}"
+                    invisible="invoice_line_ids == []"
                 >
                     <field
                         name="invoice_line_ids"
