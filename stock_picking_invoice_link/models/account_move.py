@@ -43,7 +43,7 @@ class AccountMove(models.Model):
             "stock.action_picking_tree_all"
         )
         if len(self.picking_ids) > 1:
-            result["domain"] = "[('id', 'in', %s)]" % self.picking_ids.ids
+            result["domain"] = f"[('id', 'in', {self.picking_ids.ids})]"
         else:
             form_view = self.env.ref(form_view_name)
             result["views"] = [(form_view.id, "form")]
