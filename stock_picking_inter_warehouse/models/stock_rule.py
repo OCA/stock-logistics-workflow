@@ -17,5 +17,10 @@ class StockRule(models.Model):
             partner_id = (
                 move_to_copy.picking_type_id.warehouse_id.receipt_picking_partner_id
             )
-            res.update({"partner_id": partner_id.id})
+            res.update(
+                {
+                    "partner_id": partner_id.id,
+                    "inter_warehouse_picking_id": move_to_copy.picking_id.id,
+                }
+            )
         return res
