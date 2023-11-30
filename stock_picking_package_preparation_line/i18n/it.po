@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-31 02:51+0000\n"
-"PO-Revision-Date: 2023-11-22 18:34+0000\n"
+"PO-Revision-Date: 2023-11-30 16:36+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/"
 "OCA-stock-logistics-workflow-8-0/language/it/)\n"
@@ -52,7 +52,7 @@ msgstr "Descrizione"
 #: view:stock.picking.package.preparation:stock_picking_package_preparation_line.sppp_line_stock_picking_package_preparation_form
 #: field:stock.picking.package.preparation,line_ids:0
 msgid "Details"
-msgstr "Dettaglio"
+msgstr "Dettagli"
 
 #. module: stock_picking_package_preparation_line
 #: field:stock.picking.package.preparation.line,display_name:0
