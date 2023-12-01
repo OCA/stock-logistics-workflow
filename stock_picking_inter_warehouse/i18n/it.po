@@ -99,6 +99,11 @@ msgid "Inter-Warehouse"
 msgstr "Inter-magazzini"
 
 #. module: stock_picking_inter_warehouse
+#: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_move__inter_warehouse_picking_id
+msgid "Inter-Warehouse Picking"
+msgstr ""
+
+#. module: stock_picking_inter_warehouse
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_picking__type_inter_warehouse_transfer
 #: model:ir.model.fields,field_description:stock_picking_inter_warehouse.field_stock_picking_type__inter_warehouse_transfer
 msgid "Inter-Warehouse Transfer"
@@ -186,8 +191,8 @@ msgid ""
 " - Partner: %(partner)s\n"
 " - Warehouses: %(whs)s"
 msgstr ""
-"Due magazzini non possono avere lo stesso 'Partner ricezione trasferimenti':"
-"\n"
+"Due magazzini non possono avere lo stesso 'Partner ricezione "
+"trasferimenti':\n"
 "\n"
 " - Partner: %(partner)s\n"
 " - Magazzini: %(whs)s"
