@@ -2,9 +2,10 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import math
+import threading
 from collections import defaultdict
 
-from odoo import fields, models, tools
+from odoo import api, fields, models, tools
 from odoo.exceptions import UserError
 from odoo.osv.expression import AND, OR, expression
 
@@ -59,7 +60,7 @@ class MakePickingBatch(models.TransientModel):
         selection=[
             ("sql_for_update_skip_locked", "SQL FOR UPDATE SKIP LOCKED"),
         ],
-        default=None,
+        default=lambda self: self._get_default_picking_locking_mode(),
         string="Picking locking mode",
         help="Define the way the system will search and lock the pickings. "
         "In the same time, picking already locked by another transaction will "
@@ -89,6 +90,16 @@ class MakePickingBatch(models.TransientModel):
     def __init__(self, env, ids=(), prefetch_ids=()):
         super().__init__(env, ids=ids, prefetch_ids=prefetch_ids)
         self._reset_counters()
+
+    @api.model
+    def _get_default_picking_locking_mode(self):
+        # in test mode we don't use a locking mode by default to avoid
+        # to collide with the test transaction
+        if self.env.registry.in_test_mode() or getattr(
+            threading.current_thread(), "testing", False
+        ):
+            return None
+        return "sql_for_update_skip_locked"
 
     def create_batch(self):
         self.ensure_one()

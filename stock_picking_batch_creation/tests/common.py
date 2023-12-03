@@ -123,6 +123,8 @@ class ClusterPickingCommonFeatures(TransactionCase):
                     (4, cls.device2.id),
                     (4, cls.device3.id),
                 ],
+                # disable lock: All tests are run in the same transaction
+                "picking_locking_mode": False,
             }
         )
         cls.picks = cls.pick1 | cls.pick2 | cls.pick3
