@@ -24,3 +24,14 @@ class StockPickingBatch(models.Model):
         string="Number of picking lines",
         help="Indicates the picking lines ready for preparation.",
     )
+
+    def write(self, vals):
+        res = super(StockPickingBatch, self).write(vals)
+        for rec in self:
+            if "user_id" in vals.keys() and not vals["user_id"]:
+                # We want to  unassign the batch from the operator
+                # and the pickings in the batch too. We must force the method
+                # write on the picking since the base class propagate the
+                # user_id only if it's set (not if it's unset)
+                rec.picking_ids.write({"user_id": vals["user_id"]})
+        return res
