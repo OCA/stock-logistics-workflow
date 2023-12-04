@@ -9,15 +9,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-10 02:42+0000\n"
-"PO-Revision-Date: 2019-10-27 00:33+0000\n"
-"Last-Translator: Sergio Zanchetta <primes2h@gmail.com>\n"
+"PO-Revision-Date: 2023-12-04 09:34+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.8\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_picking_package_preparation_line
 #: model_terms:ir.ui.view,arch_db:stock_picking_package_preparation_line.view_stock_picking_package_preparation_line_setting
@@ -89,6 +89,8 @@ msgid ""
 "If you change this quantity for a 'ready' picking, the system will not "
 "generate a back order, but will just deliver the new quantity"
 msgstr ""
+"Se si modifica questa quantità per un prelievo 'pronto', il sistema non "
+"genererà un ordine residuo, ma consegnerà solo la nuova quantità"
 
 #. module: stock_picking_package_preparation_line
 #: code:addons/stock_picking_package_preparation_line/models/stock_picking_package_preparation.py:180
@@ -97,6 +99,8 @@ msgstr ""
 msgid ""
 "Impossible to create confirmed picking. Please check products availability!"
 msgstr ""
+"Non è possibile creare un prelievo confermato. Controllare la disponibilità "
+"prodotto!"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line____last_update
@@ -121,7 +125,7 @@ msgstr "Lotto"
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,help:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__lot_ids
 msgid "Lots effectively linked to stock move"
-msgstr "Lotti  collegati in realtà al movimento di magazzino"
+msgstr "Lotti realmente collegati al movimento di magazzino"
 
 #. module: stock_picking_package_preparation_line
 #: model:ir.model.fields,field_description:stock_picking_package_preparation_line.field_stock_picking_package_preparation_line__lot_ids
