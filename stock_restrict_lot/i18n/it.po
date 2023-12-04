@@ -6,27 +6,29 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2023-12-04 09:33+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_restrict_lot
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_product_product__display_name
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_stock_move__display_name
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_stock_rule__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: stock_restrict_lot
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_product_product__id
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_stock_move__id
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_stock_rule__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_restrict_lot
 #: code:addons/stock_restrict_lot/models/stock_move.py:0
@@ -34,30 +36,32 @@ msgstr ""
 msgid ""
 "Inconsistencies between reserved quant and lot restriction on stock move"
 msgstr ""
+"Inconsistenza tra quanti prenotati e restrizione lotto nel movimento di "
+"magazzino"
 
 #. module: stock_restrict_lot
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_product_product____last_update
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_stock_move____last_update
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_stock_rule____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: stock_restrict_lot
 #: model:ir.model,name:stock_restrict_lot.model_product_product
 msgid "Product"
-msgstr ""
+msgstr "Prodotto"
 
 #. module: stock_restrict_lot
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_stock_move__restrict_lot_id
 msgid "Restrict Lot"
-msgstr ""
+msgstr "Restrizione lotto"
 
 #. module: stock_restrict_lot
 #: model:ir.model,name:stock_restrict_lot.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimento di magazzino"
 
 #. module: stock_restrict_lot
 #: model:ir.model,name:stock_restrict_lot.model_stock_rule
 msgid "Stock Rule"
-msgstr ""
+msgstr "Regola di giacenza"
