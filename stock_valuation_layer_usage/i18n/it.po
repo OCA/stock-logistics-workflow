@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-11-20 08:34+0000\n"
+"PO-Revision-Date: 2023-12-04 09:35+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -101,7 +101,7 @@ msgstr "Movimento di magazzino"
 #: model:ir.model,name:stock_valuation_layer_usage.model_stock_valuation_layer
 #: model:ir.model.fields,field_description:stock_valuation_layer_usage.field_stock_valuation_layer_usage__stock_valuation_layer_id
 msgid "Stock Valuation Layer"
-msgstr "Livello valorizzazione magazzino"
+msgstr "Livello valutazione magazzino"
 
 #. module: stock_valuation_layer_usage
 #: model:ir.model,name:stock_valuation_layer_usage.model_stock_valuation_layer_usage
