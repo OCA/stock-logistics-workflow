@@ -17,6 +17,7 @@ class StockMove(models.Model):
                 ("first_move_id", "in", self.ids),
                 ("id", "not in", self.ids),
                 ("id", "not in", already_cancel_ids),
+                ("state", "not in", ("cancel", "done")),
             ]
         )
         if moves_to_cancel:
