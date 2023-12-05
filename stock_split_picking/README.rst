@@ -17,13 +17,13 @@ Split picking
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
-    :target: https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_split_picking
+    :target: https://github.com/OCA/stock-logistics-workflow/tree/17.0/stock_split_picking
     :alt: OCA/stock-logistics-workflow
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-16-0/stock-logistics-workflow-16-0-stock_split_picking
+    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-17-0/stock-logistics-workflow-17-0-stock_split_picking
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=17.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -31,10 +31,11 @@ Split picking
 This module adds a "Split" button on the outgoing pickings form.
 
 It works like the classical picking Transfer but it leaves both pickings
-(picking and its backorder) as confirmed without processing the transfer.
+(picking and its backorder) as confirmed without processing the
+transfer.
 
-You can also choose to put all moves into separate pickings, or select moves
-to be put into a new picking.
+You can also choose to put all moves into separate pickings, or select
+moves to be put into a new picking.
 
 **Table of contents**
 
@@ -44,15 +45,16 @@ to be put into a new picking.
 Usage
 =====
 
-#. Go to **Inventory** dashboard and open any picking.
-#. If picking state is **available** you can see an split button.
-#. On the "Operations" tab, fill the field "Done" to the quantity you want to
-   split for each line.
-#. If you click on **Split** button, wizard will split current picking into
-   two different pickings depends on quantity done you entered above.
-#. Both pickings remain confirmed.
-#. When splitting a picking in an unassigned state, wizard won't
-   be auto completed with picking lines.
+1. Go to **Inventory** dashboard and open any picking.
+2. If picking state is **available** you can see an split button.
+3. On the "Operations" tab, fill the field "Done" to the quantity you
+   want to split for each line.
+4. If you click on **Split** button, wizard will split current picking
+   into two different pickings depends on quantity done you entered
+   above.
+5. Both pickings remain confirmed.
+6. When splitting a picking in an unassigned state, wizard won't be auto
+   completed with picking lines.
 
 Bug Tracker
 ===========
@@ -60,7 +62,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/stock-logistics-workflow/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_split_picking%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_split_picking%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -68,29 +70,29 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Camptocamp
 * Tecnativa
 * ForgeFlow S.L.
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Nicolas Bessi <nicolas.bessi@camptocamp.com>
-* Guewen Baconnier <guewen.baconnier@camptocamp.com>
-* Yannick Vaucher <yannick.vaucher@camptocamp.com>
-* Vicent Cubells <vicent.cubells@tecnativa.com>
-* Julien Coux <julien.coux@camptocamp.com>
-* Andrius Preimantas <andrius@versada.eu>
-* Holger Brunn <mail@hunki-enterprises.com>
-* Rujia Liu <rujial@roof.co.nz>
-* Bernat Puig <bernat.puig@forgeflow.com>
-* Pimolnat Suntian <pimolnats@ecosoft.co.th>
-* Yoshi Tashiro <tashiro@quartile.co>
+-  Nicolas Bessi <nicolas.bessi@camptocamp.com>
+-  Guewen Baconnier <guewen.baconnier@camptocamp.com>
+-  Yannick Vaucher <yannick.vaucher@camptocamp.com>
+-  Vicent Cubells <vicent.cubells@tecnativa.com>
+-  Julien Coux <julien.coux@camptocamp.com>
+-  Andrius Preimantas <andrius@versada.eu>
+-  Holger Brunn <mail@hunki-enterprises.com>
+-  Rujia Liu <rujial@roof.co.nz>
+-  Bernat Puig <bernat.puig@forgeflow.com>
+-  Pimolnat Suntian <pimolnats@ecosoft.co.th>
+-  Yoshi Tashiro <tashiro@quartile.co>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -102,6 +104,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_split_picking>`_ project on GitHub.
+This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/17.0/stock_split_picking>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
