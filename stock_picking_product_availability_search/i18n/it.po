@@ -6,37 +6,39 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2023-12-05 17:34+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_picking_product_availability_search
 #: code:addons/stock_picking_product_availability_search/models/stock_picking.py:0
 #, python-format
 msgid "Invalid domain operator %s"
-msgstr ""
+msgstr "Operatore dominio %s errato"
 
 #. module: stock_picking_product_availability_search
 #: code:addons/stock_picking_product_availability_search/models/stock_picking.py:0
 #, python-format
 msgid "Invalid domain right operand %s"
-msgstr ""
+msgstr "Operatore destro di dominio %s errato"
 
 #. module: stock_picking_product_availability_search
 #: model_terms:ir.ui.view,arch_db:stock_picking_product_availability_search.view_picking_internal_search
 msgid "Product Availability Issues"
-msgstr ""
+msgstr "Problema disponibilità prodotto"
 
 #. module: stock_picking_product_availability_search
 #: model:ir.model.fields,field_description:stock_picking_product_availability_search.field_stock_picking__products_availability_state
 msgid "Products Availability State"
-msgstr ""
+msgstr "Problema disponibilità stato"
 
 #. module: stock_picking_product_availability_search
 #: model:ir.model,name:stock_picking_product_availability_search.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Trasferimento"
