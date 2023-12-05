@@ -83,7 +83,7 @@ class StockPicking(models.Model):
                     "move_line_ids": [],
                     "backorder_id": self.id,
                 },
-                **(default or {})
+                **(default or {}),
             )
         )
         self.message_post(
