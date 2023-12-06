@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-11-21 19:34+0000\n"
+"PO-Revision-Date: 2023-12-06 15:36+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -238,7 +238,7 @@ msgstr "Lotto / seriale"
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot__lot_suggestion_mode
 msgid "Lot Suggestion Mode"
-msgstr "Modalità di suggerimento Lotto"
+msgstr "Modalità di suggerimento lotto"
 
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.stock_move_lines_to_return
@@ -358,7 +358,7 @@ msgstr "Partner"
 #. module: stock_return_request
 #: model:ir.model,name:stock_return_request.model_stock_return_request
 msgid "Perform stock returns across pickings"
-msgstr "Processa resi su più picking"
+msgstr "Esegui resi di magazzino su più prelievi"
 
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.view_stock_return_request_form
@@ -383,7 +383,7 @@ msgstr "Prodotto"
 #. module: stock_return_request
 #: model:ir.model,name:stock_return_request.model_stock_return_request_line
 msgid "Product to search for returns"
-msgstr "Prodotto per cercare i Resi"
+msgstr "Prodotto per cercare i resi"
 
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.view_stock_return_request_form
@@ -403,7 +403,7 @@ msgstr "Riferimento"
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot__request_line_id
 msgid "Request Line"
-msgstr "Riga Richiesta"
+msgstr "Richiesta riga"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__activity_user_id
@@ -418,23 +418,23 @@ msgstr "Limita i tipi di operazioni in cui cercare"
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.view_stock_return_request_form
 msgid "Return Line"
-msgstr "Riga Reso"
+msgstr "Riga reso"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__return_order
 msgid "Return Order"
-msgstr "Ordine di Reso"
+msgstr "Ordine di reso"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line__request_id
 #: model:ir.ui.menu,name:stock_return_request.menu_stock_return_request
 msgid "Return Request"
-msgstr "Richiesta di Reso"
+msgstr "Richiesta di reso"
 
 #. module: stock_return_request
 #: model:ir.actions.act_window,name:stock_return_request.action_stock_return_request_tree
 msgid "Return Requests"
-msgstr "Richieste di Reso"
+msgstr "Richieste di reso"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__return_from_location
@@ -444,7 +444,7 @@ msgstr "Reso da"
 #. module: stock_return_request
 #: selection:stock.return.request,return_type:0
 msgid "Return from Customer"
-msgstr "Reso dal Cliente"
+msgstr "Reso dal cliente"
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__return_from_location
@@ -465,12 +465,12 @@ msgstr "Rendi a"
 #. module: stock_return_request
 #: selection:stock.return.request,return_type:0
 msgid "Return to Internal location"
-msgstr "Reso a Ubicazione Interna"
+msgstr "Reso a ubicazione interna"
 
 #. module: stock_return_request
 #: selection:stock.return.request,return_type:0
 msgid "Return to Supplier"
-msgstr "Reso al Fornitore"
+msgstr "Reso al fornitore"
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__return_to_location
@@ -480,12 +480,12 @@ msgstr "Rendi a questa ubicazione"
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__return_type
 msgid "Return type"
-msgstr "Tipo Reso"
+msgstr "Tipo reso"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line__returnable_move_ids
 msgid "Returnable Move Lines"
-msgstr "Righe Picking Rendibili"
+msgstr "Righe movimento rendibili"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_move__qty_returnable
@@ -505,7 +505,7 @@ msgstr "Resi"
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__from_date
 msgid "Search moves up to this date"
-msgstr "Cerca picking da questa data"
+msgstr "Cerca movimenti da questa data"
 
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.view_stock_return_request_form
@@ -515,7 +515,7 @@ msgstr "Imposta a bozza"
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__show_to_refund
 msgid "Show To Refund"
-msgstr "Mostra da Rimborsare"
+msgstr "Mostra da rimborsare"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__state
@@ -543,7 +543,7 @@ msgstr "Movimento di magazzino"
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__line_ids
 msgid "Stock Return"
-msgstr "Reso di Magazzino"
+msgstr "Reso di magazzino"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_picking__stock_return_request_id
@@ -554,28 +554,28 @@ msgstr "Richiesta Reso di Magazzino"
 #. module: stock_return_request
 #: model:ir.actions.report,name:stock_return_request.action_report_stock_return_request
 msgid "Stock Return Request Report"
-msgstr "Stampa reso di magazzino"
+msgstr "Stampa richiesta reso di magazzino"
 
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.view_stock_return_request_tree
 msgid "Stock Return Requests"
-msgstr "Richieste di Reso di Magazzino"
+msgstr "Richieste di reso di magazzino"
 
 #. module: stock_return_request
 #: code:addons/stock_return_request/models/stock_return_request.py:558
 #, python-format
 msgid "Suggest Lot"
-msgstr "Suggerisci Lotto"
+msgstr "Suggerisci lotto"
 
 #. module: stock_return_request
 #: model:ir.model,name:stock_return_request.model_suggest_return_request_lot
 msgid "Suggest lots for the return request line"
-msgstr "Suggerisci quale lotto usare per la riga richiesta di reso"
+msgstr "Suggerisci lotto per la riga richiesta di reso"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot__suggested_lot
 msgid "Suggested Lots"
-msgstr "Lotti Suggeriti"
+msgstr "Lotti suggeriti"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_suggest_return_request_lot__suggested_lot_detail
@@ -585,7 +585,7 @@ msgstr "Lotti suggeriti dettagliati"
 #. module: stock_return_request
 #: model:ir.actions.act_window,name:stock_return_request.act_stock_return_request_line_suggest_lot
 msgid "Suggested Lots for this Return Request Line"
-msgstr "Lotti suggeriti per questa riga Richiesta di Reso"
+msgstr "Lotti suggeriti per questa riga richiesta di reso"
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__return_type
@@ -594,19 +594,19 @@ msgid ""
 "Customer - Search for outgoing moves to this customer\n"
 "Internal - Search for outgoing moves to this location."
 msgstr ""
-"Fornitore - Search for incoming moves from this supplier\n"
-"Cliente - Search for outgoing moves to this customer\n"
-"Interno - Search for outgoing moves to this location."
+"Fornitore - Cerca per movimenti in arrivo da questo fornitore\n"
+"Cliente - Cerca per movimenti in uscita da questo cliente\n"
+"Interno - Cerca per movimenti in uscita da questa ubicazione."
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__return_order
 msgid "The returns will be performed searching moves in the given order."
-msgstr "I resi saranno processati cercando i picking nel seguente ordine."
+msgstr "I resi saranno processati cercando i movimenti nel seguente ordine."
 
 #. module: stock_return_request
 #: model:ir.model.fields,help:stock_return_request.field_stock_return_request__note
 msgid "They will be visible on the report"
-msgstr "Saranno visibili nella stampa"
+msgstr "Saranno visibili nella resconto"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request__to_refund
@@ -621,12 +621,12 @@ msgstr "Oggi"
 #. module: stock_return_request
 #: selection:suggest.return.request.lot,lot_suggestion_mode:0
 msgid "Total by lot"
-msgstr "Totale per Lotto"
+msgstr "Totale per lotto"
 
 #. module: stock_return_request
 #: selection:suggest.return.request.lot,lot_suggestion_mode:0
 msgid "Total by move"
-msgstr "Totale per picking"
+msgstr "Totale per movimento"
 
 #. module: stock_return_request
 #: model:ir.model.fields,field_description:stock_return_request.field_stock_return_request_line__tracking
@@ -681,4 +681,4 @@ msgstr ""
 #: model:ir.model.fields,help:stock_return_request.field_suggest_return_request_lot__suggested_lot
 #: model:ir.model.fields,help:stock_return_request.field_suggest_return_request_lot__suggested_lot_detail
 msgid "You can return these lots"
-msgstr "Puoi rendere questi lotti"
+msgstr "Si possono rendere questi lotti"
