@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-01 02:08+0000\n"
-"PO-Revision-Date: 2023-11-20 08:34+0000\n"
+"PO-Revision-Date: 2023-12-06 14:35+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -88,7 +88,7 @@ msgstr "Ultimo aggiornamento il"
 #: code:addons/stock_split_picking/models/stock_picking.py:0
 #, python-format
 msgid "Mark as todo this picking please."
-msgstr "Segnare come da fare questo prelievo."
+msgstr "Segnare questo prelievo come da fare."
 
 #. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking__mode
