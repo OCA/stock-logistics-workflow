@@ -3,7 +3,7 @@
 
 {
     "name": "Stock Picking Inter Warehouse",
-    "version": "14.0.1.1.1",
+    "version": "14.0.1.2.0",
     "category": "Warehouse Management",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "PyTech SRL, Ooops404, Odoo Community Association (OCA)",
