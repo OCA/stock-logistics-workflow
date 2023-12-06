@@ -38,10 +38,13 @@ class StockPicking(models.Model):
     def _onchange_partner_id(self):
         if hasattr(super(), "_onchange_partner_id"):
             super()._onchange_partner_id()
+
+        location_dest_id = self.partner_id.default_stock_location_src_id
         if (
             self.type_inter_warehouse_transfer
             and self.partner_id.default_stock_location_src_id
+            and self.picking_type_id.default_location_dest_id != location_dest_id
         ):
-            self.picking_type_id.default_location_dest_id = (
-                self.partner_id.default_stock_location_src_id
+            self.picking_type_id.sudo().write(
+                {"default_location_dest_id": location_dest_id.id}
             )
