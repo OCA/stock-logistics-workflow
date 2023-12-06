@@ -10,7 +10,8 @@
                     <field name="picking_ids" invisible="True" />
                     <field
                         name="move_ids"
-                        attrs="{'invisible': [('mode', '!=', 'selection')], 'required': [('mode', '=', 'selection')]}"
+                        invisible="mode != 'selection'"
+                        required="mode == 'selection'"
                         domain="[('picking_id', 'in', picking_ids)]"
                     >
                         <tree create="true" edit="true" delete="true">

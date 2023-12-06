@@ -16,10 +16,10 @@ class StockPicking(models.Model):
         # Check the picking state and condition before split
         if self.state == "draft":
             raise UserError(_("Mark as todo this picking please."))
-        if all([x.qty_done == 0.0 for x in self.move_line_ids]):
+        if all([x.quantity == 0.0 for x in self.move_line_ids]):
             raise UserError(
                 _(
-                    "You must enter done quantity in order to split your "
+                    "You must enter quantity in order to split your "
                     "picking in several ones."
                 )
             )
@@ -29,38 +29,29 @@ class StockPicking(models.Model):
         for picking in self:
             picking._check_split_process()
 
-            # Split moves considering the qty_done on moves
+            # Split moves considering the quantity on moves
             new_moves = self.env["stock.move"]
+            moves2remove = self.env["stock.move"]
             for move in picking.move_ids:
                 rounding = move.product_uom.rounding
-                qty_done = move.quantity_done
+                quantity = move.quantity
                 qty_initial = move.product_uom_qty
                 qty_diff_compare = float_compare(
-                    qty_done, qty_initial, precision_rounding=rounding
+                    quantity, qty_initial, precision_rounding=rounding
                 )
                 if qty_diff_compare < 0:
-                    qty_split = qty_initial - qty_done
-                    qty_uom_split = move.product_uom._compute_quantity(
-                        qty_split, move.product_id.uom_id, rounding_method="HALF-UP"
-                    )
-                    # Empty list is returned for moves with zero qty_done.
-                    new_move_vals = move._split(qty_uom_split)
+                    qty_split = qty_initial - quantity
+                    # Empty list is returned for moves with zero quantity.
+                    new_move_vals = move._split(qty_split)
                     if new_move_vals:
-                        for move_line in move.move_line_ids:
-                            if move_line.reserved_qty and move_line.qty_done:
-                                # To avoid an error
-                                # when picking is partially available
-                                try:
-                                    move_line.write(
-                                        {"reserved_uom_qty": move_line.qty_done}
-                                    )
-                                except UserError:
-                                    continue
                         new_move = self.env["stock.move"].create(new_move_vals)
                     else:
                         new_move = move
                     new_move._action_confirm(merge=False)
                     new_moves |= new_move
+                    # Remove the move if the quantity is 0
+                    if float_compare(quantity, 0, precision_rounding=rounding) == 0:
+                        moves2remove |= move
 
             # If we have new moves to move, create the backorder picking
             if new_moves:
@@ -70,6 +61,12 @@ class StockPicking(models.Model):
                     {"picking_id": backorder_picking.id}
                 )
                 new_moves._action_assign()
+            for move2remove in moves2remove:
+                if move2remove.exists():
+                    # You can not delete moves linked to another operation,
+                    # first cancel the move and then delete it.
+                    move2remove._action_cancel()
+                    move2remove.unlink()
 
     def _create_split_backorder(self, default=None):
         """Copy current picking with defaults passed, post message about

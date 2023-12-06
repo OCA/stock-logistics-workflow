@@ -10,12 +10,12 @@ class StockSplitPicking(models.TransientModel):
 
     mode = fields.Selection(
         [
-            ("done", "Done quantities"),
+            ("quantity", "Quantities"),
             ("move", "One picking per move"),
             ("selection", "Select move lines to split off"),
         ],
         required=True,
-        default="done",
+        default="quantity",
     )
 
     picking_ids = fields.Many2many(
@@ -30,7 +30,7 @@ class StockSplitPicking(models.TransientModel):
     def action_apply(self):
         return getattr(self, "_apply_%s" % self[:1].mode)()
 
-    def _apply_done(self):
+    def _apply_quantity(self):
         return self.mapped("picking_ids").split_process()
 
     def _apply_move(self):
