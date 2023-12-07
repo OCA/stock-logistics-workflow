@@ -14,6 +14,31 @@ from .stock_move_line import check_date
 class StockMove(models.Model):
     _inherit = "stock.move"
 
+    def _get_price_unit(self):
+        """Set date for convert price unit multi currency."""
+        self.ensure_one()
+        price_unit = super()._get_price_unit()
+        date_backdating = self.env.context.get("date_backdating", False)
+        if (
+            date_backdating
+            and not self.origin_returned_move_id
+            and self.purchase_line_id
+            and self.product_id.id == self.purchase_line_id.product_id.id
+        ):
+            self.env["decimal.precision"].precision_get("Product Price")
+            line = self.purchase_line_id
+            order = line.order_id
+            price_unit = line._prepare_compute_all_values()["price_unit"]
+            if order.currency_id != order.company_id.currency_id:
+                price_unit = order.currency_id._convert(
+                    price_unit,
+                    order.company_id.currency_id,
+                    order.company_id,
+                    date_backdating,
+                    round=False,
+                )
+        return price_unit
+
     def _backdating_account_moves(self):
         """Set date on linked account.move same for each move in `self`."""
         picking_account_moves = self.env["account.move"].search(
