@@ -1,0 +1,74 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_restrict_lot_update
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_restrict_lot_update
+#: model:ir.model.fields,field_description:stock_restrict_lot_update.field_stock_move__change_restrict_lot
+msgid "Change Restrict Lot"
+msgstr ""
+
+#. module: stock_restrict_lot_update
+#: model:ir.model,name:stock_restrict_lot_update.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: stock_restrict_lot_update
+#: model:ir.model,name:stock_restrict_lot_update.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: stock_restrict_lot_update
+#: model:ir.model.fields,field_description:stock_restrict_lot_update.field_res_company__display_name
+#: model:ir.model.fields,field_description:stock_restrict_lot_update.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:stock_restrict_lot_update.field_stock_move__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_restrict_lot_update
+#: model:ir.model.fields,field_description:stock_restrict_lot_update.field_res_company__enforce_lot_restriction_product_domain
+#: model:ir.model.fields,field_description:stock_restrict_lot_update.field_res_config_settings__enforce_lot_restriction_product_domain
+msgid "Enforce lot restrictions"
+msgstr ""
+
+#. module: stock_restrict_lot_update
+#: model:ir.model.fields,field_description:stock_restrict_lot_update.field_res_company__id
+#: model:ir.model.fields,field_description:stock_restrict_lot_update.field_res_config_settings__id
+#: model:ir.model.fields,field_description:stock_restrict_lot_update.field_stock_move__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_restrict_lot_update
+#: model:ir.model.fields,help:stock_restrict_lot_update.field_stock_move__change_restrict_lot
+msgid "If the product is in the domain"
+msgstr ""
+
+#. module: stock_restrict_lot_update
+#: model:ir.model.fields,field_description:stock_restrict_lot_update.field_res_company____last_update
+#: model:ir.model.fields,field_description:stock_restrict_lot_update.field_res_config_settings____last_update
+#: model:ir.model.fields,field_description:stock_restrict_lot_update.field_stock_move____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_restrict_lot_update
+#: model:ir.model.fields,help:stock_restrict_lot_update.field_res_company__enforce_lot_restriction_product_domain
+#: model:ir.model.fields,help:stock_restrict_lot_update.field_res_config_settings__enforce_lot_restriction_product_domain
+msgid ""
+"Lot restriction of stock movements cannot be changed for products in this domain.\n"
+" if empty, lot restrictions cannot be changed for any product."
+msgstr ""
+
+#. module: stock_restrict_lot_update
+#: model:ir.model,name:stock_restrict_lot_update.model_stock_move
+msgid "Stock Move"
+msgstr ""
