@@ -97,3 +97,40 @@ class TestGroupMaxWeight(TransactionCase):
             self._set_line(sale_form, self.product_3, 1.0)
 
         self.assertEqual(2, len(sale.picking_ids))
+
+    def test_split_at_creation(self):
+        """Test that a SO with 2 lines that will exceed the max weight if set into
+        the same picking, will be split"""
+        self.product.weight = 6.0
+        self.product_2.weight = 3.0
+        # the max weight is 8.0
+        # we create a SO with 2 lines of 1.0 each ->
+        # 2 pickings will be created since the weight is 9.0
+        # the first picking will have a weight of 6.0
+        sale = self._get_new_sale_order(amount=1.0)
+        with Form(sale) as sale_form:
+            self._set_line(sale_form, self.product_2, 1.0)
+        sale.action_confirm()
+        self.assertEqual(2, len(sale.picking_ids))
+
+    def test_no_split_if_one_move_exceed(self):
+        """
+        If the picking contains a move that exceed the max weight, the picking
+        is not split
+        """
+        self.product.weight = 6.0
+        sale = self._get_new_sale_order(amount=3.0)
+        sale.action_confirm()
+        self.assertEqual(1, len(sale.picking_ids))
+
+    def test_multi_split_at_creation(self):
+        self.product.weight = 6.0
+        self.product_2.weight = 3.0
+        self.product_3.weight = 3.0
+        sale = self._get_new_sale_order(amount=1.0)
+        with Form(sale) as sale_form:
+            self._set_line(sale_form, self.product_2, 2.0)
+            self._set_line(sale_form, self.product_3, 2.0)
+
+        sale.action_confirm()
+        self.assertEqual(3, len(sale.picking_ids))

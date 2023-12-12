@@ -22,3 +22,7 @@ class StockMove(models.Model):
                 ]
             )
         return domain
+
+    def _assign_picking_post_process(self, new=False):
+        self.picking_id._split_for_max_weight()
+        return super()._assign_picking_post_process(new=new)
