@@ -37,6 +37,7 @@ setuptools.setup(
         'odoo-addon-stock_picking_grn_mandatory>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_group_by_base>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_group_by_max_weight>=16.0dev,<16.1dev',
+        'odoo-addon-stock_picking_group_by_partner_by_carrier>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_info_lot>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_invoice_link>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_kind>=16.0dev,<16.1dev',
