@@ -20,7 +20,8 @@ class StockMove(models.Model):
         price_unit = super()._get_price_unit()
         date_backdating = self.env.context.get("date_backdating", False)
         if (
-            date_backdating
+            hasattr(self, "purchase_line_id")
+            and date_backdating
             and not self.origin_returned_move_id
             and self.purchase_line_id
             and self.product_id.id == self.purchase_line_id.product_id.id
@@ -112,4 +113,5 @@ class StockMove(models.Model):
             moves_todo = self._backdating_action_done(
                 moves_todo, cancel_backorder=cancel_backorder
             )
+            moves_todo._backdating_stock_valuation_layers()
         return moves_todo
