@@ -11,3 +11,7 @@ class StockMove(models.Model):
         if carrier and self.picking_type_id.code in ["outgoing", "incoming"]:
             values["carrier_id"] = carrier.id
         return values
+
+    def _key_assign_picking(self):
+        keys = super()._key_assign_picking()
+        return keys + (self.group_id.carrier_id,)
