@@ -8,7 +8,10 @@ class StockMove(models.Model):
     def _get_new_picking_values(self):
         values = super()._get_new_picking_values()
         carrier = self.group_id.carrier_id
-        if carrier and self.picking_type_id.code in ["outgoing", "incoming"]:
+        if carrier and (
+            self.picking_type_id.code in ["outgoing", "incoming"]
+            or any(rule.propagate_carrier for rule in self.rule_id)
+        ):
             values["carrier_id"] = carrier.id
         return values
 
