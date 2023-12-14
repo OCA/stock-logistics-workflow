@@ -12,6 +12,21 @@ class NoPickingCandidateError(UserError):
         )
 
 
+class PickingCandidateNumberLineExceedError(UserError):
+    def __init__(self, picking, max_line):
+        self.picking = picking
+        super(PickingCandidateNumberLineExceedError, self).__init__(
+            _(
+                "At least one picking candidate found %(name)s but with more line "
+                "to process than the maximum number of line allowed in a batch "
+                "picking. (%(max_line)s) vs (%(line)s)",
+                name=self.picking.name,
+                max_line=max_line,
+                line=len(self.picking.move_line_ids),
+            )
+        )
+
+
 class NoSuitableDeviceError(UserError):
     def __init__(self, pickings):
         self.pickings = pickings

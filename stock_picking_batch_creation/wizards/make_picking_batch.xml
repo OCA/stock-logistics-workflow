@@ -14,6 +14,7 @@
                         <field name="user_id" />
                         <field name="picking_type_ids" widget="many2many_tags" />
                         <field name="maximum_number_of_preparation_lines" />
+                        <field name="no_line_limit_if_no_candidate" />
                     </group>
                     <group name="devices">
                         <label for="stock_device_type_ids" colspan="4" />

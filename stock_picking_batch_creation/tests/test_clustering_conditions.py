@@ -1,7 +1,7 @@
 # Copyright 2021 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from ..exceptions import NoSuitableDeviceError
+from ..exceptions import NoSuitableDeviceError, PickingCandidateNumberLineExceedError
 from .common import ClusterPickingCommonFeatures
 
 
@@ -431,3 +431,22 @@ class TestClusteringConditions(ClusterPickingCommonFeatures):
         self.assertEqual(self.pick3, batch.picking_ids)
         batch2 = self.make_picking_batch._create_batch()
         self.assertEqual(self.pick1 | self.pick2, batch2.picking_ids)
+
+    def test_picking_with_maximum_number_of_lines_exceed(self):
+        # pick 3 has 2 lines
+        # create a batch picking with maximum number of lines = 1
+        self.pick1.action_cancel()
+        self.pick2.action_cancel()
+
+        self.make_picking_batch.write(
+            {
+                "maximum_number_of_preparation_lines": 1,
+                "no_line_limit_if_no_candidate": False,
+            }
+        )
+        with self.assertRaises(PickingCandidateNumberLineExceedError):
+            self.make_picking_batch._create_batch(raise_if_not_possible=True)
+        self.make_picking_batch.no_line_limit_if_no_candidate = True
+        batch = self.make_picking_batch._create_batch()
+        self.assertEqual(self.pick3, batch.picking_ids)
+        self.assertEqual(len(batch.move_line_ids), 2)
