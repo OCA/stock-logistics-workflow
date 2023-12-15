@@ -1,0 +1,11 @@
+Fix picking groups by partner and carrier when the warehouse is configured
+to make the delivery process in a multi-step way and propagate the carrier
+across the picking chain.
+
+Before this change, it was not possible to group pickings except for the
+outgoing ones even if the others picking types were configured to group
+pickings. This was due to the fact that the domain used to find the picking where
+to group a move was restricted by default to pickings without carriers in the case
+the move was not outgoing. We now also check if the rule associated to the move is
+configured to propagate the carrier and in this case we add the carrier to the
+domain.

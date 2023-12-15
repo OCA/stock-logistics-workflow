@@ -494,3 +494,23 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
         self.assertEqual(picking.state, "done")
         self.assertTrue(picking.backorder_ids)
         self.assertNotEqual(picking, picking.backorder_ids)
+
+    def test_delivery_multi_step_group_pick_carrier_propagation(self):
+        """the warehouse uses pick + ship (with grouping enabled on pick and ship)
+        and the carrier is propagated to the picking chain
+
+        -> picks and ships are grouped
+        """
+        warehouse = self.env.ref("stock.warehouse0")
+        warehouse.delivery_steps = "pick_ship"
+        warehouse.out_type_id.group_pickings = True
+        warehouse.route_ids.rule_ids.propagate_carrier = True
+        warehouse.pick_type_id.group_pickings = True
+        so1 = self._get_new_sale_order(carrier=self.carrier1)
+        so1.action_confirm()
+        so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
+        so2.action_confirm()
+        self.assertEqual(len(so1.picking_ids), 2)
+        self.assertEqual(len(so2.picking_ids), 2)
+        # ship or pick should be shared between so1 and so2
+        self.assertEqual(so1.picking_ids, so2.picking_ids)

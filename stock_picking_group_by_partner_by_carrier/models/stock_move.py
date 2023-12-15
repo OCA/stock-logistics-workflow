@@ -80,8 +80,9 @@ class StockMove(models.Model):
             # don't search on the procurement.group
         ]
         domain += self._domain_search_picking_handle_move_type()
-        # same carrier only for outgoing transfers
-        if self.picking_type_id.code == "outgoing":
+        # same carrier only for outgoing transfers or if the carrier is set to
+        # be propagated to the picking chain
+        if self.picking_type_id.code == "outgoing" or self.rule_id.propagate_carrier:
             domain += [
                 ("carrier_id", "=", self.group_id.carrier_id.id),
             ]
