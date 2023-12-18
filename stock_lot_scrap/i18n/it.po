@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-03 03:55+0000\n"
-"PO-Revision-Date: 2023-11-02 16:39+0000\n"
+"PO-Revision-Date: 2023-12-18 10:35+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -28,7 +28,7 @@ msgstr "Lotto/seriale"
 #: code:addons/stock_lot_scrap/models/stock_scrap_lot.py:40
 #, python-format
 msgid "Scrap"
-msgstr "Scarta"
+msgstr "Scarto"
 
 #. module: stock_lot_scrap
 #: code:addons/stock_lot_scrap/models/stock_scrap_lot.py:67
