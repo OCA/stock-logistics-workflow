@@ -34,10 +34,10 @@ class StockPicking(models.Model):
             else:
                 picking.inter_warehouse_contact_domain_ids = all_partner_ids
 
-    @api.onchange("partner_id")
-    def _onchange_partner_id(self):
-        if hasattr(super(), "_onchange_partner_id"):
-            super()._onchange_partner_id()
+    @api.onchange("picking_type_id", "partner_id")
+    def onchange_picking_type(self):
+        if hasattr(super(), "onchange_picking_type"):
+            super().onchange_picking_type()
 
         location_dest_id = self.partner_id.default_stock_location_src_id
         if (
@@ -45,6 +45,4 @@ class StockPicking(models.Model):
             and self.partner_id.default_stock_location_src_id
             and self.picking_type_id.default_location_dest_id != location_dest_id
         ):
-            self.picking_type_id.sudo().write(
-                {"default_location_dest_id": location_dest_id.id}
-            )
+            self.location_dest_id = location_dest_id

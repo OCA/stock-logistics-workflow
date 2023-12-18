@@ -171,10 +171,9 @@ class TestStockPickingInterWarehouse(SavepointCase):
 
         picking_out = self.StockPicking.create(
             {
-                "partner_id": self.test_partner_2.id,
                 "picking_type_id": self.stock_wh1.int_type_id.id,
                 "location_id": self.stock_wh1.int_type_id.default_location_src_id.id,
-                "location_dest_id": self.test_partner_2.default_stock_location_src_id.id,
+                "location_dest_id": self.stock_wh1.int_type_id.default_location_dest_id.id,
                 "move_lines": [
                     (
                         0,
@@ -198,6 +197,14 @@ class TestStockPickingInterWarehouse(SavepointCase):
                     ),
                 ],
             }
+        )
+        # test that onchange_picking_type() uses the right
+        # destination location instead of the picking type's default destination location
+        picking_out.write({"partner_id": self.test_partner_2.id})
+        picking_out.onchange_picking_type()
+        self.assertEqual(
+            self.test_partner_2.default_stock_location_src_id,
+            picking_out.location_dest_id,
         )
 
         for ml in picking_out.move_lines:
