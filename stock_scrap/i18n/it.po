@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-19 03:56+0000\n"
-"PO-Revision-Date: 2023-05-24 10:10+0000\n"
+"PO-Revision-Date: 2023-12-18 10:35+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -159,7 +159,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:stock_scrap.stock_scrap_form_view
 #: model:ir.ui.view,arch_db:stock_scrap.stock_scrap_form_view2
 msgid "Scrap"
-msgstr "Scarta"
+msgstr "Scarto"
 
 #. module: stock_scrap
 #: model:ir.model.fields,field_description:stock_scrap.field_stock_scrap_scrap_location_id
