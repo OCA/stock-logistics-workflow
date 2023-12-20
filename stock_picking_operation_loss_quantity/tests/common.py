@@ -151,13 +151,16 @@ class OperationLossQuantityCommon:
         cls._create_quantities(cls.product_3, 5.0)
 
     @classmethod
-    def _create_quantities(cls, product, quantity, location=None, lot=None):
+    def _create_quantities(
+        cls, product, quantity, location=None, lot=None, package=None
+    ):
         cls.quant_obj.with_context(inventory_mode=True).create(
             {
                 "product_id": product.id,
                 "inventory_quantity": quantity,
                 "location_id": location.id if location else cls.location.id,
                 "lot_id": lot.id if lot else False,
+                "package_id": package.id if package else False,
             }
         )._apply_inventory()
 
