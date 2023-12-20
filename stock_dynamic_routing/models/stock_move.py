@@ -558,4 +558,6 @@ class StockMove(models.Model):
             # https://github.com/odoo/odoo/commit/ecf726ae
             # to be on the safe side, force it to False
             "package_level_id": False,
+            # A routing move is always in MTO
+            "procure_method": "make_to_order",
         }
