@@ -106,9 +106,11 @@ class StockMoveLine(models.Model):
             "reserved_uom_qty": loss_quantity,
             "product_id": group_key.product_id.id,
             "picking_type_id": pick_type_id.id,
+            "package_id": group_key.package_id.id,
             "location_id": group_key.location_id.id,
             "location_dest_id": pick_type_id.default_location_dest_id.id,
             "lot_id": group_key.lot_id.id,
+            "owner_id": group_key.owner_id.id,
             "origin": "Operator: %s / Pickings: %s"
             % (
                 self.env.user.name,
