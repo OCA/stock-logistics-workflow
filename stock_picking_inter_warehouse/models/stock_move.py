@@ -9,6 +9,14 @@ class StockMove(models.Model):
         "Inter-Warehouse Picking",
     )
 
+    def _action_done(self, cancel_backorder=False):
+        res = super()._action_done(cancel_backorder)
+        moves = self.exists().filtered(
+            lambda x: x.state == "done" and x.picking_id.type_inter_warehouse_transfer
+        )
+        moves._push_apply()
+        return res
+
     def _search_picking_for_assignation(self):
         # We do not want to merge pickings made in a transfer
         # between warehouses
