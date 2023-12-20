@@ -96,6 +96,17 @@ class TestQuantityLoss(OperationLossQuantityCommon, TransactionCase):
         self.assertTrue(loss_pickings.activity_ids)
         self.assertEqual(self.user_demo, loss_pickings.activity_user_id)
 
+        # make an inventory adjustment and check that the loss picking is now
+        # cancelled
+        self._create_quantities(
+            new_line_2.product_id,
+            new_line_2.reserved_uom_qty,
+            location=new_line_2.location_id,
+            lot=new_line_2.lot_id,
+            package=new_line_2.package_id,
+        )
+        self.assertEqual(loss_pickings.state, "cancel")
+
     def test_loss_line_no_tracking_multi(self):
         """
         Product 2: 1.0 quantity done (demand 6.0)
