@@ -14,7 +14,8 @@ odoo_test_flavor: Both
 odoo_version: 16.0
 org_name: Odoo Community Association (OCA)
 org_slug: OCA
-rebel_module_groups: []
+rebel_module_groups:
+- product_expiry_simple
 repo_description: 'TODO: add repo description.'
 repo_name: stock-logistics-workflow
 repo_slug: stock-logistics-workflow
