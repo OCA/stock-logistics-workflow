@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-12-22 11:37+0000\n"
+"PO-Revision-Date: 2023-12-22 14:37+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -94,7 +94,7 @@ msgstr "Approvazione livello richiesta"
 #. module: stock_scrap_tier_validation
 #: model:ir.model.fields,field_description:stock_scrap_tier_validation.field_stock_scrap__to_validate_message
 msgid "To Validate Message"
-msgstr "Messaggio da validare"
+msgstr "Messaggio per 'Da validare'"
 
 #. module: stock_scrap_tier_validation
 #: model:ir.model.fields,field_description:stock_scrap_tier_validation.field_stock_scrap__validated
@@ -105,7 +105,7 @@ msgstr "Validato"
 #. module: stock_scrap_tier_validation
 #: model:ir.model.fields,field_description:stock_scrap_tier_validation.field_stock_scrap__validated_message
 msgid "Validated Message"
-msgstr "Messaggio validato"
+msgstr "Messaggio per 'Validato'"
 
 #. module: stock_scrap_tier_validation
 #: model:ir.model.fields,field_description:stock_scrap_tier_validation.field_stock_scrap__validation_status
