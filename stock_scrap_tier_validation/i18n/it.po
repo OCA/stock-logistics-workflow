@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-12-14 10:33+0000\n"
+"PO-Revision-Date: 2023-12-22 11:37+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -54,7 +54,7 @@ msgstr "Respinto"
 #. module: stock_scrap_tier_validation
 #: model:ir.model.fields,field_description:stock_scrap_tier_validation.field_stock_scrap__rejected_message
 msgid "Rejected Message"
-msgstr "Messaggio rifiutato"
+msgstr "Messaggio di rifiuto"
 
 #. module: stock_scrap_tier_validation
 #: model:ir.model.fields,field_description:stock_scrap_tier_validation.field_stock_scrap__reviewer_ids
