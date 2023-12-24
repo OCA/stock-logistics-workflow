@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-11 10:29+0000\n"
-"PO-Revision-Date: 2023-06-08 09:15+0000\n"
+"PO-Revision-Date: 2023-12-24 18:42+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: \n"
 "Language: it\n"
@@ -53,7 +53,7 @@ msgstr "Riempi la data effettiva del movimento"
 #. module: stock_move_backdating
 #: model:ir.ui.view,arch_db:stock_move_backdating.stock_picking_view_form_inherit_backdating
 msgid "Fill Actual Movement Date of all operations"
-msgstr "Riempi la data effettiva del movimento su tutte le  operazioni"
+msgstr "Riempi la data effettiva del movimento su tutte le operazioni"
 
 #. module: stock_move_backdating
 #: model:ir.model.fields,field_description:stock_move_backdating.field_fill_date_backdating_id
