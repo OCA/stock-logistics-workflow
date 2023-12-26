@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-03 03:55+0000\n"
-"PO-Revision-Date: 2023-11-02 16:37+0000\n"
+"PO-Revision-Date: 2023-12-26 14:33+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -23,7 +23,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:product_expiry_simple.quant_search_view
 #: model:ir.ui.view,arch_db:product_expiry_simple.search_product_lot_filter
 msgid "Expired"
-msgstr ""
+msgstr "Scaduto"
 
 #. module: product_expiry_simple
 #: model:ir.model.fields,field_description:product_expiry_simple.field_stock_move_line_expiry_date
@@ -32,7 +32,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:product_expiry_simple.quant_search_view
 #: model:ir.ui.view,arch_db:product_expiry_simple.search_product_lot_filter
 msgid "Expiry Date"
-msgstr ""
+msgstr "Data scadenza"
 
 #. module: product_expiry_simple
 #: model:ir.model,name:product_expiry_simple.model_stock_production_lot
@@ -43,14 +43,14 @@ msgstr "Lotto/seriale"
 #: model:ir.ui.view,arch_db:product_expiry_simple.quant_search_view
 #: model:ir.ui.view,arch_db:product_expiry_simple.search_product_lot_filter
 msgid "Not Expired"
-msgstr ""
+msgstr "Non scaduto"
 
 #. module: product_expiry_simple
 #: model:ir.model,name:product_expiry_simple.model_stock_move_line
 msgid "Packing Operation"
-msgstr ""
+msgstr "Operazione di imballaggio"
 
 #. module: product_expiry_simple
 #: model:ir.model,name:product_expiry_simple.model_stock_quant
 msgid "Quants"
-msgstr ""
+msgstr "Quanti"
