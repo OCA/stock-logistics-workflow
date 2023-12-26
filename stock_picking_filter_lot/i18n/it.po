@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-29 11:57+0000\n"
-"PO-Revision-Date: 2023-11-02 16:37+0000\n"
+"PO-Revision-Date: 2023-12-26 14:33+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: \n"
 "Language: it\n"
@@ -38,19 +38,20 @@ msgid ""
 "If this is checked, only lots available in source location             would "
 "be displayed in drop down list for selecting lot."
 msgstr ""
+"Se selezionata, solo i lotti disponibili nell'ubizazione origine             "
+"verranno visualizzati nell'elenco a tendina di selezione lotto."
 
 #. module: stock_picking_filter_lot
 #: model:ir.model.fields,field_description:stock_picking_filter_lot.field_stock_move_line____last_update
 #: model:ir.model.fields,field_description:stock_picking_filter_lot.field_stock_picking_type____last_update
 #: model:ir.model.fields,field_description:stock_picking_filter_lot.field_stock_production_lot____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: stock_picking_filter_lot
 #: model:ir.model.fields,field_description:stock_picking_filter_lot.field_stock_production_lot__location_ids
-#, fuzzy
 msgid "Location"
-msgstr "Punti di stoccaggio"
+msgstr "Ubicazione"
 
 #. module: stock_picking_filter_lot
 #: model:ir.model,name:stock_picking_filter_lot.model_stock_production_lot
@@ -60,18 +61,18 @@ msgstr "Lotto/seriale"
 #. module: stock_picking_filter_lot
 #: model:ir.model,name:stock_picking_filter_lot.model_stock_picking_type
 msgid "Picking Type"
-msgstr ""
+msgstr "Tipologia prelievo"
 
 #. module: stock_picking_filter_lot
 #: model:ir.model,name:stock_picking_filter_lot.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
-msgstr ""
+msgstr "Movimenti prodotto (riga movimento di magazzino)"
 
 #. module: stock_picking_filter_lot
 #: model:ir.model.fields,field_description:stock_picking_filter_lot.field_stock_move_line__picking_type_use_filter_lots
 #: model:ir.model.fields,field_description:stock_picking_filter_lot.field_stock_picking_type__use_filter_lots
 msgid "Use only available lots"
-msgstr ""
+msgstr "Utilizzare solo lotti disponibili"
 
 #~ msgid "Filter location id"
 #~ msgstr "Filtra per punto di stoccaggio"
