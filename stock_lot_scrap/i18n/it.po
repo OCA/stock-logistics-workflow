@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-03 03:55+0000\n"
-"PO-Revision-Date: 2023-12-18 10:34+0000\n"
+"PO-Revision-Date: 2023-12-26 14:33+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -23,25 +23,25 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_lot_scrap.field_stock_production_lot__display_name
 #: model:ir.model.fields,field_description:stock_lot_scrap.field_stock_scrap__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: stock_lot_scrap
 #: model:ir.model.fields,field_description:stock_lot_scrap.field_stock_production_lot__id
 #: model:ir.model.fields,field_description:stock_lot_scrap.field_stock_scrap__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_lot_scrap
 #: model:ir.model.fields,field_description:stock_lot_scrap.field_stock_production_lot____last_update
 #: model:ir.model.fields,field_description:stock_lot_scrap.field_stock_scrap____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: stock_lot_scrap
 #: code:addons/stock_lot_scrap/models/stock_scrap.py:0
 #, python-format
 msgid "Lot was scrapped by <b>%s</b>."
-msgstr ""
+msgstr "Il lotto è stato scartato da <b>%s</b>."
 
 #. module: stock_lot_scrap
 #: model:ir.model,name:stock_lot_scrap.model_stock_production_lot
@@ -59,10 +59,10 @@ msgstr "Scarto"
 #: code:addons/stock_lot_scrap/models/stock_production_lot.py:0
 #, python-format
 msgid "This lot doesn't contain any quant in internal location."
-msgstr ""
+msgstr "Questo lotto non contiene nessun quanto nell'ubicazione interna."
 
 #. module: stock_lot_scrap
 #: code:addons/stock_lot_scrap/models/stock_production_lot.py:0
 #, python-format
 msgid "This will scrap the whole lot. Are you sure you want to continue?"
-msgstr ""
+msgstr "Questo scarterà il lotto intero. Si è sicuri di continuare?"
