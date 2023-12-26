@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-12-26 17:33+0000\n"
+"PO-Revision-Date: 2023-12-26 22:36+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -165,31 +165,33 @@ msgid ""
 "The scheduled date is {} ({}), but the partner is set to prefer deliveries "
 "on working days."
 msgstr ""
+"La data pianificata è {} ({}), ma il partner ha la preferenza di consegna "
+"nei giorni lavorativi."
 
 #. module: stock_partner_delivery_window
 #: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__time_window_weekday_ids
 msgid "Time Window Weekday"
-msgstr ""
+msgstr "Intervallo orario giorno della settimana"
 
 #. module: stock_partner_delivery_window
 #: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__tz
 msgid "Timezone"
-msgstr ""
+msgstr "Fuso orario"
 
 #. module: stock_partner_delivery_window
 #: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__time_window_end
 msgid "To"
-msgstr ""
+msgstr "A"
 
 #. module: stock_partner_delivery_window
 #: model:ir.model,name:stock_partner_delivery_window.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Trasferimento"
 
 #. module: stock_partner_delivery_window
 #: model:ir.model.fields.selection,name:stock_partner_delivery_window.selection__res_partner__delivery_time_preference__workdays
 msgid "Weekdays (Monday to Friday)"
-msgstr ""
+msgstr "Giorno della settimana (da lunedì a venerdì)"
 
 #. module: stock_partner_delivery_window
 #: model:ir.model.fields,help:stock_partner_delivery_window.field_partner_delivery_time_window__tz
@@ -198,3 +200,8 @@ msgid ""
 "If the timezone is not set, UTC (Coordinated Universal Time) is used.\n"
 "Anywhere else, time values are computed according to the time offset of your web client."
 msgstr ""
+"Quando si stampano i documenti e si esportano/importano dati, gli orari sono "
+"calcolati in base a questo fuso orario.\n"
+"Se questo non è impostato, viene usato l'UTC (Coordinated Universal Time).\n"
+"In qualunque altra parte, l'orario è calcolato in base regolazione dell'ora "
+"del client web."
