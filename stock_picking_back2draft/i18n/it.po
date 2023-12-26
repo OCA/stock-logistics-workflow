@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-22 18:05+0000\n"
-"PO-Revision-Date: 2023-11-24 10:34+0000\n"
+"PO-Revision-Date: 2023-12-26 14:33+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/"
 "OCA-stock-logistics-workflow-8-0/language/it/)\n"
@@ -29,19 +29,19 @@ msgstr "Ritorna a bozza"
 #: model:ir.model.fields,field_description:stock_picking_back2draft.field_stock_move__display_name
 #: model:ir.model.fields,field_description:stock_picking_back2draft.field_stock_picking__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: stock_picking_back2draft
 #: model:ir.model.fields,field_description:stock_picking_back2draft.field_stock_move__id
 #: model:ir.model.fields,field_description:stock_picking_back2draft.field_stock_picking__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_picking_back2draft
 #: model:ir.model.fields,field_description:stock_picking_back2draft.field_stock_move____last_update
 #: model:ir.model.fields,field_description:stock_picking_back2draft.field_stock_picking____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: stock_picking_back2draft
 #: model:ir.model,name:stock_picking_back2draft.model_stock_move
