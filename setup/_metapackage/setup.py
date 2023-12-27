@@ -20,6 +20,7 @@ setuptools.setup(
         'odoo14-addon-sale_line_returned_qty',
         'odoo14-addon-sale_line_returned_qty_mrp',
         'odoo14-addon-sale_order_global_stock_route',
+        'odoo14-addon-sale_purchase_stock_line_note',
         'odoo14-addon-sale_stock_mto_as_mts_orderpoint',
         'odoo14-addon-stock_account_product_run_fifo_hook',
         'odoo14-addon-stock_auto_move',
