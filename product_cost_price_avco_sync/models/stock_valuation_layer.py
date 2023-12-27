@@ -13,8 +13,11 @@ class ProductProduct(models.Model):
     _inherit = "product.product"
 
     def _run_fifo_vacuum(self, company=None):
-        if self.cost_method != "average":
-            return super()._run_fifo_vacuum()
+        non_average_products = self.filtered(lambda r: r.cost_method != "average")
+        if non_average_products:
+            return super(ProductProduct, non_average_products)._run_fifo_vacuum(
+                company=company
+            )
 
 
 class StockValuationLayer(models.Model):
