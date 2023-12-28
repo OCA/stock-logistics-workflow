@@ -85,7 +85,7 @@ msgid "Test push route 3=>1"
 msgstr ""
 
 #. module: stock_auto_move
-#: model:stock.location.route,name:stock_auto_move.test_route
+#: model:stock.route,name:stock_auto_move.test_route
 msgid "Test route"
 msgstr "Route d'essai"
 

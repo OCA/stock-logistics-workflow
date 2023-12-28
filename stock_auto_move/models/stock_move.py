@@ -17,8 +17,8 @@ class StockMove(models.Model):
         for move in self:
             move.quantity_done = move.reserved_availability
 
-    def _action_assign(self):
-        res = super()._action_assign()
+    def _action_assign(self, force_qty=False):
+        res = super()._action_assign(force_qty=force_qty)
         # Transfer all pickings which have an auto move assigned
         moves = self.filtered(
             lambda m: m.state in ("assigned", "partially_available") and m.auto_move
