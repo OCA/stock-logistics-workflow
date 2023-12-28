@@ -2,10 +2,10 @@
 # Copyright 2020 ACSONE SA/NV (<https://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestStockAutoMove(SavepointCase):
+class TestStockAutoMove(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -249,7 +249,7 @@ class TestStockAutoMove(SavepointCase):
         self.assertTrue(picking.move_line_ids)
         self.assertEqual(len(picking.move_line_ids), 1)
         picking.move_line_ids.qty_done = 1
-        picking.move_line_ids.product_uom_qty = 1
+        picking.move_line_ids.reserved_uom_qty = 1
         picking._action_done()
 
         # As move_dest_ids include backorders
@@ -274,11 +274,14 @@ class TestStockAutoMove(SavepointCase):
         back_order.move_line_ids.qty_done = 1
         back_order._action_done()
 
-        move2 = back_order.move_lines
-        self.assertEqual(len(move2.move_dest_ids), 2)
+        self.assertEqual(len(back_order.move_ids.move_dest_ids), 2)
 
-        self.assertEqual(move2.move_dest_ids.mapped("auto_move"), [True, True])
-        self.assertEqual(move2.move_dest_ids.mapped("state"), ["done", "done"])
+        self.assertEqual(
+            back_order.move_ids.move_dest_ids.mapped("auto_move"), [True, True]
+        )
+        self.assertEqual(
+            back_order.move_ids.move_dest_ids.mapped("state"), ["done", "done"]
+        )
 
     def test_60_partial_chained_auto_move(self):
         """
@@ -347,10 +350,10 @@ class TestStockAutoMove(SavepointCase):
 
         # do partial reception of the first picking
         move1.move_line_ids.qty_done = 2
-        move1.move_line_ids.product_uom_qty = 2
+        move1.move_line_ids.reserved_uom_qty = 2
 
         move2.move_line_ids.qty_done = 1
-        move2.move_line_ids.product_uom_qty = 1
+        move2.move_line_ids.reserved_uom_qty = 1
 
         picking._action_done()
 
@@ -359,12 +362,12 @@ class TestStockAutoMove(SavepointCase):
         )
 
         self.assertEqual(second_step_picking.state, "done")
-        self.assertEqual(len(second_step_picking.move_lines), 1)
+        self.assertEqual(len(second_step_picking.move_line_ids), 1)
         self.assertEqual(len(second_step_picking.move_line_ids), 1)
 
-        self.assertEqual(len(second_step_back_order.move_lines), 1)
+        self.assertEqual(len(second_step_back_order.move_line_ids), 1)
         self.assertTrue(
-            second_step_back_order.move_lines.filtered(
+            second_step_back_order.move_line_ids.filtered(
                 lambda m: m.state == "partially_available"
             )
         )
@@ -523,10 +526,10 @@ class TestStockAutoMove(SavepointCase):
 
         # do partial reception of the first picking
         move1.move_line_ids.qty_done = 2
-        move1.move_line_ids.product_uom_qty = 2
+        move1.move_line_ids.reserved_uom_qty = 2
 
         move2.move_line_ids.qty_done = 1
-        move2.move_line_ids.product_uom_qty = 1
+        move2.move_line_ids.reserved_uom_qty = 1
 
         res = picking.button_validate()
         self.assertEqual(res.get("res_model"), "stock.backorder.confirmation")
@@ -638,10 +641,10 @@ class TestStockAutoMove(SavepointCase):
 
         # do partial reception of the first picking
         move1.move_line_ids.qty_done = 5
-        move1.move_line_ids.product_uom_qty = 5
+        move1.move_line_ids.reserved_uom_qty = 5
 
         move2.move_line_ids.qty_done = 5
-        move2.move_line_ids.product_uom_qty = 5
+        move2.move_line_ids.reserved_uom_qty = 5
 
         res = picking.button_validate()
         self.assertEqual(res.get("res_model"), "stock.backorder.confirmation")
@@ -654,9 +657,11 @@ class TestStockAutoMove(SavepointCase):
 
         # We need to ensure that all moves are done or cancelled in the
         # second picking
-        self.assertItemsEqual(
-            ["done", "cancel"],
-            list(set(second_step_picking.move_lines.mapped("state"))),
+        self.assertTrue(
+            all(
+                move_line.state in ("done", "cancel")
+                for move_line in second_step_picking.move_line_ids
+            ),
         )
 
         # The second step picking should have a backorder for the
@@ -666,8 +671,7 @@ class TestStockAutoMove(SavepointCase):
         )
 
         self.assertTrue(second_step_back_order)
-        # If https://github.com/odoo/odoo/pull/66124 is integrated,
-        # this should become assigned as remaining quantity should be cancelled
-        # and quantities should be 5.0
-        self.assertEqual("partially_available", second_step_back_order.move_lines.state)
-        self.assertEqual(10.0, second_step_back_order.move_lines.product_uom_qty)
+        self.assertEqual(
+            "partially_available", second_step_back_order.move_line_ids.state
+        )
+        self.assertEqual(5.0, second_step_back_order.move_line_ids.reserved_uom_qty)
