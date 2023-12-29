@@ -2,10 +2,10 @@
 # Copyright 2020 ACSONE SA/NV (<https://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestStockAutoMove(SavepointCase):
+class TestStockAutoMove(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

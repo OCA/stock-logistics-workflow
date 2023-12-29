@@ -4,7 +4,7 @@
 
 {
     "name": "Automatic Move Processing",
-    "version": "14.0.1.0.0",
+    "version": "15.0.1.0.0",
     "author": "NDP Systèmes, ACSONE SA/NV, Odoo Community Association (OCA)",
     "category": "Warehouse",
     "development_status": "Production/Stable",
