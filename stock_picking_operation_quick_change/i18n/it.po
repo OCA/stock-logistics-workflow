@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-04-04 01:08+0000\n"
-"PO-Revision-Date: 2023-11-03 13:37+0000\n"
+"PO-Revision-Date: 2024-01-02 11:38+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -23,7 +23,7 @@ msgstr ""
 #. module: stock_picking_operation_quick_change
 #: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__location_dest_id
 msgid "Actual destination location"
-msgstr ""
+msgstr "Ubicazione destinazione attuale"
 
 #. module: stock_picking_operation_quick_change
 #: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
@@ -38,17 +38,17 @@ msgstr "Annulla"
 #. module: stock_picking_operation_quick_change
 #: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__change_all
 msgid "Change All"
-msgstr ""
+msgstr "Modifica tutto"
 
 #. module: stock_picking_operation_quick_change
 #: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.view_picking_form
 msgid "Change Location"
-msgstr ""
+msgstr "Modifica ubicazione"
 
 #. module: stock_picking_operation_quick_change
 #: model:ir.actions.act_window,name:stock_picking_operation_quick_change.action_stock_picking_operation_change_location
 msgid "Change Operation Destination Location"
-msgstr ""
+msgstr "Modifica ubicazione destinazione operazione"
 
 #. module: stock_picking_operation_quick_change
 #: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
@@ -56,11 +56,15 @@ msgid ""
 "Change the destination location.\n"
 "                    <br/>"
 msgstr ""
+"Modifica ubicazione destinazione.\n"
+"                    <br/>"
 
 #. module: stock_picking_operation_quick_change
 #: model:ir.model.fields,help:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__change_all
 msgid "Check if you want change all operations without filter by old location"
 msgstr ""
+"Selezionare se si vuole modificare tutte le operazioni senza filtrare per "
+"ubicazione vecchia"
 
 #. module: stock_picking_operation_quick_change
 #: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__create_uid
@@ -100,22 +104,22 @@ msgstr "Ultimo aggiornamento il"
 #. module: stock_picking_operation_quick_change
 #: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__new_location_dest_id
 msgid "New destination location"
-msgstr ""
+msgstr "Nuova ubicazione di destinazione"
 
 #. module: stock_picking_operation_quick_change
 #: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__old_location_dest_id
 msgid "Old destination location"
-msgstr ""
+msgstr "Vecchia ubicazione destinazione"
 
 #. module: stock_picking_operation_quick_change
 #: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
 msgid "Stock Picking"
-msgstr ""
+msgstr "Prelievo di magazzino"
 
 #. module: stock_picking_operation_quick_change
 #: model:ir.model,name:stock_picking_operation_quick_change.model_stock_picking_operation_wizard
 msgid "Stock Picking Operation Wizard"
-msgstr ""
+msgstr "Procedura guidata operazione prelievo di magazzino"
 
 #. module: stock_picking_operation_quick_change
 #: code:addons/stock_picking_operation_quick_change/wizards/stock_picking_wizard.py:66
@@ -124,6 +128,8 @@ msgid ""
 "You can not change operations destination location if picking state is not "
 "in %s"
 msgstr ""
+"Non si può modificare l'ubicazione destinazione operazioni se lo stato "
+"prelievo è %s"
 
 #. module: stock_picking_operation_quick_change
 #: code:addons/stock_picking_operation_quick_change/wizards/stock_picking_wizard.py:73
@@ -132,6 +138,8 @@ msgid ""
 "You cannot change destination location if any of the moves has a destination "
 "move."
 msgstr ""
+"Non si può modificare l'ubicazione di destinazione se uno dei movimenti ha "
+"un movimento destinazione."
 
 #. module: stock_picking_operation_quick_change
 #: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
