@@ -77,6 +77,8 @@ Contributors
    -  Vicent Cubells
    -  Carlos Roca
 
+-  Nils Coenen <nils.coenen@nico-solutions.de>
+
 Maintainers
 -----------
 
