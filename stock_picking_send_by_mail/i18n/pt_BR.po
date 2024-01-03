@@ -20,6 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: stock_picking_send_by_mail
+#. odoo-python
 #: code:addons/stock_picking_send_by_mail/models/stock_picking.py:0
 #, python-format
 msgid "Compose Email"

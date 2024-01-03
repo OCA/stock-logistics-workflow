@@ -10,7 +10,7 @@
                     name="action_picking_send"
                     string="Send by Email"
                     type="object"
-                    attrs="{'invisible': [('picking_type_code', '=', 'internal')]}"
+                    invisible="picking_type_code == 'internal'"
                     groups="base.group_user"
                 />
             </field>

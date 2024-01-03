@@ -7,7 +7,7 @@ from odoo.tests import common
 class TestStockPickingSendByMail(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
-        super(TestStockPickingSendByMail, cls).setUpClass()
+        super().setUpClass()
         # Remove this variable in v16 and put instead:
         # from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
         DISABLED_MAIL_CONTEXT = {
@@ -27,7 +27,7 @@ class TestStockPickingSendByMail(common.TransactionCase):
                 "picking_type_id": cls.picking_type.id,
                 "location_id": cls.location_id.id,
                 "location_dest_id": cls.location_destination_id.id,
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,

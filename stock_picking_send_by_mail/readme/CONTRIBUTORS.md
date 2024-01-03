@@ -2,3 +2,4 @@
 - Tecnativa \<<https://www.tecnativa.com>\>:
   - Vicent Cubells
   - Carlos Roca
+- Nils Coenen \<<nils.coenen@nico-solutions.de>\>
