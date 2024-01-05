@@ -1,6 +1,7 @@
 # Copyright 2016 Carlos Dauden <carlos.dauden@tecnativa.com>
 # Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # Copyright 2017 David Vidal <david.vidal@tecnativa.com>
+# Copyright 2024 Tecnativa - Carolina Fernandez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import ValidationError
@@ -9,7 +10,7 @@ from odoo.tools.safe_eval import safe_eval
 
 
 @tagged("post_install", "-at_install")
-class TestStockLotScrap(common.SavepointCase):
+class TestStockLotScrap(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -17,7 +18,7 @@ class TestStockLotScrap(common.SavepointCase):
             {"name": "Test product", "type": "product"}
         )
         cls.company = cls.env.ref("base.main_company")
-        cls.lot010 = cls.env["stock.production.lot"].create(
+        cls.lot010 = cls.env["stock.lot"].create(
             {
                 "name": "0000010",
                 "product_id": cls.product.id,
@@ -56,7 +57,7 @@ class TestStockLotScrap(common.SavepointCase):
 
     def test_warning(self):
         product_new = self.product.create({"name": "Test product 040"})
-        self.lot040 = self.env["stock.production.lot"].create(
+        self.lot040 = self.env["stock.lot"].create(
             {
                 "name": "0000040",
                 "product_id": product_new.id,
