@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-11-20 08:34+0000\n"
+"PO-Revision-Date: 2024-01-05 10:37+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -157,7 +157,7 @@ msgstr "Nessun trasferimento trovato. Crearne uno!"
 #: model_terms:ir.ui.view,arch_db:stock_grn.stock_move_search_view
 #: model_terms:ir.ui.view,arch_db:stock_grn.view_picking_withgrn_search
 msgid "Not Received (GRN)"
-msgstr "Non ricevuto (bolla ricezine)"
+msgstr "Non ricevuto (bolla ricezione)"
 
 #. module: stock_grn
 #: model:ir.model,name:stock_grn.model_stock_picking_type
