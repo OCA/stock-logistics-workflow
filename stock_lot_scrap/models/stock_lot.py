@@ -1,6 +1,7 @@
 # Copyright 2016 Carlos Dauden <carlos.dauden@tecnativa.com>
 # Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # Copyright 2017 David Vidal <david.vidal@tecnativa.com>
+# Copyright 2024 Tecnativa - Carolina Fernandez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from lxml import etree
@@ -9,20 +10,22 @@ from odoo import _, api, models
 from odoo.exceptions import ValidationError
 
 
-class StockProductionLot(models.Model):
-    _inherit = "stock.production.lot"
+class StockLot(models.Model):
+    _inherit = "stock.lot"
 
     @api.model
-    def fields_view_get(
-        self, view_id=None, view_type="form", toolbar=False, submenu=False
-    ):  # pragma: no cover
+    def _get_view(self, view_id=None, view_type="form", **options):
         """Inject the button here to avoid conflicts with other modules
         that add a header element in the main view.
         """
-        res = super().fields_view_get(
-            view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu
-        )
-        eview = etree.fromstring(res["arch"])
+        arch, view = super()._get_view(view_id, view_type, **options)
+
+        if isinstance(arch, bytes):
+            # If arch is bytes, convert it to an XML element
+            eview = etree.fromstring(arch)
+        else:
+            # If arch is already an XML element, no need to parse
+            eview = arch
         xml_header = eview.xpath("//header")
         if not xml_header:
             # Create a header
@@ -39,15 +42,14 @@ class StockProductionLot(models.Model):
                 "type": "object",
                 "name": "action_scrap_lot",
                 "confirm": _(
-                    "This will scrap the whole lot. Are you"
-                    " sure you want to continue?"
+                    "This will scrap the whole lot. Are you sure you want to continue?"
                 ),
                 "string": _("Scrap"),
             },
         )
         header_element.append(button_element)
-        res["arch"] = etree.tostring(eview)
-        return res
+        arch = eview  # Return the XML element directly
+        return arch, view
 
     def _prepare_scrap_vals(self, quant, scrap_location_id):
         self.ensure_one()
