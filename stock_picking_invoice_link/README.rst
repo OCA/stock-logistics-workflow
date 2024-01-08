@@ -113,6 +113,8 @@ Contributors
 
    -  Thao Le <thaolt@trobz.com>
 
+-  Nils Coenen <nils.coenen@nico-solutions.de>
+
 Other credits
 -------------
 

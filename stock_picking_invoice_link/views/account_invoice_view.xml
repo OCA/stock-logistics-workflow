@@ -19,6 +19,16 @@
                     <field name="delivery_count" widget="statinfo" string="Delivery" />
                 </button>
             </div>
+            <notebook position="inside">
+                <page string="Related Pickings">
+                    <field name="picking_ids">
+                        <tree>
+                            <field name="name" string="Delivery Order Number" />
+                            <field name="date_done" />
+                        </tree>
+                    </field>
+                </page>
+            </notebook>
             <xpath expr="//field[@name='invoice_line_ids']//tree" position="inside">
                 <field name="move_line_ids" force_save="1" column_invisible="1" />
             </xpath>
