@@ -9,20 +9,20 @@ msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-15 11:08+0000\n"
-"PO-Revision-Date: 2023-05-17 16:34+0000\n"
-"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
+"PO-Revision-Date: 2024-01-08 08:34+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_picking_invoice_link
 #: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
 msgid "<span class=\"o_stat_text\">Invoices</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Fatture</span>"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_invoice
@@ -67,6 +67,8 @@ msgid ""
 "Related pickings (only when the invoice has been generated from a sale "
 "order)."
 msgstr ""
+"Prelievi relativi (solo quando la fattura è stata generata da ordine di "
+"vendita)."
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,help:stock_picking_invoice_link.field_account_invoice_line__move_line_ids
@@ -74,11 +76,13 @@ msgid ""
 "Related stock moves (only when the invoice has been generated from a sale "
 "order)."
 msgstr ""
+"Movimento di magazzino relativo (solo qando la fattura è stata generata da "
+"un ordine di vendita)."
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_sale_order_line
 msgid "Sales Order Line"
-msgstr ""
+msgstr "Riga ordine di vendita"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_stock_move
@@ -94,7 +98,7 @@ msgstr "Trasferimento"
 #: code:addons/stock_picking_invoice_link/models/stock_move.py:35
 #, python-format
 msgid "You can not modify an invoiced stock move"
-msgstr ""
+msgstr "Non si può modificare un movimento di magazzino fatturato"
 
 #, fuzzy
 #~ msgid "View Invoice"
