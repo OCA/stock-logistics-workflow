@@ -1,4 +1,5 @@
 # Copyright 2017 Tecnativa <vicent.cubells@tecnativa.com>
+# Copyright 2024 Tecnativa Carolina Fernandez
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.tests import common
@@ -27,14 +28,13 @@ class TestStockPickingSendByMail(common.TransactionCase):
                 "picking_type_id": cls.picking_type.id,
                 "location_id": cls.location_id.id,
                 "location_dest_id": cls.location_destination_id.id,
-                "move_lines": [
+                "move_line_ids": [
                     (
                         0,
                         0,
                         {
-                            "name": cls.product.name,
                             "product_id": cls.product.id,
-                            "product_uom": cls.product.uom_id.id,
+                            "product_uom_id": cls.product.uom_id.id,
                             "location_id": cls.location_id.id,
                             "location_dest_id": cls.location_destination_id.id,
                         },
