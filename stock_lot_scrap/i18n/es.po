@@ -10,38 +10,39 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-28 03:51+0000\n"
-"PO-Revision-Date: 2018-02-28 03:51+0000\n"
-"Last-Translator: enjolras <yo@miguelrevilla.com>, 2017\n"
+"PO-Revision-Date: 2024-01-11 15:33+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_lot_scrap
 #: model:ir.model.fields,field_description:stock_lot_scrap.field_stock_production_lot__display_name
 #: model:ir.model.fields,field_description:stock_lot_scrap.field_stock_scrap__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Mostrar Nombre"
 
 #. module: stock_lot_scrap
 #: model:ir.model.fields,field_description:stock_lot_scrap.field_stock_production_lot__id
 #: model:ir.model.fields,field_description:stock_lot_scrap.field_stock_scrap__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_lot_scrap
 #: model:ir.model.fields,field_description:stock_lot_scrap.field_stock_production_lot____last_update
 #: model:ir.model.fields,field_description:stock_lot_scrap.field_stock_scrap____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Última Modificación el"
 
 #. module: stock_lot_scrap
 #: code:addons/stock_lot_scrap/models/stock_scrap.py:0
 #, python-format
 msgid "Lot was scrapped by <b>%s</b>."
-msgstr ""
+msgstr "El lote fue desguazado por <b>%s</b>."
 
 #. module: stock_lot_scrap
 #: model:ir.model,name:stock_lot_scrap.model_stock_production_lot
