@@ -4,7 +4,7 @@
 
 from itertools import groupby
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 from odoo.fields import first
 
 
@@ -112,10 +112,14 @@ class StockPicking(models.Model):
         """Build a new procurement group that is the merge of given procurement
         group."""
         sales = move_groups.sale_id
-        return {
-            "sale_ids": [(6, 0, sales.ids)],
-            "name": ", ".join(move_groups.sorted("name").mapped("name")),
-        }
+        partners = move_groups.sale_id.partner_id
+        name = _("Merged procurement")
+        if partners:
+            name = _(
+                "Merged procurement for partners: %(partners_name)s",
+                partners_name=", ".join(partners.mapped("display_name")),
+            )
+        return {"sale_ids": [(6, 0, sales.ids)], "name": name}
 
     def _merge_procurement_groups(self):
         self.ensure_one()
