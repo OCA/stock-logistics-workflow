@@ -436,7 +436,7 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
         group = picking.group_id
         # the group is related to both sales orders
         self.assertEqual(group.sale_ids, so1 | so2)
-        self.assertEqual(group.name, "{}, {}".format(so1.name, so2.name))
+        self.assertEqual(group.name, "Merged procurement for partners: Test Partner")
 
         line = so1.order_line.filtered(lambda line: not line.is_delivery)
 
@@ -465,7 +465,9 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
         # so3 moves are merged in the backorder used for so2,
         # a new group is used to hold so2 and so3
         self.assertEqual(backorder.group_id.sale_ids, so2 | so3)
-        self.assertEqual(backorder.group_id.name, "{}, {}".format(so2.name, so3.name))
+        self.assertEqual(
+            backorder.group_id.name, "Merged procurement for partners: Test Partner"
+        )
 
         self.assertEqual(so1.picking_ids, picking)
         self.assertEqual(so2.picking_ids, picking | backorder)
