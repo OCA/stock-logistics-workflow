@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-24 11:45+0000\n"
-"PO-Revision-Date: 2023-12-24 18:37+0000\n"
+"PO-Revision-Date: 2024-01-15 11:36+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: \n"
 "Language: it\n"
@@ -79,7 +79,7 @@ msgstr "Magazzino"
 #. module: stock_move_backdating
 #: model:ir.model,name:stock_move_backdating.model_stock_inventory_line
 msgid "Inventory Line"
-msgstr "Riga di Inventario"
+msgstr "Riga d'inventario"
 
 #. module: stock_move_backdating
 #: model:ir.model.fields,field_description:stock_move_backdating.field_fill_date_backdating____last_update
