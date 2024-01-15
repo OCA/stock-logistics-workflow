@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-31 02:51+0000\n"
-"PO-Revision-Date: 2023-11-17 14:34+0000\n"
+"PO-Revision-Date: 2024-01-15 11:38+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/"
 "OCA-stock-logistics-workflow-8-0/language/it/)\n"
@@ -111,7 +111,7 @@ msgstr ""
 #. module: stock_lock_lot
 #: model:ir.model,name:stock_lock_lot.model_stock_inventory_line
 msgid "Inventory Line"
-msgstr "Riga d'Inventario"
+msgstr "Riga d'inventario"
 
 #. module: stock_lock_lot
 #: model:ir.model,name:stock_lock_lot.model_stock_location
