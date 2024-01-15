@@ -6,9 +6,7 @@ from odoo import api, fields, models
 class StockMove(models.Model):
     _inherit = "stock.move"
 
-    @api.depends(
-        "picking_id.partner_id", "product_id", "product_id.customer_ids.product_code"
-    )
+    @api.depends("picking_id.partner_id", "product_id")
     def _compute_product_customer_code(self):
         for move in self:
             product_customer_name = ""
