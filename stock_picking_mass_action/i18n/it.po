@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-18 01:44+0000\n"
-"PO-Revision-Date: 2023-04-15 10:52+0000\n"
+"PO-Revision-Date: 2024-01-15 11:36+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_picking_mass_action
 #: model_terms:ir.ui.view,arch_db:stock_picking_mass_action.view_stock_picking_mass_action_form
@@ -40,9 +40,8 @@ msgstr "Controlla Disponibilità"
 #: model:ir.actions.server,name:stock_picking_mass_action.ir_cron_check_assign_all_ir_actions_server
 #: model:ir.cron,cron_name:stock_picking_mass_action.ir_cron_check_assign_all
 #: model:ir.cron,name:stock_picking_mass_action.ir_cron_check_assign_all
-#, fuzzy
 msgid "Check Availability of Stock Picking"
-msgstr "Controlla Disponibilità"
+msgstr "Controlla disponibilità di prlievi magazzino"
 
 #. module: stock_picking_mass_action
 #: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action__create_uid
@@ -68,7 +67,7 @@ msgstr "ID"
 #: code:addons/stock_picking_mass_action/models/stock_picking.py:40
 #, python-format
 msgid "Immediate Transfer?"
-msgstr ""
+msgstr "Trasferimento immediato?"
 
 #. module: stock_picking_mass_action
 #: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action____last_update
@@ -89,23 +88,22 @@ msgstr "Ultimo aggiornamento il"
 #: model:ir.actions.act_window,name:stock_picking_mass_action.action_confirm
 #: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action__confirm
 msgid "Mark as Todo"
-msgstr ""
+msgstr "Segna da fare"
 
 #. module: stock_picking_mass_action
 #: model_terms:ir.ui.view,arch_db:stock_picking_mass_action.view_stock_picking_mass_action_form
 msgid "Mass Action for the selected stock picking"
-msgstr ""
+msgstr "Azione di massa per il prelievo magazzino selezionato"
 
 #. module: stock_picking_mass_action
 #: model:ir.model.fields,field_description:stock_picking_mass_action.field_stock_picking_mass_action__picking_ids
-#, fuzzy
 msgid "Pickings"
-msgstr "Lista Picking"
+msgstr "Prelievi"
 
 #. module: stock_picking_mass_action
 #: model:ir.model,name:stock_picking_mass_action.model_stock_picking_mass_action
 msgid "Stock Picking Mass Action"
-msgstr ""
+msgstr "Azione di massa prelievi magazzino"
 
 #. module: stock_picking_mass_action
 #: model:ir.actions.act_window,name:stock_picking_mass_action.action_transfer
@@ -120,11 +118,15 @@ msgid ""
 "check this box if you want to check the availability of the selected "
 "Pickings."
 msgstr ""
+"selezionare questa opzione se si vuole controllare la disponibilità dei "
+"prelievi selezionati."
 
 #. module: stock_picking_mass_action
 #: model:ir.model.fields,help:stock_picking_mass_action.field_stock_picking_mass_action__confirm
 msgid "check this box if you want to mark as Todo the selected Pickings."
 msgstr ""
+"selezionare questa opzione se si vuole impostare \"Da fare\" i prelievi "
+"selezionati."
 
 #. module: stock_picking_mass_action
 #: model:ir.model.fields,help:stock_picking_mass_action.field_stock_picking_mass_action__transfer
@@ -133,6 +135,10 @@ msgid ""
 " You'll not have the possibility to realize a partial transfer.\n"
 " If you want  to do that, please do it manually on the picking form."
 msgstr ""
+"selezionare questa opzione se si vuole trasferire tutti i prelievi "
+"selezionati.\n"
+" Non si avrà la possibilità di eseguire un trasferimento parziale.\n"
+" Se si vuole questo, esegurlo manualmente sul modulo prelievo."
 
 #. module: stock_picking_mass_action
 #: model_terms:ir.ui.view,arch_db:stock_picking_mass_action.view_stock_picking_mass_action_form
