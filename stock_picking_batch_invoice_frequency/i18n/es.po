@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-10 17:59+0000\n"
-"PO-Revision-Date: 2024-01-10 19:01+0100\n"
-"Last-Translator: Emilio Pascual <emilio@moduom.team>\n"
+"PO-Revision-Date: 2024-01-15 19:35+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_picking_batch_invoice_frequency
 #: model:ir.model.fields,field_description:stock_picking_batch_invoice_frequency.field_sale_invoice_frequency__automatic_batch_invoicing
@@ -29,7 +29,6 @@ msgstr "Transferir agrupación"
 
 #. module: stock_picking_batch_invoice_frequency
 #: model:ir.model.fields,help:stock_picking_batch_invoice_frequency.field_sale_invoice_frequency__automatic_batch_invoicing
-#, fuzzy
 msgid ""
 "If checked, the invoices will be created and posted in stock picking batches "
 "when validated."
