@@ -1,0 +1,90 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_batch_print_pickings
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-22 08:42+0000\n"
+"PO-Revision-Date: 2024-01-22 09:44+0100\n"
+"Last-Translator: Emilio Pascual <emilio@moduom.team>\n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4\n"
+
+#. module: stock_picking_batch_print_pickings
+#: model:ir.actions.report,print_report_name:stock_picking_batch_print_pickings.action_report_picking_batch_print_pickings
+msgid "'Delivery Slips from Batch %s' % (object.name)"
+msgstr "'Albarán de entrega de la agrupación %s' % (object.name)"
+
+#. module: stock_picking_batch_print_pickings
+#: model:ir.model.fields,help:stock_picking_batch_print_pickings.field_stock_picking_type__batch_print_pickings
+msgid "Allow print all pickings from batch"
+msgstr "Permite imprimir todos los albaranes del lote"
+
+#. module: stock_picking_batch_print_pickings
+#: model:ir.model,name:stock_picking_batch_print_pickings.model_stock_picking_batch
+msgid "Batch Transfer"
+msgstr "Transferir agrupación"
+
+#. module: stock_picking_batch_print_pickings
+#: model:ir.actions.report,name:stock_picking_batch_print_pickings.action_report_picking_batch_print_pickings
+#: model:ir.actions.server,name:stock_picking_batch_print_pickings.action_print_pickings
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_print_pickings.stock_picking_batch_form_inherit_stock_picking_batch_print_pickings
+msgid "Delivery Slips"
+msgstr "Albaranes de Entrega"
+
+#. module: stock_picking_batch_print_pickings
+#: model:ir.model.fields,field_description:stock_picking_batch_print_pickings.field_stock_picking_type__number_copies_pickings
+msgid "Number of copies"
+msgstr "Número de copias"
+
+#. module: stock_picking_batch_print_pickings
+#: model:ir.model.fields,help:stock_picking_batch_print_pickings.field_stock_picking_type__number_copies_pickings
+msgid "Number of copies to print"
+msgstr "Número de copias para imprimir"
+
+#. module: stock_picking_batch_print_pickings
+#: model:ir.model,name:stock_picking_batch_print_pickings.model_stock_picking_type
+msgid "Picking Type"
+msgstr "Tipo de operación"
+
+#. module: stock_picking_batch_print_pickings
+#. odoo-python
+#: code:addons/stock_picking_batch_print_pickings/models/stock_picking_batch.py:0
+#, python-format
+msgid "Picking Type %(type)s is not configured to print pickings from batch."
+msgstr ""
+"El tipo de operación %(type)s no está configurada para imprimir albaranes "
+"desde lote."
+
+#. module: stock_picking_batch_print_pickings
+#: model:ir.model.fields,field_description:stock_picking_batch_print_pickings.field_stock_picking_batch__print_pickings
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_print_pickings.view_picking_type_form_inherit_stock_picking_batch_print_pickings
+msgid "Print Pickings"
+msgstr "Imprimir albaranes"
+
+#. module: stock_picking_batch_print_pickings
+#: model:ir.model.fields,help:stock_picking_batch_print_pickings.field_stock_picking_batch__print_pickings
+msgid "Print Pickings from Batch"
+msgstr "Imprimir albaranes desde la agrupación"
+
+#. module: stock_picking_batch_print_pickings
+#: model:ir.model.fields,field_description:stock_picking_batch_print_pickings.field_stock_picking_type__batch_print_pickings
+msgid "Print pickings from batch"
+msgstr "Imprimir albaranes desde la agrupación"
+
+#. module: stock_picking_batch_print_pickings
+#. odoo-python
+#: code:addons/stock_picking_batch_print_pickings/models/stock_picking_type.py:0
+#, python-format
+msgid "The number of copies must be greater or equal to 0"
+msgstr "El número de copias deber ser mayor o igual que cero"
+
+#~ msgid "Deliver Slips"
+#~ msgstr "Albaranes de Entrega"
