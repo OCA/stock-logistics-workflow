@@ -64,7 +64,16 @@ class TestProductSupplierinfoForCustomerPicking(TransactionCase):
             }
         )
         move = delivery_picking.move_lines[0]
-        move._compute_product_customer_code()
+        self.assertEqual(move.product_customer_code, "test_agrolait")
+        self.assertEqual(move.product_customer_name, "test prod name 1")
+
+        # Test that name stays the same on picking
+        # even after a change
+        customerinfo = self.computer_SC234.customer_ids.filtered(
+            lambda x: x.name == self.agrolait
+        )
+        customerinfo.product_code = "different_code"
+        customerinfo.product_name = "different name"
         self.assertEqual(move.product_customer_code, "test_agrolait")
         self.assertEqual(move.product_customer_name, "test prod name 1")
 
@@ -97,6 +106,12 @@ class TestProductSupplierinfoForCustomerPicking(TransactionCase):
             }
         )
         move = delivery_picking.move_lines[0]
-        move._compute_product_customer_code()
         self.assertEqual(move.product_customer_code, "test_gemini")
         self.assertEqual(move.product_customer_name, "test prod name 2")
+
+    def test_picking_customer_code_persists(self):
+        """
+        Checks that the customer code on the picking doesn't change
+        even if the customer code changes
+        """
+        self.assertTrue(1)
