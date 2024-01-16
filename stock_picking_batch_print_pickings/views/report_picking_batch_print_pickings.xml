@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Moduon Team S.L.
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <template id="report_picking_batch_print_pickings">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-if="doc.print_pickings">
+                    <t t-foreach="doc.picking_ids" t-as="o">
+                        <t
+                            name="print_pickings"
+                            t-foreach="range(int(doc.picking_type_id.number_copies_pickings))"
+                            t-as="i"
+                        >
+                            <t
+                                t-call="stock.report_delivery_document"
+                                t-lang="o._get_report_lang()"
+                            />
+                        </t>
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

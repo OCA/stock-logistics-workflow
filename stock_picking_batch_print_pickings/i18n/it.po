@@ -1,0 +1,86 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_batch_print_pickings
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-01-24 17:34+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: stock_picking_batch_print_pickings
+#: model:ir.actions.report,print_report_name:stock_picking_batch_print_pickings.action_report_picking_batch_print_pickings
+msgid "'Delivery Slips from Batch %s' % (object.name)"
+msgstr "'Foglio consegna dal gruppo %s' % (object.name)"
+
+#. module: stock_picking_batch_print_pickings
+#: model:ir.model.fields,help:stock_picking_batch_print_pickings.field_stock_picking_type__batch_print_pickings
+msgid "Allow print all pickings from batch"
+msgstr "Consente la stampa di tutti i prelievi dal gruppo"
+
+#. module: stock_picking_batch_print_pickings
+#: model:ir.model,name:stock_picking_batch_print_pickings.model_stock_picking_batch
+msgid "Batch Transfer"
+msgstr "Trasferimento raggruppato"
+
+#. module: stock_picking_batch_print_pickings
+#: model:ir.actions.report,name:stock_picking_batch_print_pickings.action_report_picking_batch_print_pickings
+#: model:ir.actions.server,name:stock_picking_batch_print_pickings.action_print_pickings
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_print_pickings.stock_picking_batch_form_inherit_stock_picking_batch_print_pickings
+msgid "Delivery Slips"
+msgstr "Foglio di consegna"
+
+#. module: stock_picking_batch_print_pickings
+#: model:ir.model.fields,field_description:stock_picking_batch_print_pickings.field_stock_picking_type__number_copies_pickings
+msgid "Number of copies"
+msgstr "Numero di copie"
+
+#. module: stock_picking_batch_print_pickings
+#: model:ir.model.fields,help:stock_picking_batch_print_pickings.field_stock_picking_type__number_copies_pickings
+msgid "Number of copies to print"
+msgstr "Numero di copie da stampare"
+
+#. module: stock_picking_batch_print_pickings
+#: model:ir.model,name:stock_picking_batch_print_pickings.model_stock_picking_type
+msgid "Picking Type"
+msgstr "Tipologia prelievo"
+
+#. module: stock_picking_batch_print_pickings
+#. odoo-python
+#: code:addons/stock_picking_batch_print_pickings/models/stock_picking_batch.py:0
+#, python-format
+msgid "Picking Type %(type)s is not configured to print pickings from batch."
+msgstr ""
+"Il tipo di prelievo %(type)s non è configurato per stampare prelievi dal "
+"gruppo."
+
+#. module: stock_picking_batch_print_pickings
+#: model:ir.model.fields,field_description:stock_picking_batch_print_pickings.field_stock_picking_batch__print_pickings
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_print_pickings.view_picking_type_form_inherit_stock_picking_batch_print_pickings
+msgid "Print Pickings"
+msgstr "Stampa prelievi"
+
+#. module: stock_picking_batch_print_pickings
+#: model:ir.model.fields,help:stock_picking_batch_print_pickings.field_stock_picking_batch__print_pickings
+msgid "Print Pickings from Batch"
+msgstr "Stampa prelievi dal gruppo"
+
+#. module: stock_picking_batch_print_pickings
+#: model:ir.model.fields,field_description:stock_picking_batch_print_pickings.field_stock_picking_type__batch_print_pickings
+msgid "Print pickings from batch"
+msgstr "Stampa prelievi dal gruppo"
+
+#. module: stock_picking_batch_print_pickings
+#. odoo-python
+#: code:addons/stock_picking_batch_print_pickings/models/stock_picking_type.py:0
+#, python-format
+msgid "The number of copies must be greater or equal to 0"
+msgstr "Il numero di copie deve essere maggiore o uguale a 0"
