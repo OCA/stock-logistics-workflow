@@ -108,10 +108,3 @@ class TestProductSupplierinfoForCustomerPicking(TransactionCase):
         move = delivery_picking.move_lines[0]
         self.assertEqual(move.product_customer_code, "test_gemini")
         self.assertEqual(move.product_customer_name, "test prod name 2")
-
-    def test_picking_customer_code_persists(self):
-        """
-        Checks that the customer code on the picking doesn't change
-        even if the customer code changes
-        """
-        self.assertTrue(1)
