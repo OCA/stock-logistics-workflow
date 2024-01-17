@@ -1,4 +1,4 @@
-# Copyright 2021-2023 Tecnativa - Víctor Martínez
+# Copyright 2021-2024 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 
 from odoo.tests.common import users
@@ -61,7 +61,8 @@ class TestPurchaseOrder(TestPurchaseOrderBase):
             lc_cost_line.split_method, self.carrier.split_method_landed_cost_line
         )
 
-    def test_order_with_lc_carrier_id_multi(self):
+    def test_order_with_lc_carrier_id_multi_01(self):
+        """Order > Carrier. Picking 1 > Carrier. Picking 2 > Carrier."""
         self.order.order_line.product_qty = 2
         self.order.button_confirm()
         picking = self.order.picking_ids
@@ -80,6 +81,47 @@ class TestPurchaseOrder(TestPurchaseOrderBase):
         self.assertEqual(lc.cost_lines.price_unit, 10)
         new_picking = self.order.picking_ids - picking
         self._action_picking_validate(new_picking)
+        self.assertEqual(len(extra_lc.cost_lines), 1)
+        self.assertEqual(extra_lc.state, "done")
+        self.assertEqual(self.carrier.product_id, extra_lc.cost_lines.product_id)
+        self.assertEqual(extra_lc.cost_lines.price_unit, 10)
+        self.assertEqual(
+            self.carrier.split_method_landed_cost_line,
+            extra_lc.cost_lines.split_method,
+        )
+
+    def test_order_with_lc_carrier_id_multi_02(self):
+        """Order > No Carrier. Picking 1 > No Carrier. Picking 2 > Carrier."""
+        self.order.carrier_id = False
+        self.order.order_line.product_qty = 2
+        self.order.button_confirm()
+        picking = self.order.picking_ids
+        self.assertEqual(len(self.order.landed_cost_ids), 1)
+        lc = self.order.landed_cost_ids
+        self.assertEqual(len(lc.cost_lines), 0)
+        self.assertEqual(lc.state, "draft")
+        for move in picking.move_ids_without_package:
+            move.quantity_done = 1
+        self._action_picking_validate(picking)
+        # Picking without carrier and LC without cost lines and draft state
+        self.assertFalse(picking.carrier_id)
+        self.assertEqual(len(self.order.landed_cost_ids), 2)
+        extra_lc = self.order.landed_cost_ids - lc
+        self.assertEqual(len(lc.cost_lines), 0)
+        self.assertEqual(lc.state, "draft")
+        self.assertEqual(extra_lc.state, "draft")
+        new_picking = self.order.picking_ids - picking
+        new_picking.carrier_id = self.carrier
+        self._action_picking_validate(new_picking)
+        # Order with carrier, delivery price and delivery line
+        self.assertEqual(self.order.carrier_id, self.carrier)
+        self.assertEqual(self.order.delivery_price, 10)
+        self.assertEqual(
+            len(self.order.order_line.filtered(lambda x: x.is_delivery)), 1
+        )
+        # LC keep draft state
+        self.assertEqual(lc.state, "draft")
+        # Extra LC done (cost line from delivery)
         self.assertEqual(len(extra_lc.cost_lines), 1)
         self.assertEqual(extra_lc.state, "done")
         self.assertEqual(self.carrier.product_id, extra_lc.cost_lines.product_id)
