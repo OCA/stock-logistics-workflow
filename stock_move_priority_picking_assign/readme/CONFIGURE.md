@@ -1,0 +1,2 @@
+- Go to Inventory > Configuration > Settings > Operations
+- Check the box 'Enable setting priority at stock move level'.
