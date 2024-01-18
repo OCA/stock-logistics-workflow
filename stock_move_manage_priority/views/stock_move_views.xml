@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="view_picking_move_tree">
+        <field
+            name="name"
+        >stock.picking.move.tree (in stock_move_priority_manage)</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_picking_move_tree" />
+        <field name="arch" type="xml">
+            <field name="quantity_done" position="after">
+                <field name="is_priority_editable" invisible="0" />
+                <field
+                    name="priority"
+                    attrs="{'readonly': [('is_priority_editable', '=', False)]}"
+                    decoration-info="priority == '0'"
+                    decoration-warning="priority == '1'"
+                    widget="selection_badge"
+                    groups="stock_move_manage_priority.group_stock_move_priority_manager"
+                />
+            </field>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_move_tree">
+        <field name="name">stock.move.tree (in stock_move_priority_manage)</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_tree" />
+        <field name="arch" type="xml">
+            <field name="state" position="before">
+                <field name="is_priority_editable" invisible="0" />
+                <field
+                    name="priority"
+                    attrs="{'readonly': [('is_priority_editable', '=', False)]}"
+                    decoration-info="priority == '0'"
+                    decoration-warning="priority == '1'"
+                    widget="selection_badge"
+                    optional="show"
+                    groups="stock_move_manage_priority.group_stock_move_priority_manager"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>
