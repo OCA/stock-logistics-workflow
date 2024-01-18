@@ -70,7 +70,11 @@ class TestMTOVariantCommon(SavepointCase):
     def assertVariantsMTO(self, records):
         records.invalidate_cache(["is_mto"])
         self.assertTrue(all([record.is_mto for record in records]))
+        for rec in records:
+            self.assertIn(self.mto_route, rec.route_ids)
 
     def assertVariantsNotMTO(self, records):
         records.invalidate_cache(["is_mto"])
         self.assertFalse(any([record.is_mto for record in records]))
+        for rec in records:
+            self.assertNotIn(self.mto_route, rec.route_ids)
