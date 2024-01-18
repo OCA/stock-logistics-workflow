@@ -14,4 +14,5 @@
         "stock",
         "stock_move_manage_priority",
     ],
+    "data": ["views/stock_picking_type.xml"],
 }
