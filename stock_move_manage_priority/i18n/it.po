@@ -6,51 +6,53 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2024-01-19 09:34+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_move_manage_priority
 #: model:ir.model,name:stock_move_manage_priority.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Aziende"
 
 #. module: stock_move_manage_priority
 #: model:ir.model,name:stock_move_manage_priority.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Impostazioni configurazione"
 
 #. module: stock_move_manage_priority
 #: model_terms:ir.ui.view,arch_db:stock_move_manage_priority.res_config_settings_view_form
 msgid "Enable setting priority at stock move level."
-msgstr ""
+msgstr "Abilita impostazione priorità a livello mvimento di magazzino."
 
 #. module: stock_move_manage_priority
 #: model:ir.model.fields,field_description:stock_move_manage_priority.field_stock_move__is_priority_editable
 msgid "Is Priority Editable"
-msgstr ""
+msgstr "La priorità è abilitata"
 
 #. module: stock_move_manage_priority
 #: model:ir.model.fields,field_description:stock_move_manage_priority.field_res_company__stock_move_manage_priority
 #: model:ir.model.fields,field_description:stock_move_manage_priority.field_res_config_settings__stock_move_manage_priority
 msgid "Manage Move Priority"
-msgstr ""
+msgstr "Gestione priorità movimento"
 
 #. module: stock_move_manage_priority
 #: model:ir.model.fields,field_description:stock_move_manage_priority.field_stock_move__priority
 msgid "Priority"
-msgstr ""
+msgstr "Priorità"
 
 #. module: stock_move_manage_priority
 #: model:ir.model,name:stock_move_manage_priority.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimento di magazzino"
 
 #. module: stock_move_manage_priority
 #: model:res.groups,name:stock_move_manage_priority.group_stock_move_priority_manager
 msgid "stock move priority manager"
-msgstr ""
+msgstr "gestore priorità movimento di magazzino"
