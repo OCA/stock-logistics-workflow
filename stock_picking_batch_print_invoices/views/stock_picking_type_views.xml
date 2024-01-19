@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Moduon Team S.L.
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+
+    <record
+        id="view_picking_type_form_inherit_stock_picking_batch_print_invoices"
+        model="ir.ui.view"
+    >
+        <field name="name">Operation Types Batch Print Invoices</field>
+        <field name="model">stock.picking.type</field>
+        <field
+            name="inherit_id"
+            ref="stock_picking_batch.view_picking_type_form_inherit"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='batch_auto_confirm']" position="after">
+                <label for="batch_print_invoices" string="Print Invoices" />
+                <div class="o_row">
+                    <field name="batch_print_invoices" />
+                    <label
+                        for="number_copies_invoices"
+                        attrs="{'invisible': [('batch_print_invoices', '=', False)]}"
+                    />
+                    <field
+                        name="number_copies_invoices"
+                        attrs="{'invisible': [('batch_print_invoices', '=', False)]}"
+                    />
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

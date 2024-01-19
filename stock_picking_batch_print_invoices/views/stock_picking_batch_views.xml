@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Moduon Team S.L.
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+
+    <record
+        id="stock_picking_batch_form_inherit_stock_picking_batch_print_invoices"
+        model="ir.ui.view"
+    >
+        <field name="name">Picking Batch Print Invoices</field>
+        <field name="model">stock.picking.batch</field>
+        <field
+            name="inherit_id"
+            ref="stock_picking_batch_print_pickings.stock_picking_batch_form_inherit_stock_picking_batch_print_pickings"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_print_pickings']" position="attributes">
+                <attribute name="string">Delivery Slips/Invoices</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record
+        id="stock_picking_batch_print_pickings.action_print_pickings"
+        model="ir.actions.server"
+    >
+        <field name="name">Delivery Slips/Invoices</field>
+    </record>
+</odoo>

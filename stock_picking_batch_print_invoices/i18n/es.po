@@ -1,0 +1,85 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_batch_print_invoices
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-19 08:32+0000\n"
+"PO-Revision-Date: 2024-01-30 13:35+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: stock_picking_batch_print_invoices
+#: model:ir.model,name:stock_picking_batch_print_invoices.model_stock_picking_batch
+msgid "Batch Transfer"
+msgstr "Transferir agrupación"
+
+#. module: stock_picking_batch_print_invoices
+#: model:ir.model.fields,help:stock_picking_batch_print_invoices.field_stock_picking_type__batch_print_invoices
+msgid ""
+"Check this box to print all the invoices associated with the pickings "
+"contained in a picking batch."
+msgstr ""
+"Marque esta casilla para imprimir todas las facturas asociadas a los pedidos "
+"contenidos en un lote de selección."
+
+#. module: stock_picking_batch_print_invoices
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_print_invoices.stock_picking_batch_form_inherit_stock_picking_batch_print_invoices
+msgid "Delivery Slips/Invoices"
+msgstr "Albaranes de Entrega/Facturas"
+
+#. module: stock_picking_batch_print_invoices
+#: model:ir.model.fields,field_description:stock_picking_batch_print_invoices.field_stock_picking_type__number_copies_invoices
+msgid "Number of copies per invoice"
+msgstr "Número de copias por factura"
+
+#. module: stock_picking_batch_print_invoices
+#: model:ir.model,name:stock_picking_batch_print_invoices.model_stock_picking_type
+msgid "Picking Type"
+msgstr "Tipo de operación"
+
+#. module: stock_picking_batch_print_invoices
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_print_invoices.view_picking_type_form_inherit_stock_picking_batch_print_invoices
+msgid "Print Invoices"
+msgstr "Imprimir Facturas"
+
+#. module: stock_picking_batch_print_invoices
+#: model:ir.model.fields,field_description:stock_picking_batch_print_invoices.field_stock_picking_type__batch_print_invoices
+msgid "Print Invoices from batch"
+msgstr "Imprimir facturas desde la agrupación de facturas"
+
+#. module: stock_picking_batch_print_invoices
+#. odoo-python
+#: code:addons/stock_picking_batch_print_invoices/models/stock_picking_type.py:0
+#, python-format
+msgid "The number of copies per invoice must be greater or equal to 0"
+msgstr "El número de copias por factura debe ser mayor o igual a 0"
+
+#~ msgid "Allow print all invoices from batch"
+#~ msgstr "Permite imprimir todas los facturas del lote"
+
+#~ msgid "Number of invoices copies"
+#~ msgstr "Número de copias de facturas"
+
+#~ msgid "Number of invoices copies invoices to print"
+#~ msgstr "Número de copias de facturas para imprimir"
+
+#, python-format
+#~ msgid ""
+#~ "Picking Type %(type)s is not configured to print pickings/invoices from "
+#~ "batch."
+#~ msgstr ""
+#~ "El tipo de operación %(type)s no está configurada para imprimir albaranes/"
+#~ "facturas desde lote."
+
+#, python-format
+#~ msgid "The number of invoices copies must be greater than 0"
+#~ msgstr "El número de copias de facturas deber ser mayor que 0"
