@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Moduon Team S.L.
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <template
+        id="report_picking_batch_print_invoices"
+        inherit_id="stock_picking_batch_print_pickings.report_picking_batch_print_pickings"
+    >
+        <xpath expr="//t[@name='print_pickings']" position="after">
+            <t
+                name="print_invoices"
+                t-foreach="set(picking.sale_id.invoice_ids.filtered(lambda p: p.partner_id == partner))"
+                t-as="invoice"
+            >
+                <t
+                    t-foreach="range(int(doc.picking_type_id.number_copies_invoices))"
+                    t-as="i"
+                >
+                    <t t-set="lang" t-value="invoice.partner_id.lang" />
+                    <t t-call="account.report_invoice_document" t-lang="lang">
+                        <t t-set="o" t-value="invoice" />
+                    </t>
+                </t>
+            </t>
+        </xpath>
+    </template>
+</odoo>
