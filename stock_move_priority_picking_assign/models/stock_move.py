@@ -34,3 +34,7 @@ class StockMove(models.Model):
         if self.picking_type_id.group_moves_per_priority:
             domain += [("priority", "=", first(self).priority)]
         return domain
+
+    def _compute_priority(self):
+        move_without_priority = self.filtered(lambda m: not m.priority)
+        return super(StockMove, move_without_priority)._compute_priority()

@@ -116,6 +116,7 @@ class TestStockMovePriority(BaseCommon):
             ]
         )
         self.assertEqual(move.picking_id, move_2.picking_id)
+        self.assertEqual(move_2.priority, "0")
 
     def test_move_priority_multi_grouped(self):
         """
