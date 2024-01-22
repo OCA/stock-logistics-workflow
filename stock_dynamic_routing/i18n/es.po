@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-11-30 13:35+0000\n"
-"Last-Translator: Sergio Del Castillo Baranda <serdelcas1990@gmail.com>\n"
+"PO-Revision-Date: 2024-01-22 18:35+0000\n"
+"Last-Translator: FranciscoFactorLibre <francisco.santos@factorlibre.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -194,7 +194,7 @@ msgstr ""
 #. module: stock_dynamic_routing
 #: model:ir.model,name:stock_dynamic_routing.model_stock_location
 msgid "Inventory Locations"
-msgstr "Localización de Inventarios"
+msgstr "Ubicación de Inventarios"
 
 #. module: stock_dynamic_routing
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing____last_update
@@ -218,7 +218,7 @@ msgstr "Última Actualización el"
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing__location_id
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__routing_location_id
 msgid "Location"
-msgstr "Localización"
+msgstr "Ubicación"
 
 #. module: stock_dynamic_routing
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__location_dest_id
@@ -228,7 +228,7 @@ msgstr "Ubicación dest"
 #. module: stock_dynamic_routing
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__location_src_id
 msgid "Location Src"
-msgstr "Localización de origen"
+msgstr "Ubicación de origen"
 
 #. module: stock_dynamic_routing
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__method
@@ -263,7 +263,7 @@ msgid ""
 "source location."
 msgstr ""
 "El tipo de operación de una regla utilizada como \"pull\" debe tener \"{}\" "
-"o una sublocalización como localización de origen."
+"o una sub-ubicación como ubicación de origen."
 
 #. module: stock_dynamic_routing
 #. odoo-python
@@ -274,7 +274,7 @@ msgid ""
 "destination location."
 msgstr ""
 "El tipo de operación de una regla utilizada como \"push\" debe tener \"{}\" "
-"o una sublocalización como localización de destino."
+"o una sub-ubicación como ubicación de destino."
 
 #. module: stock_dynamic_routing
 #: model:ir.model.fields,help:stock_dynamic_routing.field_stock_routing_rule__picking_type_id
