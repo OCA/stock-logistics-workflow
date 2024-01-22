@@ -21,6 +21,7 @@ setuptools.setup(
         'odoo-addon-stock_lot_scrap>=16.0dev,<16.1dev',
         'odoo-addon-stock_move_free_reservation_reassign>=16.0dev,<16.1dev',
         'odoo-addon-stock_move_line_auto_fill>=16.0dev,<16.1dev',
+        'odoo-addon-stock_move_line_expiration_date_required>=16.0dev,<16.1dev',
         'odoo-addon-stock_move_line_reserved_quant>=16.0dev,<16.1dev',
         'odoo-addon-stock_move_line_serial_unique>=16.0dev,<16.1dev',
         'odoo-addon-stock_move_manage_priority>=16.0dev,<16.1dev',
