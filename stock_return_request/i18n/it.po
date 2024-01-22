@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-12-06 15:36+0000\n"
+"PO-Revision-Date: 2024-01-22 10:33+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -46,7 +46,7 @@ msgstr "<span><strong>Indirizzo cliente:</strong></span>"
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.report_stock_return_request_document
 msgid "<span><strong>Supplier Address:</strong></span>"
-msgstr "<span><strong>Indirizzo Fornitore:</strong></span>"
+msgstr "<span><strong>Indirizzo fornitore:</strong></span>"
 
 #. module: stock_return_request
 #: model_terms:ir.ui.view,arch_db:stock_return_request.stock_move_lines_to_return
