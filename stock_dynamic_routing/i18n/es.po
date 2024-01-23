@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-01-22 18:35+0000\n"
+"PO-Revision-Date: 2024-01-23 16:46+0000\n"
 "Last-Translator: FranciscoFactorLibre <francisco.santos@factorlibre.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -284,17 +284,17 @@ msgstr "Tipo de operación que se aplicará en movimiento."
 #. module: stock_dynamic_routing
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__picking_type_id
 msgid "Picking Type"
-msgstr "Tipo de recogida"
+msgstr "Tipo de operación"
 
 #. module: stock_dynamic_routing
 #: model:ir.model.fields.selection,name:stock_dynamic_routing.selection__stock_routing_rule__method__pull
 msgid "Pull"
-msgstr "Tirar de"
+msgstr "Obtener de"
 
 #. module: stock_dynamic_routing
 #: model:ir.model.fields.selection,name:stock_dynamic_routing.selection__stock_routing_rule__method__push
 msgid "Push"
-msgstr "Empujar"
+msgstr "Enviar a"
 
 #. module: stock_dynamic_routing
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__routing_id
