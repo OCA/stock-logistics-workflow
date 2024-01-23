@@ -24,6 +24,7 @@ class ProductProduct(models.Model):
     route_ids = fields.Many2many(
         "stock.location.route",
         compute="_compute_route_ids",
+        domain="[('product_selectable', '=', True)]",
         store=False
     )
 
@@ -34,7 +35,7 @@ class ProductProduct(models.Model):
                 product.is_mto = False
                 continue
             product.is_mto = mto_route in product.product_tmpl_id.route_ids
-            
+
     @api.depends("is_mto", "product_tmpl_id.route_ids")
     def _compute_route_ids(self):
         mto_route = self.env.ref("stock.route_warehouse0_mto", raise_if_not_found=False)

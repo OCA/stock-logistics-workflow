@@ -20,6 +20,7 @@ class ProductTemplate(models.Model):
         templates_mto_added = template_not_mto_before & templates_mto_after
         templates_mto_removed = (self - template_not_mto_before) & (self - templates_mto_after)
         (templates_mto_added | templates_mto_removed).product_variant_ids._compute_is_mto()
+        return res
 
     @api.onchange("route_ids")
     def onchange_route_ids(self):
