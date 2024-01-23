@@ -47,6 +47,19 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_right_pane">
+                            <span
+                                class="o_form_label"
+                            >File column index for package</span>
+                            <div class="text-muted">
+                                Select the index file column which contains the package info
+                            </div>
+                            <div class="text-muted">
+                                <field name="default_sn_package_column_index" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </field>
