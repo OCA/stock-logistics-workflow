@@ -1,5 +1,6 @@
 # Copyright 2022 Tecnativa - Sergio Teruel
 # Copyright 2023 Tecnativa - Carolina Fernandez
+# Copyright 2024 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 import base64
 
@@ -40,7 +41,10 @@ class StockPickingImportSerialNumber(models.TransientModel):
     sn_product_column_index = fields.Integer(
         string="Column index for product", default=0
     )
-    sn_serial_column_index = fields.Integer(string="Column index for S/N", default="1")
+    sn_serial_column_index = fields.Integer(string="Column index for S/N", default=1)
+    sn_package_column_index = fields.Integer(
+        string="Column index for Package", default=2
+    )
 
     def action_import(self):
         if self.picking_ids.filtered(lambda p: not p.picking_type_id.use_create_lots):
@@ -67,14 +71,44 @@ class StockPickingImportSerialNumber(models.TransientModel):
                 self._import_serial_number(xl_sheet, move_lines, picking)
         self.data_file = False
 
+    def _search_or_create_package(self, picking, name):
+        """Return the package (if it exists) or create a new one."""
+        package_model = self.env["stock.quant.package"]
+        domain = [
+            "&",
+            ("name", "=", name),
+            "|",
+            ("company_id", "=", False),
+            ("company_id", "=", picking.company_id.id),
+        ]
+        package = package_model.search(domain, limit=1)
+        return package or package_model.create({"name": name})
+
+    def _prepare_stock_move_line_vals(self, picking, product):
+        return {
+            "picking_id": picking.id,
+            "location_id": picking.location_id.id,
+            "location_dest_id": picking.location_dest_id.id,
+            "product_id": product.id,
+            "product_uom_id": product.uom_id.id,
+            "product_uom_qty": 0.0,
+            "qty_done": 1.0,
+        }
+
     def _import_serial_number(self, xl_sheet, stock_move_lines, picking):
         product_file_set = set()
         serial_list = []
         for row_idx in range(1, xl_sheet.nrows):
             product = str(xl_sheet.cell(row_idx, self.sn_product_column_index).value)
             serial = str(xl_sheet.cell(row_idx, self.sn_serial_column_index).value)
+            try:
+                package = str(
+                    xl_sheet.cell(row_idx, self.sn_package_column_index).value
+                )
+            except IndexError:
+                package = False
             product_file_set.add(product)
-            serial_list.append((product, serial))
+            serial_list.append((product, serial, package))
 
         products = self.env["product.product"].search(
             [(self.sn_search_product_by_field, "in", list(product_file_set))]
@@ -89,20 +123,18 @@ class StockPickingImportSerialNumber(models.TransientModel):
                     if not sml.lot_name or self.overwrite_serial:
                         sml.lot_name = item[1]
                         sml.qty_done = 1.0
+                        if item[2]:
+                            sml.result_package_id = self._search_or_create_package(
+                                picking, item[2]
+                            )
                         # Only assign one serial
                         break
             # TODO: Check if product is present on initial demand??
             # elif product and picking.move_lines.filtered(lambda ln: ln.product_id == product)
             elif product:
-                self.env["stock.move.line"].create(
-                    {
-                        "picking_id": picking.id,
-                        "location_id": picking.location_id.id,
-                        "location_dest_id": picking.location_dest_id.id,
-                        "product_id": product.id,
-                        "product_uom_id": product.uom_id.id,
-                        "lot_name": item[1],
-                        "product_uom_qty": 0.0,
-                        "qty_done": 1.0,
-                    }
-                )
+                vals = self._prepare_stock_move_line_vals(picking, product)
+                vals.update(lot_name=item[1])
+                if item[2]:
+                    package = self._search_or_create_package(picking, item[2])
+                    vals.update(result_package_id=package.id)
+                self.env["stock.move.line"].create(vals)
