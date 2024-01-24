@@ -44,7 +44,9 @@ class StockPicking(models.Model):
                         qty_split, move.product_id.uom_id, rounding_method="HALF-UP"
                     )
                     # Empty list is returned for moves with zero qty_done.
-                    new_move_vals = move._split(qty_uom_split)
+                    new_move_vals = move.with_context(cancel_backorder=False)._split(
+                        qty_uom_split
+                    )
                     if new_move_vals:
                         for move_line in move.move_line_ids:
                             if move_line.reserved_qty and move_line.qty_done:
