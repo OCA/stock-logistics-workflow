@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Moduon Team S.L.
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <record id="action_report_picking_batch_print_pickings" model="ir.actions.report">
+        <field name="name">Delivery Slips</field>
+        <field name="model">stock.picking.batch</field>
+        <field name="report_type">qweb-pdf</field>
+        <field
+            name="report_name"
+        >stock_picking_batch_print_pickings.report_picking_batch_print_pickings</field>
+        <field
+            name="report_file"
+        >stock_picking_batch_print_pickings.report_picking_batch_print_pickings</field>
+        <field
+            name="print_report_name"
+        >'Delivery Slips from Batch %s' % (object.name)</field>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>
