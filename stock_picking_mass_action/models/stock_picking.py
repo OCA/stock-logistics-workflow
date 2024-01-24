@@ -10,10 +10,14 @@ class StockPicking(Model):
     _inherit = "stock.picking"
 
     @api.model
-    def check_assign_all(self):
+    def check_assign_all(self, domain=None):
         """Try to assign confirmed pickings"""
-        domain = [("picking_type_code", "=", "outgoing"), ("state", "=", "confirmed")]
-        records = self.search(domain, order="scheduled_date")
+        search_domain = [("state", "=", "confirmed")]
+        if domain:
+            search_domain += domain
+        else:
+            search_domain += [("picking_type_code", "=", "outgoing")]
+        records = self.search(search_domain, order="scheduled_date")
         records.action_assign()
 
     def action_immediate_transfer_wizard(self):
