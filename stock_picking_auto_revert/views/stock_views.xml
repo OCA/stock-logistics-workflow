@@ -13,7 +13,7 @@
                     states="done"
                     type="object"
                     icon="fa-ban"
-                    confirm="Are you sure you want to return a recreate this picking?"
+                    confirm="Are you sure you want to return and recreate this picking?"
                 />
             </field>
         </field>
