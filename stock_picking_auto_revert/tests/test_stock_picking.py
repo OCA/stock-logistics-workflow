@@ -5,9 +5,6 @@ from odoo.tests.common import TransactionCase
 
 
 class TestStockPicking(TransactionCase):
-    def setUp(self):
-        super(TestStockPicking, self).setUp()
-
     def test_return_and_recreate(self):
 
         self.partner = self.env.ref("base.res_partner_1")
@@ -40,7 +37,8 @@ class TestStockPicking(TransactionCase):
         picking = so.picking_ids
 
         picking.action_confirm()
-        picking.do_transfer()
+        picking.move_lines.write({"quantity_done": 5.0})
+        picking.button_validate()
         picking.action_revert_recreate()
 
         # we have the original shipment and the return and the duplicated
@@ -63,4 +61,4 @@ class TestStockPicking(TransactionCase):
             so.picking_ids[0].mapped("move_lines.location_dest_id.name"),
             ["Customers"],
         )
-        self.assertEqual(so.picking_ids[0].state, "assigned")
+        self.assertEqual(so.picking_ids[2].state, "confirmed")
