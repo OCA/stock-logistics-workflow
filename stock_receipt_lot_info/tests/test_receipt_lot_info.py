@@ -37,9 +37,9 @@ class ReceiptLotInfo(TransactionCase):
             }
         )
 
-    def test_in_1(self):
-        """This tests adds info about dates in move lines and check if
-        its set correctly.
+    def test_01_receipt_lot_info(self):
+        """Test that info about dates in move lines is passed correctly
+        to the new lot.
         """
         date = Datetime.now()
         receipt_type = self.env.ref("stock.picking_type_in")
@@ -68,7 +68,7 @@ class ReceiptLotInfo(TransactionCase):
             {
                 "qty_done": 1,
                 "lot_name": "lot1",
-                "lot_expiration_date": date + timedelta(days=15),
+                "expiration_date": date + timedelta(days=15),
                 "lot_use_date": date + timedelta(days=5),
                 "lot_removal_date": date + timedelta(days=20),
                 "lot_alert_date": date + timedelta(days=10),
