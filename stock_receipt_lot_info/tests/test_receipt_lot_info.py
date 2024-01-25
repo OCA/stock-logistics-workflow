@@ -68,7 +68,7 @@ class ReceiptLotInfo(TransactionCase):
             {
                 "qty_done": 1,
                 "lot_name": "lot1",
-                "lot_expiration_date": date + timedelta(days=15),
+                "expiration_date": date + timedelta(days=15),
                 "lot_use_date": date + timedelta(days=5),
                 "lot_removal_date": date + timedelta(days=20),
                 "lot_alert_date": date + timedelta(days=10),
