@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-22 08:42+0000\n"
-"PO-Revision-Date: 2024-01-22 09:44+0100\n"
-"Last-Translator: Emilio Pascual <emilio@moduom.team>\n"
+"PO-Revision-Date: 2024-01-30 13:35+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_picking_batch_print_pickings
 #: model:ir.actions.report,print_report_name:stock_picking_batch_print_pickings.action_report_picking_batch_print_pickings
@@ -34,10 +34,14 @@ msgstr "Transferir agrupación"
 
 #. module: stock_picking_batch_print_pickings
 #: model:ir.actions.report,name:stock_picking_batch_print_pickings.action_report_picking_batch_print_pickings
-#: model:ir.actions.server,name:stock_picking_batch_print_pickings.action_print_pickings
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_print_pickings.stock_picking_batch_form_inherit_stock_picking_batch_print_pickings
 msgid "Delivery Slips"
 msgstr "Albaranes de Entrega"
+
+#. module: stock_picking_batch_print_pickings
+#: model:ir.actions.server,name:stock_picking_batch_print_pickings.action_print_pickings
+msgid "Delivery Slips/Invoices"
+msgstr "Albaranes de Entrega/Facturas"
 
 #. module: stock_picking_batch_print_pickings
 #: model:ir.model.fields,field_description:stock_picking_batch_print_pickings.field_stock_picking_type__number_copies_pickings
