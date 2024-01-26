@@ -80,7 +80,7 @@
             <attribute name="name">stock_backorder_block</attribute>
         </xpath>
         <xpath expr='//t[@name="stock_backorder_block"]' position="after">
-            <t t-if="o.picking_type_id.code == 'outgoing'">
+            <t t-if="o.picking_type_id.code == 'outgoing' and get_remaining_to_deliver">
                 <t t-set="remainings" t-value="get_remaining_to_deliver(o)" />
                 <t t-if="not remainings">
                     <p
