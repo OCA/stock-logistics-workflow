@@ -4,10 +4,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0+e\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-19 08:32+0000\n"
-"PO-Revision-Date: 2024-01-19 08:32+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,13 +14,15 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_picking_batch_print_invoices
-#: model:ir.model.fields,help:stock_picking_batch_print_invoices.field_stock_picking_type__batch_print_invoices
-msgid "Allow print all invoices from batch"
+#: model:ir.model,name:stock_picking_batch_print_invoices.model_stock_picking_batch
+msgid "Batch Transfer"
 msgstr ""
 
 #. module: stock_picking_batch_print_invoices
-#: model:ir.model,name:stock_picking_batch_print_invoices.model_stock_picking_batch
-msgid "Batch Transfer"
+#: model:ir.model.fields,help:stock_picking_batch_print_invoices.field_stock_picking_type__batch_print_invoices
+msgid ""
+"Check this box to print all the invoices associated with the pickings "
+"contained in a picking batch."
 msgstr ""
 
 #. module: stock_picking_batch_print_invoices
@@ -32,26 +32,12 @@ msgstr ""
 
 #. module: stock_picking_batch_print_invoices
 #: model:ir.model.fields,field_description:stock_picking_batch_print_invoices.field_stock_picking_type__number_copies_invoices
-msgid "Number of invoices copies"
-msgstr ""
-
-#. module: stock_picking_batch_print_invoices
-#: model:ir.model.fields,help:stock_picking_batch_print_invoices.field_stock_picking_type__number_copies_invoices
-msgid "Number of invoices copies invoices to print"
+msgid "Number of copies per invoice"
 msgstr ""
 
 #. module: stock_picking_batch_print_invoices
 #: model:ir.model,name:stock_picking_batch_print_invoices.model_stock_picking_type
 msgid "Picking Type"
-msgstr ""
-
-#. module: stock_picking_batch_print_invoices
-#. odoo-python
-#: code:addons/stock_picking_batch_print_invoices/models/stock_picking_batch.py:0
-#, python-format
-msgid ""
-"Picking Type %(type)s is not configured to print pickings/invoices from "
-"batch."
 msgstr ""
 
 #. module: stock_picking_batch_print_invoices
@@ -68,5 +54,5 @@ msgstr ""
 #. odoo-python
 #: code:addons/stock_picking_batch_print_invoices/models/stock_picking_type.py:0
 #, python-format
-msgid "The number of invoices copies must be greater than 0"
+msgid "The number of copies per invoice must be greater or equal to 0"
 msgstr ""
