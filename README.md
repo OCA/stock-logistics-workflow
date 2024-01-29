@@ -49,13 +49,14 @@ addon | version | maintainers | summary
 [stock_picking_batch_extended_account](stock_picking_batch_extended_account/) | 16.0.1.0.2 | [![ernestotejeda](https://github.com/ernestotejeda.png?size=30px)](https://github.com/ernestotejeda) | Generates invoices when batch is set to Done state
 [stock_picking_batch_extended_account_sale_type](stock_picking_batch_extended_account_sale_type/) | 16.0.1.0.2 | [![ernestotejeda](https://github.com/ernestotejeda.png?size=30px)](https://github.com/ernestotejeda) | Generates invoices when batch is set to Done state
 [stock_picking_batch_invoice_frequency](stock_picking_batch_invoice_frequency/) | 16.0.1.0.1 | [![EmilioPascual](https://github.com/EmilioPascual.png?size=30px)](https://github.com/EmilioPascual) [![rafaelbn](https://github.com/rafaelbn.png?size=30px)](https://github.com/rafaelbn) | Invoice Sale Orders from Stock Pickin Batch
-[stock_picking_batch_print_pickings](stock_picking_batch_print_pickings/) | 16.0.1.0.1 | [![EmilioPascual](https://github.com/EmilioPascual.png?size=30px)](https://github.com/EmilioPascual) | Print Picking from Stock Picking Batch
+[stock_picking_batch_print_invoices](stock_picking_batch_print_invoices/) | 16.0.1.0.1 | [![EmilioPascual](https://github.com/EmilioPascual.png?size=30px)](https://github.com/EmilioPascual) | Print invoices from stock picking batchs
+[stock_picking_batch_print_pickings](stock_picking_batch_print_pickings/) | 16.0.1.0.2 | [![EmilioPascual](https://github.com/EmilioPascual.png?size=30px)](https://github.com/EmilioPascual) | Print Picking from Stock Picking Batch
 [stock_picking_customer_ref](stock_picking_customer_ref/) | 16.0.1.0.0 |  | This module displays the sale reference/description in the pickings
 [stock_picking_filter_lot](stock_picking_filter_lot/) | 16.0.1.0.0 |  | In picking out lots' selection, filter lots based on their location
 [stock_picking_grn_mandatory](stock_picking_grn_mandatory/) | 16.0.1.0.0 |  | This module allows to require a GRN (Goods Receive Note) when doing a Stock Picking
 [stock_picking_group_by_base](stock_picking_group_by_base/) | 16.0.1.0.0 |  | Allows to define a way to create index on extensible domain
 [stock_picking_group_by_max_weight](stock_picking_group_by_max_weight/) | 16.0.1.0.0 |  | Allows to filter available pickings for which a maximum weight is not exceeded.
-[stock_picking_group_by_partner_by_carrier](stock_picking_group_by_partner_by_carrier/) | 16.0.1.0.0 |  | Stock Picking: group by partner and carrier
+[stock_picking_group_by_partner_by_carrier](stock_picking_group_by_partner_by_carrier/) | 16.0.1.0.1 |  | Stock Picking: group by partner and carrier
 [stock_picking_info_lot](stock_picking_info_lot/) | 16.0.1.0.0 |  | Add lot information on Stock Transfer lines
 [stock_picking_invoice_link](stock_picking_invoice_link/) | 16.0.1.0.2 |  | Adds link between pickings and invoices
 [stock_picking_kind](stock_picking_kind/) | 16.0.1.0.0 |  | Computes the kind of picking based on locations

@@ -36,6 +36,7 @@ setuptools.setup(
         'odoo-addon-stock_picking_batch_extended_account>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_batch_extended_account_sale_type>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_batch_invoice_frequency>=16.0dev,<16.1dev',
+        'odoo-addon-stock_picking_batch_print_invoices>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_batch_print_pickings>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_customer_ref>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_filter_lot>=16.0dev,<16.1dev',
