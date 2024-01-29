@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-08 17:05+0000\n"
-"PO-Revision-Date: 2024-01-15 11:37+0000\n"
+"PO-Revision-Date: 2024-01-29 17:36+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/"
 "OCA-stock-logistics-workflow-8-0/language/it/)\n"
@@ -39,7 +39,7 @@ msgstr "Crea"
 #. module: stock_picking_backorder_strategy
 #: model:ir.model.fields,help:stock_picking_backorder_strategy.field_stock_picking_type__backorder_strategy
 msgid "Define what to do with backorder"
-msgstr ""
+msgstr "Definisce cosa fare con gli ordini residui"
 
 #. module: stock_picking_backorder_strategy
 #: model:ir.model.fields.selection,name:stock_picking_backorder_strategy.selection__stock_picking_type__backorder_strategy__manual
