@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_picking_note_type_manager,stock.picking.note.type manager,model_stock_picking_note_type,stock.group_stock_manager,1,1,1,1
+access_stock_picking_note_user,stock.picking.note user,model_stock_picking_note,sales_team.group_sale_salesman,1,1,1,1
