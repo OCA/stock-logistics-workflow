@@ -30,9 +30,13 @@ msgstr ""
 
 #. module: stock_picking_batch_print_pickings
 #: model:ir.actions.report,name:stock_picking_batch_print_pickings.action_report_picking_batch_print_pickings
-#: model:ir.actions.server,name:stock_picking_batch_print_pickings.action_print_pickings
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_print_pickings.stock_picking_batch_form_inherit_stock_picking_batch_print_pickings
 msgid "Delivery Slips"
+msgstr ""
+
+#. module: stock_picking_batch_print_pickings
+#: model:ir.actions.server,name:stock_picking_batch_print_pickings.action_print_pickings
+msgid "Delivery Slips/Invoices"
 msgstr ""
 
 #. module: stock_picking_batch_print_pickings
