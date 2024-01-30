@@ -12,7 +12,6 @@ from odoo.tests import Form
 
 
 class TestCommon(tests.SavepointCase):
-
     def _get_datetime_backdating(self, timedelta_days):
         now = datetime.now()
         date_backdating = now - timedelta(days=timedelta_days)
@@ -28,14 +27,14 @@ class TestCommon(tests.SavepointCase):
         Products are also assigned the values
         declared in `products_values_list`.
         """
-        product_model = cls.env['product.product']
+        product_model = cls.env["product.product"]
         products = product_model.browse()
         for products_values in products_values_list:
             product_form = Form(product_model)
             for field_name, field_value in products_values.items():
                 setattr(product_form, field_name, field_value)
-            product_form.type = 'product'
-            product_form.property_valuation = 'real_time'
+            product_form.type = "product"
+            product_form.property_valuation = "real_time"
             product = product_form.save()
             products |= product
         return products
@@ -47,8 +46,8 @@ class TestCommon(tests.SavepointCase):
         :param products_qty_dict: dictionary mapping
             a product to the quantity to be moved.
         """
-        picking_form = Form(cls.env['stock.picking'])
-        picking_form.picking_type_id = cls.env.ref('stock.picking_type_out')
+        picking_form = Form(cls.env["stock.picking"])
+        picking_form.picking_type_id = cls.env.ref("stock.picking_type_out")
         picking_form.location_id = cls.stock_location
         picking_form.location_dest_id = cls.customer_location
         for product, quantity in products_qty_dict.items():
@@ -61,19 +60,21 @@ class TestCommon(tests.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.stock_location = cls.env.ref('stock.stock_location_stock')
-        cls.customer_location = cls.env.ref('stock.stock_location_customers')
+        cls.stock_location = cls.env.ref("stock.stock_location_stock")
+        cls.customer_location = cls.env.ref("stock.stock_location_customers")
 
-        cls.products = cls._create_real_time_products([
-            {
-                'name': "Test backdating 1",
-                'standard_price': 10,
-            },
-            {
-                'name': "Test backdating 2",
-                'standard_price': 20,
-            },
-        ])
+        cls.products = cls._create_real_time_products(
+            [
+                {
+                    "name": "Test backdating 1",
+                    "standard_price": 10,
+                },
+                {
+                    "name": "Test backdating 2",
+                    "standard_price": 20,
+                },
+            ]
+        )
 
         # Map each product to how much will be moved
         products_move_mapping = {
@@ -81,10 +82,12 @@ class TestCommon(tests.SavepointCase):
             cls.products[1]: 2,
         }
         # Create enough availability in stock for the products to be moved
-        stock_quant_model = cls.env['stock.quant']
+        stock_quant_model = cls.env["stock.quant"]
         for product, quantity in products_move_mapping.items():
             stock_quant_model._update_available_quantity(
-                product, cls.stock_location, quantity,
+                product,
+                cls.stock_location,
+                quantity,
             )
 
         picking = cls._create_picking(products_move_mapping)
@@ -114,16 +117,16 @@ class TestCommon(tests.SavepointCase):
             self.assertFalse(picking_back_date)
 
     def _search_account_move(self, move):
-        account_move = self.env['account.move'].search(
+        account_move = self.env["account.move"].search(
             [
-                ('stock_move_id', '=', move.id),
+                ("stock_move_id", "=", move.id),
             ],
         )
         return account_move
 
     def _create_wizard(self, date_backdating, picking):
         """Assign `date_backdating` to all the move lines of `picking`."""
-        wiz_model = self.env['fill.date.backdating'].with_context(
+        wiz_model = self.env["fill.date.backdating"].with_context(
             active_model=picking._name,
             active_id=picking.id,
         )
@@ -133,19 +136,20 @@ class TestCommon(tests.SavepointCase):
         return wiz.fill_date_backdating()
 
     def _check_stock_moves(self, stock_moves):
-        stock_move_lines = stock_moves.mapped('move_line_ids')
+        stock_move_lines = stock_moves.mapped("move_line_ids")
         self.assertEqual(
-            len(stock_move_lines), len(stock_moves),
-            'Every move should be assigned (create a move line)',
+            len(stock_move_lines),
+            len(stock_moves),
+            "Every move should be assigned (create a move line)",
         )
-        account_moves = self.env['account.move'].search(
+        account_moves = self.env["account.move"].search(
             [
-                ('stock_move_id', 'in', stock_moves.ids),
+                ("stock_move_id", "in", stock_moves.ids),
             ],
         )
         self._check_account_moves(account_moves, stock_moves)
         for stock_move in stock_moves:
-            self.assertEqual(stock_move.state, 'done')
+            self.assertEqual(stock_move.state, "done")
 
             account_move = self._search_account_move(stock_move)
             self._check_account_move_date(account_move, stock_move.date)
@@ -157,15 +161,17 @@ class TestCommon(tests.SavepointCase):
             self.assertEqual(stock_move_line.date.date(), move_date_backdating)
 
             # Get the quant that originated the quantity moved
-            quants = self.env['stock.quant']._gather(
-                stock_move.product_id, stock_move.location_id,
+            quants = self.env["stock.quant"]._gather(
+                stock_move.product_id,
+                stock_move.location_id,
             )
             for quant in quants:
                 self.assertEqual(quant.in_date.date(), move_date_backdating)
 
             # Get the quant that received the quantity moved
-            quants = self.env['stock.quant']._gather(
-                stock_move.product_id, stock_move.location_dest_id,
+            quants = self.env["stock.quant"]._gather(
+                stock_move.product_id,
+                stock_move.location_dest_id,
             )
             for quant in quants:
                 self.assertEqual(quant.in_date.date(), move_date_backdating)
@@ -191,13 +197,14 @@ class TestCommon(tests.SavepointCase):
             self._create_wizard(date_backdating, picking)
         else:
             stock_move_lines_dates_zip = zip_longest(
-                stock_move_lines, datetime_backdating_list,
+                stock_move_lines,
+                datetime_backdating_list,
                 fillvalue=datetime_backdating_list[-1],
             )
             for stock_move, datetime_backdating in stock_move_lines_dates_zip:
                 stock_move.date_backdating = datetime_backdating
 
         picking.action_done()
-        self.assertEqual(picking.state, 'done')
+        self.assertEqual(picking.state, "done")
         self._check_stock_moves(stock_moves)
         self._check_picking_date(picking, datetime_backdating_list)
