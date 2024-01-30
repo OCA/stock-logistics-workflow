@@ -4,6 +4,7 @@
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
+
 from ..models.stock_move_line import check_date
 
 
@@ -12,11 +13,11 @@ class FillDateBackdating(models.TransientModel):
     _description = "Fill Actual Movement Date of all operations"
 
     date_backdating = fields.Datetime(
-        string='Actual Movement Date',
+        string="Actual Movement Date",
     )
 
     @api.constrains(
-        'date_backdating',
+        "date_backdating",
     )
     def constrain_date_backdating(self):
         try:
@@ -25,13 +26,15 @@ class FillDateBackdating(models.TransientModel):
             raise ValidationError(ue.args[0]) from ue
 
     def fill_date_backdating(self):
-        """ Fill the Actual Movement Date on all pack operations. """
+        """Fill the Actual Movement Date on all pack operations."""
         self.ensure_one()
-        picking_id = self.env.context['active_id']
-        picking = self.env['stock.picking'].browse(picking_id)
-        picking.move_line_ids.update({
-            'date_backdating': self.date_backdating,
-        })
+        picking_id = self.env.context["active_id"]
+        picking = self.env["stock.picking"].browse(picking_id)
+        picking.move_line_ids.update(
+            {
+                "date_backdating": self.date_backdating,
+            }
+        )
         return {
-            'type': 'ir.actions.act_window_close',
+            "type": "ir.actions.act_window_close",
         }
