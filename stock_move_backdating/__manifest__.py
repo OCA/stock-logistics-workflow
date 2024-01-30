@@ -7,7 +7,7 @@
 
 {
     "name": "Stock Move Backdating",
-    "version": "12.0.1.0.1",
+    "version": "14.0.1.0.0",
     "category": "Stock Logistics",
     "license": "AGPL-3",
     "author": "Marco Dieckhoff, BREMSKERL, Agile Business Group, "
@@ -18,9 +18,11 @@
         "stock_account",
     ],
     "data": [
+        "security/ir.model.access.csv",
         "wizards/fill_date_backdating.xml",
         "views/stock_inventory_views.xml",
         "views/stock_picking.xml",
+        "views/stock_move_line_views.xml",
     ],
     "installable": True,
 }
