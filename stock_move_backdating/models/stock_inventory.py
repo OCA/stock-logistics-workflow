@@ -3,7 +3,7 @@
 
 from odoo import api, fields, models
 
-from .stock_move_line import check_date
+from ..utils import check_date
 
 
 class StockInventory(models.Model):
