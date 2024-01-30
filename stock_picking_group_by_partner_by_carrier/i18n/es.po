@@ -6,94 +6,96 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2024-01-30 13:35+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
 msgid "<span attrs=\"{'invisible': [('nothing_todo', '=', True)]}\">or</span>"
-msgstr ""
+msgstr "<span attrs=\"{'invisible': [('nothing_todo', '=', True)]}\">o</span>"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.report_delivery_document
 msgid "All ordered items have been delivered."
-msgstr ""
+msgstr "Todos los artículos pedidos han sido entregados."
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking__canceled_by_merge
 msgid "Canceled By Merge"
-msgstr ""
+msgstr "Cancelado Por Fusión"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
 msgid "Confirm"
-msgstr ""
+msgstr "Confirmar"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Contacto"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creado por"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creado el"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_report_stock_report_deliveryslip
 msgid "Delivery Slip Report"
-msgstr ""
+msgstr "Informe de Albarán de Entrega"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__details
 msgid "Details"
-msgstr ""
+msgstr "Detalles"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__discarded_picking_ids
 msgid "Discarded Pickings"
-msgstr ""
+msgstr "Recolección de Descartes"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Mostrar Nombre"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_res_partner__disable_picking_grouping
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_res_users__disable_picking_grouping
 msgid "Do not group deliveries"
-msgstr ""
+msgstr "No agrupar las entregas"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.stock_picking_merge_wiz_info
 msgid "For customer:"
-msgstr ""
+msgstr "Para el cliente:"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.stock_picking_merge_wiz_info
 msgid "Forecasted grouping"
-msgstr ""
+msgstr "Agrupación prevista"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_type__group_pickings
 msgid "Group pickings"
-msgstr ""
+msgstr "Recogida de grupos"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,help:stock_picking_group_by_partner_by_carrier.field_stock_picking_type__group_pickings
@@ -101,11 +103,14 @@ msgid ""
 "Group pickings for the same partner and carrier. Pickings with shipping "
 "policy set to 'When all products are ready' are never grouped."
 msgstr ""
+"Albaranes grupales para el mismo socio y transportista. Las selecciones con "
+"política de envío establecida en \"Cuando todos los productos estén listos\" "
+"nunca se agrupan."
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_warehouse__group_shippings
 msgid "Group shippings"
-msgstr ""
+msgstr "Envíos colectivos"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,help:stock_picking_group_by_partner_by_carrier.field_stock_warehouse__group_shippings
@@ -113,70 +118,73 @@ msgid ""
 "Group shippings for the same partner and carrier. Shippings with shipping "
 "policy set to 'When all products are ready' are never grouped."
 msgstr ""
+"Agrupar envíos para el mismo socio y transportista. Los envíos con la "
+"política de envío establecida en \"Cuando todos los productos estén listos\" "
+"nunca se agrupan."
 
 #. module: stock_picking_group_by_partner_by_carrier
 #. odoo-python
 #: code:addons/stock_picking_group_by_partner_by_carrier/wizards/stock_picking_merge_wiz.py:0
 #, python-format
 msgid "Grouped pickings"
-msgstr ""
+msgstr "Recogidas agrupadas"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Última Modificación el"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última Actualización por"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última Actualización el"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
 msgid "Mass Action for the selected stock picking"
-msgstr ""
+msgstr "Acción en masa para el albarán seleccionado"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.actions.act_window,name:stock_picking_group_by_partner_by_carrier.act_window_merge_transfers
 msgid "Merge transfers"
-msgstr ""
+msgstr "Fusionar transferencias"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #. odoo-python
 #: code:addons/stock_picking_group_by_partner_by_carrier/wizards/stock_picking_merge_wiz.py:0
 #, python-format
 msgid "No picking can be merged!"
-msgstr ""
+msgstr "¡No se puede fusionar ninguna selección!"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__nothing_todo
 msgid "Nothing Todo"
-msgstr ""
+msgstr "Nada que hacer"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_move__original_group_id
 msgid "Original Procurement Group"
-msgstr ""
+msgstr "Grupo de Adquisiciones Original"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_procurement_group__picking_ids
 msgid "Picking"
-msgstr ""
+msgstr "Albarán"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_stock_picking_type
 msgid "Picking Type"
-msgstr ""
+msgstr "Tipo de Recogida"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
@@ -184,68 +192,70 @@ msgid ""
 "Pickings should match these parameters: picking type is groupable, state not"
 " cancelled or done, not printed."
 msgstr ""
+"Las selecciones deben coincidir con estos parámetros: el tipo de selección "
+"es agrupable, el estado no cancelado o realizado, no impreso."
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_procurement_group
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking__group_id
 msgid "Procurement Group"
-msgstr ""
+msgstr "Grupo de Adquisiciones"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.report_delivery_document
 msgid "Remaining to deliver:"
-msgstr ""
+msgstr "Pendiente de entrega:"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_procurement_group__sale_ids
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking__sale_ids
 msgid "Sale"
-msgstr ""
+msgstr "Venta"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_sale_order
 msgid "Sales Order"
-msgstr ""
+msgstr "Orden de Ventas"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_sale_order_line
 msgid "Sales Order Line"
-msgstr ""
+msgstr "Línea de Orden de Ventas"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__selected_picking_ids
 msgid "Selected Pickings"
-msgstr ""
+msgstr "Recogida Selectiva"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__show_discarded_detail
 msgid "Show Discarded Detail"
-msgstr ""
+msgstr "Mostrar Detalle de Descartes"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
 msgid "Some pickings you've selected are discarded"
-msgstr ""
+msgstr "Algunas selecciones que has hecho se descartan"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.stock_picking_merge_wiz_info
 msgid "Sorry, nothing to be done here."
-msgstr ""
+msgstr "Lo siento, aquí no hay nada que hacer."
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimiento de Existencias"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_stock_picking_merge
 msgid "Stock Picking Merge"
-msgstr ""
+msgstr "Fusión de Selección de Valores"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_stock_rule
 msgid "Stock Rule"
-msgstr ""
+msgstr "Regla de Existencias"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,help:stock_picking_group_by_partner_by_carrier.field_stock_picking__canceled_by_merge
@@ -253,33 +263,35 @@ msgid ""
 "Technical field. Indicates the transfer is canceled because it was left "
 "empty after a manual merge."
 msgstr ""
+"Campo técnico. Indica que la transferencia se cancela porque quedó vacía "
+"tras una fusión manual."
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Transferencia"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_sale_order__picking_ids
 msgid "Transfers"
-msgstr ""
+msgstr "Transferencias"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__valid_picking_ids
 msgid "Valid Pickings"
-msgstr ""
+msgstr "Recolecciones Válidas"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
 msgid "Valid pickings"
-msgstr ""
+msgstr "Recolecciones válidas"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_stock_warehouse
 msgid "Warehouse"
-msgstr ""
+msgstr "Almacén"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.stock_picking_merge_wiz_info
 msgid "With carrier:"
-msgstr ""
+msgstr "Con transportista:"
