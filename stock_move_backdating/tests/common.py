@@ -34,7 +34,9 @@ class TestCommon(tests.SavepointCase):
             for field_name, field_value in products_values.items():
                 setattr(product_form, field_name, field_value)
             product_form.type = "product"
-            product_form.property_valuation = "real_time"
+            cls.env["product.category"].browse(
+                product_form.categ_id.id
+            ).property_valuation = "real_time"
             product = product_form.save()
             products |= product
         return products
@@ -144,7 +146,7 @@ class TestCommon(tests.SavepointCase):
         )
         account_moves = self.env["account.move"].search(
             [
-                ("stock_move_id", "in", stock_moves.ids),
+                ("stock_move_id.id", "in", stock_moves.ids),
             ],
         )
         self._check_account_moves(account_moves, stock_moves)
@@ -204,7 +206,7 @@ class TestCommon(tests.SavepointCase):
             for stock_move, datetime_backdating in stock_move_lines_dates_zip:
                 stock_move.date_backdating = datetime_backdating
 
-        picking.action_done()
+        picking._action_done()
         self.assertEqual(picking.state, "done")
         self._check_stock_moves(stock_moves)
         self._check_picking_date(picking, datetime_backdating_list)
