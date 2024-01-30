@@ -7,6 +7,7 @@
 
 from odoo import api, models
 from odoo.fields import first
+
 from .stock_move_line import check_date
 
 
@@ -15,18 +16,20 @@ class StockMove(models.Model):
 
     def _backdating_account_moves(self):
         """Set date on linked account.move same for each move in `self`."""
-        picking_account_moves = self.env['account.move'].search(
+        picking_account_moves = self.env["account.move"].search(
             [
-                ('stock_move_id', 'in', self.ids),
+                ("stock_move_id", "in", self.ids),
             ],
         )
         for stock_move in self:
             move_account_moves = picking_account_moves.filtered(
                 lambda am: am.stock_move_id == stock_move
             )
-            move_account_moves.update({
-                'date': stock_move.date.date(),
-            })
+            move_account_moves.update(
+                {
+                    "date": stock_move.date.date(),
+                }
+            )
 
     def _backdating_action_done(self, moves_todo):
         """Process the moves one by one, backdating the ones that need to."""
@@ -47,15 +50,17 @@ class StockMove(models.Model):
             if date_backdating:
                 check_date(date_backdating)
                 move.date = date_backdating
-                move.move_line_ids.update({
-                    'date': date_backdating,
-                })
+                move.move_line_ids.update(
+                    {
+                        "date": date_backdating,
+                    }
+                )
         return self.browse(moves_todo_ids)
 
     @api.multi
     def _action_done(self):
-        moves_todo = self.env['stock.move']
-        has_move_lines_to_backdate = any(self.mapped('move_line_ids.date_backdating'))
+        moves_todo = self.env["stock.move"]
+        has_move_lines_to_backdate = any(self.mapped("move_line_ids.date_backdating"))
         if not has_move_lines_to_backdate:
             moves_todo |= super()._action_done()
         else:
