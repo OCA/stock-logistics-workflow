@@ -14,8 +14,7 @@ class TestInventory(TestCommon):
             {
                 "name": "Test backdating",
                 "date_backdating": yesterday,
-                "filter": "product",
-                "product_id": product.id,
+                "product_ids": [(6, 0, [product.id])],
             }
         )
         inventory.action_start()

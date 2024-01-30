@@ -5,10 +5,10 @@
 # Copyright 2023 Simone Rubino - TAKOBI
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import api, models
+from odoo import models
 from odoo.fields import first
 
-from .stock_move_line import check_date
+from ..utils import check_date
 
 
 class StockMove(models.Model):
@@ -27,6 +27,7 @@ class StockMove(models.Model):
             )
             move_account_moves.update(
                 {
+                    "name": False,
                     "date": stock_move.date.date(),
                 }
             )
@@ -57,12 +58,11 @@ class StockMove(models.Model):
                 )
         return self.browse(moves_todo_ids)
 
-    @api.multi
-    def _action_done(self):
+    def _action_done(self, cancel_backorder=False):
         moves_todo = self.env["stock.move"]
         has_move_lines_to_backdate = any(self.mapped("move_line_ids.date_backdating"))
         if not has_move_lines_to_backdate:
-            moves_todo |= super()._action_done()
+            moves_todo |= super()._action_done(cancel_backorder=cancel_backorder)
         else:
             moves_todo = self._backdating_action_done(moves_todo)
         return moves_todo

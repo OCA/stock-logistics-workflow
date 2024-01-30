@@ -47,20 +47,16 @@ class StockPicking(models.Model):
         stock_moves._backdating_account_moves()
         return True
 
-    @api.multi
-    def action_done(self):
-        result = super().action_done()
+    def _action_done(self):
+        result = super()._action_done()
         for picking in self:
             picking._backdating_update_picking_date()
             picking._backdating_update_account_moves_date()
         return result
 
-    # Disable pylint to match the exact signature in super
-    # pylint: disable=dangerous-default-value
-    @api.multi
-    def _create_backorder(self, backorder_moves=[]):
+    def _create_backorder(self):
         # When a move needs backdating,
         # we are processing the moves of a picking one by one,
         # so we don't have to create a backorder if a move is missing
         if "date_backdating" not in self.env.context:
-            return super()._create_backorder(backorder_moves=backorder_moves)
+            return super()._create_backorder()
