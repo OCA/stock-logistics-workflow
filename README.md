@@ -52,7 +52,7 @@ addon | version | maintainers | summary
 [stock_picking_batch_set_quantity](stock_picking_batch_set_quantity/) | 15.0.1.0.0 |  | Adds buttons to set all reserved quantity in quantity done fields
 [stock_picking_customer_ref](stock_picking_customer_ref/) | 15.0.1.0.0 |  | This module displays the sale reference/description in the pickings
 [stock_picking_filter_lot](stock_picking_filter_lot/) | 15.0.1.0.1 |  | In picking out lots' selection, filter lots based on their location
-[stock_picking_import_serial_number](stock_picking_import_serial_number/) | 15.0.1.0.0 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Import S/N from excel file for incoming pickings
+[stock_picking_import_serial_number](stock_picking_import_serial_number/) | 15.0.2.0.0 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Import S/N from excel file for incoming pickings
 [stock_picking_info_lot](stock_picking_info_lot/) | 15.0.1.0.0 |  | Add lot information on Stock Transfer lines
 [stock_picking_invoice_link](stock_picking_invoice_link/) | 15.0.1.1.1 |  | Adds link between pickings and invoices
 [stock_picking_line_sequence](stock_picking_line_sequence/) | 15.0.1.0.2 |  | Manages the order of stock moves by displaying its sequence
