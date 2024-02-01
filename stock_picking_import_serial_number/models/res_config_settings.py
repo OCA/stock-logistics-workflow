@@ -14,7 +14,6 @@ class ResConfigSettings(models.TransientModel):
         default_model="stock.picking.import.serial.number.wiz",
         required=True,
     )
-
     default_sn_product_column_index = fields.Integer(
         string="Column index for product",
         default_model="stock.picking.import.serial.number.wiz",
@@ -23,5 +22,10 @@ class ResConfigSettings(models.TransientModel):
     default_sn_serial_column_index = fields.Integer(
         string="Column index for S/N",
         default_model="stock.picking.import.serial.number.wiz",
-        default="1",
+        default=1,
+    )
+    default_sn_package_column_index = fields.Integer(
+        string="Column index for Package",
+        default_model="stock.picking.import.serial.number.wiz",
+        default=2,
     )
