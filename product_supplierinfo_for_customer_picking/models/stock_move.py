@@ -9,20 +9,15 @@ class StockMove(models.Model):
     @api.depends("picking_id.partner_id", "product_id")
     def _compute_product_customer_code(self):
         for move in self:
-            product_customer_name = ""
-            product_customer_code = ""
-            if (
-                move.picking_id
-                and move.picking_id.partner_id
-                and move.product_tmpl_id.customer_ids
-            ):
-                customer = fields.first(
-                    move.product_tmpl_id.customer_ids.filtered(
-                        lambda m: m.name == move.picking_id.partner_id
-                    )
+            product_customer_name = product_customer_code = False
+            if move.product_id and move.picking_id and move.picking_id.partner_id:
+                customerinfo = move.product_id._select_customerinfo(
+                    partner=move.picking_id.partner_id,
+                    quantity=move.product_uom_qty,
+                    uom_id=move.product_uom,
                 )
-                product_customer_code = customer.product_code
-                product_customer_name = customer.product_name
+                product_customer_code = customerinfo.product_code
+                product_customer_name = customerinfo.product_name
             move.product_customer_code = product_customer_code
             move.product_customer_name = product_customer_name
             product = move.product_id.with_context(

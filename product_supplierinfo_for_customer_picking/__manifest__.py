@@ -9,6 +9,7 @@
     "summary": "This module makes the product customer code visible "
     "in the stock moves of a picking.",
     "license": "AGPL-3",
+    "maintainers": ["aleuffre", "renda-dev", "PicchiSeba"],
     "depends": ["stock", "product_supplierinfo_for_customer"],
     "data": [
         "views/stock_picking_view.xml",
