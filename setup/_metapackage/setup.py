@@ -65,6 +65,7 @@ setuptools.setup(
         'odoo-addon-stock_production_lot_traceability>=15.0dev,<15.1dev',
         'odoo-addon-stock_push_delay>=15.0dev,<15.1dev',
         'odoo-addon-stock_putaway_hook>=15.0dev,<15.1dev',
+        'odoo-addon-stock_receipt_lot_info>=15.0dev,<15.1dev',
         'odoo-addon-stock_reception_discrepancy_distribution>=15.0dev,<15.1dev',
         'odoo-addon-stock_remote_measure>=15.0dev,<15.1dev',
         'odoo-addon-stock_restrict_lot>=15.0dev,<15.1dev',
