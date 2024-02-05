@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-01-16 18:36+0000\n"
-"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
+"PO-Revision-Date: 2024-02-05 06:33+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgstr "<span class=\"o_form_label\">Campo per ricerca prodotti</span>"
 #. module: stock_picking_import_serial_number
 #: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.res_config_settings_view_form
 msgid "<span class=\"o_form_label\">File column index for package</span>"
-msgstr ""
+msgstr "<span class=\"o_form_label\">Colonna indice file per i colli</span>"
 
 #. module: stock_picking_import_serial_number
 #: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.res_config_settings_view_form
@@ -52,7 +52,7 @@ msgstr "Scegliere un file da importare..."
 #: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_res_config_settings__default_sn_package_column_index
 #: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz__sn_package_column_index
 msgid "Column index for Package"
-msgstr ""
+msgstr "Indice colonna per i colli"
 
 #. module: stock_picking_import_serial_number
 #: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_res_config_settings__default_sn_serial_column_index
@@ -159,7 +159,7 @@ msgstr "Seleziona il campo per cercare i prodotti"
 #. module: stock_picking_import_serial_number
 #: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.res_config_settings_view_form
 msgid "Select the index file column which contains the package info"
-msgstr ""
+msgstr "Selezionare l'indice colonna file che contiene le informazioni collo"
 
 #. module: stock_picking_import_serial_number
 #: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.res_config_settings_view_form
