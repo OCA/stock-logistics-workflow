@@ -24,11 +24,6 @@ msgid "Lot/Serial Best before Date"
 msgstr ""
 
 #. module: stock_receipt_lot_info
-#: model:ir.model.fields,field_description:stock_receipt_lot_info.field_stock_move_line__lot_expiration_date
-msgid "Lot/Serial Expiration Date"
-msgstr ""
-
-#. module: stock_receipt_lot_info
 #: model:ir.model.fields,field_description:stock_receipt_lot_info.field_stock_move_line__lot_removal_date
 msgid "Lot/Serial Removal Date"
 msgstr ""
