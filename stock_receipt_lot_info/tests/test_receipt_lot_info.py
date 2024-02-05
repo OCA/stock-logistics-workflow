@@ -1,4 +1,4 @@
-# Copyright 2022 ForgeFlow, S.L.
+# Copyright 2022-24 ForgeFlow, S.L.
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from datetime import timedelta
@@ -19,6 +19,7 @@ class ReceiptLotInfo(TransactionCase):
         cls.uom_unit = cls.env.ref("uom.product_uom_unit")
         cls.uom_dozen = cls.env.ref("uom.product_uom_dozen")
         cls.product = cls.env["product.product"]
+        cls.lot_model = cls.env["stock.lot"]
         cls.product_lot = cls.product.create(
             {
                 "name": "Product A",
@@ -28,7 +29,7 @@ class ReceiptLotInfo(TransactionCase):
             }
         )
 
-        cls.lot1 = cls.env["stock.lot"].create(
+        cls.lot1 = cls.lot_model.create(
             {
                 "name": "lot_1",
                 "product_id": cls.product_lot.id,
@@ -36,9 +37,9 @@ class ReceiptLotInfo(TransactionCase):
             }
         )
 
-    def test_in_1(self):
-        """This tests adds info about dates in move lines and check if
-        its set correctly.
+    def test_01_receipt_lot_info(self):
+        """Test that info about dates in move lines is passed correctly
+        to the new lot.
         """
         date = Datetime.now()
         receipt_type = self.env.ref("stock.picking_type_in")
@@ -67,7 +68,7 @@ class ReceiptLotInfo(TransactionCase):
             {
                 "qty_done": 1,
                 "lot_name": "lot1",
-                "lot_expiration_date": date + timedelta(days=15),
+                "expiration_date": date + timedelta(days=15),
                 "lot_use_date": date + timedelta(days=5),
                 "lot_removal_date": date + timedelta(days=20),
                 "lot_alert_date": date + timedelta(days=10),
@@ -76,7 +77,11 @@ class ReceiptLotInfo(TransactionCase):
         picking.button_validate()
         self.assertEqual(move1.state, "done")
 
-        self.assertEqual(move_line1.lot_expiration_date, date + timedelta(days=15))
-        self.assertEqual(move_line1.lot_use_date, date + timedelta(days=5))
-        self.assertEqual(move_line1.lot_removal_date, date + timedelta(days=20))
-        self.assertEqual(move_line1.lot_alert_date, date + timedelta(days=10))
+        resulting_lot = self.lot_model.search(
+            [("name", "=", "lot1"), ("product_id", "=", self.product_lot.id)]
+        )
+        self.assertTrue(resulting_lot)
+        self.assertEqual(resulting_lot.expiration_date, date + timedelta(days=15))
+        self.assertEqual(resulting_lot.use_date, date + timedelta(days=5))
+        self.assertEqual(resulting_lot.removal_date, date + timedelta(days=20))
+        self.assertEqual(resulting_lot.alert_date, date + timedelta(days=10))

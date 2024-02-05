@@ -6,7 +6,7 @@
     "summary": "Be able to introduce more info on lot/serial "
     "number while processing a receipt.",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.1.0",
     "category": "Warehouse Management",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "license": "LGPL-3",
