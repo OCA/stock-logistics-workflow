@@ -27,11 +27,6 @@ msgid "Lot/Serial Best before Date"
 msgstr "Lote/Serie Fecha de Caducidad"
 
 #. module: stock_receipt_lot_info
-#: model:ir.model.fields,field_description:stock_receipt_lot_info.field_stock_move_line__lot_expiration_date
-msgid "Lot/Serial Expiration Date"
-msgstr "Lote/Serie Fecha de Expiración"
-
-#. module: stock_receipt_lot_info
 #: model:ir.model.fields,field_description:stock_receipt_lot_info.field_stock_move_line__lot_removal_date
 msgid "Lot/Serial Removal Date"
 msgstr "Lote/Serie Fecha de Retirada"
@@ -40,3 +35,6 @@ msgstr "Lote/Serie Fecha de Retirada"
 #: model:ir.model,name:stock_receipt_lot_info.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
 msgstr "Movimientos de Producto (Línea de Movimiento de Existencias)"
+
+#~ msgid "Lot/Serial Expiration Date"
+#~ msgstr "Lote/Serie Fecha de Expiración"
