@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Moduon Team S.L.
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <record id="stock_picking_to_batch_form_inherit" model="ir.ui.view">
+        <field name="model">stock.picking.to.batch</field>
+        <field
+            name="inherit_id"
+            ref="stock_picking_batch.stock_picking_to_batch_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='is_create_draft']" position="after">
+                <field
+                    name="batch_by_group"
+                    attrs="{'invisible': [('mode', '=', 'existing')]}"
+                />
+            </xpath>
+            <xpath expr="//footer" position="before">
+                <group
+                    string="Create multiple batch picking grouped by..."
+                    attrs="{'invisible': ['|', ('batch_by_group', '=', False), ('mode', '=', 'existing')]}"
+                >
+                    <field name="group_field_ids" nolabel="1" colspan="2">
+                        <tree editable="bottom">
+                            <field name="sequence" widget="handle" />
+                            <field name="field_id" options="{'no_create': True}" />
+                        </tree>
+                    </field>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
