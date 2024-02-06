@@ -2,17 +2,12 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0)
 
 
-import json
-
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 
 class StockPickingToBatch(models.TransientModel):
-    """Create a stock.picking.batch from stock.picking"""
-
     _inherit = "stock.picking.to.batch"
-    _group_field_param = "stock_batch_picking.group_field"
 
     batch_by_group = fields.Boolean(
         string="Grouped by fields",
@@ -36,13 +31,20 @@ class StockPickingToBatch(models.TransientModel):
                 )
 
     def load_store_fields(self):
-        group_field_ids = (
-            self.env["ir.config_parameter"].sudo().get_param(self._group_field_param)
+        group_field_names = (
+            self.env["ir.config_parameter"]
+            .sudo()
+            .get_param("stock_picking_to_batch_group_fields.group_field")
         )
-        group_fields = self.env["ir.model.fields"].browse(
-            group_field_ids and json.loads(group_field_ids)
+        if not group_field_names:
+            return self.env["ir.model.fields"].browse()
+
+        return self.env["ir.model.fields"].search(
+            [
+                ("model", "=", "stock.picking"),
+                ("name", "in", group_field_names.split(",")),
+            ]
         )
-        return group_fields
 
     @api.model
     def default_get(self, fields):
@@ -87,9 +89,9 @@ class StockPickingToBatch(models.TransientModel):
                 ("state", "not in", ("cancel", "done")),
             ]
             batchs = self.create_multiple_batch(domain)
-            group_fields = [f.field_id.id for f in self.group_field_ids]
             self.env["ir.config_parameter"].sudo().set_param(
-                self._group_field_param, group_fields
+                "stock_picking_to_batch_group_fields.group_field",
+                ",".join([f.field_id.name for f in self.group_field_ids]),
             )
         else:
             super().attach_pickings()
@@ -112,8 +114,6 @@ class StockPickingToBatch(models.TransientModel):
 
 
 class StockBatchPickingCreatorGroupField(models.TransientModel):
-    """Make mass batch pickings from grouped fields"""
-
     _name = "stock.picking.batch.creator.group.field"
     _description = "Batch Picking Creator Group Field"
     _order = "sequence, id"
