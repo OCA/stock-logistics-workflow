@@ -1,6 +1,10 @@
 # Copyright 2020 Camptocamp (https://www.camptocamp.com)
 # Copyright 2020 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+import freezegun
+
+from odoo.fields import first
+from odoo.tests.common import Form, TransactionCase
 
 from .common import TestGroupByBase
 
@@ -260,6 +264,73 @@ class TestGroupBy(TestGroupByBase):
         self.assertEqual(len(ships), 1)
         self.assertEqual(len(picks), 1)
         self.assertFalse(so1.picking_ids - so2.picking_ids)
+
+    def test_delivery_multi_step_group_out_pick_op_merged(self):
+        """the warehouse uses pick + ship (with grouping enabled on ship but
+        and pick)
+        We don't propagate the original group on pick.
+
+        Moves for the same product are merged into the pick
+        """
+        self.warehouse.delivery_steps = "pick_ship"
+        rule = self.env["procurement.group"]._get_rule(
+            self.product,
+            self.warehouse.pick_type_id.default_location_dest_id,
+            {"warehouse_id": self.warehouse},
+        )
+        rule.propagate_carrier = False
+        rule.propagate_original_group = False
+        self.warehouse.pick_type_id.group_pickings = True
+        so1 = self._get_new_sale_order(carrier=self.carrier1)
+        so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
+        with freezegun.freeze_time("2019-01-01"):
+            # we need to ensure that the computed date_deadline on the
+            # stock.move is the same for the 2 SO since it is used to
+            # group the moves. In some deployment, the date_deadline is
+            # removed from the list of fields used to group the moves.
+            # to ensure that when planning the pickings to do (for example
+            # in conjunction with the stock_available_to_promise_release
+            # module), the date_deadline will not prevent the moves to be
+            # grouped since we expect that the planned work must be done
+            # at the same time.
+            so1.action_confirm()
+            so2.action_confirm()
+        ships = (so1.picking_ids | so2.picking_ids).filtered(
+            lambda p: p.picking_type_code == "outgoing"
+        )
+        self.assertEqual(len(ships), 1)
+        picks = (so1.picking_ids | so2.picking_ids).filtered(
+            lambda p: p.picking_type_code == "internal"
+        )
+        self.assertTrue(ships.move_ids.mapped("original_group_id"))
+        self.assertFalse(picks.move_ids.mapped("original_group_id"))
+        self.assertEqual(len(picks), 1)
+        self.assertEqual(len(picks.move_ids), 1)
+        self.assertEqual(len(ships.move_ids), 2)
+        self.assertEqual(picks.move_ids.move_dest_ids, ships.move_ids)
+        for move in ships.move_ids:
+            self.assertEqual(move.move_orig_ids, picks.move_ids)
+
+        # We reset the sold quantity to 0 to trigger the creation of a negative
+        # procurement that will at the end cancel the moves related to the SO.
+        so1.order_line.filtered(
+            lambda l: l.product_id == self.product
+        ).product_uom_qty = 0
+        ship_move_so1 = ships.move_ids.filtered(
+            lambda m: m.sale_line_id.order_id == so1
+        )
+        ship_move_so2 = ships.move_ids.filtered(
+            lambda m: m.sale_line_id.order_id == so2
+        )
+        self.assertEqual(ship_move_so1.state, "cancel")
+        self.assertEqual(ship_move_so2.state, "waiting")
+        self.assertEqual(picks.move_ids.state, "confirmed")
+        self.assertEqual(picks.move_ids.product_qty, 11)
+        so2.order_line.filtered(
+            lambda l: l.product_id == self.product
+        ).product_uom_qty = 0
+        self.assertEqual(ships.state, "cancel")
+        self.assertEqual(picks.state, "cancel")
 
     def test_delivery_multi_step_cancel_so1(self):
         """the warehouse uses pick + ship. Cancel SO1
