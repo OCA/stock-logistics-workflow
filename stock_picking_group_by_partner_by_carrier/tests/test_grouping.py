@@ -193,13 +193,10 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
         so1.action_confirm()
         so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
         so2.action_confirm()
-        self.assertEqual(len(so1.picking_ids), 3)
-        self.assertEqual(len(so2.picking_ids), 3)
-        self.assertEqual(so1.picking_ids, so2.picking_ids)
+        self.assertEqual(len(so1.picking_ids), 2)
+        self.assertEqual(len(so2.picking_ids), 2)
         # ship should be shared between so1 and so2
-        ships = (so1.picking_ids | so2.picking_ids).filtered(
-            lambda p: p.picking_type_code == "outgoing"
-        )
+        ships = so1.picking_ids & so2.picking_ids
         self.assertEqual(len(ships), 1)
         self.assertEqual(ships.picking_type_id, self.warehouse.out_type_id)
         # but not picks
@@ -207,29 +204,40 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
         # be regrouped but this is currently not supported by this module. You
         # need the stock_available_to_promise_release module to have this
         # feature
-        picks = so1.picking_ids - ships
+        picks = so1.picking_ids - ships | so2.picking_ids - ships
         self.assertEqual(len(picks), 2)
         self.assertEqual(picks.picking_type_id, self.warehouse.pick_type_id)
-        # the group is the same on the move lines and picking
-        self.assertEqual(len(so1.picking_ids.group_id), 1)
-        self.assertEqual(so1.picking_ids.group_id, so1.picking_ids.move_ids.group_id)
+
+        # the group is the same on the move lines in every picks and on the ships
+        for pick in picks | ships:
+            self.assertEqual(pick.group_id, pick.move_ids.group_id)
+
         # Add a line to so1
         self.assertEqual(len(ships.move_ids), 2)
         sale_form = Form(so1)
         self._set_line(sale_form, 4)
         sale_form.save()
         self.assertEqual(len(ships.move_ids), 3)
-        # the group is the same on the move lines and picking
-        self.assertEqual(len(so1.picking_ids.group_id), 1)
-        self.assertEqual(so1.picking_ids.group_id, so1.picking_ids.move_ids.group_id)
+        # the group is the same on the move lines in every picks and on the ships
+        ships = so1.picking_ids & so2.picking_ids
+        self.assertEqual(len(ships), 1)
+        picks = so1.picking_ids - ships | so2.picking_ids - ships
+        self.assertEqual(len(picks), 2)
+        for pick in picks | ships:
+            self.assertEqual(pick.group_id, pick.move_ids.group_id)
+
         # Add a line to so2
         self.assertEqual(len(ships.move_ids), 3)
         self._set_line(sale_form, 4)
         sale_form.save()
         self.assertEqual(len(ships.move_ids), 4)
-        # the group is the same on the move lines and picking
-        self.assertEqual(len(so2.picking_ids.group_id), 1)
-        self.assertEqual(so1.picking_ids.group_id, so2.picking_ids.move_ids.group_id)
+        # the group is the same on the move lines in every picks and on the ships
+        ships = so1.picking_ids & so2.picking_ids
+        self.assertEqual(len(ships), 1)
+        picks = so1.picking_ids - ships | so2.picking_ids - ships
+        self.assertEqual(len(picks), 2)
+        for pick in picks | ships:
+            self.assertEqual(pick.group_id, pick.move_ids.group_id)
 
     def test_delivery_multi_step_group_pick(self):
         """the warehouse uses pick + ship (with grouping enabled on pick)

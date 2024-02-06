@@ -127,15 +127,10 @@ class StockPicking(models.Model):
             return False
         if self.picking_type_id.code != "outgoing":
             return False
-        group_pickings = self.move_ids.group_id.picking_ids.filtered(
-            # Do no longer modify a printed or done transfer: they are
-            # started and their group is now fixed. It prevents keeping
-            # old, done sales orders in new groups forever
-            lambda picking: not (picking.printed or picking.state == "done")
-        )
-        moves = group_pickings.move_ids
-        base_group = self.group_id
 
+        moves = self.move_ids
+        moves._keep_original_group()
+        base_group = self.group_id
         # If we have moves of different procurement groups, it means moves
         # have been merged in the same picking. In this case a new
         # procurement group is required
@@ -144,7 +139,7 @@ class StockPicking(models.Model):
             new_group = base_group.copy(
                 self._prepare_merge_procurement_group_values(moves.original_group_id)
             )
-            group_pickings.move_ids.group_id = new_group
+            moves.group_id = new_group
             return True
 
         new_moves = moves.filtered(lambda move: move.group_id != base_group)
@@ -164,7 +159,7 @@ class StockPicking(models.Model):
                         moves.original_group_id
                     )
                 )
-                group_pickings.move_ids.group_id = new_group
+                self.move_ids.group_id = new_group
                 return True
 
             base_group.write(
