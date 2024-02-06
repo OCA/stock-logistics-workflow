@@ -129,7 +129,6 @@ class StockPicking(models.Model):
             return False
 
         moves = self.move_ids
-        moves._keep_original_group()
         base_group = self.group_id
         # If we have moves of different procurement groups, it means moves
         # have been merged in the same picking. In this case a new
