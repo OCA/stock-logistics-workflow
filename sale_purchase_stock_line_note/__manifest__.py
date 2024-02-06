@@ -16,7 +16,11 @@
         "sale_purchase_stock",
     ],
     "data": [
+        "security/security.xml",
+        "report/report_stockpicking_operations.xml",
         "views/purchase_order.xml",
+        "views/res_config_settings_views.xml",
+        "views/stock_move_line_views.xml",
         "views/stock_picking.xml",
     ],
 }
