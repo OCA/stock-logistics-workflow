@@ -15,6 +15,7 @@
     "data": [
         "views/res_partner.xml",
         "views/stock_picking_type.xml",
+        "views/stock_rule.xml",
         "views/stock_warehouse.xml",
         "report/report_delivery_slip.xml",
         "wizards/stock_picking_merge_wiz.xml",
