@@ -27,6 +27,12 @@ class StockMove(models.Model):
         # merged.
         return super()._prepare_merge_moves_distinct_fields() + ["original_group_id"]
 
+    def _keep_original_group(self):
+        """Keep the original group on the move when creating a joint group."""
+        for move in self:
+            if move.group_id and not move.original_group_id:
+                move.original_group_id = move.group_id
+
     def _assign_picking(self):
         result = super(
             StockMove, self.with_context(picking_no_overwrite_partner_origin=1)
