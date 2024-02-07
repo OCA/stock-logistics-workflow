@@ -8,5 +8,5 @@ class StockPicking(models.Model):
     # this is a technical field, making possible to search a picking by any restrict lot
     # defined on its line, from the web search bar.
     restrict_lot_id = fields.Many2one(
-        related="move_ids.restrict_lot_id", string="Restrict Lot"
+        related="move_ids.restrict_lot_id", string="Restrict Lot/Serial Number"
     )
