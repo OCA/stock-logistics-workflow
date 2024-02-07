@@ -9,11 +9,6 @@ from odoo import api, fields, models
 class StockMoveLine(models.Model):
     _inherit = "stock.move.line"
 
-    expiration_date = fields.Datetime(
-        required="[('parent.use_expiration_date', '=', True),"
-        " ('parent.picking_code', '=', 'incoming')]"
-    )
-
     @api.depends("product_id", "picking_type_use_create_lots", "lot_id.expiration_date")
     def _compute_expiration_date(self):
         expiration_dtt_move_line_map = {}
