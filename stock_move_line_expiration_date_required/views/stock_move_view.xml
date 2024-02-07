@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_move_nosuggest_operations" model="ir.ui.view">
+        <field name="name">stock.move.operations.nosuggest.form</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_stock_move_nosuggest_operations" />
+        <field name="arch" type="xml">
+            <xpath expr="//form/*[1]" position="before">
+                <field name="all_expiry_dates_set" invisible="1" />
+                <div
+                    class="alert alert-warning"
+                    role="alert"
+                    attrs="{'invisible': [('all_expiry_dates_set', '=', True)]}"
+                >
+                    You won't be able to confirm the parent picking until all Expiry dates are set
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
