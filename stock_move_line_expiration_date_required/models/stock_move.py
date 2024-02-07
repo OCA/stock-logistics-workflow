@@ -9,6 +9,17 @@ from odoo import fields, models
 class StockMove(models.Model):
     _inherit = "stock.move"
 
+    all_expiry_dates_set = fields.Boolean(
+        compute="_compute_all_expiry_dates_set",
+    )
+
+    def _compute_all_expiry_dates_set(self):
+        """Check if all move lines have an expiration date set."""
+        for record in self:
+            record.all_expiry_dates_set = not record.use_expiration_date or all(
+                record.move_line_ids.filtered("qty_done").mapped("expiration_date")
+            )
+
     def _generate_serial_move_line_commands(self, lot_names, origin_move_line=None):
         """Override to add a default `expiration_date` into the move lines values."""
         move_lines_commands = super()._generate_serial_move_line_commands(
