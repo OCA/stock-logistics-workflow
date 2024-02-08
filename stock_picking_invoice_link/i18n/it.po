@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-15 11:08+0000\n"
-"PO-Revision-Date: 2023-12-26 14:36+0000\n"
+"PO-Revision-Date: 2024-02-08 10:43+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -44,13 +44,13 @@ msgstr "Fattura"
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move__invoice_line_ids
 msgid "Invoice Line"
-msgstr "Riga Fattura"
+msgstr "Riga fattura"
 
 #. module: stock_picking_invoice_link
 #: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_move_form
 #: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_move_picking_form
 msgid "Invoice Lines"
-msgstr "Righe Fattura"
+msgstr "Righe fattura"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking__invoice_ids
