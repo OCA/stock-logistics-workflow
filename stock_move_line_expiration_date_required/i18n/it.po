@@ -17,9 +17,9 @@ msgstr ""
 "X-Generator: Weblate 4.17\n"
 
 #. module: stock_move_line_expiration_date_required
-#: model:ir.model.fields,field_description:stock_move_line_expiration_date_required.field_stock_move_line__expiration_date
-msgid "Expiration Date"
-msgstr "Data di scadenza"
+#: model:ir.model.fields,field_description:stock_move_line_expiration_date_required.field_stock_move__all_expiry_dates_set
+msgid "All Expiry Dates Set"
+msgstr ""
 
 #. module: stock_move_line_expiration_date_required
 #: model:ir.model,name:stock_move_line_expiration_date_required.model_stock_move_line
@@ -39,15 +39,23 @@ msgid "The following move lines have no expiration date: %s"
 msgstr "Le seguenti righe di movimento non hanno data di scadenza: %s"
 
 #. module: stock_move_line_expiration_date_required
-#: model:ir.model.fields,help:stock_move_line_expiration_date_required.field_stock_move_line__expiration_date
-msgid ""
-"This is the date on which the goods with this Serial Number may become "
-"dangerous and must not be consumed."
-msgstr ""
-"Questa è la data nella quale la merce con questo numero di serie può "
-"diventare pericolosa e non deve essere consumata."
-
-#. module: stock_move_line_expiration_date_required
 #: model:ir.model,name:stock_move_line_expiration_date_required.model_stock_picking
 msgid "Transfer"
 msgstr "Trasferimento"
+
+#. module: stock_move_line_expiration_date_required
+#: model_terms:ir.ui.view,arch_db:stock_move_line_expiration_date_required.view_stock_move_nosuggest_operations
+msgid ""
+"You won't be able to confirm the parent picking until all Expiry dates are "
+"set"
+msgstr ""
+
+#~ msgid "Expiration Date"
+#~ msgstr "Data di scadenza"
+
+#~ msgid ""
+#~ "This is the date on which the goods with this Serial Number may become "
+#~ "dangerous and must not be consumed."
+#~ msgstr ""
+#~ "Questa è la data nella quale la merce con questo numero di serie può "
+#~ "diventare pericolosa e non deve essere consumata."
