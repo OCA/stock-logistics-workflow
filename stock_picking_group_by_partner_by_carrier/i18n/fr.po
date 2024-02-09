@@ -158,6 +158,20 @@ msgstr "Fusionner les transferts"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #. odoo-python
+#: code:addons/stock_picking_group_by_partner_by_carrier/models/stock_picking.py:0
+#, python-format
+msgid "Merged procurement"
+msgstr ""
+
+#. module: stock_picking_group_by_partner_by_carrier
+#. odoo-python
+#: code:addons/stock_picking_group_by_partner_by_carrier/models/stock_picking.py:0
+#, python-format
+msgid "Merged procurement for partners: %(partners_name)s"
+msgstr ""
+
+#. module: stock_picking_group_by_partner_by_carrier
+#. odoo-python
 #: code:addons/stock_picking_group_by_partner_by_carrier/wizards/stock_picking_merge_wiz.py:0
 #, python-format
 msgid "No picking can be merged!"
