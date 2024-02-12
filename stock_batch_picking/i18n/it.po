@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-23 11:56+0000\n"
-"PO-Revision-Date: 2023-05-24 10:10+0000\n"
+"PO-Revision-Date: 2024-02-12 10:42+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -188,7 +188,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking___last_update
 #: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_creator___last_update
 msgid "Last Modified on"
-msgstr "Ultima Modifica il"
+msgstr "Ultima modifica il"
 
 #. module: stock_batch_picking
 #: model:ir.model.fields,field_description:stock_batch_picking.field_stock_batch_picking_creator_write_uid
