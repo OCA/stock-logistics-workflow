@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-01-24 17:34+0000\n"
+"PO-Revision-Date: 2024-02-12 10:36+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -19,7 +19,7 @@ msgstr ""
 #. module: stock_move_line_expiration_date_required
 #: model:ir.model.fields,field_description:stock_move_line_expiration_date_required.field_stock_move__all_expiry_dates_set
 msgid "All Expiry Dates Set"
-msgstr ""
+msgstr "Tutte le date scadenza impostate"
 
 #. module: stock_move_line_expiration_date_required
 #: model:ir.model,name:stock_move_line_expiration_date_required.model_stock_move_line
@@ -49,6 +49,8 @@ msgid ""
 "You won't be able to confirm the parent picking until all Expiry dates are "
 "set"
 msgstr ""
+"Non sarà possibile confermare il prelievo padre finchè non saranno impostate "
+"tutte le data di scadenza"
 
 #~ msgid "Expiration Date"
 #~ msgstr "Data di scadenza"
