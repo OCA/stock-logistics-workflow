@@ -1,0 +1,1 @@
+-   The 'qty_at_date_widget' widget that displays the stock on the order line should display a different stock depending on whether the Use warehouse check is active or not.

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Moduon Team S.L.
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <record
+        id="view_picking_type_form_inherit_stock_customer_deposit"
+        model="ir.ui.view"
+    >
+        <field name="name">Operation Types Customer Deposit</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='show_reserved']" position="after">
+                <field name="assign_owner" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
