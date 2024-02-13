@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_stock_picking_note_type_tree" model="ir.ui.view">
+        <field name="name">stock.picking.note.type.tree</field>
+        <field name="model">stock.picking.note.type</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence" widget="handle" readonly="1" />
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_stock_picking_note_type_form" model="ir.ui.view">
+        <field name="name">stock.picking.note.type.form</field>
+        <field name="model">stock.picking.note.type</field>
+        <field name="arch" type="xml">
+            <form string="Picking Note Type">
+                <group>
+                    <field name="name" />
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="stock_picking_note_types_act_window">
+        <field name="name">Stock Picking Note Types</field>
+        <field name="res_model">stock.picking.note.type</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+</odoo>
