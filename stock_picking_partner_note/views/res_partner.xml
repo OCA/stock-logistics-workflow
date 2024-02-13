@@ -14,7 +14,6 @@
                         name="stock_picking_note_ids"
                         widget="one2many_list"
                         nolabel="1"
-                        colspan="2"
                         mode="tree"
                     >
                         <tree>

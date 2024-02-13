@@ -6,7 +6,7 @@ from odoo.tests import Form, common
 from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
 
 
-class StockPickingPartnerNote(common.TransactionCase):
+class StockPickingPartnerNote(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
