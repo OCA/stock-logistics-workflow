@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Moduon Team S.L.
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <record id="view_warehouse_inherit" model="ir.ui.view">
+        <field name="name">Warehouse Customer Deposit</field>
+        <field name="model">stock.warehouse</field>
+        <field name="inherit_id" ref="stock.view_warehouse" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="attributes">
+                <attribute
+                    name="groups"
+                >stock.group_adv_location,stock.group_stock_multi_warehouses,stock.group_tracking_owner</attribute>
+            </xpath>
+            <xpath expr="//group[@name='group_resupply']" position="after">
+                <group
+                    name="customer_deposits"
+                    string="Customer Deposits"
+                    groups="stock.group_tracking_owner"
+                >
+                    <field name="use_customer_deposits" />
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='in_type_id']/parent::group" position="inside">
+                <field
+                    name="customer_deposit_type_id"
+                    readonly="1"
+                    attrs="{'invisible': ['|', ('customer_deposit_type_id', '=', False), ('use_customer_deposits', '=', False)]}"
+                    groups="stock.group_tracking_owner"
+                />
+                <!-- <field
+                    name="put_customer_deposit_type_id"
+                    readonly="1"
+                    attrs="{'invisible': ['|', ('put_customer_deposit_type_id', '=', False), ('use_customer_deposits', '=', False)]}"
+                    groups="stock.group_tracking_owner"
+                /> -->
+            </xpath>
+        </field>
+    </record>
+</odoo>
