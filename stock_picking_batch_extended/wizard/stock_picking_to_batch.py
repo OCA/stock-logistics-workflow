@@ -151,6 +151,7 @@ class StockPickingToBatch(models.TransientModel):
             )
         return self.action_view_batch_picking(batchs)
 
+    @api.model
     def action_view_batch_picking(self, batch_pickings):
         if len(batch_pickings) > 1:
             action = self.env["ir.actions.act_window"]._for_xml_id(
