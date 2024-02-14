@@ -3,7 +3,7 @@
 {
     "name": "Sale Purchase Stock Line Note",
     "summary": "Propagate sale line note to stock move and purchase",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.1.0",
     "development_status": "Beta",
     "category": "Hidden",
     "website": "https://github.com/OCA/stock-logistics-workflow",
