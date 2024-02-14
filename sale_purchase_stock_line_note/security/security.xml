@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="group_show_line_note_picking_report" model="res.groups">
+        <field name="name">Display line notes in picking operations report</field>
+        <field name="category_id" ref="base.module_category_hidden" />
+    </record>
+</odoo>

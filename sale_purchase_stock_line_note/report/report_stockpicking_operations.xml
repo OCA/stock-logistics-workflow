@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_picking" inherit_id="stock.report_picking">
+        <xpath expr="//thead/tr/th[@name='th_product']" position="after">
+            <th
+                groups="sale_purchase_stock_line_note.group_show_line_note_picking_report"
+            >
+                <strong>Sale Note</strong>
+            </th>
+        </xpath>
+        <xpath
+            expr="//tbody/t/t/tr/td/span[@t-field='ml.product_id.display_name']/.."
+            position="after"
+        >
+            <td
+                groups="sale_purchase_stock_line_note.group_show_line_note_picking_report"
+            >
+                <span t-field="move.sale_note" />
+            </td>
+        </xpath>
+    </template>
+</odoo>
