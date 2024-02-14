@@ -6,23 +6,25 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2024-02-15 02:25+0000\n"
+"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: sale_purchase_stock_line_note
 #: model_terms:ir.ui.view,arch_db:sale_purchase_stock_line_note.report_picking
 msgid "<strong>Sale Note</strong>"
-msgstr ""
+msgstr "<strong>Note vendite</strong>"
 
 #. module: sale_purchase_stock_line_note
 #: model:ir.model,name:sale_purchase_stock_line_note.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Impostazioni configurazione"
 
 #. module: sale_purchase_stock_line_note
 #: model:ir.model.fields,field_description:sale_purchase_stock_line_note.field_purchase_order_line__display_name
@@ -32,13 +34,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_purchase_stock_line_note.field_stock_move_line__display_name
 #: model:ir.model.fields,field_description:sale_purchase_stock_line_note.field_stock_rule__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: sale_purchase_stock_line_note
 #: model:ir.model.fields,field_description:sale_purchase_stock_line_note.field_res_config_settings__group_show_line_note_picking_report
 #: model:res.groups,name:sale_purchase_stock_line_note.group_show_line_note_picking_report
 msgid "Display line notes in picking operations report"
-msgstr ""
+msgstr "Mostra note sulla riga nella stampa operazioni di prelievo"
 
 #. module: sale_purchase_stock_line_note
 #: model:ir.model.fields,field_description:sale_purchase_stock_line_note.field_purchase_order_line__id
@@ -48,7 +50,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_purchase_stock_line_note.field_stock_move_line__id
 #: model:ir.model.fields,field_description:sale_purchase_stock_line_note.field_stock_rule__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: sale_purchase_stock_line_note
 #: model:ir.model.fields,field_description:sale_purchase_stock_line_note.field_purchase_order_line____last_update
@@ -58,36 +60,36 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_purchase_stock_line_note.field_stock_move_line____last_update
 #: model:ir.model.fields,field_description:sale_purchase_stock_line_note.field_stock_rule____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: sale_purchase_stock_line_note
 #: model:ir.model,name:sale_purchase_stock_line_note.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
-msgstr ""
+msgstr "Movimenti prodotto (riga movimento di magazzino)"
 
 #. module: sale_purchase_stock_line_note
 #: model:ir.model,name:sale_purchase_stock_line_note.model_purchase_order_line
 msgid "Purchase Order Line"
-msgstr ""
+msgstr "Riga ordine di acquisto"
 
 #. module: sale_purchase_stock_line_note
 #: model:ir.model.fields,field_description:sale_purchase_stock_line_note.field_purchase_order_line__sale_note
 #: model:ir.model.fields,field_description:sale_purchase_stock_line_note.field_stock_move__sale_note
 #: model:ir.model.fields,field_description:sale_purchase_stock_line_note.field_stock_move_line__sale_note
 msgid "Sale Note"
-msgstr ""
+msgstr "Note vendite"
 
 #. module: sale_purchase_stock_line_note
 #: model:ir.model,name:sale_purchase_stock_line_note.model_sale_order_line
 msgid "Sales Order Line"
-msgstr ""
+msgstr "Riga ordine di vendita"
 
 #. module: sale_purchase_stock_line_note
 #: model:ir.model,name:sale_purchase_stock_line_note.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimento di magazzino"
 
 #. module: sale_purchase_stock_line_note
 #: model:ir.model,name:sale_purchase_stock_line_note.model_stock_rule
 msgid "Stock Rule"
-msgstr ""
+msgstr "Regola di giacenza"
