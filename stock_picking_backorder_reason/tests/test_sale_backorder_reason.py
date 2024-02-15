@@ -58,3 +58,15 @@ class TestSalePickingBackorder(TestPickingBackorder, TransactionCase):
         self.sale_backorder = "create"
 
         self._check_backorder_behavior()
+
+    def test_sale_picking_backorder_partner_cancel_transparent(self):
+        """
+        In this case, we test a partner that has his backorder policy
+        set to 'Cancel', the picking type activated for backorder reason
+        and the transparent action in case of cancel activated too.
+        """
+        self.picking.picking_type_id.backorder_reason_transparent_cancel = True
+        self.partner.sale_reason_backorder_strategy = "cancel"
+        result = self.picking.button_validate()
+        self.assertTrue(result is True)
+        self.assertFalse(self.picking.backorder_ids)

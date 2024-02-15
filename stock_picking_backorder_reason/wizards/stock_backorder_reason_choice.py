@@ -68,23 +68,28 @@ class StockBackorderReasonChoice(models.TransientModel):
             # Set the reason on each picking
             pickings.message_post(body=wizard._get_message())
             keep_backorder_pickings = self.env["stock.picking"].browse()
-            if wizard.backorder_action_to_do == "create":
-                keep_backorder_pickings = pickings
-            elif wizard.backorder_action_to_do == "use_partner_option":
-                keep_backorder_pickings = pickings.filtered(
-                    lambda picking: picking.backorder_reason_strategy == "create"
-                )
-            elif not wizard.backorder_action_to_do:
-                # Let do the normal way
-                return pickings.with_context(
-                    skip_backorder_reason=True
-                )._pre_action_done_hook()
-            pickings_to_cancel = pickings - keep_backorder_pickings
-            if keep_backorder_pickings:
-                backorder_wizard = confirmation_obj.create(
-                    wizard._prepare_backorder_confirmation(keep_backorder_pickings)
-                )
-                backorder_wizard.with_context(skip_backorder_reason=True).process()
+            if all(
+                picking.is_transparent_backorder_cancel for picking in self.picking_ids
+            ):
+                pickings_to_cancel = self.picking_ids
+            else:
+                if wizard.backorder_action_to_do == "create":
+                    keep_backorder_pickings = pickings
+                elif wizard.backorder_action_to_do == "use_partner_option":
+                    keep_backorder_pickings = pickings.filtered(
+                        lambda picking: picking.backorder_reason_strategy == "create"
+                    )
+                elif not wizard.backorder_action_to_do:
+                    # Let do the normal way
+                    return pickings.with_context(
+                        skip_backorder_reason=True
+                    )._pre_action_done_hook()
+                pickings_to_cancel = pickings - keep_backorder_pickings
+                if keep_backorder_pickings:
+                    backorder_wizard = confirmation_obj.create(
+                        wizard._prepare_backorder_confirmation(keep_backorder_pickings)
+                    )
+                    backorder_wizard.with_context(skip_backorder_reason=True).process()
 
             if pickings_to_cancel:
                 backorder_wizard = confirmation_obj.with_context(

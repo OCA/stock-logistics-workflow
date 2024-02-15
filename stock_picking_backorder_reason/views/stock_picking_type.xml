@@ -24,6 +24,7 @@
                         name="backorder_reason_purchase"
                         attrs="{'invisible': [('backorder_reason', '=', False)]}"
                     />
+                    <field name="backorder_reason_transparent_cancel" />
                 </group>
             </group>
         </field>

@@ -27,6 +27,10 @@ class StockPickingType(models.Model):
         help="Check this in order to consider pickings in this type as "
         "Purchase ones for backorder reason cancellation.",
     )
+    backorder_reason_transparent_cancel = fields.Boolean(
+        help="If this is checked and if the partner strategy is 'Cancel', "
+        "nothing will be shown to the user and the backorder will be cancelled."
+    )
 
     @api.depends("backorder_reason")
     def _compute_backorder_reason_sale(self):
