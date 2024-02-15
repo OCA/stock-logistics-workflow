@@ -275,6 +275,11 @@ msgid "Product"
 msgstr ""
 
 #. module: stock_picking_batch_extended
+#: model:ir.model,name:stock_picking_batch_extended.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
 msgid "QTY"
 msgstr ""
