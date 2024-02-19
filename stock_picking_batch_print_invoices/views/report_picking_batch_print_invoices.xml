@@ -9,7 +9,7 @@
         <xpath expr="//t[@name='print_pickings']" position="after">
             <t
                 name="print_invoices"
-                t-foreach="set(picking.sale_id.invoice_ids.filtered(lambda p: p.partner_id == partner))"
+                t-foreach="set(doc.picking_ids.filtered(lambda p: p.partner_id == partner).sale_id.invoice_ids)"
                 t-as="invoice"
             >
                 <t
