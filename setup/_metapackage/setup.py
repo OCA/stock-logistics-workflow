@@ -12,6 +12,8 @@ setuptools.setup(
         'odoo13-addon-delivery_total_weight_from_packaging',
         'odoo13-addon-procurement_auto_create_group_carrier',
         'odoo13-addon-product_cost_price_avco_sync',
+        'odoo13-addon-product_cost_price_avco_sync_mrp',
+        'odoo13-addon-product_cost_price_avco_sync_mrp_subcontracting',
         'odoo13-addon-product_supplierinfo_for_customer_picking',
         'odoo13-addon-purchase_stock_picking_invoice_link',
         'odoo13-addon-sale_line_returned_qty',

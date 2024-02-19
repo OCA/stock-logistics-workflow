@@ -3,7 +3,7 @@
 {
     "name": "Product cost price avco sync for mrp",
     "summary": "Set product cost price from updated moves that implies productions",
-    "version": "13.0.1.0.0",
+    "version": "13.0.1.0.1",
     "development_status": "Production/Stable",
     "category": "Stock",
     "website": "https://github.com/OCA/stock-logistics-workflow",
