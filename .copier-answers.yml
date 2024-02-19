@@ -1,5 +1,5 @@
 # Do NOT update manually; changes here will be overwritten by Copier
-_commit: v1.15.0
+_commit: v1.17.1
 _src_path: https://github.com/OCA/oca-addons-repo-template.git
 ci: GitHub
 dependency_installation_mode: PIP
@@ -15,7 +15,8 @@ odoo_test_flavor: Both
 odoo_version: 13.0
 org_name: Odoo Community Association (OCA)
 org_slug: OCA
-rebel_module_groups: []
+rebel_module_groups:
+- procurement_auto_create_group_carrier,stock_picking_group_by_partner_by_carrier,stock_picking_group_by_partner_by_carrier_by_date
 repo_description: This project aims to deal with modules related to manage logistic
     flows.
 repo_name: Odoo Stock Logistic Workflow
