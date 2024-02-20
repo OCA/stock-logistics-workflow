@@ -2,12 +2,12 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 import warnings
 from collections import defaultdict
-from datetime import time
+from datetime import datetime, time, timedelta
 
 from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
-from odoo.tools.misc import format_time
+from odoo.exceptions import UserError, ValidationError
 from odoo.tools.date_utils import date_range
+from odoo.tools.misc import format_time
 
 from odoo.addons.partner_tz.tools import tz_utils
 
@@ -81,7 +81,9 @@ class ResPartner(models.Model):
         :return: Boolean
         """
         self.ensure_one()
-        if self.delivery_time_preference == "workdays":
+        if self.delivery_time_preference == "anytime":
+            return True
+        elif self.delivery_time_preference == "workdays":
             if date_time.weekday() > 4:
                 return False
             return True
@@ -196,7 +198,7 @@ class ResPartner(models.Model):
         if not from_date:
             from_date = datetime.now()
         if self.is_in_delivery_window(from_date):
-            return from_date
+            return fields.Datetime.to_datetime(from_date)
         if timedelta_days is None:
             timedelta_days = 7
         if self.delivery_time_preference == "workdays":
