@@ -1,0 +1,37 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_rule_reserve_max_quantity
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_rule_reserve_max_quantity
+#: model:ir.model.fields,help:stock_rule_reserve_max_quantity.field_stock_rule__reserve_max_quantity
+msgid ""
+"If checked, the system will reserve the maximum quantity available for the "
+"moves that have this rule linked, when the quantity available exceeds the "
+"quantity demanded"
+msgstr ""
+
+#. module: stock_rule_reserve_max_quantity
+#: model:ir.model.fields,field_description:stock_rule_reserve_max_quantity.field_stock_rule__reserve_max_quantity
+msgid "Reserve Max Quantity"
+msgstr ""
+
+#. module: stock_rule_reserve_max_quantity
+#: model:ir.model,name:stock_rule_reserve_max_quantity.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_rule_reserve_max_quantity
+#: model:ir.model,name:stock_rule_reserve_max_quantity.model_stock_rule
+msgid "Stock Rule"
+msgstr ""
