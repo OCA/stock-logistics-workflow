@@ -195,8 +195,7 @@ class ResPartner(models.Model):
         :return: Datetime object
         """
         self.ensure_one()
-        if not from_date:
-            from_date = datetime.now()
+        from_date = from_date or datetime.now()
         if self.is_in_delivery_window(from_date):
             return fields.Datetime.to_datetime(from_date)
         if timedelta_days is None:
@@ -240,11 +239,10 @@ class ResPartner(models.Model):
         :return: List of Datetime objects
         """
         res = list()
-        for this_datetime in date_range(from_datetime, to_datetime, timedelta(days=1)):
+        dts = date_range(from_datetime, to_datetime, timedelta(days=1))
+        weekdays = {x.name: x for x in self.env["time.weekday"].search([("name", "in", dts)])}
+        for this_datetime, this_weekday in weekdays.items():
             this_weekday_number = this_datetime.weekday()
-            this_weekday = self.env["time.weekday"].search(
-                [("name", "=", this_weekday_number)], limit=1
-            )
             # Sort by start time to ensure the window we'll find will be the first
             # one for the weekday
             this_weekday_windows = self.delivery_time_window_ids.filtered(
