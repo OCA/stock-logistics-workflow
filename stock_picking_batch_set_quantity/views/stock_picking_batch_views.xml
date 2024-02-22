@@ -15,14 +15,11 @@
             <xpath expr="//field[@name='reserved_availability']" position="after">
                 <button
                     name="action_set_quantities_to_reservation"
-                    attrs="{'invisible': [
-                            '|',
-                                ('parent.state', '!=', 'in_progress'),
-                                ('parent.show_validate', '=', False)]}"
+                    attrs="{'invisible': ['|', ('state', 'in', ['done', 'cancel']), ('quantity_done', '!=', 0)]}"
                     title="Set quantities"
                     type="object"
                     groups="stock.group_stock_user"
-                    icon="fa-arrow-right"
+                    icon="fa-2x fa-arrow-right"
                 />
             </xpath>
         </field>
@@ -35,14 +32,11 @@
             <xpath expr="//field[@name='product_uom_qty']" position="after">
                 <button
                     name="action_set_quantities_to_reservation"
-                    attrs="{'invisible': [
-                            '|',
-                                ('parent.state', '!=', 'in_progress'),
-                                ('parent.show_validate', '=', False)]}"
+                    attrs="{'invisible': ['|', ('state', 'in', ['done', 'cancel']), ('qty_done', '!=', 0)]}"
                     title="Set quantities"
                     type="object"
                     groups="stock.group_stock_user"
-                    icon="fa-arrow-right"
+                    icon="fa-2x fa-arrow-right"
                 />
             </xpath>
             <xpath expr="//field[@name='qty_done']" position="after">
