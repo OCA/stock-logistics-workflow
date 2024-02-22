@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_picking_kit" model="ir.ui.view">
+        <field name="model">stock.picking.kit.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group colspan="2">
+                    <field name="picking_id" readonly="True" />
+                    <field name="company_id" invisible="True" />
+                    <field
+                        name="product_id"
+                        domain="[('id', 'in', product_selectable_ids)]"
+                    />
+                    <field name="product_selectable_ids" invisible="True" />
+                    <field name="quantity" />
+                </group>
+                <field name="line_ids">
+                    <tree editable="bottom" create="0">
+                        <field
+                            name="lot_name"
+                            default_focus="1"
+                            attrs="{'readonly': [('tracking', '=', 'none')]}"
+                        />
+                        <field name="number" readonly="True" />
+                        <field
+                            name="component_id"
+                            readonly="True"
+                            decoration-bf="is_start_pack"
+                        />
+                        <field name="qty_done" readonly="True" />
+                        <field name="is_start_pack" invisible="True" />
+                        <field name="tracking" invisible="True" />
+                    </tree>
+                </field>
+
+                <footer>
+                <button
+                        name="action_apply"
+                        class="btn btn-primary"
+                        string="Done"
+                        type="object"
+                    />
+                or
+                <button special="cancel" class="btn btn-secondary" string="Cancel" />
+            </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_stock_picking_kit_wizard" model="ir.actions.act_window">
+        <field name="name">Kit Picking Wizard</field>
+        <field name="res_model">stock.picking.kit.wizard</field>
+        <field name="view_id" ref="view_stock_picking_kit" />
+        <field name="target">new</field>
+    </record>
+</odoo>
