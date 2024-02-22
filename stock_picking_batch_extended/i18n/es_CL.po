@@ -129,6 +129,11 @@ msgid "Default Picker"
 msgstr "Liquidador predeterminado"
 
 #. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
+msgid "Detailed op."
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__display_name
 msgid "Display Name"
 msgstr "Nombre a Mostrar"
@@ -227,6 +232,11 @@ msgstr "Notas"
 #, python-format
 msgid "Nothing to print."
 msgstr "Nada que imprimir."
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
+msgid "Operations"
+msgstr "Operaciones"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__user_id
@@ -447,9 +457,6 @@ msgstr ""
 
 #~ msgid "List of picking managed by this batch."
 #~ msgstr "Lista de picking gestionada por este lote."
-
-#~ msgid "Operations"
-#~ msgstr "Operaciones"
 
 #~ msgid "Order Date"
 #~ msgstr "Fecha de Pedido"

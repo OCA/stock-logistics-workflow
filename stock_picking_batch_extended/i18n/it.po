@@ -133,6 +133,11 @@ msgid "Default Picker"
 msgstr "Prelevatore predefinito"
 
 #. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
+msgid "Detailed op."
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__display_name
 msgid "Display Name"
 msgstr "Nome visualizzato"
@@ -230,6 +235,11 @@ msgstr "Note"
 #, python-format
 msgid "Nothing to print."
 msgstr "Niente da stampare."
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
+msgid "Operations"
+msgstr "Operazioni"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__user_id
@@ -413,9 +423,6 @@ msgstr "utente a cui è assegnato il gruppo prelievo in modo predefinito"
 
 #~ msgid "Group By..."
 #~ msgstr "Raggruppa Per..."
-
-#~ msgid "Operations"
-#~ msgstr "Operazioni"
 
 #~ msgid "State"
 #~ msgstr "Stato"

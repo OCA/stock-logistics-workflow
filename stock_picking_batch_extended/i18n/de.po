@@ -136,6 +136,11 @@ msgid "Default Picker"
 msgstr "Vorgabe-Kommissionierer"
 
 #. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
+msgid "Detailed op."
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__display_name
 msgid "Display Name"
 msgstr "Angezeigter Name"
@@ -233,6 +238,11 @@ msgstr "Notizen"
 #, python-format
 msgid "Nothing to print."
 msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
+msgid "Operations"
+msgstr "Vorgänge"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__user_id
@@ -443,9 +453,6 @@ msgstr "Der Anwender, dem die Stapel per Vorgabe zugeordnet werden"
 
 #~ msgid "List of picking managed by this batch."
 #~ msgstr "Liste der Kommissionierungen, die in diesem Stapel geführt werden."
-
-#~ msgid "Operations"
-#~ msgstr "Vorgänge"
 
 #~ msgid "Order Date"
 #~ msgstr "Auftragsdatum"

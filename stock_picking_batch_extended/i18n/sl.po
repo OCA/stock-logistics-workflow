@@ -131,6 +131,11 @@ msgid "Default Picker"
 msgstr "Privzeti kontrolor"
 
 #. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
+msgid "Detailed op."
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__display_name
 msgid "Display Name"
 msgstr "Prikazani naziv"
@@ -229,6 +234,11 @@ msgstr "Beležka"
 #, python-format
 msgid "Nothing to print."
 msgstr "Ničesar ni za tiskanje."
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
+msgid "Operations"
+msgstr "Operacije"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__user_id
@@ -446,9 +456,6 @@ msgstr "uporabnik, kateremu se privzeto dodeljujejo zbirniki dobav"
 
 #~ msgid "List of picking managed by this batch."
 #~ msgstr "Seznam dobavnic v sklopu tega zbirnika."
-
-#~ msgid "Operations"
-#~ msgstr "Operacije"
 
 #~ msgid "Order Date"
 #~ msgstr "Datum naročila"

@@ -135,6 +135,11 @@ msgid "Default Picker"
 msgstr "Default Picker"
 
 #. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
+msgid "Detailed op."
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__display_name
 msgid "Display Name"
 msgstr "Nom affiché"
@@ -232,6 +237,11 @@ msgstr "Notes"
 #, python-format
 msgid "Nothing to print."
 msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
+msgid "Operations"
+msgstr "Operations"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__user_id
@@ -442,9 +452,6 @@ msgstr ""
 
 #~ msgid "List of picking managed by this batch."
 #~ msgstr "Liste des transferts gérés par ce bon de préparation."
-
-#~ msgid "Operations"
-#~ msgstr "Operations"
 
 #~ msgid "Order Date"
 #~ msgstr "Date de commande"

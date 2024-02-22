@@ -132,6 +132,11 @@ msgid "Default Picker"
 msgstr "Coletador Padrão"
 
 #. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
+msgid "Detailed op."
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__display_name
 msgid "Display Name"
 msgstr "Exibir Nome"
@@ -230,6 +235,11 @@ msgstr "Observações"
 #, python-format
 msgid "Nothing to print."
 msgstr "Nada a imprimir."
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
+msgid "Operations"
+msgstr "Operações"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__user_id
@@ -448,9 +458,6 @@ msgstr "o usuário ao qual as coletas em lote são atribuídas por padrão"
 
 #~ msgid "List of picking managed by this batch."
 #~ msgstr "Lista de coletas gerenciadas por este lote."
-
-#~ msgid "Operations"
-#~ msgstr "Operações"
 
 #~ msgid "Order Date"
 #~ msgstr "Data do Pedido"
