@@ -25,6 +25,21 @@
             </xpath>
             <xpath expr="//div[@name='button_box']" position="inside">
                 <button
+                    name="action_picking_move_line_tree"
+                    class="oe_stat_button"
+                    icon="fa-list"
+                    type="object"
+                    string="Detailed op."
+                />
+                <button
+                    name="action_picking_move_tree"
+                    class="oe_stat_button"
+                    icon="fa-arrows-v"
+                    type="object"
+                    string="Operations"
+                >
+                </button>
+                <button
                     name="action_view_stock_picking"
                     class="oe_stat_button"
                     icon="fa-truck"
