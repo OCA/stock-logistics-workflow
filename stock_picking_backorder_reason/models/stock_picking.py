@@ -10,7 +10,11 @@ class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     backorder_reason_strategy = fields.Selection(
-        selection=[("create", "Create"), ("cancel", "Cancel")],
+        selection=[
+            ("create", "Create"),
+            ("cancel", "Cancel"),
+            ("transparent_cancel", "Transparent Cancel"),
+        ],
         compute="_compute_backorder_reason_strategy",
         help="This is a technical field that says if a backorder is accepted"
         "depending on partner configuration accordingly with picking type one.",
@@ -34,9 +38,17 @@ class StockPicking(models.Model):
             picking.backorder_reason_strategy = (
                 picking.partner_id.purchase_reason_backorder_strategy
             )
+        transparent_pickings = (pickings_sale | pickings_purchase).filtered(
+            lambda p: p.picking_type_id.backorder_reason_transparent_cancel
+            and p.backorder_reason_strategy == "cancel"
+        )
+        transparent_pickings.update({"backorder_reason_strategy": "transparent_cancel"})
         # Remaining pickings
         self.browse(
-            set(self.ids) - set(pickings_sale.ids) - set(pickings_purchase.ids)
+            set(self.ids)
+            - set(pickings_sale.ids)
+            - set(pickings_purchase.ids)
+            - set(transparent_pickings.ids)
         ).backorder_reason_strategy = False
 
     def _check_backorder_reason(self):
@@ -57,7 +69,7 @@ class StockPicking(models.Model):
         )
 
     def _action_backorder_reason(self, show_transfers=False):
-        if self.is_transparent_backorder_cancel:
+        if self.backorder_reason_strategy == "transparent_cancel":
             return (
                 self.env["stock.backorder.reason.choice"]
                 .new(
@@ -90,7 +102,9 @@ class StockPicking(models.Model):
         }
 
     def _check_transparent_cancel(self):
-        return self.filtered(lambda p: p.is_transparent_backorder_cancel)
+        return self.filtered(
+            lambda p: p.backorder_reason_strategy == "transparent_cancel"
+        )
 
     def _pre_action_done_hook(self):
         if not self.env.context.get("skip_backorder_reason"):
@@ -105,11 +119,3 @@ class StockPicking(models.Model):
                     show_transfers=self._should_show_transfers()
                 )
         return super()._pre_action_done_hook()
-
-    @property
-    def is_transparent_backorder_cancel(self):
-        return bool(
-            self.picking_type_id.backorder_reason
-            and self.picking_type_id.backorder_reason_transparent_cancel
-            and self.backorder_reason_strategy == "cancel"
-        )

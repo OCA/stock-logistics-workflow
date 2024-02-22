@@ -16,14 +16,8 @@
                     name="stock_picking_type_backorder_reason"
                 >
                     <field name="backorder_reason" />
-                    <field
-                        name="backorder_reason_sale"
-                        attrs="{'invisible': [('backorder_reason', '=', False)]}"
-                    />
-                    <field
-                        name="backorder_reason_purchase"
-                        attrs="{'invisible': [('backorder_reason', '=', False)]}"
-                    />
+                    <field name="backorder_reason_sale" />
+                    <field name="backorder_reason_purchase" />
                     <field name="backorder_reason_transparent_cancel" />
                 </group>
             </group>

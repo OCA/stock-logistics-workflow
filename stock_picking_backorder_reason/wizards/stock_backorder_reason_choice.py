@@ -69,7 +69,8 @@ class StockBackorderReasonChoice(models.TransientModel):
             pickings.message_post(body=wizard._get_message())
             keep_backorder_pickings = self.env["stock.picking"].browse()
             if all(
-                picking.is_transparent_backorder_cancel for picking in self.picking_ids
+                picking.backorder_reason_strategy == "transparent_cancel"
+                for picking in self.picking_ids
             ):
                 pickings_to_cancel = self.picking_ids
             else:

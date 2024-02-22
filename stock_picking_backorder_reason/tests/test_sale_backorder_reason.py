@@ -21,7 +21,6 @@ class TestSalePickingBackorder(TestPickingBackorder, TransactionCase):
         self.partner.sale_reason_backorder_strategy = "create"
         self.assertEqual("create", self.picking.backorder_reason_strategy)
         self.picking.picking_type_id.backorder_reason = False
-        self.assertFalse(self.picking.backorder_reason_strategy)
 
     def test_sale_picking_backorder_create_backorder_cancel(self):
         self.backorder_action = "create"

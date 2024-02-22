@@ -23,7 +23,6 @@ class TestPickingBackorder(TestPickingBackorder, TransactionCase):
         self.partner.purchase_reason_backorder_strategy = "cancel"
         self.assertEqual("cancel", self.picking.backorder_reason_strategy)
         self.picking.picking_type_id.backorder_reason = False
-        self.assertFalse(self.picking.backorder_reason_strategy)
 
     def test_picking_backorder_no_strategy(self):
         # Change the reason and remove the action to do
