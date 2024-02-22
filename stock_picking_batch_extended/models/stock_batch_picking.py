@@ -111,3 +111,29 @@ class StockPickingBatch(models.Model):
         )
         action["domain"] = [("id", "in", pickings.ids)]
         return action
+
+    def action_picking_move_tree(self):
+        action = self.picking_ids.action_picking_move_tree()
+        action["views"] = [
+            (
+                self.env.ref("stock_picking_batch.view_picking_move_tree_inherited").id,
+                "tree",
+            ),
+        ]
+        return action
+
+    def action_picking_move_line_tree(self):
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "stock.stock_move_line_action"
+        )
+        action["views"] = [
+            (
+                self.env.ref("stock_picking_batch_extended.view_move_line_tree").id,
+                "tree",
+            ),
+        ]
+        ctx = self.env.context.copy()
+        ctx.update({"create": False})
+        action["context"] = ctx
+        action["domain"] = [("id", "in", self.move_line_ids.ids)]
+        return action
