@@ -5,7 +5,7 @@
     "name": "Stock Picking Start",
     "summary": """
         Add button to start picking""",
-    "version": "16.0.1.1.0",
+    "version": "16.0.1.1.1",
     "license": "LGPL-3",
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
