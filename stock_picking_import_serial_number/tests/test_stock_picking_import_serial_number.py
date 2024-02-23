@@ -3,13 +3,15 @@
 # Copyright 2024 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo.exceptions import UserError
-from odoo.tests import Form, TransactionCase
+from odoo.tests import Form
 from odoo.tools import mute_logger
+
+from odoo.addons.base.tests.common import BaseCommon
 
 from .common import CommonStockPickingImportSerial
 
 
-class TestStockPickingImportSN(CommonStockPickingImportSerial, TransactionCase):
+class TestStockPickingImportSN(CommonStockPickingImportSerial, BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -41,11 +43,11 @@ class TestStockPickingImportSN(CommonStockPickingImportSerial, TransactionCase):
             pickings = self.picking_in_01 | self.picking_in_02
         wizard_form = Form(
             self.env["stock.picking.import.serial.number.wiz"].with_context(
-                default_picking_ids=pickings.ids
+                default_picking_ids=pickings.ids,
+                default_filename=filename,
             )
         )
         wizard_form.data_file = self._data_file("data/%s" % filename)
-        wizard_form.filename = filename
         return wizard_form.save()
 
     @mute_logger("odoo.models.unlink")

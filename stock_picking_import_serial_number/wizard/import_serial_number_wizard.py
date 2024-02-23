@@ -91,7 +91,7 @@ class StockPickingImportSerialNumber(models.TransientModel):
             "location_dest_id": picking.location_dest_id.id,
             "product_id": product.id,
             "product_uom_id": product.uom_id.id,
-            "product_uom_qty": 0.0,
+            "reserved_uom_qty": 0.0,
             "qty_done": 1.0,
         }
 
