@@ -18,7 +18,7 @@
                 expr="//page[@name='operations']/field[@name='move_ids_without_package']/form//field[@name='reserved_availability']"
                 position="after"
             >
-                <field name="planned_consumed_date" optional="hide" />
+                <field name="planned_consumed_date" />
             </xpath>
         </field>
     </record>
