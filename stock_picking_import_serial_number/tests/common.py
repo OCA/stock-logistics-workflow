@@ -17,8 +17,7 @@ class CommonStockPickingImportSerial(object):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
-        cls.lot_obj = cls.env["stock.production.lot"]
+        cls.lot_obj = cls.env["stock.lot"]
         cls.warehouse = cls.env.ref("stock.warehouse0")
         cls.picking_type_in = cls.env.ref("stock.picking_type_in")
         cls.picking_type_in.use_create_lots = True
