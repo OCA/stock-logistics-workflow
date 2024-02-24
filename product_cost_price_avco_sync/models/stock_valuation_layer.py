@@ -22,23 +22,6 @@ class StockValuationLayer(models.Model):
 
     _inherit = "stock.valuation.layer"
 
-    @api.model
-    def create(self, vals):
-        svl = super().create(vals)
-        if vals.get("quantity", 0.0) > 0.0 and svl.product_id.cost_method == "average":
-            svl_remaining = self.sudo().search(
-                [
-                    ("company_id", "=", svl.company_id.id),
-                    ("product_id", "=", svl.product_id.id),
-                    ("remaining_qty", "<", 0.0),
-                ],
-                order="id",
-                limit=1,
-            )
-            if svl_remaining:
-                svl.cost_price_avco_sync({}, {})
-        return svl
-
     def write(self, vals):
         """ Update cost price avco """
         svl_previous_vals = defaultdict(dict)
