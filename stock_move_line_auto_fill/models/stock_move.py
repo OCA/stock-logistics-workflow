@@ -22,6 +22,9 @@ class StockMove(models.Model):
         """
         self.ensure_one()
         res = super()._prepare_move_line_vals(quantity, reserved_quant)
+        # Prevent auto_fill if move is subcontracted
+        if hasattr(self, 'is_subcontract') and self.is_subcontract:
+            return res
         if not self._get_auto_fill_flag():
             return res
         if self._get_avoid_lot_assignment_flag() and res.get("lot_id"):
@@ -39,6 +42,9 @@ class StockMove(models.Model):
         is called for a new lines.
         """
         res = super()._action_assign(force_qty=force_qty)
+        # Prevent auto_fill if move is subcontracted
+        if hasattr(self, 'is_subcontract') and self.is_subcontract:
+            return res
         for line in self.filtered(
             lambda m: m.state
             in ["confirmed", "assigned", "waiting", "partially_available"]
