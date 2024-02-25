@@ -1,0 +1,36 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_batch_outgoing
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_batch_outgoing
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_outgoing.stock_picking_kanban
+msgid ""
+"<i class=\"fa fa-object-group\" aria-hidden=\"true\" title=\"Outgoing batch "
+"transfer\"/>"
+msgstr ""
+
+#. module: stock_picking_batch_outgoing
+#: model:ir.model.fields,field_description:stock_picking_batch_outgoing.field_stock_picking__batch_outgoing_id
+msgid "Batch Outgoing"
+msgstr ""
+
+#. module: stock_picking_batch_outgoing
+#: model:ir.model.fields,help:stock_picking_batch_outgoing.field_stock_picking__batch_outgoing_id
+msgid "Batch associated to this transfer"
+msgstr ""
+
+#. module: stock_picking_batch_outgoing
+#: model:ir.model,name:stock_picking_batch_outgoing.model_stock_picking
+msgid "Transfer"
+msgstr ""
