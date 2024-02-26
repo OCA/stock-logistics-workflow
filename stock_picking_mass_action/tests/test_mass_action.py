@@ -84,6 +84,21 @@ class TestMassAction(common.TransactionCase):
         self.assertEqual(pick1.state, "assigned")
         self.assertEqual(pick2.state, "assigned")
 
+        pick3 = self.picking.copy()
+        pickings |= pick3
+        pick4 = self.picking.copy()
+        pickings |= pick4
+        self.assertEqual(pick3.state, "draft")
+        self.assertEqual(pick4.state, "draft")
+        wiz_confirm = wiz.create({"picking_ids": [(6, 0, [pick3.id, pick4.id])]})
+        wiz_confirm.confirm = True
+        wiz_confirm.mass_action()
+        self.assertEqual(pick3.state, "confirmed")
+        self.assertEqual(pick4.state, "confirmed")
+        pickings.check_assign_all(domain=[("picking_type_code", "=", "outgoing")])
+        self.assertEqual(pick1.state, "assigned")
+        self.assertEqual(pick2.state, "assigned")
+
     def test_mass_action_inmediate_transfer(self):
         wiz_tranfer = self.env["stock.picking.mass.action"].create(
             {"picking_ids": [(4, self.picking.id)], "confirm": True, "transfer": True}
