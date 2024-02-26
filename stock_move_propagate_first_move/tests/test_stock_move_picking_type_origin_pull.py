@@ -14,7 +14,7 @@ class TestStockMovePickingTypeOriginPull(TestStockMovePickingTypeOrigin):
         self.warehouse.delivery_steps = "pick_ship"
         pg_inter = self.env["procurement.group"].create({"name": "PG Inter"})
         pg_out = self.env["procurement.group"].create({"name": "PG Out"})
-        routes = self.env["stock.route"].create(
+        routes = self.env["stock.location.route"].create(
             {
                 "name": "Route",
                 "sequence": 1,
@@ -25,7 +25,7 @@ class TestStockMovePickingTypeOriginPull(TestStockMovePickingTypeOrigin):
                             "action": "pull",
                             "picking_type_id": self.picking_type_inter.id,
                             "location_src_id": self.loc_stock.id,
-                            "location_dest_id": self.loc_out.id,
+                            "location_id": self.loc_out.id,
                             "group_propagation_option": "fixed",
                             "group_id": pg_inter.id,
                         },
@@ -67,7 +67,7 @@ class TestStockMovePickingTypeOriginPull(TestStockMovePickingTypeOrigin):
         pg_inter_1 = self.env["procurement.group"].create({"name": "PG Inter 1"})
         pg_inter_2 = self.env["procurement.group"].create({"name": "PG Inter 2"})
         pg_out = self.env["procurement.group"].create({"name": "PG Out"})
-        routes = self.env["stock.route"].create(
+        routes = self.env["stock.location.route"].create(
             {
                 "name": "Route",
                 "sequence": 1,
@@ -79,7 +79,7 @@ class TestStockMovePickingTypeOriginPull(TestStockMovePickingTypeOrigin):
                             "action": "pull",
                             "picking_type_id": self.picking_type_inter.id,
                             "location_src_id": self.loc_stock.id,
-                            "location_dest_id": self.loc_out.id,
+                            "location_id": self.loc_out.id,
                             "group_propagation_option": "fixed",
                             "group_id": pg_inter_1.id,
                             "procure_method": "make_to_stock",
@@ -92,7 +92,7 @@ class TestStockMovePickingTypeOriginPull(TestStockMovePickingTypeOrigin):
                             "action": "pull",
                             "picking_type_id": self.picking_type_inter.id,
                             "location_src_id": self.loc_out.id,
-                            "location_dest_id": loc_out_2.id,
+                            "location_id": loc_out_2.id,
                             "group_propagation_option": "fixed",
                             "group_id": pg_inter_2.id,
                             "procure_method": "make_to_order",
@@ -105,7 +105,7 @@ class TestStockMovePickingTypeOriginPull(TestStockMovePickingTypeOrigin):
                             "action": "pull",
                             "picking_type_id": self.picking_type_out.id,
                             "location_src_id": loc_out_2.id,
-                            "location_dest_id": self.loc_customer.id,
+                            "location_id": self.loc_customer.id,
                             "group_propagation_option": "fixed",
                             "group_id": pg_out.id,
                             "procure_method": "make_to_order",

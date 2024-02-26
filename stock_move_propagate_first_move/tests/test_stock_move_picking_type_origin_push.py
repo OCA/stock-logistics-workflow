@@ -9,7 +9,7 @@ from .common import TestStockMovePickingTypeOrigin
 class TestStockMovePickingTypeOriginPush(TestStockMovePickingTypeOrigin):
     def test_push_two_steps(self):
         pg_in = self.env["procurement.group"].create({"name": "PG IN"})
-        routes = self.env["stock.route"].create(
+        routes = self.env["stock.location.route"].create(
             {
                 "name": "Route",
                 "sequence": 1,
@@ -21,7 +21,7 @@ class TestStockMovePickingTypeOriginPush(TestStockMovePickingTypeOrigin):
                             "action": "pull_push",
                             "picking_type_id": self.picking_type_in.id,
                             "location_src_id": self.loc_supplier.id,
-                            "location_dest_id": self.loc_in_1.id,
+                            "location_id": self.loc_in_1.id,
                         },
                     ),
                     Command.create(
@@ -31,7 +31,7 @@ class TestStockMovePickingTypeOriginPush(TestStockMovePickingTypeOrigin):
                             "action": "push",
                             "picking_type_id": self.picking_type_inter.id,
                             "location_src_id": self.loc_in_1.id,
-                            "location_dest_id": self.loc_in_2.id,
+                            "location_id": self.loc_in_2.id,
                         },
                     ),
                     Command.create(
@@ -41,7 +41,7 @@ class TestStockMovePickingTypeOriginPush(TestStockMovePickingTypeOrigin):
                             "action": "push",
                             "picking_type_id": self.picking_type_inter.id,
                             "location_src_id": self.loc_in_2.id,
-                            "location_dest_id": self.loc_stock.id,
+                            "location_id": self.loc_stock.id,
                         },
                     ),
                 ],

@@ -14,7 +14,7 @@ class TestStockMovePickingTypeOriginPull(TestStockMovePickingTypeOrigin):
                 "location_id": self.loc_supplier.id,
                 "location_dest_id": self.loc_in_1.id,
                 "picking_type_id": self.picking_type_in.id,
-                "move_ids": [
+                "move_lines": [
                     Command.create(
                         {
                             "name": self.product.name,
