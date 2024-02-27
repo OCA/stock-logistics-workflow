@@ -240,9 +240,10 @@ class ResPartner(models.Model):
         """
         res = list()
         dts = date_range(from_datetime, to_datetime, timedelta(days=1))
-        weekdays = {x.name: x for x in self.env["time.weekday"].search([("name", "in", dts)])}
+        weekdays = {
+            x.name: x for x in self.env["time.weekday"].search([("name", "in", dts)])
+        }
         for this_datetime, this_weekday in weekdays.items():
-            this_weekday_number = this_datetime.weekday()
             # Sort by start time to ensure the window we'll find will be the first
             # one for the weekday
             this_weekday_windows = self.delivery_time_window_ids.filtered(
