@@ -1,0 +1,186 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_import_serial_number
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_import_serial_number
+#: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.res_config_settings_view_form
+msgid "<span class=\"o_form_label\">Field to search products</span>"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.res_config_settings_view_form
+msgid "<span class=\"o_form_label\">File column index for package</span>"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.res_config_settings_view_form
+msgid "<span class=\"o_form_label\">File column index for products</span>"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.res_config_settings_view_form
+msgid "<span class=\"o_form_label\">File column index for serial number</span>"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model:ir.model.fields.selection,name:stock_picking_import_serial_number.selection__res_config_settings__default_sn_search_product_by_field__barcode
+#: model:ir.model.fields.selection,name:stock_picking_import_serial_number.selection__stock_picking_import_serial_number_wiz__sn_search_product_by_field__barcode
+msgid "Barcode"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.stock_picking_import_serial_number_wiz
+msgid "Choose a file to import..."
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_res_config_settings__default_sn_package_column_index
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz__sn_package_column_index
+msgid "Column index for Package"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_res_config_settings__default_sn_serial_column_index
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz__sn_serial_column_index
+msgid "Column index for S/N"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_res_config_settings__default_sn_product_column_index
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz__sn_product_column_index
+msgid "Column index for product"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model:ir.model,name:stock_picking_import_serial_number.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz__data_file
+msgid "File to import"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz__filename
+msgid "Filename"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model:ir.actions.act_window,name:stock_picking_import_serial_number.action_import_serial_number
+#: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.res_config_settings_view_form
+#: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.stock_picking_import_serial_number_wiz
+#: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.view_picking_form
+msgid "Import S/N"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model:ir.model,name:stock_picking_import_serial_number.model_stock_picking_import_serial_number_wiz
+msgid "Import S/N wizard"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz__overwrite_serial
+msgid "Overwrite Serial"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz__picking_ids
+msgid "Picking"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model:ir.model.fields.selection,name:stock_picking_import_serial_number.selection__res_config_settings__default_sn_search_product_by_field__default_code
+#: model:ir.model.fields.selection,name:stock_picking_import_serial_number.selection__stock_picking_import_serial_number_wiz__sn_search_product_by_field__default_code
+msgid "Reference"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_res_config_settings__default_sn_search_product_by_field
+#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz__sn_search_product_by_field
+msgid "Search product by field"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.res_config_settings_view_form
+msgid "Select the field to search products"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.res_config_settings_view_form
+msgid "Select the index file column which contains the package info"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.res_config_settings_view_form
+msgid "Select the index file column which contains the product info"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.res_config_settings_view_form
+msgid "Select the index file column which contains the serial numbers info"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: code:addons/stock_picking_import_serial_number/wizard/import_serial_number_wizard.py:0
+#, python-format
+msgid "You must upload file to import records"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: code:addons/stock_picking_import_serial_number/wizard/import_serial_number_wizard.py:0
+#, python-format
+msgid ""
+"You only can import S/N for picking operations with creation lots checked"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.stock_picking_import_serial_number_wiz
+msgid "_Cancel"
+msgstr ""
