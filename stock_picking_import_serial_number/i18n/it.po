@@ -175,12 +175,14 @@ msgstr ""
 "serie"
 
 #. module: stock_picking_import_serial_number
+#. odoo-python
 #: code:addons/stock_picking_import_serial_number/wizard/import_serial_number_wizard.py:0
 #, python-format
 msgid "You must upload file to import records"
 msgstr "Bisogna caricare il file per l'importazione dei record"
 
 #. module: stock_picking_import_serial_number
+#. odoo-python
 #: code:addons/stock_picking_import_serial_number/wizard/import_serial_number_wizard.py:0
 #, python-format
 msgid ""
