@@ -98,7 +98,7 @@ class StockPicking(models.Model):
         if self.picking_type_id.code != "outgoing":
             return False
 
-        moves = self.move_ids
+        moves = self.move_lines
         base_group = self.group_id
         # If we have moves of different procurement groups, it means moves
         # have been merged in the same picking. In this case a new
@@ -128,8 +128,7 @@ class StockPicking(models.Model):
                         moves.original_group_id
                     )
                 )
-                group_pickings.move_lines.group_id = new_group
-                self.move_ids.group_id = new_group
+                self.move_lines.group_id = new_group
                 return True
 
             base_group.write(
