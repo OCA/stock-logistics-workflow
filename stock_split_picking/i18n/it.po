@@ -59,19 +59,9 @@ msgid "Display Name"
 msgstr "Nome visualizzato"
 
 #. module: stock_split_picking
-#: model:ir.model.fields.selection,name:stock_split_picking.selection__stock_split_picking__mode__done
-msgid "Done quantities"
-msgstr "Quantità completate"
-
-#. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking__id
 msgid "ID"
 msgstr "ID"
-
-#. module: stock_split_picking
-#: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking____last_update
-msgid "Last Modified on"
-msgstr "Ultima modifica il"
 
 #. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking__write_uid
@@ -109,6 +99,11 @@ msgstr "Un prelievo per movimento"
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking__picking_ids
 msgid "Picking"
 msgstr "Prelievo"
+
+#. module: stock_split_picking
+#: model:ir.model.fields.selection,name:stock_split_picking.selection__stock_split_picking__mode__quantity
+msgid "Quantities"
+msgstr ""
 
 #. module: stock_split_picking
 #: model:ir.model.fields.selection,name:stock_split_picking.selection__stock_split_picking__mode__selection
@@ -152,12 +147,23 @@ msgstr "Unità di misura"
 #. odoo-python
 #: code:addons/stock_split_picking/models/stock_picking.py:0
 #, python-format
-msgid ""
-"You must enter done quantity in order to split your picking in several ones."
+msgid "You must enter quantity in order to split your picking in several ones."
 msgstr ""
-"Bisogna inserire la quantità completata per poter suddividere il prelievo."
 
 #. module: stock_split_picking
 #: model_terms:ir.ui.view,arch_db:stock_split_picking.view_stock_split_picking
 msgid "or"
 msgstr "o"
+
+#~ msgid "Done quantities"
+#~ msgstr "Quantità completate"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Ultima modifica il"
+
+#, python-format
+#~ msgid ""
+#~ "You must enter done quantity in order to split your picking in several "
+#~ "ones."
+#~ msgstr ""
+#~ "Bisogna inserire la quantità completata per poter suddividere il prelievo."
