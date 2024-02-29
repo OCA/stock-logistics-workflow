@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-01 02:08+0000\n"
-"PO-Revision-Date: 2023-11-20 08:34+0000\n"
+"PO-Revision-Date: 2024-02-29 15:38+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -103,7 +103,7 @@ msgstr "Prelievo"
 #. module: stock_split_picking
 #: model:ir.model.fields.selection,name:stock_split_picking.selection__stock_split_picking__mode__quantity
 msgid "Quantities"
-msgstr ""
+msgstr "Quantità"
 
 #. module: stock_split_picking
 #: model:ir.model.fields.selection,name:stock_split_picking.selection__stock_split_picking__mode__selection
@@ -148,7 +148,7 @@ msgstr "Unità di misura"
 #: code:addons/stock_split_picking/models/stock_picking.py:0
 #, python-format
 msgid "You must enter quantity in order to split your picking in several ones."
-msgstr ""
+msgstr "Bisogna inserire la quantità per poter suddividere il prelievo."
 
 #. module: stock_split_picking
 #: model_terms:ir.ui.view,arch_db:stock_split_picking.view_stock_split_picking
