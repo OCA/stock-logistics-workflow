@@ -49,7 +49,7 @@ msgstr "Date de péremption"
 #. module: product_expiry_simple
 #: model:ir.model,name:product_expiry_simple.model_stock_lot
 msgid "Lot/Serial"
-msgstr "Lot/N°série"
+msgstr "Lot/N° de série"
 
 #. module: product_expiry_simple
 #: model_terms:ir.ui.view,arch_db:product_expiry_simple.quant_search_view
@@ -91,7 +91,7 @@ msgid ""
 "Product {product} uses expiry dates, but expiry date is missing on lot "
 "{lot}."
 msgstr ""
-"L'article {product} utilise les dates de péremption, mais la date de "
+"L'article {product} utilise des dates de péremption, mais la date de "
 "péremption n'est pas renseignée sur le lot {lot}."
 
 #. module: product_expiry_simple
@@ -125,7 +125,7 @@ msgid ""
 "by lot nor serial number."
 msgstr ""
 "Vous ne pouvez pas activer 'Utilise des dates de péremption' sur l'article "
-"'%s' car il n'est tracé ni par lots ni par N° de série."
+"'%s' car il n'est pas tracé par lots ni par numéro de série."
 
 #. module: product_expiry_simple
 #. odoo-python
