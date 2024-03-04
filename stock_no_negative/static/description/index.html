@@ -369,20 +369,21 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! source digest: sha256:9dda79ba193e2287fb837d2e9ecb3f777f9f3fd8da3952c3ec18fc8682110213
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_no_negative"><img alt="OCA/stock-logistics-workflow" src="https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/stock-logistics-workflow-16-0/stock-logistics-workflow-16-0-stock_no_negative"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&amp;target_branch=16.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/stock-logistics-workflow/tree/17.0/stock_no_negative"><img alt="OCA/stock-logistics-workflow" src="https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/stock-logistics-workflow-17-0/stock-logistics-workflow-17-0-stock_no_negative"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&amp;target_branch=17.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
 <p>By default, Odoo allows negative stock. The advantage of negative stock
-is that, if some stock levels are wrong in the ERP, you will not be blocked
-when validating the picking for a customer… so you will still be able to
-ship the products on time (it’s an example !). The problem is that, after you
-forced the stock level to negative, you are supposed to fix the stock level
-later via an inventory ; but this action is often forgotten by users,
-so you end up with negative stock levels in your ERP and it can stay like
-this forever (or at least until the next full inventory).</p>
-<p>If you disallow negative stock in Odoo with this module, you will be blocked
-when trying to validate a stock operation that will set the stock level of
-a product and/or location as negative. So you will have to fix the
-wrong stock level of that product without delay, in order to validate the
-stock operation in Odoo…you can’t forget it anymore !</p>
+is that, if some stock levels are wrong in the ERP, you will not be
+blocked when validating the picking for a customer… so you will still
+be able to ship the products on time (it’s an example !). The problem is
+that, after you forced the stock level to negative, you are supposed to
+fix the stock level later via an inventory ; but this action is often
+forgotten by users, so you end up with negative stock levels in your ERP
+and it can stay like this forever (or at least until the next full
+inventory).</p>
+<p>If you disallow negative stock in Odoo with this module, you will be
+blocked when trying to validate a stock operation that will set the
+stock level of a product and/or location as negative. So you will have
+to fix the wrong stock level of that product without delay, in order to
+validate the stock operation in Odoo…you can’t forget it anymore !</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -407,34 +408,35 @@ stock operation in Odoo…you can’t forget it anymore !</p>
 </div>
 <div class="section" id="configuration">
 <h1><a class="toc-backref" href="#toc-entry-1">Configuration</a></h1>
-<p>By default, the stockable products will not be allowed to have a negative
-stock. If you want to make some exceptions for some products, product
-categories or locations, you can activate the option <em>Allow Negative Stock</em>:</p>
+<p>By default, the stockable products will not be allowed to have a
+negative stock. If you want to make some exceptions for some products,
+product categories or locations, you can activate the option <em>Allow
+Negative Stock</em>:</p>
 <p>For products:</p>
 <ol class="arabic simple">
-<li>Go to <em>Inventory / Master Data / Products</em> and in the
-tab <em>General Information</em> activate this option.</li>
+<li>Go to <em>Inventory / Master Data / Products</em> and in the tab <em>General
+Information</em> activate this option.</li>
 </ol>
 <p>For product categories:</p>
 <ol class="arabic simple">
-<li>Go to <em>Inventory / Configuration / Products / Product Categories</em>
-and activate this option.</li>
+<li>Go to <em>Inventory / Configuration / Products / Product Categories</em> and
+activate this option.</li>
 </ol>
 <p>For individual locations:</p>
 <ol class="arabic simple">
-<li>Go to <em>Inventory / Configuration / Settings</em> and activate
-the option <em>Storage Locations</em>.</li>
-<li>Go to <em>Inventory / Configuration / Warehouse Management / Locations</em> and
-activate the option the option <em>Allow Negative Stock</em> for the locations you
-choose.</li>
+<li>Go to <em>Inventory / Configuration / Settings</em> and activate the option
+<em>Storage Locations</em>.</li>
+<li>Go to <em>Inventory / Configuration / Warehouse Management / Locations</em>
+and activate the option the option <em>Allow Negative Stock</em> for the
+locations you choose.</li>
 </ol>
 </div>
 <div class="section" id="usage">
 <h1><a class="toc-backref" href="#toc-entry-2">Usage</a></h1>
-<p>When you validate a stock operation (a stock move, a picking,
-a manufacturing order, etc.) that will set the stock level of a
-stockable product as negative, you will be blocked by an error message.
-The consumable products can still have a negative stock level.</p>
+<p>When you validate a stock operation (a stock move, a picking, a
+manufacturing order, etc.) that will set the stock level of a stockable
+product as negative, you will be blocked by an error message. The
+consumable products can still have a negative stock level.</p>
 </div>
 <div class="section" id="changelog">
 <h1><a class="toc-backref" href="#toc-entry-3">Changelog</a></h1>
@@ -459,14 +461,14 @@ The consumable products can still have a negative stock level.</p>
 <div class="section" id="section-4">
 <h2><a class="toc-backref" href="#toc-entry-7">13.0.1.0.0 (2020-01-03)</a></h2>
 <ul class="simple">
-<li>[13.0][MIG] stock_no_negative
-Remove all decorators &#64;api.multi</li>
+<li>[13.0][MIG] stock_no_negative Remove all decorators &#64;api.multi</li>
 </ul>
 </div>
 <div class="section" id="section-5">
 <h2><a class="toc-backref" href="#toc-entry-8">11.0.1.1.0 (2018-12-13)</a></h2>
 <ul class="simple">
-<li>Add the ability to allow negative stock for individual stock locations.</li>
+<li>Add the ability to allow negative stock for individual stock
+locations.</li>
 </ul>
 </div>
 </div>
@@ -475,7 +477,7 @@ Remove all decorators &#64;api.multi</li>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/stock-logistics-workflow/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-<a class="reference external" href="https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_no_negative%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<a class="reference external" href="https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_no_negative%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
@@ -492,30 +494,18 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <li>Alexis de Lattre &lt;<a class="reference external" href="mailto:alexis.delattre&#64;akretion.com">alexis.delattre&#64;akretion.com</a>&gt;</li>
 <li>Vishnu Vanneri &lt;<a class="reference external" href="mailto:vanneri.odoodev&#64;gmail.com">vanneri.odoodev&#64;gmail.com</a>&gt;</li>
 <li>Serpent Consulting Services Pvt. Ltd. &lt;<a class="reference external" href="mailto:support&#64;serpentcs.com">support&#64;serpentcs.com</a>&gt;</li>
-<li><dl class="first docutils">
-<dt><a class="reference external" href="mailto:contact&#64;forgeflow.com">ForgeFlow S.L.</a>:</dt>
-<dd><ul class="first last">
+<li><a class="reference external" href="mailto:contact&#64;forgeflow.com">ForgeFlow S.L.</a>:<ul>
 <li>Jordi Ballester</li>
 <li>Joan Mateu</li>
 </ul>
-</dd>
-</dl>
 </li>
-<li><dl class="first docutils">
-<dt><a class="reference external" href="https://www.tecnativa.com">Tecnativa</a>:</dt>
-<dd><ul class="first last">
+<li><a class="reference external" href="https://www.tecnativa.com">Tecnativa</a>:<ul>
 <li>Pedro M. Baeza</li>
 </ul>
-</dd>
-</dl>
 </li>
-<li><dl class="first docutils">
-<dt><a class="reference external" href="https://www.spacefoot.com">Spacefoot</a>:</dt>
-<dd><ul class="first last">
+<li><a class="reference external" href="https://www.spacefoot.com">Spacefoot</a>:<ul>
 <li>Quentin Delcourte</li>
 </ul>
-</dd>
-</dl>
 </li>
 <li>Vishnu Vanneri &lt;<a class="reference external" href="mailto:vvanneri&#64;ioppolo.com.au">vvanneri&#64;ioppolo.com.au</a>&gt;</li>
 </ul>
@@ -527,7 +517,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.</p>
-<p>This module is part of the <a class="reference external" href="https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_no_negative">OCA/stock-logistics-workflow</a> project on GitHub.</p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/stock-logistics-workflow/tree/17.0/stock_no_negative">OCA/stock-logistics-workflow</a> project on GitHub.</p>
 <p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
 </div>
 </div>
