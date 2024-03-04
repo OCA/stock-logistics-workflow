@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_picking_form_force_assign" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <field name="use_create_lots" position="after">
+                <field name="picking_type_force_reservation" />
+            </field>
+            <!-- WARNING: The 'attrs' attributes of the 'do_unreserve' button and the
+                'forecast_availability' field are overridden in this view. This change
+                may impact visibility and functionality in other modules. Ensure thorough
+                review of migrations and dependencies. -->
+            <button name="do_unreserve" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible': ['|', '|', '|', '&amp;', ('picking_type_force_reservation', '=', False), ('picking_type_code', '=', 'incoming'), ('immediate_transfer', '=', True), '&amp;', ('state', '!=', 'assigned'), ('move_type', '!=', 'one'), '&amp;', ('state', 'not in', ('assigned', 'confirmed')), ('move_type', '=', 'one')]}</attribute>
+            </button>
+            <field name="forecast_availability" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'column_invisible': ['|', '|', ('parent.state', 'in', ['draft', 'done']), '&amp;', ('parent.picking_type_force_reservation', '=', False), ('parent.picking_type_code', '!=', 'outgoing'), ('parent.immediate_transfer', '=', True)]}</attribute>
+            </field>
+        </field>
+    </record>
+    <record id="stock_picking_type_form_force_assign" model="ir.ui.view">
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form" />
+        <field name="arch" type="xml">
+            <field name="show_operations" position="after">
+                <field name="force_reservation" />
+            </field>
+        </field>
+    </record>
+</odoo>
