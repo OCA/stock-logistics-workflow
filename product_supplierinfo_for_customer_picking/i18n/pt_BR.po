@@ -17,6 +17,11 @@ msgstr ""
 "X-Generator: Weblate 3.10\n"
 
 #. module: product_supplierinfo_for_customer_picking
+#: model:ir.model.fields,field_description:product_supplierinfo_for_customer_picking.field_stock_move__description_picking
+msgid "Description of Picking"
+msgstr ""
+
+#. module: product_supplierinfo_for_customer_picking
 #: model:ir.model.fields,field_description:product_supplierinfo_for_customer_picking.field_stock_move__display_name
 msgid "Display Name"
 msgstr ""
