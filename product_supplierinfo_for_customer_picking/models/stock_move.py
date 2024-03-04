@@ -6,10 +6,11 @@ from odoo import api, fields, models
 class StockMove(models.Model):
     _inherit = "stock.move"
 
-    @api.depends("picking_id.partner_id", "product_id")
+    @api.depends("picking_id.partner_id", "product_id", "company_id")
     def _compute_product_customer_code(self):
         for move in self:
             product_customer_name = product_customer_code = False
+            move = move.with_company(move.company_id)
             if move.product_id and move.picking_id and move.picking_id.partner_id:
                 customerinfo = move.product_id._select_customerinfo(
                     partner=move.picking_id.partner_id,
@@ -29,9 +30,16 @@ class StockMove(models.Model):
 
     product_customer_code = fields.Char(
         compute="_compute_product_customer_code",
+        store=True,
         string="Product Customer Code",
     )
     product_customer_name = fields.Char(
         compute="_compute_product_customer_code",
+        store=True,
         string="Product Customer Name",
+    )
+    description_picking = fields.Text(
+        compute="_compute_product_customer_code",
+        store=True,
+        readonly=False,
     )
