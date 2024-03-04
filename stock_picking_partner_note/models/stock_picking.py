@@ -15,7 +15,7 @@ class StockPicking(models.Model):
         for picking in self:
             picking_type_note_type_ids = picking.picking_type_id.partner_note_type_ids
             picking_notes = picking.partner_id.stock_picking_note_ids.filtered(
-                lambda n: n.note_type_id in picking_type_note_type_ids
+                lambda n: n.active and n.note_type_id in picking_type_note_type_ids
             )
             picking_notes = [
                 note.name.strip()
