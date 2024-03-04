@@ -17,6 +17,7 @@ setuptools.setup(
         'odoo-addon-sale_order_global_stock_route>=15.0dev,<15.1dev',
         'odoo-addon-stock_account_product_run_fifo_hook>=15.0dev,<15.1dev',
         'odoo-addon-stock_delivery_note>=15.0dev,<15.1dev',
+        'odoo-addon-stock_force_assign_by_type>=15.0dev,<15.1dev',
         'odoo-addon-stock_landed_costs_delivery>=15.0dev,<15.1dev',
         'odoo-addon-stock_landed_costs_purchase_auto>=15.0dev,<15.1dev',
         'odoo-addon-stock_landed_costs_security>=15.0dev,<15.1dev',
