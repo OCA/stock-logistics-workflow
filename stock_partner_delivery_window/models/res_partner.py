@@ -255,3 +255,42 @@ class ResPartner(models.Model):
                 )
                 res.append(this_weekday_start_datetime)
         return res
+
+    # TODO: Refactor with function above
+    def get_next_delivery_availability(self, from_datetime, to_datetime=None):
+        """Get all delivery windows start time.
+
+        Range from from_datetime weekday to to_datetime weekday.
+
+        Note result can include a start datetime that is before from_datetime
+        on the from_datetime weekday
+
+        :param from_datetime: Datetime object
+        :param to_datetime: Datetime object
+        """
+        self.ensure_one()
+        if to_datetime is None:
+            to_datetime = from_datetime + timedelta(days=365)
+        for this_datetime in date_range(from_datetime, to_datetime, timedelta(days=1)):
+            if self.delivery_time_preference == "anytime":
+                yield this_datetime
+            else:
+                this_weekday_number = this_datetime.weekday()
+                if self.delivery_time_preference == "workdays":
+                    if this_weekday_number < 5:
+                        yield this_datetime
+                else:
+                    this_weekday_windows = self.env[
+                        "partner.delivery.time.window"
+                    ].search(
+                        [
+                            ("time_window_weekday_ids.name", "=", this_weekday_number),
+                            ("partner_id", "=", self.id),
+                        ],
+                        order="time_window_start ASC",
+                    )
+                    for win in this_weekday_windows:
+                        this_weekday_start_datetime = datetime.combine(
+                            this_datetime, win.get_time_window_start_time()
+                        )
+                        yield this_weekday_start_datetime
