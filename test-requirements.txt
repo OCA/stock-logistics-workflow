@@ -1,1 +1,4 @@
 odoo-test-helper
+
+openupgradelib @ git+https://github.com/OCA/openupgradelib.git@master
+odoo-addon-stock-picking-progress @ git+https://github.com/OCA/stock-logistics-workflow.git@refs/pull/1330/head#subdirectory=setup/stock_picking_progress
