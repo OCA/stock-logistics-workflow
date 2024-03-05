@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+
+        <record id="dymo" model="base.selection">
+            <field
+            name="field_id"
+            ref="stock_product_label.field_product_label_layout__print_format_id"
+        />
+            <field name="name">Dymo</field>
+            <field name="code">dymo</field>
+        </record>
+
+        <record id="2x7xprice" model="base.selection">
+            <field
+            name="field_id"
+            ref="stock_product_label.field_product_label_layout__print_format_id"
+        />
+            <field name="name">2 x 7 with price</field>
+            <field name="code">2x7xprice</field>
+            <field name="default">1</field>
+        </record>
+
+        <record id="4x7xprice" model="base.selection">
+            <field
+            name="field_id"
+            ref="stock_product_label.field_product_label_layout__print_format_id"
+        />
+            <field name="name">4 x 7 with price</field>
+            <field name="code">4x7xprice</field>
+        </record>
+
+        <record id="4x12" model="base.selection">
+            <field
+            name="field_id"
+            ref="stock_product_label.field_product_label_layout__print_format_id"
+        />
+            <field name="name">4 x 12</field>
+            <field name="code">4x12</field>
+        </record>
+
+        <record id="4x12xprice" model="base.selection">
+            <field
+            name="field_id"
+            ref="stock_product_label.field_product_label_layout__print_format_id"
+        />
+            <field name="name">4 x 12 with price</field>
+            <field name="code">4x12xprice</field>
+        </record>
+
+</odoo>

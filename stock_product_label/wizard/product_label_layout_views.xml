@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="product_label_layout_form" model="ir.ui.view">
+        <field name="name">product.label.layout.form</field>
+        <field name="model">product.label.layout</field>
+        <field name="inherit_id" ref="product.product_label_layout_form" />
+        <field name="arch" type="xml">
+            <field name="print_format" position="before">
+                <field name="print_format_id" widget="radio" />
+            </field>
+            <field name="print_format" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+        </field>
+    </record>
+
+</odoo>
