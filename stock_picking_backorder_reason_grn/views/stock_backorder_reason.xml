@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="stock_backorder_reason_form_view">
+        <field
+            name="name"
+        >stock.backorder.reason.form (in stock_picking_backorder_reason_grn)</field>
+        <field name="model">stock.backorder.reason</field>
+        <field
+            name="inherit_id"
+            ref="stock_picking_backorder_reason.stock_backorder_reason_form_view"
+        />
+        <field name="arch" type="xml">
+            <field name="backorder_action_to_do" position="after">
+                <field name="keep_grn" />
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="stock_backorder_reason_search_view">
+        <field
+            name="name"
+        >stock.backorder.reason.search (in stock_picking_backorder_reason_grn)</field>
+        <field name="model">stock.backorder.reason</field>
+        <field
+            name="inherit_id"
+            ref="stock_picking_backorder_reason.stock_backorder_reason_search_view"
+        />
+        <field name="arch" type="xml">
+            <field name="backorder_action_to_do" position="after">
+                <field name="keep_grn" />
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="stock_backorder_reason_tree_view">
+        <field
+            name="name"
+        >stock.backorder.reason.tree (in stock_picking_backorder_reason_grn)</field>
+        <field name="model">stock.backorder.reason</field>
+        <field
+            name="inherit_id"
+            ref="stock_picking_backorder_reason.stock_backorder_reason_tree_view"
+        />
+        <field name="arch" type="xml">
+            <field name="backorder_action_to_do" position="after">
+                <field name="keep_grn" />
+            </field>
+        </field>
+    </record>
+</odoo>
