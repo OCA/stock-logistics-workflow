@@ -154,6 +154,10 @@ Contributors
 
 -  Vishnu Vanneri <vvanneri@ioppolo.com.au>
 
+-  `OERP Canada <https://www.oerp.ca/>`__:
+
+   -  Foram Darji <fd@oerp.ca>
+
 Maintainers
 -----------
 

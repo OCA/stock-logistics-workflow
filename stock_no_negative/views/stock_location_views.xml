@@ -13,7 +13,7 @@
             <field name="usage" position="after">
                 <field
                     name="allow_negative_stock"
-                    attrs="{'invisible': [('usage', 'not in', ['internal', 'transit'])]}"
+                    invisible="usage not in ['internal', 'transit']"
                 />
             </field>
         </field>
