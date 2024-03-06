@@ -34,7 +34,7 @@ class StockMoveLine(models.Model):
         """
         vals_list = []
         stock_lot_obj = self.env["stock.lot"]
-        lots = stock_lot_obj.browse()
+        lot_ids = set()
         for line in self:
             vals = line._prepare_auto_lot_values()
             if line.picking_id.use_existing_lots and vals.get("name"):
@@ -42,17 +42,18 @@ class StockMoveLine(models.Model):
                     [
                         (key, "=", vals[key])
                         for key in ("product_id", "company_id", "name")
-                    ]
+                    ],
+                    limit=1,
                 )
                 if lot:
-                    lots |= lot
+                    lot_ids.add(lot.id)
                 else:
                     vals_list.append(vals)
             else:
                 vals_list.append(vals)
         # Lots are created using create_multi to avoid too much queries.
-        lots |= stock_lot_obj.create(vals_list)
-        return lots
+        lot_ids.update(stock_lot_obj.create(vals_list).ids)
+        return stock_lot_obj.browse(lot_ids)
 
     def set_lot_auto(self):
         """
