@@ -41,4 +41,7 @@ class StockReceptionDiscrepancyDistributionWiz(models.TransientModel):
         self.move_id.move_dest_ids = self.move_dest_ids
 
     def action_confirm(self):
-        """Dummy button"""
+        # Update initial demand to avoid an extra picking when use multi steps reception
+        # and MTO
+        if self.move_id.quantity_done > self.move_id.product_uom_qty:
+            self.move_id.product_uom_qty = self.move_id.quantity_done
