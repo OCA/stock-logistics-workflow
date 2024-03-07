@@ -19,6 +19,3 @@ class TierValidationTester(models.Model):
     )
     test_field = fields.Float()
     user_id = fields.Many2one(string="Assigned to:", comodel_name="res.users")
-
-    def action_confirm(self):
-        self.write({"state": "confirmed"})
