@@ -20,127 +20,120 @@ msgstr ""
 "%100==4 ? 2 : 3;\n"
 "X-Generator: Weblate 3.10\n"
 
-#. module: stock_picking_operation_quick_change
-#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__location_dest_id
+#. module: stock_picking_batch_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_batch_operation_quick_change.field_stock_picking_batch_operation_wizard__location_dest_id
 msgid "Actual destination location"
 msgstr ""
 
-#. module: stock_picking_operation_quick_change
-#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__allowed_product_ids
+#. module: stock_picking_batch_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_batch_operation_quick_change.field_stock_picking_batch_operation_wizard__allowed_product_ids
 msgid "Allowed Product"
 msgstr ""
 
-#. module: stock_picking_operation_quick_change
-#: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
+#. module: stock_picking_batch_operation_quick_change
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_operation_quick_change.stock_picking_batch_operation_change_location_view
 msgid "Apply"
 msgstr "Uveljavi"
 
-#. module: stock_picking_operation_quick_change
-#: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
+#. module: stock_picking_batch_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_batch_operation_quick_change.field_stock_picking_batch_operation_wizard__batch_id
+msgid "Batch"
+msgstr ""
+
+#. module: stock_picking_batch_operation_quick_change
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_operation_quick_change.stock_picking_batch_operation_change_location_view
 msgid "Cancel"
 msgstr "Preklic"
 
-#. module: stock_picking_operation_quick_change
-#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__change_all
+#. module: stock_picking_batch_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_batch_operation_quick_change.field_stock_picking_batch_operation_wizard__change_all
 msgid "Change All"
 msgstr ""
 
-#. module: stock_picking_operation_quick_change
-#: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.view_picking_form
+#. module: stock_picking_batch_operation_quick_change
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_operation_quick_change.stock_picking_batch_form
 msgid "Change Location"
 msgstr ""
 
-#. module: stock_picking_operation_quick_change
-#: model:ir.actions.act_window,name:stock_picking_operation_quick_change.action_stock_picking_operation_change_location
+#. module: stock_picking_batch_operation_quick_change
+#: model:ir.actions.act_window,name:stock_picking_batch_operation_quick_change.action_stock_picking_batch_operation_change_location
 msgid "Change Operation Destination Location"
 msgstr ""
 
-#. module: stock_picking_operation_quick_change
-#: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
+#. module: stock_picking_batch_operation_quick_change
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_operation_quick_change.stock_picking_batch_operation_change_location_view
 msgid ""
 "Change the destination location.\n"
 "                    <br/>"
 msgstr ""
 
-#. module: stock_picking_operation_quick_change
-#: model:ir.model.fields,help:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__change_all
+#. module: stock_picking_batch_operation_quick_change
+#: model:ir.model.fields,help:stock_picking_batch_operation_quick_change.field_stock_picking_batch_operation_wizard__change_all
 msgid "Check if you want change all operations without filter by old location"
 msgstr ""
 
-#. module: stock_picking_operation_quick_change
-#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__create_uid
+#. module: stock_picking_batch_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_batch_operation_quick_change.field_stock_picking_batch_operation_wizard__create_uid
 msgid "Created by"
 msgstr "Ustvaril"
 
-#. module: stock_picking_operation_quick_change
-#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__create_date
+#. module: stock_picking_batch_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_batch_operation_quick_change.field_stock_picking_batch_operation_wizard__create_date
 msgid "Created on"
 msgstr "Ustvarjeno"
 
-#. module: stock_picking_operation_quick_change
-#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__display_name
+#. module: stock_picking_batch_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_batch_operation_quick_change.field_stock_picking_batch_operation_wizard__display_name
 msgid "Display Name"
 msgstr "Prikazni naziv"
 
-#. module: stock_picking_operation_quick_change
-#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__id
+#. module: stock_picking_batch_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_batch_operation_quick_change.field_stock_picking_batch_operation_wizard__id
 msgid "ID"
 msgstr "ID"
 
-#. module: stock_picking_operation_quick_change
-#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard____last_update
+#. module: stock_picking_batch_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_batch_operation_quick_change.field_stock_picking_batch_operation_wizard____last_update
 msgid "Last Modified on"
 msgstr "Zadnjič spremenjeno"
 
-#. module: stock_picking_operation_quick_change
-#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__write_uid
+#. module: stock_picking_batch_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_batch_operation_quick_change.field_stock_picking_batch_operation_wizard__write_uid
 msgid "Last Updated by"
 msgstr "Zadnji posodobil"
 
-#. module: stock_picking_operation_quick_change
-#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__write_date
+#. module: stock_picking_batch_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_batch_operation_quick_change.field_stock_picking_batch_operation_wizard__write_date
 msgid "Last Updated on"
 msgstr "Zadnjič posodobljeno"
 
-#. module: stock_picking_operation_quick_change
-#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__new_location_dest_id
+#. module: stock_picking_batch_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_batch_operation_quick_change.field_stock_picking_batch_operation_wizard__new_location_dest_id
 msgid "New destination location"
 msgstr ""
 
-#. module: stock_picking_operation_quick_change
-#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__old_location_dest_id
+#. module: stock_picking_batch_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_batch_operation_quick_change.field_stock_picking_batch_operation_wizard__old_location_dest_id
 msgid "Old destination location"
 msgstr ""
 
-#. module: stock_picking_operation_quick_change
-#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__picking_id
-msgid "Picking"
-msgstr ""
-
-#. module: stock_picking_operation_quick_change
-#: model:ir.model.fields,field_description:stock_picking_operation_quick_change.field_stock_picking_operation_wizard__product_id
+#. module: stock_picking_batch_operation_quick_change
+#: model:ir.model.fields,field_description:stock_picking_batch_operation_quick_change.field_stock_picking_batch_operation_wizard__product_id
 msgid "Product"
 msgstr ""
 
-#. module: stock_picking_operation_quick_change
-#: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
-msgid "Stock Picking"
+#. module: stock_picking_batch_operation_quick_change
+#: model:ir.model,name:stock_picking_batch_operation_quick_change.model_stock_picking_batch_operation_wizard
+msgid "Stock Picking Batch Operation Wizard"
 msgstr ""
 
-#. module: stock_picking_operation_quick_change
-#: model:ir.model,name:stock_picking_operation_quick_change.model_stock_picking_operation_wizard
-msgid "Stock Picking Operation Wizard"
-msgstr ""
-
-#. module: stock_picking_operation_quick_change
-#: code:addons/stock_picking_operation_quick_change/wizards/stock_picking_wizard.py:0
+#. module: stock_picking_batch_operation_quick_change
+#: code:addons/stock_picking_batch_operation_quick_change/wizards/stock_picking_batch_wizard.py:0
 #, python-format
 msgid ""
 "You can not change operations destination location if picking state is not "
 "in %s"
 msgstr ""
 
-#. module: stock_picking_operation_quick_change
-#: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
-msgid "or"
-msgstr "ali"
+#~ msgid "or"
+#~ msgstr "ali"
