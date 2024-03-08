@@ -2,10 +2,10 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 from freezegun import freeze_time
 
-from odoo.tests import SavepointCase, tagged
+from odoo.tests import TransactionCase, tagged
 
 
-class TestGroupByDateBase(SavepointCase):
+class TestGroupByDateBase(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
