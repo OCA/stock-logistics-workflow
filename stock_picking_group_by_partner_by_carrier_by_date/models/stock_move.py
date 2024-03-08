@@ -1,7 +1,14 @@
 # Copyright 2020 Camptocamp (https://www.camptocamp.com)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+from datetime import timedelta
+
 from odoo import models
+
+from odoo.addons.partner_tz.tools.tz_utils import (
+    tz_to_utc_naive_datetime,
+    utc_to_tz_naive_datetime,
+)
 
 
 class StockMove(models.Model):
@@ -25,10 +32,22 @@ class StockMove(models.Model):
         domain = []
         if self._skip_assign_picking_group_domain_by_date():
             return domain
-        date_planned = self.date.replace(hour=0, minute=0, second=0)
-        date_planned_end = date_planned.replace(hour=23, minute=59, second=59)
+        tz = (
+            self.warehouse_id.partner_id.tz
+            or self.env.company.partner_id.tz
+            or self.env.user.tz
+        )
+        date_tz = utc_to_tz_naive_datetime(tz, self.date)
+        dt_start_tz = date_tz.replace(
+            hour=0,
+            minute=0,
+            second=0,
+            microsecond=0,
+        )
+        dt_start = tz_to_utc_naive_datetime(tz, dt_start_tz)
+        dt_end = dt_start + timedelta(days=1)
         domain = [
-            ("scheduled_date", "<=", date_planned_end),
-            ("scheduled_date", ">=", date_planned),
+            ("scheduled_date", "<", dt_end),
+            ("scheduled_date", ">=", dt_start),
         ]
         return domain
