@@ -86,3 +86,11 @@ class TestGroupByDate(TestGroupByDateBase):
             p9, p10 = self._create_orders_and_pickings()
             self.assertEqual(p9, p10)
             self.assertNotEqual(p9, p1)
+
+        # With tz
+        p1.scheduled_date = "2020-11-28 18:30:00"
+        with freeze_time("2020-11-28 18:00:00"):
+            self.warehouse.partner_id.tz = "Asia/Hong_Kong"
+            p11, p12 = self._create_orders_and_pickings()
+            self.assertEqual(p11, p12)
+            self.assertEqual(p11, p1)
