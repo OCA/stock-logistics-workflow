@@ -24,12 +24,6 @@
                 >{'readonly': [('state', 'in', ('done', 'cancel')), ('is_locked', '=', True)], 'invisible': [('lots_visible', '=', False)]}</attribute>
                 <attribute name="optional">show</attribute>
             </field>
-            <field name="lot_name" position="attributes">
-                <attribute
-                    name="attrs"
-                >{'readonly': [('state', 'in', ('done', 'cancel')), ('is_locked', '=', True)], 'invisible': [('lots_visible', '=', False)]}</attribute>
-                <attribute name="optional">hide</attribute>
-            </field>
             <field name="location_id" position="attributes">
                 <attribute
                     name="attrs"
