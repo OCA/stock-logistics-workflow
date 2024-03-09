@@ -39,6 +39,7 @@ addon | version | maintainers | summary
 [stock_move_line_reserved_quant](stock_move_line_reserved_quant/) | 16.0.1.0.0 | [![rousseldenis](https://github.com/rousseldenis.png?size=30px)](https://github.com/rousseldenis) | This module allows to get the link from a stock move line to the reserved quant
 [stock_move_line_serial_unique](stock_move_line_serial_unique/) | 16.0.1.0.0 |  | Stock Move Line Serial Unique
 [stock_move_manage_priority](stock_move_manage_priority/) | 16.0.1.0.0 |  | Stock Move Priority Management
+[stock_move_priority_picking_assign](stock_move_priority_picking_assign/) | 16.0.1.0.0 |  | This module allows to create a stock movement with a priority and transfer it to the picking during assignation (for new ones)
 [stock_move_propagate_first_move](stock_move_propagate_first_move/) | 16.0.1.0.1 |  | This addon propagate the picking type of the original move to all next moves created from procurement
 [stock_no_negative](stock_no_negative/) | 16.0.1.0.2 |  | Disallow negative stock levels by default
 [stock_override_procurement](stock_override_procurement/) | 16.0.1.0.0 |  | This technical module allow to override procurement values
