@@ -1,0 +1,41 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_move_priority_picking_assign
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_move_priority_picking_assign
+#: model:ir.model.fields,help:stock_move_priority_picking_assign.field_stock_picking_type__group_moves_per_priority
+msgid ""
+"Check this if you want to group moves per priority when creatingpickings "
+"during move assignation."
+msgstr ""
+
+#. module: stock_move_priority_picking_assign
+#: model:ir.model.fields,field_description:stock_move_priority_picking_assign.field_stock_picking_type__group_moves_per_priority
+msgid "Group Moves Per Priority"
+msgstr ""
+
+#. module: stock_move_priority_picking_assign
+#: model_terms:ir.ui.view,arch_db:stock_move_priority_picking_assign.stock_picking_type_form_view
+msgid "Moves priority"
+msgstr ""
+
+#. module: stock_move_priority_picking_assign
+#: model:ir.model,name:stock_move_priority_picking_assign.model_stock_picking_type
+msgid "Picking Type"
+msgstr ""
+
+#. module: stock_move_priority_picking_assign
+#: model:ir.model,name:stock_move_priority_picking_assign.model_stock_move
+msgid "Stock Move"
+msgstr ""
