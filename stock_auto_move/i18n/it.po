@@ -31,18 +31,6 @@ msgid "Automatic move"
 msgstr "Movimento automatico"
 
 #. module: stock_auto_move
-#: model:ir.model.fields,field_description:stock_auto_move.field_stock_move__display_name
-#: model:ir.model.fields,field_description:stock_auto_move.field_stock_rule__display_name
-msgid "Display Name"
-msgstr "Nome visualizzato"
-
-#. module: stock_auto_move
-#: model:ir.model.fields,field_description:stock_auto_move.field_stock_move__id
-#: model:ir.model.fields,field_description:stock_auto_move.field_stock_rule__id
-msgid "ID"
-msgstr "ID"
-
-#. module: stock_auto_move
 #: model:ir.model.fields,help:stock_auto_move.field_stock_rule__auto_move
 msgid ""
 "If this option is selected, the generated move will be automatically "
@@ -64,12 +52,6 @@ msgstr ""
 "automaticamente appena i prodotti sono disponibili."
 
 #. module: stock_auto_move
-#: model:ir.model.fields,field_description:stock_auto_move.field_stock_move____last_update
-#: model:ir.model.fields,field_description:stock_auto_move.field_stock_rule____last_update
-msgid "Last Modified on"
-msgstr "Ultima modifica il"
-
-#. module: stock_auto_move
 #: model:ir.model,name:stock_auto_move.model_stock_move
 msgid "Stock Move"
 msgstr "Movimento di magazzino"
@@ -88,3 +70,12 @@ msgstr "Test forza percorso 3=>1"
 #: model:stock.location.route,name:stock_auto_move.test_route
 msgid "Test route"
 msgstr "Test percorso"
+
+#~ msgid "Display Name"
+#~ msgstr "Nome visualizzato"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Ultima modifica il"
