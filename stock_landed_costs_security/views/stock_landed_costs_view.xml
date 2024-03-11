@@ -13,12 +13,6 @@
             </button>
         </field>
     </record>
-    <record id="stock_landed_costs.account_view_move_form_inherited" model="ir.ui.view">
-        <field
-            name="groups_id"
-            eval="[(4, ref('stock_landed_costs_security.group_stock_landed_costs_security_user'))]"
-        />
-    </record>
     <record id="account_view_move_form_inherited" model="ir.ui.view">
         <field name="model">account.move</field>
         <field
@@ -35,10 +29,43 @@
             <button name="button_create_landed_costs" position="attributes">
                 <attribute
                     name="groups"
-                    add="stock_landed_costs_security.group_stock_landed_costs_security_user"
-                    separator=","
-                />
+                >account.group_account_invoice,stock_landed_costs_security.group_stock_landed_costs_security_user
+                </attribute>
             </button>
+            <xpath
+                expr="//field[@name='invoice_line_ids']/tree/field[@name='is_landed_costs_line']"
+                position="attributes"
+            >
+                <attribute
+                    name="groups"
+                >stock.group_stock_manager,stock_landed_costs_security.group_stock_landed_costs_security_user</attribute>
+            </xpath>
+            <xpath
+                expr="//field[@name='line_ids']/tree/field[@name='is_landed_costs_line']"
+                position="attributes"
+            >
+                <attribute
+                    name="groups"
+                >stock.group_stock_manager,stock_landed_costs_security.group_stock_landed_costs_security_user</attribute>
+            </xpath>
+            <!-- Needed because Odoo only checks only exact matches on the groups attribute for its error
+            Field '...' used in attrs (...) is restricted to the group(s) ... -->
+            <xpath
+                expr="//field[@name='invoice_line_ids']/tree/field[@name='product_type']"
+                position="attributes"
+            >
+                <attribute
+                    name="groups"
+                >stock.group_stock_manager,stock_landed_costs_security.group_stock_landed_costs_security_user</attribute>
+            </xpath>
+            <xpath
+                expr="//field[@name='line_ids']/tree/field[@name='product_type']"
+                position="attributes"
+            >
+                <attribute
+                    name="groups"
+                >stock.group_stock_manager,stock_landed_costs_security.group_stock_landed_costs_security_user</attribute>
+            </xpath>
         </field>
     </record>
 
