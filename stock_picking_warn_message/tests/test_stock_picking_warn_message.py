@@ -35,6 +35,7 @@ class TestStockPickingWarnMessage(TransactionCase):
         )
 
     def test_compute_picking_warn_msg(self):
+        location_id = self.picking_type_out.default_location_src_id.id
         picking = self.env["stock.picking"].create(
             {
                 "partner_id": self.partner.id,
@@ -50,7 +51,7 @@ class TestStockPickingWarnMessage(TransactionCase):
                             "product_id": self.product.id,
                             "product_uom": self.product.uom_id.id,
                             "product_uom_qty": 1,
-                            "location_id": self.picking_type_out.default_location_src_id.id,
+                            "location_id": location_id,
                             "location_dest_id": self.customer_location.id,
                         },
                     ),
@@ -61,6 +62,7 @@ class TestStockPickingWarnMessage(TransactionCase):
 
     def test_compute_picking_warn_msg_parent(self):
         self.partner.update({"parent_id": self.parent.id})
+        location_id = self.picking_type_out.default_location_src_id.id
         picking = self.env["stock.picking"].create(
             {
                 "partner_id": self.partner.id,
@@ -76,7 +78,7 @@ class TestStockPickingWarnMessage(TransactionCase):
                             "product_id": self.product.id,
                             "product_uom": self.product.uom_id.id,
                             "product_uom_qty": 1,
-                            "location_id": self.picking_type_out.default_location_src_id.id,
+                            "location_id": location_id,
                             "location_dest_id": self.customer_location.id,
                         },
                     ),
@@ -88,6 +90,7 @@ class TestStockPickingWarnMessage(TransactionCase):
         )
 
     def test_compute_picking_warn(self):
+        location_id = self.picking_type_out.default_location_src_id.id
         picking = self.env["stock.picking"].create(
             {
                 "partner_id": self.partner.id,
@@ -103,7 +106,7 @@ class TestStockPickingWarnMessage(TransactionCase):
                             "product_id": self.product.id,
                             "product_uom": self.product.uom_id.id,
                             "product_uom_qty": 1,
-                            "location_id": self.picking_type_out.default_location_src_id.id,
+                            "location_id": location_id,
                             "location_dest_id": self.customer_location.id,
                         },
                     ),

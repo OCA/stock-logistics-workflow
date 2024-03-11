@@ -3,11 +3,15 @@
 
 from odoo import api, fields, models
 
+from odoo.addons.base.models.res_partner import WARNING_HELP, WARNING_MESSAGE
+
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    picking_warn = fields.Text(compute="_compute_picking_warn")
+    picking_warn = fields.Selection(
+        selection=WARNING_MESSAGE, compute="_compute_picking_warn", help=WARNING_HELP
+    )
     picking_warn_msg = fields.Text(compute="_compute_picking_warn_msg")
 
     @api.depends(
