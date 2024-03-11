@@ -5,7 +5,6 @@ from odoo import api, fields, models
 
 
 class StockPicking(models.Model):
-
     _inherit = "stock.picking"
 
     picking_warn = fields.Text(compute="_compute_picking_warn")
