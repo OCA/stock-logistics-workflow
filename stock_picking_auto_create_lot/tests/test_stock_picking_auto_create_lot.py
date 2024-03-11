@@ -167,3 +167,18 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
             lambda ln: ln.product_id == self.product
         )
         self.assertEqual(line.qty_done, 2.0)
+
+    def test_multiple_sml_for_one_stock_move(self):
+        """
+        Create a picking and we receive goods from supplier with different features so we
+        want different lots by each stock move line.
+        """
+        self._create_picking()
+        self._create_move(product=self.product, qty=50.0)
+        self.picking.action_assign()
+        self.picking.move_line_ids.qty_done = 25.0
+        # new sml with 25.0 units
+        self.picking.move_line_ids.copy()
+        self.picking.button_validate()
+        lots = self.picking.move_line_ids.lot_id
+        self.assertEqual(len(lots), 2)
