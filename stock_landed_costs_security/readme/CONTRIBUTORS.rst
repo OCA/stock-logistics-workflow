@@ -2,3 +2,4 @@
 
   * Pedro M. Baeza
   * César A. Sánchez
+  * Carolina Fernandez
