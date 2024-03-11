@@ -12,7 +12,7 @@
                 <div
                     class="alert alert-warning"
                     role="alert"
-                    attrs="{'invisible': [('picking_warn', '!=', 'warning')]}"
+                    invisible="picking_warn != 'warning'"
                     style="margin-bottom:0px;"
                 >
                     <p>
@@ -24,7 +24,7 @@
                 <div
                     class="alert alert-danger"
                     role="alert"
-                    attrs="{'invisible': [('picking_warn', '!=', 'block')]}"
+                    invisible="picking_warn != 'block'"
                     style="margin-bottom:0px;"
                 >
                     <p>
