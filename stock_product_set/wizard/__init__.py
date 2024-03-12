@@ -1,1 +1,1 @@
-from . import product_set_add_from_picking
+from . import stock_product_set_wizard

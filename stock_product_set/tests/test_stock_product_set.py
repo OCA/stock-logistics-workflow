@@ -3,21 +3,14 @@
 from odoo.tests import Form, common, new_test_user
 from odoo.tests.common import users
 
+from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+
 
 class TestStockProductSet(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(
-            context=dict(
-                cls.env.context,
-                mail_create_nolog=True,
-                mail_create_nosubscribe=True,
-                mail_notrack=True,
-                no_reset_password=True,
-                tracking_disable=True,
-            )
-        )
+        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
         cls.product_a = cls.env["product.product"].create(
             {"name": "Test product A", "type": "product"}
         )
@@ -48,7 +41,7 @@ class TestStockProductSet(common.TransactionCase):
         )
         picking = picking_form.save()
         wizard_form = Form(
-            self.env["product.set.add.from.picking"].with_context(
+            self.env["stock.product.set.wizard"].with_context(
                 default_picking_id=picking.id
             )
         )

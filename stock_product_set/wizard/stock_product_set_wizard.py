@@ -1,14 +1,13 @@
 # Copyright 2023-2024 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
-from odoo import fields, models
+from odoo import _, exceptions, fields, models
 
 
-class ProductSetAddFromPicking(models.TransientModel):
-    _inherit = "product.set.add"
-    _name = "product.set.add.from.picking"
-    _description = "product.set.add.from.picking"
+class StockProductSetWizard(models.TransientModel):
+    _inherit = "product.set.wizard"
+    _name = "stock.product.set.wizard"
+    _description = "Wizard model to add product set into a picking form"
 
-    order_id = fields.Many2one(required=False)
     picking_id = fields.Many2one(
         comodel_name="stock.picking",
         string="Picking",
@@ -19,6 +18,14 @@ class ProductSetAddFromPicking(models.TransientModel):
         ondelete="cascade",
     )
     partner_id = fields.Many2one(related="picking_id.partner_id", ondelete="cascade")
+
+    def _compute_product_set_line_ids(self):
+        res = super()._compute_product_set_line_ids()
+        for rec in self:
+            rec.product_set_line_ids = rec.product_set_id.set_line_ids.filtered(
+                "product_id"
+            )
+        return res
 
     def _prepare_stock_moves(self):
         moves = []
@@ -33,10 +40,18 @@ class ProductSetAddFromPicking(models.TransientModel):
             self.picking_id, self.quantity
         )
 
+    def _check_partner(self):
+        res = super()._check_partner()
+        if self.partner_id != self.product_set_id.partner_id:
+            raise exceptions.ValidationError(
+                _("This set of products is restricted for this user.")
+            )
+        return res
+
     def add_set(self):
+        res = super().add_set()
         if not self.picking_id:
-            return super().add_set()
-        self._check_partner()
+            return res
         moves = self._prepare_stock_moves()
         if moves:
             self.picking_id.write({"move_ids_without_package": moves})
