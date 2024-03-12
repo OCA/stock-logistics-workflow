@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <record id="product_set_add_from_picking_form_view" model="ir.ui.view">
-        <field name="name">product.set.add.from.picking.form</field>
-        <field name="model">product.set.add.from.picking</field>
+        <field name="name">stock.product.set.form</field>
+        <field name="model">stock.product.set.wizard</field>
         <field name="arch" type="xml">
             <form>
                 <group name="main" colspan="4">
@@ -17,11 +17,11 @@
                     />
                     <field name="quantity" />
                 </group>
-                <group name="lines" colspan="4">
+                <group name="lines">
                     <field
                         name="product_set_line_ids"
                         nolabel="1"
-                        colspan="4"
+                        colspan="2"
                         domain="[('product_set_id', '=', product_set_id)]"
                     >
                         <tree>
@@ -49,7 +49,7 @@
         model="ir.actions.act_window"
     >
         <field name="name">Add a set in a picking</field>
-        <field name="res_model">product.set.add.from.picking</field>
+        <field name="res_model">stock.product.set.wizard</field>
         <field name="view_mode">form</field>
         <field name="view_id" ref="product_set_add_from_picking_form_view" />
         <field name="domain">[]</field>
