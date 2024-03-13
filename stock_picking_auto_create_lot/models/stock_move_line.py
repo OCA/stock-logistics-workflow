@@ -35,5 +35,8 @@ class StockMoveLine(models.Model):
         for line in self:
             lot = first(lots_by_product[line.product_id.id])
             line.lot_id = lot
-            if lot.product_id.tracking == "serial":
+            # If product has tracking we have to remove the lot to assign the next
+            # lot created. If not do it, different stock move lines will have the same
+            # lot and we will have orphans lots.
+            if lot.product_id.tracking != "none":
                 lots_by_product[line.product_id.id] -= lot
