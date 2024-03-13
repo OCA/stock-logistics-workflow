@@ -9,43 +9,44 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-01 02:08+0000\n"
-"PO-Revision-Date: 2017-06-01 02:08+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"PO-Revision-Date: 2024-03-13 13:34+0000\n"
+"Last-Translator: Pierre-François Teyssier <pierre-francois@scalizer.fr>\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_split_picking
 #: model_terms:ir.ui.view,arch_db:stock_split_picking.view_stock_split_picking
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #. module: stock_split_picking
 #. odoo-python
 #: code:addons/stock_split_picking/models/stock_picking.py:0
 #, python-format
 msgid "Cannot split off all moves from picking %s"
-msgstr ""
+msgstr "On ne pas diviser tous les mouvements du transfert %s"
 
 #. module: stock_split_picking
 #. odoo-python
 #: code:addons/stock_split_picking/models/stock_picking.py:0
 #, python-format
 msgid "Cannot split picking {name} in state {state}"
-msgstr ""
+msgstr "On ne peut pas diviser le transfert {name} au statut {state}"
 
 #. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Créé par"
 
 #. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Créé le"
 
 #. module: stock_split_picking
 #: model_terms:ir.ui.view,arch_db:stock_split_picking.view_stock_split_picking
@@ -55,12 +56,12 @@ msgstr ""
 #. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom d'affichage"
 
 #. module: stock_split_picking
 #: model:ir.model.fields.selection,name:stock_split_picking.selection__stock_split_picking__mode__done
 msgid "Done quantities"
-msgstr ""
+msgstr "Quantités faites"
 
 #. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking__id
@@ -70,24 +71,24 @@ msgstr ""
 #. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Dernière modification le"
 
 #. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Dernière modification par"
 
 #. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Dernière modification le"
 
 #. module: stock_split_picking
 #. odoo-python
 #: code:addons/stock_split_picking/models/stock_picking.py:0
 #, python-format
 msgid "Mark as todo this picking please."
-msgstr ""
+msgstr "Marquer ce transfert comme à faire svp."
 
 #. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking__mode
@@ -97,22 +98,22 @@ msgstr ""
 #. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking__move_ids
 msgid "Move"
-msgstr ""
+msgstr "Mouvement"
 
 #. module: stock_split_picking
 #: model:ir.model.fields.selection,name:stock_split_picking.selection__stock_split_picking__mode__move
 msgid "One picking per move"
-msgstr ""
+msgstr "Un transfert par ligne"
 
 #. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking__picking_ids
 msgid "Picking"
-msgstr ""
+msgstr "Transfert"
 
 #. module: stock_split_picking
 #: model:ir.model.fields.selection,name:stock_split_picking.selection__stock_split_picking__mode__selection
 msgid "Select move lines to split off"
-msgstr ""
+msgstr "Sélectionner les lignes de mouvement à diviser"
 
 #. module: stock_split_picking
 #: model_terms:ir.ui.view,arch_db:stock_split_picking.view_picking_form
@@ -123,19 +124,19 @@ msgstr "Diviser"
 #. module: stock_split_picking
 #: model:ir.model,name:stock_split_picking.model_stock_split_picking
 msgid "Split a picking"
-msgstr ""
+msgstr "Diviser un transfert"
 
 #. module: stock_split_picking
 #: model:ir.actions.act_window,name:stock_split_picking.action_stock_split_picking
 msgid "Split pickings"
-msgstr ""
+msgstr "Diviser les transferts"
 
 #. module: stock_split_picking
 #. odoo-python
 #: code:addons/stock_split_picking/models/stock_picking.py:0
 #, python-format
 msgid "The backorder %s has been created."
-msgstr ""
+msgstr "Le reliquat %s a été créé."
 
 #. module: stock_split_picking
 #: model:ir.model,name:stock_split_picking.model_stock_picking
@@ -145,7 +146,7 @@ msgstr "Transfert"
 #. module: stock_split_picking
 #: model_terms:ir.ui.view,arch_db:stock_split_picking.view_stock_split_picking
 msgid "Unit of Measure"
-msgstr ""
+msgstr "Unité de mesure"
 
 #. module: stock_split_picking
 #. odoo-python
@@ -154,8 +155,10 @@ msgstr ""
 msgid ""
 "You must enter done quantity in order to split your picking in several ones."
 msgstr ""
+"Vous devez renseigner une quantité faite afin de diviser votre transfert en "
+"plusieurs."
 
 #. module: stock_split_picking
 #: model_terms:ir.ui.view,arch_db:stock_split_picking.view_stock_split_picking
 msgid "or"
-msgstr ""
+msgstr "ou"
