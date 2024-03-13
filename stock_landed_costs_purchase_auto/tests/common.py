@@ -1,23 +1,15 @@
-# Copyright 2021-2023 Tecnativa - Víctor Martínez
+# Copyright 2021-2024 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 
-from odoo.tests import Form, common, new_test_user
+from odoo.tests import Form, new_test_user
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestPurchaseOrderBase(common.TransactionCase):
+class TestPurchaseOrderBase(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        # Remove this variable in v16 and put instead:
-        # from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
-        DISABLED_MAIL_CONTEXT = {
-            "tracking_disable": True,
-            "mail_create_nolog": True,
-            "mail_create_nosubscribe": True,
-            "mail_notrack": True,
-            "no_reset_password": True,
-        }
-        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
         cls.company = cls.env.ref("base.main_company")
         cls.category = cls.env["product.category"].create(
             {"name": "Test category", "property_cost_method": "average"}
