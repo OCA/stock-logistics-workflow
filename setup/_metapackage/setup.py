@@ -54,6 +54,7 @@ setuptools.setup(
         'odoo-addon-stock_picking_mass_action>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_partner_note>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_product_link>=16.0dev,<16.1dev',
+        'odoo-addon-stock_picking_progress>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_purchase_order_link>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_sale_order_link>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_send_by_mail>=16.0dev,<16.1dev',
