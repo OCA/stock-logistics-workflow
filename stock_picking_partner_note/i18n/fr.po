@@ -52,3 +52,26 @@ msgstr "Opération Type de note"
 #: model_terms:ir.ui.view,arch_db:stock_picking_partner_note.view_stock_picking_note_type_tree
 msgid "Picking Note Types"
 msgstr "Opération Types de note"
+
+#. module: stock_picking_partner_note
+#. odoo-python
+#: code:addons/stock_picking_partner_note/models/stock_picking_note.py:0
+#, python-format
+msgid ""
+"You cannot update or delete a note that linked to multiple contacts: "
+"%(partner_ids)s"
+msgstr "Vous ne pouvez pas mettre à jour ou supprimer une note liée à plusieurs contacts."
+
+#. module: stock_picking_partner_note
+#: model_terms:ir.ui.view,arch_db:stock_picking_partner_note.res_config_settings_view_form
+msgid ""
+"Add a constraint to check if the picking note is already in use on multiple "
+"partner"
+msgstr "Ajout d'une contrainte pour vérifier si la note de prélèvement est déjà utilisée par plusieurs "
+"partenaires"
+
+#. module: stock_picking_partner_note
+#: model:ir.model.fields,field_description:stock_picking_partner_note.field_res_company__check_note_already_in_use
+#: model:ir.model.fields,field_description:stock_picking_partner_note.field_res_config_settings__check_note_already_in_use
+msgid "Check picking note already in use"
+msgstr "Vérifier la note de prélèvement déjà utilisée"
