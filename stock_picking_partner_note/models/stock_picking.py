@@ -8,7 +8,7 @@ from odoo import api, fields, models
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    note = fields.Html(compute="_compute_note", store=True)
+    note = fields.Text(compute="_compute_note", store=True)
 
     # TODO: ideally, we should add more detailed dependencies here;
     # however, there's a CacheMiss error that occurs when adding
@@ -27,4 +27,4 @@ class StockPicking(models.Model):
                 for note in picking_notes
                 if note.name and note.name.strip()
             ]
-            picking.note = "<br />".join(picking_notes)
+            picking.note = "\n".join(picking_notes)
