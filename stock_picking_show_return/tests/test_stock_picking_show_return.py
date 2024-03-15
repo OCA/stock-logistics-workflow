@@ -44,7 +44,8 @@ class TestStockPickingShowReturn(TransactionCase):
 
     def test_returned_ids_field(self):
         self.picking.action_assign()
-        self.picking.move_line_ids.qty_done = 1
+        self.picking.move_line_ids.quantity = 1
+        self.picking.move_line_ids.picked = True
         self.picking._action_done()
         wizard = self.get_return_picking_wizard(self.picking)
         wizard.create_returns()
@@ -53,7 +54,8 @@ class TestStockPickingShowReturn(TransactionCase):
 
     def test_source_picking_id_field(self):
         self.picking.action_assign()
-        self.picking.move_line_ids.qty_done = 1
+        self.picking.move_line_ids.quantity = 1
+        self.picking.move_line_ids.picked = True
         self.picking._action_done()
         wizard = self.get_return_picking_wizard(self.picking)
         wizard.create_returns()
