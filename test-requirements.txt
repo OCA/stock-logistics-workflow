@@ -1,1 +1,6 @@
 odoo-test-helper
+odoo-addon-delivery-procurement-group-carrier @ git+https://github.com/OCA/stock-logistics-workflow.git@refs/pull/1158/head#subdirectory=setup/delivery_procurement_group_carrier
+odoo-addon-stock-picking-group-by-partner-by-carrier @ git+https://github.com/OCA/stock-logistics-workflow.git@refs/pull/1165/head#subdirectory=setup/stock_picking_group_by_partner_by_carrier
+odoo-addon-sale-procurement-customer @ git+https://github.com/OCA/sale-workflow.git@refs/pull/2329/head#subdirectory=setup/sale_procurement_customer
+odoo-addon-stock-procurement-customer @ git+https://github.com/OCA/stock-logistics-workflow@refs/pull/1185/head#subdirectory=setup/stock_procurement_customer
+odoo-addon-stock-picking-group-by-base @ git+https://github.com/OCA/stock-logistics-workflow.git@refs/pull/1187/head#subdirectory=setup/stock_picking_group_by_base
