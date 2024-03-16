@@ -1,7 +1,9 @@
 # Copyright 2018 Tecnativa - Sergio Teruel
 # Copyright 2020 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo.exceptions import UserError
+from freezegun import freeze_time
+
+from odoo.exceptions import UserError, ValidationError
 from odoo.tests import TransactionCase
 
 from .common import CommonStockPickingAutoCreateLot
@@ -17,7 +19,7 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
         cls.product_serial_not_auto = cls._create_product(tracking="serial", auto=False)
         cls.picking_type_in.auto_create_lot = True
 
-        cls._create_picking()
+        cls.picking = cls._create_picking()
         cls._create_move(product=cls.product, qty=2.0)
         cls._create_move(product=cls.product_serial, qty=3.0)
         cls._create_move(product=cls.product_serial_not_auto, qty=4.0)
@@ -69,6 +71,34 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
             [("product_id", "=", self.product_serial.id)]
         )
         self.assertEqual(len(lot), 3)
+        lot = self.env["stock.lot"].search(
+            [("product_id", "=", self.product_serial_not_auto.id)]
+        )
+        self.assertFalse(lot)
+
+    def test_auto_create_lot_for_all_products(self):
+        self.picking_type_in.auto_create_lot_for_all_products = True
+        self.product.auto_create_lot = False
+        self.picking.action_assign()
+        # Check the display field
+        move = self.picking.move_ids.filtered(
+            lambda m: m.product_id == self.product_serial
+        )
+        self.assertFalse(move.display_assign_serial)
+
+        move = self.picking.move_ids.filtered(
+            lambda m: m.product_id == self.product_serial_not_auto
+        )
+        self.assertFalse(move.display_assign_serial)
+
+        self.picking._action_done()
+        lot = self.env["stock.lot"].search([("product_id", "=", self.product.id)])
+        self.assertEqual(len(lot), 1)
+        # Search for serials
+        lot = self.env["stock.lot"].search(
+            [("product_id", "=", self.product_serial_not_auto.id)]
+        )
+        self.assertEqual(len(lot), 4)
 
     def test_auto_create_transfer_lot(self):
         self.picking.action_assign()
@@ -121,9 +151,8 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
         """
         self.picking.action_assign()
         picking_1 = self.picking
-        self._create_picking()
-        picking_2 = self.picking
-        self._create_move(product=self.product_serial, qty=3.0)
+        picking_2 = self._create_picking()
+        self._create_move(product=self.product_serial, qty=3.0, picking=picking_2)
         picking_2.action_assign()
         pickings = picking_1 | picking_2
 
@@ -144,3 +173,51 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
             [("product_id", "=", self.product_serial.id)]
         )
         self.assertEqual(len(lot), 6)
+
+    @freeze_time("2023-03-21")
+    def test_lot_name_expression(self):
+        self.picking_type_in.auto_create_lot_name_expression = (
+            "{{stock_move_line.picking_id.partner_id.name}}/"
+            "{{datetime.date.today().isoformat()}}"
+        )
+        self.picking.action_assign()
+        self.picking._action_done()
+        lot = self.env["stock.lot"].search([("product_id", "=", self.product.id)])
+        self.assertEqual(len(lot), 1)
+        self.assertEqual(lot.name, "Supplier - test/2023-03-21")
+        # products with serial tracking should not use the expression
+        serials = self.env["stock.lot"].search(
+            [("product_id", "=", self.product_serial.id)]
+        )
+        self.assertEqual(len(serials), 3)
+        self.assertRegex(serials[0].name, r"^\d+$")
+        self.assertNotEqual(serials[0].name, serials[1].name)
+
+    def test_not_reuse_existing_lot(self):
+        # self.picking_type_in.use_existing_lots is False by default
+        self.picking_type_in.auto_create_lot_name_expression = "test lot"
+        self.env["stock.lot"].create(
+            {
+                "name": "test lot",
+                "product_id": self.product.id,
+                "company_id": self.env.company.id,
+            }
+        )
+        self.picking.action_assign()
+        with self.assertRaises(ValidationError):
+            self.picking._action_done()
+
+    def test_reuse_existing_lot(self):
+        self.picking_type_in.use_existing_lots = True
+        self.picking_type_in.auto_create_lot_name_expression = "test lot"
+        self.env["stock.lot"].create(
+            {
+                "name": "test lot",
+                "product_id": self.product.id,
+                "company_id": self.env.company.id,
+            }
+        )
+        self.picking.action_assign()
+        self.picking._action_done()
+        lot = self.env["stock.lot"].search([("product_id", "=", self.product.id)])
+        self.assertEqual(len(lot), 1)

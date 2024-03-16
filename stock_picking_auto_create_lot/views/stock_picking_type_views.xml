@@ -9,6 +9,15 @@
         <field name="arch" type="xml">
             <field name="use_existing_lots" position="after">
                 <field name="auto_create_lot" />
+                <field
+                    name="auto_create_lot_name_expression"
+                    attrs="{'readonly': [('auto_create_lot', '=', False)]}"
+                    style="overflow-wrap: anywhere"
+                />
+                <field
+                    name="auto_create_lot_for_all_products"
+                    attrs="{'readonly': [('auto_create_lot', '=', False)]}"
+                />
             </field>
         </field>
     </record>

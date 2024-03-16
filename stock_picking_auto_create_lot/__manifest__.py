@@ -6,12 +6,16 @@
     "summary": "Auto create lots for incoming pickings",
     "version": "16.0.1.0.0",
     "development_status": "Production/Stable",
-    "category": "stock",
+    "category": "Inventory",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "ACSONE SA/NV, Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
-    "installable": True,
-    "depends": ["stock"],
-    "data": ["views/product_views.xml", "views/stock_picking_type_views.xml"],
+    "depends": [
+        "stock",
+    ],
+    "data": [
+        "views/product_views.xml",
+        "views/stock_picking_type_views.xml",
+    ],
     "maintainers": ["sergio-teruel"],
 }
