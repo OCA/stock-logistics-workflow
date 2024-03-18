@@ -13,7 +13,7 @@
     # TODO: consider splitting the hook for `_assign_picking` defined in
     # `stock_picking_group_by_partner_by_carrier`
     # to avoid depending on `stock_picking_group_by_partner_by_carrier`.
-    "depends": ["stock_picking_group_by_partner_by_carrier"],
+    "depends": ["partner_tz", "stock_picking_group_by_partner_by_carrier"],
     "data": ["views/stock_picking_type.xml"],
     "installable": True,
     "license": "AGPL-3",
