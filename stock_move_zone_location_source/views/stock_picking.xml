@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="view_picking_form">
+        <field
+            name="name"
+        >stock.picking.form (in stock_move_zone_location_source)</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='move_ids_without_package']/tree/field[@name='product_uom_qty']"
+                position="after"
+            >
+                <field
+                    name="source_zone_location_ids"
+                    widget="many2many_tags"
+                    optional="hide"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="stock_picking_type_form_view">
+        <field
+            name="name"
+        >stock.location.form (in stock_move_zone_location_source)</field>
+        <field name="model">stock.location</field>
+        <field
+            name="inherit_id"
+            ref="stock_location_zone.stock_location_form_inherit"
+        />
+        <field name="arch" type="xml">
+            <field name="is_zone" position="after">
+                <field
+                    name="is_considered_as_source"
+                    attrs="{'invisible': [('is_zone', '=', False)]}"
+                />
+            </field>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="stock_picking_type_search_view">
+        <field
+            name="name"
+        >stock.location.search (in stock_move_zone_location_source)</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_search" />
+        <field name="arch" type="xml">
+            <filter name="inactive" position="after">
+                <separator />
+                <filter
+                    string="Is considered as Source"
+                    name="is_considered_as_source"
+                    domain="[('is_considered_as_source', '=', True)]"
+                />
+            </filter>
+        </field>
+    </record>
+
+</odoo>
