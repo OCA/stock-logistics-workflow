@@ -20,13 +20,21 @@ class ProductTemplate(models.Model):
             products_to_update._archive_orderpoints_on_mto_removal()
         return res
 
+    def _template_is_mto(self):
+        self.ensure_one()
+        mto_route = self.env.ref("stock.route_warehouse0_mto", raise_if_not_found=False)
+        return mto_route in self.route_ids
+
+    def _template_is_not_mto(self):
+        self.ensure_one()
+        return not self._template_is_mto()
+
     def _filter_mto_products(self, mto=True):
         mto_route = self.env.ref("stock.route_warehouse0_mto", raise_if_not_found=False)
         if mto:
-            func = lambda p: mto_route in p.route_ids  # noqa
+            return self.filtered(lambda t: t._template_is_mto())
         else:
-            func = lambda p: mto_route not in p.route_ids  # noqa
-        return self.filtered(func)
+            return self.filtered(lambda t: t._template_is_not_mto())
 
     def _get_orderpoints_to_archive_domain(self):
         warehouses = self.env["stock.warehouse"].search([])
