@@ -5,3 +5,7 @@
   * Jacques-Etienne Baudoux <je@bcim.be>
 
 * Phuc Tran Thanh <phuc@trobz.com>
+
+* ACSONE SA/NV:
+  * Denis Roussel <denis.roussel@acsone.eu>
+  * Laurent Mignon <laurent.mignon@acsone.eu>
