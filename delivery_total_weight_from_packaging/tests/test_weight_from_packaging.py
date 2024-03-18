@@ -74,3 +74,26 @@ class TestWeight(TestShippingWeightCommon):
         # I can still override it
         pack.shipping_weight = 20
         self.assertEqual(pack.shipping_weight, 20)
+
+    def test_packaging_with_base_weight(self):
+        pallet_type = self.env["product.packaging"].create(
+            {"name": "Pallet", "base_weight": 10.0}
+        )
+        pack_pallet = self.env["stock.quant.package"].create(
+            {"name": "Pack Pallet", "packaging_id": pallet_type.id}
+        )
+        self.env["stock.quant"]._update_available_quantity(
+            self.product, self.wh.lot_stock_id, 10.0, package_id=pack_pallet
+        )
+        self.move._action_assign()
+        # 10 units, so 2 Boxes, with max weight 7kgs each = 14kgs
+        # Weight of the pallet itself, 10kgs
+        # total = 24kgs
+        self.assertEqual(pack_pallet.weight, 24) # 10kgs for products, 10 for the pallet
+        self.assertEqual(pack_pallet.shipping_weight, 24)
+        # Set max weight to 0, so the product's weight (1kg each) is used.
+        # Total = 20kgs
+        self.product.packaging_ids.max_weight = 0.0
+        self.move._action_assign()
+        self.assertEqual(pack_pallet.weight, 20)
+        self.assertEqual(pack_pallet.shipping_weight, 20)

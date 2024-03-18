@@ -17,5 +17,7 @@
         # OCA/product-attribute
         "product_total_weight_from_packaging",
     ],
-    "data": [],
+    "data": [
+        "views/product_packaging.xml",
+    ],
 }
