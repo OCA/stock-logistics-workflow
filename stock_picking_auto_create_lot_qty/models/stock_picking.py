@@ -24,7 +24,7 @@ class StockPicking(models.Model):
         if not new_lines:
             count_by_product = dict.fromkeys(lines.mapped("product_id"), 0)
             for line in lines:
-                count_by_product[line.product_id] += line.product_uom_qty
+                count_by_product[line.product_id] += line.reserved_uom_qty
             for product_id, product_qty in count_by_product.items():
                 current_product_qty = product_id.uom_id._compute_quantity(
                     product_qty,

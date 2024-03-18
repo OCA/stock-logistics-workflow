@@ -1,13 +1,13 @@
 # Copyright (C) 2023 Cetmix OÜ
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo.exceptions import UserError
-from odoo.tests import SavepointCase
+from odoo.tests.common import TransactionCase
 
 from .common import CommonStockPickingAutoCreateLotQty
 
 
 class TestStockPickingAutoCreateLotQty(
-    CommonStockPickingAutoCreateLotQty, SavepointCase
+    CommonStockPickingAutoCreateLotQty, TransactionCase
 ):
     @classmethod
     def setUpClass(cls):
@@ -40,7 +40,7 @@ class TestStockPickingAutoCreateLotQty(
         )
         self.picking.button_validate()
         # Check the display field
-        move = self.picking.move_lines.filtered(
+        move = self.picking.move_ids.filtered(
             lambda m: m.product_id
             == self.product_serial_auto_qty_5_multiples_allowed_false
         )
@@ -49,7 +49,7 @@ class TestStockPickingAutoCreateLotQty(
         )
 
         # Search for serials
-        lot = self.env["stock.production.lot"].search(
+        lot = self.lot_obj.search(
             [
                 (
                     "product_id",
@@ -78,7 +78,7 @@ class TestStockPickingAutoCreateLotQty(
         )
         self.picking.button_validate()
         # Check the display field
-        move = self.picking.move_lines.filtered(
+        move = self.picking.move_ids.filtered(
             lambda m: m.product_id
             == self.product_serial_auto_qty_5_multiples_allowed_true
         )
@@ -87,7 +87,7 @@ class TestStockPickingAutoCreateLotQty(
         )
 
         # Search for serials
-        lot = self.env["stock.production.lot"].search(
+        lot = self.lot_obj.search(
             [
                 (
                     "product_id",

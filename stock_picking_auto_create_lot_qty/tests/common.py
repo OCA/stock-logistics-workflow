@@ -7,7 +7,7 @@ class CommonStockPickingAutoCreateLotQty(object):
     def setUpClass(cls):
         super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
-        cls.lot_obj = cls.env["stock.production.lot"]
+        cls.lot_obj = cls.env["stock.lot"]
         cls.warehouse = cls.env.ref("stock.warehouse0")
         cls.picking_type_in = cls.env.ref("stock.picking_type_in")
         cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
@@ -62,7 +62,7 @@ class CommonStockPickingAutoCreateLotQty(object):
                         0,
                         {
                             "product_id": product.id,
-                            "product_uom_qty": qty,
+                            "reserved_uom_qty": qty,
                             "product_uom_id": product.uom_id.id,
                             "location_id": cls.supplier_location.id,
                             "location_dest_id": location_dest.id,
