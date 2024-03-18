@@ -1,0 +1,4 @@
+odoo14-addon-stock-move-planned-consumed-date @ git+https://github.com/OCA/stock-logistics-workflow@refs/pull/1508/head#subdirectory=setup/stock_move_planned_consumed_date
+# not strictly required but make able to test
+# stock_restrict_by_planned_consumed_date it on runboat
+odoo14-addon-stock-restrict-by-planned-consumed-date @ git+https://github.com/OCA/stock-logistics-workflow@refs/pull/1509/head#subdirectory=setup/stock_restrict_by_planned_consumed_date
