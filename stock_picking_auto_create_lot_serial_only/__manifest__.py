@@ -5,7 +5,7 @@
     "name": "Stock Picking Auto Create Lot Serial Only",
     "summary": """
         This module restrict lot auto creation to serial only""",
-    "version": "13.0.1.0.0",
+    "version": "16.0.1.0.0",
     "license": "AGPL-3",
     "development_status": "Production/Stable",
     "maintainers": ["rousseldenis"],
