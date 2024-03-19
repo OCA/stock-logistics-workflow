@@ -73,6 +73,7 @@ msgstr "Agrupar productos en batch picking"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model,name:stock_picking_batch_extended.model_stock_picking_batch
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_move__batch_id
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__name
 msgid "Batch Transfer"
 msgstr "Grupo de albaranes"
@@ -81,6 +82,11 @@ msgstr "Grupo de albaranes"
 #: model:ir.model,name:stock_picking_batch_extended.model_stock_picking_to_batch
 msgid "Batch Transfer Lines"
 msgstr "Líneas de Transferencia de Lotes"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_move__batch_id
+msgid "Batch associated to this transfer"
+msgstr "Grupo asociado a este albarán"
 
 #. module: stock_picking_batch_extended
 #: model:ir.actions.report,name:stock_picking_batch_extended.action_report_batch_picking
@@ -336,6 +342,11 @@ msgid "Sequence"
 msgstr "Secuencia"
 
 #. module: stock_picking_batch_extended
+#: model:ir.model,name:stock_picking_batch_extended.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.res_config_settings_view_form
 msgid "Switch behaviour bettwen Odoo and OCA for batch validation"
 msgstr ""
@@ -445,9 +456,6 @@ msgstr "el usuario al que se le asigna el grupo de albaranes por defecto"
 
 #~ msgid "Batch Picking properties"
 #~ msgstr "Propiedades del grupo de albaranes"
-
-#~ msgid "Batch associated to this transfer"
-#~ msgstr "Grupo asociado a este albarán"
 
 #~ msgid "Cancel"
 #~ msgstr "Cancelar"
