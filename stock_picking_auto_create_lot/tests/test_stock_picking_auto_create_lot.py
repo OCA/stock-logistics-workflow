@@ -147,6 +147,7 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, SavepointCa
             [("product_id", "=", self.product.id)]
         )
         self.assertEqual(len(lot), 1)
+
         # Search for serials
         lot = self.env["stock.production.lot"].search(
             [("product_id", "=", self.product_serial.id)]
