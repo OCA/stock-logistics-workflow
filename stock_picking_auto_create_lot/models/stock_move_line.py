@@ -35,5 +35,4 @@ class StockMoveLine(models.Model):
         for line in self:
             lot = first(lots_by_product[line.product_id.id])
             line.lot_id = lot
-            if lot.product_id.tracking == "serial":
-                lots_by_product[line.product_id.id] -= lot
+            lots_by_product[line.product_id.id] -= lot
