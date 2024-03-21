@@ -8,14 +8,11 @@ from odoo import api, fields, models
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    note = fields.Html(compute="_compute_note", store=True)
+    note = fields.Text(compute="_compute_note", store=True)
 
-    # TODO: ideally, we should add more detailed dependencies here;
-    # however, there's a CacheMiss error that occurs when adding
-    # "picking_type_id.partner_note_type_ids" and "partner_id.stock_picking_note_ids"
-    # so we're leaving it like this for now
-    # (the partner should be enough to trigger the compute).
-    @api.depends("partner_id")
+    @api.depends(
+        "partner_id.stock_picking_note_ids", "picking_type_id.partner_note_type_ids"
+    )
     def _compute_note(self):
         for picking in self:
             picking_type_note_type_ids = picking.picking_type_id.partner_note_type_ids
@@ -27,4 +24,4 @@ class StockPicking(models.Model):
                 for note in picking_notes
                 if note.name and note.name.strip()
             ]
-            picking.note = "<br />".join(picking_notes)
+            picking.note = "\n".join(picking_notes)
