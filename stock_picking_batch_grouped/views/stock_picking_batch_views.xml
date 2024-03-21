@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright 2023 Simone Rubino - Aion Tech
+  ~ License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+  -->
+<odoo>
+    <record id="stock_picking_batch_form" model="ir.ui.view">
+        <field name="name">Add Grouped lines to Batch Transfer form view</field>
+        <field name="model">stock.picking.batch</field>
+        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='move_line_ids']/.." position="before">
+                <page string="Products">
+                    <field name="grouped_line_ids">
+                        <tree editable="top" create="False">
+                            <field name="product_id" />
+                            <field name="lot_id" />
+                            <field name="location_id" />
+                            <field name="location_dest_id" />
+                            <field name="reserved_qty" />
+                            <field name="done_qty" />
+                            <field
+                                name="company_id"
+                                groups="base.group_multi_company"
+                            />
+                        </tree>
+                    </field>
+                </page>
+
+            </xpath>
+        </field>
+    </record>
+</odoo>
