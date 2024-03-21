@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+        <record id="custom_main_stock_picking_form_view" model="ir.ui.view">
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form" />
+            <field name="arch" type="xml">
+                <xpath
+                expr="//field[@name='move_ids_without_package']/tree/field[@name='product_id']"
+                position="after"
+            >
+                    <field
+                    name="restrict_lot_id"
+                    readonly="1"
+                    optional="show"
+                    groups="stock.group_production_lot"
+                />
+                </xpath>
+            </field>
+        </record>
+
+        <record id="custom_stock_picking_search_view" model="ir.ui.view">
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_internal_search" />
+            <field name="arch" type="xml">
+                <field name="product_id" position="after">
+                    <field
+                    name="restrict_lot_id"
+                    string="Lot"
+                    groups="stock.group_production_lot"
+                />
+                </field>
+            </field>
+        </record>
+
+</odoo>
