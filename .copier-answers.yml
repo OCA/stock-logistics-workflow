@@ -17,6 +17,7 @@ org_name: Odoo Community Association (OCA)
 org_slug: OCA
 rebel_module_groups:
 - stock_picking_to_batch_group_fields
+- product_expiry_simple
 repo_description: 'TODO: add repo description.'
 repo_name: stock-logistics-workflow
 repo_slug: stock-logistics-workflow

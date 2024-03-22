@@ -1,0 +1,135 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* product_expiry_simple
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-13 11:44+0000\n"
+"PO-Revision-Date: 2022-12-13 11:44+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: product_expiry_simple
+#: model_terms:ir.ui.view,arch_db:product_expiry_simple.view_stock_quant_form_editable
+msgid ""
+"<span class=\"badge badge-danger\" attrs=\"{'invisible': [('expired', '=', "
+"False)]}\">Expired</span>"
+msgstr "<span class=\"badge badge-danger\" attrs=\"{'invisible': [('expired', '=', False)]}\">Périmé</span>"
+
+#. module: product_expiry_simple
+#: model_terms:ir.ui.view,arch_db:product_expiry_simple.view_production_lot_form
+msgid ""
+"<span class=\"badge text-bg-danger\" attrs=\"{'invisible': [('expired', '=',"
+" False)]}\">Expired</span>"
+msgstr "<span class=\"badge text-bg-danger\" attrs=\"{'invisible': [('expired', '=', False)]}\">Périmé</span>"
+
+#. module: product_expiry_simple
+#: model:ir.model.fields,field_description:product_expiry_simple.field_stock_lot__expired
+#: model:ir.model.fields,field_description:product_expiry_simple.field_stock_quant__expired
+#: model_terms:ir.ui.view,arch_db:product_expiry_simple.quant_search_view
+#: model_terms:ir.ui.view,arch_db:product_expiry_simple.search_product_lot_filter
+msgid "Expired"
+msgstr "Périmé"
+
+#. module: product_expiry_simple
+#: model:ir.model.fields,field_description:product_expiry_simple.field_stock_lot__expiry_date
+#: model:ir.model.fields,field_description:product_expiry_simple.field_stock_move_line__expiry_date
+#: model:ir.model.fields,field_description:product_expiry_simple.field_stock_quant__expiry_date
+#: model_terms:ir.ui.view,arch_db:product_expiry_simple.quant_search_view
+#: model_terms:ir.ui.view,arch_db:product_expiry_simple.search_product_lot_filter
+msgid "Expiry Date"
+msgstr "Date de péremption"
+
+#. module: product_expiry_simple
+#: model:ir.model,name:product_expiry_simple.model_stock_lot
+msgid "Lot/Serial"
+msgstr "Lot/N° de série"
+
+#. module: product_expiry_simple
+#: model_terms:ir.ui.view,arch_db:product_expiry_simple.quant_search_view
+#: model_terms:ir.ui.view,arch_db:product_expiry_simple.search_product_lot_filter
+msgid "Not Expired"
+msgstr "Non périmé"
+
+#. module: product_expiry_simple
+#: model_terms:ir.ui.view,arch_db:product_expiry_simple.view_picking_form
+msgid "One or several products have <b>expired</b> lots"
+msgstr "Un ou plusieurs articles ont des lots <b>périmés</b>"
+
+#. module: product_expiry_simple
+#: model:ir.model,name:product_expiry_simple.model_product_template
+msgid "Product"
+msgstr "Article"
+
+#. module: product_expiry_simple
+#: model:ir.model,name:product_expiry_simple.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Mouvements d'article (Ligne de mouvement de stock)"
+
+#. module: product_expiry_simple
+#. odoo-python
+#: code:addons/product_expiry_simple/models/stock_lot.py:0
+#, python-format
+msgid ""
+"Product {product} doesn't use expiry dates, but an expiry date is set on lot"
+" {lot}."
+msgstr ""
+"L'article {product} n'utilise pas de dates de péremption, mais une date de "
+"péremption est renseignée sur le lot {lot}."
+
+#. module: product_expiry_simple
+#. odoo-python
+#: code:addons/product_expiry_simple/models/stock_lot.py:0
+#, python-format
+msgid ""
+"Product {product} uses expiry dates, but expiry date is missing on lot "
+"{lot}."
+msgstr ""
+"L'article {product} utilise des dates de péremption, mais la date de "
+"péremption n'est pas renseignée sur le lot {lot}."
+
+#. module: product_expiry_simple
+#: model:ir.model,name:product_expiry_simple.model_stock_quant
+msgid "Quants"
+msgstr ""
+
+#. module: product_expiry_simple
+#: model:ir.model.fields,field_description:product_expiry_simple.field_stock_picking__show_expiry_warning
+msgid "Show Expiry Warning"
+msgstr "Afficher l'avertissement de péremption"
+
+#. module: product_expiry_simple
+#: model:ir.model,name:product_expiry_simple.model_stock_picking
+msgid "Transfer"
+msgstr "Transfert"
+
+#. module: product_expiry_simple
+#: model:ir.model.fields,field_description:product_expiry_simple.field_product_product__use_expiry_date
+#: model:ir.model.fields,field_description:product_expiry_simple.field_product_template__use_expiry_date
+#: model:ir.model.fields,field_description:product_expiry_simple.field_stock_lot__use_expiry_date
+msgid "Use Expiry Date"
+msgstr "Utilise des dates de péremption"
+
+#. module: product_expiry_simple
+#. odoo-python
+#: code:addons/product_expiry_simple/models/product_template.py:0
+#, python-format
+msgid ""
+"You cannot set 'Use Expiry Date' on product '%s' because it is not tracked "
+"by lot nor serial number."
+msgstr ""
+"Vous ne pouvez pas activer 'Utilise des dates de péremption' sur l'article "
+"'%s' car il n'est pas tracé par lots ni par numéro de série."
+
+#. module: product_expiry_simple
+#. odoo-python
+#: code:addons/product_expiry_simple/models/stock_lot.py:0
+#, python-format
+msgid "[%s Expired] %s"
+msgstr "[%s Périmé] %s"
