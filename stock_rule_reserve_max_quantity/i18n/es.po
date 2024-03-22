@@ -24,9 +24,9 @@ msgid ""
 "moves that have this rule linked, when the quantity available exceeds the "
 "quantity demanded"
 msgstr ""
-"Si está marcado, el sistema reservará la cantidad máxima disponible para "
-"los movimientos que tengan esta regla vinculada cuando la cantidad "
-"disponible exceda la cantidad demandada"
+"Si está marcado, el sistema reservará la cantidad máxima disponible para los "
+"movimientos que tengan esta regla vinculada cuando la cantidad disponible "
+"exceda la cantidad demandada"
 
 #. module: stock_rule_reserve_max_quantity
 #: model:ir.model.fields,field_description:stock_rule_reserve_max_quantity.field_stock_rule__reserve_max_quantity
