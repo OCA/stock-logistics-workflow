@@ -36,17 +36,17 @@ jobs:
       matrix:
         include:
           - container: ghcr.io/oca/oca-ci/py3.10-odoo16.0:latest
-            include: "stock_picking_to_batch_group_fields"
+            include: "stock_picking_to_batch_group_fields,stock_owner_restriction"
             name: test with Odoo
           - container: ghcr.io/oca/oca-ci/py3.10-ocb16.0:latest
-            include: "stock_picking_to_batch_group_fields"
+            include: "stock_picking_to_batch_group_fields,stock_owner_restriction"
             name: test with OCB
             makepot: "true"
           - container: ghcr.io/oca/oca-ci/py3.10-odoo16.0:latest
-            exclude: "stock_picking_to_batch_group_fields"
+            exclude: "stock_picking_to_batch_group_fields,stock_owner_restriction"
             name: test with Odoo
           - container: ghcr.io/oca/oca-ci/py3.10-ocb16.0:latest
-            exclude: "stock_picking_to_batch_group_fields"
+            exclude: "stock_picking_to_batch_group_fields,stock_owner_restriction"
             name: test with OCB
             makepot: "true"
     services:
