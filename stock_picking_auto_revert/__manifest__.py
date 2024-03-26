@@ -1,0 +1,15 @@
+# Copyright 2019 ForgeFlow
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
+{
+    "name": "Stock Picking Auto Revert",
+    "version": "15.0.1.0.0",
+    "category": "Stock",
+    "summary": "Returns and recreate the picking",
+    "author": "ForgeFlow, Odoo Community Association (OCA)",
+    "website": "https://github.com/OCA/stock-logistics-workflow",
+    "license": "AGPL-3",
+    "depends": ["sale_stock"],
+    "data": ["view/stock_view.xml"],
+    "installable": True,
+}
