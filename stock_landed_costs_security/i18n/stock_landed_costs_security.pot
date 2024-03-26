@@ -1,0 +1,29 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_landed_costs_security
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_landed_costs_security
+#: model:ir.ui.menu,name:stock_landed_costs_security.menu_landed_costs
+msgid "Landed Costs"
+msgstr ""
+
+#. module: stock_landed_costs_security
+#: model:ir.module.category,name:stock_landed_costs_security.stock_landed_costs_security_category
+msgid "Landed costs"
+msgstr ""
+
+#. module: stock_landed_costs_security
+#: model:res.groups,name:stock_landed_costs_security.group_stock_landed_costs_security_user
+msgid "User"
+msgstr ""
