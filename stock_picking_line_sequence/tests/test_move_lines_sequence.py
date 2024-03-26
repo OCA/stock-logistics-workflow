@@ -68,7 +68,6 @@ class TestStockMove(common.TransactionCase):
         return picking
 
     def test_move_lines_sequence(self):
-
         self.picking = self._create_picking()
         self.picking._compute_max_line_sequence()
         self.picking.move_ids.write({"product_uom_qty": 10.0})
