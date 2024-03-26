@@ -119,7 +119,7 @@ class StockPicking(models.Model):
                 "Merged procurement for partners: %(partners_name)s",
                 partners_name=", ".join(partners.mapped("display_name")),
             )
-        return {"sale_ids": [(6, 0, sales.ids)], "name": name}
+        return {"sale_ids": [(6, 0, sales.ids)], "name": name, "is_merged": True}
 
     def _merge_procurement_groups(self):
         self.ensure_one()
@@ -130,11 +130,10 @@ class StockPicking(models.Model):
 
         moves = self.move_ids
         base_group = self.group_id
-        # If we have moves of different procurement groups, it means moves
-        # have been merged in the same picking. In this case a new
-        # procurement group is required
-        if len(moves.original_group_id) > 1 and base_group in moves.original_group_id:
-            # Create a new procurement group
+        # When grouping is allowed, we create a "merged" procurement group
+        # that will be used to group the moves every time a new move is
+        # added to the picking from a different procurement group.
+        if not base_group.is_merged:
             new_group = base_group.copy(
                 self._prepare_merge_procurement_group_values(moves.original_group_id)
             )
