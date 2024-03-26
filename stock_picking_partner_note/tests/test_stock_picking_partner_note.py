@@ -1,6 +1,7 @@
 # Copyright 2024 Camptocamp (<https://www.camptocamp.com>).
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+from odoo.exceptions import UserError
 from odoo.tests import Form, common
 
 from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
@@ -42,3 +43,26 @@ class StockPickingPartnerNote(common.TransactionCase):
         ]
         self.order.action_confirm()
         self.assertIn("<p>Note 1<br>Note 2</p>", self.order.picking_ids[0].note)
+
+    def test_no_check_note_already_in_use(self):
+        self.assertTrue(
+            self.partner_a.stock_picking_note_ids.check_note_already_in_use()
+        )
+
+    def test_picking_partner_note_already_in_use(self):
+        """Test that we cannot update or delete a note that is already in use."""
+        self.env.user.company_id.check_note_already_in_use = True
+        partner_b = self.env["res.partner"].create(
+            {
+                "name": "Customer B",
+                "stock_picking_note_ids": [
+                    (4, self.partner_a.stock_picking_note_ids[0].id),
+                ],
+            }
+        )
+        # We cannot update a note that is already in use
+        with self.assertRaises(UserError):
+            partner_b.stock_picking_note_ids.write({"name": "Changed Note"})
+        # We cannot delete a note that is already in use
+        with self.assertRaises(UserError):
+            partner_b.stock_picking_note_ids.unlink()
