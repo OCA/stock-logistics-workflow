@@ -8,7 +8,7 @@ from odoo.tests.common import TransactionCase
 
 class TestStockPickingPurchaseOrderLink(TransactionCase):
     def setUp(self):
-        super(TestStockPickingPurchaseOrderLink, self).setUp()
+        super().setUp()
         self.stock_location_obj = self.env["stock.location"]
         self.stock_picking_type_obj = self.env["stock.picking.type"]
         self.stock_picking_obj = self.env["stock.picking"]
