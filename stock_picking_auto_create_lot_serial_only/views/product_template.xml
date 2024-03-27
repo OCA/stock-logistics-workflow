@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2020 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="view_template_property_form" model="ir.ui.view">
+        <field
+            name="name"
+        >product.template.form (in stock_picking_type_auto_create_serial_only)</field>
+        <field name="model">product.template</field>
+        <field
+            name="inherit_id"
+            ref="stock_picking_auto_create_lot.view_template_property_form"
+        />
+        <field name="arch" type="xml">
+            <field name="tracking" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible':[('tracking', '!=', 'serial')]}</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>
