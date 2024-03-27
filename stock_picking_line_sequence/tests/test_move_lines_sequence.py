@@ -3,18 +3,18 @@
 # Copyright 2017 Serpent Consulting Services Pvt. Ltd.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo.tests import common
+from odoo.tests import Form, common
 
 
 class TestStockMove(common.TransactionCase):
     def setUp(self):
-        super(TestStockMove, self).setUp()
+        super().setUp()
         # Useful models
         self.Picking = self.env["stock.picking"]
         self.product_id_1 = self.env.ref("product.product_product_8")
         self.product_id_2 = self.env.ref("product.product_product_11")
         self.product_id_3 = self.env.ref("product.product_product_6")
-        self.picking_type_in = self.env.ref("stock.picking_type_in")
+        self.picking_type_in = self.env.ref("stock.warehouse0").in_type_id
         self.supplier_location = self.env.ref("stock.stock_location_suppliers")
         self.customer_location = self.env.ref("stock.stock_location_customers")
 
@@ -87,13 +87,18 @@ class TestStockMove(common.TransactionCase):
             self.picking.move_ids[2].sequence,
             "The Sequence is not copied properly",
         )
+        picking_form = Form(self.picking)
+        with picking_form.move_ids_without_package.new() as move_form:
+            move_form.product_id = self.product_id_1
+            self.assertEqual(move_form.sequence, self.picking.max_line_sequence)
 
     def test_backorder(self):
         picking = self._create_picking()
         picking._compute_max_line_sequence()
         picking.action_confirm()
         picking.action_assign()
-        picking.move_line_ids[1].write({"qty_done": 5})
+        picking.move_line_ids[0].write({"quantity": 3})
+        picking.move_line_ids[2].write({"quantity": 3})
         res_dict = picking.button_validate()
         self.assertEqual(res_dict["res_model"], "stock.backorder.confirmation")
         backorder_wiz = (
