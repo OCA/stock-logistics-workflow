@@ -1,0 +1,1 @@
+See `stock_picking_group_by_partner_by_carrier` configuration.
