@@ -64,7 +64,50 @@
             </tree>
             <tree position="inside">
                 <field name="started" invisible="1" />
+                <field name="action_start_allowed" invisible="1" />
+                <field name="action_cancel_start_allowed" invisible="1" />
+                <button
+                    name="action_start"
+                    string="Start"
+                    type="object"
+                    attrs="{'invisible': [('action_start_allowed', '!=', True)]}"
+                    class="btn btn-primary"
+                />
+                <button
+                    name="action_cancel_start"
+                    string="Cancel Start"
+                    type="object"
+                    attrs="{'invisible': [('action_cancel_start_allowed', '!=', True)]}"
+                    class="btn bg-warning-light"
+                />
             </tree>
+        </field>
+    </record>
+    <record id="stock_picking_kanban" model="ir.ui.view">
+        <field name="name">stock.picking.kanban (in stock_picking_start)</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.stock_picking_kanban" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='activity_state']" position="after">
+                <field name="action_start_allowed" />
+                <field name="action_cancel_start_allowed" />
+            </xpath>
+            <xpath expr="//t[@t-name='kanban-box']/div" position="inside">
+                <button
+                    name="action_start"
+                    string="Start"
+                    type="object"
+                    attrs="{'invisible': [('action_start_allowed', '!=', True)]}"
+                    class="btn btn-primary"
+                ><span>Start</span></button>
+                <button
+                    name="action_cancel_start"
+                    string="Cancel Start"
+                    type="object"
+                    attrs="{'invisible': [('action_cancel_start_allowed', '!=', True)]}"
+                    class="btn bg-warning-light"
+                ><span>Cancel Start</span></button>
+            </xpath>
         </field>
     </record>
 </odoo>
