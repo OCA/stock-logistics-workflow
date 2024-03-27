@@ -32,13 +32,14 @@ class TestStockPickinStart(TransactionCase):
                 "picking_type_id": cls.picking_type.id,
                 "location_id": cls.loc_stock.id,
                 "location_dest_id": cls.loc_customer.id,
-                "move_ids": [
+                "move_lines": [
                     (
                         0,
                         0,
                         {
                             "name": "test move",
                             "product_id": cls.product_1.id,
+                            "product_uom": cls.product_1.uom_id.id,
                             "product_uom_qty": 5,
                             "location_id": cls.loc_stock.id,
                             "location_dest_id": cls.loc_customer.id,
@@ -53,13 +54,14 @@ class TestStockPickinStart(TransactionCase):
                 "picking_type_id": cls.picking_type.id,
                 "location_id": cls.loc_stock.id,
                 "location_dest_id": cls.loc_customer.id,
-                "move_ids": [
+                "move_lines": [
                     (
                         0,
                         0,
                         {
                             "name": "test move",
                             "product_id": cls.product_2.id,
+                            "product_uom": cls.product_1.uom_id.id,
                             "product_uom_qty": 5,
                             "location_id": cls.loc_stock.id,
                             "location_dest_id": cls.loc_customer.id,
@@ -77,7 +79,7 @@ class TestStockPickinStart(TransactionCase):
         # this method adds the quantity to the current quantity, so remove it
         quantity -= sum(quants.mapped("quantity"))
         cls.env["stock.quant"]._update_available_quantity(product, location, quantity)
-        cls.env["product.product"].invalidate_model(
+        cls.env["product.product"].flush(
             fnames=[
                 "qty_available",
                 "virtual_available",
