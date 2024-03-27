@@ -28,7 +28,8 @@ class SaleOrder(models.Model):
             lines = self.mapped("order_line").filtered(
                 lambda l: l.route_id.id != vals["route_id"]
             )
-            lines.write({"route_id": vals["route_id"]})
+            for line in lines:
+                line.write({"route_id": vals["route_id"]})
         return res
 
     class SaleOrderLine(models.Model):
