@@ -14,7 +14,7 @@
                     icon="fa-dollar"
                     string="Sales Order"
                     type="object"
-                    attrs="{'invisible': [('sale_id', '=', False)]}"
+                    invisible="not sale_id"
                     groups="stock.group_stock_user"
                 >
                 </button>
