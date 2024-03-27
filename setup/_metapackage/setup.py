@@ -18,6 +18,7 @@ setuptools.setup(
         'odoo-addon-stock_delivery_note>=16.0dev,<16.1dev',
         'odoo-addon-stock_grn>=16.0dev,<16.1dev',
         'odoo-addon-stock_landed_costs_currency>=16.0dev,<16.1dev',
+        'odoo-addon-stock_landed_costs_purchase_auto>=16.0dev,<16.1dev',
         'odoo-addon-stock_landed_costs_security>=16.0dev,<16.1dev',
         'odoo-addon-stock_lot_production_date>=16.0dev,<16.1dev',
         'odoo-addon-stock_lot_scrap>=16.0dev,<16.1dev',
