@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8' ?>
 <!-- Copyright 2019 ForgeFlow S.L.
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
@@ -14,7 +14,7 @@
                     icon="fa-shopping-cart"
                     string="Purchase Order"
                     type="object"
-                    attrs="{'invisible': [('purchase_id', '=', False)]}"
+                    invisible="purchase_id == False"
                     groups="stock.group_stock_user"
                 >
                 </button>
