@@ -20,18 +20,6 @@
                     <field name="sequence" widget="handle" />
                     <field name="sequence2" />
                 </xpath>
-                <xpath
-                expr="//notebook/page/field[@name='move_ids_without_package']"
-                position="attributes"
-            >
-                    <attribute
-                    name="context"
-                >{'picking_type_code': picking_type_code, 'default_picking_id': id,
-                    'form_view_ref':'stock.view_move_picking_form', 'address_in_id': partner_id,
-                    'default_picking_type_id': picking_type_id, 'default_location_id': location_id,
-                    'default_location_dest_id': location_dest_id, 'default_sequence': max_line_sequence}
-                    </attribute>
-                </xpath>
             </field>
         </record>
 
