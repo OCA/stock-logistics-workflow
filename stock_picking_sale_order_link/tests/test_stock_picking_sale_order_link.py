@@ -8,7 +8,7 @@ from odoo.tests.common import TransactionCase
 @tagged("post_install", "-at_install")
 class TestStockPickingSaleOrderLink(TransactionCase):
     def setUp(self):
-        super(TestStockPickingSaleOrderLink, self).setUp()
+        super().setUp()
         self.Location = self.env["stock.location"]
         self.PickingType = self.env["stock.picking.type"]
         self.Picking = self.env["stock.picking"]
