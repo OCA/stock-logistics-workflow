@@ -11,6 +11,8 @@ from odoo.tools.misc import format_time
 
 from odoo.addons.partner_tz.tools import tz_utils
 
+from ..date_utils import date_range as custom_date_range
+
 WORKDAYS = list(range(5))
 
 
@@ -271,7 +273,11 @@ class ResPartner(models.Model):
         self.ensure_one()
         if to_datetime is None:
             to_datetime = from_datetime + timedelta(days=365)
-        for this_datetime in date_range(from_datetime, to_datetime, timedelta(days=1)):
+
+        date_generator = custom_date_range(
+            from_datetime, to_datetime, timedelta(hours=1)
+        )
+        for this_datetime in date_generator:
             if self.delivery_time_preference == "anytime":
                 yield this_datetime
             else:
@@ -294,3 +300,7 @@ class ResPartner(models.Model):
                             this_datetime, win.get_time_window_start_time()
                         )
                         yield this_weekday_start_datetime
+                    # Skip to next day for the next iteration
+                    date_generator.send(
+                        (this_datetime + timedelta(days=1)).replace(hour=0)
+                    )
