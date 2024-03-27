@@ -8,13 +8,13 @@ from odoo.tests import common
 
 class TestStockMove(common.TransactionCase):
     def setUp(self):
-        super(TestStockMove, self).setUp()
+        super().setUp()
         # Useful models
         self.Picking = self.env["stock.picking"]
         self.product_id_1 = self.env.ref("product.product_product_8")
         self.product_id_2 = self.env.ref("product.product_product_11")
         self.product_id_3 = self.env.ref("product.product_product_6")
-        self.picking_type_in = self.env.ref("stock.picking_type_in")
+        self.picking_type_in = self.env.ref("stock.warehouse0").in_type_id
         self.supplier_location = self.env.ref("stock.stock_location_suppliers")
         self.customer_location = self.env.ref("stock.stock_location_customers")
 
@@ -93,7 +93,8 @@ class TestStockMove(common.TransactionCase):
         picking._compute_max_line_sequence()
         picking.action_confirm()
         picking.action_assign()
-        picking.move_line_ids[1].write({"qty_done": 5})
+        picking.move_line_ids[0].write({"quantity": 3})
+        picking.move_line_ids[2].write({"quantity": 3})
         res_dict = picking.button_validate()
         self.assertEqual(res_dict["res_model"], "stock.backorder.confirmation")
         backorder_wiz = (
