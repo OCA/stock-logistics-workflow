@@ -26,7 +26,7 @@ class SaleOrder(models.Model):
         res = super().write(vals)
         if "route_id" in vals:
             lines = self.mapped("order_line").filtered(
-                lambda l: l.route_id.id != vals["route_id"]
+                lambda line: line.route_id.id != vals["route_id"]
             )
             lines.write({"route_id": vals["route_id"]})
         return res
