@@ -25,6 +25,7 @@ addon | version | maintainers | summary
 [stock_picking_invoice_link](stock_picking_invoice_link/) | 17.0.1.0.0 |  | Adds link between pickings and invoices
 [stock_picking_show_return](stock_picking_show_return/) | 17.0.1.0.0 |  | Show returns on stock pickings
 [stock_split_picking](stock_split_picking/) | 17.0.1.0.0 |  | Split a picking in two not transferred pickings
+[sale_order_global_stock_route](sale_order_global_stock_route/) | 17.0.1.0.0 |  | Set global route for sale order
 
 [//]: # (end addons)
 
