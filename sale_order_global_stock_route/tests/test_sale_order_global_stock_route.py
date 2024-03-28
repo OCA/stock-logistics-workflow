@@ -7,7 +7,7 @@ from odoo.tests.common import TransactionCase
 class SaleOrderGlobalStockRouteTest(TransactionCase):
     @classmethod
     def setUpClass(cls):
-        super(SaleOrderGlobalStockRouteTest, cls).setUpClass()
+        super().setUpClass()
         cls.partner = cls.env["res.partner"].create({"name": "Test"})
         cls.product1 = cls.env["product.product"].create(
             {"name": "test_product1", "type": "product"}
