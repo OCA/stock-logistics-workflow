@@ -31,47 +31,44 @@ class StockPicking(models.Model):
 
             # Split moves considering the qty_done on moves
             new_moves = self.env["stock.move"]
-            for move in picking.move_ids:
-                rounding = move.product_uom.rounding
-                qty_done = move.quantity_done
-                qty_initial = move.product_uom_qty
-                qty_diff_compare = float_compare(
-                    qty_done, qty_initial, precision_rounding=rounding
+            new_move_lines = self.env["stock.move.line"]
+            for move in picking.move_ids.filtered(lambda x: x.quantity_done):
+                qty_uom_split = move.product_uom._compute_quantity(
+                    move.quantity_done, move.product_id.uom_id, rounding_method="HALF-UP"
                 )
-                if qty_diff_compare < 0:
-                    qty_split = qty_initial - qty_done
-                    qty_uom_split = move.product_uom._compute_quantity(
-                        qty_split, move.product_id.uom_id, rounding_method="HALF-UP"
-                    )
-                    # Empty list is returned for moves with zero qty_done.
-                    new_move_vals = move.with_context(cancel_backorder=False)._split(
-                        qty_uom_split
-                    )
-                    if new_move_vals:
-                        for move_line in move.move_line_ids:
-                            if move_line.reserved_qty and move_line.qty_done:
-                                # To avoid an error
-                                # when picking is partially available
-                                try:
-                                    move_line.write(
-                                        {"reserved_uom_qty": move_line.qty_done}
-                                    )
-                                except UserError:
-                                    continue
-                        new_move = self.env["stock.move"].create(new_move_vals)
-                    else:
-                        new_move = move
-                    new_move._action_confirm(merge=False)
-                    new_moves |= new_move
+                new_move_vals = move.with_context(cancel_backorder=False)._split(qty_uom_split)
+                if new_move_vals:
+                    # Create new move and move lines
+                    new_move = self.env["stock.move"].create(new_move_vals)
+
+                    new_move_line_vals = []
+                    for move_line in move.move_line_ids:
+                        if move_line.reserved_qty and move_line.qty_done:
+                            ml_vals = move_line._split(move_line.qty_done)
+                            new_move_line_vals += ml_vals
+                            # If is not necessary to split the move line the method split will return [].
+                            # In this case we want to move manually the move_line to the new stock_move.
+                            if not ml_vals:
+                                move_line.move_id = new_move.id
+                    for vals in new_move_line_vals:
+                        vals['move_id'] = new_move.id
+                    new_move_lines |= self.env["stock.move.line"].create(new_move_line_vals)
+                else:
+                    new_move = move
+                new_move._action_confirm(merge=False)
+                new_moves |= new_move
 
             # If we have new moves to move, create the backorder picking
             if new_moves:
                 backorder_picking = picking._create_split_backorder()
                 new_moves.write({"picking_id": backorder_picking.id})
-                new_moves.mapped("move_line_ids").write(
-                    {"picking_id": backorder_picking.id}
-                )
-                new_moves._action_assign()
+                new_moves.move_line_ids.write({"picking_id": backorder_picking.id})
+                if new_move_lines:
+                    new_move_lines.write({"picking_id": backorder_picking.id})
+                    new_moves._recompute_state()
+                else:
+                    new_moves._action_assign()
+                return backorder_picking
 
     def _create_split_backorder(self, default=None):
         """Copy current picking with defaults passed, post message about

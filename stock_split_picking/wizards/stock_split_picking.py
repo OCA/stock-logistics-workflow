@@ -12,7 +12,7 @@ class StockSplitPicking(models.TransientModel):
         [
             ("done", "Done quantities"),
             ("move", "One picking per move"),
-            ("selection", "Select move lines to split off"),
+            ("selection", "Select stock move to split off"),
         ],
         required=True,
         default="done",
