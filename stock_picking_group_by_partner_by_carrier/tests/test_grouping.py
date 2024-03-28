@@ -577,3 +577,36 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
         self.assertEqual(picking.state, "done")
         self.assertTrue(picking.backorder_ids)
         self.assertNotEqual(picking, picking.backorder_ids)
+
+    def test_create_backorder_new_procurement_group(self):
+        """Ensure a new procurement group is created when a backorder is created
+        and that the backorder will reference only pickings from remaining moves.
+        """
+        so1 = self._get_new_sale_order()
+        so2 = self._get_new_sale_order(amount=11)
+        so3 = self._get_new_sale_order(amount=12)
+        so1.action_confirm()
+        so2.action_confirm()
+        so3.action_confirm()
+
+        picking = so1.picking_ids | so2.picking_ids | so3.picking_ids
+        line = so1.order_line.filtered(lambda line: not line.is_delivery)
+
+        self._update_qty_in_location(
+            picking.location_id,
+            line.product_id,
+            line.product_uom_qty,
+        )
+
+        self.assertEqual(len(picking), 1)
+        picking.action_assign()
+
+        # partially process the picking for line from so1
+        move = picking.move_ids.filtered(lambda m: m.sale_line_id.order_id == so1)
+        move.move_line_ids.qty_done = move.move_line_ids.reserved_uom_qty
+        picking._action_done()
+        backorder = picking.backorder_ids
+        self.assertTrue(backorder)
+        self.assertEqual(len(backorder), 1)
+        self.assertNotEqual(picking.group_id, backorder.group_id)
+        self.assertEqual(backorder.sale_ids, so2 | so3)
