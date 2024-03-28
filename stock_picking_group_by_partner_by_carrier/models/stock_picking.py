@@ -92,8 +92,23 @@ class StockPicking(models.Model):
                 picking = picking.with_context(picking_no_copy_if_can_group=1)
             backorder = super(StockPicking, picking)._create_backorder()
             if backorder and not picking._is_grouping_disabled():
-                backorder._merge_procurement_groups()
-                backorder._update_merged_origin()
+                if backorder.group_id != picking.group_id:
+                    # the backorder is an existing picking where the remaining
+                    # moves have been moved to. We need to update the origin
+                    backorder._update_merged_origin()
+                else:
+                    # Create a new procurement group to remove the link from moves
+                    # done in the original group and therefore avoid that a sale order
+                    # linked to the picking and entirely delivered is no more linked
+                    # to the backorder.
+                    base_group = backorder.group_id
+                    moves = backorder.move_ids
+                    new_group = base_group.copy(
+                        self._prepare_merge_procurement_group_values(
+                            moves.original_group_id
+                        )
+                    )
+                    moves.group_id = new_group
             backorders |= backorder
         return backorders
 
