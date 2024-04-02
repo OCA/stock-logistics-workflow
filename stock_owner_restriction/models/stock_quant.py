@@ -8,6 +8,14 @@ from odoo.osv import expression
 class StockQuant(models.Model):
     _inherit = "stock.quant"
 
+    @api.model
+    def _get_restriction_owner_id(self, location_id, owner_id):
+        """Hook to allow modify the owner of quants to gather.
+        By default prevent a negative quant from being created with owner instead of
+        reducing the original quant when a return is made by assigning owner.
+        """
+        return owner_id if location_id.usage != "customer" else None
+
     def _gather(
         self,
         product_id,
@@ -22,9 +30,7 @@ class StockQuant(models.Model):
             location_id,
             lot_id=lot_id,
             package_id=package_id,
-            # Prevent a negative quant from being created with owner instead of reducing
-            # the original quant when a return is made by assigning owner
-            owner_id=owner_id if location_id.usage != "customer" else None,
+            owner_id=self._get_restriction_owner_id(location_id, owner_id),
             strict=strict,
         )
         restricted_owner_id = self.env.context.get("force_restricted_owner_id", None)
