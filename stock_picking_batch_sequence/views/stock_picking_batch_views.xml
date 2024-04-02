@@ -34,7 +34,9 @@
                 <field name="picking_sequence" invisible="1" />
             </xpath>
             <xpath expr="//tree" position="attributes">
-                <attribute name="default_order">picking_sequence,sequence,id</attribute>
+                <attribute
+                    name="default_order"
+                >picking_sequence,picking_id,sequence,id</attribute>
             </xpath>
         </field>
     </record>
