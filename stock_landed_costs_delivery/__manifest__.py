@@ -1,8 +1,9 @@
 # Copyright 2021 Tecnativa - Víctor Martínez
+# Copyright 2024 Tecnativa - Carolina Fernandez
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Stock landed costs delivery",
-    "version": "15.0.2.0.1",
+    "version": "16.0.1.0.0",
     "category": "Inventory",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Tecnativa, Odoo Community Association (OCA)",
