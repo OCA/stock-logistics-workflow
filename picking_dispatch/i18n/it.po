@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-18 01:44+0000\n"
-"PO-Revision-Date: 2024-01-25 10:38+0000\n"
+"PO-Revision-Date: 2024-04-03 12:43+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/"
 "OCA-stock-logistics-workflow-8-0/language/it/)\n"
@@ -109,7 +109,7 @@ msgstr "Vettore"
 #: view:picking.dispatch:picking_dispatch.picking_dispatch_form
 #: view:picking.dispatch.check.assign.all:picking_dispatch.view_dispatch_check_assign_all
 msgid "Check Availability"
-msgstr "Controllo Disponibilità"
+msgstr "Controllo disponibilità"
 
 #. module: picking_dispatch
 #: view:picking.dispatch.check.assign.all:picking_dispatch.view_dispatch_check_assign_all
