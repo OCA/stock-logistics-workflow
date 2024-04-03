@@ -50,6 +50,7 @@ addon | version | maintainers | summary
 [stock_lot_scrap](stock_lot_scrap/) | 14.0.1.0.2 |  | This module adds a button in Production Lot/Serial Number view form to Scrap all products contained.
 [stock_mass_scrap](stock_mass_scrap/) | 14.0.1.0.1 |  | Add wizard to mass scrap expired products
 [stock_move_assign_picking_hook](stock_move_assign_picking_hook/) | 14.0.1.1.2 |  | Stock Move picking assignment hook
+[stock_move_backdating](stock_move_backdating/) | 14.0.1.0.1 |  | Stock Move Backdating
 [stock_move_change_source_location](stock_move_change_source_location/) | 14.0.1.0.1 |  | This module allows you to change the source location of a stock move from the picking
 [stock_move_forced_lot](stock_move_forced_lot/) | 14.0.1.0.0 |  | This module allows you to set a lot_id in a procurement to force the stock move generated to only reserve the selected lot.
 [stock_move_free_reservation_reassign](stock_move_free_reservation_reassign/) | 14.0.1.0.0 |  | Try to reassign a move when its reservation is removed due to the related quant becoming unavailable
