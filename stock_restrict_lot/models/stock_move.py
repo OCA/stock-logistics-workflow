@@ -1,7 +1,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo import _, api, exceptions, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 
 class StockMove(models.Model):
@@ -118,3 +118,37 @@ class StockMove(models.Model):
                         move_restrict_lot=move.restrict_lot_id.display_name,
                     )
                 )
+    def get_all_dest_moves(self):
+        res = self.move_dest_ids
+        moves_to_search = self.move_dest_ids
+        while moves_to_search:
+            new_dest_ids = moves_to_search.move_dest_ids
+            moves_to_search = new_dest_ids - res
+            res |= new_dest_ids
+        return res
+
+    def get_all_orig_moves(self):
+        res = self.move_orig_ids
+        moves_to_search = self.move_orig_ids
+        while moves_to_search:
+            new_orig_ids = moves_to_search.move_orig_ids
+            moves_to_search = new_orig_ids - res
+            res |= new_orig_ids
+        return res
+
+    def write(self, vals):
+        if "restrict_lot_id" not in vals:
+            return super().write(vals)
+        else:
+            restrict_lot_id = vals.pop("restrict_lot_id")
+            chained_moves = self | self.get_all_dest_moves() | self.get_all_orig_moves()
+            if any([sm.state == "done" for sm in chained_moves]):
+                raise ValidationError(
+                    _(
+                        "You can't modify the Lot/Serial number"
+                        " because at least one move in the chain has "
+                        "already been done."
+                    )
+                )
+            super(StockMove, chained_moves).write({"restrict_lot_id": restrict_lot_id})
+        return super().write(vals)
