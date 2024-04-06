@@ -23,6 +23,7 @@ class TestStockPickingAutoCreateLotQty(
             tracking="lot", auto=True, every_n=5, multiple_allow=False
         )
         cls.picking_type_in.auto_create_lot = True
+        cls.picking_type_in_2.auto_create_lot = True
 
         # * tracking "lot" to "none"
         cls.product_no_tracking = cls._create_product(
@@ -77,6 +78,38 @@ class TestStockPickingAutoCreateLotQty(
             product=self.product_serial_auto_qty_5_multiples_allowed_true, qty=15.0
         )
         self.picking.button_validate()
+        # Check the display field
+        move = self.picking.move_lines.filtered(
+            lambda m: m.product_id
+            == self.product_serial_auto_qty_5_multiples_allowed_true
+        )
+        self.assertFalse(
+            move.display_assign_serial, msg="Do not display the assigned serial number"
+        )
+
+        # Search for serials
+        lot = self.env["stock.production.lot"].search(
+            [
+                (
+                    "product_id",
+                    "=",
+                    self.product_serial_auto_qty_5_multiples_allowed_true.id,
+                )
+            ]
+        )
+        # 15 / 5 => 3
+        self.assertEqual(
+            len(lot), 3, msg="The number of created lots should be equal to 3"
+        )
+
+    def test_multiples_allowed_true_2_multicompany(self):
+        self._create_picking(multicompany=True)
+        self._create_move(
+            product=self.product_serial_auto_qty_5_multiples_allowed_true,
+            qty=15.0,
+            multicompany=True,
+        )
+        self.picking.with_company(self.company_2).button_validate()
         # Check the display field
         move = self.picking.move_lines.filtered(
             lambda m: m.product_id

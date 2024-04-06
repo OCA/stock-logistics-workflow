@@ -10,8 +10,17 @@ class CommonStockPickingAutoCreateLotQty(object):
         cls.lot_obj = cls.env["stock.production.lot"]
         cls.warehouse = cls.env.ref("stock.warehouse0")
         cls.picking_type_in = cls.env.ref("stock.picking_type_in")
+        cls.picking_type_in_2 = cls.env.ref("stock.chi_picking_type_in")
+
         cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
         cls.supplier = cls.env["res.partner"].create({"name": "Supplier - test"})
+
+        cls.stock_serial_sequence_2 = cls.env.ref(
+            "stock.sequence_production_lots"
+        ).copy()
+        cls.stock_serial_sequence_2.prefix = "TEST"
+        cls.company_1 = cls.env.ref("base.main_company")
+        cls.company_2 = cls.env.ref("stock.res_company_1")
 
     @classmethod
     def _create_product(
@@ -30,45 +39,55 @@ class CommonStockPickingAutoCreateLotQty(object):
         )
 
     @classmethod
-    def _create_picking(cls):
+    def _create_picking(cls, multicompany=False):
+        company = cls.company_1 if not multicompany else cls.company_2
+        picking_type_in = (
+            cls.picking_type_in if not multicompany else cls.picking_type_in_2
+        )
         cls.picking = (
             cls.env["stock.picking"]
-            .with_context(default_picking_type_id=cls.picking_type_in.id)
+            .with_context(default_picking_type_id=picking_type_in.id)
+            .with_company(company)
             .create(
                 {
                     "partner_id": cls.supplier.id,
-                    "picking_type_id": cls.picking_type_in.id,
+                    "picking_type_id": picking_type_in.id,
                     "location_id": cls.supplier_location.id,
                 }
             )
         )
 
     @classmethod
-    def _create_move(cls, product=None, qty=1.0):
+    def _create_move(cls, product=None, qty=1.0, multicompany=False):
+        company = cls.company_1 if not multicompany else cls.company_2
         location_dest = cls.picking.picking_type_id.default_location_dest_id
-        cls.move = cls.env["stock.move"].create(
-            {
-                "name": "test-{product}".format(product=product.name),
-                "product_id": product.id,
-                "picking_id": cls.picking.id,
-                "picking_type_id": cls.picking.picking_type_id.id,
-                "product_uom_qty": qty,
-                "product_uom": product.uom_id.id,
-                "location_id": cls.supplier_location.id,
-                "location_dest_id": location_dest.id,
-                "move_line_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "product_id": product.id,
-                            "product_uom_qty": qty,
-                            "product_uom_id": product.uom_id.id,
-                            "location_id": cls.supplier_location.id,
-                            "location_dest_id": location_dest.id,
-                            "picking_id": cls.picking.id,
-                        },
-                    )
-                ],
-            }
+        cls.move = (
+            cls.env["stock.move"]
+            .with_company(company)
+            .create(
+                {
+                    "name": "test-{product}".format(product=product.name),
+                    "product_id": product.id,
+                    "picking_id": cls.picking.id,
+                    "picking_type_id": cls.picking.picking_type_id.id,
+                    "product_uom_qty": qty,
+                    "product_uom": product.uom_id.id,
+                    "location_id": cls.supplier_location.id,
+                    "location_dest_id": location_dest.id,
+                    "move_line_ids": [
+                        (
+                            0,
+                            0,
+                            {
+                                "product_id": product.id,
+                                "product_uom_qty": qty,
+                                "product_uom_id": product.uom_id.id,
+                                "location_id": cls.supplier_location.id,
+                                "location_dest_id": location_dest.id,
+                                "picking_id": cls.picking.id,
+                            },
+                        )
+                    ],
+                }
+            )
         )
