@@ -8,7 +8,7 @@ class ProductTemplate(models.Model):
 
     batch_uom_id = fields.Many2one(
         string="Uom",
-        help="Uom",
+        help="Units of measure",
         comodel_name="uom.uom",
     )
 

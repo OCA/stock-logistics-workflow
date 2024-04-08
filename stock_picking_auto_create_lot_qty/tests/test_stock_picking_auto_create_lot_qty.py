@@ -1,14 +1,11 @@
 # Copyright (C) 2023 Cetmix OÜ
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo.exceptions import UserError
-from odoo.tests import SavepointCase
 
 from .common import CommonStockPickingAutoCreateLotQty
 
 
-class TestStockPickingAutoCreateLotQty(
-    CommonStockPickingAutoCreateLotQty, SavepointCase
-):
+class TestStockPickingAutoCreateLotQty(CommonStockPickingAutoCreateLotQty):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -35,6 +32,10 @@ class TestStockPickingAutoCreateLotQty(
         )
 
     def test_multiples_allowed_false(self):
+        """
+        Test that the serial number is created if the quantity
+        received is not a multiple of the selected value
+        """
         self._create_picking()
         self._create_move(
             product=self.product_serial_auto_qty_5_multiples_allowed_false, qty=8.0
@@ -64,6 +65,8 @@ class TestStockPickingAutoCreateLotQty(
         )
 
     def test_multiples_allowed_true_1(self):
+        """Test that the serial number is not  created if the quantity received
+        is a multiple of the selected value"""
         self._create_picking()
         self._create_move(
             product=self.product_serial_auto_qty_5_multiples_allowed_true, qty=8.0
@@ -73,6 +76,8 @@ class TestStockPickingAutoCreateLotQty(
         self.assertRaises(UserError, self.picking.button_validate)
 
     def test_multiples_allowed_true_2(self):
+        """Test that the serial number is  created if the quantity received
+        is a multiple of the selected value"""
         self._create_picking()
         self._create_move(
             product=self.product_serial_auto_qty_5_multiples_allowed_true, qty=15.0
@@ -103,6 +108,10 @@ class TestStockPickingAutoCreateLotQty(
         )
 
     def test_multiples_allowed_true_2_multicompany(self):
+        """
+        Check that the picking has been created if
+        the "multi-company" function is enabled
+        """
         self._create_picking(multicompany=True)
         self._create_move(
             product=self.product_serial_auto_qty_5_multiples_allowed_true,

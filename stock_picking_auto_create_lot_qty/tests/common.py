@@ -1,8 +1,10 @@
 # Copyright (C) 2023 Cetmix OÜ
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from odoo.tests import SavepointCase
 
-class CommonStockPickingAutoCreateLotQty(object):
+
+class CommonStockPickingAutoCreateLotQty(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -26,6 +28,18 @@ class CommonStockPickingAutoCreateLotQty(object):
     def _create_product(
         cls, tracking="lot", auto=True, every_n=0, multiple_allow=False
     ):
+        """
+        Create a new product and set the following properties:
+
+        Args:
+            tracking (str): Tracking method
+            auto (bool): Auto create lot
+            every_n (int): Create lot every n units
+            multiple_allow (bool): Allow multiple serial numbers
+
+        Returns:
+            product.product: Created product
+        """
         name = "{tracking} - {auto}".format(tracking=tracking, auto=auto)
         return cls.env["product.product"].create(
             {
@@ -40,6 +54,15 @@ class CommonStockPickingAutoCreateLotQty(object):
 
     @classmethod
     def _create_picking(cls, multicompany=False):
+        """
+        Create a new picking and set the following properties:
+
+        Args:
+            multicompany (bool): Create picking for a second company
+
+        Returns:
+            stock.picking: Created picking
+        """
         company = cls.company_1 if not multicompany else cls.company_2
         picking_type_in = (
             cls.picking_type_in if not multicompany else cls.picking_type_in_2
@@ -59,6 +82,14 @@ class CommonStockPickingAutoCreateLotQty(object):
 
     @classmethod
     def _create_move(cls, product=None, qty=1.0, multicompany=False):
+        """Create a new stock move for the given product and quantity
+
+        Args:
+            product (product.product): Product. Defaults to None
+            qty (float): Quantity. Defaults to 1.0.
+            multicompany (bool): Create move for a second company. Defaults to False.
+
+        """
         company = cls.company_1 if not multicompany else cls.company_2
         location_dest = cls.picking.picking_type_id.default_location_dest_id
         cls.move = (
