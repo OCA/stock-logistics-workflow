@@ -1,13 +1,28 @@
 # Copyright 2020 Carlos Dauden - Tecnativa
 # Copyright 2020 Sergio Teruel - Tecnativa
+# Copyright 2024 Quartile Limited
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from collections import defaultdict
 
-from odoo import models
+from odoo import api, fields, models
 
 
 class StockMove(models.Model):
     _inherit = "stock.move"
+
+    restrict_partner_id = fields.Many2one(
+        compute="_compute_restrict_partner_id",
+        store=True,
+        readonly=False,
+    )
+
+    @api.depends("picking_type_id", "picking_id.owner_id", "move_dest_ids")
+    def _compute_restrict_partner_id(self):
+        for move in self:
+            if move.picking_type_id.owner_restriction == "picking_partner":
+                move.restrict_partner_id = move._get_owner_for_assign()
+            else:
+                move.restrict_partner_id = False
 
     def _get_moves_to_assign_with_standard_behavior(self):
         """This method is expected to be extended as necessary. e.g. you may not want to
