@@ -20,6 +20,21 @@ class StockMove(models.Model):
         string="Original Procurement Group",
     )
 
+    def write(self, vals):
+        """
+        During picking assignation, Odoo is overwriting the group on stock
+        moves from found picking. Here, get the original group on stock moves.
+        """
+        if (
+            self.env.context.get("picking_no_overwrite_partner_origin")
+            and "picking_id" in vals
+            and "group_id" not in vals
+            and len(self.group_id) == 1
+        ):
+            vals["group_id"] = self.group_id.id
+        res = super().write(vals)
+        return res
+
     @api.model
     def _prepare_merge_moves_distinct_fields(self):
         # Prevent merging pulled moves. This allows to cancel a SO without
