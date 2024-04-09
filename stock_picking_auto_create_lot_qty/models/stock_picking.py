@@ -1,27 +1,32 @@
 # Copyright (C) 2023 Cetmix OÜ
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo import _, api, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     @api.model
-    def _get_stock_move_lines(self, pickings):
-        """Get stock move lines for the given pickings, and the new ones
+    def _split_stock_move_lines(self, pickings):
+        """
+        Split stock move lines into existing and new lines.
+
+        This method separates stock move lines into existing and new lines based on
+        specific criteria and optionally creates automatic lot numbers.
 
         Args:
             pickings (recordset): Recordset of stock pickings for which to retrieve
                                   stock move lines
 
         Returns:
-            tuple (lines, new_lines): A tuple containing two recordsets - lines and new_lines.
-                 - lines: Existing stock move lines associated with the pickings.
+            tuple (existing_lines, new_lines): A tuple containing two recordsets:
+                 - existing_lines: Existing stock move lines associated with the pickings.
                  - new_lines: New stock move lines that need to be created.
 
         """
-        lines = new_lines = self.env["stock.move.line"].browse()
+        existing_lines = self.env["stock.move.line"].browse()
+        new_lines = self.env["stock.move.line"].browse()
         for line in pickings.mapped("move_line_ids"):
             if (
                 not line.lot_id
@@ -29,15 +34,17 @@ class StockPicking(models.Model):
                 and line.product_id.tracking != "none"
                 and line.product_id.auto_create_lot
             ):
-                lines |= line
+                existing_lines |= line
             if line.qty_done:
                 new_lines |= line
-        return lines, new_lines
+        return existing_lines, new_lines
 
     @api.model
-    def _generate_lots_stock_move_line(self, count_of_lots, line, product_id, every_n):
+    def _create_multiple_stock_move_lines_for_lots(
+        self, count_of_lots, line, product_id, every_n
+    ):
         """
-        Generate new stock move lines for lots based on the given parameters.
+        Create multiple stock move lines for generating lots.
 
         Args:
             count_of_lots (int): Number of lots to generate.
@@ -61,9 +68,10 @@ class StockPicking(models.Model):
         return new_lines
 
     @api.model
-    def _compute_count_by_product(self, lines):
+    def _prepare_count_by_products(self, lines):
         """
-        Compute the number of lots to generate for each product.
+        Prepares the number of lots to generate for each product
+        based on the stock move lines provided.
 
         Args:
             lines (recordset): List of stock move lines.
@@ -78,9 +86,13 @@ class StockPicking(models.Model):
         return count_by_product
 
     @api.model
-    def _generate_lot_every_n(self, product_id, line, current_product_qty):
+    def _prepare_stock_move_lines_for_lots(self, product_id, line, current_product_qty):
         """
-        Generate lots for a product every n units based on the product's configuration.
+        Prepare stock move lines representing generated lots for a product.
+
+        This method is responsible for preparing stock move lines that
+        represent the lots generated for a specific product based on
+        the product's configuration and the provided quantity.
 
         Args:
             product_id (product.product): Product for which lots are generated.
@@ -91,10 +103,14 @@ class StockPicking(models.Model):
             lines (recordset): A set of new stock move lines representing the
                                    generated lots.
         """
-        lines = self.env["stock.move.line"].browse()
         every_n = product_id.product_tmpl_id.create_lot_every_n
+        if every_n == 0 or current_product_qty == 0:
+            raise ValidationError(
+                _("The qty create lot every n and product qty must be greater than 0")
+            )
+        lines = self.env["stock.move.line"].browse()
         count_of_lots = int(current_product_qty // every_n)
-        lines |= self._generate_lots_stock_move_line(
+        lines |= self._create_multiple_stock_move_lines_for_lots(
             count_of_lots, line, product_id, every_n
         )
         remainder = current_product_qty - (count_of_lots * every_n)
@@ -106,7 +122,9 @@ class StockPicking(models.Model):
                 )
             )
         if remainder > 0:
-            lines |= self._generate_lots_stock_move_line(1, line, product_id, remainder)
+            lines |= self._create_multiple_stock_move_lines_for_lots(
+                1, line, product_id, remainder
+            )
         return lines
 
     def _set_auto_lot(self):
@@ -114,11 +132,11 @@ class StockPicking(models.Model):
         Allows to be called either by button or through code
         """
         pickings = self.filtered(lambda p: p.picking_type_id.auto_create_lot)
-        lines, new_lines = self._get_stock_move_lines(pickings)
-        if new_lines:
+        lines, new_lines = self._split_stock_move_lines(pickings)
+        if new_lines or not lines:
             return
-        count_by_product = self._compute_count_by_product(lines)
-        line = lines[0] if lines else None
+        count_by_product = self._prepare_count_by_products(lines)
+        line = lines[0]
         for product_id, product_qty in count_by_product.items():
             current_product_qty = product_id.uom_id._compute_quantity(
                 product_qty,
@@ -126,7 +144,7 @@ class StockPicking(models.Model):
                 round=False,
             )
             if product_id.create_lot_every_n:
-                new_lines |= self._generate_lot_every_n(
+                new_lines |= self._prepare_stock_move_lines_for_lots(
                     product_id, line, current_product_qty
                 )
             else:

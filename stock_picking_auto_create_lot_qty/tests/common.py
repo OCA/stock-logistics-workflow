@@ -4,7 +4,7 @@
 from odoo.tests import SavepointCase
 
 
-class CommonStockPickingAutoCreateLotQty(SavepointCase):
+class CommonStockPicking(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
