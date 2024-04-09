@@ -4,11 +4,11 @@
 
 
 from odoo import exceptions
-from odoo.tests.common import SavepointCase, tagged
+from odoo.tests.common import TransactionCase, tagged
 
 
 @tagged("post_install", "-at_install")
-class TestMergeWizard(SavepointCase):
+class TestMergeWizard(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
