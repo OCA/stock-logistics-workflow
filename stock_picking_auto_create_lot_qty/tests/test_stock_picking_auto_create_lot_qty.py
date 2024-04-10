@@ -21,7 +21,6 @@ class TestStockPickingAutoCreateLotQty(CommonStockPicking):
         )
         cls.picking_type_in.auto_create_lot = True
         cls.picking_type_in_2.auto_create_lot = True
-
         # * tracking "lot" to "none"
         cls.product_no_tracking = cls._create_product(
             tracking="lot", auto=True, every_n=5, multiple_allow=False
@@ -42,7 +41,7 @@ class TestStockPickingAutoCreateLotQty(CommonStockPicking):
         )
         self.picking.button_validate()
         # Check the display field
-        move = self.picking.move_lines.filtered(
+        move = self.picking.move_ids.filtered(
             lambda m: m.product_id
             == self.product_serial_auto_qty_5_multiples_allowed_false
         )
@@ -51,7 +50,7 @@ class TestStockPickingAutoCreateLotQty(CommonStockPicking):
         )
 
         # Search for serials
-        lot = self.env["stock.production.lot"].search(
+        lot = self.lot_obj.search(
             [
                 (
                     "product_id",
@@ -84,7 +83,7 @@ class TestStockPickingAutoCreateLotQty(CommonStockPicking):
         )
         self.picking.button_validate()
         # Check the display field
-        move = self.picking.move_lines.filtered(
+        move = self.picking.move_ids.filtered(
             lambda m: m.product_id
             == self.product_serial_auto_qty_5_multiples_allowed_true
         )
@@ -93,7 +92,7 @@ class TestStockPickingAutoCreateLotQty(CommonStockPicking):
         )
 
         # Search for serials
-        lot = self.env["stock.production.lot"].search(
+        lot = self.lot_obj.search(
             [
                 (
                     "product_id",
@@ -120,7 +119,7 @@ class TestStockPickingAutoCreateLotQty(CommonStockPicking):
         )
         self.picking.with_company(self.company_2).button_validate()
         # Check the display field
-        move = self.picking.move_lines.filtered(
+        move = self.picking.move_ids.filtered(
             lambda m: m.product_id
             == self.product_serial_auto_qty_5_multiples_allowed_true
         )
@@ -129,7 +128,7 @@ class TestStockPickingAutoCreateLotQty(CommonStockPicking):
         )
 
         # Search for serials
-        lot = self.env["stock.production.lot"].search(
+        lot = self.env["stock.lot"].search(
             [
                 (
                     "product_id",
@@ -144,7 +143,7 @@ class TestStockPickingAutoCreateLotQty(CommonStockPicking):
         )
 
     def test_onchange_tracking(self):
-        """Test tracking if the value is not 'lot'"""
+        """Test the creation of a serial number if the tracking is equal to "none" """
         self.product_no_tracking.product_tmpl_id.tracking = "none"
         self.product_no_tracking.product_tmpl_id._onchange_tracking()
         self.assertFalse(
@@ -153,14 +152,14 @@ class TestStockPickingAutoCreateLotQty(CommonStockPicking):
         )
 
     def test_product_0_every_n(self):
-        """Test when every n=0 create 1 lots"""
+        """Test the creation of a serial number if the create auto lot is equal to 0"""
         self._create_picking()
         self._create_move(
             product=self.product_0_every_n,
             qty=5,
         )
         self.picking.button_validate()
-        lot = self.env["stock.production.lot"].search(
+        lot = self.env["stock.lot"].search(
             [
                 (
                     "product_id",
@@ -184,7 +183,7 @@ class TestStockPickingAutoCreateLotQty(CommonStockPicking):
             msg="The qty create lot every n and product qty must be greater than 0",
         ):
             self.picking._prepare_stock_move_lines_for_lots(
-                self.product_0_every_n, self.picking.move_lines, 1
+                self.product_0_every_n, self.picking.move_line_ids, 1
             )
 
         # Validate that the product quantity must be greater than 0
@@ -194,7 +193,7 @@ class TestStockPickingAutoCreateLotQty(CommonStockPicking):
             msg="The qty create lot every n and product qty must be greater than 0",
         ):
             self.picking._prepare_stock_move_lines_for_lots(
-                product, self.picking.move_lines, 0
+                product, self.picking.move_line_ids, 0
             )
 
     def test_prepare_stock_move_lines_for_lots_2(self):

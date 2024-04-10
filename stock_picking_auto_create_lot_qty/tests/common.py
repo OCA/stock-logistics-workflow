@@ -1,19 +1,19 @@
 # Copyright (C) 2023 Cetmix OÜ
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+from odoo.tests import TransactionCase
 
-from odoo.tests import SavepointCase
 
-
-class CommonStockPicking(SavepointCase):
+class CommonStockPicking(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
-        cls.lot_obj = cls.env["stock.production.lot"]
+        cls.lot_obj = cls.env["stock.lot"]
         cls.warehouse = cls.env.ref("stock.warehouse0")
+        cls.company_1 = cls.env.ref("base.main_company")
+        cls.company_2 = cls.env.ref("stock.res_company_1")
         cls.picking_type_in = cls.env.ref("stock.picking_type_in")
         cls.picking_type_in_2 = cls.env.ref("stock.chi_picking_type_in")
-
         cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
         cls.supplier = cls.env["res.partner"].create({"name": "Supplier - test"})
 
@@ -21,8 +21,7 @@ class CommonStockPicking(SavepointCase):
             "stock.sequence_production_lots"
         ).copy()
         cls.stock_serial_sequence_2.prefix = "TEST"
-        cls.company_1 = cls.env.ref("base.main_company")
-        cls.company_2 = cls.env.ref("stock.res_company_1")
+        cls.company_2.stock_lot_serial_sequence_id = cls.stock_serial_sequence_2.id
 
     @classmethod
     def _create_product(
@@ -111,7 +110,7 @@ class CommonStockPicking(SavepointCase):
                             0,
                             {
                                 "product_id": product.id,
-                                "product_uom_qty": qty,
+                                "reserved_uom_qty": qty,
                                 "product_uom_id": product.uom_id.id,
                                 "location_id": cls.supplier_location.id,
                                 "location_dest_id": location_dest.id,

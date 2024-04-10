@@ -4,7 +4,7 @@
 {
     "name": "Stock Picking Auto Create Lot Quantity",
     "summary": "Auto batch generation by quantity",
-    "version": "14.0.1.0.0",
+    "version": "16.0.1.0.0",
     "development_status": "Production/Stable",
     "category": "stock",
     "website": "https://github.com/OCA/stock-logistics-workflow",
@@ -12,5 +12,8 @@
     "license": "AGPL-3",
     "installable": True,
     "depends": ["stock_picking_auto_create_lot"],
-    "data": ["views/product_template_view.xml", "views/res_config_settings_views.xml"],
+    "data": [
+        "views/product_template_view.xml",
+        "views/res_config_settings_view.xml",
+    ],
 }

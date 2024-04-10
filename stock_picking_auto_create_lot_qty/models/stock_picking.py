@@ -11,19 +11,15 @@ class StockPicking(models.Model):
     def _split_stock_move_lines(self, pickings):
         """
         Split stock move lines into existing and new lines.
-
         This method separates stock move lines into existing and new lines based on
         specific criteria and optionally creates automatic lot numbers.
-
         Args:
             pickings (recordset): Recordset of stock pickings for which to retrieve
                                   stock move lines
-
         Returns:
             tuple (existing_lines, new_lines): A tuple containing two recordsets:
                  - existing_lines: Existing stock move lines associated with the pickings.
                  - new_lines: New stock move lines that need to be created.
-
         """
         existing_lines = self.env["stock.move.line"].browse()
         new_lines = self.env["stock.move.line"].browse()
@@ -45,13 +41,11 @@ class StockPicking(models.Model):
     ):
         """
         Create multiple stock move lines for generating lots.
-
         Args:
             count_of_lots (int): Number of lots to generate.
             line (stock.move.line): Stock move line to use as a template.
             product_id (product.product): Product for which lots are generated.
             every_n (int): Number of units of measure to generate a lot for.
-
         Returns:
             new_lines (recordset): List of new stock move lines generated.
         """
@@ -72,33 +66,28 @@ class StockPicking(models.Model):
         """
         Prepares the number of lots to generate for each product
         based on the stock move lines provided.
-
         Args:
             lines (recordset): List of stock move lines.
-
         Returns:
             count_by_product (dict): Dictionary with product IDs as keys and number of lots
                                     to generate as values.
         """
         count_by_product = dict.fromkeys(lines.mapped("product_id"), 0)
         for line in lines:
-            count_by_product[line.product_id] += line.product_uom_qty
+            count_by_product[line.product_id] += line.reserved_uom_qty
         return count_by_product
 
     @api.model
     def _prepare_stock_move_lines_for_lots(self, product_id, line, current_product_qty):
         """
         Prepare stock move lines representing generated lots for a product.
-
         This method is responsible for preparing stock move lines that
         represent the lots generated for a specific product based on
         the product's configuration and the provided quantity.
-
         Args:
             product_id (product.product): Product for which lots are generated.
             line (stock.move.line): Stock move line to use as a template.
             current_product_qty (int): Quantity of the product to generate lots for.
-
         Returns:
             lines (recordset): A set of new stock move lines representing the
                                    generated lots.
