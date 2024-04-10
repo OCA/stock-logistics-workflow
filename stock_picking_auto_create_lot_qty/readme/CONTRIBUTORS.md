@@ -1,4 +1,0 @@
-- [Ooops](https://www.ooops404.com)
-  - [Francesco Foresti](francesco.foresti@ooops404.com)
-- [Cetmix](https://www.cetmix.com):
-  - [Alexander Yartsev](a.yartsev@yartsev.by)

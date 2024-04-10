@@ -1,19 +1,19 @@
 # Copyright (C) 2023 Cetmix OÜ
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+from odoo.tests import TransactionCase
 
-from odoo.tests import SavepointCase
 
-
-class CommonStockPicking(SavepointCase):
+class CommonStockPicking(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
-        cls.lot_obj = cls.env["stock.production.lot"]
+        cls.lot_obj = cls.env["stock.lot"]
         cls.warehouse = cls.env.ref("stock.warehouse0")
+        cls.company_1 = cls.env.ref("base.main_company")
+        cls.company_2 = cls.env.ref("stock.res_company_1")
         cls.picking_type_in = cls.env.ref("stock.picking_type_in")
         cls.picking_type_in_2 = cls.env.ref("stock.chi_picking_type_in")
-
         cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
         cls.supplier = cls.env["res.partner"].create({"name": "Supplier - test"})
 
@@ -21,8 +21,7 @@ class CommonStockPicking(SavepointCase):
             "stock.sequence_production_lots"
         ).copy()
         cls.stock_serial_sequence_2.prefix = "TEST"
-        cls.company_1 = cls.env.ref("base.main_company")
-        cls.company_2 = cls.env.ref("stock.res_company_1")
+        cls.company_2.stock_lot_serial_sequence_id = cls.stock_serial_sequence_2.id
 
     @classmethod
     def _create_product(
@@ -53,7 +52,7 @@ class CommonStockPicking(SavepointCase):
         )
 
     @classmethod
-    def _create_picking(cls, multicompany=False):
+    def _create_picking(cls, multicompany=False, immediate_transfer=False):
         """
         Create a new picking and set the following properties:
 
@@ -69,7 +68,10 @@ class CommonStockPicking(SavepointCase):
         )
         cls.picking = (
             cls.env["stock.picking"]
-            .with_context(default_picking_type_id=picking_type_in.id)
+            .with_context(
+                default_picking_type_id=picking_type_in.id,
+                default_immediate_transfer=immediate_transfer,
+            )
             .with_company(company)
             .create(
                 {
@@ -81,7 +83,9 @@ class CommonStockPicking(SavepointCase):
         )
 
     @classmethod
-    def _create_move(cls, product=None, qty=1.0, multicompany=False):
+    def _create_move(
+        cls, product=None, qty=1.0, multicompany=False, immediate_transfer=False
+    ):
         """Create a new stock move for the given product and quantity
 
         Args:
@@ -105,13 +109,14 @@ class CommonStockPicking(SavepointCase):
                     "product_uom": product.uom_id.id,
                     "location_id": cls.supplier_location.id,
                     "location_dest_id": location_dest.id,
+                    "quantity_done": qty if immediate_transfer else 0,
                     "move_line_ids": [
                         (
                             0,
                             0,
                             {
                                 "product_id": product.id,
-                                "product_uom_qty": qty,
+                                "reserved_uom_qty": qty,
                                 "product_uom_id": product.uom_id.id,
                                 "location_id": cls.supplier_location.id,
                                 "location_dest_id": location_dest.id,

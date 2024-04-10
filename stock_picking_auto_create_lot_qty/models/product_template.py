@@ -25,6 +25,9 @@ class ProductTemplate(models.Model):
         " set a value and select one of the UoMs available"
         " for purchase (if value = 0, behavior stays the"
         " same as base module)",
+        compute="_compute_create_lot_every_n",
+        readonly=False,
+        store=True,
     )
 
     only_multiples_allowed = fields.Boolean(
@@ -33,7 +36,10 @@ class ProductTemplate(models.Model):
         " received is not a multiple of the selected value",
     )
 
-    @api.onchange("tracking")
-    def _onchange_tracking(self):
-        if self.tracking != "lot":
-            self.create_lot_every_n = False
+    @api.depends("tracking")
+    def _compute_create_lot_every_n(self):
+        for rec in self:
+            if rec.tracking != "lot":
+                rec.create_lot_every_n = False
+            else:
+                rec.create_lot_every_n = rec.create_lot_every_n

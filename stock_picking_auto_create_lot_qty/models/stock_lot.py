@@ -3,8 +3,8 @@
 from odoo import fields, models
 
 
-class ProductionLot(models.Model):
-    _inherit = "stock.production.lot"
+class StockLot(models.Model):
+    _inherit = "stock.lot"
 
     name = fields.Char(
         default=lambda self: self.env["ir.sequence"].next_by_code(
