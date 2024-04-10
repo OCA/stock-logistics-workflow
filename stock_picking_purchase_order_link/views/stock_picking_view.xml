@@ -11,9 +11,9 @@
                 <button
                     name="action_view_purchase_order"
                     class="oe_stat_button"
+                    type="object"
                     icon="fa-shopping-cart"
                     string="Purchase Order"
-                    type="object"
                     invisible="not purchase_id"
                     groups="stock.group_stock_user"
                 >
