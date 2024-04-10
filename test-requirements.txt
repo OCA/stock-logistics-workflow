@@ -1,1 +1,2 @@
 odoo-test-helper
+odoo-addon-stock_picking_auto_create_lot @ git+https://github.com/OCA/stock-logistics-workflow.git@refs/pull/1565/head#subdirectory=setup/stock_picking_auto_create_lot
