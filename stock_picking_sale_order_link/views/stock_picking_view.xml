@@ -12,8 +12,8 @@
                     name="action_view_sale_order"
                     class="oe_stat_button"
                     icon="fa-dollar"
-                    string="Sales Order"
                     type="object"
+                    string="Sales Order"
                     invisible="not sale_id"
                     groups="stock.group_stock_user"
                 >
