@@ -14,7 +14,7 @@
                     icon="fa-shopping-cart"
                     string="Purchase Order"
                     type="object"
-                    invisible="purchase_id == False"
+                    invisible="not purchase_id"
                     groups="stock.group_stock_user"
                 >
                 </button>
