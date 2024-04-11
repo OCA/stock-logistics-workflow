@@ -10,7 +10,7 @@ class StockPicking(models.Model):
 
     def action_cancel(self):
         for pick in self:
-            if pick.printed:
+            if pick.printed and pick.picking_type_id.restrict_cancel_if_printed:
                 raise UserError(
                     _("You cannot cancel a transfer that is already printed.")
                 )
