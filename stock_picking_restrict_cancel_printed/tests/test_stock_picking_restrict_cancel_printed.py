@@ -11,16 +11,22 @@ class TestResPartnerGetAddress(SavepointCase):
         super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.partner_1 = cls.env.ref("base.res_partner_1")
-
-    def test_stock_picking_restrict_cancel_printed(self):
-        picking = self.env["stock.picking"].create(
+        cls.picking_type = cls.env.ref("stock.picking_type_out")
+        cls.picking = cls.env["stock.picking"].create(
             {
-                "partner_id": self.partner_1.id,
-                "picking_type_id": self.env.ref("stock.picking_type_out").id,
-                "location_id": self.env.ref("stock.stock_location_stock").id,
-                "location_dest_id": self.env.ref("stock.stock_location_customers").id,
+                "partner_id": cls.partner_1.id,
+                "picking_type_id": cls.picking_type.id,
+                "location_id": cls.env.ref("stock.stock_location_stock").id,
+                "location_dest_id": cls.env.ref("stock.stock_location_customers").id,
             }
         )
-        picking.printed = True
+
+    def test_stock_picking_restrict_cancel_printed_enabled(self):
+        self.picking.printed = True
         with self.assertRaises(UserError):
-            picking.action_cancel()
+            self.picking.action_cancel()
+
+    def test_stock_picking_restrict_cancel_printed_disabled(self):
+        self.picking_type.restrict_cancel_if_printed = False
+        self.picking.printed = True
+        self.picking.action_cancel()
