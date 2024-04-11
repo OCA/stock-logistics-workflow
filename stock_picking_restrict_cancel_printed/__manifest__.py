@@ -3,7 +3,7 @@
 
 {
     "name": "Stock picking restrict partner cancel printed",
-    "version": "16.0.1.0.0",
+    "version": "14.0.1.0.0",
     "development_status": "Beta",
     "category": "Inventory",
     "summary": "Prevent canceling a picking with a printed flag",

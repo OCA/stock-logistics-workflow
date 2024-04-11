@@ -2,16 +2,14 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo.exceptions import UserError
-from odoo.tests.common import TransactionCase
-
-from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+from odoo.tests.common import SavepointCase
 
 
-class TestResPartnerGetAddress(TransactionCase):
+class TestResPartnerGetAddress(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env["base"].with_context(**DISABLED_MAIL_CONTEXT).env
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.partner_1 = cls.env.ref("base.res_partner_1")
 
     def test_stock_picking_restrict_cancel_printed(self):
