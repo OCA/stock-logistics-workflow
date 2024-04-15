@@ -61,6 +61,7 @@ setuptools.setup(
         'odoo-addon-stock_picking_sale_order_link>=15.0dev,<15.1dev',
         'odoo-addon-stock_picking_send_by_mail>=15.0dev,<15.1dev',
         'odoo-addon-stock_picking_show_backorder>=15.0dev,<15.1dev',
+        'odoo-addon-stock_picking_show_lot>=15.0dev,<15.1dev',
         'odoo-addon-stock_picking_show_return>=15.0dev,<15.1dev',
         'odoo-addon-stock_picking_warn_message>=15.0dev,<15.1dev',
         'odoo-addon-stock_picking_whole_scrap>=15.0dev,<15.1dev',
