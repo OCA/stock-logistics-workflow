@@ -13,6 +13,7 @@ setuptools.setup(
         'odoo-addon-purchase_stock_picking_invoice_link>=16.0dev,<16.1dev',
         'odoo-addon-sale_line_returned_qty>=16.0dev,<16.1dev',
         'odoo-addon-sale_order_global_stock_route>=16.0dev,<16.1dev',
+        'odoo-addon-sale_stock_restocking_fee_invoicing>=16.0dev,<16.1dev',
         'odoo-addon-stock_account_product_run_fifo_hook>=16.0dev,<16.1dev',
         'odoo-addon-stock_auto_move>=16.0dev,<16.1dev',
         'odoo-addon-stock_customer_deposit>=16.0dev,<16.1dev',
