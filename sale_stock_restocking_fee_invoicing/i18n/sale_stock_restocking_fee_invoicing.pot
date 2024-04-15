@@ -4,10 +4,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0+e\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-17 14:43+0000\n"
-"PO-Revision-Date: 2023-03-17 14:43+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -45,16 +43,14 @@ msgid "If checked your customer will be charged for accepting returned goods."
 msgstr ""
 
 #. module: sale_stock_restocking_fee_invoicing
-#: model:ir.model.fields,field_description:sale_stock_restocking_fee_invoicing.field_stock_picking__is_fee_customer_out
-msgid "Is Fee Customer Out"
+#: model:ir.model.fields,help:sale_stock_restocking_fee_invoicing.field_stock_move__picking_kind
+msgid "Indicate the kind of picking based on its locations"
 msgstr ""
 
 #. module: sale_stock_restocking_fee_invoicing
-#: model:ir.model.fields,field_description:sale_stock_restocking_fee_invoicing.field_stock_move__is_fee_customer_return
-#: model:ir.model.fields,field_description:sale_stock_restocking_fee_invoicing.field_stock_picking__is_fee_customer_return
-#: model:ir.model.fields,field_description:sale_stock_restocking_fee_invoicing.field_stock_return_picking__is_fee_customer_return
-#: model:ir.model.fields,field_description:sale_stock_restocking_fee_invoicing.field_stock_return_picking_line__is_fee_customer_return
-msgid "Is Fee Customer Return"
+#: model:ir.model.fields,field_description:sale_stock_restocking_fee_invoicing.field_stock_return_picking__is_customer_return
+#: model:ir.model.fields,field_description:sale_stock_restocking_fee_invoicing.field_stock_return_picking_line__is_customer_return
+msgid "Is Customer Return"
 msgstr ""
 
 #. module: sale_stock_restocking_fee_invoicing
@@ -86,6 +82,11 @@ msgstr ""
 msgid ""
 "No product configured for restocking fee. Please fix the configuration into "
 "stock settings or contact you administrator."
+msgstr ""
+
+#. module: sale_stock_restocking_fee_invoicing
+#: model:ir.model.fields,field_description:sale_stock_restocking_fee_invoicing.field_stock_move__picking_kind
+msgid "Picking Kind"
 msgstr ""
 
 #. module: sale_stock_restocking_fee_invoicing
@@ -150,9 +151,4 @@ msgstr ""
 msgid ""
 "Tick this box if you wish to charge your customer a fee in case of return of"
 " goods. Default value comes from the customer info."
-msgstr ""
-
-#. module: sale_stock_restocking_fee_invoicing
-#: model:ir.model,name:sale_stock_restocking_fee_invoicing.model_stock_picking
-msgid "Transfer"
 msgstr ""
