@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_weight_record_label">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <!-- Don't print empty labels -->
+                <t t-foreach="docs.filtered('qty_done')" t-as="sml">
+                    <t t-set="lot_name" t-value="sml.lot_id.name or sml.lot_name" />
+                    <div class="o_label_page o_label_dymo">
+                        <div>
+                            <span t-out="sml.product_id.display_name" />
+                        </div>
+                        <div class="h5 pt-2">
+                            <span
+                                t-out="sml.qty_done"
+                                t-options="{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}"
+                            /> <span t-out="sml.product_uom_id.name" />
+                        </div>
+                        <div t-if="lot_name">
+                            <span>LOT: <t t-out="lot_name" /></span>
+                        </div>
+                        <div t-out="sml.move_id.reference" />
+                    </div>
+                </t>
+            </div>
+        </t>
+    </template>
+    <record id="label_weight_record" model="ir.actions.report">
+        <field name="name">Weight Record Label</field>
+        <field name="model">stock.move.line</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">stock_weighing.report_weight_record_label</field>
+        <field name="report_file">stock_weighing.report_weight_record_label</field>
+        <field name="paperformat_id" ref="product.paperformat_label_sheet_dymo" />
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

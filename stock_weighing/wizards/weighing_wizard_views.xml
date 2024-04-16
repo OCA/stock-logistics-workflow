@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="weighing_wizard_form_view" model="ir.ui.view">
+        <field name="model">weighing.wizard</field>
+        <field name="arch" type="xml">
+            <form create="false" string="Record Weight">
+                <field name="selected_move_line_id" invisible="1" />
+                <field name="wizard_state" invisible="1" />
+                <field name="move_id" invisible="1" />
+                <field name="product_id" invisible="1" />
+                <field name="product_tracking" invisible="1" />
+                <field name="available_lot_ids" invisible="1" />
+                <sheet>
+                    <field
+                        name="lot_id"
+                        class="form-control-lg"
+                        widget="selection"
+                        placeholder="Select lot..."
+                        attrs="{'invisible': ['|', ('wizard_state', '=', 'weight'), ('product_tracking', '=', 'none')]}"
+                    />
+                    <field
+                        name="weight"
+                        class="form-control-lg text-center text-info o_input_weight"
+                    />
+                    <footer>
+                        <button
+                            name="record_weight"
+                            type="object"
+                            class="btn btn-primary"
+                            attrs="{'invisible': [('wizard_state', '!=', 'weight')]}"
+                            data-hotkey="r"
+                        >Record</button>
+                        <button
+                            name="add_operation_and_record"
+                            type="object"
+                            class="btn btn-primary"
+                            attrs="{'invisible': [('wizard_state', '=', 'weight')]}"
+                            data-hotkey="r"
+                        >Add detailed operation</button>
+                        <button
+                            string="Cancel"
+                            class="btn-secondary"
+                            type="object"
+                            name="action_close"
+                            data-hotkey="z"
+                        />
+                        <field name="print_label" widget="boolean_toggle" />
+                        <label for="print_label" />
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="weighing_wizard_action" model="ir.actions.act_window">
+        <field name="res_model">weighing.wizard</field>
+        <field name="name">Record Weight</field>
+        <field name="view_mode">form</field>
+        <field name="context">{}</field>
+        <field name="view_id" ref="weighing_wizard_form_view" />
+        <field name="target">new</field>
+    </record>
+</odoo>

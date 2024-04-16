@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="stock.picking_type_out" model="stock.picking.type">
+        <field name="weighing_operations" eval="True" />
+        <field name="print_weighing_label" eval="True" />
+        <field
+            name="weighing_label_report_id"
+            ref="stock_weighing.label_weight_record"
+        />
+    </record>
+</odoo>

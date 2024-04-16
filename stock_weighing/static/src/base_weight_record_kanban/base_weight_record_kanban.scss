@@ -1,0 +1,115 @@
+/* Copyright 2024 Tecnativa - David Vidal
+ * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
+// Full width kanban view for the weighing main screen
+.o_kanban_view.o_weight_kanban {
+    overflow: auto;
+    border-top: 1px solid $border-color;
+    &.o_kanban_ungrouped {
+        padding: 0px;
+        .o_weight_kanban_card {
+            width: 100%;
+            margin: 0px;
+            border-right: 0px;
+            border-top: 0px;
+            overflow: hidden;
+            .o_kanban_detail_ungrouped {
+                padding-left: $o-horizontal-padding - $o-kanban-color-border-width -
+                    $o-kanban-record-margin;
+                > div {
+                    display: grid;
+                    align-items: center;
+                }
+                .o_weight_kanban_image {
+                    width: 56px;
+                    height: 56px;
+                    top: 0px;
+                    position: absolute;
+                }
+                .o_weight_name {
+                    overflow-wrap: break-word;
+                }
+                .o_weight_kanban_actions_ungrouped {
+                    button {
+                        float: right;
+                        margin: 4px;
+                    }
+                }
+            }
+        }
+    }
+    &.o_kanban_grouped {
+        flex-flow: row wrap;
+        min-height: 50%;
+        .o_kanban_group {
+            width: 100%;
+            padding: 0;
+            overflow: hidden;
+            .o_kanban_header {
+                padding-left: 10px;
+                display: flex;
+                flex-flow: row;
+                border-bottom: 1px solid $o-brand-primary;
+                .o_kanban_counter {
+                    width: 100%;
+                    margin-left: 1rem;
+                    margin-bottom: initial;
+                    .o_kanban_counter_progress {
+                        width: 95%;
+                        .progress-bar {
+                            filter: opacity(0.7);
+                        }
+                    }
+                    .o_kanban_counter_side {
+                        width: initial;
+                    }
+                }
+            }
+            .o_kanban_config {
+                display: none;
+            }
+            .o_kanban_header_title {
+                .o_column_title {
+                    cursor: initial;
+                }
+                .toggle_kanban_fold {
+                    cursor: pointer;
+                }
+            }
+            &.o_column_folded {
+                .o_kanban_header_title {
+                    .o_column_title {
+                        font-size: initial;
+                        left: 20px;
+                        top: initial;
+                        transform: initial;
+                        transform-origin: initial;
+                    }
+                }
+            }
+        }
+    }
+    // Kanban card side colors
+    .oe_kanban_color_weighed {
+        border-left-color: $o-success;
+        &:after {
+            background-color: $o-success;
+        }
+    }
+    .oe_kanban_color_weighing {
+        border-left-color: $o-warning;
+        &:after {
+            background-color: $o-warning;
+        }
+    }
+    .oe_kanban_color_to_weigh {
+        border-left-color: $o-danger;
+        &:after {
+            background-color: $o-danger;
+        }
+    }
+}
+// Big input for the wizard
+input.o_input_weight {
+    font-size: 3em;
+    font-weight: bold;
+}

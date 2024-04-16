@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- A kanban with no borders so the usability is more like a tree -->
+    <record id="view_move_weight_kanban_view" model="ir.ui.view">
+        <field name="model">stock.move</field>
+        <field name="arch" type="xml">
+            <kanban
+                class="o_weight_kanban"
+                js_class="base_weight_record_kanban"
+                create="0"
+                group_create="0"
+                group_delete="0"
+                group_edit="0"
+                records_draggable="0"
+                groups_draggable="0"
+                quick_create="0"
+            >
+                <field name="id" />
+                <field name="product_id" />
+                <field name="show_details_visible" />
+                <field name="product_uom_qty" />
+                <field name="product_qty" readonly="1" />
+                <field name="quantity_done" />
+                <field name="reserved_availability" />
+                <field name="is_inventory" />
+                <field name="state" />
+                <field name="name" />
+                <field name="product_uom" />
+                <field name="location_id" />
+                <field name="location_dest_id" />
+                <field name="has_weight" />
+                <field name="reference" />
+                <field name="move_line_ids" />
+                <field name="move_lines_count" />
+                <field name="move_lines_weighed" />
+                <field name="weighing_state" />
+                <field name="weighing_user_id" />
+                <field name="is_weighing_operation_locked" />
+                <field name="partner_id" />
+                <field name="origin_names" />
+                <field name="date" />
+                <progressbar
+                    field="weighing_state"
+                    colors='{"weighed": "success", "to_weigh": "danger", "weighing": "warning"}'
+                />
+                <templates>
+                    <t t-name="kanban-box">
+                        <t
+                            t-set="single_move_line"
+                            t-value="record.move_lines_count.raw_value === 1"
+                        />
+                        <div
+                            t-attf-class="{{record.weighing_state.raw_value &amp;&amp; 'oe_kanban_color_' + record.weighing_state.raw_value}} o_weight_kanban_card {{record.is_weighing_operation_locked.raw_value &amp;&amp; 'bg-light'}}"
+                        >
+                            <div class="o_kanban_detail_ungrouped row">
+                                <!-- Header infos -->
+                                <div class="col-12">
+                                    <div>
+                                        <t t-if="record.lot_names.raw_value">
+                                            <small>LOTS: </small>
+                                            <span class="text-muted"><field
+                                                    name="lot_names"
+                                                /></span>
+                                        </t>
+                                        <span
+                                            class="badge badge-light"
+                                            title="Destination"
+                                        >
+                                            <t t-out="record.origin_names.value" />
+                                            <i class="fa fa-arrow-right" />
+                                            <t t-out="record.location_dest_id.value" />
+                                        </span>
+                                        <span class="pull-right badge badge-light">
+                                            <field name="date" />
+                                        </span>
+                                        <span
+                                            t-if="record.is_weighing_operation_locked.raw_value"
+                                            class="pull-right badge badge-danger"
+                                            title="Locked by user"
+                                        >
+                                            <i class="fa fa-lock" /> <field
+                                                name="weighing_user_id"
+                                            />
+                                        </span>
+                                    </div>
+                                </div>
+                                <!-- Informations -->
+                                <div class="col-5 o_weight_name">
+                                    <strong class="h5 mb-0">
+                                        <field name="product_id" />
+                                    </strong>
+                                    <div>
+                                        <span
+                                            class="h4 badge badge-primary"
+                                            t-out="record.reference.raw_value"
+                                        />
+                                        <em t-out="record.partner_id.value" />
+                                    </div>
+                                    <div>
+                                        <span class="text-warning"><strong
+                                            >To do: </strong><field
+                                                name="product_uom_qty"
+                                            /><field name="product_uom" /></span>
+                                        <span class="text-info"><strong
+                                            >Reserved: </strong><field
+                                                name="reserved_availability"
+                                            /><field name="product_uom" /></span>
+                                        <span class="text-success"><strong
+                                            >Done: </strong><field
+                                                name="quantity_done"
+                                            /><field name="product_uom" /></span>
+                                    </div>
+                                </div>
+                                <!-- Recording button -->
+                                <div class="col-1">
+                                    <div
+                                        t-if="record.has_weight.raw_value &amp;&amp; !['done', 'cancel', 'draft'].includes(record.state.raw_value)"
+                                        class="row"
+                                    >
+                                        <button
+                                            string="Record weight"
+                                            name="action_weighing"
+                                            type="object"
+                                            class="btn btn-lg border"
+                                            t-if="record.move_lines_count.raw_value === 1"
+                                        ><i
+                                                t-attf-class="fa {{record.recorded_weight.raw_value ? 'fa-refresh text-success' : 'fa-circle text-danger'}}"
+                                            /></button>
+                                        <!-- We can't do a t-attf-name -->
+                                        <button
+                                            string="Record weight"
+                                            name="action_weight_detailed_operations"
+                                            type="object"
+                                            class="btn btn-lg border"
+                                            t-elif="record.move_lines_count.raw_value > 1 &amp;&amp; !context.hide_weight_detail_buttons"
+                                        ><i
+                                                t-attf-class="fa {{record.recorded_weight.raw_value &amp;&amp; record.weighing_state.raw_value == 'weighed' ? 'fa-refresh text-success' : 'fa-circle text-danger'}}"
+                                            /></button>
+                                        <button
+                                            string="Force weighed"
+                                            title="Force weighed"
+                                            name="action_force_weighed"
+                                            type="object"
+                                            class="btn btn-lg border"
+                                            t-elif="record.move_lines_count.raw_value > 1 &amp;&amp; context.hide_weight_detail_buttons &amp;&amp; record.weighing_state.raw_value === 'weighing'"
+                                        ><i class="fa fa-check text-success" /></button>
+                                    </div>
+                                </div>
+                                <!-- Weight -->
+                                <div class="col-2">
+                                    <t t-if="record.has_weight.raw_value">
+                                        <span
+                                            t-if="record.weighing_state.raw_value == 'weighed'"
+                                            class="badge badge-success w-100"
+                                        >Weighed</span>
+                                        <span
+                                            t-elif="record.weighing_state.raw_value == 'weighing'"
+                                            class="badge badge-warning w-100"
+                                        >Weighing</span>
+                                        <span
+                                            t-elif="record.weighing_state.raw_value == 'to_weigh'"
+                                            class="badge badge-danger w-100"
+                                        >To weigh</span>
+                                        <div class="text-center">
+                                            <t t-if="record.recorded_weight.raw_value">
+                                                <span class="h1 text-success">
+                                                    <field name="recorded_weight" />
+                                                </span>
+                                                <sup class="initialism">
+                                                    <field name="product_uom" />
+                                                </sup>
+                                            </t>
+                                            <t t-else="">
+                                                <span
+                                                    class="h1 text-warning"
+                                                    t-out="'--.--'"
+                                                />
+                                            </t>
+                                        </div>
+                                    </t>
+                                </div>
+                                <!-- Extra buttons -->
+                                <div class="col-3">
+                                    <div class="row">
+                                        <button
+                                            class="btn btn-lg btn-secondary"
+                                            name="action_print_weight_record_label"
+                                            type="object"
+                                            string="Print labels"
+                                            title="Print labels"
+                                        ><i class="fa fa-print" /></button>
+                                        <!-- Hidden for the moment -->
+                                        <button
+                                            t-if="!['done', 'cancel', 'draft'].includes(record.state.raw_value)"
+                                            type="object"
+                                            name="action_add_move_line"
+                                            title="Add operation"
+                                            class="btn btn-lg btn-secondary ml-1 "
+                                        >
+                                            <i class="fa fa-plus" />
+                                        </button>
+                                        <button
+                                            t-if="!['done', 'cancel', 'draft'].includes(record.state.raw_value)"
+                                            type="object"
+                                            name="action_reset_weights"
+                                            title="Reset weights"
+                                            class="btn btn-lg btn-secondary ml-1 "
+                                            confirm="This will reset your current weight. Proceed?"
+                                        >
+                                            <i class="fa fa-times" />
+                                        </button>
+                                        <button
+                                            t-if="record.is_weighing_operation_locked.raw_value"
+                                            type="object"
+                                            name="action_unlock_weigh_operation"
+                                            title="Unlock weight operation"
+                                            class="btn btn-lg btn-danger ml-1 "
+                                        >
+                                            <i class="fa fa-lock" />
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- Details -->
+                                <div class="col-1">
+                                    <button
+                                        t-if="record.move_lines_count.raw_value &amp;&amp; !single_move_line &amp;&amp; !context.hide_weight_detail_buttons"
+                                        type="object"
+                                        name="action_weight_detailed_operations"
+                                        t-attf-class="btn btn-lg {{single_move_line ? 'btn-secondary' : 'btn-primary'}}"
+                                        title="Details"
+                                    ><i
+                                            t-attf-class="fa fa-th-list"
+                                            title="Details"
+                                        /></button>
+                                </div>
+                                <!-- Footer infos-->
+                                <div class="col-12">
+                                    <div name="weight_card_footer">
+                                        <span
+                                            class="badge badge-light"
+                                            t-out="record.state.value"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <!-- This is meant to be used in a split view if we get to do that instead of the wizard approach -->
+    <record id="stock_move_weight_form_view" model="ir.ui.view">
+        <field name="model">stock.move</field>
+        <field name="arch" type="xml">
+            <form class="p-0" create="0" edit="0" js_class="base_weight_record_form">
+                <field name="company_id" invisible="1" />
+                <!-- HACK: Use the same kanban in the form view with a computed field on itself so we can reuse it -->
+                <field
+                    name="self_move_ids"
+                    mode="kanban"
+                    class="w-100"
+                    context="{'kanban_view_ref': 'stock_weighing.view_move_weight_kanban_view', 'hide_weight_detail_buttons': True}"
+                />
+                <field
+                    name="move_line_ids"
+                    mode="kanban"
+                    class="w-100"
+                    context="{'kanban_view_ref': 'stock_weighing.stock_move_line_weight_kanban_view'}"
+                />
+            </form>
+        </field>
+    </record>
+    <record id="view_move_search" model="ir.ui.view">
+        <field name="model">stock.move</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="stock.view_move_search" />
+        <field name="arch" type="xml">
+            <filter name="inventory" position="after">
+                <filter
+                    string="Weight"
+                    name="weighed"
+                    domain="[('has_weight', '=', True)]"
+                />
+            </filter>
+            <filter name="ready" position="attributes">
+                <attribute
+                    name="context"
+                >{'shown_in_panel': {'icon': 'fa-thumbs-up'}}</attribute>
+            </filter>
+            <filter name="future" position="attributes">
+                <attribute
+                    name="context"
+                >{'shown_in_panel': {'icon': 'fa-hand-o-right'}}</attribute>
+            </filter>
+            <filter name="done" position="after">
+                <separator />
+                <filter
+                    string="To weigh"
+                    name="to_weigh"
+                    domain="[('weighing_state', 'in', ['weighing', 'to_weigh'])]"
+                    context="{'shown_in_panel': {'icon': 'fa-thermometer'}}"
+                />
+            </filter>
+            <filter name="today" position="before">
+                <filter
+                    string="Today"
+                    name="date_today"
+                    domain="[('date', '&lt;=', context_today().strftime('%%Y-%%m-%%d 23:59:59'))]"
+                    context="{'shown_in_panel': {'icon': 'fa-calendar'}}"
+                />
+            </filter>
+
+            <filter name="status" position="after">
+                <filter
+                    string="Weighing State"
+                    name="weighing_state"
+                    domain="[]"
+                    context="{'group_by': 'weighing_state'}"
+                />
+                <filter
+                    string="Destination"
+                    name="destination_address"
+                    domain="[]"
+                    context="{'group_by': 'partner_id'}"
+                />
+            </filter>
+        </field>
+    </record>
+    <!-- Default action -->
+    <record id="weighing_operation_action" model="ir.actions.act_window">
+        <field name="res_model">stock.move</field>
+        <field name="name">Weighing operations</field>
+        <field name="view_mode">kanban,form</field>
+        <field
+            name="context"
+        >{'search_default_ready': 1, 'search_default_date_today': 1, 'search_default_to_weigh': 1, 'outgoing_weighing_order': 1}</field>
+        <field name="domain">[('has_weight', '=', True)]</field>
+        <field
+            name="view_ids"
+            eval="[(5, 0, 0),(0, 0, {'view_mode': 'kanban', 'view_id': ref('stock_weighing.view_move_weight_kanban_view')}),(0, 0, {'view_mode': 'form', 'view_id': ref('stock_weighing.stock_move_weight_form_view')})]"
+        />
+        <field name="search_view_id" ref="stock_weighing.view_move_search" />
+    </record>
+    <menuitem
+        id="menu_weight_operation"
+        name="Weighing Operations"
+        parent="stock.menu_warehouse_report"
+        sequence="101"
+        action="weighing_operation_action"
+    />
+    <menuitem
+        id="menu_weighing"
+        name="Weighing"
+        web_icon="stock_weighing,static/description/icon.png"
+        groups="stock.group_stock_manager,stock.group_stock_user"
+        sequence="141"
+    />
+    <menuitem
+        id="menu_weight_operation_screen"
+        name="Weighing Operations"
+        parent="menu_weighing"
+        sequence="0"
+        action="stock_weighing.stock_move_weight_operation_start_screen"
+    />
+</odoo>

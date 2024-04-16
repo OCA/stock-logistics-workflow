@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="stock_move_line_weight_kanban_view" model="ir.ui.view">
+        <field name="model">stock.move.line</field>
+        <field name="arch" type="xml">
+            <kanban class="o_weight_kanban">
+                <field name="product_id" />
+                <field name="product_uom_qty" />
+                <field name="location_id" invisible="1" />
+                <field name="location_dest_id" invisible="1" />
+                <field name="has_weight" />
+                <field name="has_recorded_weight" />
+                <field name="recorded_weight" />
+                <field name="state" />
+                <field name="lot_id" />
+                <field name="reference" />
+                <field name="tracking" />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="o_weight_kanban_card">
+                            <div class="o_kanban_detail_ungrouped row">
+                                <div class="col-12">
+                                    <div>
+                                        <span class="badge badge-light">
+                                            <t t-out="record.location_id.value" />
+                                            <i class="fa fa-arrow-right" title="to" />
+                                            <t t-out="record.location_dest_id.value" />
+                                        </span>
+                                    </div>
+                                </div>
+                                <!-- Infos -->
+                                <div class="col-2">
+                                    <div>
+                                        <span>To weigh:</span><br />
+                                        <strong class="h5 text-warning"><field
+                                                name="product_uom_qty"
+                                            /> <field name="product_uom_id" /></strong>
+                                    </div>
+                                </div>
+                                <div class="col-2 o_weight_name">
+                                    <t t-if="record.tracking.raw_value">
+                                        <small>LOT</small>
+                                        <span
+                                            class="h4 text-muted"
+                                            t-out="record.lot_id.value"
+                                            t-if="record.lot_id.raw_value"
+                                        />
+                                    </t>
+                                </div>
+                                <!-- Weight -->
+                                <!-- Recording button -->
+                                <div class="col-2">
+                                    <div
+                                        t-if="record.has_weight.raw_value &amp;&amp; record.state.raw_value !== 'done'"
+                                        class="row"
+                                    >
+                                        <button
+                                            string="Record weight"
+                                            name="action_weighing"
+                                            type="object"
+                                            class="btn btn-lg border"
+                                        ><i
+                                                t-attf-class="fa {{record.recorded_weight.raw_value ? 'fa-refresh text-success' : 'fa-circle text-danger'}}"
+                                            /></button>
+                                    </div>
+                                </div>
+                                <!-- Weight value -->
+                                <div class="col-3">
+                                    <t t-if="record.has_weight.raw_value">
+                                        <div>
+                                            <t t-if="record.recorded_weight.raw_value">
+                                                <span class="h1 text-success">
+                                                    <field name="recorded_weight" />
+                                                </span>
+                                                <sup class="initialism">
+                                                    <field name="product_uom_id" />
+                                                </sup>
+                                            </t>
+                                            <t t-else="">
+                                                <span
+                                                    class="h1 text-warning"
+                                                    t-out="'--.--'"
+                                                />
+                                            </t>
+                                        </div>
+                                    </t>
+                                </div>
+                                <div class="col-3">
+                                    <div class="row">
+                                        <button
+                                            class="btn btn-lg btn-secondary"
+                                            name="action_print_weight_record_label"
+                                            type="object"
+                                            string="Print labels"
+                                        ><i
+                                                class="fa fa-print "
+                                                title="Print labels"
+                                            /></button>
+                                        <button
+                                            t-if="!['done', 'cancel', 'draft'].includes(record.state.raw_value)"
+                                            type="object"
+                                            name="action_reset_weights"
+                                            title="Reset weights"
+                                            class="btn btn-lg btn-secondary ml-1 "
+                                            confirm="This will reset your current weight. Proceed?"
+                                        >
+                                            <i class="fa fa-times" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+</odoo>

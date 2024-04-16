@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-extend="KanbanView.Group" t-name="WeightRecordingKanbanView.Group">
+        <t t-jquery="span.o_column_title" t-operation="before">
+            <span t-if="!widget.folded" class="toggle_kanban_fold mr-2">
+                <i
+                    class="fa fa-folder-open text-warning"
+                    role="img"
+                    aria-label="Fold"
+                    title="Fold"
+                />
+            </span>
+            <span t-else="">
+                <i
+                    class="fa fa-folder text-warning"
+                    role="img"
+                    aria-label="Unfold"
+                    title="Unfold"
+                />
+            </span>
+        </t>
+        <t t-jquery=".o_column_unfold" t-operation="replace" />
+    </t>
+
+</templates>

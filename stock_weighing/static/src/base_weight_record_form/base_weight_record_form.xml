@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <!-- UX: There's too much blank space on the top. Maybe we could toggle this somehow, or maybe is just useless for this purpose. -->
+    <t
+        t-name="WeightRecording.DetailControlPanel"
+        t-inherit="web.Legacy.ControlPanel"
+        t-inherit-mode="primary"
+        owl="1"
+    >
+        <xpath expr="//div[hasclass('o_cp_bottom')]" position="attributes">
+            <attribute name="t-if">True</attribute>
+        </xpath>
+    </t>
+
+</templates>
