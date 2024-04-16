@@ -81,6 +81,9 @@ Contributors
    -  Phuc Tran Thanh <phuc@trobz.com>
 
 -  Denis Roussel <denis.roussel@acsone.eu>
+-  `APSL <https://apsl.tech>`__:
+
+   -  Antoni Marroig <amarroig@apsl.net>
 
 Other credits
 -------------

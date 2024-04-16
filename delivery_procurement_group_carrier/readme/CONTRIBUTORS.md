@@ -6,3 +6,5 @@
 - TROBZ:
   - Phuc Tran Thanh \<<phuc@trobz.com>\>
 - Denis Roussel \<<denis.roussel@acsone.eu>\>
+- [APSL](https://apsl.tech):
+  - Antoni Marroig  \<<amarroig@apsl.net>\>
