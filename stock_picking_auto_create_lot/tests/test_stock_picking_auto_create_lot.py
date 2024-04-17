@@ -17,6 +17,8 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, SavepointCa
         cls.product_serial_not_auto = cls._create_product(tracking="serial", auto=False)
         cls.picking_type_in.auto_create_lot = True
 
+        cls.product_2 = cls._create_product()
+
         cls._create_picking()
         cls._create_move(product=cls.product, qty=2.0)
         cls._create_move(product=cls.product_serial, qty=3.0)
@@ -152,3 +154,62 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, SavepointCa
             [("product_id", "=", self.product_serial.id)]
         )
         self.assertEqual(len(lot), 6)
+
+    def test_auto_create_lot_2(self):
+        """Test check create lots per product"""
+        picking = (
+            self.env["stock.picking"]
+            .with_context(default_picking_type_id=self.picking_type_in.id)
+            .create(
+                {
+                    "partner_id": self.supplier.id,
+                    "picking_type_id": self.picking_type_in.id,
+                    "location_id": self.supplier_location.id,
+                }
+            )
+        )
+        location_dest = picking.picking_type_id.default_location_dest_id
+        move = self.env["stock.move"].create(
+            [
+                {
+                    "name": "test-{product}".format(product=self.product.name),
+                    "product_id": self.product.id,
+                    "picking_id": picking.id,
+                    "picking_type_id": picking.picking_type_id.id,
+                    "product_uom_qty": 5,
+                    "product_uom": self.product.uom_id.id,
+                    "location_id": self.supplier_location.id,
+                    "location_dest_id": location_dest.id,
+                },
+                {
+                    "name": "test-{product}".format(product=self.product_2.name),
+                    "product_id": self.product_2.id,
+                    "picking_id": picking.id,
+                    "picking_type_id": picking.picking_type_id.id,
+                    "product_uom_qty": 7,
+                    "product_uom": self.product_2.uom_id.id,
+                    "location_id": self.supplier_location.id,
+                    "location_dest_id": location_dest.id,
+                },
+            ]
+        )
+        picking.action_assign()
+        # Check the display field
+        move = picking.move_lines.filtered(
+            lambda m: m.product_id == self.product_serial
+        )
+        self.assertFalse(move.display_assign_serial)
+
+        move = picking.move_lines.filtered(
+            lambda m: m.product_id == self.product_serial_not_auto
+        )
+        self.assertFalse(move.display_assign_serial)
+        move_lines = picking.move_line_ids.filtered(
+            lambda m: m.product_id == self.product or m.product_id == self.product_2
+        )
+        picking._action_done()
+        lots = self.env["stock.production.lot"].search(
+            [("product_id", "in", [self.product.id, self.product_2.id])]
+        )
+        self.assertEqual(len(lots), 2, msg="Two lots should have been created")
+        self.assertUniqueIn(move_lines.mapped("lot_id.name"))
