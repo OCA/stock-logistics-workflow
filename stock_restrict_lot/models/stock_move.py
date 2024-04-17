@@ -7,7 +7,7 @@ from odoo.exceptions import UserError, ValidationError
 class StockMove(models.Model):
     _inherit = "stock.move"
 
-    # seems better to not copy this field except when a move is splitted, because a move
+    # seems better to not copy this field except when a move is split, because a move
     # can be copied in multiple different occasions and could even be copied with a
     # different product...
     restrict_lot_id = fields.Many2one(
@@ -141,14 +141,32 @@ class StockMove(models.Model):
             return super().write(vals)
         else:
             restrict_lot_id = vals.pop("restrict_lot_id")
+            restrict_lot = self.env["stock.lot"].browse(restrict_lot_id)
             chained_moves = self | self.get_all_dest_moves() | self.get_all_orig_moves()
-            if any([sm.state == "done" for sm in chained_moves]):
+            if any(
+                [
+                    sm.state == "done" and sm.lot_ids != restrict_lot
+                    for sm in chained_moves
+                ]
+            ):
                 raise ValidationError(
                     _(
-                        "You can't modify the Lot/Serial number"
-                        " because at least one move in the chain has "
-                        "already been done."
+                        "You can't modify the Lot/Serial number "
+                        "because at least one move in the chain has "
+                        "already been done with another Lot/Serial number."
                     )
                 )
             super(StockMove, chained_moves).write({"restrict_lot_id": restrict_lot_id})
         return super().write(vals)
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        res = super().create(vals_list)
+        for move in res:
+            if not move.restrict_lot_id:
+                chained_moves = (
+                    move | move.get_all_dest_moves() | move.get_all_orig_moves()
+                )
+                if chained_moves.restrict_lot_id:
+                    move.restrict_lot_id = chained_moves.restrict_lot_id[0]
+        return res
