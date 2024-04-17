@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="weighing_wizard_form_view" model="ir.ui.view">
+        <field name="inherit_id" ref="stock_weighing.weighing_wizard_form_view" />
+        <field name="model">weighing.wizard</field>
+        <field name="arch" type="xml">
+            <field name="weight" position="before">
+                <field name="measure_device_id" invisible="1" />
+                <field name="uom_id" invisible="1" />
+            </field>
+            <field name="weight" position="attributes">
+                <attribute name="widget">remote_measure_form</attribute>
+                <!-- Override to set your preferred tares -->
+                <attribute
+                    name="options"
+                >{'remote_device_field': 'measure_device_id', 'uom_field': 'uom_id', 'tares': [{'tare':'0.05', 'name': '50 gr.'}, {'tare': '0.1', 'name': '100 gr.'}, {'tare': '0.2', 'name': '200 gr.'}, {'tare': '0.5', 'name': '500 gr.'}]}</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>

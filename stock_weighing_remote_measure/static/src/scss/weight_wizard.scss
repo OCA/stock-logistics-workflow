@@ -1,0 +1,22 @@
+.weight_wizard {
+    width: fit-content;
+    height: unset;
+    border: 0;
+    overflow: hidden;
+    div[name="tare_infos"] {
+        font-size: $font-size-base;
+    }
+    div[name="display"] {
+        height: max-content;
+        .o_input_weight {
+            width: fit-content;
+        }
+    }
+    span.o_field_remote_device_start,
+    span.o_field_remote_device_stop {
+        margin-top: 20px;
+    }
+    span.manual_tare_label {
+        @include font-size($input-font-size-sm !important);
+    }
+}

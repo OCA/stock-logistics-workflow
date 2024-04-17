@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates xml:space="preserve">
+    <t t-name="weigh_remote_measure.RemoteMeasureForm">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 border border-dark rounded p-2 ml-0" name="display">
+                    <div
+                        name="tare_infos"
+                        t-if="tares.length"
+                        class="ml-1 mr-1 text-info text-left w-100"
+                    >
+                        <i class="fa fa-level-down" /> TARE: <span
+                            name="tare_amount"
+                            class="font-weight-bold text-danger"
+                        >0</span> <span t-out="uom_name" class="text-danger" />
+                        <i class="fa fa-caret-square-o-right" /> REAL: <span
+                            name="real_amount"
+                            class="font-weight-bold text-success"
+                            t-out="amount"
+                        /> <span t-out="uom_name" class="text-success" />
+                        <div class="d-inline float-right text-dark" title="Device info">
+                            <i class="fa fa-thermometer" /> <span t-out="device_name" />
+                        </div>
+                    </div>
+                    <div name="weight_control" class="w-100" />
+                </div>
+                <t
+                    t-set="colors"
+                    t-value="['success', 'info', 'warning', 'danger', 'primary']"
+                />
+                <div class="col-12 pt-2 pl-0" name="buttons">
+                    <div
+                        t-foreach="tares"
+                        t-as="tare"
+                        class="btn-group btn-group-lg mr-2 mb-2 float-left"
+                    >
+                        <t t-set="color" t-value="colors[tare_index % colors.length]" />
+                        <btn
+                            t-attf-class="btn btn-outline-{{color}}"
+                            t-attf-data-tare="-{{tare.tare}}"
+                        >
+                            -
+                        </btn>
+                        <btn t-attf-class="btn btn-{{color}} disabled">
+                            <t t-if="tare.name" t-out="tare.name" />
+                            <t t-else="">
+                                <t t-out="tare.tare" /> <t t-out="uom_name" />
+                            </t>
+                        </btn>
+                        <btn
+                            t-attf-class="btn btn-outline-{{color}}"
+                            t-att-data-tare="tare.tare"
+                        >
+                            +
+                        </btn>
+                    </div>
+                </div>
+                <div class="col-12 pt-2 pl-0">
+                    <div name="manual_tare" class="input-group input-group-lg">
+                        <div class="input-group-prepend">
+                            <span
+                                class="input-group-text text-uppercase manual_tare_label"
+                            >Manual tare</span>
+                            <button
+                                class="fa fa-minus btn btn-primary"
+                                aria-label="Minus"
+                                title="Minus"
+                                type="button"
+                                data-mode="minus"
+                            />
+                        </div>
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.1"
+                            inputmode="decimal"
+                            class="form-control text-center"
+                            aria-label="Manual tare"
+                        />
+                        <div class="input-group-append">
+                            <button
+                                class="fa fa-plus btn btn-primary"
+                                aria-label="Plus"
+                                title="Plus"
+                                type="button"
+                                data-mode="plus"
+                            />
+                            <span class="input-group-text" t-out="uom_name" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </t>
+</templates>
