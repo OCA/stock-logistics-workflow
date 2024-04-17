@@ -68,6 +68,7 @@ setuptools.setup(
         'odoo14-addon-stock_picking_putinpack_restriction',
         'odoo14-addon-stock_picking_quick',
         'odoo14-addon-stock_picking_reallocation',
+        'odoo14-addon-stock_picking_restrict_cancel_printed',
         'odoo14-addon-stock_picking_restrict_cancel_with_orig_move',
         'odoo14-addon-stock_picking_return_show_lot',
         'odoo14-addon-stock_picking_sale_order_link',
