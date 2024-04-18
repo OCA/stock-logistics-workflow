@@ -4,7 +4,7 @@
 {
     "name": "Stock Customer Deposit Elaboration",
     "summary": "Glue module betwen stock_customer_deposit and sale_elaboration",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.0.1",
     "development_status": "Alpha",
     "category": "Inventory/Delivery",
     "website": "https://github.com/OCA/stock-logistics-workflow",

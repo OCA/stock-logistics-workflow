@@ -17,6 +17,7 @@ setuptools.setup(
         'odoo-addon-stock_account_product_run_fifo_hook>=16.0dev,<16.1dev',
         'odoo-addon-stock_auto_move>=16.0dev,<16.1dev',
         'odoo-addon-stock_customer_deposit>=16.0dev,<16.1dev',
+        'odoo-addon-stock_customer_deposit_elaboration>=16.0dev,<16.1dev',
         'odoo-addon-stock_delivery_note>=16.0dev,<16.1dev',
         'odoo-addon-stock_grn>=16.0dev,<16.1dev',
         'odoo-addon-stock_landed_costs_currency>=16.0dev,<16.1dev',
