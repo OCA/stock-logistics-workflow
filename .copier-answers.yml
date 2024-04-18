@@ -1,5 +1,5 @@
 # Do NOT update manually; changes here will be overwritten by Copier
-_commit: v1.20-2-g9c473ce
+_commit: v1.20-4-g56d206b
 _src_path: gh:oca/oca-addons-repo-template
 ci: GitHub
 convert_readme_fragments_to_markdown: false
@@ -17,7 +17,7 @@ org_name: Odoo Community Association (OCA)
 org_slug: OCA
 rebel_module_groups:
 - stock_picking_to_batch_group_fields
-- stock_customer_deposit
+- stock_customer_deposit,stock_customer_deposit_elaboration
 repo_description: 'TODO: add repo description.'
 repo_name: stock-logistics-workflow
 repo_slug: stock-logistics-workflow
