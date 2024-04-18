@@ -30,12 +30,16 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, SavepointCa
         move = self.picking.move_lines.filtered(
             lambda m: m.product_id == self.product_serial
         )
-        self.assertFalse(move.display_assign_serial)
+        self.assertFalse(
+            move.display_assign_serial, msg="Serial numbers must be not assigned"
+        )
 
         move = self.picking.move_lines.filtered(
             lambda m: m.product_id == self.product_serial_not_auto
         )
-        self.assertTrue(move.display_assign_serial)
+        self.assertTrue(
+            move.display_assign_serial, msg="Serial numbers must be assigned"
+        )
 
         # Assign manual serials
         for line in move.move_line_ids:
@@ -45,12 +49,12 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, SavepointCa
         lot = self.env["stock.production.lot"].search(
             [("product_id", "=", self.product.id)]
         )
-        self.assertEqual(len(lot), 1)
+        self.assertEqual(len(lot), 1, msg="Must be equal 1 lot")
         # Search for serials
         lot = self.env["stock.production.lot"].search(
             [("product_id", "=", self.product_serial.id)]
         )
-        self.assertEqual(len(lot), 3)
+        self.assertEqual(len(lot), 3, msg="Must be equal 3 lots")
 
     def test_auto_create_lot(self):
         self.picking.action_assign()
@@ -58,23 +62,27 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, SavepointCa
         move = self.picking.move_lines.filtered(
             lambda m: m.product_id == self.product_serial
         )
-        self.assertFalse(move.display_assign_serial)
+        self.assertFalse(
+            move.display_assign_serial, msg="Serial numbers must be not assigned"
+        )
 
         move = self.picking.move_lines.filtered(
             lambda m: m.product_id == self.product_serial_not_auto
         )
-        self.assertTrue(move.display_assign_serial)
+        self.assertTrue(
+            move.display_assign_serial, msg="Serial numbers must be assigned"
+        )
 
         self.picking._action_done()
         lot = self.env["stock.production.lot"].search(
             [("product_id", "=", self.product.id)]
         )
-        self.assertEqual(len(lot), 1)
+        self.assertEqual(len(lot), 1, msg="Must be equal 1 lot")
         # Search for serials
         lot = self.env["stock.production.lot"].search(
             [("product_id", "=", self.product_serial.id)]
         )
-        self.assertEqual(len(lot), 3)
+        self.assertEqual(len(lot), 3, msg="Must be equal 3 lots")
 
     def test_auto_create_transfer_lot(self):
         self.picking.action_assign()
@@ -82,7 +90,7 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, SavepointCa
             lambda m: m.product_id == self.product_serial
         )
         for line in moves.mapped("move_line_ids"):
-            self.assertFalse(line.lot_id)
+            self.assertFalse(line.lot_id, msg="The lot should not be assigned")
 
         # Test the exception if manual serials are not filled in
         with self.assertRaises(UserError), self.cr.savepoint():
@@ -99,17 +107,17 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, SavepointCa
 
         self.picking.button_validate()
         for line in moves.mapped("move_line_ids"):
-            self.assertTrue(line.lot_id)
+            self.assertTrue(line.lot_id, msg="The lot should be assigned")
 
         lot = self.env["stock.production.lot"].search(
             [("product_id", "=", self.product.id)]
         )
-        self.assertEqual(len(lot), 1)
+        self.assertEqual(len(lot), 1, msg="Must be equal 1 lot")
         # Search for serials
         lot = self.env["stock.production.lot"].search(
             [("product_id", "=", self.product_serial.id)]
         )
-        self.assertEqual(len(lot), 3)
+        self.assertEqual(len(lot), 3, msg="Must be equal 3 lots")
 
         # Check if lots are unique per move and per product if managed
         # per serial
@@ -139,21 +147,21 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, SavepointCa
             lambda m: m.product_id == self.product_serial
         )
         for line in moves.mapped("move_line_ids"):
-            self.assertFalse(line.lot_id)
+            self.assertFalse(line.lot_id, msg="The lot should not be assigned")
 
         pickings._action_done()
         for line in moves.mapped("move_line_ids"):
-            self.assertTrue(line.lot_id)
+            self.assertTrue(line.lot_id, msg="The lot should be assigned")
 
         lot = self.env["stock.production.lot"].search(
             [("product_id", "=", self.product.id)]
         )
-        self.assertEqual(len(lot), 1)
+        self.assertEqual(len(lot), 1, msg="Must be 1 lot")
         # Search for serials
         lot = self.env["stock.production.lot"].search(
             [("product_id", "=", self.product_serial.id)]
         )
-        self.assertEqual(len(lot), 6)
+        self.assertEqual(len(lot), 6, msg="Must be 6 lots")
 
     def test_auto_create_lot_2(self):
         """Test check create lots per product"""
@@ -169,7 +177,7 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, SavepointCa
             )
         )
         location_dest = picking.picking_type_id.default_location_dest_id
-        move = self.env["stock.move"].create(
+        self.env["stock.move"].create(
             [
                 {
                     "name": "test-{product}".format(product=self.product.name),
@@ -198,12 +206,16 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, SavepointCa
         move = picking.move_lines.filtered(
             lambda m: m.product_id == self.product_serial
         )
-        self.assertFalse(move.display_assign_serial)
+        self.assertFalse(
+            move.display_assign_serial, msg="Serial numbers must be not assigned"
+        )
 
         move = picking.move_lines.filtered(
             lambda m: m.product_id == self.product_serial_not_auto
         )
-        self.assertFalse(move.display_assign_serial)
+        self.assertFalse(
+            move.display_assign_serial, msg="Serial numbers must be not assigned"
+        )
         move_lines = picking.move_line_ids.filtered(
             lambda m: m.product_id == self.product or m.product_id == self.product_2
         )
@@ -211,5 +223,5 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, SavepointCa
         lots = self.env["stock.production.lot"].search(
             [("product_id", "in", [self.product.id, self.product_2.id])]
         )
-        self.assertEqual(len(lots), 2, msg="Two lots should have been created")
+        self.assertEqual(len(lots), 2, msg="Must be equal to 2")
         self.assertUniqueIn(move_lines.mapped("lot_id.name"))
