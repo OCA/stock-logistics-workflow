@@ -1,4 +1,5 @@
 # Copyright 2023 Camptocamp (https://www.camptocamp.com)
+# Copyright 2024 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo import _, models
@@ -9,7 +10,8 @@ class StockMoveLine(models.Model):
     _inherit = "stock.move.line"
 
     def _action_done(self):
-        for line in self:
+        res = super()._action_done()
+        for line in self.exists():
             picking_type = line.move_id.picking_type_id
             restriction = picking_type.put_in_pack_restriction
             if not restriction:
@@ -24,4 +26,4 @@ class StockMoveLine(models.Model):
                 raise ValidationError(
                     _("A package is required for transfer type %s.") % picking_type.name
                 )
-        return super()._action_done()
+        return res
