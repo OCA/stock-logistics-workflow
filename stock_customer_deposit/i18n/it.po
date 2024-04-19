@@ -6,27 +6,29 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2024-04-19 15:34+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_customer_deposit
 #. odoo-python
 #: code:addons/stock_customer_deposit/models/stock_warehouse.py:0
 #, python-format
 msgid "%(name)s (copy)(%(id)s)"
-msgstr ""
+msgstr "%(name)s (copia)(%(id)s)"
 
 #. module: stock_customer_deposit
 #. odoo-python
 #: code:addons/stock_customer_deposit/models/stock_warehouse.py:0
 #, python-format
 msgid "%s Sequence Customer Deposit"
-msgstr ""
+msgstr "Deposito cliente sequenza %s"
 
 #. module: stock_customer_deposit
 #. odoo-python
@@ -36,16 +38,18 @@ msgid ""
 "All lines coming from orders marked as 'Customer depot' must have Customer "
 "deposit route."
 msgstr ""
+"Tutte le righe derivanti da ordini marcati come 'Deposito cliente' devono "
+"avere un percorso deposito cliente."
 
 #. module: stock_customer_deposit
 #: model:ir.model.fields,field_description:stock_customer_deposit.field_stock_picking_type__assign_owner
 msgid "Assign owner automatically"
-msgstr ""
+msgstr "Assegna proprietario automaticamente"
 
 #. module: stock_customer_deposit
 #: model:ir.model,name:stock_customer_deposit.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Contatto"
 
 #. module: stock_customer_deposit
 #. odoo-python
@@ -54,24 +58,24 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_customer_deposit.field_sale_order__customer_deposit
 #, python-format
 msgid "Customer Deposit"
-msgstr ""
+msgstr "Deposito cliente"
 
 #. module: stock_customer_deposit
 #: model:ir.model.fields,field_description:stock_customer_deposit.field_res_partner__customer_deposit_count
 #: model:ir.model.fields,field_description:stock_customer_deposit.field_res_users__customer_deposit_count
 #: model:ir.model.fields,field_description:stock_customer_deposit.field_sale_order__customer_deposit_count
 msgid "Customer Deposit Count"
-msgstr ""
+msgstr "Conteggio deposito cliente"
 
 #. module: stock_customer_deposit
 #: model:ir.model.fields,field_description:stock_customer_deposit.field_stock_warehouse__customer_deposit_route_id
 msgid "Customer Deposit Route"
-msgstr ""
+msgstr "Percorso deposito cliente"
 
 #. module: stock_customer_deposit
 #: model:ir.model.fields,field_description:stock_customer_deposit.field_stock_warehouse__customer_deposit_type_id
 msgid "Customer Deposit Type"
-msgstr ""
+msgstr "Tipo deposito cliente"
 
 #. module: stock_customer_deposit
 #. odoo-python
@@ -83,101 +87,101 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock_customer_deposit.view_warehouse_inherit
 #, python-format
 msgid "Customer Deposits"
-msgstr ""
+msgstr "Depositi cliente"
 
 #. module: stock_customer_deposit
 #: model:ir.model.fields,field_description:stock_customer_deposit.field_sale_order_line__deposit_allowed_qty
 msgid "Deposit Allowed Qty"
-msgstr ""
+msgstr "Q.tà consentita nel deposito"
 
 #. module: stock_customer_deposit
 #: model:ir.model.fields,field_description:stock_customer_deposit.field_sale_order_line__deposit_available_qty
 #: model_terms:ir.ui.view,arch_db:stock_customer_deposit.view_order_form_inherit_customer_deposit
 msgid "Deposit Available Qty"
-msgstr ""
+msgstr "Q.tà disponibile nel deposito"
 
 #. module: stock_customer_deposit
 #: model_terms:ir.ui.view,arch_db:stock_customer_deposit.view_order_form_inherit_customer_deposit
 #: model_terms:ir.ui.view,arch_db:stock_customer_deposit.view_partner_form_inherit_customer_deposit
 msgid "Deposits"
-msgstr ""
+msgstr "Depositi"
 
 #. module: stock_customer_deposit
 #: model:ir.model.fields,help:stock_customer_deposit.field_stock_picking_type__assign_owner
 msgid ""
 "If checked, the owner of the picking will be the partner of the picking."
-msgstr ""
+msgstr "Se selezionata, il titolare del prelievo sarà il partner del prelievo."
 
 #. module: stock_customer_deposit
 #: model:ir.model,name:stock_customer_deposit.model_stock_picking_type
 msgid "Picking Type"
-msgstr ""
+msgstr "Tipologia prelievo"
 
 #. module: stock_customer_deposit
 #: model:ir.model,name:stock_customer_deposit.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
-msgstr ""
+msgstr "Movimenti prodotto (riga movimento di magazzino)"
 
 #. module: stock_customer_deposit
 #: model:ir.model,name:stock_customer_deposit.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Variante prodotto"
 
 #. module: stock_customer_deposit
 #: model:ir.model.fields,help:stock_customer_deposit.field_sale_order_line__deposit_allowed_qty
 msgid "Quantity of the product allowed to used in customer deposit."
-msgstr ""
+msgstr "Quantità del prodotto consentita da usare nel deposito cliente."
 
 #. module: stock_customer_deposit
 #: model:ir.model.fields,help:stock_customer_deposit.field_sale_order_line__deposit_available_qty
 msgid "Quantity of the product available in customer deposit."
-msgstr ""
+msgstr "Quantità del prodotto disponibile nel deposito cliente."
 
 #. module: stock_customer_deposit
 #: model:ir.model,name:stock_customer_deposit.model_stock_quant
 msgid "Quants"
-msgstr ""
+msgstr "Quanti"
 
 #. module: stock_customer_deposit
 #: model:ir.model.fields,field_description:stock_customer_deposit.field_sale_order_line__route_id
 msgid "Route"
-msgstr ""
+msgstr "Percorso"
 
 #. module: stock_customer_deposit
 #: model:ir.model,name:stock_customer_deposit.model_sale_order
 msgid "Sales Order"
-msgstr ""
+msgstr "Ordine di vendita"
 
 #. module: stock_customer_deposit
 #: model:ir.model,name:stock_customer_deposit.model_sale_order_line
 msgid "Sales Order Line"
-msgstr ""
+msgstr "Riga ordine di vendita"
 
 #. module: stock_customer_deposit
 #: model:ir.model,name:stock_customer_deposit.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimento di magazzino"
 
 #. module: stock_customer_deposit
 #: model:ir.model,name:stock_customer_deposit.model_stock_rule
 msgid "Stock Rule"
-msgstr ""
+msgstr "Regola di giacenza"
 
 #. module: stock_customer_deposit
 #: model:ir.model,name:stock_customer_deposit.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Trasferimento"
 
 #. module: stock_customer_deposit
 #: model:ir.model.fields,field_description:stock_customer_deposit.field_sale_order__can_customer_deposit
 #: model:ir.model.fields,field_description:stock_customer_deposit.field_stock_warehouse__use_customer_deposits
 msgid "Use Customer Deposits"
-msgstr ""
+msgstr "Utilizza deposito cliente"
 
 #. module: stock_customer_deposit
 #: model:ir.model,name:stock_customer_deposit.model_stock_warehouse
 msgid "Warehouse"
-msgstr ""
+msgstr "Magazzino"
 
 #. module: stock_customer_deposit
 #. odoo-python
@@ -188,6 +192,9 @@ msgid ""
 "deposit. If the customer wants more, create a new order after confirming "
 "this one."
 msgstr ""
+"Non si può aggiungere più quantità del prodotto %(product)s dal deposito del "
+"cliente. Se il cliente ne viole di più, creare un nuovo ordine dopo la "
+"conferma di questo."
 
 #. module: stock_customer_deposit
 #. odoo-python
@@ -197,6 +204,8 @@ msgid ""
 "You can't use customer deposit for products with the route 'Customer "
 "Deposit'."
 msgstr ""
+"non si può utilizzare un deposito cliente per prodotti con il percosro "
+"'Deposito cliente'."
 
 #. module: stock_customer_deposit
 #. odoo-python
@@ -206,3 +215,5 @@ msgid ""
 "You cannot select Customer Deposit route in an order line if you do not mark"
 " the order as a customer depot."
 msgstr ""
+"Non si può selezionare il percorso deposito cliente in una riga ordine se "
+"non si imposta l'ordine come un deposito cliente."
