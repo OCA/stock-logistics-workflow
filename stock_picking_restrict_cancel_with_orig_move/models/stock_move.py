@@ -29,11 +29,16 @@ class StockMove(models.Model):
             blocking_moves = self.get_blocking_moves(orig_moves)
             blocking_objects = self.identify_blocking_objects(blocking_moves)
             error_objects = ""
-            for object_type, objects in blocking_objects.items():
-                error_objects += _(
-                    "- {} : {}. \n".format(
-                        object_type, ",".join([o.name for o in objects])
+            if blocking_objects:
+                for object_type, objects in blocking_objects.items():
+                    error_objects += _(
+                        "- {} : {}. \n".format(
+                            object_type, ",".join([o.name for o in objects])
+                        )
                     )
+            else:
+                error_objects += _(
+                    "- {}. \n".format(",".join(blocking_moves.mapped("name")))
                 )
             raise UserError(
                 _(
