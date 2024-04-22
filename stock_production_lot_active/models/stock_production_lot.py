@@ -4,8 +4,8 @@
 from odoo import api, fields, models
 
 
-class StockProductionLot(models.Model):
-    _inherit = "stock.production.lot"
+class StockLot(models.Model):
+    _inherit = "stock.lot"
 
     active = fields.Boolean(default=True)
 
@@ -16,6 +16,4 @@ class StockProductionLot(models.Model):
         To avoid allowing duplicate lot/company/name combinations when there is
         another inactive entry we have to set the active_test flag to False.
         """
-        return super(
-            StockProductionLot, self.with_context(active_test=False)
-        )._check_unique_lot()
+        return super(StockLot, self.with_context(active_test=False))._check_unique_lot()

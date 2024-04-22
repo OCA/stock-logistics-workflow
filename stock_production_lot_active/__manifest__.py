@@ -3,9 +3,8 @@
 
 {
     "name": "Stock Production Lot Active",
-    "summary": """
-        Allow to archive/unarchive a lot.""",
-    "version": "15.0.1.0.2",
+    "summary": "Allow to archive/unarchive lots/serial numbers",
+    "version": "16.0.1.0.0",
     "development_status": "Beta",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
@@ -13,5 +12,4 @@
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": ["stock"],
     "data": ["views/stock_production_lot.xml"],
-    "demo": [],
 }
