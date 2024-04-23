@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-19 13:08+0000\n"
-"PO-Revision-Date: 2023-09-03 05:07+0000\n"
+"PO-Revision-Date: 2024-04-23 08:40+0000\n"
 "Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -101,7 +101,7 @@ msgstr "Recogida"
 #. module: stock_split_picking
 #: model:ir.model.fields.selection,name:stock_split_picking.selection__stock_split_picking__mode__quantity
 msgid "Quantities"
-msgstr ""
+msgstr "Cantidades"
 
 #. module: stock_split_picking
 #: model:ir.model.fields.selection,name:stock_split_picking.selection__stock_split_picking__mode__selection
@@ -146,7 +146,7 @@ msgstr "Unidad de Medida"
 #: code:addons/stock_split_picking/models/stock_picking.py:0
 #, python-format
 msgid "You must enter quantity in order to split your picking in several ones."
-msgstr ""
+msgstr "Debe introducir la cantidad para dividir el pedido en varios."
 
 #. module: stock_split_picking
 #: model_terms:ir.ui.view,arch_db:stock_split_picking.view_stock_split_picking
