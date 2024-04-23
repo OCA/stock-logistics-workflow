@@ -1,4 +1,5 @@
 # Copyright 2023 Camptocamp (https://www.camptocamp.com)
+# Copyright 2024 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo.exceptions import ValidationError
@@ -92,3 +93,16 @@ class TestStockPickingPutInPackRestriction(SavepointCase):
         self.picking_type.put_in_pack_restriction = False
         self.picking._action_done()
         self.assertEqual(self.picking.state, "done")
+
+    def test_partial_picking_line_with_zero_qty_done(self):
+        self.picking_type.put_in_pack_restriction = "with_package"
+        self.picking.action_assign()
+        self.assertEqual(self.picking.state, "assigned")
+        line = self.picking.move_line_ids
+        qty_done = 1
+        new_line_vals = {"product_uom_qty": 4.0, "qty_done": 0}
+        line.copy(new_line_vals)
+        line.qty_done = qty_done
+        line.with_context(bypass_reservation_update=True).product_uom_qty = qty_done
+        line.result_package_id = self.env["stock.quant.package"].create({})
+        self.picking._action_done()
