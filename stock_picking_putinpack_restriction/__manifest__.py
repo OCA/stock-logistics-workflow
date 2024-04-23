@@ -7,7 +7,7 @@
         Adds a restriction on transfer type to force or disallow
         the use of destination package.
     """,
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "category": "Inventory",
     "author": "Camptocamp, BCIM, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
