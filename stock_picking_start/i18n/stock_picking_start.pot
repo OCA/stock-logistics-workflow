@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0\n"
+"Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -18,6 +18,16 @@ msgstr ""
 msgid ""
 "<span class=\"fa fa-lg\" title=\"Values set here are company-specific.\" "
 "groups=\"base.group_multi_company\"/>"
+msgstr ""
+
+#. module: stock_picking_start
+#: model_terms:ir.ui.view,arch_db:stock_picking_start.stock_picking_kanban
+msgid "<span>Cancel Start</span>"
+msgstr ""
+
+#. module: stock_picking_start
+#: model_terms:ir.ui.view,arch_db:stock_picking_start.stock_picking_kanban
+msgid "<span>Start</span>"
 msgstr ""
 
 #. module: stock_picking_start
@@ -51,6 +61,8 @@ msgstr ""
 
 #. module: stock_picking_start
 #: model_terms:ir.ui.view,arch_db:stock_picking_start.stock_picking_form_view
+#: model_terms:ir.ui.view,arch_db:stock_picking_start.stock_picking_kanban
+#: model_terms:ir.ui.view,arch_db:stock_picking_start.stock_picking_tree_view
 msgid "Cancel Start"
 msgstr ""
 
@@ -71,6 +83,8 @@ msgstr ""
 
 #. module: stock_picking_start
 #: model_terms:ir.ui.view,arch_db:stock_picking_start.stock_picking_form_view
+#: model_terms:ir.ui.view,arch_db:stock_picking_start.stock_picking_kanban
+#: model_terms:ir.ui.view,arch_db:stock_picking_start.stock_picking_tree_view
 msgid "Start"
 msgstr ""
 
@@ -82,7 +96,6 @@ msgid "Started"
 msgstr ""
 
 #. module: stock_picking_start
-#. odoo-python
 #: code:addons/stock_picking_start/models/stock_picking.py:0
 #, python-format
 msgid ""
@@ -91,7 +104,6 @@ msgid ""
 msgstr ""
 
 #. module: stock_picking_start
-#. odoo-python
 #: code:addons/stock_picking_start/models/stock_picking.py:0
 #, python-format
 msgid ""
