@@ -92,6 +92,7 @@ addon | version | maintainers | summary
 [stock_split_picking](stock_split_picking/) | 15.0.1.1.2 |  | Split a picking in two not transferred pickings
 [stock_valuation_fifo_lot](stock_valuation_fifo_lot/) | 15.0.1.0.0 | [![newtratip](https://github.com/newtratip.png?size=30px)](https://github.com/newtratip) | Stock Valuation Fifo Lot
 [stock_valuation_layer_usage](stock_valuation_layer_usage/) | 15.0.1.0.0 |  | Trace where has the stock valuation been used in, including the quantities taken.
+[stock_warn_option](stock_warn_option/) | 15.0.1.0.0 | [![Shide](https://github.com/Shide.png?size=30px)](https://github.com/Shide) [![rafaelbn](https://github.com/rafaelbn.png?size=30px)](https://github.com/rafaelbn) | Add Options to Stock Warn Messages
 
 [//]: # (end addons)
 
