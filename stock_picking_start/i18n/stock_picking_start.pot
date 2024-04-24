@@ -1,0 +1,105 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_start
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_start
+#: model_terms:ir.ui.view,arch_db:stock_picking_start.res_config_settings_form_view
+msgid ""
+"<span class=\"fa fa-lg\" title=\"Values set here are company-specific.\" "
+"groups=\"base.group_multi_company\"/>"
+msgstr ""
+
+#. module: stock_picking_start
+#: model:ir.model.fields,field_description:stock_picking_start.field_stock_picking__action_cancel_start_allowed
+msgid "Action Cancel Start Allowed"
+msgstr ""
+
+#. module: stock_picking_start
+#: model:ir.model.fields,field_description:stock_picking_start.field_stock_picking__action_start_allowed
+msgid "Action Start Allowed"
+msgstr ""
+
+#. module: stock_picking_start
+#: model:ir.model.fields,field_description:stock_picking_start.field_res_config_settings__stock_picking_assign_operator_at_start
+#: model_terms:ir.ui.view,arch_db:stock_picking_start.res_config_settings_form_view
+msgid "Assign responsible at stock picking start"
+msgstr ""
+
+#. module: stock_picking_start
+#: model:ir.model.fields,field_description:stock_picking_start.field_res_company__stock_picking_assign_operator_at_start
+msgid "Assign responsible on stock picking start"
+msgstr ""
+
+#. module: stock_picking_start
+#: model_terms:ir.ui.view,arch_db:stock_picking_start.res_config_settings_form_view
+msgid ""
+"Assign responsible when the button start si pushed on the stock picking form.\n"
+"                            If set, when a picking is created no default value is provided for the responsible field on the picking form.\n"
+"                            It will be filled with the current user when the button start on the picking form is clicked."
+msgstr ""
+
+#. module: stock_picking_start
+#: model_terms:ir.ui.view,arch_db:stock_picking_start.stock_picking_form_view
+msgid "Cancel Start"
+msgstr ""
+
+#. module: stock_picking_start
+#: model:ir.model,name:stock_picking_start.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: stock_picking_start
+#: model:ir.model,name:stock_picking_start.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: stock_picking_start
+#: model:ir.model.fields,field_description:stock_picking_start.field_stock_picking__user_id
+msgid "Responsible"
+msgstr ""
+
+#. module: stock_picking_start
+#: model_terms:ir.ui.view,arch_db:stock_picking_start.stock_picking_form_view
+msgid "Start"
+msgstr ""
+
+#. module: stock_picking_start
+#: model:ir.model.fields,field_description:stock_picking_start.field_stock_picking__started
+#: model_terms:ir.ui.view,arch_db:stock_picking_start.stock_picking_form_view
+#: model_terms:ir.ui.view,arch_db:stock_picking_start.view_picking_internal_search
+msgid "Started"
+msgstr ""
+
+#. module: stock_picking_start
+#. odoo-python
+#: code:addons/stock_picking_start/models/stock_picking.py:0
+#, python-format
+msgid ""
+"The 'started' status of the following picking(s) can't be cancelled:\n"
+"%(names)s"
+msgstr ""
+
+#. module: stock_picking_start
+#. odoo-python
+#: code:addons/stock_picking_start/models/stock_picking.py:0
+#, python-format
+msgid ""
+"The following picking(s) can't be started:\n"
+"%(names)s"
+msgstr ""
+
+#. module: stock_picking_start
+#: model:ir.model,name:stock_picking_start.model_stock_picking
+msgid "Transfer"
+msgstr ""

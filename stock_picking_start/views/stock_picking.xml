@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2022 ACSONE SA/NV
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="stock_picking_form_view">
+        <field name="name">stock.picking.form (in stock_picking_start)</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[1]" position="before">
+                <field name="action_start_allowed" invisible="1" />
+                <button
+                    name="action_start"
+                    string="Start"
+                    type="object"
+                    attrs="{'invisible': [('action_start_allowed', '!=', True)]}"
+                    class="oe_highlight"
+                />
+            </xpath>
+            <div name="button_box" position="after">
+                <field name="started" invisible="1" />
+                <widget
+                    name="web_ribbon"
+                    title="Started"
+                    bg_color="bg-success"
+                    attrs="{'invisible': [('started', '=', False)]}"
+                />
+            </div>
+            <xpath expr="//header/button[last()]" position="after">
+                <field name="action_cancel_start_allowed" invisible="1" />
+                <button
+                    name="action_cancel_start"
+                    string="Cancel Start"
+                    type="object"
+                    attrs="{'invisible': [('action_cancel_start_allowed', '!=', True)]}"
+                />
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_picking_internal_search">
+        <field
+            name="name"
+        >stock.picking.internal.search (in stock_picking_start)</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search" />
+        <field name="arch" type="xml">
+            <filter name="available" position="after">
+                <filter
+                    name="staretd"
+                    string="Started"
+                    domain="[('started', '=', True)]"
+                />
+            </filter>
+        </field>
+    </record>
+    <record id="stock_picking_tree_view" model="ir.ui.view">
+        <field name="name">stock.picking.tree (in stock_picking_start)</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree" />
+        <field name="arch" type="xml">
+            <tree position="attributes">
+                <attribute name="decoration-success">started</attribute>
+            </tree>
+            <tree position="inside">
+                <field name="started" invisible="1" />
+                <field name="action_start_allowed" invisible="1" />
+                <field name="action_cancel_start_allowed" invisible="1" />
+                <button
+                    name="action_start"
+                    string="Start"
+                    type="object"
+                    attrs="{'invisible': [('action_start_allowed', '!=', True)]}"
+                    class="btn btn-primary"
+                />
+                <button
+                    name="action_cancel_start"
+                    string="Cancel Start"
+                    type="object"
+                    attrs="{'invisible': [('action_cancel_start_allowed', '!=', True)]}"
+                    class="btn bg-warning-light"
+                />
+            </tree>
+        </field>
+    </record>
+    <record id="stock_picking_kanban" model="ir.ui.view">
+        <field name="name">stock.picking.kanban (in stock_picking_start)</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.stock_picking_kanban" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='activity_state']" position="after">
+                <field name="action_start_allowed" />
+                <field name="action_cancel_start_allowed" />
+            </xpath>
+            <xpath expr="//t[@t-name='kanban-box']/div" position="inside">
+                <button
+                    name="action_start"
+                    string="Start"
+                    type="object"
+                    attrs="{'invisible': [('action_start_allowed', '!=', True)]}"
+                    class="btn btn-primary"
+                ><span>Start</span></button>
+                <button
+                    name="action_cancel_start"
+                    string="Cancel Start"
+                    type="object"
+                    attrs="{'invisible': [('action_cancel_start_allowed', '!=', True)]}"
+                    class="btn bg-warning-light"
+                ><span>Cancel Start</span></button>
+            </xpath>
+        </field>
+    </record>
+</odoo>
