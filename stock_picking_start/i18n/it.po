@@ -26,6 +26,16 @@ msgstr ""
 "azienda.\" groups=\"base.group_multi_company\"/>"
 
 #. module: stock_picking_start
+#: model_terms:ir.ui.view,arch_db:stock_picking_start.stock_picking_kanban
+msgid "<span>Cancel Start</span>"
+msgstr ""
+
+#. module: stock_picking_start
+#: model_terms:ir.ui.view,arch_db:stock_picking_start.stock_picking_kanban
+msgid "<span>Start</span>"
+msgstr ""
+
+#. module: stock_picking_start
 #: model:ir.model.fields,field_description:stock_picking_start.field_stock_picking__action_cancel_start_allowed
 msgid "Action Cancel Start Allowed"
 msgstr "Azione annulla inIzio consentita"
@@ -49,9 +59,12 @@ msgstr "Assegna reponsabile a inizio prelievo magazzino"
 #. module: stock_picking_start
 #: model_terms:ir.ui.view,arch_db:stock_picking_start.res_config_settings_form_view
 msgid ""
-"Assign responsible when the button start si pushed on the stock picking form.\n"
-"                            If set, when a picking is created no default value is provided for the responsible field on the picking form.\n"
-"                            It will be filled with the current user when the button start on the picking form is clicked."
+"Assign responsible when the button start si pushed on the stock picking "
+"form.\n"
+"                            If set, when a picking is created no default "
+"value is provided for the responsible field on the picking form.\n"
+"                            It will be filled with the current user when the "
+"button start on the picking form is clicked."
 msgstr ""
 "Assegna responsabile quando il pulsante inizio è cliccato nel modulo "
 "prelievo di magazzino.\n"
@@ -63,6 +76,8 @@ msgstr ""
 
 #. module: stock_picking_start
 #: model_terms:ir.ui.view,arch_db:stock_picking_start.stock_picking_form_view
+#: model_terms:ir.ui.view,arch_db:stock_picking_start.stock_picking_kanban
+#: model_terms:ir.ui.view,arch_db:stock_picking_start.stock_picking_tree_view
 msgid "Cancel Start"
 msgstr "Annulla inizio"
 
@@ -83,6 +98,8 @@ msgstr "Responsabile"
 
 #. module: stock_picking_start
 #: model_terms:ir.ui.view,arch_db:stock_picking_start.stock_picking_form_view
+#: model_terms:ir.ui.view,arch_db:stock_picking_start.stock_picking_kanban
+#: model_terms:ir.ui.view,arch_db:stock_picking_start.stock_picking_tree_view
 msgid "Start"
 msgstr "Inizio"
 
@@ -94,7 +111,6 @@ msgid "Started"
 msgstr "Iniziato"
 
 #. module: stock_picking_start
-#. odoo-python
 #: code:addons/stock_picking_start/models/stock_picking.py:0
 #, python-format
 msgid ""
@@ -105,7 +121,6 @@ msgstr ""
 "%(names)s"
 
 #. module: stock_picking_start
-#. odoo-python
 #: code:addons/stock_picking_start/models/stock_picking.py:0
 #, python-format
 msgid ""

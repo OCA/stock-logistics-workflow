@@ -26,6 +26,16 @@ msgstr ""
 "específicos de la compañía.\" groups=\"base.group_multi_company\"/>"
 
 #. module: stock_picking_start
+#: model_terms:ir.ui.view,arch_db:stock_picking_start.stock_picking_kanban
+msgid "<span>Cancel Start</span>"
+msgstr ""
+
+#. module: stock_picking_start
+#: model_terms:ir.ui.view,arch_db:stock_picking_start.stock_picking_kanban
+msgid "<span>Start</span>"
+msgstr ""
+
+#. module: stock_picking_start
 #: model:ir.model.fields,field_description:stock_picking_start.field_stock_picking__action_cancel_start_allowed
 msgid "Action Cancel Start Allowed"
 msgstr "Acción 'Cancelar iniciado\" permitido"
@@ -66,6 +76,8 @@ msgstr ""
 
 #. module: stock_picking_start
 #: model_terms:ir.ui.view,arch_db:stock_picking_start.stock_picking_form_view
+#: model_terms:ir.ui.view,arch_db:stock_picking_start.stock_picking_kanban
+#: model_terms:ir.ui.view,arch_db:stock_picking_start.stock_picking_tree_view
 msgid "Cancel Start"
 msgstr "Cancelar 'Iniciado'"
 
@@ -86,6 +98,8 @@ msgstr "Responsable"
 
 #. module: stock_picking_start
 #: model_terms:ir.ui.view,arch_db:stock_picking_start.stock_picking_form_view
+#: model_terms:ir.ui.view,arch_db:stock_picking_start.stock_picking_kanban
+#: model_terms:ir.ui.view,arch_db:stock_picking_start.stock_picking_tree_view
 msgid "Start"
 msgstr "Iniciar"
 
@@ -97,7 +111,6 @@ msgid "Started"
 msgstr "Iniciado"
 
 #. module: stock_picking_start
-#. odoo-python
 #: code:addons/stock_picking_start/models/stock_picking.py:0
 #, python-format
 msgid ""
@@ -108,7 +121,6 @@ msgstr ""
 " %(names)s"
 
 #. module: stock_picking_start
-#. odoo-python
 #: code:addons/stock_picking_start/models/stock_picking.py:0
 #, python-format
 msgid ""
