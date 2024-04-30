@@ -10,29 +10,29 @@ from odoo.tools import sql
 _logger = logging.getLogger(__name__)
 
 
-def _create_delivery_count(cr):
+def _create_picking_count(cr):
     """Extracted to reuse in migration script. TODO: It can be merged into a sole
     method in v16"""
-    _logger.info("Creating column: delivery_count for table account_move")
+    _logger.info("Creating column: picking_count for table account_move")
     cr.execute(
         """
     ALTER TABLE account_move
-        ADD COLUMN IF NOT EXISTS delivery_count INTEGER;
+        ADD COLUMN IF NOT EXISTS picking_count INTEGER;
     """
     )
 
 
-def _populate_delivery_count(cr):
+def _populate_picking_count(cr):
     """Extracted to reuse in migration script. TODO: It can be merged into a sole
     method in v16"""
-    _logger.info("Populating values for column delivery_count in table account_move")
+    _logger.info("Populating values for column picking_count in table account_move")
     cr.execute(
         """
-        UPDATE account_move am SET delivery_count = t.delivery_count
+        UPDATE account_move am SET picking_count = t.picking_count
         FROM (
             SELECT
                 am.id AS account_move_id,
-                COUNT(DISTINCT sm.picking_id) AS delivery_count
+                COUNT(DISTINCT sm.picking_id) AS picking_count
             FROM
                 account_move am
                 JOIN account_move_line aml ON aml.move_id = am.id
@@ -52,8 +52,8 @@ def _populate_delivery_count(cr):
 
 def pre_init_hook(cr):
     """Avoid pre-computations with the ORM"""
-    _create_delivery_count(cr)
-    _populate_delivery_count(cr)
+    _create_picking_count(cr)
+    _populate_picking_count(cr)
     _logger.info(
         "Create temporary table to avoid the automatic launch of the compute method in "
         "the Many2one field account.move.picking_ids"

@@ -12,5 +12,5 @@ from odoo.addons.stock_picking_invoice_link.init_hook import (
 @openupgrade.migrate()
 def migrate(env, version):
     """Pre-create the delivered_count field for performance"""
-    _create_delivery_count(env.cr)
-    _populate_delivery_count(env.cr)
+    _create_picking_count(env.cr)
+    _populate_picking_count(env.cr)
