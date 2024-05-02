@@ -19,8 +19,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/stock_picking_batch_creation/exceptions.py:0
 #, python-format
-msgid " Pickings %{names}s do not match any device"
-msgstr "Transferts %{names}s ne correspondent à aucune type de matérial de préparation"
+msgid " Pickings %(names)s do not match any device"
+msgstr "Transferts %(names)s ne correspondent à aucune type de matérial de préparation"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch__add_picking_list_in_error
@@ -226,7 +226,7 @@ msgstr "Nombre maximum de lignes de préparation pour la vague"
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type__user_max_volume
 msgid "Maximum total net volume for electing this device"
-msgstr "
+msgstr ""
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type__max_volume
