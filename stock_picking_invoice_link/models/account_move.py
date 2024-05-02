@@ -16,7 +16,8 @@ class AccountMove(models.Model):
         string="Related Pickings",
         store=True,
         compute="_compute_picking_ids",
-        help="Related pickings (only when the invoice has been generated from a sale order).",
+        help="Related pickings (only when the invoice has been generated from a sale "
+        "order).",
     )
 
     delivery_count = fields.Integer(

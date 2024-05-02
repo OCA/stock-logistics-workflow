@@ -103,7 +103,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         action_data = pick_1.button_validate()
         backorder_wizard = Form(
             self.env["stock.backorder.confirmation"].with_context(
-                action_data["context"]
+                **action_data["context"]
             )
         ).save()
         backorder_wizard.process()
