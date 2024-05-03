@@ -1,0 +1,23 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_customer_deposit_sale_margin
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-05-03 09:02+0000\n"
+"PO-Revision-Date: 2024-05-03 11:03+0200\n"
+"Last-Translator: Emilio Pascual <emilio@moduom.team>\n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4.2\n"
+
+#. module: stock_customer_deposit_sale_margin
+#: model:ir.model,name:stock_customer_deposit_sale_margin.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Línea de pedido de venta"

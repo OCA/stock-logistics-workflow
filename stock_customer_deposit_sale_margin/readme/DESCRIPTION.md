@@ -1,0 +1,1 @@
+This module extends the functionality of the consignment stock to support customer deposits and set cost in sale order line to zero when making another sale order to deliver some previously consigned customer deposit.
