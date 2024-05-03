@@ -1,0 +1,1 @@
+This module was created to make sure that the cost on a sale order line is zero when delivering from customer deposits. This is needed because the purchase price already accounts for the customer deposit in the sale order. Without this module, the cost would be counted twice in the accounting.
