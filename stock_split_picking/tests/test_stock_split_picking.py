@@ -15,6 +15,9 @@ class TestStockSplitPicking(TransactionCase):
         cls.dest_location = cls.env.ref("stock.stock_location_customers")
         cls.product = cls.env["product.product"].create({"name": "Test product"})
         cls.product_2 = cls.env["product.product"].create({"name": "Test product 2"})
+        cls.product_3 = cls.env["product.product"].create(
+            {"name": "Test product 3", "detailed_type": "product"}
+        )
         cls.partner = cls.env["res.partner"].create({"name": "Test partner"})
         cls.picking = cls.env["stock.picking"].create(
             {
@@ -143,6 +146,36 @@ class TestStockSplitPicking(TransactionCase):
         )
         wizard.action_apply()
         self.assertNotEqual(self.move2.picking_id, self.picking)
+        self.assertEqual(self.move.picking_id, self.picking)
+
+    def test_stock_split_picking_wizard_avaiable(self):
+        stock_move_data = [
+            {
+                "name": "/",
+                "picking_id": self.picking.id,
+                "product_id": self.product.id,
+                "product_uom_qty": 5,
+                "location_id": self.src_location.id,
+                "location_dest_id": self.dest_location.id,
+            },
+            {
+                "name": "/",
+                "picking_id": self.picking.id,
+                "product_id": self.product_3.id,
+                "product_uom_qty": 5,
+                "location_id": self.src_location.id,
+                "location_dest_id": self.dest_location.id,
+            },
+        ]
+        self.move_3 = self.env["stock.move"].create(stock_move_data)
+        self.assertEqual(self.move_3.picking_id, self.picking)
+        wizard = (
+            self.env["stock.split.picking"]
+            .with_context(active_ids=self.picking.ids)
+            .create({"mode": "available"})
+        )
+        wizard.action_apply()
+        self.assertNotEqual(self.move_3.picking_id, self.picking)
         self.assertEqual(self.move.picking_id, self.picking)
 
     def test_stock_split_picking_wizard_selection(self):

@@ -12,6 +12,10 @@ class StockSplitPicking(models.TransientModel):
         [
             ("done", "Done quantities"),
             ("move", "One picking per move"),
+            (
+                "available",
+                "Split move lines between available and not available products",
+            ),
             ("selection", "Select move lines to split off"),
         ],
         required=True,
@@ -41,6 +45,18 @@ class StockSplitPicking(models.TransientModel):
         for picking in self.mapped("picking_ids"):
             for move in picking.move_ids[1:]:
                 new_pickings += picking._split_off_moves(move)
+        return self._picking_action(new_pickings)
+
+    def _apply_available(self):
+        """Create different pickings for available and not available move line"""
+        for picking in self.mapped("picking_ids"):
+            moves = picking.mapped("move_ids")
+            moves_available = moves.filtered(
+                lambda move: move.forecast_availability < move.product_uom_qty
+            )
+            new_pickings = moves_available.mapped("picking_id")._split_off_moves(
+                moves_available
+            )
         return self._picking_action(new_pickings)
 
     def _apply_selection(self):
