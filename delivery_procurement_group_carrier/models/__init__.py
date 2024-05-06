@@ -1,1 +1,4 @@
-from . import procurement_group, sale_order, sale_order_line
+from . import procurement_group
+from . import sale_order
+from . import stock_move
+from . import sale_order_line
