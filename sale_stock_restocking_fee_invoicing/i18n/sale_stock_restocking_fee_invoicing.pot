@@ -1,0 +1,154 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_stock_restocking_fee_invoicing
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_stock_restocking_fee_invoicing
+#: model:ir.model.fields,field_description:sale_stock_restocking_fee_invoicing.field_res_partner__charge_restocking_fee
+#: model:ir.model.fields,field_description:sale_stock_restocking_fee_invoicing.field_res_users__charge_restocking_fee
+#: model:ir.model.fields,field_description:sale_stock_restocking_fee_invoicing.field_stock_move__charge_restocking_fee
+#: model:ir.model.fields,field_description:sale_stock_restocking_fee_invoicing.field_stock_return_picking__charge_restocking_fee
+#: model:ir.model.fields,field_description:sale_stock_restocking_fee_invoicing.field_stock_return_picking_line__charge_restocking_fee
+msgid "Charge Restocking Fee"
+msgstr ""
+
+#. module: sale_stock_restocking_fee_invoicing
+#: model:ir.model,name:sale_stock_restocking_fee_invoicing.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: sale_stock_restocking_fee_invoicing
+#: model:ir.model,name:sale_stock_restocking_fee_invoicing.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: sale_stock_restocking_fee_invoicing
+#: model:ir.model,name:sale_stock_restocking_fee_invoicing.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: sale_stock_restocking_fee_invoicing
+#: model:ir.model.fields,help:sale_stock_restocking_fee_invoicing.field_stock_move__charge_restocking_fee
+msgid "If checked your customer will be charged for accepting returned goods."
+msgstr ""
+
+#. module: sale_stock_restocking_fee_invoicing
+#: model:ir.model.fields,help:sale_stock_restocking_fee_invoicing.field_stock_move__picking_kind
+msgid "Indicate the kind of picking based on its locations"
+msgstr ""
+
+#. module: sale_stock_restocking_fee_invoicing
+#: model:ir.model.fields,field_description:sale_stock_restocking_fee_invoicing.field_stock_return_picking__is_customer_return
+#: model:ir.model.fields,field_description:sale_stock_restocking_fee_invoicing.field_stock_return_picking_line__is_customer_return
+msgid "Is Customer Return"
+msgstr ""
+
+#. module: sale_stock_restocking_fee_invoicing
+#: model:ir.model.fields,field_description:sale_stock_restocking_fee_invoicing.field_sale_order_line__is_restocking_fee
+msgid "Is Restocking Fee"
+msgstr ""
+
+#. module: sale_stock_restocking_fee_invoicing
+#: model:ir.model.fields,help:sale_stock_restocking_fee_invoicing.field_res_config_settings__restocking_fee_product_id
+msgid ""
+"It is possible to specify on a customer whether fees must be charged for "
+"returning goods. In the case where fees are to be applied, the product "
+"specified here is added to the sale order to charge these fees."
+msgstr ""
+
+#. module: sale_stock_restocking_fee_invoicing
+#: model:ir.model.fields,help:sale_stock_restocking_fee_invoicing.field_res_company__restocking_fee_product_id
+msgid ""
+"It is possible to specify on a customer whether restocking fee must be "
+"charged for returning goods. In the case where fee are to be applied, the "
+"product specified here is added to the sale order to charge these restocking"
+" fee."
+msgstr ""
+
+#. module: sale_stock_restocking_fee_invoicing
+#. odoo-python
+#: code:addons/sale_stock_restocking_fee_invoicing/models/sale_order.py:0
+#, python-format
+msgid ""
+"No product configured for restocking fee. Please fix the configuration into "
+"stock settings or contact you administrator."
+msgstr ""
+
+#. module: sale_stock_restocking_fee_invoicing
+#: model:ir.model.fields,field_description:sale_stock_restocking_fee_invoicing.field_stock_move__picking_kind
+msgid "Picking Kind"
+msgstr ""
+
+#. module: sale_stock_restocking_fee_invoicing
+#: model_terms:ir.ui.view,arch_db:sale_stock_restocking_fee_invoicing.res_config_settings_view_form
+msgid "Product which is the fee for restocking returned goods"
+msgstr ""
+
+#. module: sale_stock_restocking_fee_invoicing
+#: model:ir.model.fields,field_description:sale_stock_restocking_fee_invoicing.field_res_company__restocking_fee_product_id
+#: model:ir.model.fields,field_description:sale_stock_restocking_fee_invoicing.field_res_config_settings__restocking_fee_product_id
+msgid "Restocking Fee Product"
+msgstr ""
+
+#. module: sale_stock_restocking_fee_invoicing
+#: model:product.template,name:sale_stock_restocking_fee_invoicing.product_restocking_fee_product_template
+msgid "Restocking fee"
+msgstr ""
+
+#. module: sale_stock_restocking_fee_invoicing
+#. odoo-python
+#: code:addons/sale_stock_restocking_fee_invoicing/models/sale_order.py:0
+#, python-format
+msgid "Restocking fee for %(prod_uom_qty)s %(prod_uom)s %(so_line)s"
+msgstr ""
+
+#. module: sale_stock_restocking_fee_invoicing
+#: model:ir.model,name:sale_stock_restocking_fee_invoicing.model_stock_return_picking
+msgid "Return Picking"
+msgstr ""
+
+#. module: sale_stock_restocking_fee_invoicing
+#: model:ir.model,name:sale_stock_restocking_fee_invoicing.model_stock_return_picking_line
+msgid "Return Picking Line"
+msgstr ""
+
+#. module: sale_stock_restocking_fee_invoicing
+#: model:ir.model,name:sale_stock_restocking_fee_invoicing.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: sale_stock_restocking_fee_invoicing
+#: model:ir.model,name:sale_stock_restocking_fee_invoicing.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
+
+#. module: sale_stock_restocking_fee_invoicing
+#: model:ir.model,name:sale_stock_restocking_fee_invoicing.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: sale_stock_restocking_fee_invoicing
+#: model:ir.model.fields,help:sale_stock_restocking_fee_invoicing.field_res_partner__charge_restocking_fee
+#: model:ir.model.fields,help:sale_stock_restocking_fee_invoicing.field_res_users__charge_restocking_fee
+#: model:ir.model.fields,help:sale_stock_restocking_fee_invoicing.field_stock_return_picking_line__charge_restocking_fee
+msgid ""
+"Tick this box if you wish to charge your customer a fee in case of return of"
+" goods"
+msgstr ""
+
+#. module: sale_stock_restocking_fee_invoicing
+#: model:ir.model.fields,help:sale_stock_restocking_fee_invoicing.field_stock_return_picking__charge_restocking_fee
+msgid ""
+"Tick this box if you wish to charge your customer a fee in case of return of"
+" goods. Default value comes from the customer info."
+msgstr ""
