@@ -35,3 +35,8 @@ msgstr "Ordine di vendita"
 #: model:ir.model,name:delivery_procurement_group_carrier.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Riga ordine di vendita"
+
+#. module: delivery_procurement_group_carrier
+#: model:ir.model,name:delivery_procurement_group_carrier.model_stock_move
+msgid "Stock Move"
+msgstr ""

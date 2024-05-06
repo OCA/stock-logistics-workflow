@@ -35,3 +35,8 @@ msgstr "Orden de Ventas"
 #: model:ir.model,name:delivery_procurement_group_carrier.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Línea de Orden de Ventas"
+
+#. module: delivery_procurement_group_carrier
+#: model:ir.model,name:delivery_procurement_group_carrier.model_stock_move
+msgid "Stock Move"
+msgstr ""
