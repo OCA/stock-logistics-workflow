@@ -17,7 +17,7 @@ org_name: Odoo Community Association (OCA)
 org_slug: OCA
 rebel_module_groups:
 - stock_picking_to_batch_group_fields
-- stock_customer_deposit,stock_customer_deposit_elaboration
+- stock_customer_deposit,stock_customer_deposit_elaboration,stock_customer_deposit_sale_margin
 repo_description: 'TODO: add repo description.'
 repo_name: stock-logistics-workflow
 repo_slug: stock-logistics-workflow
