@@ -13,8 +13,6 @@ def post_load_hook():
         if not hasattr(self, "_run_fifo_prepare_candidate_update"):
             return self._run_fifo_original(quantity, company)
 
-        self.ensure_one()
-
         # Find back incoming stock valuation layers (called candidates here)
         # to value `quantity`.
         qty_to_take_on_candidates = quantity
@@ -122,7 +120,6 @@ def post_load_hook():
     def _run_fifo_vacuum_new(self, company=None):
         if not hasattr(self, "_run_fifo_prepare_candidate_update"):
             return self._run_fifo_vacuum_original(company=company)
-        self.ensure_one()
         if company is None:
             company = self.env.company
         svls_to_vacuum = (
@@ -130,7 +127,7 @@ def post_load_hook():
             .sudo()
             .search(
                 [
-                    ("product_id", "=", self.id),
+                    ("product_id", "in", self.ids),
                     ("remaining_qty", "<", 0),
                     ("stock_move_id", "!=", False),
                     ("company_id", "=", company.id),
@@ -145,14 +142,14 @@ def post_load_hook():
 
         domain = [
             ("company_id", "=", company.id),
-            ("product_id", "=", self.id),
+            ("product_id", "in", self.ids),
             ("remaining_qty", ">", 0),
             ("create_date", ">=", svls_to_vacuum[0].create_date),
         ]
         if self.env.context.get("use_past_svl", False):
             domain = [
                 ("company_id", "=", company.id),
-                ("product_id", "=", self.id),
+                ("product_id", "in", self.ids),
                 ("remaining_qty", ">", 0),
             ]
         all_candidates = self.env["stock.valuation.layer"].sudo().search(domain)
@@ -238,7 +235,7 @@ def post_load_hook():
             corrected_value = svl_to_vacuum.currency_id.round(corrected_value)
             move = svl_to_vacuum.stock_move_id
             vals = {
-                "product_id": self.id,
+                "product_id": svl_to_vacuum.product_id.id,
                 "value": corrected_value,
                 "unit_cost": 0,
                 "quantity": 0,
