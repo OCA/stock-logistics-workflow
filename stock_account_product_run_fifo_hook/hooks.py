@@ -16,8 +16,6 @@ def post_load_hook():
         if not hasattr(self, "_run_fifo_prepare_candidate_update"):
             return self._run_fifo_original(quantity, company)
 
-        self.ensure_one()
-
         # Find back incoming stock valuation layers (called candidates here)
         # to value `quantity`.
         qty_to_take_on_candidates = quantity
@@ -26,9 +24,7 @@ def post_load_hook():
         tmp_value = 0  # to accumulate the value taken on the candidates
         taken_data = {}
         for candidate in candidates:
-            qty_taken_on_candidate = min(
-                qty_to_take_on_candidates, candidate.remaining_qty
-            )
+            qty_taken_on_candidate = min(qty_to_take_on_candidates, candidate.remaining_qty)
             taken_data[candidate.id] = {"quantity": qty_taken_on_candidate}
             candidate_unit_cost = candidate.remaining_value / candidate.remaining_qty
             new_standard_price = candidate_unit_cost
