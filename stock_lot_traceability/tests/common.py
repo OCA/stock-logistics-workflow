@@ -23,7 +23,7 @@ class CommonStockLotTraceabilityCase(TransactionCase):
         # - Product 2 is produced from Product 1
         # - Product 3 is produced from Product 2
         # - We have/produce two lots for each product
-        cls.product1_lot1, cls.product1_lot2 = cls.env["stock.production.lot"].create(
+        cls.product1_lot1, cls.product1_lot2 = cls.env["stock.lot"].create(
             [
                 {
                     "name": "Product 1 Lot 1",
@@ -37,7 +37,7 @@ class CommonStockLotTraceabilityCase(TransactionCase):
                 },
             ]
         )
-        cls.product2_lot1, cls.product2_lot2 = cls.env["stock.production.lot"].create(
+        cls.product2_lot1, cls.product2_lot2 = cls.env["stock.lot"].create(
             [
                 {
                     "name": "Product 2 Lot 1",
@@ -51,7 +51,7 @@ class CommonStockLotTraceabilityCase(TransactionCase):
                 },
             ]
         )
-        cls.product3_lot1, cls.product3_lot2 = cls.env["stock.production.lot"].create(
+        cls.product3_lot1, cls.product3_lot2 = cls.env["stock.lot"].create(
             [
                 {
                     "name": "Product 3 Lot 1",
@@ -129,7 +129,7 @@ class CommonStockLotTraceabilityCase(TransactionCase):
                         {
                             "product_id": product.id,
                             "product_uom_id": product.uom_id.id,
-                            "qty_done": qty,
+                            "quantity": qty,
                             "lot_id": lot.id,
                             "location_id": location_from.id,
                             "location_dest_id": location_dest.id,
@@ -140,6 +140,7 @@ class CommonStockLotTraceabilityCase(TransactionCase):
         )
         if validate:
             move._action_confirm()
+            move.picked = True
             move._action_done()
         return move
 

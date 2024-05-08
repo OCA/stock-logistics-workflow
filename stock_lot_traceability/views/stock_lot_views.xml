@@ -7,7 +7,7 @@
 <odoo>
 
     <record model="ir.ui.view" id="view_production_lot_form">
-        <field name="model">stock.production.lot</field>
+        <field name="model">stock.lot</field>
         <field name="inherit_id" ref="stock.view_production_lot_form" />
         <field name="arch" type="xml">
             <div name="button_box" position="inside">
@@ -15,7 +15,7 @@
                     type="object"
                     name="action_view_consume_lots"
                     icon="fa-level-up"
-                    attrs="{'invisible': [('consume_lot_count', '=', 0)]}"
+                    invisible="consume_lot_count == 0"
                 >
                     <field
                         string="Consumed"
@@ -27,7 +27,7 @@
                     type="object"
                     name="action_view_produce_lots"
                     icon="fa-level-down"
-                    attrs="{'invisible': [('produce_lot_count', '=', 0)]}"
+                    invisible="produce_lot_count == 0"
                 >
                     <field
                         string="Produced"

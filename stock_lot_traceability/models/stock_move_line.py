@@ -11,7 +11,7 @@ class StockMoveLine(models.Model):
     def write(self, vals):
         # OVERRIDE to invalidate the cache of the lots' produce/consume fields,
         # as they're computed from the move lines that consume/produce them.
-        self.env["stock.production.lot"].invalidate_cache(
+        self.env["stock.lot"].invalidate_model(
             [
                 "produce_lot_ids",
                 "consume_lot_ids",
@@ -25,7 +25,7 @@ class StockMoveLine(models.Model):
     def create(self, vals_list):
         # OVERRIDE to invalidate the cache of the lots' produce/consume fields,
         # as they're computed from the move lines that consume/produce them.
-        self.env["stock.production.lot"].invalidate_cache(
+        self.env["stock.lot"].invalidate_model(
             [
                 "produce_lot_ids",
                 "consume_lot_ids",
