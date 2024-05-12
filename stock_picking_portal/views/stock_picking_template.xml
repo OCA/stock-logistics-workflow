@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="portal_my_home_menu_stock_operations"
+        name="Portal layout: Stock Operations menu entry"
+        inherit_id="portal.portal_breadcrumbs"
+        priority="99"
+    >
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li
+                t-if="page_name == 'stock_operations' or stock_operations"
+                t-attf-class="breadcrumb-item #{'active ' if not stock_operations else ''}"
+            >
+                <a
+                    t-if="stock_operations"
+                    t-attf-href="/my/stock_operations?{{ keep_query() }}"
+                >Stock Operations</a>
+                <t t-else="">Stock Operations</t>
+            </li>
+        </xpath>
+    </template>
+    <template
+        id="portal_my_home_stock_operations"
+        name="Show Stock Operations"
+        customize_show="True"
+        inherit_id="portal.portal_my_home"
+        priority="99"
+    >
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Stock Operations</t>
+                <t t-set="url" t-value="'/my/stock_operations'" />
+                <t t-set="placeholder_count" t-value="'stock_operations_count'" />
+            </t>
+        </xpath>
+    </template>
+    <template id="portal_my_stock_operations" name="My Stock Operations">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True" />
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Stock Operations</t>
+            </t>
+            <t t-if="stock_operation_ids" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>
+                            <span class='d-none d-md-inline'>Document #</span>
+                        </th>
+                        <th class="text-center">Document date</th>
+                        <th class="text-center">Delivery address</th>
+                        <th class="text-center">State</th>
+                    </tr>
+                </thead>
+                <t t-foreach="stock_operation_ids" t-as="operation">
+                    <tr>
+                        <td>
+                            <t
+                                t-set="operation_url"
+                                t-value="'/my/stock_operations/%s?access_token=%s' % (operation.id, operation.access_token)"
+                            />
+                            <a t-attf-href="{{ operation_url}}">
+                                <t t-out="operation.name" />
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <span
+                                t-field="operation.scheduled_date"
+                                t-options="{'widget': 'date'}"
+                            />&amp;nbsp;
+                            <span
+                                class='d-none d-md-inline'
+                                t-field="operation.scheduled_date"
+                                t-options="{'time_only': True}"
+                            />
+                        </td>
+                        <td class="text-center">
+                            <t t-out="operation.partner_id.name" />
+                        </td>
+                        <td class="text-center">
+                            <span
+                                t-if="operation.state == 'done'"
+                                class="small badge text-bg-success orders_label_text_align"
+                            >
+                                <i class="fa fa-fw fa-truck" />
+                                <b>Shipped</b>
+                            </span>
+                            <span
+                                t-elif="operation.state == 'cancel'"
+                                class="small badge text-bg-danger orders_label_text_align"
+                            >
+                                <i class="fa fa-fw fa-times" />
+                                <b>Cancelled</b>
+                            </span>
+                            <span
+                                t-elif="operation.state in ['draft', 'waiting', 'confirmed', 'assigned']"
+                                class="small badge text-bg-info orders_label_text_align"
+                            >
+                                <i class="fa fa-fw fa-clock-o" />
+                                <b>Preparation</b>
+                            </span>
+                        </td>
+                    </tr>
+                </t>
+            </t>
+            <p t-else="">There are currently no stock operations for your account.</p>
+        </t>
+    </template>
+    <template
+        id="stock_operation_portal_template"
+        name="Stock Operations Portal Template"
+        inherit_id="portal.portal_sidebar"
+        primary="True"
+    >
+        <xpath expr="//div[hasclass('o_portal_sidebar')]" position="inside">
+            <div class="row mt16 o_portal_sale_sidebar">
+            <t t-call="portal.portal_record_sidebar">
+                    <t t-set="classes" t-value="'col-lg-auto d-print-none'" />
+
+                    <t t-set="title">
+                    </t>
+                      <t t-set="entries">
+                    <ul
+                            class="list-group list-group-flush flex-wrap flex-row flex-lg-column"
+                        >
+                        <li class="list-group-item d-grid align-content-start">
+                            <a
+                                    t-if="not object.is_signed"
+                                    role="button"
+                                    class="btn btn-primary mb8"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modalaccept"
+                                    href="#"
+                                >
+                                <i class="fa fa-check" /><t>Sign now</t>
+                            </a>
+                            <a
+                                    t-if="object.is_signed"
+                                    role="button"
+                                    class="btn btn-primary mb8"
+                                >
+                                <i class="fa fa-check" /><t>Signed</t>
+                            </a>
+                            <div class="o_download_pdf btn-toolbar flex-sm-nowrap">
+                                <div class="btn-group flex-grow-1 me-1 mb-1">
+                                    <a
+                                            class="btn btn-secondary o_download_btn"
+                                            t-att-href="object.get_portal_url(report_type='pdf', download=True)"
+                                            title="Download"
+                                        >
+                                        <i class="fa fa-download" /> Download
+                                    </a>
+                                </div>
+                                <div class="btn-group flex-grow-1 mb-1">
+                                    <a
+                                            class="btn btn-secondary o_print_btn o_portal_invoice_print"
+                                            t-att-href="object.get_portal_url(report_type='pdf')"
+                                            id="print_invoice_report"
+                                            title="Print"
+                                            target="_blank"
+                                        >
+                                        <i class="fa fa-print" /> Print
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </t>
+                </t>
+
+                <div id="quote_content" class="col-12 col-lg justify-content-end">
+                    <div class="o_portal_html_view shadow p-3">
+                        <div class="o_portal_html_loader text-center">
+                        </div>
+                        <t
+                            t-call="stock_picking_portal.stock_operation_document"
+                            t-lang="object._get_report_lang()"
+                        >
+                            <t t-set="o" t-value="object" />
+                        </t>
+                    </div>
+
+                    <div role="dialog" class="modal fade" id="modalaccept">
+                        <div class="modal-dialog">
+                            <form
+                                id="accept"
+                                method="POST"
+                                t-att-data-order-id="object.id"
+                                t-att-data-token="object.access_token"
+                                class="js_accept_json modal-content js_website_submit_form"
+                            >
+                                <input
+                                    type="hidden"
+                                    name="csrf_token"
+                                    t-att-value="request.csrf_token()"
+                                />
+                                <header class="modal-header">
+                                    <h4
+                                        class="modal-title"
+                                    >Validate Stock Operation</h4>
+                                    <button
+                                        type="button"
+                                        class="btn-close"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close"
+                                    />
+                                </header>
+                                <main class="modal-body" id="sign-dialog">
+                                    <t t-call="portal.signature_form">
+                                        <t
+                                            t-set="call_url"
+                                            t-value="object.get_portal_url(suffix='/accept')"
+                                        />
+                                        <t
+                                            t-set="default_name"
+                                            t-value="object.partner_id.name"
+                                        />
+                                    </t>
+                                </main>
+                            </form>
+                        </div>
+                    </div>
+                    <div id="stock_operation_communication" class="mt-4">
+                        <h2>History</h2>
+                        <t t-call="portal.message_thread" />
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+    <template id="stock_operation_document">
+        <t t-set="o" t-value="o.with_context(lang=o._get_report_lang())" />
+        <t
+            t-set="partner"
+            t-value="o.partner_id or (o.move_ids and o.move_ids[0].partner_id) or False"
+        />
+        <t t-set="address">
+            <div name="div_outgoing_address">
+                <div
+                    name="outgoing_delivery_address"
+                    t-if="o.should_print_delivery_address()"
+                >
+                    <span>
+                        <strong>Delivery Address:</strong>
+                    </span>
+                    <div
+                        t-field="o.move_ids[0].partner_id"
+                        t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
+                    />
+                    </div>
+                <div
+                    name="outgoing_warehouse_address"
+                    t-elif="o.picking_type_id.code != 'internal' and o.picking_type_id.warehouse_id.partner_id"
+                >
+                    <span>
+                        <strong>Warehouse Address:</strong>
+                    </span>
+                    <div
+                        t-field="o.picking_type_id.warehouse_id.partner_id"
+                        t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
+                    />
+                    </div>
+            </div>
+        </t>
+        <t t-set="information_block">
+            <div class="row">
+                <div class="col-7" name="div_incoming_address">
+                    <t t-set="show_partner" t-value="False" />
+                    <div
+                        name="vendor_address"
+                        t-if="o.picking_type_id.code=='incoming' and partner"
+                    >
+                        <span>
+                            <strong>Vendor Address:</strong>
+                        </span>
+                        <t t-set="show_partner" t-value="True" />
+                    </div>
+                    <div
+                        name="customer_address"
+                        t-if="o.picking_type_id.code=='outgoing' and partner and partner != partner.commercial_partner_id"
+                    >
+                        <span>
+                            <strong>Customer Address:</strong>
+                        </span>
+                        <t t-set="show_partner" t-value="True" />
+                    </div>
+                    <div t-if="show_partner" name="partner_header">
+                        <div
+                            t-field="partner.commercial_partner_id"
+                            t-options='{"widget": "contact", "fields": ["address", "name", "phone", "vat"], "no_marker": True, "phone_icons": True}'
+                        />
+                            </div>
+                </div>
+            </div>
+        </t>
+        <div class="page">
+            <h2>
+                <span t-field="o.name" />
+            </h2>
+            <div class="row mt32 mb32">
+                <div t-if="o.origin" class="col-auto" name="div_origin">
+                    <strong>Order:</strong>
+                    <p t-field="o.origin" />
+                </div>
+                <div t-if="o.state" class="col-auto" name="div_sched_date">
+                    <strong>Shipping Date:</strong>
+                    <t t-if="o.state == 'done'">
+                        <p t-field="o.date_done" />
+                    </t>
+                    <t t-if="o.state != 'done'">
+                        <p t-field="o.scheduled_date" />
+                    </t>
+                </div>
+            </div>
+            <table
+                class="table table-sm"
+                t-if="o.state!='done'"
+                name="stock_move_table"
+            >
+                <thead>
+                    <tr>
+                        <th name="th_sm_product">
+                            <strong>Product</strong>
+                        </th>
+                        <th name="th_sm_ordered">
+                            <strong>Ordered</strong>
+                        </th>
+                        <th name="th_sm_quantity">
+                            <strong>Delivered</strong>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t
+                        t-set="lines"
+                        t-value="o.move_ids.filtered(lambda x: x.product_uom_qty)"
+                    />
+                    <tr t-foreach="lines" t-as="move">
+                        <td>
+                            <span t-field="move.product_id" />
+                            <p
+                                t-if="move.description_picking != move.product_id.name and move.description_picking != move.product_id.display_name"
+                            >
+                                <span t-field="move.description_picking" />
+                            </p>
+                        </td>
+                        <td>
+                            <span t-field="move.product_uom_qty" />
+                            <span t-field="move.product_uom" />
+                        </td>
+                        <td>
+                            <span t-field="move.quantity_done" />
+                            <span t-field="move.product_uom" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table
+                class="table table-sm mt48"
+                t-if="o.move_line_ids and o.state=='done'"
+                name="stock_move_line_table"
+            >
+                <t t-set="has_serial_number" t-value="False" />
+                <t
+                    t-set="has_serial_number"
+                    t-value="o.move_line_ids.mapped('lot_id')"
+                    groups="stock.group_lot_on_delivery_slip"
+                />
+                <thead>
+                    <tr>
+                        <th name="th_sml_product">
+                            <strong>Product</strong>
+                        </th>
+                        <t name="lot_serial" t-if="has_serial_number">
+                            <th>
+                                        Lot/Serial Number
+                                    </th>
+                        </t>
+                        <th
+                            name="th_sml_qty_ordered"
+                            class="text-center"
+                            t-if="not has_serial_number"
+                        >
+                            <strong>Ordered</strong>
+                        </th>
+                        <th name="th_sml_quantity" class="text-center">
+                            <strong>Delivered</strong>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-if="o.has_packages" name="has_packages">
+                        <t
+                            t-set="packages"
+                            t-value="o.move_line_ids.mapped('result_package_id')"
+                        />
+                        <t t-foreach="packages" t-as="package">
+                            <t
+                                t-call="stock.stock_report_delivery_package_section_line"
+                            />
+                            <t
+                                t-set="package_move_lines"
+                                t-value="o.move_line_ids.filtered(lambda l: l.result_package_id == package)"
+                            />
+                            <t t-if="has_serial_number">
+                                <tr t-foreach="package_move_lines" t-as="move_line">
+                                    <t
+                                        t-call="stock.stock_report_delivery_has_serial_move_line"
+                                    />
+                                </tr>
+                            </t>
+                            <t t-else="">
+                                <t
+                                    t-set="aggregated_lines"
+                                    t-value="package_move_lines._get_aggregated_product_quantities(strict=True)"
+                                />
+                                <t
+                                    t-call="stock.stock_report_delivery_aggregated_move_lines"
+                                />
+                                    </t>
+                        </t>
+                        <t
+                            t-set="move_lines"
+                            t-value="o.move_line_ids.filtered(lambda l: not l.result_package_id)"
+                        />
+                        <t
+                            t-set="aggregated_lines"
+                            t-value="o.move_line_ids._get_aggregated_product_quantities(except_package=True)"
+                        />
+                        <t
+                            t-if="move_lines or aggregated_lines"
+                            name="no_package_move_lines"
+                        >
+                            <t
+                                t-call="stock.stock_report_delivery_no_package_section_line"
+                                name="no_package_section"
+                            />
+                            <t t-if="has_serial_number">
+                                <tr t-foreach="move_lines" t-as="move_line">
+                                    <t
+                                        t-call="stock.stock_report_delivery_has_serial_move_line"
+                                    />
+                                </tr>
+                            </t>
+                            <t t-elif="aggregated_lines">
+                                <t
+                                    t-call="stock.stock_report_delivery_aggregated_move_lines"
+                                />
+                                    </t>
+                        </t>
+                    </t>
+                    <t t-else="">
+                        <t t-if="has_serial_number">
+                            <tr t-foreach="o.move_line_ids" t-as="move_line">
+                                <t
+                                    t-call="stock.stock_report_delivery_has_serial_move_line"
+                                />
+                            </tr>
+                        </t>
+                        <t t-else="" name="aggregated_move_lines">
+                            <t
+                                t-set="aggregated_lines"
+                                t-value="o.move_line_ids._get_aggregated_product_quantities()"
+                            />
+                            <t
+                                t-call="stock.stock_report_delivery_aggregated_move_lines"
+                            />
+                                </t>
+                    </t>
+                </tbody>
+            </table>
+            <t
+                t-set="backorders"
+                t-value="o.backorder_ids.filtered(lambda x: x.state not in ('done', 'cancel'))"
+            />
+            <t t-if="o.backorder_ids and backorders">
+                <p class="mt-5">
+                    <span>Remaining quantities not yet delivered:</span>
+                </p>
+                <table
+                    class="table table-sm"
+                    name="stock_backorder_table"
+                    style="table-layout: fixed;"
+                >
+                    <thead>
+                        <tr>
+                            <th name="th_sb_product">
+                                <strong>Product</strong>
+                            </th>
+                            <th />
+                            <th name="th_sb_quantity" class="text-center">
+                                <strong>Quantity</strong>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="backorders" t-as="backorder">
+                            <t
+                                t-set="bo_lines"
+                                t-value="backorder.move_ids.filtered(lambda x: x.product_uom_qty)"
+                            />
+                            <tr t-foreach="bo_lines" t-as="bo_line">
+                                <td class="w-auto">
+                                    <span t-field="bo_line.product_id" />
+                                    <p
+                                        t-if="bo_line.description_picking != bo_line.product_id.name and bo_line.description_picking != bo_line.product_id.display_name"
+                                    >
+                                        <span t-field="bo_line.description_picking" />
+                                    </p>
+                                </td>
+                                <td />
+                                <td class="text-center w-auto">
+                                    <span t-field="bo_line.product_uom_qty" />
+                                    <span t-field="bo_line.product_uom" />
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </t>
+            <div t-if="o.signature" class="mt32 ml64 mr4" name="signature">
+                <div class="offset-8">
+                    <strong>Signature</strong>
+                </div>
+                <div class="offset-8">
+                    <img
+                        t-att-src="image_data_uri(o.signature)"
+                        style="max-height: 4cm; max-width: 8cm;"
+                    />
+                </div>
+                <div class="offset-8 text-center">
+                    <p t-field="o.partner_id.name" />
+                </div>
+            </div>
+        </div>
+    </template>
+</odoo>
