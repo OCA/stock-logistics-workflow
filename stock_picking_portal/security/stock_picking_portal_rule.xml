@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+  <!-- Portal users may read only pickings of visible types and their own partner -->
+  <record id="rule_portal_picking" model="ir.rule">
+    <field name="name">Stock Picking Portal Access</field>
+    <field name="model_id" ref="stock.model_stock_picking" />
+    <field name="domain_force">
+      ['&amp;',
+       ('picking_type_id.portal_visible', '=', True),
+       ('partner_id', '=', user.partner_id.id)]
+    </field>
+    <field name="groups" eval="[(4, ref('base.group_portal'))]" />
+    <field name="perm_read" eval="1" />
+    <field name="perm_write" eval="0" />
+    <field name="perm_create" eval="0" />
+    <field name="perm_unlink" eval="0" />
+  </record>
+
+  <!-- Portal users may read only picking types marked portal_visible -->
+  <record id="rule_portal_picking_type" model="ir.rule">
+    <field name="name">Stock Picking Type Portal Access</field>
+    <field name="model_id" ref="stock.model_stock_picking_type" />
+    <field name="domain_force">[('portal_visible','=',True)]</field>
+    <field name="groups" eval="[(4, ref('base.group_portal'))]" />
+    <field name="perm_read" eval="1" />
+    <field name="perm_write" eval="0" />
+    <field name="perm_create" eval="0" />
+    <field name="perm_unlink" eval="0" />
+  </record>
+</odoo>
