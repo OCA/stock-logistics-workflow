@@ -12,47 +12,54 @@ class StockPicking(models.Model):
 
     _inherit = "stock.picking"
 
-    def _check_split_process(self):
+    def _check_split_process(self, split_move_type):
         # Check the picking state and condition before split
         if self.state == "draft":
             raise UserError(_("Mark as todo this picking please."))
-        if all([x.qty_done == 0.0 for x in self.move_line_ids]):
-            raise UserError(
-                _(
-                    "You must enter done quantity in order to split your "
-                    "picking in several ones."
-                )
-            )
 
-    def split_process(self):
+        if split_move_type == "quantity_done":
+            if all([x.qty_done == 0.0 for x in self.move_line_ids]):
+                raise UserError(
+                    _(
+                        "You must enter done quantity in order to split your "
+                        "picking in several ones."
+                    )
+                )
+
+    def split_process(self, split_move_type):
         """Use to trigger the wizard from button with correct context"""
         for picking in self:
-            picking._check_split_process()
+            picking._check_split_process(split_move_type)
 
             # Split moves considering the qty_done on moves
             new_moves = self.env["stock.move"]
             for move in picking.move_lines:
                 rounding = move.product_uom.rounding
-                qty_done = move.quantity_done
+                qty_compare_split = getattr(move, split_move_type)
                 qty_initial = move.product_uom_qty
                 qty_diff_compare = float_compare(
-                    qty_done, qty_initial, precision_rounding=rounding
+                    qty_compare_split, qty_initial, precision_rounding=rounding
                 )
                 if qty_diff_compare < 0:
-                    qty_split = qty_initial - qty_done
+                    qty_split = qty_initial - qty_compare_split
                     qty_uom_split = move.product_uom._compute_quantity(
                         qty_split, move.product_id.uom_id, rounding_method="HALF-UP"
                     )
                     new_move_vals = move._split(qty_uom_split)
-                    for move_line in move.move_line_ids:
-                        if move_line.product_qty and move_line.qty_done:
-                            # To avoid an error
-                            # when picking is partially available
-                            try:
-                                move_line.write({"product_uom_qty": move_line.qty_done})
-                            except UserError:
-                                pass
-                    new_move = self.env["stock.move"].create(new_move_vals)
+                    if new_move_vals:
+                        for move_line in move.move_line_ids:
+                            if move_line.product_qty and move_line.qty_done:
+                                # To avoid an error
+                                # when picking is partially available
+                                try:
+                                    move_line.write(
+                                        {"product_uom_qty": move_line.qty_done}
+                                    )
+                                except UserError:
+                                    pass
+                        new_move = self.env["stock.move"].create(new_move_vals)
+                    else:
+                        new_move = move
                     new_move._action_confirm(merge=False)
                     new_moves |= new_move
 
