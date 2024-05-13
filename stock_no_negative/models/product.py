@@ -2,7 +2,7 @@
 # @author Alexis de Lattre <alexis.delattre@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class ProductCategory(models.Model):
@@ -15,6 +15,14 @@ class ProductCategory(models.Model):
         "attached to sub-categories of this category.",
     )
 
+    @api.constrains("allow_negative_stock")
+    def _check_allow_negative_stock(self):
+        for rec in self:
+            if not rec.allow_negative_stock:
+                self.env["stock.quant"].search(
+                    [("product_id.categ_id", "=", rec.id)]
+                ).check_negative_qty()
+
 
 class ProductTemplate(models.Model):
     _inherit = "product.template"
@@ -26,3 +34,17 @@ class ProductTemplate(models.Model):
         "then the validation of the related stock moves will be blocked if "
         "the stock level becomes negative with the stock move.",
     )
+
+    @api.constrains("allow_negative_stock", "categ_id")
+    def _check_allow_negative_stock(self):
+        for rec in self:
+            if not rec.allow_negative_stock:
+                self.env["stock.quant"].search(
+                    [
+                        (
+                            "product_id",
+                            "in",
+                            rec.with_context(active_test=False).product_variant_ids.ids,
+                        )
+                    ]
+                ).check_negative_qty()
