@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Moduon Team S.L.
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <record id="stock_picking_batch_confirm_view_form" model="ir.ui.view">
+        <field name="name">stock.picking.batch.confirm.view.form</field>
+        <field name="model">stock.picking.batch.confirm</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <p>There are <i>pending origin moves</i> yet. By clickcing on <i
+                    >validate</i>, batch will be validated</p>
+                <field name="batch_id" invisible="1" />
+                <field
+                    name="move_ids"
+                    readonly="1"
+                    context="{'tree_view_ref': 'stock_picking_batch.view_picking_move_tree_inherited'}"
+                />
+                <footer>
+                    <button
+                        name="button_validate"
+                        string="Validate"
+                        type="object"
+                        class="btn-secondary"
+                    />
+                    <button string="Cancel" class="btn-primary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
