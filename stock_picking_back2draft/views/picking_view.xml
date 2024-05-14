@@ -8,7 +8,7 @@
             <xpath expr="//button[@name='action_cancel']" position="after">
                 <button
                     name="action_back_to_draft"
-                    states="cancel"
+                    invisible="state != 'cancel'"
                     string="Back to draft"
                     groups="base.group_user"
                     type="object"

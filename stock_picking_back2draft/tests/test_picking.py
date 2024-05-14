@@ -33,7 +33,7 @@ class TestPickingBackToDraft(TransactionCase):
         )
 
     def setUp(self, *args, **kwargs):
-        super(TestPickingBackToDraft, self).setUp(*args, **kwargs)
+        super().setUp(*args, **kwargs)
         self.src_location = self.env.ref("stock.stock_location_stock")
         self.cust_location = self.env.ref("stock.stock_location_customers")
         self.partner = self.env.ref("base.res_partner_2")
