@@ -6,6 +6,9 @@
 
   * Simone Rubino <sir@takobi.online>
 
+* `Ooops404 <https://www.ooops404.com/>_`:
+  * Eduard Brahas <eduardbrhas@outlook.it>
+
 * `Ecosoft <http://ecosoft.co.th>`__:
 
   * Pimolnat Suntian <pimolnats@ecosoft.co.th>
