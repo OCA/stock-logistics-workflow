@@ -28,17 +28,25 @@ Stock Move Backdating
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module allows to register old stock moves (with date != now).
-On each operation, user can specify the **Actual Movement Date**, that will be
-used as movements date. That date can also be set by using the button **Fill Actual Movement Date**, shown in the header form when state is *Partially Available* or *Available*. As a result, all operations get automatically filled in with the date chosen.
-In addition, if *Perpetual inventory valuation* is enabled, the date of journal entries generated will be updated accordingly.
+This module allows users to register stock moves with a past date (i.e., a date different from the current one).
+It is especially useful for accurately reflecting historical stock movements and maintaining correct inventory records.
 
-This module also allows to backdate inventory adjustments.
+If *Perpetual Inventory Valuation* is enabled, the generated journal entries will reflect the chosen backdated date accordingly.
 
 **Table of contents**
 
 .. contents::
    :local:
+
+Usage
+=====
+
+How to Use Backdated Stock Movement:
+
+1. Transfer the products and process as usual until the status becomes `Ready`.
+2. Click `Fill Actual Movement Date` > select the backdate > click Apply.
+3. The system will display the `Forced Effective Date` as the selected backdate.
+4. Click Validate > check that the `Stock Valuation Date` and the `Journal Entries` (if using Perpetual Inventory Valuation) are backdated accordingly.
 
 Bug Tracker
 ===========
@@ -77,6 +85,7 @@ Contributors
 * `Ecosoft <http://ecosoft.co.th>`__:
 
   * Pimolnat Suntian <pimolnats@ecosoft.co.th>
+  * Saran Lim. <saranl@ecosoft.co.th>
 
 Maintainers
 ~~~~~~~~~~~

@@ -14,7 +14,7 @@
                 <footer>
                     <button
                         name="fill_date_backdating"
-                        string="_Apply"
+                        string="Apply"
                         type="object"
                         class="btn-primary"
                     />
