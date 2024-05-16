@@ -33,5 +33,6 @@ Deliver customer deposits:
 7. As a product in deposit, a button **Customer deposit** will appear. If you do not have enough in deposit, button will be grey. If you click on the button **Customer deposit**, you can view the deposits for that product.
 8. You will only be able to confirm the order if you use less quantity than you have in the deposit.
 9. If you try to confirm the order with more quantity than you have in deposit, a validation error will show.
+10. Check the deposit line has 100% discount.
 
 
