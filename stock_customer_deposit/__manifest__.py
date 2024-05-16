@@ -4,7 +4,7 @@
 {
     "name": "Stock Customer Deposit",
     "summary": "Customer deposits in your warehouse",
-    "version": "16.0.1.0.1",
+    "version": "16.0.1.1.0",
     "development_status": "Alpha",
     "category": "Inventory/Delivery",
     "website": "https://github.com/OCA/stock-logistics-workflow",

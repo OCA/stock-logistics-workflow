@@ -68,13 +68,13 @@ class SaleOrderLine(models.Model):
     @api.depends(
         "product_id", "product_uom", "product_uom_qty", "deposit_available_qty"
     )
-    def _compute_price_unit(self):
-        """Set price_unit to 0 if use_customer_deposit is True because customer paid before
-        for them."""
-        res = super()._compute_price_unit()
+    def _compute_discount(self):
+        """Set discount to 100% if use_customer_deposit is True
+        because customer paid before for them."""
+        res = super()._compute_discount()
         for line in self:
             if line.deposit_available_qty:
-                line.price_unit = 0
+                line.discount = 100.0
         return res
 
     @api.depends("qty_invoiced", "qty_delivered", "product_uom_qty", "state")
