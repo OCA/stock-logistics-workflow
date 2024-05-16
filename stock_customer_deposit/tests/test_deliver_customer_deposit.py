@@ -124,6 +124,11 @@ class TestDeliverCustomerDeposits(TestStockCustomerDepositCommon):
                 line.product_uom_qty = qty
         so = so_form.save()
         so.action_confirm()
+        # Check discount on lines
+        self.assertTrue(
+            sum(so.mapped("order_line.discount")) > 0.0,
+            "Discount is not set properly on order lines",
+        )
         for partner, products in self.result_test["sale1"].items():
             for product, value in products.items():
                 self.assertEqual(
