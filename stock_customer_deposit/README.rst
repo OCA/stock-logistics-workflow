@@ -100,22 +100,23 @@ View Customer deposits:
 
 Deliver customer deposits:
 
-1. Go to Sales > Quotation.
-2. Create a new quotation.
-3. Select customer who has a deposit in your warehouse.
-4. In page Other Info choose warehouse where deposit is located. (Only
-   if multi-warehouse is activated)
-5. Smart button **Deposits** with deposits is displayed if the customer
-   has deposits in the chosen warehouse.
-6. Add line with product in deposit.
-7. As a product in deposit, a button **Customer deposit** will appear.
-   If you do not have enough in deposit, button will be grey. If you
-   click on the button **Customer deposit**, you can view the deposits
-   for that product.
-8. You will only be able to confirm the order if you use less quantity
-   than you have in the deposit.
-9. If you try to confirm the order with more quantity than you have in
-   deposit, a validation error will show.
+1.  Go to Sales > Quotation.
+2.  Create a new quotation.
+3.  Select customer who has a deposit in your warehouse.
+4.  In page Other Info choose warehouse where deposit is located. (Only
+    if multi-warehouse is activated)
+5.  Smart button **Deposits** with deposits is displayed if the customer
+    has deposits in the chosen warehouse.
+6.  Add line with product in deposit.
+7.  As a product in deposit, a button **Customer deposit** will appear.
+    If you do not have enough in deposit, button will be grey. If you
+    click on the button **Customer deposit**, you can view the deposits
+    for that product.
+8.  You will only be able to confirm the order if you use less quantity
+    than you have in the deposit.
+9.  If you try to confirm the order with more quantity than you have in
+    deposit, a validation error will show.
+10. Check the deposit line has 100% discount.
 
 Known issues / Roadmap
 ======================
@@ -148,6 +149,7 @@ Contributors
 -  Emilio Pascual (`Moduon <https://www.moduon.team/>`__)
 -  Rafael Blasco (`Moduon <https://www.moduon.team/>`__)
 -  Gelo Joga (`Moduon <https://www.moduon.team/>`__)
+-  Eduardo de Miguel (`Moduon <https://www.moduon.team/>`__)
 
 Maintainers
 -----------
