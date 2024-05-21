@@ -9,8 +9,9 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-01 02:08+0000\n"
-"PO-Revision-Date: 2023-12-27 14:35+0000\n"
-"Last-Translator: Adriano Prado <adrianojprado@gmail.com>\n"
+"PO-Revision-Date: 2024-05-22 02:05+0000\n"
+"Last-Translator: Rodrigo Macedo <sottomaiormacedotec@users.noreply."
+"translation.odoo-community.org>\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
 "23907/pt_BR/)\n"
 "Language: pt_BR\n"
@@ -104,7 +105,7 @@ msgstr "Mover"
 #. module: stock_split_picking
 #: model:ir.model.fields.selection,name:stock_split_picking.selection__stock_split_picking__mode__move
 msgid "One picking per move"
-msgstr ""
+msgstr "Uma escolha por movimento"
 
 #. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking__picking_ids
