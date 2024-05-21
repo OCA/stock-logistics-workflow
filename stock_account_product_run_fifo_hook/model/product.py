@@ -24,7 +24,6 @@ class ProductProduct(models.Model):
         value_taken_on_candidate,
         candidate_vals,
     ):
-        self.ensure_one()
         return candidate_vals
 
     def _get_candidates_domain(self, company):
