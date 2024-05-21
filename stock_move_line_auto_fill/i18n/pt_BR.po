@@ -9,8 +9,9 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-03 03:55+0000\n"
-"PO-Revision-Date: 2023-12-27 14:35+0000\n"
-"Last-Translator: Adriano Prado <adrianojprado@gmail.com>\n"
+"PO-Revision-Date: 2024-05-22 02:02+0000\n"
+"Last-Translator: Rodrigo Macedo <sottomaiormacedotec@users.noreply."
+"translation.odoo-community.org>\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
 "23907/pt_BR/)\n"
 "Language: pt_BR\n"
@@ -22,7 +23,6 @@ msgstr ""
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking__action_pack_op_auto_fill_allowed
-#, fuzzy
 msgid "Action Pack Op Auto Fill Allowed"
 msgstr "Action Pack Op Preenchimento automático permitido"
 
