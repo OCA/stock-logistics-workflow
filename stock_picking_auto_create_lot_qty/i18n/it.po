@@ -6,18 +6,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2024-05-22 11:37+0000\n"
+"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_picking_auto_create_lot_qty
 #: model_terms:ir.ui.view,arch_db:stock_picking_auto_create_lot_qty.res_config_settings_view_form
 msgid "<b>Add your Sequence:</b>"
-msgstr ""
+msgstr "<b>Aggiungi la tua sequenza:</b>"
 
 #. module: stock_picking_auto_create_lot_qty
 #: model:ir.model.fields,help:stock_picking_auto_create_lot_qty.field_product_product__only_multiples_allowed
@@ -26,22 +28,24 @@ msgid ""
 "Blocks automatic creation of lots if quantity received is not a multiple of "
 "the selected value"
 msgstr ""
+"Blocca la creazione automatica dei lotti se la quantità ricevuta non è un "
+"multiplo del valore indicato"
 
 #. module: stock_picking_auto_create_lot_qty
 #: model:ir.model,name:stock_picking_auto_create_lot_qty.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Aziende"
 
 #. module: stock_picking_auto_create_lot_qty
 #: model:ir.model,name:stock_picking_auto_create_lot_qty.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Impostazioni configurazione"
 
 #. module: stock_picking_auto_create_lot_qty
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot_qty.field_product_product__create_lot_every_n
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot_qty.field_product_template__create_lot_every_n
 msgid "Create lot every"
-msgstr ""
+msgstr "Crea lotto ogni"
 
 #. module: stock_picking_auto_create_lot_qty
 #: model:ir.model.fields,help:stock_picking_auto_create_lot_qty.field_product_product__create_lot_every_n
@@ -51,6 +55,9 @@ msgid ""
 "UoMs available for purchase (if value = 0, behavior stays the same as base "
 "module)"
 msgstr ""
+"Crea lotto ogni n UdM - qui l'utente può impostare un valore e selezionare "
+"una unità di misura disponibile per l'acquisto (se il valore è 0, il "
+"comportamento resta quello standard)"
 
 #. module: stock_picking_auto_create_lot_qty
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot_qty.field_product_template__display_name
@@ -59,7 +66,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot_qty.field_stock_picking__display_name
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot_qty.field_stock_production_lot__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: stock_picking_auto_create_lot_qty
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot_qty.field_product_template__id
@@ -68,7 +75,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot_qty.field_stock_picking__id
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot_qty.field_stock_production_lot__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_picking_auto_create_lot_qty
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot_qty.field_product_template____last_update
@@ -77,55 +84,57 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot_qty.field_stock_picking____last_update
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot_qty.field_stock_production_lot____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: stock_picking_auto_create_lot_qty
 #: model:ir.model,name:stock_picking_auto_create_lot_qty.model_stock_production_lot
 msgid "Lot/Serial"
-msgstr ""
+msgstr "Lotto/seriale"
 
 #. module: stock_picking_auto_create_lot_qty
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot_qty.field_stock_production_lot__name
 msgid "Lot/Serial Number"
-msgstr ""
+msgstr "Numero di lotto/serie"
 
 #. module: stock_picking_auto_create_lot_qty
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot_qty.field_product_product__only_multiples_allowed
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot_qty.field_product_template__only_multiples_allowed
 msgid "Only multiples allowed"
-msgstr ""
+msgstr "Solo multipli ammessi"
 
 #. module: stock_picking_auto_create_lot_qty
 #: model:ir.model,name:stock_picking_auto_create_lot_qty.model_product_template
 msgid "Product Template"
-msgstr ""
+msgstr "Modello prodotto"
 
 #. module: stock_picking_auto_create_lot_qty
 #: model_terms:ir.ui.view,arch_db:stock_picking_auto_create_lot_qty.res_config_settings_view_form
 msgid "Select stock lot sequence for current company."
-msgstr ""
+msgstr "Seleziona una sequenza per i lotti di magazzino per l'azienda corrente."
 
 #. module: stock_picking_auto_create_lot_qty
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot_qty.field_res_config_settings__stock_lot_serial_sequence_id
 #: model_terms:ir.ui.view,arch_db:stock_picking_auto_create_lot_qty.res_config_settings_view_form
 msgid "Sequences"
-msgstr ""
+msgstr "Sequenze"
 
 #. module: stock_picking_auto_create_lot_qty
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot_qty.field_res_company__stock_lot_serial_sequence_id
 msgid "Stock Lot Serial Sequence"
-msgstr ""
+msgstr "Sequenza lotto/seriale magazzino"
 
 #. module: stock_picking_auto_create_lot_qty
 #: model_terms:ir.ui.view,arch_db:stock_picking_auto_create_lot_qty.res_config_settings_view_form
 msgid "Stock Serial Lots"
-msgstr ""
+msgstr "Lotti/seriali magazzino"
 
 #. module: stock_picking_auto_create_lot_qty
 #: code:addons/stock_picking_auto_create_lot_qty/models/stock_picking.py:0
 #, python-format
 msgid "The qty create lot every n and product qty must be greater than 0"
 msgstr ""
+"La quantità n ogni cui creare un lotto/seriale e la quantità prodotto devono "
+"essere maggiori di 0"
 
 #. module: stock_picking_auto_create_lot_qty
 #: code:addons/stock_picking_auto_create_lot_qty/models/stock_picking.py:0
@@ -134,22 +143,24 @@ msgid ""
 "The quantity received for the product does not allow for automatic lot "
 "creation"
 msgstr ""
+"La quantità ricevuta del prodotto non permette la creazione automatica del "
+"lotto"
 
 #. module: stock_picking_auto_create_lot_qty
 #: model:ir.model.fields,help:stock_picking_auto_create_lot_qty.field_product_product__batch_uom_id
 #: model:ir.model.fields,help:stock_picking_auto_create_lot_qty.field_product_template__batch_uom_id
 msgid "The unit of measure used when creating batches."
-msgstr ""
+msgstr "L'unità di misura utilizzata quando si creano batch."
 
 #. module: stock_picking_auto_create_lot_qty
 #: model:ir.model,name:stock_picking_auto_create_lot_qty.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Trasferimento"
 
 #. module: stock_picking_auto_create_lot_qty
 #: model:ir.model.fields,help:stock_picking_auto_create_lot_qty.field_stock_production_lot__name
 msgid "Unique Lot/Serial Number"
-msgstr ""
+msgstr "Numero di lotto/serie univoco"
 
 #. module: stock_picking_auto_create_lot_qty
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot_qty.field_product_product__main_uom_category_id
@@ -157,10 +168,10 @@ msgstr ""
 #: model:ir.model.fields,help:stock_picking_auto_create_lot_qty.field_product_product__main_uom_category_id
 #: model:ir.model.fields,help:stock_picking_auto_create_lot_qty.field_product_template__main_uom_category_id
 msgid "UoM category"
-msgstr ""
+msgstr "Categoria UdM"
 
 #. module: stock_picking_auto_create_lot_qty
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot_qty.field_product_product__batch_uom_id
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot_qty.field_product_template__batch_uom_id
 msgid "Uom"
-msgstr ""
+msgstr "UdM"
