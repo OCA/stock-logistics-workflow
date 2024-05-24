@@ -35,8 +35,8 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
         )
         self.assertTrue(move.display_assign_serial)
         # Assign manual serials
-        for line in move.move_line_ids:
-            line.lot_id = self.lot_obj.create(line._prepare_auto_lot_values())
+        self._assign_manual_serials(move)
+        self.picking.action_set_quantities_to_reservation()
 
         self.picking.button_validate()
         lot = self.env["stock.lot"].search([("product_id", "=", self.product.id)])
@@ -59,6 +59,9 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
             lambda m: m.product_id == self.product_serial_not_auto
         )
         self.assertTrue(move.display_assign_serial)
+        # Assign manual serials
+        self._assign_manual_serials(move)
+        self.picking.action_set_quantities_to_reservation()
 
         self.picking._action_done()
         lot = self.env["stock.lot"].search([("product_id", "=", self.product.id)])
@@ -75,7 +78,7 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
             lambda m: m.product_id == self.product_serial
         )
         for line in moves.mapped("move_line_ids"):
-            self.assertFalse(line.lot_id)
+            self.assertFalse(line.lot_name)
 
         # Test the exception if manual serials are not filled in
         with self.assertRaises(UserError), self.cr.savepoint():
@@ -85,10 +88,9 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
         moves = self.picking.move_ids.filtered(
             lambda m: m.product_id == self.product_serial_not_auto
         )
-
         # Assign manual serials
-        for line in moves.mapped("move_line_ids"):
-            line.lot_id = self.lot_obj.create(line._prepare_auto_lot_values())
+        self._assign_manual_serials(moves)
+        self.picking.action_set_quantities_to_reservation()
 
         self.picking.button_validate()
         for line in moves.mapped("move_line_ids"):
@@ -128,21 +130,14 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
 
         moves = pickings.mapped("move_ids").filtered(
             lambda m: m.product_id == self.product_serial
+            and m.product_id.auto_create_lot
         )
         for line in moves.mapped("move_line_ids"):
-            self.assertFalse(line.lot_id)
+            self.assertFalse(line.lot_name)
 
         pickings._action_done()
         for line in moves.mapped("move_line_ids"):
-            self.assertTrue(line.lot_id)
-
-        lot = self.env["stock.lot"].search([("product_id", "=", self.product.id)])
-        self.assertEqual(len(lot), 1)
-        # Search for serials
-        lot = self.env["stock.lot"].search(
-            [("product_id", "=", self.product_serial.id)]
-        )
-        self.assertEqual(len(lot), 6)
+            self.assertTrue(line.lot_name)
 
     def test_immediate_validate_tracked_move_with_auto_create_lot(self):
         # Clear existing move if not the picking will open backorder wizard because
@@ -161,3 +156,25 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
         immediate_wizard_form.process()
         # Confirm that validation is not blocked, for example, by create-backorder wizard.
         self.assertEqual(self.picking.state, "done")
+
+    def test_multiple_sml_for_one_stock_move(self):
+        """
+        Create a picking and we receive goods from supplier with different features so we
+        want different lots by each stock move line.
+        """
+        self._create_picking()
+        self._create_move(product=self.product, qty=50.0)
+        self.picking.action_assign()
+        self.picking.move_line_ids.qty_done = 25.0
+        # new sml with 25.0 units
+        self.picking.move_line_ids.copy({"qty_done": 25.0})
+        self.picking.button_validate()
+        lots = self.picking.move_line_ids.lot_id
+        self.assertEqual(len(lots), 2)
+
+    def _assign_manual_serials(self, moves):
+        # Assign manual serials
+        moves.picking_id._set_auto_lot()
+        moves.move_line_ids.qty_done = 1.0
+        for line in moves.move_line_ids:
+            line.lot_name = self.env["ir.sequence"].next_by_code("stock.lot.serial")
