@@ -1,7 +1,7 @@
 # Copyright 2018 Tecnativa - Sergio Teruel
 # Copyright 2020 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import models
+from odoo import api, models
 
 
 class StockPicking(models.Model):
@@ -20,7 +20,8 @@ class StockPicking(models.Model):
                 and x.product_id.auto_create_lot
             )
         )
-        lines.set_lot_auto()
+        for line in lines:
+            line.lot_name = self._get_lot_sequence()
 
     def _action_done(self):
         self._set_auto_lot()
@@ -29,3 +30,7 @@ class StockPicking(models.Model):
     def button_validate(self):
         self._set_auto_lot()
         return super().button_validate()
+
+    @api.model
+    def _get_lot_sequence(self):
+        return self.env["ir.sequence"].next_by_code("stock.lot.serial")
