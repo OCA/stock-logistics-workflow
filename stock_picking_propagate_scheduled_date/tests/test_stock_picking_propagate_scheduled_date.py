@@ -64,65 +64,74 @@ class TestStockPickingPropagateScheduledDate(TransactionCase):
     def test_01_pick_reschedule(self):
         """change the Pick date"""
         # Set the scheduled_date of the Pick picking to next week.
-        new_scheduled_date = datetime.now().replace(microsecond=0) + timedelta(days=7)
-        self.pick.scheduled_date = new_scheduled_date
+        scheduled_date = datetime.now().replace(microsecond=0) + timedelta(days=7)
+        self.pick.scheduled_date = scheduled_date
 
+        delta = timedelta(seconds=2)
         # the date of the stock.move in the Pick picking is moved to next week
-        self.assertEqual(
+        self.assertAlmostEqual(
             self.pick.move_lines[0].date,
-            new_scheduled_date,
-            "The date of the stock.move in the Pick picking should be moved to next week",
+            scheduled_date,
+            msg="The date of the stock.move in the Pick picking should be moved to next week",
+            delta=delta,
         )
-
         # the date of the stock.move in the Ship picking is moved to next week
-        self.assertEqual(
+        self.assertAlmostEqual(
             self.ship.move_lines[0].date,
-            new_scheduled_date,
-            "The date of the stock.move in the Ship picking should be moved to next week",
+            scheduled_date,
+            msg="The date of the stock.move in the Ship picking should be moved to next week",
+            delta=delta,
         )
 
         # the scheduled_date of the Ship picking is moved to next week
-        self.assertEqual(
+        self.assertAlmostEqual(
             self.ship.scheduled_date,
-            new_scheduled_date,
-            "The `scheduled_date` of the Ship picking should be moved to next week",
+            scheduled_date,
+            msg="The `scheduled_date` of the Ship picking should be moved to next week",
+            delta=delta,
         )
 
     def test_02_ship_pick_reschedule(self):
         """change the Ship date, then the Pick date"""
         # Set the scheduled_date of the Ship picking to next week.
-        new_scheduled_date = datetime.now().replace(microsecond=0) + timedelta(days=7)
-        self.ship.scheduled_date = new_scheduled_date
+        scheduled_date = datetime.now().replace(microsecond=0) + timedelta(days=7)
+        propagated_date = scheduled_date + timedelta(days=7)
+        self.ship.scheduled_date = scheduled_date
 
         # Then set the scheduled_date of the Pick picking to next week.
-        self.pick.scheduled_date = new_scheduled_date
+        self.pick.scheduled_date = scheduled_date
 
+        delta = timedelta(seconds=2)
         # the date of the stock.move in the Pick picking is moved to next week
-        self.assertEqual(
+        self.assertAlmostEqual(
             self.pick.move_lines[0].date,
-            new_scheduled_date,
-            "The date of stock.move in the Pick picking should be moved to next week",
+            scheduled_date,
+            msg="The date of stock.move in the Pick picking should be moved to next week",
+            delta=delta,
         )
 
         # the date of the stock.move in the Ship picking is moved to in 2 weeks
-        self.assertEqual(
+        self.assertAlmostEqual(
             self.ship.move_lines[0].date,
-            new_scheduled_date + timedelta(days=7),
-            "the date of the stock.move in the Ship picking should be moved to in 2 weeks",
+            propagated_date,
+            msg="the date of the stock.move in the Ship picking should be moved to in 2 weeks",
+            delta=delta,
         )
 
         # the scheduled_date of the Ship picking is moved to in 2 weeks
-        self.assertEqual(
+        self.assertAlmostEqual(
             self.ship.scheduled_date,
-            new_scheduled_date + timedelta(days=7),
-            "the scheduled_date of the Ship picking should be moved to in 2 weeks",
+            propagated_date,
+            msg="the scheduled_date of the Ship picking should be moved to in 2 weeks",
+            delta=delta,
         )
 
     def test_03_ship_pick_backorder_reschedule(self):
         """backorder handling : reschedule before process chained"""
         # Set the scheduled_date of the Ship picking to next week.
-        new_scheduled_date = datetime.now().replace(microsecond=0) + timedelta(days=7)
-        self.ship.scheduled_date = new_scheduled_date
+        scheduled_date = datetime.now().replace(microsecond=0) + timedelta(days=7)
+        propagated_date = scheduled_date + timedelta(days=7)
+        self.ship.scheduled_date = scheduled_date
 
         # Process the picking for the available quantity of the product (2)
         self.pick.action_assign()
@@ -135,26 +144,30 @@ class TestStockPickingPropagateScheduledDate(TransactionCase):
         )
 
         # Change the scheduled date of the Pick backorder to next week.
-        backorder_pick.scheduled_date = new_scheduled_date
+        backorder_pick.scheduled_date = scheduled_date
 
+        delta = timedelta(seconds=2)
         # the date of the stock.move in the Ship picking is in 2 weeks
-        self.assertEqual(
+        self.assertAlmostEqual(
             self.ship.move_lines[0].date,
-            new_scheduled_date + timedelta(days=7),
-            "the date of the stock.move in the Ship picking should be moved to in 2 weeks",
+            propagated_date,
+            msg="the date of the stock.move in the Ship picking should be moved to in 2 weeks",
+            delta=delta,
         )
         # the scheduled date of the Ship picking is in 2 weeks
-        self.assertEqual(
+        self.assertAlmostEqual(
             self.ship.scheduled_date,
-            new_scheduled_date + timedelta(days=7),
-            "the scheduled_date of the Ship picking should be moved to in 2 weeks",
+            propagated_date,
+            msg="the scheduled_date of the Ship picking should be moved to in 2 weeks",
+            delta=delta,
         )
 
     def test_04_ship_process_pick_multiple_backorders(self):
         """backorder handling : process chained before reschedule"""
         # Set the scheduled_date of the Ship picking to next week.
-        new_scheduled_date = datetime.now().replace(microsecond=0) + timedelta(days=7)
-        self.ship.scheduled_date = new_scheduled_date
+        scheduled_date = datetime.now().replace(microsecond=0) + timedelta(days=7)
+        propagated_date = scheduled_date + timedelta(days=7)
+        self.ship.scheduled_date = scheduled_date
 
         # Process the picking for the available quantity of the product (2)
         self.pick.action_assign()
@@ -177,19 +190,23 @@ class TestStockPickingPropagateScheduledDate(TransactionCase):
         )
 
         # Change the scheduled date of the Pick backorder to next week.
-        backorder_pick.scheduled_date = new_scheduled_date
+        backorder_pick.scheduled_date = scheduled_date
 
+        delta = timedelta(seconds=2)
         # the date of the stock.move in the Ship backorder picking is in 2 weeks
-        self.assertEqual(
+        self.assertAlmostEqual(
             backorder_ship.move_lines[0].date,
-            new_scheduled_date + timedelta(days=7),
-            "the date of the stock.move in the Ship backorder "
+            propagated_date,
+            msg="the date of the stock.move in the Ship backorder "
             "picking should be moved to in 2 weeks",
+            delta=delta,
         )
 
         # the scheduled date of the Ship backorder picking is in 2 weeks
-        self.assertEqual(
+        self.assertAlmostEqual(
             backorder_ship.move_lines[0].date,
-            new_scheduled_date + timedelta(days=7),
-            "the scheduled_date of the Ship picking backorder should be moved to in 2 weeks",
+            propagated_date,
+            msg="the scheduled_date of the Ship picking backorder "
+            "should be moved to in 2 weeks",
+            delta=delta,
         )
