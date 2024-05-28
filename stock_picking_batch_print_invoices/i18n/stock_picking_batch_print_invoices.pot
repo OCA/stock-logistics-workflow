@@ -14,20 +14,42 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_picking_batch_print_invoices
+#: model:ir.model.fields,help:stock_picking_batch_print_invoices.field_stock_picking_type__print_documents_from_batch
+msgid ""
+"'Pickings': Print only pickings are in batch.\n"
+"'Invoices': Print only invoices related with pickings are in batch.\n"
+"'Invoices and Pickings': Print pickings are in batch and invoices related with pickings are in batch.\n"
+"'Invoices or Pickings': Print invoices related with pickings are in batch but if picking has not invoice, then print picking."
+msgstr ""
+
+#. module: stock_picking_batch_print_invoices
 #: model:ir.model,name:stock_picking_batch_print_invoices.model_stock_picking_batch
 msgid "Batch Transfer"
 msgstr ""
 
 #. module: stock_picking_batch_print_invoices
-#: model:ir.model.fields,help:stock_picking_batch_print_invoices.field_stock_picking_type__batch_print_invoices
-msgid ""
-"Check this box to print all the invoices associated with the pickings "
-"contained in a picking batch."
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_print_invoices.stock_picking_batch_form_inherit_stock_picking_batch_print_invoices
+msgid "Delivery Slips/Invoices"
 msgstr ""
 
 #. module: stock_picking_batch_print_invoices
-#: model_terms:ir.ui.view,arch_db:stock_picking_batch_print_invoices.stock_picking_batch_form_inherit_stock_picking_batch_print_invoices
-msgid "Delivery Slips/Invoices"
+#: model:ir.model.fields.selection,name:stock_picking_batch_print_invoices.selection__stock_picking_type__print_documents_from_batch__invoices
+msgid "Invoices"
+msgstr ""
+
+#. module: stock_picking_batch_print_invoices
+#: model:ir.model.fields.selection,name:stock_picking_batch_print_invoices.selection__stock_picking_type__print_documents_from_batch__invoices_and_pickings
+msgid "Invoices and Pickings"
+msgstr ""
+
+#. module: stock_picking_batch_print_invoices
+#: model:ir.model.fields.selection,name:stock_picking_batch_print_invoices.selection__stock_picking_type__print_documents_from_batch__invoices_or_pickings
+msgid "Invoices or Pickings"
+msgstr ""
+
+#. module: stock_picking_batch_print_invoices
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_print_invoices.view_picking_type_form_inherit_stock_picking_batch_print_invoices
+msgid "Number of Copies per Invoices"
 msgstr ""
 
 #. module: stock_picking_batch_print_invoices
@@ -41,13 +63,8 @@ msgid "Picking Type"
 msgstr ""
 
 #. module: stock_picking_batch_print_invoices
-#: model_terms:ir.ui.view,arch_db:stock_picking_batch_print_invoices.view_picking_type_form_inherit_stock_picking_batch_print_invoices
-msgid "Print Invoices"
-msgstr ""
-
-#. module: stock_picking_batch_print_invoices
-#: model:ir.model.fields,field_description:stock_picking_batch_print_invoices.field_stock_picking_type__batch_print_invoices
-msgid "Print Invoices from batch"
+#: model:ir.model.fields,field_description:stock_picking_batch_print_invoices.field_stock_picking_type__print_documents_from_batch
+msgid "Print Documents From Batch"
 msgstr ""
 
 #. module: stock_picking_batch_print_invoices

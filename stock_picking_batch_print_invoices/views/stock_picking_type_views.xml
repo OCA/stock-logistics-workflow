@@ -11,22 +11,22 @@
         <field name="model">stock.picking.type</field>
         <field
             name="inherit_id"
-            ref="stock_picking_batch.view_picking_type_form_inherit"
+            ref="stock_picking_batch_print_pickings.view_picking_type_form_inherit_stock_picking_batch_print_pickings"
         />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='batch_auto_confirm']" position="after">
-                <label for="batch_print_invoices" string="Print Invoices" />
-                <div class="o_row">
-                    <field name="batch_print_invoices" />
-                    <label
-                        for="number_copies_invoices"
-                        attrs="{'invisible': [('batch_print_invoices', '=', False)]}"
-                    />
-                    <field
-                        name="number_copies_invoices"
-                        attrs="{'invisible': [('batch_print_invoices', '=', False)]}"
-                    />
-                </div>
+            <xpath expr="//field[@name='number_copies_pickings']" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible': [('print_documents_from_batch', 'not in',
+                    ('pickings', 'invoices_and_pickings', 'invoices_or_pickings'))]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='number_copies_pickings']" position="after">
+                <field
+                    name="number_copies_invoices"
+                    string="Number of Copies per Invoices"
+                    attrs="{'invisible': [('print_documents_from_batch', 'not in',
+                    ('invoices', 'invoices_and_pickings', 'invoices_or_pickings'))]}"
+                />
             </xpath>
         </field>
     </record>

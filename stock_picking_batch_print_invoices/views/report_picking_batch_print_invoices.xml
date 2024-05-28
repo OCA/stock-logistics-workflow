@@ -3,25 +3,46 @@
      License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0) -->
 <odoo>
     <template
-        id="report_picking_batch_print_invoices"
-        inherit_id="stock_picking_batch_print_pickings.report_picking_batch_print_pickings"
+        id="print_pickings_invoices"
+        inherit_id="stock_picking_batch_print_pickings.print_pickings"
     >
+        <xpath
+            expr="//t[@t-if=&quot;type_document == &apos;pickings&apos;&quot;]"
+            position="attributes"
+        >
+            <attribute
+                name="t-if"
+            >type_document in {'pickings', 'invoices_and_pickings'} or
+                type_document == 'invoices_or_pickings' and not doc.picking_ids.filtered(lambda p:
+                p.partner_id ==
+                partner).mapped('move_ids.sale_line_id.invoice_lines.move_id').filtered(lambda inv:
+                inv.state == 'posted') or doc.picking_ids.filtered(lambda p: p.partner_id ==
+                partner).mapped('move_ids.sale_line_id.invoice_lines.move_id').filtered(lambda inv:
+                inv.state == 'posted') and not doc.picking_type_id.number_copies_invoices</attribute>
+        </xpath>
         <xpath expr="//t[@name='print_pickings']" position="after">
             <t
-                name="print_invoices"
-                t-foreach="set(doc.picking_ids.filtered(lambda p: p.partner_id == partner).sale_id.invoice_ids)"
-                t-as="invoice"
+                t-if="type_document in {'invoices', 'invoices_and_pickings', 'invoices_or_pickings'}"
             >
-                <t
-                    t-foreach="range(int(doc.picking_type_id.number_copies_invoices))"
-                    t-as="i"
-                >
-                    <t t-set="lang" t-value="invoice.partner_id.lang" />
-                    <t t-call="account.report_invoice_document" t-lang="lang">
-                        <t t-set="o" t-value="invoice" />
-                    </t>
-                </t>
+                <t t-call="stock_picking_batch_print_invoices.print_invoices" />
             </t>
         </xpath>
+    </template>
+    <template id="print_invoices">
+        <t
+            name="print_invoices"
+            t-foreach="doc.picking_ids.filtered(lambda p: p.partner_id == partner).mapped('move_ids.sale_line_id.invoice_lines.move_id').filtered(lambda inv: inv.state == 'posted')"
+            t-as="invoice"
+        >
+            <t t-call="stock_picking_batch_print_invoices.copies_invoice" />
+        </t>
+    </template>
+    <template id="copies_invoice">
+        <t t-foreach="range(int(doc.picking_type_id.number_copies_invoices))" t-as="i">
+            <t t-set="lang" t-value="invoice.partner_id.lang" />
+            <t t-call="account.report_invoice_document" t-lang="lang">
+                <t t-set="o" t-value="invoice" />
+            </t>
+        </t>
     </template>
 </odoo>
