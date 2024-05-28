@@ -9,16 +9,13 @@ from odoo.exceptions import ValidationError
 class StockPickingType(models.Model):
     _inherit = "stock.picking.type"
 
-    batch_print_pickings = fields.Boolean(
-        "Print pickings from batch",
-        help="Allow print all pickings from batch",
+    print_documents_from_batch = fields.Selection(
+        [("pickings", "Pickings")], default=False
     )
     number_copies_pickings = fields.Integer(
         "Number of copies",
-        help="Number of copies to print",
-        compute="_compute_number_copies_pickings",
-        store=True,
-        readonly=False,
+        help="Number of copies per picking",
+        default=1,
     )
 
     @api.constrains("number_copies_pickings")
@@ -28,11 +25,3 @@ class StockPickingType(models.Model):
                 raise ValidationError(
                     _("The number of copies must be greater or equal to 0")
                 )
-
-    @api.depends("batch_print_pickings")
-    def _compute_number_copies_pickings(self):
-        for record in self:
-            if record.batch_print_pickings:
-                record.number_copies_pickings = 1
-            else:
-                record.number_copies_pickings = 0

@@ -80,7 +80,7 @@ class TestBatchPrintPickings(TransactionCase):
 
     def test_stock_picking_batch_print_pickings_01(self):
         """Picking type with unchecked print pickings from batch."""
-        self.picking_type.batch_print_pickings = False
+        self.picking_type.print_documents_from_batch = False
         self.batch.update(
             {
                 "picking_ids": [
@@ -93,7 +93,7 @@ class TestBatchPrintPickings(TransactionCase):
 
     def test_stock_picking_batch_print_pickings_02(self):
         """Picking type with checked print pickings from batch but with 0 copies to print."""
-        self.picking_type.batch_print_pickings = True
+        self.picking_type.print_documents_from_batch = "pickings"
         self.picking_type.number_copies_pickings = 0
         self.batch.update(
             {
@@ -108,7 +108,7 @@ class TestBatchPrintPickings(TransactionCase):
     def test_stock_picking_batch_print_pickings_03(self):
         """Picking type with checked print pickings from batch and copies to print
         but batch without pickings."""
-        self.picking_type.batch_print_pickings = True
+        self.picking_type.print_documents_from_batch = "pickings"
         self.picking_type.number_copies_pickings = 2
         with self.assertRaises(UserError):
             self.batch.action_print_pickings()
@@ -116,7 +116,7 @@ class TestBatchPrintPickings(TransactionCase):
     def test_stock_picking_batch_print_pickings_04(self):
         """Picking type with checked print pickings from batch, copies to print
         and batch with pickings."""
-        self.picking_type.batch_print_pickings = True
+        self.picking_type.print_documents_from_batch = "pickings"
         self.picking_type.number_copies_pickings = 2
         self.batch.update(
             {

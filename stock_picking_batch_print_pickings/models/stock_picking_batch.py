@@ -9,32 +9,28 @@ from odoo.exceptions import UserError
 class StockPickingBatch(models.Model):
     _inherit = "stock.picking.batch"
 
-    print_pickings = fields.Boolean(
+    print_documents = fields.Boolean(
         help="Print Pickings from Batch",
-        compute="_compute_print_pickings",
+        compute="_compute_print_documents",
     )
 
     @api.depends(
-        "picking_type_id.batch_print_pickings", "picking_type_id.number_copies_pickings"
+        "picking_type_id.print_documents_from_batch",
+        "picking_type_id.number_copies_pickings",
     )
-    def _compute_print_pickings(self):
+    def _compute_print_documents(self):
         for record in self:
-            if (
-                record.picking_ids
-                and record.picking_type_id.batch_print_pickings
+            record.print_documents = (
+                record.picking_type_id.print_documents_from_batch
                 and record.picking_type_id.number_copies_pickings
-            ):
-                record.print_pickings = record.picking_type_id.batch_print_pickings
-            else:
-                record.print_pickings = False
+                and record.picking_ids
+            )
 
     def action_print_pickings(self):
         for record in self:
-            if not record.print_pickings:
+            if not record.print_documents:
                 raise UserError(
-                    _(
-                        "Picking Type %(type)s is not configured to print pickings from batch."
-                    )
+                    _("Picking Type %(type)s is not configured to print from batch.")
                     % ({"type": record.picking_type_id.display_name})
                 )
         return self.env.ref(

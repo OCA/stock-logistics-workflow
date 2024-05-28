@@ -15,18 +15,13 @@
         />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='batch_auto_confirm']" position="after">
-                <label for="batch_print_pickings" string="Print Pickings" />
-                <div class="o_row">
-                    <field name="batch_print_pickings" />
-                    <label
-                        for="number_copies_pickings"
-                        attrs="{'invisible': [('batch_print_pickings', '=', False)]}"
-                    />
-                    <field
-                        name="number_copies_pickings"
-                        attrs="{'invisible': [('batch_print_pickings', '=', False)]}"
-                    />
-                </div>
+                <!-- <field name="batch_print_pickings"/> -->
+                <field name="print_documents_from_batch" />
+                <field
+                    name="number_copies_pickings"
+                    string="Number of Copies per Picking"
+                    attrs="{'invisible': [('print_documents_from_batch', '!=', 'pickings')]}"
+                />
             </xpath>
         </field>
     </record>

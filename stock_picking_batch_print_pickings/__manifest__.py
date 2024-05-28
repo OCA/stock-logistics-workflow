@@ -4,7 +4,7 @@
 {
     "name": "Stock Picking Batch Print Pickings",
     "summary": "Print Picking from Stock Picking Batch",
-    "version": "16.0.1.0.2",
+    "version": "16.0.1.1.0",
     "development_status": "Alpha",
     "category": "Inventory/Inventory",
     "website": "https://github.com/OCA/stock-logistics-workflow",

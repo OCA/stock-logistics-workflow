@@ -19,8 +19,12 @@ msgid "'Delivery Slips from Batch %s' % (object.name)"
 msgstr ""
 
 #. module: stock_picking_batch_print_pickings
-#: model:ir.model.fields,help:stock_picking_batch_print_pickings.field_stock_picking_type__batch_print_pickings
-msgid "Allow print all pickings from batch"
+#: model:ir.model.fields,help:stock_picking_batch_print_pickings.field_stock_picking_type__print_documents_from_batch
+msgid ""
+"'Pickings': Print only pickings are in batch.\n"
+"'Invoices': Print only invoices related with pickings are in batch.\n"
+"'Invoices and Pickings': Print pickings are in batch and invoices related with pickings are in batch.\n"
+"'Invoices or Pickings': Print invoices related with pickings are in batch but if picking has not invoice, then print picking."
 msgstr ""
 
 #. module: stock_picking_batch_print_pickings
@@ -40,13 +44,18 @@ msgid "Delivery Slips/Invoices"
 msgstr ""
 
 #. module: stock_picking_batch_print_pickings
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_print_pickings.view_picking_type_form_inherit_stock_picking_batch_print_pickings
+msgid "Number of Copies per Picking"
+msgstr ""
+
+#. module: stock_picking_batch_print_pickings
 #: model:ir.model.fields,field_description:stock_picking_batch_print_pickings.field_stock_picking_type__number_copies_pickings
 msgid "Number of copies"
 msgstr ""
 
 #. module: stock_picking_batch_print_pickings
 #: model:ir.model.fields,help:stock_picking_batch_print_pickings.field_stock_picking_type__number_copies_pickings
-msgid "Number of copies to print"
+msgid "Number of copies per picking"
 msgstr ""
 
 #. module: stock_picking_batch_print_pickings
@@ -58,23 +67,27 @@ msgstr ""
 #. odoo-python
 #: code:addons/stock_picking_batch_print_pickings/models/stock_picking_batch.py:0
 #, python-format
-msgid "Picking Type %(type)s is not configured to print pickings from batch."
+msgid "Picking Type %(type)s is not configured to print from batch."
 msgstr ""
 
 #. module: stock_picking_batch_print_pickings
-#: model:ir.model.fields,field_description:stock_picking_batch_print_pickings.field_stock_picking_batch__print_pickings
-#: model_terms:ir.ui.view,arch_db:stock_picking_batch_print_pickings.view_picking_type_form_inherit_stock_picking_batch_print_pickings
-msgid "Print Pickings"
+#: model:ir.model.fields.selection,name:stock_picking_batch_print_pickings.selection__stock_picking_type__print_documents_from_batch__pickings
+msgid "Pickings"
 msgstr ""
 
 #. module: stock_picking_batch_print_pickings
-#: model:ir.model.fields,help:stock_picking_batch_print_pickings.field_stock_picking_batch__print_pickings
+#: model:ir.model.fields,field_description:stock_picking_batch_print_pickings.field_stock_picking_batch__print_documents
+msgid "Print Documents"
+msgstr ""
+
+#. module: stock_picking_batch_print_pickings
+#: model:ir.model.fields,field_description:stock_picking_batch_print_pickings.field_stock_picking_type__print_documents_from_batch
+msgid "Print Documents From Batch"
+msgstr ""
+
+#. module: stock_picking_batch_print_pickings
+#: model:ir.model.fields,help:stock_picking_batch_print_pickings.field_stock_picking_batch__print_documents
 msgid "Print Pickings from Batch"
-msgstr ""
-
-#. module: stock_picking_batch_print_pickings
-#: model:ir.model.fields,field_description:stock_picking_batch_print_pickings.field_stock_picking_type__batch_print_pickings
-msgid "Print pickings from batch"
 msgstr ""
 
 #. module: stock_picking_batch_print_pickings
