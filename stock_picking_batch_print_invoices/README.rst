@@ -29,7 +29,9 @@ Stock Picking Batch Print Invoices
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
 This module extends the functionality of stock batch pickings and to
-allows you to print multiple invoices from batches.
+allows you to print multiple invoices from batches. You can configure a
+type operation for print only *invoices*, *invoices and pickings* or
+*invoices or pickings*
 
 .. IMPORTANT::
    This is an alpha version, the data model and design can change at any time without warning.
@@ -69,7 +71,8 @@ Activate invoice printing from batch:
 
 1. Go to Inventory > Configuration > Operation Types.
 2. Choose one already created or create new operation type.
-3. Check print invoices.
+3. Select *Invoices, Invoices and Pickings or Invoices or Pickings* in
+   **Print documents from batch**.
 4. Fill in the number of copies you want.
 
 Usage
