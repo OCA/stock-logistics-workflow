@@ -30,11 +30,6 @@ msgid "Picking Type"
 msgstr "Tipo de albarán"
 
 #. module: stock_picking_auto_create_lot
-#: model:ir.model,name:stock_picking_auto_create_lot.model_stock_move_line
-msgid "Product Moves (Stock Move Line)"
-msgstr "Movimientos de Producto (Línea de Movimiento de Existencias)"
-
-#. module: stock_picking_auto_create_lot
 #: model:ir.model,name:stock_picking_auto_create_lot.model_product_template
 msgid "Product Template"
 msgstr "Plantilla de producto"
@@ -48,3 +43,6 @@ msgstr "Movimiento de Existencias"
 #: model:ir.model,name:stock_picking_auto_create_lot.model_stock_picking
 msgid "Transfer"
 msgstr "Transferir"
+
+#~ msgid "Product Moves (Stock Move Line)"
+#~ msgstr "Movimientos de Producto (Línea de Movimiento de Existencias)"

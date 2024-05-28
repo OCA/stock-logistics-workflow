@@ -29,11 +29,6 @@ msgid "Picking Type"
 msgstr "Tipologia prelievo"
 
 #. module: stock_picking_auto_create_lot
-#: model:ir.model,name:stock_picking_auto_create_lot.model_stock_move_line
-msgid "Product Moves (Stock Move Line)"
-msgstr "Movimenti prodotto (riga movimento di magazzino)"
-
-#. module: stock_picking_auto_create_lot
 #: model:ir.model,name:stock_picking_auto_create_lot.model_product_template
 msgid "Product Template"
 msgstr "Modello prodotto"
@@ -47,3 +42,6 @@ msgstr "Movimento di magazzino"
 #: model:ir.model,name:stock_picking_auto_create_lot.model_stock_picking
 msgid "Transfer"
 msgstr "Trasferimento"
+
+#~ msgid "Product Moves (Stock Move Line)"
+#~ msgstr "Movimenti prodotto (riga movimento di magazzino)"
