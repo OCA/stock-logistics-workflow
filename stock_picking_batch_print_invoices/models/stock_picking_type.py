@@ -9,10 +9,18 @@ from odoo.exceptions import ValidationError
 class StockPickingType(models.Model):
     _inherit = "stock.picking.type"
 
-    batch_print_invoices = fields.Boolean(
-        "Print Invoices from batch",
-        help="Check this box to print all the invoices associated with the pickings"
-        " contained in a picking batch.",
+    print_documents_from_batch = fields.Selection(
+        selection_add=[
+            ("invoices", "Invoices"),
+            ("invoices_and_pickings", "Invoices and Pickings"),
+            ("invoices_or_pickings", "Invoices or Pickings"),
+        ],
+        help="'Pickings': Print only pickings are in batch.\n"
+        "'Invoices': Print only invoices related with pickings are in batch.\n"
+        "'Invoices and Pickings': Print pickings are in batch and invoices related"
+        " with pickings are in batch.\n"
+        "'Invoices or Pickings': Print invoices related with pickings are in batch"
+        " but if picking has not invoice, then print picking.",
     )
     number_copies_invoices = fields.Integer(
         "Number of copies per invoice",
