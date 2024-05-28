@@ -12,14 +12,14 @@
         <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='show_lots_text']" position="after">
-                <field name="print_pickings" invisible="1" />
+                <field name="print_documents" invisible="1" />
             </xpath>
             <xpath expr="//header" position="inside">
                 <button
                     string="Delivery Slips"
                     name="action_print_pickings"
                     type="object"
-                    attrs="{'invisible': [('print_pickings', '=', False)]}"
+                    attrs="{'invisible': [('print_documents', '=', False)]}"
                 />
             </xpath>
         </field>
