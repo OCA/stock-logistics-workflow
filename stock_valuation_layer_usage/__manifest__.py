@@ -18,5 +18,5 @@
         "views/stock_valuation_layer_views.xml",
         "views/stock_move_views.xml",
     ],
-    "installable": True,
+    "installable": False,
 }
