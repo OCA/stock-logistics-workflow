@@ -9,26 +9,28 @@ msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-07 07:49+0000\n"
-"PO-Revision-Date: 2017-01-07 07:49+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/"
-"teams/23907/pt_BR/)\n"
+"PO-Revision-Date: 2024-05-29 14:35+0000\n"
+"Last-Translator: Rodrigo Macedo <sottomaiormacedotec@users.noreply."
+"translation.odoo-community.org>\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
+"23907/pt_BR/)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_auto_move
 #: model:stock.rule,name:stock_auto_move.stock_rule_a_to_b
 msgid "1 => 2 with auto_move"
-msgstr ""
+msgstr "1 => 2 com auto_move"
 
 #. module: stock_auto_move
 #: model:ir.model.fields,field_description:stock_auto_move.field_stock_move__auto_move
 #: model:ir.model.fields,field_description:stock_auto_move.field_stock_rule__auto_move
 msgid "Automatic move"
-msgstr ""
+msgstr "Movimentação automática"
 
 #. module: stock_auto_move
 #: model:ir.model.fields,help:stock_auto_move.field_stock_rule__auto_move
@@ -37,6 +39,10 @@ msgid ""
 "processed as soon as the products are available. This can be useful for "
 "situations with chained moves where we do not want an operator action."
 msgstr ""
+"Se esta opção for selecionada, a movimentação gerada será processada "
+"automaticamente assim que os produtos estiverem disponíveis. Isto pode ser "
+"útil para situações com movimentos encadeados onde não queremos uma ação do "
+"operador."
 
 #. module: stock_auto_move
 #: model:ir.model.fields,help:stock_auto_move.field_stock_move__auto_move
@@ -44,6 +50,8 @@ msgid ""
 "If this option is selected, the move will be automatically processed as soon "
 "as the products are available."
 msgstr ""
+"Se esta opção for selecionada, a movimentação será processada "
+"automaticamente assim que os produtos estiverem disponíveis."
 
 #. module: stock_auto_move
 #: model:ir.model,name:stock_auto_move.model_stock_move
@@ -53,17 +61,17 @@ msgstr "Movimentação de estoque"
 #. module: stock_auto_move
 #: model:ir.model,name:stock_auto_move.model_stock_rule
 msgid "Stock Rule"
-msgstr ""
+msgstr "Regra do estoque"
 
 #. module: stock_auto_move
 #: model:stock.rule,name:stock_auto_move.auto_location_path
 msgid "Test push route 3=>1"
-msgstr ""
+msgstr "Testar rota push 3=>1"
 
 #. module: stock_auto_move
 #: model:stock.route,name:stock_auto_move.test_route
 msgid "Test route"
-msgstr ""
+msgstr "Rota de teste"
 
 #~ msgid "Procurement"
 #~ msgstr "Aprovisionamento"
