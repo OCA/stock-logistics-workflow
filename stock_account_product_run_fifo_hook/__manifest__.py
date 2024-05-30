@@ -10,6 +10,6 @@
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "license": "LGPL-3",
     "depends": ["stock_account"],
-    "installable": False,
+    "installable": True,
     "post_load": "post_load_hook",
 }
