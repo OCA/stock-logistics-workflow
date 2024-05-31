@@ -17,23 +17,45 @@ msgstr ""
 "X-Generator: Weblate 4.17\n"
 
 #. module: stock_picking_batch_print_invoices
+#: model:ir.model.fields,help:stock_picking_batch_print_invoices.field_stock_picking_type__print_documents_from_batch
+msgid ""
+"'Pickings': Print only pickings are in batch.\n"
+"'Invoices': Print only invoices related with pickings are in batch.\n"
+"'Invoices and Pickings': Print pickings are in batch and invoices related "
+"with pickings are in batch.\n"
+"'Invoices or Pickings': Print invoices related with pickings are in batch "
+"but if picking has not invoice, then print picking."
+msgstr ""
+
+#. module: stock_picking_batch_print_invoices
 #: model:ir.model,name:stock_picking_batch_print_invoices.model_stock_picking_batch
 msgid "Batch Transfer"
 msgstr "Trasferimento raggruppato"
 
 #. module: stock_picking_batch_print_invoices
-#: model:ir.model.fields,help:stock_picking_batch_print_invoices.field_stock_picking_type__batch_print_invoices
-msgid ""
-"Check this box to print all the invoices associated with the pickings "
-"contained in a picking batch."
-msgstr ""
-"Selezionae questa opzione per stampare tutte le fatture associate con i "
-"prelievi contenuti in un gruppo prelievo."
-
-#. module: stock_picking_batch_print_invoices
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_print_invoices.stock_picking_batch_form_inherit_stock_picking_batch_print_invoices
 msgid "Delivery Slips/Invoices"
 msgstr "Fogli di consegna/fatture"
+
+#. module: stock_picking_batch_print_invoices
+#: model:ir.model.fields.selection,name:stock_picking_batch_print_invoices.selection__stock_picking_type__print_documents_from_batch__invoices
+msgid "Invoices"
+msgstr ""
+
+#. module: stock_picking_batch_print_invoices
+#: model:ir.model.fields.selection,name:stock_picking_batch_print_invoices.selection__stock_picking_type__print_documents_from_batch__invoices_and_pickings
+msgid "Invoices and Pickings"
+msgstr ""
+
+#. module: stock_picking_batch_print_invoices
+#: model:ir.model.fields.selection,name:stock_picking_batch_print_invoices.selection__stock_picking_type__print_documents_from_batch__invoices_or_pickings
+msgid "Invoices or Pickings"
+msgstr ""
+
+#. module: stock_picking_batch_print_invoices
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_print_invoices.view_picking_type_form_inherit_stock_picking_batch_print_invoices
+msgid "Number of Copies per Invoices"
+msgstr ""
 
 #. module: stock_picking_batch_print_invoices
 #: model:ir.model.fields,field_description:stock_picking_batch_print_invoices.field_stock_picking_type__number_copies_invoices
@@ -46,14 +68,9 @@ msgid "Picking Type"
 msgstr "Tipologia prelievo"
 
 #. module: stock_picking_batch_print_invoices
-#: model_terms:ir.ui.view,arch_db:stock_picking_batch_print_invoices.view_picking_type_form_inherit_stock_picking_batch_print_invoices
-msgid "Print Invoices"
-msgstr "Stampa fatture"
-
-#. module: stock_picking_batch_print_invoices
-#: model:ir.model.fields,field_description:stock_picking_batch_print_invoices.field_stock_picking_type__batch_print_invoices
-msgid "Print Invoices from batch"
-msgstr "Stampa fatture dal gruppo"
+#: model:ir.model.fields,field_description:stock_picking_batch_print_invoices.field_stock_picking_type__print_documents_from_batch
+msgid "Print Documents From Batch"
+msgstr ""
 
 #. module: stock_picking_batch_print_invoices
 #. odoo-python
@@ -61,3 +78,16 @@ msgstr "Stampa fatture dal gruppo"
 #, python-format
 msgid "The number of copies per invoice must be greater or equal to 0"
 msgstr "Il numero di copie per fattura deve essere maggiore o uguale a 0"
+
+#~ msgid ""
+#~ "Check this box to print all the invoices associated with the pickings "
+#~ "contained in a picking batch."
+#~ msgstr ""
+#~ "Selezionae questa opzione per stampare tutte le fatture associate con i "
+#~ "prelievi contenuti in un gruppo prelievo."
+
+#~ msgid "Print Invoices"
+#~ msgstr "Stampa fatture"
+
+#~ msgid "Print Invoices from batch"
+#~ msgstr "Stampa fatture dal gruppo"

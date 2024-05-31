@@ -20,16 +20,6 @@ msgstr ""
 #. module: stock_picking_batch_print_invoices
 #: model:ir.model.fields,help:stock_picking_batch_print_invoices.field_stock_picking_type__print_documents_from_batch
 #, fuzzy
-#| msgid ""
-#| "\n"
-#| "        'Pickings': Print only pickings are in batch.\n"
-#| "        'Invoices': Print only invoices related with pickings are in "
-#| "batch.\n"
-#| "        'Invoices and Pickings': Print pickings are in batch and invoices "
-#| "related with pickings are in batch.\n"
-#| "        'Invoices or Pickings': Print invoices related with pickings are "
-#| "in batch but if picking has not invoice, then print picking.\n"
-#| "        "
 msgid ""
 "'Pickings': Print only pickings are in batch.\n"
 "'Invoices': Print only invoices related with pickings are in batch.\n"
