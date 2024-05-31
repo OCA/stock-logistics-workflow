@@ -23,6 +23,17 @@ msgid "'Delivery Slips from Batch %s' % (object.name)"
 msgstr "'Albarán de entrega de la agrupación %s' % (object.name)"
 
 #. module: stock_picking_batch_print_pickings
+#: model:ir.model.fields,help:stock_picking_batch_print_pickings.field_stock_picking_type__print_documents_from_batch
+msgid ""
+"'Pickings': Print only pickings are in batch.\n"
+"'Invoices': Print only invoices related with pickings are in batch.\n"
+"'Invoices and Pickings': Print pickings are in batch and invoices related "
+"with pickings are in batch.\n"
+"'Invoices or Pickings': Print invoices related with pickings are in batch "
+"but if picking has not invoice, then print picking."
+msgstr ""
+
+#. module: stock_picking_batch_print_pickings
 #: model:ir.model,name:stock_picking_batch_print_pickings.model_stock_picking_batch
 msgid "Batch Transfer"
 msgstr "Transferir agrupación"
