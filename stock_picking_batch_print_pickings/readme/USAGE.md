@@ -4,7 +4,7 @@ Single batch print flow
 
 1. Go to Inventory > Configuration > Operation Types.
 2. Choose one already created or create new operation type.
-3. Check print pickings.
+3. Select *Pickings* in **Print documents from batch**.
 4. Fill in the number of copies you want.
 5. Go to Inventory > Operations > Transfers.
 6. Create some new transfer with operation type configured before.
