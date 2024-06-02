@@ -92,8 +92,23 @@ class StockPicking(models.Model):
                 picking = picking.with_context(picking_no_copy_if_can_group=1)
             backorder = super(StockPicking, picking)._create_backorder()
             if backorder and not picking._is_grouping_disabled():
-                backorder._merge_procurement_groups()
-                backorder._update_merged_origin()
+                if backorder.group_id != picking.group_id:
+                    # the backorder is an existing picking where the remaining
+                    # moves have been moved to. We need to update the origin
+                    backorder._update_merged_origin()
+                else:
+                    # Create a new procurement group to remove the link from moves
+                    # done in the original group and therefore avoid that a sale order
+                    # linked to the picking and entirely delivered is no more linked
+                    # to the backorder.
+                    base_group = backorder.group_id
+                    moves = backorder.move_ids
+                    new_group = base_group.copy(
+                        self._prepare_merge_procurement_group_values(
+                            moves.original_group_id
+                        )
+                    )
+                    moves.group_id = new_group
             backorders |= backorder
         return backorders
 
@@ -119,7 +134,7 @@ class StockPicking(models.Model):
                 "Merged procurement for partners: %(partners_name)s",
                 partners_name=", ".join(partners.mapped("display_name")),
             )
-        return {"sale_ids": [(6, 0, sales.ids)], "name": name}
+        return {"sale_ids": [(6, 0, sales.ids)], "name": name, "is_merged": True}
 
     def _merge_procurement_groups(self):
         self.ensure_one()
@@ -127,24 +142,17 @@ class StockPicking(models.Model):
             return False
         if self.picking_type_id.code != "outgoing":
             return False
-        group_pickings = self.move_ids.group_id.picking_ids.filtered(
-            # Do no longer modify a printed or done transfer: they are
-            # started and their group is now fixed. It prevents keeping
-            # old, done sales orders in new groups forever
-            lambda picking: not (picking.printed or picking.state == "done")
-        )
-        moves = group_pickings.move_ids
-        base_group = self.group_id
 
-        # If we have moves of different procurement groups, it means moves
-        # have been merged in the same picking. In this case a new
-        # procurement group is required
-        if len(moves.original_group_id) > 1 and base_group in moves.original_group_id:
-            # Create a new procurement group
+        moves = self.move_ids
+        base_group = self.group_id
+        # When grouping is allowed, we create a "merged" procurement group
+        # that will be used to group the moves every time a new move is
+        # added to the picking from a different procurement group.
+        if not base_group.is_merged:
             new_group = base_group.copy(
                 self._prepare_merge_procurement_group_values(moves.original_group_id)
             )
-            group_pickings.move_ids.group_id = new_group
+            moves.group_id = new_group
             return True
 
         new_moves = moves.filtered(lambda move: move.group_id != base_group)
@@ -164,7 +172,7 @@ class StockPicking(models.Model):
                         moves.original_group_id
                     )
                 )
-                group_pickings.move_ids.group_id = new_group
+                self.move_ids.group_id = new_group
                 return True
 
             base_group.write(

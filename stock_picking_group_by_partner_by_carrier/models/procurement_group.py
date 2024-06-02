@@ -10,3 +10,4 @@ class ProcurementGroup(models.Model):
         inverse_name="group_id",
         readonly=True,
     )
+    is_merged = fields.Boolean()

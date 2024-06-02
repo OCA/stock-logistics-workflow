@@ -4,7 +4,7 @@
 {
     "name": "Stock Picking: group by partner and carrier",
     "Summary": "Group sales deliveries moves in 1 picking per partner and carrier",
-    "version": "16.0.1.1.1",
+    "version": "16.0.2.0.0",
     "author": "Camptocamp, BCIM, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "category": "Warehouse",
@@ -15,6 +15,7 @@
     "data": [
         "views/res_partner.xml",
         "views/stock_picking_type.xml",
+        "views/stock_rule.xml",
         "views/stock_warehouse.xml",
         "report/report_delivery_slip.xml",
         "wizards/stock_picking_merge_wiz.xml",
