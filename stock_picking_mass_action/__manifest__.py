@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Stock Picking Mass Action",
-    "version": "15.0.1.0.2",
+    "version": "15.0.1.0.3",
     "author": "Camptocamp, GRAP, Tecnativa, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "license": "AGPL-3",
