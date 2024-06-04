@@ -56,7 +56,7 @@ class ProductProduct(models.Model):
                     move_line.qty_done, move.product_id.uom_id
                 )
                 candidates = self._get_all_candidates(company).filtered(
-                    lambda l: move_line.lot_id in l.lot_ids
+                    lambda candidate, lot=move_line.lot_id: lot in candidate.lot_ids
                 )
                 for candidate in candidates:
                     qty_taken_on_candidate = min(

@@ -57,9 +57,7 @@ class StockMove(models.Model):
                         move.company_id.id
                     ).with_context(
                         disable_auto_svl=True
-                    ).standard_price = all_candidates[
-                        0
-                    ].unit_cost
+                    ).standard_price = all_candidates[0].unit_cost
             layers |= layer
         return layers
 
