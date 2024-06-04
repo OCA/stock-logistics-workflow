@@ -53,7 +53,7 @@ class ProductProduct(models.Model):
                 # Find back incoming stock valuation layers
                 # (called candidates here) to value `quantity`.
                 qty_to_take_on_candidates = move_line.product_uom_id._compute_quantity(
-                    move_line.qty_done, move.product_id.uom_id
+                    move_line.quantity, move.product_id.uom_id
                 )
                 candidates = self._get_all_candidates(company).filtered(
                     lambda candidate, lot=move_line.lot_id: lot in candidate.lot_ids
