@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-06-05 09:37+0000\n"
+"PO-Revision-Date: 2024-06-05 11:40+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -57,7 +57,7 @@ msgstr "Bolle di consegna/fatture"
 #. module: stock_picking_batch_print_pickings
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_print_pickings.view_picking_type_form_inherit_stock_picking_batch_print_pickings
 msgid "Number of Copies per Picking"
-msgstr "Numero di copie per fattura"
+msgstr "Numero di copie per prelievo"
 
 #. module: stock_picking_batch_print_pickings
 #: model:ir.model.fields,field_description:stock_picking_batch_print_pickings.field_stock_picking_type__number_copies_pickings
@@ -67,7 +67,7 @@ msgstr "Numero di copie"
 #. module: stock_picking_batch_print_pickings
 #: model:ir.model.fields,help:stock_picking_batch_print_pickings.field_stock_picking_type__number_copies_pickings
 msgid "Number of copies per picking"
-msgstr ""
+msgstr "Numero di copie per prelievo"
 
 #. module: stock_picking_batch_print_pickings
 #: model:ir.model,name:stock_picking_batch_print_pickings.model_stock_picking_type
@@ -80,21 +80,23 @@ msgstr "Tipologia prelievo"
 #, python-format
 msgid "Picking Type %(type)s is not configured to print from batch."
 msgstr ""
+"Il tipo di prelievo %(type)s non è configurato per stampare prelievi dal "
+"gruppo."
 
 #. module: stock_picking_batch_print_pickings
 #: model:ir.model.fields.selection,name:stock_picking_batch_print_pickings.selection__stock_picking_type__print_documents_from_batch__pickings
 msgid "Pickings"
-msgstr ""
+msgstr "Prelievi"
 
 #. module: stock_picking_batch_print_pickings
 #: model:ir.model.fields,field_description:stock_picking_batch_print_pickings.field_stock_picking_batch__print_documents
 msgid "Print Documents"
-msgstr ""
+msgstr "Stampa documenti"
 
 #. module: stock_picking_batch_print_pickings
 #: model:ir.model.fields,field_description:stock_picking_batch_print_pickings.field_stock_picking_type__print_documents_from_batch
 msgid "Print Documents From Batch"
-msgstr ""
+msgstr "Stampa i documenti dal gruppo"
 
 #. module: stock_picking_batch_print_pickings
 #: model:ir.model.fields,help:stock_picking_batch_print_pickings.field_stock_picking_batch__print_documents
