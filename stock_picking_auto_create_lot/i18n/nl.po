@@ -34,11 +34,6 @@ msgid "Product"
 msgstr "Product"
 
 #. module: stock_picking_auto_create_lot
-#: model:ir.model,name:stock_picking_auto_create_lot.model_stock_move_line
-msgid "Product Moves (Stock Move Line)"
-msgstr "Voorraadverplaatsingen (Voorraadverplaatsingsregels)"
-
-#. module: stock_picking_auto_create_lot
 #: model:ir.model,name:stock_picking_auto_create_lot.model_stock_move
 msgid "Stock Move"
 msgstr "Voorraadverplaatsing"
@@ -47,3 +42,6 @@ msgstr "Voorraadverplaatsing"
 #: model:ir.model,name:stock_picking_auto_create_lot.model_stock_picking
 msgid "Transfer"
 msgstr "transfer"
+
+#~ msgid "Product Moves (Stock Move Line)"
+#~ msgstr "Voorraadverplaatsingen (Voorraadverplaatsingsregels)"
