@@ -1,4 +1,5 @@
 # Copyright 2022 ForgeFlow (http://www.forgeflow.com)
+# Copyright 2024 Alitec (http://www.alitec.sg)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 from odoo.tests import Form, common
 
@@ -42,12 +43,12 @@ class TestSaleLineReturnedQty(common.TransactionCase):
         return_wiz.product_return_moves.to_refund = to_refund
         res = return_wiz.create_returns()
         return_picking = self.env["stock.picking"].browse(res["res_id"])
-        self._validate_picking(return_picking)
+        return_picking.button_validate()
 
     def _validate_picking(self, picking):
         """Helper method to confirm the pickings"""
         for line in picking.move_ids:
-            line.quantity_done = line.product_uom_qty
+            line.quantity = line.product_uom_qty
         picking._action_done()
 
     def test_returned_qty(self):
@@ -57,8 +58,10 @@ class TestSaleLineReturnedQty(common.TransactionCase):
         # Partial delivery one
         picking = self.order.picking_ids
         picking.action_assign()
-        picking.move_ids.quantity_done = 10.0
+        picking.move_ids.quantity = 10.0
+        picking.move_ids.picked = True
         picking._action_done()
+        self.assertEqual(picking.state, "done")
         self.assertEqual(so_line.qty_returned, 0.0)
         # Make a return for 5 units
         self._return_picking(picking, 5.0, to_refund=True)

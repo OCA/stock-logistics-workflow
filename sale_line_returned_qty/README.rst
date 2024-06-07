@@ -53,6 +53,7 @@ Authors
 -------
 
 * ForgeFlow
+* Alitec Pte Ltd
 
 Contributors
 ------------
@@ -61,6 +62,10 @@ Contributors
 
       -  Jordi Masvidal
       -  Pau Sanchez (pau.sanchez@qubiq.es)
+
+-  `Alitec <https://www.alitec.sg>`__:
+
+      -  Jay Patel (jay@alitec.sg)
 
 Maintainers
 -----------
