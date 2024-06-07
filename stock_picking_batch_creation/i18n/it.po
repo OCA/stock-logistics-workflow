@@ -6,35 +6,39 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2024-06-07 12:35+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_picking_batch_creation
 #. odoo-python
 #: code:addons/stock_picking_batch_creation/exceptions.py:0
 #, python-format
 msgid " Pickings %(names)s do not match any device"
-msgstr ""
+msgstr " Il prelievo %(names)s non corrisponde a nessun dispositivo"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch__add_picking_list_in_error
 msgid "Add all the names of the pickings in error message"
-msgstr ""
+msgstr "Aggiungere tutti i nomi dei prelievi nel messaggio di errore"
 
 #. module: stock_picking_batch_creation
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_creation.make_picking_batch_form_view
 msgid "Advanced"
-msgstr ""
+msgstr "Avanzato"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,help:stock_picking_batch_creation.field_make_picking_batch__group_pickings_by_partner
 msgid "All the pickings related to one partner will be put into the same bins"
 msgstr ""
+"Tutti i prelievi relativi ad un partner verranno inseriti nello stesso "
+"contenitore"
 
 #. module: stock_picking_batch_creation
 #. odoo-python
@@ -45,64 +49,70 @@ msgid ""
 "than the maximum number of line allowed in a batch picking. (%(max_line)s) "
 "vs (%(line)s)"
 msgstr ""
+"Trovato almeno un prelievo candidato %(name)s ma con più righe da elaborare "
+"di quelle consentite in un prelievo raggurppato. (%(max_line)s) vs (%(line)s)"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model,name:stock_picking_batch_creation.model_stock_picking_batch
 msgid "Batch Transfer"
-msgstr ""
+msgstr "Trasferimento raggruppato"
 
 #. module: stock_picking_batch_creation
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_creation.make_picking_batch_form_view
 msgid "Cancel"
-msgstr ""
+msgstr "Annulla"
 
 #. module: stock_picking_batch_creation
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_creation.stock_device_type_form_view
 msgid "Constrains"
-msgstr ""
+msgstr "Restrizioni"
 
 #. module: stock_picking_batch_creation
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_creation.make_picking_batch_form_view
 msgid "Create batch picking"
-msgstr ""
+msgstr "Crea prelievo raggruppato"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch__create_uid
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creato da"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch__create_date
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creato il"
 
 #. module: stock_picking_batch_creation
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_creation.make_picking_batch_form_view
 msgid "Criteria"
-msgstr ""
+msgstr "Criteri"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch__stock_device_type_ids
 msgid "Default device types"
-msgstr ""
+msgstr "Tipi dispositivo predefiniti"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,help:stock_picking_batch_creation.field_make_picking_batch__stock_device_type_ids
 msgid "Default list of eligible device types when creating a batch transfer"
 msgstr ""
+"Lista predefinita dei tipi dispositivi utilizzabili nella creazione di un "
+"trasferimento raggruppato"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,help:stock_picking_batch_creation.field_make_picking_batch__picking_type_ids
 msgid ""
 "Default list of eligible operation types when creating a batch transfer"
 msgstr ""
+"Lista predefinita dei tipi operazione utilizzabili nella creazione di un "
+"trasferimento raggruppato"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch__picking_type_ids
 msgid "Default operation types"
-msgstr ""
+msgstr "Tipo operazione predefiniti"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,help:stock_picking_batch_creation.field_make_picking_batch__picking_locking_mode
@@ -112,43 +122,47 @@ msgid ""
 "should reduce the risk of deadlocks if 2 users try to create a batch at the "
 "same time."
 msgstr ""
+"Definisce il modo in cui il sistema cercherà e bloccherà i prelievi. Allo "
+"stesso tempo, i prelievi già bloccati da un'altra transizione verranno "
+"saltati. Questo dovrebbe ridurre il rischio di stalli se due utenti tentano "
+"di creare un gruppo nello stesso momento."
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_picking_batch__picking_device_id
 msgid "Device"
-msgstr ""
+msgstr "Dispositivo"
 
 #. module: stock_picking_batch_creation
 #: model:ir.ui.menu,name:stock_picking_batch_creation.menu_stock_device_types
 msgid "Device Types"
-msgstr ""
+msgstr "Tipi servizio"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_picking__picking_device_id
 msgid "Device for the picking"
-msgstr ""
+msgstr "Dispositivi per il prelievo"
 
 #. module: stock_picking_batch_creation
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_creation.make_picking_batch_form_view
 msgid "Diagnostic"
-msgstr ""
+msgstr "Diagnostica"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch__display_name
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch__group_pickings_by_partner
 msgid "Group pickings by partner"
-msgstr ""
+msgstr "Raggruppa prelievi per partner"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch__id
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,help:stock_picking_batch_creation.field_make_picking_batch__no_line_limit_if_no_candidate
@@ -161,6 +175,14 @@ msgid ""
 " picking for the sole case where a device is suitable for the picking but "
 "the picking has more lines than the maximum number of lines."
 msgstr ""
+"Se selezionate, il massimo nimero di righe non verrà applicato se non ci "
+"sono candidati da aggiungere al gruppo con un numero di righe inferiore al "
+"massimo numero di righe. L'opzione è utile se si vuolerilasciare il massimo "
+"numero di righe per consentire di creare un gruppo anche se non ci sono "
+"candidati da aggiungere al gruppo come primi. Questo eviterà di creare "
+"manualmente un gruppo con un singolo prelievo per il solo caso in cui un "
+"dispositivo sia disponibile per il prelievo ma il prelievo ha più righe del "
+"massimo."
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,help:stock_picking_batch_creation.field_make_picking_batch__add_picking_list_in_error
@@ -169,249 +191,256 @@ msgid ""
 "message will contain the list of the pickings names. In somecases, this list"
 " can be very long. That's why this option is uncheckedby default."
 msgstr ""
+"Se non viene fornito un dispositivo idoneo per i prelievi candidati, il "
+"messaggio di errore conterrà la lista dei nomi dei prelievi. In alcunui "
+"casi, questa lista può essere molto lunga. Per questo motivo è deselezionata "
+"in modo predefinito."
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,help:stock_picking_batch_creation.field_stock_picking_batch__batch_nbr_bins
 msgid "Indicates the bins occupied by the pickings on the device."
-msgstr ""
+msgstr "Indica i contenitori occupati dal prelievo in questo dispositivo."
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,help:stock_picking_batch_creation.field_stock_picking__nbr_picking_lines
 #: model:ir.model.fields,help:stock_picking_batch_creation.field_stock_picking_batch__batch_nbr_lines
 msgid "Indicates the picking lines ready for preparation."
-msgstr ""
+msgstr "Indica le righe del prelievo pronte alla preparazione."
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,help:stock_picking_batch_creation.field_stock_picking_batch__batch_volume
 msgid "Indicates total volume of transfers included."
-msgstr ""
+msgstr "Indica il volume totale dei trasferimenti inclusi."
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,help:stock_picking_batch_creation.field_stock_picking_batch__batch_weight
 msgid "Indicates total weight of transfers included."
-msgstr ""
+msgstr "Indica il peso totale dei trasferimenti inclusi."
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch____last_update
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch__write_uid
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultimo aggiornamento di"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch__write_date
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultimo aggiornamento il"
 
 #. module: stock_picking_batch_creation
 #: model:ir.actions.act_window,name:stock_picking_batch_creation.make_picking_batch_act_window
 #: model:ir.ui.menu,name:stock_picking_batch_creation.make_picking_batch
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_creation.make_picking_batch_form_view
 msgid "Make Picking Batch"
-msgstr ""
+msgstr "Crea gruppo prelievo"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model,name:stock_picking_batch_creation.model_make_picking_batch
 msgid "Make a batch picking wizard"
-msgstr ""
+msgstr "Procedura guidata creazione gruppo prelievo"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type__volume_per_bin
 msgid "Max volume per bin"
-msgstr ""
+msgstr "Volume massimo per contenitore"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch__maximum_number_of_preparation_lines
 msgid "Maximum number of preparation lines for the batch"
-msgstr ""
+msgstr "Numero massim di righe di preparazione per il gruppo"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type__user_max_volume
 msgid "Maximum total net volume for electing this device"
-msgstr ""
+msgstr "Massimo voume totale netto per selezionare questo dispositivo"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type__max_volume
 msgid "Maximum total net volume for this device"
-msgstr ""
+msgstr "Massimo volume totale netto per questo dispositivo"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type__user_max_weight
 msgid "Maximum total net weight for electing this device"
-msgstr ""
+msgstr "Massimo peso totale netto per selezionare questo dispositivo"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type__max_weight
 msgid "Maximum total net weight for this device"
-msgstr ""
+msgstr "Massimo peso totale netto per questo dispositivo"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type__user_min_volume
 msgid "Minimum total net volume for electing this device"
-msgstr ""
+msgstr "Minimo voume totale netto per selezionare questo dispositivo"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type__min_volume
 msgid "Minimum total net volume for this device"
-msgstr ""
+msgstr "Minimo volume totale netto per questo dispositivo"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type__name
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #. module: stock_picking_batch_creation
 #. odoo-python
 #: code:addons/stock_picking_batch_creation/exceptions.py:0
 #, python-format
 msgid "No device found for batch picking."
-msgstr ""
+msgstr "Nessun dispositivo trovato per il gruppo prelievo."
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch__no_line_limit_if_no_candidate
 msgid "No line limit if no candidate"
-msgstr ""
+msgstr "Nessun limite riga se non c'è il candidato"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type__nbr_bins
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_picking_batch__batch_nbr_bins
 msgid "Number of compartments"
-msgstr ""
+msgstr "Numero di compartimenti"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_picking__nbr_picking_lines
 msgid "Number of lines"
-msgstr ""
+msgstr "Numero di righe"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_picking_batch__batch_nbr_lines
 msgid "Number of picking lines"
-msgstr ""
+msgstr "Numero di righe prelievo"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,help:stock_picking_batch_creation.field_make_picking_batch__restrict_to_same_partner
 msgid ""
 "Only the pickings with the same partner will be selected for this batch."
 msgstr ""
+"Solo i prelievi con lo stesso partner verranno selezionati per questo gruppo."
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,help:stock_picking_batch_creation.field_make_picking_batch__restrict_to_same_priority
 msgid ""
 "Only the pickings with the same priority will be selected for this batch."
 msgstr ""
+"Solo i prelievi con la stessa priorità verranno selezionati per questo "
+"gruppo."
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,help:stock_picking_batch_creation.field_stock_device_type__user_volume_uom_id
 msgid "Packaging volume unit of measure"
-msgstr ""
+msgstr "Unità di misura per il volume dell'imballaggio"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch__picking_locking_mode
 msgid "Picking locking mode"
-msgstr ""
+msgstr "Modalità bloccaggio prelievo"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type__sequence
 msgid "Priority"
-msgstr ""
+msgstr "Priorità"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch__user_id
 msgid "Responsible"
-msgstr ""
+msgstr "Responsabile"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch__restrict_to_same_partner
 msgid "Restrict to the same partner"
-msgstr ""
+msgstr "Restringi allo stesso partner"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch__restrict_to_same_priority
 msgid "Restrict to the same priority"
-msgstr ""
+msgstr "Restringi alla stessa priorità"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields.selection,name:stock_picking_batch_creation.selection__make_picking_batch__picking_locking_mode__sql_for_update_skip_locked
 msgid "SQL FOR UPDATE SKIP LOCKED"
-msgstr ""
+msgstr "SQL PER SALTO AGGIORNAMENTO BLOCCATO"
 
 #. module: stock_picking_batch_creation
 #: model:ir.actions.act_window,name:stock_picking_batch_creation.stock_device_type_act_window
 #: model:ir.model,name:stock_picking_batch_creation.model_stock_device_type
 #: model:ir.ui.menu,name:stock_picking_batch_creation.menu_stock_device_type
 msgid "Stock Device Type"
-msgstr ""
+msgstr "Tipo dispositivo magazzino"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_picking_batch__batch_volume
 msgid "Total volume"
-msgstr ""
+msgstr "Volume totale"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_picking_batch__batch_weight
 msgid "Total weight"
-msgstr ""
+msgstr "Peso totale"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model,name:stock_picking_batch_creation.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Trasferimento"
 
 #. module: stock_picking_batch_creation
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_creation.stock_device_type_form_view
 msgid "Units of Measure"
-msgstr ""
+msgstr "Unità di misura"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type__user_volume_uom_name
 msgid "Volume Unit of Measure label"
-msgstr ""
+msgstr "Etichetta unità di misura volume"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type__user_volume_uom_id
 msgid "Volume Units of Measure"
-msgstr ""
+msgstr "Unità di misura del volume"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,help:stock_picking_batch_creation.field_stock_device_type__max_volume
 #: model:ir.model.fields,help:stock_picking_batch_creation.field_stock_device_type__min_volume
 msgid "Volume in default system volume unit of measure"
-msgstr ""
+msgstr "Volume nell'unità di misura del volume predefinita del sistema"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,help:stock_picking_batch_creation.field_stock_device_type__user_weight_uom_id
 msgid "Weight Unit of Measure"
-msgstr ""
+msgstr "Unità di misura del peso"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type__user_weight_uom_id
 msgid "Weight Units of Measure"
-msgstr ""
+msgstr "Unità di misura del peso"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,help:stock_picking_batch_creation.field_stock_device_type__max_weight
 msgid "Weight in default system weight unit of measure"
-msgstr ""
+msgstr "Peso nell'unità di misura del peso predefinita del sistema"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type__user_weight_uom_name
 msgid "Weight unit of measure label"
-msgstr ""
+msgstr "Etichetta unità di misura del peso"
 
 #. module: stock_picking_batch_creation
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_creation.stock_device_type_form_view
 msgid "e.g. Forklift"
-msgstr ""
+msgstr "es. muletto"
 
 #. module: stock_picking_batch_creation
 #. odoo-python
 #: code:addons/stock_picking_batch_creation/exceptions.py:0
 #, python-format
 msgid "no candidate pickings to batch"
-msgstr ""
+msgstr "nessun prelievo candidato da raggruppare"
