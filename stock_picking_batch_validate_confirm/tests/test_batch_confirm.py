@@ -11,6 +11,10 @@ class TestBatchConfirm(TestPickShip):
     def setUpClass(cls):
         super().setUpClass()
         cls.location = cls.env["stock.location"].browse(cls.stock_location)
+        vc_group = cls.env.ref(
+            "stock_picking_batch_validate_confirm.stock_picking_batch_validate_confirm_group"
+        )
+        cls.env.ref("base.group_user").write({"implied_ids": [(4, vc_group.id)]})
 
     def test_batch_confirm(self):
         """Check batch confirm wizard when pending moves origin exist."""

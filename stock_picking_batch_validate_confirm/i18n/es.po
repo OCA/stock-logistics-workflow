@@ -4,18 +4,26 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0+e\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-08 10:52+0000\n"
-"PO-Revision-Date: 2024-05-08 12:54+0200\n"
-"Last-Translator: Emilio Pascual <emilio@moduom.team>\n"
+"POT-Creation-Date: 2024-06-10 06:08+0000\n"
+"PO-Revision-Date: 2024-06-10 08:08+0200\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.4\n"
+
+#. module: stock_picking_batch_validate_confirm
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_validate_confirm.stock_picking_batch_confirm_view_form
+msgid ""
+"<i>* You have not enough permissions to validate this batch as it is</i>"
+msgstr ""
+"<i>* No tienes suficientes permisos para Validar éste Batch tal y como está</"
+"i>"
 
 #. module: stock_picking_batch_validate_confirm
 #: model:ir.model.fields,field_description:stock_picking_batch_validate_confirm.field_stock_picking_batch_confirm__batch_id
@@ -32,7 +40,7 @@ msgstr "Confirmación Agrupación"
 #. module: stock_picking_batch_validate_confirm
 #: model:ir.model,name:stock_picking_batch_validate_confirm.model_stock_picking_batch
 msgid "Batch Transfer"
-msgstr "Transferir agrupación"
+msgstr "Agrupación de albarán"
 
 #. module: stock_picking_batch_validate_confirm
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_validate_confirm.stock_picking_batch_confirm_view_form
@@ -92,6 +100,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_validate_confirm.stock_picking_batch_confirm_view_form
 msgid "Validate"
 msgstr "Validar"
+
+#. module: stock_picking_batch_validate_confirm
+#: model:res.groups,name:stock_picking_batch_validate_confirm.stock_picking_batch_validate_confirm_group
+msgid "Validate Incomplete Batches"
+msgstr "Validar Agrupaciones Incompletas"
 
 #. module: stock_picking_batch_validate_confirm
 #: model:ir.model,name:stock_picking_batch_validate_confirm.model_stock_picking_batch_confirm
