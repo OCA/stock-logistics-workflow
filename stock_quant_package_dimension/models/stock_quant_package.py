@@ -61,7 +61,7 @@ class StockQuantPackage(models.Model):
     weight_uom_name = fields.Char(
         # Same as product.packing
         string="Weight unit of measure label",
-        readonly=True,
+        compute="_compute_weight_uom_name",
     )
 
     volume_uom_id = fields.Many2one(
@@ -84,7 +84,7 @@ class StockQuantPackage(models.Model):
         readonly=True,
     )
 
-    @api.depends("weight_uom_id.name")
+    @api.depends("weight_uom_id", "weight_uom_id.name")
     def _compute_weight_uom_name(self):
         # Don't use a related here as the original default value
         # causes warnings (Redundant default on related fields are not wanted)
@@ -158,7 +158,7 @@ class StockQuantPackage(models.Model):
         uom_kg = self.env.ref("uom.product_uom_kgm")
         return sum(
             ml.product_uom_id._compute_quantity(
-                qty=ml.qty_done, to_unit=ml.product_id.uom_id
+                qty=ml.quantity, to_unit=ml.product_id.uom_id
             )
             * ml.product_id.weight_uom_id._compute_quantity(
                 qty=ml.product_id.weight, to_unit=uom_kg

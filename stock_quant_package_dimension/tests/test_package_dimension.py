@@ -62,8 +62,6 @@ class TestStockQuantPackageProductPackaging(common.TestStockQuantPackageCommon):
         # Weight are taken from product, like the delivery module
         self.assertEqual(self.package.estimated_pack_weight_kg, 7)
         self.move._action_assign()
-        for line in self.move.move_line_ids:
-            line.qty_done = line.reserved_qty
         self.assertEqual(
             self.package.with_context(
                 picking_id=self.move.picking_id.id
