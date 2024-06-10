@@ -158,7 +158,7 @@ class StockQuantPackage(models.Model):
         uom_kg = self.env.ref("uom.product_uom_kgm")
         return sum(
             ml.product_uom_id._compute_quantity(
-                qty=ml.qty_done, to_unit=ml.product_id.uom_id
+                qty=ml.quantity, to_unit=ml.product_id.uom_id
             )
             * ml.product_id.weight_uom_id._compute_quantity(
                 qty=ml.product_id.weight, to_unit=uom_kg
