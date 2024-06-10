@@ -4,7 +4,6 @@ from odoo import api, fields, models
 
 
 class StockQuantPackage(models.Model):
-
     _inherit = "stock.quant.package"
 
     # This is not the same thing as 'packaging_id':
