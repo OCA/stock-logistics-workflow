@@ -454,7 +454,6 @@ class StockReturnRequestLine(models.Model):
         domain = [
             ("state", "=", "done"),
             ("origin_returned_move_id", "=", False),
-            ("qty_returnable", ">", 0),
             ("product_id", "=", self.product_id.id),
         ]
         if not self.env.context.get("ignore_rr_lots"):
@@ -502,6 +501,7 @@ class StockReturnRequestLine(models.Model):
             moves = stock_move_obj.search(
                 line._get_moves_domain(), order=line.request_id.return_order
             )
+            moves = moves.filtered(lambda m: m.qty_returnable > 0.0)
             # Add moves up to desired quantity
             qty_to_complete = line.quantity
             for move in moves:

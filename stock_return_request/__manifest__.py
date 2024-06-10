@@ -19,6 +19,4 @@
         "report/stock_return_report.xml",
         "wizard/suggest_return_request.xml",
     ],
-    "pre_init_hook": "pre_init_hook",
-    "post_init_hook": "post_init_hook",
 }
