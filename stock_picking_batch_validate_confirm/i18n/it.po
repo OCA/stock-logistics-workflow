@@ -17,6 +17,12 @@ msgstr ""
 "X-Generator: Weblate 4.17\n"
 
 #. module: stock_picking_batch_validate_confirm
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_validate_confirm.stock_picking_batch_confirm_view_form
+msgid ""
+"<i>* You have not enough permissions to validate this batch as it is</i>"
+msgstr ""
+
+#. module: stock_picking_batch_validate_confirm
 #: model:ir.model.fields,field_description:stock_picking_batch_validate_confirm.field_stock_picking_batch_confirm__batch_id
 msgid "Batch"
 msgstr "Gruppo"
@@ -91,6 +97,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_validate_confirm.stock_picking_batch_confirm_view_form
 msgid "Validate"
 msgstr "Valida"
+
+#. module: stock_picking_batch_validate_confirm
+#: model:res.groups,name:stock_picking_batch_validate_confirm.stock_picking_batch_validate_confirm_group
+msgid "Validate Incomplete Batches"
+msgstr ""
 
 #. module: stock_picking_batch_validate_confirm
 #: model:ir.model,name:stock_picking_batch_validate_confirm.model_stock_picking_batch_confirm

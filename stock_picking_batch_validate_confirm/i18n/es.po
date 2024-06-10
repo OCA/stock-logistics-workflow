@@ -22,8 +22,8 @@ msgstr ""
 msgid ""
 "<i>* You have not enough permissions to validate this batch as it is</i>"
 msgstr ""
-"<i>* No tienes suficientes permisos para Validar éste Batch tal y como "
-"está</i>"
+"<i>* No tienes suficientes permisos para Validar éste Batch tal y como está</"
+"i>"
 
 #. module: stock_picking_batch_validate_confirm
 #: model:ir.model.fields,field_description:stock_picking_batch_validate_confirm.field_stock_picking_batch_confirm__batch_id
