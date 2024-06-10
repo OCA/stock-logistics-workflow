@@ -30,7 +30,8 @@ Stock Picking Batch Validate Confirm
 
 This module extends the functionality of stock picking batch. When you
 validate stock batch, if there are pending origin moves, a wizard is
-shown with pending origin moves.
+shown with pending origin moves. You must have *Validate Incomplete
+Batches* permission to Validate Incomplete Batches
 
 .. IMPORTANT::
    This is an alpha version, the data model and design can change at any time without warning.
@@ -50,6 +51,7 @@ To configure this module, you need to:
 1. Go to Inventory App > Configuration > Settings.
 2. Activate Batch Transfers.
 3. Activate Multi-Step Routes.
+4. Add *Validate Incomplete Batches* group to some users
 
 Usage
 =====

@@ -19,6 +19,7 @@
     ],
     "data": [
         "security/ir.model.access.csv",
+        "security/stock_picking_batch_validate_confirm_groups.xml",
         "wizards/stock_picking_batch_confirm.xml",
     ],
 }
