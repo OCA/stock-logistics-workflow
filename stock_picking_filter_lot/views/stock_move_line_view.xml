@@ -11,12 +11,13 @@
         <field name="inherit_id" ref="stock.view_stock_move_line_operation_tree" />
         <field name="arch" type="xml">
             <field name="lot_id" position="attributes">
-                <attribute
-                    name="domain"
-                >[('product_id','=', parent.product_id), ('company_id', '=', company_id), ('location_ids', 'child_of', location_id)]</attribute>
+                <attribute name="domain">
+                    [('product_id','=', parent.product_id), ('company_id', '=', company_id), ('location_ids', 'child_of', location_id)]
+                </attribute>
             </field>
         </field>
     </record>
+
     <record id="view_stock_move_line_detailed_operation_tree" model="ir.ui.view">
         <field
             name="name"
@@ -28,9 +29,9 @@
         />
         <field name="arch" type="xml">
             <field name="lot_id" position="attributes">
-                <attribute
-                    name="domain"
-                >[('product_id','=', product_id), ('company_id', '=', company_id), ('location_ids', 'child_of', location_id)]</attribute>
+                <attribute name="domain">
+                    [('product_id','=', product_id), ('company_id', '=', company_id), ('location_ids', 'child_of', location_id)]
+                </attribute>
             </field>
         </field>
     </record>
