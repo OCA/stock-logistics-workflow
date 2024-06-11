@@ -4,3 +4,4 @@
 - Tharathip Chaweewongphan \<<tharathipc@ecosoft.co.th>\>
   (www.ecosoft.co.th)
 - Jesus Alcala \<<jesus.alcala@jarsa.com.mx>\> (www.jarsa.com.mx)
+- [OERP Canada](https://www.oerp.ca/) \<<info@oerp.ca>\>
