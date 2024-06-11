@@ -27,6 +27,7 @@ class ChangeLotCase(TransactionCase):
                 {
                     "name": "Product A",
                     "type": "product",
+                    "tracking": "lot",
                 }
             )
         )
@@ -314,7 +315,6 @@ class ChangeLotCase(TransactionCase):
 
     def test_change_lot_different_location(self):
         "If the scanned lot is in a different location, we cannot process it"
-        self.product_a.tracking = "lot"
         initial_lot = self._create_lot(self.product_a)
         self._update_qty_in_location(self.shelf1, self.product_a, 10, lot=initial_lot)
         picking = self._create_picking(lines=[(self.product_a, 10)])
@@ -330,7 +330,6 @@ class ChangeLotCase(TransactionCase):
         self.assert_quant_reserved_qty(line, lambda: 0, lot=new_lot)
 
     def test_change_lot_in_package(self):
-        self.product_a.tracking = "lot"
         initial_lot = self._create_lot(self.product_a)
         initial_package = self._create_package_in_location(
             self.shelf1, [self.PackageContent(self.product_a, 10, lot=initial_lot)]
@@ -363,7 +362,6 @@ class ChangeLotCase(TransactionCase):
         )
 
     def test_change_lot_in_package_no_initial_package(self):
-        self.product_a.tracking = "lot"
         initial_lot = self._create_lot(self.product_a)
         self._update_qty_in_location(self.shelf1, self.product_a, 10, lot=initial_lot)
         # ensure we have our new package in the same location
