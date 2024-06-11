@@ -4,16 +4,16 @@
 from odoo import api, fields, models
 
 
-class StockProductionLot(models.Model):
+class StockLot(models.Model):
     _inherit = "stock.lot"
 
     location_ids = fields.Many2many(
         comodel_name="stock.location", compute="_compute_location_ids", store=True
     )
 
-    @api.depends("quant_ids", "quant_ids.location_id", "quant_ids.quantity")
+    @api.depends("quant_ids", "quant_ids.location_id")
     def _compute_location_ids(self):
         for lot in self:
-            lot.location_ids = lot.quant_ids.filtered(lambda l: l.quantity > 0).mapped(
-                "location_id"
-            )
+            lot.location_ids = lot.quant_ids.filtered(
+                lambda quant: quant.quantity > 0
+            ).mapped("location_id")
