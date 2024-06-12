@@ -11,8 +11,8 @@ msgstr ""
 "POT-Creation-Date: 2017-06-15 11:08+0000\n"
 "PO-Revision-Date: 2023-12-27 14:35+0000\n"
 "Last-Translator: Adriano Prado <adrianojprado@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
-"23907/pt_BR/)\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/"
+"teams/23907/pt_BR/)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,13 +29,6 @@ msgstr "Reversão da Movimentação da Conta"
 #: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.invoice_form
 msgid "Delivery"
 msgstr "Entrega"
-
-#. module: stock_picking_invoice_link
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_bank_statement_line__delivery_count
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move__delivery_count
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_payment__delivery_count
-msgid "Delivery Orders"
-msgstr "Ordens de Entrega"
 
 #. module: stock_picking_invoice_link
 #: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
@@ -72,6 +65,13 @@ msgstr "Item Diário"
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking__invoice_count
 msgid "Number of Invoices"
 msgstr "Número de Faturas"
+
+#. module: stock_picking_invoice_link
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_bank_statement_line__picking_count
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move__picking_count
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_payment__picking_count
+msgid "Pickings count"
+msgstr ""
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_bank_statement_line__picking_ids
@@ -126,6 +126,9 @@ msgstr "Transferir"
 #, python-format
 msgid "You can not modify an invoiced stock move"
 msgstr "Você não pode modificar uma movimentação de estoque faturada"
+
+#~ msgid "Delivery Orders"
+#~ msgstr "Ordens de Entrega"
 
 #~ msgid "Pickings"
 #~ msgstr "Separações"
