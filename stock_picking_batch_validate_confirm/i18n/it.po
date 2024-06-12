@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-05-15 09:34+0000\n"
+"PO-Revision-Date: 2024-06-12 19:29+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -21,6 +21,8 @@ msgstr ""
 msgid ""
 "<i>* You have not enough permissions to validate this batch as it is</i>"
 msgstr ""
+"<i>* Non si hanno diritti sufficienti per validare questo gruppo così "
+"com'è</i>"
 
 #. module: stock_picking_batch_validate_confirm
 #: model:ir.model.fields,field_description:stock_picking_batch_validate_confirm.field_stock_picking_batch_confirm__batch_id
@@ -101,7 +103,7 @@ msgstr "Valida"
 #. module: stock_picking_batch_validate_confirm
 #: model:res.groups,name:stock_picking_batch_validate_confirm.stock_picking_batch_validate_confirm_group
 msgid "Validate Incomplete Batches"
-msgstr ""
+msgstr "Valida gruppi incompleti"
 
 #. module: stock_picking_batch_validate_confirm
 #: model:ir.model,name:stock_picking_batch_validate_confirm.model_stock_picking_batch_confirm
