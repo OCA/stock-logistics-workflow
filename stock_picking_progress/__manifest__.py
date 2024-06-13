@@ -7,7 +7,7 @@
     "version": "14.0.1.2.1",
     "category": "Inventory",
     "website": "https://github.com/OCA/stock-logistics-workflow",
-    "author": "mmequignon, Camptocamp SA, Odoo Community Association (OCA)",
+    "author": "mmequignon, Camptocamp, Odoo Community Association (OCA)",
     "maintainers": ["mmequignon", "JuMiSanAr"],
     "license": "AGPL-3",
     "installable": True,
