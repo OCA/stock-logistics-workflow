@@ -24,13 +24,6 @@ msgid "Delivery"
 msgstr ""
 
 #. module: stock_picking_invoice_link
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_bank_statement_line__delivery_count
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move__delivery_count
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_payment__delivery_count
-msgid "Delivery Orders"
-msgstr ""
-
-#. module: stock_picking_invoice_link
 #: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
 msgid "Invoice"
 msgstr ""
@@ -64,6 +57,13 @@ msgstr ""
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking__invoice_count
 msgid "Number of Invoices"
+msgstr ""
+
+#. module: stock_picking_invoice_link
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_bank_statement_line__picking_count
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move__picking_count
+#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_payment__picking_count
+msgid "Pickings count"
 msgstr ""
 
 #. module: stock_picking_invoice_link
