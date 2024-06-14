@@ -6,15 +6,10 @@
         <field name="inherit_id" ref="stock.view_picking_form" />
         <field name="arch" type="xml">
             <field name="origin" position="after">
-                <field
-                    name="origin_reference"
-                    attrs="{'invisible': [('origin_reference', '=', False)]}"
-                />
+                <field name="origin_reference" invisible="not origin_reference" />
             </field>
             <field name="origin" position="attributes">
-                <attribute
-                    name="attrs"
-                >{'invisible': ['|',('origin', '=', False),('origin_reference', '!=', False)]}</attribute>
+                <attribute name="invisible">not origin or origin_reference</attribute>
             </field>
         </field>
     </record>
