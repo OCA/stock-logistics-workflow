@@ -1,0 +1,1 @@
+This module has been developed to allow the Scheduled date field on Pickings (and Date on moves) to be used as a reference field for planning purposes when products have to be shipped on the same day that needs to be delivered.
