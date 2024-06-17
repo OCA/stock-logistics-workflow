@@ -4,7 +4,7 @@
 {
     "name": "Stock Picking Date Deadline syncs Scheduled Date",
     "summary": "Sync Scheduled Date with Date Deadline in Stock Picking",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.0.1",
     "development_status": "Alpha",
     "category": "Inventory/Inventory",
     "website": "https://github.com/OCA/stock-logistics-workflow",

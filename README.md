@@ -63,6 +63,7 @@ addon | version | maintainers | summary
 [stock_picking_batch_print_pickings](stock_picking_batch_print_pickings/) | 16.0.1.1.0 | [![EmilioPascual](https://github.com/EmilioPascual.png?size=30px)](https://github.com/EmilioPascual) | Print Picking from Stock Picking Batch
 [stock_picking_batch_validate_confirm](stock_picking_batch_validate_confirm/) | 16.0.1.1.0 | [![EmilioPascual](https://github.com/EmilioPascual.png?size=30px)](https://github.com/EmilioPascual) [![rafaelbn](https://github.com/rafaelbn.png?size=30px)](https://github.com/rafaelbn) | Request confirmation when validating batch if there are pending origin moves
 [stock_picking_customer_ref](stock_picking_customer_ref/) | 16.0.1.0.0 |  | This module displays the sale reference/description in the pickings
+[stock_picking_date_deadline_syncs_scheduled_date](stock_picking_date_deadline_syncs_scheduled_date/) | 16.0.1.0.1 | [![Shide](https://github.com/Shide.png?size=30px)](https://github.com/Shide) | Sync Scheduled Date with Date Deadline in Stock Picking
 [stock_picking_filter_lot](stock_picking_filter_lot/) | 16.0.1.0.0 |  | In picking out lots' selection, filter lots based on their location
 [stock_picking_grn_mandatory](stock_picking_grn_mandatory/) | 16.0.1.0.0 |  | This module allows to require a GRN (Goods Receive Note) when doing a Stock Picking
 [stock_picking_group_by_base](stock_picking_group_by_base/) | 16.0.1.0.0 |  | Allows to define a way to create index on extensible domain
