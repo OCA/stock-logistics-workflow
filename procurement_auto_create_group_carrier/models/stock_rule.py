@@ -8,8 +8,8 @@ class StockRule(models.Model):
 
     _inherit = "stock.rule"
 
-    def _prepare_auto_procurement_group_data(self):
-        data = super()._prepare_auto_procurement_group_data()
+    def _prepare_auto_procurement_group_data(self, product):
+        data = super()._prepare_auto_procurement_group_data(product=product)
         if self.partner_address_id.property_delivery_carrier_id:
             data["carrier_id"] = self.partner_address_id.property_delivery_carrier_id.id
         return data
