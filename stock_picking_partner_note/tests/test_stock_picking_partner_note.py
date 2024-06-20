@@ -3,14 +3,12 @@
 
 from odoo.tests import Form, common
 
-from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
-
 
 class StockPickingPartnerNote(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env["base"].with_context(**DISABLED_MAIL_CONTEXT).env
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.product_a = cls.env.ref("product.product_product_4")
         cls.note_type1 = cls.env["stock.picking.note.type"].create(
             {"name": "Note type 1", "sequence": 10}
