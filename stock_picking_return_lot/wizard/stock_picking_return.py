@@ -12,7 +12,6 @@ class ReturnPicking(models.TransientModel):
         # stock_account will raise singltone error, to propagate lot_id we are
         # mapping moves between pickings after move was created
         res = super()._create_returns()
-
         picking_returned = self.env["stock.picking"].browse(res[0])
         ml_ids_to_update = picking_returned.move_line_ids.ids
         moves_with_lot = self.product_return_moves.mapped(

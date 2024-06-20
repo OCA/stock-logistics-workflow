@@ -1,1 +1,1 @@
-This module propagates serial numbers or lots form initial picking to backorder.
+This module propagates serial numbers or lots from initial picking to return picking.
