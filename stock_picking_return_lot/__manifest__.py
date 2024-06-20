@@ -3,11 +3,10 @@
 
 {
     "name": "Stock Picking Return Lot",
-    "summary": "This module don't allows you to fill up return with serial lots"
-    "from initial picking.",
-    "version": "12.0.1.0.0",
+    "summary": "Propagate SN/lots from origin picking to return picking.",
+    "version": "14.0.1.0.1",
     "license": "AGPL-3",
     "author": "Camptocamp, Odoo Community Association (OCA)",
-    "website": "https://github.com/OCA/stock-logistics-workflow/",
+    "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": ["stock", "stock_account"],
 }
