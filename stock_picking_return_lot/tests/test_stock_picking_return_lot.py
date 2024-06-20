@@ -87,12 +87,13 @@ class StockPickingReturnLotTest(common.SavepointCase):
     def create_return_wiz(self):
         return (
             self.env["stock.return.picking"]
-            .with_context(active_id=self.picking.id)
+            .with_context(active_id=self.picking.id, active_model="stock.picking")
             .create({})
         )
 
     def test_return(self):
         wiz = self.create_return_wiz()
+        wiz._onchange_picking_id()
         self.assertEqual(len(wiz.product_return_moves), 1)
         picking_returned_id = wiz._create_returns()[0]
         picking_returned = self.picking_obj.browse(picking_returned_id)
