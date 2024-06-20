@@ -30,7 +30,6 @@ class AccountMove(models.Model):
             invoice.picking_ids = invoice.mapped(
                 "invoice_line_ids.move_line_ids.picking_id"
             )
-            invoice.picking_count = len(invoice.picking_ids)
 
     @api.depends("picking_ids")
     def _compute_picking_count(self):
