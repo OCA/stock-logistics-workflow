@@ -84,6 +84,7 @@ addon | version | maintainers | summary
 [stock_picking_reallocation](stock_picking_reallocation/) | 14.0.1.0.0 |  | Allow to reallocate moves from a picking to several pickings.
 [stock_picking_restrict_cancel_printed](stock_picking_restrict_cancel_printed/) | 14.0.1.0.1 |  | Prevent canceling a stock transfer if printed.
 [stock_picking_restrict_cancel_with_orig_move](stock_picking_restrict_cancel_with_orig_move/) | 14.0.1.0.1 |  | Restrict cancellation of dest moves according to origin.
+[stock_picking_return_lot](stock_picking_return_lot/) | 14.0.1.0.1 |  | Propagate SN/lots from origin picking to return picking.
 [stock_picking_return_show_lot](stock_picking_return_show_lot/) | 14.0.1.0.1 |  | This module allows to show lots in the picking return wizard before " "return picking creation.
 [stock_picking_sale_order_link](stock_picking_sale_order_link/) | 14.0.1.0.1 |  | Link between picking and sale order
 [stock_picking_send_by_mail](stock_picking_send_by_mail/) | 14.0.1.0.0 |  | Send stock picking by email
