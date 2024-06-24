@@ -35,6 +35,11 @@ msgid "Product"
 msgstr "Producto"
 
 #. module: stock_picking_auto_create_lot
+#: model:ir.model,name:stock_picking_auto_create_lot.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Movimientos de producto (Movimiento de stock)"
+
+#. module: stock_picking_auto_create_lot
 #: model:ir.model,name:stock_picking_auto_create_lot.model_stock_move
 msgid "Stock Move"
 msgstr "Movimiento de existencias"
@@ -43,9 +48,6 @@ msgstr "Movimiento de existencias"
 #: model:ir.model,name:stock_picking_auto_create_lot.model_stock_picking
 msgid "Transfer"
 msgstr "Transferir"
-
-#~ msgid "Product Moves (Stock Move Line)"
-#~ msgstr "Movimientos de producto (Movimiento de stock)"
 
 #~ msgid "Product Template"
 #~ msgstr "Plantilla de producto"
