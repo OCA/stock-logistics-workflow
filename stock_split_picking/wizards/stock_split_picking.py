@@ -40,7 +40,7 @@ class StockSplitPicking(models.TransientModel):
         return getattr(self, "_apply_%s" % self[:1].mode)()
 
     def _apply_done(self):
-        return self.mapped("picking_ids").split_process("quantity_done")
+        return self.picking_ids.split_process("quantity_done")
 
     def _apply_move(self):
         """Create new pickings for every move line, keep first
