@@ -31,6 +31,8 @@ class StockPicking(models.Model):
         for picking in self:
             picking._check_split_process(split_move_type)
 
+            if not picking.move_ids.filtered(lambda r: r.reserved_availability):
+                raise UserError(_("No split available"))
             # Split moves considering the qty_done on moves
             new_moves = self.env["stock.move"]
             for move in picking.move_ids:
@@ -70,9 +72,7 @@ class StockPicking(models.Model):
             if new_moves:
                 backorder_picking = picking._create_split_backorder()
                 new_moves.write({"picking_id": backorder_picking.id})
-                new_moves.mapped("move_line_ids").write(
-                    {"picking_id": backorder_picking.id}
-                )
+                new_moves.move_line_ids.write({"picking_id": backorder_picking.id})
                 new_moves._action_assign()
 
     def _create_split_backorder(self, default=None):
@@ -113,5 +113,5 @@ class StockPicking(models.Model):
                     _("Cannot split off all moves from picking %s") % this.name
                 )
         moves.write({"picking_id": new_picking.id})
-        moves.mapped("move_line_ids").write({"picking_id": new_picking.id})
+        moves.move_line_ids.write({"picking_id": new_picking.id})
         return new_picking
