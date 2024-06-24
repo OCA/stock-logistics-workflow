@@ -65,7 +65,6 @@ class StockSplitPicking(models.TransientModel):
         self.picking_ids.split_process("reserved_availability")
         self.picking_ids.move_ids._recompute_state()
         return True
-        
 
     def _apply_selection(self):
         """Create one picking for all selected moves"""
