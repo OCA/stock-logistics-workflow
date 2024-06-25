@@ -40,44 +40,37 @@ class StockSplitPicking(models.TransientModel):
         return getattr(self, "_apply_%s" % self[:1].mode)()
 
     def _apply_done(self):
-        return self.mapped("picking_ids").split_process("quantity_done")
+        return self.picking_ids.split_process("quantity_done")
 
     def _apply_move(self):
         """Create new pickings for every move line, keep first
         move line in original picking
         """
         new_pickings = self.env["stock.picking"]
-        for picking in self.mapped("picking_ids"):
+        for picking in self.picking_ids:
             for move in picking.move_lines[1:]:
                 new_pickings += picking._split_off_moves(move)
         return self._picking_action(new_pickings)
 
     def _apply_available_line(self):
         """Create different pickings for available and not available move line"""
-        for picking in self.mapped("picking_ids"):
-            if picking.picking_type_code == "outgoing":
-                moves = picking.mapped("move_lines")
-                moves_available = moves.filtered(lambda move: move.state == "confirmed")
-                new_picking = moves_available.mapped("picking_id")._split_off_moves(
-                    moves_available
-                )
-            else:
-                raise UserError(_("This type of mode is not available for the receipt"))
-        return self._picking_action(new_picking)
+        for picking in self.picking_ids:
+            moves = picking.move_lines
+            moves_available = moves.filtered(lambda move: move.state == "assigned")
+            moves_available.picking_id._split_off_moves(
+                moves_available
+            )
+        return self._picking_action(self.picking_ids)
 
     def _apply_available_product(self):
         """Create different pickings for available and not available move line"""
-        return self.mapped("picking_ids").split_process("reserved_availability")
+        return self.picking_ids.split_process("reserved_availability")
 
     def _apply_selection(self):
         """Create one picking for all selected moves"""
-        moves = self.mapped("move_ids")
-        new_picking = moves.mapped("picking_id")._split_off_moves(moves)
+        moves = self.move_ids
+        new_picking = moves.picking_id._split_off_moves(moves)
         return self._picking_action(new_picking)
 
     def _picking_action(self, pickings):
-        action = self.env["ir.actions.act_window"]._for_xml_id(
-            "stock.action_picking_tree_all",
-        )
-        action["domain"] = [("id", "in", pickings.ids)]
-        return action
+        return pickings.get_formview_action() if pickings else False

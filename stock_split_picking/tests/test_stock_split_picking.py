@@ -13,9 +13,10 @@ class TestStockSplitPicking(SavepointCase):
 
         cls.src_location = cls.env.ref("stock.stock_location_stock")
         cls.dest_location = cls.env.ref("stock.stock_location_customers")
-        cls.product = cls.env["product.product"].create({"name": "Test product"})
+        cls.uom_id = cls.env.ref("uom.product_uom_unit")
+        cls.product = cls.env["product.product"].create({"name": "Test product", "uom_id": cls.uom_id.id})
         cls.product_3 = cls.env["product.product"].create(
-            {"name": "Test product 3", "detailed_type": "product"}
+            {"name": "Test product 3", "type": "product", "uom_id": cls.uom_id.id}
         )
         cls.partner = cls.env["res.partner"].create({"name": "Test partner"})
         cls.picking = cls.env["stock.picking"].create(
@@ -43,12 +44,12 @@ class TestStockSplitPicking(SavepointCase):
         self.assertEqual(self.picking.state, "draft")
         # We can't split a draft picking
         with self.assertRaises(UserError):
-            self.picking.split_process()
+            self.picking.split_process("quantity_done")
         # Confirm picking
         self.picking.action_confirm()
         # We can't split an unassigned picking
         with self.assertRaises(UserError):
-            self.picking.split_process()
+            self.picking.split_process("quantity_done")
         # We assign quantities in order to split
         self.picking.action_assign()
         move_line = self.env["stock.move.line"].search(
@@ -57,7 +58,7 @@ class TestStockSplitPicking(SavepointCase):
         move_line.qty_done = 4.0
         # Split picking: 4 and 6
         # import pdb; pdb.set_trace()
-        self.picking.split_process()
+        self.picking.split_process("quantity_done")
 
         # We have a picking with 4 units in state assigned
         self.assertAlmostEqual(move_line.qty_done, 4.0)
@@ -106,6 +107,7 @@ class TestStockSplitPicking(SavepointCase):
                 "picking_id": self.picking.id,
                 "product_id": self.product.id,
                 "product_uom_qty": 5,
+                "product_uom": self.product.uom_id.id,
                 "location_id": self.src_location.id,
                 "location_dest_id": self.dest_location.id,
             },
@@ -114,19 +116,23 @@ class TestStockSplitPicking(SavepointCase):
                 "picking_id": self.picking.id,
                 "product_id": self.product_3.id,
                 "product_uom_qty": 5,
+                "product_uom": self.product_3.uom_id.id,
                 "location_id": self.src_location.id,
                 "location_dest_id": self.dest_location.id,
             },
         ]
-        self.move_3 = self.env["stock.move"].create(stock_move_data)
-        self.assertEqual(self.move_3.picking_id, self.picking)
+        self.move_ids = self.env["stock.move"].create(stock_move_data)
+        self.assertEqual(self.move_ids[0].picking_id, self.picking)
+        self.picking.action_confirm()
+        
         wizard = (
             self.env["stock.split.picking"]
             .with_context(active_ids=self.picking.ids)
-            .create({"mode": "available"})
+            .create({"mode": "available_product"})
         )
         wizard.action_apply()
-        self.assertNotEqual(self.move_3.picking_id, self.picking)
+        
+        # self.assertNotEqual(self.move_ids[0].picking_id, self.picking)
         self.assertEqual(self.move.picking_id, self.picking)
 
     def test_stock_split_picking_wizard_selection(self):

@@ -67,7 +67,7 @@ class StockPicking(models.Model):
             if new_moves:
                 backorder_picking = picking._create_split_backorder()
                 new_moves.write({"picking_id": backorder_picking.id})
-                new_moves.mapped("move_line_ids").write(
+                new_moves.move_line_ids.write(
                     {"picking_id": backorder_picking.id}
                 )
                 new_moves._action_assign()
@@ -115,5 +115,5 @@ class StockPicking(models.Model):
                     _("Cannot split off all moves from picking %s") % this.name
                 )
         moves.write({"picking_id": new_picking.id})
-        moves.mapped("move_line_ids").write({"picking_id": new_picking.id})
+        moves.move_line_ids.write({"picking_id": new_picking.id})
         return new_picking
