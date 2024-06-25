@@ -1,8 +1,7 @@
 # Copyright 2020 Hunki Enterprises BV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, fields, models
-from odoo.exceptions import UserError
+from odoo import fields, models
 
 
 class StockSplitPicking(models.TransientModel):
@@ -57,9 +56,7 @@ class StockSplitPicking(models.TransientModel):
         for picking in self.picking_ids:
             moves = picking.move_lines
             moves_available = moves.filtered(lambda move: move.state == "assigned")
-            moves_available.picking_id._split_off_moves(
-                moves_available
-            )
+            moves_available.picking_id._split_off_moves(moves_available)
         return self._picking_action(self.picking_ids)
 
     def _apply_available_product(self):

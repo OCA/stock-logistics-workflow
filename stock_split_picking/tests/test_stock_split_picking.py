@@ -14,7 +14,9 @@ class TestStockSplitPicking(SavepointCase):
         cls.src_location = cls.env.ref("stock.stock_location_stock")
         cls.dest_location = cls.env.ref("stock.stock_location_customers")
         cls.uom_id = cls.env.ref("uom.product_uom_unit")
-        cls.product = cls.env["product.product"].create({"name": "Test product", "uom_id": cls.uom_id.id})
+        cls.product = cls.env["product.product"].create(
+            {"name": "Test product", "uom_id": cls.uom_id.id}
+        )
         cls.product_3 = cls.env["product.product"].create(
             {"name": "Test product 3", "type": "product", "uom_id": cls.uom_id.id}
         )
@@ -124,14 +126,14 @@ class TestStockSplitPicking(SavepointCase):
         self.move_ids = self.env["stock.move"].create(stock_move_data)
         self.assertEqual(self.move_ids[0].picking_id, self.picking)
         self.picking.action_confirm()
-        
+
         wizard = (
             self.env["stock.split.picking"]
             .with_context(active_ids=self.picking.ids)
             .create({"mode": "available_product"})
         )
         wizard.action_apply()
-        
+
         # self.assertNotEqual(self.move_ids[0].picking_id, self.picking)
         self.assertEqual(self.move.picking_id, self.picking)
 
