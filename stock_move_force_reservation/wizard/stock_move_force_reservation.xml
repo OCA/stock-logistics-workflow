@@ -10,6 +10,7 @@
         <field name="partner_id" string="Partner"/>
         <field name="date" />
         <field name="date_deadline"/>
+        <field name="forecast_availability" string="reserved"/>
         <field name="state"/>
         <field name="picking_state"/>
       </tree>
@@ -29,6 +30,9 @@
           </group>
           <group>
             <field name="move_to_unreserve_ids" context="{'tree_view_ref':'stock_move_force_reservation.stock_move_view_tree'}" nolabel="1" />
+          </group>
+          <group>
+            <field name="total_quantity"/>
           </group>
         </sheet> 
         <footer>
