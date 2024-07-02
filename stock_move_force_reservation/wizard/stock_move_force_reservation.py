@@ -31,6 +31,7 @@ class StockMoveForceReservation(models.TransientModel):
         string="Moves To Unreserve",
         help="Moves from other transfers that will be unreserve",
     )
+    total_quantity = fields.Float(compute="_compute_total_quantity")
 
     @api.model
     def default_get(self, fields_list):
@@ -46,11 +47,18 @@ class StockMoveForceReservation(models.TransientModel):
         )
         return rec
     
+    @api.depends("move_to_unreserve_ids")
+    def _compute_total_quantity(self):
+        total_quantity=0
+        for record in self.move_to_unreserve_ids:
+            total_quantity += record.product_uom_qty
+        self.total_quantity = total_quantity
+    
     @api.onchange('move_id', 'product_id')
-    def onchange_account_ids(self):
+    def onchange_move_id(self):
         if self.move_id and self.product_id:
             move_ids = self.env['stock.move'].search(
-                [('product_id', '=', self.product_id.id), ('state', '!=', 'done'), ('id', '!=', self.move_id.id)])
+                [('product_id', '=', self.product_id.id), ('state', '=', 'assigned'), ('id', '!=', self.move_id.id)])
 
             domain = {'move_to_unreserve_ids': [('id', 'in', move_ids.ids)]}
             return {'domain': domain}
