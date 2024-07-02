@@ -1,4 +1,5 @@
 # Copyright 2016 AvanzOsc (http://www.avanzosc.es)
+# Copyright 2024 Adriana Saiz <adriana.saiz@factorlibre.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo import _, exceptions, models
@@ -17,4 +18,4 @@ class StockMoveLine(models.Model):
                     )
                     % ml.lot_id.name
                 )
-        super()._action_done()
+        return super()._action_done()

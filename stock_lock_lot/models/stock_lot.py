@@ -1,13 +1,14 @@
 # Copyright 2015 Serv. Tec. Avanzados - Pedro M. Baeza (http://www.serviciosbaeza.com)
 # Copyright 2015 AvanzOsc (http://www.avanzosc.es)
+# Copyright 2024 Adriana Saiz <adriana.saiz@factorlibre.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo import _, api, exceptions, fields, models
 
 
-class StockProductionLot(models.Model):
-    _name = "stock.production.lot"
-    _inherit = ["stock.production.lot", "mail.thread"]
+class StockLot(models.Model):
+    _name = "stock.lot"
+    _inherit = ["stock.lot", "mail.thread"]
     _mail_post_access = "read"
 
     locked = fields.Boolean(string="Blocked", tracking=True)
@@ -51,30 +52,31 @@ class StockProductionLot(models.Model):
                 )
             )
 
-    @api.model
-    def create(self, vals):
+    @api.model_create_multi
+    def create(self, vals_list):
         """Force the locking/unlocking, ignoring the value of 'locked'."""
-        product = self.env["product.product"].browse(
-            vals.get(
-                "product_id",
-                # Web quick-create provide in context
-                self.env.context.get(
-                    "product_id", self.env.context.get("default_product_id", False)
-                ),
+        for vals in vals_list:
+            product = self.env["product.product"].browse(
+                vals.get(
+                    "product_id",
+                    # Web quick-create provide in context
+                    self.env.context.get(
+                        "product_id", self.env.context.get("default_product_id", False)
+                    ),
+                )
             )
-        )
-        vals["locked"] = self._get_product_locked(product)
-        lot = super(
-            StockProductionLot, self.with_context(bypass_lock_permission_check=True)
-        ).create(vals)
-        return self.browse(lot.id)  # for cleaning context
+            vals["locked"] = self._get_product_locked(product)
+        lots = super(
+            StockLot, self.with_context(bypass_lock_permission_check=True)
+        ).create(vals_list)
+        return self.browse(lots.ids)  # for cleaning context
 
     def write(self, values):
         """ "Lock the lot if changing the product and locking is required"""
         if "product_id" in values:
             product = self.env["product.product"].browse(values["product_id"])
             values["locked"] = self._get_product_locked(product)
-        return super(StockProductionLot, self).write(values)
+        return super().write(values)
 
     def _track_subtype(self, init_values):
         self.ensure_one()

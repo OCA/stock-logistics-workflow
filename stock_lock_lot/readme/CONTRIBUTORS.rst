@@ -7,3 +7,4 @@
 
   * Pedro M. Baeza
   * Ernesto Tejeda
+  * Adriana Saiz <adriana.saiz@factorlibre.com>

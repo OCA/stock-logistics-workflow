@@ -6,7 +6,7 @@
 {
     "name": "Stock Lock Lot",
     "Summary": "Restrict blocked lots in Stock Moves and reservations",
-    "version": "14.0.1.0.0",
+    "version": "16.0.1.0.0",
     "author": "Avanzosc, Tecnativa, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "category": "Warehouse Management",

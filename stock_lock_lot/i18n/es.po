@@ -225,13 +225,13 @@ msgid "Website communication history"
 msgstr ""
 
 #. module: stock_lock_lot
-#: code:addons/stock_lock_lot/models/stock_production_lot.py:0
+#: code:addons/stock_lock_lot/models/stock_lot.py:0
 #, fuzzy, python-format
 msgid "You are not allowed to block/unblock Serial Numbers/Lots"
 msgstr "Prohibir estrictamente los movimientos de lote/nº de serie bloqueados."
 
 #. module: stock_lock_lot
-#: code:addons/stock_lock_lot/models/stock_production_lot.py:0
+#: code:addons/stock_lock_lot/models/stock_lot.py:0
 #, python-format
 msgid ""
 "You are not allowed to block/unblock, there are reserved quantities for "
