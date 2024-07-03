@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 
 
 class StockSplitPicking(models.TransientModel):
@@ -120,3 +121,8 @@ class StockSplitProductQuantities(models.TransientModel):
                 .move_lines.filtered(lambda r: r.product_id == self.product_id)
             )
             self.qty_to_deliver = picking_id.product_uom_qty
+
+    @api.onchange("qty_to_split")
+    def onchange_qty_to_split(self):
+        if self.qty_to_split > self.qty_to_deliver:
+            raise UserError(_("Quantity to split can't be bigger than quantity to deliver"))

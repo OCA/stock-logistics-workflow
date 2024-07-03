@@ -141,5 +141,7 @@ class StockPicking(models.Model):
                     {"picking_id": new_picking.id, "product_uom_qty": record["qty"]}
                 )
                 new_move_id.move_line_ids.write({"picking_id": new_picking.id})
-                new_move_id.action_confirm()
-                new_move_id.action_assing()
+                new_picking.action_confirm()
+                new_picking.action_assign()
+        
+        return new_picking
