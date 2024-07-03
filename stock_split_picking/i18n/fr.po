@@ -162,6 +162,13 @@ msgid "Split pickings"
 msgstr "Diviser des BLs"
 
 #. module: stock_split_picking
+#: code:addons/stock_split_picking/wizards/stock_split_picking.py:0
+#: model:ir.model.fields.selection,name:stock_split_picking.selection__stock_split_picking__mode__split_product_quantities
+#, python-format
+msgid "Split selected product and quantitites "
+msgstr "Diviser les produits et les quantités sélectionnés"
+
+#. module: stock_split_picking
 #: code:addons/stock_split_picking/models/stock_picking.py:0
 #, python-format
 msgid ""
