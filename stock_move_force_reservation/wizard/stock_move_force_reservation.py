@@ -57,8 +57,9 @@ class StockMoveForceReservation(models.TransientModel):
     @api.onchange('move_id', 'product_id')
     def onchange_move_id(self):
         if self.move_id and self.product_id:
+            warehouse_id = self.picking_id.location_id.get_warehouse()
             move_ids = self.env['stock.move'].search(
-                [('product_id', '=', self.product_id.id), ('state', '=', 'assigned'), ('id', '!=', self.move_id.id)])
+                [('product_id', '=', self.product_id.id), ('state', '=', 'assigned'), ('id', '!=', self.move_id.id), ('warehouse_id', '=', warehouse_id.id)])
 
             domain = {'move_to_unreserve_ids': [('id', 'in', move_ids.ids)]}
             return {'domain': domain}
