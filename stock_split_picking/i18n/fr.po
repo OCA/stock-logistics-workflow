@@ -127,6 +127,12 @@ msgid "Qty To Split"
 msgstr "Qty à diviser"
 
 #. module: stock_split_picking
+#: code:addons/stock_split_picking/wizards/stock_split_picking.py:0
+#, python-format
+msgid "Quantity to split can't be bigger than quantity to deliver"
+msgstr "La quantité à diviser ne peut pas être supérieure à la quantité à livrer"
+
+#. module: stock_split_picking
 #: model:ir.model.fields.selection,name:stock_split_picking.selection__stock_split_picking__mode__selection
 msgid "Select move lines to split off"
 msgstr "Sélectionner les mouvements à extraire du BL"

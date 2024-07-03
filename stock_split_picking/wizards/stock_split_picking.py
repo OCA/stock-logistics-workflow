@@ -125,4 +125,6 @@ class StockSplitProductQuantities(models.TransientModel):
     @api.onchange("qty_to_split")
     def onchange_qty_to_split(self):
         if self.qty_to_split > self.qty_to_deliver:
-            raise UserError(_("Quantity to split can't be bigger than quantity to deliver"))
+            raise UserError(
+                _("Quantity to split can't be bigger than quantity to deliver")
+            )

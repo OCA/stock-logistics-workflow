@@ -143,5 +143,5 @@ class StockPicking(models.Model):
                 new_move_id.move_line_ids.write({"picking_id": new_picking.id})
                 new_picking.action_confirm()
                 new_picking.action_assign()
-        
+
         return new_picking
