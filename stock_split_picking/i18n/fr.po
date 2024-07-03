@@ -111,6 +111,22 @@ msgid "Picking"
 msgstr "BL"
 
 #. module: stock_split_picking
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_product_quantities__product_id
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_product_quantities__product_ids
+msgid "Product"
+msgstr "Produit"
+
+#. module: stock_split_picking
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_product_quantities__qty_to_deliver
+msgid "Qty To Deliver"
+msgstr "Qty à livrer"
+
+#. module: stock_split_picking
+#: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_product_quantities__qty_to_split
+msgid "Qty To Split"
+msgstr "Qty à diviser"
+
+#. module: stock_split_picking
 #: model:ir.model.fields.selection,name:stock_split_picking.selection__stock_split_picking__mode__selection
 msgid "Select move lines to split off"
 msgstr "Sélectionner les mouvements à extraire du BL"
@@ -125,6 +141,20 @@ msgstr "Diviser"
 #: model:ir.model,name:stock_split_picking.model_stock_split_picking
 msgid "Split a picking"
 msgstr "Diviser un BL"
+
+#. module: stock_split_picking
+#: code:addons/stock_split_picking/wizards/stock_split_picking.py:0
+#: model:ir.model.fields.selection,name:stock_split_picking.selection__stock_split_picking__mode__available_line
+#, python-format
+msgid "Split move lines between available and not available move lines"
+msgstr "Diviser les lignes de mouvements entre les lignes de mouvements disponibles et non disponibles"
+
+#. module: stock_split_picking
+#: code:addons/stock_split_picking/wizards/stock_split_picking.py:0
+#: model:ir.model.fields.selection,name:stock_split_picking.selection__stock_split_picking__mode__available_product
+#, python-format
+msgid "Split move lines between available and not available products"
+msgstr "Diviser les lignes de mouvement entre les produits disponibles et non disponibles"
 
 #. module: stock_split_picking
 #: model:ir.actions.act_window,name:stock_split_picking.action_stock_split_picking
