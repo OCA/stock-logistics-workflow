@@ -27,7 +27,7 @@ class StockMove(models.Model):
 
     def _compute_qty_in_stock(self):
         for record in self:
-            record.qty_in_stock = record.product_id.with_context({'warehouse':record.location_id.get_warehouse().id}).qty_available
+            record.qty_in_stock = record.product_id.with_context(warehouse=record.location_id.get_warehouse().id).qty_available
     
     def force_quantity(self):
         self.ensure_one()
