@@ -8,8 +8,8 @@ from odoo.tools import float_compare, float_is_zero
 from odoo.addons.stock.models.product import OPERATORS
 
 
-class ProductionLot(models.Model):
-    _inherit = "stock.production.lot"
+class StockLot(models.Model):
+    _inherit = "stock.lot"
 
     product_qty = fields.Float(search="_search_product_qty")
 

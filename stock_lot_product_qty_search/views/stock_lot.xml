@@ -2,7 +2,7 @@
 <odoo>
     <record model="ir.ui.view" id="search_product_lot_filter_inherit">
         <field name="name">Production Lots Filter Qty on Hand</field>
-        <field name="model">stock.production.lot</field>
+        <field name="model">stock.lot</field>
         <field name="inherit_id" ref="stock.search_product_lot_filter" />
         <field name="arch" type="xml">
             <field name="product_id" position="after">

@@ -14,15 +14,11 @@ class TestSearchLotProductQty(TransactionCase):
             "Product Unit of Measure"
         )
         cls.existing_lots_qties = (
-            cls.env["stock.production.lot"]
-            .search([])
-            .read(["product_id", "product_qty"])
+            cls.env["stock.lot"].search([]).read(["product_id", "product_qty"])
         )
 
     def test_search_with_product_qty(self):
-        lots_with_qties = self.env["stock.production.lot"].search(
-            [("product_qty", ">", 0)]
-        )
+        lots_with_qties = self.env["stock.lot"].search([("product_qty", ">", 0)])
         self.assertEqual(
             lots_with_qties.ids,
             [
@@ -36,9 +32,7 @@ class TestSearchLotProductQty(TransactionCase):
         )
 
     def test_search_without_product_qty(self):
-        lots_with_qties = self.env["stock.production.lot"].search(
-            [("product_qty", "=", 0)]
-        )
+        lots_with_qties = self.env["stock.lot"].search([("product_qty", "=", 0)])
         self.assertEqual(
             lots_with_qties.ids,
             [
@@ -51,9 +45,7 @@ class TestSearchLotProductQty(TransactionCase):
         )
 
     def test_search_bigger_product_qty(self):
-        lots_with_qties = self.env["stock.production.lot"].search(
-            [("product_qty", ">", 50)]
-        )
+        lots_with_qties = self.env["stock.lot"].search([("product_qty", ">", 50)])
         self.assertEqual(
             lots_with_qties.ids,
             [
@@ -67,9 +59,7 @@ class TestSearchLotProductQty(TransactionCase):
         )
 
     def test_search_smaller_product_qty(self):
-        lots_with_qties = self.env["stock.production.lot"].search(
-            [("product_qty", "<", 1)]
-        )
+        lots_with_qties = self.env["stock.lot"].search([("product_qty", "<", 1)])
         self.assertEqual(
             lots_with_qties.ids,
             [
@@ -84,6 +74,6 @@ class TestSearchLotProductQty(TransactionCase):
 
     def test_search_product_qty_args(self):
         with self.assertRaises(UserError):
-            self.env["stock.production.lot"].search([("product_qty", "like", 1)])
+            self.env["stock.lot"].search([("product_qty", "like", 1)])
         with self.assertRaises(UserError):
-            self.env["stock.production.lot"].search([("product_qty", "=", "1")])
+            self.env["stock.lot"].search([("product_qty", "=", "1")])
