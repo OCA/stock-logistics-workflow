@@ -8,7 +8,7 @@
             <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='forecast_availability']" position="after">
                 <field name="show_force_quantity" invisible="True"/>
                 <field name="qty_in_stock"/>
-                <button name="force_quantity" string="Force quantity" type="object" attrs="{'invisible': ['|', '|', ('show_force_quantity', '=', False), ('qty_in_stock', '=', 0), ('state', '!=', 'confirmed')]}"/>
+                <button name="force_quantity" string="Force quantity" type="object" attrs="{'invisible': ['|', '|', ('show_force_quantity', '=', False), ('state', 'not in', ['confirmed', 'partially_available'])]}"/>
             </xpath>
         </field>
     </record>
