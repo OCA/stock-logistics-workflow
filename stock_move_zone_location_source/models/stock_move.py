@@ -33,9 +33,10 @@ class StockMove(models.Model):
         src_zones = self.env["stock.location"].browse()
         for zone_location in self.move_line_ids.location_id.zone_location_id:
             src_zones |= zone_location._get_source_zone()
-        unvisited_moves = (self - visited) if visited else self
+        visited = visited + self if visited else self
+        unvisited_moves = self.move_orig_ids - visited
         for move in unvisited_moves:
-            src_zones |= move.move_orig_ids._find_source_zone_locations()
+            src_zones |= move._find_source_zone_locations(visited)
         return src_zones
 
     @api.depends("move_orig_ids")
