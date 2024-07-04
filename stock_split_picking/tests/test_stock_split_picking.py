@@ -157,3 +157,166 @@ class TestStockSplitPicking(SavepointCase):
             # fails because we can't split cancelled pickings
             self.picking.action_cancel()
             self.picking._split_off_moves(self.picking.move_lines)
+
+    def test_split_product_quantities_one_product(self):
+        self.product_4 = self.env["product.product"].create(
+            {"name": "Test product 4", "type": "product", "uom_id": self.uom_id.id}
+        )
+        self.env["stock.quant"].create(
+            [
+                {
+                    "product_id": self.product_3.id,
+                    "location_id": self.src_location.id,
+                    "inventory_quantity": 20,
+                },
+                {
+                    "product_id": self.product_4.id,
+                    "location_id": self.src_location.id,
+                    "inventory_quantity": 10,
+                },
+            ]
+        )
+
+        order_id = self.env["sale.order"].create(
+            {
+                "partner_id": self.partner.id,
+                "order_line": [
+                    (
+                        0,
+                        0,
+                        {
+                            "product_id": self.product_3.id,
+                            "product_uom_qty": 5,
+                        },
+                    )
+                ],
+            }
+        )
+        order_id.action_confirm()
+        wizard = (
+            self.env["stock.split.picking"]
+            .with_context(active_ids=order_id.picking_ids.ids)
+            .create(
+                {
+                    "mode": "split_product_quantities",
+                    "stock_split_product_quantities_ids": [
+                        (
+                            0,
+                            0,
+                            {
+                                "product_id": self.product_3.id,
+                                "qty_to_split": 2,
+                            },
+                        )
+                    ],
+                }
+            )
+        )
+        wizard.action_apply()
+        self.assertEqual(len(order_id.picking_ids), 2)
+        self.assertEqual(
+            order_id.picking_ids[1].move_ids_without_package.product_uom_qty, 2
+        )
+        self.assertEqual(
+            order_id.picking_ids[0].move_ids_without_package.product_uom_qty, 3
+        )
+
+    def test_split_product_quantities_two_products(self):
+        self.product_4 = self.env["product.product"].create(
+            {"name": "Test product 4", "type": "product", "uom_id": self.uom_id.id}
+        )
+        self.env["stock.quant"].create(
+            [
+                {
+                    "product_id": self.product_3.id,
+                    "location_id": self.src_location.id,
+                    "inventory_quantity": 20,
+                },
+                {
+                    "product_id": self.product_4.id,
+                    "location_id": self.src_location.id,
+                    "inventory_quantity": 10,
+                },
+            ]
+        )
+
+        order_id = self.env["sale.order"].create(
+            {
+                "partner_id": self.partner.id,
+                "order_line": [
+                    (
+                        0,
+                        0,
+                        {
+                            "product_id": self.product_3.id,
+                            "product_uom_qty": 5,
+                        },
+                    ),
+                    (
+                        0,
+                        0,
+                        {
+                            "product_id": self.product_4.id,
+                            "product_uom_qty": 2,
+                        },
+                    ),
+                ],
+            }
+        )
+        order_id.action_confirm()
+        wizard = (
+            self.env["stock.split.picking"]
+            .with_context(active_ids=order_id.picking_ids.ids)
+            .create(
+                {
+                    "mode": "split_product_quantities",
+                    "stock_split_product_quantities_ids": [
+                        (
+                            0,
+                            0,
+                            {
+                                "product_id": self.product_3.id,
+                                "qty_to_split": 2,
+                            },
+                        ),
+                        (
+                            0,
+                            0,
+                            {
+                                "product_id": self.product_4.id,
+                                "qty_to_split": 2,
+                            },
+                        ),
+                    ],
+                }
+            )
+        )
+        wizard.action_apply()
+        self.assertEqual(len(order_id.picking_ids), 2)
+        self.assertEqual(len(order_id.picking_ids[0].move_ids_without_package), 1)
+        self.assertEqual(len(order_id.picking_ids[1].move_ids_without_package), 2)
+
+    def test_onchange_qty_to_split(self):
+        self.picking.action_confirm()
+        self.picking.action_assign()
+        wizard = (
+            self.env["stock.split.picking"]
+            .with_context(active_ids=self.picking.ids)
+            .create(
+                {
+                    "mode": "split_product_quantities",
+                    "stock_split_product_quantities_ids": [
+                        (
+                            0,
+                            0,
+                            {
+                                "product_id": self.product.id,
+                            },
+                        )
+                    ],
+                }
+            )
+        )
+        wizard.stock_split_product_quantities_ids[0].qty_to_split = 11
+        with self.assertRaises(UserError):
+            wizard.stock_split_product_quantities_ids[0].onchange_qty_to_split()
