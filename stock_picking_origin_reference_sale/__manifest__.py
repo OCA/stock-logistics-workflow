@@ -3,7 +3,7 @@
 {
     "name": "Stock Picking Origin Reference Sale",
     "summary": "Transfer to Sales Order navigation from the Source Document.",
-    "version": "15.0.1.0.0",
+    "version": "17.0.1.0.0",
     "license": "AGPL-3",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
