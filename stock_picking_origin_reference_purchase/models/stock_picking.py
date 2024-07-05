@@ -22,8 +22,5 @@ class StockPicking(models.Model):
                     [("name", "=", picking.origin)], limit=1
                 )
                 if rel_purchase:
-                    picking.origin_reference = "%s,%s" % (
-                        PO_MODEL_NAME,
-                        rel_purchase.id,
-                    )
+                    picking.origin_reference = f"{PO_MODEL_NAME},{rel_purchase.id}"
         return res
