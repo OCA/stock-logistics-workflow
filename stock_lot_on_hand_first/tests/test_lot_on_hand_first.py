@@ -18,7 +18,7 @@ class TestLotOnHandFirst(TransactionCase):
 
     @classmethod
     def _create_lot(cls, product, lot_name, qty=0):
-        lot = cls.env["stock.production.lot"].create(
+        lot = cls.env["stock.lot"].create(
             {
                 "name": lot_name,
                 "product_id": product.id,
@@ -41,7 +41,7 @@ class TestLotOnHandFirst(TransactionCase):
         lot_5 = self._create_lot(self.product, "LOT-000005", 1)
 
         name_get_res = (
-            self.env["stock.production.lot"]
+            self.env["stock.lot"]
             .with_context(name_search_qty_on_hand_first=True)
             .name_search(args=[("product_id", "=", self.product.id)])
         )
@@ -63,7 +63,7 @@ class TestLotOnHandFirst(TransactionCase):
         lot_3 = self._create_lot(self.product, "LOT-000003", 0)
 
         name_get_res = (
-            self.env["stock.production.lot"]
+            self.env["stock.lot"]
             .with_context(name_search_qty_on_hand_first=True)
             .name_search(args=[("product_id", "=", self.product.id)])
         )
@@ -105,7 +105,7 @@ class TestLotOnHandFirst(TransactionCase):
         lot_10 = self._create_lot(self.product, "LOT-000010", 5)
 
         name_get_res = (
-            self.env["stock.production.lot"]
+            self.env["stock.lot"]
             .with_context(name_search_qty_on_hand_first=True)
             .name_search(args=[("product_id", "=", self.product.id)], limit=8)
         )

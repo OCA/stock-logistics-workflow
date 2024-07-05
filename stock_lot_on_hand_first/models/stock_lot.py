@@ -4,18 +4,20 @@ from odoo import api, models
 from odoo.osv.expression import AND
 
 
-class ProductionLot(models.Model):
-    _inherit = "stock.production.lot"
+class StockLot(models.Model):
+    _inherit = "stock.lot"
 
     @api.model
-    def _name_search(self, name="", args=None, operator="ilike", limit=80):
+    def _name_search(
+        self, name="", args=None, operator="ilike", limit=80, name_get_uid=None
+    ):
         """Move lots without a qty on hand at the end of the list"""
 
         if self.env.context.get("name_search_qty_on_hand_first"):
             args = list(args or [])
 
             with_quantity_domain = AND([args, [("product_qty", ">", 0)]])
-            with_quantity_count = self.env["stock.production.lot"].search_count(
+            with_quantity_count = self.env["stock.lot"].search_count(
                 with_quantity_domain
             )
 
@@ -23,13 +25,18 @@ class ProductionLot(models.Model):
                 args = with_quantity_domain
             else:
                 with_quantity_ids = super()._name_search(
-                    name=name, args=with_quantity_domain, operator=operator, limit=limit
+                    name=name,
+                    args=with_quantity_domain,
+                    operator=operator,
+                    limit=limit,
+                    name_get_uid=name_get_uid,
                 )
                 without_quantity_ids = super()._name_search(
                     name=name,
                     args=AND([args, [("product_qty", "=", 0)]]),
                     operator=operator,
                     limit=limit - with_quantity_count,
+                    name_get_uid=name_get_uid,
                 )
                 # _name_search is supposed to return a odoo.osv.query.Query object
                 # that will be evaluated as a list of ids when used in the browse function.
@@ -42,5 +49,9 @@ class ProductionLot(models.Model):
                 )
 
         return super()._name_search(
-            name=name, args=args, operator=operator, limit=limit
+            name=name,
+            args=args,
+            operator=operator,
+            limit=limit,
+            name_get_uid=name_get_uid,
         )

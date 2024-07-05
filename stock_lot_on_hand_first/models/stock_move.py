@@ -10,5 +10,4 @@ class StockMove(models.Model):
 
     display_lots_on_hand_first = fields.Boolean(
         related="picking_type_id.display_lots_on_hand_first",
-        readonly=True,
     )
