@@ -56,7 +56,8 @@ class StockPicking(models.Model):
         res = super(StockPicking, self)._complete_quick_line_vals(
             vals, lines_key="move_ids_without_package"
         )
-        res.pop("product_qty")
+        if "product_qty" in res:
+            res.pop("product_qty")
         return res
 
     def _add_quick_line(self, product, lines_key=""):
