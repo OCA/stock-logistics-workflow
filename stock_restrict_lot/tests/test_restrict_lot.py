@@ -191,7 +191,9 @@ class TestRestrictLot(TransactionCase):
                 and mov.location_id == expect_from_location
             )
             self.assertEqual(len(concern_move_line), 1)
-            self.assertEqual(concern_move_line.reserved_uom_qty, expect_reserved_qty)
+            self.assertEqual(
+                concern_move_line.quantity_product_uom, expect_reserved_qty
+            )
 
         pickings = self.env["stock.picking"].search(
             [("group_id", "=", procurement_group.id)]
