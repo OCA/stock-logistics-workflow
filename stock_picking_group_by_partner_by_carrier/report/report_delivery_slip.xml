@@ -177,7 +177,7 @@
             expr='//p[@t-field="o.sudo().sale_id.client_order_ref"]'
             position="after"
         >
-            <p>
+            <p class="m-0">
                 <t t-esc="o.get_customer_refs().pop()" />
             </p>
         </xpath>
