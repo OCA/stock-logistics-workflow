@@ -119,3 +119,26 @@ class StockPicking(models.Model):
                     show_transfers=self._should_show_transfers()
                 )
         return super()._pre_action_done_hook()
+
+    def button_validate(self):
+        """
+        In case of transparent cancel, we can pass to context 'picking_ids_not_to_backorder'
+        value to let Odoo manage that case.
+        """
+        pickings_with_backorder = self._check_backorder()
+        picking_not_to_backorder = pickings_with_backorder.filtered(
+            lambda p: p.backorder_reason_strategy == "cancel"
+        )._check_transparent_cancel()
+        picking_ids_not_to_backorder = self.env.context.get(
+            "picking_ids_not_to_backorder"
+        )
+        if picking_ids_not_to_backorder:
+            # Don't override an existing context value but add records to it
+            picking_not_to_backorder |= self.browse(picking_ids_not_to_backorder)
+        if picking_not_to_backorder:
+            new_self = self.with_context(
+                picking_ids_not_to_backorder=picking_not_to_backorder.ids
+            )
+            return super(StockPicking, new_self).button_validate()
+        else:
+            return super().button_validate()
