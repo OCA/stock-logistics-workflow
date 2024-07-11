@@ -3,7 +3,7 @@
 
 {
     "name": "Stock Scrap Tier Validation",
-    "version": "15.0.1.0.0",
+    "version": "17.0.1.0.0",
     "category": "Stock",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Jarsa, Odoo Community Association (OCA)",
