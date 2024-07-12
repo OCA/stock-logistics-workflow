@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 
-class CommonStockPickingAutoCreateLot(object):
+class CommonStockPickingAutoCreateLot:
     def assertUniqueIn(self, element_list):
         elements = []
         for element in element_list:
@@ -23,7 +23,7 @@ class CommonStockPickingAutoCreateLot(object):
 
     @classmethod
     def _create_product(cls, tracking="lot", auto=True):
-        name = "{tracking} - {auto}".format(tracking=tracking, auto=auto)
+        name = f"{tracking} - {auto}"
         return cls.env["product.product"].create(
             {
                 "name": name,
@@ -52,7 +52,7 @@ class CommonStockPickingAutoCreateLot(object):
         location_dest = cls.picking.picking_type_id.default_location_dest_id
         cls.move = cls.env["stock.move"].create(
             {
-                "name": "test-{product}".format(product=product.name),
+                "name": f"test-{product.name}",
                 "product_id": product.id,
                 "picking_id": cls.picking.id,
                 "picking_type_id": cls.picking.picking_type_id.id,
