@@ -37,4 +37,4 @@ class StockMove(models.Model):
             for move_line in move.move_line_ids:
                 if move_line.lot_id:
                     # Create-backorder wizard would open without this.
-                    move_line.qty_done = move_line.reserved_uom_qty
+                    move_line.quantity = move_line.quantity_product_uom
