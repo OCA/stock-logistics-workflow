@@ -2,7 +2,7 @@
 # Copyright 2020 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo.exceptions import UserError
-from odoo.tests import Form, TransactionCase
+from odoo.tests import TransactionCase
 
 from .common import CommonStockPickingAutoCreateLot
 
@@ -36,8 +36,7 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
         self.assertTrue(move.display_assign_serial)
         # Assign manual serials
         self._assign_manual_serials(move)
-        self.picking.action_set_quantities_to_reservation()
-
+        self.picking.move_ids.picked = True
         self.picking.button_validate()
         lot = self.env["stock.lot"].search([("product_id", "=", self.product.id)])
         self.assertEqual(len(lot), 1)
@@ -61,7 +60,7 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
         self.assertTrue(move.display_assign_serial)
         # Assign manual serials
         self._assign_manual_serials(move)
-        self.picking.action_set_quantities_to_reservation()
+        self.picking.move_ids.picked = True
 
         self.picking._action_done()
         lot = self.env["stock.lot"].search([("product_id", "=", self.product.id)])
@@ -90,7 +89,7 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
         )
         # Assign manual serials
         self._assign_manual_serials(moves)
-        self.picking.action_set_quantities_to_reservation()
+        self.picking.move_ids.picked = True
 
         self.picking.button_validate()
         for line in moves.mapped("move_line_ids"):
@@ -146,28 +145,22 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
         self.picking.move_ids = False
         self._create_move(product=self.product_serial, qty=4.0)
         self.picking.action_assign()
-        immediate_wizard = self.picking.button_validate()
-        self.assertEqual(immediate_wizard.get("res_model"), "stock.immediate.transfer")
-        immediate_wizard_form = Form(
-            self.env[immediate_wizard["res_model"]].with_context(
-                **immediate_wizard["context"]
-            )
-        ).save()
-        immediate_wizard_form.process()
-        # Confirm that validation is not blocked, for example, by create-backorder wizard.
+        self.picking.button_validate()
+        # Confirm that validation is not blocked, for example, by create-backorder
+        # wizard.
         self.assertEqual(self.picking.state, "done")
 
     def test_multiple_sml_for_one_stock_move(self):
         """
-        Create a picking and we receive goods from supplier with different features so we
-        want different lots by each stock move line.
+        Create a picking and we receive goods from supplier with different features so
+        we want different lots by each stock move line.
         """
         self._create_picking()
         self._create_move(product=self.product, qty=50.0)
         self.picking.action_assign()
-        self.picking.move_line_ids.qty_done = 25.0
+        self.picking.move_line_ids.quantity = 25.0
         # new sml with 25.0 units
-        self.picking.move_line_ids.copy({"qty_done": 25.0})
+        self.picking.move_line_ids.copy({"quantity": 25.0})
         self.picking.button_validate()
         lots = self.picking.move_line_ids.lot_id
         self.assertEqual(len(lots), 2)
@@ -175,6 +168,6 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
     def _assign_manual_serials(self, moves):
         # Assign manual serials
         moves.picking_id._set_auto_lot()
-        moves.move_line_ids.qty_done = 1.0
+        moves.move_line_ids.quantity = 1.0
         for line in moves.move_line_ids:
             line.lot_name = self.env["ir.sequence"].next_by_code("stock.lot.serial")

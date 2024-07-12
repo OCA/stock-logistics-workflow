@@ -4,7 +4,7 @@
 {
     "name": "Stock Picking Auto Create Lot",
     "summary": "Auto create lots for incoming pickings",
-    "version": "16.0.3.0.0",
+    "version": "17.0.1.0.0",
     "development_status": "Production/Stable",
     "category": "stock",
     "website": "https://github.com/OCA/stock-logistics-workflow",
