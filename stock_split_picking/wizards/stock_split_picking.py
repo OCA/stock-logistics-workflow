@@ -89,7 +89,7 @@ class StockSplitPicking(models.TransientModel):
         return self._picking_action(new_picking)
 
     def _picking_action(self, pickings):
-        return pickings.get_formview_action() if pickings else False
+        return pickings.get_formview_action() if len(pickings) == 1 else False
 
 
 class StockSplitProductQuantities(models.TransientModel):
