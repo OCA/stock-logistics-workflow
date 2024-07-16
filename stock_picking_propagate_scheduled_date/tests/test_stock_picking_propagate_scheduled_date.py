@@ -70,14 +70,14 @@ class TestStockPickingPropagateScheduledDate(TransactionCase):
         delta = timedelta(seconds=2)
         # the date of the stock.move in the Pick picking is moved to next week
         self.assertAlmostEqual(
-            self.pick.move_lines[0].date,
+            self.pick.move_ids[0].date,
             scheduled_date,
             msg="The date of the stock.move in the Pick picking should be moved to next week",
             delta=delta,
         )
         # the date of the stock.move in the Ship picking is moved to next week
         self.assertAlmostEqual(
-            self.ship.move_lines[0].date,
+            self.ship.move_ids[0].date,
             scheduled_date,
             msg="The date of the stock.move in the Ship picking should be moved to next week",
             delta=delta,
@@ -104,7 +104,7 @@ class TestStockPickingPropagateScheduledDate(TransactionCase):
         delta = timedelta(seconds=2)
         # the date of the stock.move in the Pick picking is moved to next week
         self.assertAlmostEqual(
-            self.pick.move_lines[0].date,
+            self.pick.move_ids[0].date,
             scheduled_date,
             msg="The date of stock.move in the Pick picking should be moved to next week",
             delta=delta,
@@ -112,7 +112,7 @@ class TestStockPickingPropagateScheduledDate(TransactionCase):
 
         # the date of the stock.move in the Ship picking is moved to in 2 weeks
         self.assertAlmostEqual(
-            self.ship.move_lines[0].date,
+            self.ship.move_ids[0].date,
             propagated_date,
             msg="the date of the stock.move in the Ship picking should be moved to in 2 weeks",
             delta=delta,
@@ -135,7 +135,7 @@ class TestStockPickingPropagateScheduledDate(TransactionCase):
 
         # Process the picking for the available quantity of the product (2)
         self.pick.action_assign()
-        self.pick.move_lines[0].quantity_done = 2.0
+        self.pick.move_ids[0].quantity_done = 2.0
         self.pick._action_done()
 
         # Create a backorder of Pick.
@@ -149,7 +149,7 @@ class TestStockPickingPropagateScheduledDate(TransactionCase):
         delta = timedelta(seconds=2)
         # the date of the stock.move in the Ship picking is in 2 weeks
         self.assertAlmostEqual(
-            self.ship.move_lines[0].date,
+            self.ship.move_ids[0].date,
             propagated_date,
             msg="the date of the stock.move in the Ship picking should be moved to in 2 weeks",
             delta=delta,
@@ -171,7 +171,7 @@ class TestStockPickingPropagateScheduledDate(TransactionCase):
 
         # Process the picking for the available quantity of the product (2)
         self.pick.action_assign()
-        self.pick.move_lines[0].quantity_done = 2.0
+        self.pick.move_ids[0].quantity_done = 2.0
         self.pick._action_done()
 
         # Create a backorder of Pick.
@@ -181,7 +181,7 @@ class TestStockPickingPropagateScheduledDate(TransactionCase):
 
         # Process the Ship picking for the available quantity of the product (2)
         self.ship.action_assign()
-        self.ship.move_lines[0].quantity_done = 2.0
+        self.ship.move_ids[0].quantity_done = 2.0
         self.ship._action_done()
 
         # create a backorder of Ship
@@ -195,7 +195,7 @@ class TestStockPickingPropagateScheduledDate(TransactionCase):
         delta = timedelta(seconds=2)
         # the date of the stock.move in the Ship backorder picking is in 2 weeks
         self.assertAlmostEqual(
-            backorder_ship.move_lines[0].date,
+            backorder_ship.move_ids[0].date,
             propagated_date,
             msg="the date of the stock.move in the Ship backorder "
             "picking should be moved to in 2 weeks",
@@ -204,7 +204,7 @@ class TestStockPickingPropagateScheduledDate(TransactionCase):
 
         # the scheduled date of the Ship backorder picking is in 2 weeks
         self.assertAlmostEqual(
-            backorder_ship.move_lines[0].date,
+            backorder_ship.move_ids[0].date,
             propagated_date,
             msg="the scheduled_date of the Ship picking backorder "
             "should be moved to in 2 weeks",
