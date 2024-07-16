@@ -2,16 +2,16 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    "name": "Stock Production Lot Active",
+    "name": "Stock Lot Active",
     "summary": """
         Allow to archive/unarchive a lot.""",
-    "version": "15.0.1.0.2",
+    "version": "16.0.1.0.0",
     "development_status": "Beta",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "maintainers": ["ThomasBinsfeld"],
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": ["stock"],
-    "data": ["views/stock_production_lot.xml"],
+    "data": ["views/stock_lot.xml"],
     "demo": [],
 }

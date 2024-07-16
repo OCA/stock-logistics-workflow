@@ -6,8 +6,8 @@
     <record model="ir.ui.view" id="stock_production_lot_form_view">
         <field
             name="name"
-        >stock.production.lot.form (in stock_production_lot_active)</field>
-        <field name="model">stock.production.lot</field>
+        >stock.lot.form (in stock_production_lot_active)</field>
+        <field name="model">stock.lot</field>
         <field name="inherit_id" ref="stock.view_production_lot_form" />
         <field name="arch" type="xml">
             <field name="display_complete" position="before">
@@ -25,8 +25,8 @@
     <record model="ir.ui.view" id="stock_production_lot_tree_view">
         <field
             name="name"
-        >stock.production.lot.tree (in stock_production_lot_active)</field>
-        <field name="model">stock.production.lot</field>
+        >stock.lot.tree (in stock_production_lot_active)</field>
+        <field name="model">stock.lot</field>
         <field name="inherit_id" ref="stock.view_production_lot_tree" />
         <field name="arch" type="xml">
             <field name="company_id" position="after">
@@ -38,8 +38,8 @@
     <record model="ir.ui.view" id="stock_production_lot_search_view">
         <field
             name="name"
-        >stock.production.lot.search (in stock_production_lot_active)</field>
-        <field name="model">stock.production.lot</field>
+        >stock.lot.search (in stock_production_lot_active)</field>
+        <field name="model">stock.lot</field>
         <field name="inherit_id" ref="stock.search_product_lot_filter" />
         <field name="arch" type="xml">
             <field name="product_id" position="after">
