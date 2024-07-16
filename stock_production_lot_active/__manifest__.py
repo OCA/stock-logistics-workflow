@@ -12,6 +12,6 @@
     "maintainers": ["ThomasBinsfeld"],
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": ["stock"],
-    "data": ["views/stock_lot.xml"],
+    "data": ["views/stock_production_lot.xml"],
     "demo": [],
 }
