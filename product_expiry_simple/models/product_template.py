@@ -9,7 +9,13 @@ from odoo.exceptions import ValidationError
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    use_expiry_date = fields.Boolean()
+    use_expiry_date = fields.Boolean(
+        compute="_compute_use_expiry_date", store=True, readonly=False, precompute=True
+    )
+
+    @api.depends("tracking")
+    def _compute_use_expiry_date(self):
+        self.filtered(lambda pt: pt.tracking == "none").use_expiry_date = False
 
     @api.constrains("tracking", "use_expiry_date")
     def _check_use_expiry_date(self):
