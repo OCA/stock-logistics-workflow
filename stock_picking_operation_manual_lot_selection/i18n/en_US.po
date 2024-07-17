@@ -1,0 +1,73 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_operation_manual_lot_selection
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-07-17 15:39+0000\n"
+"PO-Revision-Date: 2024-07-17 17:39+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4.3\n"
+
+#. module: stock_picking_operation_manual_lot_selection
+#: model:ir.model.fields,help:stock_picking_operation_manual_lot_selection.field_stock_move_line__use_manual_lots
+#: model:ir.model.fields,help:stock_picking_operation_manual_lot_selection.field_stock_picking__use_manual_lots
+#: model:ir.model.fields,help:stock_picking_operation_manual_lot_selection.field_stock_picking_type__use_manual_lots
+msgid ""
+"If checked, the user will be able to manually select a production lot for "
+"each move line."
+msgstr ""
+
+#. module: stock_picking_operation_manual_lot_selection
+#: model_terms:ir.ui.view,arch_db:stock_picking_operation_manual_lot_selection.view_stock_move_line_detailed_operation_tree
+#: model_terms:ir.ui.view,arch_db:stock_picking_operation_manual_lot_selection.view_stock_move_line_operation_tree
+msgid "Lot"
+msgstr ""
+
+#. module: stock_picking_operation_manual_lot_selection
+#: model:ir.model.fields,field_description:stock_picking_operation_manual_lot_selection.field_stock_move_line__manual_production_lot_id
+msgid "Lot/Serial Number (manual)"
+msgstr ""
+
+#. module: stock_picking_operation_manual_lot_selection
+#: model:ir.model.fields,field_description:stock_picking_operation_manual_lot_selection.field_stock_move_line__use_manual_lots
+#: model:ir.model.fields,field_description:stock_picking_operation_manual_lot_selection.field_stock_picking__use_manual_lots
+#: model:ir.model.fields,field_description:stock_picking_operation_manual_lot_selection.field_stock_picking_type__use_manual_lots
+msgid "Manual Production Lot Selection"
+msgstr ""
+
+#. module: stock_picking_operation_manual_lot_selection
+#: model:ir.model,name:stock_picking_operation_manual_lot_selection.model_stock_picking_type
+msgid "Picking Type"
+msgstr ""
+
+#. module: stock_picking_operation_manual_lot_selection
+#: model:ir.model,name:stock_picking_operation_manual_lot_selection.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: stock_picking_operation_manual_lot_selection
+#: model:ir.model.fields,help:stock_picking_operation_manual_lot_selection.field_stock_move_line__manual_production_lot_id
+msgid "This field is used to manually select a production lot."
+msgstr ""
+
+#. module: stock_picking_operation_manual_lot_selection
+#: model:ir.model,name:stock_picking_operation_manual_lot_selection.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: stock_picking_operation_manual_lot_selection
+#: code:addons/stock_picking_operation_manual_lot_selection/models/stock_move_line.py:0
+#, python-format
+msgid ""
+"You need to manually supply a Lot/Serial Number for product: \n"
+" - "
+msgstr ""
