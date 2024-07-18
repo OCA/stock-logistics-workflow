@@ -4,7 +4,6 @@ from odoo import models
 
 
 class StockMove(models.Model):
-
     _inherit = "stock.move"
 
     def _shipping_policy_from_picking_type(self):
