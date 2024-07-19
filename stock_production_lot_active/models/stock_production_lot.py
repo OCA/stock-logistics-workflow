@@ -4,7 +4,18 @@
 from odoo import fields, models
 
 
-class StockProductionLot(models.Model):
+class StockLot(models.Model):
     _inherit = "stock.lot"
 
-    active = fields.Boolean(string="Active", default=True)
+    active = fields.Boolean(default=True)
+
+    @api.constrains("name", "product_id", "company_id")
+    def _check_unique_lot(self):
+        """Check that there is no other lot with the same name, company and product
+
+        To avoid allowing duplicate lot/company/name combinations when there is
+        another inactive entry we have to set the active_test flag to False.
+        """
+        return super(
+            StockLot, self.with_context(active_test=False)
+        )._check_unique_lot()
