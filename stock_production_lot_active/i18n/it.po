@@ -17,7 +17,7 @@ msgstr ""
 "X-Generator: Weblate 4.17\n"
 
 #. module: stock_production_lot_active
-#: model:ir.model.fields,field_description:stock_production_lot_active.field_stock_production_lot__active
+#: model:ir.model.fields,field_description:stock_production_lot_active.field_stock_lot__active
 msgid "Active"
 msgstr "Attivo"
 
@@ -28,6 +28,6 @@ msgid "Archived"
 msgstr "In archivio"
 
 #. module: stock_production_lot_active
-#: model:ir.model,name:stock_production_lot_active.model_stock_production_lot
+#: model:ir.model,name:stock_production_lot_active.model_stock_lot
 msgid "Lot/Serial"
 msgstr "Lotto/seriale"
