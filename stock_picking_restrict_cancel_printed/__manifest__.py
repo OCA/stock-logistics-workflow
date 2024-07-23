@@ -1,4 +1,5 @@
 # Copyright 2024 Camptocamp (<https://www.camptocamp.com>).
+# Copyright 2024 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 {
@@ -8,6 +9,7 @@
     "category": "Inventory",
     "summary": "Prevent canceling a stock transfer if printed.",
     "author": "Camptocamp, BCIM, Odoo Community Association (OCA)",
+    "maintainers": ["jbaudoux"],
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "license": "AGPL-3",
     "depends": ["stock"],
