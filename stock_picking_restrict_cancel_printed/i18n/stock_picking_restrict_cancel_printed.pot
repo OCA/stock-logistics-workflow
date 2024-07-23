@@ -24,6 +24,11 @@ msgid "Restrict cancelation if printed"
 msgstr ""
 
 #. module: stock_picking_restrict_cancel_printed
+#: model:ir.model,name:stock_picking_restrict_cancel_printed.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_picking_restrict_cancel_printed
 #: model:ir.model,name:stock_picking_restrict_cancel_printed.model_stock_picking
 msgid "Transfer"
 msgstr ""
@@ -36,6 +41,7 @@ msgstr ""
 
 #. module: stock_picking_restrict_cancel_printed
 #. odoo-python
+#: code:addons/stock_picking_restrict_cancel_printed/models/stock_move.py:0
 #: code:addons/stock_picking_restrict_cancel_printed/models/stock_picking.py:0
 #, python-format
 msgid "You cannot cancel a transfer that is already printed."
