@@ -57,7 +57,9 @@ class StockSplitPicking(models.TransientModel):
         for picking in self.picking_ids:
             for move in picking.move_lines[1:]:
                 new_pickings += picking._split_off_moves(move)
-        return self._picking_action(new_pickings)
+        return self._picking_action(
+            self.picking_ids.filtered(lambda r: r.state == "assigned")
+        )
 
     def _apply_available_line(self):
         """Create different pickings for available and not available move line"""
@@ -65,7 +67,11 @@ class StockSplitPicking(models.TransientModel):
             moves = picking.move_lines
             moves_available = moves.filtered(lambda move: move.state == "assigned")
             moves_available.picking_id._split_off_moves(moves_available)
-        return self._picking_action(self.picking_ids)
+        return self._picking_action(
+            self.picking_ids.sale_id.picking_ids.filtered(
+                lambda r: r.state == "assigned"
+            )
+        )
 
     def _apply_available_product(self):
         """Create different pickings for available and not available move line"""
@@ -79,14 +85,22 @@ class StockSplitPicking(models.TransientModel):
             {"product_id": record.product_id, "qty": record.qty_to_split}
             for record in self.stock_split_product_quantities_ids
         ]
-        new_picking = moves.picking_id._split_product_quantities(moves, split_list)
-        return self._picking_action(new_picking)
+        moves.picking_id._split_product_quantities(moves, split_list)
+        return self._picking_action(
+            self.picking_ids.sale_id.picking_ids.filtered(
+                lambda r: r.state == "assigned"
+            )
+        )
 
     def _apply_selection(self):
         """Create one picking for all selected moves"""
         moves = self.move_ids
-        new_picking = moves.picking_id._split_off_moves(moves)
-        return self._picking_action(new_picking)
+        moves.picking_id._split_off_moves(moves)
+        return self._picking_action(
+            self.picking_ids.sale_id.picking_ids.filtered(
+                lambda r: r.state == "assigned"
+            )
+        )
 
     def _picking_action(self, pickings):
         return pickings.get_formview_action() if len(pickings) == 1 else False
