@@ -31,7 +31,7 @@ class StockMove(models.Model):
 
     def write(self, vals):
         # propagate date changes in the stock move chain
-        if "date" in vals:
+        if self and "date" in vals:
             self._propagate_date(vals.get("date"))
         return super(StockMove, self).write(vals)
 
