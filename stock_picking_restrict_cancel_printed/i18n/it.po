@@ -27,20 +27,25 @@ msgid "Restrict cancelation if printed"
 msgstr "Limita annullamento se stampato"
 
 #. module: stock_picking_restrict_cancel_printed
+#: model:ir.model,name:stock_picking_restrict_cancel_printed.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_picking_restrict_cancel_printed
 #: model:ir.model,name:stock_picking_restrict_cancel_printed.model_stock_picking
 msgid "Transfer"
 msgstr "Trasferimento"
 
 #. module: stock_picking_restrict_cancel_printed
 #: model:ir.model.fields,help:stock_picking_restrict_cancel_printed.field_stock_picking_type__restrict_cancel_if_printed
-msgid ""
-"When checked, the cancelation of a printed transfer will not be allowed"
+msgid "When checked, the cancelation of a printed transfer will not be allowed"
 msgstr ""
 "Quando selezionata, la cancellazione di un trasferimento stampato non sarà "
 "consentita"
 
 #. module: stock_picking_restrict_cancel_printed
 #. odoo-python
+#: code:addons/stock_picking_restrict_cancel_printed/models/stock_move.py:0
 #: code:addons/stock_picking_restrict_cancel_printed/models/stock_picking.py:0
 #, python-format
 msgid "You cannot cancel a transfer that is already printed."
