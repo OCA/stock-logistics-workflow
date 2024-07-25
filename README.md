@@ -39,3 +39,9 @@ that explains its license.
 OCA, or the [Odoo Community Association](http://odoo-community.org/), is a nonprofit
 organization whose mission is to support the collaborative development of Odoo features
 and promote its widespread use.
+## Available modules
+
+| Module | Summary |
+| --- | --- |
+| [stock_picking_invoice_link](stock_picking_invoice_link) |     "author": "Agile Business Group, " |
+| [stock_production_lot_active](stock_production_lot_active) |         Allow to archive/unarchive a lot.""", |
