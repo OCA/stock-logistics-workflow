@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+        <record id="view_stock_move_line_operation_tree" model="ir.ui.view">
+            <field name="name">stock.move.line.operations.tree</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_stock_move_line_operation_tree" />
+            <field name="priority">2000</field>
+            <field name="arch" type="xml">
+                <field name="lot_id" position="before">
+                    <field name="use_manual_lots" invisible="1" />
+                    <field
+                    name="manual_production_lot_id"
+                    string="Lot"
+                    attrs="{
+                               'invisible': [('use_manual_lots', '=', False)],
+                           }"
+                    domain="[('product_id', '=', parent.product_id), ('company_id', '=', company_id)]"
+                    context="{
+                               'active_picking_id': picking_id,
+                               'default_company_id': parent.company_id,
+                               'default_product_id': parent.product_id,
+                           }"
+                />
+                </field>
+                <field name="lot_id" position="attributes">
+                    <attribute name="attrs">{
+                        'invisible': [('use_manual_lots', '=', True)]
+                    }</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_stock_move_line_detailed_operation_tree" model="ir.ui.view">
+            <field name="name">stock.move.line.operations.tree</field>
+            <field name="model">stock.move.line</field>
+            <field
+            name="inherit_id"
+            ref="stock.view_stock_move_line_detailed_operation_tree"
+        />
+            <field name="priority">2000</field>
+            <field name="arch" type="xml">
+                <field name="lot_id" position="before">
+                    <field name="use_manual_lots" invisible="1" />
+                    <field
+                    name="manual_production_lot_id"
+                    string="Lot"
+                    groups="stock.group_production_lot"
+                    attrs="{
+                               'column_invisible': [('parent.use_manual_lots', '=', False)],
+                               'invisible': [('use_manual_lots', '=', False)],
+                           }"
+                    context="{
+                               'default_product_id': product_id,
+                               'default_company_id': company_id,
+                               'active_picking_id': picking_id
+                           }"
+                    optional="show"
+                />
+                </field>
+                <field name="lot_id" position="attributes">
+                    <attribute name="attrs">{
+                        'invisible': [('use_manual_lots', '=', True)],
+                        'column_invisible': [('parent.use_manual_lots', '=', True)]
+                    }</attribute>
+                </field>
+            </field>
+        </record>
+
+</odoo>
