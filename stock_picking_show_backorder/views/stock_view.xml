@@ -13,7 +13,7 @@
                 <page
                     name="backorders"
                     string="Backorders"
-                    attrs="{'invisible': [('backorder_ids','=',[])]}"
+                    invisible="not backorder_ids"
                 >
                     <field name="backorder_ids" string="Backorders" />
                 </page>

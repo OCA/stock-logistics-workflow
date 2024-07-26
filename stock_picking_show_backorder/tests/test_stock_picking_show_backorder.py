@@ -42,8 +42,10 @@ class TestStockPickingShowBackorder(TransactionCase):
         move_line = self.env["stock.move.line"].search(
             [("picking_id", "=", self.picking.id)], limit=1
         )
-        move_line.qty_done = 1.0
+        move_line.quantity = 1.0
+        self.picking.button_validate()
         self.picking._action_done()
         self.assertEqual(self.picking.state, "done")
+
         # The backorder should be created
         self.assertEqual(len(self.picking.backorder_ids), 1, "It should be 1")
