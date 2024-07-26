@@ -1,14 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="stock_picking_form_view" model="ir.ui.view">
         <field name="name">stock.picking.form</field>
         <field name="model">stock.picking</field>
-        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="inherit_id" ref="stock.view_picking_form" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='forecast_availability']" position="after">
-                <field name="show_force_quantity" invisible="True"/>
-                <field name="qty_in_stock"/>
-                <button name="force_quantity" string="Force quantity" type="object" attrs="{'invisible': ['|', '|', ('show_force_quantity', '=', False),('qty_in_stock', '=', 0), ('state', 'not in', ['confirmed', 'partially_available'])]}"/>
+            <xpath
+                expr="//field[@name='move_ids_without_package']/tree/field[@name='forecast_availability']"
+                position="after"
+            >
+                <field name="show_force_quantity" invisible="True" />
+                <field name="qty_in_stock" />
+                <button
+                    name="force_quantity"
+                    string="Force quantity"
+                    type="object"
+                    class="btn btn-primary"
+                    attrs="{'invisible': ['|', '|', ('show_force_quantity', '=', False),('qty_in_stock', '=', 0), ('state', 'not in', ['confirmed', 'partially_available'])]}"
+                />
             </xpath>
         </field>
     </record>
