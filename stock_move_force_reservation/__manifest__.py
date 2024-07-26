@@ -8,8 +8,8 @@
     "version": "14.0.1.0.0",
     "category": "Inventory",
     "author": "Akretion, Odoo Community Association (OCA)",
+    "website": "https://github.com/OCA/stock-logistics-workflow",
     "license": "AGPL-3",
-    "website": "",
     "depends": ["stock"],
     "data": [
         "security/ir.model.access.csv",
