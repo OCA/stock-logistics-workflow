@@ -2,14 +2,12 @@
 # @author: Mathieu Delva <mathieu.delva@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
-from odoo.exceptions import UserError
-
+from odoo import api, fields, models
 
 
 class StockMoveForceReservation(models.TransientModel):
     _name = "stock.move.force.reservation"
-    
+
     picking_id = fields.Many2one(
         comodel_name="stock.picking",
         string="Current Transfer",
@@ -42,28 +40,33 @@ class StockMoveForceReservation(models.TransientModel):
             {
                 "move_id": stock_move,
                 "product_id": stock_move.product_id,
-                "picking_id": stock_move.picking_id
+                "picking_id": stock_move.picking_id,
             }
         )
         return rec
-    
+
     @api.depends("move_to_unreserve_ids")
     def _compute_total_quantity(self):
-        total_quantity=0
+        total_quantity = 0
         for record in self.move_to_unreserve_ids:
             total_quantity += record.product_uom_qty
         self.total_quantity = total_quantity
-    
-    @api.onchange('move_id', 'product_id')
+
+    @api.onchange("move_id", "product_id")
     def onchange_move_id(self):
         if self.move_id and self.product_id:
             warehouse_id = self.picking_id.location_id.get_warehouse()
-            move_ids = self.env['stock.move'].search(
-                [('product_id', '=', self.product_id.id), ('state', '=', 'assigned'), ('id', '!=', self.move_id.id), ('warehouse_id', '=', warehouse_id.id)])
+            move_ids = self.env["stock.move"].search(
+                [
+                    ("product_id", "=", self.product_id.id),
+                    ("state", "=", "assigned"),
+                    ("id", "!=", self.move_id.id),
+                    ("warehouse_id", "=", warehouse_id.id),
+                ]
+            )
 
-            domain = {'move_to_unreserve_ids': [('id', 'in', move_ids.ids)]}
-            return {'domain': domain}
-
+            domain = {"move_to_unreserve_ids": [("id", "in", move_ids.ids)]}
+            return {"domain": domain}
 
     def validate(self):
         moves_to_unreserve = self.move_to_unreserve_ids

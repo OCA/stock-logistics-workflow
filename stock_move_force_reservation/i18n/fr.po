@@ -69,13 +69,13 @@ msgstr "Nom affiché"
 #. module: stock_move_force_reservation
 #: model_terms:ir.ui.view,arch_db:stock_move_force_reservation.stock_picking_form_view
 msgid "Force quantity"
-msgstr "Forcé la quantité"
+msgstr "Forcer la quantité"
 
 #. module: stock_move_force_reservation
 #: model:ir.actions.act_window,name:stock_move_force_reservation.stock_move_force_reservation_action
 #: model_terms:ir.ui.view,arch_db:stock_move_force_reservation.stock_move_force_reservation_form
 msgid "Force reservation"
-msgstr "Forcé la réservation"
+msgstr "Forcer la réservation"
 
 #. module: stock_move_force_reservation
 #: model:ir.model.fields,field_description:stock_move_force_reservation.field_stock_move__id
@@ -107,7 +107,7 @@ msgstr "Mouvement à déreserver"
 #. module: stock_move_force_reservation
 #: model:ir.model.fields,help:stock_move_force_reservation.field_stock_move_force_reservation__move_to_unreserve_ids
 msgid "Moves from other transfers that will be unreserve"
-msgstr "Mouvement d'autres transferts qui seront déréservé"
+msgstr "Mouvements d'autres transferts qui seront déréservés"
 
 #. module: stock_move_force_reservation
 #: model_terms:ir.ui.view,arch_db:stock_move_force_reservation.stock_move_view_tree
@@ -122,7 +122,7 @@ msgstr "Statut du transfert"
 #. module: stock_move_force_reservation
 #: model:ir.model.fields,field_description:stock_move_force_reservation.field_stock_move__qty_in_stock
 msgid "Qty In Stock"
-msgstr "Qty en stock"
+msgstr "Qté en stock"
 
 #. module: stock_move_force_reservation
 #: model:ir.model.fields,field_description:stock_move_force_reservation.field_stock_move__show_force_quantity
@@ -142,7 +142,7 @@ msgstr "Quantité total"
 #. module: stock_move_force_reservation
 #: model_terms:ir.ui.view,arch_db:stock_move_force_reservation.stock_move_force_reservation_form
 msgid "Validate"
-msgstr "Valider"
+msgstr "Validé"
 
 #. module: stock_move_force_reservation
 #: model_terms:ir.ui.view,arch_db:stock_move_force_reservation.stock_move_view_tree
