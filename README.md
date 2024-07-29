@@ -41,6 +41,7 @@ addon | version | maintainers | summary
 [stock_move_consu_location_from_putaway](stock_move_consu_location_from_putaway/) | 15.0.1.0.0 | [![grindtildeath](https://github.com/grindtildeath.png?size=30px)](https://github.com/grindtildeath) | Use putaway location as source of move lines for consumables
 [stock_move_line_auto_fill](stock_move_line_auto_fill/) | 15.0.1.0.1 |  | Stock Move Line auto fill
 [stock_move_name_from_sale_line](stock_move_name_from_sale_line/) | 15.0.1.0.0 |  | Set stock move name from sale line name
+[stock_move_original_date](stock_move_original_date/) | 15.0.1.0.0 | [![LoisRForgeFlow](https://github.com/LoisRForgeFlow.png?size=30px)](https://github.com/LoisRForgeFlow) | adds the Original Date Scheduled to stock moves.
 [stock_move_propagate_first_move](stock_move_propagate_first_move/) | 15.0.1.0.0 |  | This addon propagate the picking type of the original move to all next moves created from procurement
 [stock_move_quick_lot](stock_move_quick_lot/) | 15.0.1.0.0 |  | Set lot name and end date directly on picking operations
 [stock_no_negative](stock_no_negative/) | 15.0.1.0.0 |  | Disallow negative stock levels by default

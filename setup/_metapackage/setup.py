@@ -28,6 +28,7 @@ setuptools.setup(
         'odoo-addon-stock_move_consu_location_from_putaway>=15.0dev,<15.1dev',
         'odoo-addon-stock_move_line_auto_fill>=15.0dev,<15.1dev',
         'odoo-addon-stock_move_name_from_sale_line>=15.0dev,<15.1dev',
+        'odoo-addon-stock_move_original_date>=15.0dev,<15.1dev',
         'odoo-addon-stock_move_propagate_first_move>=15.0dev,<15.1dev',
         'odoo-addon-stock_move_quick_lot>=15.0dev,<15.1dev',
         'odoo-addon-stock_no_negative>=15.0dev,<15.1dev',
