@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 ForgeFlow S.L. (http://www.forgeflow.com)
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.form - stock_move_original_date</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <field name="date_deadline" position="before">
+                <field name="original_scheduled_date" />
+            </field>
+            <xpath
+                expr="//field[@name='move_ids_without_package']//tree//field[@name='date']"
+                position="after"
+            >
+                <field name="original_date" optional="hide" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
