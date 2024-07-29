@@ -1,0 +1,46 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_move_original_date
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_move_original_date
+#: model:ir.model.fields,field_description:stock_move_original_date.field_stock_move__original_date
+msgid "Original Date Scheduled"
+msgstr ""
+
+#. module: stock_move_original_date
+#: model:ir.model.fields,field_description:stock_move_original_date.field_stock_picking__original_scheduled_date
+msgid "Original Scheduled Date"
+msgstr ""
+
+#. module: stock_move_original_date
+#: model:ir.model.fields,help:stock_move_original_date.field_stock_picking__original_scheduled_date
+msgid ""
+"Original Scheduled date for the first part of the shipment to be processed "
+"at transfer confirmation."
+msgstr ""
+
+#. module: stock_move_original_date
+#: model:ir.model.fields,help:stock_move_original_date.field_stock_move__original_date
+msgid "Original Scheduled date on the confirmation of the stock move."
+msgstr ""
+
+#. module: stock_move_original_date
+#: model:ir.model,name:stock_move_original_date.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_move_original_date
+#: model:ir.model,name:stock_move_original_date.model_stock_picking
+msgid "Transfer"
+msgstr ""
