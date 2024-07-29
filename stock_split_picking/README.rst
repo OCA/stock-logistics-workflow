@@ -88,6 +88,7 @@ Contributors
 * Bernat Puig <bernat.puig@forgeflow.com>
 * Pimolnat Suntian <pimolnats@ecosoft.co.th>
 * Yoshi Tashiro <tashiro@quartile.co>
+* Syera Bonneaux <syera.bonneaux@akretion.com>
 
 Maintainers
 ~~~~~~~~~~~

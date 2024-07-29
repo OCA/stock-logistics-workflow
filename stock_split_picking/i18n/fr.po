@@ -101,6 +101,14 @@ msgid "Move"
 msgstr "Mouvement"
 
 #. module: stock_split_picking
+#. odoo-python
+#: code:addons/stock_split_picking/models/stock_picking.py:0
+#, python-format
+msgid "No split available"
+msgstr ""
+
+
+#. module: stock_split_picking
 #: model:ir.model.fields.selection,name:stock_split_picking.selection__stock_split_picking__mode__move
 msgid "One picking per move"
 msgstr "Un transfert par ligne"
@@ -125,6 +133,16 @@ msgstr "Diviser"
 #: model:ir.model,name:stock_split_picking.model_stock_split_picking
 msgid "Split a picking"
 msgstr "Diviser un transfert"
+
+#. module: stock_split_picking
+#: model:ir.model.fields.selection,name:stock_split_picking.selection__stock_split_picking__mode__available_line
+msgid "Split move lines between available and not available move lines"
+msgstr "Diviser les lignes entre les lignes disponibles et non disponibles"
+
+#. module: stock_split_picking
+#: model:ir.model.fields.selection,name:stock_split_picking.selection__stock_split_picking__mode__available_product
+msgid "Split move lines between available and not available products"
+msgstr "Diviser les lignes entre les produits disponibles et non disponibles"
 
 #. module: stock_split_picking
 #: model:ir.actions.act_window,name:stock_split_picking.action_stock_split_picking
