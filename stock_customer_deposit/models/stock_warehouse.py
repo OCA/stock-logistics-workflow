@@ -180,18 +180,20 @@ class StockWarehouse(models.Model):
                 warehouse.customer_deposit_type_id.sequence_id.write(sequence_data)
 
     def _get_customer_deposit_picking_type_update_values(self):
-        customer_loc, supplier_loc = self._get_partner_locations()
         return {
             "active": self.use_customer_deposits,
-            "assign_owner": False,
+            "assign_owner": True,
             "code": "internal",
+            "use_create_lots": False,
+            "use_existing_lots": True,
             "default_location_src_id": self.lot_stock_id.id,
-            "default_location_dest_id": customer_loc.id,
+            "default_location_dest_id": self.lot_stock_id.id,
             "barcode": self.code.replace(" ", "").upper() + "-DEPOSIT",
+            "show_reserved": False,
+            "show_operations": True,
         }
 
     def _get_customer_deposit_picking_type_create_values(self, max_sequence):
-        customer_loc, supplier_loc = self._get_partner_locations()
         return {
             "code": "internal",
             "name": _("Customer Deposit"),
@@ -204,6 +206,7 @@ class StockWarehouse(models.Model):
             "show_reserved": False,
             "show_operations": True,
             "sequence_code": "DEPOSIT",
+            "barcode": self.code.replace(" ", "").upper() + "-DEPOSIT",
             "company_id": self.company_id.id,
         }, max_sequence + 1
 
