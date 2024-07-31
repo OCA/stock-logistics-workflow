@@ -81,5 +81,21 @@ class TestStockWareHoseCustomerDeposit(TestStockCustomerDepositCommon):
         self.assertFalse(warehouse.customer_deposit_type_id.active)
         self.assertFalse(warehouse.customer_deposit_route_id.active)
         warehouse.write({"use_customer_deposits": True})
-        self.assertTrue(operation_type.active)
+        self.assertRecordValues(
+            operation_type,
+            [
+                {
+                    "active": True,
+                    "code": "internal",
+                    "use_create_lots": False,
+                    "use_existing_lots": True,
+                    "assign_owner": True,
+                    "default_location_src_id": warehouse.lot_stock_id.id,
+                    "default_location_dest_id": warehouse.lot_stock_id.id,
+                    "show_reserved": False,
+                    "show_operations": True,
+                    "barcode": "TST-DEPOSIT",
+                },
+            ],
+        )
         self.assertTrue(route.active)
