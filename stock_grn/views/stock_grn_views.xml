@@ -89,14 +89,13 @@
     </field>
   </record>
   <record model="ir.actions.act_window" id="action_grn_view">
-    <field name="name">Goods Received Note</field>
+    <field name="name">Goods Received Notes</field>
     <field name="res_model">stock.grn</field>
   </record>
   <menuitem
         id="menu_stock_grn"
-        name="Goods Received Note"
-        parent="stock.menu_stock_inventory_control"
-        sequence="50"
+        parent="stock.menu_stock_warehouse_mgmt"
+        sequence="30"
         action="action_grn_view"
     />
 </odoo>
