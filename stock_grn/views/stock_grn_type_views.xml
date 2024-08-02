@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+  <record model="ir.ui.view" id="view_grn_type_search">
+    <field name="name">stock.grn.type.search</field>
+    <field name="model">stock.grn.type</field>
+    <field name="arch" type="xml">
+      <search string="GRN Types">
+        <field name="name" string="Name" />
+        <filter string="Archived" name="inactive" domain="[('active','=',False)]" />
+      </search>
+    </field>
+  </record>
+  <record model="ir.ui.view" id="view_grn_type_tree">
+    <field name="name">stock.grn.type.tree</field>
+    <field name="model">stock.grn.type</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="name" />
+      </tree>
+    </field>
+  </record>
+  <record model="ir.ui.view" id="view_grn_type_form">
+    <field name="name">stock.grn.type.form</field>
+    <field name="model">stock.grn.type</field>
+    <field eval="10" name="priority" />
+    <field name="arch" type="xml">
+      <form string="GRN Type">
+        <sheet>
+          <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="bg-danger"
+                        attrs="{'invisible': [('active', '=', True)]}"
+                    />
+          <div class="oe_title">
+            <h1>
+              <field name="name" />
+            </h1>
+          </div>
+          <group>
+            <group>
+              <field name="active" invisible="1" />
+            </group>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record model="ir.actions.act_window" id="action_grn_type_view">
+    <field name="name">Goods Received Note Types</field>
+    <field name="res_model">stock.grn.type</field>
+  </record>
+  <menuitem
+        id="menu_stock_grn_type"
+        parent="stock.menu_warehouse_config"
+        action="action_grn_type_view"
+    />
+</odoo>
