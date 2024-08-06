@@ -7,7 +7,7 @@
 
 {
     "name": "Stock Picking Invoice Link",
-    "version": "17.0.1.2.0",
+    "version": "17.0.1.2.1",
     "category": "Warehouse Management",
     "summary": "Adds link between pickings and invoices",
     "author": "Agile Business Group, "
@@ -17,6 +17,7 @@
     "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "license": "AGPL-3",
+    "development_status": "Mature",
     "depends": ["sale_stock"],
     "data": ["views/stock_view.xml", "views/account_invoice_view.xml"],
     "installable": True,
