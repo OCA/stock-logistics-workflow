@@ -59,10 +59,12 @@ class StockPickingOperationWizard(models.TransientModel):
         domain=lambda self: self._get_allowed_location_domain(),
     )
     allowed_product_ids = fields.Many2many(
-        comodel_name="product.product", compute="_compute_allowed_product_ids",
+        comodel_name="product.product",
+        compute="_compute_allowed_product_ids",
     )
     product_id = fields.Many2one(
-        comodel_name="product.product", domain="[('id', 'in', allowed_product_ids)]",
+        comodel_name="product.product",
+        domain="[('id', 'in', allowed_product_ids)]",
     )
     change_all = fields.Boolean(
         string="Change All",

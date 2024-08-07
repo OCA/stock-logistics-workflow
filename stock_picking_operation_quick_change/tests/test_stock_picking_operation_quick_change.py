@@ -102,7 +102,8 @@ class TestOperationQuickChange(TransactionCase):
             }
         )
         wiz = self.Wizard.with_context(
-            active_model=self.picking._name, active_ids=self.picking.ids,
+            active_model=self.picking._name,
+            active_ids=self.picking.ids,
         ).create({"new_location_dest_id": new_location_dest_id.id, "change_all": True})
         move_lines = self.picking.mapped("move_line_ids")
         self.assertEqual(wiz.location_dest_id, self.picking.location_dest_id)
@@ -128,7 +129,8 @@ class TestOperationQuickChange(TransactionCase):
         move_lines = self.picking.mapped("move_line_ids")
         move_lines[:1].write({"location_dest_id": other_location_dest_id.id})
         wiz = self.Wizard.with_context(
-            active_model=self.picking._name, active_ids=self.picking.ids,
+            active_model=self.picking._name,
+            active_ids=self.picking.ids,
         ).create(
             {
                 "old_location_dest_id": self.picking.location_dest_id.id,
@@ -151,7 +153,8 @@ class TestOperationQuickChange(TransactionCase):
             }
         )
         wiz = self.Wizard.with_context(
-            active_model=self.picking._name, active_ids=self.picking.ids,
+            active_model=self.picking._name,
+            active_ids=self.picking.ids,
         ).create({"new_location_dest_id": new_location_dest_id.id, "change_all": True})
         with self.assertRaises(UserError):
             wiz.action_apply()
