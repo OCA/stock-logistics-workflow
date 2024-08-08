@@ -13,12 +13,12 @@ class StockMoveLine(models.Model):
             "new_stock_move_create", False
         ):
             return super()._create_correction_svl(move, diff)
-        for svl in move.stock_valuation_layer_ids:
-            # TODO: Review if is dropshipping
+        for svl in move.stock_valuation_layer_ids.filtered(
+            lambda x: not x.stock_valuation_layer_id
+        ):
             if move._is_out():
-                svl.quantity -= diff
-            else:
-                svl.quantity += diff
+                diff = -diff
+            svl.quantity += diff
 
     @api.model_create_multi
     def create(self, vals_list):
