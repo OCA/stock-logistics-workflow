@@ -8,7 +8,9 @@ class StockMove(models.Model):
     # seems better to not copy this field except when a move is splitted, because a move
     # can be copied in multiple different occasions and could even be copied with a
     # different product...
-    restrict_lot_id = fields.Many2one("stock.lot", string="Restrict Lot", copy=False)
+    restrict_lot_id = fields.Many2one(
+        "stock.lot", string="Restrict Lot", copy=False, index=True
+    )
 
     def _prepare_procurement_values(self):
         vals = super()._prepare_procurement_values()
