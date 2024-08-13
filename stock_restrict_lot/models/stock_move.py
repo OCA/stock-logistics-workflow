@@ -11,7 +11,7 @@ class StockMove(models.Model):
     # can be copied in multiple different occasions and could even be copied with a
     # different product...
     restrict_lot_id = fields.Many2one(
-        "stock.production.lot", string="Restrict Lot", copy=False
+        "stock.production.lot", string="Restrict Lot", copy=False, index=True
     )
 
     def _prepare_procurement_values(self):
