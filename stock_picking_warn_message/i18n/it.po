@@ -35,6 +35,16 @@ msgstr ""
 "                        &amp;nbsp;"
 
 #. module: stock_picking_warn_message
+#: model:ir.model.fields.selection,name:stock_picking_warn_message.selection__stock_picking__picking_warn__block
+msgid "Blocking Message"
+msgstr ""
+
+#. module: stock_picking_warn_message
+#: model:ir.model.fields.selection,name:stock_picking_warn_message.selection__stock_picking__picking_warn__no-message
+msgid "No Message"
+msgstr ""
+
+#. module: stock_picking_warn_message
 #: model:ir.model.fields,field_description:stock_picking_warn_message.field_stock_picking__picking_warn
 msgid "Picking Warn"
 msgstr "Avviso prelievo"
@@ -45,6 +55,19 @@ msgid "Picking Warn Msg"
 msgstr "Messaggio avviso prelievo"
 
 #. module: stock_picking_warn_message
+#: model:ir.model.fields,help:stock_picking_warn_message.field_stock_picking__picking_warn
+msgid ""
+"Selecting the \"Warning\" option will notify user with the message, "
+"Selecting \"Blocking Message\" will throw an exception with the message and "
+"block the flow. The Message has to be written in the next field."
+msgstr ""
+
+#. module: stock_picking_warn_message
 #: model:ir.model,name:stock_picking_warn_message.model_stock_picking
 msgid "Transfer"
 msgstr "Trasferimento"
+
+#. module: stock_picking_warn_message
+#: model:ir.model.fields.selection,name:stock_picking_warn_message.selection__stock_picking__picking_warn__warning
+msgid "Warning"
+msgstr ""
