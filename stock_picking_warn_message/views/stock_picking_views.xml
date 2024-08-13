@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2020 ForgeFlow S.L.
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="view_picking_form">
+        <field name="name">stock.picking.form (in stock_picking_warn_message)</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <header position="after">
+                <field name="picking_warn" invisible="1" />
+                <div
+                    class="alert alert-warning"
+                    role="alert"
+                    invisible="picking_warn != 'warning'"
+                    style="margin-bottom:0px;"
+                >
+                    <p>
+                        <i class="fa fa-info-circle" />
+                        &amp;nbsp;
+                        <field name="picking_warn_msg" class="oe_inline" />
+                    </p>
+                </div>
+                <div
+                    class="alert alert-danger"
+                    role="alert"
+                    invisible="picking_warn != 'block'"
+                    style="margin-bottom:0px;"
+                >
+                    <p>
+                        <i class="fa fa-warning" />
+                        &amp;nbsp;
+                        <field name="picking_warn_msg" class="oe_inline" />
+                    </p>
+                </div>
+            </header>
+        </field>
+    </record>
+</odoo>
