@@ -3,7 +3,7 @@
 
 {
     "name": "Stock Picking Partner Note",
-    "version": "14.0.1.0.1",
+    "version": "14.0.1.0.2",
     "development_status": "Beta",
     "category": "Product",
     "summary": "Add partner notes on picking",
