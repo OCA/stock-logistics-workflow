@@ -84,11 +84,6 @@ msgid "Name"
 msgstr "Nom"
 
 #. module: stock_picking_partner_note
-#: model:ir.model.fields,field_description:stock_picking_partner_note.field_stock_picking__note
-msgid "Note"
-msgstr ""
-
-#. module: stock_picking_partner_note
 #: model:ir.model.fields,field_description:stock_picking_partner_note.field_stock_picking_note__note_type_id
 msgid "Note Type"
 msgstr "Type de note"
@@ -97,6 +92,11 @@ msgstr "Type de note"
 #: model:ir.ui.menu,name:stock_picking_partner_note.stock_picking_note_types_menu
 msgid "Note Types"
 msgstr "Type de notes"
+
+#. module: stock_picking_partner_note
+#: model:ir.model.fields,field_description:stock_picking_partner_note.field_stock_picking__note
+msgid "Notes"
+msgstr ""
 
 #. module: stock_picking_partner_note
 #: model:ir.model.fields,field_description:stock_picking_partner_note.field_stock_picking_type__partner_note_type_ids
