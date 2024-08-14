@@ -39,4 +39,4 @@ class StockPickingPartnerNote(common.SavepointCase):
             (6, 0, (self.note_type1 | self.note_type2).ids)
         ]
         self.order.action_confirm()
-        self.assertIn("<p>Note 1<br>Note 2</p>", self.order.picking_ids[0].note)
+        self.assertIn("Note 1\nNote 2", self.order.picking_ids[0].note)
