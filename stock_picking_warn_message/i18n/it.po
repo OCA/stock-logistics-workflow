@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-11-17 09:33+0000\n"
+"PO-Revision-Date: 2024-08-14 16:58+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: stock_picking_warn_message
 #: model_terms:ir.ui.view,arch_db:stock_picking_warn_message.view_picking_form
@@ -37,12 +37,12 @@ msgstr ""
 #. module: stock_picking_warn_message
 #: model:ir.model.fields.selection,name:stock_picking_warn_message.selection__stock_picking__picking_warn__block
 msgid "Blocking Message"
-msgstr ""
+msgstr "Messaggio di blocco"
 
 #. module: stock_picking_warn_message
 #: model:ir.model.fields.selection,name:stock_picking_warn_message.selection__stock_picking__picking_warn__no-message
 msgid "No Message"
-msgstr ""
+msgstr "Nessun messaggio"
 
 #. module: stock_picking_warn_message
 #: model:ir.model.fields,field_description:stock_picking_warn_message.field_stock_picking__picking_warn
@@ -61,6 +61,10 @@ msgid ""
 "Selecting \"Blocking Message\" will throw an exception with the message and "
 "block the flow. The Message has to be written in the next field."
 msgstr ""
+"Selezionando l'opzione \"Attenzione\" l'utente verrà avvisato con il "
+"messaggio. Selezionando \"Ferma messaggi\" genererà un'eccezione con il "
+"messaggio e fermerà il flusso. Il messaggio deve essere scritto nel campo "
+"successivo."
 
 #. module: stock_picking_warn_message
 #: model:ir.model,name:stock_picking_warn_message.model_stock_picking
@@ -70,4 +74,4 @@ msgstr "Trasferimento"
 #. module: stock_picking_warn_message
 #: model:ir.model.fields.selection,name:stock_picking_warn_message.selection__stock_picking__picking_warn__warning
 msgid "Warning"
-msgstr ""
+msgstr "Attenzione"
