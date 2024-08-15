@@ -105,12 +105,12 @@ class TestOperationQuickChange(TransactionCase):
             active_model=self.picking._name,
             active_ids=self.picking.ids,
         ).create({"new_location_dest_id": new_location_dest_id.id, "change_all": True})
-        move_lines = self.picking.mapped("move_line_ids")
+        move_lines = self.picking.move_line_ids
         self.assertEqual(wiz.location_dest_id, self.picking.location_dest_id)
         self.assertEqual(wiz.old_location_dest_id, move_lines[:1].location_dest_id)
         wiz.action_apply()
-        move_lines = self.picking.mapped("move_line_ids.location_dest_id")
-        self.assertEqual(len(move_lines), 1)
+        location_dest_id = self.picking.move_line_ids.location_dest_id
+        self.assertEqual(len(location_dest_id), 1)
 
     def test_picking_operation_change_location_dest(self):
         new_location_dest_id = self.Location.create(
@@ -126,7 +126,7 @@ class TestOperationQuickChange(TransactionCase):
             }
         )
         self.picking.action_assign()
-        move_lines = self.picking.mapped("move_line_ids")
+        move_lines = self.picking.move_line_ids
         move_lines[:1].write({"location_dest_id": other_location_dest_id.id})
         wiz = self.Wizard.with_context(
             active_model=self.picking._name,
@@ -138,8 +138,8 @@ class TestOperationQuickChange(TransactionCase):
             }
         )
         wiz.action_apply()
-        move_lines = self.picking.mapped("move_line_ids.location_dest_id")
-        self.assertEqual(len(move_lines), 2)
+        location_dest_id = self.picking.move_line_ids.location_dest_id
+        self.assertEqual(len(location_dest_id), 2)
 
     def test_picking_operation_change_location_dest_failed(self):
         self.picking.action_assign()

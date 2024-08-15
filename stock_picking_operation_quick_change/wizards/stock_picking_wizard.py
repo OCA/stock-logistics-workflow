@@ -27,7 +27,7 @@ class StockPickingOperationWizard(models.TransientModel):
     def _default_old_dest_location_id(self):
         stock_picking_obj = self.env["stock.picking"]
         pickings = stock_picking_obj.browse(self.env.context["active_ids"])
-        first_move_line = pickings.mapped("move_line_ids")[:1]
+        first_move_line = pickings.move_line_ids[:1]
         return first_move_line.location_dest_id.id
 
     def _get_allowed_locations(self):
@@ -92,7 +92,7 @@ class StockPickingOperationWizard(models.TransientModel):
                 % ",".join(self._get_allowed_picking_states())
             )
         pickings_with_chained_moves = pickings.filtered(
-            lambda x: x.move_lines.mapped("move_dest_ids")
+            lambda x: x.move_lines.move_dest_ids
         )
         if pickings_with_chained_moves:
             raise UserError(
@@ -106,7 +106,7 @@ class StockPickingOperationWizard(models.TransientModel):
         stock_picking_obj = self.env["stock.picking"]
         pickings = stock_picking_obj.browse(self.env.context["active_ids"])
         self.check_allowed_pickings(pickings)
-        move_lines = pickings.mapped("move_line_ids")
+        move_lines = pickings.move_line_ids
 
         vals = {"location_dest_id": self.new_location_dest_id.id}
         if self.change_all:
