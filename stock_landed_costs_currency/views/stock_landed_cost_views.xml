@@ -8,13 +8,13 @@
             <xpath expr="//field[@name='account_journal_id']" position="after">
                 <field
                     name="currency_id"
-                    attrs="{'readonly': [('state', '=', 'done')]}"
+                    readonly="state == 'done'"
                     groups="base.group_multi_currency"
                 />
             </xpath>
             <xpath expr="//tree/field[@name='price_unit']" position="before">
                 <field name="currency_price_unit" />
-                <field name="currency_id" invisible="1" />
+                <field name="currency_id" column_invisible="1" />
             </xpath>
             <xpath expr="//tree/field[@name='price_unit']" position="attributes">
                 <attribute name="readonly">1</attribute>

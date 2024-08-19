@@ -83,6 +83,9 @@ Contributors
    (https://komit-consulting.com)
 -  Pimolnat Suntian <pimolnats@ecosoft.co.th> (https://ecosoft.co.th)
 -  Jan Dziurzyński <jan.dziurzynski@braintec.com> (https://braintec.com)
+-  `APSL-Nagarro <https://apsl.tech>`__:
+
+   -  Antoni Marroig <amarroig@apsl.net>
 
 Maintainers
 -----------
