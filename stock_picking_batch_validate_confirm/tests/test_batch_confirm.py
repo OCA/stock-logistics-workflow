@@ -3,10 +3,10 @@
 
 from odoo.tests import Form
 
-from odoo.addons.stock.tests.test_move2 import TestPickShip
+from odoo.addons.stock.tests.common import TestStockCommon
 
 
-class TestBatchConfirm(TestPickShip):
+class TestBatchConfirm(TestStockCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -15,6 +15,52 @@ class TestBatchConfirm(TestPickShip):
             "stock_picking_batch_validate_confirm.stock_picking_batch_validate_confirm_group"
         )
         cls.env.ref("base.group_user").write({"implied_ids": [(4, vc_group.id)]})
+
+    def create_pick_ship(self):
+        picking_client = self.env["stock.picking"].create(
+            {
+                "location_id": self.pack_location,
+                "location_dest_id": self.customer_location,
+                "picking_type_id": self.picking_type_out,
+            }
+        )
+
+        dest = self.MoveObj.create(
+            {
+                "name": self.productA.name,
+                "product_id": self.productA.id,
+                "product_uom_qty": 10,
+                "product_uom": self.productA.uom_id.id,
+                "picking_id": picking_client.id,
+                "location_id": self.pack_location,
+                "location_dest_id": self.customer_location,
+                "state": "waiting",
+                "procure_method": "make_to_order",
+            }
+        )
+
+        picking_pick = self.env["stock.picking"].create(
+            {
+                "location_id": self.stock_location,
+                "location_dest_id": self.pack_location,
+                "picking_type_id": self.picking_type_out,
+            }
+        )
+
+        self.MoveObj.create(
+            {
+                "name": self.productA.name,
+                "product_id": self.productA.id,
+                "product_uom_qty": 10,
+                "product_uom": self.productA.uom_id.id,
+                "picking_id": picking_pick.id,
+                "location_id": self.stock_location,
+                "location_dest_id": self.pack_location,
+                "move_dest_ids": [(4, dest.id)],
+                "state": "confirmed",
+            }
+        )
+        return picking_pick, picking_client
 
     def test_batch_confirm(self):
         """Check batch confirm wizard when pending moves origin exist."""
