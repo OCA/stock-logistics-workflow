@@ -49,9 +49,9 @@ class StockMove(models.Model):
                 move.product_id.cost_method == "fifo"
                 and move.product_id.tracking != "none"
             ):
-                all_candidates = move.product_id._get_all_candidates(
-                    move.company_id, sort_by="lot_create_date"
-                )
+                all_candidates = move.product_id.with_context(
+                    sort_by="lot_create_date"
+                )._get_fifo_candidates(move.company_id)
                 if all_candidates:
                     move.product_id.sudo().with_company(
                         move.company_id.id
@@ -68,13 +68,15 @@ class StockMove(models.Model):
         No PO, Get price unit from lot price
         """
         self.ensure_one()
-        price_unit = super()._get_price_unit()
+        if not self.company_id.use_lot_get_price_unit_fifo:
+            return super()._get_price_unit()
         if (
-            not self.purchase_line_id
+            hasattr(self, "purchase_line_id")
+            and not self.purchase_line_id
             and self.product_id.cost_method == "fifo"
             and len(self.lot_ids) == 1
         ):
-            candidates = (
+            candidate = (
                 self.env["stock.valuation.layer"]
                 .sudo()
                 .search(
@@ -85,13 +87,12 @@ class StockMove(models.Model):
                             "in",
                             self.lot_ids.ids,
                         ),
-                        ("quantity", ">", 0),
-                        ("value", ">", 0),
+                        ("remaining_qty", ">", 0),
                         ("company_id", "=", self.company_id.id),
                     ],
                     limit=1,
                 )
             )
-            if candidates:
-                price_unit = candidates[0].unit_cost
-        return price_unit
+            if candidate:
+                return candidate.remaining_value / candidate.remaining_qty
+        return super()._get_price_unit()

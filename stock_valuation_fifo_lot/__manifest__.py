@@ -11,6 +11,7 @@
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": ["stock_account", "stock_no_negative", "mrp_landed_costs"],
     "data": [
+        "views/res_config_settings_views.xml",
         "views/stock_valuation_layer_views.xml",
     ],
     "installable": True,
