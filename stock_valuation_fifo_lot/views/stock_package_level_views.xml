@@ -1,0 +1,17 @@
+<odoo>
+    <record id="package_level_form_view" model="ir.ui.view">
+        <field name="name">Package Level</field>
+        <field name="model">stock.package_level</field>
+        <field name="inherit_id" ref="stock.package_level_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='lot_name']" position="after">
+                <field
+                    name="force_fifo_lot_id"
+                    attrs="{'column_invisible': [('parent.show_lots_m2o', '=', False)]}"
+                    groups="stock.group_production_lot"
+                    domain="[('is_force_fifo_candidate', '=', True)]"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>

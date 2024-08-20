@@ -17,18 +17,73 @@ Stock Valuation Fifo Lot
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
-    :target: https://github.com/OCA/stock-logistics-workflow/tree/15.0/stock_valuation_fifo_lot
+    :target: https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_valuation_fifo_lot
     :alt: OCA/stock-logistics-workflow
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-15-0/stock-logistics-workflow-15-0-stock_valuation_fifo_lot
+    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-16-0/stock-logistics-workflow-16-0-stock_valuation_fifo_lot
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=15.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=16.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module is used to calculate FIFO cost by lot.
+This module changes the scope of FIFO cost calculation to specific lots/serials (as
+opposed to products), effectively achieving Specific Identification costing method.
+
+Example: Lot-Level Costing
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Purchase:
+
+  - Lot A: 100 units at $10 each.
+  - Lot B: 100 units at $12 each.
+
+- Sale:
+
+  - 50 units from Lot B.
+
+- COGS Calculation:
+
+  - 50 units * $12 = $600 assigned to COGS.
+
+- Ending Inventory:
+
+  - Lot A: 100 units at $10 each.
+  - Lot B: 50 units at $12 each.
+
+Main UI Changes
+~~~~~~~~~~~~~~~
+
+- Stock Valuation Layer
+
+  - Adds the following field:
+  
+    - 'Lots/Serials': Taken from related stock moves.
+
+- Stock Move Line
+
+  - Adds the following fields:
+
+    - 'Qty Base' [*]: Base quantity for FIFO allocation; represents the total quantity
+      of the moves with incoming valuation for the move line. In product UoM.
+    - 'Qty Consumed' [*]: Consumed quantity by outgoing valuation. In product UoM.
+    - 'Value Consumed' [*]: Consumed value by outgoing valuation.
+    - 'Qty Remaining' [*]: Remaining quantity (the total by product should match that
+      of the inventory valuation). In product UoM.
+    - 'Value Remaining' [*]: Remaining value (the total by product should match that
+      of the inventory valuation).
+    - 'Force FIFO Lot/Serial': Used when you are stuck by not being able to find a FIFO
+      balance for the lot in an outgoing move line.
+ 
+ .. [*] Updated only for products with FIFO costing method, for valued incoming
+        moves, and for outgoing moves where the qty_done has been reduced in the completed
+        state.
+        For these outgoing moves, the system generates positive stock valuation layers
+        with a remaining balance, which need to be reflected in the related move line.
+        The values here represent the theoretical figures in terms of FIFO costing,
+        meaning that they may differ from the actual stock situation especially for
+        those updated at the installation of this module.
 
 .. IMPORTANT::
    This is an alpha version, the data model and design can change at any time without warning.
@@ -40,13 +95,44 @@ This module is used to calculate FIFO cost by lot.
 .. contents::
    :local:
 
+Configuration
+=============
+
+Disable the 'Use Last Lot/Serial Cost for New Stock' setting under *Inventory >
+Configuration > Settings*, which is enabled by default, to use the standard
+`_get_price()` behavior instead of the lot cost, for receipts of specific lots/serials
+with no link to a purchase order (i.e. customer returns and positive inventory
+adjustments).
+
+Usage
+=====
+
+Process an outgoing move with a lot/serial for a product of FIFO costing method, and the
+costs are calculated based on the lot/serial.
+
+You will get a user error in case the lot/serial of your choice (in an outgoing move)
+does not have a FIFO balance (i.e. there is no remaining quantity for the incoming move
+lines linked to the candidate SVL; this is expected to happen for lots/serials created
+before the installation of this module, unless your actual inventory operations have
+been strictly FIFO). In such situations, you should select a "rogue" lot/serial (one
+that still exists in terms of FIFO costing, but not in reality, due to the inconsistency
+carried over from the past) in the 'Force FIFO Lot/Serial' field so that this lot/serial
+is used for FIFO costing instead.
+
+Known issues / Roadmap
+======================
+
+The module currently doesn't support product revaluation for specific lots.
+If such a need arises, a workaround is to deduct the stock of the target lot and recreate it
+using an inventory adjustment after modifying the product cost.
+
 Bug Tracker
 ===========
 
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/stock-logistics-workflow/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_valuation_fifo_lot%0Aversion:%2015.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_valuation_fifo_lot%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -57,6 +143,7 @@ Authors
 ~~~~~~~
 
 * Ecosoft
+* Quartile
 
 Contributors
 ~~~~~~~~~~~~
@@ -66,6 +153,11 @@ Contributors
   * Tharathip Chaweewongphan <tharathipc@ecosoft.co.th>
   * Saran Limpajitkutaporn <saranl@ecosoft.co.th>
   * Pimolnat Suntian <pimolnats@ecosoft.co.th>
+
+* `Quartile <https://www.quartile.co>`__:
+
+  * Aung Ko Ko Lin
+  * Yoshi Tashiro
 
 Maintainers
 ~~~~~~~~~~~
@@ -88,6 +180,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-newtratip| 
 
-This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/15.0/stock_valuation_fifo_lot>`_ project on GitHub.
+This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_valuation_fifo_lot>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
