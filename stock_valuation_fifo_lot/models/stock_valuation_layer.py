@@ -8,6 +8,6 @@ class StockValuationLayer(models.Model):
     _inherit = "stock.valuation.layer"
 
     lot_ids = fields.Many2many(
-        comodel_name="stock.production.lot",
+        comodel_name="stock.lot",
         string="Lots/Serial Numbers",
     )
