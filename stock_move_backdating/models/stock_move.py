@@ -5,7 +5,7 @@
 # Copyright 2023 Simone Rubino - TAKOBI
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import fields, models
+from odoo import models
 from odoo.fields import first
 
 from .stock_move_line import check_date
@@ -39,27 +39,6 @@ class StockMove(models.Model):
                     round=False,
                 )
         return price_unit
-
-    def _backdating_account_moves(self):
-        """Set date on linked account.move same for each move in `self`."""
-        picking_account_moves = (
-            self.env["account.move"]
-            .sudo()
-            .search(
-                [
-                    ("stock_move_id", "in", self.ids),
-                ],
-            )
-        )
-        for stock_move in self:
-            move_account_moves = picking_account_moves.filtered(
-                lambda am: am.stock_move_id == stock_move
-            )
-            move_account_moves.update(
-                {
-                    "date": fields.Date.context_today(self, stock_move.date),
-                }
-            )
 
     def _backdating_stock_valuation_layers(self):
         """Set date on linked stock.valuation.layer same for each move in `self`."""
@@ -119,3 +98,12 @@ class StockMove(models.Model):
             )
             moves_todo._backdating_stock_valuation_layers()
         return moves_todo
+
+    def _account_entry_move(self, qty, description, svl_id, cost):
+        """Accounting Valuation Entries"""
+        self.ensure_one()
+        am_vals = super()._account_entry_move(qty, description, svl_id, cost)
+        date_backdating = self.env.context.get("date_backdating", False)
+        if date_backdating:
+            am_vals[0]["date"] = date_backdating
+        return am_vals
