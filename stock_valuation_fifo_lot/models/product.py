@@ -44,8 +44,11 @@ class ProductProduct(models.Model):
             qty_to_take_on_candidates = move_line.product_uom_id._compute_quantity(
                 move_line.qty_done, move.product_id.uom_id
             )
+            # Find incoming stock valuation layers that have lot_ids on their moves
+            # Check with stock_move_id.lot_ids to cover the situation where the stock
+            # was received either before or after the installation of this module
             candidates = self._get_fifo_candidates(company).filtered(
-                lambda l: move_line.lot_id in l.lot_ids
+                lambda l: move_line.lot_id in l.stock_move_id.lot_ids
             )
             for candidate in candidates:
                 qty_taken_on_candidate = min(
