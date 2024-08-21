@@ -61,7 +61,6 @@ class StockPicking(models.Model):
                         new_move = self.env["stock.move"].create(new_move_vals)
                     else:
                         new_move = move
-                    new_move._action_confirm(merge=False)
                     new_moves |= new_move
 
             # If we have new moves to move, create the backorder picking
@@ -71,7 +70,7 @@ class StockPicking(models.Model):
                 new_moves.mapped("move_line_ids").write(
                     {"picking_id": backorder_picking.id}
                 )
-                new_moves._action_assign()
+                new_moves._action_confirm(merge=False)
 
     def _create_split_backorder(self, default=None):
         """Copy current picking with defaults passed, post message about
