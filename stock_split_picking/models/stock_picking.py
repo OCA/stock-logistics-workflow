@@ -52,7 +52,6 @@ class StockPicking(models.Model):
                         new_move = self.env["stock.move"].create(new_move_vals)
                     else:
                         new_move = move
-                    new_move._action_confirm(merge=False)
                     new_moves |= new_move
                     # Remove the move if the quantity is 0
                     if float_compare(quantity, 0, precision_rounding=rounding) == 0:
@@ -65,7 +64,8 @@ class StockPicking(models.Model):
                 new_moves.mapped("move_line_ids").write(
                     {"picking_id": backorder_picking.id}
                 )
-                new_moves._action_assign()
+                new_moves._action_confirm(merge=False)
+
             for move2remove in moves2remove:
                 if move2remove.exists():
                     # You can not delete moves linked to another operation,
