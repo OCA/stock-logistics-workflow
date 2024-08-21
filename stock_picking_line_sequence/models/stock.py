@@ -35,24 +35,11 @@ class StockMoveLine(models.Model):
     _inherit = "stock.move.line"
 
     def _get_aggregated_product_quantities(self, **kwargs):
-        def get_aggregated_properties(move_line=False, move=False):
-            move = move or move_line.move_id
-            uom = move.product_uom or move_line.product_uom_id
-            name = move.product_id.display_name
-            description = move.description_picking
-            if description == name or description == move.product_id.name:
-                description = False
-            product = move.product_id
-            line_key = (
-                f"{product.id}_{product.display_name}_" f'{description or ""}_{uom.id}'
-            )
-            return line_key
-
         aggregated_move_lines = super(
             StockMoveLine, self
         )._get_aggregated_product_quantities(**kwargs)
         for move_line in self:
-            line_key = get_aggregated_properties(move_line=move_line)
+            line_key = self._get_aggregated_properties(move_line=move_line)["line_key"]
             sequence2 = move_line.move_id.sequence2
             if line_key in aggregated_move_lines:
                 aggregated_move_lines[line_key]["sequence2"] = sequence2
