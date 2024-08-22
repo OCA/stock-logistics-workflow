@@ -27,5 +27,6 @@ class ReturnPicking(models.TransientModel):
             )
             if ml and not ml.lot_id and (ml.product_uom_qty == line.qty_done):
                 ml.lot_id = line.lot_id
-            ml_ids_to_update.remove(ml.id)
+            if ml.id in ml_ids_to_update:
+                ml_ids_to_update.remove(ml.id)
         return res
