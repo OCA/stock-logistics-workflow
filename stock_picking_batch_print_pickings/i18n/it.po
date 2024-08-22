@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-06-05 11:40+0000\n"
+"PO-Revision-Date: 2024-08-22 10:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: stock_picking_batch_print_pickings
 #: model:ir.actions.report,print_report_name:stock_picking_batch_print_pickings.action_report_picking_batch_print_pickings
@@ -72,7 +72,7 @@ msgstr "Numero di copie per prelievo"
 #. module: stock_picking_batch_print_pickings
 #: model:ir.model,name:stock_picking_batch_print_pickings.model_stock_picking_type
 msgid "Picking Type"
-msgstr "Tipologia prelievo"
+msgstr "Tipo prelievo"
 
 #. module: stock_picking_batch_print_pickings
 #. odoo-python
