@@ -59,12 +59,11 @@ class StockMoveForceReservation(models.TransientModel):
             move_ids = self.env["stock.move"].search(
                 [
                     ("product_id", "=", self.product_id.id),
-                    ("state", "=", "assigned"),
+                    ("state", "in", ["assigned", "partially_available"]),
                     ("id", "!=", self.move_id.id),
                     ("warehouse_id", "=", warehouse_id.id),
                 ]
             )
-
             domain = {"move_to_unreserve_ids": [("id", "in", move_ids.ids)]}
             return {"domain": domain}
 
