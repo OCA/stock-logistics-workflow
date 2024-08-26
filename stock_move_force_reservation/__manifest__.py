@@ -10,7 +10,7 @@
     "author": "Akretion, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "license": "AGPL-3",
-    "depends": ["stock"],
+    "depends": ["base", "stock"],
     "data": [
         "security/ir.model.access.csv",
         "views/stock_picking_views.xml",

@@ -64,7 +64,6 @@ class StockMoveForceReservation(models.TransientModel):
                     ("warehouse_id", "=", warehouse_id.id),
                 ]
             )
-
             domain = {"move_to_unreserve_ids": [("id", "in", move_ids.ids)]}
             return {"domain": domain}
 
