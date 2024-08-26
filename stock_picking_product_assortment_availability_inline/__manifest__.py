@@ -16,6 +16,5 @@
         "stock_picking_product_assortment",
         "stock_picking_product_availability_inline",
     ],
-    "data": ["views/stock_picking_view.xml"],
     "auto_install": True,
 }
