@@ -19,13 +19,20 @@ msgstr ""
 
 #. module: stock_picking_batch_outgoing
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_outgoing.stock_picking_kanban
-msgid "<i class=\"fa fa-truck\" aria-hidden=\"true\" title=\"Outgoing batch transfer\"/>"
+msgid ""
+"<i class=\"fa fa-object-group\" aria-hidden=\"true\" title=\"Outgoing batch "
+"transfer\"/>"
 msgstr ""
 
 #. module: stock_picking_batch_outgoing
 #: model:ir.model.fields,field_description:stock_picking_batch_outgoing.field_stock_picking__batch_outgoing_id
 msgid "Batch Outgoing"
 msgstr "Agrupación de salida"
+
+#. module: stock_picking_batch_outgoing
+#: model:ir.model.fields,help:stock_picking_batch_outgoing.field_stock_picking__batch_outgoing_id
+msgid "Batch associated to this transfer"
+msgstr ""
 
 #. module: stock_picking_batch_outgoing
 #: model:ir.model,name:stock_picking_batch_outgoing.model_stock_picking
