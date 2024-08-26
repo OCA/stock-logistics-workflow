@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="view_picking_form">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <field name="group_id" position="before">
+                <field name="batch_outgoing_id" />
+            </field>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="vpicktree_inherit_stock_picking_batch">
+        <field name="model">stock.picking</field>
+        <field
+            name="inherit_id"
+            ref="stock_picking_batch.vpicktree_inherit_stock_picking_batch"
+        />
+        <field name="arch" type="xml">
+            <field name="batch_id" position="after">
+                <field name="batch_outgoing_id" optional="hide" />
+            </field>
+        </field>
+    </record>
+    <record id="stock_picking_kanban" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.stock_picking_kanban" />
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="batch_outgoing_id" />
+            </field>
+            <xpath expr="//t[@t-name='kanban-box']/div" position="inside">
+                <t t-if="record.batch_outgoing_id.raw_value">
+                    <div class="row pull-right mt8">
+                        <div class="col text-right">
+                            <i
+                                class="fa fa-object-group"
+                                aria-hidden="true"
+                                title="Outgoing batch transfer"
+                            />
+                            <strong>
+                                <field name="batch_outgoing_id" />
+                            </strong>
+                        </div>
+                    </div>
+                </t>
+            </xpath>
+        </field>
+    </record>
+</odoo>
