@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="stock_picking_notification_template_view_form" model="ir.ui.view">
+        <field name="name">stock.picking.notification.template.view.form</field>
+        <field name="model">stock.picking.notification.template</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="picking_type_id" />
+                            <field name="source_document_regex" />
+                            <field name="sequence" />
+                        </group>
+                        <group>
+                            <field name="user_ids" widget="many2many_tags" />
+                            <field name="message" />
+                            <field name="filename" invisible="1" />
+                            <field name="notification_sound_file" filename="filename" />
+                        </group>
+                        <group
+                            name="allow_notify_states"
+                            string="Notification States"
+                            colspan="2"
+                        >
+                            <group>
+                                <field
+                                    name="allow_notify_draft"
+                                    string="Draft"
+                                    widget="boolean_toggle"
+                                />
+                                <field
+                                    name="allow_notify_waiting"
+                                    string="Waiting Another Operation"
+                                    widget="boolean_toggle"
+                                />
+                                <field
+                                    name="allow_notify_confirmed"
+                                    string="Waiting"
+                                    widget="boolean_toggle"
+                                />
+                            </group>
+                            <group>
+                                <field
+                                    name="allow_notify_assigned"
+                                    string="Ready"
+                                    widget="boolean_toggle"
+                                />
+                                <field
+                                    name="allow_notify_done"
+                                    string="Done"
+                                    widget="boolean_toggle"
+                                />
+                                <field
+                                    name="allow_notify_cancel"
+                                    string="Cancel"
+                                    widget="boolean_toggle"
+                                />
+                            </group>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="stock_picking_notification_template_view_tree" model="ir.ui.view">
+        <field name="name">stock.picking.notification.template.view.tree</field>
+        <field name="model">stock.picking.notification.template</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence" widget="handle" />
+                <field name="picking_type_id" />
+                <field name="source_document_regex" />
+                <field name="user_ids" widget="many2many_tags" optional="hide" />
+                <field name="filename" />
+                <field
+                    name="allow_notify_draft"
+                    string="Draft"
+                    widget="boolean_toggle"
+                    optional="hide"
+                />
+                <field
+                    name="allow_notify_waiting"
+                    string="Waiting Another Operation"
+                    widget="boolean_toggle"
+                    optional="hide"
+                />
+                <field
+                    name="allow_notify_confirmed"
+                    string="Waiting"
+                    widget="boolean_toggle"
+                    optional="hide"
+                />
+                <field
+                    name="allow_notify_assigned"
+                    string="Ready"
+                    widget="boolean_toggle"
+                    optional="hide"
+                />
+                <field
+                    name="allow_notify_done"
+                    string="Done"
+                    widget="boolean_toggle"
+                    optional="hide"
+                />
+                <field
+                    name="allow_notify_cancel"
+                    string="Cancel"
+                    widget="boolean_toggle"
+                    optional="hide"
+                />
+            </tree>
+        </field>
+    </record>
+
+    <record
+        id="action_stock_picking_notification_template"
+        model="ir.actions.act_window"
+    >
+        <field name="name">Picking Notifications</field>
+        <field name="res_model">stock.picking.notification.template</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No template found. Let's create one!
+            </p>
+        </field>
+    </record>
+</odoo>
