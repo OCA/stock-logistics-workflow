@@ -27,28 +27,18 @@ msgid "Has Assortment"
 msgstr "Ha assortimento"
 
 #. module: stock_picking_product_assortment
-#: model_terms:ir.ui.view,arch_db:stock_picking_product_assortment.view_picking_form
-#: model_terms:ir.ui.view,arch_db:stock_picking_product_assortment.view_stock_move_line_detailed_operation_tree
-msgid "Product"
-msgstr "Prodotto"
-
-#. module: stock_picking_product_assortment
-#: model:ir.model,name:stock_picking_product_assortment.model_stock_move_line
-msgid "Product Moves (Stock Move Line)"
-msgstr "Movimenti prodotto (riga movimento di magazzino)"
-
-#. module: stock_picking_product_assortment
-#: model:ir.model.fields,field_description:stock_picking_product_assortment.field_stock_move__assortment_product_id
-#: model:ir.model.fields,field_description:stock_picking_product_assortment.field_stock_move_line__assortment_product_id
-msgid "Product with blacklist"
-msgstr "Prodotto con lista esclusione"
-
-#. module: stock_picking_product_assortment
-#: model:ir.model,name:stock_picking_product_assortment.model_stock_move
-msgid "Stock Move"
-msgstr "Movimento di magazzino"
-
-#. module: stock_picking_product_assortment
 #: model:ir.model,name:stock_picking_product_assortment.model_stock_picking
 msgid "Transfer"
 msgstr "Trasferimento"
+
+#~ msgid "Product"
+#~ msgstr "Prodotto"
+
+#~ msgid "Product Moves (Stock Move Line)"
+#~ msgstr "Movimenti prodotto (riga movimento di magazzino)"
+
+#~ msgid "Product with blacklist"
+#~ msgstr "Prodotto con lista esclusione"
+
+#~ msgid "Stock Move"
+#~ msgstr "Movimento di magazzino"

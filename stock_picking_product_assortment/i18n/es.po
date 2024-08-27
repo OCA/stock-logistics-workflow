@@ -28,31 +28,21 @@ msgid "Has Assortment"
 msgstr "Tiene Surtido"
 
 #. module: stock_picking_product_assortment
-#: model_terms:ir.ui.view,arch_db:stock_picking_product_assortment.view_picking_form
-#: model_terms:ir.ui.view,arch_db:stock_picking_product_assortment.view_stock_move_line_detailed_operation_tree
-msgid "Product"
-msgstr "Producto"
-
-#. module: stock_picking_product_assortment
-#: model:ir.model,name:stock_picking_product_assortment.model_stock_move_line
-msgid "Product Moves (Stock Move Line)"
-msgstr "Movimientos de Producto (Stock Move Line)"
-
-#. module: stock_picking_product_assortment
-#: model:ir.model.fields,field_description:stock_picking_product_assortment.field_stock_move__assortment_product_id
-#: model:ir.model.fields,field_description:stock_picking_product_assortment.field_stock_move_line__assortment_product_id
-msgid "Product with blacklist"
-msgstr "Producto con lista negra"
-
-#. module: stock_picking_product_assortment
-#: model:ir.model,name:stock_picking_product_assortment.model_stock_move
-msgid "Stock Move"
-msgstr "Movimiento de existencias"
-
-#. module: stock_picking_product_assortment
 #: model:ir.model,name:stock_picking_product_assortment.model_stock_picking
 msgid "Transfer"
 msgstr "Albarán"
+
+#~ msgid "Product"
+#~ msgstr "Producto"
+
+#~ msgid "Product Moves (Stock Move Line)"
+#~ msgstr "Movimientos de Producto (Stock Move Line)"
+
+#~ msgid "Product with blacklist"
+#~ msgstr "Producto con lista negra"
+
+#~ msgid "Stock Move"
+#~ msgstr "Movimiento de existencias"
 
 #~ msgid "Blacklisted Products"
 #~ msgstr "Productos en lista negra"
