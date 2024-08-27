@@ -1,0 +1,1 @@
+This module propagates the sold lot to moves and to the supplier purchase
