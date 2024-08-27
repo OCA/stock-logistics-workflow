@@ -13,25 +13,17 @@
                 expr="//field[@name='move_ids_without_package']/tree/field[@name='product_id']"
                 position="attributes"
             >
-                <attribute name="attrs">
-                    {'column_invisible':[('parent.has_assortment', '=', True)]}
+                <attribute
+                    name="domain"
+                    operation="domain_add"
+                    condition="parent.has_assortment"
+                >
+                    [('id', 'in', parent.assortment_product_ids)]
                 </attribute>
-            </xpath>
-            <xpath
-                expr="//field[@name='move_ids_without_package']/tree/field[@name='product_id']"
-                position="after"
-            >
-                <field
-                    name="assortment_product_id"
-                    string="Product"
-                    attrs="{'column_invisible':[('parent.has_assortment', '=', False)]}"
-                    domain="[('id', 'in', parent.assortment_product_ids)]"
-                    readonly="0"
-                    required="1"
-                />
             </xpath>
         </field>
     </record>
+
     <record id="view_stock_move_line_detailed_operation_tree" model="ir.ui.view">
         <field name="name">stock.move.line.operations.tree</field>
         <field name="model">stock.move.line</field>
@@ -41,19 +33,13 @@
         />
         <field name="arch" type="xml">
             <xpath expr="//tree/field[@name='product_id']" position="attributes">
-                <attribute name="attrs">
-                    {'column_invisible':[('parent.has_assortment', '=', True)]}
+                <attribute
+                    name="domain"
+                    operation="domain_add"
+                    condition="parent.has_assortment"
+                >
+                    [('id', 'in', parent.assortment_product_ids)]
                 </attribute>
-            </xpath>
-            <xpath expr="//tree/field[@name='product_id']" position="after">
-                <field
-                    name="assortment_product_id"
-                    string="Product"
-                    attrs="{'column_invisible':[('parent.has_assortment', '=', False)]}"
-                    domain="[('id', 'in', parent.assortment_product_ids)]"
-                    readonly="0"
-                    required="1"
-                />
             </xpath>
         </field>
     </record>

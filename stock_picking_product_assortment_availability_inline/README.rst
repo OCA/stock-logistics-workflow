@@ -28,6 +28,9 @@ Stock Picking Product Assortment Availability Inline
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
+** This module is not needed anymore since the module stock_picking_product_assortment
+   has been improved.
+
 This is a glue module to allows to display available quantities in picking lines if the
 partner have a product assortment defined.
 
