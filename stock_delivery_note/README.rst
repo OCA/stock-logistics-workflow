@@ -64,7 +64,12 @@ Contributors
 ------------
 
 -  Denis Roussel <denis.roussel@acsone.eu>
+
 -  Hughes Damry <hughes.damry@acsone.eu>
+
+-  `Sodexis <https://www.sodexis.com>`__
+
+   -  SodexisTeam <dev@sodexis.com>
 
 Maintainers
 -----------
