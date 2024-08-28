@@ -1,3 +1,3 @@
 **Financial support**
 
-* Cosanum
+- Cosanum
