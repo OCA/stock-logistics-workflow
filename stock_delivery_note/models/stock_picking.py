@@ -5,7 +5,6 @@ from odoo import fields, models
 
 
 class StockPicking(models.Model):
-
     _inherit = "stock.picking"
 
     delivery_note = fields.Text(help="This field will be displayed on delivery report")
