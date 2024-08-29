@@ -54,7 +54,7 @@ class TestStockQuantSerialUnique(TransactionCase):
         move_line_vals = {
             "product_id": product.id,
             "picking_id": picking.id,
-            "qty_done": 1,
+            "quantity": 1,
         }
         return self.env["stock.move.line"].create(move_line_vals)
 
@@ -100,7 +100,8 @@ class TestStockQuantSerialUnique(TransactionCase):
             self.owner,
         )
         moveline = self._create_moveline(self.product, picking_out)
-        # Stock exists for serial '001' but no check should be done for outgoing/internal moves.
+        # Stock exists for serial '001' but no check should be done
+        # for outgoing/internal moves.
         moveline.write({"lot_id": self.serial1.id})
         picking_out.action_confirm()
         picking_out.button_validate()
