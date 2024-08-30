@@ -5,9 +5,9 @@
 from odoo import _, api, exceptions, fields, models
 
 
-class StockProductionLot(models.Model):
-    _name = "stock.production.lot"
-    _inherit = ["stock.production.lot", "mail.thread"]
+class StockLot(models.Model):
+    _name = "stock.lot"
+    _inherit = ["stock.lot", "mail.thread"]
     _mail_post_access = "read"
 
     locked = fields.Boolean(string="Blocked", tracking=True)
@@ -64,7 +64,9 @@ class StockProductionLot(models.Model):
             )
         )
         vals["locked"] = self._get_product_locked(product)
-        lot = super().with_context(bypass_lock_permission_check=True).create(vals)
+        lot = super(
+            StockLot, self.with_context(bypass_lock_permission_check=True)
+        ).create(vals)
 
         return self.browse(lot.id)  # for cleaning context
 

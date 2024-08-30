@@ -5,7 +5,7 @@ from odoo import exceptions
 from odoo.tests import common
 
 
-class TestStockLockLot(common.SavepointCase):
+class TestStockLockLot(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -25,21 +25,21 @@ class TestStockLockLot(common.SavepointCase):
 
     def test_new_lot_unlocked(self):
         self.category.lot_default_locked = False
-        lot = self.env["stock.production.lot"].create(self._get_lot_default_vals())
+        lot = self.env["stock.lot"].create(self._get_lot_default_vals())
         self.assertFalse(lot.locked)
 
     def test_new_lot_locked(self):
-        lot = self.env["stock.production.lot"].create(self._get_lot_default_vals())
+        lot = self.env["stock.lot"].create(self._get_lot_default_vals())
         self.assertTrue(lot.locked)
 
     def test_lot_onchange_product(self):
-        lot = self.env["stock.production.lot"].new(self._get_lot_default_vals())
+        lot = self.env["stock.lot"].new(self._get_lot_default_vals())
         lot._onchange_product_id()
         self.assertTrue(lot.locked)
 
     def test_lock_permissions(self):
         self.env.user.groups_id -= self.env.ref("stock_lock_lot.group_lock_lot")
         # This should work correctly
-        lot = self.env["stock.production.lot"].create(self._get_lot_default_vals())
+        lot = self.env["stock.lot"].create(self._get_lot_default_vals())
         with self.assertRaises(exceptions.AccessError):
             lot.locked = False
