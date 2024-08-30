@@ -5,7 +5,6 @@ from odoo import models
 
 
 class StockMove(models.Model):
-
     _inherit = "stock.move"
 
     def _prepare_move_line_vals(self, quantity=None, reserved_quant=None) -> dict:
