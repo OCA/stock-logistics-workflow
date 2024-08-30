@@ -13,8 +13,8 @@ class StockMoveLine(models.Model):
                 raise exceptions.ValidationError(
                     _(
                         "The following lots/serial number is blocked and "
-                        "cannot be moved:\n%s"
+                        "cannot be moved:\n%(lot)s",
+                        lot=ml.lot_id.name,
                     )
-                    % ml.lot_id.name
                 )
         return super()._action_done()

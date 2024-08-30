@@ -11,5 +11,6 @@ class ProductCategory(models.Model):
     lot_default_locked = fields.Boolean(
         string="Block new Serial Numbers/lots",
         help="If checked, future Serial Numbers/lots will be created blocked "
-        "by default",
+        "by default. This means they will not be available for use "
+        "in stock moves or other operations",
     )
