@@ -17,4 +17,4 @@ class StockMoveLine(models.Model):
                     )
                     % ml.lot_id.name
                 )
-        super()._action_done()
+        return super()._action_done()

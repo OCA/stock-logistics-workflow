@@ -64,9 +64,8 @@ class StockProductionLot(models.Model):
             )
         )
         vals["locked"] = self._get_product_locked(product)
-        lot = super(
-            StockProductionLot, self.with_context(bypass_lock_permission_check=True)
-        ).create(vals)
+        lot = super().with_context(bypass_lock_permission_check=True).create(vals)
+
         return self.browse(lot.id)  # for cleaning context
 
     def write(self, values):
@@ -74,7 +73,7 @@ class StockProductionLot(models.Model):
         if "product_id" in values:
             product = self.env["product.product"].browse(values["product_id"])
             values["locked"] = self._get_product_locked(product)
-        return super(StockProductionLot, self).write(values)
+        return super().write(values)
 
     def _track_subtype(self, init_values):
         self.ensure_one()
