@@ -83,7 +83,7 @@ class TestBatchPicking(TransactionCase):
         report_name = result.get("report_name")
         self.assertEqual(
             result.get("report_name"),
-            "stock_picking_batch_extended.report_batch_picking",
+            "stock.report_deliveryslip",
         )
         report_pdf = self.env["ir.actions.report"]._render(report_name, self.batch.ids)
         self.assertGreaterEqual(len(report_pdf[0]), 1)

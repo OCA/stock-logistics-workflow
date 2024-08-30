@@ -67,9 +67,9 @@ class StockPickingBatch(models.Model):
         pickings = self.mapped("picking_ids")
         if not pickings:
             raise UserError(_("Nothing to print."))
-        return self.env.ref(
-            "stock_picking_batch_extended.action_report_batch_picking"
-        ).report_action(self)
+        return self.env.ref("stock.action_report_delivery").report_action(
+            self.picking_ids
+        )
 
     def remove_undone_pickings(self):
         """Remove of this batch all pickings which state is not done / cancel."""
