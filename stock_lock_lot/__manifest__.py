@@ -15,7 +15,7 @@
         "security/stock_lock_lot_security.xml",
         "data/stock_lock_lot_data.xml",
         "views/product_category_view.xml",
-        "views/stock_production_lot_view.xml",
+        "views/stock_lot_view.xml",
         "views/stock_location_view.xml",
     ],
     "installable": True,
