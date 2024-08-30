@@ -7,4 +7,6 @@ from odoo import fields, models
 class StockLocation(models.Model):
     _inherit = "stock.location"
 
-    allow_locked = fields.Boolean()
+    allow_locked = fields.Boolean(
+        help="Indicates whether the location allows receipt of blocked batches"
+    )
