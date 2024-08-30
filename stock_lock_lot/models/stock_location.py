@@ -7,4 +7,4 @@ from odoo import fields, models
 class StockLocation(models.Model):
     _inherit = "stock.location"
 
-    allow_locked = fields.Boolean(string="Allow Locked")
+    allow_locked = fields.Boolean()
