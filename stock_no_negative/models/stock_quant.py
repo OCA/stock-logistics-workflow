@@ -12,6 +12,11 @@ class StockQuant(models.Model):
 
     @api.constrains("product_id", "quantity")
     def check_negative_qty(self):
+        # To provide an option to skip the check when necessary.
+        # e.g. mrp_subcontracting_skip_no_negative - passes the context
+        # for subcontracting receipts.
+        if self.env.context.get("skip_negative_qty_check"):
+            return
         p = self.env["decimal.precision"].precision_get("Product Unit of Measure")
         check_negative_qty = (
             config["test_enable"] and self.env.context.get("test_stock_no_negative")
