@@ -25,7 +25,7 @@ class TestPickingValidation(TransactionCase):
                 "picking_id": picking.id if picking is not None else None,
                 "product_id": product.id,
                 "product_uom_qty": quantity,
-                "quantity_done": quantity,
+                "quantity": quantity,
                 "product_uom": product.uom_id.id,
                 "location_id": src.id,
                 "location_dest_id": dest.id,

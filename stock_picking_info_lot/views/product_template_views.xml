@@ -6,10 +6,7 @@
         <field name="inherit_id" ref="stock.view_template_property_form" />
         <field name="arch" type="xml">
             <group name="traceability" position="after">
-                <group
-                    name="lot_info_group"
-                    attrs="{'invisible': [('type', '=', 'service')]}"
-                >
+                <group name="lot_info_group" invisible="type == 'service'">
                     <field name="lot_info_usage" widget="radio" />
                 </group>
             </group>

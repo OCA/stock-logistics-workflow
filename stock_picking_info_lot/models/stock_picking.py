@@ -12,9 +12,14 @@ class StockPicking(models.Model):
                 lambda x: x.lot_info_usage == "required" and not x.lot_info
             )
             if lines_missing_lotinfo:
+                product_names = ", ".join(
+                    lines_missing_lotinfo.mapped("product_id.display_name")
+                )
                 raise exceptions.UserError(
-                    _("Missing Lot Info for Products %s.")
-                    % ", ".join(lines_missing_lotinfo.product_id.mapped("display_name"))
+                    _(
+                        "Missing Lot Info for Products: %(product_names)s.",
+                        product_names=product_names,
+                    )
                 )
 
     def button_validate(self):
