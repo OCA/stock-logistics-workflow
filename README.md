@@ -56,7 +56,7 @@ addon | version | maintainers | summary
 [stock_move_free_reservation_reassign](stock_move_free_reservation_reassign/) | 14.0.1.0.0 |  | Try to reassign a move when its reservation is removed due to the related quant becoming unavailable
 [stock_move_line_auto_fill](stock_move_line_auto_fill/) | 14.0.1.0.0 |  | Stock Move Line auto fill
 [stock_move_quick_lot](stock_move_quick_lot/) | 14.0.1.0.0 |  | Set lot name and end date directly on picking operations
-[stock_no_negative](stock_no_negative/) | 14.0.1.0.1 |  | Disallow negative stock levels by default
+[stock_no_negative](stock_no_negative/) | 14.0.1.0.2 |  | Disallow negative stock levels by default
 [stock_owner_restriction](stock_owner_restriction/) | 14.0.1.0.2 |  | Do not reserve quantity with assigned owner
 [stock_partner_delivery_window](stock_partner_delivery_window/) | 14.0.1.2.2 |  | Define preferred delivery time windows for partners
 [stock_picking_auto_create_lot](stock_picking_auto_create_lot/) | 14.0.1.0.1 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Auto create lots for incoming pickings
