@@ -4,8 +4,9 @@
 {
     "name": "Stock Move Line Reserved Quant",
     "summary": """
-        This module allows to get the link from a stock move line to the reserved quant""",
-    "version": "16.0.1.0.0",
+        This module allows to get the link from a stock move line
+        to the reserved quant""",
+    "version": "17.0.1.0.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
