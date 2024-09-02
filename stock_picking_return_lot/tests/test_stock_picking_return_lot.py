@@ -12,10 +12,10 @@ class StockPickingReturnLotTest(common.SavepointCase):
         product = self.env["product.product"].create(
             {"name": "test_product", "type": "product", "tracking": "serial"}
         )
-        lot_1 = self.env["stock.production.lot"].create(
+        lot_1 = self.env["stock.lot"].create(
             {"name": "000001", "product_id": product.id}
         )
-        lot_2 = self.env["stock.production.lot"].create(
+        lot_2 = self.env["stock.lot"].create(
             {"name": "000002", "product_id": product.id}
         )
         picking_type_out = self.env.ref("stock.picking_type_out")
