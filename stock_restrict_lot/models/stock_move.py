@@ -1,5 +1,6 @@
 from odoo import _, api, exceptions, fields, models
 from odoo.exceptions import UserError, ValidationError
+from odoo.tools.misc import OrderedSet
 
 
 class StockMove(models.Model):
@@ -140,10 +141,12 @@ class StockMove(models.Model):
         else:
             restrict_lot_id = vals.pop("restrict_lot_id")
             restrict_lot = self.env["stock.lot"].browse(restrict_lot_id)
-            chained_moves = self | self.get_all_dest_moves() | self.get_all_orig_moves()
+            chained_moves = OrderedSet()
+            self._rollup_move_dests(chained_moves)
+            self._rollup_move_origs(chained_moves)
             if any(
                 [
-                    sm.state == "done" and sm.lot_ids != restrict_lot
+                    sm.state == "done" and sm.lot_ids and sm.lot_ids != restrict_lot
                     for sm in chained_moves
                 ]
             ):
@@ -156,15 +159,3 @@ class StockMove(models.Model):
                 )
             super(StockMove, chained_moves).write({"restrict_lot_id": restrict_lot_id})
         return super().write(vals)
-
-    @api.model_create_multi
-    def create(self, vals_list):
-        res = super().create(vals_list)
-        for move in res:
-            if not move.restrict_lot_id:
-                chained_moves = (
-                    move | move.get_all_dest_moves() | move.get_all_orig_moves()
-                )
-                if chained_moves.restrict_lot_id:
-                    move.restrict_lot_id = chained_moves.restrict_lot_id[0]
-        return res
