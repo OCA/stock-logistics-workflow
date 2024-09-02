@@ -25,6 +25,7 @@ setuptools.setup(
         'odoo-addon-stock_landed_costs_delivery>=16.0dev,<16.1dev',
         'odoo-addon-stock_landed_costs_purchase_auto>=16.0dev,<16.1dev',
         'odoo-addon-stock_landed_costs_security>=16.0dev,<16.1dev',
+        'odoo-addon-stock_lock_lot>=16.0dev,<16.1dev',
         'odoo-addon-stock_lot_production_date>=16.0dev,<16.1dev',
         'odoo-addon-stock_lot_scrap>=16.0dev,<16.1dev',
         'odoo-addon-stock_move_free_reservation_reassign>=16.0dev,<16.1dev',
