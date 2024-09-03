@@ -8,18 +8,18 @@ from odoo.tools import sql
 _logger = logging.getLogger(__name__)
 
 
-def pre_init_hook(cr):
+def pre_init_hook(env):
     """Initialize picking_kind field based on location_id and location_dest_id"""
-    if not sql.column_exists(cr, "stock_picking", "picking_kind"):
+    if not sql.column_exists(env.cr, "stock_picking", "picking_kind"):
         _logger.info("Create picking_kind column")
-        cr.execute(
+        env.cr.execute(
             """
             ALTER TABLE stock_picking
             ADD COLUMN picking_kind character varying;
         """
         )
         _logger.info("Initialize picking_kind field")
-        cr.execute(
+        env.cr.execute(
             """
             UPDATE stock_picking
             SET picking_kind = (
@@ -56,4 +56,4 @@ def pre_init_hook(cr):
             AND stock_picking.location_dest_id = destination.id
         """
         )
-        _logger.info(f"{cr.rowcount} rows updated")
+        _logger.info(f"{env.cr.rowcount} rows updated")
