@@ -5,7 +5,6 @@ from odoo import models
 
 
 class StockRule(models.Model):
-
     _inherit = "stock.rule"
 
     def _get_stock_move_values(
