@@ -2,7 +2,11 @@
 # Copyright 2018 Okia SPRL <sylvain@okia.be>
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+import logging
+
 from odoo import models
+
+_logger = logging.getLogger(__name__)
 
 
 class StockQuant(models.Model):
@@ -16,10 +20,16 @@ class StockQuant(models.Model):
 
         TODO: Externalize this in a separate module
         """
-        self.env.cr.execute(
-            "SELECT id FROM stock_quant WHERE id in %s FOR UPDATE NOWAIT",
-            (tuple(self.ids),),
-        )
+        if not self.ids:
+            _logger.warning(
+                "You try to lock quants for update in a loss operation, "
+                "but without ids provided."
+            )
+        else:
+            self.env.cr.execute(
+                "SELECT id FROM stock_quant WHERE id in %s FOR UPDATE NOWAIT",
+                (tuple(self.ids),),
+            )
 
     def _apply_inventory(self):
         """When an inventory is validated, we need to cancel any remaining
