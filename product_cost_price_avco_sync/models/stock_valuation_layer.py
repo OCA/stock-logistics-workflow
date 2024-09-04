@@ -1,12 +1,13 @@
 # Copyright 2020 Tecnativa - Carlos Dauden
+# Copyright 2024 Tecnativa - Carlos Dauden
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import re
 from collections import OrderedDict, defaultdict
 
-from odoo import _, api, models
+from odoo import _, api, exceptions, models
 from odoo.exceptions import ValidationError
-from odoo.tools import float_compare, float_is_zero, float_round
+from odoo.tools import float_compare, float_is_zero, float_round, groupby
 
 
 class ProductProduct(models.Model):
@@ -23,23 +24,6 @@ class StockValuationLayer(models.Model):
 
     _inherit = "stock.valuation.layer"
 
-    @api.model
-    def create(self, vals):
-        svl = super().create(vals)
-        if vals.get("quantity", 0.0) > 0.0 and svl.product_id.cost_method == "average":
-            svl_remaining = self.sudo().search(
-                [
-                    ("company_id", "=", svl.company_id.id),
-                    ("product_id", "=", svl.product_id.id),
-                    ("remaining_qty", "<", 0.0),
-                ],
-                order="id",
-                limit=1,
-            )
-            if svl_remaining:
-                svl.cost_price_avco_sync({}, {})
-        return svl
-
     def write(self, vals):
         """Update cost price avco"""
         svl_previous_vals = defaultdict(dict)
@@ -48,71 +32,72 @@ class StockValuationLayer(models.Model):
         ):
             for svl in self:
                 for field_name in set(vals.keys()) & {"unit_cost", "quantity"}:
-                    svl_previous_vals[svl.id][field_name] = svl[field_name]
+                    svl_previous_vals[svl][field_name] = svl[field_name]
         res = super().write(vals)
         if svl_previous_vals:
-            self.cost_price_avco_sync(vals, svl_previous_vals)
+            # Group by product and company, and sync the lowest SVL of each group
+            self = self.sorted(lambda x: (x.create_date, x.id))
+            for _group, elems in groupby(self, lambda x: (x.product_id, x.company_id)):
+                elems[0]._cost_price_avco_sync(svl_previous_vals[elems[0]])
         return res
 
-    def get_svls_to_avco_sync(self):
+    def _get_next_svl_to_sync_avco(self):
         self.ensure_one()
-        # return self.product_id.stock_valuation_layer_ids
         domain = [
             ("company_id", "=", self.company_id.id),
             ("product_id", "=", self.product_id.id),
+            "|",
+            "&",
+            ("create_date", "=", self.create_date),
+            ("id", ">", self.id),
+            ("create_date", ">", self.create_date),
         ]
         return (
             self.env["stock.valuation.layer"]
             .sudo()
-            .search(domain, order="create_date, id")
+            .search(domain, order="create_date, id", limit=1)
         )
 
-    def get_avco_svl_qty_unit_cost(self, line, vals):
+    def _is_avco_sync_processable(self, svls_dic):
+        """Method to be overrided in extension modules for blocking the sync in
+        specific cases (like manufactured or component products) where we don't still
+        have the needed data.
+        """
         self.ensure_one()
-        if self.id == line.id:
-            qty = vals.get("quantity", line.quantity)
-            unit_cost = vals.get("unit_cost", line.unit_cost)
-        else:
-            qty = self.quantity
-            unit_cost = self.unit_cost
-        return qty, unit_cost
+        return True
 
     @api.model
-    def process_avco_svl_inventory(
-        self, svl, svl_dic, line, svl_previous_vals, previous_unit_cost
-    ):
+    def _process_avco_svl_inventory(self, svl_dic, qty_diff, previous_unit_cost):
+        self.ensure_one()
         high_decimal_precision = 8
-        new_svl_qty = svl_dic["quantity"] + (
-            svl_previous_vals[line.id]["quantity"] - line.quantity
-        )
+        new_svl_qty = svl_dic["quantity"] + qty_diff
+        move = self.stock_move_id
         # Check if with the new difference the sign of the move changes
-        if (new_svl_qty < 0 and svl.stock_move_id.location_id.usage == "inventory") or (
-            new_svl_qty > 0 and svl.stock_move_id.location_dest_id.usage == "inventory"
+        if (new_svl_qty < 0 and move.location_id.usage == "inventory") or (
+            new_svl_qty > 0 and move.location_dest_id.usage == "inventory"
         ):
-            location_aux = svl.stock_move_id.location_id
-            svl.stock_move_id.location_id = svl.stock_move_id.location_dest_id
-            svl.stock_move_id.location_dest_id = location_aux
-            svl.stock_move_id.move_line_ids.location_id = svl.stock_move_id.location_id
-            svl.stock_move_id.move_line_ids.location_dest_id = (
-                svl.stock_move_id.location_dest_id
-            )
+            location_aux = move.location_id
+            move.location_id = move.location_dest_id
+            move.location_dest_id = location_aux
+            move.move_line_ids.location_id = move.location_id
+            move.move_line_ids.location_dest_id = move.location_dest_id
         # TODO: Split new_svl_qty in related stock move lines
         if (
             float_compare(
                 abs(new_svl_qty),
-                svl.stock_move_id.quantity_done,
+                move.quantity_done,
                 precision_digits=high_decimal_precision,
             )
             != 0
         ):
-            if len(svl.stock_move_id.move_line_ids) > 1:
+            if len(move.move_line_ids) > 1:
                 raise ValidationError(
                     _(
                         "More than one stock move line to assign the new "
                         "stock valuation layer quantity"
                     )
                 )
-            svl.stock_move_id.quantity_done = abs(new_svl_qty)
+            move.quantity_done = abs(new_svl_qty)
         # Reasign qty variables
         qty = new_svl_qty
         svl_dic["quantity"] = new_svl_qty
@@ -126,7 +111,10 @@ class StockValuationLayer(models.Model):
         return qty
 
     @api.model
-    def update_avco_svl_values(self, svl_dic, unit_cost=None, remaining_qty=None):
+    def _update_avco_svl_values(self, svl_dic, unit_cost=None, remaining_qty=None):
+        """Helper method for updating chained fields in SVL easily. Only including
+        unit_cost, remaining_qty or both, the rest of the derived values are computed.
+        """
         if unit_cost is not None:
             svl_dic["unit_cost"] = unit_cost
         svl_dic["value"] = svl_dic["unit_cost"] * svl_dic["quantity"]
@@ -135,16 +123,18 @@ class StockValuationLayer(models.Model):
         svl_dic["remaining_value"] = svl_dic["remaining_qty"] * svl_dic["unit_cost"]
 
     @api.model
-    def get_avco_svl_price(
-        self, previous_unit_cost, previous_qty, unit_cost, qty, total_qty
-    ):
+    def _get_avco_svl_price(self, previous_unit_cost, previous_qty, unit_cost, qty):
+        """Helper method for computing AVCO price based on previous and current
+        information,
+        """
+        total_qty = previous_qty + qty
         return (
             (previous_unit_cost * previous_qty + unit_cost * qty) / total_qty
             if total_qty
             else unit_cost
         )
 
-    def vacumm_avco_svl(self, qty, svls_dic, vacuum_dic):
+    def _vacumm_avco_svl(self, qty, svls_dic, vacuum_dic):
         self.ensure_one()
         svl_dic = svls_dic[self]
         vacuum_qty = qty
@@ -170,15 +160,15 @@ class StockValuationLayer(models.Model):
                 x += abs(new_remaining_qty) * vacuum_dic[svl_to_vacuum["id"]][0][1]
             new_unit_cost = x / abs(svl_to_vacuum["quantity"])
             # Update remaining in outgoing line
-            self.update_avco_svl_values(
+            self._update_avco_svl_values(
                 svl_to_vacuum, unit_cost=new_unit_cost, remaining_qty=new_remaining_qty
             )
             # Update remaining in incoming line
-            self.update_avco_svl_values(svl_dic, remaining_qty=vacuum_qty)
+            self._update_avco_svl_values(svl_dic, remaining_qty=vacuum_qty)
             if vacuum_qty == 0.0:
                 break
 
-    def update_remaining_avco_svl_in(self, svls_dic, vacuum_dic):
+    def _update_remaining_avco_svl_in(self, svls_dic, vacuum_dic):
         for svl in self:
             svl_dic = svls_dic[svl]
             svl_out_qty = svl_dic["quantity"]
@@ -195,15 +185,15 @@ class StockValuationLayer(models.Model):
                         (svl_in_remaining["remaining_qty"], svl_dic["unit_cost"])
                     )
                     new_remaining_qty = 0.0
-                self.update_avco_svl_values(
+                self._update_avco_svl_values(
                     svl_in_remaining, remaining_qty=new_remaining_qty
                 )
                 if svl_out_qty == 0.0:
                     break
-            self.update_avco_svl_values(svl_dic, remaining_qty=svl_out_qty)
+            self._update_avco_svl_values(svl_dic, remaining_qty=svl_out_qty)
 
     @api.model
-    def process_avco_svl_manual_adjustements(self, svls_dic):
+    def _process_avco_svl_manual_adjustements(self, svls_dic):
         accumulated_qty = accumulated_value = 0.0
         for svl, svl_dic in svls_dic.items():
             if (
@@ -222,7 +212,8 @@ class StockValuationLayer(models.Model):
             accumulated_value = accumulated_value + svl_dic["value"]
 
     @api.model
-    def update_avco_svl_modified(self, svls_dic, skip_avco_sync=True):
+    def _flush_all_avco_sync(self, svls_dic, skip_avco_sync=True):
+        """Check if there's something to write and write it in the DB."""
         for svl, svl_dic in svls_dic.items():
             vals = {}
             for field_name, new_value in svl_dic.items():
@@ -247,187 +238,288 @@ class StockValuationLayer(models.Model):
             if vals:
                 svl.with_context(skip_avco_sync=skip_avco_sync).write(vals)
 
-    def _preprocess_main_svl_line(self):
-        """This method serves for doing any stuff before processing the SVL, and it
-        also allows to skip the line returning True.
-        """
-        return False
+    def _get_previous_svl_info(self):
+        self.ensure_one()
+        previous_svls = self.env["stock.valuation.layer"].search(
+            [
+                ("product_id", "=", self.product_id.id),
+                ("company_id", "=", self.company_id.id),
+                "|",
+                "&",
+                ("create_date", "=", self.create_date),
+                ("id", "<", self.id),
+                ("create_date", "<", self.create_date),
+            ],
+            order="create_date, id",
+        )
+        key = (self.product_id, self.company_id)
+        svls_dic = OrderedDict()
+        svls_dic[key] = {
+            "vacuum_dic": defaultdict(list),
+            "svls": OrderedDict(),
+            "previous_unit_cost": 0,
+            "previous_qty": 0,
+            "inventory_processed": 0,
+            "unit_cost_processed": 0,
+            "qty_diff": 0,
+        }
+        for svl in previous_svls:
+            svl._process_avco_sync_one(svls_dic, dry=True)
+        return (
+            svls_dic[key]["previous_unit_cost"],
+            svls_dic[key]["previous_qty"],
+            svls_dic[key]["inventory_processed"],
+            svls_dic[key]["unit_cost_processed"],
+        )
 
-    def _preprocess_rest_svl_to_sync(self, svls_dic, preprocess_svl_dic):
-        """This method serves for doing any stuff before processing subsequent SVLs that
-        are being synced, and it also allows to skip the line returning True.
+    def _initialize_avco_sync_struct(self, svl_prev_vals):
+        """Return the basic initialized structure for each pair (product, company)
+        that is used for AVCO sync main loop.
         """
-        return False
+        self.ensure_one()
+        prev_vals = self._get_previous_svl_info()
+        return {
+            "vacuum_dic": defaultdict(list),
+            "to_sync": self,
+            "svls": OrderedDict(),
+            "previous_unit_cost": prev_vals[0],
+            "previous_qty": prev_vals[1],
+            "inventory_processed": prev_vals[2],
+            "unit_cost_processed": prev_vals[3],
+            "qty_diff": self.quantity - svl_prev_vals.get("quantity", self.quantity),
+        }
 
-    def cost_price_avco_sync(self, vals, svl_previous_vals):  # noqa: C901
+    def _initialize_avco_sync_svl_dic(self):
+        """Return the basic initialized dictionary for each SVL in memory."""
+        return {
+            "id": self.id,
+            "quantity": self.quantity,
+            "unit_cost": self.unit_cost,
+            "remaining_qty": self.quantity,
+            "remaining_value": self.quantity * self.unit_cost,
+            "value": self.value,
+        }
+
+    def _is_avco_synced(self, svls_dic):
+        """Helper method for indicating if the SVL represented by self is already synced
+        in current synchronization structure, which is pass in ~svls_dic~.
+        """
+        self.ensure_one()
+        key = (self.product_id, self.company_id)
+        to_sync = svls_dic[key]["to_sync"]
+        if not to_sync:
+            return True
+        return self.create_date < to_sync.create_date or (
+            self.create_date == to_sync.create_date and self.id < to_sync.id
+        )
+
+    def _cost_price_avco_sync(self, svl_prev_vals):
+        self.ensure_one()
         dp_obj = self.env["decimal.precision"]
-        precision_qty = dp_obj.precision_get("Product Unit of Measure")
         precision_price = dp_obj.precision_get("Product Price")
-        for line in self.sorted(key=lambda l: (l.create_date, l.id)):
-            bypass = line._preprocess_main_svl_line()
-            if (
-                line.product_id.cost_method != "average"
-                or line.stock_valuation_layer_id
-                or bypass
-            ):
-                continue
-            previous_unit_cost = previous_qty = 0.0
-            svls_to_avco_sync = line.with_context(
-                skip_avco_sync=True
-            ).get_svls_to_avco_sync()
-            vacuum_dic = defaultdict(list)
-            inventory_processed = False
-            unit_cost_processed = False
-            svls_dic = OrderedDict()
-            # SVLS that need to be written in a previous process before processing
-            # the other SVLS.
-            preprocess_svl_dic = OrderedDict()
-            for svl in svls_to_avco_sync:
-                if svl._preprocess_rest_svl_to_sync(svls_dic, preprocess_svl_dic):
-                    continue
-                # Compatibility with landed cost
-                if svl.stock_valuation_layer_id:
-                    linked_layer = svl.stock_valuation_layer_id
-                    cost_to_add = svl.value
-                    if cost_to_add and previous_qty:
-                        previous_unit_cost += cost_to_add / previous_qty
-                        svls_dic[linked_layer]["remaining_value"] += cost_to_add
-                    continue
-                qty, unit_cost = svl.get_avco_svl_qty_unit_cost(line, vals)
-                svls_dic[svl] = {
-                    "id": svl.id,
-                    "quantity": qty,
-                    "unit_cost": unit_cost,
-                    "remaining_qty": qty,
-                    "remaining_value": qty * unit_cost,
-                    "value": svl.value,
-                }
-                svl_dic = svls_dic[svl]
-                f_compare = float_compare(qty, 0.0, precision_digits=precision_qty)
-                # Keep inventory unit_cost if not previous incoming or manual adjustment
-                if not unit_cost_processed:
-                    previous_unit_cost = unit_cost
-                    if f_compare > 0.0:
-                        unit_cost_processed = True
-                # Adjust inventory IN and OUT
-                # Discard moves with a picking because they are not an inventory
-                if (
-                    (
-                        svl.stock_move_id.location_id.usage == "inventory"
-                        or svl.stock_move_id.location_dest_id.usage == "inventory"
+        # Prepare structure for the main loop
+        if self.product_id.cost_method != "average" or self.stock_valuation_layer_id:
+            return
+        svls_dic = OrderedDict()
+        svls_dic[
+            (self.product_id, self.company_id)
+        ] = self._initialize_avco_sync_struct(svl_prev_vals)
+        # Main loop: iterate while there's something to do
+        index = 0  # which (product, company) to process
+        reloop = False  # activated when something is blocking
+        any_processed = False  # to control if there's no progress in a whole loop
+        while index < len(svls_dic):
+            product, company = list(svls_dic.keys())[index]
+            svl_dic = svls_dic[(product, company)]
+            while svl_dic["to_sync"]:
+                svl = svl_dic["to_sync"]
+                if not svl._is_avco_sync_processable(svls_dic):
+                    reloop = True
+                    break
+                svl._process_avco_sync_one(svls_dic)
+                svl_dic["to_sync"] = svl._get_next_svl_to_sync_avco()
+                any_processed = True
+            index += 1
+            if index > len(svls_dic) and reloop:
+                if not any_processed:
+                    raise exceptions.UserError(
+                        _(
+                            "The AVCO sync can't be completed, as there's some endless "
+                            "dependency in the data needed to process it."
+                        )
                     )
-                    and not svl.stock_move_id.picking_id
-                    and not svl.stock_move_id.scrapped
-                ):
-                    if (
-                        not inventory_processed
-                        # Context to keep stock quantities after inventory qty update
-                        and self.env.context.get("keep_avco_inventory", False)
-                    ):
-                        qty = self.process_avco_svl_inventory(
-                            svl,
-                            svl_dic,
-                            line,
-                            svl_previous_vals,
-                            previous_unit_cost,
-                        )
-                        inventory_processed = True
-                    else:
-                        svl.update_avco_svl_values(
-                            svl_dic, unit_cost=previous_unit_cost
-                        )
-                    # Check if adjust IN and we have moves to vacuum outs without stock
-                    if svl_dic["quantity"] > 0.0 and previous_qty < 0.0:
-                        svl.vacumm_avco_svl(qty, svls_dic, vacuum_dic)
-                    elif svl_dic["quantity"] < 0.0:
-                        svl.update_remaining_avco_svl_in(svls_dic, vacuum_dic)
-                    previous_qty = previous_qty + qty
-                # Incoming line in layer
-                elif f_compare > 0:
-                    total_qty = previous_qty + qty
-                    # Return moves
-                    if not svl.stock_move_id or svl.stock_move_id.move_orig_ids:
-                        svl.update_avco_svl_values(
-                            svl_dic, unit_cost=previous_unit_cost
-                        )
-                    # Normal incoming moves
-                    else:
-                        unit_cost_processed = True
-                        if previous_qty <= 0.0:
-                            # Set income svl.unit_cost as previous_unit_cost
-                            previous_unit_cost = unit_cost
-                        else:
-                            previous_unit_cost = svl.get_avco_svl_price(
-                                previous_unit_cost,
-                                previous_qty,
-                                unit_cost,
-                                qty,
-                                total_qty,
-                            )
-                    svl.update_avco_svl_values(svl_dic, remaining_qty=qty)
-                    if previous_qty < 0:
-                        # Vacuum previous product outs without stock
-                        svl.vacumm_avco_svl(qty, svls_dic, vacuum_dic)
-                    previous_qty = total_qty
-                # Outgoing line in layer
-                elif f_compare < 0:
-                    # Normal OUT
-                    svl.update_avco_svl_values(
-                        svl_dic,
-                        unit_cost=previous_unit_cost,
-                    )
-                    previous_qty = previous_qty + qty
-                    svl.update_remaining_avco_svl_in(svls_dic, vacuum_dic)
-                # Manual standard_price adjustment line in layer
-                elif (
-                    not unit_cost
-                    and not qty
-                    and not svl.stock_move_id
-                    and svl.description
-                ):
-                    unit_cost_processed = True
-                    match_price = re.findall(r"[+-]?[0-9]+\.[0-9]+\)$", svl.description)
-                    if match_price:
-                        standard_price = float(match_price[0][:-1])
-                        # TODO: Review abs in previous_qty or new_diff
-                        new_diff = standard_price - previous_unit_cost
-                        svl_dic["value"] = new_diff * previous_qty
-                        previous_unit_cost = standard_price
-                    # elif previous_qty > 0.0:
-                    #     previous_unit_cost = (
-                    #         previous_unit_cost * previous_qty + svl_dic["value"]
-                    #     ) / previous_qty
-                # Incoming or Outgoing moves without quantity and unit_cost
-                elif not qty and svl.stock_move_id:
-                    svl_dic["value"] = 0.0
-            line.update_avco_svl_modified(preprocess_svl_dic, skip_avco_sync=False)
+                any_processed = False
+                index = 0
+                reloop = False
+        for product, company in svls_dic:
+            svl_dic = svls_dic[(product, company)]
             # Reprocess svls to set manual adjust values take into account all vacuums
-            self.process_avco_svl_manual_adjustements(svls_dic)
+            self._process_avco_svl_manual_adjustements(svl_dic["svls"])
             # Update product standard price if it is modified
             if float_compare(
-                previous_unit_cost,
-                line.product_id.with_company(line.company_id.id).standard_price,
+                svl_dic["previous_unit_cost"],
+                product.with_company(company).standard_price,
                 precision_digits=precision_price,
             ):
-                line.product_id.with_company(line.company_id.id).with_context(
+                product.with_company(company).with_context(
                     disable_auto_svl=True
                 ).sudo().standard_price = float_round(
-                    previous_unit_cost, precision_digits=precision_price
+                    svl_dic["previous_unit_cost"], precision_digits=precision_price
                 )
-            # Update actual line value
-            svl_dic = svls_dic[line]
-            if svl_dic["quantity"] or svl_dic["unit_cost"]:
-                svl_dic["value"] = svl_dic["quantity"] * svl_dic["unit_cost"]
             # Write changes in db
-            line.update_avco_svl_modified(svls_dic)
-            # Update unit_cost for incoming stock moves
+            self._flush_all_avco_sync(svl_dic["svls"])
+        # Update unit_cost for incoming stock moves
+        if (
+            self.stock_move_id
+            and self.stock_move_id._is_in()
+            and float_compare(
+                self.stock_move_id.price_unit,
+                self.unit_cost,
+                precision_digits=precision_price,
+            )
+        ):
+            self.stock_move_id.price_unit = self.unit_cost
+
+    def _process_avco_sync_one(self, svls_dic, dry=False):  # noqa: C901
+        """Process the syncronization of the current SVL in self. If this method is
+        executed, the sync is processable. If you need to block this processing,
+        override `_is_avco_sync_processable` and return a falsy value there.
+
+        Two things can be performed here:
+
+        1. Modify current SVL dic for putting another values (quantity, unit_cost, etc).
+           You have to update also internal structures, updating "previous_unit_cost"
+           through `_update_avco_svl_values`, "unit_cost_processed", and using
+           `_get_avco_svl_price`. Example:
+
+            ```
+            svl_dic = svls_dic[(self.product_id, self.company_id)]
+            svl_dic["svls"][self] = self._initialize_avco_sync_svl_dic()
+            unit_cost = <new svl unit cost>
+            svl_dic["unit_cost_processed"] = True
+            svl_dic["previous_unit_cost"] = self._get_avco_svl_price(
+                svl_dic["previous_unit_cost"],
+                svl_dic["previous_qty"],
+                unit_cost,
+                self.quantity,
+            )
+            self._update_avco_svl_values(svl_dic["svls"][self], unit_cost=unit_cost)
+            ```
+        2. Add in the sync structure extra products to sync. Example:
+
+            ```
+            svl = <svl_to_sync>
+            key = (svl.product_id, svl.company_id)
+            if key not in svls_dic:
+                svls_dic[key] = svl._initialize_avco_sync_struct({})
+            ```
+
+        If the argument ~~dry~~ is set to True, no sync enqueue should be done.
+        """
+        self.ensure_one()
+        dp_obj = self.env["decimal.precision"]
+        precision_qty = dp_obj.precision_get("Product Unit of Measure")
+        svl_dic = svls_dic[(self.product_id, self.company_id)]
+        svl_dic["svls"][self] = self._initialize_avco_sync_svl_dic()
+        svl_data = svl_dic["svls"][self]
+        # Compatibility with landed cost
+        if self.stock_valuation_layer_id:
+            linked_layer = self.stock_valuation_layer_id
+            if self.value and svl_dic["previous_qty"]:
+                svl_dic["previous_unit_cost"] += self.value / svl_dic["previous_qty"]
+            if linked_layer in svl_dic["svls"][self]:
+                svl_dic[self][linked_layer]["remaining_value"] += self.value
+            return
+        f_compare = float_compare(self.quantity, 0.0, precision_digits=precision_qty)
+        # Keep inventory unit_cost if not previous incoming or manual adjustment
+        if not svl_dic["unit_cost_processed"]:
+            svl_dic["previous_unit_cost"] = self.unit_cost
+            if f_compare > 0.0:
+                svl_dic["unit_cost_processed"] = True
+        # Adjust inventory IN and OUT
+        if (
+            (
+                self.stock_move_id.location_id.usage == "inventory"
+                or self.stock_move_id.location_dest_id.usage == "inventory"
+            )
+            # Discard moves with a picking because they are not an inventory
+            and not self.stock_move_id.picking_id
+            and not self.stock_move_id.scrapped
+        ):
             if (
-                line.stock_move_id
-                and line.stock_move_id._is_in()
-                and float_compare(
-                    line.stock_move_id.price_unit,
-                    line.unit_cost,
-                    precision_digits=precision_price,
-                )
+                not svl_dic["inventory_processed"]
+                # Context to keep stock quantities after inventory qty update
+                and self.env.context.get("keep_avco_inventory", False)
             ):
-                line.stock_move_id.price_unit = line.unit_cost
+                qty = self._process_avco_svl_inventory(
+                    svl_data,
+                    svl_dic["qty_diff"],
+                    svl_dic["previous_unit_cost"],
+                )
+                svl_dic["inventory_processed"] = True
+            else:
+                qty = svl_data["quantity"]
+                self._update_avco_svl_values(
+                    svl_data, unit_cost=svl_dic["previous_unit_cost"]
+                )
+            # Check if adjust IN and we have moves to vacuum outs without stock
+            if svl_data["quantity"] > 0.0 and svl_dic["previous_qty"] < 0.0:
+                self._vacumm_avco_svl(qty, svl_dic["svls"], svl_dic["vacuum_dic"])
+            elif svl_data["quantity"] < 0.0:
+                self._update_remaining_avco_svl_in(
+                    svl_dic["svls"], svl_dic["vacuum_dic"]
+                )
+            svl_dic["previous_qty"] += qty
+        # Incoming line in layer
+        elif f_compare > 0:
+            # Return moves
+            if not self.stock_move_id or self.stock_move_id.move_orig_ids:
+                self._update_avco_svl_values(
+                    svl_data, unit_cost=svl_dic["previous_unit_cost"]
+                )
+            # Normal incoming moves
+            else:
+                svl_dic["unit_cost_processed"] = True
+                if svl_dic["previous_qty"] <= 0.0:
+                    # Set income svl.unit_cost as previous_unit_cost
+                    svl_dic["previous_unit_cost"] = svl_data["unit_cost"]
+                else:
+                    svl_dic["previous_unit_cost"] = self._get_avco_svl_price(
+                        svl_dic["previous_unit_cost"],
+                        svl_dic["previous_qty"],
+                        self.unit_cost,
+                        self.quantity,
+                    )
+            self._update_avco_svl_values(svl_data, remaining_qty=self.quantity)
+            if svl_dic["previous_qty"] < 0:
+                # Vacuum previous product outs without stock
+                self._vacumm_avco_svl(
+                    self.quantity, svl_dic["svls"], svl_dic["vacuum_dic"]
+                )
+            svl_dic["previous_qty"] += self.quantity
+        # Outgoing line in layer
+        elif f_compare < 0:
+            # Normal OUT
+            self._update_avco_svl_values(
+                svl_data, unit_cost=svl_dic["previous_unit_cost"]
+            )
+            svl_dic["previous_qty"] += self.quantity
+            self._update_remaining_avco_svl_in(svl_dic["svls"], svl_dic["vacuum_dic"])
+        # Manual standard_price adjustment line in layer
+        elif (
+            not self.unit_cost
+            and not self.quantity
+            and not self.stock_move_id
+            and self.description
+        ):
+            svl_dic["unit_cost_processed"] = True
+            match_price = re.findall(r"[+-]?[0-9]+\.[0-9]+\)$", self.description)
+            if match_price:
+                standard_price = float(match_price[0][:-1])
+                # TODO: Review abs in previous_qty or new_diff
+                new_diff = standard_price - svl_dic["previous_unit_cost"]
+                svl_data["value"] = new_diff * svl_dic["previous_qty"]
+                svl_dic["previous_unit_cost"] = standard_price
+        # Incoming or Outgoing moves without quantity and unit_cost
+        elif not self.quantity and self.stock_move_id:
+            svl_data["value"] = 0.0
