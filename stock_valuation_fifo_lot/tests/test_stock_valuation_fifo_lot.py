@@ -58,10 +58,11 @@ class TestStockAccountFifoReturnOrigin(TransactionCase):
             move.write({"price_unit": price})
         return move
 
-    def create_stock_move_line(self, move, lot_name=False):
+    def create_stock_move_line(self, move, picking, lot_name=False):
         move_line = self.env["stock.move.line"].create(
             {
                 "move_id": move.id,
+                "picking_id": picking.id,
                 "product_id": move.product_id.id,
                 "location_id": move.location_id.id,
                 "location_dest_id": move.location_dest_id.id,
@@ -77,7 +78,7 @@ class TestStockAccountFifoReturnOrigin(TransactionCase):
             self.supplier_location, self.stock_location, self.picking_type_in
         )
         move = self.create_stock_move(receipt_picking_1, self.product, 100)
-        self.create_stock_move_line(move, "11111")
+        self.create_stock_move_line(move, receipt_picking_1, "11111")
 
         receipt_picking_1.action_confirm()
         receipt_picking_1.action_assign()
@@ -88,7 +89,7 @@ class TestStockAccountFifoReturnOrigin(TransactionCase):
             self.supplier_location, self.stock_location, self.picking_type_in
         )
         move = self.create_stock_move(receipt_picking_2, self.product, 200)
-        self.create_stock_move_line(move, "22222")
+        self.create_stock_move_line(move, receipt_picking_2, "22222")
 
         receipt_picking_2.action_confirm()
         receipt_picking_2.action_assign()
@@ -100,7 +101,7 @@ class TestStockAccountFifoReturnOrigin(TransactionCase):
             self.stock_location, self.customer_location, self.picking_type_out
         )
         move = self.create_stock_move(delivery_picking1, self.product)
-        move_line = self.create_stock_move_line(move)
+        move_line = self.create_stock_move_line(move, delivery_picking1)
         lot_id = self.env["stock.lot"].search(
             [("name", "=", "22222"), ("product_id", "=", self.product.id)]
         )
@@ -116,7 +117,7 @@ class TestStockAccountFifoReturnOrigin(TransactionCase):
             self.supplier_location, self.stock_location, self.picking_type_in
         )
         move = self.create_stock_move(receipt_picking_3, self.product, 300)
-        self.create_stock_move_line(move, "33333")
+        self.create_stock_move_line(move, receipt_picking_3, "33333")
 
         receipt_picking_3.action_confirm()
         receipt_picking_3.action_assign()
