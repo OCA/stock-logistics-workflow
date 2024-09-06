@@ -34,7 +34,7 @@ addon | version | maintainers | summary
 [sale_line_returned_qty_mrp](sale_line_returned_qty_mrp/) | 14.0.1.0.1 |  | Track returned quantity of sale order lines for BoM products.
 [sale_order_global_stock_route](sale_order_global_stock_route/) | 14.0.1.0.1 |  | Add the possibility to choose one warehouse path for an order
 [sale_purchase_stock_line_note](sale_purchase_stock_line_note/) | 14.0.1.1.0 | [![grindtildeath](https://github.com/grindtildeath.png?size=30px)](https://github.com/grindtildeath) | Propagate sale line note to stock move and purchase
-[sale_stock_mto_as_mts_orderpoint](sale_stock_mto_as_mts_orderpoint/) | 14.0.1.0.2 |  | Materialize need from MTO route through orderpoint
+[sale_stock_mto_as_mts_orderpoint](sale_stock_mto_as_mts_orderpoint/) | 14.0.1.0.3 |  | Materialize need from MTO route through orderpoint
 [stock_account_product_run_fifo_hook](stock_account_product_run_fifo_hook/) | 14.0.1.0.1 |  | Add more flexibility in the run fifo method.
 [stock_auto_move](stock_auto_move/) | 14.0.1.0.0 |  | Automatic Move Processing
 [stock_dangerous_goods](stock_dangerous_goods/) | 14.0.1.0.0 | [![mmequignon](https://github.com/mmequignon.png?size=30px)](https://github.com/mmequignon) | Adds utility fields to manage dangerous goods
