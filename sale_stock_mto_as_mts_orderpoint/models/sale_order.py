@@ -73,7 +73,7 @@ class SaleOrderLine(models.Model):
                 .sudo()
                 .create(
                     {
-                        "product_id": self.product_id.id,
+                        "product_id": product_id.id,
                         "warehouse_id": warehouse.id,
                         "location_id": (
                             warehouse._get_locations_for_mto_orderpoints().id
