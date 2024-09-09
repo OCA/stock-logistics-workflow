@@ -27,7 +27,7 @@ class SaleOrderLine(models.Model):
             for delivery_move in delivery_moves:
                 if (
                     not delivery_move.is_from_mto_route
-                    and mto_route not in line.product_id.route_ids
+                    and mto_route not in delivery_move.product_id.route_ids
                 ):
                     continue
                 orderpoint = line._get_mto_orderpoint(delivery_move.product_id)
