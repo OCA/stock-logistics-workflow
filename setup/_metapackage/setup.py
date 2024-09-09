@@ -53,6 +53,7 @@ setuptools.setup(
         'odoo14-addon-stock_picking_backorder_strategy',
         'odoo14-addon-stock_picking_batch_extended',
         'odoo14-addon-stock_picking_cancel_reason',
+        'odoo14-addon-stock_picking_customer_ref',
         'odoo14-addon-stock_picking_default_planned_transfer',
         'odoo14-addon-stock_picking_filter_lot',
         'odoo14-addon-stock_picking_group_by_partner_by_carrier',

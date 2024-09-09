@@ -66,6 +66,7 @@ addon | version | maintainers | summary
 [stock_picking_backorder_strategy](stock_picking_backorder_strategy/) | 14.0.1.0.0 | [![rousseldenis](https://github.com/rousseldenis.png?size=30px)](https://github.com/rousseldenis) [![mgosai](https://github.com/mgosai.png?size=30px)](https://github.com/mgosai) | Picking backordering strategies
 [stock_picking_batch_extended](stock_picking_batch_extended/) | 14.0.1.0.2 | [![gurneyalex](https://github.com/gurneyalex.png?size=30px)](https://github.com/gurneyalex) [![carlosdauden](https://github.com/carlosdauden.png?size=30px)](https://github.com/carlosdauden) [![i-vyshnevska](https://github.com/i-vyshnevska.png?size=30px)](https://github.com/i-vyshnevska) | Allows manage a lot of pickings in batch
 [stock_picking_cancel_reason](stock_picking_cancel_reason/) | 14.0.1.0.1 |  | Stock Picking Cancel Reason
+[stock_picking_customer_ref](stock_picking_customer_ref/) | 14.0.1.0.0 |  | This module displays the sale reference/description in the pickings
 [stock_picking_default_planned_transfer](stock_picking_default_planned_transfer/) | 14.0.1.0.1 | [![Kev-Roche](https://github.com/Kev-Roche.png?size=30px)](https://github.com/Kev-Roche) | Set Planned Transfer as Default from Inventory Views
 [stock_picking_filter_lot](stock_picking_filter_lot/) | 14.0.2.0.2 |  | In picking out lots' selection, filter lots based on their location
 [stock_picking_group_by_partner_by_carrier](stock_picking_group_by_partner_by_carrier/) | 14.0.1.4.4 |  | Stock Picking: group by partner and carrier
