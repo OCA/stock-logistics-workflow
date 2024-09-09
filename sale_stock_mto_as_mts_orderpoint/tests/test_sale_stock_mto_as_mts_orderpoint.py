@@ -24,7 +24,7 @@ class TestSaleStockMtoAsMtsOrderpoint(SavepointCase):
         )
 
         cls.warehouse = ref("stock.warehouse0")
-
+        cls.warehouse.mto_as_mts = True
         cls.mto_route = ref("stock.route_warehouse0_mto")
         cls.buy_route = ref("purchase_stock.route_warehouse0_buy")
         cls.product.write({"route_ids": [(6, 0, [cls.mto_route.id, cls.buy_route.id])]})
