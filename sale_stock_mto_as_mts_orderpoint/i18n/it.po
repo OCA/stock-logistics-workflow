@@ -44,6 +44,11 @@ msgid "Last Modified on"
 msgstr ""
 
 #. module: sale_stock_mto_as_mts_orderpoint
+#: model:ir.model.fields,field_description:sale_stock_mto_as_mts_orderpoint.field_stock_warehouse__mto_as_mts
+msgid "Mto As Mts"
+msgstr ""
+
+#. module: sale_stock_mto_as_mts_orderpoint
 #: model:ir.model,name:sale_stock_mto_as_mts_orderpoint.model_product_template
 msgid "Product Template"
 msgstr ""
