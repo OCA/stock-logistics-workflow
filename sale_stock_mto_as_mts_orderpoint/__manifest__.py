@@ -3,7 +3,7 @@
 {
     "name": "Sale Stock Mto As Mts Orderpoint",
     "summary": "Materialize need from MTO route through orderpoint",
-    "version": "14.0.1.0.4",
+    "version": "14.0.1.1.0",
     "development_status": "Alpha",
     "category": "Operations/Inventory/Delivery",
     "website": "https://github.com/OCA/stock-logistics-workflow",
@@ -14,5 +14,6 @@
     "depends": ["sale_stock", "stock_orderpoint_manual_procurement"],
     "data": [
         "data/stock_data.xml",
+        "views/stock_warehouse_views.xml",
     ],
 }

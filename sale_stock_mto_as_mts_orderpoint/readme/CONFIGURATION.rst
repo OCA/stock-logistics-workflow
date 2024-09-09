@@ -10,3 +10,6 @@ from Stock:
   the need is materialized by the procure_recommended_qty on the orderpoint,
   if the ensuing procurement (purchase order/manufacturing order) having the
   orderpoint as origin is canceled.
+
+To activate the functionality you need to activate the field `MTO as MTS` on
+the warehouse.
