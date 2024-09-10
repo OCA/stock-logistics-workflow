@@ -74,6 +74,8 @@ Contributors
    -  Pedro M. Baeza
    -  Víctor Martínez
 
+-  `SodexisTeam <dev@sodexis.com>`__
+
 Maintainers
 -----------
 
