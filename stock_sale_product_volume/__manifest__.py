@@ -9,6 +9,7 @@
     "author": "Akretion,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": ["stock", "sale_management"],
+    "maintainers": ["mathieudelva"],
     "data": [
         "views/sale_order.xml",
         "views/stock_package_type.xml",
