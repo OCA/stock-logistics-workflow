@@ -37,7 +37,7 @@ class TestAutomaticPackage(SavepointCase):
             10,
         )
         cls.picking = cls._create_picking()
-        cls.picking.move_lines.update({"quantity_done": 4.0})
+        cls.picking.move_lines.update({"quantity_done": 5.0})
 
     @classmethod
     def _create_picking(cls):
@@ -92,4 +92,11 @@ class TestAutomaticPackage(SavepointCase):
         self.picking.picking_type_id.automatic_package_creation_mode = "packaging"
         self.picking._action_done()
         self.assertTrue(self.picking.move_line_ids.result_package_id)
-        self.assertTrue(len(self.picking.move_line_ids.result_package_id), 2)
+        self.assertTrue(len(self.picking.move_line_ids.result_package_id), 3)
+
+    def test_automatic_packaging_no_product_packaging(self):
+        self.picking.picking_type_id.automatic_package_creation_mode = "packaging"
+        self.product_packaging.unlink()
+        self.picking._action_done()
+        self.assertTrue(self.picking.move_line_ids.result_package_id)
+        self.assertTrue(len(self.picking.move_line_ids.result_package_id), 5)

@@ -3,9 +3,7 @@
 # Copyright 2023 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, models
-from odoo.exceptions import UserError
-from odoo.tools.float_utils import float_round
+from odoo import api, models
 
 
 class StockPicking(models.Model):
@@ -38,35 +36,18 @@ class StockPicking(models.Model):
                 move_line = self._auto_create_delivery_package_filter(move_line)
                 if not move_line:
                     continue
+                qty_to_pack = move_line.qty_done
+                max_pack_qty = 1
                 packagings = move_line.product_id.packaging_ids
-                if not packagings:
-                    raise UserError(
-                        _(
-                            "Cannot create a package for the product %s as "
-                            "no product packaging is defined"
-                        )
-                        % move_line.product_id.display_name
-                    )
-                smallest_packaging = packagings.sorted("qty")[0]
-                precision_digits = self.env["decimal.precision"].precision_get(
-                    "Product Unit of Measure"
-                )
-                qty_done = move_line.qty_done
-                qty = float_round(
-                    qty_done / smallest_packaging.qty,
-                    precision_digits=precision_digits,
-                    rounding_method="HALF-UP",
-                )
-                if not qty.is_integer():
-                    raise UserError(
-                        _(
-                            "The done quantity of the product %s is not "
-                            "a multiple of product packaging"
-                        )
-                        % move_line.product_id.display_name
-                    )
-                for _i in range(int(qty)):
-                    move_line.qty_done = smallest_packaging.qty
+                if packagings:
+                    smallest_packaging = packagings.filtered(
+                        lambda pack: pack.qty > 0
+                    ).sorted("qty")[0]
+                    max_pack_qty = smallest_packaging.qty
+                while qty_to_pack:
+                    pack_qty = min(qty_to_pack, max_pack_qty)
+                    qty_to_pack -= pack_qty
+                    move_line.qty_done = pack_qty
                     move_line.picking_id._put_in_pack(move_line)
 
     def _auto_create_delivery_package_single(self) -> None:
