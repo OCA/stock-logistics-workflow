@@ -64,7 +64,6 @@ class TestStockPicking(common.TransactionCase):
         cls.dozen = cls.env.ref("uom.product_uom_dozen")
 
     def test_compute_action_pack_operation_auto_fill_allowed(self):
-
         self.move_model.create(
             dict(
                 product_id=self.product_9.id,
@@ -94,7 +93,6 @@ class TestStockPicking(common.TransactionCase):
         self.assertTrue(self.picking.action_pack_op_auto_fill_allowed)
 
     def test_check_action_pack_operation_auto_fill_allowed(self):
-
         self.move_model.create(
             dict(
                 product_id=self.product_9.id,
@@ -126,7 +124,6 @@ class TestStockPicking(common.TransactionCase):
         self.picking.action_pack_operation_auto_fill()
 
     def test_action_pack_operation_auto_fill(self):
-
         # set tracking on the products
         self.picking_type_in.use_create_lots = True
         self.product_8.tracking = "lot"
