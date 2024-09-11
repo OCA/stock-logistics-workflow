@@ -8,10 +8,11 @@
 
 /*
 :Author: David Goodger (goodger@python.org)
-:Id: $Id: html4css1.css 8954 2022-01-20 10:10:25Z milde $
+:Id: $Id: html4css1.css 9511 2024-01-13 09:50:07Z milde $
 :Copyright: This stylesheet has been placed in the public domain.
 
 Default cascading style sheet for the HTML output of Docutils.
+Despite the name, some widely supported CSS2 features are used.
 
 See https://docutils.sourceforge.io/docs/howto/html-stylesheets.html for how to
 customize this style sheet.
@@ -274,7 +275,7 @@ pre.literal-block, pre.doctest-block, pre.math, pre.code {
   margin-left: 2em ;
   margin-right: 2em }
 
-pre.code .ln { color: grey; } /* line numbers */
+pre.code .ln { color: gray; } /* line numbers */
 pre.code, code { background-color: #eeeeee }
 pre.code .comment, code .comment { color: #5C6576 }
 pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
@@ -300,7 +301,7 @@ span.option {
 span.pre {
   white-space: pre }
 
-span.problematic {
+span.problematic, pre.problematic {
   color: red }
 
 span.section-subtitle {
@@ -368,55 +369,64 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! source digest: sha256:6dc785ac9664c8c3d8af36df140c3d617c687377ed34ebe20f9ab3996cef734a
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_move_line_auto_fill"><img alt="OCA/stock-logistics-workflow" src="https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/stock-logistics-workflow-16-0/stock-logistics-workflow-16-0-stock_move_line_auto_fill"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&amp;target_branch=16.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
-<p>This module alows to auto fill quantities in picking operations and autoassignment
-lots quantities.</p>
-<p>In Odoo, if you schedule to transfer 50 products and only receive 49, you have
-to change the quantity directly on the picking.
-As the quantity by default is 0 for each line, you have to write the received
-quantity on 49 lines.</p>
-<p>In this module we have added a button that helps users to fill automatically
-the scheduled quantities. Then, the user can just change back the quantities
-for the product that hasn’t been received yet.</p>
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/stock-logistics-workflow/tree/17.0/stock_move_line_auto_fill"><img alt="OCA/stock-logistics-workflow" src="https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/stock-logistics-workflow-17-0/stock-logistics-workflow-17-0-stock_move_line_auto_fill"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&amp;target_branch=17.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
+<p>This module alows to auto fill quantities in picking operations and
+autoassignment lots quantities.</p>
+<p>In Odoo, if you schedule to transfer 50 products and only receive 49,
+you have to change the quantity directly on the picking. As the quantity
+by default is 0 for each line, you have to write the received quantity
+on 49 lines.</p>
+<p>In this module we have added a button that helps users to fill
+automatically the scheduled quantities. Then, the user can just change
+back the quantities for the product that hasn’t been received yet.</p>
 <div class="section" id="products-with-lots">
 <h1>Products with lots</h1>
-<p>When working with lots, it’s very uncomfortable to introduce the quantity,
-lot by lot, when transferring pickings from your warehouse (outgoing or
-internal).</p>
-<p>This module automatically assigns the reserved quantity as the done one, so
-that you only have to change it in case of divergence, but having the
+<p>When working with lots, it’s very uncomfortable to introduce the
+quantity, lot by lot, when transferring pickings from your warehouse
+(outgoing or internal).</p>
+<p>This module automatically assigns the reserved quantity as the done one,
+so that you only have to change it in case of divergence, but having the
 possibility of transferring directly.</p>
 <p><strong>Table of contents</strong></p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#configuration" id="toc-entry-1">Configuration</a></li>
+<li><a class="reference internal" href="#usage" id="toc-entry-2">Usage</a></li>
+</ul>
 </div>
 <div class="section" id="configuration">
-<h1>Configuration</h1>
+<h2><a class="toc-backref" href="#toc-entry-1">Configuration</a></h2>
 <p>To configure this module, you need to:</p>
 <ol class="arabic simple">
-<li>Make sure you have selected the proper removal strategy on your product
-categories.</li>
-<li>Configure the product on the page “Inventory”, field “Tracking” with one of
-these values: “By Unique Serial Number” or “By Lots” if you want autoassign
-lots.</li>
-<li>Check in Operation type if you want auto assign quantities, by default if
-you want assign quantities done to reserved quantities you must push the
-button “Auto Fill” when the picking is in ready state and has move lines</li>
-<li>Check in Operation type if you do not want auto assign lots quantities with
-“Avoid auto-assignment of lots”.</li>
+<li>Make sure you have selected the proper removal strategy on your
+product categories.</li>
+<li>Configure the product on the page “Inventory”, field “Tracking” with
+one of these values: “By Unique Serial Number” or “By Lots” if you
+want autoassign lots.</li>
+<li>Check in Operation type if you want auto assign quantities, by
+default if you want assign quantities done to reserved quantities you
+must push the button “Auto Fill” when the picking is in ready state
+and has move lines</li>
+<li>Check in Operation type if you do not want auto assign lots
+quantities with “Avoid auto-assignment of lots”.</li>
 </ol>
 </div>
 <div class="section" id="usage">
-<h1>Usage</h1>
-<p>Set options in operation types, you can set ‘Auto fill operation’ what make
-autoassignment button invisible and fill the quantities in operations for lines
-and ‘Avoid Autoassignment Lots’ what allow fill manually the lots quantities.</p>
+<h2><a class="toc-backref" href="#toc-entry-2">Usage</a></h2>
+<p>Set options in operation types, you can set ‘Auto fill operation’ what
+make autoassignment button invisible and fill the quantities in
+operations for lines and ‘Avoid Autoassignment Lots’ what allow fill
+manually the lots quantities.</p>
+</div>
 </div>
 <div class="section" id="products-without-tracking-lots">
 <h1>Products without tracking lots</h1>
-<p>After confirming the picking, click on <cite>Auto fill operations</cite> button. The
-Operations matching the following conditions will be filled automatically:</p>
+<p>After confirming the picking, click on Auto fill operations button. The
+Operations matching the following conditions will be filled
+automatically:</p>
 <ul class="simple">
-<li>The operation has not be processed (i.e <cite>qty_done == 0</cite>).</li>
-<li>The operation has no package set (i.e <cite>package_id</cite> is empty).</li>
+<li>The operation has not be processed (i.e qty_done == 0).</li>
+<li>The operation has no package set (i.e package_id is empty).</li>
 </ul>
 </div>
 <div class="section" id="product-with-lots">
@@ -425,58 +435,57 @@ Operations matching the following conditions will be filled automatically:</p>
 <li>Create an outgoing or an internal picking.</li>
 <li>Include one product with lots and with enough stock.</li>
 <li>Click on “Mark as Todo” button, and then on “Reserve”.</li>
-<li>Clicking on the icon with the three items bullet list on the “Operations”
-tab you will see that the quantities have been auto-assigned on the “Done”
-column.</li>
+<li>Clicking on the icon with the three items bullet list on the
+“Operations” tab you will see that the quantities have been
+auto-assigned on the “Done” column.</li>
 </ol>
-</div>
 <div class="section" id="bug-tracker">
-<h1>Bug Tracker</h1>
+<h2>Bug Tracker</h2>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/stock-logistics-workflow/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-<a class="reference external" href="https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_move_line_auto_fill%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<a class="reference external" href="https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_move_line_auto_fill%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h1>Credits</h1>
+<h2>Credits</h2>
+</div>
+</div>
 <div class="section" id="authors">
-<h2>Authors</h2>
+<h1>Authors</h1>
 <ul class="simple">
 <li>ACSONE SA/NV</li>
 <li>Tecnativa</li>
 </ul>
 </div>
 <div class="section" id="contributors">
-<h2>Contributors</h2>
+<h1>Contributors</h1>
 <ul class="simple">
 <li>Zakaria Makrelouf (ACSONE SA/NV) &lt;<a class="reference external" href="mailto:z.makrelouf&#64;gmail.com">z.makrelouf&#64;gmail.com</a>&gt;</li>
-<li>Luis Triana (Jarsa Sistemas de S.A. de C.V.) &lt;<a class="reference external" href="mailto:luis.triana&#64;jarsa.com.mx">luis.triana&#64;jarsa.com.mx</a>&gt;</li>
-<li><dl class="first docutils">
-<dt><a class="reference external" href="https://www.tecnativa.com">Tecnativa</a>:</dt>
-<dd><ul class="first last">
+<li>Luis Triana (Jarsa Sistemas de S.A. de C.V.)
+&lt;<a class="reference external" href="mailto:luis.triana&#64;jarsa.com.mx">luis.triana&#64;jarsa.com.mx</a>&gt;</li>
+<li><a class="reference external" href="https://www.tecnativa.com">Tecnativa</a>:<ul>
 <li>Pedro M. Baeza &lt;<a class="reference external" href="mailto:pedro.baeza&#64;tecnativa.com">pedro.baeza&#64;tecnativa.com</a>&gt;</li>
 <li>Vicent Cubells &lt;<a class="reference external" href="mailto:vicent.cubells&#64;tecnativa.com">vicent.cubells&#64;tecnativa.com</a>&gt;</li>
 <li>Sergio Teruel &lt;<a class="reference external" href="mailto:sergio.teruel&#64;tecnativa.com">sergio.teruel&#64;tecnativa.com</a>&gt;</li>
 <li>David Vidal &lt;<a class="reference external" href="mailto:david.vidal&#64;tecnativa.com">david.vidal&#64;tecnativa.com</a>&gt;</li>
 </ul>
-</dd>
-</dl>
 </li>
 <li>Jaime Arroyo (Creu Blanca) &lt;<a class="reference external" href="mailto:jaime.arroyo&#64;creublanca.es">jaime.arroyo&#64;creublanca.es</a>&gt;</li>
 <li>Iván Todorovich &lt;<a class="reference external" href="mailto:ivan.todorovich&#64;gmail.com">ivan.todorovich&#64;gmail.com</a>&gt;</li>
 </ul>
 </div>
 <div class="section" id="maintainers">
-<h2>Maintainers</h2>
+<h1>Maintainers</h1>
 <p>This module is maintained by the OCA.</p>
-<a class="reference external image-reference" href="https://odoo-community.org"><img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" /></a>
+<a class="reference external image-reference" href="https://odoo-community.org">
+<img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" />
+</a>
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.</p>
-<p>This module is part of the <a class="reference external" href="https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_move_line_auto_fill">OCA/stock-logistics-workflow</a> project on GitHub.</p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/stock-logistics-workflow/tree/17.0/stock_move_line_auto_fill">OCA/stock-logistics-workflow</a> project on GitHub.</p>
 <p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
-</div>
 </div>
 </div>
 </body>
