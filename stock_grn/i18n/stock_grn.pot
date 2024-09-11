@@ -14,6 +14,17 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_grn
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn_type__active
+msgid "Active"
+msgstr ""
+
+#. module: stock_grn
+#: model_terms:ir.ui.view,arch_db:stock_grn.view_grn_type_form
+#: model_terms:ir.ui.view,arch_db:stock_grn.view_grn_type_search
+msgid "Archived"
+msgstr ""
+
+#. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn__carrier_id
 #: model_terms:ir.ui.view,arch_db:stock_grn.view_grn_search
 msgid "Carrier"
@@ -87,12 +98,32 @@ msgid "GRN Date"
 msgstr ""
 
 #. module: stock_grn
-#: model:ir.actions.act_window,name:stock_grn.action_grn_view
+#: model_terms:ir.ui.view,arch_db:stock_grn.view_grn_type_form
+msgid "GRN Type"
+msgstr ""
+
+#. module: stock_grn
+#: model_terms:ir.ui.view,arch_db:stock_grn.view_grn_type_search
+msgid "GRN Types"
+msgstr ""
+
+#. module: stock_grn
 #: model:ir.model,name:stock_grn.model_stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_move__grn_id
 #: model:ir.model.fields,field_description:stock_grn.field_stock_picking__grn_id
-#: model:ir.ui.menu,name:stock_grn.menu_stock_grn
 msgid "Goods Received Note"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.actions.act_window,name:stock_grn.action_grn_type_view
+#: model:ir.ui.menu,name:stock_grn.menu_stock_grn_type
+msgid "Goods Received Note Types"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.actions.act_window,name:stock_grn.action_grn_view
+#: model:ir.ui.menu,name:stock_grn.menu_stock_grn
+msgid "Goods Received Notes"
 msgstr ""
 
 #. module: stock_grn
@@ -142,6 +173,7 @@ msgstr ""
 #. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn__name
 #: model_terms:ir.ui.view,arch_db:stock_grn.view_grn_search
+#: model_terms:ir.ui.view,arch_db:stock_grn.view_grn_type_search
 msgid "Name"
 msgstr ""
 
