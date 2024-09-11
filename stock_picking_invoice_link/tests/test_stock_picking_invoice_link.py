@@ -272,7 +272,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         )
         wiz_invoice_refund.modify_moves()
         new_invoice = self.so.invoice_ids.filtered(
-            lambda i: i.move_type == "out_refund" and i.state == "draft"
+            lambda i: i.move_type == "out_refund"
         )
         inv_line_prod_del = new_invoice.invoice_line_ids.filtered(
             lambda line: line.product_id == self.prod_del
