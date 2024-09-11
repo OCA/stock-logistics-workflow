@@ -46,7 +46,7 @@ class StockMove(models.Model):
             if line._should_bypass_reservation() or not line._get_auto_fill_flag():
                 return res
             lines_to_update = line.move_line_ids.filtered(
-                lambda l: l.qty_done != l.reserved_uom_qty
+                lambda li: li.qty_done != li.reserved_uom_qty
             )
             for move_line in lines_to_update:
                 if not line._get_avoid_lot_assignment_flag() or not move_line.lot_id:
