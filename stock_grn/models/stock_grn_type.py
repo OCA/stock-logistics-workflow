@@ -11,6 +11,7 @@ class StockGrnType(models.Model):
     _description = "Type of goods received note"
 
     name = fields.Char(string="Type", required=True)
+    active = fields.Boolean(default=True)
 
     _sql_constraints = [
         ("name_uniq", "unique (name)", "This GRN type name already exists !")
