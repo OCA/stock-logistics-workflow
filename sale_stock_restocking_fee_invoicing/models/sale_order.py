@@ -7,7 +7,6 @@ from odoo.fields import Command
 
 
 class SaleOrder(models.Model):
-
     _inherit = "sale.order"
 
     def _get_restocking_fee_line_name(self, stock_move):
