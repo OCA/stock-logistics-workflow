@@ -5,7 +5,6 @@ from odoo import api, fields, models
 
 
 class StockReturnPicking(models.TransientModel):
-
     _inherit = "stock.return.picking"
 
     charge_restocking_fee = fields.Boolean(
