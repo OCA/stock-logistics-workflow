@@ -3,13 +3,10 @@
 
 import logging
 
-from odoo import SUPERUSER_ID, api
-
 _logger = logging.getLogger(__name__)
 
 
-def _initialize_restocking_fee_product(cr):
-    env = api.Environment(cr, SUPERUSER_ID, {})
+def _initialize_restocking_fee_product(env):
     _logger.info("Initialize restocking fee product on companies")
     restocking_fee_product = env.ref(
         "sale_stock_restocking_fee_invoicing.product_restocking_fee"
@@ -19,5 +16,5 @@ def _initialize_restocking_fee_product(cr):
     )
 
 
-def post_init_hook(cr, registry):
-    _initialize_restocking_fee_product(cr)
+def post_init_hook(env):
+    _initialize_restocking_fee_product(env)

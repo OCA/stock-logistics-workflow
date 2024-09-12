@@ -57,7 +57,7 @@ class TestStockReturnPicking(TransactionCase):
     def _process_picking(picking):
         picking.action_assign()
         for move in picking.move_ids:
-            move.quantity_done = move.product_qty
+            move.quantity = move.product_qty
         picking.button_validate()
 
     def _create_return_wizard(self):

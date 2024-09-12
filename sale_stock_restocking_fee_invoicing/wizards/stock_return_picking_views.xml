@@ -10,19 +10,22 @@
         <field name="model">stock.return.picking</field>
         <field name="inherit_id" ref="stock.view_stock_return_picking_form" />
         <field name="arch" type="xml">
-            <field name="product_return_moves" position="after">
+            <xpath expr="//field[@name='product_return_moves']" position="after">
                 <field name="is_customer_return" invisible="1" />
-                <group attrs="{'invisible':[('is_customer_return','=',False)]}">
+                <group invisible="not is_customer_return">
                     <field name="charge_restocking_fee" />
                 </group>
-            </field>
-            <field name="quantity" position="after">
+            </xpath>
+            <xpath
+                expr="//field[@name='product_return_moves']/tree/field[@name='quantity']"
+                position="after"
+            >
                 <field name="is_customer_return" invisible="1" />
                 <field
                     name="charge_restocking_fee"
-                    attrs="{'column_invisible':[('is_customer_return','=',False)]}"
+                    invisible="not is_customer_return"
                 />
-            </field>
+            </xpath>
         </field>
     </record>
 
