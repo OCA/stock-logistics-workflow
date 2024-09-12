@@ -14,7 +14,7 @@
                 <field name="picking_kind" invisible="1" />
                 <field
                     name="charge_restocking_fee"
-                    attrs="{'invisible':[('picking_kind','!=','customer_return')]}"
+                    invisible="picking_kind != 'customer_return'"
                 />
             </field>
         </field>

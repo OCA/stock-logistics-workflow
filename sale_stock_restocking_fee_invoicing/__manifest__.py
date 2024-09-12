@@ -5,7 +5,7 @@
     "name": "Sale Stock Restocking Fee Invoicing",
     "summary": """
         On demand charge restocking fee for accepting returned goods .""",
-    "version": "16.0.1.0.0",
+    "version": "17.0.1.0.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
