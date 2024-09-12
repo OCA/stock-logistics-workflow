@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+<record model="ir.ui.view" id="view_picking_internal_search">
+    <field name="name">stock.picking.internal.search in (stock_picking_kind)</field>
+    <field name="model">stock.picking</field>
+    <field name="inherit_id" ref="stock.view_picking_internal_search" />
+    <field name="arch" type="xml">
+            <filter name="backorder" position="after">
+                <separator />
+                <filter
+                    name="customer_return"
+                    string="Customer Returns"
+                    domain="[('picking_kind', '=', 'customer_return')]"
+                />
+                <filter
+                    name="customer_out"
+                    string="Customer Deliveries"
+                    domain="[('picking_kind', '=', 'customer_out')]"
+                />
+                <filter
+                    name="supplier_return"
+                    string="Supplier Returns"
+                    domain="[('picking_kind', '=', 'supplier_return')]"
+                />
+                <filter
+                    name="supplier_in"
+                    string="Supplier Receptions"
+                    domain="[('picking_kind', '=', 'supplier_in')]"
+                />
+            </filter>
+        <filter name="picking_type" position="after">
+            <filter
+                    string="Picking Kind"
+                    name="picking_kind"
+                    domain="[]"
+                    context="{'group_by': 'picking_kind'}"
+                />
+        </filter>
+    </field>
+</record>
+
+</odoo>

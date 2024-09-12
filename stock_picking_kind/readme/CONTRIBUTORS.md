@@ -1,0 +1,2 @@
+- Hughes Damry \<<hughes.damry@acsone.eu>\>
+- Sodexis Team \<<dev@sodexis.com>\>
