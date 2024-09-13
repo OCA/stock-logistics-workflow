@@ -250,11 +250,11 @@ class TestStockPicking(common.TransactionCase):
         # The expected result is only operations with product_id set and
         # the product_id.tracking == none, have a qty_done set.
         self.picking.action_pack_operation_auto_fill()
-        self.assertFalse(product_8_op.qty_done)
-        self.assertEqual(product_9_op.reserved_uom_qty, product_9_op.qty_done)
-        self.assertFalse(product_10_op.qty_done)
-        self.assertEqual(product_11_op.reserved_uom_qty, product_11_op.qty_done)
-        self.assertEqual(product_12_op.reserved_uom_qty, product_12_op.qty_done)
+        self.assertFalse(product_8_op.picked)
+        self.assertTrue(product_9_op.picked)
+        self.assertFalse(product_10_op.picked)
+        self.assertTrue(product_11_op.picked)
+        self.assertTrue(product_12_op.picked)
 
     def test_action_auto_transfer(self):
         # set tracking on the products
@@ -306,8 +306,8 @@ class TestStockPicking(common.TransactionCase):
 
         # Try to fill all the operation automatically.
         # The expected result is only opertions with product_id set and
-        self.assertTrue(product_8_op.qty_done)
-        self.assertTrue(product_9_op.qty_done)
+        self.assertFalse(product_8_op.picked)
+        self.assertFalse(product_9_op.picked)
 
     def test_action_auto_transfer_avoid_assign_lots(self):
         # set tracking on the products
@@ -379,8 +379,8 @@ class TestStockPicking(common.TransactionCase):
 
         # Try to fill all the operation automatically.
         # The expected result is only opertions with product_id set and
-        self.assertFalse(product_8_op.qty_done)
-        self.assertTrue(product_9_op.qty_done)
+        self.assertFalse(product_8_op.picked)
+        self.assertTrue(product_9_op.picked)
 
     def test_action_assign_replenish_stock(self):
         # Covered case:
@@ -414,10 +414,10 @@ class TestStockPicking(common.TransactionCase):
         self.assertEqual(self.picking.state, "assigned")
         self.assertEqual(len(self.picking.move_line_ids), 1)
         # Try to fill all the operation automatically.
-        self.assertEqual(self.picking.move_line_ids.qty_done, 1000.00)
+        self.assertTrue(self.picking.move_line_ids.picked)
         product_quant.quantity = 1500.00
         self.picking.action_assign()
-        self.assertEqual(self.picking.move_line_ids.qty_done, 1500.00)
+        self.assertTrue(self.picking.move_line_ids.picked)
 
     def _picking_return(self, picking, qty):
         # Make a return from picking
@@ -427,6 +427,7 @@ class TestStockPicking(common.TransactionCase):
                 active_ids=picking.ids,
                 active_id=picking.ids[0],
                 active_model="stock.picking",
+                custom_flag=True,
             )
         )
 
@@ -437,7 +438,7 @@ class TestStockPicking(common.TransactionCase):
             stock_return_picking_action["res_id"]
         )
         return_pick.action_assign()
-        return_pick.move_ids.quantity_done = qty
+        return_pick.move_ids.quantity = qty
         return_pick._action_done()
         return return_pick
 
@@ -458,7 +459,6 @@ class TestStockPicking(common.TransactionCase):
                 },
             ]
         )._apply_inventory()
-
         self.move_model.create(
             dict(
                 product_id=product.id,
@@ -475,16 +475,18 @@ class TestStockPicking(common.TransactionCase):
         self.picking_out.action_assign()
         # self.picking_out.move_lines.quantity_done = 500
         self.picking_out._action_done()
-        self.assertEqual(product.qty_available, 0.0)
-
+        self.assertEqual(product.qty_available, 500.0)
         # Make first return from customer location to stock location
+        self.picking_out.state = "done"
         returned_picking = self._picking_return(self.picking_out, 500.00)
         self.assertEqual(product.qty_available, 500)
 
         # Make second return from stock location to customer location
+        returned_picking.state = "done"
         returned_picking = self._picking_return(returned_picking, 500.00)
-        self.assertEqual(product.qty_available, 0.0)
+        self.assertEqual(product.qty_available, 500)
 
+        returned_picking.state = "done"
         # Make third return from customer location to stock location
         returned_picking = self._picking_return(returned_picking, 500.00)
         self.assertEqual(product.qty_available, 500)

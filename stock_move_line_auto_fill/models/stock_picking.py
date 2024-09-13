@@ -51,7 +51,7 @@ class StockPicking(models.Model):
         operations_to_auto_fill = operations.filtered(
             lambda op: (
                 op.product_id
-                and not op.qty_done
+                and not op.picked
                 and (
                     not op.lots_visible
                     or not op.picking_id.picking_type_id.avoid_lot_assignment
@@ -59,4 +59,4 @@ class StockPicking(models.Model):
             )
         )
         for op in operations_to_auto_fill:
-            op.qty_done = op.reserved_uom_qty
+            op.picked = True
