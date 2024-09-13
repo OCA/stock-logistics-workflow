@@ -5,3 +5,4 @@
   - Vicent Cubells
   - Carlos Roca
   - Carolina Fernandez
+- [SodexisTeam](dev@sodexis.com)
