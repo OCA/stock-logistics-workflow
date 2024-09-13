@@ -79,6 +79,8 @@ Contributors
    -  Carlos Roca
    -  Carolina Fernandez
 
+-  `SodexisTeam <dev@sodexis.com>`__
+
 Maintainers
 -----------
 

@@ -3,6 +3,8 @@
 # Copyright 2017 David Vidal <david.vidal@tecnativa.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+from markupsafe import Markup
+
 from odoo import _, models
 
 
@@ -13,6 +15,6 @@ class StockScrap(models.Model):
         self.ensure_one()
         if self.lot_id:
             self.lot_id.message_post(
-                body=_("Lot was scrapped by <b>%s</b>.") % self.env.user.name
+                body=Markup(_("Lot was scrapped by <b>%s</b>.") % self.env.user.name)
             )
         return super().action_validate()
