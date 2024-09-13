@@ -5,7 +5,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import ValidationError
-from odoo.tests import common, tagged
+from odoo.tests import Form, common, tagged
 from odoo.tools.safe_eval import safe_eval
 
 
@@ -45,12 +45,13 @@ class TestStockLotScrap(common.TransactionCase):
         cls.env.user.lang = "en_US"
 
     def test_picking_created(self):
+        Form(self.lot010)
         res = self.lot010.action_scrap_lot()
         self.assertIn("domain", res)
         scrap = self.env["stock.scrap"].search(safe_eval(res["domain"]))
         self.assertAlmostEqual(sum(scrap.mapped("scrap_qty")), 5325)
         self.assertTrue(
-            all(scrap.mapped("move_id").mapped(lambda x: x.state == "done"))
+            all(scrap.mapped("move_ids").mapped(lambda x: x.state == "done"))
         )
         scrap[:1].action_validate()
         self.assertIn("Lot was scrapped by", self.lot010.message_ids[:1].body)
