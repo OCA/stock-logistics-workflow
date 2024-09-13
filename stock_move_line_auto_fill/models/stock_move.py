@@ -26,9 +26,9 @@ class StockMove(models.Model):
             return res
         if self._get_avoid_lot_assignment_flag() and res.get("lot_id"):
             return res
-        if self.quantity_done != self.product_uom_qty:
+        if self.quantity != self.product_uom_qty:
             # Not assign qty_done for extra moves in over processed quantities
-            res.update({"qty_done": res.get("reserved_uom_qty", 0.0)})
+            res.update({"quantity": res.get("reserved_uom_qty", 0.0)})
         return res
 
     def _action_assign(self, force_qty=False):
@@ -45,10 +45,8 @@ class StockMove(models.Model):
         ):
             if line._should_bypass_reservation() or not line._get_auto_fill_flag():
                 return res
-            lines_to_update = line.move_line_ids.filtered(
-                lambda li: li.qty_done != li.reserved_uom_qty
-            )
+            lines_to_update = line.move_line_ids.filtered(lambda li: not li.picked)
             for move_line in lines_to_update:
                 if not line._get_avoid_lot_assignment_flag() or not move_line.lot_id:
-                    move_line.qty_done = move_line.reserved_uom_qty
+                    move_line.picked = True
         return res
