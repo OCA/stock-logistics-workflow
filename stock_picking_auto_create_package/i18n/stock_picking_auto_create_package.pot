@@ -26,14 +26,6 @@ msgid ""
 msgstr ""
 
 #. module: stock_picking_auto_create_package
-#: code:addons/stock_picking_auto_create_package/models/stock_picking.py:0
-#, python-format
-msgid ""
-"Cannot create a package for the product %s as no product packaging is "
-"defined"
-msgstr ""
-
-#. module: stock_picking_auto_create_package
 #: model:ir.model.fields,field_description:stock_picking_auto_create_package.field_stock_picking__display_name
 #: model:ir.model.fields,field_description:stock_picking_auto_create_package.field_stock_picking_type__display_name
 msgid "Display Name"
@@ -64,13 +56,6 @@ msgstr ""
 #. module: stock_picking_auto_create_package
 #: model:ir.model.fields.selection,name:stock_picking_auto_create_package.selection__stock_picking_type__automatic_package_creation_mode__single
 msgid "Single Package"
-msgstr ""
-
-#. module: stock_picking_auto_create_package
-#: code:addons/stock_picking_auto_create_package/models/stock_picking.py:0
-#, python-format
-msgid ""
-"The done quantity of the product %s is not a multiple of product packaging"
 msgstr ""
 
 #. module: stock_picking_auto_create_package
