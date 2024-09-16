@@ -78,8 +78,14 @@ Contributors
 -  `Tecnativa <https://www.tecnativa.com>`__
 
    -  Pedro M. Baeza
+
    -  César A. Sánchez
+
    -  Carolina Fernandez
+
+   -  `Sodexis <https://www.sodexis.com>`__
+
+      -  SodexisTeam
 
 Maintainers
 -----------

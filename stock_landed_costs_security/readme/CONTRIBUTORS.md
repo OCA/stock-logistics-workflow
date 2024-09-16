@@ -2,3 +2,6 @@
   - Pedro M. Baeza
   - César A. Sánchez
   - Carolina Fernandez
+
+  - [Sodexis](https://www.sodexis.com)
+    -  SodexisTeam
