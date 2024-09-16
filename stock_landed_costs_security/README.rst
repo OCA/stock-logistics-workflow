@@ -17,18 +17,21 @@ Stock landed costs security
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
-    :target: https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_landed_costs_security
+    :target: https://github.com/OCA/stock-logistics-workflow/tree/17.0/stock_landed_costs_security
     :alt: OCA/stock-logistics-workflow
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-16-0/stock-logistics-workflow-16-0-stock_landed_costs_security
+    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-17-0/stock-logistics-workflow-17-0-stock_landed_costs_security
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=17.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module promotes the "Landed cost" feature to a full application, with its icon and specific menu, accessible through an specific user group. Any user mapped to this group can create and validate landing costs without extra permissions.
+This module promotes the "Landed cost" feature to a full application,
+with its icon and specific menu, accessible through an specific user
+group. Any user mapped to this group can create and validate landing
+costs without extra permissions.
 
 **Table of contents**
 
@@ -38,17 +41,18 @@ This module promotes the "Landed cost" feature to a full application, with its i
 Configuration
 =============
 
-#. Go to *Settings* > Users and companies > Users.
-#. Select one user or create a new one.
-#. Select on the section "Inventory", line "Landend costs", the option "User".
+1. Go to *Settings* > Users and companies > Users.
+2. Select one user or create a new one.
+3. Select on the section "Inventory", line "Landend costs", the option
+   "User".
 
 Usage
 =====
 
-#. Go to Users.
-#. Select Landing costs -> User.
-#. Go to *Landed Costs*.
-#. This user can create and validate any landed cost.
+1. Go to Users.
+2. Select Landing costs -> User.
+3. Go to *Landed Costs*.
+4. This user can create and validate any landed cost.
 
 Bug Tracker
 ===========
@@ -56,7 +60,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/stock-logistics-workflow/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_landed_costs_security%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_landed_costs_security%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -64,21 +68,21 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Tecnativa
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* `Tecnativa <https://www.tecnativa.com>`_
+-  `Tecnativa <https://www.tecnativa.com>`__
 
-  * Pedro M. Baeza
-  * César A. Sánchez
-  * Carolina Fernandez
+   -  Pedro M. Baeza
+   -  César A. Sánchez
+   -  Carolina Fernandez
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -98,6 +102,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-cesar-tecnativa| 
 
-This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_landed_costs_security>`_ project on GitHub.
+This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/17.0/stock_landed_costs_security>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
