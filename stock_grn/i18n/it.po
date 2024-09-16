@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-22 10:06+0000\n"
+"PO-Revision-Date: 2024-09-16 10:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -19,13 +19,13 @@ msgstr ""
 #. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn_type__active
 msgid "Active"
-msgstr ""
+msgstr "Attiva"
 
 #. module: stock_grn
 #: model_terms:ir.ui.view,arch_db:stock_grn.view_grn_type_form
 #: model_terms:ir.ui.view,arch_db:stock_grn.view_grn_type_search
 msgid "Archived"
-msgstr ""
+msgstr "In archivio"
 
 #. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn__carrier_id
@@ -103,12 +103,12 @@ msgstr "Data bolla ricezione"
 #. module: stock_grn
 #: model_terms:ir.ui.view,arch_db:stock_grn.view_grn_type_form
 msgid "GRN Type"
-msgstr ""
+msgstr "Tipo BR"
 
 #. module: stock_grn
 #: model_terms:ir.ui.view,arch_db:stock_grn.view_grn_type_search
 msgid "GRN Types"
-msgstr ""
+msgstr "Tipi BR"
 
 #. module: stock_grn
 #: model:ir.model,name:stock_grn.model_stock_grn
@@ -121,13 +121,13 @@ msgstr "Bolla ricezione merce"
 #: model:ir.actions.act_window,name:stock_grn.action_grn_type_view
 #: model:ir.ui.menu,name:stock_grn.menu_stock_grn_type
 msgid "Goods Received Note Types"
-msgstr ""
+msgstr "Tipi bolla ricezione"
 
 #. module: stock_grn
 #: model:ir.actions.act_window,name:stock_grn.action_grn_view
 #: model:ir.ui.menu,name:stock_grn.menu_stock_grn
 msgid "Goods Received Notes"
-msgstr ""
+msgstr "Bolle ricezione"
 
 #. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn__type_id
