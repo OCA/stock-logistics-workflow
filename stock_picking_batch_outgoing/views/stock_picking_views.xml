@@ -46,4 +46,19 @@
             </xpath>
         </field>
     </record>
+    <record
+        model="ir.ui.view"
+        id="view_picking_internal_search_inherit_stock_picking_batch"
+    >
+        <field name="model">stock.picking</field>
+        <field
+            name="inherit_id"
+            ref="stock_picking_batch.view_picking_internal_search_inherit_stock_picking_batch"
+        />
+        <field name="arch" type="xml">
+            <field name="batch_id" position="after">
+                <field name="batch_outgoing_id" />
+            </field>
+        </field>
+    </record>
 </odoo>
