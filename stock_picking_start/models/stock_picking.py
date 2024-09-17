@@ -7,7 +7,6 @@ from odoo.models import BaseModel
 
 
 class StockPicking(models.Model):
-
     _inherit = "stock.picking"
 
     user_id = fields.Many2one(

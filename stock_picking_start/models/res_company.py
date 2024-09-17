@@ -5,7 +5,6 @@ from odoo import fields, models
 
 
 class ResCompany(models.Model):
-
     _inherit = "res.company"
 
     stock_picking_assign_operator_at_start = fields.Boolean(
