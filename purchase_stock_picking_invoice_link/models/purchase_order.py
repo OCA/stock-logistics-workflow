@@ -30,9 +30,9 @@ class PurchaseOrderLine(models.Model):
                 continue
             if not stock_move.invoice_line_ids:
                 to_invoice -= (
-                    stock_move.quantity_done
+                    stock_move.quantity
                     if not stock_move.to_refund
-                    else -stock_move.quantity_done
+                    else -stock_move.quantity
                 )
                 moves_linked += stock_move
                 continue
@@ -41,9 +41,9 @@ class PurchaseOrderLine(models.Model):
             ):
                 break
             to_invoice -= (
-                stock_move.quantity_done
+                stock_move.quantity
                 if not stock_move.to_refund
-                else -stock_move.quantity_done
+                else -stock_move.quantity
             )
             moves_linked += stock_move
         return moves_linked

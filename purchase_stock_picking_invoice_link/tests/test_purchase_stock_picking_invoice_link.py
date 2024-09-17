@@ -24,7 +24,7 @@ class TestPurchaseSTockPickingInvoiceLink(common.TransactionCase):
         # Validate shipment
         picking = self.po.picking_ids[0]
         # Process pickings
-        picking.move_line_ids.qty_done = 1.0
+        picking.move_line_ids.quantity = 1.0
         picking.button_validate()
         # Create and post invoice
         inv_action = self.po.action_create_invoice()
@@ -55,7 +55,7 @@ class TestPurchaseSTockPickingInvoiceLink(common.TransactionCase):
         # Validate shipment
         picking = self.po.picking_ids[0]
         # Process pickings
-        picking.move_line_ids.qty_done = 1.0
+        picking.move_line_ids.quantity = 1.0
         picking.button_validate()
         # Only one invoice line has been created
         self.assertEqual(len(invoice.invoice_line_ids), 1)
@@ -77,7 +77,7 @@ class TestPurchaseSTockPickingInvoiceLink(common.TransactionCase):
         # Validate shipment
         picking = self.po.picking_ids[0]
         # Process pickings
-        picking.move_line_ids.qty_done = 1.0
+        picking.move_line_ids.quantity = 1.0
         picking.button_validate()
         # Create invoice
         inv_action = self.po.action_create_invoice()
@@ -90,13 +90,12 @@ class TestPurchaseSTockPickingInvoiceLink(common.TransactionCase):
             .with_context(active_model="account.move", active_ids=invoice.ids)
             .create(
                 {
-                    "refund_method": "cancel",
                     "reason": "test",
                     "journal_id": invoice.journal_id.id,
                 }
             )
         )
-        wiz_invoice_refund.reverse_moves()
+        wiz_invoice_refund.refund_moves()
         # Create invoice again
         inv_action = self.po.action_create_invoice()
         new_inv = self.env["account.move"].browse([(inv_action["res_id"])])
@@ -111,7 +110,7 @@ class TestPurchaseSTockPickingInvoiceLink(common.TransactionCase):
         # Validate shipment
         picking = self.po.picking_ids[0]
         # Process pickings
-        picking.move_line_ids.qty_done = 1.0
+        picking.move_line_ids.quantity = 1.0
         picking.button_validate()
         # Create invoice
         inv_action = self.po.action_create_invoice()
@@ -124,13 +123,12 @@ class TestPurchaseSTockPickingInvoiceLink(common.TransactionCase):
             .with_context(active_model="account.move", active_ids=invoice.ids)
             .create(
                 {
-                    "refund_method": "modify",
                     "reason": "test",
                     "journal_id": invoice.journal_id.id,
                 }
             )
         )
-        invoice_id = wiz_invoice_refund.reverse_moves()["res_id"]
+        invoice_id = wiz_invoice_refund.modify_moves()["res_id"]
         new_inv = self.env["account.move"].browse(invoice_id)
         # Maintain order due to a bug in the ORM that does not populate compute before
         # evaluating the len() function.
@@ -143,18 +141,20 @@ class TestPurchaseSTockPickingInvoiceLink(common.TransactionCase):
         self.po.order_line.product_qty = 10
         self.po.button_confirm()
         picking = self.po.picking_ids[0]
-        picking.move_line_ids.qty_done = 8.0
-        picking._action_done()
-        wiz = self.env["stock.backorder.confirmation"].create(
-            {"pick_ids": [(4, picking.id)]}
-        )
-        wiz.process()
+        picking.move_line_ids.quantity = 8.0
+        action_data = picking.button_validate()
+        backorder_wizard = Form(
+            self.env["stock.backorder.confirmation"].with_context(
+                **action_data["context"]
+            )
+        ).save()
+        backorder_wizard.process()
         inv_action = self.po.action_create_invoice()
         invoice = self.env["account.move"].browse([(inv_action["res_id"])])
         self.assertEqual(invoice.picking_ids, picking)
         self.assertEqual(len(picking.invoice_ids), 1)
         backorder_picking = self.po.picking_ids.filtered(lambda p: p.state != "done")
-        backorder_picking.move_line_ids.qty_done = 2.0
+        backorder_picking.move_line_ids.quantity = 2.0
         backorder_picking.button_validate()
         self.assertFalse(len(backorder_picking.invoice_ids))
         self.assertEqual(invoice.picking_ids, picking)
@@ -164,18 +164,20 @@ class TestPurchaseSTockPickingInvoiceLink(common.TransactionCase):
         self.po.order_line.product_qty = 10
         self.po.button_confirm()
         picking = self.po.picking_ids[0]
-        picking.move_line_ids.qty_done = 8.0
-        picking._action_done()
-        wiz = self.env["stock.backorder.confirmation"].create(
-            {"pick_ids": [(4, picking.id)]}
-        )
-        wiz.process()
+        picking.move_line_ids.quantity = 8.0
+        action_data = picking.button_validate()
+        backorder_wizard = Form(
+            self.env["stock.backorder.confirmation"].with_context(
+                **action_data["context"]
+            )
+        ).save()
+        backorder_wizard.process()
         inv_action = self.po.action_create_invoice()
         invoice = self.env["account.move"].browse([(inv_action["res_id"])])
         self.assertEqual(invoice.picking_ids, picking)
         self.assertEqual(len(picking.invoice_ids), 1)
         backorder_picking = self.po.picking_ids.filtered(lambda p: p.state != "done")
-        backorder_picking.move_line_ids.qty_done = 2.0
+        backorder_picking.move_line_ids.quantity = 2.0
         backorder_picking.button_validate()
         self.assertEqual(invoice.picking_ids, picking + backorder_picking)
 
@@ -187,8 +189,8 @@ class TestPurchaseSTockPickingInvoiceLink(common.TransactionCase):
         self.po.order_line.product_qty = 2.0
         self.po.button_confirm()
         picking = self.po.picking_ids[0]
-        picking.move_line_ids.qty_done = 2.0
-        picking._action_done()
+        picking.move_line_ids.quantity = 2.0
+        picking.button_validate()
         # Create invoice
         inv_action = self.po.action_create_invoice()
         invoice = self.env["account.move"].browse([(inv_action["res_id"])])
