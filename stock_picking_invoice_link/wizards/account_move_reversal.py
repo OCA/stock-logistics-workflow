@@ -10,7 +10,7 @@ class AccountMoveReversal(models.TransientModel):
         """Link return moves to the lines of refund invoice"""
         action = super(
             AccountMoveReversal, self.with_context(force_copy_stock_moves=True)
-        ).reverse_moves()
+        ).reverse_moves(is_modify)
         if "res_id" in action:
             moves = self.env["account.move"].browse(action["res_id"])
         else:
