@@ -100,3 +100,10 @@ class TestAutomaticPackage(SavepointCase):
         self.picking._action_done()
         self.assertTrue(self.picking.move_line_ids.result_package_id)
         self.assertTrue(len(self.picking.move_line_ids.result_package_id), 5)
+
+    def test_automatic_packaging_with_qty_zero_on_packaging(self):
+        self.picking.picking_type_id.automatic_package_creation_mode = "packaging"
+        self.product_packaging.qty = 0
+        self.picking._action_done()
+        self.assertTrue(self.picking.move_line_ids.result_package_id)
+        self.assertTrue(len(self.picking.move_line_ids.result_package_id), 5)

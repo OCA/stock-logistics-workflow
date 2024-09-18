@@ -38,11 +38,11 @@ class StockPicking(models.Model):
                     continue
                 qty_to_pack = move_line.qty_done
                 max_pack_qty = 1
-                packagings = move_line.product_id.packaging_ids
+                packagings = move_line.product_id.packaging_ids.filtered(
+                    lambda pack: pack.qty > 0
+                )
                 if packagings:
-                    smallest_packaging = packagings.filtered(
-                        lambda pack: pack.qty > 0
-                    ).sorted("qty")[0]
+                    smallest_packaging = packagings.sorted("qty")[0]
                     max_pack_qty = smallest_packaging.qty
                 while qty_to_pack:
                     pack_qty = min(qty_to_pack, max_pack_qty)
