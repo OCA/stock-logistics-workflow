@@ -1,4 +1,5 @@
 from odoo import _, api, exceptions, fields, models
+from odoo.exceptions import UserError
 
 
 class StockMove(models.Model):
@@ -7,7 +8,9 @@ class StockMove(models.Model):
     # seems better to not copy this field except when a move is splitted, because a move
     # can be copied in multiple different occasions and could even be copied with a
     # different product...
-    restrict_lot_id = fields.Many2one("stock.lot", string="Restrict Lot", copy=False)
+    restrict_lot_id = fields.Many2one(
+        "stock.lot", string="Restrict Lot", copy=False, index=True
+    )
 
     def _prepare_procurement_values(self):
         vals = super()._prepare_procurement_values()
@@ -88,3 +91,28 @@ class StockMove(models.Model):
         if vals_list and self.restrict_lot_id:
             vals_list[0]["restrict_lot_id"] = self.restrict_lot_id.id
         return vals_list
+
+    def _action_done(self, cancel_backorder=False):
+        res = super()._action_done(cancel_backorder=cancel_backorder)
+        self._check_lot_consistent_with_restriction()
+        return res
+
+    def _check_lot_consistent_with_restriction(self):
+        """
+        Check that the lot set on move lines
+        is the same as the restricted lot set on the move
+        """
+        for move in self:
+            if not (move.restrict_lot_id and move.move_line_ids):
+                continue
+            move_line_lot = move.mapped("move_line_ids.lot_id")
+            if move.restrict_lot_id != move_line_lot:
+                raise UserError(
+                    _(
+                        "The lot(s) %(move_line_lot)s being moved is "
+                        "inconsistent with the restriction on "
+                        "lot %(move_restrict_lot)s set on the move",
+                        move_line_lot=", ".join(move_line_lot.mapped("display_name")),
+                        move_restrict_lot=move.restrict_lot_id.display_name,
+                    )
+                )
