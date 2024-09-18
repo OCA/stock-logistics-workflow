@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-25 18:42+0000\n"
-"PO-Revision-Date: 2024-02-25 19:43+0100\n"
+"POT-Creation-Date: 2024-09-18 11:44+0000\n"
+"PO-Revision-Date: 2024-09-18 13:45+0200\n"
 "Last-Translator: Sergio Teruel <sergio.teruel@tecnativa.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -23,16 +23,19 @@ msgid ""
 "<i class=\"fa fa-object-group\" aria-hidden=\"true\" title=\"Outgoing batch "
 "transfer\"/>"
 msgstr ""
+"<i class=\"fa fa-object-group\" aria-hidden=\"true\" title=\"Agrupación de "
+"albaranes de salida\"/>"
 
 #. module: stock_picking_batch_outgoing
 #: model:ir.model.fields,field_description:stock_picking_batch_outgoing.field_stock_picking__batch_outgoing_id
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_outgoing.view_picking_internal_search_inherit_stock_picking_batch
 msgid "Batch Outgoing"
 msgstr "Agrupación de salida"
 
 #. module: stock_picking_batch_outgoing
 #: model:ir.model.fields,help:stock_picking_batch_outgoing.field_stock_picking__batch_outgoing_id
 msgid "Batch associated to this transfer"
-msgstr ""
+msgstr "Agrupación asociada a este albarán"
 
 #. module: stock_picking_batch_outgoing
 #: model:ir.model,name:stock_picking_batch_outgoing.model_stock_picking

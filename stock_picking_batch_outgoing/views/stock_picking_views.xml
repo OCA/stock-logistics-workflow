@@ -59,6 +59,14 @@
             <field name="batch_id" position="after">
                 <field name="batch_outgoing_id" />
             </field>
+            <group position="inside">
+                <filter
+                    string="Batch Outgoing"
+                    name="batch_outgoing"
+                    domain="[]"
+                    context="{'group_by': 'batch_outgoing_id'}"
+                />
+            </group>
         </field>
     </record>
 </odoo>

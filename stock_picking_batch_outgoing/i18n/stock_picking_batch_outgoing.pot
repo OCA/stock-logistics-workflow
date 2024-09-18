@@ -22,6 +22,7 @@ msgstr ""
 
 #. module: stock_picking_batch_outgoing
 #: model:ir.model.fields,field_description:stock_picking_batch_outgoing.field_stock_picking__batch_outgoing_id
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_outgoing.view_picking_internal_search_inherit_stock_picking_batch
 msgid "Batch Outgoing"
 msgstr ""
 
