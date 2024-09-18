@@ -1,10 +1,10 @@
 # Copyright 2021 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 
-from odoo.tests import SavepointCase
+from odoo.tests import TransactionCase
 
 
-class TestProcurementAutoCreateGroupCarrier(SavepointCase):
+class TestProcurementAutoCreateGroupCarrier(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -15,11 +15,9 @@ class TestProcurementAutoCreateGroupCarrier(SavepointCase):
         cls.location2 = cls.env.ref("stock.stock_location_components")
         cls.picking_type = cls.env.ref("stock.picking_type_internal")
         cls.partner = cls.env["res.partner"].create({"name": "Partner"})
-        cls.carrier = cls.env.ref("delivery.normal_delivery_carrier")
+        cls.carrier = cls.env.ref("delivery.free_delivery_carrier")
         cls.partner.property_delivery_carrier_id = cls.carrier
-        route_auto = cls.env["stock.location.route"].create(
-            {"name": "Auto Create Group"}
-        )
+        route_auto = cls.env["stock.route"].create({"name": "Auto Create Group"})
         cls.rule_1 = cls.env["stock.rule"].create(
             {
                 "name": "rule with autocreate",
@@ -28,7 +26,7 @@ class TestProcurementAutoCreateGroupCarrier(SavepointCase):
                 "action": "pull_push",
                 "warehouse_id": cls.warehouse.id,
                 "picking_type_id": cls.picking_type.id,
-                "location_id": cls.location1.id,
+                "location_dest_id": cls.location1.id,
                 "location_src_id": cls.location2.id,
                 "partner_address_id": cls.partner.id,
             }
