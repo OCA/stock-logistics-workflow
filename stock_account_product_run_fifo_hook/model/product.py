@@ -26,14 +26,6 @@ class ProductProduct(models.Model):
     ):
         return candidate_vals
 
-    def _get_candidates_domain(self, company):
-        candidates_domain = [
-            ("product_id", "=", self.id),
-            ("remaining_qty", ">", 0),
-            ("company_id", "=", company.id),
-        ]
-        return candidates_domain
-
     def _price_updateable(self, new_standard_price=False):
         self.ensure_one()
         return new_standard_price and self.cost_method == "fifo"
