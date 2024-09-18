@@ -17,33 +17,35 @@ Stock Valuation Layer Usage
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
-    :target: https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_valuation_layer_usage
+    :target: https://github.com/OCA/stock-logistics-workflow/tree/17.0/stock_valuation_layer_usage
     :alt: OCA/stock-logistics-workflow
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-16-0/stock-logistics-workflow-16-0-stock_valuation_layer_usage
+    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-17-0/stock-logistics-workflow-17-0-stock_valuation_layer_usage
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=17.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
 This module allows to trace the usage of stock valuation layer. That is,
-makes it possible to identify in what stock moves was a given valuation layer
-used, and how much quantity was taken by the particular stock move.
+makes it possible to identify in what stock moves was a given valuation
+layer used, and how much quantity was taken by the particular stock
+move.
 
-This kind of traceability is important in case that at some point you want
-to conduct an revaluation (for example, in case that the purchase order price
-changes after the products have been received into stock).
+This kind of traceability is important in case that at some point you
+want to conduct an revaluation (for example, in case that the purchase
+order price changes after the products have been received into stock).
 
-Also, it changes the way the outgoing layers are created in order to respect
-the MTO case. When creating the out svl, Odoo takes the first layer available
-with value. The module stock_valuation_layer_usage arises an issue with that
-Odoo process. Odoo will take always the oldest svl. However, that is not the
-case for MTO. When there is a fixed link between the incoming move and the
-outgoing move, at the time of creating the outgoing svl the system should
-take the specific incoming svl not just the oldest one. Also, when the case
-is not MTO, the system should avoid using svl that are "reserved".
+Also, it changes the way the outgoing layers are created in order to
+respect the MTO case. When creating the out svl, Odoo takes the first
+layer available with value. The module stock_valuation_layer_usage
+arises an issue with that Odoo process. Odoo will take always the oldest
+svl. However, that is not the case for MTO. When there is a fixed link
+between the incoming move and the outgoing move, at the time of creating
+the outgoing svl the system should take the specific incoming svl not
+just the oldest one. Also, when the case is not MTO, the system should
+avoid using svl that are "reserved".
 
 .. IMPORTANT::
    This is an alpha version, the data model and design can change at any time without warning.
@@ -58,35 +60,33 @@ is not MTO, the system should avoid using svl that are "reserved".
 Installation
 ============
 
-This module depends on the OCA module 'stock_account_product_run_fifo_hook',
-available in the same OCA repository https://github.com/OCA/stock-logistics-workflow.
+This module depends on the OCA module
+'stock_account_product_run_fifo_hook', available in the same OCA
+repository https://github.com/OCA/stock-logistics-workflow.
 
 Usage
 =====
 
-* Create a product with that uses a category with automatic
-  inventory valuation and FIFO costing method.
-
-* Create a purchase order for this product and receive it into stock.
-
-* Deliver the product to a customer and check the completed stock move in
-  'Inventory / Reporting / Stock Moves'. You will see a section
-  'Valuation Layers' where you will be able to identify the valuation layers
-  that were used to value this move, and the quantity and value that was taken.
-
-* Create several MTO order
-
-* Deliver the products to a customer in a random way and check the section
-  'Valuation Layers Usage'. The MTO logic is respected, then FIFO applies.
+-  Create a product with that uses a category with automatic inventory
+   valuation and FIFO costing method.
+-  Create a purchase order for this product and receive it into stock.
+-  Deliver the product to a customer and check the completed stock move
+   in 'Inventory / Reporting / Stock Moves'. You will see a section
+   'Valuation Layers' where you will be able to identify the valuation
+   layers that were used to value this move, and the quantity and value
+   that was taken.
+-  Create several MTO order
+-  Deliver the products to a customer in a random way and check the
+   section 'Valuation Layers Usage'. The MTO logic is respected, then
+   FIFO applies.
 
 Changelog
 =========
 
 13.0.1.0.0 (2020-01-03)
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
-* [13.0][MIG] stock_valuation_layer_usage
-  Create module
+-  [13.0][MIG] stock_valuation_layer_usage Create module
 
 Bug Tracker
 ===========
@@ -94,7 +94,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/stock-logistics-workflow/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_valuation_layer_usage%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_valuation_layer_usage%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -102,18 +102,19 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * ForgeFlow
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* ForgeFlow S.L. <contact@forgeflow.com>
-  * Jordi Ballester <jordi.ballester@forgeflow.com>
+-  ForgeFlow S.L. <contact@forgeflow.com>
+
+   -  Jordi Ballester <jordi.ballester@forgeflow.com>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -125,6 +126,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_valuation_layer_usage>`_ project on GitHub.
+This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/17.0/stock_valuation_layer_usage>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
