@@ -82,7 +82,7 @@ class StockValuationLayer(models.Model):
         recs = self.browse()
         for val in values:
             taken_data = "taken_data" in val.keys() and val.pop("taken_data") or {}
-            rec = super(StockValuationLayer, self).create(val)
+            rec = super().create(val)
             # There are cases in which the transformation
             # comes from a return process,
             # such as sales returns or production unbuilds.
@@ -91,12 +91,12 @@ class StockValuationLayer(models.Model):
             if not taken_data and rec.quantity > 0:
                 all_parents = self.env["stock.move"]
                 next_parents = rec.stock_move_id.move_orig_ids.filtered(
-                    lambda m: m not in all_parents
+                    lambda m, all_parents=all_parents: m not in all_parents
                 )
                 while next_parents:
                     all_parents |= next_parents
                     next_parents = next_parents.mapped("move_orig_ids").filtered(
-                        lambda m: m not in all_parents
+                        lambda m, all_parents=all_parents: m not in all_parents
                     )
                 if all_parents:
                     output_layers = self.search(
@@ -137,7 +137,7 @@ class StockValuationLayer(models.Model):
         return recs
 
     def write(self, values):
-        res = super(StockValuationLayer, self).write(values)
+        res = super().write(values)
         for rec in self:
             if self.env.context.get("taken_data"):
                 self._process_taken_data(self.env.context.get("taken_data"), rec)

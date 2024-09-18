@@ -17,12 +17,11 @@ class StockMove(models.Model):
     )
 
     def _create_dropshipped_svl(self, forced_quantity=None):
-        layers = super(StockMove, self)._create_dropshipped_svl(
-            forced_quantity=forced_quantity
-        )
+        layers = super()._create_dropshipped_svl(forced_quantity=forced_quantity)
         for move in self:
             in_layer = layers.filtered(
-                lambda l: l.quantity > 0 and l.stock_move_id == move
+                lambda layer, move=move: layer.quantity > 0
+                and layer.stock_move_id == move
             )
             # FIXME: this could be more than one?, can be for multi lots layers?
             out_layer = self.env["stock.valuation.layer"].search(
