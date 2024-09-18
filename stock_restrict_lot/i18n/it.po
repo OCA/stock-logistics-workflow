@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-11-17 11:36+0000\n"
+"PO-Revision-Date: 2024-09-18 16:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: stock_restrict_lot
 #. odoo-python
@@ -34,7 +34,7 @@ msgstr "Lotto"
 #. module: stock_restrict_lot
 #: model:ir.model,name:stock_restrict_lot.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Variante prodotto"
 
 #. module: stock_restrict_lot
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_stock_move__restrict_lot_id
@@ -60,6 +60,8 @@ msgid ""
 "The lot(s) %(move_line_lot)s being moved is inconsistent with the "
 "restriction on lot %(move_restrict_lot)s set on the move"
 msgstr ""
+"Il lotto %(move_line_lot)s che si sta movimentando è inconsistente con la "
+"restrizione sul lotto %(move_restrict_lot)s impostato nel movimento"
 
 #. module: stock_restrict_lot
 #: model:ir.model,name:stock_restrict_lot.model_stock_picking
