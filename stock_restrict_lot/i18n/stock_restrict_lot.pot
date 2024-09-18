@@ -27,6 +27,11 @@ msgid "Lot"
 msgstr ""
 
 #. module: stock_restrict_lot
+#: model:ir.model,name:stock_restrict_lot.model_product_product
+msgid "Product Variant"
+msgstr ""
+
+#. module: stock_restrict_lot
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_stock_move__restrict_lot_id
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_stock_picking__restrict_lot_id
 msgid "Restrict Lot"
@@ -40,6 +45,15 @@ msgstr ""
 #. module: stock_restrict_lot
 #: model:ir.model,name:stock_restrict_lot.model_stock_rule
 msgid "Stock Rule"
+msgstr ""
+
+#. module: stock_restrict_lot
+#. odoo-python
+#: code:addons/stock_restrict_lot/models/stock_move.py:0
+#, python-format
+msgid ""
+"The lot(s) %(move_line_lot)s being moved is inconsistent with the "
+"restriction on lot %(move_restrict_lot)s set on the move"
 msgstr ""
 
 #. module: stock_restrict_lot
