@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="0">
+    <record id="stock_landed_costs_security_category" model="ir.module.category">
+        <field name="name">Landed costs</field>
+        <field name="parent_id" ref="base.module_category_inventory" />
+        <field name="sequence">7</field>
+    </record>
+    <record id="group_stock_landed_costs_security_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="stock_landed_costs_security_category" />
+        <field
+            name="users"
+            eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"
+        />
+    </record>
+</odoo>
