@@ -9,7 +9,7 @@ from odoo.tests.common import TransactionCase
 class TestStockValuationLayerUsage(TransactionCase):
     @classmethod
     def setUpClass(cls):
-        super(TestStockValuationLayerUsage, cls).setUpClass()
+        super().setUpClass()
         # Get required Model
         cls.product_model = cls.env["product.product"]
         cls.template_model = cls.env["product.template"]
@@ -231,7 +231,7 @@ class TestStockValuationLayerUsage(TransactionCase):
         """Do picking with only one move on the given date."""
         picking.action_confirm()
         picking.action_assign()
-        picking.move_ids.quantity_done = qty
+        picking.move_ids.quantity = qty
         res = picking.button_validate()
         if isinstance(res, dict) and res:
             backorder_wiz_id = res["res_id"]
@@ -254,13 +254,13 @@ class TestStockValuationLayerUsage(TransactionCase):
 
         # Inventory is 10
         aml = self.aml_model.search([("product_id", "=", self.product.id)])
-        inv_aml = aml.filtered(lambda l: l.account_id == self.account_inventory)
+        inv_aml = aml.filtered(lambda line: line.account_id == self.account_inventory)
         balance_inv = sum(inv_aml.mapped("balance"))
         self.assertEqual(balance_inv, 10.0)
 
         # GRNI is -10
         aml = self.aml_model.search([("product_id", "=", self.product.id)])
-        grni_aml = aml.filtered(lambda l: l.account_id == self.account_grni)
+        grni_aml = aml.filtered(lambda line: line.account_id == self.account_grni)
         balance_grni = sum(grni_aml.mapped("balance"))
         self.assertEqual(balance_grni, -10.0)
 
@@ -299,15 +299,15 @@ class TestStockValuationLayerUsage(TransactionCase):
         # GDNI         10
         aml = self.aml_model.search([("product_id", "=", self.product.id)])
         # Inventory is 0
-        inv_aml = aml.filtered(lambda l: l.account_id == self.account_inventory)
+        inv_aml = aml.filtered(lambda line: line.account_id == self.account_inventory)
         balance_inv = sum(inv_aml.mapped("balance"))
         self.assertEqual(balance_inv, 0.0)
         # GRNI is -10
-        grni_aml = aml.filtered(lambda l: l.account_id == self.account_grni)
+        grni_aml = aml.filtered(lambda line: line.account_id == self.account_grni)
         balance_grni = sum(grni_aml.mapped("balance"))
         self.assertEqual(balance_grni, -10.0)
         # GDNI is 10
-        gdni_aml = aml.filtered(lambda l: l.account_id == self.account_gdni)
+        gdni_aml = aml.filtered(lambda line: line.account_id == self.account_gdni)
         balance_gdni = sum(gdni_aml.mapped("balance"))
         self.assertEqual(balance_gdni, 10.0)
 
@@ -315,7 +315,7 @@ class TestStockValuationLayerUsage(TransactionCase):
         move = dropship_picking.move_ids
         layers = self.layer_model.search([("stock_move_id", "=", move.id)])
         self.assertEqual(len(layers), 2)
-        in_layer = layers.filtered(lambda l: l.quantity > 0)
+        in_layer = layers.filtered(lambda line: line.quantity > 0)
         # Check that the layer created for the outgoing move
         self.assertEqual(in_layer.remaining_qty, 0.0)
         self.assertEqual(in_layer.remaining_value, 0.0)
@@ -325,7 +325,7 @@ class TestStockValuationLayerUsage(TransactionCase):
         self.assertEqual(layer_usage.quantity, 1.0)
         self.assertEqual(layer_usage.value, 10.0)
         self.assertEqual(layer_usage.stock_valuation_layer_id, in_layer)
-        out_layer = layers.filtered(lambda l: l.quantity < 0)
+        out_layer = layers.filtered(lambda line: line.quantity < 0)
         self.assertEqual(
             out_layer.incoming_usage_ids.mapped("stock_valuation_layer_id").ids,
             in_layer.ids,

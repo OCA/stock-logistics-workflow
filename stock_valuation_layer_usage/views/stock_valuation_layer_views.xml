@@ -11,7 +11,7 @@
                 <page
                     name="incoming_usage"
                     string="Incoming Usage"
-                    attrs="{'invisible': [('incoming_usage_ids', '=', [])]}"
+                    invisible="not incoming_usage_ids"
                 >
                     <field name="incoming_usage_ids" />
                 </page>
