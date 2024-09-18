@@ -62,7 +62,9 @@ class StockPickingReturnLotTest(TransactionCase):
             .create({})
         )
 
-    def _create_validate_picking(self):
+    def _create_picking(self, product=None):
+        if not product:
+            product = self.product
         picking = self.picking_obj.create(
             {
                 "partner_id": self.partner.id,
@@ -72,10 +74,10 @@ class StockPickingReturnLotTest(TransactionCase):
                 "move_ids": [
                     Command.create(
                         {
-                            "name": self.product.name,
-                            "product_id": self.product.id,
+                            "name": product.name,
+                            "product_id": product.id,
                             "product_uom_qty": 1,
-                            "product_uom": self.product.uom_id.id,
+                            "product_uom": product.uom_id.id,
                             "location_id": self.stock_location.id,
                             "location_dest_id": self.customer_location.id,
                         },
@@ -86,14 +88,18 @@ class StockPickingReturnLotTest(TransactionCase):
         self.env["stock.move"].create(
             {
                 "picking_id": picking.id,
-                "name": self.product.name,
-                "product_id": self.product.id,
+                "name": product.name,
+                "product_id": product.id,
                 "product_uom_qty": 1,
                 "product_uom": self.product.uom_id.id,
                 "location_id": self.stock_location.id,
                 "location_dest_id": self.customer_location.id,
             }
         )
+        return picking
+
+    def _create_validate_picking(self):
+        picking = self._create_picking()
         picking.action_confirm()
         picking.action_assign()
         picking.action_set_quantities_to_reservation()
@@ -189,15 +195,17 @@ class StockPickingReturnLotTest(TransactionCase):
         picking = self._create_validate_picking()
         wiz = self.create_return_wiz(picking)
         wiz._onchange_picking_id()
-        self.assertEqual(len(wiz.product_return_moves), 1)
-        return_line_1 = wiz.product_return_moves.filtered(
+        self.assertEqual(len(wiz.product_return_moves), 2)
+        return_lines = wiz.product_return_moves.filtered(
             lambda m, lot=self.lot_1: m.lot_id == lot
         )
-        self.assertEqual(return_line_1.quantity, 2)
+        self.assertEqual(return_lines[0].quantity, 1)
+        self.assertEqual(return_lines[1].quantity, 1)
         picking_returned_id = wiz._create_returns()[0]
         picking_returned = self.picking_obj.browse(picking_returned_id)
-        move_1 = picking_returned.move_ids.filtered(
+        moves = picking_returned.move_ids.filtered(
             lambda m, lot=self.lot_1: m.restrict_lot_id == lot
         )
-        self.assertEqual(move_1.move_line_ids.lot_id, self.lot_1)
-        self.assertEqual(move_1.product_qty, 2)
+        self.assertEqual(moves.move_line_ids.lot_id, self.lot_1)
+        self.assertEqual(moves[0].product_qty, 1)
+        self.assertEqual(moves[1].product_qty, 1)

@@ -20,13 +20,13 @@ class ReturnPicking(models.TransientModel):
                 ("move_id.scrapped", "=", False),
             ],
             ["qty_done:sum"],
-            ["product_id", "lot_id"],
+            ["move_id", "lot_id"],
             lazy=False,
         ):
             lot_id = group.get("lot_id")[0] if group.get("lot_id") else False
-            product_id = group.get("product_id")[0]
+            move_id = group.get("move_id")[0]
             qty_done = group.get("qty_done")
-            res[(product_id, lot_id)] += qty_done
+            res[(move_id, lot_id)] += qty_done
         return res
 
     @api.onchange("picking_id")
@@ -38,12 +38,10 @@ class ReturnPicking(models.TransientModel):
             "stock.return.picking.line"
         ].default_get(line_fields)
         qty_done_by_product_lot = self._get_qty_done_by_product_lot()
-        for (product_id, lot_id), qty_done in qty_done_by_product_lot.items():
+        for (move_id, lot_id), qty_done in qty_done_by_product_lot.items():
             product_return_moves_data = dict(product_return_moves_data_tmpl)
             product_return_moves_data.update(
-                self._prepare_stock_return_picking_line_vals(
-                    product_id, lot_id, qty_done
-                )
+                self._prepare_stock_return_picking_line_vals(move_id, lot_id, qty_done)
             )
             product_return_moves.append((0, 0, product_return_moves_data))
         if self.picking_id:
@@ -51,16 +49,13 @@ class ReturnPicking(models.TransientModel):
         return res
 
     @api.model
-    def _prepare_stock_return_picking_line_vals(self, product_id, lot_id, qty_done):
-        moves = self.picking_id.move_line_ids.filtered(
-            lambda ml, p_id=product_id, l_id=lot_id: ml.product_id.id == p_id
-            and ml.lot_id.id == l_id
-        ).move_id
+    def _prepare_stock_return_picking_line_vals(self, move_id, lot_id, qty_done):
+        move = self.env["stock.move"].browse(move_id)
         quantity = qty_done
-        for dest_move in moves.move_dest_ids:
+        for dest_move in move.move_dest_ids:
             if (
                 not dest_move.origin_returned_move_id
-                or dest_move.origin_returned_move_id not in moves
+                or dest_move.origin_returned_move_id != move
             ):
                 continue
 
@@ -74,13 +69,13 @@ class ReturnPicking(models.TransientModel):
                 elif dest_move.state == "done":
                     quantity -= dest_move.product_qty
         quantity = float_round(
-            quantity, precision_rounding=moves.product_id.uom_id.rounding
+            quantity, precision_rounding=move.product_id.uom_id.rounding
         )
         return {
-            "product_id": moves.product_id.id,
+            "product_id": move.product_id.id,
             "quantity": quantity,
-            "move_id": moves[0].id,
-            "uom_id": moves.product_id.uom_id.id,
+            "move_id": move.id,
+            "uom_id": move.product_id.uom_id.id,
             "lot_id": lot_id,
         }
 
