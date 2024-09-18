@@ -21,10 +21,7 @@ def post_load_hook():
         # Find back incoming stock valuation layers (called candidates here)
         # to value `quantity`.
         qty_to_take_on_candidates = quantity
-        # START HOOK Search Candidates
-        candidates_domain = self._get_candidates_domain(company)
-        candidates = self.env["stock.valuation.layer"].sudo().search(candidates_domain)
-        # END HOOK Search Candidates
+        candidates = self._get_fifo_candidates(company)
         new_standard_price = 0
         tmp_value = 0  # to accumulate the value taken on the candidates
         taken_data = {}
@@ -127,9 +124,9 @@ def post_load_hook():
             return self._run_fifo_vacuum_original(company=company)
         if company is None:
             company = self.env.company
-        ValuationLayer = self.env["stock.valuation.layer"]
+        ValuationLayer = self.env["stock.valuation.layer"].sudo()
         svls_to_vacuum_by_product = defaultdict(lambda: ValuationLayer)
-        res = ValuationLayer.sudo().read_group(
+        res = ValuationLayer.read_group(
             [
                 ("product_id", "in", self.ids),
                 ("remaining_qty", "<", 0),
@@ -154,7 +151,7 @@ def post_load_hook():
             ("create_date", ">=", min_create_date),
         ]
         if self.env.context.get("use_past_svl", False):
-            domain = domain[:2]
+            domain = domain[:3]
         res = ValuationLayer.sudo().read_group(
             domain,
             ["ids:array_agg(id)"],
@@ -180,6 +177,8 @@ def post_load_hook():
                     or r.create_date == svl_to_vacuum.create_date
                     and r.id > svl_to_vacuum.id
                 )
+                if self.env.context.get("use_past_svl", False):
+                    candidates = all_candidates
                 if not candidates:
                     break
                 qty_to_take_on_candidates = abs(svl_to_vacuum.remaining_qty)
@@ -283,12 +282,15 @@ def post_load_hook():
                 if product.valuation == "real_time":
                     current_real_time_svls |= svl_to_vacuum
             real_time_svls_to_vacuum |= current_real_time_svls
-        ValuationLayer.sudo().create(new_svl_vals_manual)
-        vacuum_svls = ValuationLayer.sudo().create(new_svl_vals_real_time)
+        ValuationLayer.create(new_svl_vals_manual)
+        vacuum_svls = ValuationLayer.create(new_svl_vals_real_time)
 
         # If some negative stock were fixed, we need to recompute the standard price.
         for product in self:
             product = product.with_company(company.id)
+            # Only recompute if we fixed some negative stock
+            if not svls_to_vacuum_by_product[product.id]:
+                continue
             if product.cost_method == "average" and not float_is_zero(
                 product.quantity_svl, precision_rounding=product.uom_id.rounding
             ):
