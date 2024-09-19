@@ -31,7 +31,7 @@ class StockPackageType(models.Model):
         conversion_uom_dict = {"mm³": 1, "cm³": 1000000, "m³": 1000000000}
         for rec in self:
             rec.volume = 0
-            if rec.length_uom_name == "mm":
+            if rec.length_uom_name == "mm" and rec.volume_uom_name:
                 rec.volume = (
                     rec.packaging_length * rec.width * rec.height
                 ) / conversion_uom_dict[rec.volume_uom_name]
