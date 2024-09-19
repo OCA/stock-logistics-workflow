@@ -66,6 +66,10 @@ Contributors
 
 -  Laurent Mignon <laurent.mignon@acsone.eu>
 
+-  `Sodexis Team <dev@sodexis.com>`__:
+
+      -  Sowrirajan <sowrirajan@sodexis.com>
+
 Maintainers
 -----------
 

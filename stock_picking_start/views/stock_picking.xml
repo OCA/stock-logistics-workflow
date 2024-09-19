@@ -14,7 +14,7 @@
                     name="action_start"
                     string="Start"
                     type="object"
-                    attrs="{'invisible': [('action_start_allowed', '!=', True)]}"
+                    invisible='action_start_allowed != True'
                     class="oe_highlight"
                 />
             </xpath>
@@ -24,7 +24,7 @@
                     name="web_ribbon"
                     title="Started"
                     bg_color="bg-success"
-                    attrs="{'invisible': [('started', '=', False)]}"
+                    invisible='started == False'
                 />
             </div>
             <xpath expr="//header/button[last()]" position="after">
@@ -33,7 +33,7 @@
                     name="action_cancel_start"
                     string="Cancel Start"
                     type="object"
-                    attrs="{'invisible': [('action_cancel_start_allowed', '!=', True)]}"
+                    invisible='action_cancel_start_allowed != True'
                 />
             </xpath>
         </field>
@@ -63,7 +63,7 @@
                 <attribute name="decoration-success">started</attribute>
             </tree>
             <tree position="inside">
-                <field name="started" invisible="1" />
+                <field name="started" column_invisible="1" />
             </tree>
         </field>
     </record>

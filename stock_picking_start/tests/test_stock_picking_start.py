@@ -8,7 +8,7 @@ from odoo.tests.common import Form, TransactionCase
 class TestStockPickinStart(TransactionCase):
     @classmethod
     def setUpClass(cls):
-        super(TestStockPickinStart, cls).setUpClass()
+        super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.wh = cls.env["stock.warehouse"].create(
             {
