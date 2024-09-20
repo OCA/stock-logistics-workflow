@@ -119,23 +119,16 @@ class StockMove(models.Model):
                         move_restrict_lot=move.restrict_lot_id.display_name,
                     )
                 )
-    def get_all_dest_moves(self):
-        res = self.move_dest_ids
-        moves_to_search = self.move_dest_ids
-        while moves_to_search:
-            new_dest_ids = moves_to_search.move_dest_ids
-            moves_to_search = new_dest_ids - res
-            res |= new_dest_ids
-        return res
 
-    def get_all_orig_moves(self):
-        res = self.move_orig_ids
-        moves_to_search = self.move_orig_ids
-        while moves_to_search:
-            new_orig_ids = moves_to_search.move_orig_ids
-            moves_to_search = new_orig_ids - res
-            res |= new_orig_ids
-        return res
+    # Same as _rollup_move_origs but also for "done" moves.
+    def _rollup_not_cancelled_move_origs(self, seen=False):
+        if not seen:
+            seen = OrderedSet()
+        for dst in self.move_orig_ids:
+            if dst.id not in seen and dst.state != "cancel":
+                seen.add(dst.id)
+                dst._rollup_move_origs(seen)
+        return seen
 
     def write(self, vals):
         if "restrict_lot_id" not in vals:
@@ -143,9 +136,10 @@ class StockMove(models.Model):
         else:
             restrict_lot_id = vals.pop("restrict_lot_id")
             restrict_lot = self.env["stock.lot"].browse(restrict_lot_id)
-            chained_moves = OrderedSet()
+            chained_moves = OrderedSet(self.ids)
             self._rollup_move_dests(chained_moves)
-            self._rollup_move_origs(chained_moves)
+            self._rollup_not_cancelled_move_origs(chained_moves)
+            chained_moves = self.env["stock.move"].browse(chained_moves)
             if any(
                 [
                     sm.state == "done" and sm.lot_ids and sm.lot_ids != restrict_lot
@@ -159,5 +153,6 @@ class StockMove(models.Model):
                         "already been done with another Lot/Serial number."
                     )
                 )
-            super(StockMove, chained_moves).write({"restrict_lot_id": restrict_lot_id})
+            for move in chained_moves:
+                super(StockMove, move).write({"restrict_lot_id": restrict_lot_id})
         return super().write(vals)
