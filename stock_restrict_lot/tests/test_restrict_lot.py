@@ -346,7 +346,7 @@ class TestRestrictLot(TransactionCase):
         self.assertRaises(UserError, move._action_done)
         move_line.lot_id = self.lot
         move._action_done()
-        
+
     def test_restrict_lot_propagation_dest_moves(self):
         move, new_lot = self._create_move_with_lot()
         move_dest = self._create_move_dest()
