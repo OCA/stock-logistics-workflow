@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2024 Foodles (https://www.foodles.co/).
+    @author Alexandre Galdeano <alexandre.galdeano@foodles.co>
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+-->
+<odoo>
+    <record id="product_product_kurry_fried_chicken" model="product.product">
+        <field name="name">Kurry Fried Chicken</field>
+        <field name="sale_ok">True</field>
+        <field name="purchase_ok">True</field>
+        <!-- General Information -->
+        <field name="type">product</field>
+        <field name="categ_id" ref="product.product_category_all" />
+        <field name="list_price">6</field>
+        <field
+            name="taxes_id"
+            eval="[(6, 0, [ref('l10n_generic_coa.1_sale_tax_template')])]"
+        />
+        <field name="company_id" ref="base.main_company" />
+        <!-- Purchase -->
+        <field name="seller_ids" eval="[(6, 0, [ref('" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="uom_po_id" ref="uom.product_uom_unit" />
+        <field name="description">Solid wood table.</field>
+        <field name="default_code">FURN_9666</field>
+        <field name="tracking">serial</field>
+    </record>
+    <record id="res_partner_kurry_fried_chicken_supplier" model="res.partner">
+        <field name="name">Wood Corner</field>
+        <field name="category_id" eval="[(6, 0, [ref('res_partner_category_0')])]" />
+        <field name="is_company">1</field>
+        <field name="street">1839 Arbor Way</field>
+        <field name="city">Turlock</field>
+        <field name="state_id" ref='state_us_5' />
+        <field name="zip">95380</field>
+        <field name="country_id" ref="base.us" />
+        <field name="email">kurry-fried-chicken@example.com</field>
+        <field name="phone">(623)-853-7197</field>
+        <field name="website">http://www.wood-corner.com</field>
+        <field
+            name="image_1920"
+            type="base64"
+            file="base/static/img/res_partner_1-image.png"
+        />
+    </record>
+    <record id="product_supplierinfo_kurry_fried_chicken" model="product.supplierinfo">
+        <field
+            name="product_tmpl_id"
+            ref="product_product_kurry_fried_chicken_product_template"
+        />
+        <field name="name" ref="base.res_partner_1" />
+        <field name="delay">3</field>
+        <field name="min_qty">1</field>
+        <field name="price">750</field>
+        <field name="currency_id" ref="base.USD" />
+    </record>
+</odoo>

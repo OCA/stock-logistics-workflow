@@ -1,0 +1,335 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_rule_delays_in_workable_days
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model,name:stock_rule_delays_in_workable_days.model_res_partner
+msgid "Contact"
+msgstr "Contact"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_lead_times_by_day__create_uid
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_lead_times_by_day_value__create_uid
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_weekdays__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_lead_times_by_day__create_date
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_lead_times_by_day_value__create_date
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_weekdays__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields,help:stock_rule_delays_in_workable_days.field_lead_times_by_day__weekday
+msgid "Days of weeks to purchase/order goods"
+msgstr "Jour de la semaine de la commande d'achat"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_stock_rule__is_delay_in_workable_days
+msgid "Delay in Workable Days"
+msgstr "Délai en jours travaillés"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_lead_times_by_day__display_name
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_lead_times_by_day_value__display_name
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_purchase_order_line__display_name
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_res_partner__display_name
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_resource_calendar__display_name
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_stock_rule__display_name
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_stock_warehouse__display_name
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_weekdays__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields.selection,name:stock_rule_delays_in_workable_days.selection__lead_times_by_day__weekday__4
+#: model:ir.model.fields.selection,name:stock_rule_delays_in_workable_days.selection__weekdays__weekday__4
+#: model:weekdays,name:stock_rule_delays_in_workable_days.weekday_friday
+msgid "Friday"
+msgstr "Vendredi"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_lead_times_by_day__id
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_lead_times_by_day_value__id
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_purchase_order_line__id
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_res_partner__id
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_resource_calendar__id
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_stock_rule__id
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_stock_warehouse__id
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_weekdays__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields,help:stock_rule_delays_in_workable_days.field_stock_rule__is_delay_in_workable_days
+msgid ""
+"If checked, the delay will be calculated in workable days based on "
+"thecalendars of both the source and the destination of the transfer (if "
+"provided)."
+msgstr ""
+"Si coché, le délai sera calculé en jours travaillés en fonction des "
+"calendriers de la source et de la destination du transfert (si fourni)."
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_lead_times_by_day____last_update
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_lead_times_by_day_value____last_update
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_purchase_order_line____last_update
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_res_partner____last_update
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_resource_calendar____last_update
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_stock_rule____last_update
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_stock_warehouse____last_update
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_weekdays____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_lead_times_by_day__write_uid
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_lead_times_by_day_value__write_uid
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_weekdays__write_uid
+msgid "Last Updated by"
+msgstr "Dernière modification par"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_lead_times_by_day__write_date
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_lead_times_by_day_value__write_date
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_weekdays__write_date
+msgid "Last Updated on"
+msgstr "Dernière modification le"
+
+#. module: stock_rule_delays_in_workable_days
+#: model_terms:ir.ui.view,arch_db:stock_rule_delays_in_workable_days.view_stock_rule_form
+msgid "Lead Times By Day"
+msgstr "Délais par jour"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_lead_times_by_day_value__value
+msgid "Lead day"
+msgstr "Délai (en jour)"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_lead_times_by_day__value_ids
+msgid "Lead days"
+msgstr "Délais (en jour)"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model,name:stock_rule_delays_in_workable_days.model_lead_times_by_day
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_stock_rule__lead_times_by_day_ids
+#: model_terms:ir.ui.view,arch_db:stock_rule_delays_in_workable_days.view_stock_rule_form
+msgid "Lead times by day"
+msgstr "Délais par jour"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model,name:stock_rule_delays_in_workable_days.model_lead_times_by_day_value
+msgid "Lead times by day value"
+msgstr "Valeur des délais par jour"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields,help:stock_rule_delays_in_workable_days.field_lead_times_by_day__value_ids
+msgid "List of received lead days according the purchase weekday."
+msgstr "Liste de délais de récéption par rapport au jour de commande d'achat."
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model,name:stock_rule_delays_in_workable_days.model_weekdays
+msgid "Model representing days in Odoo"
+msgstr "Modèle représentant les jours dans Odoo"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields.selection,name:stock_rule_delays_in_workable_days.selection__lead_times_by_day__weekday__0
+#: model:ir.model.fields.selection,name:stock_rule_delays_in_workable_days.selection__weekdays__weekday__0
+#: model:weekdays,name:stock_rule_delays_in_workable_days.weekday_monday
+msgid "Monday"
+msgstr "Lundi"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_weekdays__name
+msgid "Name"
+msgstr ""
+
+#. module: stock_rule_delays_in_workable_days
+#: code:addons/stock_rule_delays_in_workable_days/models/stock_rule.py:0
+#, python-format
+msgid ""
+"No delivery date found with the current configuration. Please check the "
+"supplier calendar, the warehouse calendar, the product expiration delay or "
+"adjust the event date."
+msgstr ""
+"Aucune date de livraison trouvée avec la configuration actuelle. Veuillez "
+"vérifier le calendrier du fournisseur, le calendrier de l'entrepôt, le délai "
+"d'expiration du produit ou ajuster la date de l'événement."
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_stock_warehouse__calendar_id
+msgid "Operating Hours Calendar"
+msgstr "Calendrier d'heures d'ouverture"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_purchase_order_line__planned_expiry_date
+msgid "Planned expiry date"
+msgstr "DLC prévue"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_purchase_order_line__planned_expiry_date_required
+msgid "Planned expiry date required"
+msgstr "DLC prévue requise"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model,name:stock_rule_delays_in_workable_days.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr ""
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_lead_times_by_day__weekday
+msgid "Purchase weekday"
+msgstr "Jour commande d'achat"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model,name:stock_rule_delays_in_workable_days.model_resource_calendar
+msgid "Resource Working Time"
+msgstr "Temps de travail de la ressource"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_lead_times_by_day__rule_id
+msgid "Rule"
+msgstr ""
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields.selection,name:stock_rule_delays_in_workable_days.selection__lead_times_by_day__weekday__5
+#: model:ir.model.fields.selection,name:stock_rule_delays_in_workable_days.selection__weekdays__weekday__5
+#: model:weekdays,name:stock_rule_delays_in_workable_days.weekday_saturday
+msgid "Saturday"
+msgstr "Samedi"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model,name:stock_rule_delays_in_workable_days.model_stock_rule
+msgid "Stock Rule"
+msgstr "Règle d’approvisionnement"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields.selection,name:stock_rule_delays_in_workable_days.selection__lead_times_by_day__weekday__6
+#: model:ir.model.fields.selection,name:stock_rule_delays_in_workable_days.selection__weekdays__weekday__6
+#: model:weekdays,name:stock_rule_delays_in_workable_days.weekday_sunday
+msgid "Sunday"
+msgstr "Dimanche"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_res_partner__supplier_calendar_id
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_res_users__supplier_calendar_id
+msgid "Supplier Calendar"
+msgstr "Calendrier du fournisseur"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields,help:stock_rule_delays_in_workable_days.field_purchase_order_line__planned_expiry_date_required
+msgid ""
+"Technical fields to determine if planned expiry date is required or not on "
+"purchase order line"
+msgstr ""
+"Champ technique pour déterminer si la DLC prévue est requise ou non sur les "
+"linges de commandes d'achat"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields,help:stock_rule_delays_in_workable_days.field_stock_rule__lead_times_by_day_ids
+msgid "The lead time in days for the stock rule"
+msgstr "Le délai en jours pour la règle de stock"
+
+#. module: stock_rule_delays_in_workable_days
+#: code:addons/stock_rule_delays_in_workable_days/models/resource_calendar.py:0
+#, python-format
+msgid "The lead time must be a positive number."
+msgstr "Le délai de préparation doit être un nombre positif."
+
+#. module: stock_rule_delays_in_workable_days
+#: code:addons/stock_rule_delays_in_workable_days/models/stock_rule.py:0
+#, python-format
+msgid ""
+"The order date is in the past. Please check the supplier calendar, the "
+"warehouse calendar, the product expiration delay or adjust the event date."
+msgstr ""
+"La date de commande trouvée est dans le passé. Veuillez vérifier le "
+"calendrier du fournisseur, le calendrier de l'entrepôt, le délai "
+"d'expiration du produit les délais du fournisseur ou ajuster la date de "
+"l'événement."
+
+#. module: stock_rule_delays_in_workable_days
+#: code:addons/stock_rule_delays_in_workable_days/models/lead_times_by_day_value.py:0
+#, python-format
+msgid "The value can't be negative"
+msgstr "La valeur ne peut pas être négative"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields,help:stock_rule_delays_in_workable_days.field_res_partner__supplier_calendar_id
+#: model:ir.model.fields,help:stock_rule_delays_in_workable_days.field_res_users__supplier_calendar_id
+msgid "This calendar will be used to manage the availability of the supplier"
+msgstr "Ce calendrier sera utilisé pour gérer la disponibilité du fournisseur"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields.selection,name:stock_rule_delays_in_workable_days.selection__lead_times_by_day__weekday__3
+#: model:ir.model.fields.selection,name:stock_rule_delays_in_workable_days.selection__weekdays__weekday__3
+#: model:weekdays,name:stock_rule_delays_in_workable_days.weekday_thursday
+msgid "Thursday"
+msgstr "Jeudi"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields.selection,name:stock_rule_delays_in_workable_days.selection__lead_times_by_day__weekday__1
+#: model:ir.model.fields.selection,name:stock_rule_delays_in_workable_days.selection__weekdays__weekday__1
+#: model:weekdays,name:stock_rule_delays_in_workable_days.weekday_tuesday
+msgid "Tuesday"
+msgstr "Mardi"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model,name:stock_rule_delays_in_workable_days.model_stock_warehouse
+msgid "Warehouse"
+msgstr "Entrepôt"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields.selection,name:stock_rule_delays_in_workable_days.selection__lead_times_by_day__weekday__2
+#: model:ir.model.fields.selection,name:stock_rule_delays_in_workable_days.selection__weekdays__weekday__2
+#: model:weekdays,name:stock_rule_delays_in_workable_days.weekday_wednesday
+msgid "Wednesday"
+msgstr "Mercredi"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields,field_description:stock_rule_delays_in_workable_days.field_weekdays__weekday
+msgid "Weekday"
+msgstr "Jour"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.constraint,message:stock_rule_delays_in_workable_days.constraint_weekdays_weekday_uniq
+msgid "Weekday must be unique!"
+msgstr "Le jour doit être unique !"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.actions.act_window,name:stock_rule_delays_in_workable_days.action_weekdays
+#: model:ir.ui.menu,name:stock_rule_delays_in_workable_days.menu_calendar_weekdays
+msgid "Weekdays"
+msgstr "Jours"
+
+#. module: stock_rule_delays_in_workable_days
+#: code:addons/stock_rule_delays_in_workable_days/models/stock_rule.py:0
+#, python-format
+msgid "You can't have two lead time for the same day"
+msgstr "Vous ne pouvez pas avoir deux lignes de délais pour le même jour"
+
+#. module: stock_rule_delays_in_workable_days
+#: model:ir.model.fields,help:stock_rule_delays_in_workable_days.field_purchase_order_line__planned_expiry_date
+msgid "exact or minimal planned expired date"
+msgstr "DLC exacte ou minimale"
+
+#. module: stock_rule_delays_in_workable_days
+#: code:addons/stock_rule_delays_in_workable_days/models/lead_times_by_day_value.py:0
+#, python-format
+msgid "{} day(s)"
+msgstr "{} jour(s)"
