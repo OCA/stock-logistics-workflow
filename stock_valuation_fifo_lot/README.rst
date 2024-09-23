@@ -28,7 +28,62 @@ Stock Valuation Fifo Lot
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module is used to calculate FIFO cost by lot.
+This module changes the scope of FIFO cost calculation to specific lots/serials (as
+opposed to products), effectively achieving Specific Identification costing method.
+
+Example: Lot-Level Costing
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Purchase:
+
+  - Lot A: 100 units at $10 each.
+  - Lot B: 100 units at $12 each.
+
+- Sale:
+
+  - 50 units from Lot B.
+
+- COGS Calculation:
+
+  - 50 units * $12 = $600 assigned to COGS.
+
+- Ending Inventory:
+
+  - Lot A: 100 units at $10 each.
+  - Lot B: 50 units at $12 each.
+
+Main UI Changes
+~~~~~~~~~~~~~~~
+
+- Stock Valuation Layer
+
+  - Adds the following field:
+  
+    - 'Lots/Serials': Taken from related stock moves.
+
+- Stock Move Line
+
+  - Adds the following fields:
+
+    - 'Qty Base' [*]: Base quantity for FIFO allocation; represents the total quantity
+      of the moves with incoming valuation for the move line. In product UoM.
+    - 'Qty Consumed' [*]: Consumed quantity by outgoing valuation. In product UoM.
+    - 'Value Consumed' [*]: Consumed value by outgoing valuation.
+    - 'Qty Remaining' [*]: Remaining quantity (the total by product should match that
+      of the inventory valuation). In product UoM.
+    - 'Value Remaining' [*]: Remaining value (the total by product should match that
+      of the inventory valuation).
+    - 'Force FIFO Lot/Serial': Used when you are stuck by not being able to find a FIFO
+      balance for the lot in an outgoing move line.
+ 
+ .. [*] Updated only for products with FIFO costing method only, for valued incoming
+        moves, and outgoing moves where the qty_done has been reduced in the completed
+        state.
+        For these outgoing moves, the system generates positive stock valuation layers
+        with a remaining balance, which need to be reflected in the related move line.
+        The values here represent the theoretical figures in terms of FIFO costing,
+        meaning that they may differ from the actual stock situation especially for
+        those updated at the installation of this module.
 
 .. IMPORTANT::
    This is an alpha version, the data model and design can change at any time without warning.
@@ -43,8 +98,26 @@ This module is used to calculate FIFO cost by lot.
 Configuration
 =============
 
-If necessary, update the 'Use FIFO cost by lot' setting under Inventory > Configuration > Settings to use the lot cost instead of the standard _get_price() behavior when there is no relation to a purchase order in the stock move.
-(enabled by default).
+Disable the 'Use Last Lot/Serial Cost for New Stock' setting under *Inventory >
+Configuration > Settings*, which is enabled by default, to use the standard
+`_get_price()` behavior instead of the lot cost, for receipts of specific lots/serials
+with no link to a purchase order (i.e. customer returns and positive inventory
+adjustments).
+
+Usage
+=====
+
+Process an outgoing move with a lot/serial for a product of FIFO costing method, and the
+costs are calculated based on the lot/serial.
+
+You will get a user error in case the lot/serial of your choice (in an outgoing move)
+does not have a FIFO balance (i.e. there is no remaining quantity for the incoming move
+lines linked to the candidate SVL; this is expected to happen for lots/serials created
+before the installation of this module, unless your actual inventory operations have
+been strictly FIFO). In such situations, you should select a "rogue" lot/serial (one
+that still exists in terms of FIFO costing, but not in reality, due to the inconsistency
+carried over from the past) in the 'Force FIFO Lot/Serial' field so that this lot/serial
+is used for FIFO costing instead.
 
 Bug Tracker
 ===========
@@ -63,6 +136,7 @@ Authors
 ~~~~~~~
 
 * Ecosoft
+* Quartile
 
 Contributors
 ~~~~~~~~~~~~
@@ -76,7 +150,7 @@ Contributors
 * `Quartile <https://www.quartile.co>`__:
 
   * Aung Ko Ko Lin
- 
+  * Yoshi Tashiro
 
 Maintainers
 ~~~~~~~~~~~

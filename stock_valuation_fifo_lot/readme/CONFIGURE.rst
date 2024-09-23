@@ -1,2 +1,5 @@
-If necessary, update the 'Use FIFO cost by lot' setting under Inventory > Configuration > Settings to use the lot cost instead of the standard _get_price() behavior when there is no relation to a purchase order in the stock move.
-(enabled by default).
+Disable the 'Use Last Lot/Serial Cost for New Stock' setting under *Inventory >
+Configuration > Settings*, which is enabled by default, to use the standard
+`_get_price()` behavior instead of the lot cost, for receipts of specific lots/serials
+with no link to a purchase order (i.e. customer returns and positive inventory
+adjustments).

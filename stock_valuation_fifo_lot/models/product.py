@@ -1,12 +1,24 @@
 # Copyright 2023 Ecosoft Co., Ltd (https://ecosoft.co.th)
+# Copyright 2024 Quartile (https://www.quartile.co)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html)
 
-from odoo import models
+from collections import defaultdict
+
+from odoo import _, models
+from odoo.exceptions import UserError
+from odoo.osv import expression
 from odoo.tools import float_is_zero
 
 
 class ProductProduct(models.Model):
     _inherit = "product.product"
+
+    def _get_fifo_candidates_domain(self, company):
+        res = super()._get_fifo_candidates_domain(company)
+        fifo_lot = self.env.context.get("fifo_lot")
+        if not fifo_lot:
+            return res
+        return expression.AND([res, [("lot_ids", "in", fifo_lot.ids)]])
 
     def _sort_by_all_candidates(self, all_candidates, sort_by):
         """Hook function for other sort by"""
@@ -14,98 +26,74 @@ class ProductProduct(models.Model):
 
     def _get_fifo_candidates(self, company):
         all_candidates = super()._get_fifo_candidates(company)
+        fifo_lot = self.env.context.get("fifo_lot")
+        if fifo_lot:
+            for svl in all_candidates:
+                if not svl._get_unconsumed_in_move_line(fifo_lot):
+                    all_candidates -= svl
+            if not all_candidates:
+                raise UserError(
+                    _(
+                        "There is no remaining balance for FIFO valuation for the "
+                        "lot/serial %s. Please select a Force FIFO Lot/Serial in the "
+                        "detailed operation line."
+                    )
+                    % fifo_lot.display_name
+                )
         sort_by = self.env.context.get("sort_by")
         if sort_by == "lot_create_date":
 
             def sorting_key(candidate):
                 if candidate.lot_ids:
                     return min(candidate.lot_ids.mapped("create_date"))
-                else:
-                    return candidate.create_date
+                return candidate.create_date
 
             all_candidates = all_candidates.sorted(key=sorting_key)
         elif sort_by is not None:
             all_candidates = self._sort_by_all_candidates(all_candidates, sort_by)
         return all_candidates
 
+    # Depends on https://github.com/odoo/odoo/pull/180245
+    def _get_qty_taken_on_candidate(self, qty_to_take_on_candidates, candidate):
+        fifo_lot = self.env.context.get("fifo_lot")
+        if fifo_lot:
+            candidate_ml = candidate._get_unconsumed_in_move_line(fifo_lot)
+            qty_to_take_on_candidates = min(
+                qty_to_take_on_candidates, candidate_ml.qty_remaining
+            )
+            candidate_ml.qty_consumed += qty_to_take_on_candidates
+            candidate_ml.value_consumed += qty_to_take_on_candidates * (
+                candidate.remaining_value / candidate.remaining_qty
+            )
+        return super()._get_qty_taken_on_candidate(qty_to_take_on_candidates, candidate)
+
     def _run_fifo(self, quantity, company):
         self.ensure_one()
-        move_id = self._context.get("used_in_move_id")
-        if self.tracking == "none" or not move_id:
+        fifo_move = self._context.get("fifo_move")
+        if self.tracking == "none" or not fifo_move:
             return super()._run_fifo(quantity, company)
-
-        move = self.env["stock.move"].browse(move_id)
-        move_lines = move._get_out_move_lines()
-        tmp_value = 0
-        tmp_remaining_qty = 0
-        for move_line in move_lines:
-            # Find back incoming stock valuation layers
-            # (called candidates here) to value `quantity`.
-            qty_to_take_on_candidates = move_line.product_uom_id._compute_quantity(
-                move_line.qty_done, move.product_id.uom_id
-            )
-            # Find incoming stock valuation layers that have lot_ids on their moves
-            # Check with stock_move_id.lot_ids to cover the situation where the stock
-            # was received either before or after the installation of this module
-            candidates = self._get_fifo_candidates(company).filtered(
-                lambda l: move_line.lot_id in l.stock_move_id.lot_ids
-            )
-            for candidate in candidates:
-                qty_taken_on_candidate = min(
-                    qty_to_take_on_candidates, candidate.remaining_qty
+        remaining_qty = quantity
+        vals = defaultdict(float)
+        correction_ml = self.env.context.get("correction_move_line")
+        move_lines = correction_ml or fifo_move._get_out_move_lines()
+        moved_qty = 0
+        for ml in move_lines:
+            fifo_lot = ml.force_fifo_lot_id or ml.lot_id
+            if correction_ml:
+                moved_qty = quantity
+            else:
+                moved_qty = ml.product_uom_id._compute_quantity(
+                    ml.qty_done, self.uom_id
                 )
-
-                candidate_unit_cost = (
-                    candidate.remaining_value / candidate.remaining_qty
-                )
-                value_taken_on_candidate = qty_taken_on_candidate * candidate_unit_cost
-                value_taken_on_candidate = candidate.currency_id.round(
-                    value_taken_on_candidate
-                )
-                new_remaining_value = (
-                    candidate.remaining_value - value_taken_on_candidate
-                )
-
-                candidate_vals = {
-                    "remaining_qty": candidate.remaining_qty - qty_taken_on_candidate,
-                    "remaining_value": new_remaining_value,
-                }
-
-                candidate.write(candidate_vals)
-
-                qty_to_take_on_candidates -= qty_taken_on_candidate
-                tmp_value += value_taken_on_candidate
-
-                if float_is_zero(
-                    qty_to_take_on_candidates,
-                    precision_rounding=self.uom_id.rounding,
-                ):
-                    break
-
-            if candidates and qty_to_take_on_candidates > 0:
-                tmp_value += abs(candidate.unit_cost * -qty_to_take_on_candidates)
-                tmp_remaining_qty += qty_to_take_on_candidates
-
-        # Calculate standard price (Sorted by lot created date)
-        all_candidates = self.with_context(
-            sort_by="lot_create_date"
-        )._get_fifo_candidates(company)
-        new_standard_price = 0.0
-        if all_candidates:
-            new_standard_price = all_candidates[0].unit_cost
-        elif candidates:
-            new_standard_price = candidate.unit_cost
-
-        # Update standard price
-        if new_standard_price and self.cost_method == "fifo":
-            self.sudo().with_company(company.id).with_context(
-                disable_auto_svl=True
-            ).standard_price = new_standard_price
-
-        # Value
-        vals = {
-            "remaining_qty": -tmp_remaining_qty,
-            "value": -tmp_value,
-            "unit_cost": tmp_value / (quantity + tmp_remaining_qty),
-        }
+            fifo_qty = min(remaining_qty, moved_qty)
+            self = self.with_context(fifo_lot=fifo_lot, fifo_qty=fifo_qty)
+            ml_fifo_vals = super()._run_fifo(fifo_qty, company)
+            for key, value in ml_fifo_vals.items():
+                if key in ("remaining_qty", "value"):
+                    vals[key] += value
+                    continue
+                vals[key] = value  # unit_cost
+            remaining_qty -= fifo_qty
+            if float_is_zero(remaining_qty, precision_rounding=self.uom_id.rounding):
+                break
         return vals

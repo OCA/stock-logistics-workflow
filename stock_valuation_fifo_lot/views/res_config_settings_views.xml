@@ -11,18 +11,18 @@
             >
                 <div
                     class="col-12 col-lg-6 o_setting_box"
-                    id="use_lot_get_price_unit_fifo"
+                    id="use_lot_cost_for_new_stock"
                 >
                     <div class="o_setting_left_pane">
-                        <field name="use_lot_get_price_unit_fifo" />
+                        <field name="use_lot_cost_for_new_stock" />
                     </div>
                     <div class="o_setting_right_pane">
                         <label
-                            for="use_lot_get_price_unit_fifo"
-                            string="Use FIFO cost by lot"
+                            for="use_lot_cost_for_new_stock"
+                            string="Use Last Lot/Serial Cost for New Stock"
                         />
                         <div class="text-muted">
-                            Use the FIFO price unit by lot when there is no PO in the stock move.
+                            Apply the last lot/serial cost for FIFO products for non-purchase receipts.
                         </div>
                     </div>
                 </div>

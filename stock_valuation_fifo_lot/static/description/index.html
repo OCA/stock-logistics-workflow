@@ -369,7 +369,73 @@ ul.auto-toc {
 !! source digest: sha256:877af52a350ab6a61b6c128c4fbcffe909e4a8274c8ec064390dc9b1c36d9253
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Alpha" src="https://img.shields.io/badge/maturity-Alpha-red.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_valuation_fifo_lot"><img alt="OCA/stock-logistics-workflow" src="https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/stock-logistics-workflow-16-0/stock-logistics-workflow-16-0-stock_valuation_fifo_lot"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&amp;target_branch=16.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
-<p>This module is used to calculate FIFO cost by lot.</p>
+<p>This module changes the scope of FIFO cost calculation to specific lots/serials (as
+opposed to products), effectively achieving Specific Identification costing method.</p>
+<div class="section" id="example-lot-level-costing">
+<h1>Example: Lot-Level Costing</h1>
+<ul class="simple">
+<li>Purchase:<ul>
+<li>Lot A: 100 units at $10 each.</li>
+<li>Lot B: 100 units at $12 each.</li>
+</ul>
+</li>
+<li>Sale:<ul>
+<li>50 units from Lot B.</li>
+</ul>
+</li>
+<li>COGS Calculation:<ul>
+<li>50 units * $12 = $600 assigned to COGS.</li>
+</ul>
+</li>
+<li>Ending Inventory:<ul>
+<li>Lot A: 100 units at $10 each.</li>
+<li>Lot B: 50 units at $12 each.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="main-ui-changes">
+<h1>Main UI Changes</h1>
+<ul class="simple">
+<li>Stock Valuation Layer<ul>
+<li>Adds the following field:<ul>
+<li>‘Lots/Serials’: Taken from related stock moves.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Stock Move Line<ul>
+<li>Adds the following fields:<ul>
+<li>‘Qty Base’ [*]: Base quantity for FIFO allocation; represents the total quantity
+of the moves with incoming valuation for the move line. In product UoM.</li>
+<li>‘Qty Consumed’ [*]: Consumed quantity by outgoing valuation. In product UoM.</li>
+<li>‘Value Consumed’ [*]: Consumed value by outgoing valuation.</li>
+<li>‘Qty Remaining’ [*]: Remaining quantity (the total by product should match that
+of the inventory valuation). In product UoM.</li>
+<li>‘Value Remaining’ [*]: Remaining value (the total by product should match that
+of the inventory valuation).</li>
+<li>‘Force FIFO Lot/Serial’: Used when you are stuck by not being able to find a FIFO
+balance for the lot in an outgoing move line.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<table class="docutils footnote" frame="void" id="footnote-1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[*]</td><td>Updated only for products with FIFO costing method only, for valued incoming
+moves, and outgoing moves where the qty_done has been reduced in the completed
+state.
+For these outgoing moves, the system generates positive stock valuation layers
+with a remaining balance, which need to be reflected in the related move line.
+The values here represent the theoretical figures in terms of FIFO costing,
+meaning that they may differ from the actual stock situation especially for
+those updated at the installation of this module.</td></tr>
+</tbody>
+</table>
+</blockquote>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
 <p class="last">This is an alpha version, the data model and design can change at any time without warning.
@@ -380,22 +446,34 @@ Only for development or testing purpose, do not use in production.
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><a class="reference internal" href="#configuration" id="toc-entry-1">Configuration</a></li>
-<li><a class="reference internal" href="#bug-tracker" id="toc-entry-2">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="toc-entry-3">Credits</a><ul>
-<li><a class="reference internal" href="#authors" id="toc-entry-4">Authors</a></li>
-<li><a class="reference internal" href="#contributors" id="toc-entry-5">Contributors</a></li>
-<li><a class="reference internal" href="#maintainers" id="toc-entry-6">Maintainers</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#usage" id="toc-entry-2">Usage</a></li>
+<li><a class="reference internal" href="#bug-tracker" id="toc-entry-3">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="toc-entry-4">Credits</a></li>
 </ul>
 </div>
 <div class="section" id="configuration">
-<h1><a class="toc-backref" href="#toc-entry-1">Configuration</a></h1>
-<p>If necessary, update the ‘Use FIFO cost by lot’ setting under Inventory &gt; Configuration &gt; Settings to use the lot cost instead of the standard _get_price() behavior when there is no relation to a purchase order in the stock move.
-(enabled by default).</p>
+<h2><a class="toc-backref" href="#toc-entry-1">Configuration</a></h2>
+<p>Disable the ‘Use Last Lot/Serial Cost for New Stock’ setting under <em>Inventory &gt;
+Configuration &gt; Settings</em>, which is enabled by default, to use the standard
+<cite>_get_price()</cite> behavior instead of the lot cost, for receipts of specific lots/serials
+with no link to a purchase order (i.e. customer returns and positive inventory
+adjustments).</p>
+</div>
+<div class="section" id="usage">
+<h2><a class="toc-backref" href="#toc-entry-2">Usage</a></h2>
+<p>Process an outgoing move with a lot/serial for a product of FIFO costing method, and the
+costs are calculated based on the lot/serial.</p>
+<p>You will get a user error in case the lot/serial of your choice (in an outgoing move)
+does not have a FIFO balance (i.e. there is no remaining quantity for the incoming move
+lines linked to the candidate SVL; this is expected to happen for lots/serials created
+before the installation of this module, unless your actual inventory operations have
+been strictly FIFO). In such situations, you should select a “rogue” lot/serial (one
+that still exists in terms of FIFO costing, but not in reality, due to the inconsistency
+carried over from the past) in the ‘Force FIFO Lot/Serial’ field so that this lot/serial
+is used for FIFO costing instead.</p>
 </div>
 <div class="section" id="bug-tracker">
-<h1><a class="toc-backref" href="#toc-entry-2">Bug Tracker</a></h1>
+<h2><a class="toc-backref" href="#toc-entry-3">Bug Tracker</a></h2>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/stock-logistics-workflow/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
@@ -403,15 +481,18 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h1><a class="toc-backref" href="#toc-entry-3">Credits</a></h1>
+<h2><a class="toc-backref" href="#toc-entry-4">Credits</a></h2>
+</div>
+</div>
 <div class="section" id="authors">
-<h2><a class="toc-backref" href="#toc-entry-4">Authors</a></h2>
+<h1>Authors</h1>
 <ul class="simple">
 <li>Ecosoft</li>
+<li>Quartile</li>
 </ul>
 </div>
 <div class="section" id="contributors">
-<h2><a class="toc-backref" href="#toc-entry-5">Contributors</a></h2>
+<h1>Contributors</h1>
 <ul class="simple">
 <li><a class="reference external" href="http://ecosoft.co.th">Ecosoft</a>:<ul>
 <li>Tharathip Chaweewongphan &lt;<a class="reference external" href="mailto:tharathipc&#64;ecosoft.co.th">tharathipc&#64;ecosoft.co.th</a>&gt;</li>
@@ -421,12 +502,13 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 </li>
 <li><a class="reference external" href="https://www.quartile.co">Quartile</a>:<ul>
 <li>Aung Ko Ko Lin</li>
+<li>Yoshi Tashiro</li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="maintainers">
-<h2><a class="toc-backref" href="#toc-entry-6">Maintainers</a></h2>
+<h1>Maintainers</h1>
 <p>This module is maintained by the OCA.</p>
 <a class="reference external image-reference" href="https://odoo-community.org"><img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" /></a>
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose
@@ -436,7 +518,6 @@ promote its widespread use.</p>
 <p><a class="reference external image-reference" href="https://github.com/newtratip"><img alt="newtratip" src="https://github.com/newtratip.png?size=40px" /></a></p>
 <p>This module is part of the <a class="reference external" href="https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_valuation_fifo_lot">OCA/stock-logistics-workflow</a> project on GitHub.</p>
 <p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
-</div>
 </div>
 </div>
 </body>
