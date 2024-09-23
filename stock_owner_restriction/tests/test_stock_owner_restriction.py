@@ -66,8 +66,14 @@ class TestStockOwnerRestriction(TransactionCase):
 
     def test_product_qty_available(self):
         # Quants with owner assigned are not available
-        self.assertEqual(self.product.qty_available, 500.00)
-        self.product.invalidate_model()
+        # No need invalidate the cache, force_restricted_owner_id key is added to
+        # context depends of product qty_available
+        self.assertEqual(
+            self.product.with_context(
+                force_restricted_owner_id=self.owner.id
+            ).qty_available,
+            500.00,
+        )
         self.assertEqual(
             self.product.with_context(skip_restricted_owner=True).qty_available, 1000.00
         )
@@ -137,7 +143,7 @@ class TestStockOwnerRestriction(TransactionCase):
         self.picking_type_out.owner_restriction = "partner_or_unassigned"
         self.picking_out.do_unreserve()
         self.picking_out.action_assign()
-        self.assertEqual(self.picking_out.move_lines.reserved_availability, 1000.00)
+        self.assertEqual(self.picking_out.move_ids.reserved_availability, 1000.00)
         self.assertEqual(len(self.picking_out.move_line_ids), 2)
         self.assertEqual(self.picking_out.move_line_ids.mapped("owner_id"), self.owner)
 
@@ -148,7 +154,7 @@ class TestStockOwnerRestriction(TransactionCase):
         self.picking_out.partner_id = False
         self.picking_out.do_unreserve()
         self.picking_out.action_assign()
-        self.assertEqual(self.picking_out.move_lines.reserved_availability, 500.00)
+        self.assertEqual(self.picking_out.move_ids.reserved_availability, 500.00)
         self.assertEqual(len(self.picking_out.move_line_ids), 1)
 
     def test_search_qty(self):

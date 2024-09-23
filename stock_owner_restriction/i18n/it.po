@@ -38,6 +38,11 @@ msgid "Picking partner"
 msgstr "Partner prelievo"
 
 #. module: stock_owner_restriction
+#: model:ir.model.fields.selection,name:stock_owner_restriction.selection__stock_picking_type__owner_restriction__partner_or_unassigned
+msgid "Picking partner or unassigned owner"
+msgstr ""
+
+#. module: stock_owner_restriction
 #: model:ir.model,name:stock_owner_restriction.model_product_product
 msgid "Product Variant"
 msgstr "Variante prodotto"
