@@ -68,8 +68,14 @@ class TestStockOwnerRestriction(TransactionCase):
 
     def test_product_qty_available(self):
         # Quants with owner assigned are not available
-        self.assertEqual(self.product.qty_available, 500.00)
-        self.product.invalidate_cache()
+        # No need invalidate the cache, force_restricted_owner_id key is added to
+        # context depends of product qty_available
+        self.assertEqual(
+            self.product.with_context(
+                force_restricted_owner_id=self.owner.id
+            ).qty_available,
+            500.00,
+        )
         self.assertEqual(
             self.product.with_context(skip_restricted_owner=True).qty_available, 1000.00
         )
