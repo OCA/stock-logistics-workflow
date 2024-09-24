@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_picking_move_tree']" position="after">
+                <button
+                    name="action_picking_move_line_tree"
+                    class="oe_stat_button"
+                    icon="fa-arrows-v"
+                    type="object"
+                    help="List view of detailed operations"
+                    attrs="{'invisible': [('show_operations', '=', False)]}"
+                >
+                    <div class="o_form_field o_stat_info">
+                        <span class="o_stat_text"> Detailed Operations</span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="stock_move_line_action" model="ir.actions.act_window">
+        <field name="name">Stock Move Lines</field>
+        <field name="res_model">stock.move.line</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="stock.view_move_line_tree" />
+        <field name="target">current</field>
+    </record>
+</odoo>
