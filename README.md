@@ -23,6 +23,7 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [delivery_procurement_group_carrier](delivery_procurement_group_carrier/) | 16.0.1.1.0 |  | Delivery Procurement Group Carrier
 [delivery_total_weight_from_packaging](delivery_total_weight_from_packaging/) | 16.0.1.0.0 |  | Include packaging weight on move, transfer and package.
+[product_expiry_simple](product_expiry_simple/) | 16.0.1.0.0 | [![alexis-via](https://github.com/alexis-via.png?size=30px)](https://github.com/alexis-via) | Simpler and better alternative to the official product_expiry module
 [purchase_stock_picking_invoice_link](purchase_stock_picking_invoice_link/) | 16.0.1.0.0 |  | Adds link between purchases, pickings and invoices
 [sale_line_returned_qty](sale_line_returned_qty/) | 16.0.1.0.0 |  | Track returned quantity of sale order lines.
 [sale_order_global_stock_route](sale_order_global_stock_route/) | 16.0.1.0.0 |  | Add the possibility to choose one warehouse path for an order
