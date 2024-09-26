@@ -68,19 +68,21 @@ class StockMove(models.Model):
                 forced_quantity=forced_quantity
             )
             layers |= layer
-            # Calculate standard price (sorted by lot created date)
             product = move.product_id
             if product.cost_method != "fifo" or product.tracking == "none":
                 continue
             for ml in layer.stock_move_id.move_line_ids:
                 ml.qty_base = ml.qty_done
-            # Change product standard price to the first available lot price.
+            # Update product standard price to the first available
+            # lot price (by sorting by lot create date).
             product = product.with_context(sort_by="lot_create_date")
             candidate = product._get_fifo_candidates(move.company_id)[:1]
             if not candidate:
                 continue
             product = product.with_company(move.company_id.id)
             product = product.with_context(disable_auto_svl=True)
+            # `candidate.unit_cost` is not totally accurate in 16.0 because of
+            # https://github.com/odoo/odoo/issues/171464
             product.sudo().standard_price = candidate.unit_cost
         return layers
 
