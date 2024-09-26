@@ -35,6 +35,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - container: ghcr.io/oca/oca-ci/py3.10-ocb16.0:latest
+            include: "product_expiry_simple"
+            name: test OCB with product_expiry_simple
+            makepot: "true"
           - container: ghcr.io/oca/oca-ci/py3.10-odoo16.0:latest
             include: "stock_picking_to_batch_group_fields"
             name: test with Odoo
@@ -50,10 +54,10 @@ jobs:
             name: test with OCB
             makepot: "true"
           - container: ghcr.io/oca/oca-ci/py3.10-odoo16.0:latest
-            exclude: "stock_picking_to_batch_group_fields,stock_customer_deposit,stock_customer_deposit_elaboration,stock_customer_deposit_sale_margin"
+            exclude: "stock_picking_to_batch_group_fields,stock_customer_deposit,stock_customer_deposit_elaboration,stock_customer_deposit_sale_margin,product_expiry_simple"
             name: test with Odoo
           - container: ghcr.io/oca/oca-ci/py3.10-ocb16.0:latest
-            exclude: "stock_picking_to_batch_group_fields,stock_customer_deposit,stock_customer_deposit_elaboration,stock_customer_deposit_sale_margin"
+            exclude: "stock_picking_to_batch_group_fields,stock_customer_deposit,stock_customer_deposit_elaboration,stock_customer_deposit_sale_margin,product_expiry_simple"
             name: test with OCB
             makepot: "true"
     services:
