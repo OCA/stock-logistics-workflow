@@ -6,8 +6,6 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-13 11:44+0000\n"
-"PO-Revision-Date: 2022-12-13 11:44+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -68,26 +66,26 @@ msgid "Product"
 msgstr ""
 
 #. module: product_expiry_simple
+#. odoo-python
+#: code:addons/product_expiry_simple/models/stock_lot.py:0
+#, python-format
+msgid ""
+"Product %(product)s doesn't use expiry dates, but an expiry date is set on "
+"lot %(lot)s."
+msgstr ""
+
+#. module: product_expiry_simple
+#. odoo-python
+#: code:addons/product_expiry_simple/models/stock_lot.py:0
+#, python-format
+msgid ""
+"Product %(product)s uses expiry dates, but expiry date is missing on lot "
+"%(lot)s."
+msgstr ""
+
+#. module: product_expiry_simple
 #: model:ir.model,name:product_expiry_simple.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
-msgstr ""
-
-#. module: product_expiry_simple
-#. odoo-python
-#: code:addons/product_expiry_simple/models/stock_lot.py:0
-#, python-format
-msgid ""
-"Product {product} doesn't use expiry dates, but an expiry date is set on lot"
-" {lot}."
-msgstr ""
-
-#. module: product_expiry_simple
-#. odoo-python
-#: code:addons/product_expiry_simple/models/stock_lot.py:0
-#, python-format
-msgid ""
-"Product {product} uses expiry dates, but expiry date is missing on lot "
-"{lot}."
 msgstr ""
 
 #. module: product_expiry_simple
@@ -118,12 +116,12 @@ msgstr ""
 #, python-format
 msgid ""
 "You cannot set 'Use Expiry Date' on product '%s' because it is not tracked "
-"by lot nor serial number."
+"by lot nor by serial number."
 msgstr ""
 
 #. module: product_expiry_simple
 #. odoo-python
 #: code:addons/product_expiry_simple/models/stock_lot.py:0
 #, python-format
-msgid "[%s Expired] %s"
+msgid "[%(date)s Expired] %(lot)s"
 msgstr ""
