@@ -17,37 +17,114 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: product_expiry_simple
-#: model:ir.ui.view,arch_db:product_expiry_simple.quant_search_view
-#: model:ir.ui.view,arch_db:product_expiry_simple.search_product_lot_filter
+#: model_terms:ir.ui.view,arch_db:product_expiry_simple.view_stock_quant_form_editable
+msgid ""
+"<span class=\"badge badge-danger\" attrs=\"{'invisible': [('expired', '=', "
+"False)]}\">Expired</span>"
+msgstr ""
+
+#. module: product_expiry_simple
+#: model_terms:ir.ui.view,arch_db:product_expiry_simple.view_production_lot_form
+msgid ""
+"<span class=\"badge text-bg-danger\" attrs=\"{'invisible': [('expired', '=', "
+"False)]}\">Expired</span>"
+msgstr ""
+
+#. module: product_expiry_simple
+#: model:ir.model.fields,field_description:product_expiry_simple.field_stock_lot__expired
+#: model:ir.model.fields,field_description:product_expiry_simple.field_stock_quant__expired
+#: model_terms:ir.ui.view,arch_db:product_expiry_simple.quant_search_view
+#: model_terms:ir.ui.view,arch_db:product_expiry_simple.search_product_lot_filter
 msgid "Expired"
 msgstr "Expirado"
 
 #. module: product_expiry_simple
-#: model:ir.model.fields,field_description:product_expiry_simple.field_stock_move_line_expiry_date
-#: model:ir.model.fields,field_description:product_expiry_simple.field_stock_production_lot_expiry_date
-#: model:ir.model.fields,field_description:product_expiry_simple.field_stock_quant_expiry_date
-#: model:ir.ui.view,arch_db:product_expiry_simple.quant_search_view
-#: model:ir.ui.view,arch_db:product_expiry_simple.search_product_lot_filter
+#: model:ir.model.fields,field_description:product_expiry_simple.field_stock_lot__expiry_date
+#: model:ir.model.fields,field_description:product_expiry_simple.field_stock_move_line__expiry_date
+#: model:ir.model.fields,field_description:product_expiry_simple.field_stock_quant__expiry_date
+#: model_terms:ir.ui.view,arch_db:product_expiry_simple.quant_search_view
+#: model_terms:ir.ui.view,arch_db:product_expiry_simple.search_product_lot_filter
 msgid "Expiry Date"
 msgstr "Fecha de Expiración"
 
 #. module: product_expiry_simple
-#: model:ir.model,name:product_expiry_simple.model_stock_production_lot
+#: model:ir.model,name:product_expiry_simple.model_stock_lot
 msgid "Lot/Serial"
 msgstr "Lote/Nº de serie"
 
 #. module: product_expiry_simple
-#: model:ir.ui.view,arch_db:product_expiry_simple.quant_search_view
-#: model:ir.ui.view,arch_db:product_expiry_simple.search_product_lot_filter
+#: model_terms:ir.ui.view,arch_db:product_expiry_simple.quant_search_view
+#: model_terms:ir.ui.view,arch_db:product_expiry_simple.search_product_lot_filter
 msgid "Not Expired"
 msgstr "No Expirado"
 
 #. module: product_expiry_simple
+#: model_terms:ir.ui.view,arch_db:product_expiry_simple.view_picking_form
+msgid "One or several products have <b>expired</b> lots"
+msgstr ""
+
+#. module: product_expiry_simple
+#: model:ir.model,name:product_expiry_simple.model_product_template
+msgid "Product"
+msgstr ""
+
+#. module: product_expiry_simple
+#. odoo-python
+#: code:addons/product_expiry_simple/models/stock_lot.py:0
+#, python-format
+msgid ""
+"Product %(product)s doesn't use expiry dates, but an expiry date is set on "
+"lot %(lot)s."
+msgstr ""
+
+#. module: product_expiry_simple
+#. odoo-python
+#: code:addons/product_expiry_simple/models/stock_lot.py:0
+#, python-format
+msgid ""
+"Product %(product)s uses expiry dates, but expiry date is missing on lot "
+"%(lot)s."
+msgstr ""
+
+#. module: product_expiry_simple
 #: model:ir.model,name:product_expiry_simple.model_stock_move_line
-msgid "Packing Operation"
+msgid "Product Moves (Stock Move Line)"
 msgstr ""
 
 #. module: product_expiry_simple
 #: model:ir.model,name:product_expiry_simple.model_stock_quant
 msgid "Quants"
 msgstr "Quants"
+
+#. module: product_expiry_simple
+#: model:ir.model.fields,field_description:product_expiry_simple.field_stock_picking__show_expiry_warning
+msgid "Show Expiry Warning"
+msgstr ""
+
+#. module: product_expiry_simple
+#: model:ir.model,name:product_expiry_simple.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: product_expiry_simple
+#: model:ir.model.fields,field_description:product_expiry_simple.field_product_product__use_expiry_date
+#: model:ir.model.fields,field_description:product_expiry_simple.field_product_template__use_expiry_date
+#: model:ir.model.fields,field_description:product_expiry_simple.field_stock_lot__use_expiry_date
+msgid "Use Expiry Date"
+msgstr ""
+
+#. module: product_expiry_simple
+#. odoo-python
+#: code:addons/product_expiry_simple/models/product_template.py:0
+#, python-format
+msgid ""
+"You cannot set 'Use Expiry Date' on product '%s' because it is not tracked "
+"by lot nor by serial number."
+msgstr ""
+
+#. module: product_expiry_simple
+#. odoo-python
+#: code:addons/product_expiry_simple/models/stock_lot.py:0
+#, python-format
+msgid "[%(date)s Expired] %(lot)s"
+msgstr ""

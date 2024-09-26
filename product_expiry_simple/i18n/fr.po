@@ -10,6 +10,7 @@ msgstr ""
 "PO-Revision-Date: 2022-12-13 11:44+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -20,14 +21,18 @@ msgstr ""
 msgid ""
 "<span class=\"badge badge-danger\" attrs=\"{'invisible': [('expired', '=', "
 "False)]}\">Expired</span>"
-msgstr "<span class=\"badge badge-danger\" attrs=\"{'invisible': [('expired', '=', False)]}\">Périmé</span>"
+msgstr ""
+"<span class=\"badge badge-danger\" attrs=\"{'invisible': [('expired', '=', "
+"False)]}\">Périmé</span>"
 
 #. module: product_expiry_simple
 #: model_terms:ir.ui.view,arch_db:product_expiry_simple.view_production_lot_form
 msgid ""
-"<span class=\"badge text-bg-danger\" attrs=\"{'invisible': [('expired', '=',"
-" False)]}\">Expired</span>"
-msgstr "<span class=\"badge text-bg-danger\" attrs=\"{'invisible': [('expired', '=', False)]}\">Périmé</span>"
+"<span class=\"badge text-bg-danger\" attrs=\"{'invisible': [('expired', '=', "
+"False)]}\">Expired</span>"
+msgstr ""
+"<span class=\"badge text-bg-danger\" attrs=\"{'invisible': [('expired', '=', "
+"False)]}\">Périmé</span>"
 
 #. module: product_expiry_simple
 #: model:ir.model.fields,field_description:product_expiry_simple.field_stock_lot__expired
@@ -68,31 +73,27 @@ msgid "Product"
 msgstr "Article"
 
 #. module: product_expiry_simple
+#. odoo-python
+#: code:addons/product_expiry_simple/models/stock_lot.py:0
+#, python-format
+msgid ""
+"Product %(product)s doesn't use expiry dates, but an expiry date is set on "
+"lot %(lot)s."
+msgstr ""
+
+#. module: product_expiry_simple
+#. odoo-python
+#: code:addons/product_expiry_simple/models/stock_lot.py:0
+#, python-format
+msgid ""
+"Product %(product)s uses expiry dates, but expiry date is missing on lot "
+"%(lot)s."
+msgstr ""
+
+#. module: product_expiry_simple
 #: model:ir.model,name:product_expiry_simple.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
 msgstr "Mouvements d'article (Ligne de mouvement de stock)"
-
-#. module: product_expiry_simple
-#. odoo-python
-#: code:addons/product_expiry_simple/models/stock_lot.py:0
-#, python-format
-msgid ""
-"Product {product} doesn't use expiry dates, but an expiry date is set on lot"
-" {lot}."
-msgstr ""
-"L'article {product} n'utilise pas de dates de péremption, mais une date de "
-"péremption est renseignée sur le lot {lot}."
-
-#. module: product_expiry_simple
-#. odoo-python
-#: code:addons/product_expiry_simple/models/stock_lot.py:0
-#, python-format
-msgid ""
-"Product {product} uses expiry dates, but expiry date is missing on lot "
-"{lot}."
-msgstr ""
-"L'article {product} utilise des dates de péremption, mais la date de "
-"péremption n'est pas renseignée sur le lot {lot}."
 
 #. module: product_expiry_simple
 #: model:ir.model,name:product_expiry_simple.model_stock_quant
@@ -122,14 +123,40 @@ msgstr "Utilise des dates de péremption"
 #, python-format
 msgid ""
 "You cannot set 'Use Expiry Date' on product '%s' because it is not tracked "
-"by lot nor serial number."
+"by lot nor by serial number."
 msgstr ""
-"Vous ne pouvez pas activer 'Utilise des dates de péremption' sur l'article "
-"'%s' car il n'est pas tracé par lots ni par numéro de série."
 
 #. module: product_expiry_simple
 #. odoo-python
 #: code:addons/product_expiry_simple/models/stock_lot.py:0
 #, python-format
-msgid "[%s Expired] %s"
-msgstr "[%s Périmé] %s"
+msgid "[%(date)s Expired] %(lot)s"
+msgstr ""
+
+#, python-format
+#~ msgid ""
+#~ "Product {product} doesn't use expiry dates, but an expiry date is set on "
+#~ "lot {lot}."
+#~ msgstr ""
+#~ "L'article {product} n'utilise pas de dates de péremption, mais une date "
+#~ "de péremption est renseignée sur le lot {lot}."
+
+#, python-format
+#~ msgid ""
+#~ "Product {product} uses expiry dates, but expiry date is missing on lot "
+#~ "{lot}."
+#~ msgstr ""
+#~ "L'article {product} utilise des dates de péremption, mais la date de "
+#~ "péremption n'est pas renseignée sur le lot {lot}."
+
+#, python-format
+#~ msgid ""
+#~ "You cannot set 'Use Expiry Date' on product '%s' because it is not "
+#~ "tracked by lot nor serial number."
+#~ msgstr ""
+#~ "Vous ne pouvez pas activer 'Utilise des dates de péremption' sur "
+#~ "l'article '%s' car il n'est pas tracé par lots ni par numéro de série."
+
+#, python-format
+#~ msgid "[%s Expired] %s"
+#~ msgstr "[%s Périmé] %s"
