@@ -10,9 +10,8 @@ class StockQuant(models.Model):
     @api.model
     def _gather(self, *args, **kwargs):
         quants = super()._gather(*args, **kwargs)
-        if planned_consumed_date := self.env.context.get(
-            "restrict_planned_consumed_date"
-        ):
+        planned_consumed_date = self.env.context.get("restrict_planned_consumed_date")
+        if planned_consumed_date:
             quants = quants.filtered(
                 lambda quant, planned=planned_consumed_date: quant.lot_id is False
                 or quant.lot_id
