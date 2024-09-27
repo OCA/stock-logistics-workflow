@@ -9,14 +9,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-03 03:55+0000\n"
-"PO-Revision-Date: 2017-12-03 03:55+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"PO-Revision-Date: 2024-09-27 09:06+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: product_expiry_simple
 #: model_terms:ir.ui.view,arch_db:product_expiry_simple.view_stock_quant_form_editable
@@ -24,6 +25,8 @@ msgid ""
 "<span class=\"badge badge-danger\" attrs=\"{'invisible': [('expired', '=', "
 "False)]}\">Expired</span>"
 msgstr ""
+"<span class=\"badge badge-danger\" attrs=\"{'invisible': [('expired', '=', "
+"False)]}\">Scaduto</span>"
 
 #. module: product_expiry_simple
 #: model_terms:ir.ui.view,arch_db:product_expiry_simple.view_production_lot_form
@@ -31,6 +34,8 @@ msgid ""
 "<span class=\"badge text-bg-danger\" attrs=\"{'invisible': [('expired', '=', "
 "False)]}\">Expired</span>"
 msgstr ""
+"<span class=\"badge text-bg-danger\" attrs=\"{'invisible': [('expired', '=', "
+"False)]}\">Scaduto</span>"
 
 #. module: product_expiry_simple
 #: model:ir.model.fields,field_description:product_expiry_simple.field_stock_lot__expired
@@ -38,7 +43,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:product_expiry_simple.quant_search_view
 #: model_terms:ir.ui.view,arch_db:product_expiry_simple.search_product_lot_filter
 msgid "Expired"
-msgstr ""
+msgstr "Scaduto"
 
 #. module: product_expiry_simple
 #: model:ir.model.fields,field_description:product_expiry_simple.field_stock_lot__expiry_date
@@ -47,7 +52,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:product_expiry_simple.quant_search_view
 #: model_terms:ir.ui.view,arch_db:product_expiry_simple.search_product_lot_filter
 msgid "Expiry Date"
-msgstr ""
+msgstr "Data scadenza"
 
 #. module: product_expiry_simple
 #: model:ir.model,name:product_expiry_simple.model_stock_lot
@@ -58,17 +63,17 @@ msgstr "Lotto/Numero di serie"
 #: model_terms:ir.ui.view,arch_db:product_expiry_simple.quant_search_view
 #: model_terms:ir.ui.view,arch_db:product_expiry_simple.search_product_lot_filter
 msgid "Not Expired"
-msgstr ""
+msgstr "Non scaduto"
 
 #. module: product_expiry_simple
 #: model_terms:ir.ui.view,arch_db:product_expiry_simple.view_picking_form
 msgid "One or several products have <b>expired</b> lots"
-msgstr ""
+msgstr "Uno o più prodotti hanno lotti <b>scaduti</b>"
 
 #. module: product_expiry_simple
 #: model:ir.model,name:product_expiry_simple.model_product_template
 msgid "Product"
-msgstr ""
+msgstr "Prodotto"
 
 #. module: product_expiry_simple
 #. odoo-python
@@ -78,6 +83,8 @@ msgid ""
 "Product %(product)s doesn't use expiry dates, but an expiry date is set on "
 "lot %(lot)s."
 msgstr ""
+"Il prodotto %(product)s non utilizza date di scadenza, ma una data di "
+"scadenza è impostata sul lotto %(lot)s."
 
 #. module: product_expiry_simple
 #. odoo-python
@@ -87,33 +94,35 @@ msgid ""
 "Product %(product)s uses expiry dates, but expiry date is missing on lot "
 "%(lot)s."
 msgstr ""
+"Il prodotto %(product)s utilizza date di scadenza, ma la data di scadenza "
+"manca sul lotto %(lot)s."
 
 #. module: product_expiry_simple
 #: model:ir.model,name:product_expiry_simple.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
-msgstr ""
+msgstr "Movimenti prodotto (riga movimento magazzino)"
 
 #. module: product_expiry_simple
 #: model:ir.model,name:product_expiry_simple.model_stock_quant
 msgid "Quants"
-msgstr ""
+msgstr "Quanti"
 
 #. module: product_expiry_simple
 #: model:ir.model.fields,field_description:product_expiry_simple.field_stock_picking__show_expiry_warning
 msgid "Show Expiry Warning"
-msgstr ""
+msgstr "Visualizza avviso scadenza"
 
 #. module: product_expiry_simple
 #: model:ir.model,name:product_expiry_simple.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Trasferimento"
 
 #. module: product_expiry_simple
 #: model:ir.model.fields,field_description:product_expiry_simple.field_product_product__use_expiry_date
 #: model:ir.model.fields,field_description:product_expiry_simple.field_product_template__use_expiry_date
 #: model:ir.model.fields,field_description:product_expiry_simple.field_stock_lot__use_expiry_date
 msgid "Use Expiry Date"
-msgstr ""
+msgstr "Utilizza data scadenza"
 
 #. module: product_expiry_simple
 #. odoo-python
@@ -123,10 +132,12 @@ msgid ""
 "You cannot set 'Use Expiry Date' on product '%s' because it is not tracked "
 "by lot nor by serial number."
 msgstr ""
+"Non si può impostare 'Utilizza data scadenza' sul prodotto '%s' perché non è "
+"tracciato da lotto o numero di serie."
 
 #. module: product_expiry_simple
 #. odoo-python
 #: code:addons/product_expiry_simple/models/stock_lot.py:0
 #, python-format
 msgid "[%(date)s Expired] %(lot)s"
-msgstr ""
+msgstr "[Scaduto %(date)s] %(lot)s"
