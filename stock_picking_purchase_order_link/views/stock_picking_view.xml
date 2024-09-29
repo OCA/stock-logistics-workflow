@@ -15,7 +15,7 @@
                     string="Purchase Order"
                     type="object"
                     attrs="{'invisible': [('purchase_id', '=', False)]}"
-                    groups="stock.group_stock_user"
+                    groups="purchase.group_purchase_user"
                 >
                 </button>
             </xpath>
