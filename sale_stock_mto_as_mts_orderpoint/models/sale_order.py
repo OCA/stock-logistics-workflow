@@ -1,6 +1,7 @@
 # Copyright 2020 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
-from odoo import models
+from odoo import api, models
+from odoo.tools import groupby
 
 
 class SaleOrderLine(models.Model):
@@ -14,37 +15,31 @@ class SaleOrderLine(models.Model):
         self._run_orderpoints_for_mto_products()
         return res
 
+    @api.model
+    def _get_procurement_wiz_for_orderpoint_ids(self, context):
+        model = self.env["make.procurement.orderpoint"]
+        return model.with_context(**context).create({})
+
     def _run_orderpoints_for_mto_products(self):
-        orderpoints_to_procure_ids = []
-        mto_route = self.env.ref("stock.route_warehouse0_mto", raise_if_not_found=False)
-        if not mto_route:
-            return
-        for line in self:
-            delivery_moves = line.move_ids.filtered(
+        orderpoints_to_procure = self.env["stock.warehouse.orderpoint"]
+        lines_per_warehouse = groupby(
+            self, key=lambda l: l.warehouse_id or l.order_id.warehouse_id
+        )
+        for warehouse, line_list in lines_per_warehouse:
+            lines = self.browse([line.id for line in line_list])
+            delivery_moves = lines.move_ids.filtered(
                 lambda m: m.picking_id.picking_type_code == "outgoing"
                 and m.state not in ("done", "cancel")
             )
-            for delivery_move in delivery_moves:
-                if (
-                    not delivery_move.is_from_mto_route
-                    and mto_route not in delivery_move.product_id.route_ids
-                ):
-                    continue
-                if not delivery_move.warehouse_id.mto_as_mts:
-                    continue
-                orderpoint = line._get_mto_orderpoint(delivery_move.product_id)
-                if orderpoint.procure_recommended_qty:
-                    orderpoints_to_procure_ids.append(orderpoint.id)
-        wiz = (
-            self.env["make.procurement.orderpoint"]
-            .with_context(
-                **{
-                    "active_model": "stock.warehouse.orderpoint",
-                    "active_ids": orderpoints_to_procure_ids,
-                }
-            )
-            .create({})
-        )
+            if warehouse.mto_as_mts:
+                orderpoints_to_procure |= delivery_moves._get_mto_as_mts_orderpoints(
+                    warehouse
+                )
+        context = {
+            "active_model": "stock.warehouse.orderpoint",
+            "active_ids": orderpoints_to_procure.ids,
+        }
+        wiz = self._get_procurement_wiz_for_orderpoint_ids(context)
         wiz.make_procurement()
 
     def _get_mto_orderpoint(self, product_id):
