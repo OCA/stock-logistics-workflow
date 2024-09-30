@@ -11,6 +11,11 @@
                      field in sale order lines.
                  -->
                 <field name="route_id" groups="stock.group_adv_location" />
+                <field
+                    name="route_id"
+                    attrs="{'readonly': [('state', 'in', ('sale', 'done', 'cancel'))]}"
+                    groups="stock.group_adv_location"
+                />
             </field>
         </field>
     </record>
