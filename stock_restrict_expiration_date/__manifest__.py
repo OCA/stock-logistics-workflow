@@ -4,7 +4,7 @@
 {
     "name": "Stock Restrict Expiration date",
     "summary": "Add concept of restrict lot on stock move based on specific expiration date",
-    "version": "14.0.1.3.0",
+    "version": "14.0.1.3.1",
     "category": "Warehouse Management",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Akretion, Odoo Community Association (OCA)",

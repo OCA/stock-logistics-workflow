@@ -88,6 +88,7 @@ setuptools.setup(
         'odoo14-addon-stock_quant_package_dimension',
         'odoo14-addon-stock_quant_package_dimension_total_weight_from_packaging',
         'odoo14-addon-stock_quant_package_product_packaging',
+        'odoo14-addon-stock_restrict_expiration_date',
         'odoo14-addon-stock_restrict_lot',
         'odoo14-addon-stock_restrict_lot_update',
         'odoo14-addon-stock_return_request',
