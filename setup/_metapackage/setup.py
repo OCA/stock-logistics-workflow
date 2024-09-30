@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo-addon-delivery_procurement_group_carrier>=16.0dev,<16.1dev',
         'odoo-addon-delivery_total_weight_from_packaging>=16.0dev,<16.1dev',
+        'odoo-addon-procurement_auto_create_group_carrier>=16.0dev,<16.1dev',
         'odoo-addon-product_expiry_simple>=16.0dev,<16.1dev',
         'odoo-addon-purchase_stock_picking_invoice_link>=16.0dev,<16.1dev',
         'odoo-addon-sale_line_returned_qty>=16.0dev,<16.1dev',
