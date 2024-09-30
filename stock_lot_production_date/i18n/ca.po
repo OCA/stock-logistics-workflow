@@ -1,0 +1,36 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_lot_production_date
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2023-11-23 12:25+0000\n"
+"Last-Translator: Eugeni Chafer <eugeni@chafer.cat>\n"
+"Language-Team: none\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: stock_lot_production_date
+#: model:ir.model,name:stock_lot_production_date.model_stock_lot
+msgid "Lot/Serial"
+msgstr "Lot/Núm.Serie"
+
+#. module: stock_lot_production_date
+#: model:ir.model.fields,field_description:stock_lot_production_date.field_stock_lot__production_date
+msgid "Production Date"
+msgstr "Data de producció"
+
+#. module: stock_lot_production_date
+#: model:ir.model.fields,help:stock_lot_production_date.field_stock_lot__production_date
+msgid ""
+"This is the date when the goods with this lot/serial number have been "
+"produced."
+msgstr ""
+"Aquesta és la data en la qual es van produir els productes amb aquest lot/"
+"número de sèrie."

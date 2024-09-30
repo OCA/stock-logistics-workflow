@@ -1,0 +1,2 @@
+- Sébastien Alix \<<sebastien.alix@camptocamp.com>\>
+- SodexisTeam \<<dev@sodexis.com>\>
