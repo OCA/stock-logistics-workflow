@@ -67,11 +67,6 @@ msgid "Incoming Valuation Usage"
 msgstr "Utilización de la Valoración Recibida"
 
 #. module: stock_valuation_layer_usage
-#: model:ir.model.fields,field_description:stock_valuation_layer_usage.field_stock_valuation_layer_usage____last_update
-msgid "Last Modified on"
-msgstr "Última Modificación el"
-
-#. module: stock_valuation_layer_usage
 #: model:ir.model.fields,field_description:stock_valuation_layer_usage.field_stock_valuation_layer_usage__write_uid
 msgid "Last Updated by"
 msgstr "Última Actualización por"
@@ -200,3 +195,6 @@ msgstr "Valoración"
 #, python-format
 msgid "You can't user same layer as origin and destination"
 msgstr "No se puede utilizar el mismo nivel como origen y destino"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Última Modificación el"
