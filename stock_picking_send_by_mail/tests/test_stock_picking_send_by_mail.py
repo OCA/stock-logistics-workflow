@@ -2,15 +2,13 @@
 # Copyright 2024 Tecnativa Carolina Fernandez
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests import common
+from odoo.tests.common import TransactionCase, tagged
 
 
-class TestStockPickingSendByMail(common.TransactionCase):
-    @classmethod
-    def setUpClass(cls):
-        super(TestStockPickingSendByMail, cls).setUpClass()
-        # Remove this variable in v16 and put instead:
-        # from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+@tagged("post_install", "-at_install")
+class TestStockPickingSendByMail(TransactionCase):
+    def setUp(self):
+        super().setUp()
         DISABLED_MAIL_CONTEXT = {
             "tracking_disable": True,
             "mail_create_nolog": True,
@@ -18,25 +16,25 @@ class TestStockPickingSendByMail(common.TransactionCase):
             "mail_notrack": True,
             "no_reset_password": True,
         }
-        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
-        cls.product = cls.env["product.product"].create({"name": "Test product"})
-        cls.location_id = cls.env.ref("stock.stock_location_stock")
-        cls.location_destination_id = cls.env.ref("stock.stock_location_customers")
-        cls.picking_type = cls.env.ref("stock.picking_type_out")
-        cls.picking = cls.env["stock.picking"].create(
+        self.env = self.env(context=dict(self.env.context, **DISABLED_MAIL_CONTEXT))
+        self.product = self.env["product.product"].create({"name": "Test product"})
+        self.location_id = self.env.ref("stock.stock_location_stock")
+        self.location_destination_id = self.env.ref("stock.stock_location_customers")
+        self.picking_type = self.env.ref("stock.picking_type_out")
+        self.picking = self.env["stock.picking"].create(
             {
-                "picking_type_id": cls.picking_type.id,
-                "location_id": cls.location_id.id,
-                "location_dest_id": cls.location_destination_id.id,
+                "picking_type_id": self.picking_type.id,
+                "location_id": self.location_id.id,
+                "location_dest_id": self.location_destination_id.id,
                 "move_line_ids": [
                     (
                         0,
                         0,
                         {
-                            "product_id": cls.product.id,
-                            "product_uom_id": cls.product.uom_id.id,
-                            "location_id": cls.location_id.id,
-                            "location_dest_id": cls.location_destination_id.id,
+                            "product_id": self.product.id,
+                            "product_uom_id": self.product.uom_id.id,
+                            "location_id": self.location_id.id,
+                            "location_dest_id": self.location_destination_id.id,
                         },
                     )
                 ],
