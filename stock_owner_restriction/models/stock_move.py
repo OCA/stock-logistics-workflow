@@ -16,7 +16,8 @@ class StockMove(models.Model):
         those moves.
         """
         return self.filtered(
-            lambda m: m.picking_type_id.owner_restriction == "standard_behavior"
+            lambda m: not m.picking_type_id
+            or m.picking_type_id.owner_restriction == "standard_behavior"
         )
 
     def _get_owner_for_assign(self):
