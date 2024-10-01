@@ -4,7 +4,7 @@
 {
     "name": "Stock Owner Restriction",
     "summary": "Do not reserve quantity with assigned owner",
-    "version": "16.0.1.1.0",
+    "version": "16.0.1.1.1",
     "development_status": "Beta",
     "category": "stock",
     "website": "https://github.com/OCA/stock-logistics-workflow",
