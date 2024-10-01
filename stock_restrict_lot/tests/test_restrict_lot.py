@@ -376,7 +376,9 @@ class TestRestrictLot(TransactionCase):
     def test_restrict_lot_no_propagation_error(self):
         move, new_lot = self._create_move_with_lot()
         orig_move = move.move_orig_ids
-        orig_move.state = "done"
+        orig_move._action_assign()
+        orig_move.quantity_done = orig_move.product_uom_qty
+        orig_move._action_done()
         self.assertEqual(orig_move.state, "done")
         with self.assertRaises(ValidationError) as m:
             move.restrict_lot_id = new_lot.id
