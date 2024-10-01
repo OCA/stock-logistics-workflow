@@ -1,0 +1,37 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_move_line_reserved_quant
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-01-30 13:35+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
+"Language-Team: none\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: stock_move_line_reserved_quant
+#: model:ir.model,name:stock_move_line_reserved_quant.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Movimientos de Producto (Línea de Movimiento de Existencias)"
+
+#. module: stock_move_line_reserved_quant
+#: model:ir.model.fields,field_description:stock_move_line_reserved_quant.field_stock_move_line__reserved_quant_id
+msgid "Reserved Quant"
+msgstr "Cantid Reservada"
+
+#. module: stock_move_line_reserved_quant
+#: model:ir.model,name:stock_move_line_reserved_quant.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento de Existencias"
+
+#. module: stock_move_line_reserved_quant
+#: model:ir.model.fields,help:stock_move_line_reserved_quant.field_stock_move_line__reserved_quant_id
+msgid "This is the quant reserved by this stock movement"
+msgstr "Esta es la cantidad reservada por este movimiento de existencias"
