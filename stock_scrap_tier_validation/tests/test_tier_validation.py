@@ -64,3 +64,9 @@ class TestStockScrapTierValidation(common.TransactionCase):
         scrap.with_user(self.test_user_1).validate_tier()
         scrap.action_validate()
         self.assertEqual(scrap.state, "done")
+
+    def test_stock_picking_scrap(self):
+        """Scrapping from picking does not open in a popup"""
+        picking = self.env["stock.picking"].search([], limit=1)
+        action = picking.button_scrap()
+        self.assertFalse(action.get("target"))
