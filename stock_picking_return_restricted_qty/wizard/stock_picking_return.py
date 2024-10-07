@@ -22,6 +22,7 @@ class ReturnPicking(models.TransientModel):
         )
         for return_line in self.product_return_moves:
             quantity = return_line.get_returned_restricted_quantity(return_line.move_id)
+
             if (
                 float_compare(
                     return_line.quantity, quantity, precision_digits=precision
@@ -40,6 +41,7 @@ class ReturnPickingLine(models.TransientModel):
     @api.onchange("quantity")
     def _onchange_quantity(self):
         qty = self.get_returned_restricted_quantity(self.move_id)
+
         if self.quantity > qty:
             raise UserError(_("Return more quantities than delivered is not allowed."))
 
@@ -55,7 +57,7 @@ class ReturnPickingLine(models.TransientModel):
             ):
                 continue
             if line.state in {"partially_available", "assigned"}:
-                qty -= line.product_qty
+                qty -= line.reserved_qty
             elif line.state == "done":
                 qty -= line.qty_done
         return max(qty, 0.0)
