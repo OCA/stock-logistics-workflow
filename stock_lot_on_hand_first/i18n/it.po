@@ -24,7 +24,7 @@ msgid "Display Lots On Hand First"
 msgstr "Visualizza i lotti disponibili per primi"
 
 #. module: stock_lot_on_hand_first
-#: model:ir.model,name:stock_lot_on_hand_first.model_stock_production_lot
+#: model:ir.model,name:stock_lot_on_hand_first.model_stock_lot
 msgid "Lot/Serial"
 msgstr "Lotto/seriale"
 
