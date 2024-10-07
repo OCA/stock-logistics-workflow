@@ -9,4 +9,7 @@
     "author": "Tecnativa," "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": ["stock"],
+    "data": [
+        "views/stock_picking_type_views.xml",
+    ],
 }

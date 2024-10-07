@@ -17,6 +17,22 @@ msgstr ""
 "X-Generator: Weblate 4.17\n"
 
 #. module: stock_picking_return_restricted_qty
+#: model:ir.model.fields,help:stock_picking_return_restricted_qty.field_stock_picking_type__restrict_return_qty
+msgid ""
+"Enable this option to restrict returning more quantities than delivered."
+msgstr ""
+
+#. module: stock_picking_return_restricted_qty
+#: model:ir.model,name:stock_picking_return_restricted_qty.model_stock_picking_type
+msgid "Picking Type"
+msgstr ""
+
+#. module: stock_picking_return_restricted_qty
+#: model:ir.model.fields,field_description:stock_picking_return_restricted_qty.field_stock_picking_type__restrict_return_qty
+msgid "Restrict Return Quantity"
+msgstr ""
+
+#. module: stock_picking_return_restricted_qty
 #: model:ir.model,name:stock_picking_return_restricted_qty.model_stock_return_picking
 msgid "Return Picking"
 msgstr "Prelievo di reso"
@@ -27,7 +43,7 @@ msgid "Return Picking Line"
 msgstr "Riga prelievo di reso"
 
 #. module: stock_picking_return_restricted_qty
-#: code:addons/stock_picking_return_restricted_qty/wizard/stock_picking_return.py:0
+#. odoo-python
 #: code:addons/stock_picking_return_restricted_qty/wizard/stock_picking_return.py:0
 #, python-format
 msgid "Return more quantities than delivered is not allowed."
