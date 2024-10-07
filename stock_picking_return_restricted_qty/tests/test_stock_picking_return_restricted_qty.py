@@ -32,7 +32,7 @@ class StockPickingReturnRestrictedQtyTest(common.TransactionCase):
                 "picking_type_id": picking_type_out.id,
                 "location_id": stock_location.id,
                 "location_dest_id": customer_location.id,
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
@@ -50,7 +50,7 @@ class StockPickingReturnRestrictedQtyTest(common.TransactionCase):
         )
         cls.picking.action_confirm()
         cls.picking.action_assign()
-        cls.picking.move_lines[:1].quantity_done = 20
+        cls.picking.move_ids[:1].quantity_done = 20
         cls.picking.button_validate()
 
     def get_return_picking_wizard(self, picking):
