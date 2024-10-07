@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2024 Foodles (https://www.foodles.co/).
+    @author Alexandre Galdeano <alexandre.galdeano@foodles.co>
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+-->
+<odoo>
+    <!-- Lead Times by Day Values -->
+    <record id="lead_times_by_day_value_1" model="lead_times_by_day.value">
+        <field name="value">1</field>
+    </record>
+    <record id="lead_times_by_day_value_2" model="lead_times_by_day.value">
+        <field name="value">2</field>
+    </record>
+    <record id="lead_times_by_day_value_3" model="lead_times_by_day.value">
+        <field name="value">3</field>
+    </record>
+    <record id="lead_times_by_day_value_4" model="lead_times_by_day.value">
+        <field name="value">4</field>
+    </record>
+    <record id="lead_times_by_day_value_5" model="lead_times_by_day.value">
+        <field name="value">5</field>
+    </record>
+    <record id="lead_times_by_day_value_6" model="lead_times_by_day.value">
+        <field name="value">6</field>
+    </record>
+    <record id="lead_times_by_day_value_7" model="lead_times_by_day.value">
+        <field name="value">7</field>
+    </record>
+    <record id="lead_times_by_day_value_8" model="lead_times_by_day.value">
+        <field name="value">8</field>
+    </record>
+    <record id="lead_times_by_day_value_9" model="lead_times_by_day.value">
+        <field name="value">9</field>
+    </record>
+    <record id="lead_times_by_day_value_10" model="lead_times_by_day.value">
+        <field name="value">10</field>
+    </record>
+    <record id="lead_times_by_day_value_11" model="lead_times_by_day.value">
+        <field name="value">11</field>
+    </record>
+    <record id="lead_times_by_day_value_12" model="lead_times_by_day.value">
+        <field name="value">12</field>
+    </record>
+    <record id="lead_times_by_day_value_13" model="lead_times_by_day.value">
+        <field name="value">13</field>
+    </record>
+    <record id="lead_times_by_day_value_14" model="lead_times_by_day.value">
+        <field name="value">14</field>
+    </record>
+    <record id="lead_times_by_day_value_15" model="lead_times_by_day.value">
+        <field name="value">15</field>
+    </record>
+    <record id="lead_times_by_day_value_16" model="lead_times_by_day.value">
+        <field name="value">16</field>
+    </record>
+
+    <!-- Lead Times by Day -->
+    <record id="lead_times_by_day_monday_kurry_fried_chicken" model="lead_times_by_day">
+        <!-- Monday -->
+        <field name="weekday">0</field>
+        <!-- Thursday in W+1 -->
+        <field name="value_ids" eval="[(6, 0, [ref('lead_times_by_day_value_10')])]" />
+    </record>
+    <record
+        id="lead_times_by_day_wednesday_kurry_fried_chicken"
+        model="lead_times_by_day"
+    >
+        <!-- Wednesday -->
+        <field name="weekday">2</field>
+        <!-- Monday in W+2 -->
+        <field name="value_ids" eval="[(6, 0, [ref('lead_times_by_day_value_12')])]" />
+    </record>
+</odoo>

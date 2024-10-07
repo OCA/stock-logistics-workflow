@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2024 Foodles (https://www.foodles.co/).
+    @author Damien Crier <damien.crier@foodles.co>
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+-->
+<odoo noupdate="1">
+    <record id="weekday_monday" model="weekdays">
+        <field name="name">Monday</field>
+        <field name="weekday">0</field>
+    </record>
+    <record id="weekday_tuesday" model="weekdays">
+        <field name="name">Tuesday</field>
+        <field name="weekday">1</field>
+    </record>
+    <record id="weekday_wednesday" model="weekdays">
+        <field name="name">Wednesday</field>
+        <field name="weekday">2</field>
+    </record>
+    <record id="weekday_thursday" model="weekdays">
+        <field name="name">Thursday</field>
+        <field name="weekday">3</field>
+    </record>
+    <record id="weekday_friday" model="weekdays">
+        <field name="name">Friday</field>
+        <field name="weekday">4</field>
+    </record>
+    <record id="weekday_saturday" model="weekdays">
+        <field name="name">Saturday</field>
+        <field name="weekday">5</field>
+    </record>
+    <record id="weekday_sunday" model="weekdays">
+        <field name="name">Sunday</field>
+        <field name="weekday">6</field>
+    </record>
+</odoo>

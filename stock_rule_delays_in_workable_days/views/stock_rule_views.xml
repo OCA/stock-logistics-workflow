@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2024 Foodles (https://www.foodles.co/).
+    @author Alexandre Galdeano <alexandre.galdeano@foodles.co>
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+-->
+<odoo>
+    <record id="view_stock_rule_form" model="ir.ui.view">
+        <field name="name">stock.rule.form</field>
+        <field name="model">stock.rule</field>
+        <field name="inherit_id" ref="stock.view_stock_rule_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='delay']/parent::div" position="after">
+                <field name="is_delay_in_workable_days" />
+            </xpath>
+            <xpath expr="//sheet" position="inside">
+                <notebook>
+                    <page
+                        name="lead_times_by_day_ids"
+                        string="Lead Times By Day"
+                        attrs="{'invisible':[('action','!=','buy')]}"
+                    >
+                        <field name="lead_times_by_day_ids">
+                            <tree string="Lead times by day" editable="bottom">
+                                <field name="weekday" />
+                                <field name="value_ids" widget="many2many_tags" />
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+</odoo>
