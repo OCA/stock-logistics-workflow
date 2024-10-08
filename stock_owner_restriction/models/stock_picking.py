@@ -8,3 +8,11 @@ class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     owner_restriction = fields.Selection(related="picking_type_id.owner_restriction")
+
+    def write(self, vals):
+        if "owner_id" in vals:
+            for pick in self:
+                owner_restriction = pick.picking_type_id.owner_restriction
+                if owner_restriction in ("unassigned_owner", "picking_partner"):
+                    pick.move_line_ids.unlink()
+        return super().write(vals)
