@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+
+            <button name="do_print_picking" position="before">
+                <button
+                    string="Kit Unit Picking"
+                    name="%(stock_picking_kit_by_unit.action_stock_picking_kit_wizard)s"
+                    states="draft,confirmed,waiting,assigned"
+                    groups="stock.group_stock_user"
+                    type="action"
+                />
+            </button>
+
+        </field>
+    </record>
+
+</odoo>
