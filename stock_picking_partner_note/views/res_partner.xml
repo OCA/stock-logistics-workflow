@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//page[@name='internal_notes']//field[@name='comment']"
+                position="after"
+            >
+                <group string="Picking Notes">
+                    <field
+                        name="stock_picking_note_ids"
+                        widget="one2many_list"
+                        nolabel="1"
+                        colspan="2"
+                        mode="tree"
+                    >
+                        <tree>
+                            <field name="name" />
+                            <field name="note_type_id" />
+                        </tree>
+                    </field>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

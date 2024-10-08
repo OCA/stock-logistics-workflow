@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_stock_picking_note_form" model="ir.ui.view">
+        <field name="name">stock.picking.note.form</field>
+        <field name="model">stock.picking.note</field>
+        <field name="arch" type="xml">
+            <form string="Picking Note">
+                <group>
+                    <field name="name" />
+                    <field name="note_type_id" />
+                    <field name="active" readonly="1" />
+                </group>
+            </form>
+        </field>
+    </record>
+</odoo>

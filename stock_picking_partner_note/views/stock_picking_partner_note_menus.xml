@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem
+        id="stock_picking_notes_root"
+        name="Picking Notes"
+        parent="stock.menu_stock_config_settings"
+        sequence="10"
+        groups="stock.group_stock_manager"
+    />
+    <menuitem
+        id="stock_picking_note_types_menu"
+        action="stock_picking_note_types_act_window"
+        name="Note Types"
+        parent="stock_picking_notes_root"
+        sequence="10"
+    />
+</odoo>
