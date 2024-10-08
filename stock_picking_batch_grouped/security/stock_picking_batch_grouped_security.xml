@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  ~ Copyright 2023 Simone Rubino - Aion Tech
+  ~ License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+  -->
+<odoo noupdate="0">
+    <record id="stock_picking_batch_multicompany_rule" model="ir.rule">
+        <field name="name">Multi Company for Line of a Batch Transfer</field>
+        <field name="model_id" ref="model_stock_picking_batch_line" />
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>
