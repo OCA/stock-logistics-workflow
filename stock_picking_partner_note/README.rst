@@ -74,6 +74,9 @@ Contributors
 
 -  Telmo Santos <telmo.santos@camptocamp.com>
 -  Jacques-Etienne Baudoux <je@bcim.be>
+-  `360ERP <https://www.360erp.com>`__:
+
+   -  Andrea Stirpe
 
 Maintainers
 -----------
