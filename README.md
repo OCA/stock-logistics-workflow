@@ -36,6 +36,7 @@ addon | version | maintainers | summary
 [stock_picking_origin_reference](stock_picking_origin_reference/) | 17.0.1.0.0 |  | Add clickable button to the Transfer Source Document.
 [stock_picking_purchase_order_link](stock_picking_purchase_order_link/) | 17.0.1.0.0 |  | Link between picking and purchase order
 [stock_picking_sale_order_link](stock_picking_sale_order_link/) | 17.0.1.0.0 |  | Link between picking and sale order
+[stock_picking_send_by_mail](stock_picking_send_by_mail/) | 17.0.1.0.0 |  | Send stock picking by email
 [stock_picking_show_backorder](stock_picking_show_backorder/) | 17.0.1.0.0 |  | Provides a new field on stock pickings, allowing to display the corresponding backorders.
 [stock_picking_show_return](stock_picking_show_return/) | 17.0.1.0.1 |  | Show returns on stock pickings
 [stock_picking_warn_message](stock_picking_warn_message/) | 17.0.1.0.0 |  | Add a popup warning on picking to ensure warning is populated
