@@ -1,0 +1,47 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_move_propagate_first_move
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2023-11-17 11:36+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: stock_move_propagate_first_move
+#: model:ir.model.fields,field_description:stock_move_propagate_first_move.field_stock_move__first_move_id
+msgid "First Move"
+msgstr "Primo movimento"
+
+#. module: stock_move_propagate_first_move
+#: model:ir.model.fields,field_description:stock_move_propagate_first_move.field_stock_move__first_picking_type_id
+msgid "Original Operation Type"
+msgstr "Tipo oprazione origine"
+
+#. module: stock_move_propagate_first_move
+#: model:ir.model.fields,help:stock_move_propagate_first_move.field_stock_move__first_picking_type_id
+msgid "Picking type of the original move which generated this one."
+msgstr "Tipo prelievo del movimento origine che ha generato questo."
+
+#. module: stock_move_propagate_first_move
+#: model:ir.model,name:stock_move_propagate_first_move.model_stock_move
+msgid "Stock Move"
+msgstr "Movimento di magazzino"
+
+#. module: stock_move_propagate_first_move
+#: model:ir.model,name:stock_move_propagate_first_move.model_stock_rule
+msgid "Stock Rule"
+msgstr "Regola di giacenza"
+
+#. module: stock_move_propagate_first_move
+#: model:ir.model.fields,help:stock_move_propagate_first_move.field_stock_move__first_move_id
+msgid "The original move which generated this one."
+msgstr "Il movimento origine che ha generato questo."
