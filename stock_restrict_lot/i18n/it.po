@@ -67,3 +67,12 @@ msgstr ""
 #: model:ir.model,name:stock_restrict_lot.model_stock_picking
 msgid "Transfer"
 msgstr "Trasferimento"
+
+#. module: stock_restrict_lot
+#. odoo-python
+#: code:addons/stock_restrict_lot/models/stock_move.py:0
+#, python-format
+msgid ""
+"You can't modify the Lot/Serial number because at least one move in the "
+"chain has already been done with another Lot/Serial number."
+msgstr ""
