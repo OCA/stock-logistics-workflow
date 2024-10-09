@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="stock_picking_type_form_view">
+        <field
+            name="name"
+        >stock.picking.type.form (in stock_picking_putaway_recompute)</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form" />
+        <field name="arch" type="xml">
+            <group name="locations" position="inside">
+                <field name="allow_to_recompute_putaways" />
+            </group>
+        </field>
+    </record>
+
+</odoo>
