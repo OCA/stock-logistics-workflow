@@ -24,6 +24,7 @@ addon | version | maintainers | summary
 [product_cost_price_avco_sync](product_cost_price_avco_sync/) | 12.0.1.0.3 | [![carlosdauden](https://github.com/carlosdauden.png?size=30px)](https://github.com/carlosdauden) [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Set product cost price from updated moves
 [product_supplierinfo_for_customer_picking](product_supplierinfo_for_customer_picking/) | 12.0.1.0.0 |  | This module makes the product customer code visible in the stock moves of a picking.
 [product_supplierinfo_picking](product_supplierinfo_picking/) | 12.0.1.0.0 |  | This module makes the product supplier code visible in the stock moves of a picking.
+[product_weighable_default_weight](product_weighable_default_weight/) | 12.0.1.0.0 | [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) | Set default weight on weighable product, the weight is guessed from the ratio of the unit of mesure
 [purchase_stock_picking_restrict_cancel](purchase_stock_picking_restrict_cancel/) | 12.0.1.0.0 |  | Restrict cancellation with Purchase.
 [sale_order_global_stock_route](sale_order_global_stock_route/) | 12.0.1.0.2 |  | Add the possibility to choose one warehouse path for an order
 [stock_change_price_at_date](stock_change_price_at_date/) | 12.0.1.0.0 |  | This module allows to fill in a date in the standard wizard that changes product price. That helps accountant to add some product past values
