@@ -14,7 +14,6 @@
                     attrs="{'readonly': [('is_priority_editable', '=', False)]}"
                     decoration-info="priority == '0'"
                     decoration-warning="priority == '1'"
-                    widget="selection_badge"
                     groups="stock_move_manage_priority.group_stock_move_priority_manager"
                 />
             </field>
@@ -32,7 +31,6 @@
                     attrs="{'readonly': [('is_priority_editable', '=', False)]}"
                     decoration-info="priority == '0'"
                     decoration-warning="priority == '1'"
-                    widget="selection_badge"
                     optional="show"
                     groups="stock_move_manage_priority.group_stock_move_priority_manager"
                 />
