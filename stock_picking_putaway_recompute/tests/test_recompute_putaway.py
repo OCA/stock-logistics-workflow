@@ -294,3 +294,32 @@ class TestRecomputePutaway(BaseCommon):
         self.assertEqual(
             self.sub_location_1, self.picking.move_line_ids.location_dest_id
         )
+
+    def test_no_recompute_putaway(self):
+        """
+        Create a single picking from Suppliers -> Stock
+        The created operation point to the Sub location 1
+        Deactivate the option on picking type level
+        Change the rule to point to Sub location 2
+        Launch the action to recompute putaways
+        The operation still points to the Sub location 1
+        """
+        self._create_picking()
+        self.picking.action_confirm()
+
+        self.assertTrue(self.picking.move_line_ids)
+        self.assertEqual(
+            self.sub_location_1, self.picking.move_line_ids.location_dest_id
+        )
+
+        # Simulate the package is already set
+        self.type_in.allow_to_recompute_putaways = False
+
+        # Change the rule destination
+        self.rule.location_out_id = self.sub_location_2
+
+        self.picking.action_recompute_putaways()
+
+        self.assertEqual(
+            self.sub_location_1, self.picking.move_line_ids.location_dest_id
+        )
