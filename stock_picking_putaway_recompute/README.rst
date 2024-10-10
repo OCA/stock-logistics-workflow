@@ -64,7 +64,8 @@ Usage
 -  If a putaway rule has been changed after product reservation, click
    on the button 'Recompute putaways'. This will recompute the
    destination locations on all detailed operations that have no done
-   quantity yet.
+   quantity yet and no result package (as all operations for the same
+   package should go to the same destination).
 -  Moreover, the action is available on picking level and on detailed
    operation one too.
 
