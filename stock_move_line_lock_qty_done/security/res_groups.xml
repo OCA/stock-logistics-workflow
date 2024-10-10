@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record id="group_stock_move_can_edit_done_qty" model="res.groups">
+        <field name="name">Can edit done quantity for done stock moves</field>
+        <field name="category_id" ref="base.module_category_inventory_inventory" />
+    </record>
+</odoo>
