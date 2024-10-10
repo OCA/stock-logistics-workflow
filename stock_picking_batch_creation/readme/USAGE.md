@@ -65,3 +65,12 @@ will prevent to consume at least one bin for each picking if pickings
 are for the same partner. When activated, the computation of the number
 of bins consumed by the picking into the batch will take into account
 the volume of the pickings for the same partners already.
+
+#### Splitting picking if needed
+
+You can also activate the option *Split picking exceeding the limits* on the
+wizard. This will allow, when the system is not able to find a picking that
+fits the criteria to create the batch, to lower the criteria by removing those
+based on the volume, weight and number of lines. If a picking is found and
+you allow to split it, the system will try to split the picking so that the
+limits are respected.

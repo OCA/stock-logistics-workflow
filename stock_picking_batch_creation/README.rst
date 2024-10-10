@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ============================
 Stock Picking Batch Creation
 ============================
@@ -17,7 +13,7 @@ Stock Picking Batch Creation
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
@@ -147,6 +143,16 @@ will prevent to consume at least one bin for each picking if pickings
 are for the same partner. When activated, the computation of the number
 of bins consumed by the picking into the batch will take into account
 the volume of the pickings for the same partners already.
+
+Splitting picking if needed
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You can also activate the option *Split picking exceeding the limits* on
+the wizard. This will allow, when the system is not able to find a
+picking that fits the criteria to create the batch, to lower the
+criteria by removing those based on the volume, weight and number of
+lines. If a picking is found and you allow to split it, the system will
+try to split the picking so that the limits are respected.
 
 Bug Tracker
 ===========
