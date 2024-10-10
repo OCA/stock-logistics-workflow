@@ -1,6 +1,6 @@
 # Copyright 2024 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo.fields import Command
+from odoo.fields import Command, first
 
 from odoo.addons.base.tests.common import BaseCommon
 
@@ -14,9 +14,16 @@ class TestRecomputePutaway(BaseCommon):
         cls.suppliers = cls.env.ref("stock.stock_location_suppliers")
         cls.stock = cls.env.ref("stock.stock_location_stock")
         cls.type_in = cls.env.ref("stock.picking_type_in")
+        cls.type_in.allow_to_recompute_putaways = True
         cls.product = cls.env["product.product"].create(
             {
                 "name": "Test product",
+                "type": "product",
+            }
+        )
+        cls.product_2 = cls.env["product.product"].create(
+            {
+                "name": "Test product 2",
                 "type": "product",
             }
         )
@@ -43,6 +50,16 @@ class TestRecomputePutaway(BaseCommon):
                 "location_out_id": cls.sub_location_1.id,
             }
         )
+        # Create the same rule for product 2
+        cls.rule_2 = cls.rule_obj.create(
+            {
+                "product_id": cls.product_2.id,
+                "location_in_id": cls.stock.id,
+                "location_out_id": cls.sub_location_1.id,
+            }
+        )
+
+        cls.package = cls.env["stock.quant.package"].create({})
 
     def _create_picking(self):
         self.picking = self.env["stock.picking"].create(
@@ -60,7 +77,17 @@ class TestRecomputePutaway(BaseCommon):
                             "product_uom": self.product.uom_id.id,
                             "product_uom_qty": 10.0,
                         }
-                    )
+                    ),
+                    Command.create(
+                        {
+                            "location_id": self.suppliers.id,
+                            "location_dest_id": self.stock.id,
+                            "name": self.product.name,
+                            "product_id": self.product_2.id,
+                            "product_uom": self.product.uom_id.id,
+                            "product_uom_qty": 10.0,
+                        }
+                    ),
                 ],
             }
         )
@@ -88,7 +115,7 @@ class TestRecomputePutaway(BaseCommon):
         self.picking.action_recompute_putaways()
 
         self.assertEqual(
-            self.sub_location_2, self.picking.move_line_ids.location_dest_id
+            self.sub_location_2, first(self.picking.move_line_ids).location_dest_id
         )
 
     def test_recompute_putaway_line(self):
@@ -113,7 +140,7 @@ class TestRecomputePutaway(BaseCommon):
         self.picking.move_line_ids.action_recompute_putaways()
 
         self.assertEqual(
-            self.sub_location_2, self.picking.move_line_ids.location_dest_id
+            self.sub_location_2, first(self.picking.move_line_ids).location_dest_id
         )
 
     def test_recompute_putaway_qty_done(self):
@@ -202,16 +229,68 @@ class TestRecomputePutaway(BaseCommon):
         picking1 = self._create_picking()
         self.picking.action_confirm()
 
-        self.assertTrue(self.picking.move_line_ids.can_recompute_putaways)
+        self.assertEqual(
+            [True, True], self.picking.move_line_ids.mapped("can_recompute_putaways")
+        )
 
         picking2 = self._create_picking()
         self.picking.action_confirm()
-        move_lines = (picking1 | picking2).move_line_ids
-        self.assertEqual([True, True], move_lines.mapped("can_recompute_putaways"))
+        move_lines_picking1 = picking1.move_line_ids
+        self.assertEqual(
+            [True, True], move_lines_picking1.mapped("can_recompute_putaways")
+        )
+
+        move_lines_picking2 = picking2.move_line_ids
+        self.assertEqual(
+            [True, True], move_lines_picking2.mapped("can_recompute_putaways")
+        )
 
         picking1.printed = True
-        self.assertEqual([False, True], move_lines.mapped("can_recompute_putaways"))
+        move_lines_picking1 = picking1.move_line_ids
+        self.assertEqual(
+            [False, False], move_lines_picking1.mapped("can_recompute_putaways")
+        )
+        move_lines_picking2 = picking2.move_line_ids
+        self.assertEqual(
+            [True, True], move_lines_picking2.mapped("can_recompute_putaways")
+        )
 
         picking1.printed = False
         picking2.move_line_ids.qty_done = 10.0
-        self.assertEqual([True, False], move_lines.mapped("can_recompute_putaways"))
+        move_lines_picking1 = picking1.move_line_ids
+        self.assertEqual(
+            [True, True], move_lines_picking1.mapped("can_recompute_putaways")
+        )
+        move_lines_picking2 = picking2.move_line_ids
+        self.assertEqual(
+            [False, False], move_lines_picking2.mapped("can_recompute_putaways")
+        )
+
+    def test_recompute_putaway_packaging(self):
+        """
+        Create a single picking from Suppliers -> Stock
+        The created operation point to the Sub location 1
+        Simulate a package presence on operations
+        Change the rule to point to Sub location 2
+        Launch the action to recompute putaways
+        The operation still points to the Sub location 1
+        """
+        self._create_picking()
+        self.picking.action_confirm()
+
+        self.assertTrue(self.picking.move_line_ids)
+        self.assertEqual(
+            self.sub_location_1, self.picking.move_line_ids.location_dest_id
+        )
+
+        # Simulate the package is already set
+        self.picking.move_line_ids.result_package_id = self.package
+
+        # Change the rule destination
+        self.rule.location_out_id = self.sub_location_2
+
+        self.picking.action_recompute_putaways()
+
+        self.assertEqual(
+            self.sub_location_1, self.picking.move_line_ids.location_dest_id
+        )

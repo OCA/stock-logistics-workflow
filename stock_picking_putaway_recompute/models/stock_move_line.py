@@ -34,6 +34,7 @@ class StockMoveLine(models.Model):
         return self.filtered(
             lambda line: line.picking_type_id.allow_to_recompute_putaways
             and not line.picking_id.printed
+            and not line.result_package_id
             and not line.qty_done
         )
 
