@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Akretion
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="stock_package_type_form_view">
+        <field name="name">stock.package.type.form</field>
+        <field name="model">stock.package.type</field>
+        <field name="inherit_id" ref="stock.stock_package_type_form" />
+        <field name="arch" type="xml">
+            <field name="barcode" position="after">
+                <label for="volume_uom_name" string="Volume" />
+                <div class="o_row" name="volume">
+                    <field name="volume" />
+                    <span><field name="volume_uom_name" /></span>
+                </div>
+            </field>
+        </field>
+    </record>
+
+</odoo>

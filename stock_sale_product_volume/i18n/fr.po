@@ -1,0 +1,41 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_sale_product_volume
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-09-05 11:54+0000\n"
+"PO-Revision-Date: 2024-09-05 11:54+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_sale_product_volume
+#: model:ir.model,name:stock_sale_product_volume.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: stock_sale_product_volume
+#: model:ir.model,name:stock_sale_product_volume.model_stock_package_type
+msgid "Stock package type"
+msgstr ""
+
+#. module: stock_sale_product_volume
+#: model:ir.model.fields,field_description:stock_sale_product_volume.field_stock_package_type__volume_mm3
+msgid "Volume Mm3"
+msgstr "Volume en mm3"
+
+#. module: stock_sale_product_volume
+#: model:ir.model.fields,field_description:stock_sale_product_volume.field_sale_order__total_volume_m3
+msgid "Volume in cubic meter"
+msgstr "Volume en mètre cube"
+
+#. module: stock_sale_product_volume
+#: model:ir.model.fields,help:stock_sale_product_volume.field_stock_package_type__volume_mm3
+msgid "Volume in cubic millimeters"
+msgstr "Volume en millimètre cube"
