@@ -3,7 +3,7 @@
 {
     "name": "Stock Lot On Hand First",
     "summary": "Allows to display lots on hand first in M2o fields",
-    "version": "16.0.1.0.0",
+    "version": "17.0.1.0.0",
     "development_status": "Alpha",
     "category": "Inventory/Inventory",
     "website": "https://github.com/OCA/stock-logistics-workflow",

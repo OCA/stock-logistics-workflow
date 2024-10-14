@@ -8,38 +8,36 @@ class StockLot(models.Model):
     _inherit = "stock.lot"
 
     @api.model
-    def _name_search(
-        self, name="", args=None, operator="ilike", limit=80, name_get_uid=None
-    ):
+    def _name_search(self, name, domain=None, operator="ilike", limit=None, order=None):
         """Move lots without a qty on hand at the end of the list"""
 
         if self.env.context.get("name_search_qty_on_hand_first"):
-            args = list(args or [])
+            domain = list(domain or [])
 
-            with_quantity_domain = AND([args, [("product_qty", ">", 0)]])
+            with_quantity_domain = AND([domain, [("product_qty", ">", 0)]])
             with_quantity_count = self.env["stock.lot"].search_count(
                 with_quantity_domain
             )
 
             if with_quantity_count >= limit:
-                args = with_quantity_domain
+                domain = with_quantity_domain
             else:
                 with_quantity_ids = super()._name_search(
                     name=name,
-                    args=with_quantity_domain,
+                    domain=with_quantity_domain,
                     operator=operator,
                     limit=limit,
-                    name_get_uid=name_get_uid,
+                    order=order,
                 )
                 without_quantity_ids = super()._name_search(
                     name=name,
-                    args=AND([args, [("product_qty", "=", 0)]]),
+                    domain=AND([domain, [("product_qty", "=", 0)]]),
                     operator=operator,
                     limit=limit - with_quantity_count,
-                    name_get_uid=name_get_uid,
+                    order=order,
                 )
-                # _name_search is supposed to return a odoo.osv.query.Query object
-                # that will be evaluated as a list of ids when used in the browse function.
+                # _name_search is supposed to return a odoo.osv.query.Query object that
+                # will be evaluated as a list of ids when used in the browse function.
                 # Since we cannot merge the Query objects to respect the intended order
                 # in which we want to display the results,  we return the list of ids
                 # that will be used by browse in the name_search implementation.
@@ -50,8 +48,8 @@ class StockLot(models.Model):
 
         return super()._name_search(
             name=name,
-            args=args,
+            domain=domain,
             operator=operator,
             limit=limit,
-            name_get_uid=name_get_uid,
+            order=order,
         )
