@@ -4,7 +4,6 @@ from odoo import api, fields, models
 
 
 class StockPickingType(models.Model):
-
     _inherit = "stock.picking.type"
 
     display_lots_on_hand_first = fields.Boolean(
