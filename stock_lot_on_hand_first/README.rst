@@ -17,20 +17,20 @@ Stock Lot On Hand First
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
-    :target: https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_lot_on_hand_first
+    :target: https://github.com/OCA/stock-logistics-workflow/tree/17.0/stock_lot_on_hand_first
     :alt: OCA/stock-logistics-workflow
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-16-0/stock-logistics-workflow-16-0-stock_lot_on_hand_first
+    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-17-0/stock-logistics-workflow-17-0-stock_lot_on_hand_first
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=17.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module allows to display lots with a quantity on hand as first results
-in the selection field of Detailed Operations (`stock.move.line`) in order
-to avoid displaying old lots that are not in stock anymore.
+This module allows to display lots with a quantity on hand as first
+results in the selection field of Detailed Operations (stock.move.line)
+in order to avoid displaying old lots that are not in stock anymore.
 
 .. IMPORTANT::
    This is an alpha version, the data model and design can change at any time without warning.
@@ -45,9 +45,9 @@ to avoid displaying old lots that are not in stock anymore.
 Configuration
 =============
 
-On the Operations types (`stock.picking.type`) an extra checkbox will appear if
-Use Existing Lots/Serial Numbers is selected, to allow reordering the results
-appearing in the selection.
+On the Operations types (stock.picking.type) an extra checkbox will
+appear if Use Existing Lots/Serial Numbers is selected, to allow
+reordering the results appearing in the selection.
 
 Bug Tracker
 ===========
@@ -55,7 +55,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/stock-logistics-workflow/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_lot_on_hand_first%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_lot_on_hand_first%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -63,19 +63,19 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Camptocamp
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Akim Juillerat <akim.juillerat@camptocamp.com>
-* Ricardo Almeida Soares <ricardo.almeidasoares@camptocamp.com>
-* Felipe Vaqueriza de Benito <felipe.vaqueriza@factorlibre.com>
+-  Akim Juillerat <akim.juillerat@camptocamp.com>
+-  Ricardo Almeida Soares <ricardo.almeidasoares@camptocamp.com>
+-  Felipe Vaqueriza de Benito <felipe.vaqueriza@factorlibre.com>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -95,6 +95,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-grindtildeath| 
 
-This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_lot_on_hand_first>`_ project on GitHub.
+This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/17.0/stock_lot_on_hand_first>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
