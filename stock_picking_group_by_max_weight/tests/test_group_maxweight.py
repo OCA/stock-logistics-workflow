@@ -1,14 +1,14 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo.tests.common import Form, TransactionCase
+from odoo.tests.common import Form
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestGroupMaxWeight(TransactionCase):
+class TestGroupMaxWeight(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-
-        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.partner = cls.env["res.partner"].create({"name": "Test Partner"})
         cls.product = cls.env.ref("product.product_delivery_01")
         cls.product_2 = cls.env.ref("product.product_delivery_02")
@@ -32,6 +32,9 @@ class TestGroupMaxWeight(TransactionCase):
             self._set_line(sale_form, self.product, amount)
         sale = sale_form.save()
         return sale
+
+    def test_init(self):
+        self.env["stock.picking"].init()
 
     def test_group_max_weight(self):
         """
