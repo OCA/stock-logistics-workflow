@@ -1,0 +1,1 @@
+Add a unique lot sequence for lots being created for every company
