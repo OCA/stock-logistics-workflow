@@ -1,14 +1,14 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo.tests.common import Form, TransactionCase
+from odoo.tests.common import Form
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestGroupMaxWeight(TransactionCase):
+class TestGroupMaxWeight(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-
-        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.partner = cls.env["res.partner"].create({"name": "Test Partner"})
         cls.product = cls.env.ref("product.product_delivery_01")
         cls.product_2 = cls.env.ref("product.product_delivery_02")
@@ -32,6 +32,9 @@ class TestGroupMaxWeight(TransactionCase):
             self._set_line(sale_form, self.product, amount)
         sale = sale_form.save()
         return sale
+
+    def test_init(self):
+        self.env["stock.picking"].init()
 
     def test_group_max_weight(self):
         """
@@ -57,6 +60,53 @@ class TestGroupMaxWeight(TransactionCase):
             self._set_line(sale_form, self.product_3, 1.0)
 
         self.assertEqual(2, len(sale.picking_ids))
+
+    def test_group_max_weight_change_parameter(self):
+        """
+        Create a Sale order with first product
+        Confirm the Sale Order
+        Add a new product
+        New move should be assigned to a new picking
+
+        Create inventory quantity
+        Assign the picking
+        """
+        self.product.weight = 6.0
+        self.product_2.weight = 3.0
+        self.product_3.weight = 9.0
+        sale = self._get_new_sale_order(amount=1.0)
+        sale.action_confirm()
+        self.assertEqual(1, len(sale.picking_ids))
+        picking_1 = sale.picking_ids
+        self.assertEqual(2.0, sale.picking_ids.assignation_max_weight)
+        with Form(sale) as sale_form:
+            self._set_line(sale_form, self.product_2, 1.0)
+        self.assertEqual(2, len(sale.picking_ids))
+
+        # Change the strategy, check if the number of pickings still == 2
+        self.picking_type_out.group_pickings_maxweight = 0
+        with Form(sale) as sale_form:
+            self._set_line(sale_form, self.product_3, 1.0)
+
+        self.assertEqual(2, len(sale.picking_ids))
+
+        self.env["stock.quant"].with_context(inventory_mode=True).create(
+            {
+                "product_id": self.product.id,
+                "inventory_quantity": 50.0,
+                "location_id": self.env.ref("stock.stock_location_stock").id,
+            }
+        )._apply_inventory()
+
+        picking_1.action_assign()
+        self.assertEqual("assigned", picking_1.state)
+        for line in picking_1.move_line_ids:
+            line.qty_done = line.reserved_qty
+        picking_1._action_done()
+
+        self.picking_type_out.group_pickings_maxweight = 2.0
+
+        self.assertEqual(2.0, picking_1.assignation_max_weight)
 
     def test_group_max_weight_several_quantities(self):
         """

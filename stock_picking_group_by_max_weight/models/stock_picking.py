@@ -23,10 +23,12 @@ class StockPicking(models.Model):
     def _assignation_max_weight_precision(self):
         return self._fields["assignation_max_weight"].get_digits(self.env)[1]
 
-    @api.depends("picking_type_id.group_pickings_maxweight", "weight", "state")
+    @api.depends("picking_type_id", "weight", "state")
     def _compute_assignation_max_weight(self):
         precision_digits = self._assignation_max_weight_precision
-        for picking in self:
+        for picking in self.filtered(
+            lambda picking: picking.state not in ("draft", "done", "cancel")
+        ):
             max_weight = (
                 picking.picking_type_id.group_pickings_maxweight - picking.weight
             )
