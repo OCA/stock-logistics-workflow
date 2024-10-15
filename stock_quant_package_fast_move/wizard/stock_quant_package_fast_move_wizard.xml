@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="stock_quant_package_fast_move_wizard_view_form" model="ir.ui.view">
+        <field name="name">stock.quant.package.fast.move.wizard.form</field>
+        <field name="model">stock.quant.package.fast.move.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Move Packages">
+                <group>
+                    <field name="location_dest_id" />
+                    <field
+                        name="package_dest_id"
+                        attrs="{'invisible': [('put_in_new_package', '=', True)]}"
+                    />
+                    <field name="put_in_new_package" />
+                    <field name="validate" />
+                </group>
+                <footer>
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                    <button
+                        name="action_move"
+                        string="Confirm"
+                        type="object"
+                        class="btn-primary"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="stock_quant_package_fast_move_server" model="ir.actions.server">
+        <field name="name">Move Packages</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="stock.model_stock_quant_package" />
+        <field name="binding_model_id" ref="stock.model_stock_quant_package" />
+        <field name="state">code</field>
+        <field name="code">
+            action = model.action_show_package_fast_move_wizard()
+        </field>
+    </record>
+</odoo>
