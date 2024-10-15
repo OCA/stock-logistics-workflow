@@ -58,6 +58,53 @@ class TestGroupMaxWeight(TransactionCase):
 
         self.assertEqual(2, len(sale.picking_ids))
 
+    def test_group_max_weight_change_parameter(self):
+        """
+        Create a Sale order with first product
+        Confirm the Sale Order
+        Add a new product
+        New move should be assigned to a new picking
+
+        Create inventory quantity
+        Assign the picking
+        """
+        self.product.weight = 6.0
+        self.product_2.weight = 3.0
+        self.product_3.weight = 9.0
+        sale = self._get_new_sale_order(amount=1.0)
+        sale.action_confirm()
+        self.assertEqual(1, len(sale.picking_ids))
+        picking_1 = sale.picking_ids
+        self.assertEqual(2.0, sale.picking_ids.assignation_max_weight)
+        with Form(sale) as sale_form:
+            self._set_line(sale_form, self.product_2, 1.0)
+        self.assertEqual(2, len(sale.picking_ids))
+
+        # Change the strategy, check if the number of pickings still == 2
+        self.picking_type_out.group_pickings_maxweight = 0
+        with Form(sale) as sale_form:
+            self._set_line(sale_form, self.product_3, 1.0)
+
+        self.assertEqual(2, len(sale.picking_ids))
+
+        self.env["stock.quant"].with_context(inventory_mode=True).create(
+            {
+                "product_id": self.product.id,
+                "inventory_quantity": 50.0,
+                "location_id": self.env.ref("stock.stock_location_stock").id,
+            }
+        )._apply_inventory()
+
+        picking_1.action_assign()
+        self.assertEqual("assigned", picking_1.state)
+        for line in picking_1.move_line_ids:
+            line.qty_done = line.reserved_qty
+        picking_1._action_done()
+
+        self.picking_type_out.group_pickings_maxweight = 2.0
+
+        self.assertEqual(2.0, picking_1.assignation_max_weight)
+
     def test_group_max_weight_several_quantities(self):
         """
         Create a Sale order with first product
