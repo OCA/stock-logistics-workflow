@@ -1,1 +1,2 @@
 odoo-test-helper
+odoo-addon-web_notify @ git+https://github.com/OCA/web@refs/pull/2923/head#subdirectory=setup/web_notify
