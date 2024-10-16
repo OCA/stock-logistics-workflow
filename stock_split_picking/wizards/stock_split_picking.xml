@@ -43,6 +43,20 @@
                             <field name="state" />
                         </tree>
                     </field>
+                    <field
+                        name="stock_split_product_quantities_ids"
+                        attrs="{'invisible': [('mode', '!=', 'split_product_quantities')], 'required': [('mode', '=', 'split_product_quantities')]}"
+                    >
+                        <tree create="true" edit="true" delete="true" editable="top">
+                            <field name="product_ids" invisible="True" />
+                            <field
+                                name="product_id"
+                                domain="[('id', 'in', product_ids)]"
+                            />
+                            <field name="qty_to_deliver" />
+                            <field name="qty_to_split" />
+                        </tree>
+                    </field>
                 </group>
                 <footer>
                 <button

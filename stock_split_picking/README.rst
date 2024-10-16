@@ -85,6 +85,7 @@ Contributors
 * Andrius Preimantas <andrius@versada.eu>
 * Holger Brunn <mail@hunki-enterprises.com>
 * Rujia Liu <rujial@roof.co.nz>
+* Syera Bonneaux <syera.bonneaux@akretion.com>
 
 Maintainers
 ~~~~~~~~~~~
