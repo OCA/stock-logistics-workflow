@@ -5,6 +5,8 @@
 # Copyright 2020 Manuel Calero - Tecnativa
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
+from collections import defaultdict
+
 from odoo import api, fields, models
 
 
@@ -16,8 +18,12 @@ class AccountMove(models.Model):
         string="Related Pickings",
         store=True,
         compute="_compute_picking_ids",
-        help="Related pickings "
-        "(only when the invoice has been generated from a sale order).",
+        help="Related pickings (only when the invoice has been generated from a sale "
+        "order).",
+    )
+
+    picking_count = fields.Integer(
+        string="Pickings count", compute="_compute_picking_count"
     )
 
     @api.depends("invoice_line_ids", "invoice_line_ids.move_line_ids")
@@ -26,6 +32,12 @@ class AccountMove(models.Model):
             invoice.picking_ids = invoice.mapped(
                 "invoice_line_ids.move_line_ids.picking_id"
             )
+            invoice.picking_count = len(invoice.picking_ids)
+
+    @api.depends("picking_ids")
+    def _compute_picking_count(self):
+        for invoice in self:
+            invoice.picking_count = len(invoice.picking_ids)
 
     def action_show_picking(self):
         """This function returns an action that display existing pickings
@@ -35,15 +47,34 @@ class AccountMove(models.Model):
         """
         self.ensure_one()
         form_view_name = "stock.view_picking_form"
-        xmlid = "stock.action_picking_tree_all"
-        action = self.env["ir.actions.act_window"]._for_xml_id(xmlid)
+        result = self.env["ir.actions.act_window"]._for_xml_id(
+            "stock.action_picking_tree_all"
+        )
         if len(self.picking_ids) > 1:
-            action["domain"] = "[('id', 'in', %s)]" % self.picking_ids.ids
+            result["domain"] = f"[('id', 'in', {self.picking_ids.ids})]"
         else:
             form_view = self.env.ref(form_view_name)
-            action["views"] = [(form_view.id, "form")]
-            action["res_id"] = self.picking_ids.id
-        return action
+            result["views"] = [(form_view.id, "form")]
+            result["res_id"] = self.picking_ids.id
+        return result
+
+    def _reverse_move_vals(self, default_values, cancel=True):
+        move_vals = super()._reverse_move_vals(default_values, cancel=cancel)
+        product_dic = defaultdict(int)
+        # Invoice returned moves marked as to_refund
+        for line_command in move_vals.get("line_ids", []):
+            line_vals = line_command[2]
+            product_id = line_vals.get("product_id", False)
+            if product_id:
+                position = product_dic[product_id]
+                product_line = self.line_ids.filtered(
+                    lambda l: l.product_id.id == product_id
+                )[position]
+                product_dic[product_id] += 1
+                stock_moves = product_line.mapped("move_line_ids")
+                if stock_moves:
+                    line_vals["move_line_ids"] = [(4, m.id) for m in stock_moves]
+        return move_vals
 
 
 class AccountMoveLine(models.Model):
@@ -56,6 +87,20 @@ class AccountMoveLine(models.Model):
         column2="move_id",
         string="Related Stock Moves",
         readonly=True,
-        help="Related stock moves "
-        "(only when the invoice has been generated from a sale order).",
+        copy=False,
+        help="Related stock moves (only when the invoice has been"
+        " generated from a sale order).",
     )
+
+    def copy_data(self, default=None):
+        """Copy the move_line_ids in case of refund invoice creating a new invoice
+        (refund_method="modify").
+        """
+        self.ensure_one()
+        res = super().copy_data(default=default)
+        if (
+            self.env.context.get("force_copy_stock_moves")
+            and "move_line_ids" not in res
+        ):
+            res[0]["move_line_ids"] = [(6, 0, self.move_line_ids.ids)]
+        return res
