@@ -42,10 +42,11 @@ class StockQuant(models.Model):
                     msg_add = _(" lot '%s'") % quant.lot_id.name_get()[0][1]
                 raise ValidationError(
                     _(
-                        "You cannot validate this stock operation because the "
-                        "stock level of the product '%s'%s would become negative "
-                        "(%s) on the stock location '%s' and negative stock is "
-                        "not allowed for this product and/or location."
+                        "The product '%s'%s cannot have negative quantities (%s) in the "
+                        "location '%s'. To allow negative stock, you must enable the "
+                        "'allow negative stock' in the product, the category, or the "
+                        "location. Please adjust the stock levels accordingly and try "
+                        "again."
                     )
                     % (
                         quant.product_id.display_name,
