@@ -18,7 +18,7 @@ class SaleOrderLine(models.Model):
         orderpoints_to_procure_ids = []
         mto_route = self.env.ref("stock.route_warehouse0_mto", raise_if_not_found=False)
         if not mto_route:
-            return
+            return orderpoints_to_procure_ids
         for line in self:
             delivery_moves = line.move_ids.filtered(
                 lambda m: m.picking_id.picking_type_code == "outgoing"
@@ -46,6 +46,7 @@ class SaleOrderLine(models.Model):
             .create({})
         )
         wiz.make_procurement()
+        return orderpoints_to_procure_ids
 
     def _get_mto_orderpoint(self, product_id):
         self.ensure_one()
