@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2022 Camptocamp SA
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+  <record id="stock_picking_force_availability_form" model="ir.ui.view">
+    <field name="name">stock.picking.force_availability.form</field>
+    <field name="model">stock.picking.force_availability</field>
+    <field name="arch" type="xml">
+      <form string="Force availability">
+        <sheet>
+          <group>
+            <field name="picking_id" force_save="1" />
+          </group>
+          <group string="Moves to unreserve">
+            <field name="same_picking_type" widget="boolean_toggle" />
+            <field name="move_to_unreserve_ids" nolabel="1" force_save="1" colspan="4">
+              <tree>
+                <field name="picking_id" />
+                <field name="date" optional="show" />
+                <field name="date_deadline" optional="hide" />
+                <field name="origin" />
+                <field name="product_id" />
+                <field name="product_uom_qty" />
+                <field
+                                    name="product_uom"
+                                    options="{'no_open': True, 'no_create': True}"
+                                    groups="uom.group_uom"
+                                />
+                <field name="state" />
+              </tree>
+            </field>
+            <field name="assign_moves" widget="boolean_toggle" />
+          </group>
+        </sheet>
+        <footer>
+          <button name="validate" type="object" string="Validate" class="btn-primary" />
+          <button special="cancel" string="Cancel" class="btn-default" />
+        </footer>
+      </form>
+    </field>
+  </record>
+
+  <record id="stock_picking_force_availability_action" model="ir.actions.act_window">
+    <field name="name">Force availability</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">stock.picking.force_availability</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+    <field name="groups_id" eval="[(4,ref('stock.group_stock_user'))]" />
+  </record>
+
+</odoo>
