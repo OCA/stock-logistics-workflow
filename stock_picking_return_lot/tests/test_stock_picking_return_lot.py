@@ -50,8 +50,7 @@ class StockPickingReturnLotTest(TransactionCase):
             }
         )
         cls.picking.action_confirm()
-        cls.picking.action_assign()
-        cls.picking.action_set_quantities_to_reservation()
+        cls.picking.move_ids.picked = True
         cls.picking._action_done()
 
     @classmethod
@@ -101,14 +100,12 @@ class StockPickingReturnLotTest(TransactionCase):
     def _create_validate_picking(self):
         picking = self._create_picking()
         picking.action_confirm()
-        picking.action_assign()
-        picking.action_set_quantities_to_reservation()
+        picking.move_ids.picked = True
         picking._action_done()
         return picking
 
     def test_partial_return(self):
         wiz = self.create_return_wiz(self.picking)
-        wiz._onchange_picking_id()
         self.assertEqual(len(wiz.product_return_moves), 2)
         return_line_1 = wiz.product_return_moves.filtered(
             lambda m, lot=self.lot_1: m.lot_id == lot
@@ -134,7 +131,6 @@ class StockPickingReturnLotTest(TransactionCase):
     def test_full_return_after_partial_return(self):
         self.test_partial_return()
         wiz = self.create_return_wiz(self.picking)
-        wiz._onchange_picking_id()
         self.assertEqual(len(wiz.product_return_moves), 2)
 
         return_line_1 = wiz.product_return_moves.filtered(
@@ -166,7 +162,6 @@ class StockPickingReturnLotTest(TransactionCase):
         )
         picking = self._create_validate_picking()
         wiz = self.create_return_wiz(picking)
-        wiz._onchange_picking_id()
         self.assertEqual(len(wiz.product_return_moves), 2)
         return_line_1 = wiz.product_return_moves.filtered(
             lambda m, lot=self.lot_1: m.lot_id == lot
@@ -194,7 +189,6 @@ class StockPickingReturnLotTest(TransactionCase):
         )
         picking = self._create_validate_picking()
         wiz = self.create_return_wiz(picking)
-        wiz._onchange_picking_id()
         self.assertEqual(len(wiz.product_return_moves), 2)
         return_lines = wiz.product_return_moves.filtered(
             lambda m, lot=self.lot_1: m.lot_id == lot

@@ -13,7 +13,7 @@
                 <field
                     name="lot_id"
                     groups="stock.group_production_lot"
-                    attrs="{'invisible': [('lots_visible', '=', False)]}"
+                    invisible="not lots_visible"
                 />
             </xpath>
         </field>
