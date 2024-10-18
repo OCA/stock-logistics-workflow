@@ -9,8 +9,10 @@ class StockMoveLine(models.Model):
 
     @api.model
     def _create_correction_svl(self, move, diff):
-        if move.product_id.cost_method != "average" or self.env.context.get(
-            "new_stock_move_create", False
+        if (
+            move.product_id.cost_method != "average"
+            or self.env.context.get("new_stock_move_create")
+            or not diff
         ):
             return super()._create_correction_svl(move, diff)
         for svl in move.stock_valuation_layer_ids.filtered(
