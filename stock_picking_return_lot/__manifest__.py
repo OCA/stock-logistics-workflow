@@ -5,7 +5,7 @@
 {
     "name": "Stock Picking Return Lot",
     "summary": "Propagate SN/lots from origin picking to return picking.",
-    "version": "16.0.1.1.0",
+    "version": "17.0.1.0.0",
     "license": "AGPL-3",
     "author": "Camptocamp, ACSONE SA/NV, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
