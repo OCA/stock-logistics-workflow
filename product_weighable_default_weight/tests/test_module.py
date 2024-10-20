@@ -6,12 +6,14 @@ from odoo.tests.common import Form, TransactionCase
 
 
 class TestModule(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.ProductProduct = self.env["product.product"]
-        self.ProductTemplate = self.env["product.template"]
-        self.uom_kg = self.browse_ref("uom.product_uom_kgm")
-        self.uom_ton = self.browse_ref("uom.product_uom_ton")
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.ProductProduct = cls.env["product.product"]
+        cls.ProductTemplate = cls.env["product.template"]
+        cls.uom_kg = cls.env.ref("uom.product_uom_kgm")
+        cls.uom_ton = cls.env.ref("uom.product_uom_ton")
+        cls.env.user.groups_id += cls.env.ref("uom.group_uom")
 
     def _test_create_write(self, model):
         item = model.create(

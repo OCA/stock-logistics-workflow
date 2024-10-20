@@ -8,9 +8,9 @@ from odoo import api, models
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
-    @api.onchange("uom_id", "uom_po_id")
-    def _onchange_uom(self):
-        res = super()._onchange_uom()
+    @api.onchange("uom_id")
+    def _onchange_uom_id(self):
+        res = super()._onchange_uom_id()
         new_weight = self.product_tmpl_id._get_weight_from_uom(self.uom_id)
         if new_weight:
             self.weight = new_weight

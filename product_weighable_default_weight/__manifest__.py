@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Weighable Product - Default Weight",
-    "version": "12.0.1.0.0",
+    "version": "16.0.1.0.0",
     "category": "Point Of Sale",
     "summary": "Set default weight on weighable product,"
     " the weight is guessed from the ratio of the unit of mesure",
@@ -11,8 +11,7 @@
     "maintainers": ["legalsylvain"],
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "license": "AGPL-3",
-    "depends": ["product"],
-    "demo": ["demo/res_groups.xml"],
+    "depends": ["stock", "product_uom_measure_type"],
     "post_init_hook": "post_init_hook",
     "installable": True,
 }
