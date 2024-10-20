@@ -2,12 +2,10 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo.tests.common import TransactionCase
-from odoo.tests.common import Form
+from odoo.tests.common import Form, TransactionCase
 
 
 class TestModule(TransactionCase):
-
     def setUp(self):
         super().setUp()
         self.ProductProduct = self.env["product.product"]
@@ -16,11 +14,13 @@ class TestModule(TransactionCase):
         self.uom_ton = self.browse_ref("uom.product_uom_ton")
 
     def _test_create_write(self, model):
-        item = model.create({
-            "name": "Demo Product",
-            "uom_id": self.uom_kg.id,
-            "uom_po_id": self.uom_kg.id,
-        })
+        item = model.create(
+            {
+                "name": "Demo Product",
+                "uom_id": self.uom_kg.id,
+                "uom_po_id": self.uom_kg.id,
+            }
+        )
         self.assertEqual(item.weight, 1.0)
         item.uom_id = self.uom_ton
         self.assertEqual(item.weight, 1000.0)
