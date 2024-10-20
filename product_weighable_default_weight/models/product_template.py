@@ -2,13 +2,13 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import models, api
+from odoo import api, models
 
 
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    @api.onchange('uom_id')
+    @api.onchange("uom_id")
     def _onchange_uom_id(self):
         res = super()._onchange_uom_id()
         new_weight = self._get_weight_from_uom(self.uom_id)
@@ -41,6 +41,5 @@ class ProductTemplate(models.Model):
         if not uom.measure_type == "weight":
             return
         return uom._compute_quantity(
-            1,
-            self._get_weight_uom_id_from_ir_config_parameter()
+            1, self._get_weight_uom_id_from_ir_config_parameter()
         )

@@ -1,5 +1,6 @@
 import logging
-from odoo import api, SUPERUSER_ID
+
+from odoo import SUPERUSER_ID, api
 
 _logger = logging.getLogger(__name__)
 
@@ -9,13 +10,14 @@ def post_init_hook(cr, registry):
     with api.Environment.manage():
         env = api.Environment(cr, SUPERUSER_ID, {})
         _logger.info(
-            "[default UoM] Fast initializing weight fields for products"
-            ", if not set"
+            "[default UoM] Fast initializing weight fields for products" ", if not set"
         )
-        env.cr.execute("""
+        env.cr.execute(
+            """
             SELECT value
             FROM ir_config_parameter
-            WHERE key='product.weight_in_lbs';""")
+            WHERE key='product.weight_in_lbs';"""
+        )
         res = env.cr.fetchone()
         if res and res[0] == 1:
             # LBs is the global default UoM
@@ -24,19 +26,25 @@ def post_init_hook(cr, registry):
             # Kg is the global default UoM
             default_uom = env.ref("uom.product_uom_kgm")
         if default_uom:
-            env.cr.execute("""
+            env.cr.execute(
+                """
                 UPDATE product_template
                 SET weight = 1.0
                 WHERE uom_id = %s
-                AND (weight = 0.0 or weight is null);""", (default_uom.id,))
-            env.cr.execute("""
+                AND (weight = 0.0 or weight is null);""",
+                (default_uom.id,),
+            )
+            env.cr.execute(
+                """
                 UPDATE product_product pp
                 SET weight = 1.0
                 FROM product_template pt
                 WHERE pt.id = pp.product_tmpl_id
                 AND pt.uom_id = %s
                 AND (
-                    pp.weight = 0.0 or pp.weight is null);""", (default_uom.id,))
+                    pp.weight = 0.0 or pp.weight is null);""",
+                (default_uom.id,),
+            )
 
         _logger.info(
             "[Other UoM] Initializing weight fields for weighable products,"
@@ -45,10 +53,13 @@ def post_init_hook(cr, registry):
         groups = env["product.product"].read_group(
             [
                 ("uom_id.measure_type", "=", "weight"),
-                '|', ("weight", "=", 0.0), ('weight', '=', False)
+                "|",
+                ("weight", "=", 0.0),
+                ("weight", "=", False),
             ],
             fields=["weight", "uom_id"],
-            groupby="uom_id")
+            groupby="uom_id",
+        )
 
         for group in groups:
             products = env["product.product"].search(group["__domain"])
