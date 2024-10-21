@@ -6,7 +6,7 @@
 {
     "name": "Delivery Procurement Group Carrier",
     "Summary": "Record the carrier on the procurement group",
-    "version": "17.0.1.1.0",
+    "version": "17.0.1.1.1",
     "development_status": "Beta",
     "author": "Camptocamp, BCIM, MT Software, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
