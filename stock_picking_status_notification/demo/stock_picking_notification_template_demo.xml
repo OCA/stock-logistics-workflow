@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record
+        id="delivery_picking_notification_template1"
+        model="stock.picking.notification.template"
+    >
+        <field name="picking_type_id" ref="stock.picking_type_out" />
+        <field name="user_ids" eval="[(6, 0, [ref('base.user_admin')])]" />
+        <field name="allow_notify_draft">True</field>
+        <field name="allow_notify_waiting">True</field>
+        <field name="allow_notify_done">True</field>
+        <field name="allow_notify_cancel">True</field>
+        <field
+            name="notification_sound_file"
+            type="base64"
+            file="mail/static/src/audio/ting.mp3"
+        />
+        <field name="filename">ting.mp3</field>
+    </record>
+
+</odoo>
