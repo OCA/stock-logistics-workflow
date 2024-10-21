@@ -1,0 +1,3 @@
+odoo14-addon-stock-restrict-by-planned-consumed-date @ git+https://github.com/OCA/stock-logistics-workflow@refs/pull/1509/head#subdirectory=setup/stock_restrict_by_planned_consumed_date
+odoo14-addon-stock-move-planned-consumed-date @ git+https://github.com/OCA/stock-logistics-workflow@refs/pull/1724/head#subdirectory=setup/stock_move_planned_consumed_date
+odoo14-addon-sale-planned-consumed-date @ git+https://github.com/OCA/stock-logistics-workflow@refs/pull/1725/head#subdirectory=setup/sale_planned_consumed_date

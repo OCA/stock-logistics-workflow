@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2024 Foodles (https://www.foodles.co/).
+    @author Alexandre Galdeano <alexandre.galdeano@foodles.co>
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+-->
+<odoo>
+    <!-- Stock location route -->
+    <record id="stock_location_route_kurry_fried_chicken" model="stock.location.route">
+        <field name="name">Kurry Fried Chicken</field>
+        <field name="product_selectable">True</field>
+        <field name="active">True</field>
+    </record>
+
+    <!-- Stock rules -->
+    <record id="stock_rule_kurry_fried_chicken_deliver" model="stock.location.route">
+        <field name="name">Delivery</field>
+        <field name="action">pull</field>
+        <field name="picking_type_id" ref="stock.picking_type_out" />
+        <field name="location_src_id" ref="stock.location_dispatch_zone" />
+        <field name="location_id" ref="stock.stock_location_customers" />
+        <field name="procure_method">make_to_order</field>
+        <field name="company_id" ref="base.main_company" />
+        <field name="group_propagation_option">propagate</field>
+        <field name="delay">2</field>
+        <field name="is_delay_workable_days">True</field>
+    </record>
+    <record id="stock_rule_kurry_fried_chicken_prepare" model="stock.location.route">
+        <field name="name">Prepare</field>
+        <field name="action">pull</field>
+        <field name="picking_type_id" ref="stock.picking_type_internal" />
+        <field name="location_src_id" ref="stock.stock_location_stock" />
+        <field name="location_id" ref="stock.location_dispatch_zone" />
+        <field name="procure_method">make_to_order</field>
+        <field name="company_id" ref="base.main_company" />
+        <field name="group_propagation_option">none</field>
+        <field name="delay">1</field>
+        <field name="is_delay_workable_days">True</field>
+    </record>
+    <record id="stock_rule_buy_kurry_fried_chicken_buy" model="stock.location.route">
+        <field name="name">Buy</field>
+        <field name="action">buy</field>
+        <field name="picking_type_id" ref="stock.picking_type_in" />
+        <field name="location_id" ref="stock.stock_location_stock" />
+        <field name="procure_method">make_to_order</field>
+        <field name="company_id" ref="base.main_company" />
+        <field name="group_propagation_option">none</field>
+        <field
+            name="lead_times_by_day_ids"
+            eval="[(6, 0, [ref('lead_times_by_day_monday_kurry_fried_chicken'), ref('lead_times_by_day_wednesday_kurry_fried_chicken')])]"
+        />
+    </record>
+</odoo>

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_lead_times_by_day,Lead times by day access,model_lead_times_by_day,base.group_user,1,1,1,1
+access_lead_times_by_day_value,Lead times by day value access,model_lead_times_by_day_value,base.group_user,1,1,1,1
+access_foodles_weekdays,access_foodles_weekdays,model_weekdays,base.group_user,1,0,0,0

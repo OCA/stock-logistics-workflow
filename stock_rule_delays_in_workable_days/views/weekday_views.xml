@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2024 Foodles (https://www.foodles.co/).
+    @author Damien Crier <damien.crier@foodles.co>
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+-->
+<odoo>
+    <record id="view_weekdays_tree" model="ir.ui.view">
+        <field name="name">weekdays.form</field>
+        <field name="model">weekdays</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="weekday" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="calendar_weekdays_form" model="ir.ui.view">
+            <field name="name">weekdays.form</field>
+            <field name="model">weekdays</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name" />
+                        <field name="weekday" />
+                    </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_weekdays" model="ir.actions.act_window">
+        <field name="name">Weekdays</field>
+        <field name="res_model">weekdays</field>
+        <field name="view_id" ref="view_weekdays_tree" />
+    </record>
+
+    <menuitem
+        id="menu_calendar_weekdays"
+        parent="calendar.menu_calendar_configuration"
+        action="action_weekdays"
+        groups="base.group_no_one"
+    />
+</odoo>
