@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="stock_package_type_form_delivery" model="ir.ui.view">
+        <field name="name">stock.package.type.form.consumption</field>
+        <field name="model">stock.package.type</field>
+        <field name="inherit_id" ref="stock.stock_package_type_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='barcode']" position="after">
+                <field name="product_id" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
