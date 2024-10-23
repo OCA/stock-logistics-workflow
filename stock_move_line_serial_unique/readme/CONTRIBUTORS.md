@@ -1,0 +1,2 @@
+- Tatsuki Kanda \<<kanda@quartile.co>\>
+- SodexisTeam \<<dev@sodexis.com>\>
