@@ -32,7 +32,7 @@ class StockQuant(models.Model):
             disallowed_by_location = not quant.location_id.allow_negative_stock
             if (
                 float_compare(quant.quantity, 0, precision_digits=p) == -1
-                and quant.product_id.type == "product"
+                and quant.product_id.is_storable
                 and quant.location_id.usage in ["internal", "transit"]
                 and disallowed_by_product
                 and disallowed_by_location
