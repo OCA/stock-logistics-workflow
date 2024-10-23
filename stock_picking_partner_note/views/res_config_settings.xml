@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form </field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//block[@name='operations_setting_container']"
+                position="inside"
+            >
+                <setting
+                    id="check_pickings_partner_note"
+                    string="Check picking note already in use"
+                    help="Add a constraint to check if the picking note is already in use on multiple partner"
+                >
+                    <field name="check_note_already_in_use" />
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>
