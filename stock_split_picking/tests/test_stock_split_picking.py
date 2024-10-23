@@ -3,44 +3,11 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import UserError
-from odoo.tests.common import TransactionCase
+
+from .common import TestStockSplitPickingCase
 
 
-class TestStockSplitPicking(TransactionCase):
-    @classmethod
-    def setUpClass(cls):
-        super(TestStockSplitPicking, cls).setUpClass()
-
-        cls.src_location = cls.env.ref("stock.stock_location_stock")
-        cls.dest_location = cls.env.ref("stock.stock_location_customers")
-        cls.product = cls.env["product.product"].create({"name": "Test product"})
-        cls.product_2 = cls.env["product.product"].create({"name": "Test product 2"})
-        cls.partner = cls.env["res.partner"].create({"name": "Test partner"})
-        cls.picking = cls.env["stock.picking"].create(
-            {
-                "partner_id": cls.partner.id,
-                "picking_type_id": cls.env.ref("stock.picking_type_out").id,
-                "location_id": cls.src_location.id,
-                "location_dest_id": cls.dest_location.id,
-            }
-        )
-
-        def _create_stock_move(product):
-            return cls.env["stock.move"].create(
-                {
-                    "name": "/",
-                    "picking_id": cls.picking.id,
-                    "product_id": product.id,
-                    "product_uom_qty": 10,
-                    "product_uom": product.uom_id.id,
-                    "location_id": cls.src_location.id,
-                    "location_dest_id": cls.dest_location.id,
-                }
-            )
-
-        cls.move = _create_stock_move(cls.product)
-        cls.move_2 = _create_stock_move(cls.product_2)
-
+class TestStockSplitPicking(TestStockSplitPickingCase):
     def test_stock_split_picking(self):
         # Picking state is draft
         self.assertEqual(self.picking.state, "draft")
