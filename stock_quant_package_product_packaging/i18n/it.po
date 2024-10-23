@@ -1,0 +1,51 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_quant_package_product_packaging
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2023-11-17 11:36+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: stock_quant_package_product_packaging
+#: model:ir.model,name:stock_quant_package_product_packaging.model_stock_quant_package
+msgid "Packages"
+msgstr "Colli"
+
+#. module: stock_quant_package_product_packaging
+#: model:ir.model.fields,help:stock_quant_package_product_packaging.field_stock_quant_package__product_packaging_id
+msgid ""
+"Packaging of the product, used for internal logisticstransfers, put-away "
+"rules, ..."
+msgstr ""
+"Imballo del prodotto, utilizzato per trasferimenti logistici interni, regole "
+"di stoccaggio, ..."
+
+#. module: stock_quant_package_product_packaging
+#: model:ir.model,name:stock_quant_package_product_packaging.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Movimenti prodotto (riga movimento di magazzino)"
+
+#. module: stock_quant_package_product_packaging
+#: model:ir.model.fields,field_description:stock_quant_package_product_packaging.field_stock_quant_package__product_packaging_id
+msgid "Product Packaging"
+msgstr "Imballaggio prodotto"
+
+#. module: stock_quant_package_product_packaging
+#: model:ir.model.fields,field_description:stock_quant_package_product_packaging.field_stock_quant_package__single_product_id
+msgid "Single Product"
+msgstr "Prodotto singolo"
+
+#. module: stock_quant_package_product_packaging
+#: model:ir.model.fields,field_description:stock_quant_package_product_packaging.field_stock_quant_package__single_product_qty
+msgid "Single Product Qty"
+msgstr "Q-tà prodotto singolo"

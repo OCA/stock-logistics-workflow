@@ -1,0 +1,51 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_quant_package_product_packaging
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2023-03-21 12:12+0000\n"
+"Last-Translator: FranciscoFactorLibre <francisco.santos@factorlibre.com>\n"
+"Language-Team: none\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.14.1\n"
+
+#. module: stock_quant_package_product_packaging
+#: model:ir.model,name:stock_quant_package_product_packaging.model_stock_quant_package
+msgid "Packages"
+msgstr "Paquetes"
+
+#. module: stock_quant_package_product_packaging
+#: model:ir.model.fields,help:stock_quant_package_product_packaging.field_stock_quant_package__product_packaging_id
+msgid ""
+"Packaging of the product, used for internal logisticstransfers, put-away "
+"rules, ..."
+msgstr ""
+"Empaquetado de producto, usado para trasferencias internas, reglas de "
+"traslado, ..."
+
+#. module: stock_quant_package_product_packaging
+#: model:ir.model,name:stock_quant_package_product_packaging.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Movimientos de producto (Movimiento de stock)"
+
+#. module: stock_quant_package_product_packaging
+#: model:ir.model.fields,field_description:stock_quant_package_product_packaging.field_stock_quant_package__product_packaging_id
+msgid "Product Packaging"
+msgstr "Empaquetado de producto"
+
+#. module: stock_quant_package_product_packaging
+#: model:ir.model.fields,field_description:stock_quant_package_product_packaging.field_stock_quant_package__single_product_id
+msgid "Single Product"
+msgstr "Producto individual"
+
+#. module: stock_quant_package_product_packaging
+#: model:ir.model.fields,field_description:stock_quant_package_product_packaging.field_stock_quant_package__single_product_qty
+msgid "Single Product Qty"
+msgstr "Cantidad de producto individual"
