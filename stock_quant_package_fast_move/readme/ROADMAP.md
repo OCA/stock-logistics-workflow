@@ -1,0 +1,1 @@
+Only packages residing in the same source location can be moved.
