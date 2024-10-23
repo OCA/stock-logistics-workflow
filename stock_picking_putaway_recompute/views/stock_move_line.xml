@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="view_stock_move_line_detailed_operation_tree" model="ir.ui.view">
+        <field
+            name="name"
+        >stock.move.line.operations.tree (in stock_picking_putaway_recompute)</field>
+        <field name="model">stock.move.line</field>
+        <field
+            name="inherit_id"
+            ref="stock.view_stock_move_line_detailed_operation_tree"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='location_dest_id'][last()]" position="after">
+                <field name="can_recompute_putaways" invisible="1" />
+                <button
+                    title="Recompute Putaways"
+                    groups="stock.group_stock_multi_locations"
+                    help="Click this if you want to recompute destination location for this operation"
+                    name="action_recompute_putaways"
+                    type="object"
+                    icon="fa-sort-amount-asc"
+                    attrs="{'invisible': [('can_recompute_putaways', '=', False)]}"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
