@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_picking_portal,stock.picking,stock.model_stock_picking,base.group_portal,1,1,0,0
+access_stock_picking_type_portal,stock.picking.type,stock.model_stock_picking_type,base.group_portal,1,0,0,0
+access_stock_warehouse_portal,stock.warehouse,stock.model_stock_warehouse,base.group_portal,1,0,0,0
+access_picking_link_wizard,picking.link.wizard,model_picking_link_wizard,base.group_user,1,1,1,1
