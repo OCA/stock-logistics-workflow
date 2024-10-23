@@ -679,3 +679,53 @@ class TestClusteringConditions(ClusterPickingCommonFeatures):
         batch = self.make_picking_batch._create_batch()
         self.assertEqual(self.pick3, batch.picking_ids)
         self.assertEqual(len(batch.move_line_ids), 1)
+
+    def test_picking_split_priority(self):
+        # We ensure than even if a picking with a higher priority has a volume
+        # exceeding the device capacity, it will be split and processed first
+        # if the split_picking_exceeding_limits is set to True
+        # the processing order for picks of type 1 will be:
+        # pick3 (priority), pick1 (lower id), pick2
+        self.assertEqual(len(self.pick3.move_line_ids), 2)
+
+        max_volume = 200
+        device = self.env["stock.device.type"].create(
+            {
+                "name": "test volume null devices and one bin",
+                "min_volume": 0,
+                "max_volume": max_volume,
+                "max_weight": 300,
+                "nbr_bins": 1,
+                "sequence": 50,
+            }
+        )
+
+        self.make_picking_batch.write(
+            {
+                "split_picking_exceeding_limits": False,
+                "stock_device_type_ids": [(6, 0, [device.id])],
+            }
+        )
+        # each product has a volume of 120
+        self.pick3.move_ids.product_id.write(
+            {
+                "product_length": 12,
+                "product_height": 5,
+                "product_width": 2,
+            }
+        )
+        self.pick3.move_ids._compute_volume()
+
+        # since pick3 exceeds the device capacity and
+        # the split_picking_exceeding_limits is set to False
+        # the next picking to process should be pick1
+        batch = self.make_picking_batch._create_batch()
+        self.assertEqual(self.pick1, batch.picking_ids)
+
+        batch.unlink()
+
+        # if the split_picking_exceeding_limits is set to True.
+        # then pick3 should be split and processed first
+        self.make_picking_batch.split_picking_exceeding_limits = True
+        batch = self.make_picking_batch._create_batch()
+        self.assertEqual(self.pick3, batch.picking_ids)

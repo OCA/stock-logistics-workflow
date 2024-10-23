@@ -69,8 +69,15 @@ the volume of the pickings for the same partners already.
 #### Splitting picking if needed
 
 You can also activate the option *Split picking exceeding the limits* on the
-wizard. This will allow, when the system is not able to find a picking that
-fits the criteria to create the batch, to lower the criteria by removing those
-based on the volume, weight and number of lines. If a picking is found and
-you allow to split it, the system will try to split the picking so that the
-limits are respected.
+wizard. In this case, when the system select the first picking to add to the
+batch, it will disable the criteria based on the volume, weight and number of
+lines. If the picking is exceeding the limits, the system will then try to split
+the picking so that the new picking fits the criteria and can be added to the
+batch. If the picking can't be split, an exception will be raised.
+
+This option is useful to allow to create a batch picking with pickings that
+are exceeding the limits defined in the wizard. It also ensures that the
+processing of pickings is done in the order of the pickings. If the option is
+not activated, the system will try to find a picking that fits the criteria
+and will ignore those that are exceeding the limits even if they are to be
+processed first.
