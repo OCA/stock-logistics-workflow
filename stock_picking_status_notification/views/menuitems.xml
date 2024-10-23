@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <menuitem
+        id="menu_picking_notification_templates"
+        name="Picking Notifications"
+        parent="stock.menu_warehouse_config"
+        action="action_stock_picking_notification_template"
+        sequence="20"
+    />
+
+</odoo>
