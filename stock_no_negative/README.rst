@@ -158,6 +158,10 @@ Contributors
 
    -  Foram Darji <fd@oerp.ca>
 
+-  `Dynapps <https://www.dynapps.eu/>`__:
+
+   -  Bert Van Groenendael <bert.vangroenendael@dynapps.eu>
+
 Maintainers
 -----------
 

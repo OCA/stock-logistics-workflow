@@ -41,7 +41,8 @@ class TestStockNoNegative(TransactionCase):
             {
                 "name": name,
                 "categ_id": self.product_ctg.id,
-                "type": "product",
+                "is_storable": True,
+                "type": "consu",
                 "allow_negative_stock": False,
             }
         )
@@ -52,7 +53,8 @@ class TestStockNoNegative(TransactionCase):
             {
                 "name": name,
                 "categ_id": self.product_ctg.id,
-                "type": "product",
+                "is_storable": True,
+                "type": "consu",
                 "tracking": "lot",
                 "allow_negative_stock": False,
             }
