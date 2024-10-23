@@ -1,0 +1,118 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_scrap_tier_validation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2023-11-11 18:37+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
+"Language-Team: none\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: stock_scrap_tier_validation
+#: model:ir.model.fields,field_description:stock_scrap_tier_validation.field_stock_scrap__can_review
+msgid "Can Review"
+msgstr "Puede Revisar"
+
+#. module: stock_scrap_tier_validation
+#: model:ir.model.fields,field_description:stock_scrap_tier_validation.field_stock_scrap__has_comment
+msgid "Has Comment"
+msgstr "Tiene Comentario"
+
+#. module: stock_scrap_tier_validation
+#: model_terms:ir.ui.view,arch_db:stock_scrap_tier_validation.view_stock_scrap_filter
+msgid "My Scraps to review"
+msgstr "Mis Recortes para revisar"
+
+#. module: stock_scrap_tier_validation
+#: model:ir.model.fields,field_description:stock_scrap_tier_validation.field_stock_scrap__need_validation
+msgid "Need Validation"
+msgstr "Necesita Validación"
+
+#. module: stock_scrap_tier_validation
+#: model_terms:ir.ui.view,arch_db:stock_scrap_tier_validation.view_stock_scrap_filter
+msgid "Needs my Review"
+msgstr "Necesita mi Revisión"
+
+#. module: stock_scrap_tier_validation
+#: model:ir.model.fields,field_description:stock_scrap_tier_validation.field_stock_scrap__next_review
+msgid "Next Review"
+msgstr "Siguiente Revisión"
+
+#. module: stock_scrap_tier_validation
+#: model:ir.model.fields,field_description:stock_scrap_tier_validation.field_stock_scrap__rejected
+msgid "Rejected"
+msgstr "Rechazado"
+
+#. module: stock_scrap_tier_validation
+#: model:ir.model.fields,field_description:stock_scrap_tier_validation.field_stock_scrap__rejected_message
+msgid "Rejected Message"
+msgstr "Mensaje Rechazado"
+
+#. module: stock_scrap_tier_validation
+#: model:ir.model.fields,field_description:stock_scrap_tier_validation.field_stock_scrap__reviewer_ids
+msgid "Reviewers"
+msgstr "Revisores"
+
+#. module: stock_scrap_tier_validation
+#: model:ir.model,name:stock_scrap_tier_validation.model_stock_scrap
+msgid "Scrap"
+msgstr "Desecho"
+
+#. module: stock_scrap_tier_validation
+#: model_terms:ir.ui.view,arch_db:stock_scrap_tier_validation.view_stock_scrap_filter
+msgid "Scraps validated and ready to be confirmed"
+msgstr "Recortes validados y listos para ser confirmados"
+
+#. module: stock_scrap_tier_validation
+#: model:ir.model,name:stock_scrap_tier_validation.model_tier_definition
+msgid "Tier Definition"
+msgstr "Definición del nivel"
+
+#. module: stock_scrap_tier_validation
+#: model:mail.message.subtype,name:stock_scrap_tier_validation.stock_scrap_tier_validation_accepted
+msgid "Tier Validation Accepted Notification"
+msgstr "Notificación de Validación de Nivel Aceptada"
+
+#. module: stock_scrap_tier_validation
+#: model:mail.message.subtype,name:stock_scrap_tier_validation.stock_scrap_tier_validation_rejected
+msgid "Tier Validation Rejected Notification"
+msgstr "Validación de nivel Notificación rechazada"
+
+#. module: stock_scrap_tier_validation
+#: model:mail.message.subtype,name:stock_scrap_tier_validation.stock_scrap_tier_validation_requested
+msgid "Tier Validation Requested"
+msgstr "Validación de nivel solicitada"
+
+#. module: stock_scrap_tier_validation
+#: model:ir.model.fields,field_description:stock_scrap_tier_validation.field_stock_scrap__to_validate_message
+msgid "To Validate Message"
+msgstr "Para validar el mensaje"
+
+#. module: stock_scrap_tier_validation
+#: model:ir.model.fields,field_description:stock_scrap_tier_validation.field_stock_scrap__validated
+#: model_terms:ir.ui.view,arch_db:stock_scrap_tier_validation.view_stock_scrap_filter
+msgid "Validated"
+msgstr "Validado"
+
+#. module: stock_scrap_tier_validation
+#: model:ir.model.fields,field_description:stock_scrap_tier_validation.field_stock_scrap__validated_message
+msgid "Validated Message"
+msgstr "Mensaje Validado"
+
+#. module: stock_scrap_tier_validation
+#: model:ir.model.fields,field_description:stock_scrap_tier_validation.field_stock_scrap__validation_status
+msgid "Validation Status"
+msgstr "Estado de validación"
+
+#. module: stock_scrap_tier_validation
+#: model:ir.model.fields,field_description:stock_scrap_tier_validation.field_stock_scrap__review_ids
+msgid "Validations"
+msgstr "Validaciones"
