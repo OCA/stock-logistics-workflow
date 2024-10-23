@@ -42,24 +42,30 @@ jobs:
           - container: ghcr.io/oca/oca-ci/py3.10-odoo16.0:latest
             include: "stock_picking_to_batch_group_fields"
             name: test with Odoo
+            id: 1
           - container: ghcr.io/oca/oca-ci/py3.10-ocb16.0:latest
             include: "stock_picking_to_batch_group_fields"
             name: test with OCB
             makepot: "true"
+            id: 2
           - container: ghcr.io/oca/oca-ci/py3.10-odoo16.0:latest
             include: "stock_customer_deposit,stock_customer_deposit_elaboration,stock_customer_deposit_sale_margin"
             name: test with Odoo
+            id: 3
           - container: ghcr.io/oca/oca-ci/py3.10-ocb16.0:latest
             include: "stock_customer_deposit,stock_customer_deposit_elaboration,stock_customer_deposit_sale_margin"
             name: test with OCB
             makepot: "true"
+            id: 4
           - container: ghcr.io/oca/oca-ci/py3.10-odoo16.0:latest
             exclude: "stock_picking_to_batch_group_fields,stock_customer_deposit,stock_customer_deposit_elaboration,stock_customer_deposit_sale_margin,product_expiry_simple"
             name: test with Odoo
+            id: 5
           - container: ghcr.io/oca/oca-ci/py3.10-ocb16.0:latest
             exclude: "stock_picking_to_batch_group_fields,stock_customer_deposit,stock_customer_deposit_elaboration,stock_customer_deposit_sale_margin,product_expiry_simple"
             name: test with OCB
             makepot: "true"
+            id: 6
     services:
       postgres:
         image: postgres:12.0
@@ -85,10 +91,53 @@ jobs:
       - name: Initialize test db
         run: oca_init_test_database
       - name: Run tests
-        run: oca_run_tests
+        id: run_tests
+        run: oca_run_tests 2>&1 | tee odoo-${{matrix.id}}.log
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: odoo-${{matrix.id}}-log
+          path: odoo-${{matrix.id}}.log
       - uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Update .pot files
         run: oca_export_and_push_pot https://x-access-token:${{ secrets.GIT_PUSH_TOKEN }}@github.com/${{ github.repository }}
         if: ${{ matrix.makepot == 'true' && github.event_name == 'push' && github.repository_owner == 'OCA' }}
+  
+  # merge:
+  #   runs-on: ubuntu-latest
+  #   needs: test
+  #   steps:
+  #     - name: Merge Artifacts
+  #       uses: actions/upload-artifact/merge@v4
+  #       with:
+  #         name: my-amazing-merged-artifact
+  #         pattern: odoo-*
+  #         delete-merged: true
+  #         retention-days: 1
+
+  checklog:
+    needs: test
+    runs-on: ubuntu-22.04
+    name: checklog-odoo
+    steps:
+      - name: Download
+        uses: actions/download-artifact@v4
+      - name: Finding files
+        id: finding-files        
+        run: |
+          {
+            echo 'FILELIST<<EOF'
+            find . -name '*.log' -print 
+            echo EOF
+          } >> "$GITHUB_ENV"
+      - name: Check logs
+        run: |
+          pip install checklog-odoo
+          echo $FILELIST
+          {
+          for x in $FILELIST; do
+            checklog-odoo $x
+          done
+          }
