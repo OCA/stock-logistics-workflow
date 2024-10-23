@@ -1,0 +1,52 @@
+# Copyright 2017 Pedro M. Baeza <pedro.baeza@tecnativa.com>
+# Copyright 2018 David Vidal <david.vidal@tecnativa.com>
+# Copyright 2020 Tecnativa - Sergio Teruel
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
+from odoo import models
+
+
+class StockMove(models.Model):
+    _inherit = "stock.move"
+
+    def _get_auto_fill_flag(self):
+        return self.picking_id.auto_fill_operation
+
+    def _get_avoid_lot_assignment_flag(self):
+        return self.picking_id.picking_type_id.avoid_lot_assignment
+
+    def _prepare_move_line_vals(self, quantity=None, reserved_quant=None):
+        """
+        Auto-assign as done the quantity proposed for the lots.
+        Keep this method to avoid extra write after picking _action_assign
+        """
+        self.ensure_one()
+        res = super()._prepare_move_line_vals(quantity, reserved_quant)
+        if not self._get_auto_fill_flag():
+            return res
+        if self._get_avoid_lot_assignment_flag() and res.get("lot_id"):
+            return res
+        if self.quantity != self.product_uom_qty:
+            # Not assign qty_done for extra moves in over processed quantities
+            res.update({"quantity": res.get("reserved_uom_qty", 0.0)})
+        return res
+
+    def _action_assign(self, force_qty=False):
+        """
+        Update stock move line quantity done field with reserved quantity.
+        This method take into account incoming and outgoing moves.
+        We can not use _prepare_move_line_vals method because this method only
+        is called for a new lines.
+        """
+        res = super()._action_assign(force_qty=force_qty)
+        for line in self.filtered(
+            lambda m: m.state
+            in ["confirmed", "assigned", "waiting", "partially_available"]
+        ):
+            if line._should_bypass_reservation() or not line._get_auto_fill_flag():
+                return res
+            lines_to_update = line.move_line_ids.filtered(lambda li: not li.picked)
+            for move_line in lines_to_update:
+                if not line._get_avoid_lot_assignment_flag() or not move_line.lot_id:
+                    move_line.picked = True
+        return res
