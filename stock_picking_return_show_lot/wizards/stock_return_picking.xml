@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2022 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="stock_return_picking_form_view">
+        <field
+            name="name"
+        >stock.return.picking.form (in stock_picking_return_show_lot)</field>
+        <field name="model">stock.return.picking</field>
+        <field name="inherit_id" ref="stock.view_stock_return_picking_form" />
+        <field name="arch" type="xml">
+            <field name="move_id" position="after">
+                <field name="lot_ids" widget="many2many_tags" />
+            </field>
+        </field>
+    </record>
+
+</odoo>
