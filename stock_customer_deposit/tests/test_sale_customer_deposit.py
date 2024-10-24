@@ -98,6 +98,8 @@ class TestSaleCustomerDeposits(TestStockCustomerDepositCommon):
         so.picking_ids.action_assign()
         so.picking_ids.action_set_quantities_to_reservation()
         so.picking_ids.button_validate()
+        # Check valuation layers has been created when creating a deposit
+        self.assertTrue(so.picking_ids.move_ids.stock_valuation_layer_ids)
         for partner, products in self.result_test.items():
             for product, quantity in products.items():
                 self.assertEqual(
