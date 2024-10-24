@@ -116,6 +116,7 @@ Contributors
 ------------
 
 -  Emilio Pascual (`Moduon <https://www.moduon.team/>`__)
+-  Eduardo de Miguel (`Moduon <https://www.moduon.team/>`__)
 
 Maintainers
 -----------
