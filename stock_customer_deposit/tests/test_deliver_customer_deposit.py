@@ -297,6 +297,26 @@ class TestDeliverCustomerDeposits(TestStockCustomerDepositCommon):
                 )
 
     @users("user_customer_deposit")
+    def test_deliver_customer_deposit_no_valuation_layers(self):
+        """Test no valuation layers has been created when deliver a deposit."""
+        so_form = Form(self.env["sale.order"])
+        so_form.partner_id = self.partner1
+        so_form.warehouse_id = self.warehouse
+        product_qty_dict = {self.productA: 1.0}
+        for product, qty in product_qty_dict.items():
+            with so_form.order_line.new() as line:
+                line.product_id = product
+                line.product_uom_qty = qty
+        so = so_form.save()
+        so.action_confirm()
+        so.picking_ids.action_confirm()
+        so.picking_ids.action_assign()
+        so.picking_ids.action_set_quantities_to_reservation()
+        so.picking_ids.button_validate()
+        # Check valuation layers has not been created
+        self.assertFalse(so.picking_ids.move_ids.stock_valuation_layer_ids)
+
+    @users("user_customer_deposit")
     def test_actions(self):
         self.assertEqual(self.partner1.customer_deposit_count, 2)
         domain = self.partner1.action_view_customer_deposits()["domain"]
