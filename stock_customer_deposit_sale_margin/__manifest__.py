@@ -4,7 +4,7 @@
 {
     "name": "Stock Customer Deposit Sale Margin",
     "summary": "Set purchase price to zero when deliver customer deposit",
-    "version": "16.0.1.0.1",
+    "version": "16.0.1.0.2",
     "development_status": "Alpha",
     "category": "Uncategorized",
     "website": "https://github.com/OCA/stock-logistics-workflow",
