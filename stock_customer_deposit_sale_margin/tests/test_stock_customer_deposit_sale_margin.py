@@ -28,7 +28,7 @@ class TestCustomeDepostiSaleMargin(TestStockCustomerDepositCommon):
         so_form.partner_id = self.partner1
         so_form.warehouse_id = self.warehouse
         product_qty_dict = {
-            self.productA: 50.0,
+            self.productA: 100.0,
             self.productB: 130.0,
             self.productC: 90.0,
         }
