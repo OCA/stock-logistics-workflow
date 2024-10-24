@@ -39,6 +39,17 @@ class StockMove(models.Model):
             StockMove, (moves_customer_deposits - moves_owner).with_context(owner=False)
         )._action_assign(force_qty=force_qty)
 
+    def _get_out_move_lines(self):
+        """Also consider as "out" move lines to those that belongs to
+        a picking type that assigns owners
+        and are in a location that should be valued."""
+        res = super()._get_out_move_lines()
+        for move in self.filtered(lambda m: m.picking_type_id.assign_owner):
+            res |= move.move_line_ids.filtered(
+                lambda ml: ml.location_id._should_be_valued()
+            )
+        return res
+
 
 class StockMoveLine(models.Model):
     _inherit = "stock.move.line"
