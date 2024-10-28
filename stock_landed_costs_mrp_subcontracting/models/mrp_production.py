@@ -19,4 +19,4 @@ class MrpProduction(models.Model):
                     # incorrect moves, not linked to the actual picking that
                     # is being proposed.
                     if move_dest.is_subcontract:
-                        move_dest.write({"move_orig_ids": [(6, 0, finished_move.ids)]})
+                        move_dest.move_orig_ids |= finished_move
