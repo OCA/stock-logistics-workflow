@@ -5,7 +5,7 @@
 # Copyright 2020 Manuel Calero - Tecnativa
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
-from odoo import api, fields, models
+from odoo import Command, api, fields, models
 
 
 class AccountMove(models.Model):
@@ -72,14 +72,13 @@ class AccountMoveLine(models.Model):
     )
 
     def copy_data(self, default=None):
-        """Copy the move_line_ids in case of refund invoice creating a new invoice
-        (refund_method="modify").
-        """
-        self.ensure_one()
-        res = super().copy_data(default=default)
-        if (
-            self.env.context.get("force_copy_stock_moves")
-            and "move_line_ids" not in res
-        ):
-            res[0]["move_line_ids"] = [(6, 0, self.move_line_ids.ids)]
-        return res
+        """Copy the move_line_ids in case of refund invoice creating new invoices
+        (refund_method="modify") for multiple records."""
+        vals_list = super().copy_data(default)
+
+        if self.env.context.get("force_copy_stock_moves"):
+            for record, vals in zip(self, vals_list, strict=False):
+                if "move_line_ids" not in vals and record.move_line_ids:
+                    vals["move_line_ids"] = [Command.set(record.move_line_ids.ids)]
+
+        return vals_list
