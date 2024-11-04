@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_stock_landed_cost_form" model="ir.ui.view">
+        <field name="model">stock.landed.cost</field>
+        <field name="inherit_id" ref="stock_landed_costs.view_stock_landed_cost_form" />
+        <field name="arch" type="xml">
+            <field name="name" position="before">
+                <field name="priority" widget="priority" class="mr-3" />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_stock_landed_cost_tree" model="ir.ui.view">
+        <field name="model">stock.landed.cost</field>
+        <field name="inherit_id" ref="stock_landed_costs.view_stock_landed_cost_tree" />
+        <field name="arch" type="xml">
+            <field name="name" position="before">
+                <field name="priority" widget="priority" optional="show" nolabel="1" />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_stock_landed_cost_tree2" model="ir.ui.view">
+        <field name="model">stock.landed.cost</field>
+        <field
+            name="inherit_id"
+            ref="stock_landed_costs.view_stock_landed_cost_tree2"
+        />
+        <field name="arch" type="xml">
+            <field name="name" position="before">
+                <field name="priority" widget="priority" optional="show" nolabel="1" />
+            </field>
+        </field>
+    </record>
+
+    <record id="stock_landed_cost_view_kanban" model="ir.ui.view">
+        <field name="model">stock.landed.cost</field>
+        <field
+            name="inherit_id"
+            ref="stock_landed_costs.stock_landed_cost_view_kanban"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//span[@t-esc='record.name.value']" position="before">
+                <field name="priority" widget="priority" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_stock_landed_cost_search" model="ir.ui.view">
+        <field name="model">stock.landed.cost</field>
+        <field
+            name="inherit_id"
+            ref="stock_landed_costs.view_stock_landed_cost_search"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='date']" position="after">
+                <separator />
+                <filter
+                    name="priority"
+                    string="Priority"
+                    domain="[('priority', '=', '1')]"
+                />
+                <filter
+                    name="non_priority"
+                    string="Non-Priority"
+                    domain="[('priority', '=', '0')]"
+                />
+            </xpath>
+            <xpath expr="//group" position="inside">
+                <filter
+                    string="Priority"
+                    name="group_by_priority"
+                    context="{'group_by': 'priority'}"
+                />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
