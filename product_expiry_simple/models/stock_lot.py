@@ -12,7 +12,7 @@ class StockLot(models.Model):
     _inherit = "stock.lot"
 
     use_expiry_date = fields.Boolean(related="product_id.use_expiry_date", store=True)
-    expiry_date = fields.Date()
+    expiry_date = fields.Date(tracking=True)
     expired = fields.Boolean(compute="_compute_expired")
 
     @api.constrains("use_expiry_date", "expiry_date")
