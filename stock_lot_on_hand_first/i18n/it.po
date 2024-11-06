@@ -18,6 +18,7 @@ msgstr ""
 
 #. module: stock_lot_on_hand_first
 #: model:ir.model.fields,field_description:stock_lot_on_hand_first.field_stock_move__display_lots_on_hand_first
+#: model:ir.model.fields,field_description:stock_lot_on_hand_first.field_stock_move_line__display_lots_on_hand_first
 #: model:ir.model.fields,field_description:stock_lot_on_hand_first.field_stock_picking__display_lots_on_hand_first
 #: model:ir.model.fields,field_description:stock_lot_on_hand_first.field_stock_picking_type__display_lots_on_hand_first
 msgid "Display Lots On Hand First"
@@ -34,6 +35,11 @@ msgid "Picking Type"
 msgstr "Tipologia prelievo"
 
 #. module: stock_lot_on_hand_first
+#: model:ir.model,name:stock_lot_on_hand_first.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: stock_lot_on_hand_first
 #: model:ir.model,name:stock_lot_on_hand_first.model_stock_move
 msgid "Stock Move"
 msgstr "Movimento di magazzino"
@@ -45,6 +51,7 @@ msgstr "Trasferimento"
 
 #. module: stock_lot_on_hand_first
 #: model:ir.model.fields,help:stock_lot_on_hand_first.field_stock_move__display_lots_on_hand_first
+#: model:ir.model.fields,help:stock_lot_on_hand_first.field_stock_move_line__display_lots_on_hand_first
 #: model:ir.model.fields,help:stock_lot_on_hand_first.field_stock_picking__display_lots_on_hand_first
 #: model:ir.model.fields,help:stock_lot_on_hand_first.field_stock_picking_type__display_lots_on_hand_first
 msgid ""
