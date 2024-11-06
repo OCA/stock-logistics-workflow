@@ -10,10 +10,10 @@ class SaleOrderGlobalStockRouteTest(TransactionCase):
         super().setUpClass()
         cls.partner = cls.env["res.partner"].create({"name": "Test"})
         cls.product1 = cls.env["product.product"].create(
-            {"name": "test_product1", "type": "product"}
+            {"name": "test_product1", "type": "consu", "is_storable": True}
         )
         cls.product2 = cls.env["product.product"].create(
-            {"name": "test_product2", "type": "product"}
+            {"name": "test_product2", "type": "consu", "is_storable": True}
         )
         cls.route1 = cls.env["stock.route"].create(
             {"name": "test_route_1", "sale_selectable": "True"}
@@ -61,7 +61,7 @@ class SaleOrderGlobalStockRouteTest(TransactionCase):
         self.order["route_id"] = self.route1.id
         for line in self.order.order_line:
             line.global_stock_route_product_id_change()
-            self.assertTrue(line.route_id == self.route1)
+            self.assertEqual(line.route_id, self.order.route_id)
 
     def test_routes_without_onchange(self):
         new_order = self.env["sale.order"].create(
@@ -102,3 +102,20 @@ class SaleOrderGlobalStockRouteTest(TransactionCase):
         new_order.write({"route_id": self.route2.id})
         for line in new_order.order_line:
             self.assertTrue(line.route_id == self.route2)
+
+    def test_create_order_line_inherits_route_id(self):
+        sale_order = self.env["sale.order"].create(
+            {
+                "partner_id": self.partner.id,
+                "route_id": self.route1.id,
+            }
+        )
+        order_line = self.env["sale.order.line"].create(
+            [
+                {
+                    "order_id": sale_order.id,
+                    "product_id": self.product1.id,
+                }
+            ]
+        )
+        self.assertEqual(order_line.route_id, sale_order.route_id)
