@@ -89,6 +89,25 @@ class TestStockPickingWarnMessage(TransactionCase):
             picking.picking_warn_msg, self.warn_msg_parent + "\n" + self.warn_msg
         )
 
+    def test_compute_picking_warn_when_no_warning(self):
+        partner = self.env["res.partner"].create(
+            {
+                "name": "Customer with no message",
+                "picking_warn": "no-message",
+            }
+        )
+        picking = self.env["stock.picking"].create(
+            {
+                "partner_id": partner.id,
+                "state": "draft",
+                "picking_type_id": self.picking_type_out.id,
+                "location_id": self.picking_type_out.default_location_src_id.id,
+                "location_dest_id": self.customer_location.id,
+            }
+        )
+        picking._compute_picking_warn_msg()
+        self.assertFalse(picking.picking_warn_msg)
+
     def test_compute_picking_warn(self):
         location_id = self.picking_type_out.default_location_src_id.id
         picking = self.env["stock.picking"].create(
@@ -141,3 +160,35 @@ class TestStockPickingWarnMessage(TransactionCase):
         # the one from the parent
         self.parent.update({"picking_warn": "warning"})
         self.assertEqual(picking.picking_warn, "warning")
+
+    def test_compute_picking_warn_when_done_or_cancel(self):
+        location_id = self.picking_type_out.default_location_src_id.id
+        picking = self.env["stock.picking"].create(
+            {
+                "partner_id": self.partner.id,
+                "picking_type_id": self.picking_type_out.id,
+                "location_id": self.picking_type_out.default_location_src_id.id,
+                "location_dest_id": self.customer_location.id,
+                "move_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": self.product.name,
+                            "product_id": self.product.id,
+                            "product_uom": self.product.uom_id.id,
+                            "product_uom_qty": 1,
+                            "location_id": location_id,
+                            "location_dest_id": self.customer_location.id,
+                        },
+                    ),
+                ],
+            }
+        )
+        picking.write({"state": "done"})
+        picking._compute_picking_warn()
+        self.assertEqual(picking.picking_warn, "no-message")
+
+        picking.write({"state": "cancel"})
+        picking._compute_picking_warn()
+        self.assertEqual(picking.picking_warn, "no-message")
