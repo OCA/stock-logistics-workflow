@@ -56,6 +56,7 @@ class AccountMoveLine(models.Model):
         column2="move_id",
         string="Related Stock Moves",
         readonly=True,
+        copy=False,
         help="Related stock moves "
         "(only when the invoice has been generated from a sale order).",
     )
