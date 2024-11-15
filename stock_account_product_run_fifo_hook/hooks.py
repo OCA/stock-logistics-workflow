@@ -24,7 +24,9 @@ def post_load_hook():
         tmp_value = 0  # to accumulate the value taken on the candidates
         taken_data = {}
         for candidate in candidates:
-            qty_taken_on_candidate = min(qty_to_take_on_candidates, candidate.remaining_qty)
+            qty_taken_on_candidate = self._get_qty_taken_on_candidate(
+                qty_to_take_on_candidates, candidate
+            )
             taken_data[candidate.id] = {"quantity": qty_taken_on_candidate}
             candidate_unit_cost = candidate.remaining_value / candidate.remaining_qty
             new_standard_price = candidate_unit_cost
