@@ -55,7 +55,7 @@ class TestWeight(TestShippingWeightCommon):
         # Check shipping weight knowing there is no shipping weight on the package
         self.assertEqual(picking.shipping_weight, 16)
         pack.shipping_weight = 6
-        picking.invalidate_cache(["shipping_weight"])
+        picking.invalidate_model(["shipping_weight"])
         self.assertEqual(picking.shipping_weight, 15)
         picking._action_done()
         # Check the manualy set weight is not lost when quants are inserted in the package
