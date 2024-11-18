@@ -27,3 +27,8 @@ msgstr "Correzione di %s (modificha dei vecchi movimenti)"
 #: model:ir.model,name:stock_account_product_run_fifo_hook.model_product_product
 msgid "Product Variant"
 msgstr "Variante prodotto"
+
+#. module: stock_account_product_run_fifo_hook
+#: model:ir.model,name:stock_account_product_run_fifo_hook.model_stock_valuation_layer
+msgid "Stock Valuation Layer"
+msgstr ""
