@@ -3,3 +3,4 @@
   - Vicent Cubells
   - Carlos Roca
 - Nils Coenen \<<nils.coenen@nico-solutions.de>\>
+- Frederic Grall \<<fgr@apik.cloud>>
