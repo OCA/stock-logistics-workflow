@@ -127,7 +127,7 @@ class StockMove(models.Model):
         for dst in self.move_orig_ids:
             if dst.id not in seen and dst.state != "cancel":
                 seen.add(dst.id)
-                dst._rollup_move_origs(seen)
+                dst._rollup_not_cancelled_move_origs(seen)
         return seen
 
     def write(self, vals):
