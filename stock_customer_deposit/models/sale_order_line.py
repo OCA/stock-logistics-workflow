@@ -28,6 +28,7 @@ class SaleOrderLine(models.Model):
         "product_id", "warehouse_id.use_customer_deposits", "order_id.customer_deposit"
     )
     def _compute_route_id(self):
+        """Set route_id to customer deposit route if use_customer_deposits is True"""
         for line in self:
             line.route_id = (
                 line.warehouse_id.customer_deposit_route_id

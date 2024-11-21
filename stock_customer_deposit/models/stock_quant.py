@@ -4,6 +4,7 @@
 
 from odoo import api, models
 from odoo.osv import expression
+from odoo.tools import float_compare
 
 
 class StockQuant(models.Model):
@@ -47,7 +48,9 @@ class StockQuant(models.Model):
         owner_id=None,
         in_date=None,
     ):
-        if quantity > 0 and self.env.context.get("owner", False):
+        if float_compare(
+            quantity, 0.0, precision_rounding=product_id.uom_id.rounding
+        ) > 0 and self.env.context.get("owner", False):
             owner_id = (
                 owner_id
                 or self.env["res.partner"].browse(self.env.context.get("owner"))
