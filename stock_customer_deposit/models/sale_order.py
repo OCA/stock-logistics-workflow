@@ -4,6 +4,7 @@
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.tools import float_compare
 
 
 class SaleOrder(models.Model):
@@ -25,27 +26,25 @@ class SaleOrder(models.Model):
 
     def _action_confirm(self):
         self._check_can_customer_deposit()
-        deposit_lines = self.order_line.filtered(
-            lambda line: line.deposit_available_qty > 0.0 and line.product_uom_qty > 0.0
-        )
-        if not deposit_lines:
-            return super()._action_confirm()
-        if deposit_lines.filtered(
-            lambda line: line.route_id == line.warehouse_id.customer_deposit_route_id
-        ):
-            raise ValidationError(
-                _(
-                    "You can't use customer deposit for products with the route"
-                    " 'Customer Deposit'."
-                )
-            )
-        for order in self:
+        for order in self.filtered(lambda o: not o.customer_deposit):
             deposit_lines = order.order_line.filtered(
-                lambda line: line.deposit_available_qty > 0.0
-                and line.product_uom_qty > 0.0
+                lambda line: float_compare(
+                    line.deposit_available_qty,
+                    0.0,
+                    precision_rounding=line.product_id.uom_id.rounding,
+                )
+                > 0
+                and float_compare(
+                    line.product_uom_qty,
+                    0.0,
+                    precision_rounding=line.product_id.uom_id.rounding,
+                )
+                > 0
             )
+            # Normal order
             if not deposit_lines:
                 continue
+            # Taking from deposit order
             quants_by_product = self.env["stock.quant"].read_group(
                 domain=order._get_customer_deposit_domain(),
                 fields=["available_quantity"],
@@ -58,10 +57,17 @@ class SaleOrder(models.Model):
                 for quant_by_product in quants_by_product
             }
             for product in deposit_lines.mapped("product_id"):
-                if product_deposit.get(product.id, 0.0) < sum(
-                    deposit_lines.filtered(
-                        lambda line: line.product_id.id == product.id
-                    ).mapped("product_uom_qty")
+                if (
+                    float_compare(
+                        product_deposit.get(product.id, 0.0),
+                        sum(
+                            deposit_lines.filtered(
+                                lambda line: line.product_id.id == product.id
+                            ).mapped("product_uom_qty")
+                        ),
+                        precision_rounding=product.uom_id.rounding,
+                    )
+                    < 0
                 ):
                     raise ValidationError(
                         _(
@@ -71,32 +77,38 @@ class SaleOrder(models.Model):
                             product=product.name,
                         )
                     )
-        return super(SaleOrder, self)._action_confirm()
+        return super()._action_confirm()
 
     def _check_can_customer_deposit(self):
-        if self.filtered("customer_deposit").order_line.filtered(
-            lambda line: line.product_id.type == "product"
-            and line.route_id != line.warehouse_id.customer_deposit_route_id
-        ):
-            raise ValidationError(
-                _(
-                    "All lines coming from orders marked as 'Customer depot' must"
-                    " have Customer deposit route."
-                )
+        """Check if the order is valid to perform a deposit or take from deposit"""
+        for order in self:
+            product_lines = order.order_line.filtered(
+                lambda line: line.product_id.type == "product"
             )
-
-        if self.order_line.filtered(
-            lambda line: line.product_id.type == "product"
-            and line.warehouse_id.customer_deposit_route_id
-            and not line.order_id.customer_deposit
-            and line.route_id == line.warehouse_id.customer_deposit_route_id
-        ):
-            raise ValidationError(
-                _(
-                    "You cannot select Customer Deposit route in an order line if you"
-                    " do not mark the order as a customer depot."
-                )
-            )
+            if order.customer_deposit:
+                # Perform deposit
+                if product_lines.filtered(
+                    lambda line: line.route_id
+                    != line.warehouse_id.customer_deposit_route_id
+                ):
+                    raise ValidationError(
+                        _(
+                            "All lines coming from orders marked as 'Customer depot' must"
+                            " have Customer deposit route."
+                        )
+                    )
+            elif order.warehouse_id.customer_deposit_route_id:
+                # Take from deposit
+                if product_lines.filtered(
+                    lambda line: line.route_id
+                    == line.warehouse_id.customer_deposit_route_id
+                ):
+                    raise ValidationError(
+                        _(
+                            "You cannot select Customer Deposit route in an order line if you"
+                            " do not mark the order as a customer depot."
+                        )
+                    )
 
     def _get_customer_deposit_domain(self):
         return [
