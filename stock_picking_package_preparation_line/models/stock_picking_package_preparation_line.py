@@ -78,9 +78,12 @@ class StockPickingPackagePreparationLine(models.Model):
                 if not self.search([('move_id', '=', move_line.id)],
                                    count=True):
                     lot_id = move_line.move_line_ids.mapped('lot_id')
+                    line_name = move_line.name
+                    if move_line.location_dest_id.usage != "customer":
+                        line_name = move_line.product_id.display_name
                     lines.append({
                         'move_id': move_line.id,
-                        'name': move_line.name,
+                        'name': line_name,
                         'product_id': move_line.product_id.id,
                         'product_uom_qty': move_line.product_uom_qty,
                         'product_uom_id': move_line.product_uom.id,
