@@ -4,7 +4,8 @@ from collections import defaultdict
 from datetime import datetime
 
 from odoo import _
-from odoo.tools import float_is_zero
+from odoo.exceptions import UserError
+from odoo.tools import clean_context, float_compare, float_is_zero, float_round
 
 from odoo.addons.stock_account.models.product import ProductProduct
 from odoo.addons.stock_account.models.stock_move import StockMove
@@ -30,10 +31,11 @@ def post_load_hook():
             taken_data[candidate.id] = {"quantity": qty_taken_on_candidate}
             candidate_unit_cost = candidate.remaining_value / candidate.remaining_qty
             new_standard_price = candidate_unit_cost
-            value_taken_on_candidate = qty_taken_on_candidate * candidate_unit_cost
-            value_taken_on_candidate = candidate.currency_id.round(
-                value_taken_on_candidate
+            # HOOK value taken on candidate
+            value_taken_on_candidate = candidate._fifo_new_get_value_taken_on_candidate(
+                qty_taken_on_candidate, candidate_unit_cost
             )
+            # END HOOK value taken on candidate
             taken_data[candidate.id].update(
                 {
                     "value": value_taken_on_candidate,
@@ -194,12 +196,13 @@ def post_load_hook():
                     candidate_unit_cost = (
                         candidate.remaining_value / candidate.remaining_qty
                     )
+                    # HOOK value taken on candidate
                     value_taken_on_candidate = (
-                        qty_taken_on_candidate * candidate_unit_cost
+                        candidate._fifo_vacuum_get_value_taken_on_candidate(
+                            qty_taken_on_candidate, candidate_unit_cost
+                        )
                     )
-                    value_taken_on_candidate = candidate.currency_id.round(
-                        value_taken_on_candidate
-                    )
+                    # END HOOK value taken on candidate
 
                     taken_data[candidate.id].update(
                         {
@@ -255,7 +258,11 @@ def post_load_hook():
                 if svl_to_vacuum.currency_id.is_zero(corrected_value):
                     continue
 
-                corrected_value = svl_to_vacuum.currency_id.round(corrected_value)
+                # HOOK: round corrected value
+                corrected_value = svl_to_vacuum._fifo_vacuum_get_corrected_value(
+                    corrected_value
+                )
+                # END HOOK: round corrected value
 
                 move = svl_to_vacuum.stock_move_id
                 new_svl_vals = (
@@ -304,6 +311,208 @@ def post_load_hook():
     if not hasattr(ProductProduct, "_run_fifo_vacuum_original"):
         ProductProduct._run_fifo_vacuum_original = ProductProduct._run_fifo_vacuum
     ProductProduct._run_fifo_vacuum = _run_fifo_vacuum_new
+
+    def _prepare_out_svl_vals_new(self, quantity, company):
+        """Prepare the values for a stock valuation layer created by a delivery.
+
+        :param quantity: the quantity to value, expressed in `self.uom_id`
+        :return: values to use in a call to create
+        :rtype: dict
+        """
+        self.ensure_one()
+        company_id = self.env.context.get("force_company", self.env.company.id)
+        company = self.env["res.company"].browse(company_id)
+        currency = company.currency_id
+        # Quantity is negative for out valuation layers.
+        quantity = -1 * quantity
+        vals = {
+            "product_id": self.id,
+            "value": self._get_rounded_value(quantity, currency),  # HOOK: rounded value
+            "unit_cost": self.standard_price,
+            "quantity": quantity,
+        }
+        fifo_vals = self._run_fifo(abs(quantity), company)
+        vals["remaining_qty"] = fifo_vals.get("remaining_qty")
+        # In case of AVCO, fix rounding issue of standard price when needed.
+        if self.product_tmpl_id.cost_method == "average" and not float_is_zero(
+            self.quantity_svl, precision_rounding=self.uom_id.rounding
+        ):
+            # HOOK: rounding error
+            rounding_error = self._get_rounded_error(currency, quantity)
+            # END HOOK: rounding error
+            if rounding_error:
+                # If it is bigger than the (smallest number of the currency * quantity) / 2,
+                # then it isn't a rounding error but a stock valuation error, we shouldn't fix it under the hood ...
+                if abs(rounding_error) <= max(
+                    (abs(quantity) * currency.rounding) / 2, currency.rounding
+                ):
+                    vals["value"] += rounding_error
+                    vals["rounding_adjustment"] = "\nRounding Adjustment: %s%s %s" % (
+                        "+" if rounding_error > 0 else "",
+                        float_repr(
+                            rounding_error, precision_digits=currency.decimal_places
+                        ),
+                        currency.symbol,
+                    )
+        if self.product_tmpl_id.cost_method == "fifo":
+            vals.update(fifo_vals)
+        return vals
+
+    def _change_standard_price_new(self, new_price):
+        """Helper to create the stock valuation layers and the account moves
+        after an update of standard price.
+
+        :param new_price: new standard price
+        """
+        # Handle stock valuation layers.
+
+        if self.filtered(lambda p: p.valuation == "real_time") and not self.env[
+            "stock.valuation.layer"
+        ].check_access_rights("read", raise_exception=False):
+            raise UserError(
+                _(
+                    "You cannot update the cost of a product in automated valuation as it leads to the creation of a journal entry, for which you don't have the access rights."
+                )
+            )
+
+        svl_vals_list = []
+        company_id = self.env.company
+        price_unit_prec = self.env["decimal.precision"].precision_get("Product Price")
+        rounded_new_price = float_round(new_price, precision_digits=price_unit_prec)
+        for product in self:
+            if product.cost_method not in ("standard", "average"):
+                continue
+            quantity_svl = product.sudo().quantity_svl
+            if (
+                float_compare(
+                    quantity_svl, 0.0, precision_rounding=product.uom_id.rounding
+                )
+                <= 0
+            ):
+                continue
+            value_svl = product.sudo().value_svl
+            # HOOK: value diff
+            value = product._get_change_price_diff_value(
+                company_id, rounded_new_price, quantity_svl, value_svl
+            )
+            # END HOOK: value diff
+            if company_id.currency_id.is_zero(value):
+                continue
+
+            # pylint: disable=W8120
+            svl_vals = {
+                "company_id": company_id.id,
+                "product_id": product.id,
+                "description": _("Product value manually modified (from %s to %s)")
+                % (product.standard_price, rounded_new_price),
+                "value": value,
+                "quantity": 0,
+            }
+            svl_vals_list.append(svl_vals)
+        stock_valuation_layers = (
+            self.env["stock.valuation.layer"].sudo().create(svl_vals_list)
+        )
+
+        # Handle account moves.
+        product_accounts = {
+            product.id: product.product_tmpl_id.get_product_accounts()
+            for product in self
+        }
+        am_vals_list = []
+        for stock_valuation_layer in stock_valuation_layers:
+            product = stock_valuation_layer.product_id
+            value = stock_valuation_layer.value
+
+            if product.type != "product" or product.valuation != "real_time":
+                continue
+
+            # Sanity check.
+            if not product_accounts[product.id].get("expense"):
+                raise UserError(
+                    _("You must set a counterpart account on your product category.")
+                )
+            if not product_accounts[product.id].get("stock_valuation"):
+                raise UserError(
+                    _(
+                        "You don't have any stock valuation account defined on your product category. You must define one before processing this operation."
+                    )
+                )
+
+            if value < 0:
+                debit_account_id = product_accounts[product.id]["expense"].id
+                credit_account_id = product_accounts[product.id]["stock_valuation"].id
+            else:
+                debit_account_id = product_accounts[product.id]["stock_valuation"].id
+                credit_account_id = product_accounts[product.id]["expense"].id
+
+            move_vals = {
+                "journal_id": product_accounts[product.id]["stock_journal"].id,
+                "company_id": company_id.id,
+                "ref": product.default_code,
+                "stock_valuation_layer_ids": [(6, None, [stock_valuation_layer.id])],
+                "move_type": "entry",
+                "line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": _(
+                                "%(user)s changed cost from %(previous)s to %(new_price)s - %(product)s",
+                                user=self.env.user.name,
+                                previous=product.standard_price,
+                                new_price=new_price,
+                                product=product.display_name,
+                            ),
+                            "account_id": debit_account_id,
+                            "debit": abs(value),
+                            "credit": 0,
+                            "product_id": product.id,
+                            "quantity": 0,
+                        },
+                    ),
+                    (
+                        0,
+                        0,
+                        {
+                            "name": _(
+                                "%(user)s changed cost from %(previous)s to %(new_price)s - %(product)s",
+                                user=self.env.user.name,
+                                previous=product.standard_price,
+                                new_price=new_price,
+                                product=product.display_name,
+                            ),
+                            "account_id": credit_account_id,
+                            "debit": 0,
+                            "credit": abs(value),
+                            "product_id": product.id,
+                            "quantity": 0,
+                        },
+                    ),
+                ],
+            }
+            am_vals_list.append(move_vals)
+
+        # pylint: disable=W8121
+        account_moves = (
+            self.env["account.move"]
+            .sudo()
+            .with_context(clean_context(self._context))
+            .create(am_vals_list)
+        )
+        if account_moves:
+            account_moves._post()
+
+    if not hasattr(ProductProduct, "_prepare_out_svl_vals_original"):
+        ProductProduct._prepare_out_svl_vals_original = (
+            ProductProduct._prepare_out_svl_vals
+        )
+    ProductProduct._prepare_out_svl_vals = _prepare_out_svl_vals_new
+
+    if not hasattr(ProductProduct, "_change_standard_price_original"):
+        ProductProduct._change_standard_price_original = (
+            ProductProduct._change_standard_price
+        )
+    ProductProduct._change_standard_price = _change_standard_price_new
 
     def _create_out_svl_new(self, forced_quantity=None):
         """Create a `stock.valuation.layer` from `self`.

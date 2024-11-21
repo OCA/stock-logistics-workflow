@@ -18,3 +18,21 @@ class StockValuationLayer(models.Model):
             ).create(values)
         else:
             return super().create(values)
+
+    def _fifo_new_get_value_taken_on_candidate(
+        self, qty_taken_on_candidate, candidate_unit_cost
+    ):
+        value_taken_on_candidate = qty_taken_on_candidate * candidate_unit_cost
+        value_taken_on_candidate = self.currency_id.round(value_taken_on_candidate)
+        return value_taken_on_candidate
+
+    def _fifo_vacuum_get_value_taken_on_candidate(
+        self, qty_taken_on_candidate, candidate_unit_cost
+    ):
+        value_taken_on_candidate = qty_taken_on_candidate * candidate_unit_cost
+        value_taken_on_candidate = self.currency_id.round(value_taken_on_candidate)
+        return value_taken_on_candidate
+
+    def _fifo_vacuum_get_corrected_value(self, corrected_value):
+        corrected_value = self.currency_id.round(corrected_value)
+        return corrected_value
