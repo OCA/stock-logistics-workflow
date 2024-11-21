@@ -1,0 +1,58 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_restrict_expiration_date
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2025-04-02 19:06+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.10.2\n"
+
+#. module: stock_restrict_expiration_date
+#: model:ir.model.fields,field_description:stock_restrict_expiration_date.field_stock_move__display_name
+#: model:ir.model.fields,field_description:stock_restrict_expiration_date.field_stock_quant__display_name
+#: model:ir.model.fields,field_description:stock_restrict_expiration_date.field_stock_rule__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: stock_restrict_expiration_date
+#: model:ir.model.fields,field_description:stock_restrict_expiration_date.field_stock_move__id
+#: model:ir.model.fields,field_description:stock_restrict_expiration_date.field_stock_quant__id
+#: model:ir.model.fields,field_description:stock_restrict_expiration_date.field_stock_rule__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_restrict_expiration_date
+#: model:ir.model.fields,field_description:stock_restrict_expiration_date.field_stock_move____last_update
+#: model:ir.model.fields,field_description:stock_restrict_expiration_date.field_stock_quant____last_update
+#: model:ir.model.fields,field_description:stock_restrict_expiration_date.field_stock_rule____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: stock_restrict_expiration_date
+#: model:ir.model,name:stock_restrict_expiration_date.model_stock_quant
+msgid "Quants"
+msgstr "Quanti"
+
+#. module: stock_restrict_expiration_date
+#: model:ir.model.fields,field_description:stock_restrict_expiration_date.field_stock_move__restrict_expiration_date
+msgid "Restrict Expiration date"
+msgstr "Limita data scadenza"
+
+#. module: stock_restrict_expiration_date
+#: model:ir.model,name:stock_restrict_expiration_date.model_stock_move
+msgid "Stock Move"
+msgstr "Movimento di magazzino"
+
+#. module: stock_restrict_expiration_date
+#: model:ir.model,name:stock_restrict_expiration_date.model_stock_rule
+msgid "Stock Rule"
+msgstr "Regola di giacenza"
