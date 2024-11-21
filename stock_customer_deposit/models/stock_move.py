@@ -3,6 +3,7 @@
 
 
 from odoo import models
+from odoo.tools import float_compare
 
 
 class StockMove(models.Model):
@@ -11,32 +12,47 @@ class StockMove(models.Model):
     def _action_assign(self, force_qty=False):
         if self.env.context.get("owner", False):
             return super(StockMove, self)._action_assign(force_qty=force_qty)
-        # moves from warehouse with customer deposits activate
-        moves_customer_deposits = self.filtered(
-            lambda move: move.warehouse_id.use_customer_deposits
+
+        # Warehouse not configured to use customer deposits
+        no_deposit_config_moves = self.filtered(
+            lambda move: not move.warehouse_id.use_customer_deposits
         )
-        # moves with warehouse that have deactivated customer deposits should not do anything.
-        super(StockMove, self - moves_customer_deposits)._action_assign(
-            force_qty=force_qty
+        super(StockMove, no_deposit_config_moves)._action_assign(force_qty=force_qty)
+        # Warehouse configured to use customer deposits
+        deposit_config_moves = self - no_deposit_config_moves
+        # Move needs to create deposit
+        moves_push_deposit_route = deposit_config_moves.filtered(
+            lambda move: move.warehouse_id.customer_deposit_route_id in move.route_ids
         )
-        # moves with warehouse that have activated customer deposits must assign owner
-        moves_owner = moves_customer_deposits.filtered(
-            lambda m: self.env["stock.quant"]._get_available_quantity(
-                m.product_id,
-                m.location_id,
-                owner_id=m.partner_id.commercial_partner_id or m.partner_id,
+        # Move needs to take from deposit or stock
+        moves_pull_from_stock = deposit_config_moves - moves_push_deposit_route
+        for move in moves_pull_from_stock:
+            # Check if move can take from deposit
+            move_owner_qty = move._get_available_quantity(
+                move.location_id,
+                lot_id=None,
+                package_id=None,
+                owner_id=move.partner_id.commercial_partner_id or move.partner_id,
+                strict=False,
+                allow_negative=False,
             )
-            > 0.0
-        )
-        for move in moves_owner:
-            super(
-                StockMove,
-                move.with_context(
-                    owner=move.partner_id.commercial_partner_id.id or move.partner_id.id
-                ),
-            )._action_assign(force_qty=force_qty)
+            owner = False
+            if (
+                float_compare(
+                    move_owner_qty,
+                    move.product_uom_qty,
+                    precision_rounding=move.product_uom.rounding,
+                )
+                >= 0
+            ):
+                # Enough qty to take from deposit: Propagate assign with owner context
+                owner = move.partner_id.commercial_partner_id.id or move.partner_id.id
+            super(StockMove, move.with_context(owner=owner))._action_assign(
+                force_qty=force_qty
+            )
+
         return super(
-            StockMove, (moves_customer_deposits - moves_owner).with_context(owner=False)
+            StockMove, moves_push_deposit_route.with_context(owner=False)
         )._action_assign(force_qty=force_qty)
 
     def _get_out_move_lines(self):
