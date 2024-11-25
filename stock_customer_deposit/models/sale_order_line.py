@@ -3,6 +3,7 @@
 
 
 from odoo import _, api, fields, models
+from odoo.tools import float_compare
 
 
 class SaleOrderLine(models.Model):
@@ -67,15 +68,42 @@ class SaleOrderLine(models.Model):
             line.deposit_allowed_qty = line.deposit_available_qty - line.product_uom_qty
 
     @api.depends(
-        "product_id", "product_uom", "product_uom_qty", "deposit_available_qty"
+        "product_id",
+        "product_uom",
+        "product_uom_qty",
+        "deposit_available_qty",
+        "warehouse_id.use_customer_deposits",
+        "order_id.customer_deposit",
+        "pricelist_item_id",
+        "order_id.pricelist_id",
     )
     def _compute_discount(self):
-        """Set discount to 100% if use_customer_deposit is True
-        because customer paid before for them."""
+        """Apply 100% discount when customer is taking from customer deposit"""
         res = super()._compute_discount()
         for line in self:
-            if line.deposit_available_qty:
-                line.discount = 100.0
+            if (
+                line.warehouse_id.use_customer_deposits
+                and line.product_id.type == "product"
+            ):
+                if line.order_id.customer_deposit:
+                    # Customer deposit: Pricelist choose the price and discount
+                    pricelist = (
+                        line.pricelist_item_id.pricelist_id
+                        or line.order_id.pricelist_id
+                    )
+                    if pricelist.discount_policy == "with_discount":
+                        line.discount = 0.0
+                    continue
+
+                if (
+                    float_compare(
+                        line.deposit_available_qty,
+                        0.0,
+                        precision_rounding=line.product_id.uom_id.rounding,
+                    )
+                    > 0
+                ):
+                    line.discount = 100.0
         return res
 
     @api.depends("qty_invoiced", "qty_delivered", "product_uom_qty", "state")
