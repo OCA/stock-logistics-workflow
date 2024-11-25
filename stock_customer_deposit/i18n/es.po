@@ -1,21 +1,21 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* stock_customer_deposits
+# 	* stock_customer_deposit
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0+e\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-11 11:27+0000\n"
-"PO-Revision-Date: 2024-03-11 12:28+0100\n"
-"Last-Translator: Emilio Pascual <emilio@moduom.team>\n"
+"POT-Creation-Date: 2024-11-25 09:30+0000\n"
+"PO-Revision-Date: 2024-11-25 10:30+0100\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #. module: stock_customer_deposit
 #. odoo-python
@@ -35,12 +35,8 @@ msgstr "%s Secuencia depósito cliente"
 #. odoo-python
 #: code:addons/stock_customer_deposit/models/sale_order.py:0
 #, python-format
-msgid ""
-"All lines coming from orders marked as 'Customer depot' must have Customer "
-"deposit route."
-msgstr ""
-"Todas las líneas de los pedidos marcados como 'Depósito de cliente' debe "
-"tener la ruta 'Depósito de Cliente\"."
+msgid "All lines coming from orders marked as 'Customer depot' must have Customer deposit route."
+msgstr "Todas las líneas de los pedidos marcados como 'Depósito de cliente' debe tener la ruta 'Depósito de Cliente\"."
 
 #. module: stock_customer_deposit
 #: model:ir.model.fields,field_description:stock_customer_deposit.field_stock_picking_type__assign_owner
@@ -79,8 +75,7 @@ msgstr "Tipo operación Depósito de Cliente"
 
 #. module: stock_customer_deposit
 #. odoo-python
-#: code:addons/stock_customer_deposit/models/res_partner.py:0
-#: code:addons/stock_customer_deposit/models/sale_order.py:0
+#: code:addons/stock_customer_deposit/models/res_partner.py:0 code:addons/stock_customer_deposit/models/sale_order.py:0
 #: code:addons/stock_customer_deposit/models/sale_order_line.py:0
 #: model_terms:ir.ui.view,arch_db:stock_customer_deposit.view_order_form_inherit_customer_deposit
 #: model_terms:ir.ui.view,arch_db:stock_customer_deposit.view_sales_order_filter_inherit_stock_customer_deposit
@@ -108,15 +103,18 @@ msgstr "Depósitos"
 
 #. module: stock_customer_deposit
 #: model:ir.model.fields,help:stock_customer_deposit.field_stock_picking_type__assign_owner
-msgid ""
-"If checked, the owner of the picking will be the partner of the picking."
-msgstr ""
-"Si está marcado, el propietario del albarán será el contacto del albarán."
+msgid "If checked, the owner of the picking will be the partner of the picking."
+msgstr "Si está marcado, el propietario del albarán será el contacto del albarán."
 
 #. module: stock_customer_deposit
 #: model:ir.model,name:stock_customer_deposit.model_stock_picking_type
 msgid "Picking Type"
-msgstr "Tipo de operación"
+msgstr "Tipo de albarán"
+
+#. module: stock_customer_deposit
+#: model:ir.model,name:stock_customer_deposit.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Movimientos de Producto (Stock Move Line)"
 
 #. module: stock_customer_deposit
 #: model:ir.model,name:stock_customer_deposit.model_product_product
@@ -136,7 +134,7 @@ msgstr "Cantidad del producto disponible del depósito del cliente."
 #. module: stock_customer_deposit
 #: model:ir.model,name:stock_customer_deposit.model_stock_quant
 msgid "Quants"
-msgstr "Existencia"
+msgstr ""
 
 #. module: stock_customer_deposit
 #: model:ir.model.fields,field_description:stock_customer_deposit.field_sale_order_line__route_id
@@ -151,12 +149,17 @@ msgstr "Pedido de venta"
 #. module: stock_customer_deposit
 #: model:ir.model,name:stock_customer_deposit.model_sale_order_line
 msgid "Sales Order Line"
-msgstr "Línea de pedido de venta"
+msgstr "Línea de Orden de Venta"
 
 #. module: stock_customer_deposit
 #: model:ir.model,name:stock_customer_deposit.model_stock_move
 msgid "Stock Move"
 msgstr "Movimiento de existencias"
+
+#. module: stock_customer_deposit
+#: model:ir.model,name:stock_customer_deposit.model_stock_rule
+msgid "Stock Rule"
+msgstr "Regla de Inventario"
 
 #. module: stock_customer_deposit
 #: model:ir.model,name:stock_customer_deposit.model_stock_picking
@@ -178,36 +181,17 @@ msgstr "Almacén"
 #. odoo-python
 #: code:addons/stock_customer_deposit/models/sale_order.py:0
 #, python-format
-msgid ""
-"You can't add more than the quantity of %(product)s from the customer's "
-"deposit. If the customer wants more, create a new order after confirming "
-"this one."
+msgid "You cannot select Customer Deposit route in an order line if you do not mark the order as a customer depot."
 msgstr ""
-"No puede añadir más cantidad del producto %(product)s del depósito de "
-"cliente. Si el cliente quiere más, cree un nuevo pedido después de confirmar "
-"este."
+"No puede seleccionar la ruta Depósito de cliente en una línea de pedido si no marca el pedido como depósito de cliente."
 
 #. module: stock_customer_deposit
 #. odoo-python
 #: code:addons/stock_customer_deposit/models/sale_order.py:0
 #, python-format
 msgid ""
-"You can't use customer deposit for products with the route 'Customer "
-"Deposit'."
+"You're trying to sell more than what's available in the customer's deposit for '%(product)s'.\n"
+"You can either adjust the quantity to fit what's available or create a new order to increase the deposit before proceeding."
 msgstr ""
-"No puede usar Depósito de cliente para productos con la ruta 'Depósito de "
-"cliente'."
-
-#. module: stock_customer_deposit
-#. odoo-python
-#: code:addons/stock_customer_deposit/models/sale_order.py:0
-#, python-format
-msgid ""
-"You cannot select Customer Deposit route in an order line if you do not mark "
-"the order as a customer depot."
-msgstr ""
-"No puede seleccionar la ruta Depósito de cliente en una línea de pedido si "
-"no marca el pedido como depósito de cliente."
-
-#~ msgid "Deposit Availiable Qty"
-#~ msgstr "Cantidad de depósito disponible"
+"Estás intentando vender más de lo que hay disponible en el depósito del cliente para '%(product)s'.\n"
+"Puedes ajustar la cantidad a lo disponible o crear un nuevo pedido para aumentar el depósito antes de continuar."
