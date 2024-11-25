@@ -71,9 +71,11 @@ class SaleOrder(models.Model):
                 ):
                     raise ValidationError(
                         _(
-                            "You can't add more than the quantity of %(product)s"
-                            " from the customer's deposit. If the customer wants"
-                            " more, create a new order after confirming this one.",
+                            "You're trying to sell more than what's available "
+                            "in the customer's deposit for '%(product)s'.\n"
+                            "You can either adjust the quantity to fit what's "
+                            "available or create a new order to increase the "
+                            "deposit before proceeding.",
                             product=product.name,
                         )
                     )
