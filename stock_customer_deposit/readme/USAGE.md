@@ -7,13 +7,14 @@ Create Customer deposits:
 3. Activate **customer deposit** in quotation.
 4. Add storable product in order lines.
 5. Add quantity you will keep as a deposit.
-6. *Confirm* quotation.
-7. Sale is now ready for invoicing.
-8. A picking will be created. This picking is an operation Customer Deposit and it's **internal** operation.
-9. Click on smart button with delivery.
-10. Set quantity done in operations or click on **Set Quantities**.
-11. Update location destination if it's necessary in operations detailed.
-12. Click on **Validate**.
+6. Discount will be applied following Odoo rules.
+7. *Confirm* quotation.
+8. Sale is now ready for invoicing.
+9. A picking will be created. This picking is an operation Customer Deposit and it's **internal** operation.
+10. Click on smart button with delivery.
+11. Set quantity done in operations or click on **Set Quantities**.
+12. Update location destination if it's necessary in operations detailed.
+13. Click on **Validate**.
 
 View Customer deposits:
 
