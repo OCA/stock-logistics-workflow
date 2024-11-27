@@ -2,14 +2,15 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from freezegun import freeze_time
 
-from odoo.tests.common import TransactionCase
+from odoo.exceptions import UserError
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestPartnerDeliveryWindow(TransactionCase):
+class TestPartnerDeliveryWindow(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.customer_anytime = cls.env["res.partner"].create(
             {"name": "Anytime", "delivery_time_preference": "anytime"}
         )
@@ -75,11 +76,12 @@ class TestPartnerDeliveryWindow(TransactionCase):
         self.assertIsNone(onchange_res)
         # But warning on saturday
         workdays_picking.scheduled_date = "2020-04-04"  # Saturday
-        onchange_res = workdays_picking._onchange_scheduled_date()
-        self.assertIn("warning", onchange_res)
+        with self.assertRaises(UserError) as error:
+            workdays_picking._onchange_scheduled_date()
+        self.assertIn("The scheduled date", error.exception.args[0])
         self.assertIn(
             "the partner is set to prefer deliveries on working days",
-            onchange_res["warning"]["message"],
+            error.exception.args[0],
         )
         # No warning on preferred time window
         time_window_picking = self._create_delivery_picking(self.customer_time_window)
@@ -87,8 +89,9 @@ class TestPartnerDeliveryWindow(TransactionCase):
         onchange_res = time_window_picking._onchange_scheduled_date()
         self.assertIsNone(onchange_res)
         time_window_picking.scheduled_date = "2020-04-03"  # Friday
-        onchange_res = time_window_picking._onchange_scheduled_date()
-        self.assertTrue("warning" in onchange_res.keys())
+        with self.assertRaises(UserError) as error:
+            onchange_res = time_window_picking._onchange_scheduled_date()
+        self.assertTrue("The scheduled date" in error.exception.args[0])
 
     @freeze_time("2020-04-02 07:59:59")  # Thursday
     def test_with_timezone_dst(self):
@@ -103,9 +106,11 @@ class TestPartnerDeliveryWindow(TransactionCase):
         # Frozen time is in UTC so 2020-04-02 07:59:59 == 2020-04-02 09:59:59
         #  in Brussels which is preferred
         picking = self._create_delivery_picking(self.customer_time_window)
-        onchange_res = picking._onchange_scheduled_date()
+        with self.assertRaises(UserError) as error:
+            onchange_res = picking._onchange_scheduled_date()
         self.assertTrue(
-            isinstance(onchange_res, dict) and "warning" in onchange_res.keys()
+            isinstance(error.exception.args[0], str)
+            and "The scheduled date" in error.exception.args[0]
         )
         # Scheduled date is in UTC so 2020-04-02 08:00:00 == 2020-04-02 10:00:00
         #  in Brussels which is preferred
@@ -125,9 +130,11 @@ class TestPartnerDeliveryWindow(TransactionCase):
         # Scheduled date is in UTC so 2020-04-02 14:00:01 == 2020-04-02 16:00:01
         #  in Brussels which is preferred
         picking.scheduled_date = "2020-04-02 14:00:01"
-        onchange_res = picking._onchange_scheduled_date()
+        with self.assertRaises(UserError) as error:
+            onchange_res = picking._onchange_scheduled_date()
         self.assertTrue(
-            isinstance(onchange_res, dict) and "warning" in onchange_res.keys()
+            isinstance(error.exception.args[0], str)
+            and "The scheduled date" in error.exception.args[0]
         )
 
     @freeze_time("2020-03-26 08:59:59")  # Thursday
@@ -143,9 +150,11 @@ class TestPartnerDeliveryWindow(TransactionCase):
         # Frozen time is in UTC so 2020-03-26 08:59:59 == 2020-04-02 09:59:59
         #  in Brussels which is preferred
         picking = self._create_delivery_picking(self.customer_time_window)
-        onchange_res = picking._onchange_scheduled_date()
+        with self.assertRaises(UserError) as error:
+            onchange_res = picking._onchange_scheduled_date()
         self.assertTrue(
-            isinstance(onchange_res, dict) and "warning" in onchange_res.keys()
+            isinstance(error.exception.args[0], str)
+            and "The scheduled date" in error.exception.args[0]
         )
         # Scheduled date is in UTC so 2020-03-26 09:00:00 == 2020-04-02 10:00:00
         #  in Brussels which is preferred
@@ -167,9 +176,11 @@ class TestPartnerDeliveryWindow(TransactionCase):
         # Scheduled date is in UTC so 2020-03-26 15:00:01 == 2020-04-02 16:00:01
         #  in Brussels which is not preferred
         picking.scheduled_date = "2020-03-26 15:00:01"
-        onchange_res = picking._onchange_scheduled_date()
+        with self.assertRaises(UserError) as error:
+            onchange_res = picking._onchange_scheduled_date()
         self.assertTrue(
-            isinstance(onchange_res, dict) and "warning" in onchange_res.keys()
+            isinstance(error.exception.args[0], str)
+            and "The scheduled date" in error.exception.args[0]
         )
 
     def test_copy_partner_with_time_window_ids(self):
