@@ -14,7 +14,6 @@ WORKDAYS = list(range(5))
 
 
 class ResPartner(models.Model):
-
     _inherit = "res.partner"
 
     delivery_time_preference = fields.Selection(

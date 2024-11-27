@@ -39,7 +39,7 @@ class StockPicking(models.Model):
             if partner:
                 for w in partner.get_delivery_windows().get(partner.id):
                     delivery_windows_strings.append(
-                        "  * {} ({})".format(w.display_name, partner.tz)
+                        f"  * {w.display_name} ({partner.tz})"
                     )
             message = _(
                 "The scheduled date is {date} ({tz}), but the partner is "
