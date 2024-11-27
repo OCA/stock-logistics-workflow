@@ -4,3 +4,4 @@
 Trobz
 
 - Dung Tran \<<dungtd@trobz.com>\>
+- Vo Hong Thien \<<thienvh@trobz.com>\>

@@ -81,6 +81,7 @@ Contributors
 Trobz
 
 -  Dung Tran <dungtd@trobz.com>
+-  Vo Hong Thien <thienvh@trobz.com>
 
 Other credits
 -------------
@@ -88,6 +89,9 @@ Other credits
 The development of this module has been financially supported by:
 
 -  Camptocamp
+
+The migration of this module from 16.0 to 18.0 was financially supported
+by Camptocamp.
 
 Maintainers
 -----------

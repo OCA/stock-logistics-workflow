@@ -1,6 +1,7 @@
 # Copyright 2020 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
-from odoo import _, api, models
+from odoo import api, models
+from odoo.exceptions import UserError
 from odoo.tools.misc import format_datetime
 
 
@@ -20,17 +21,16 @@ class StockPicking(models.Model):
         if not partner or anytime_delivery or outgoing_picking:
             return
         if not partner.is_in_delivery_window(self._planned_delivery_date()):
-            return {"warning": self._scheduled_date_no_delivery_window_match_msg()}
+            raise UserError(self._scheduled_date_no_delivery_window_match_msg())
 
     def _scheduled_date_no_delivery_window_match_msg(self):
         scheduled_date = self.scheduled_date
         formatted_scheduled_date = format_datetime(self.env, scheduled_date)
         partner = self.partner_id
         if partner.delivery_time_preference == "workdays":
-            message = _(
+            message = self.env._(
                 "The scheduled date is {date} ({weekday}), but the partner is "
-                "set to prefer deliveries on working days."
-            ).format(
+                "set to prefer deliveries on working days.",
                 date=formatted_scheduled_date,
                 weekday=scheduled_date.weekday(),
             )
@@ -41,17 +41,11 @@ class StockPicking(models.Model):
                     delivery_windows_strings.append(
                         f"  * {w.display_name} ({partner.tz})"
                     )
-            message = _(
+            message = self.env._(
                 "The scheduled date is {date} ({tz}), but the partner is "
-                "set to prefer deliveries on following time windows:\n{window}"
-            ).format(
+                "set to prefer deliveries on following time windows:\n{window}",
                 date=format_datetime(self.env, self.scheduled_date),
                 tz=self.env.context.get("tz"),
                 window="\n".join(delivery_windows_strings),
             )
-        return {
-            "title": _(
-                "Scheduled date does not match partner's Delivery window preference."
-            ),
-            "message": message,
-        }
+        return message
