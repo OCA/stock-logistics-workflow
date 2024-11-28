@@ -8,7 +8,7 @@ class CommonStockPickingAutoCreateLot:
         elements = []
         for element in element_list:
             if element in elements:
-                raise Exception("Element %s is not unique in list" % element)
+                raise Exception(f"Element {element} is not unique in list")
             elements.append(element)
 
     @classmethod
@@ -27,9 +27,10 @@ class CommonStockPickingAutoCreateLot:
         return cls.env["product.product"].create(
             {
                 "name": name,
-                "type": "product",
+                "type": "consu",
                 "tracking": tracking,
                 "auto_create_lot": auto,
+                "is_storable": True,
             }
         )
 
