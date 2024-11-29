@@ -62,8 +62,6 @@ class ReturnPickingLine(models.TransientModel):
                 and line.move_id.origin_returned_move_id != stock_move
             ):
                 continue
-            if line.state in {"partially_available", "assigned"}:
-                qty -= line.reserved_qty
-            elif line.state == "done":
-                qty -= line.qty_done
+            if line.state in {"partially_available", "assigned", "done"}:
+                qty -= line.quantity
         return max(qty, 0.0)

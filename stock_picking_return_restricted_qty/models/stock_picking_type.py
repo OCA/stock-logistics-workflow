@@ -12,5 +12,4 @@ class StockPickingType(models.Model):
             "Enable this option to restrict returning more quantities "
             "than delivered."
         ),
-        default=False,
     )
