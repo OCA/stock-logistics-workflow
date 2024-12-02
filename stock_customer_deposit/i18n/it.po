@@ -54,7 +54,6 @@ msgstr "Contatto"
 #. module: stock_customer_deposit
 #. odoo-python
 #: code:addons/stock_customer_deposit/models/stock_warehouse.py:0
-#: code:addons/stock_customer_deposit/models/stock_warehouse.py:0
 #: model:ir.model.fields,field_description:stock_customer_deposit.field_sale_order__customer_deposit
 #, python-format
 msgid "Customer Deposit"
@@ -188,32 +187,37 @@ msgstr "Magazzino"
 #: code:addons/stock_customer_deposit/models/sale_order.py:0
 #, python-format
 msgid ""
-"You can't add more than the quantity of %(product)s from the customer's "
-"deposit. If the customer wants more, create a new order after confirming "
-"this one."
-msgstr ""
-"Non si può aggiungere più quantità del prodotto %(product)s dal deposito del "
-"cliente. Se il cliente ne viole di più, creare un nuovo ordine dopo la "
-"conferma di questo."
-
-#. module: stock_customer_deposit
-#. odoo-python
-#: code:addons/stock_customer_deposit/models/sale_order.py:0
-#, python-format
-msgid ""
-"You can't use customer deposit for products with the route 'Customer "
-"Deposit'."
-msgstr ""
-"non si può utilizzare un deposito cliente per prodotti con il percosro "
-"'Deposito cliente'."
-
-#. module: stock_customer_deposit
-#. odoo-python
-#: code:addons/stock_customer_deposit/models/sale_order.py:0
-#, python-format
-msgid ""
-"You cannot select Customer Deposit route in an order line if you do not mark"
-" the order as a customer depot."
+"You cannot select Customer Deposit route in an order line if you do not mark "
+"the order as a customer depot."
 msgstr ""
 "Non si può selezionare il percorso deposito cliente in una riga ordine se "
 "non si imposta l'ordine come un deposito cliente."
+
+#. module: stock_customer_deposit
+#. odoo-python
+#: code:addons/stock_customer_deposit/models/sale_order.py:0
+#, python-format
+msgid ""
+"You're trying to sell more than what's available in the customer's deposit "
+"for '%(product)s'.\n"
+"You can either adjust the quantity to fit what's available or create a new "
+"order to increase the deposit before proceeding."
+msgstr ""
+
+#, python-format
+#~ msgid ""
+#~ "You can't add more than the quantity of %(product)s from the customer's "
+#~ "deposit. If the customer wants more, create a new order after confirming "
+#~ "this one."
+#~ msgstr ""
+#~ "Non si può aggiungere più quantità del prodotto %(product)s dal deposito "
+#~ "del cliente. Se il cliente ne viole di più, creare un nuovo ordine dopo "
+#~ "la conferma di questo."
+
+#, python-format
+#~ msgid ""
+#~ "You can't use customer deposit for products with the route 'Customer "
+#~ "Deposit'."
+#~ msgstr ""
+#~ "non si può utilizzare un deposito cliente per prodotti con il percosro "
+#~ "'Deposito cliente'."
