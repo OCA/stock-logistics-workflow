@@ -35,8 +35,12 @@ msgstr "%s Secuencia depósito cliente"
 #. odoo-python
 #: code:addons/stock_customer_deposit/models/sale_order.py:0
 #, python-format
-msgid "All lines coming from orders marked as 'Customer depot' must have Customer deposit route."
-msgstr "Todas las líneas de los pedidos marcados como 'Depósito de cliente' debe tener la ruta 'Depósito de Cliente\"."
+msgid ""
+"All lines coming from orders marked as 'Customer depot' must have Customer "
+"deposit route."
+msgstr ""
+"Todas las líneas de los pedidos marcados como 'Depósito de cliente' debe "
+"tener la ruta 'Depósito de Cliente\"."
 
 #. module: stock_customer_deposit
 #: model:ir.model.fields,field_description:stock_customer_deposit.field_stock_picking_type__assign_owner
@@ -75,7 +79,8 @@ msgstr "Tipo operación Depósito de Cliente"
 
 #. module: stock_customer_deposit
 #. odoo-python
-#: code:addons/stock_customer_deposit/models/res_partner.py:0 code:addons/stock_customer_deposit/models/sale_order.py:0
+#: code:addons/stock_customer_deposit/models/res_partner.py:0
+#: code:addons/stock_customer_deposit/models/sale_order.py:0
 #: code:addons/stock_customer_deposit/models/sale_order_line.py:0
 #: model_terms:ir.ui.view,arch_db:stock_customer_deposit.view_order_form_inherit_customer_deposit
 #: model_terms:ir.ui.view,arch_db:stock_customer_deposit.view_sales_order_filter_inherit_stock_customer_deposit
@@ -103,8 +108,10 @@ msgstr "Depósitos"
 
 #. module: stock_customer_deposit
 #: model:ir.model.fields,help:stock_customer_deposit.field_stock_picking_type__assign_owner
-msgid "If checked, the owner of the picking will be the partner of the picking."
-msgstr "Si está marcado, el propietario del albarán será el contacto del albarán."
+msgid ""
+"If checked, the owner of the picking will be the partner of the picking."
+msgstr ""
+"Si está marcado, el propietario del albarán será el contacto del albarán."
 
 #. module: stock_customer_deposit
 #: model:ir.model,name:stock_customer_deposit.model_stock_picking_type
@@ -181,17 +188,24 @@ msgstr "Almacén"
 #. odoo-python
 #: code:addons/stock_customer_deposit/models/sale_order.py:0
 #, python-format
-msgid "You cannot select Customer Deposit route in an order line if you do not mark the order as a customer depot."
+msgid ""
+"You cannot select Customer Deposit route in an order line if you do not mark "
+"the order as a customer depot."
 msgstr ""
-"No puede seleccionar la ruta Depósito de cliente en una línea de pedido si no marca el pedido como depósito de cliente."
+"No puede seleccionar la ruta Depósito de cliente en una línea de pedido si "
+"no marca el pedido como depósito de cliente."
 
 #. module: stock_customer_deposit
 #. odoo-python
 #: code:addons/stock_customer_deposit/models/sale_order.py:0
 #, python-format
 msgid ""
-"You're trying to sell more than what's available in the customer's deposit for '%(product)s'.\n"
-"You can either adjust the quantity to fit what's available or create a new order to increase the deposit before proceeding."
+"You're trying to sell more than what's available in the customer's deposit "
+"for '%(product)s'.\n"
+"You can either adjust the quantity to fit what's available or create a new "
+"order to increase the deposit before proceeding."
 msgstr ""
-"Estás intentando vender más de lo que hay disponible en el depósito del cliente para '%(product)s'.\n"
-"Puedes ajustar la cantidad a lo disponible o crear un nuevo pedido para aumentar el depósito antes de continuar."
+"Estás intentando vender más de lo que hay disponible en el depósito del "
+"cliente para '%(product)s'.\n"
+"Puedes ajustar la cantidad a lo disponible o crear un nuevo pedido para "
+"aumentar el depósito antes de continuar."
