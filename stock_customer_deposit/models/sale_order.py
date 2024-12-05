@@ -28,7 +28,8 @@ class SaleOrder(models.Model):
         self._check_can_customer_deposit()
         for order in self.filtered(lambda o: not o.customer_deposit):
             deposit_lines = order.order_line.filtered(
-                lambda line: float_compare(
+                lambda line: not line.display_type
+                and float_compare(
                     line.deposit_available_qty,
                     0.0,
                     precision_rounding=line.product_id.uom_id.rounding,
