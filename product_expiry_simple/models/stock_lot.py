@@ -55,9 +55,7 @@ class StockLot(models.Model):
             if lot.expiry_date:
                 expiry_date_print = format_date(self.env, lot.expiry_date)
                 if lot.expiry_date < today:
-                    dname = _(
-                        "[%(date)s Expired] %(lot)s", date=expiry_date_print, lot=dname
-                    )
+                    dname = _("[%(date)s ⚠] %(lot)s", date=expiry_date_print, lot=dname)
                 else:
                     dname = "[%s] %s" % (expiry_date_print, dname)
             res.append((lot.id, dname))
