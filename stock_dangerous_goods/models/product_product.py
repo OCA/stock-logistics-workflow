@@ -18,6 +18,6 @@ class ProductProduct(models.Model):
             "l10n_eu_product_adr_dangerous_goods.limited_amount_1"
         )
         for record in self:
-            record.is_lq_product = bool(
+            record.is_lq_product = (
                 record.is_dangerous and record.limited_amount_id == limited_amount_lq
             )
