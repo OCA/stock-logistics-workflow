@@ -139,5 +139,9 @@ msgstr ""
 #. odoo-python
 #: code:addons/product_expiry_simple/models/stock_lot.py:0
 #, python-format
-msgid "[%(date)s Expired] %(lot)s"
-msgstr "[Scaduto %(date)s] %(lot)s"
+msgid "[%(date)s ⚠] %(lot)s"
+msgstr ""
+
+#, python-format
+#~ msgid "[%(date)s Expired] %(lot)s"
+#~ msgstr "[Scaduto %(date)s] %(lot)s"
