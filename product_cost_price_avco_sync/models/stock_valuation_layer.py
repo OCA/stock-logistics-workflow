@@ -141,6 +141,10 @@ class StockValuationLayer(models.Model):
             accumulated_qty = accumulated_qty + svl_dic["quantity"]
             accumulated_value = accumulated_value + svl_dic["value"]
 
+    def _get_flush_excluded_fields(self):
+        """Helper method to get the fields that won't be rounded in the flush."""
+        return []
+
     def _get_monetary_fields(self):
         """Helper method to get the fields to round to currency precision."""
         return ["unit_cost", "value"]
@@ -153,21 +157,22 @@ class StockValuationLayer(models.Model):
             for field_name, new_value in svl_dic.items():
                 if field_name == "id":
                     continue
-                # Currency decimal precision for values and high precision to others
-                elif field_name in self._get_monetary_fields():
-                    prec_digits = svl.currency_id.decimal_places
-                else:
-                    prec_digits = 8
-                if svl[field_name] != 0.0 and float_is_zero(
-                    new_value, precision_digits=prec_digits
-                ):
-                    vals[field_name] = 0.0
-                elif float_compare(
-                    svl[field_name],
-                    new_value,
-                    precision_digits=prec_digits,
-                ):
+                elif field_name in self._get_flush_excluded_fields():
                     vals[field_name] = new_value
+                else:
+                    # Currency decimal precision for values and high precision to others
+                    if field_name in self._get_monetary_fields():
+                        prec_digits = svl.currency_id.decimal_places
+                    else:
+                        prec_digits = 8
+                    if svl[field_name] != 0.0 and float_is_zero(
+                        new_value, precision_digits=prec_digits
+                    ):
+                        vals[field_name] = 0.0
+                    elif float_compare(
+                        svl[field_name], new_value, precision_digits=prec_digits
+                    ):
+                        vals[field_name] = new_value
             # Write modified fields
             if vals:
                 svl.with_context(skip_avco_sync=skip_avco_sync).write(vals)
@@ -310,6 +315,15 @@ class StockValuationLayer(models.Model):
         ):
             self.stock_move_id.price_unit = self.unit_cost
 
+    def _is_manual_adjustment(self):
+        self.ensure_one()
+        return (
+            not self.unit_cost
+            and not self.quantity
+            and not self.stock_move_id
+            and self.description
+        )
+
     def _process_avco_sync_one(self, svls_dic, dry=False):  # noqa: C901
         """Process the syncronization of the current SVL in self. If this method is
         executed, the sync is processable. If you need to block this processing,
@@ -419,15 +433,10 @@ class StockValuationLayer(models.Model):
             )
             svl_dic["previous_qty"] += self.quantity
         # Manual standard_price adjustment line in layer
-        elif (
-            not self.unit_cost
-            and not self.quantity
-            and not self.stock_move_id
-            and self.description
-        ):
-            svl_dic["unit_cost_processed"] = True
+        elif self._is_manual_adjustment():
             match_price = re.findall(r"[+-]?[0-9]+\.[0-9]+\)$", self.description)
             if match_price:
+                svl_dic["unit_cost_processed"] = True
                 standard_price = float(match_price[0][:-1])
                 # TODO: Review abs in previous_qty or new_diff
                 new_diff = standard_price - svl_dic["previous_unit_cost"]
