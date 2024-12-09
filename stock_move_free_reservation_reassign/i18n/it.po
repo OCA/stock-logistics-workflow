@@ -1,0 +1,51 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_move_free_reservation_reassign
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2023-11-17 09:33+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: stock_move_free_reservation_reassign
+#: model:ir.model.fields,field_description:stock_move_free_reservation_reassign.field_res_config_settings__reassign_stock_move_after_free_reservation
+msgid ""
+"Automatically reassign stock move after free reservation due to inventory "
+"adjustment"
+msgstr ""
+"Riassegna automaticamnte il movimento di magazzino dopo annullamento "
+"prenotazione per rettifica di inventario"
+
+#. module: stock_move_free_reservation_reassign
+#: model:ir.model,name:stock_move_free_reservation_reassign.model_res_config_settings
+msgid "Config Settings"
+msgstr "Impostazioni configurazione"
+
+#. module: stock_move_free_reservation_reassign
+#: model:ir.model,name:stock_move_free_reservation_reassign.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Movimenti prodotto (riga movimento di magazzino)"
+
+#. module: stock_move_free_reservation_reassign
+#: model:ir.model,name:stock_move_free_reservation_reassign.model_stock_quant
+msgid "Quants"
+msgstr "Quanti"
+
+#. module: stock_move_free_reservation_reassign
+#: model_terms:ir.ui.view,arch_db:stock_move_free_reservation_reassign.res_config_settings_view_form
+msgid ""
+"Try to automatically reassign stock moves after a free reservation\n"
+"                due to an inventory adjustment."
+msgstr ""
+"Cerca di riassegnare atomaticamente i movimenti di magazzino dopo "
+"annullamento prenotazione\n"
+"                per rettifica di inventario."
