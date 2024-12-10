@@ -19,4 +19,4 @@ class ProductProduct(models.Model):
         lot_domain = [("restrict_lot_id", "=", lot_id)]
         domain_move_in_loc += lot_domain
         domain_move_out_loc += lot_domain
-        return domain_quant_loc, domain_move_in_loc, domain_move_out_loc
+        return domain_quant_loc, domain_move_in_loc, domain_move_out_loc + 1
