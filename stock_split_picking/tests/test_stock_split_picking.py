@@ -3,60 +3,12 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import UserError
-from odoo.tests.common import TransactionCase
+
+from .common import TestStockSplitPickingCase
 
 
-class TestStockSplitPicking(TransactionCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-
-        def _create_picking():
-            return cls.env["stock.picking"].create(
-                {
-                    "partner_id": cls.partner.id,
-                    "picking_type_id": cls.env.ref("stock.picking_type_out").id,
-                    "location_id": cls.src_location.id,
-                    "location_dest_id": cls.dest_location.id,
-                }
-            )
-
-        def _create_stock_move(product, picking):
-            return cls.env["stock.move"].create(
-                {
-                    "name": "/",
-                    "picking_id": picking.id,
-                    "product_id": product.id,
-                    "product_uom_qty": 10,
-                    "product_uom": product.uom_id.id,
-                    "location_id": cls.src_location.id,
-                    "location_dest_id": cls.dest_location.id,
-                }
-            )
-
-        cls.src_location = cls.env.ref("stock.stock_location_stock")
-        cls.dest_location = cls.env.ref("stock.stock_location_customers")
-        cls.product = cls.env["product.product"].create(
-            {"name": "Test product", "type": "consu", "is_storable": True}
-        )
-        cls.product_2 = cls.env["product.product"].create(
-            {"name": "Test product 2", "type": "consu", "is_storable": True}
-        )
-        cls.product_consu = cls.env["product.product"].create(
-            {"name": "Test product", "type": "consu"}
-        )
-        cls.product_consu_2 = cls.env["product.product"].create(
-            {"name": "Test product 2", "type": "consu"}
-        )
-        cls.partner = cls.env["res.partner"].create({"name": "Test partner"})
-        cls.picking = _create_picking()
-        cls.move = _create_stock_move(cls.product, cls.picking)
-        cls.move_2 = _create_stock_move(cls.product_2, cls.picking)
-        cls.picking_consu = _create_picking()
-        cls.move_consu = _create_stock_move(cls.product_consu, cls.picking_consu)
-        cls.move_consu_2 = _create_stock_move(cls.product_consu_2, cls.picking_consu)
-
-    def test_check_state_stock_split_picking(self):
+class TestStockSplitPicking(TestStockSplitPickingCase):
+    def test_stock_split_picking(self):
         # Picking state is draft
         self.assertEqual(self.picking.state, "draft")
         # We can't split a draft picking
