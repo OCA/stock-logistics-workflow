@@ -531,3 +531,4 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
         so1.picking_ids._action_done()
         self.assertFalse(new_move.sale_line_id)
         self.assertFalse(group.sale_id)
+        self.assertEqual(group.sale_ids, so1 + so2)

@@ -111,7 +111,7 @@ class StockPicking(models.Model):
     def _prepare_merge_procurement_group_values(self, move_groups):
         """Build a new procurement group that is the merge of given procurement
         group."""
-        sales = move_groups.sale_id
+        sales = move_groups.sale_id + move_groups.sale_ids
         partners = move_groups.sale_id.partner_id
         name = _("Merged procurement")
         if partners:
@@ -119,7 +119,7 @@ class StockPicking(models.Model):
                 "Merged procurement for partners: %(partners_name)s",
                 partners_name=", ".join(partners.mapped("display_name")),
             )
-        return {"sale_ids": [(6, 0, sales.ids)], "name": name}
+        return {"sale_ids": [(6, 0, sales.ids)], "name": name, "sale_id": False}
 
     def _merge_procurement_groups(self):
         self.ensure_one()
