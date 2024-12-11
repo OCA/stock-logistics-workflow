@@ -1,7 +1,7 @@
 # Copyright 2020 Tecnativa - Carlos Roca
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import _, api, models
+from odoo import api, models
 from odoo.exceptions import UserError
 from odoo.tools import float_compare
 
@@ -16,7 +16,7 @@ class ReturnPicking(models.TransientModel):
         val["quantity"] = return_lines.get_returned_restricted_quantity(stock_move)
         return val
 
-    def _create_returns(self):
+    def _create_return(self):
         restrict_return_qty = self.picking_id.picking_type_id.restrict_return_qty
 
         precision = self.env["decimal.precision"].precision_get(
@@ -32,9 +32,9 @@ class ReturnPicking(models.TransientModel):
                 > 0
             ):
                 raise UserError(
-                    _("Return more quantities than delivered is not allowed.")
+                    self.env._("Return more quantities than delivered is not allowed.")
                 )
-        return super()._create_returns()
+        return super()._create_return()
 
 
 class ReturnPickingLine(models.TransientModel):
@@ -49,7 +49,9 @@ class ReturnPickingLine(models.TransientModel):
         qty = self.get_returned_restricted_quantity(self.move_id)
 
         if restrict_return_qty and self.quantity > qty:
-            raise UserError(_("Return more quantities than delivered is not allowed."))
+            raise UserError(
+                self.env._("Return more quantities than delivered is not allowed.")
+            )
 
     def get_returned_restricted_quantity(self, stock_move):
         """This function is created to know how many products

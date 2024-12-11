@@ -13,7 +13,7 @@ class StockPickingReturnRestrictedQtyTest(BaseCommon):
         super().setUpClass()
 
         product = cls.env["product.product"].create(
-            {"name": "test_product", "type": "product"}
+            {"name": "test_product", "is_storable": True, "type": "consu"}
         )
         picking_type_out = cls.env.ref("stock.picking_type_out")
         stock_location = cls.env.ref("stock.stock_location_stock")
@@ -63,7 +63,7 @@ class StockPickingReturnRestrictedQtyTest(BaseCommon):
         self.assertEqual(return_picking.product_return_moves.quantity, 20)
         return_picking.product_return_moves.quantity = 30
         with self.assertRaises(UserError):
-            return_picking._create_returns()
+            return_picking._create_return()
 
     def test_return_without_restriction(self):
         """On this test we create a return picking with more quantity
@@ -73,7 +73,7 @@ class StockPickingReturnRestrictedQtyTest(BaseCommon):
         return_picking = self.get_return_picking_wizard(self.picking)
         self.assertEqual(return_picking.product_return_moves.quantity, 20)
         return_picking.product_return_moves.quantity = 30
-        return_picking._create_returns()
+        return_picking._create_return()
         self.assertEqual(return_picking.product_return_moves.quantity, 30)
 
     def test_multiple_return(self):
@@ -82,13 +82,10 @@ class StockPickingReturnRestrictedQtyTest(BaseCommon):
         self.picking.picking_type_id.restrict_return_qty = True
         wiz = self.get_return_picking_wizard(self.picking)
         wiz.product_return_moves.quantity = 10
-        picking_returned_id = wiz._create_returns()[0]
-        picking_returned = self.env["stock.picking"].browse(picking_returned_id)
-
+        picking_returned_id = wiz._create_return()[0]
         wiz = self.get_return_picking_wizard(self.picking)
         self.assertEqual(wiz.product_return_moves.quantity, 10)
-
-        picking_returned._action_done()
+        picking_returned_id._action_done()
         wiz = self.get_return_picking_wizard(self.picking)
         self.assertEqual(wiz.product_return_moves.quantity, 10)
 
@@ -103,13 +100,11 @@ class StockPickingReturnRestrictedQtyTest(BaseCommon):
         self.picking.picking_type_id.restrict_return_qty = False
         wiz = self.get_return_picking_wizard(self.picking)
         wiz.product_return_moves.quantity = 10
-        picking_returned_id = wiz._create_returns()[0]
-        picking_returned = self.env["stock.picking"].browse(picking_returned_id)
-
+        picking_returned_id = wiz._create_return()[0]
         wiz = self.get_return_picking_wizard(self.picking)
         self.assertEqual(wiz.product_return_moves.quantity, 10)
 
-        picking_returned._action_done()
+        picking_returned_id._action_done()
         wiz = self.get_return_picking_wizard(self.picking)
         self.assertEqual(wiz.product_return_moves.quantity, 10)
 
