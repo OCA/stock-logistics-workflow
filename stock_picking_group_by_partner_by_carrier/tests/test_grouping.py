@@ -497,3 +497,37 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
         self.assertEqual(picking.state, "done")
         self.assertTrue(picking.backorder_ids)
         self.assertNotEqual(picking, picking.backorder_ids)
+
+    def test_merged_procurement_link_to_sale(self):
+        """
+        When a merged procurement group is created, it should not be linked to the
+        original sales order. Linking it would cause any moves manually added to the
+        delivery picking to be associated with that sales order.
+        """
+        so1 = self._get_new_sale_order()
+        so2 = self._get_new_sale_order(amount=11)
+        so1.action_confirm()
+        so2.action_confirm()
+        group = so1.picking_ids.group_id
+        moves = so1.picking_ids.move_ids
+        self.env["procurement.group"].run(
+            [
+                self.env["procurement.group"].Procurement(
+                    self.product,
+                    5.0,
+                    self.product.uom_id,
+                    self.partner.property_stock_customer,
+                    "Test 1",
+                    "Test 1",
+                    self.env.company,
+                    {"group_id": group, "route_ids": self.warehouse.delivery_route_id},
+                )
+            ]
+        )
+        self._update_qty_in_location(so1.picking_ids.location_id, self.product, 100)
+        new_move = so1.picking_ids.move_ids - moves
+        so1.picking_ids.action_assign()
+        so1.picking_ids.action_set_quantities_to_reservation()
+        so1.picking_ids._action_done()
+        self.assertFalse(new_move.sale_line_id)
+        self.assertFalse(group.sale_id)
