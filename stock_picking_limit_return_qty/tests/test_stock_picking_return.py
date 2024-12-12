@@ -125,3 +125,35 @@ class TestStockReturnPicking(TransactionCase):
                 msg="Return Quantity must be equal to the maximum quantity",
             )
             line.quantity = line.quantity + 1
+
+    def test_check_return_limit_enforcement_enabled(self):
+        """
+        Test that the return limit enforcement is enabled when the configuration
+        specifies that the stock picking return quantity limit should be enabled.
+
+        This test creates a configuration with the stock picking return quantity
+        limit enabled, executes the configuration, and then checks that the return
+        limit enforcement is indeed enabled.
+        """
+        config = self.config_obj.create({"stock_picking_limit_return_qty": True})
+        config.execute()
+        self.assertTrue(
+            self.picking_return_line._check_return_limit_enforcement(),
+            msg="Stock Picking Return Quantity Limit must be enabled",
+        )
+
+    def test_check_return_limit_enforcement_disabled(self):
+        """
+        Test that the return limit enforcement is disabled when the configuration
+        specifies that the stock picking return quantity limit should be disabled.
+
+        This test creates a configuration with the stock picking return quantity
+        limit disabled, executes the configuration, and then checks that the return
+        limit enforcement is indeed disabled.
+        """
+        config = self.config_obj.create({"stock_picking_limit_return_qty": False})
+        config.execute()
+        self.assertFalse(
+            self.picking_return_line._check_return_limit_enforcement(),
+            msg="Stock Picking Return Quantity Limit must be disabled",
+        )
