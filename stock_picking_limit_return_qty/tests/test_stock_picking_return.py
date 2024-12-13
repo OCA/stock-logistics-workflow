@@ -1,7 +1,6 @@
 # Copyright 2024 Cetmix OU
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
 
@@ -19,14 +18,16 @@ class TestStockReturnPicking(TransactionCase):
         cls.picking_return = cls.env["stock.return.picking"]
         cls.picking_return_line = cls.env["stock.return.picking.line"]
         cls.stock_move = cls.env["stock.move"]
-        cls.product_product = cls.env["product.product"]
+        cls.product_template = cls.env["product.template"]
         cls.config_obj = cls.env["res.config.settings"].sudo()
-        cls.product_a = cls.product_product.create(
+        product_template_a = cls.product_template.create(
             {"name": "Product A", "type": "product"}
         )
-        cls.product_b = cls.product_product.create(
+        product_template_b = cls.product_template.create(
             {"name": "Product B", "type": "product"}
         )
+        cls.product_a = product_template_a.product_variant_id
+        cls.product_b = product_template_b.product_variant_id
 
     @classmethod
     def _create_picking(cls, location, destination_location, picking_type):
@@ -73,11 +74,12 @@ class TestStockReturnPicking(TransactionCase):
             active_id=picking.id, active_model="stock.picking"
         ).create({})
         return_wizard._onchange_picking_id()
-        return_line = return_wizard.product_return_moves[
+        return_qty_limit = return_wizard.product_return_moves[
             0
         ]._check_return_limit_enforcement()
         self.assertTrue(
-            return_line, msg="'Stock Picking Return Quantity Limit' must be enabled"
+            return_qty_limit,
+            msg="'Stock Picking Return Quantity Limit' must be enabled",
         )
 
         for line in return_wizard.product_return_moves:
@@ -111,20 +113,21 @@ class TestStockReturnPicking(TransactionCase):
             active_id=picking.id, active_model="stock.picking"
         ).create({})
         return_wizard._onchange_picking_id()
-        return_line = return_wizard.product_return_moves[
+        return_qty_limit = return_wizard.product_return_moves[
             0
         ]._check_return_limit_enforcement()
         self.assertFalse(
-            return_line, msg="'Stock Picking Return Quantity Limit' must be disabled"
+            return_qty_limit,
+            msg="'Stock Picking Return Quantity Limit' must be disabled",
         )
 
         for line in return_wizard.product_return_moves:
-            self.assertEqual(
+            line.quantity = line.quantity + 1
+            self.assertNotEqual(
                 line.quantity,
                 line.quantity_max,
-                msg="Return Quantity must be equal to the maximum quantity",
+                msg="Return Quantity must be not equal to the maximum quantity",
             )
-            line.quantity = line.quantity + 1
 
     def test_check_return_limit_enforcement_enabled(self):
         """
@@ -157,3 +160,170 @@ class TestStockReturnPicking(TransactionCase):
             self.picking_return_line._check_return_limit_enforcement(),
             msg="Stock Picking Return Quantity Limit must be disabled",
         )
+
+    def test_zero_quantity(self):
+        """
+        Test the return process with zero quantity.
+        """
+        config = self.config_obj.create({"stock_picking_limit_return_qty": True})
+        config.execute()
+        picking = self._create_picking(
+            self.supplier_location, self.stock_location, self.picking_type_in
+        )
+        move_1 = self._create_move(picking=picking, product=self.product_a, qty=0)
+        picking.action_confirm()
+        picking.action_assign()
+        move_1.quantity_done = 0
+        with self.assertRaises(UserError):
+            picking.button_validate()
+
+    def test_partial_quantity(self):
+        """
+        Test the return process with partial quantity.
+        """
+        config = self.config_obj.create({"stock_picking_limit_return_qty": True})
+        config.execute()
+        picking = self._create_picking(
+            self.supplier_location, self.stock_location, self.picking_type_in
+        )
+        move_1 = self._create_move(picking=picking, product=self.product_a, qty=5)
+        picking.action_confirm()
+        picking.action_assign()
+        move_1.quantity_done = 5
+        picking.button_validate()
+        return_wizard = self.picking_return.with_context(
+            active_id=picking.id, active_model="stock.picking"
+        ).create({})
+        return_wizard._onchange_picking_id()
+        for line in return_wizard.product_return_moves:
+            line.quantity = 3
+            self.assertEqual(line.quantity, 3, msg="Return Quantity must be 3")
+
+    def test_multiple_products(self):
+        """
+        Test the return process with multiple products.
+        """
+        config = self.config_obj.create({"stock_picking_limit_return_qty": True})
+        config.execute()
+        picking = self._create_picking(
+            self.supplier_location, self.stock_location, self.picking_type_in
+        )
+        move_1 = self._create_move(picking=picking, product=self.product_a, qty=2)
+        move_2 = self._create_move(picking=picking, product=self.product_b, qty=3)
+        picking.action_confirm()
+        picking.action_assign()
+        move_1.quantity_done = 2
+        move_2.quantity_done = 3
+        picking.button_validate()
+        return_wizard = self.picking_return.with_context(
+            active_id=picking.id, active_model="stock.picking"
+        ).create({})
+        return_wizard._onchange_picking_id()
+        for line in return_wizard.product_return_moves:
+            self.assertEqual(
+                line.quantity,
+                line.quantity_max,
+                msg="Return Quantity must be equal to the maximum quantity",
+            )
+
+    def test_no_products(self):
+        """
+        Test the return process with no products.
+        """
+        config = self.config_obj.create({"stock_picking_limit_return_qty": True})
+        config.execute()
+        picking = self._create_picking(
+            self.supplier_location, self.stock_location, self.picking_type_in
+        )
+        picking.action_confirm()
+        with self.assertRaises(UserError):
+            picking.action_assign()
+
+    def test_invalid_configuration(self):
+        """
+        Test the return process with invalid configuration.
+        """
+        config = self.config_obj.create({"stock_picking_limit_return_qty": None})
+        config.execute()
+        picking = self._create_picking(
+            self.supplier_location, self.stock_location, self.picking_type_in
+        )
+        move_1 = self._create_move(picking=picking, product=self.product_a, qty=2)
+        picking.action_confirm()
+        picking.action_assign()
+        move_1.quantity_done = 2
+        picking.button_validate()
+        return_wizard = self.picking_return.with_context(
+            active_id=picking.id, active_model="stock.picking"
+        ).create({})
+        return_wizard._onchange_picking_id()
+        return_qty_limit = return_wizard.product_return_moves[
+            0
+        ]._check_return_limit_enforcement()
+        self.assertFalse(
+            return_qty_limit,
+            msg=(
+                "'Stock Picking Return Quantity Limit'"
+                "must be disabled with invalid configuration"
+            ),
+        )
+
+    def test_prepare_stock_return_picking_line_vals_from_move(self):
+        """
+        Test the _prepare_stock_return_picking_line_vals_from_move method.
+        """
+        config = self.config_obj.create({"stock_picking_limit_return_qty": True})
+        config.execute()
+        picking = self._create_picking(
+            self.supplier_location, self.stock_location, self.picking_type_in
+        )
+        move_1 = self._create_move(picking=picking, product=self.product_a, qty=2)
+        picking.action_confirm()
+        picking.action_assign()
+        move_1.quantity_done = 2
+        picking.button_validate()
+
+        return_wizard = self.picking_return.with_context(
+            active_id=picking.id, active_model="stock.picking"
+        ).create({})
+        return_wizard._onchange_picking_id()
+
+        for line in return_wizard.product_return_moves:
+            res = return_wizard._prepare_stock_return_picking_line_vals_from_move(
+                line.move_id
+            )
+            self.assertEqual(
+                res["quantity_max"],
+                line.quantity_max,
+                msg="Quantity max must be equal to the return quantity max",
+            )
+
+    def test_constraints_quantity(self):
+        """
+        Test the _constraints_quantity method.
+        """
+        config = self.config_obj.create({"stock_picking_limit_return_qty": True})
+        config.execute()
+        picking = self._create_picking(
+            self.supplier_location, self.stock_location, self.picking_type_in
+        )
+        move_1 = self._create_move(picking=picking, product=self.product_a, qty=2)
+        picking.action_confirm()
+        picking.action_assign()
+        move_1.quantity_done = 2
+        picking.button_validate()
+
+        return_wizard = self.picking_return.with_context(
+            active_id=picking.id, active_model="stock.picking"
+        ).create({})
+        return_wizard._onchange_picking_id()
+
+        for line in return_wizard.product_return_moves:
+            with self.assertRaises(
+                ValidationError,
+                msg=(
+                    "ValidationError must be raised when "
+                    "quantity exceeds the maximum allowed quantity"
+                ),
+            ):
+                line.quantity = line.quantity_max + 1

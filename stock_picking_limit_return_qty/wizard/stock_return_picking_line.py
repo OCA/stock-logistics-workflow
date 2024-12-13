@@ -30,7 +30,8 @@ class ReturnPickingLine(models.TransientModel):
 
     @api.model
     def _check_return_limit_enforcement(self):
-        """Returns the state of the "Stock Picking Return Quantity Limit" option
+        """
+        Returns the state of the "Stock Picking Return Quantity Limit" option
 
         Returns:
             bool: Option status
@@ -42,3 +43,18 @@ class ReturnPickingLine(models.TransientModel):
                 "stock_picking_limit_return_qty.stock_picking_limit_return_qty", False
             )
         )
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        if not self._check_return_limit_enforcement():
+            return super().create(vals_list)
+
+        for vals in vals_list:
+            if vals.get("quantity", False) and not vals.get("quantity_max", False):
+                vals.update(
+                    {
+                        "quantity_max": vals["quantity"],
+                    }
+                )
+
+        return super().create(vals_list)

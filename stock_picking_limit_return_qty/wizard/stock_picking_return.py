@@ -10,9 +10,7 @@ class ReturnPicking(models.TransientModel):
     @api.model
     def _prepare_stock_return_picking_line_vals_from_move(self, stock_move):
 
-        res = super(
-            ReturnPicking, self
-        )._prepare_stock_return_picking_line_vals_from_move(stock_move)
+        res = super()._prepare_stock_return_picking_line_vals_from_move(stock_move)
 
         # Store maximum quantity that is possible to return
         res.update(
