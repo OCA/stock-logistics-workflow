@@ -2,10 +2,10 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo.tests import SavepointCase
+from odoo.tests import TransactionCase
 
 
-class TestAutomaticPackage(SavepointCase):
+class TestAutomaticPackage(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -37,7 +37,7 @@ class TestAutomaticPackage(SavepointCase):
             10,
         )
         cls.picking = cls._create_picking()
-        cls.picking.move_lines.update({"quantity_done": 5.0})
+        cls.picking.move_ids.update({"quantity_done": 5.0})
 
     @classmethod
     def _create_picking(cls):
@@ -45,7 +45,7 @@ class TestAutomaticPackage(SavepointCase):
             "location_id": cls.stock.id,
             "location_dest_id": cls.customers.id,
             "picking_type_id": cls.env.ref("stock.picking_type_out").id,
-            "move_lines": [
+            "move_ids": [
                 (
                     0,
                     0,
@@ -81,7 +81,7 @@ class TestAutomaticPackage(SavepointCase):
         self.picking.picking_type_id.automatic_package_creation_mode = "single"
         self.picking._action_done()
         self.assertTrue(self.picking.move_line_ids.result_package_id)
-        self.assertTrue(len(self.picking.move_line_ids.result_package_id), 1)
+        self.assertEqual(len(self.picking.move_line_ids.result_package_id), 1)
 
     def test_automatic_packaging(self):
         """
@@ -92,18 +92,18 @@ class TestAutomaticPackage(SavepointCase):
         self.picking.picking_type_id.automatic_package_creation_mode = "packaging"
         self.picking._action_done()
         self.assertTrue(self.picking.move_line_ids.result_package_id)
-        self.assertTrue(len(self.picking.move_line_ids.result_package_id), 3)
+        self.assertEqual(len(self.picking.move_line_ids.result_package_id), 3)
 
     def test_automatic_packaging_no_product_packaging(self):
         self.picking.picking_type_id.automatic_package_creation_mode = "packaging"
         self.product_packaging.unlink()
         self.picking._action_done()
         self.assertTrue(self.picking.move_line_ids.result_package_id)
-        self.assertTrue(len(self.picking.move_line_ids.result_package_id), 5)
+        self.assertEqual(len(self.picking.move_line_ids.result_package_id), 5)
 
     def test_automatic_packaging_with_qty_zero_on_packaging(self):
         self.picking.picking_type_id.automatic_package_creation_mode = "packaging"
         self.product_packaging.qty = 0
         self.picking._action_done()
         self.assertTrue(self.picking.move_line_ids.result_package_id)
-        self.assertTrue(len(self.picking.move_line_ids.result_package_id), 5)
+        self.assertEqual(len(self.picking.move_line_ids.result_package_id), 5)
