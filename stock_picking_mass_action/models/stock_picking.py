@@ -2,23 +2,35 @@
 # Copyright 2018 Tecnativa - Vicent Cubells
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+
 from odoo import _, api
 from odoo.models import Model
+from odoo.osv import expression
 
 
 class StockPicking(Model):
     _inherit = "stock.picking"
 
     @api.model
-    def check_assign_all(self, domain=None):
+    def check_assign_all(self, domain=None, batch_size=False, company=None):
         """Try to assign confirmed pickings"""
-        search_domain = [("state", "=", "confirmed")]
+        if not batch_size:
+            batch_size = 1000
+        move_assign_domain = self.env["procurement.group"]._get_moves_to_assign_domain(
+            company
+        )
         if domain:
-            search_domain += domain
-        else:
-            search_domain += [("picking_type_code", "=", "outgoing")]
-        records = self.search(search_domain, order="scheduled_date")
-        records.action_assign()
+            move_assign_domain = expression.AND([domain, move_assign_domain])
+
+        moves_to_assign = self.env["stock.move"].search(
+            move_assign_domain,
+            limit=None,
+            order="reservation_date, priority desc, date asc, id asc",
+        )
+        total_items = len(moves_to_assign)
+        for i in range(0, total_items, batch_size):
+            batch = moves_to_assign[i : i + batch_size]
+            self.env["stock.move"].browse(batch.ids).sudo()._action_assign()
 
     def action_immediate_transfer_wizard(self):
         view = self.env.ref("stock.view_immediate_transfer")

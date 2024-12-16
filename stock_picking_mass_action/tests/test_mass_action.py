@@ -1,6 +1,9 @@
 # Copyright 2018 Tecnativa - Vicent Cubells
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+from datetime import timedelta
+
+from odoo import fields
 from odoo.tests import common
 
 
@@ -20,7 +23,7 @@ class TestMassAction(common.TransactionCase):
             {
                 "product_id": product.id,
                 "location_id": stock_location.id,
-                "quantity": 600.0,
+                "quantity": 900,
             }
         )
         # Force Odoo not to automatically reserve the products on the pickings
@@ -51,6 +54,9 @@ class TestMassAction(common.TransactionCase):
         )
 
     def test_mass_action(self):
+        """
+        Test manual assignment of pickings
+        """
         self.assertEqual(self.picking.state, "draft")
         wiz = self.env["stock.picking.mass.action"]
         # We test confirming a picking
@@ -80,10 +86,10 @@ class TestMassAction(common.TransactionCase):
         wiz_confirm.mass_action()
         self.assertEqual(pick1.state, "confirmed")
         self.assertEqual(pick2.state, "confirmed")
+        # Confirm pickings are not assigned automatically
         pickings.check_assign_all()
-        self.assertEqual(pick1.state, "assigned")
-        self.assertEqual(pick2.state, "assigned")
-
+        self.assertEqual(pick1.state, "confirmed")
+        self.assertEqual(pick2.state, "confirmed")
         pick3 = self.picking.copy()
         pickings |= pick3
         pick4 = self.picking.copy()
@@ -95,9 +101,69 @@ class TestMassAction(common.TransactionCase):
         wiz_confirm.mass_action()
         self.assertEqual(pick3.state, "confirmed")
         self.assertEqual(pick4.state, "confirmed")
-        pickings.check_assign_all(domain=[("picking_type_code", "=", "outgoing")])
+        pickings.check_assign_all(domain=[("picking_code", "=", "outgoing")])
+        self.assertEqual(pick3.state, "confirmed")
+        self.assertEqual(pick4.state, "confirmed")
+        # Confirm pickings are assigned manually
+        pick1.action_assign()
+        pick2.action_assign()
         self.assertEqual(pick1.state, "assigned")
         self.assertEqual(pick2.state, "assigned")
+        pick3.action_assign()
+        pick4.action_assign()
+        self.assertEqual(pick3.state, "assigned")
+        self.assertEqual(pick4.state, "assigned")
+
+    def test_at_confirm_reservation(self):
+        """
+        Test automatically reservation at picking confirmation
+        """
+        # Set at_confirm method
+        self.env.ref("stock.picking_type_out").write(
+            {"reservation_method": "at_confirm"}
+        )
+        self.assertEqual(self.picking.state, "draft")
+        for line in self.picking.move_ids:
+            self.assertEqual(line.state, "draft")
+        self.picking.action_confirm()
+        self.assertEqual(self.picking.state, "assigned")
+        for line in self.picking.move_ids:
+            self.assertEqual(line.state, "assigned")
+            self.assertEqual(line.reserved_availability, 200.0)
+
+    def test_mass_action_by_date(self):
+        """
+        Test automatically reservation by date
+        """
+        # Set by date method
+        self.env.ref("stock.picking_type_out").write(
+            {"reservation_method": "by_date", "reservation_days_before": 4}
+        )
+        self.assertEqual(self.picking.state, "draft")
+        wiz = self.env["stock.picking.mass.action"]
+        # We test checking assign all with "by date" method
+        pickings = self.env["stock.picking"]
+        pickOutDate = self.picking.copy()
+        # Set scheduled date out of the range of 4 days
+        pickOutDate.scheduled_date = fields.Date.today() + timedelta(days=15)
+        pickings |= pickOutDate
+        pickInDate = self.picking.copy()
+        pickings |= pickInDate
+        self.assertEqual(pickOutDate.state, "draft")
+        self.assertEqual(pickInDate.state, "draft")
+        wiz_confirm = wiz.create(
+            {"picking_ids": [(6, 0, [pickOutDate.id, pickInDate.id])]}
+        )
+        wiz_confirm.confirm = True
+        wiz_confirm.mass_action()
+        self.assertEqual(pickOutDate.state, "confirmed")
+        self.assertEqual(pickInDate.state, "assigned")
+        pickings.check_assign_all()
+        self.assertEqual(pickOutDate.state, "confirmed")
+        # Change scheduled date in the range of 4 days
+        pickOutDate.scheduled_date = fields.Date.today() + timedelta(days=1)
+        pickings.check_assign_all()
+        self.assertEqual(pickOutDate.state, "assigned")
 
     def test_mass_action_inmediate_transfer(self):
         wiz_tranfer = self.env["stock.picking.mass.action"].create(
