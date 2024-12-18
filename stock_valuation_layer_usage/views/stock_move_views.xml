@@ -10,13 +10,14 @@
                     name="layers_used"
                     string="Valuation Layers"
                     groups="account.group_account_user"
+                    colspan="2"
                 >
                     <field name="layer_usage_ids" readonly="1">
-                        <tree>
+                        <list>
                             <field name="stock_valuation_layer_id" />
                             <field name="quantity" />
                             <field name="value" />
-                        </tree>
+                        </list>
                     </field>
                 </group>
             </group>

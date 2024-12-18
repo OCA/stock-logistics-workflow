@@ -98,7 +98,7 @@ class TestStockValuationLayerUsage(TransactionCase):
                 "name": name,
                 "code": code,
                 "account_type": acc_type,
-                "company_id": company.id,
+                "company_ids": [(6, 0, company.ids)],
             }
         )
         return account
@@ -127,7 +127,8 @@ class TestStockValuationLayerUsage(TransactionCase):
                 {
                     "name": "test_product",
                     "categ_id": cls.product_ctg.id,
-                    "type": "product",
+                    "type": "consu",
+                    "is_storable": True,
                     "standard_price": standard_price,
                     "valuation": "real_time",
                     "invoice_policy": "delivery",
