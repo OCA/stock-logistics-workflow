@@ -19,7 +19,6 @@ msgstr ""
 #. module: stock_account_product_run_fifo_hook
 #. odoo-python
 #: code:addons/stock_account_product_run_fifo_hook/hooks.py:0
-#, python-format
 msgid "Correction of %s (modification of past move)"
 msgstr "Corrección de %s (modificación del movimiento anterior)"
 
