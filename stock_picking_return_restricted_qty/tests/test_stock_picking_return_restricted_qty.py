@@ -102,7 +102,7 @@ class StockPickingReturnRestrictedQtyTest(common.TransactionCase):
 
         wiz.product_return_moves.quantity = 80
         with self.assertRaises(UserError):
-            wiz.product_return_moves._onchange_quantity()
+            wiz._create_returns()
 
     def test_multiple_return_without_restriction(self):
         """On this test we are going to follow a sequence that a client
@@ -122,5 +122,5 @@ class StockPickingReturnRestrictedQtyTest(common.TransactionCase):
         self.assertEqual(wiz.product_return_moves.quantity, 10)
 
         wiz.product_return_moves.quantity = 80
-        wiz.product_return_moves._onchange_quantity()
+        wiz._create_returns()
         self.assertEqual(wiz.product_return_moves.quantity, 80)

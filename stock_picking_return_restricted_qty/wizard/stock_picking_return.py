@@ -49,7 +49,11 @@ class ReturnPickingLine(models.TransientModel):
         qty = self.get_returned_restricted_quantity(self.move_id)
 
         if restrict_return_qty and self.quantity > qty:
-            raise UserError(_("Return more quantities than delivered is not allowed."))
+            warning = {
+                "title": ("Warning!"),
+                "message": ("Return more quantities than delivered is not allowed."),
+            }
+            return {"warning": warning}
 
     def get_returned_restricted_quantity(self, stock_move):
         """This function is created to know how many products
