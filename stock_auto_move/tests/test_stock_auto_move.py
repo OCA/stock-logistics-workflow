@@ -69,8 +69,11 @@ class TestStockAutoMove(TransactionCase):
             }
         )
         move3._action_confirm()
+        self.env["stock.quant"]._update_available_quantity(
+            self.product_a1232, self.location_shelf, 25, 0
+        )
         move3._action_assign()
-        move3.quantity_done = move3.product_qty
+        move3.picked = True
         move3._action_done()
         move._action_assign()
         move2._action_assign()
@@ -195,7 +198,7 @@ class TestStockAutoMove(TransactionCase):
         picking.action_confirm()
         self.assertTrue(picking.move_line_ids)
         self.assertEqual(len(picking.move_line_ids), 1)
-        picking.move_line_ids.qty_done = 2
+        picking.move_line_ids.picked = True
         picking._action_done()
         self.assertTrue(move1.move_dest_ids)
 
@@ -248,8 +251,7 @@ class TestStockAutoMove(TransactionCase):
         picking.action_confirm()
         self.assertTrue(picking.move_line_ids)
         self.assertEqual(len(picking.move_line_ids), 1)
-        picking.move_line_ids.qty_done = 1
-        picking.move_line_ids.reserved_uom_qty = 1
+        picking.move_line_ids.write({"picked": True, "quantity": 1})
         picking._action_done()
 
         # As move_dest_ids include backorders
@@ -271,7 +273,7 @@ class TestStockAutoMove(TransactionCase):
         self.assertTrue(back_order)
         self.assertEqual(len(back_order), 1)
 
-        back_order.move_line_ids.qty_done = 1
+        back_order.move_line_ids.picked = True
         back_order._action_done()
 
         self.assertEqual(len(back_order.move_ids.move_dest_ids), 2)
@@ -349,11 +351,9 @@ class TestStockAutoMove(TransactionCase):
         move2.move_dest_ids.auto_move = False
 
         # do partial reception of the first picking
-        move1.move_line_ids.qty_done = 2
-        move1.move_line_ids.reserved_uom_qty = 2
+        move1.move_line_ids.write({"picked": True, "quantity": 2})
 
-        move2.move_line_ids.qty_done = 1
-        move2.move_line_ids.reserved_uom_qty = 1
+        move2.move_line_ids.write({"picked": True, "quantity": 1})
 
         picking._action_done()
 
@@ -452,13 +452,13 @@ class TestStockAutoMove(TransactionCase):
         picking.action_confirm()
         self.assertTrue(picking.move_line_ids)
         self.assertEqual(len(picking.move_line_ids), 1)
-        picking.move_line_ids.qty_done = 2
+        picking.move_line_ids.picked = True
         picking._action_done()
         self.assertTrue(move1.move_dest_ids)
 
         self.assertTrue(move1.move_dest_ids.auto_move)
         self.assertEqual(move1.move_dest_ids.state, "done")
-        self.assertEqual(move1.move_dest_ids.quantity_done, 2.0)
+        self.assertEqual(move1.move_dest_ids.quantity, 2.0)
         self.assertEqual(move1.move_dest_ids.product_qty, 24.0)
 
     def test_90_partial_chained_auto_move_no_backorder(self):
@@ -525,11 +525,9 @@ class TestStockAutoMove(TransactionCase):
         second_step_picking = move2.move_dest_ids.picking_id
 
         # do partial reception of the first picking
-        move1.move_line_ids.qty_done = 2
-        move1.move_line_ids.reserved_uom_qty = 2
+        move1.move_line_ids.write({"picked": True, "quantity": 2})
 
-        move2.move_line_ids.qty_done = 1
-        move2.move_line_ids.reserved_uom_qty = 1
+        move2.move_line_ids.write({"picked": True, "quantity": 1})
 
         res = picking.button_validate()
         self.assertEqual(res.get("res_model"), "stock.backorder.confirmation")
@@ -548,8 +546,8 @@ class TestStockAutoMove(TransactionCase):
 
         self.assertEqual("done", move1.move_dest_ids.state)
         self.assertEqual("done", move2.move_dest_ids.state)
-        self.assertEqual(2.0, move1.move_dest_ids.quantity_done)
-        self.assertEqual(1.0, move2.move_dest_ids.quantity_done)
+        self.assertEqual(2.0, move1.move_dest_ids.quantity)
+        self.assertEqual(1.0, move2.move_dest_ids.quantity)
 
     def test_100_partial_chained_auto_move_mixed_no_backorder(self):
         """
@@ -640,11 +638,9 @@ class TestStockAutoMove(TransactionCase):
         second_step_picking = move2.move_dest_ids.picking_id
 
         # do partial reception of the first picking
-        move1.move_line_ids.qty_done = 5
-        move1.move_line_ids.reserved_uom_qty = 5
+        move1.move_line_ids.write({"picked": True, "quantity": 5})
 
-        move2.move_line_ids.qty_done = 5
-        move2.move_line_ids.reserved_uom_qty = 5
+        move2.move_line_ids.write({"picked": True, "quantity": 5})
 
         res = picking.button_validate()
         self.assertEqual(res.get("res_model"), "stock.backorder.confirmation")
@@ -674,4 +670,4 @@ class TestStockAutoMove(TransactionCase):
         self.assertEqual(
             "partially_available", second_step_back_order.move_line_ids.state
         )
-        self.assertEqual(5.0, second_step_back_order.move_line_ids.reserved_uom_qty)
+        self.assertEqual(5.0, second_step_back_order.move_line_ids.quantity)

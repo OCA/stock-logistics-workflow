@@ -1,7 +1,7 @@
 # Copyright 2014-2015 NDP Systèmes (<https://www.ndp-systemes.fr>)
 # Copyright 2020 ACSONE SA/NV (<https://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class StockMove(models.Model):
@@ -15,7 +15,7 @@ class StockMove(models.Model):
 
     def _auto_assign_quantities(self):
         for move in self:
-            move.quantity_done = move.reserved_availability
+            move.picked = True
 
     def _action_assign(self, force_qty=False):
         res = super()._action_assign(force_qty=force_qty)
@@ -33,21 +33,6 @@ class StockMove(models.Model):
             # We need to create backorder if there are mixed moves (auto and manual)
             moves.mapped("picking_id")._create_backorder()
         return res
-
-    @api.model
-    def _get_auto_moves_by_pickings(self, auto_moves):
-        """Group moves by picking.
-        @param auto_moves: stock.move data set
-        @return dict dict of moves grouped by pickings
-        {stock.picking(id): stock.move(id1, id2, id3 ...), ...}
-        """
-        auto_moves_by_pickings = dict()
-        for move in auto_moves:
-            if move.picking_id in auto_moves_by_pickings:
-                auto_moves_by_pickings[move.picking_id] |= move
-            else:
-                auto_moves_by_pickings.update({move.picking_id: move})
-        return auto_moves_by_pickings
 
     def _change_procurement_group(self):
         automatic_group = self.env.ref("stock_auto_move.automatic_group")
