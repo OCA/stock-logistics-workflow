@@ -1,0 +1,1 @@
+from . import test_stock_move_negative_stock_location
