@@ -3,7 +3,7 @@
 {
     "name": "Show Automatic Valuation for Stock Moves in CE",
     "summary": "Allow automatic valuation for stock moves in community edition",
-    "version": "17.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Inventory",
     "author": "INVITU," "Odoo Community Association (OCA)",
     "license": "AGPL-3",
