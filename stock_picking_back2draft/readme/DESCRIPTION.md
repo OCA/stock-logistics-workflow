@@ -1,1 +1,1 @@
-This module allows to bring cancelled pickings back to draft
+This module allows to bring canceled transfers back to draft
