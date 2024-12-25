@@ -10,5 +10,5 @@ class StockMove(models.Model):
 
     def action_back_to_draft(self):
         if self.filtered(lambda m: m.state != "cancel"):
-            raise UserError(_("You can set to draft cancelled moves only"))
+            raise UserError(_("You can set back to draft only canceled moves"))
         self.write({"state": "draft"})

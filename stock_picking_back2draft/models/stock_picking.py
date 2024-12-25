@@ -8,5 +8,4 @@ class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     def action_back_to_draft(self):
-        moves = self.mapped("move_ids")
-        moves.action_back_to_draft()
+        self.move_ids.action_back_to_draft()
