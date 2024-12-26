@@ -8,9 +8,10 @@ from odoo.addons.stock_picking_origin_reference.tests import (
 class TestStockPickingOriginReferenceSale(
     test_stock_picking_origin_reference.TestStockPickingOriginReference
 ):
-    def setUp(self):
-        super().setUp()
-        self.sale_model = self.env["sale.order"]
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.sale_model = cls.env["sale.order"]
 
     def _create_sale(self, partner, product):
         sale = self.sale_model.create(
