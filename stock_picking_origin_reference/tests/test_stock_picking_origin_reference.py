@@ -5,24 +5,25 @@ from odoo.tests.common import TransactionCase
 
 
 class TestStockPickingOriginReference(TransactionCase):
-    def setUp(self):
-        super().setUp()
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
         # Models
-        self.picking_model = self.env["stock.picking"]
+        cls.picking_model = cls.env["stock.picking"]
 
         # Existing Instances
-        self.picking_type_in_id = self.env.ref("stock.picking_type_in")
-        self.picking_type_out_id = self.env.ref("stock.picking_type_out")
-        self.location_suppliers = self.env.ref("stock.stock_location_suppliers")
-        self.location_stock = self.env.ref("stock.stock_location_stock")
-        self.location_customers = self.env.ref("stock.stock_location_customers")
+        cls.picking_type_in_id = cls.env.ref("stock.picking_type_in")
+        cls.picking_type_out_id = cls.env.ref("stock.picking_type_out")
+        cls.location_suppliers = cls.env.ref("stock.stock_location_suppliers")
+        cls.location_stock = cls.env.ref("stock.stock_location_stock")
+        cls.location_customers = cls.env.ref("stock.stock_location_customers")
 
         # TO BE USED IN CHILDREN TESTS
-        self.partner_model = self.env["res.partner"]
+        cls.partner_model = cls.env["res.partner"]
 
-        self.product = self.env.ref("product.product_product_3")
+        cls.product = cls.env.ref("product.product_product_3")
 
-        self.partner = self.partner_model.create({"name": "Test Partner"})
+        cls.partner = cls.partner_model.create({"name": "Test Partner"})
 
     def _create_picking(
         self, picking_type_id, location_id, location_dest_id, origin=False
