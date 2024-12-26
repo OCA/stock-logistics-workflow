@@ -16,12 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: stock_picking_purchase_order_link
-#: model_terms:ir.ui.view,arch_db:stock_picking_purchase_order_link.view_picking_form
-msgid "Purchase Order"
-msgstr "Pedido Compra"
+#~ msgid "Purchase Order"
+#~ msgstr "Pedido Compra"
 
-#. module: stock_picking_purchase_order_link
-#: model:ir.model,name:stock_picking_purchase_order_link.model_stock_picking
-msgid "Transfer"
-msgstr "Transferência"
+#~ msgid "Transfer"
+#~ msgstr "Transferência"
