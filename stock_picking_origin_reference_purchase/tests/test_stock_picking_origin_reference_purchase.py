@@ -10,9 +10,10 @@ from odoo.addons.stock_picking_origin_reference.tests import (
 class TestStockPickingOriginReferencePurchase(
     test_stock_picking_origin_reference.TestStockPickingOriginReference
 ):
-    def setUp(self):
-        super().setUp()
-        self.purchase_model = self.env["purchase.order"]
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.purchase_model = cls.env["purchase.order"]
 
     def _create_purchase(self, partner, product):
         purchase = self.purchase_model.create(
