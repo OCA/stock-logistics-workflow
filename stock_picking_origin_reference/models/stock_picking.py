@@ -9,7 +9,6 @@ class StockPicking(models.Model):
     origin_reference = fields.Reference(
         selection="_selection_origin_reference",
         compute="_compute_origin_reference",
-        string="Source Document",
     )
 
     def _selection_origin_reference(self):
