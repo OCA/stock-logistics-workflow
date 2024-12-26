@@ -3,7 +3,7 @@
 {
     "name": "Stock Picking Origin Reference",
     "summary": "Add clickable button to the Transfer Source Document.",
-    "version": "17.0.1.0.0",
+    "version": "18.0.1.0.0",
     "license": "AGPL-3",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
