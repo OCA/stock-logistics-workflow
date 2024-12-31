@@ -8,8 +8,8 @@
             <field name="lot_name" position="after">
                 <field
                     name="expiry_date"
-                    attrs="{'readonly': [('package_level_id', '!=', False), ('parent.picking_type_entire_packs', '=', True)]}"
-                    invisible="not context.get('show_lots_text')"
+                    readonly="package_level_id and parent.picking_type_entire_packs"
+                    column_invisible="parent.has_tracking == 'none' or not parent.show_lots_text"
                     groups="stock.group_production_lot"
                 />
             </field>
@@ -26,7 +26,8 @@
             <field name="lot_name" position="after">
                 <field
                     name="expiry_date"
-                    attrs="{'column_invisible': [('parent.show_lots_text', '=', False)], 'invisible': [('lots_visible', '=', False)]}"
+                    column_invisible="not context.get('show_lots_text')"
+                    invisible="not lots_visible"
                     groups="stock.group_production_lot"
                 />
             </field>

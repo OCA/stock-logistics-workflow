@@ -9,14 +9,14 @@
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.view_picking_form" />
         <field name="arch" type="xml">
-            <field name="show_mark_as_todo" position="after">
+            <field name="use_create_lots" position="after">
                 <field name="show_expiry_warning" invisible="1" />
             </field>
             <xpath expr="/form/sheet" position="before">
                 <div
                     class="alert alert-warning"
                     role="alert"
-                    attrs="{'invisible': [('show_expiry_warning', '=', False)]}"
+                    invisible="not show_expiry_warning"
                 >
                         One or several products have <b>expired</b> lots
                 </div>

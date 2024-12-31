@@ -11,36 +11,29 @@
         <field name="inherit_id" ref="stock.view_stock_quant_form_editable" />
         <field name="arch" type="xml">
             <field name="product_id" position="before">
-                <!-- Cannot use context_today() nor current_date in a form view,
-                         only in a tree/search view.
-                         So I added a computed boolean field 'expired' -->
                 <field name="expired" invisible="1" />
-                <span
-                    class="badge badge-danger"
-                    attrs="{'invisible': [('expired', '=', False)]}"
-                >Expired</span>
+                <span class="badge badge-danger" invisible="not expired">Expired</span>
             </field>
         </field>
     </record>
 
-    <record id="view_stock_quant_tree" model="ir.ui.view">
+    <record id="view_stock_quant_tree_simple" model="ir.ui.view">
         <field name="name">product_expiry_simple.stock.quant.tree</field>
         <field name="model">stock.quant</field>
-        <field name="inherit_id" ref="stock.view_stock_quant_tree" />
+        <field name="inherit_id" ref="stock.view_stock_quant_tree_simple" />
         <field name="arch" type="xml">
             <field name="lot_id" position="after">
                 <!-- We show expiry_date in tree view in order to do an "order by" on this column via the interface
-            But the information is already in the lot_id column via name_get() -->
+            But the information is already in the lot_id column via display_name -->
                 <field name="expiry_date" optional="hide" />
+                <field name="expired" column_invisible="1" />
             </field>
             <!-- I prefer to continue to use the full line in red
                     instead of using widget="badge" decoration-danger=""
                     on the field expiry_date. That way, we can keep the field
             expiry_date hidden by default, which avoids the double info -->
-            <xpath expr="/tree" position="attributes">
-                <attribute
-                    name="decoration-danger"
-                >expiry_date and expiry_date &lt; current_date</attribute>
+            <xpath expr="/list" position="attributes">
+                <attribute name="decoration-danger">expired</attribute>
             </xpath>
         </field>
     </record>
@@ -51,13 +44,12 @@
         <field name="arch" type="xml">
             <field name="lot_id" position="after">
                 <!-- We show expiry_date in tree view in order to do an "order by" on this column via the interface
-            But the information is already in the lot_id column via name_get() -->
+            But the information is already in the lot_id column via display_name -->
                 <field name="expiry_date" optional="hide" />
+                <field name="expired" column_invisible="1" />
             </field>
-            <xpath expr="/tree" position="attributes">
-                <attribute
-                    name="decoration-danger"
-                >expiry_date and expiry_date &lt; current_date</attribute>
+            <xpath expr="/list" position="attributes">
+                <attribute name="decoration-danger">expired</attribute>
             </xpath>
         </field>
     </record>
@@ -72,11 +64,10 @@
                 <!-- We show expiry_date in tree view in order to do an "order by" on this column via the interface
             But the information is already in the lot_id column via name_get() -->
                 <field name="expiry_date" optional="hide" />
+                <field name="expired" column_invisible="1" />
             </field>
-            <xpath expr="/tree" position="attributes">
-                <attribute
-                    name="decoration-danger"
-                >expiry_date and expiry_date &lt; current_date</attribute>
+            <xpath expr="/list" position="attributes">
+                <attribute name="decoration-danger">expired</attribute>
             </xpath>
         </field>
     </record>
@@ -91,21 +82,21 @@
                 <filter name="expiry_date" date="expiry_date" string="Expiry Date" />
                 <separator />
                 <filter
-                    domain="[('expiry_date', '&lt;', context_today().strftime('%Y-%m-%d'))]"
+                    domain="[('expired', '=', True)]"
                     groups="stock.group_production_lot"
                     name="expired"
                     string="Expired"
                 />
                 <filter
-                    domain="[('expiry_date', '&gt;=', context_today().strftime('%Y-%m-%d'))]"
+                    domain="[('expired', '=', False)]"
                     groups="stock.group_production_lot"
                     name="no-expired"
                     string="Not Expired"
                 />
             </filter>
-            <filter context="{'group_by': 'lot_id'}" position="after">
+            <filter name="Lot_Serial_number" position="after">
                 <filter
-                    context="{'group_by': 'expiry_date:month'}"
+                    context="{'group_by': 'expiry_date'}"
                     groups="stock.group_production_lot"
                     name="expiry_date_groupby"
                     string="Expiry Date"

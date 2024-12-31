@@ -13,7 +13,7 @@ class StockLot(models.Model):
 
     use_expiry_date = fields.Boolean(related="product_id.use_expiry_date", store=True)
     expiry_date = fields.Date(tracking=True)
-    expired = fields.Boolean(compute="_compute_expired")
+    expired = fields.Boolean(compute="_compute_expired", search="_search_expired")
 
     @api.constrains("use_expiry_date", "expiry_date")
     def _check_use_expiry_date(self):
@@ -46,17 +46,28 @@ class StockLot(models.Model):
                 expired = True
             lot.expired = expired
 
+    def _search_expired(self, operator, value):
+        lot_ids = []
+        if operator == "=":
+            today = fields.Date.context_today(self)
+            domain = [("use_expiry_date", "=", True)]
+            if value:
+                domain.append(("expiry_date", "<", today))
+            else:
+                domain.append(("expiry_date", ">=", today))
+            lot_ids = list(self._search(domain))
+        res = [("id", "in", lot_ids)]
+        return res
+
     @api.depends("name", "expiry_date")
-    def name_get(self):
-        res = []
+    def _compute_display_name(self):
         today = fields.Date.context_today(self)
         for lot in self:
             dname = lot.name
             if lot.expiry_date:
                 expiry_date_print = format_date(self.env, lot.expiry_date)
                 if lot.expiry_date < today:
-                    dname = _("[%(date)s ⚠] %(lot)s", date=expiry_date_print, lot=dname)
+                    dname = f"[{expiry_date_print} ⚠] {dname}"
                 else:
                     dname = f"[{expiry_date_print}] {dname}"
-            res.append((lot.id, dname))
-        return res
+            lot.display_name = dname

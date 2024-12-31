@@ -13,7 +13,8 @@
             <field name="ref" position="before">
                 <field
                     name="expiry_date"
-                    attrs="{'invisible': [('use_expiry_date', '!=', True)], 'required': [('use_expiry_date', '=', True)]}"
+                    invisible="not use_expiry_date"
+                    required="use_expiry_date"
                 />
                 <field name="expired" invisible="1" />
                 <field name="use_expiry_date" invisible="1" />
@@ -21,7 +22,7 @@
             <xpath expr="//div[hasclass('oe_title')]" position="inside">
                 <span
                     class="badge text-bg-danger"
-                    attrs="{'invisible': [('expired', '=', False)]}"
+                    invisible="not expired"
                 >Expired</span>
             </xpath>
         </field>
@@ -35,7 +36,7 @@
             <field name="name" position="after">
                 <field name="expiry_date" optional="show" />
             </field>
-            <xpath expr="/tree" position="attributes">
+            <xpath expr="/list" position="attributes">
                 <attribute
                     name="decoration-danger"
                 >expiry_date and expiry_date &lt; current_date</attribute>
@@ -52,12 +53,12 @@
                 <filter string="Expiry Date" name="expiry_date" date="expiry_date" />
                 <separator />
                 <filter
-                    domain="[('expiry_date', '&lt;', context_today().strftime('%Y-%m-%d'))]"
+                    domain="[('expired', '=', True)]"
                     name="expired"
                     string="Expired"
                 />
                 <filter
-                    domain="[('expiry_date', '&gt;=', context_today().strftime('%Y-%m-%d'))]"
+                    domain="[('expired', '=', False)]"
                     name="no-expired"
                     string="Not Expired"
                 />
@@ -65,7 +66,7 @@
             </field>
             <filter name="group_by_product" position="after">
                 <filter
-                    context="{'group_by': 'expiry_date:month'}"
+                    context="{'group_by': 'expiry_date'}"
                     name="expiry_date_groupby"
                     string="Expiry Date"
                 />

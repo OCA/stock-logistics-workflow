@@ -11,8 +11,8 @@ class StockMoveLine(models.Model):
 
     expiry_date = fields.Date()
 
-    def _get_value_production_lot(self):
-        vals = super()._get_value_production_lot()
+    def _prepare_new_lot_vals(self):
+        vals = super()._prepare_new_lot_vals()
         if self.product_id.use_expiry_date:
             vals["expiry_date"] = self.expiry_date
         return vals

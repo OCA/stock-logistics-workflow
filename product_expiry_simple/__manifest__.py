@@ -5,7 +5,7 @@
 
 {
     "name": "Product Expiry Simple",
-    "version": "16.0.1.1.0",
+    "version": "18.0.1.0.0",
     "category": "Product",
     "license": "AGPL-3",
     "summary": "Simpler and better alternative to the official product_expiry module",
@@ -21,10 +21,8 @@
         "views/product_template.xml",
         "views/stock_lot.xml",
         "views/stock_quant.xml",
-        "views/stock_move.xml",
         "views/stock_move_line.xml",
         "views/stock_picking.xml",
-        "wizards/stock_assign_serial_view.xml",
     ],
     "installable": True,
 }
