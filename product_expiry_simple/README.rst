@@ -17,26 +17,39 @@ Product Expiry Simple
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
-    :target: https://github.com/OCA/stock-logistics-workflow/tree/16.0/product_expiry_simple
+    :target: https://github.com/OCA/stock-logistics-workflow/tree/18.0/product_expiry_simple
     :alt: OCA/stock-logistics-workflow
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-16-0/stock-logistics-workflow-16-0-product_expiry_simple
+    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-18-0/stock-logistics-workflow-18-0-product_expiry_simple
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=18.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module is similar to the official `product_expiry <https://github.com/odoo/odoo/tree/16.0/addons/product_expiry>`_ module that adds support for *Expiry Dates* on products, but it is both simpler and better:
+This module is similar to the official
+`product_expiry <https://github.com/odoo/odoo/tree/16.0/addons/product_expiry>`__
+module that adds support for *Expiry Dates* on products, but it is both
+simpler and better:
 
-* Only one *Expiry Date* field instead of 4 fields (Expiration Date, Best before Date, Removal Date, Alert Date)!
-* Use date field instead of datetime field for *Expiry Date*.
-* No automatic computing of Expiry Date based on a delay configured on product because it is not used most of the time (for manufacturing companies, the rules that control expiry dates are usually more complex than that ; for reseller companies, they have to copy the expiry date written on the good when they receive it in their warehouse).
+-  Only one *Expiry Date* field instead of 4 fields (Expiration Date,
+   Best before Date, Removal Date, Alert Date)!
+-  Use date field instead of datetime field for *Expiry Date*.
+-  No automatic computing of Expiry Date based on a delay configured on
+   product because it is not used most of the time (for manufacturing
+   companies, the rules that control expiry dates are usually more
+   complex than that ; for reseller companies, they have to copy the
+   expiry date written on the good when they receive it in their
+   warehouse).
 
-This modules keeps the main feature of the official *product_expiry* module: the support of FEFO (First Expiry First Out).
+This modules keeps the main feature of the official *product_expiry*
+module: the support of FEFO (First Expiry First Out).
 
-I decided to develop this module because, after implementing *product_expiry* at several companies, I noticed that I spent more time inheriting the official *product_expiry* module to make always the same kind of changes that re-developping a simpler and better alternative.
+I decided to develop this module because, after implementing
+*product_expiry* at several companies, I noticed that I spent more time
+inheriting the official *product_expiry* module to make always the same
+kind of changes that re-developping a simpler and better alternative.
 
 **Table of contents**
 
@@ -49,7 +62,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/stock-logistics-workflow/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20product_expiry_simple%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20product_expiry_simple%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -57,19 +70,19 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Akretion
 * Jarsa Sistemas
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Alexis de Lattre <alexis.delattre@akretion.com>
-* Alan Ramos <alan.ramos@jarsa.com.mx>
+-  Alexis de Lattre <alexis.delattre@akretion.com>
+-  Alan Ramos <alan.ramos@jarsa.com.mx>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -89,6 +102,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-alexis-via| 
 
-This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/16.0/product_expiry_simple>`_ project on GitHub.
+This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/18.0/product_expiry_simple>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

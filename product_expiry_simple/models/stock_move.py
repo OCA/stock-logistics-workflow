@@ -8,7 +8,8 @@ from odoo import fields, models
 class StockMove(models.Model):
     _inherit = "stock.move"
 
-    # Add fields for the feature that generate serial numbers from first SN + Number of SN
+    # Add fields for the feature that generate serial numbers
+    # from first SN + Number of SN
     serial_expiry_date = fields.Date(string="Expiry Date")
     product_use_expiry_date = fields.Boolean(related="product_id.use_expiry_date")
 

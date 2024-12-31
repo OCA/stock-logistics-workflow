@@ -5,21 +5,17 @@
   License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 -->
 <odoo>
-
-
-<record id="view_assign_serial_numbers" model="ir.ui.view">
-    <field name="model">stock.assign.serial</field>
-    <field name="inherit_id" ref="stock.view_assign_serial_numbers" />
-    <field name="arch" type="xml">
-        <field name="next_serial_number" position="after">
-            <field
+    <record id="view_assign_serial_numbers" model="ir.ui.view">
+        <field name="model">stock.assign.serial</field>
+        <field name="inherit_id" ref="stock.view_assign_serial_numbers" />
+        <field name="arch" type="xml">
+            <field name="next_serial_number" position="after">
+                <field
                     name="serial_expiry_date"
                     attrs="{'invisible': [('product_use_expiry_date', '=', False)]}"
                 />
-            <field name="product_use_expiry_date" invisible="1" />
+                <field name="product_use_expiry_date" invisible="1" />
+            </field>
         </field>
-    </field>
-</record>
-
-
+    </record>
 </odoo>
