@@ -5,13 +5,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2025-01-01 14:06+0000\n"
+"Last-Translator: samibc2c <sami.bouzidi@camptocamp.com>\n"
 "Language-Team: \n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
@@ -41,7 +43,7 @@ msgstr "Confirmer"
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Contact"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__create_uid
@@ -129,7 +131,7 @@ msgstr "Transferts groupés"
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge____last_update
@@ -161,21 +163,21 @@ msgstr "Fusionner les transferts"
 #: code:addons/stock_picking_group_by_partner_by_carrier/models/stock_picking.py:0
 #, python-format
 msgid "Merged procurement"
-msgstr ""
+msgstr "Approvisionnement regroupé"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #. odoo-python
 #: code:addons/stock_picking_group_by_partner_by_carrier/models/stock_picking.py:0
 #, python-format
 msgid "Merged procurement for partners: %(partners_name)s"
-msgstr ""
+msgstr "Approvisionnement regroupé pour les partenaires : %(partners_name)s"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #. odoo-python
 #: code:addons/stock_picking_group_by_partner_by_carrier/wizards/stock_picking_merge_wiz.py:0
 #, python-format
 msgid "No picking can be merged!"
-msgstr "Aucun transfert ne peut être fusionné!"
+msgstr "Aucun transfert ne peut être fusionné !"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__nothing_todo
@@ -213,7 +215,7 @@ msgstr "Groupe d'approvisionnement"
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.report_delivery_document
 msgid "Remaining to deliver:"
-msgstr "Reste à délivrer:"
+msgstr "Reste à délivrer :"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_procurement_group__sale_ids
