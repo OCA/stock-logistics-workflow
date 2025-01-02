@@ -7,7 +7,7 @@
         This module allows you to set a lot_id in a procurement
          to force the stock move generated to only reserve the selected lot.
     """,
-    "version": "14.0.1.0.0",
+    "version": "17.0.1.0.0",
     "license": "LGPL-3",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",

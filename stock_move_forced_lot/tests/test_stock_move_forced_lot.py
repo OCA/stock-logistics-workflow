@@ -1,10 +1,10 @@
 # Copyright 2022 ForgeFlow S.L.
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 
-from odoo.tests import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestStockMoveForcedLot(SavepointCase):
+class TestStockMoveForcedLot(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -15,9 +15,7 @@ class TestStockMoveForcedLot(SavepointCase):
         cls.location2 = cls.env.ref("stock.stock_location_components")
         cls.picking_type = cls.env.ref("stock.picking_type_internal")
         cls.partner = cls.env["res.partner"].create({"name": "Partner"})
-        route_auto = cls.env["stock.location.route"].create(
-            {"name": "Auto Create Group"}
-        )
+        route_auto = cls.env["stock.route"].create({"name": "Auto Create Group"})
         cls.rule_1 = cls.env["stock.rule"].create(
             {
                 "name": "rule with autocreate",
@@ -25,7 +23,7 @@ class TestStockMoveForcedLot(SavepointCase):
                 "action": "pull_push",
                 "warehouse_id": cls.warehouse.id,
                 "picking_type_id": cls.picking_type.id,
-                "location_id": cls.location1.id,
+                "location_dest_id": cls.location1.id,
                 "location_src_id": cls.location2.id,
                 "partner_address_id": cls.partner.id,
             }
@@ -44,7 +42,7 @@ class TestStockMoveForcedLot(SavepointCase):
         serials = []
         for i in range(nb_product_todo):
             serials.append(
-                self.env["stock.production.lot"].create(
+                self.env["stock.lot"].create(
                     {
                         "name": f"lot_consumed_{i}",
                         "product_id": self.product.id,
