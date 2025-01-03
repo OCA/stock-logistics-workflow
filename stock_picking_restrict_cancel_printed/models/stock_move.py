@@ -9,6 +9,9 @@ class StockMove(models.Model):
     _inherit = "stock.move"
 
     def _action_cancel(self):
+        # if picking_type create_backorder is never, then move is canceled on action_done
+        if self.env.context.get("cancel_backorder"):
+            return super()._action_cancel()
         for move in self:
             if (
                 move.picking_id.printed
