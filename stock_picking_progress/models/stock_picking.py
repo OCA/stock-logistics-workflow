@@ -7,9 +7,7 @@ from odoo import api, fields, models
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    progress = fields.Float(
-        compute="_compute_progress", store=True, group_operator="avg"
-    )
+    progress = fields.Float(compute="_compute_progress", store=True, aggregator="avg")
 
     @api.depends("move_ids", "move_ids.progress")
     def _compute_progress(self):

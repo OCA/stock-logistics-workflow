@@ -8,14 +8,12 @@ from odoo.tools.float_utils import float_is_zero
 class StockMove(models.Model):
     _inherit = "stock.move"
 
-    progress = fields.Float(
-        compute="_compute_progress", store=True, group_operator="avg"
-    )
+    progress = fields.Float(compute="_compute_progress", store=True, aggregator="avg")
 
     @api.depends(
         "product_uom_qty",
         "product_uom",
-        "quantity_done",
+        "quantity",
         "state",
     )
     def _compute_progress(self):
@@ -27,4 +25,4 @@ class StockMove(models.Model):
             if float_is_zero(record.product_uom_qty, precision_rounding=rounding):
                 record.progress = 100
             else:
-                record.progress = (record.quantity_done / record.product_uom_qty) * 100
+                record.progress = (record.quantity / record.product_uom_qty) * 100

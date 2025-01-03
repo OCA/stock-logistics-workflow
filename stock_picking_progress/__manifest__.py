@@ -4,7 +4,7 @@
 {
     "name": "Stock Picking Progress",
     "summary": "Compute the stock.picking progression",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Inventory",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Camptocamp SA, Odoo Community Association (OCA)",

@@ -2,3 +2,4 @@
 - Juan Miguel Sánchez Arce \<<juan.sanchez@camptocamp.com>\>
 - Souheil Bejaoui \<<souheil.bejaoui@acsone.eu>\>
 - Denis Roussel \<<denis.roussel@acsone.eu>\>
+- Tuan Nguyen \<<tuanna@trobz.com>\>

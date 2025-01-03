@@ -28,12 +28,10 @@ Stock Picking Progress
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module adds a new progress field on stock.picking, stock.move and
-stock.move.line.
+This module adds a new progress field on stock transfers and moves.
 
-On stock.move and stock.move.line, this field represents the percentage
-of qty_done compared to the product_uom_qty. On stock.picking, this
-field is the average progress of all moves.
+On moves, this field represents the percentage of quantity processed. On
+transfers, this field is the average progress of all moves.
 
 **Table of contents**
 
@@ -65,6 +63,13 @@ Contributors
 - Juan Miguel Sánchez Arce <juan.sanchez@camptocamp.com>
 - Souheil Bejaoui <souheil.bejaoui@acsone.eu>
 - Denis Roussel <denis.roussel@acsone.eu>
+- Tuan Nguyen <tuanna@trobz.com>
+
+Other credits
+-------------
+
+The migration of this module from 16.0 to 18.0 has been financially
+supported by Camptocamp
 
 Maintainers
 -----------
