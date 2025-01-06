@@ -61,6 +61,7 @@ Credits
 Authors
 ~~~~~~~
 
+* Le Filament
 * Agile Business Group
 
 Contributors
@@ -71,6 +72,7 @@ Contributors
 * Alan Ramos <alan.ramos@jarsa.com.mx> (www.jarsa.com.mx)
 * Tharathip Chaweewongphan <tharathipc@ecosoft.co.th> (www.ecosoft.co.th)
 * Jesus Alcala <jesus.alcala@jarsa.com.mx> (www.jarsa.com.mx)
+* Le Filament (le-filament.com)
 
 Maintainers
 ~~~~~~~~~~~
