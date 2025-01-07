@@ -5,8 +5,11 @@
         <field name="model">stock.landed.cost</field>
         <field name="inherit_id" ref="stock_landed_costs.view_stock_landed_cost_form" />
         <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_title')]/h1" position="attributes">
+                <attribute name="style">display: flex</attribute>
+            </xpath>
             <field name="name" position="before">
-                <field name="priority" widget="priority" class="mr-3" />
+                <field name="priority" widget="priority" class="mr4" />
             </field>
         </field>
     </record>
@@ -42,7 +45,7 @@
         />
         <field name="arch" type="xml">
             <xpath expr="//span[@t-esc='record.name.value']" position="before">
-                <field name="priority" widget="priority" />
+                <field name="priority" widget="priority" class="mr4" />
             </xpath>
         </field>
     </record>
