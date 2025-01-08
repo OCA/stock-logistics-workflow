@@ -2,6 +2,8 @@
 # Copyright 2024 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+from collections import defaultdict
+
 from odoo import _, models
 from odoo.exceptions import UserError
 from odoo.tools.float_utils import float_compare
@@ -66,11 +68,7 @@ class StockMoveLine(models.Model):
         if not vals.get("lot_id"):
             return super().write(vals)
 
-        res, already_processed, to_reassign_moves = self._do_change_lot(vals)
-        res &= super(StockMoveLine, self - already_processed).write(vals)
-        if to_reassign_moves:
-            to_reassign_moves._action_assign()
-
+        res, __, ___ = self._do_change_lot(vals)
         return res
 
     def _do_change_lot(self, vals):
@@ -96,6 +94,7 @@ class StockMoveLine(models.Model):
         res = True
         already_processed = self.browse()
         to_reassign_moves = self.env["stock.move"]
+        moves_by_previous_lot = defaultdict(self.env["stock.move"].browse)
         lot = self.env["stock.lot"].browse(vals["lot_id"])
         for move_line in self:
             if move_line.move_id._should_bypass_reservation(move_line.location_id):
@@ -114,6 +113,7 @@ class StockMoveLine(models.Model):
             package = move_line.package_id.browse(
                 vals.get("package_id", move_line.package_id.id)
             )
+            moves_by_previous_lot[move_line.lot_id] |= move_line.move_id
 
             available_quantity = 0
             # Collect new lot inside or outside a package (strict=False)
@@ -186,4 +186,27 @@ class StockMoveLine(models.Model):
                 # recompute the state to be "partially_available"
                 move_line.move_id._recompute_state()
                 already_processed |= move_line
+
+        res &= super(StockMoveLine, self - already_processed).write(vals)
+        if to_reassign_moves:
+            self._handle_change_lot_reassign(
+                lot, to_reassign_moves, moves_by_previous_lot
+            )
         return res, already_processed, to_reassign_moves
+
+    def _handle_change_lot_reassign(
+        self, lot, to_reassign_moves, moves_by_previous_lot
+    ):
+        for previous_lot, moves in moves_by_previous_lot.items():
+            moves &= to_reassign_moves
+            self._hook_change_lot_before_assign(previous_lot, lot, moves)
+        to_reassign_moves._action_assign()
+        for previous_lot, moves in moves_by_previous_lot.items():
+            moves &= to_reassign_moves
+            self._hook_change_lot_after_assign(previous_lot, lot, moves)
+
+    def _hook_change_lot_before_assign(self, previous_lot, lot, moves):
+        pass
+
+    def _hook_change_lot_after_assign(self, previous_lot, lot, moves):
+        pass
