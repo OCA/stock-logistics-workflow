@@ -14,6 +14,7 @@
     "depends": ["sale", "stock_account_product_run_fifo_hook"],
     "data": [
         "security/ir.model.access.csv",
+        "security/ir_rule.xml",
         "views/stock_valuation_layer_usage_views.xml",
         "views/stock_valuation_layer_views.xml",
         "views/stock_move_views.xml",
