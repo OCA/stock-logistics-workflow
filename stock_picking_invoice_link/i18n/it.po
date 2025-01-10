@@ -68,14 +68,12 @@ msgstr "Numero di fatture"
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_bank_statement_line__picking_count
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move__picking_count
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_payment__picking_count
 msgid "Pickings count"
 msgstr "Conteggio prelievi"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_bank_statement_line__picking_ids
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move__picking_ids
-#: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_payment__picking_ids
 msgid "Related Pickings"
 msgstr "Picking Correlati"
 
@@ -87,7 +85,6 @@ msgstr "Movimenti di Magazzino Correlati"
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,help:stock_picking_invoice_link.field_account_bank_statement_line__picking_ids
 #: model:ir.model.fields,help:stock_picking_invoice_link.field_account_move__picking_ids
-#: model:ir.model.fields,help:stock_picking_invoice_link.field_account_payment__picking_ids
 msgid ""
 "Related pickings (only when the invoice has been generated from a sale "
 "order)."
@@ -122,7 +119,6 @@ msgstr "Trasferimento"
 #. module: stock_picking_invoice_link
 #. odoo-python
 #: code:addons/stock_picking_invoice_link/models/stock_move.py:0
-#, python-format
 msgid "You can not modify an invoiced stock move"
 msgstr "Non si può modificare un movimento di magazzino fatturato"
 
