@@ -17,27 +17,9 @@ msgstr ""
 "X-Generator: Weblate 4.17\n"
 
 #. module: stock_move_forced_lot
-#: model:ir.model.fields,field_description:stock_move_forced_lot.field_stock_move__display_name
-#: model:ir.model.fields,field_description:stock_move_forced_lot.field_stock_rule__display_name
-msgid "Display Name"
-msgstr "Nome visualizzato"
-
-#. module: stock_move_forced_lot
 #: model:ir.model.fields,field_description:stock_move_forced_lot.field_stock_move__forced_lot_id
 msgid "Forced Lot"
 msgstr "Lotto forzato"
-
-#. module: stock_move_forced_lot
-#: model:ir.model.fields,field_description:stock_move_forced_lot.field_stock_move__id
-#: model:ir.model.fields,field_description:stock_move_forced_lot.field_stock_rule__id
-msgid "ID"
-msgstr "ID"
-
-#. module: stock_move_forced_lot
-#: model:ir.model.fields,field_description:stock_move_forced_lot.field_stock_move____last_update
-#: model:ir.model.fields,field_description:stock_move_forced_lot.field_stock_rule____last_update
-msgid "Last Modified on"
-msgstr "Ultima modifica il"
 
 #. module: stock_move_forced_lot
 #: model:ir.model,name:stock_move_forced_lot.model_stock_move
@@ -48,3 +30,12 @@ msgstr "Movimento di magazzino"
 #: model:ir.model,name:stock_move_forced_lot.model_stock_rule
 msgid "Stock Rule"
 msgstr "Regola di giacenza"
+
+#~ msgid "Display Name"
+#~ msgstr "Nome visualizzato"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Ultima modifica il"
