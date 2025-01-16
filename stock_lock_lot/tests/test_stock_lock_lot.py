@@ -72,3 +72,14 @@ class TestStockLockLot(common.TransactionCase):
         self.assertEqual(
             subtype, expected_subtype, "Incorrect subtype for unlocked state"
         )
+
+    def test_category_lock_permissions(self):
+        # Remove lock permission
+        self.env.user.groups_id -= self.env.ref("stock_lock_lot.group_lock_lot")
+        # Change lot_default_locked should fail
+        with self.assertRaises(exceptions.AccessError):
+            self.category.write({"lot_default_locked": False})
+        self.env.user.groups_id += self.env.ref("stock_lock_lot.group_lock_lot")
+        # Now the change should work
+        self.category.write({"lot_default_locked": False})
+        self.assertFalse(self.category.lot_default_locked)
