@@ -25,11 +25,7 @@ class StockMoveLine(models.Model):
                 res = wrapped(*args, **kwargs)
                 move_to_reassign_ids.update(move_recomputed_state_ids)
                 return res
-
-        self.patch(type(self.env["stock.move.line"]),
-                "_free_reservation", _free_reservation
-            )
-
+            
     @contextmanager
     def _get_move_recomputed_state_ids(self):
         """A context manager method to collect the move where the state has been
@@ -45,5 +41,3 @@ class StockMoveLine(models.Model):
         def _recompute_state(self):
             move_to_reassign_ids.update(self.ids)
             wrapped(self)
-
-        self.patch(type(self.env["stock.move"]),"_recompute_state", _recompute_state)
