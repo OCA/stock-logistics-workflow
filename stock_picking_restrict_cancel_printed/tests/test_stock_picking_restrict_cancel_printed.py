@@ -65,3 +65,13 @@ class TestPickingRestrictCancel(TransactionCase):
         self.picking.move_ids.quantity_done = 1
         self.picking_type.create_backorder = "never"
         self.picking.button_validate()
+
+    def test_stock_move_restrict_cancel_printed_enabled_move_merge(self):
+        """Check a picking processed in excess can be validated
+
+        This will trigger the creation of an extra move.
+        That extra gets merged and then canceled.
+        """
+        self.picking.printed = True
+        self.picking.move_ids.quantity_done = 10
+        self.picking.button_validate()
