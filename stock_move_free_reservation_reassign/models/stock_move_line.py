@@ -26,13 +26,9 @@ class StockMoveLine(models.Model):
                 move_to_reassign_ids.update(move_recomputed_state_ids)
                 return res
 
-        try:
-            self.env["stock.move.line"]._patch_method(
+        self.patch(type(self.env["stock.move.line"]),
                 "_free_reservation", _free_reservation
             )
-            yield move_to_reassign_ids
-        finally:
-            self.env["stock.move.line"]._revert_method("_free_reservation")
 
     @contextmanager
     def _get_move_recomputed_state_ids(self):
@@ -50,8 +46,4 @@ class StockMoveLine(models.Model):
             move_to_reassign_ids.update(self.ids)
             wrapped(self)
 
-        try:
-            self.env["stock.move"]._patch_method("_recompute_state", _recompute_state)
-            yield move_to_reassign_ids
-        finally:
-            self.env["stock.move"]._revert_method("_recompute_state")
+        self.patch(type(self.env["stock.move"]),"_recompute_state", _recompute_state)
