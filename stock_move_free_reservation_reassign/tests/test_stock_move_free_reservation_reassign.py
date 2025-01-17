@@ -12,7 +12,7 @@ class TestStockMoveFreeReservationReassign(TransactionCase):
         cls.stock_location = cls.env.ref("stock.stock_location_stock")
         cls.customer_location = cls.env.ref("stock.stock_location_customers")
         cls.product = cls.env["product.product"].create(
-            {"name": "Product A", "type": "consu"}
+            {"name": "Product A", "type": "consu", "is_storable":True,"tracking":"none"}
         )
         cls.location_1 = cls.env["stock.location"].create(
             {
