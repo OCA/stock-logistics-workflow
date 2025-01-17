@@ -1,10 +1,10 @@
 # Copyright 2022 ForgeFlow S.L.
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 
-from odoo.tests import SavepointCase
+from odoo.tests import TransactionCase
 
 
-class TestStockMoveForcedLot(SavepointCase):
+class TestStockMoveForcedLot(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
