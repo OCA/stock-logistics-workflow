@@ -91,7 +91,7 @@ class StockPutawayRule(models.Model):
             transfer_modifiers_to_node(modifiers, field)
 
     def _add_exclusive_selection(self, doc, field_name):
-        nodes = doc.xpath("//field[@name='{}']".format(field_name))
+        nodes = doc.xpath(f"//field[@name='{field_name}']")
         for field in nodes:
             options = safe_eval(field.attrib.get("options", "{}"))
             options["exclusive_selection"] = True

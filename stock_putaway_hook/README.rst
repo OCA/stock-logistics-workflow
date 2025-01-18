@@ -17,21 +17,21 @@ Stock Putaway Hooks
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
-    :target: https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_putaway_hook
+    :target: https://github.com/OCA/stock-logistics-workflow/tree/17.0/stock_putaway_hook
     :alt: OCA/stock-logistics-workflow
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-16-0/stock-logistics-workflow-16-0-stock_putaway_hook
+    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-17-0/stock-logistics-workflow-17-0-stock_putaway_hook
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=17.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
 Technical module. It adds hooks to the core putaway method
-``StockLocation._get_putaway_strategy()`` allowing to plug other strategies and
-makes the selector fields in the tree views dynamic (required/readonly). See the
-usage section for details.
+``StockLocation._get_putaway_strategy()`` allowing to plug other
+strategies and makes the selector fields in the tree views dynamic
+(required/readonly). See the usage section for details.
 
 An example of implementation is the module ``stock_putaway_by_route``.
 
@@ -43,32 +43,36 @@ An example of implementation is the module ``stock_putaway_by_route``.
 Usage
 =====
 
-The modules that implement a new strategy have to follow the following steps.
-The module ``stock_putaway_by_route`` should be used as reference.
+The modules that implement a new strategy have to follow the following
+steps. The module ``stock_putaway_by_route`` should be used as
+reference.
 
-Add the field to match on ``stock.putaway.rule`` in the model and in the view.
-In the view, the field must have ``options="{'exclusive_selection': True}"``,
-which will allow this module to dynamically build dynamic attrs, restricting the
-selection of more than one field. (defining the readonly and required attrs in the view is therefore useless).
+Add the field to match on ``stock.putaway.rule`` in the model and in the
+view. In the view, the field must have
+``options="{'exclusive_selection': True}"``, which will allow this
+module to dynamically build dynamic attrs, restricting the selection of
+more than one field. (defining the readonly and required attrs in the
+view is therefore useless).
 
-Add the strategy key, named after the new field name, in ``StockLocation._putaway_strategies``. Example:
+Add the strategy key, named after the new field name, in
+``StockLocation._putaway_strategies``. Example:
 
 ::
 
-  class StockLocation(models.Model):
-      _inherit = "stock.location"
+   class StockLocation(models.Model):
+       _inherit = "stock.location"
 
-      @property
-      def _putaway_strategies(self):
-          strategies = super()._putaway_strategies
-          return strategies + ["route_id"]
+       @property
+       def _putaway_strategies(self):
+           strategies = super()._putaway_strategies
+           return strategies + ["route_id"]
 
-Pass the value to match with the putaway rule field in the context, in every
-method calling ``StockLocation._get_putaway_strategy``. The name of the key in
-the context is:``_putaway_<KEY>``, where KEY is the name of the new field on the
-putaway rule. The value can be a unit, a recordset of any length or a
-list/tuple. In latter cases, the putaway rule is selected if its field match any
-value in the list/recordset.
+Pass the value to match with the putaway rule field in the context, in
+every method calling ``StockLocation._get_putaway_strategy``. The name
+of the key in the context is:``_putaway_<KEY>``, where KEY is the name
+of the new field on the putaway rule. The value can be a unit, a
+recordset of any length or a list/tuple. In latter cases, the putaway
+rule is selected if its field match any value in the list/recordset.
 
 Bug Tracker
 ===========
@@ -76,7 +80,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/stock-logistics-workflow/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_putaway_hook%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_putaway_hook%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -84,19 +88,19 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Camptocamp
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Guewen Baconnier <guewen.baconnier@camptocamp.com>
-* Fernando La Chica <fernandolachica@gmail.com>
-* Denis Roussel <denis.roussel@acsone.eu>
+- Guewen Baconnier <guewen.baconnier@camptocamp.com>
+- Fernando La Chica <fernandolachica@gmail.com>
+- Denis Roussel <denis.roussel@acsone.eu>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -108,6 +112,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_putaway_hook>`_ project on GitHub.
+This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/17.0/stock_putaway_hook>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
