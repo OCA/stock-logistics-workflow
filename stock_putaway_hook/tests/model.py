@@ -6,14 +6,12 @@ from odoo import fields, models
 
 
 class StockPutawayRule(models.Model):
-
     _inherit = "stock.putaway.rule"
 
     foo = fields.Boolean()
 
 
 class StockLocation(models.Model):
-
     _inherit = "stock.location"
 
     @property

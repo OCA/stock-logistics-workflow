@@ -63,7 +63,7 @@ class StockLocation(models.Model):
         putaway_location = self.browse()
 
         strategy_values = {
-            field: self.env.context.get("_putaway_{}".format(field))
+            field: self.env.context.get(f"_putaway_{field}")
             for field in self._putaway_strategies
         }
 
