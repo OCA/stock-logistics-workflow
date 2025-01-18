@@ -85,8 +85,8 @@ class StockLocation(models.Model):
                 value = strategy_values[strategy]
                 # Looking for a putaway from the strategy
                 putaway_rules = current_location.putaway_rule_ids.filtered(
-                    lambda x: x[strategy] in value
-                    if isinstance(value, (models.BaseModel, list, tuple))
+                    lambda x, strategy=strategy, value=value: x[strategy] in value
+                    if isinstance(value, models.BaseModel | list | tuple)
                     else x[strategy] == value
                 )
                 putaway_location = first(putaway_rules).location_out_id

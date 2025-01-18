@@ -51,7 +51,7 @@ class PutawayHookCommon:
             }
         )
 
-        cls.env["stock.putaway.rule"].create(
+        cls.stock_putaway_rule = cls.env["stock.putaway.rule"].create(
             {
                 "foo": True,  # The field that is passed through context
                 "location_in_id": cls.location_internal_parent_3.id,
