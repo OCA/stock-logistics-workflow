@@ -4,7 +4,7 @@
 
 {
     "name": "Stock Picking - restrict cancelation if printed",
-    "version": "16.0.1.0.2",
+    "version": "16.0.1.0.3",
     "development_status": "Beta",
     "category": "Inventory",
     "summary": "Prevent canceling a stock transfer if printed.",
