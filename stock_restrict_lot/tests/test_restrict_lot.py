@@ -1,3 +1,5 @@
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
 from odoo.exceptions import UserError
 from odoo.tests.common import TransactionCase
 
@@ -204,7 +206,6 @@ class TestRestrictLot(TransactionCase):
             lambda pick: pick.picking_type_id.code == "outgoing"
         )
         pick = pickings.filtered(lambda pick: pick.picking_type_id.code == "internal")
-
         self.assertEqual(delivery.state, "waiting")
         self.assertEqual(len(delivery.move_ids_without_package), 2)
         assert_move_qty_per_lot(delivery.move_ids_without_package, self.lot, 15)
