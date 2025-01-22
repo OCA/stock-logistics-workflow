@@ -52,8 +52,7 @@ class StockMove(models.Model):
                 and moves_to_assign.picking_type_id.owner_restriction
                 == "partner_or_unassigned"
                 and sum(
-                    move.reserved_availability - move.product_uom_qty
-                    for move in moves_to_assign
+                    move.quantity - move.product_uom_qty for move in moves_to_assign
                 )
                 < 0
             ):
@@ -66,7 +65,6 @@ class StockMove(models.Model):
     def _update_reserved_quantity(
         self,
         need,
-        available_quantity,
         location_id,
         lot_id=None,
         package_id=None,
@@ -78,7 +76,6 @@ class StockMove(models.Model):
             owner_id = restricted_owner_id
         return super()._update_reserved_quantity(
             need,
-            available_quantity,
             location_id,
             lot_id=lot_id,
             package_id=package_id,

@@ -9,8 +9,8 @@
             </field>
             <field name="owner_id" position="attributes">
                 <attribute
-                    name="attrs"
-                >{'invisible': [('picking_type_code', '!=', 'incoming'), ('owner_restriction', '!=', 'picking_partner')]}</attribute>
+                    name="invisible"
+                >picking_type_code != 'incoming' and owner_restriction != 'picking_partner'</attribute>
             </field>
         </field>
     </record>
