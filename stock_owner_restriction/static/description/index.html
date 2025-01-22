@@ -369,10 +369,10 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! source digest: sha256:885d32742bfef03a27c8c9373bfecefea44e5758c69cc6f525399e7aa025751b
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_owner_restriction"><img alt="OCA/stock-logistics-workflow" src="https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/stock-logistics-workflow-16-0/stock-logistics-workflow-16-0-stock_owner_restriction"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&amp;target_branch=16.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
-<p>This module extends the functionality of stock module to allow restriction
-of product quantities (quants) for stock operations such as reserve quantities
-or product quantity available info.</p>
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/stock-logistics-workflow/tree/18.0/stock_owner_restriction"><img alt="OCA/stock-logistics-workflow" src="https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/stock-logistics-workflow-18-0/stock-logistics-workflow-18-0-stock_owner_restriction"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&amp;target_branch=18.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
+<p>This module extends the functionality of stock module to allow
+restriction of product quantities (quants) for stock operations such as
+reserve quantities or product quantity available info.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -391,17 +391,17 @@ or product quantity available info.</p>
 <h1><a class="toc-backref" href="#toc-entry-1">Configuration</a></h1>
 <p>To configure this module you need to:</p>
 <ol class="arabic simple">
-<li>Make sure to select the consignment option in inventory settings by going
-to <em>Inventory &gt; Configuration &gt; Settings</em> and ticking <em>Consignment</em> under
-<em>Traceability</em>.</li>
+<li>Make sure to select the consignment option in inventory settings by
+going to <em>Inventory &gt; Configuration &gt; Settings</em> and ticking
+<em>Consignment</em> under <em>Traceability</em>.</li>
 <li>Go to <em>Inventory &gt; Configuration &gt; Operation Types</em>.</li>
-<li>Select an operation type, or create a new one, and set <em>Owner Restriction</em>
-field to the desired value.</li>
+<li>Select an operation type, or create a new one, and set <em>Owner
+Restriction</em> field to the desired value.</li>
 </ol>
 <p>Developers notes</p>
-<p>This module update the context dependency of product quantity available to be computed
-correctly. If you need get product quantity available for an owner yo need set the
-context key “force_restricted_owner_id”.</p>
+<p>This module update the context dependency of product quantity available
+to be computed correctly. If you need get product quantity available for
+an owner yo need set the context key “force_restricted_owner_id”.</p>
 </div>
 <div class="section" id="usage">
 <h1><a class="toc-backref" href="#toc-entry-2">Usage</a></h1>
@@ -415,29 +415,36 @@ context key “force_restricted_owner_id”.</p>
 <p><strong>The stock with owner assigned is not available in products:</strong></p>
 <ol class="arabic simple">
 <li>Go to <em>Inventory &gt; Master Data &gt; Products</em></li>
-<li>Search any product which is in incoming delivery order created in previos step.</li>
-<li>The quantity on hand has not take into account the incoming quanities with
-a owner assigned.</li>
+<li>Search any product which is in incoming delivery order created in
+previos step.</li>
+<li>The quantity on hand has not take into account the incoming quanities
+with a owner assigned.</li>
 </ol>
 <p><strong>Use cases:</strong></p>
 <ol class="arabic">
 <li><p class="first"><em>Odoo standard behavior.</em></p>
 <blockquote>
-<p>In picking operation type set “Standard behavior” value in “Owner restriction” field.</p>
+<p>In picking operation type set “Standard behavior” value in “Owner
+restriction” field.</p>
 <p>** All product stock is available to delivery it.</p>
 </blockquote>
 </li>
 <li><p class="first"><em>Unassigned owner behavior.</em></p>
 <blockquote>
-<p>In picking operation type set “Unassigned owner” value in “Owner restriction” field.</p>
-<p>** Only product stock without owner assigned is available to delivery it.</p>
+<p>In picking operation type set “Unassigned owner” value in “Owner
+restriction” field.</p>
+<p>** Only product stock without owner assigned is available to
+delivery it.</p>
 </blockquote>
 </li>
 <li><p class="first"><em>Picking partner behavior.</em></p>
 <blockquote>
-<p>In picking operation type set “Picking partner” value in “Owner restriction” field.</p>
-<p>** Only product stock with owner assigned is available to delivery it.</p>
-<p>** The owner is get from picking owner field or picking partner field.</p>
+<p>In picking operation type set “Picking partner” value in “Owner
+restriction” field.</p>
+<p>** Only product stock with owner assigned is available to
+delivery it.</p>
+<p>** The owner is get from picking owner field or picking partner
+field.</p>
 </blockquote>
 </li>
 </ol>
@@ -447,7 +454,7 @@ a owner assigned.</li>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/stock-logistics-workflow/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-<a class="reference external" href="https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_owner_restriction%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<a class="reference external" href="https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_owner_restriction%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
@@ -482,7 +489,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.</p>
-<p>This module is part of the <a class="reference external" href="https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_owner_restriction">OCA/stock-logistics-workflow</a> project on GitHub.</p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/stock-logistics-workflow/tree/18.0/stock_owner_restriction">OCA/stock-logistics-workflow</a> project on GitHub.</p>
 <p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
 </div>
 </div>
