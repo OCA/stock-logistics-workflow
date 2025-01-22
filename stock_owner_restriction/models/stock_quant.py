@@ -14,7 +14,7 @@ class StockQuant(models.Model):
         By default prevent a negative quant from being created with owner instead of
         reducing the original quant when a return is made by assigning owner.
         """
-        return owner_id if location_id.usage != "customer" else None
+        return owner_id if location_id.usage != "customer" else self.env["res.partner"]
 
     def _gather(
         self,
@@ -24,6 +24,7 @@ class StockQuant(models.Model):
         package_id=None,
         owner_id=None,
         strict=False,
+        qty=0,
     ):
         records = super()._gather(
             product_id,
@@ -32,6 +33,7 @@ class StockQuant(models.Model):
             package_id=package_id,
             owner_id=self._get_restriction_owner_id(location_id, owner_id),
             strict=strict,
+            qty=qty,
         )
         restricted_owner_id = self.env.context.get("force_restricted_owner_id", None)
         if owner_id is None or restricted_owner_id is None:
@@ -41,20 +43,27 @@ class StockQuant(models.Model):
         )
 
     @api.model
-    def read_group(
-        self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True
+    def _read_group(
+        self,
+        domain,
+        groupby=(),
+        aggregates=(),
+        having=(),
+        offset=0,
+        limit=None,
+        order=None,
     ):
         restricted_owner_id = self.env.context.get("force_restricted_owner_id", None)
         if restricted_owner_id is not None:
             domain = expression.AND([domain, [("owner_id", "=", restricted_owner_id)]])
-        return super(StockQuant, self).read_group(
+        return super()._read_group(
             domain,
-            fields,
-            groupby,
+            groupby=groupby,
+            aggregates=aggregates,
+            having=having,
             offset=offset,
             limit=limit,
-            orderby=orderby,
-            lazy=lazy,
+            order=order,
         )
 
     @api.model

@@ -3,20 +3,13 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo.tests.common import TransactionCase
 
+from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+
 
 class TestStockOwnerRestriction(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        # Remove this variable in v16 and put instead:
-        # from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
-        DISABLED_MAIL_CONTEXT = {
-            "tracking_disable": True,
-            "mail_create_nolog": True,
-            "mail_create_nosubscribe": True,
-            "mail_notrack": True,
-            "no_reset_password": True,
-        }
         cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
         # models
         cls.picking_model = cls.env["stock.picking"]
@@ -24,8 +17,8 @@ class TestStockOwnerRestriction(TransactionCase):
         cls.ResPartner = cls.env["res.partner"]
 
         # warehouse and picking types
-        cls.warehouse = cls.env.ref("stock.stock_warehouse_shop0")
-        cls.picking_type_out = cls.env.ref("stock.chi_picking_type_out")
+        cls.warehouse = cls.env.ref("stock.warehouse0")
+        cls.picking_type_out = cls.env.ref("stock.picking_type_out")
         cls.customer_location = cls.env.ref("stock.stock_location_customers")
 
         # Allow all companies for OdooBot user and set default user company
@@ -42,7 +35,7 @@ class TestStockOwnerRestriction(TransactionCase):
 
         # products
         cls.product = cls.env["product.product"].create(
-            {"name": "Test restriction", "type": "product"}
+            {"name": "Test restriction", "type": "consu", "is_storable": True}
         )
         quant_vals = {
             "product_id": cls.product.id,
@@ -99,7 +92,7 @@ class TestStockOwnerRestriction(TransactionCase):
         # For standard_behavior Odoo does not take into account the owner in
         # quants, so Odoo has been reserved 500 quantities without owner and
         # 500 quantities with owner
-        self.assertEqual(self.picking_out.move_ids.reserved_availability, 1000.00)
+        self.assertEqual(self.picking_out.move_ids.quantity, 1000.00)
         self.assertEqual(len(self.picking_out.move_line_ids), 2)
         self.assertEqual(self.picking_out.move_line_ids.mapped("owner_id"), self.owner)
 
@@ -108,7 +101,7 @@ class TestStockOwnerRestriction(TransactionCase):
         self.picking_type_out.owner_restriction = "unassigned_owner"
         self.picking_out.do_unreserve()
         self.picking_out.action_assign()
-        self.assertEqual(self.picking_out.move_ids.reserved_availability, 500.00)
+        self.assertEqual(self.picking_out.move_ids.quantity, 500.00)
         self.assertEqual(len(self.picking_out.move_line_ids), 1)
         self.assertFalse(self.picking_out.move_line_ids.mapped("owner_id"))
 
@@ -119,7 +112,7 @@ class TestStockOwnerRestriction(TransactionCase):
         self.picking_type_out.owner_restriction = "picking_partner"
         self.picking_out.do_unreserve()
         self.picking_out.action_assign()
-        self.assertEqual(self.picking_out.move_ids.reserved_availability, 0.0)
+        self.assertEqual(self.picking_out.move_ids.quantity, 0.0)
         self.assertEqual(len(self.picking_out.move_line_ids), 0)
         self.assertEqual(self.picking_out.state, "confirmed")
 
@@ -131,7 +124,7 @@ class TestStockOwnerRestriction(TransactionCase):
         self.picking_out.partner_id = self.owner
         self.picking_out.do_unreserve()
         self.picking_out.action_assign()
-        self.assertEqual(self.picking_out.move_ids.reserved_availability, 500.00)
+        self.assertEqual(self.picking_out.move_ids.quantity, 500.00)
         self.assertEqual(len(self.picking_out.move_line_ids), 1)
         self.assertTrue(self.picking_out.move_line_ids.mapped("owner_id"))
         self.assertEqual(self.picking_out.state, "assigned")
@@ -143,7 +136,7 @@ class TestStockOwnerRestriction(TransactionCase):
         self.picking_type_out.owner_restriction = "partner_or_unassigned"
         self.picking_out.do_unreserve()
         self.picking_out.action_assign()
-        self.assertEqual(self.picking_out.move_ids.reserved_availability, 1000.00)
+        self.assertEqual(self.picking_out.move_ids.quantity, 1000.00)
         self.assertEqual(len(self.picking_out.move_line_ids), 2)
         self.assertEqual(self.picking_out.move_line_ids.mapped("owner_id"), self.owner)
 
@@ -154,7 +147,7 @@ class TestStockOwnerRestriction(TransactionCase):
         self.picking_out.partner_id = False
         self.picking_out.do_unreserve()
         self.picking_out.action_assign()
-        self.assertEqual(self.picking_out.move_ids.reserved_availability, 500.00)
+        self.assertEqual(self.picking_out.move_ids.quantity, 500.00)
         self.assertEqual(len(self.picking_out.move_line_ids), 1)
 
     def test_search_qty(self):
