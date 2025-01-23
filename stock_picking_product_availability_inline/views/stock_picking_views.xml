@@ -10,13 +10,13 @@
                 <field name="picking_type_warehouse_id" invisible="1" />
             </xpath>
             <xpath
-                expr="//field[@name='move_ids_without_package']/tree/field[@name='product_id']"
+                expr="//field[@name='move_ids_without_package']/list/field[@name='product_id']"
                 position="attributes"
             >
                 <attribute name="context" operation="update">
                     {
                         "sp_product_stock_inline": True,
-                        "warehouse": parent.picking_type_warehouse_id
+                        "warehouse_id": parent.picking_type_warehouse_id
                      }
                 </attribute>
             </xpath>

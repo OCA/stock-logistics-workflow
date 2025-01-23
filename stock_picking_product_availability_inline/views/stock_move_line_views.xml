@@ -16,7 +16,7 @@
                 <attribute name="context" operation="update">
                     {
                         "sp_product_stock_inline": True,
-                        "warehouse": picking_type_warehouse_id
+                        "warehouse_id": picking_type_warehouse_id
                      }
                 </attribute>
             </xpath>

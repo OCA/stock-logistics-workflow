@@ -1,7 +1,9 @@
 # Copyright 2022 Tecnativa - Ernesto Tejeda
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests import Form, TransactionCase, tagged
+from odoo.tests import TransactionCase, tagged
+
+from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
 
 
 @tagged("post_install", "-at_install")
@@ -9,19 +11,15 @@ class TestStockPickingProductAvailabilityInline(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        # Remove this variable in v16 and put instead:
-        # from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
-        DISABLED_MAIL_CONTEXT = {
-            "tracking_disable": True,
-            "mail_create_nolog": True,
-            "mail_create_nosubscribe": True,
-            "mail_notrack": True,
-            "no_reset_password": True,
-        }
         cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
         cls.partner = cls.env["res.partner"].create({"name": "Partner"})
         cls.product = cls.env["product.product"].create(
-            {"name": "Product", "type": "product"}
+            {
+                "name": "Product Availability Inline",
+                "default_code": "TEST",
+                "type": "consu",
+                "is_storable": True,
+            }
         )
         cls.warehouse1 = cls.env["stock.warehouse"].create(
             {"name": "Warehouse 1", "code": "AI1"}
@@ -51,35 +49,23 @@ class TestStockPickingProductAvailabilityInline(TransactionCase):
         self.env.ref("product.decimal_product_uom").write({"digits": 3})
         # Show free_qty in warehouse1
         self.assertEqual(
-            self.product.with_context(warehouse=self.warehouse1.id).free_qty,
+            self.product.with_context(warehouse_id=self.warehouse1.id).free_qty,
             10.0,
         )
-        picking_form = Form(
-            self.env["stock.picking"].with_context(
-                warehouse=self.warehouse1.id, sp_product_stock_inline=True
-            )
+        name_search = (
+            self.env["product.product"]
+            .with_context(warehouse_id=self.warehouse1.id, sp_product_stock_inline=True)
+            .name_search(name=self.product.display_name)
         )
-        picking_form.partner_id = self.partner
-        picking_form.picking_type_id = self.env.ref("stock.picking_type_out")
-        with picking_form.move_ids_without_package.new() as line_form:
-            line_form.product_id = self.product
-            self.assertTrue(
-                line_form.product_id.display_name.endswith("(10.000 Units)")
-            )
+        self.assertTrue(name_search[0][1].endswith("(10.000 Units)"))
         # Show free_qty in warehouse2
         self.assertEqual(
-            self.product.with_context(warehouse=self.warehouse2.id).free_qty,
+            self.product.with_context(warehouse_id=self.warehouse2.id).free_qty,
             20.0,
         )
-        picking_form = Form(
-            self.env["stock.picking"].with_context(
-                warehouse=self.warehouse2.id, sp_product_stock_inline=True
-            )
+        name_search = (
+            self.env["product.product"]
+            .with_context(warehouse_id=self.warehouse2.id, sp_product_stock_inline=True)
+            .name_search(name=self.product.display_name)
         )
-        picking_form.partner_id = self.partner
-        picking_form.picking_type_id = self.env.ref("stock.picking_type_out")
-        with picking_form.move_ids_without_package.new() as line_form:
-            line_form.product_id = self.product
-            self.assertTrue(
-                line_form.product_id.display_name.endswith("(20.000 Units)")
-            )
+        self.assertTrue(name_search[0][1].endswith("(20.000 Units)"))

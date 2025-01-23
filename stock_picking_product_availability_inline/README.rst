@@ -10,9 +10,9 @@ Stock Picking Product Availability Inline
    !! source digest: sha256:bde30e8b7f2c6162ec6fb4c9b318c9c404d028e74a8d7c3b347c7aa781b4c02b
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-.. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
+.. |badge1| image:: https://img.shields.io/badge/maturity-Production%2FStable-green.png
     :target: https://odoo-community.org/page/development-status
-    :alt: Beta
+    :alt: Production/Stable
 .. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
@@ -74,6 +74,7 @@ Contributors
 
    -  Ernesto Tejeda
    -  Sergio Teruel
+   -  Carlos Roca
 
 Maintainers
 -----------
