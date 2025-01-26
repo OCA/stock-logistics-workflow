@@ -16,8 +16,7 @@
                     string="Sales Order"
                     invisible="not sale_id"
                     groups="stock.group_stock_user"
-                >
-                </button>
+                />
             </xpath>
         </field>
     </record>
