@@ -12,9 +12,3 @@ class ResConfigSettings(models.TransientModel):
         related="company_id.use_oca_batch_validation",
         readonly=False,
     )
-
-
-class Company(models.Model):
-    _inherit = "res.company"
-
-    use_oca_batch_validation = fields.Boolean()

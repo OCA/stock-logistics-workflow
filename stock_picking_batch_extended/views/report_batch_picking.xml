@@ -108,12 +108,12 @@
                                             <!--</td>-->
                                             <tr
                                                 align="left"
-                                                t-if="product.description_warehouse"
+                                                t-if="product.description_picking"
                                             >
                                                 <td colspan="4">
                                                     <pre class="description ">
                                                         <span
-                                                            t-esc="product.description_warehouse"
+                                                            t-esc="product.description_picking"
                                                         />
                                                     </pre>
                                                 </td>

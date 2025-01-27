@@ -1,7 +1,7 @@
 # Copyright 2012-2014 Alexandre Fayolle, Camptocamp SA
 # Copyright 2018-2020 Tecnativa - Carlos Dauden
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import _, fields, models
+from odoo import fields, models
 from odoo.exceptions import UserError
 
 
@@ -12,13 +12,12 @@ class StockPickingBatch(models.Model):
 
     name = fields.Char(
         index=True,
-        states={"draft": [("readonly", False)]},
+        readonly=False,  # allow edition in draft state
     )
     date = fields.Date(
         required=True,
-        readonly=True,
+        readonly=False,  # allow edition in draft,in_progress state
         index=True,
-        states={"draft": [("readonly", False)], "in_progress": [("readonly", False)]},
         default=fields.Date.context_today,
         help="date on which the batch picking is to be processed",
     )
@@ -66,7 +65,7 @@ class StockPickingBatch(models.Model):
     def action_print_picking(self):
         pickings = self.mapped("picking_ids")
         if not pickings:
-            raise UserError(_("Nothing to print."))
+            raise UserError(self.env._("Nothing to print."))
         return self.env.ref("stock.action_report_delivery").report_action(
             self.picking_ids
         )

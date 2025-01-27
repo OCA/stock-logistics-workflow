@@ -28,11 +28,11 @@ Stock Picking - restrict cancelation if printed
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-Display the printed flag on the form view of the transfer.
-Raise an error when canceling a printed stock transfer: `You cannot cancel a transfer that is already printed.`
-The restriction for canceling a printed transfer can be disabled
-with the field `Restrict cancelation if printed` on the transfer type.
-
+Display the printed flag on the form view of the transfer. Raise an
+error when canceling a printed stock transfer: You cannot cancel a
+transfer that is already printed. The restriction for canceling a
+printed transfer can be disabled with the field Restrict cancelation if
+printed on the transfer type.
 
 **Table of contents**
 
@@ -53,19 +53,19 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Camptocamp
 * BCIM
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Telmo Santos <telmo.santos@camptocamp.com>
-* Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
+- Telmo Santos <telmo.santos@camptocamp.com>
+- Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
