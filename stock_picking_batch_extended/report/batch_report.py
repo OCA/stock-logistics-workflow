@@ -22,10 +22,7 @@ class ReportPrintBatchPicking(models.AbstractModel):
 
     @api.model
     def new_level_0(self, operation):
-        level_0_name = "{} \u21E8 {}".format(
-            operation.location_id.name_get()[0][1],
-            operation.location_dest_id.name_get()[0][1],
-        )
+        level_0_name = f"{operation.location_id.name_get()[0][1]} \u21e8 {operation.location_dest_id.name_get()[0][1]}"
         return {
             "name": level_0_name,
             "location": operation.location_id,
