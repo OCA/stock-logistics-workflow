@@ -4,15 +4,18 @@
         <field name="model">stock.picking.batch</field>
         <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_form" />
         <field name="arch" type="xml">
+            <field name="name" position="attributes">
+                <attribute name="readonly">state != 'draft'</attribute>
+            </field>
             <field name="user_id" position="after">
-                <field name="use_oca_batch_validation" invisible="1" />
+                <field name="date" readonly="state not in ('draft', 'in_progress')" />
             </field>
             <xpath expr="//header//field[@name='state']" position="before">
                 <button
                     name="remove_undone_pickings"
                     string="Remove Undone"
                     type="object"
-                    attrs="{'invisible': ['|',('active_picking_ids', '=', []),('use_oca_batch_validation', '!=', True)]}"
+                    invisible="not active_picking_ids or not use_oca_batch_validation"
                     confirm="All undone pickings from this batch will be removed, are you sure?"
                 />
                 <button
@@ -20,7 +23,7 @@
                     string="Print Pickings"
                     type="object"
                     class="oe_highlight"
-                    attrs="{'invisible': [('use_oca_batch_validation', '!=', True)]}"
+                    invisible="not use_oca_batch_validation"
                 />
             </xpath>
             <xpath expr="//div[@name='button_box']" position="inside">
@@ -54,18 +57,15 @@
                     string="Remove Undone"
                     type="object"
                     class="oe_link"
-                    attrs="{'invisible': [('active_picking_ids', '=', [])]}"
+                    invisible="not active_picking_ids"
                     confirm="All undone pickings from this batch will be removed, are you sure?"
                 />
             </field>
             <xpath expr="//field[@name='picking_ids']/.." position="after">
-                <page string='Notes'>
-                    <field name='notes' colspan='4' nolabel='1' />
+                <page string="Notes">
+                    <field name="notes" colspan="4" nolabel="1" />
                 </page>
             </xpath>
-            <field name="user_id" position="after">
-                <field name="date" />
-            </field>
             <xpath expr="//field[@name='picking_ids']" position="attributes">
                 <attribute
                     name="context"
