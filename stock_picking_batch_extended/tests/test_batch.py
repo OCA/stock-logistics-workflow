@@ -1,11 +1,14 @@
 # Copyright 2018 Tecnativa - Carlos Dauden
+from odoo import Command
 from odoo.exceptions import UserError
 from odoo.tests import Form
-from odoo.tests.common import TransactionCase, tagged
+from odoo.tests.common import tagged
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
 @tagged("post_install", "-at_install")
-class TestBatchPicking(TransactionCase):
+class TestBatchPicking(BaseCommon):
     @classmethod
     def _create_product(cls, name, product_type="consu"):
         return cls.env["product.product"].create({"name": name, "type": product_type})
@@ -13,8 +16,8 @@ class TestBatchPicking(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.stock_loc = cls.env.ref("stock.stock_location_stock")
-        cls.customer_loc = cls.env.ref("stock.stock_location_customers")
+        cls.stock_location = cls.env.ref("stock.stock_location_stock")
+        cls.customer_location = cls.env.ref("stock.stock_location_customers")
         cls.uom_unit = cls.env.ref("uom.product_uom_unit")
         cls.picking_type_out = cls.env.ref("stock.picking_type_out")
         cls.batch_model = cls.env["stock.picking.batch"]
@@ -23,7 +26,9 @@ class TestBatchPicking(TransactionCase):
         cls.picking_model = cls.env["stock.picking"]
         cls.product6 = cls._create_product("product_product_6")
         cls.product7 = cls._create_product("product_product_7")
-        cls.product8 = cls._create_product("product_product_8", "product")
+        cls.product8 = cls.env["product.product"].create(
+            {"name": "product_product_8", "is_storable": True}
+        )
         cls.product9 = cls._create_product("product_product_9")
         cls.product10 = cls._create_product("product_product_10")
         cls.product11 = cls._create_product("product_product_11")
@@ -35,7 +40,10 @@ class TestBatchPicking(TransactionCase):
             {
                 "user_id": cls.env.uid,
                 "use_oca_batch_validation": True,
-                "picking_ids": [(4, cls.picking.id), (4, cls.picking2.id)],
+                "picking_ids": [
+                    Command.link(cls.picking.id),
+                    Command.link(cls.picking2.id),
+                ],
             }
         )
 
@@ -46,19 +54,17 @@ class TestBatchPicking(TransactionCase):
         return cls.picking_model.with_context(planned=True).create(
             {
                 "picking_type_id": cls.picking_type_out.id,
-                "location_id": cls.stock_loc.id,
-                "location_dest_id": cls.customer_loc.id,
+                "location_id": cls.stock_location.id,
+                "location_dest_id": cls.customer_location.id,
                 "batch_id": batch_id,
                 "move_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "Test move",
                             "product_id": product_id,
-                            "product_uom_qty": 1,
-                            "location_id": cls.stock_loc.id,
-                            "location_dest_id": cls.customer_loc.id,
+                            "product_uom_qty": 10,
+                            "location_id": cls.stock_location.id,
+                            "location_dest_id": cls.customer_location.id,
                         },
                     )
                     for product_id in product_ids
@@ -229,15 +235,17 @@ class TestBatchPicking(TransactionCase):
             elif move.product_id == self.product7:
                 move.product_uom_qty = 2
         self.batch.action_assign()
-        # Mark product 6 as partially processed and 7 and 9 as fully processed.
+        # Mark product 6 and 10 as partially processed and 7 and 9 as fully processed.
         for operation in self.batch.move_line_ids:
-            # stock_move_line.qty_done
+            # stock_move_line.quantity
             if operation.product_id == self.product6:
-                operation.qty_done = 3
+                operation.quantity = 3
             elif operation.product_id == self.product7:
-                operation.qty_done = 2
+                operation.quantity = 2
             elif operation.product_id == self.product9:
-                operation.qty_done = 1
+                operation.quantity = 10
+            elif operation.product_id == self.product10:
+                operation.quantity = 9
         # confirm transfer action creation
         self.batch.action_assign()
         context = self.batch.action_done().get("context")
@@ -256,8 +264,7 @@ class TestBatchPicking(TransactionCase):
         self.assertEqual(self.product6, backorder.move_ids[0].product_id)
         self.assertEqual(2, backorder.move_ids[0].product_uom_qty)
         self.assertEqual(1, len(backorder.move_line_ids))
-        self.assertEqual(2, backorder.move_line_ids[0].reserved_uom_qty)
-        self.assertEqual(0, backorder.move_line_ids[0].qty_done)
+        self.assertEqual(2, backorder.move_line_ids[0].quantity)
         backorder2 = self.picking_model.search(
             [("backorder_id", "=", self.picking2.id)]
         )
@@ -267,68 +274,63 @@ class TestBatchPicking(TransactionCase):
         self.assertEqual(self.product10, backorder2.move_ids.product_id)
         self.assertEqual(1, backorder2.move_ids.product_uom_qty)
         self.assertEqual(1, len(backorder2.move_line_ids))
-        self.assertEqual(1, backorder2.move_line_ids.reserved_uom_qty)
-        self.assertEqual(0, backorder2.move_line_ids.qty_done)
+        self.assertEqual(1, backorder2.move_line_ids.quantity)
 
     def test_assign_draft_pick(self):
-        picking3 = self.create_simple_picking(
+        self.picking3 = self.create_simple_picking(
             self.product11.ids, batch_id=self.batch.id
         )
-        self.assertEqual("draft", picking3.state)
+        self.assertEqual("draft", self.picking3.state)
         self.batch.action_assign()
-        context = self.batch.action_done().get("context")
-        Form(
-            self.env["stock.immediate.transfer"].with_context(**context)
-        ).save().process()
+        self.assertEqual(self.picking.state, "assigned", "Picking 1 should be ready")
+        self.assertEqual(self.picking2.state, "assigned", "Picking 2 should be ready")
+        self.assertEqual(self.picking3.state, "assigned", "Picking 3 should be ready")
+        self.picking.move_ids.write({"quantity": 5, "picked": True})
+        self.picking2.move_ids.write({"quantity": 10, "picked": True})
+        self.picking3.move_ids.write({"quantity": 5, "picked": True})
+        # There should be a wizard asking to process picking without quantity done
+        back_order_wizard_dict = self.batch.action_done()
+        self.assertTrue(back_order_wizard_dict)
+        back_order_wizard = Form.from_action(self.env, back_order_wizard_dict).save()
+        self.assertEqual(len(back_order_wizard.pick_ids), 2)
+        back_order_wizard.process()
         self.assertEqual("done", self.batch.state)
         self.assertEqual("done", self.picking.state)
         self.assertEqual("done", self.picking2.state)
-        self.assertEqual("done", picking3.state)
+        self.assertEqual("done", self.picking3.state)
 
     def test_package(self):
-        warehouse = self.browse_ref("stock.warehouse0")
-        warehouse.delivery_steps = "pick_ship"
-        group = self.env["procurement.group"].create(
-            {"name": "Test", "move_type": "direct"}
+        # only do part of pickings
+        # + assign different destinations
+        # + try to pack (should get wizard to correct destination)
+        self.batch.move_line_ids.quantity = 5
+        self.batch.move_line_ids[0].location_dest_id = self.stock_location.id
+        self.batch.move_ids.picked = True
+        wizard_values = self.batch.action_put_in_pack()
+        wizard = self.env[(wizard_values.get("res_model"))].browse(
+            wizard_values.get("res_id")
         )
-        values = {
-            "company_id": warehouse.company_id,
-            "group_id": group,
-            "date_planned": "2018-11-13 12:12:59",
-            "warehouse_id": warehouse,
-        }
-        procurements = [
-            self.env["procurement.group"].Procurement(
-                self.product11,
-                1,
-                self.env.ref("uom.product_uom_unit"),
-                self.customer_loc,
-                "test",
-                "TEST",
-                warehouse.company_id,
-                values,
-            )
-        ]
-        group.run(procurements)
-        pickings = self.picking_model.search([("group_id", "=", group.id)])
-        self.assertEqual(2, len(pickings))
-        picking = pickings.filtered(lambda p: p.state == "assigned")
-        picking.move_line_ids[0].qty_done = 1
-        picking.action_put_in_pack()
-        other_picking = pickings.filtered(lambda p: p.id != picking.id)
-        picking._action_done()
-        self.assertEqual("assigned", other_picking.state)
-        # We add the 'package' picking in batch
-        other_picking.batch_id = self.batch
-        self.batch.action_assign()
-        context = self.batch.action_done().get("context")
-        Form(
-            self.env["stock.immediate.transfer"].with_context(**context)
-        ).save().process()
+        wizard.location_dest_id = self.customer_location.id
+        package = wizard.action_done()
+
+        # a new package is made and done quantities should be in same package
+        self.assertTrue(package)
+        done_qty_move_lines = self.batch.move_line_ids.filtered(
+            lambda ml: ml.quantity == 5
+        )
+        self.assertEqual(done_qty_move_lines[0].result_package_id.id, package.id)
+        self.assertEqual(done_qty_move_lines[1].result_package_id.id, package.id)
+
+        # confirm w/ backorder
+        back_order_wizard_dict = self.batch.action_done()
+        self.assertTrue(back_order_wizard_dict)
+        back_order_wizard = Form.from_action(self.env, back_order_wizard_dict).save()
+        self.assertEqual(len(back_order_wizard.pick_ids), 2)
+        back_order_wizard.process()
+
         self.assertEqual("done", self.batch.state)
         self.assertEqual("done", self.picking.state)
         self.assertEqual("done", self.picking2.state)
-        self.assertEqual("done", other_picking.state)
 
     def test_remove_undone(self):
         self.picking2.action_cancel()
@@ -342,21 +344,22 @@ class TestBatchPicking(TransactionCase):
         self.assertEqual(0, len(self.batch.picking_ids))
 
     def test_partial_done(self):
-        # If user filled some quantity_done manually in operations tab,
+        # If user filled some quantity manually in operations tab,
         # we want only these qties to be processed.
         # So picking with no qties processed are release and backorder are
         # created for picking partially processed.
         self.batch.action_assign()
         self.assertEqual("assigned", self.picking.state)
         self.assertEqual("assigned", self.picking2.state)
-        self.picking.move_line_ids[0].qty_done = 1
-        self.picking2.move_line_ids[0].qty_done = 1
-        self.picking2.move_line_ids[1].qty_done = 1
-        context = self.batch.action_done().get("context")
-        # Create backorder? action
-        Form(
-            self.env["stock.backorder.confirmation"].with_context(**context)
-        ).save().process()
+        self.picking.move_line_ids[0].write({"quantity": 10, "picked": True})
+        self.picking2.move_line_ids[0].write({"quantity": 5, "picked": True})
+        self.picking2.move_line_ids[1].write({"quantity": 10, "picked": True})
+        # confirm w/ backorder
+        back_order_wizard_dict = self.batch.action_done()
+        self.assertTrue(back_order_wizard_dict)
+        back_order_wizard = Form.from_action(self.env, back_order_wizard_dict).save()
+        self.assertEqual(len(back_order_wizard.pick_ids), 2)
+        back_order_wizard.process()
         self.batch.remove_undone_pickings()
         self.assertEqual(len(self.batch.picking_ids), 2)
         self.assertEqual("done", self.picking.state)
