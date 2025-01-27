@@ -77,7 +77,7 @@
                 <field name="scheduled_date" />
             </field>
             <filter name="state" position="after">
-                    <filter
+                <filter
                     name="scheduled_date"
                     string="Scheduled Date"
                     context="{'group_by':'scheduled_date'}"
@@ -97,5 +97,4 @@
             </xpath>
         </field>
     </record>
-
 </odoo>
