@@ -10,11 +10,11 @@
                 </group>
                 <footer>
                     <button
-                        name="mass_action"
-                        string="Apply"
-                        type="object"
-                        class="oe_highlight"
-                    />
+                    name="mass_action"
+                    string="Apply"
+                    type="object"
+                    class="oe_highlight"
+                />
                     or
                     <button string="Cancel" class="oe_link" special="cancel" />
                 </footer>
