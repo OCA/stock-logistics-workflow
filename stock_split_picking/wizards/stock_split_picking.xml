@@ -47,11 +47,11 @@
                 </group>
                 <footer>
                 <button
-                        name="action_apply"
-                        class="btn btn-primary"
-                        string="Split"
-                        type="object"
-                    />
+                    name="action_apply"
+                    class="btn btn-primary"
+                    string="Split"
+                    type="object"
+                />
                 or
                 <button special="cancel" class="btn btn-secondary" string="Cancel" />
             </footer>
