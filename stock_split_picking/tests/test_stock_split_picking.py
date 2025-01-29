@@ -37,16 +37,16 @@ class TestStockSplitPicking(TransactionCase):
         cls.src_location = cls.env.ref("stock.stock_location_stock")
         cls.dest_location = cls.env.ref("stock.stock_location_customers")
         cls.product = cls.env["product.product"].create(
-            {"name": "Test product", "detailed_type": "product"}
+            {"name": "Test product", "type": "consu", "is_storable": True}
         )
         cls.product_2 = cls.env["product.product"].create(
-            {"name": "Test product 2", "detailed_type": "product"}
+            {"name": "Test product 2", "type": "consu", "is_storable": True}
         )
         cls.product_consu = cls.env["product.product"].create(
-            {"name": "Test product", "detailed_type": "consu"}
+            {"name": "Test product", "type": "consu"}
         )
         cls.product_consu_2 = cls.env["product.product"].create(
-            {"name": "Test product 2", "detailed_type": "consu"}
+            {"name": "Test product 2", "type": "consu"}
         )
         cls.partner = cls.env["res.partner"].create({"name": "Test partner"})
         cls.picking = _create_picking()

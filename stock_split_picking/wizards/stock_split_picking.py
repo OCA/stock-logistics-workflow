@@ -28,7 +28,7 @@ class StockSplitPicking(models.TransientModel):
         return self.env["stock.picking"].browse(self.env.context.get("active_ids", []))
 
     def action_apply(self):
-        return getattr(self, "_apply_%s" % self[:1].mode)()
+        return getattr(self, f"_apply_{self[:1].mode}")()
 
     def _apply_quantity(self):
         return self.mapped("picking_ids").split_process()

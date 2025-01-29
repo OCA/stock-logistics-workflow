@@ -14,7 +14,7 @@
                         required="mode == 'selection'"
                         domain="[('picking_id', 'in', picking_ids)]"
                     >
-                        <tree create="true" edit="true" delete="true">
+                        <list create="true" edit="true" delete="true">
                             <field name="product_id" />
                             <field name="product_uom_qty" />
                             <field
@@ -42,7 +42,7 @@
                             />
                             <field name="date_deadline" />
                             <field name="state" />
-                        </tree>
+                        </list>
                     </field>
                 </group>
                 <footer>
