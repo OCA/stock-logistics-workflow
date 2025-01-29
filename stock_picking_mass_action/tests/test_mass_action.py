@@ -1,58 +1,51 @@
 # Copyright 2018 Tecnativa - Vicent Cubells
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo.tests import common
+from odoo import Command
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestMassAction(common.TransactionCase):
+class TestMassAction(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        # Remove this variable in v16 and put instead:
-        # from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
-        DISABLED_MAIL_CONTEXT = {
-            "tracking_disable": True,
-            "mail_create_nolog": True,
-            "mail_create_nosubscribe": True,
-            "mail_notrack": True,
-            "no_reset_password": True,
-        }
-        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
-        partner = cls.env["res.partner"].create({"name": "Test Partner"})
-        product = cls.env["product.product"].create(
-            {"name": "Product Test", "type": "product"}
+        cls.partner = cls.env["res.partner"].create({"name": "Test Partner"})
+        cls.product = cls.env["product.product"].create(
+            {"name": "Product Test", "is_storable": True}
         )
-        picking_type_out = cls.env.ref("stock.picking_type_out")
-        stock_location = cls.env.ref("stock.stock_location_stock")
-        customer_location = cls.env.ref("stock.stock_location_customers")
-        cls.env["stock.quant"].create(
+        cls.picking_type_out = cls.env.ref("stock.picking_type_out")
+        cls.stock_location = cls.env.ref("stock.stock_location_stock")
+        cls.customer_location = cls.env.ref("stock.stock_location_customers")
+        cls.lot1 = cls.env["stock.lot"].create(
             {
-                "product_id": product.id,
-                "location_id": stock_location.id,
-                "quantity": 600.0,
+                "name": "lot1",
+                "product_id": cls.product.id,
             }
+        )
+        cls.env["stock.quant"]._update_available_quantity(
+            cls.product, cls.stock_location, 600.0, lot_id=cls.lot1
         )
         # Force Odoo not to automatically reserve the products on the pickings
         # so we can test stock.picking.mass.action
-        picking_type_out.reservation_method = "manual"
+        cls.picking_type_out.reservation_method = "manual"
         # We create a picking out
         cls.picking = cls.env["stock.picking"].create(
             {
-                "partner_id": partner.id,
-                "picking_type_id": picking_type_out.id,
-                "location_id": stock_location.id,
-                "location_dest_id": customer_location.id,
+                "partner_id": cls.partner.id,
+                "picking_type_id": cls.picking_type_out.id,
+                "location_id": cls.stock_location.id,
+                "location_dest_id": cls.customer_location.id,
+                "state": "draft",
                 "move_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
-                            "name": product.name,
-                            "product_id": product.id,
+                            "name": cls.product.name,
+                            "product_id": cls.product.id,
                             "product_uom_qty": 200,
-                            "product_uom": product.uom_id.id,
-                            "location_id": stock_location.id,
-                            "location_dest_id": customer_location.id,
+                            "product_uom": cls.product.uom_id.id,
+                            "location_id": cls.stock_location.id,
+                            "location_dest_id": cls.customer_location.id,
                         },
                     )
                 ],
@@ -63,17 +56,18 @@ class TestMassAction(common.TransactionCase):
         self.assertEqual(self.picking.state, "draft")
         wiz = self.env["stock.picking.mass.action"]
         # We test confirming a picking
-        wiz_confirm = wiz.create({"picking_ids": [(4, self.picking.id)]})
+        wiz_confirm = wiz.create({"picking_ids": [Command.link(self.picking.id)]})
         wiz_confirm.confirm = True
         wiz_confirm.mass_action()
         self.assertEqual(self.picking.state, "confirmed")
         # We test transferring picking
         wiz_tranfer = wiz.with_context(transfer=True).create(
-            {"picking_ids": [(4, self.picking.id)]}
+            {"picking_ids": [Command.link(self.picking.id)]}
         )
         wiz_tranfer.confirm = True
         for line in self.picking.move_ids:
-            line.quantity_done = line.product_uom_qty
+            line.quantity = line.product_uom_qty
+            line.picked = True
         wiz_tranfer.mass_action()
         self.assertEqual(self.picking.state, "done")
         # We test checking assign all
@@ -84,7 +78,7 @@ class TestMassAction(common.TransactionCase):
         pickings |= pick2
         self.assertEqual(pick1.state, "draft")
         self.assertEqual(pick2.state, "draft")
-        wiz_confirm = wiz.create({"picking_ids": [(6, 0, [pick1.id, pick2.id])]})
+        wiz_confirm = wiz.create({"picking_ids": [Command.set([pick1.id, pick2.id])]})
         wiz_confirm.confirm = True
         wiz_confirm.mass_action()
         self.assertEqual(pick1.state, "confirmed")
@@ -99,7 +93,7 @@ class TestMassAction(common.TransactionCase):
         pickings |= pick4
         self.assertEqual(pick3.state, "draft")
         self.assertEqual(pick4.state, "draft")
-        wiz_confirm = wiz.create({"picking_ids": [(6, 0, [pick3.id, pick4.id])]})
+        wiz_confirm = wiz.create({"picking_ids": [Command.set([pick3.id, pick4.id])]})
         wiz_confirm.confirm = True
         wiz_confirm.mass_action()
         self.assertEqual(pick3.state, "confirmed")
@@ -108,18 +102,37 @@ class TestMassAction(common.TransactionCase):
         self.assertEqual(pick1.state, "assigned")
         self.assertEqual(pick2.state, "assigned")
 
-    def test_mass_action_inmediate_transfer(self):
+    def test_mass_action_immediate_transfer(self):
         wiz_tranfer = self.env["stock.picking.mass.action"].create(
-            {"picking_ids": [(4, self.picking.id)], "confirm": True, "transfer": True}
+            {
+                "picking_ids": [Command.link(self.picking.id)],
+                "confirm": True,
+                "transfer": True,
+            }
         )
-        res = wiz_tranfer.mass_action()
-        self.assertEqual(res["res_model"], "stock.immediate.transfer")
+        wiz_tranfer.mass_action()
+        self.picking.check_assign_all()
+        self.assertEqual(self.picking.move_ids.quantity, 200)
+        # Check move_lines data
+        self.assertEqual(len(self.picking.move_ids.move_line_ids), 1)
+        self.assertEqual(self.picking.move_ids.move_line_ids.quantity, 200)
+        # Check quants data
+        self.assertEqual(
+            self.env["stock.quant"]._get_available_quantity(
+                self.product, self.stock_location
+            ),
+            400.0,
+        )
 
     def test_mass_action_backorder(self):
         wiz_tranfer = self.env["stock.picking.mass.action"].create(
-            {"picking_ids": [(4, self.picking.id)], "confirm": True, "transfer": True}
+            {
+                "picking_ids": [Command.link(self.picking.id)],
+                "confirm": True,
+                "transfer": True,
+            }
         )
         self.picking.action_assign()
-        self.picking.move_ids[0].quantity_done = 30
+        self.picking.move_ids[0].quantity = 30
         res = wiz_tranfer.mass_action()
         self.assertEqual(res["res_model"], "stock.backorder.confirmation")
