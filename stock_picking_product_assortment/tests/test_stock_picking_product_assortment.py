@@ -1,9 +1,11 @@
 # Copyright 2020 Tecnativa - Carlos Roca
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import Form, TransactionCase
+from odoo.tests import Form
+from odoo.tests.common import TransactionCase, tagged
 
 
+@tagged("post_install", "-at_install")
 class TestStockPickingProductAssortment(TransactionCase):
     def setUp(self):
         super().setUp()
@@ -20,7 +22,7 @@ class TestStockPickingProductAssortment(TransactionCase):
             {
                 "name": "Test product 1",
                 "sale_ok": True,
-                "type": "product",
+                "type": "consu",
                 "categ_id": self.product_category.id,
                 "description_sale": "Test Description Sale",
             }
@@ -29,7 +31,7 @@ class TestStockPickingProductAssortment(TransactionCase):
             {
                 "name": "Test product 2",
                 "sale_ok": True,
-                "type": "product",
+                "type": "consu",
                 "categ_id": self.product_category.id,
                 "description_sale": "Test Description Sale",
             }

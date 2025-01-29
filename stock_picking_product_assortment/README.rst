@@ -29,9 +29,10 @@ Stock Picking Product Assortment
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
 This module allows to use the product assortments related to a partner
-on outgoing stock pickings. Whith this implementation, we just allow to
-select the products defined on whitelist and we don't allow to select
-the products defined on blacklist on outgoing stock pickings.
+on stock pickings. Whith this implementation, on stock pickings, we only
+allow to select the products defined on the assortment and we don't
+allow to select products which are not defined in the whitelist on the
+assortment.
 
 **Table of contents**
 
@@ -41,14 +42,14 @@ the products defined on blacklist on outgoing stock pickings.
 Configuration
 =============
 
-Follow the steps of product_assortment module to define a whitelist or a
-blacklists or both to some partner.
+Follow the steps of the product_assortment module to define a whitelist
+or a blacklists or both to some partner.
 
 Usage
 =====
 
 1. Go to Inventory.
-2. Create a new outgoing picking.
+2. Create a new outgoing or incoming picking.
 3. Select one of the partners defined on product_assortment.
 4. Add products defined on the product assortment.
 
