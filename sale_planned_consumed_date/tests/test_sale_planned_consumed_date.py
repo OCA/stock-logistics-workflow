@@ -1,11 +1,11 @@
-# Copyright 2024 Foodles (https://www.foodles.co)
+# Copyright 2024-2025 Foodles (https://www.foodles.co)
 # @author Pierre Verkest <pierreverkest84@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from odoo import fields
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class SaleOrderPlannedConsumedDateTest(SavepointCase):
+class SaleOrderPlannedConsumedDateTest(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -40,7 +40,7 @@ class SaleOrderPlannedConsumedDateTest(SavepointCase):
         self.order.action_confirm()
         delivery = self.order.picking_ids
         self.assertEqual(
-            delivery.move_lines.planned_consumed_date,
+            delivery.move_ids.planned_consumed_date,
             fields.Datetime.from_string("2024-02-02"),
         )
 
@@ -51,5 +51,5 @@ class SaleOrderPlannedConsumedDateTest(SavepointCase):
         self.order.action_confirm()
         delivery = self.order.picking_ids
         self.assertFalse(
-            delivery.move_lines.planned_consumed_date,
+            delivery.move_ids.planned_consumed_date,
         )
