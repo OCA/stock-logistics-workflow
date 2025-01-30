@@ -10,7 +10,7 @@ class TestRestrictLot(TransactionCase):
         super().setUpClass()
         cls.customer_loc = cls.env.ref("stock.stock_location_customers")
         cls.output_loc = cls.env.ref("stock.stock_location_output")
-        cls.product = cls.env.ref("product.product_product_16")
+        cls.product = cls.env.ref("product.product_product_16").copy()
         cls.product.write({"tracking": "lot"})
         cls.warehouse = cls.env.ref("stock.warehouse0")
         cls.warehouse.write({"delivery_steps": "pick_ship"})
