@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0\n"
+"Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -21,6 +21,16 @@ msgstr ""
 #. module: stock_scrap_tier_validation
 #: model:ir.model.fields,field_description:stock_scrap_tier_validation.field_stock_scrap__has_comment
 msgid "Has Comment"
+msgstr ""
+
+#. module: stock_scrap_tier_validation
+#: model:ir.model.fields,field_description:stock_scrap_tier_validation.field_stock_scrap__hide_reviews
+msgid "Hide Reviews"
+msgstr ""
+
+#. module: stock_scrap_tier_validation
+#: model:ir.model.fields,help:stock_scrap_tier_validation.field_stock_scrap__has_comment
+msgid "If set, Allow the reviewer to leave a comment on the review."
 msgstr ""
 
 #. module: stock_scrap_tier_validation
@@ -91,6 +101,16 @@ msgstr ""
 #. module: stock_scrap_tier_validation
 #: model:ir.model.fields,field_description:stock_scrap_tier_validation.field_stock_scrap__to_validate_message
 msgid "To Validate Message"
+msgstr ""
+
+#. module: stock_scrap_tier_validation
+#: model:ir.model,name:stock_scrap_tier_validation.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: stock_scrap_tier_validation
+#: model_terms:ir.ui.view,arch_db:stock_scrap_tier_validation.stock_scrap_form_view2
+msgid "Validate"
 msgstr ""
 
 #. module: stock_scrap_tier_validation
