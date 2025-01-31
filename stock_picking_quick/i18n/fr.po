@@ -1,0 +1,52 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_quick
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+
+#. module: stock_picking_quick
+#: model_terms:ir.ui.view,arch_db:stock_picking_quick.view_picking_form
+msgid "Add"
+msgstr ""
+
+#. module: stock_picking_quick
+#: model_terms:ir.ui.view,arch_db:stock_picking_quick.product_search_view4picking
+msgid "Filter products available in the current location"
+msgstr ""
+
+#. module: stock_picking_quick
+#: model_terms:ir.ui.view,arch_db:stock_picking_quick.product_tree_view4picking
+msgid "Open"
+msgstr ""
+
+#. module: stock_picking_quick
+#: model:ir.model,name:stock_picking_quick.model_product_product
+msgid "Product Variant"
+msgstr ""
+
+#. module: stock_picking_quick
+#. odoo-python
+#: code:addons/stock_picking_quick/models/stock_picking.py:0
+#, python-format
+msgid "Product Variants"
+msgstr ""
+
+#. module: stock_picking_quick
+#: model:ir.model,name:stock_picking_quick.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: stock_picking_quick
+#: model_terms:ir.ui.view,arch_db:stock_picking_quick.product_search_view4picking
+msgid "Use Only Available Products"
+msgstr ""
