@@ -15,7 +15,7 @@ odoo_version: 12.0
 org_name: Odoo Community Association (OCA)
 org_slug: OCA
 rebel_module_groups: []
-repo_description: null
+repo_description: ""
 repo_name: Odoo Stock, Workflow and Organization
 repo_slug: https://github.com/OCA/stock-logistics-workflow
 repo_website: https://github.com/OCA/stock-logistics-workflow
