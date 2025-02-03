@@ -75,6 +75,7 @@ Contributors
 -  ForgeFlow S.L. <contact@forgeflow.com>
 -  Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>
 -  Sulivan Lominchar <slominchar@archeti.com>
+-  Stefan Rijnhart <stefan@opener.amsterdam>
 
 Maintainers
 -----------
