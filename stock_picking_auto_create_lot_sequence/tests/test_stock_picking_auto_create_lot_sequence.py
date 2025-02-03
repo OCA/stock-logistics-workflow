@@ -1,7 +1,7 @@
 # Copyright 2024 Quartile (https://www.quartile.co)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import Form, TransactionCase
+from odoo.tests.common import TransactionCase
 
 
 class TestStockPickingProductLotSequence(TransactionCase):
@@ -55,13 +55,6 @@ class TestStockPickingProductLotSequence(TransactionCase):
         self.assertRegex(next_serial, r"Test/\d{5}")
         self.picking.action_confirm()
         self.picking.action_assign()
-        immediate_wizard = self.picking.button_validate()
-        self.assertEqual(immediate_wizard.get("res_model"), "stock.immediate.transfer")
-        immediate_wizard_form = Form(
-            self.env[immediate_wizard["res_model"]].with_context(
-                **immediate_wizard["context"]
-            )
-        ).save()
-        immediate_wizard_form.process()
+        self.picking.button_validate()
         for move_line in self.picking.move_line_ids:
             self.assertRegex(move_line.lot_name, r"Test/\d{5}")
