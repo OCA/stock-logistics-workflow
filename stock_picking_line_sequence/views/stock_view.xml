@@ -13,7 +13,7 @@
                 <field name="max_line_sequence" invisible="1" />
             </xpath>
             <xpath
-                expr="//notebook/page/field[@name='move_ids_without_package']/tree/field[@name='name']"
+                expr="//notebook/page/field[@name='move_ids_without_package']/list/field[@name='name']"
                 position="before"
             >
                 <field name="sequence" widget="handle" />
