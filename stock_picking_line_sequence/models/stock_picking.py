@@ -7,45 +7,6 @@ from lxml import etree
 from odoo import api, fields, models
 
 
-class StockMove(models.Model):
-    _inherit = "stock.move"
-
-    # re-defines the field to change the default
-    sequence = fields.Integer("HiddenSequence", default=9999)
-
-    # displays sequence on the stock moves
-    sequence2 = fields.Integer(
-        "Sequence",
-        help="Shows the sequence in the Stock Move.",
-        related="sequence",
-        readonly=True,
-        store=True,
-    )
-
-    @api.model
-    def create(self, values):
-        move = super().create(values)
-        # We do not reset the sequence if we are copying a complete picking
-        # or creating a backorder
-        if not self.env.context.get("keep_line_sequence", False):
-            move.picking_id._reset_sequence()
-        return move
-
-
-class StockMoveLine(models.Model):
-    _inherit = "stock.move.line"
-
-    def _get_aggregated_product_quantities(self, **kwargs):
-        aggregated_move_lines = super()._get_aggregated_product_quantities(**kwargs)
-        for move_line in self:
-            line_key = self._get_aggregated_properties(move_line=move_line)["line_key"]
-            sequence2 = move_line.move_id.sequence2
-            if line_key in aggregated_move_lines:
-                aggregated_move_lines[line_key]["sequence2"] = sequence2
-
-        return aggregated_move_lines
-
-
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 

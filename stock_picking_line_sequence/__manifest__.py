@@ -16,7 +16,7 @@
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": ["stock", "sale", "sale_stock"],
     "data": [
-        "views/stock_view.xml",
+        "views/stock_picking_views.xml",
         "report/report_deliveryslip.xml",
     ],
     "post_init_hook": "post_init_hook",
