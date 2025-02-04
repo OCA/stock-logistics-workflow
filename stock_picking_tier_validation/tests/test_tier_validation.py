@@ -9,7 +9,7 @@ from .tier_validation_tester import TierValidationTester
 
 
 @tagged("post_install", "-at_install")
-class TestStockPickingTierValidation(common.SavepointCase):
+class TestStockPickingTierValidation(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super(TestStockPickingTierValidation, cls).setUpClass()
