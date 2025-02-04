@@ -60,7 +60,7 @@ class TestSaleTierValidation(common.TransactionCase):
         with self.assertRaises(ValidationError):
             scrap.action_validate()
         scrap.request_validation()
-        scrap.invalidate_cache()
+        scrap.invalidate_recordset()
         scrap.with_user(self.test_user_1).validate_tier()
         scrap.action_validate()
         self.assertEqual(scrap.state, "done")
