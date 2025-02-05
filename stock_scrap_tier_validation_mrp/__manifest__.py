@@ -3,7 +3,7 @@
 
 {
     "name": "Stock Scrap Tier Validation: MRP compatibility",
-    "version": "17.0.1.0.0",
+    "version": "16.0.1.0.0",
     "category": "Stock",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "360ERP, Odoo Community Association (OCA)",
