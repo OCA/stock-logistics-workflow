@@ -122,12 +122,12 @@ class TestStockMove(common.TransactionCase):
         agg_mls = picking.move_line_ids[0]._get_aggregated_product_quantities()
         for key in agg_mls:
             self.assertNotEqual(
-                agg_mls[key].get("sequence2", "NA"),
+                agg_mls[key].get("visible_sequence", "NA"),
                 "NA",
-                "The field sequence2 is not added in dictionary",
+                "The field visible_sequence is not added in dictionary",
             )
             self.assertEqual(
-                picking.move_line_ids[0].move_id.sequence2,
-                agg_mls[key]["sequence2"],
+                picking.move_line_ids[0].move_id.visible_sequence,
+                agg_mls[key]["visible_sequence"],
                 "The Sequence is not copied properly in the aggregated move lines",
             )

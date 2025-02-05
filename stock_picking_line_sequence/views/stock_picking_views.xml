@@ -17,7 +17,7 @@
                 position="before"
             >
                 <field name="sequence" widget="handle" />
-                <field name="sequence2" />
+                <field name="visible_sequence" />
             </xpath>
         </field>
     </record>

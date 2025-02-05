@@ -37,12 +37,12 @@ msgid "Max sequence in lines"
 msgstr "Makimalni broj redaka"
 
 #. module: stock_picking_line_sequence
-#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move__sequence2
+#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move__visible_sequence
 msgid "Sequence"
 msgstr "Sekvenca"
 
 #. module: stock_picking_line_sequence
-#: model:ir.model.fields,help:stock_picking_line_sequence.field_stock_move__sequence2
+#: model:ir.model.fields,help:stock_picking_line_sequence.field_stock_move__visible_sequence
 msgid "Shows the sequence in the Stock Move."
 msgstr "Prikazuje sekvencu na skladišnom prenosu."
 

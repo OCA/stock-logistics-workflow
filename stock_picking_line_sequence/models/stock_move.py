@@ -12,7 +12,7 @@ class StockMove(models.Model):
     sequence = fields.Integer("HiddenSequence", default=9999)
 
     # displays sequence on the stock moves
-    sequence2 = fields.Integer(
+    visible_sequence = fields.Integer(
         "Sequence",
         help="Shows the sequence in the Stock Move.",
         related="sequence",

@@ -12,8 +12,8 @@ class StockMoveLine(models.Model):
         aggregated_move_lines = super()._get_aggregated_product_quantities(**kwargs)
         for move_line in self:
             line_key = self._get_aggregated_properties(move_line=move_line)["line_key"]
-            sequence2 = move_line.move_id.sequence2
+            visible_sequence = move_line.move_id.visible_sequence
             if line_key in aggregated_move_lines:
-                aggregated_move_lines[line_key]["sequence2"] = sequence2
+                aggregated_move_lines[line_key]["visible_sequence"] = visible_sequence
 
         return aggregated_move_lines
