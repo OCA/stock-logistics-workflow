@@ -8,7 +8,7 @@
         </xpath>
         <xpath expr="//table[1]/tbody/tr/td[1]" position="before">
             <td>
-                <span t-field="move.sequence2" />
+                <span t-field="move.visible_sequence" />
             </td>
         </xpath>
         <xpath expr="//table[2]/thead/tr/th[1]" position="before">
@@ -24,7 +24,7 @@
     >
         <xpath expr="//td[1]" position="before">
             <td>
-                <span t-field="move_line.move_id.sequence2" />
+                <span t-field="move_line.move_id.visible_sequence" />
             </td>
         </xpath>
     </template>
@@ -34,9 +34,9 @@
         inherit_id="stock.stock_report_delivery_aggregated_move_lines"
     >
         <xpath expr="//td[1]" position="before">
-            <td class="text-center" name="move_line_aggregated_sequence2">
-                <t t-if=" 'sequence2' in aggregated_lines[line]">
-                    <span t-esc="aggregated_lines[line]['sequence2']" />
+            <td class="text-center" name="move_line_aggregated_visible_sequence">
+                <t t-if=" 'visible_sequence' in aggregated_lines[line]">
+                    <span t-esc="aggregated_lines[line]['visible_sequence']" />
                 </t>
             </td>
         </xpath>

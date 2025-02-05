@@ -36,12 +36,12 @@ msgid "Max sequence in lines"
 msgstr "Maks. zaporedje v vrsticah"
 
 #. module: stock_picking_line_sequence
-#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move__sequence2
+#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move__visible_sequence
 msgid "Sequence"
 msgstr "Zaporedje"
 
 #. module: stock_picking_line_sequence
-#: model:ir.model.fields,help:stock_picking_line_sequence.field_stock_move__sequence2
+#: model:ir.model.fields,help:stock_picking_line_sequence.field_stock_move__visible_sequence
 msgid "Shows the sequence in the Stock Move."
 msgstr "Prikaže zaporedje pri premikih zaloge."
 
