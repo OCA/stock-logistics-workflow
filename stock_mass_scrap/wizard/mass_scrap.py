@@ -28,7 +28,7 @@ class MassScrap(models.TransientModel):
         help="If you choose a warehouse here, only the serial numbers/lots "
         "currently stored in this warehouse will be scrapped",
     )
-    stock_quant_ids = fields.Many2many(comodel_name="stock.quant", readonly=True)
+    stock_quant_ids = fields.Many2many(comodel_name="stock.quant")
 
     def _get_domain(self):
         domain = [

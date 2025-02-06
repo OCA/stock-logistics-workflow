@@ -3,11 +3,11 @@
 
 from freezegun import freeze_time
 
-from odoo.tests.common import SavepointCase
+from odoo.addons.base.tests.common import BaseCommon
 
 
 @freeze_time("2021-11-15 08:00:00")
-class TestMassScrap(SavepointCase):
+class TestMassScrap(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -44,7 +44,7 @@ class TestMassScrap(SavepointCase):
 
     @classmethod
     def _create_lot(cls, name, expiration_date):
-        lot = cls.env["stock.production.lot"].create(
+        lot = cls.env["stock.lot"].create(
             {
                 "name": name,
                 "product_id": cls.product.id,

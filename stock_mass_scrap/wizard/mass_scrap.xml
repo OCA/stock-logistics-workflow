@@ -20,7 +20,7 @@
                             <field name="scrap_location_id" />
                         </group>
                         <group string="Quants">
-                            <field name="stock_quant_ids" nolabel="1" />
+                            <field name="stock_quant_ids" nolabel="1" readonly="1" />
                         </group>
                     </group>
                 </sheet>
