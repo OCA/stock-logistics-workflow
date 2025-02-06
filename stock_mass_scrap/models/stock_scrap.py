@@ -5,7 +5,6 @@ from odoo import models
 
 
 class StockScrap(models.Model):
-
     _inherit = "stock.scrap"
 
     def mass_validate(self):
