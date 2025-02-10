@@ -23,16 +23,14 @@ msgstr ""
 
 #. module: stock_split_picking
 #. odoo-python
-#: code:addons/stock_split_picking/models/stock_picking.py:0
-#, python-format
-msgid "Cannot split off all moves from picking %s"
+#: code:addons/stock_split_picking/exceptions.py:0
+msgid "Cannot split off all moves from picking %(name)s"
 msgstr ""
 
 #. module: stock_split_picking
 #. odoo-python
-#: code:addons/stock_split_picking/models/stock_picking.py:0
-#, python-format
-msgid "Cannot split picking {name} in state {state}"
+#: code:addons/stock_split_picking/exceptions.py:0
+msgid "Cannot split picking %(name)s in state %(state)s"
 msgstr ""
 
 #. module: stock_split_picking
@@ -73,7 +71,6 @@ msgstr ""
 #. module: stock_split_picking
 #. odoo-python
 #: code:addons/stock_split_picking/models/stock_picking.py:0
-#, python-format
 msgid "Mark as todo this picking please."
 msgstr "请标记为要做此拣货。"
 
@@ -126,7 +123,6 @@ msgstr ""
 #. module: stock_split_picking
 #. odoo-python
 #: code:addons/stock_split_picking/models/stock_picking.py:0
-#, python-format
 msgid "The backorder %s has been created."
 msgstr ""
 
@@ -143,7 +139,6 @@ msgstr ""
 #. module: stock_split_picking
 #. odoo-python
 #: code:addons/stock_split_picking/models/stock_picking.py:0
-#, python-format
 msgid "You must enter quantity in order to split your picking in several ones."
 msgstr ""
 
@@ -160,8 +155,8 @@ msgstr ""
 
 #, python-format
 #~ msgid ""
-#~ "The backorder <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id="
-#~ "\"%d\">%s</a> has been created."
+#~ "The backorder <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-"
+#~ "id=\"%d\">%s</a> has been created."
 #~ msgstr ""
 #~ "欠单 <a href=\"#\" data-oe-model=\"stock.picking\" data-oe-id=\"%d\">%s</"
 #~ "a> 已经被创建。"
