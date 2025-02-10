@@ -7,24 +7,29 @@ class StockWarehouse(models.Model):
 
     _inherit = "stock.warehouse"
 
-    mto_as_mts = fields.Boolean(inverse="_inverse_mto_as_mts")
+    mto_as_mts = fields.Boolean()
 
     def _get_locations_for_mto_orderpoints(self):
         return self.mapped("lot_stock_id")
 
-    def _inverse_mto_as_mts(self):
-        mto_route = self.env.ref("stock.route_warehouse0_mto", raise_if_not_found=False)
-        if not mto_route:
-            return
+    def write(self, vals):
+        res = super().write(vals)
+        if "mto_as_mts" in vals and vals["mto_as_mts"] == False:
+            self._archive_orderpoints_on_mts_mto_removal()
+        return res
+
+    def _archive_orderpoints_on_mts_mto_removal(self):
         for warehouse in self:
-            if warehouse.mto_as_mts:
-                wh_mto_rules = self.env["stock.rule"].search(
-                    [
-                        ("route_id", "=", mto_route.id),
-                        "|",
-                        ("warehouse_id", "=", warehouse.id),
-                        ("picking_type_id.warehouse_id", "=", warehouse.id),
-                    ]
-                )
-                if wh_mto_rules:
-                    wh_mto_rules.active = False
+            domain = warehouse._get_orderpoints_to_archive_domain()
+            orderpoints = self.env["stock.warehouse.orderpoint"].search(domain)
+            if orderpoints:
+                orderpoints.write({"active": False})
+
+    def _get_orderpoints_to_archive_domain(self):
+        self.ensure_one()
+        locations = self._get_locations_for_mto_orderpoints()
+        return [
+            ("product_min_qty", "=", 0.0),
+            ("product_max_qty", "=", 0.0),
+            ("location_id", "in", locations.ids),
+        ]

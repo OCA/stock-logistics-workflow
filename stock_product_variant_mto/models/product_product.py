@@ -1,7 +1,7 @@
 # Copyright 2023 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
-from odoo import api, models, fields
+from odoo import api, fields, models
 
 IS_MTO_HELP = """
     Check or Uncheck this field to enable the Make To Order on the variant,
@@ -9,6 +9,7 @@ IS_MTO_HELP = """
     Please note that activating or deactivating Make To Order on the template,
     will reset this setting on its variants.
 """
+
 
 class ProductProduct(models.Model):
     _inherit = "product.product"
@@ -25,7 +26,7 @@ class ProductProduct(models.Model):
         "stock.location.route",
         compute="_compute_route_ids",
         domain="[('product_selectable', '=', True)]",
-        store=False
+        store=False,
     )
 
     def _compute_is_mto(self):

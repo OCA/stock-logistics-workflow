@@ -8,6 +8,8 @@
       <field name="model">product.product</field>
       <field name="inherit_id" ref="product.product_normal_form_view"/>
       <field name="arch" type="xml">
+            <!-- TODO: Set route_ids as readonly here to avoid any mess?
+            And add tooltip to mention it is to be configured on product template -->
           <group name="operations" position="inside">
               <field name="is_mto"/>
           </group>

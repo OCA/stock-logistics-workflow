@@ -7,7 +7,7 @@
     "version": "14.0.1.0.0",
     "development_status": "Alpha",
     "category": "Inventory",
-    "website": "https://github.com/OCA/stock-workflow",
+    "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Camptocamp SA, Odoo Community Association (OCA)",
     "maintainers": ["mmequignon"],
     "license": "AGPL-3",
