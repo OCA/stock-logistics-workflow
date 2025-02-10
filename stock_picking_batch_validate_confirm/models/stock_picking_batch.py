@@ -15,24 +15,14 @@ class StockPickingBatch(models.Model):
             [("state", "not in", ("cancel", "done"))]
         )
         if pending_orig_moves:
-            return self._action_generate_batch_confirm_wizard(pending_orig_moves)
+            return self._action_generate_batch_confirm_wizard()
         return super().action_done()
 
-    def _action_generate_batch_confirm_wizard(self, pending_orig_moves):
-        view = self.env.ref(
-            "stock_picking_batch_validate_confirm.stock_picking_batch_confirm_view_form"
-        )
+    def _action_generate_batch_confirm_wizard(self):
         return {
             "name": _("Batch Confirm"),
             "type": "ir.actions.act_window",
             "view_mode": "form",
             "res_model": "stock.picking.batch.confirm",
-            "views": [(view.id, "form")],
-            "view_id": view.id,
             "target": "new",
-            "context": dict(
-                self.env.context,
-                default_batch_id=self.id,
-                default_move_ids=[(6, 0, pending_orig_moves.ids)],
-            ),
         }
