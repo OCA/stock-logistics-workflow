@@ -13,7 +13,6 @@ class TestStockQuantPackageProductPackaging(TransactionCase):
         # if show_reserved: qty_done must be set on stock.picking.move_line_ids
         # if not show_reserved: qty_done must be set on
         #   stock.picking.move_line_nosuggest_ids
-        cls.receipt_picking_type.show_reserved = True
         cls.product = cls.env.ref("product.product_delivery_02")
         cls.packaging = cls.env["product.packaging"].create(
             {"name": "10 pack", "product_id": cls.product.id, "qty": 10}
