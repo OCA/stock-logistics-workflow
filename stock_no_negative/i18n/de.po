@@ -19,7 +19,7 @@ msgstr ""
 #. module: stock_no_negative
 #. odoo-python
 #: code:addons/stock_no_negative/models/stock_quant.py:0
-msgid " lot {}"
+msgid " lot %(name)s"
 msgstr ""
 
 #. module: stock_no_negative

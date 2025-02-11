@@ -19,8 +19,8 @@ msgstr ""
 #. module: stock_no_negative
 #. odoo-python
 #: code:addons/stock_no_negative/models/stock_quant.py:0
-msgid " lot {}"
-msgstr " lotto {}"
+msgid " lot %(name)s"
+msgstr ""
 
 #. module: stock_no_negative
 #: model:ir.model.fields,field_description:stock_no_negative.field_product_category__allow_negative_stock
@@ -96,3 +96,6 @@ msgstr ""
 "del prodotto '{name}'{name_lot} diventerebbe negativa ({q_quantity}) "
 "nell'ubicazione '{complete_name}' e per questo prodotto e/o ubicazione non è "
 "consentata la giacenza negativa."
+
+#~ msgid " lot {}"
+#~ msgstr " lotto {}"
