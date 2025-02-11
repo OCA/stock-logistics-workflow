@@ -1,1 +1,3 @@
 odoo-test-helper
+
+odoo-addon-product-expiry-alert @ git+https://github.com/OCA/product-attribute.git@refs/pull/1882/head#subdirectory=setup/product_expiry_alert
