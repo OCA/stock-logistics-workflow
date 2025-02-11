@@ -19,8 +19,8 @@ msgstr ""
 #. module: stock_no_negative
 #. odoo-python
 #: code:addons/stock_no_negative/models/stock_quant.py:0
-msgid " lot {}"
-msgstr " lote {}"
+msgid " lot %(name)s"
+msgstr ""
 
 #. module: stock_no_negative
 #: model:ir.model.fields,field_description:stock_no_negative.field_product_category__allow_negative_stock
@@ -96,3 +96,6 @@ msgstr ""
 "No se puede validar esta operación de stock porque el nivel de stock del "
 "producto '%s'%s se volvería negativo (%s) en la ubicación de stock '%s' y no "
 "se permite stock negativo para este producto y/o ubicación."
+
+#~ msgid " lot {}"
+#~ msgstr " lote {}"
