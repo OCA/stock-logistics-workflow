@@ -1,0 +1,99 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_move_product_expired_alert
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-02-12 08:44+0000\n"
+"PO-Revision-Date: 2025-02-12 08:44+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_move_product_expired_alert
+#. odoo-python
+#: code:addons/stock_move_product_expired_alert/models/stock_move.py:0
+#, python-format
+msgid ""
+"\n"
+" - Product: %(product_name)s (Lot: %(lot_name)s)"
+msgstr ""
+
+#. module: stock_move_product_expired_alert
+#: model:ir.model.fields,field_description:stock_move_product_expired_alert.field_stock_picking_type__check_expired_product_alert
+msgid "Check Expired Product Alert"
+msgstr ""
+
+#. module: stock_move_product_expired_alert
+#: model:ir.model.fields,help:stock_move_product_expired_alert.field_stock_picking_type__check_expired_product_alert
+msgid ""
+"Choose the field that will trigger an activity if an expired product is "
+"transferred."
+msgstr ""
+
+#. module: stock_move_product_expired_alert
+#: model:mail.activity.type,name:stock_move_product_expired_alert.expired_product_alert
+msgid "Expired Product in Picking"
+msgstr ""
+
+#. module: stock_move_product_expired_alert
+#. odoo-python
+#: code:addons/stock_move_product_expired_alert/models/stock_move.py:0
+#, python-format
+msgid "Expired products transferred in %(picking_name)s"
+msgstr ""
+
+#. module: stock_move_product_expired_alert
+#: model:ir.model,name:stock_move_product_expired_alert.model_stock_picking_type
+msgid "Picking Type"
+msgstr ""
+
+#. module: stock_move_product_expired_alert
+#: model:res.groups,name:stock_move_product_expired_alert.stock_move_expired_alert
+msgid "Product Expiration Move Alert"
+msgstr ""
+
+#. module: stock_move_product_expired_alert
+#: model_terms:ir.ui.view,arch_db:stock_move_product_expired_alert.view_picking_type_form
+msgid "Product Expiry Alert"
+msgstr ""
+
+#. module: stock_move_product_expired_alert
+#: model:ir.model,name:stock_move_product_expired_alert.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: stock_move_product_expired_alert
+#: model:mail.activity.type,summary:stock_move_product_expired_alert.expired_product_alert
+msgid "Some expired products have been transferred"
+msgstr ""
+
+#. module: stock_move_product_expired_alert
+#: model:ir.model,name:stock_move_product_expired_alert.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_move_product_expired_alert
+#: model:ir.model.fields.selection,name:stock_move_product_expired_alert.selection__stock_picking_type__check_expired_product_alert__alert_date
+msgid "Trigger an alert if alert date is expired"
+msgstr ""
+
+#. module: stock_move_product_expired_alert
+#: model:ir.model.fields.selection,name:stock_move_product_expired_alert.selection__stock_picking_type__check_expired_product_alert__expiration_date
+msgid "Trigger an alert if expiration date is expired"
+msgstr ""
+
+#. module: stock_move_product_expired_alert
+#: model:ir.model.fields.selection,name:stock_move_product_expired_alert.selection__stock_picking_type__check_expired_product_alert__removal_date
+msgid "Trigger an alert if removal date is expired"
+msgstr ""
+
+#. module: stock_move_product_expired_alert
+#: model:ir.model.fields.selection,name:stock_move_product_expired_alert.selection__stock_picking_type__check_expired_product_alert__use_date
+msgid "Trigger an alert if use date is expired"
+msgstr ""

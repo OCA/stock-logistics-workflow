@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<!-- Copyright 2025 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record id="view_picking_type_form" model="ir.ui.view">
+        <field name="name">Operation Types</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='show_entire_packs']/parent::group"
+                position="after"
+            >
+                <group name="product_expiration_alert" string="Product Expiry Alert">
+                    <field name="check_expired_product_alert" />
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

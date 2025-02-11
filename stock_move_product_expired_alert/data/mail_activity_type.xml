@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<!-- Copyright 2025 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo noupdate="1">
+   <record id="expired_product_alert" model="mail.activity.type">
+      <field name="name">Expired Product in Picking</field>
+      <field name="res_model">stock.picking</field>
+      <field name="summary">Some expired products have been transferred</field>
+   </record>
+</odoo>
