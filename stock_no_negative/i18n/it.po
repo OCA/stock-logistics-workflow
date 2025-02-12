@@ -7,20 +7,21 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-21 14:50+0000\n"
-"PO-Revision-Date: 2023-11-21 14:50+0000\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2025-02-12 16:06+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: \n"
-"Language: \n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: stock_no_negative
 #. odoo-python
 #: code:addons/stock_no_negative/models/stock_quant.py:0
 msgid " lot %(name)s"
-msgstr ""
+msgstr " lotto %(name)s"
 
 #. module: stock_no_negative
 #: model:ir.model.fields,field_description:stock_no_negative.field_product_category__allow_negative_stock
