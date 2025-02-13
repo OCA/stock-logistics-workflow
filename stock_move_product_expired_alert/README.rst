@@ -29,7 +29,8 @@ Stock Move Product Expired Entry Alert
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
 This module allows to create activities for users that should be warned
-about expired products stock transfers.
+about expired products stock transfers. In order to manage those
+activities in a shared way, this will use activity teams.
 
 **Table of contents**
 
@@ -43,7 +44,7 @@ When managing expiration dates on products, stock managers want to be
 warned about incoming expired products.
 
 Receiving those products should be done to manage traceability (even if
-they will be destoryed or returned to supplier, or...).
+they will be destroyed or returned to supplier, or...).
 
 Configuration
 =============
@@ -52,9 +53,10 @@ Configuration
 - Select the field that will trigger an expiration alert (activity
   creation) for movements that have expired product lots for that
   operation type.
-- Go to Settings > Users & Companies > Groups
-- Select the 'Product Expiration Move Alert' group and add the users you
-  want to be warned about expired products moves.
+- Go to Settings > Technical > Activity Teams
+- Create a team or use an existing one.
+- Go to Inventory > Configuration > Traceability
+- Choose the team in 'Check Expired Product Alert Team' section.
 
 Bug Tracker
 ===========

@@ -1,0 +1,30 @@
+<!-- Copyright 2025 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.stock</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <div id="group_lot_on_delivery_slip" position="after">
+                <div
+                    class="col-12 col-lg-6 o_setting_box"
+                    attrs="{'invisible': [('group_stock_production_lot', '=', False)]}"
+                    id="check_expired_transfered_product_alert"
+                >
+                    <div class="o_setting_left_pane">
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="check_expired_product_alert_team_id" />
+                        <field name="check_expired_product_alert_team_id" />
+                        <div class="text-muted">
+                            Fill in the Activity Team that will be warned of expired products.
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </field>
+    </record>
+</odoo>

@@ -23,15 +23,20 @@ class TestStockMove(BaseCommon):
         cls.picking_type_in = cls.env.ref("stock.picking_type_in")
         cls.picking_type_in.check_expired_product_alert = "alert_date"
 
+        cls.team = cls.env["mail.activity.team"].create(
+            {
+                "name": "Test Team",
+            }
+        )
+
         cls.user = cls.env["res.users"].create(
             {
                 "name": "Test User",
                 "login": "test_user",
             }
         )
-        cls.user.groups_id |= cls.env.ref(
-            "stock_move_product_expired_alert.stock_move_expired_alert"
-        )
+        cls.member_ids = cls.env.user
+        cls.env.company.check_expired_product_alert_team_id = cls.team
         cls.lot = cls._create_lot()
 
     @classmethod
@@ -72,6 +77,7 @@ class TestStockMove(BaseCommon):
         move._action_done()
         activities_after = move.picking_id.activity_ids - activities_before
         self.assertEqual(1, len(activities_after))
+        self.assertEqual(self.team, activities_after.team_id)
 
     @freeze_time("2025-01-10")
     def test_move_not_expired(self):

@@ -11,11 +11,12 @@
     "maintainers": ["rousseldenis"],
     "depends": [
         "base_partition",
+        "mail_activity_team",
         "stock",
         "product_expiry_alert",
     ],
     "data": [
-        "security/res_groups.xml",
+        "views/res_config_settings.xml",
         "data/mail_activity_type.xml",
         "views/stock_picking_type.xml",
     ],
