@@ -12,7 +12,7 @@ from .tier_validation_tester import TierValidationTester
 class TestStockPickingTierValidation(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
-        super(TestStockPickingTierValidation, cls).setUpClass()
+        super().setUpClass()
 
         setup_test_model(cls.env, [TierValidationTester])
 
@@ -56,7 +56,7 @@ class TestStockPickingTierValidation(common.SavepointCase):
     @classmethod
     def tearDownClass(cls):
         teardown_test_model(cls.env, [TierValidationTester])
-        super(TestStockPickingTierValidation, cls).tearDownClass()
+        super().tearDownClass()
 
     def test_01_tier_definition_models(self):
         """When the user can validate all future reviews, it is not needed
