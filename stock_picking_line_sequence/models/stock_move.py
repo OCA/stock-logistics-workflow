@@ -9,12 +9,15 @@ class StockMove(models.Model):
     _inherit = "stock.move"
 
     # re-defines the field to change the default
-    sequence = fields.Integer("HiddenSequence", default=9999)
+    sequence = fields.Integer(
+        default=9999,
+        help="Determines the sequence of this move on the stock picking.",
+    )
 
     # displays sequence on the stock moves
     visible_sequence = fields.Integer(
-        "Sequence",
-        help="Shows the sequence in the Stock Move.",
+        "Line Number",
+        help="Displays the sequence of this move on the stock picking.",
         related="sequence",
         readonly=True,
         store=True,
@@ -22,10 +25,10 @@ class StockMove(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        """(re)initialize the sequences of the moves within a picking"""
         moves = super().create(vals_list)
+        # (re)initialize the sequences of the moves within a picking.
         # We do not reset the sequence if we are copying a complete picking
-        # or creating a backorder
+        # or creating a backorder.
         if not self.env.context.get("keep_line_sequence"):
             moves.picking_id._reset_sequence()
         return moves
