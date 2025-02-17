@@ -4,26 +4,18 @@
 import logging
 from time import sleep
 
-from odoo.tests.common import TransactionCase, tagged
+from odoo.tests.common import tagged
+
+from odoo.addons.base.tests.common import BaseCommon
 
 _logger = logging.getLogger(__name__)
 
 
 @tagged("-at_install", "post_install")
-class TestProductCostPriceAvcoSync(TransactionCase):
+class TestProductCostPriceAvcoSync(BaseCommon):
     @classmethod
     def setUpClass(cls):
-        super(TestProductCostPriceAvcoSync, cls).setUpClass()
-        # Remove this variable in v16 and put instead:
-        # from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
-        DISABLED_MAIL_CONTEXT = {
-            "tracking_disable": True,
-            "mail_create_nolog": True,
-            "mail_create_nosubscribe": True,
-            "mail_notrack": True,
-            "no_reset_password": True,
-        }
-        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
+        super().setUpClass()
         cls.StockPicking = cls.env["stock.picking"]
         cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
         cls.customer_location = cls.env.ref("stock.stock_location_customers")
@@ -48,7 +40,7 @@ class TestProductCostPriceAvcoSync(TransactionCase):
                 "picking_type_id": cls.picking_type_in.id,
                 "location_id": cls.supplier_location.id,
                 "location_dest_id": cls.stock_location.id,
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
@@ -70,7 +62,7 @@ class TestProductCostPriceAvcoSync(TransactionCase):
                 "picking_type_id": cls.picking_type_out.id,
                 "location_id": cls.stock_location.id,
                 "location_dest_id": cls.customer_location.id,
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
@@ -88,7 +80,7 @@ class TestProductCostPriceAvcoSync(TransactionCase):
         )
 
     def _test_sync_cost_price(self):
-        move_in = self.picking_in.move_lines[:1]
+        move_in = self.picking_in.move_ids[:1]
         move_in.product_uom_qty = 100
         move_in.price_unit = 5.0
         move_in.quantity_done = move_in.product_uom_qty
@@ -104,20 +96,20 @@ class TestProductCostPriceAvcoSync(TransactionCase):
         sleep(1)
 
         picking_in_2 = self.picking_in.copy()
-        move_in_2 = picking_in_2.move_lines[:1]
+        move_in_2 = picking_in_2.move_ids[:1]
         move_in_2.product_uom_qty = 10.0
         move_in_2.quantity_done = move_in_2.product_uom_qty
         picking_in_2._action_done()
         move_in_2.date = "2019-10-02 00:00:00"
         sleep(1)
 
-        move_out = self.picking_out.move_lines[:1]
+        move_out = self.picking_out.move_ids[:1]
         move_out.quantity_done = move_out.product_uom_qty
         self.picking_out._action_done()
         move_out.date = "2019-10-03 00:00:00"
 
         picking_out_2 = self.picking_out.copy()
-        move_out_2 = picking_out_2.move_lines[:1]
+        move_out_2 = picking_out_2.move_ids[:1]
         move_out_2.quantity_done = move_out_2.product_uom_qty
         picking_out_2._action_done()
         move_out_2.date = "2019-10-04 00:00:00"
@@ -154,31 +146,31 @@ class TestProductCostPriceAvcoSync(TransactionCase):
 
     def _test_sync_cost_price_and_history(self):
         company_id = self.picking_in.company_id.id
-        move_in = self.picking_in.move_lines[:1]
+        move_in = self.picking_in.move_ids[:1]
         move_in.quantity_done = move_in.product_uom_qty
         self.picking_in._action_done()
         move_in.date = "2019-10-01 00:00:00"
 
-        move_out = self.picking_out.move_lines[:1]
+        move_out = self.picking_out.move_ids[:1]
         move_out.quantity_done = move_out.product_uom_qty
         self.picking_out._action_done()
         move_out.date = "2019-10-01 01:00:00"
 
         picking_in_2 = self.picking_in.copy()
-        move_in_2 = picking_in_2.move_lines[:1]
+        move_in_2 = picking_in_2.move_ids[:1]
         move_in_2.quantity_done = move_in_2.product_uom_qty
         picking_in_2._action_done()
         move_in_2.date = "2019-10-01 02:00:00"
 
         picking_out_2 = self.picking_out.copy()
-        move_out_2 = picking_out_2.move_lines[:1]
+        move_out_2 = picking_out_2.move_ids[:1]
         move_out_2.product_uom_qty = 15
         move_out_2.quantity_done = move_out_2.product_uom_qty
         picking_out_2._action_done()
         move_out_2.date = "2019-10-01 03:00:00"
 
         picking_in_3 = self.picking_in.copy()
-        move_in_3 = picking_in_3.move_lines[:1]
+        move_in_3 = picking_in_3.move_ids[:1]
         move_in_3.quantity_done = move_in_3.product_uom_qty
         move_in_3.price_unit = 2.0
         picking_in_3._action_done()
@@ -215,13 +207,13 @@ class TestProductCostPriceAvcoSync(TransactionCase):
         self.assertEqual(svl_count, 4)  # TODO: Miralo que no se si es así
 
     def _test_sync_cost_price_multi_moves_done_at_same_time(self):
-        move_in = self.picking_in.move_lines[:1]
+        move_in = self.picking_in.move_ids[:1]
         move_in.product_uom_qty = 10
         move_in.price_unit = 10.0
         move_in.quantity_done = move_in.product_uom_qty
 
         picking_in_2 = self.picking_in.copy()
-        move_in_2 = picking_in_2.move_lines[:1]
+        move_in_2 = picking_in_2.move_ids[:1]
         move_in_2.product_uom_qty = 10.0
         move_in_2.price_unit = 5.0
         move_in_2.quantity_done = move_in_2.product_uom_qty
@@ -245,13 +237,13 @@ class TestProductCostPriceAvcoSync(TransactionCase):
     def _test_change_quantiy_price(self):
         """Write quantity and price to zero in a stock valuation layer"""
         self.picking_in.action_assign()
-        move_in = self.picking_in.move_lines[:1]
+        move_in = self.picking_in.move_ids[:1]
         self.picking_in.move_line_ids.qty_done = move_in.product_uom_qty
         self.picking_in._action_done()
 
         picking_in_2 = self.picking_in.copy()
         picking_in_2.action_assign()
-        move_in_2 = picking_in_2.move_lines[:1]
+        move_in_2 = picking_in_2.move_ids[:1]
         move_in_2.product_uom_qty = 10.0
         move_in_2.quantity_done = move_in_2.product_uom_qty
         picking_in_2._action_done()
@@ -300,7 +292,7 @@ class TestProductCostPriceAvcoSync(TransactionCase):
                     "picking_type_id": picking_type.id,
                     "location_id": location_id.id,
                     "location_dest_id": location_dest_id.id,
-                    "move_lines": [
+                    "move_ids": [
                         (
                             0,
                             0,
@@ -319,7 +311,7 @@ class TestProductCostPriceAvcoSync(TransactionCase):
         )
         if confirmed:
             picking.action_assign()
-            move = picking.move_lines[:1]
+            move = picking.move_ids[:1]
             picking.move_line_ids.qty_done = move.product_uom_qty
             picking._action_done()
         return picking, move
@@ -470,7 +462,7 @@ class TestProductCostPriceAvcoSync(TransactionCase):
         )
 
         # Restore to initial values
-        move_in_01.with_context(keep_avco_inventory=True).quantity_done = 10.0
+        move_in_01.with_context(keep_avco_inventory=True).move_line_ids.qty_done = 10.0
         move_in_01.stock_valuation_layer_ids.unit_cost = 2.0
         self.print_svl(
             "After restore initial values Quant:{} Standard Price:{}".format(
@@ -494,7 +486,7 @@ class TestProductCostPriceAvcoSync(TransactionCase):
 
         # Restore to initial values
         move_in_01.stock_valuation_layer_ids.unit_cost = 2.0
-        move_in_01.quantity_done = 10.0
+        move_in_01.move_line_ids.qty_done = 10.0
         self.print_svl(
             "After restore initial values Quant:{} Standard Price:{}".format(
                 quant.quantity, quant.product_id.standard_price
