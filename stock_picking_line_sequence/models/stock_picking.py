@@ -32,7 +32,7 @@ class StockPicking(models.Model):
             current_sequence = 1
             for line in rec.move_ids_without_package:
                 # Check if the record ID is an integer (real ID)
-                # or a string (virtual ID)
+                # not NewId
                 if isinstance(line.id, int):
                     line.sequence = current_sequence
                     current_sequence += 1
