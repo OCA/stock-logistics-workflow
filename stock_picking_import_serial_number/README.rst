@@ -83,6 +83,7 @@ Contributors
      - Sergio Teruel
      - Carolina Fernandez
      - Víctor Martínez
+     - Juan Carlos Oñate
 
 Maintainers
 -----------

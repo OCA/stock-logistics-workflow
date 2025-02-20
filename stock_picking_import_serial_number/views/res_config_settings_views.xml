@@ -4,7 +4,7 @@
         <field name="model">res.config.settings</field>
         <field name="inherit_id" ref="stock.res_config_settings_view_form" />
         <field name="arch" type="xml">
-            <div id="production_lot_info" position="after">
+            <block id="production_lot_info" position="after">
                 <h2>Import S/N</h2>
                 <div class="row mt16 o_settings_container" id="serial_number_importer">
                     <div class="col-12 col-lg-6 o_setting_box">
@@ -61,7 +61,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </block>
         </field>
     </record>
 </odoo>
