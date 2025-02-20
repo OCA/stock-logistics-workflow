@@ -5,7 +5,7 @@ from odoo.tests.common import TransactionCase
 class TestPacking(TransactionCase):
     @classmethod
     def setUpClass(cls):
-        super(TestPacking, cls).setUpClass()
+        super().setUpClass()
         cls.stock_location = cls.env.ref("stock.stock_location_stock")
         cls.warehouse = cls.env["stock.warehouse"].search(
             [("lot_stock_id", "=", cls.stock_location.id)], limit=1
