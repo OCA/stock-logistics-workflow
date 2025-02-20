@@ -37,9 +37,12 @@ msgstr "Transferencia"
 #. module: stock_picking_back2draft
 #. odoo-python
 #: code:addons/stock_picking_back2draft/models/stock_move.py:0
+msgid "You can set back to draft only canceled moves"
+msgstr ""
+
 #, python-format
-msgid "You can set to draft cancelled moves only"
-msgstr "Sólo se pueden establecer a borradores movimientos cancelados"
+#~ msgid "You can set to draft cancelled moves only"
+#~ msgstr "Sólo se pueden establecer a borradores movimientos cancelados"
 
 #~ msgid "Picking List"
 #~ msgstr "Lista albaranes"
