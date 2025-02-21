@@ -4,3 +4,4 @@ To use this module:
     lots.
 2.  When you enter detailed operations you will notice that the lots
     available to select are filtered by the origin of the operation.
+3.  Note that lots must have a company assigned to them for proper filtering.
