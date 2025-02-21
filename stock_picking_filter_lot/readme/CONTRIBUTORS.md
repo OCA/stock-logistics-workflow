@@ -5,3 +5,5 @@
   (www.ecosoft.co.th)
 - Jesus Alcala \<<jesus.alcala@jarsa.com.mx>\> (www.jarsa.com.mx)
 - [OERP Canada](https://www.oerp.ca/) \<<info@oerp.ca>\>
+- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
+  - Bhavesh Heliconia
