@@ -8,7 +8,10 @@ class StockLot(models.Model):
     _inherit = "stock.lot"
 
     location_ids = fields.Many2many(
-        comodel_name="stock.location", compute="_compute_location_ids", store=True
+        comodel_name="stock.location",
+        compute="_compute_location_ids",
+        store=True,
+        string="Locations",
     )
 
     @api.depends("quant_ids", "quant_ids.location_id")
