@@ -13,7 +13,5 @@ class StockRule(models.Model):
 
     def _push_prepare_move_copy_values(self, move_to_copy, new_date):
         values = super()._push_prepare_move_copy_values(move_to_copy, new_date)
-        values["restrict_lot_id"] = (
-            move_to_copy.restrict_lot_id.id if move_to_copy.restrict_lot_id else False
-        )
+        values["restrict_lot_id"] = move_to_copy.restrict_lot_id.id
         return values
