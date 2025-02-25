@@ -14,6 +14,19 @@ class TestRestrictLot(TransactionCase):
         cls.product.write({"tracking": "lot"})
         cls.warehouse = cls.env.ref("stock.warehouse0")
         cls.warehouse.write({"delivery_steps": "pick_ship"})
+        cls.stock_loc = cls.warehouse.lot_stock_id
+
+        # Set up a pull route from an external warehouse
+        cls.warehouse2 = cls.env["stock.warehouse"].create(
+            {"name": __name__, "code": "_WH2"}
+        )
+        cls.warehouse.resupply_wh_ids = cls.warehouse2
+        route = cls.env["stock.route"].search(
+            [("supplied_wh_id", "=", cls.warehouse.id)]
+        )
+        assert route
+        cls.product.route_ids = route
+
         cls.lot = cls.env["stock.lot"].create(
             {
                 "name": "lot1",
@@ -26,8 +39,8 @@ class TestRestrictLot(TransactionCase):
         move = self.env["stock.move"].create(
             {
                 "product_id": self.product.id,
-                "location_id": self.output_loc.id,
-                "location_dest_id": self.customer_loc.id,
+                "location_id": self.stock_loc.id,
+                "location_dest_id": self.output_loc.id,
                 "product_uom_qty": 1,
                 "product_uom": self.product.uom_id.id,
                 "name": "test",
@@ -70,8 +83,8 @@ class TestRestrictLot(TransactionCase):
         move = self.env["stock.move"].create(
             {
                 "product_id": self.product.id,
-                "location_id": self.output_loc.id,
-                "location_dest_id": self.customer_loc.id,
+                "location_id": self.stock_loc.id,
+                "location_dest_id": self.output_loc.id,
                 "product_uom_qty": 1,
                 "product_uom": self.product.uom_id.id,
                 "name": "test",
@@ -89,8 +102,8 @@ class TestRestrictLot(TransactionCase):
         move = self.env["stock.move"].create(
             {
                 "product_id": self.product.id,
-                "location_id": self.output_loc.id,
-                "location_dest_id": self.customer_loc.id,
+                "location_id": self.stock_loc.id,
+                "location_dest_id": self.output_loc.id,
                 "product_uom_qty": 2,
                 "product_uom": self.product.uom_id.id,
                 "name": "test",
@@ -160,19 +173,13 @@ class TestRestrictLot(TransactionCase):
                 "group_stock_multi_locations": True,
             }
         )
-        warehouse = self.env["stock.warehouse"].search(
-            [("company_id", "=", self.env.company.id)], limit=1
-        )
-        warehouse.delivery_steps = "pick_ship"
 
-        self.product.categ_id.route_ids |= self.env["stock.route"].search(
-            [("name", "ilike", "deliver in 2")]
-        )
+        self.product.categ_id.route_ids |= self.warehouse.delivery_route_id
         location_1 = self.env["stock.location"].create(
-            {"name": "loc1", "location_id": warehouse.lot_stock_id.id}
+            {"name": "loc1", "location_id": self.warehouse.lot_stock_id.id}
         )
         location_2 = self.env["stock.location"].create(
-            {"name": "loc2", "location_id": warehouse.lot_stock_id.id}
+            {"name": "loc2", "location_id": self.warehouse.lot_stock_id.id}
         )
 
         # create goods in stock
@@ -231,9 +238,9 @@ class TestRestrictLot(TransactionCase):
             self.assertEqual(concern_move.product_uom_qty, expect_qty)
 
         def assert_move_line_per_lot_and_location(
-            moves, expect_lot, expect_from_location, expect_reserved_qty
+            move_lines, expect_lot, expect_from_location, expect_reserved_qty
         ):
-            concern_move_line = moves.filtered(
+            concern_move_line = move_lines.filtered(
                 lambda mov: mov.lot_id == expect_lot
                 and mov.location_id == expect_from_location
             )
@@ -242,22 +249,11 @@ class TestRestrictLot(TransactionCase):
                 concern_move_line.quantity_product_uom, expect_reserved_qty
             )
 
-        pickings = self.env["stock.picking"].search(
-            [("group_id", "=", procurement_group.id)]
-        )
-        self.assertEqual(len(pickings), 2)
-        delivery = pickings.filtered(
-            lambda pick: pick.picking_type_id.code == "outgoing"
-        )
-        pick = pickings.filtered(lambda pick: pick.picking_type_id.code == "internal")
-        self.assertEqual(delivery.state, "waiting")
-        self.assertEqual(len(delivery.move_ids_without_package), 2)
-        assert_move_qty_per_lot(delivery.move_ids_without_package, self.lot, 15)
-        assert_move_qty_per_lot(delivery.move_ids_without_package, lot2, 30)
-
-        pick.action_assign()
+        pick = procurement_group.stock_move_ids.picking_id
+        self.assertEqual(len(pick), 1)
+        self.assertEqual(pick.picking_type_id.code, "internal")
         self.assertEqual(pick.state, "assigned")
-        self.assertEqual(len(pick.move_ids_without_package), 2)
+        self.assertEqual(len(pick.move_ids), 2)
         assert_move_qty_per_lot(pick.move_ids_without_package, self.lot, 15)
         assert_move_qty_per_lot(pick.move_ids_without_package, lot2, 30)
         assert_move_line_per_lot_and_location(
@@ -272,17 +268,26 @@ class TestRestrictLot(TransactionCase):
         assert_move_line_per_lot_and_location(
             pick.move_line_ids_without_package, lot2, location_2, 25
         )
+        pick.button_validate()
+        self.assertEqual(pick.state, "done")
+
+        delivery = procurement_group.stock_move_ids.picking_id - pick
+        self.assertEqual(delivery.picking_type_id.code, "outgoing")
+        self.assertEqual(delivery.state, "assigned")
+
+        assert_move_qty_per_lot(delivery.move_ids_without_package, self.lot, 15)
+        assert_move_qty_per_lot(delivery.move_ids_without_package, lot2, 30)
 
     def test_compute_quantites(self):
         move = self.env["stock.move"].create(
             {
                 "product_id": self.product.id,
-                "location_id": self.output_loc.id,
+                "location_id": self.stock_loc.id,
                 "location_dest_id": self.customer_loc.id,
                 "product_uom_qty": 1,
                 "product_uom": self.product.uom_id.id,
                 "name": "test",
-                "procure_method": "make_to_order",
+                "procure_method": "make_to_stock",
                 "warehouse_id": self.warehouse.id,
                 "route_ids": [(6, 0, self.warehouse.delivery_route_id.ids)],
                 "restrict_lot_id": self.lot.id,
@@ -297,6 +302,7 @@ class TestRestrictLot(TransactionCase):
 
         product = move.product_id
         self.assertEqual(product.outgoing_qty, 2)
+
         product.invalidate_recordset()
         product = product.with_context(lot_id=self.lot.id)
         self.assertEqual(product.outgoing_qty, 1)
@@ -377,7 +383,8 @@ class TestRestrictLot(TransactionCase):
         move, new_lot = self._create_move_with_lot()
         orig_move = move.move_orig_ids
         orig_move._action_assign()
-        orig_move.quantity_done = orig_move.product_uom_qty
+        orig_move.quantity = orig_move.product_uom_qty
+        orig_move.picked = True
         orig_move._action_done()
         self.assertEqual(orig_move.state, "done")
         with self.assertRaises(ValidationError) as m:
