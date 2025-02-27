@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* stock_picking_type_shipping_policy
+# 	* stock_picking_type_force_move_type
 #
 msgid ""
 msgstr ""
@@ -16,8 +16,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 5.6.2\n"
 
-#. module: stock_picking_type_shipping_policy
-#: model:ir.model.fields,help:stock_picking_type_shipping_policy.field_stock_picking_type__shipping_policy
+#. module: stock_picking_type_force_move_type
+#: model:ir.model.fields,help:stock_picking_type_force_move_type.field_stock_picking_type__force_move_type
 msgid ""
 "Allows to force the shipping policy on pickings according to the picking "
 "type."
@@ -25,17 +25,17 @@ msgstr ""
 "Consente di forzare la politica di spedizione dei prelievi coerentemente al "
 "tipo di prelievo."
 
-#. module: stock_picking_type_shipping_policy
-#: model:ir.model,name:stock_picking_type_shipping_policy.model_stock_picking_type
+#. module: stock_picking_type_force_move_type
+#: model:ir.model,name:stock_picking_type_force_move_type.model_stock_picking_type
 msgid "Picking Type"
 msgstr "Tipo prelievo"
 
-#. module: stock_picking_type_shipping_policy
-#: model:ir.model.fields,field_description:stock_picking_type_shipping_policy.field_stock_picking_type__shipping_policy
+#. module: stock_picking_type_force_move_type
+#: model:ir.model.fields,field_description:stock_picking_type_force_move_type.field_stock_picking_type__force_move_type
 msgid "Shipping Policy"
 msgstr "Politica di spedizione"
 
-#. module: stock_picking_type_shipping_policy
-#: model:ir.model,name:stock_picking_type_shipping_policy.model_stock_move
+#. module: stock_picking_type_force_move_type
+#: model:ir.model,name:stock_picking_type_force_move_type.model_stock_move
 msgid "Stock Move"
 msgstr "Movimento di magazzino"
