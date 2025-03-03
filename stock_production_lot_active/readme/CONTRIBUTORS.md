@@ -3,3 +3,5 @@
 - David Montull Guasch \<<david.montull@bt-group.com>\>
 - Daniel Haag \<<dh.oca.dev@dhx.at>\>
 - Daniel Reis \<<dreis@opensourceintegrators.com>\>
+- [Tecnativa](https://www.tecnativa.com)
+  - Juan Carlos Oñate
