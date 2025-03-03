@@ -17,7 +17,8 @@ class StockMove(models.Model):
     def _action_cancel(self):
         if self.env.context.get("disable_printed_check"):
             return super()._action_cancel()
-        # if picking_type create_backorder is never, then move is canceled on action_done
+        # if picking_type create_backorder is never,
+        # then move is canceled on action_done
         if self.env.context.get("cancel_backorder"):
             return super()._action_cancel()
         for move in self:

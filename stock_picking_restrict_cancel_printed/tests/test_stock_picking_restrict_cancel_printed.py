@@ -60,7 +60,10 @@ class TestPickingRestrictCancel(TransactionCase):
         self.picking.move_ids._action_cancel()
 
     def test_stock_move_restrict_cancel_printed_enabled_nobackorder(self):
-        """Check a picking partially processed can be validated when no backorder are created"""
+        """Check a picking partially processed can be validated...
+
+        ...when no backorder are created.
+        """
         self.picking.printed = True
         self.picking.move_ids.quantity_done = 1
         self.picking_type.create_backorder = "never"
