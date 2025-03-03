@@ -4,16 +4,14 @@
 
 from odoo import Command
 from odoo.exceptions import UserError
-from odoo.tests.common import TransactionCase
 
-from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestPickingRestrictCancel(TransactionCase):
+class TestPickingRestrictCancel(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env["base"].with_context(**DISABLED_MAIL_CONTEXT).env
         cls.partner_1 = cls.env.ref("base.res_partner_1")
         cls.picking_type = cls.env.ref("stock.picking_type_out")
         cls.product = cls.env.ref("product.product_product_5")
@@ -65,7 +63,8 @@ class TestPickingRestrictCancel(TransactionCase):
         ...when no backorder are created.
         """
         self.picking.printed = True
-        self.picking.move_ids.quantity_done = 1
+        self.picking.move_line_ids.quantity = 1
+        self.picking.move_ids.picked = True
         self.picking_type.create_backorder = "never"
         self.picking.button_validate()
 
@@ -76,5 +75,6 @@ class TestPickingRestrictCancel(TransactionCase):
         That extra gets merged and then canceled.
         """
         self.picking.printed = True
-        self.picking.move_ids.quantity_done = 10
+        self.picking.move_line_ids.quantity = 10
+        self.picking.move_ids.picked = True
         self.picking.button_validate()
