@@ -11,8 +11,8 @@
                 <widget
                     name="web_ribbon"
                     title="Archived"
-                    bg_color="bg-danger"
-                    attrs="{'invisible': [('active', '=', True)]}"
+                    bg_color="text-bg-danger"
+                    invisible="active"
                 />
                 <field name="active" invisible="1" />
             </field>
@@ -24,7 +24,7 @@
         <field name="inherit_id" ref="stock.view_production_lot_tree" />
         <field name="arch" type="xml">
             <field name="company_id" position="after">
-                <field name="active" invisible="1" />
+                <field name="active" column_invisible="1" />
             </field>
         </field>
     </record>
@@ -34,11 +34,13 @@
         <field name="inherit_id" ref="stock.search_product_lot_filter" />
         <field name="arch" type="xml">
             <field name="product_id" position="after">
+                <separator />
                 <filter
                     name="archived"
                     string="Archived"
                     domain="[('active', '=', False)]"
                 />
+                <separator />
             </field>
         </field>
     </record>

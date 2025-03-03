@@ -10,9 +10,9 @@ Stock Production Lot Active
    !! source digest: sha256:bbc48e4abce304453e6ef11bbbefbebf3f21bb9441d232e75c00a393f7aafd7d
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-.. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
+.. |badge1| image:: https://img.shields.io/badge/maturity-Production%2FStable-green.png
     :target: https://odoo-community.org/page/development-status
-    :alt: Beta
+    :alt: Production/Stable
 .. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
@@ -61,6 +61,9 @@ Contributors
 - David Montull Guasch <david.montull@bt-group.com>
 - Daniel Haag <dh.oca.dev@dhx.at>
 - Daniel Reis <dreis@opensourceintegrators.com>
+- `Tecnativa <https://www.tecnativa.com>`__
+
+  - Juan Carlos Oñate
 
 Maintainers
 -----------
