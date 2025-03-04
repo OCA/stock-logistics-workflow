@@ -6,3 +6,4 @@
 - [Tecnativa](https://www.tecnativa.com):
   - Pedro M. Baeza
   - Ernesto Tejeda
+- Henry Backman \<<henry.backman@camptocamp.com>\>

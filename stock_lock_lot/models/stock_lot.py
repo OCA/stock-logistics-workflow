@@ -38,7 +38,7 @@ class StockLot(models.Model):
 
     @api.constrains("locked")
     def _check_lock_unlock(self):
-        if not self.user_has_groups(
+        if not self.env.user.has_group(
             "stock_lock_lot.group_lock_lot"
         ) and not self.env.context.get("bypass_lock_permission_check"):
             raise exceptions.AccessError(
@@ -55,24 +55,23 @@ class StockLot(models.Model):
                 )
             )
 
-    @api.model
-    def create(self, vals):
+    @api.model_create_multi
+    def create(self, vals_list):
         """Force the locking/unlocking, ignoring the value of 'locked'."""
-        product = self.env["product.product"].browse(
-            vals.get(
-                "product_id",
-                # Web quick-create provide in context
-                self.env.context.get(
-                    "product_id", self.env.context.get("default_product_id", False)
-                ),
-            )
+        # Web quick-create provide in context
+        default_product_id = self.env.context.get(
+            "product_id", self.env.context.get("default_product_id", False)
         )
-        vals["locked"] = self._get_product_locked(product)
-        lot = super(
+        for vals in vals_list:
+            product = self.env["product.product"].browse(
+                vals.get("product_id", default_product_id)
+            )
+            vals["locked"] = self._get_product_locked(product)
+        lots = super(
             StockLot, self.with_context(bypass_lock_permission_check=True)
-        ).create(vals)
+        ).create(vals_list)
 
-        return self.browse(lot.id)  # for cleaning context
+        return self.browse(lots.ids)  # for cleaning context
 
     def write(self, values):
         """ "Lock the lot if changing the product and locking is required"""
