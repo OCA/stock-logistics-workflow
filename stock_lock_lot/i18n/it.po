@@ -222,9 +222,6 @@ msgstr ""
 "Non hai il permesso di bloccare/sbloccare, ci sono quantità riservate per "
 "questi seriali/lotti"
 
-#~ msgid "Display Name"
-#~ msgstr "Nome visualizzato"
-
 #~ msgid "Followers (Channels)"
 #~ msgstr "Seguito da (canali)"
 
