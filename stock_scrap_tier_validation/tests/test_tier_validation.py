@@ -41,6 +41,15 @@ class TestStockScrapTierValidation(common.TransactionCase):
         cls.scrap_location = cls.env["stock.location"].search(
             [("scrap_location", "=", True)], limit=1
         )
+        cls.scrap = cls.env["stock.scrap"].create(
+            {
+                "product_id": cls.product.id,
+                "product_uom_id": cls.product.uom_id.id,
+                "scrap_qty": 1.0,
+                "location_id": cls.location.id,
+                "scrap_location_id": cls.scrap_location.id,
+            }
+        )
 
     def test_tier_validation_model_name(self):
         self.assertIn(
@@ -48,25 +57,31 @@ class TestStockScrapTierValidation(common.TransactionCase):
         )
 
     def test_validation_stock_scrap(self):
-        scrap = self.env["stock.scrap"].create(
-            {
-                "product_id": self.product.id,
-                "product_uom_id": self.product.uom_id.id,
-                "scrap_qty": 1.0,
-                "location_id": self.location.id,
-                "scrap_location_id": self.scrap_location.id,
-            }
-        )
         with self.assertRaises(ValidationError):
-            scrap.action_validate()
-        scrap.request_validation()
-        scrap.invalidate_recordset()
-        scrap.with_user(self.test_user_1).validate_tier()
-        scrap.action_validate()
-        self.assertEqual(scrap.state, "done")
+            self.scrap.action_validate()
+        self.scrap.request_validation()
+        self.scrap.invalidate_recordset()
+        self.scrap.with_user(self.test_user_1).validate_tier()
+        self.scrap.action_validate()
+        self.assertEqual(self.scrap.state, "done")
 
     def test_stock_picking_scrap(self):
         """Scrapping from picking does not open in a popup"""
         picking = self.env["stock.picking"].search([], limit=1)
         action = picking.button_scrap()
         self.assertFalse(action.get("target"))
+
+    def test_notification_subtypes(self):
+        """Check that the notification subtypes are correctly returned."""
+        self.assertEqual(
+            self.scrap._get_requested_notification_subtype(),
+            "stock_scrap_tier_validation.stock_scrap_tier_validation_requested",
+        )
+        self.assertEqual(
+            self.scrap._get_accepted_notification_subtype(),
+            "stock_scrap_tier_validation.stock_scrap_tier_validation_accepted",
+        )
+        self.assertEqual(
+            self.scrap._get_rejected_notification_subtype(),
+            "stock_scrap_tier_validation.stock_scrap_tier_validation_rejected",
+        )
