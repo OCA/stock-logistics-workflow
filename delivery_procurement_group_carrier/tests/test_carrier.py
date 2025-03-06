@@ -2,44 +2,65 @@
 # Copyright 2020 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo.tests import tagged
-
-from odoo.addons.sale.tests.common import TestSaleCommonBase
+from odoo.tests import SavepointCase, tagged
+from odoo.tests.common import Form
 
 
 @tagged("post_install", "-at_install")
-class TestProcurementGroupCarrier(TestSaleCommonBase):
-    # FIXME: TestSale is very heavy and create tons of records w/ no tracking disable
-    # for every test. Move to SavepointCase!
-    def setUp(self):
-        super().setUp()
-        self.carrier1 = self.env["delivery.carrier"].create(
+class TestProcurementGroupCarrier(SavepointCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
+        cls.product = cls.env["product.product"].create(
+            {"type": "product", "name": "Test Product"}
+        )
+        cls.carrier = cls.env["delivery.carrier"].create(
             {
                 "name": "My Test Carrier",
-                "product_id": self.env.ref("delivery.product_product_delivery").id,
+                "product_id": cls.env.ref("delivery.product_product_delivery").id,
             }
         )
-        self.partner = self.env["res.partner"].create({"name": "Test Partner"})
+        cls.partner = cls.env["res.partner"].create({"name": "Test Partner"})
+
+    @classmethod
+    def _add_carrier_to_order(cls, order, carrier):
+        order.set_delivery_line(carrier, 1)
+
+    @classmethod
+    def _create_sale_order(cls, product_qty, carrier=None):
+        with Form(cls.env["sale.order"]) as order_form:
+            order_form.partner_id = cls.partner
+            for product, qty in product_qty:
+                with order_form.order_line.new() as line:
+                    line.product_id = product
+                    line.product_uom_qty = qty
+
+        order = order_form.save()
+        if carrier:
+            cls._add_carrier_to_order(order, carrier)
+        return order
 
     def test_sale_procurement_group_carrier(self):
         """Check the SO procurement group contains the carrier on SO confirmation"""
-        product = self.env.ref("product.product_delivery_01")
-        sale_order_line_vals = {
-            "name": product.name,
-            "product_id": product.id,
-            "product_uom_qty": 1,
-            "product_uom": product.uom_id.id,
-            "price_unit": product.list_price,
-        }
-        sale_order_vals = {
-            "partner_id": self.partner.id,
-            "partner_invoice_id": self.partner.id,
-            "partner_shipping_id": self.partner.id,
-            "carrier_id": self.carrier1.id,
-            "order_line": [(0, 0, sale_order_line_vals)],
-            "pricelist_id": self.env.ref("product.list0").id,
-        }
-        so = self.env["sale.order"].create(sale_order_vals)
-        so.action_confirm()
-        self.assertTrue(so.picking_ids)
-        self.assertEqual(so.procurement_group_id.carrier_id, so.carrier_id)
+        order = self._create_sale_order([(self.product, 1.0)], carrier=self.carrier)
+        order.action_confirm()
+        self.assertTrue(order.picking_ids)
+        self.assertEqual(order.procurement_group_id.carrier_id, order.carrier_id)
+
+    def test_sale_picking_group_carrier_aligned(self):
+        # Create an order without carrier
+        order = self._create_sale_order([(self.product, 1.0)])
+        order.action_confirm()
+        picking = order.picking_ids
+        move_group = picking.move_lines.group_id
+        self.assertFalse(order.carrier_id)
+        self.assertFalse(picking.carrier_id)
+        self.assertFalse(move_group.carrier_id)
+        # Now change carrier on order (odoo allows it)
+        self._add_carrier_to_order(order, self.carrier)
+        # In odoo standard both picking and order references the new carrier
+        move_group = picking.move_lines.group_id
+        self.assertEqual(order.carrier_id, self.carrier)
+        self.assertEqual(picking.carrier_id, self.carrier)
+        self.assertEqual(move_group.carrier_id, self.carrier)
