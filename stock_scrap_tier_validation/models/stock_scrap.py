@@ -13,13 +13,13 @@ class StockScrap(models.Model):
     _tier_validation_manual_config = False
 
     def _get_requested_notification_subtype(self):
-        return "stock_scrap_tier_validation.sale_order_tier_validation_requested"
+        return "stock_scrap_tier_validation.stock_scrap_tier_validation_requested"
 
     def _get_accepted_notification_subtype(self):
-        return "stock_scrap_tier_validation.sale_order_tier_validation_accepted"
+        return "stock_scrap_tier_validation.stock_scrap_tier_validation_accepted"
 
     def _get_rejected_notification_subtype(self):
-        return "stock_scrap_tier_validation.sale_order_tier_validation_rejected"
+        return "stock_scrap_tier_validation.stock_scrap_tier_validation_rejected"
 
     @api.model
     def _get_under_validation_exceptions(self):
