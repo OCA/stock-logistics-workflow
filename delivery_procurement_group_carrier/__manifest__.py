@@ -11,7 +11,7 @@
     "author": "Camptocamp, BCIM, MT Software, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "category": "Warehouse Management",
-    "depends": ["sale_stock", "delivery"],
+    "depends": ["sale_stock", "stock_delivery"],
     "data": [
         "views/procurement_group.xml",
     ],
