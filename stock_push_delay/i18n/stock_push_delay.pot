@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0\n"
+"Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -14,11 +14,40 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_push_delay
+#: model:ir.model.fields,field_description:stock_push_delay.field_stock_rule__location_dest_from_rule
+msgid "Destination location origin from rule"
+msgstr ""
+
+#. module: stock_push_delay
+#: model:ir.model.fields,field_description:stock_push_delay.field_stock_move__location_final_id
+msgid "Final Location"
+msgstr ""
+
+#. module: stock_push_delay
 #: model:ir.model,name:stock_push_delay.model_stock_move
 msgid "Stock Move"
 msgstr ""
 
 #. module: stock_push_delay
+#: model:ir.model,name:stock_push_delay.model_stock_rule
+msgid "Stock Rule"
+msgstr ""
+
+#. module: stock_push_delay
+#: model:ir.model.fields,help:stock_push_delay.field_stock_move__location_final_id
+msgid ""
+"The operation brings the products to the intermediate location.But this "
+"operation is part of a chain of operations targeting the final location."
+msgstr ""
+
+#. module: stock_push_delay
 #: model:ir.model,name:stock_push_delay.model_stock_picking
 msgid "Transfer"
+msgstr ""
+
+#. module: stock_push_delay
+#: model:ir.model.fields,help:stock_push_delay.field_stock_rule__location_dest_from_rule
+msgid ""
+"When set to False the destination location of the stock.move will be the "
+"Operation Type one. Otherwise, it takes it from the rule."
 msgstr ""
