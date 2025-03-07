@@ -17,13 +17,17 @@ msgstr ""
 "X-Generator: Weblate 3.10\n"
 
 #. module: stock_picking_type_force_move_type
+#: model:ir.model.fields,field_description:stock_picking_type_force_move_type.field_stock_picking_type__force_move_type
+#, fuzzy
+msgid "Force Shipping Policy"
+msgstr "Política de envío"
+
+#. module: stock_picking_type_force_move_type
 #: model:ir.model.fields,help:stock_picking_type_force_move_type.field_stock_picking_type__force_move_type
 msgid ""
-"Allows to force the shipping policy on pickings according to the picking "
-"type."
+"Force the shipping policy of the operation type (ignore the one from "
+"procurement group)"
 msgstr ""
-"Permite forzar la política de envío en transferencias dependiendo del tipo "
-"de transferencia."
 
 #. module: stock_picking_type_force_move_type
 #: model:ir.model,name:stock_picking_type_force_move_type.model_stock_picking_type
@@ -31,11 +35,16 @@ msgid "Picking Type"
 msgstr "Tipo de Transferencia"
 
 #. module: stock_picking_type_force_move_type
-#: model:ir.model.fields,field_description:stock_picking_type_force_move_type.field_stock_picking_type__force_move_type
-msgid "Shipping Policy"
-msgstr "Política de envío"
+#: model:ir.model,name:stock_picking_type_force_move_type.model_stock_picking
+msgid "Transfer"
+msgstr ""
 
-#. module: stock_picking_type_force_move_type
-#: model:ir.model,name:stock_picking_type_force_move_type.model_stock_move
-msgid "Stock Move"
-msgstr "Movimiento de Almacén"
+#~ msgid ""
+#~ "Allows to force the shipping policy on pickings according to the picking "
+#~ "type."
+#~ msgstr ""
+#~ "Permite forzar la política de envío en transferencias dependiendo del "
+#~ "tipo de transferencia."
+
+#~ msgid "Stock Move"
+#~ msgstr "Movimiento de Almacén"
