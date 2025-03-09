@@ -1,0 +1,30 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_planned_consumed_date
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_planned_consumed_date
+#: model:ir.model.fields,field_description:sale_planned_consumed_date.field_sale_order_line__planned_consumed_date
+msgid "Planned consumed date"
+msgstr "Date de consomation prévue"
+
+#. module: sale_planned_consumed_date
+#: model:ir.model,name:sale_planned_consumed_date.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Ligne de vente"
+
+#. module: sale_planned_consumed_date
+#: model:ir.model.fields,help:sale_planned_consumed_date.field_sale_order_line__planned_consumed_date
+msgid "The planned consumed date by customer."
+msgstr "La date de consomation prévu par le client."
