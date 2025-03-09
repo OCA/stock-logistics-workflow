@@ -44,7 +44,7 @@ class StockPicking(models.Model):
         return_pick.action_set_quantities_to_reservation()
         return_pick._action_done()
         new_pick = pick.copy()
-        new_pick.origin = new_pick.origin + " ({pick_name})".format(pick_name=pick.name)
+        new_pick.origin = new_pick.origin + f" ({pick.name})"
         new_pick.action_assign()
         result = self.env["ir.actions.act_window"]._for_xml_id(
             "stock.action_picking_tree_all"
