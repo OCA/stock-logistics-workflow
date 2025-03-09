@@ -2,7 +2,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo.exceptions import UserError
-from odoo.tests import Form
 from odoo.tests.common import TransactionCase
 
 
@@ -49,76 +48,58 @@ class TestStockPicking(TransactionCase):
                     },
                 ),
             ],
-            "pricelist_id": cls.env.ref("product.list0").id,
         }
         cls.so = cls.env["sale.order"].create(so_vals)
 
-    def test_return_and_recreate(self):
+    def _do_confirm_and_deliver(self, so):
         # confirm our standard so, check the picking
-        self.so.action_confirm()
+        so.action_confirm()
         # deliver completely
-        picking = self.so.picking_ids
+        picking = so.picking_ids
         picking.action_confirm()
         # cancel one line, that one wont be returned
-        picking = self.so.picking_ids
-        picking.move_lines.filtered(lambda x: x.product_id == self.product).write(
-            {"quantity_done": 5.0}
-        )
-        picking.move_lines.filtered(
-            lambda x: x.product_id == self.product2
-        )._action_cancel()
+        p1_moves = picking.move_ids.filtered(lambda x: x.product_id == self.product)
+        p1_moves.write({"quantity": 5.0})
+        p2_moves = picking.move_ids.filtered(lambda x: x.product_id == self.product2)
+        p2_moves._action_cancel()
         picking.button_validate()
+        return picking
+
+    def test_return_and_recreate(self):
+        # confirm our standard so and deliver
+        picking = self._do_confirm_and_deliver(self.so)
         picking.action_revert_recreate()
 
-        # we have the original shipment and the return and the duplicated
-        self.assertEqual(len(self.so.picking_ids), 3)
+        # we have the original shipment, return and the duplicated, by creation order
+        so_pickings = self.so.picking_ids.sorted(key=lambda x: x.id)
+        self.assertEqual(len(so_pickings), 3)
 
         # All pickings same quantity
-        self.assertEqual(
-            self.so.mapped("picking_ids.move_lines")
-            .filtered(lambda l: l.product_id == self.product)
-            .mapped("product_uom_qty"),
-            [5.0, 5.0, 5.0],
+        so_product_moves = so_pickings.move_ids.filtered(
+            lambda x: x.product_id == self.product
         )
+        self.assertEqual(so_product_moves.mapped("product_uom_qty"), [5.0, 5.0, 5.0])
 
         # check return destination location
-        self.assertEqual(
-            sorted(self.so.picking_ids, key=lambda x: x.id)[1].mapped(
-                "move_lines.location_dest_id.name"
-            ),
-            ["Stock"],
-        )
+        self.assertEqual(so_pickings[1].move_ids.location_dest_id.name, "Stock")
 
         # check duplicate destination location
-        self.assertEqual(
-            sorted(self.so.picking_ids, key=lambda x: x.id)[2].mapped(
-                "move_lines.location_dest_id.name"
-            ),
-            ["Customers"],
-        )
-        self.assertEqual(
-            sorted(self.so.picking_ids, key=lambda x: x.id)[2].state, "assigned"
-        )
+        self.assertEqual(so_pickings[2].move_ids.location_dest_id.name, "Customers")
+        self.assertEqual(so_pickings[2].state, "assigned")
 
     def test_exemption_is_raised_on_existing_returns(self):
-        # confirm our standard so, check the picking
-        self.so.action_confirm()
-        # deliver completely
-        picking = self.so.picking_ids
-        picking.action_confirm()
-        picking = self.so.picking_ids
-        picking.move_lines.write({"quantity_done": 5.0})
-        picking.move_lines.filtered(
-            lambda x: x.product_id == self.product2
-        )._action_cancel()
-        picking.button_validate()
+        # confirm our standard so and deliver
+        picking = self._do_confirm_and_deliver(self.so)
         # Create return picking
-        return_form = Form(self.env["stock.return.picking"])
-        return_form.picking_id = picking
-        return_wiz = return_form.save()
+        return_wiz = (
+            self.env["stock.return.picking"]
+            .with_context(active_id=picking.id, active_model="stock.picking")
+            .create({})
+        )
+        return_wiz = self.env["stock.return.picking"].create({})
+        return_wiz.picking_id = picking
         return_wiz.product_return_moves.quantity = 5.0
-        res = return_wiz.create_returns()
-        self.env["stock.picking"].browse(res["res_id"])
+        return_wiz.create_returns()
         # check error is raised when returning & recreating
         with self.assertRaises(UserError):
             picking.action_revert_recreate()
@@ -131,7 +112,7 @@ class TestStockPicking(TransactionCase):
         picking.action_confirm()
         self.env.ref("stock.warehouse0").delivery_steps = "pick_pack_ship"
         picking = self.so.picking_ids
-        picking.move_lines.write({"quantity_done": 5.0})
+        picking.move_ids.write({"quantity": 5.0})
         picking.button_validate()
         # check error is raised when returning & recreating
         with self.assertRaises(UserError):

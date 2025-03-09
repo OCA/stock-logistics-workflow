@@ -10,7 +10,7 @@
                 <button
                     name="action_revert_recreate"
                     string="Return and recreate"
-                    states="done"
+                    invisible="not (state == 'done')"
                     type="object"
                     icon="fa-ban"
                     confirm="Are you sure you want to return and recreate this picking?"

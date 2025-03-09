@@ -13,7 +13,8 @@ class StockMove(models.Model):
         if self.returned_move_ids:
             raise exceptions.UserError(
                 _(
-                    "You cannot revert this stock picking. Move splited / with returned moves."
+                    "You cannot revert this stock picking. "
+                    "Move splited / with returned moves."
                 )
             )
         if self.move_dest_ids or self.search([("move_dest_ids", "in", self.ids)]):
@@ -23,7 +24,8 @@ class StockMove(models.Model):
             )
             raise exceptions.UserError(
                 _(
-                    "You cannot revert this stock picking. Its stock moves are linked to "
+                    "You cannot revert this stock picking. "
+                    "Its stock moves are linked to "
                     "other moves. Origin pickings: "
                 )
                 + origin_pickings

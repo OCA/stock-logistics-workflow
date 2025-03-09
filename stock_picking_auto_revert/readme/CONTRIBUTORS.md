@@ -1,1 +1,2 @@
 - Aaron Henriquez \<<aaron.henriquez@forgeflow.com>\>
+- Daniel Reis \<<dreis@opensourceintegrators.com>\>

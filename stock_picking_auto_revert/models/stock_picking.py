@@ -7,25 +7,15 @@ from odoo import _, exceptions, models
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    def _check_restrictions(self):
-        # returned_move_ids in stock.move
-        # split_from in stock.move
-        for move in self.move_lines:
-            move._check_restrictions()
-
     def action_revert_recreate(self):
         self.ensure_one()
         pick = self
-        pick._check_restrictions()
-        msg = _(
-            "Too bad. This picking cannot be returned because the products "
-            "are not available in the destination location"
-        )
+        pick.move_ids._check_restrictions()
         # Create return picking
-        StockReturnPicking = self.env["stock.return.picking"]
-        default_data = StockReturnPicking.with_context(
+        StockReturnPicking = self.env["stock.return.picking"].with_context(
             active_model="stock.picking", active_id=pick.id
-        ).default_get(
+        )
+        default_data = StockReturnPicking.default_get(
             [
                 "move_dest_exists",
                 "original_location_id",
@@ -36,12 +26,11 @@ class StockPicking(models.Model):
         )
         default_data.update({"location_id": pick.location_id.id})
         return_wiz = StockReturnPicking.create(default_data)
-        return_wiz._onchange_picking_id()
-        self.check_return_quantities(return_wiz, pick, msg)
+        return_wiz.picking_id = pick
+        self._check_return_quantities(return_wiz, pick)
         res = return_wiz.create_returns()
         return_pick = self.env["stock.picking"].browse(res["res_id"])
         # Validate picking
-        return_pick.action_set_quantities_to_reservation()
         return_pick._action_done()
         new_pick = pick.copy()
         new_pick.origin = new_pick.origin + f" ({pick.name})"
@@ -54,10 +43,15 @@ class StockPicking(models.Model):
         result["res_id"] = new_pick.id
         return result
 
-    def check_return_quantities(self, return_wiz, pick, msg):
+    def _check_return_quantities(self, return_wiz, pick):
+        msg = _(
+            "Too bad. This picking cannot be returned because the products "
+            "are not available in the destination location"
+        )
         for rm in return_wiz.product_return_moves:
-            sm = pick.move_lines.filtered(
-                lambda x: x.product_id.id == rm.product_id.id and x.state == "done"
+            sm = pick.move_ids.filtered(
+                lambda x, rm=rm: x.product_id.id == rm.product_id.id
+                and x.state == "done"
             )
             if rm.quantity < sum(sm.mapped("product_uom_qty")):
                 raise exceptions.UserError(msg)
