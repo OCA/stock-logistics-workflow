@@ -62,7 +62,7 @@ addon | version | maintainers | summary
 [stock_scrap_tier_validation](stock_scrap_tier_validation/) | 17.0.1.0.0 |  | Stock Scrap Tier Validation
 [stock_scrap_tier_validation_mrp](stock_scrap_tier_validation_mrp/) | 17.0.1.0.0 |  | Stock Scrap Tier Validation: MRP compatibility
 [stock_split_picking](stock_split_picking/) | 17.0.1.0.0 |  | Split a picking in two not transferred pickings
-[stock_valuation_layer_usage](stock_valuation_layer_usage/) | 17.0.1.0.1 |  | Trace where has the stock valuation been used in, including the quantities taken.
+[stock_valuation_layer_usage](stock_valuation_layer_usage/) | 17.0.1.1.0 |  | Trace where has the stock valuation been used in, including the quantities taken.
 
 [//]: # (end addons)
 
