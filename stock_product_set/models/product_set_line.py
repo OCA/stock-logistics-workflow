@@ -11,7 +11,7 @@ class ProductSetLine(models.Model):
         product = self.product_id.with_context(
             lang=picking.partner_id.lang or self.env.user.lang
         )
-        # Inspired in purchase_stock/models/purchase.py#L506
+        # Inspired in the _prepare_stock_move_vals() method of purchase_stock
         return {
             # truncate to 2000 to avoid triggering index limit error
             "name": (self.product_id.display_name or "")[:2000],

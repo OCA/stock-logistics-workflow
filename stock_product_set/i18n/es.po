@@ -109,16 +109,3 @@ msgstr ""
 #: model:ir.model,name:stock_product_set.model_stock_product_set_wizard
 msgid "Wizard model to add product set into a picking form"
 msgstr ""
-
-#~ msgid ""
-#~ "Enable this to not add new lines for products already included in SO "
-#~ "lines."
-#~ msgstr ""
-#~ "Habilite esto para no agregar nuevas líneas para productos ya incluidos "
-#~ "en las líneas SO."
-
-#~ msgid "Sale Order"
-#~ msgstr "Pedido de venta"
-
-#~ msgid "Skip Existing Products"
-#~ msgstr "Omitir productos existentes"

@@ -1,21 +1,20 @@
-# Copyright 2023-2024 Tecnativa - Víctor Martínez
+# Copyright 2023-2025 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from odoo.tests import Form, common, new_test_user
+from odoo.tests import Form, new_test_user
 from odoo.tests.common import users
 
-from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestStockProductSet(common.TransactionCase):
+class TestStockProductSet(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
         cls.product_a = cls.env["product.product"].create(
-            {"name": "Test product A", "type": "product"}
+            {"name": "Test product A", "type": "consu", "is_storable": True}
         )
         cls.product_b = cls.env["product.product"].create(
-            {"name": "Test product B", "type": "product"}
+            {"name": "Test product B", "type": "consu", "is_storable": True}
         )
         cls.product_set = cls.env["product.set"].create(
             {

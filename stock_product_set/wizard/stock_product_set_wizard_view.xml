@@ -24,12 +24,12 @@
                         colspan="2"
                         domain="[('product_set_id', '=', product_set_id)]"
                     >
-                        <tree>
+                        <list>
                             <field
                                 name="product_id"
                                 options="{'no_open': True, 'no_create': True}"
                             />
-                        </tree>
+                        </list>
                     </field>
                 </group>
                 <footer>

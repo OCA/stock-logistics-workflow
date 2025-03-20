@@ -11,7 +11,7 @@
                     type="action"
                     name="%(act_open_wizard_product_set_add_from_picking)d"
                     icon="fa-cubes"
-                    attrs="{'invisible': ['|', ('state', '!=', 'draft'), ('immediate_transfer', '=', True)]}"
+                    invisible="state!='draft'"
                     string="Add set"
                 />
             </xpath>

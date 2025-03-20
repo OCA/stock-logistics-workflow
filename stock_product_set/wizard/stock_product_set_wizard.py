@@ -42,7 +42,10 @@ class StockProductSetWizard(models.TransientModel):
 
     def _check_partner(self):
         res = super()._check_partner()
-        if self.partner_id != self.product_set_id.partner_id:
+        if (
+            self.product_set_id.partner_id
+            and self.partner_id != self.product_set_id.partner_id
+        ):
             raise exceptions.ValidationError(
                 _("This set of products is restricted for this user.")
             )
