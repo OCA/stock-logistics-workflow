@@ -53,6 +53,10 @@
                                 name="product_id"
                                 domain="[('id', 'in', product_ids)]"
                             />
+                            <field
+                                name="move_id"
+                                domain="[('product_id', '=', product_id)]"
+                            />
                             <field name="qty_to_deliver" />
                             <field name="qty_to_split" />
                         </tree>

@@ -79,13 +79,11 @@ class StockSplitPicking(models.TransientModel):
 
     def _apply_split_product_quantities(self):
         """Create different pickings with products and quantities selected"""
-        for picking in self.picking_ids:
-            moves = picking.move_lines
         split_list = [
-            {"product_id": record.product_id, "qty": record.qty_to_split}
+            {"move_id": record.move_id, "qty": record.qty_to_split}
             for record in self.stock_split_product_quantities_ids
         ]
-        moves.picking_id._split_product_quantities(moves, split_list)
+        self.picking_ids._split_product_quantities(split_list)
         return self._picking_action(
             self.picking_ids.sale_id.picking_ids.filtered(
                 lambda r: r.state == "assigned"
@@ -113,11 +111,43 @@ class StockSplitProductQuantities(models.TransientModel):
     stock_split_picking_id = fields.Many2one("stock.split.picking")
     product_id = fields.Many2one("product.product")
     qty_to_deliver = fields.Float(readonly=True)
+    move_id = fields.Many2one(
+        "stock.move",
+    )
     qty_to_split = fields.Float()
     product_ids = fields.Many2many(
         "product.product",
         default=lambda self: self._default_product_ids(),
     )
+
+    @api.onchange("product_id")
+    def _onchange_product_id(self):
+        if self.move_id:
+            self.move_id = False
+        if self.product_id:
+            move_ids = (
+                self.env["stock.picking"]
+                .browse(self.env.context.get("active_ids", []))
+                .move_lines
+            )
+            move_id = self.env["stock.move"].search(
+                [("id", "in", move_ids.ids), ("product_id", "=", self.product_id.id)]
+            )
+            if move_id and len(move_id) == 1:
+                self.move_id = move_id.id
+            return {
+                "domain": {
+                    "move_id": [
+                        ("id", "in", move_ids.ids),
+                        ("product_id", "=", self.product_id.id),
+                    ]
+                }
+            }
+        return {"domain": {"move_id": []}}  #
+
+    @api.onchange("move_id")
+    def _onchange_move_id(self):
+        self.qty_to_deliver = self.move_id.product_uom_qty if self.move_id else 0
 
     def _default_product_ids(self):
         return (
@@ -125,16 +155,6 @@ class StockSplitProductQuantities(models.TransientModel):
             .browse(self.env.context.get("active_ids", []))
             .move_lines.product_id
         )
-
-    @api.onchange("product_id")
-    def onchange_product_id(self):
-        if self.product_id:
-            picking_id = (
-                self.env["stock.picking"]
-                .browse(self.env.context.get("active_ids", []))
-                .move_lines.filtered(lambda r: r.product_id == self.product_id)
-            )
-            self.qty_to_deliver = picking_id.product_uom_qty
 
     @api.onchange("qty_to_split")
     def onchange_qty_to_split(self):

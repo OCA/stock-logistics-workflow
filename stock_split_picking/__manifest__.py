@@ -11,7 +11,7 @@
     "author": "Camptocamp, " "Tecnativa, " "Odoo Community Association (OCA),",
     "license": "AGPL-3",
     "website": "https://github.com/OCA/stock-logistics-workflow",
-    "depends": ["stock"],
+    "depends": ["stock", "sale_management"],
     "data": [
         "security/ir.model.access.csv",
         "wizards/stock_split_picking.xml",

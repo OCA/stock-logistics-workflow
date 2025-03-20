@@ -117,7 +117,7 @@ class StockPicking(models.Model):
 
         return new_picking
 
-    def _split_product_quantities(self, moves, split_list):
+    def _split_product_quantities(self, split_list):
         new_picking = self.env["stock.picking"]
         for this in self:
             if this.state in ("done", "cancel"):
@@ -130,7 +130,7 @@ class StockPicking(models.Model):
                 )
             new_picking = new_picking or this._create_split_backorder()
         for record in split_list:
-            move_id = moves.filtered(lambda r: r.product_id == record["product_id"])
+            move_id = record["move_id"]
             if record["qty"] == move_id.product_uom_qty:
                 move_id.write({"picking_id": new_picking.id})
                 move_id.move_line_ids.write({"picking_id": new_picking.id})
