@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2025 Moduon Team S.L.
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0) -->
+<data>
+    <record id="view_move_line_form" model="ir.ui.view">
+        <field name="name">stock.move.line.form</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_move_line_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date']" position="after">
+                <field name="date_schedule" />
+                <field name="date_deadline" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_move_line_tree_detailed" model="ir.ui.view">
+        <field name="name">stock.move.line.tree.detailed</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_move_line_tree_detailed" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date']" position="after">
+                <field name="date_schedule" widget="remaining_days" optional="hide" />
+                <field name="date_deadline" widget="remaining_days" optional="hide" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="stock_move_line_view_search" model="ir.ui.view">
+        <field name="name">stock.move.line.search</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.stock_move_line_view_search" />
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='date']" position="before">
+                <filter
+                    string="Date Scheduled"
+                    name="date_schedule"
+                    date="date_schedule"
+                />
+                <filter
+                    string="Today"
+                    name="today"
+                    domain="[('date_schedule', '&gt;=', datetime.datetime.combine(context_today(), datetime.time(0, 0, 0)).to_utc()), ('date_schedule', '&lt;', datetime.datetime.combine(context_today() + relativedelta(days=1), datetime.time(0, 0, 0)).to_utc())]"
+                />
+                <filter
+                    string="Tomorrow"
+                    name="tomorrow"
+                    domain="[('date_schedule', '&gt;=', datetime.datetime.combine(context_today() + relativedelta(days=1), datetime.time(0, 0, 0)).to_utc()), ('date_schedule', '&lt;', datetime.datetime.combine(context_today() + relativedelta(days=2), datetime.time(0, 0, 0)).to_utc())]"
+                />
+                <separator />
+            </xpath>
+            <xpath expr="//group/filter[@name='by_date']" position="before">
+                <filter
+                    string="Date Scheduled"
+                    name="by_date_schedule"
+                    domain="[]"
+                    context="{'group_by': 'date_schedule'}"
+                />
+                <filter
+                    string="Deadline"
+                    name="by_date_deadline"
+                    domain="[]"
+                    context="{'group_by': 'date_deadline'}"
+                />
+            </xpath>
+        </field>
+    </record>
+</data>
