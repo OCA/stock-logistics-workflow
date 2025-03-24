@@ -1,0 +1,111 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_product_set
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-03-19 15:37+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: stock_product_set
+#: model:ir.actions.act_window,name:stock_product_set.act_open_wizard_product_set_add_from_picking
+msgid "Add a set in a picking"
+msgstr "Aggiungere un set nel prelievo"
+
+#. module: stock_product_set
+#: model_terms:ir.ui.view,arch_db:stock_product_set.product_set_add_from_picking_form_view
+#: model_terms:ir.ui.view,arch_db:stock_product_set.view_picking_form
+msgid "Add set"
+msgstr "Aggiungi set"
+
+#. module: stock_product_set
+#: model_terms:ir.ui.view,arch_db:stock_product_set.product_set_add_from_picking_form_view
+msgid "Cancel"
+msgstr "Annulla"
+
+#. module: stock_product_set
+#: model:ir.model.fields,field_description:stock_product_set.field_stock_product_set_wizard__partner_id
+msgid "Contact"
+msgstr "Contatto"
+
+#. module: stock_product_set
+#: model:ir.model.fields,field_description:stock_product_set.field_stock_product_set_wizard__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: stock_product_set
+#: model:ir.model.fields,field_description:stock_product_set.field_stock_product_set_wizard__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: stock_product_set
+#: model:ir.model.fields,field_description:stock_product_set.field_stock_product_set_wizard__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: stock_product_set
+#: model:ir.model.fields,field_description:stock_product_set.field_stock_product_set_wizard__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_product_set
+#: model:ir.model.fields,field_description:stock_product_set.field_stock_product_set_wizard____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: stock_product_set
+#: model:ir.model.fields,field_description:stock_product_set.field_stock_product_set_wizard__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento di"
+
+#. module: stock_product_set
+#: model:ir.model.fields,field_description:stock_product_set.field_stock_product_set_wizard__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: stock_product_set
+#: model:ir.model.fields,field_description:stock_product_set.field_stock_product_set_wizard__picking_id
+msgid "Picking"
+msgstr "Prelievo"
+
+#. module: stock_product_set
+#: model:ir.model.fields,field_description:stock_product_set.field_stock_product_set_wizard__product_set_id
+msgid "Product set"
+msgstr "Set prodotto"
+
+#. module: stock_product_set
+#: model:ir.model,name:stock_product_set.model_product_set_line
+msgid "Product set line"
+msgstr "Riga set prodotto"
+
+#. module: stock_product_set
+#: model:ir.model.fields,field_description:stock_product_set.field_stock_product_set_wizard__product_set_line_ids
+msgid "Product set lines"
+msgstr "Righe set prodotto"
+
+#. module: stock_product_set
+#: model:ir.model.fields,field_description:stock_product_set.field_stock_product_set_wizard__quantity
+msgid "Quantity"
+msgstr "Quantità"
+
+#. module: stock_product_set
+#. odoo-python
+#: code:addons/stock_product_set/wizard/stock_product_set_wizard.py:0
+#, python-format
+msgid "This set of products is restricted for this user."
+msgstr "Questo set di prodotti è limitato per questo utente."
+
+#. module: stock_product_set
+#: model:ir.model,name:stock_product_set.model_stock_product_set_wizard
+msgid "Wizard model to add product set into a picking form"
+msgstr ""
+"Modello procedura guidata per aggiugere un set prodotto in un modulo prelievo"
