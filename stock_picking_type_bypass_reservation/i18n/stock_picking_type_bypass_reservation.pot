@@ -1,0 +1,38 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_type_bypass_reservation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-24 09:53+0000\n"
+"PO-Revision-Date: 2025-03-24 09:53+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_type_bypass_reservation
+#: model:ir.model.fields,field_description:stock_picking_type_bypass_reservation.field_stock_picking_type__bypass_reservation
+msgid "Bypass Reservation"
+msgstr ""
+
+#. module: stock_picking_type_bypass_reservation
+#: model:ir.model.fields,help:stock_picking_type_bypass_reservation.field_stock_picking_type__bypass_reservation
+msgid ""
+"If checked, products from this Picking Type will always be reserved even if you don't have stock.\n"
+"Note: Pickings will be reserved on Confirmation even if you don't have checked the option"
+msgstr ""
+
+#. module: stock_picking_type_bypass_reservation
+#: model:ir.model,name:stock_picking_type_bypass_reservation.model_stock_picking_type
+msgid "Picking Type"
+msgstr ""
+
+#. module: stock_picking_type_bypass_reservation
+#: model:ir.model,name:stock_picking_type_bypass_reservation.model_stock_move
+msgid "Stock Move"
+msgstr ""

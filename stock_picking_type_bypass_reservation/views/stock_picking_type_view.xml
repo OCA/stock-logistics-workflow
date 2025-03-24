@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2025 Moduon Team S.L.
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0) -->
+<data>
+    <record id="view_picking_type_form" model="ir.ui.view">
+        <field name="name">stock.picking.type.bypass.reservation.form</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='show_reserved']" position="after">
+                <field
+                    name="bypass_reservation"
+                    groups="base.group_no_one"
+                    attrs="{'invisible': [('code', '=', 'incoming')]}"
+                />
+            </xpath>
+        </field>
+    </record>
+</data>
