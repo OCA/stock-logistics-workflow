@@ -1,34 +1,39 @@
 # Copyright 2025 Camptocamp SA
+# Copyright 2025 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
 from odoo import models
+from odoo.tools import groupby
 
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     def _align_group_carrier(self):
-        for picking in self:
-            picking_carrier = picking.carrier_id
-            picking_group = picking.group_id
-            if picking_group and picking_carrier != picking_group.carrier_id:
-                picking_group.carrier_id = picking_carrier
-                need_align_pickings = self.search(
-                    [
-                        ("group_id", "=", picking_group.id),
+        for group, pickings in groupby(self, lambda pick: pick.group_id):
+            if not group:
+                continue
+            pickings = self.browse().union(*pickings)
+            carrier = pickings.carrier_id
+            carrier.ensure_one()
+            need_align_pickings = self.search(
+                [
+                    ("group_id", "=", group.id),
+                    (
+                        "state",
+                        "not in",
                         (
-                            "state",
-                            "not in",
-                            (
-                                "done",
-                                "cancel",
-                            ),
+                            "done",
+                            "cancel",
                         ),
-                        ("carrier_id", "!=", picking_carrier.id),
-                        ("carrier_id", "!=", False),
-                    ]
-                )
-                need_align_pickings.carrier_id = picking_carrier
+                    ),
+                    ("carrier_id", "!=", carrier.id),
+                    ("carrier_id", "!=", False),
+                ]
+            )
+            group.carrier_id = carrier
+            if need_align_pickings:
+                need_align_pickings.carrier_id = carrier
 
     def write(self, values):
         if "carrier_id" not in values or self.env.context.get(
@@ -43,5 +48,6 @@ class StockPicking(models.Model):
         updated_pickings = self.filtered(
             lambda p: p.carrier_id != carrier_mapping.get(p.id)
         )
-        updated_pickings._align_group_carrier()
+        if updated_pickings:
+            updated_pickings._align_group_carrier()
         return res

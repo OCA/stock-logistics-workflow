@@ -1,6 +1,7 @@
 # Copyright 2020 Camptocamp (https://www.camptocamp.com)
 # Copyright 2020 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # Copyright 2022 ACSONE SA/NV
+# Copyright 2025 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo.tests import Form, tagged
@@ -22,6 +23,19 @@ class TestProcurementGroupCarrier(TransactionCase):
                 "product_id": cls.env.ref("delivery.product_product_delivery").id,
             }
         )
+        cls.carrier2 = cls.env["delivery.carrier"].create(
+            {
+                "name": "My Test Carrier2",
+                "product_id": cls.env.ref("delivery.product_product_delivery").id,
+            }
+        )
+        cls.carrier3 = cls.env["delivery.carrier"].create(
+            {
+                "name": "My Test Carrier3",
+                "product_id": cls.env.ref("delivery.product_product_delivery").id,
+            }
+        )
+
         cls.partner = cls.env["res.partner"].create({"name": "Test Partner"})
 
     @classmethod
