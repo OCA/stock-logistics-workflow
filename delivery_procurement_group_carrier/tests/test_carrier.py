@@ -81,15 +81,35 @@ class TestProcurementGroupCarrier(TransactionCase):
         delivery_route.rule_ids.propagate_carrier = False
         order.carrier_id = self.carrier
         order.action_confirm()
-        picking = order.picking_ids
-        move_group = picking.move_ids.group_id
-        self.assertFalse(order.carrier_id)
-        self.assertFalse(picking.carrier_id)
-        self.assertFalse(move_group.carrier_id)
+        out_transfer = order.picking_ids.filtered(
+            lambda pick: pick.location_dest_id.usage == "customer"
+        )
+        pick_transfer = order.picking_ids - out_transfer
+        move_group = order.procurement_group_id
+        self.assertEqual(out_transfer.carrier_id, self.carrier)
+        self.assertEqual(move_group.carrier_id, self.carrier)
+        self.assertFalse(pick_transfer.carrier_id)
+
+        # Change the carrier on the out transfer
+        # Carrier on group needs to be changed
+        # but not on the pick transfer
+        out_transfer.carrier_id = self.carrier2
+        self.assertEqual(move_group.carrier_id, self.carrier2)
+        self.assertFalse(pick_transfer.carrier_id)
+
         # Now change carrier on order (odoo allows it)
-        self._add_carrier_to_order(order, self.carrier)
-        # In odoo standard both picking and order references the new carrier
-        move_group = picking.move_ids.group_id
-        self.assertEqual(order.carrier_id, self.carrier)
-        self.assertEqual(picking.carrier_id, self.carrier)
+        # In odoo standard all pickings and order references the new carrier
+        self._add_carrier_to_order(order, self.carrier3)
+        move_group = order.procurement_group_id
+        self.assertEqual(order.carrier_id, self.carrier3)
+        self.assertEqual(out_transfer.carrier_id, self.carrier3)
+        self.assertEqual(pick_transfer.carrier_id, self.carrier3)
+        self.assertEqual(move_group.carrier_id, self.carrier3)
+
+        # Now since the carrier is set on out and pick tranfer
+        # updating the carrier on the out transfer
+        # should also change the carrier on the pick transfer
+        out_transfer.carrier_id = self.carrier
+        self.assertEqual(out_transfer.carrier_id, self.carrier)
+        self.assertEqual(pick_transfer.carrier_id, self.carrier)
         self.assertEqual(move_group.carrier_id, self.carrier)
