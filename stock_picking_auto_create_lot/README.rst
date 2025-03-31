@@ -88,6 +88,8 @@ Contributors
 
   - Aung Ko Ko Lin
 
+- Eduardo de Miguel <info@moduon.team>
+
 Maintainers
 -----------
 
