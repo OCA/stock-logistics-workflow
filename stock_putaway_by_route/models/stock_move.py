@@ -18,7 +18,7 @@ class StockMove(models.Model):
         )
 
     def _get_putaway_routes(self):
-        routes = self.env["stock.location"]
+        routes = self.env["stock.location.route"]
         if self.rule_id.route_id:
             routes = self.rule_id.route_id
         elif self.product_id.route_ids:
