@@ -79,14 +79,16 @@ Authors
 Contributors
 ------------
 
--  Carlos Dauden <carlos.dauden@tecnativa.com>
--  Sergio Teruel <sergio.teruel@tecnativa.com>
--  Pimolnat Suntian <pimolnats@ecosoft.co.th>
--  Denis Roussel <denis.roussel@acsone.eu>
--  Valentin Vinagre <valentin.vinagre@sygel.es>
--  `Quartile <https://www.quartile.co>`__:
+- Carlos Dauden <carlos.dauden@tecnativa.com>
+- Sergio Teruel <sergio.teruel@tecnativa.com>
+- Pimolnat Suntian <pimolnats@ecosoft.co.th>
+- Denis Roussel <denis.roussel@acsone.eu>
+- Valentin Vinagre <valentin.vinagre@sygel.es>
+- `Quartile <https://www.quartile.co>`__:
 
-   -  Aung Ko Ko Lin
+  - Aung Ko Ko Lin
+
+- Eduardo de Miguel <info@moduon.team>
 
 Maintainers
 -----------
