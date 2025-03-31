@@ -1,5 +1,6 @@
 # Copyright 2018 Tecnativa - Sergio Teruel
 # Copyright 2020 ACSONE SA/NV
+# Copyright 2025 Moduon Team
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo.exceptions import UserError
 from odoo.tests import TransactionCase
@@ -13,14 +14,19 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
         super().setUpClass()
         # Create 3 products with lot/serial and auto_create True/False
         cls.product = cls._create_product()
-        cls.product_serial = cls._create_product(tracking="serial")
+        cls.product_serial = cls._create_product(tracking="serial", auto=True)
         cls.product_serial_not_auto = cls._create_product(tracking="serial", auto=False)
+        cls.product_serial_categ_auto = cls._create_product(
+            tracking="serial", auto=False
+        )
+        cls.product_serial_categ_auto.categ_id = cls.auto_lot_category
         cls.picking_type_in.auto_create_lot = True
 
         cls._create_picking()
         cls._create_move(product=cls.product, qty=2.0)
         cls._create_move(product=cls.product_serial, qty=3.0)
         cls._create_move(product=cls.product_serial_not_auto, qty=4.0)
+        cls._create_move(product=cls.product_serial_categ_auto, qty=5.0)
 
     def test_manual_lot(self):
         self.picking.action_assign()
@@ -29,7 +35,10 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
             lambda m: m.product_id == self.product_serial
         )
         self.assertFalse(move.display_assign_serial)
-
+        move = self.picking.move_ids.filtered(
+            lambda m: m.product_id == self.product_serial_categ_auto
+        )
+        self.assertFalse(move.display_assign_serial)
         move = self.picking.move_ids.filtered(
             lambda m: m.product_id == self.product_serial_not_auto
         )
@@ -45,6 +54,10 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
             [("product_id", "=", self.product_serial.id)]
         )
         self.assertEqual(len(lot), 3)
+        lot = self.env["stock.lot"].search(
+            [("product_id", "=", self.product_serial_categ_auto.id)]
+        )
+        self.assertEqual(len(lot), 5)
 
     def test_auto_create_lot(self):
         self.picking.action_assign()
@@ -53,7 +66,10 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
             lambda m: m.product_id == self.product_serial
         )
         self.assertFalse(move.display_assign_serial)
-
+        move = self.picking.move_ids.filtered(
+            lambda m: m.product_id == self.product_serial_categ_auto
+        )
+        self.assertFalse(move.display_assign_serial)
         move = self.picking.move_ids.filtered(
             lambda m: m.product_id == self.product_serial_not_auto
         )
@@ -70,6 +86,10 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
             [("product_id", "=", self.product_serial.id)]
         )
         self.assertEqual(len(lot), 3)
+        lot = self.env["stock.lot"].search(
+            [("product_id", "=", self.product_serial_categ_auto.id)]
+        )
+        self.assertEqual(len(lot), 5)
 
     def test_auto_create_transfer_lot(self):
         self.picking.action_assign()
@@ -102,11 +122,23 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
             [("product_id", "=", self.product_serial.id)]
         )
         self.assertEqual(len(lot), 3)
+        lot = self.env["stock.lot"].search(
+            [("product_id", "=", self.product_serial_categ_auto.id)]
+        )
+        self.assertEqual(len(lot), 5)
 
         # Check if lots are unique per move and per product if managed
         # per serial
         move_lines_serial = self.picking.move_line_ids.filtered(
             lambda m: m.product_id.tracking == "serial" and m.product_id.auto_create_lot
+        )
+        serials = []
+        for move in move_lines_serial:
+            serials.append(move.lot_id.name)
+        self.assertUniqueIn(serials)
+        move_lines_serial = self.picking.move_line_ids.filtered(
+            lambda m: m.product_id.tracking == "serial"
+            and m.product_id.categ_id.auto_create_lot
         )
         serials = []
         for move in move_lines_serial:
@@ -129,7 +161,7 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
 
         moves = pickings.mapped("move_ids").filtered(
             lambda m: m.product_id == self.product_serial
-            and m.product_id.auto_create_lot
+            and (m.product_id.auto_create_lot or m.product_id.categ_id.auto_create_lot)
         )
         for line in moves.mapped("move_line_ids"):
             self.assertFalse(line.lot_name)
