@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-03-14 15:06+0000\n"
+"PO-Revision-Date: 2025-04-02 19:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -20,7 +20,7 @@ msgstr ""
 #: code:addons/stock_account_product_run_fifo_hook/hooks.py:0
 #, python-format
 msgid "Correction of %s (modification of past move)"
-msgstr ""
+msgstr "Correzione di %s (modifica dei vecchi movimenti)"
 
 #. module: stock_account_product_run_fifo_hook
 #: model:ir.model.fields,field_description:stock_account_product_run_fifo_hook.field_product_product__display_name
@@ -30,14 +30,14 @@ msgstr "Nome visualizzato"
 #. module: stock_account_product_run_fifo_hook
 #: model:ir.model.fields,field_description:stock_account_product_run_fifo_hook.field_product_product__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_account_product_run_fifo_hook
 #: model:ir.model.fields,field_description:stock_account_product_run_fifo_hook.field_product_product____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: stock_account_product_run_fifo_hook
 #: model:ir.model,name:stock_account_product_run_fifo_hook.model_product_product
 msgid "Product"
-msgstr ""
+msgstr "Prodotto"
