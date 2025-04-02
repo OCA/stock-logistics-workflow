@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-03-14 15:06+0000\n"
+"PO-Revision-Date: 2025-04-02 19:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -26,18 +26,18 @@ msgstr "Nome visualizzato"
 #: model:ir.model.fields,field_description:stock_quant_package_product_packaging.field_stock_move_line__id
 #: model:ir.model.fields,field_description:stock_quant_package_product_packaging.field_stock_quant_package__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_quant_package_product_packaging
 #: model:ir.model.fields,field_description:stock_quant_package_product_packaging.field_stock_move_line____last_update
 #: model:ir.model.fields,field_description:stock_quant_package_product_packaging.field_stock_quant_package____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: stock_quant_package_product_packaging
 #: model:ir.model,name:stock_quant_package_product_packaging.model_stock_quant_package
 msgid "Packages"
-msgstr ""
+msgstr "Colli"
 
 #. module: stock_quant_package_product_packaging
 #: model:ir.model.fields,help:stock_quant_package_product_packaging.field_stock_quant_package__product_packaging_id
@@ -45,23 +45,25 @@ msgid ""
 "Packaging of the product, used for internal logisticstransfers, put-away "
 "rules, ..."
 msgstr ""
+"Imballo del prodotto, utilizzato per trasferimenti logistici interni, regole "
+"di stoccaggio, ..."
 
 #. module: stock_quant_package_product_packaging
 #: model:ir.model,name:stock_quant_package_product_packaging.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
-msgstr ""
+msgstr "Movimenti prodotto (riga movimento di magazzino)"
 
 #. module: stock_quant_package_product_packaging
 #: model:ir.model.fields,field_description:stock_quant_package_product_packaging.field_stock_quant_package__product_packaging_id
 msgid "Product Packaging"
-msgstr ""
+msgstr "Imballaggio prodotto"
 
 #. module: stock_quant_package_product_packaging
 #: model:ir.model.fields,field_description:stock_quant_package_product_packaging.field_stock_quant_package__single_product_id
 msgid "Single Product"
-msgstr ""
+msgstr "Prodotto singolo"
 
 #. module: stock_quant_package_product_packaging
 #: model:ir.model.fields,field_description:stock_quant_package_product_packaging.field_stock_quant_package__single_product_qty
 msgid "Single Product Qty"
-msgstr ""
+msgstr "Q.tà prodotto singolo"
