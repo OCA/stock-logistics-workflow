@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-03-14 15:06+0000\n"
+"PO-Revision-Date: 2025-04-02 19:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -30,12 +30,12 @@ msgstr "Nome visualizzato"
 #: model:ir.model.fields,field_description:sale_stock_mto_as_mts_orderpoint.field_stock_move__id
 #: model:ir.model.fields,field_description:sale_stock_mto_as_mts_orderpoint.field_stock_warehouse__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: sale_stock_mto_as_mts_orderpoint
 #: model:ir.model.fields,field_description:sale_stock_mto_as_mts_orderpoint.field_stock_move__is_from_mto_route
 msgid "Is From Mto Route"
-msgstr ""
+msgstr "Viene da percorso MTO"
 
 #. module: sale_stock_mto_as_mts_orderpoint
 #: model:ir.model.fields,field_description:sale_stock_mto_as_mts_orderpoint.field_product_template____last_update
@@ -43,29 +43,29 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_stock_mto_as_mts_orderpoint.field_stock_move____last_update
 #: model:ir.model.fields,field_description:sale_stock_mto_as_mts_orderpoint.field_stock_warehouse____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: sale_stock_mto_as_mts_orderpoint
 #: model:ir.model.fields,field_description:sale_stock_mto_as_mts_orderpoint.field_stock_warehouse__mto_as_mts
 msgid "Mto As Mts"
-msgstr ""
+msgstr "MTO come MTS"
 
 #. module: sale_stock_mto_as_mts_orderpoint
 #: model:ir.model,name:sale_stock_mto_as_mts_orderpoint.model_product_template
 msgid "Product Template"
-msgstr ""
+msgstr "Modello prodotto"
 
 #. module: sale_stock_mto_as_mts_orderpoint
 #: model:ir.model,name:sale_stock_mto_as_mts_orderpoint.model_sale_order_line
 msgid "Sales Order Line"
-msgstr ""
+msgstr "Riga ordine di vendita"
 
 #. module: sale_stock_mto_as_mts_orderpoint
 #: model:ir.model,name:sale_stock_mto_as_mts_orderpoint.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimento di magazzino"
 
 #. module: sale_stock_mto_as_mts_orderpoint
 #: model:ir.model,name:sale_stock_mto_as_mts_orderpoint.model_stock_warehouse
 msgid "Warehouse"
-msgstr ""
+msgstr "Magazzino"
