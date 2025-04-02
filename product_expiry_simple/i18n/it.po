@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-03 03:55+0000\n"
-"PO-Revision-Date: 2023-12-26 14:33+0000\n"
+"PO-Revision-Date: 2025-04-02 19:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.10.2\n"
 
 #. module: product_expiry_simple
 #: model_terms:ir.ui.view,arch_db:product_expiry_simple.view_production_lot_form
@@ -26,6 +26,8 @@ msgid ""
 "<span class=\"badge badge-danger\" attrs=\"{'invisible': [('expired', '=', "
 "False)]}\">Expired</span>"
 msgstr ""
+"<span class=\"badge badge-danger\" attrs="
+"\"{'invisible': [('expired', '=', False)]}\">Scaduto</span>"
 
 #. module: product_expiry_simple
 #: model:ir.model.fields,field_description:product_expiry_simple.field_stock_move_line__display_name
@@ -33,7 +35,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_expiry_simple.field_stock_production_lot__display_name
 #: model:ir.model.fields,field_description:product_expiry_simple.field_stock_quant__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: product_expiry_simple
 #: model:ir.model.fields,field_description:product_expiry_simple.field_stock_production_lot__expired
@@ -58,7 +60,7 @@ msgstr "Data scadenza"
 #: model:ir.model.fields,field_description:product_expiry_simple.field_stock_production_lot__id
 #: model:ir.model.fields,field_description:product_expiry_simple.field_stock_quant__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: product_expiry_simple
 #: model:ir.model.fields,field_description:product_expiry_simple.field_stock_move_line____last_update
@@ -66,7 +68,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_expiry_simple.field_stock_production_lot____last_update
 #: model:ir.model.fields,field_description:product_expiry_simple.field_stock_quant____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: product_expiry_simple
 #: model:ir.model,name:product_expiry_simple.model_stock_production_lot
@@ -82,12 +84,12 @@ msgstr "Non scaduto"
 #. module: product_expiry_simple
 #: model_terms:ir.ui.view,arch_db:product_expiry_simple.view_picking_form
 msgid "One or several products have <b>expired</b> lots"
-msgstr ""
+msgstr "Uno o più prodotti hanno lotti <b>scaduti</b>"
 
 #. module: product_expiry_simple
 #: model:ir.model,name:product_expiry_simple.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
-msgstr ""
+msgstr "Movimenti prodotto (riga movimento di magazzino)"
 
 #. module: product_expiry_simple
 #: model:ir.model,name:product_expiry_simple.model_stock_quant
@@ -97,12 +99,12 @@ msgstr "Quanti"
 #. module: product_expiry_simple
 #: model:ir.model.fields,field_description:product_expiry_simple.field_stock_picking__show_expiry_warning
 msgid "Show Expiry Warning"
-msgstr ""
+msgstr "Visualizza avviso scadenza"
 
 #. module: product_expiry_simple
 #: model:ir.model,name:product_expiry_simple.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Trasferimento"
 
 #~ msgid "Packing Operation"
 #~ msgstr "Operazione di imballaggio"
