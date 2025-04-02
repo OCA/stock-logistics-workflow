@@ -33,7 +33,7 @@ class StockMove(models.Model):
         # propagate date changes in the stock move chain
         if self and "date" in vals:
             self._propagate_date(vals.get("date"))
-        return super(StockMove, self).write(vals)
+        return super().write(vals)
 
     def _register_hook(self):
         # Patch `write` to initialize `date_propagated_ids` in the context, so that
