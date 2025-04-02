@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-03-14 15:06+0000\n"
+"PO-Revision-Date: 2025-04-02 19:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -24,17 +24,17 @@ msgstr "Nome visualizzato"
 #. module: stock_picking_product_link
 #: model:ir.model.fields,field_description:stock_picking_product_link.field_stock_picking__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_picking_product_link
 #: model:ir.model.fields,field_description:stock_picking_product_link.field_stock_picking____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: stock_picking_product_link
 #: model:ir.model.fields,field_description:stock_picking_product_link.field_stock_picking__product_count
 msgid "Number of Products"
-msgstr ""
+msgstr "Numero di prodotti"
 
 #. module: stock_picking_product_link
 #: code:addons/stock_picking_product_link/models/stock_picking.py:0
@@ -42,9 +42,9 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock_picking_product_link.view_picking_form
 #, python-format
 msgid "Products"
-msgstr ""
+msgstr "Prodotti"
 
 #. module: stock_picking_product_link
 #: model:ir.model,name:stock_picking_product_link.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Trasferimento"
