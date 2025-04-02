@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-03-14 15:06+0000\n"
+"PO-Revision-Date: 2025-04-02 19:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -24,39 +24,39 @@ msgstr "Nome visualizzato"
 #. module: stock_move_quick_lot
 #: model:ir.model.fields,field_description:stock_move_quick_lot.field_stock_move__expiration_date
 msgid "End of Life Date"
-msgstr ""
+msgstr "Data di fine vita"
 
 #. module: stock_move_quick_lot
 #: code:addons/stock_move_quick_lot/models/stock_move.py:0
 #, python-format
 msgid "Go to lots to change data"
-msgstr ""
+msgstr "Accedere ai lotti per modificare i dati"
 
 #. module: stock_move_quick_lot
 #: model:ir.model.fields,field_description:stock_move_quick_lot.field_stock_move__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_move_quick_lot
 #: model:ir.model.fields,field_description:stock_move_quick_lot.field_stock_move____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: stock_move_quick_lot
 #: model:ir.model.fields,field_description:stock_move_quick_lot.field_stock_move__line_lot_name
 msgid "Lot Name"
-msgstr ""
+msgstr "Nome del lotto"
 
 #. module: stock_move_quick_lot
 #: code:addons/stock_move_quick_lot/models/stock_move.py:0
 #, python-format
 msgid "Open detail to remove lot"
-msgstr ""
+msgstr "Aprire i dettagli per rimuovere il lotto"
 
 #. module: stock_move_quick_lot
 #: model:ir.model,name:stock_move_quick_lot.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimento di magazzino"
 
 #. module: stock_move_quick_lot
 #: model:ir.model.fields,help:stock_move_quick_lot.field_stock_move__expiration_date
@@ -64,3 +64,5 @@ msgid ""
 "This is the date on which the goods with this Serial Number may become "
 "dangerous and must not be consumed."
 msgstr ""
+"Questa è la data nella quale la merce con questo numero di serie può "
+"diventare pericolosa e non deve essere consumata."
