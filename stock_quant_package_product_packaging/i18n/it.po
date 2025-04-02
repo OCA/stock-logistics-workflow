@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-11-17 11:36+0000\n"
+"PO-Revision-Date: 2025-04-02 19:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.10.2\n"
 
 #. module: stock_quant_package_product_packaging
 #: model:ir.model,name:stock_quant_package_product_packaging.model_stock_quant_package
@@ -48,4 +48,4 @@ msgstr "Prodotto singolo"
 #. module: stock_quant_package_product_packaging
 #: model:ir.model.fields,field_description:stock_quant_package_product_packaging.field_stock_quant_package__single_product_qty
 msgid "Single Product Qty"
-msgstr "Q-tà prodotto singolo"
+msgstr "Q.tà prodotto singolo"
