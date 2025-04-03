@@ -15,15 +15,23 @@ class TestStockPickingPropagateScheduledDate(TransactionCase):
         # Configure a warehouse with delivery_steps = 'pick_ship'
         cls.warehouse = cls.env.ref("stock.warehouse0")
         cls.warehouse.delivery_steps = "pick_ship"
-
+        cls.warehouse.delivery_route_id.rule_ids[0].write(
+            {
+                "location_dest_id": cls.output_location.id,
+            }
+        )
+        cls.warehouse.delivery_route_id.rule_ids[1].write(
+            {
+                "action": "pull",
+            }
+        )
         # Create a product
         cls.product = cls.env["product.product"].create(
             {
                 "name": "Test Product",
-                "type": "product",
+                "is_storable": True,
             }
         )
-
         # Set initial stock
         cls.env["stock.quant"]._update_available_quantity(
             cls.product, cls.stock_location, 2.0
@@ -72,14 +80,14 @@ class TestStockPickingPropagateScheduledDate(TransactionCase):
         self.assertAlmostEqual(
             self.pick.move_ids[0].date,
             scheduled_date,
-            msg="The date of the stock.move in the Pick picking should be moved to next week",
+            msg="The date of the stock.move in the Pick picking should be moved to next week",  # noqa
             delta=delta,
         )
         # the date of the stock.move in the Ship picking is moved to next week
         self.assertAlmostEqual(
             self.ship.move_ids[0].date,
             scheduled_date,
-            msg="The date of the stock.move in the Ship picking should be moved to next week",
+            msg="The date of the stock.move in the Ship picking should be moved to next week",  # noqa
             delta=delta,
         )
 
@@ -87,7 +95,7 @@ class TestStockPickingPropagateScheduledDate(TransactionCase):
         self.assertAlmostEqual(
             self.ship.scheduled_date,
             scheduled_date,
-            msg="The `scheduled_date` of the Ship picking should be moved to next week",
+            msg="The `scheduled_date` of the Ship picking should be moved to next week",  # noqa
             delta=delta,
         )
 
@@ -106,7 +114,7 @@ class TestStockPickingPropagateScheduledDate(TransactionCase):
         self.assertAlmostEqual(
             self.pick.move_ids[0].date,
             scheduled_date,
-            msg="The date of stock.move in the Pick picking should be moved to next week",
+            msg="The date of stock.move in the Pick picking should be moved to next week",  # noqa
             delta=delta,
         )
 
@@ -114,7 +122,7 @@ class TestStockPickingPropagateScheduledDate(TransactionCase):
         self.assertAlmostEqual(
             self.ship.move_ids[0].date,
             propagated_date,
-            msg="the date of the stock.move in the Ship picking should be moved to in 2 weeks",
+            msg="the date of the stock.move in the Ship picking should be moved to in 2 weeks",  # noqa
             delta=delta,
         )
 
@@ -122,7 +130,7 @@ class TestStockPickingPropagateScheduledDate(TransactionCase):
         self.assertAlmostEqual(
             self.ship.scheduled_date,
             propagated_date,
-            msg="the scheduled_date of the Ship picking should be moved to in 2 weeks",
+            msg="the scheduled_date of the Ship picking should be moved to in 2 weeks",  # noqa
             delta=delta,
         )
 
@@ -135,7 +143,8 @@ class TestStockPickingPropagateScheduledDate(TransactionCase):
 
         # Process the picking for the available quantity of the product (2)
         self.pick.action_assign()
-        self.pick.move_ids[0].quantity_done = 2.0
+        self.pick.move_ids[0].quantity = 2.0
+        self.pick.move_ids[0].picked = True
         self.pick._action_done()
 
         # Create a backorder of Pick.
@@ -151,14 +160,14 @@ class TestStockPickingPropagateScheduledDate(TransactionCase):
         self.assertAlmostEqual(
             self.ship.move_ids[0].date,
             propagated_date,
-            msg="the date of the stock.move in the Ship picking should be moved to in 2 weeks",
+            msg="the date of the stock.move in the Ship picking should be moved to in 2 weeks",  # noqa
             delta=delta,
         )
         # the scheduled date of the Ship picking is in 2 weeks
         self.assertAlmostEqual(
             self.ship.scheduled_date,
             propagated_date,
-            msg="the scheduled_date of the Ship picking should be moved to in 2 weeks",
+            msg="the scheduled_date of the Ship picking should be moved to in 2 weeks",  # noqa
             delta=delta,
         )
 
@@ -171,7 +180,8 @@ class TestStockPickingPropagateScheduledDate(TransactionCase):
 
         # Process the picking for the available quantity of the product (2)
         self.pick.action_assign()
-        self.pick.move_ids[0].quantity_done = 2.0
+        self.pick.move_ids[0].quantity = 2.0
+        self.pick.move_ids[0].picked = True
         self.pick._action_done()
 
         # Create a backorder of Pick.
@@ -181,14 +191,13 @@ class TestStockPickingPropagateScheduledDate(TransactionCase):
 
         # Process the Ship picking for the available quantity of the product (2)
         self.ship.action_assign()
-        self.ship.move_ids[0].quantity_done = 2.0
+        self.ship.move_ids[0].quantity = 2.0
+        self.ship.move_ids[0].picked = True
         self.ship._action_done()
-
         # create a backorder of Ship
         backorder_ship = self.env["stock.picking"].search(
             [("backorder_id", "=", self.ship.id)]
         )
-
         # Change the scheduled date of the Pick backorder to next week.
         backorder_pick.scheduled_date = scheduled_date
 

@@ -64,6 +64,10 @@ Contributors
 
    -  Vincent Van Rossem <vincent.vanrossem@camptocamp.com>
 
+-  `Trobz <https://www.trobz.com>`__
+
+   -  Do Anh Duy <duyda@trobz.com>
+
 Maintainers
 -----------
 

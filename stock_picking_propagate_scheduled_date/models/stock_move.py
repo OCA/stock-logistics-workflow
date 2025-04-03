@@ -2,6 +2,8 @@
 # @author Vincent Van Rossem <vincent.vanrossem@camptocamp.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from collections import defaultdict
+
 from odoo import fields, models
 
 
@@ -48,5 +50,14 @@ class StockMove(models.Model):
 
             return write
 
-        self._patch_method("write", make_write())
+        patched_models = defaultdict(set)
+
+        def patch(model, name, method):
+            if model not in patched_models[name]:
+                patched_models[name].add(model)
+                ModelClass = model.env.registry[model._name]
+                method.origin = getattr(ModelClass, name)
+                setattr(ModelClass, name, method)
+
+        patch(self, "write", make_write())
         return res
