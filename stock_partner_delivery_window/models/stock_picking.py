@@ -29,7 +29,7 @@ class StockPicking(models.Model):
         partner = self.partner_id
         if partner.delivery_time_preference == "workdays":
             message = self.env._(
-                "The scheduled date is {date} ({weekday}), but the partner is "
+                "The scheduled date is %(date)s %(weekday)s, but the partner is "
                 "set to prefer deliveries on working days.",
                 date=formatted_scheduled_date,
                 weekday=scheduled_date.weekday(),
@@ -42,8 +42,8 @@ class StockPicking(models.Model):
                         f"  * {w.display_name} ({partner.tz})"
                     )
             message = self.env._(
-                "The scheduled date is {date} ({tz}), but the partner is "
-                "set to prefer deliveries on following time windows:\n{window}",
+                "The scheduled date is %(date)s (%(tz)s), but the partner is "
+                "set to prefer deliveries on following time windows:\n%(window)s",
                 date=format_datetime(self.env, self.scheduled_date),
                 tz=self.env.context.get("tz"),
                 window="\n".join(delivery_windows_strings),
