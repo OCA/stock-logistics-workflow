@@ -66,3 +66,27 @@ class StockPickingPartnerNote(common.TransactionCase):
         # We cannot delete a note that is already in use
         with self.assertRaises(UserError):
             partner_b.stock_picking_note_ids.unlink()
+
+    def test_update_partner_note_propagated_to_open_picking(self):
+        """Test that update of partner note is propagated to open pickings."""
+        with Form(self.env["sale.order"]) as order_form:
+            order_form.partner_id = self.partner_a
+            with order_form.order_line.new() as line_form:
+                line_form.product_id = self.product_a
+                line_form.product_uom_qty = 1
+
+        self.order = order_form.save()
+        self.order.warehouse_id.out_type_id.partner_note_type_ids = [
+            (6, 0, (self.note_type1 | self.note_type2).ids)
+        ]
+        self.order.action_confirm()
+        self.partner_a.write(
+            {
+                "stock_picking_note_ids": [
+                    (0, 0, {"name": "Note 3", "note_type_id": self.note_type1.id}),
+                ]
+            }
+        )
+        self.assertIn(
+            "<p>Note 1<br>Note 2<br>Note 3</p>", self.order.picking_ids[0].note
+        )
