@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2025 (APSL-Nagarro) Antoni Marroig
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="group_stock_user_product" model="res.groups">
+        <field name="name">User: Manage Products</field>
+        <field name="category_id" ref="base.module_category_inventory_inventory" />
+        <field name="implied_ids" eval="[(4, ref('stock.group_stock_user'))]" />
+    </record>
+</odoo>
