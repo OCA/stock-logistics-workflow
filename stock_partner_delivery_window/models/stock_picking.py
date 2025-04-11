@@ -22,9 +22,9 @@ class StockPicking(models.Model):
                 continue
 
             anytime_delivery = partner and partner.delivery_time_preference == "anytime"
-            outgoing_picking = picking.picking_type_id.code == "outgoing_picking"
+            not_outgoing_picking = picking.picking_type_id.code != "outgoing"
 
-            if anytime_delivery or outgoing_picking:
+            if anytime_delivery or not_outgoing_picking:
                 continue
 
             elif not partner.is_in_delivery_window(self._planned_delivery_date()):
