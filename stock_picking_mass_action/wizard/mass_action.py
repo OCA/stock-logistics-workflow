@@ -21,7 +21,7 @@ class StockPickingMassAction(TransientModel):
     confirm = fields.Boolean(
         string="Mark as Todo",
         default=True,
-        help="check this box if you want to mark as Todo the" " selected Pickings.",
+        help="check this box if you want to mark as Todo the selected Pickings.",
     )
     transfer = fields.Boolean(
         default=lambda self: self._default_transfer(),
@@ -52,14 +52,6 @@ class StockPickingMassAction(TransientModel):
             assigned_picking_lst = self.picking_ids.filtered(
                 lambda x: x.state == "assigned"
             ).sorted(key=lambda r: r.scheduled_date)
-            quantities_done = sum(
-                move_line.qty_done
-                for move_line in assigned_picking_lst.mapped("move_line_ids").filtered(
-                    lambda m: m.state not in ("done", "cancel")
-                )
-            )
-            if not quantities_done:
-                return assigned_picking_lst.action_immediate_transfer_wizard()
             if any([pick._check_backorder() for pick in assigned_picking_lst]):
                 return assigned_picking_lst._action_generate_backorder_wizard()
             assigned_picking_lst.button_validate()
