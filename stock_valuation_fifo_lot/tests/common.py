@@ -8,7 +8,7 @@ class TestStockValuationFifoCommon(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        product_category = cls.env["product.category"].create(
+        product_categ = cls.env["product.category"].create(
             {
                 "name": "Test Category",
                 "property_cost_method": "fifo",
@@ -19,80 +19,74 @@ class TestStockValuationFifoCommon(TransactionCase):
             {
                 "name": "Test Product",
                 "type": "product",
-                "categ_id": product_category.id,
+                "categ_id": product_categ.id,
                 "tracking": "lot",
             }
         )
-        cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
-        cls.customer_location = cls.env.ref("stock.stock_location_customers")
-        cls.stock_location = cls.env.ref("stock.stock_location_stock")
-        cls.picking_type_in = cls.env.ref("stock.picking_type_in")
-        cls.picking_type_out = cls.env.ref("stock.picking_type_out")
+        cls.vendor_loc = cls.env.ref("stock.stock_location_suppliers")
+        cls.cust_loc = cls.env.ref("stock.stock_location_customers")
+        cls.stock_loc = cls.env.ref("stock.stock_location_stock")
+        cls.pick_type_in = cls.env.ref("stock.picking_type_in")
+        cls.pick_type_out = cls.env.ref("stock.picking_type_out")
 
     def create_picking(
-        self,
-        location,
-        location_dest,
-        picking_type,
-        lot_numbers,
-        price_unit=0.0,
-        is_receipt=True,
-        force_lot_name=None,
+        self, op_type, lot_numbers, ml_qty=5.0, price=0.0, force_lot_name=None
     ):
-        picking = self.env["stock.picking"].create(
+        loc = self.vendor_loc
+        loc_dest = self.stock_loc
+        pick_type = self.pick_type_in
+        if op_type == "out":
+            loc = self.stock_loc
+            loc_dest = self.cust_loc
+            pick_type = self.pick_type_out
+        pick = self.env["stock.picking"].create(
             {
-                "location_id": location.id,
-                "location_dest_id": location_dest.id,
-                "picking_type_id": picking_type.id,
+                "location_id": loc.id,
+                "location_dest_id": loc_dest.id,
+                "picking_type_id": pick_type.id,
             }
         )
-        move_line_qty = 5.0
         move = self.env["stock.move"].create(
             {
                 "name": "Test",
                 "product_id": self.product.id,
-                "location_id": picking.location_id.id,
-                "location_dest_id": picking.location_dest_id.id,
+                "location_id": loc.id,
+                "location_dest_id": loc_dest.id,
                 "product_uom": self.product.uom_id.id,
-                "product_uom_qty": move_line_qty * len(lot_numbers),
-                "picking_id": picking.id,
+                "product_uom_qty": ml_qty * len(lot_numbers),
+                "picking_id": pick.id,
+                "price_unit": price,
             }
         )
-        if price_unit:
-            move.write({"price_unit": price_unit})
-
         for lot in lot_numbers:
             move_line = self.env["stock.move.line"].create(
                 {
                     "move_id": move.id,
-                    "picking_id": picking.id,
+                    "picking_id": pick.id,
                     "product_id": self.product.id,
-                    "location_id": move.location_id.id,
-                    "location_dest_id": move.location_dest_id.id,
+                    "location_id": loc.id,
+                    "location_dest_id": loc_dest.id,
                     "product_uom_id": move.product_uom.id,
-                    "qty_done": move_line_qty,
+                    "qty_done": ml_qty,
                 }
             )
-            if is_receipt:
+            if op_type == "in":
                 move_line.lot_name = lot
-            else:
-                lot = self.env["stock.lot"].search(
-                    [("product_id", "=", self.product.id), ("name", "=", lot)], limit=1
-                )
-                move_line.lot_id = lot.id
-                if force_lot_name:
-                    force_lot = self.env["stock.lot"].search(
-                        [
-                            ("product_id", "=", self.product.id),
-                            ("name", "=", force_lot_name),
-                        ],
-                        limit=1,
-                    )
-                    move_line.force_fifo_lot_id = force_lot.id
-        picking.action_confirm()
-        picking.action_assign()
-        picking._action_done()
-        return picking, move
+                continue
+            move_line.lot_id = self.env["stock.lot"].search(
+                [("product_id", "=", self.product.id), ("name", "=", lot)], limit=1
+            )
+            if not force_lot_name:
+                continue
+            force_lot = self.env["stock.lot"].search(
+                [("product_id", "=", self.product.id), ("name", "=", force_lot_name)],
+                limit=1,
+            )
+            move_line.force_fifo_lot_id = force_lot.id
+        pick.action_confirm()
+        pick.action_assign()
+        pick._action_done()
+        return pick, move
 
     def transfer_return(self, original_picking, return_qty):
         return_picking_wizard_form = Form(

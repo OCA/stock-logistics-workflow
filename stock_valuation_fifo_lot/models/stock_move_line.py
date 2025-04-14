@@ -1,7 +1,8 @@
-# Copyright 2024 Quartile (https://www.quartile.co)
+# Copyright 2024-2025 Quartile (https://www.quartile.co)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html)
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 
 
 class StockMoveLine(models.Model):
@@ -17,8 +18,7 @@ class StockMoveLine(models.Model):
         "a lot/serial. In product UoM.",
     )
     company_currency_id = fields.Many2one(related="company_id.currency_id")
-    value_consumed = fields.Monetary(
-        currency_field="company_currency_id",
+    value_consumed = fields.Float(
         help="Consumed value by outgoing valuation for FIFO valued products with a "
         "lot/serial",
     )
@@ -29,10 +29,9 @@ class StockMoveLine(models.Model):
         "total by product should match that of the inventory valuation). In product "
         "UoM.",
     )
-    value_remaining = fields.Monetary(
+    value_remaining = fields.Float(
         compute="_compute_remaining_value",
         store=True,
-        currency_field="company_currency_id",
         help="Remaining value for FIFO valued products with a lot/serial (the total "
         "by product should match that of the inventory valuation)",
     )
@@ -73,8 +72,11 @@ class StockMoveLine(models.Model):
             )
 
     def _create_correction_svl(self, move, diff):
-        # Pass the move line as a context value in case qty_done is overridden in a done
-        # transfer, to correctly identify which record should be processed in
-        # _run_fifo().
-        move = move.with_context(correction_move_line=self)
+        # We don't allow forced quantity change for FIFO products with a lot/serial
+        # to avoid overcomplicating the custom logic.
+        if move.product_id.cost_method == "fifo" and move.product_id.tracking != "none":
+            raise UserError(
+                _("Forced quantity is not allowed for the tracked FIFO product %s.")
+                % move.product_id.display_name
+            )
         return super()._create_correction_svl(move, diff)

@@ -4,7 +4,7 @@
 
 {
     "name": "Stock Valuation Fifo Lot",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.0.1",
     "category": "Warehouse Management",
     "development_status": "Alpha",
     "license": "AGPL-3",
@@ -16,6 +16,7 @@
         "views/stock_move_line_views.xml",
         "views/stock_package_level_views.xml",
         "views/stock_valuation_layer_views.xml",
+        "wizard/stock_valuation_layer_revaluation_views.xml",
     ],
     "installable": True,
     "post_init_hook": "post_init_hook",

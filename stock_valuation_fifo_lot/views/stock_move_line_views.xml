@@ -27,6 +27,8 @@
                 />
                 <field
                     name="value_consumed"
+                    widget="monetary"
+                    options="{'currency_field': 'company_currency_id'}"
                     sum="Value Consumed"
                     groups="stock.group_stock_manager"
                     optional="show"
@@ -39,6 +41,8 @@
                 />
                 <field
                     name="value_remaining"
+                    widget="monetary"
+                    options="{'currency_field': 'company_currency_id'}"
                     sum="Value Remaining"
                     groups="stock.group_stock_manager"
                     optional="show"

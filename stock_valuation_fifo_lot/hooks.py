@@ -1,4 +1,4 @@
-# Copyright 2024 Quartile (https://www.quartile.co)
+# Copyright 2024-2025 Quartile (https://www.quartile.co)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html)
 
 from odoo import SUPERUSER_ID, api
@@ -15,6 +15,7 @@ def post_init_hook(cr, registry):
             or not move.lot_ids
         ):
             continue
+        # svls will include the valuation layers of related landed costs as well
         svls = move.stock_valuation_layer_ids
         svls.lot_ids = move.lot_ids
         if move._is_out():
@@ -27,10 +28,7 @@ def post_init_hook(cr, registry):
         consumed_qty = consumed_qty_bal = sum(svls.mapped("quantity")) - sum(
             svls.mapped("remaining_qty")
         )
-        total_value = sum(svls.mapped("value")) + sum(
-            svls.stock_valuation_layer_ids.mapped("value")
-        )
-        consumed_value = total_value - sum(svls.mapped("remaining_value"))
+        consumed_value = sum(svls.mapped("value")) - sum(svls.mapped("remaining_value"))
         product_uom = move.product_id.uom_id
         for ml in move.move_line_ids.sorted("id"):
             ml.qty_base = ml.product_uom_id._compute_quantity(ml.qty_done, product_uom)

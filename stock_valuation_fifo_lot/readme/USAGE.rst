@@ -9,3 +9,7 @@ been strictly FIFO). In such situations, you should select a "rogue" lot/serial 
 that still exists in terms of FIFO costing, but not in reality, due to the inconsistency
 carried over from the past) in the 'Force FIFO Lot/Serial' field so that this lot/serial
 is used for FIFO costing instead.
+
+To revalue a product with lot_ids displayed in the Stock Valuation Layer list view,
+use the standard revaluation wizard. Set a lot_id in the wizard to revalue a specific
+lot only. Only lots with a remaining quantity will appear in the dropdown list.
