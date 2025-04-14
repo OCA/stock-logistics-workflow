@@ -5,7 +5,7 @@
 {
     "name": "Product cost price avco sync",
     "summary": "Set product cost price from updated moves",
-    "version": "16.0.1.0.0",
+    "version": "17.0.1.0.0",
     "development_status": "Production/Stable",
     "category": "Stock",
     "website": "https://github.com/OCA/stock-logistics-workflow",

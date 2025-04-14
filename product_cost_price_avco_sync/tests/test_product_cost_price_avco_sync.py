@@ -312,7 +312,8 @@ class TestProductCostPriceAvcoSync(BaseCommon):
         if confirmed:
             picking.action_assign()
             move = picking.move_ids[:1]
-            picking.move_line_ids.qty_done = move.product_uom_qty
+            picking.move_line_ids.quantity = move.product_uom_qty
+            picking.move_line_ids.picked = True
             picking._action_done()
         return picking, move
 
@@ -448,7 +449,8 @@ class TestProductCostPriceAvcoSync(BaseCommon):
             )
         )
         # Change qty before cost
-        move_in_01.with_context(keep_avco_inventory=True).quantity_done = 0.0
+        move_in_01.with_context(keep_avco_inventory=True).quantity = 0.0
+        move_in_01.with_context(keep_avco_inventory=True).picked = True
         self.print_svl(
             "After force quantity to 0 in first IN move Quant:{} Cost:{}".format(
                 quant.quantity, quant.product_id.standard_price
@@ -460,7 +462,7 @@ class TestProductCostPriceAvcoSync(BaseCommon):
         )
 
         # Restore to initial values
-        move_in_01.with_context(keep_avco_inventory=True).move_line_ids.qty_done = 10.0
+        move_in_01.with_context(keep_avco_inventory=True).move_line_ids.quantity = 10.0
         move_in_01.stock_valuation_layer_ids.unit_cost = 2.0
         self.print_svl(
             "After restore initial values Quant:{} Standard Price:{}".format(
@@ -473,7 +475,7 @@ class TestProductCostPriceAvcoSync(BaseCommon):
         self.print_svl(
             f"After force unit cost to 0 in first IN move Quant:{quant.quantity}"
         )
-        move_in_01.quantity_done = 0.0
+        move_in_01.quantity = 0.0
         self.print_svl(
             "After force quantity to 0 in first IN move Quant:{} Cost:{}".format(
                 quant.quantity, quant.product_id.standard_price
@@ -482,7 +484,7 @@ class TestProductCostPriceAvcoSync(BaseCommon):
 
         # Restore to initial values
         move_in_01.stock_valuation_layer_ids.unit_cost = 2.0
-        move_in_01.move_line_ids.qty_done = 10.0
+        move_in_01.move_line_ids.quantity = 10.0
         self.print_svl(
             "After restore initial values Quant:{} Standard Price:{}".format(
                 quant.quantity, quant.product_id.standard_price
