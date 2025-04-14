@@ -256,9 +256,9 @@ class StockValuationLayer(models.Model):
         if self.product_id.cost_method != "average" or self.stock_valuation_layer_id:
             return
         svls_dic = OrderedDict()
-        svls_dic[
-            (self.product_id, self.company_id)
-        ] = self._initialize_avco_sync_struct(svl_prev_vals)
+        svls_dic[(self.product_id, self.company_id)] = (
+            self._initialize_avco_sync_struct(svl_prev_vals)
+        )
         # Main loop: iterate while there's something to do
         index = 0  # which (product, company) to process
         reloop = False  # activated when something is blocking
