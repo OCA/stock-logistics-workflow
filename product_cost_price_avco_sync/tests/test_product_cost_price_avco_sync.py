@@ -29,7 +29,8 @@ class TestProductCostPriceAvcoSync(BaseCommon):
         cls.product = cls.env["product.product"].create(
             {
                 "name": "Product for test",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "tracking": "none",
                 "standard_price": 1,
                 "categ_id": cls.categ_all.id,
