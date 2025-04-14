@@ -7,10 +7,7 @@ from odoo import fields, models
 class StockValuationLayer(models.Model):
     _inherit = "stock.valuation.layer"
 
-    lot_ids = fields.Many2many(
-        comodel_name="stock.lot",
-        string="Lots/Serials",
-    )
+    lot_ids = fields.Many2many(comodel_name="stock.lot", string="Lots/Serials")
 
     def _get_unconsumed_in_move_line(self, lot):
         self.ensure_one()

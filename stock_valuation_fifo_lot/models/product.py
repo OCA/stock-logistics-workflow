@@ -1,10 +1,10 @@
 # Copyright 2023 Ecosoft Co., Ltd (https://ecosoft.co.th)
-# Copyright 2024 Quartile (https://www.quartile.co)
+# Copyright 2024-2025 Quartile (https://www.quartile.co)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html)
 
 from collections import defaultdict
 
-from odoo import _, models
+from odoo import _, api, models
 from odoo.exceptions import UserError
 from odoo.osv import expression
 from odoo.tools import float_is_zero
@@ -24,6 +24,17 @@ class ProductProduct(models.Model):
         """Hook function for other sort by"""
         return all_candidates
 
+    @api.model
+    def _raise_no_fifo_candidate_ml_error(self, fifo_lot):
+        raise UserError(
+            _(
+                "There is no remaining balance for FIFO valuation for the "
+                "lot/serial %s. Please select a Force FIFO Lot/Serial in the "
+                "detailed operation line."
+            )
+            % fifo_lot.display_name
+        )
+
     def _get_fifo_candidates(self, company):
         all_candidates = super()._get_fifo_candidates(company)
         fifo_lot = self.env.context.get("fifo_lot")
@@ -32,14 +43,7 @@ class ProductProduct(models.Model):
                 if not svl._get_unconsumed_in_move_line(fifo_lot):
                     all_candidates -= svl
             if not all_candidates:
-                raise UserError(
-                    _(
-                        "There is no remaining balance for FIFO valuation for the "
-                        "lot/serial %s. Please select a Force FIFO Lot/Serial in the "
-                        "detailed operation line."
-                    )
-                    % fifo_lot.display_name
-                )
+                self._raise_no_fifo_candidate_ml_error(fifo_lot)
         sort_by = self.env.context.get("sort_by")
         if sort_by == "lot_create_date":
 
@@ -53,7 +57,6 @@ class ProductProduct(models.Model):
             all_candidates = self._sort_by_all_candidates(all_candidates, sort_by)
         return all_candidates
 
-    # Depends on https://github.com/odoo/odoo/pull/180245
     def _get_qty_taken_on_candidate(self, qty_to_take_on_candidates, candidate):
         fifo_lot = self.env.context.get("fifo_lot")
         if fifo_lot:
@@ -74,17 +77,11 @@ class ProductProduct(models.Model):
             return super()._run_fifo(quantity, company)
         remaining_qty = quantity
         vals = defaultdict(float)
-        correction_ml = self.env.context.get("correction_move_line")
-        move_lines = correction_ml or fifo_move._get_out_move_lines()
+        out_move_lines = fifo_move._get_out_move_lines()
         moved_qty = 0
-        for ml in move_lines:
+        for ml in out_move_lines:
             fifo_lot = ml.force_fifo_lot_id or ml.lot_id
-            if correction_ml:
-                moved_qty = quantity
-            else:
-                moved_qty = ml.product_uom_id._compute_quantity(
-                    ml.qty_done, self.uom_id
-                )
+            moved_qty = ml.product_uom_id._compute_quantity(ml.qty_done, self.uom_id)
             fifo_qty = min(remaining_qty, moved_qty)
             self = self.with_context(fifo_lot=fifo_lot, fifo_qty=fifo_qty)
             ml_fifo_vals = super()._run_fifo(fifo_qty, company)
