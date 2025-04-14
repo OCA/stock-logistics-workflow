@@ -456,9 +456,7 @@ class TestProductCostPriceAvcoSync(BaseCommon):
         )
         move_in_01.stock_valuation_layer_ids.unit_cost = 0.0
         self.print_svl(
-            "After force unit cost to 0 in first IN move Quant:{}".format(
-                quant.quantity
-            )
+            f"After force unit cost to 0 in first IN move Quant:{quant.quantity}"
         )
 
         # Restore to initial values
@@ -473,9 +471,7 @@ class TestProductCostPriceAvcoSync(BaseCommon):
         # Change cost before quantity
         move_in_01.stock_valuation_layer_ids.unit_cost = 0.0
         self.print_svl(
-            "After force unit cost to 0 in first IN move Quant:{}".format(
-                quant.quantity
-            )
+            f"After force unit cost to 0 in first IN move Quant:{quant.quantity}"
         )
         move_in_01.quantity_done = 0.0
         self.print_svl(
@@ -494,7 +490,7 @@ class TestProductCostPriceAvcoSync(BaseCommon):
         )
 
     def print_svl(self, char_info=""):
-        msg_list = ["{}".format(char_info)]
+        msg_list = [f"{char_info}"]
         total_qty = total_value = 0.0
         for svl in self.env["stock.valuation.layer"].search(
             [("product_id", "=", self.product.id)]
