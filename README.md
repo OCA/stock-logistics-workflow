@@ -22,6 +22,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [delivery_procurement_group_carrier](delivery_procurement_group_carrier/) | 17.0.1.1.1 |  | Delivery Procurement Group Carrier
+[product_cost_price_avco_sync](product_cost_price_avco_sync/) | 17.0.1.0.0 | [![carlosdauden](https://github.com/carlosdauden.png?size=30px)](https://github.com/carlosdauden) [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Set product cost price from updated moves
 [purchase_stock_picking_invoice_link](purchase_stock_picking_invoice_link/) | 17.0.1.0.0 |  | Adds link between purchases, pickings and invoices
 [sale_order_global_stock_route](sale_order_global_stock_route/) | 17.0.1.0.0 |  | Add the possibility to choose one warehouse path for an order
 [sale_planned_consumed_date](sale_planned_consumed_date/) | 17.0.1.0.0 |  | Sale planned consumed date
