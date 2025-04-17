@@ -4,7 +4,7 @@
      License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
 <odoo>
     <record id="view_stock_move_line_detailed_operation_tree" model="ir.ui.view">
-        <field name="name">stock.move.line.operations.tree</field>
+        <field name="name">stock.move.line.operations.list</field>
         <field name="model">stock.move.line</field>
         <field
             name="inherit_id"

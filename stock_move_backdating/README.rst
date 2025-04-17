@@ -95,6 +95,11 @@ Contributors
    -  Pimolnat Suntian <pimolnats@ecosoft.co.th>
    -  Saran Lim. <saranl@ecosoft.co.th>
 
+-  `OBS-Solutions
+   Netherlands <https://www.odoo-bs.com/obs-netherlands>`__:
+
+   -  bosd <c5e2fd43-d292-4c90-9d1f-74ff3436329a@anonaddy.me>
+
 Maintainers
 -----------
 

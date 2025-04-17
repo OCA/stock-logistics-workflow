@@ -21,7 +21,7 @@ class FillDateBackdating(models.TransientModel):
     )
     def constrain_date_backdating(self):
         try:
-            check_date(self.date_backdating)
+            check_date(self, self.date_backdating)
         except UserError as ue:
             raise ValidationError(ue.args[0]) from ue
 
