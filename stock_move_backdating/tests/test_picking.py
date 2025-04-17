@@ -4,7 +4,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 
-from odoo.exceptions import UserError, ValidationError
 from odoo.tests import tagged
 
 from .common import TestCommon
