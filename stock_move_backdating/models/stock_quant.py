@@ -23,7 +23,6 @@ class StockQuant(models.Model):
         self,
         product_id,
         location_id,
-        quantity=False,
         reserved_quantity=False,
         lot_id=None,
         package_id=None,
@@ -39,7 +38,6 @@ class StockQuant(models.Model):
         return super()._update_available_quantity(
             product_id,
             location_id,
-            quantity=quantity,
             reserved_quantity=reserved_quantity,
             lot_id=lot_id,
             package_id=package_id,
@@ -102,6 +100,7 @@ class StockQuant(models.Model):
                         line_values = line_command[2]
                         # Add the backdating date to the move line values
                         line_values["date_backdating"] = date_backdating
+                        line_values["date"] = date_backdating
                         new_move_line_ids.append((0, 0, line_values))
                     else:
                         new_move_line_ids.append(line_command)

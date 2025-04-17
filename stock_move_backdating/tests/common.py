@@ -42,8 +42,7 @@ class TestCommon(tests.TransactionCase):
             stock_quant_model._update_available_quantity(
                 product,
                 cls.stock_location,
-                quantity=quantity,
-                reserved_quantity=False,
+                quantity,
                 lot_id=None,
                 package_id=None,
                 owner_id=None,
@@ -76,7 +75,8 @@ class TestCommon(tests.TransactionCase):
             product_form = Form(product_model)
             for field_name, field_value in products_values.items():
                 setattr(product_form, field_name, field_value)
-            product_form.detailed_type = "product"
+            product_form.type = "consu"
+            product_form.is_storable = True
             # product_form.property_valuation = "real_time"
             product = product_form.save()
             products |= product
@@ -209,8 +209,8 @@ class TestCommon(tests.TransactionCase):
                 datetime_backdating_list,
                 fillvalue=datetime_backdating_list[-1],
             )
-            for stock_move, datetime_backdating in stock_move_lines_dates_zip:
-                stock_move.date_backdating = datetime_backdating
+            for stock_move_line, datetime_backdating in stock_move_lines_dates_zip:
+                stock_move_line.date_backdating = datetime_backdating
 
         picking.button_validate()
         self.assertEqual(picking.state, "done")

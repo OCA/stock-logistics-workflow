@@ -19,7 +19,7 @@
                 />
             </xpath>
             <field name="date_done" position="after">
-                <field name="date_backdating" invisible="not date_backdating" />
+                <field name="date_backdating" invisible="date_backdating == False" />
             </field>
         </field>
     </record>
