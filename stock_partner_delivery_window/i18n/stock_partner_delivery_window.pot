@@ -1,0 +1,176 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_partner_delivery_window
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields.selection,name:stock_partner_delivery_window.selection__res_partner__delivery_time_preference__anytime
+msgid "Any time"
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#: model:ir.model,name:stock_partner_delivery_window.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,help:stock_partner_delivery_window.field_res_partner__delivery_time_preference
+#: model:ir.model.fields,help:stock_partner_delivery_window.field_res_users__delivery_time_preference
+msgid ""
+"Define the scheduling preference for delivery orders:\n"
+"\n"
+"* Any time: Do not postpone deliveries\n"
+"* Fixed time windows: Postpone deliveries to the next preferred time window\n"
+"* Weekdays: Postpone deliveries to the next weekday"
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_res_partner__delivery_time_preference
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_res_users__delivery_time_preference
+msgid "Delivery time schedule preference"
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_res_partner__delivery_time_window_ids
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_res_users__delivery_time_window_ids
+msgid "Delivery time windows"
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields.selection,name:stock_partner_delivery_window.selection__res_partner__delivery_time_preference__time_windows
+msgid "Fixed time windows"
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__time_window_start
+msgid "From"
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#. odoo-python
+#: code:addons/stock_partner_delivery_window/models/res_partner.py:0
+#, python-format
+msgid "From %(start)s to %(end)s"
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__partner_id
+msgid "Partner"
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#. odoo-python
+#: code:addons/stock_partner_delivery_window/models/res_partner.py:0
+#, python-format
+msgid ""
+"Please define at least one delivery time window or change preference to Any "
+"time"
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#: model:ir.model,name:stock_partner_delivery_window.model_partner_delivery_time_window
+msgid "Preferred delivery time windows"
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#. odoo-python
+#: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
+#, python-format
+msgid "Scheduled date does not match partner's Delivery window preference."
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#. odoo-python
+#: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
+#, python-format
+msgid ""
+"The scheduled date is {date} ({tz}), but the partner is set to prefer deliveries on following time windows:\n"
+"{window}"
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#. odoo-python
+#: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
+#, python-format
+msgid ""
+"The scheduled date is {date} ({weekday}), but the partner is set to prefer "
+"deliveries on working days."
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__time_window_weekday_ids
+msgid "Time Window Weekday"
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__tz
+msgid "Timezone"
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__time_window_end
+msgid "To"
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#: model:ir.model,name:stock_partner_delivery_window.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields.selection,name:stock_partner_delivery_window.selection__res_partner__delivery_time_preference__workdays
+msgid "Weekdays (Monday to Friday)"
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,help:stock_partner_delivery_window.field_partner_delivery_time_window__tz
+msgid ""
+"When printing documents and exporting/importing data, time values are computed according to this timezone.\n"
+"If the timezone is not set, UTC (Coordinated Universal Time) is used.\n"
+"Anywhere else, time values are computed according to the time offset of your web client."
+msgstr ""
