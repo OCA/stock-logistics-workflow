@@ -13,8 +13,9 @@ class StockPick(models.Model):
 
     @api.model
     def _get_available_operations(self):
-        values = self.env["res.config.settings"].sudo().get_values()
-        return values.get("portal_visible_operation_ids", [])
+        return (
+            self.env["stock.picking.type"].search([("portal_visible", "=", True)]).ids
+        )
 
     def _compute_access_url(self):
         super()._compute_access_url()

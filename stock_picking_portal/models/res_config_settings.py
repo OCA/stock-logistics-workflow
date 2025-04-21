@@ -12,26 +12,16 @@ class ResConfigSettings(models.TransientModel):
         string="Portal Visible Operations",
     )
 
-    def set_values(self):
-        super().set_values()
-        ICPSudo = self.env["ir.config_parameter"].sudo()
-        ICPSudo.set_param(
-            "stock_picking_portal.portal_visible_operation_ids",
-            ",".join(str(i) for i in self.portal_visible_operation_ids.ids),
-        )
-        return
-
     @api.model
     def get_values(self):
         res = super().get_values()
-        ICPSudo = self.env["ir.config_parameter"].sudo()
-        portal_visible_operation_ids = ICPSudo.get_param(
-            "stock_picking_portal.portal_visible_operation_ids", default=False
-        )
-        if portal_visible_operation_ids:
-            res.update(
-                portal_visible_operation_ids=[
-                    int(r) for r in portal_visible_operation_ids.split(",")
-                ]
-            )
+        visible = self.env["stock.picking.type"].search([("portal_visible", "=", True)])
+        res.update(portal_visible_operation_ids=visible.ids)
+        return res
+
+    def set_values(self):
+        res = super().set_values()
+        all_types = self.env["stock.picking.type"].search([])
+        all_types.write({"portal_visible": False})
+        self.portal_visible_operation_ids.write({"portal_visible": True})
         return res

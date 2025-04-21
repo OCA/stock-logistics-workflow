@@ -11,6 +11,7 @@
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "data": [
         "security/ir.model.access.csv",
+        "security/stock_picking_portal_rule.xml",
         "views/res_config_settings_view.xml",
         "views/stock_picking_template.xml",
         "wizards/picking_link_wizard.xml",

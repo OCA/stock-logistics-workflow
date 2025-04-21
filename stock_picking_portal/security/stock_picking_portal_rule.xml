@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+  <record id="rule_portal_picking" model="ir.rule">
+    <field name="name">Stock Picking Portal Access</field>
+    <field name="model_id" ref="stock.model_stock_picking" />
+    <field name="domain_force">
+      [('picking_type_id.portal_visible','=',True),
+       ('partner_id','=',user.partner_id.id)]
+    </field>
+    <field name="groups" eval="[(4, ref('base.group_portal'))]" />
+  </record>
+</odoo>
