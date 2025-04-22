@@ -395,6 +395,28 @@ create lots for incoming pickings.</p>
 <li>Go to a <em>Inventory &gt; Master Data &gt; Products</em>.</li>
 <li>Set ‘auto create lot’ option for the products you need.</li>
 </ol>
+<p>It’s possible to configure by code a way to force the setting of the
+auto lot when printing the detailed operation labels. To do so, pass the
+context key <tt class="docutils literal">force_auto_lot</tt> to the report. This is a simple example
+with a server action, but it can be done with overriding methods as
+well:</p>
+<pre class="code xml literal-block">
+<span class="nt">&lt;record</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;action_print_detailed_operation&quot;</span><span class="w"> </span><span class="na">model=</span><span class="s">&quot;ir.actions.server&quot;</span><span class="nt">&gt;</span><span class="w">
+     </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;</span>Print<span class="w"> </span>detailed<span class="w"> </span>operations<span class="nt">&lt;/field&gt;</span><span class="w">
+     </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;model_id&quot;</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;stock.model_stock_move_line&quot;</span><span class="w"> </span><span class="nt">/&gt;</span><span class="w">
+     </span><span class="nt">&lt;field</span><span class="w">
+           </span><span class="na">name=</span><span class="s">&quot;binding_model_id&quot;</span><span class="w">
+           </span><span class="na">ref=</span><span class="s">&quot;stock.model_stock_move_line&quot;</span><span class="w">
+     </span><span class="nt">/&gt;</span><span class="w">
+     </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;binding_view_types&quot;</span><span class="nt">&gt;</span>list<span class="nt">&lt;/field&gt;</span><span class="w">
+     </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;state&quot;</span><span class="nt">&gt;</span>code<span class="nt">&lt;/field&gt;</span><span class="w">
+     </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;code&quot;</span><span class="nt">&gt;</span><span class="w">
+</span>if<span class="w"> </span>records:<span class="w">
+     </span>report<span class="w"> </span>=<span class="w"> </span>env[&quot;ir.actions.report&quot;].sudo()._get_report(&quot;my_custom_module.my_custom_report_xml_id&quot;)<span class="w">
+     </span>action<span class="w"> </span>=<span class="w"> </span>report.with_context(force_auto_lot=True).report_action(records.ids)<span class="w">
+     </span><span class="nt">&lt;/field&gt;</span><span class="w">
+</span><span class="nt">&lt;/record&gt;</span>
+</pre>
 </div>
 <div class="section" id="usage">
 <h1><a class="toc-backref" href="#toc-entry-2">Usage</a></h1>
