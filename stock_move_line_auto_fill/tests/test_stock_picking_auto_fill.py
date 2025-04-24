@@ -18,9 +18,9 @@ class TestStockPicking(common.TransactionCase):
         cls.move_model = cls.env["stock.move"]
 
         # warehouse and picking types
-        cls.warehouse = cls.env.ref("stock.stock_warehouse_shop0")
-        cls.picking_type_in = cls.env.ref("stock.chi_picking_type_in")
-        cls.picking_type_out = cls.env.ref("stock.chi_picking_type_out")
+        cls.warehouse = cls.env.ref("stock.warehouse0")
+        cls.picking_type_in = cls.warehouse.in_type_id
+        cls.picking_type_out = cls.warehouse.out_type_id
         cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
         cls.customer_location = cls.env.ref("stock.stock_location_customers")
 
@@ -389,7 +389,7 @@ class TestStockPicking(common.TransactionCase):
         # after check availability
         self.picking_type_in.auto_fill_operation = True
         product = self.env["product.product"].create(
-            {"name": "Test auto fill", "type": "product"}
+            {"name": "Test auto fill", "is_storable": True}
         )
         product_quant = self.env["stock.quant"].create(
             {
@@ -421,22 +421,17 @@ class TestStockPicking(common.TransactionCase):
 
     def _picking_return(self, picking, qty):
         # Make a return from picking
-        ReturnWiz = self.env["stock.return.picking"]
-        return_form = Form(
-            ReturnWiz.with_context(
+        stock_return_picking_form = Form(
+            self.env["stock.return.picking"].with_context(
                 active_ids=picking.ids,
-                active_id=picking.ids[0],
+                active_id=picking.sorted().ids[0],
                 active_model="stock.picking",
-                custom_flag=True,
             )
         )
-
-        stock_return_picking = return_form.save()
-        stock_return_picking.product_return_moves.quantity = qty
-        stock_return_picking_action = stock_return_picking.create_returns()
-        return_pick = self.env["stock.picking"].browse(
-            stock_return_picking_action["res_id"]
-        )
+        return_wiz = stock_return_picking_form.save()
+        return_wiz.product_return_moves.quantity = qty
+        res = return_wiz.action_create_returns()
+        return_pick = self.env["stock.picking"].browse(res["res_id"])
         return_pick.action_assign()
         return_pick.move_ids.quantity = qty
         return_pick._action_done()
@@ -448,7 +443,7 @@ class TestStockPicking(common.TransactionCase):
         self.picking_type_out.auto_fill_operation = True
         self.picking_type_in.auto_fill_operation = True
         product = self.env["product.product"].create(
-            {"name": "Test return", "type": "product"}
+            {"name": "Test return", "is_storable": True}
         )
         self.env["stock.quant"].with_context(inventory_mode=True).create(
             [
