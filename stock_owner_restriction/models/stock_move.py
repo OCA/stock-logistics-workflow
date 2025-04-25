@@ -33,32 +33,48 @@ class StockMove(models.Model):
     def _action_assign(self, force_qty=False):
         # Split moves by picking type owner behavior restriction to process
         # moves depending of their owners
+        res = True
         moves = self._get_moves_to_assign_with_standard_behavior()
-        res = super(StockMove, moves)._action_assign(force_qty=force_qty)
+        if moves:
+            res = super(StockMove, moves)._action_assign(force_qty=force_qty)
+
+        # Group remaining moves by owner ID or False
         dict_key = defaultdict(lambda: self.env["stock.move"])
         for move in self - moves:
             if move.picking_type_id.owner_restriction == "unassigned_owner":
-                dict_key[False] |= move
+                owner_key = False
+                dict_key[owner_key] |= move
             else:
                 partner = move._get_owner_for_assign()
-                dict_key[partner] |= move
-        for owner_id, moves_to_assign in dict_key.items():
+                owner_key = partner.id if partner else False
+                dict_key[owner_key] |= move
+
+        # Process grouped moves
+        for owner_id_key, moves_to_assign in dict_key.items():
+            ctx = {"force_restricted_owner_id": owner_id_key}
             super(
                 StockMove,
-                moves_to_assign.with_context(force_restricted_owner_id=owner_id),
+                moves_to_assign.with_context(**ctx),
             )._action_assign(force_qty=force_qty)
+
+            # --- Logic for partner_or_unassigned ---
+            # Check if owner_id_key is a valid partner ID (not False)
             if (
-                owner_id
-                and moves_to_assign.picking_type_id.owner_restriction
+                owner_id_key is not False
+                and moves_to_assign
+                # Check restriction type on the first move
+                # (assuming all in group are same)
+                and moves_to_assign[0].picking_type_id.owner_restriction
                 == "partner_or_unassigned"
                 and sum(
                     move.quantity - move.product_uom_qty for move in moves_to_assign
                 )
                 < 0
             ):
+                ctx_unassigned = {"force_restricted_owner_id": False}
                 super(
                     StockMove,
-                    moves_to_assign.with_context(force_restricted_owner_id=False),
+                    moves_to_assign.with_context(**ctx_unassigned),
                 )._action_assign(force_qty=force_qty)
         return res
 
@@ -71,14 +87,32 @@ class StockMove(models.Model):
         owner_id=None,
         strict=True,
     ):
-        restricted_owner_id = self.env.context.get("force_restricted_owner_id", None)
-        if not owner_id and restricted_owner_id is not None:
-            owner_id = restricted_owner_id
+        restricted_owner_id_ctx = self.env.context.get(
+            "force_restricted_owner_id", None
+        )
+
+        owner_arg_for_super = owner_id
+
+        # If the calling method didn't specify an owner
+        # AND there's a restriction in context
+        if owner_arg_for_super is None and restricted_owner_id_ctx is not None:
+            if isinstance(restricted_owner_id_ctx, int):
+                # Convert the ID from context back to a recordset
+                owner_recordset = self.env["res.partner"].browse(
+                    restricted_owner_id_ctx
+                )
+                # Use False if ID was invalid, otherwise the recordset
+                owner_arg_for_super = (
+                    owner_recordset if owner_recordset.exists() else False
+                )
+            elif restricted_owner_id_ctx is False:
+                owner_arg_for_super = False
+
         return super()._update_reserved_quantity(
             need,
             location_id,
             lot_id=lot_id,
             package_id=package_id,
-            owner_id=owner_id,
+            owner_id=owner_arg_for_super,
             strict=strict,
         )
