@@ -8,11 +8,9 @@ class StockPickingType(models.Model):
     _inherit = "stock.picking.type"
 
     bypass_reservation = fields.Boolean(
+        string="Reserve over availability",
         help="If checked, products from this Picking Type will always be reserved "
-        "even if you don't have stock.\nNote: Pickings will be reserved on "
-        "Confirmation even if you don't have checked the option",
+        "even if you don't have enough stock (available stock will be reserved as "
+        "usual).\nNote: Pickings will be reserved on Confirmation even if you don't "
+        "have checked the option",
     )
-
-    def should_bypass_reservation(self):
-        self.ensure_one()
-        return super().should_bypass_reservation() or self.bypass_reservation
