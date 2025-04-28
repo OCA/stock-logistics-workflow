@@ -85,7 +85,7 @@ class StockMoveLine(models.Model):
                 vals.get("location_id", move_line.location_id.id)
             )
             package = move_line.package_id.browse(
-                vals.get("package_id", move_line.package_id)
+                vals.get("package_id", move_line.package_id.id)
             )
 
             available_quantity = 0
