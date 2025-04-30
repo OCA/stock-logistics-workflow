@@ -17,8 +17,3 @@ msgstr ""
 #: model:ir.model,name:stock_putaway_hook.model_stock_location
 msgid "Inventory Locations"
 msgstr ""
-
-#. module: stock_putaway_hook
-#: model:ir.model,name:stock_putaway_hook.model_stock_putaway_rule
-msgid "Putaway Rule"
-msgstr ""
