@@ -18,6 +18,10 @@
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "license": "AGPL-3",
     "depends": ["sale_stock"],
-    "data": ["views/stock_view.xml", "views/account_invoice_view.xml"],
+    "data": [
+        "security/stock_picking_invoice_link_security.xml",
+        "views/stock_view.xml",
+        "views/account_invoice_view.xml",
+    ],
     "installable": True,
 }

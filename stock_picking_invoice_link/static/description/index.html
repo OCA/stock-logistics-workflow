@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -9,10 +8,11 @@
 
 /*
 :Author: David Goodger (goodger@python.org)
-:Id: $Id: html4css1.css 8954 2022-01-20 10:10:25Z milde $
+:Id: $Id: html4css1.css 9511 2024-01-13 09:50:07Z milde $
 :Copyright: This stylesheet has been placed in the public domain.
 
 Default cascading style sheet for the HTML output of Docutils.
+Despite the name, some widely supported CSS2 features are used.
 
 See https://docutils.sourceforge.io/docs/howto/html-stylesheets.html for how to
 customize this style sheet.
@@ -275,7 +275,7 @@ pre.literal-block, pre.doctest-block, pre.math, pre.code {
   margin-left: 2em ;
   margin-right: 2em }
 
-pre.code .ln { color: grey; } /* line numbers */
+pre.code .ln { color: gray; } /* line numbers */
 pre.code, code { background-color: #eeeeee }
 pre.code .comment, code .comment { color: #5C6576 }
 pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
@@ -301,7 +301,7 @@ span.option {
 span.pre {
   white-space: pre }
 
-span.problematic {
+span.problematic, pre.problematic {
   color: red }
 
 span.section-subtitle {
@@ -376,6 +376,9 @@ which deliveries an invoice relates to.</p>
 <p>In standard, if you make a partial delivery and invoice it, then make remaining
 delivery and invoice it, it is impossible to known to what delivery the
 invoices relate to. You only have the quantity.</p>
+<p>Additionally, the cancellation of stock moves already linked to invoices or
+bills is restricted to users who belong to the “Allow to cancel stock moves
+linked to invoices/bills” group.</p>
 <p>This module is also useful if you want to present data on the invoice report
 grouped by deliveries.</p>
 <p>Note that the links are only for products with an invoicing policy set on
@@ -401,6 +404,10 @@ delivery.</p>
 <li>Create an invoice of the goods delivered.</li>
 <li>If you open invoice form, you must see a new Pickings tab with information
 about them.</li>
+<li>Attempt to cancel a picking linked to invoices/bills.</li>
+<li>If the user is not part of the group “Allow to cancel stock move linked to invoice/bill”,
+an error will be raised, preventing the cancellation.</li>
+<li>Members of the group can proceed with the cancellation without restrictions.</li>
 </ul>
 </div>
 <div class="section" id="bug-tracker">
@@ -458,7 +465,9 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <div class="section" id="maintainers">
 <h2><a class="toc-backref" href="#toc-entry-6">Maintainers</a></h2>
 <p>This module is maintained by the OCA.</p>
-<a class="reference external image-reference" href="https://odoo-community.org"><img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" /></a>
+<a class="reference external image-reference" href="https://odoo-community.org">
+<img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" />
+</a>
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.</p>

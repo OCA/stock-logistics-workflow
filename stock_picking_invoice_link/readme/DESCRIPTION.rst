@@ -6,6 +6,10 @@ In standard, if you make a partial delivery and invoice it, then make remaining
 delivery and invoice it, it is impossible to known to what delivery the
 invoices relate to. You only have the quantity.
 
+Additionally, the cancellation of stock moves already linked to invoices or
+bills is restricted to users who belong to the "Allow to cancel stock moves
+linked to invoices/bills" group.
+
 This module is also useful if you want to present data on the invoice report
 grouped by deliveries.
 

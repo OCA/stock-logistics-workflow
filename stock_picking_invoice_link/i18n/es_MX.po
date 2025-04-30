@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-18 03:48+0000\n"
+"POT-Creation-Date: 2025-04-30 03:06+0000\n"
 "PO-Revision-Date: 2017-12-18 03:48+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
 "Language-Team: Spanish (Mexico) (https://www.transifex.com/oca/teams/23907/"
@@ -22,6 +22,11 @@ msgstr ""
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_move_reversal
 msgid "Account Move Reversal"
+msgstr ""
+
+#. module: stock_picking_invoice_link
+#: model:res.groups,name:stock_picking_invoice_link.group_allow_to_cancel_stock_move_linked_to_invoice_bill
+msgid "Allow to cancel stock moves linked to invoices/bills"
 msgstr ""
 
 #. module: stock_picking_invoice_link
@@ -133,4 +138,12 @@ msgstr ""
 #: code:addons/stock_picking_invoice_link/models/stock_move.py:0
 #, python-format
 msgid "You can not modify an invoiced stock move"
+msgstr ""
+
+#. module: stock_picking_invoice_link
+#: code:addons/stock_picking_invoice_link/models/stock_move.py:0
+#, python-format
+msgid ""
+"You cannot cancel a stock move linked to invoices/bills. Only members of the "
+"\"%(group_name)s\" group can perform this action. References: %(references)s"
 msgstr ""

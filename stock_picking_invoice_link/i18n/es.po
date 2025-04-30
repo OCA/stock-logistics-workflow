@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-26 08:45+0000\n"
+"POT-Creation-Date: 2025-04-30 03:06+0000\n"
 "PO-Revision-Date: 2022-09-26 10:46+0200\n"
 "Last-Translator: Pedro M. Baeza <pedro.baeza@gmail.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
@@ -24,6 +24,11 @@ msgstr ""
 #: model:ir.model,name:stock_picking_invoice_link.model_account_move_reversal
 msgid "Account Move Reversal"
 msgstr ""
+
+#. module: stock_picking_invoice_link
+#: model:res.groups,name:stock_picking_invoice_link.group_allow_to_cancel_stock_move_linked_to_invoice_bill
+msgid "Allow to cancel stock moves linked to invoices/bills"
+msgstr "Permite cancelar movimientos de existencias vinculados a facturas"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move__display_name
@@ -139,6 +144,16 @@ msgstr "Transferir"
 #, python-format
 msgid "You can not modify an invoiced stock move"
 msgstr "No puede modificar un movimiento de existencias facturado"
+
+#. module: stock_picking_invoice_link
+#: code:addons/stock_picking_invoice_link/models/stock_move.py:0
+#, python-format
+msgid ""
+"You cannot cancel a stock move linked to invoices/bills. Only members of the "
+"\"%(group_name)s\" group can perform this action. References: %(references)s"
+msgstr ""
+"No puede cancelar un movimiento de existencias vinculado a facturas. Solo los miembros del "
+"grupo \"%(group_name)s\" pueden realizar esta acción. Referencias: %(references)s"
 
 #~ msgid "Journal Entries"
 #~ msgstr "Asientos contables"

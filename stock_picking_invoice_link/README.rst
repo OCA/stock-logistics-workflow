@@ -36,6 +36,10 @@ In standard, if you make a partial delivery and invoice it, then make remaining
 delivery and invoice it, it is impossible to known to what delivery the
 invoices relate to. You only have the quantity.
 
+Additionally, the cancellation of stock moves already linked to invoices or
+bills is restricted to users who belong to the "Allow to cancel stock moves
+linked to invoices/bills" group.
+
 This module is also useful if you want to present data on the invoice report
 grouped by deliveries.
 
@@ -55,6 +59,11 @@ Usage
 * Create an invoice of the goods delivered.
 * If you open invoice form, you must see a new Pickings tab with information
   about them.
+
+* Attempt to cancel a picking linked to invoices/bills.
+* If the user is not part of the group "Allow to cancel stock move linked to invoice/bill",
+  an error will be raised, preventing the cancellation.
+* Members of the group can proceed with the cancellation without restrictions.
 
 Bug Tracker
 ===========
