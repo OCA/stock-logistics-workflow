@@ -57,6 +57,7 @@ addon | version | maintainers | summary
 [stock_product_security](stock_product_security/) | 17.0.1.0.0 | [![peluko00](https://github.com/peluko00.png?size=30px)](https://github.com/peluko00) | Stock Product Security
 [stock_production_lot_active](stock_production_lot_active/) | 17.0.1.0.0 | [![ThomasBinsfeld](https://github.com/ThomasBinsfeld.png?size=30px)](https://github.com/ThomasBinsfeld) | Allow to archive/unarchive lots/serial numbers
 [stock_push_delay](stock_push_delay/) | 17.0.1.1.0 |  | Manual evaluation of Push rules
+[stock_putaway_hook](stock_putaway_hook/) | 17.0.1.0.0 |  | Add hooks allowing modules to add more putaway strategies
 [stock_quant_package_dimension](stock_quant_package_dimension/) | 17.0.1.0.0 |  | Use dimensions on packages
 [stock_quant_package_product_packaging](stock_quant_package_product_packaging/) | 17.0.1.0.0 |  | Use product packagings on packages
 [stock_restrict_by_planned_consumed_date](stock_restrict_by_planned_consumed_date/) | 17.0.1.0.0 |  | Stock restrict by planned consumed date
