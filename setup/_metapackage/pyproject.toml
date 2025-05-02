@@ -1,6 +1,6 @@
 [project]
 name = "odoo-addons-oca-stock-logistics-workflow"
-version = "18.0.20250418.0"
+version = "18.0.20250502.0"
 dependencies = [
     "odoo-addon-delivery_procurement_group_carrier==18.0.*",
     "odoo-addon-product_cost_price_avco_sync==18.0.*",
@@ -31,6 +31,7 @@ dependencies = [
     "odoo-addon-stock_product_set==18.0.*",
     "odoo-addon-stock_restrict_lot==18.0.*",
     "odoo-addon-stock_split_picking==18.0.*",
+    "odoo-addon-stock_valuation_layer_usage==18.0.*",
 ]
 classifiers=[
     "Programming Language :: Python",
