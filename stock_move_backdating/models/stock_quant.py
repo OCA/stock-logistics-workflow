@@ -23,7 +23,8 @@ class StockQuant(models.Model):
         self,
         product_id,
         location_id,
-        quantity,
+        quantity=False,
+        reserved_quantity=False,
         lot_id=None,
         package_id=None,
         owner_id=None,
@@ -38,11 +39,12 @@ class StockQuant(models.Model):
         return super()._update_available_quantity(
             product_id,
             location_id,
-            quantity,
-            lot_id,
-            package_id,
-            owner_id,
-            in_date,
+            quantity=quantity,
+            reserved_quantity=reserved_quantity,
+            lot_id=lot_id,
+            package_id=package_id,
+            owner_id=owner_id,
+            in_date=in_date,
         )
 
     def _apply_inventory(self):
@@ -62,20 +64,49 @@ class StockQuant(models.Model):
 
     @api.model
     def _get_inventory_fields_write(self):
-        """Returns a list of fields user can edit when editing a quant in `inventory_mode`."""
+        """
+        Returns a list of fields user can edit when editing a quant in `inventory_mode`.
+        """
         res = super()._get_inventory_fields_write()
         res += ["date_backdating"]
         return res
 
-    def _get_inventory_move_values(self, qty, location_id, location_dest_id, out=False):
+    def _get_inventory_move_values(
+        self,
+        qty,
+        location_id,
+        location_dest_id,
+        package_id=False,
+        package_dest_id=False,
+    ):
+        """Override to add backdating date to move lines if applicable"""
         res = super()._get_inventory_move_values(
-            qty, location_id, location_dest_id, out
+            qty,
+            location_id,
+            location_dest_id,
+            package_id=package_id,
+            package_dest_id=package_dest_id,
         )
-        date_backdating = self.date_backdating
-        if date_backdating:
-            move_line_ids = res.get("move_line_ids", list())
-            for move_line_values in move_line_ids:
-                # Extract the dictionary from (0, 0, <dict>)
-                move_line_values = move_line_values[2]
-                move_line_values["date_backdating"] = date_backdating
+
+        date_backdating_ctx = self.env.context.get("date_backdating", False)
+
+        date_to_use = date_backdating_ctx
+
+        if date_to_use:
+            if "move_line_ids" in res and isinstance(res["move_line_ids"], list):
+                new_move_line_ids = []
+                for line_command in res["move_line_ids"]:
+                    if (
+                        isinstance(line_command, tuple | list)
+                        and len(line_command) == 3
+                        and line_command[0] == 0
+                    ):
+                        line_values = line_command[2]
+                        # Add the backdating date to the move line values
+                        line_values["date"] = date_to_use
+                        new_move_line_ids.append((0, 0, line_values))
+                    else:
+                        new_move_line_ids.append(line_command)
+                res["move_line_ids"] = new_move_line_ids
+
         return res

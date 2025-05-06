@@ -4,11 +4,8 @@
         <field name="model">stock.scrap</field>
         <field name="inherit_id" ref="stock.stock_scrap_form_view" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='date_done']" position="before">
-                <field
-                    name="date_backdating"
-                    attrs="{'readonly': [('state', '!=', 'draft')]}"
-                />
+            <xpath expr="//field[@name='date_done']" position="before">=
+                <field name="date_backdating" readonly="state != 'draft'" />
             </xpath>
         </field>
     </record>

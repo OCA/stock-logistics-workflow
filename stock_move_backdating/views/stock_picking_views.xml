@@ -13,28 +13,13 @@
                     string="Fill Actual Movement Date"
                     type="action"
                     name="%(action_view_fill_backdating)d"
-                    attrs="{
-                        'invisible':[
-                            ('state', 'not in', (
-                                    'assigned',
-                                    'partially_available',
-                                ),
-                            ),
-                        ],
-                    }"
+                    invisible="state not in ('assigned','partially_available')"
                     class="oe_highlight"
                     help="Fill Actual Movement Date of all operations"
                 />
             </xpath>
             <field name="date_done" position="after">
-                <field
-                    name="date_backdating"
-                    attrs="{
-                        'invisible': [
-                            ('date_backdating', '=', False),
-                        ],
-                    }"
-                />
+                <field name="date_backdating" invisible="not date_backdating" />
             </field>
         </field>
     </record>
