@@ -19,7 +19,7 @@ class StockMove(models.Model):
             ):
                 customer = fields.first(
                     move.product_tmpl_id.customer_ids.filtered(
-                        lambda m: m.name == move.picking_id.partner_id
+                        lambda m, move=move: m.partner_id == move.picking_id.partner_id
                     )
                 )
                 product_customer_code = customer.product_code
