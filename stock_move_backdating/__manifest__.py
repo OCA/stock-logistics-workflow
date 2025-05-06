@@ -7,22 +7,22 @@
 
 {
     "name": "Stock Move Backdating",
-    "version": "14.0.1.0.1",
+    "version": "17.0.1.0.0",
     "category": "Stock Logistics",
     "license": "AGPL-3",
     "author": "Marco Dieckhoff, BREMSKERL, Agile Business Group, "
     "Odoo Community Association (OCA)",
-    "website": "https://github.com/OCA/stock-logistics-workflow"
-    "/tree/12.0/stock_move_backdating",
+    "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": [
         "stock_account",
     ],
     "data": [
         "security/ir.model.access.csv",
         "wizards/fill_date_backdating.xml",
-        "views/stock_inventory_views.xml",
-        "views/stock_picking.xml",
+        "views/stock_quant_views.xml",
+        "views/stock_picking_views.xml",
         "views/stock_move_line_views.xml",
+        "views/stock_scrap_views.xml",
     ],
     "installable": True,
 }

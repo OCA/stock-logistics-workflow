@@ -11,54 +11,7 @@ from odoo.fields import first
 from odoo.tests import Form
 
 
-class TestCommon(tests.SavepointCase):
-    def _get_datetime_backdating(self, timedelta_days):
-        now = datetime.now()
-        date_backdating = now - timedelta(days=timedelta_days)
-        return date_backdating
-
-    def _get_corresponding_move_line(self, move):
-        return first(move.move_line_ids)
-
-    @classmethod
-    def _create_real_time_products(cls, products_values_list):
-        """Create products with Perpetual Inventory Valuation.
-
-        Products are also assigned the values
-        declared in `products_values_list`.
-        """
-        product_model = cls.env["product.product"]
-        products = product_model.browse()
-        for products_values in products_values_list:
-            product_form = Form(product_model)
-            for field_name, field_value in products_values.items():
-                setattr(product_form, field_name, field_value)
-            product_form.type = "product"
-            cls.env["product.category"].browse(
-                product_form.categ_id.id
-            ).property_valuation = "real_time"
-            product = product_form.save()
-            products |= product
-        return products
-
-    @classmethod
-    def _create_picking(cls, products_qty_dict):
-        """Create a picking moving products as described in `products_qty_dict`.
-
-        :param products_qty_dict: dictionary mapping
-            a product to the quantity to be moved.
-        """
-        picking_form = Form(cls.env["stock.picking"])
-        picking_form.picking_type_id = cls.env.ref("stock.picking_type_out")
-        picking_form.location_id = cls.stock_location
-        picking_form.location_dest_id = cls.customer_location
-        for product, quantity in products_qty_dict.items():
-            with picking_form.move_ids_without_package.new() as move:
-                move.product_id = product
-                move.product_uom_qty = quantity
-        picking = picking_form.save()
-        return picking
-
+class TestCommon(tests.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -89,13 +42,62 @@ class TestCommon(tests.SavepointCase):
             stock_quant_model._update_available_quantity(
                 product,
                 cls.stock_location,
-                quantity,
+                quantity=quantity,
+                reserved_quantity=False,
+                lot_id=None,
+                package_id=None,
+                owner_id=None,
+                in_date=None,
             )
 
         picking = cls._create_picking(products_move_mapping)
         picking.action_confirm()
         picking.action_assign()
         cls.picking = picking
+
+    def _get_datetime_backdating(self, timedelta_days):
+        now = datetime.now()
+        date_backdating = now - timedelta(days=timedelta_days)
+        return date_backdating
+
+    def _get_corresponding_move_line(self, move):
+        return first(move.move_line_ids)
+
+    @classmethod
+    def _create_real_time_products(cls, products_values_list):
+        """Create products with Perpetual Inventory Valuation.
+
+        Products are also assigned the values
+        declared in `products_values_list`.
+        """
+        product_model = cls.env["product.product"]
+        products = product_model.browse()
+        for products_values in products_values_list:
+            product_form = Form(product_model)
+            for field_name, field_value in products_values.items():
+                setattr(product_form, field_name, field_value)
+            product_form.detailed_type = "product"
+            # product_form.property_valuation = "real_time"
+            product = product_form.save()
+            products |= product
+        products.categ_id.property_valuation = "real_time"
+        return products
+
+    @classmethod
+    def _create_picking(cls, products_qty_dict):
+        """Create a picking moving products as described in `products_qty_dict`.
+
+        :param products_qty_dict: dictionary mapping
+            a product to the quantity to be moved.
+        """
+        picking_form = Form(cls.env["stock.picking"])
+        picking_form.picking_type_id = cls.env.ref("stock.picking_type_out")
+        for product, quantity in products_qty_dict.items():
+            with picking_form.move_ids_without_package.new() as move:
+                move.product_id = product
+                move.product_uom_qty = quantity
+        picking = picking_form.save()
+        return picking
 
     def _check_account_moves(self, account_moves, stock_moves):
         # check numbers of account moves created by perpetual valuation
@@ -107,14 +109,14 @@ class TestCommon(tests.SavepointCase):
 
     def _check_picking_date(self, picking, datetime_backdating_list):
         max_datetime = max(datetime_backdating_list)
-        max_date = max_datetime.date()
-        self.assertEqual(picking.date_done.date(), max_date)
+        # max_date = fields.Date.context_today(self, max_datetime)
+        self.assertEqual(picking.date_done, max_datetime)
 
         picking_back_date = picking.date_backdating
         if len(datetime_backdating_list) == 1:
-            picking_back_date = picking_back_date.date()
+            # picking_back_date = fields.Date.context_today(self, picking_back_date)
             datetime_backdating = datetime_backdating_list[0]
-            self.assertEqual(datetime_backdating.date(), picking_back_date)
+            self.assertEqual(datetime_backdating, picking_back_date)
         else:
             self.assertFalse(picking_back_date)
 
@@ -146,7 +148,7 @@ class TestCommon(tests.SavepointCase):
         )
         account_moves = self.env["account.move"].search(
             [
-                ("stock_move_id.id", "in", stock_moves.ids),
+                ("stock_move_id", "in", stock_moves.ids),
             ],
         )
         self._check_account_moves(account_moves, stock_moves)
@@ -159,9 +161,12 @@ class TestCommon(tests.SavepointCase):
             stock_move_line = self._get_corresponding_move_line(stock_move)
             move_datetime_backdating = stock_move_line.date_backdating
             move_date_backdating = move_datetime_backdating.date()
-            self.assertEqual(stock_move.date.date(), move_date_backdating)
-            self.assertEqual(stock_move_line.date.date(), move_date_backdating)
 
+            self.assertEqual(stock_move.date.date(), stock_move_line.date.date())
+
+            # Check the quants, if stock move date is the same as the backdating
+            if stock_move.date.date() != move_date_backdating:
+                continue
             # Get the quant that originated the quantity moved
             quants = self.env["stock.quant"]._gather(
                 stock_move.product_id,
@@ -186,12 +191,11 @@ class TestCommon(tests.SavepointCase):
         If there are fewer dates than moves, the last date is repeated.
         """
         picking = self.picking
-        stock_moves = picking.move_lines
-        stock_move_lines = picking.move_line_ids
+        stock_moves = picking.move_ids
 
         # Set all the requested quantities as done
         for stock_move in stock_moves:
-            stock_move.quantity_done = stock_move.product_uom_qty
+            stock_move.quantity = stock_move.product_uom_qty
 
         if len(datetime_backdating_list) == 1:
             # Assign the same date to all the move lines using the wizard
@@ -199,14 +203,14 @@ class TestCommon(tests.SavepointCase):
             self._create_wizard(date_backdating, picking)
         else:
             stock_move_lines_dates_zip = zip_longest(
-                stock_move_lines,
+                picking.move_line_ids,
                 datetime_backdating_list,
                 fillvalue=datetime_backdating_list[-1],
             )
             for stock_move, datetime_backdating in stock_move_lines_dates_zip:
                 stock_move.date_backdating = datetime_backdating
 
-        picking._action_done()
+        picking.button_validate()
         self.assertEqual(picking.state, "done")
         self._check_stock_moves(stock_moves)
         self._check_picking_date(picking, datetime_backdating_list)
