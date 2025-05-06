@@ -49,8 +49,9 @@ class StockMove(models.Model):
             ],
         )
         for stock_move in self:
+            current_stock_move = stock_move
             stock_valuation_layers = picking_stock_valuation_layers.filtered(
-                lambda svl: svl.stock_move_id == stock_move
+                lambda svl, move=current_stock_move: svl.stock_move_id == move
             )
             for svl in stock_valuation_layers:
                 self._cr.execute(

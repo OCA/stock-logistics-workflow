@@ -42,7 +42,12 @@ class TestCommon(tests.TransactionCase):
             stock_quant_model._update_available_quantity(
                 product,
                 cls.stock_location,
-                quantity,
+                quantity=quantity,
+                reserved_quantity=False,
+                lot_id=None,
+                package_id=None,
+                owner_id=None,
+                in_date=None,
             )
 
         picking = cls._create_picking(products_move_mapping)
@@ -187,11 +192,10 @@ class TestCommon(tests.TransactionCase):
         """
         picking = self.picking
         stock_moves = picking.move_ids
-        stock_move_lines = picking.move_line_ids
 
         # Set all the requested quantities as done
         for stock_move in stock_moves:
-            stock_move.quantity_done = stock_move.product_uom_qty
+            stock_move.quantity = stock_move.product_uom_qty
 
         if len(datetime_backdating_list) == 1:
             # Assign the same date to all the move lines using the wizard
@@ -199,14 +203,14 @@ class TestCommon(tests.TransactionCase):
             self._create_wizard(date_backdating, picking)
         else:
             stock_move_lines_dates_zip = zip_longest(
-                stock_move_lines,
+                picking.move_line_ids,
                 datetime_backdating_list,
                 fillvalue=datetime_backdating_list[-1],
             )
             for stock_move, datetime_backdating in stock_move_lines_dates_zip:
                 stock_move.date_backdating = datetime_backdating
 
-        picking._action_done()
+        picking.button_validate()
         self.assertEqual(picking.state, "done")
         self._check_stock_moves(stock_moves)
         self._check_picking_date(picking, datetime_backdating_list)
