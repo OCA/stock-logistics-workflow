@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -74,6 +74,7 @@ msgstr ""
 
 #. module: stock_lock_lot
 #: model:ir.model.fields,help:stock_lock_lot.field_stock_lot__message_has_error
+#: model:ir.model.fields,help:stock_lock_lot.field_stock_lot__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr ""
 
@@ -153,6 +154,11 @@ msgid "Product Moves (Stock Move Line)"
 msgstr ""
 
 #. module: stock_lock_lot
+#: model:ir.model.fields,field_description:stock_lock_lot.field_stock_lot__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: stock_lock_lot
 #: model:mail.message.subtype,description:stock_lock_lot.mt_lock_lot
 #: model:mail.message.subtype,name:stock_lock_lot.mt_lock_lot
 msgid "Serial Number/lot blocked"
@@ -167,7 +173,6 @@ msgstr ""
 #. module: stock_lock_lot
 #. odoo-python
 #: code:addons/stock_lock_lot/models/stock_move_line.py:0
-#, python-format
 msgid ""
 "The following lots/serial number is blocked and cannot be moved:\n"
 "%(lot)s"
@@ -186,14 +191,12 @@ msgstr ""
 #. module: stock_lock_lot
 #. odoo-python
 #: code:addons/stock_lock_lot/models/stock_lot.py:0
-#, python-format
 msgid "You are not allowed to block/unblock Serial Numbers/Lots"
 msgstr ""
 
 #. module: stock_lock_lot
 #. odoo-python
 #: code:addons/stock_lock_lot/models/stock_lot.py:0
-#, python-format
 msgid ""
 "You are not allowed to block/unblock, there are reserved quantities for "
 "these Serial Numbers/Lots"
