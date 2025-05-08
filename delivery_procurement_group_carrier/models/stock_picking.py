@@ -15,6 +15,8 @@ class StockPicking(models.Model):
                 continue
             pickings = self.browse().union(*pickings)
             carrier = pickings.carrier_id
+            if not carrier:
+                continue
             carrier.ensure_one()
             need_align_pickings = self.search(
                 [
