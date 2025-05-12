@@ -17,7 +17,7 @@ class TestStockMOveQuantityProductUom(TransactionCase):
         cls.product = cls.env["product.product"].create(
             {
                 "name": "Test Product",
-                "is_storable": True,
+                "type": "product",
                 "uom_id": cls.uom_kg.id,
                 "uom_po_id": cls.uom_kg.id,
             }
