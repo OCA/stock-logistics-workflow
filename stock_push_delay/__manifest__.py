@@ -10,5 +10,5 @@
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "data": ["views/stock_move_views.xml", "views/stock_rule_views.xml"],
     "depends": ["stock"],
-    "development_status": "Alpha",
+    "development_status": "Production/Stable",
 }
