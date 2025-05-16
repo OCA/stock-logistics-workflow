@@ -1,0 +1,46 @@
+<!-- Copyright 2025 APSL-Nagarro Antoni Marroig
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="view_picking_form_inherit">
+        <field name="name">stock.picking.form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//button[@name='action_view_reception_report']"
+                position="before"
+            >
+                <field name="mrp_picking_ids" readonly="1" invisible="1" />
+                <button
+                    class="oe_stat_button"
+                    name="action_view_mrp_picking_ids"
+                    type="object"
+                    icon="fa-wrench"
+                    invisible="not mrp_picking_ids"
+                >
+                    <field
+                        name="mrp_picking_count"
+                        widget="statinfo"
+                        string="Manufacturing Picking Orders"
+                    />
+                </button>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button
+                    name="action_mrp_mass_production_order"
+                    invisible="not (state == 'done' and picking_type_code in ['incoming', 'internal', 'stock_request_order'])"
+                    string="Create Mass Production Orders"
+                    type="object"
+                    class="oe_highlight"
+                    groups="mrp.group_mrp_user"
+                />
+            </xpath>
+            <xpath
+                expr="//field[@name='move_ids_without_package']/tree"
+                position="inside"
+            >
+                <field name="consumed_quantity" readonly="1" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
