@@ -17,37 +17,38 @@ Stock Picking: group by partner and carrier
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
-    :target: https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_picking_group_by_partner_by_carrier
+    :target: https://github.com/OCA/stock-logistics-workflow/tree/18.0/stock_picking_group_by_partner_by_carrier
     :alt: OCA/stock-logistics-workflow
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-16-0/stock-logistics-workflow-16-0-stock_picking_group_by_partner_by_carrier
+    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-18-0/stock-logistics-workflow-18-0-stock_picking_group_by_partner_by_carrier
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=18.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module can be used if your customers expect that several different orders
-they passed will be shipped in a single delivery order.
+This module can be used if your customers expect that several different
+orders they passed will be shipped in a single delivery order.
 
-With this module installed, when a sale order is confirmed, the stock moves for
-the lines of the sale order can be placed in an existing delivery order that
-shares the same delivery address and carrier (or lack thereof).
+With this module installed, when a sale order is confirmed, the stock
+moves for the lines of the sale order can be placed in an existing
+delivery order that shares the same delivery address and carrier (or
+lack thereof).
 
-Sale orders with a Shipping Policy set to 'When all products are ready' always
-get their own shipping.
+Sale orders with a Shipping Policy set to 'When all products are ready'
+always get their own shipping.
 
-When the delivery slip is printed, the list of pending quantities to deliver
-is shown at the end, grouped by order.
+When the delivery slip is printed, the list of pending quantities to
+deliver is shown at the end, grouped by order.
 
-The grouping can also be applied in case of external resupply. Moves at the
-destination of the same delivery address defined on the resupply stock rule
-will be grouped in a same delivery order.
+The grouping can also be applied in case of external resupply. Moves at
+the destination of the same delivery address defined on the resupply
+stock rule will be grouped in a same delivery order.
 
-Note: The grouping is currently not propagated to the pulled internal moves if
-you don't use the module stock_available_to_promise_release in the wms
-repository.
+Note: The grouping is currently not propagated to the pulled internal
+moves if you don't use the module stock_available_to_promise_release in
+the wms repository.
 
 **Table of contents**
 
@@ -57,34 +58,38 @@ repository.
 Configuration
 =============
 
-#. To enable picking grouping:
+1. To enable picking grouping:
 
-  #. Go to Inventory > Configuration > Warehouses
-  #. Select 'Technical Information' tab
-  #. Check the 'Group pickings' box
+..
 
-#. To disable picking grouping for some partners:
+   1. Go to Inventory > Configuration > Warehouses
+   2. Select 'Technical Information' tab
+   3. Check the 'Group pickings' box
 
-  #. Go to the partner form you want
-  #. Go to 'Sales & Purchase' tab
-  #. Check the 'Do not group deliveries' box
+1. To disable picking grouping for some partners:
+
+..
+
+   1. Go to the partner form you want
+   2. Go to 'Sales & Purchase' tab
+   3. Check the 'Do not group deliveries' box
 
 Usage
 =====
 
-To use this module you need to enable grouping on the picking types for which you want grouping.
+To use this module you need to enable grouping on the picking types for
+which you want grouping.
 
 If you want to enable this for the shippings of a warehouse:
 
-* be sure that in the settings of the Inventory app, you checked "Manage Push
-  and Pull inventory flows"
-* enable "debug mode"
-* go to the warehouse for which you want grouping and check the setting "Group
-  Shippings"
+- be sure that in the settings of the Inventory app, you checked "Manage
+  Push and Pull inventory flows"
+- enable "debug mode"
+- go to the warehouse for which you want grouping and check the setting
+  "Group Shippings"
 
-
-You can also enable this for individual picking types by checking the setting
-"Group Pickings" on the picking type view.
+You can also enable this for individual picking types by checking the
+setting "Group Pickings" on the picking type view.
 
 Bug Tracker
 ===========
@@ -92,7 +97,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/stock-logistics-workflow/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_picking_group_by_partner_by_carrier%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_picking_group_by_partner_by_carrier%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -100,33 +105,35 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Camptocamp
 * BCIM
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Camptocamp:
-  * Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
-  * Thierry Ducrest <thierry.ducrest@camptocamp.com>
-* BCIM:
-  * Jacques-Etienne Baudoux <je@bcim.be>
+- Camptocamp:
 
-* Phuc Tran Thanh <phuc@trobz.com>
+  - Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
+  - Thierry Ducrest <thierry.ducrest@camptocamp.com>
 
-* Denis Roussel <denis.roussel@acsone.eu>
+- BCIM:
+
+  - Jacques-Etienne Baudoux <je@bcim.be>
+
+- Phuc Tran Thanh <phuc@trobz.com>
+- Denis Roussel <denis.roussel@acsone.eu>
 
 Other credits
-~~~~~~~~~~~~~
+-------------
 
 The development of this module has been financially supported by:
 
-* Camptocamp
+- Camptocamp
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -138,6 +145,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_picking_group_by_partner_by_carrier>`_ project on GitHub.
+This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/18.0/stock_picking_group_by_partner_by_carrier>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
