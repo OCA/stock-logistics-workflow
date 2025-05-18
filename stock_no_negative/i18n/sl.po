@@ -6,7 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2025-05-18 10:30+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: none\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
@@ -14,12 +15,13 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
 "n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: stock_no_negative
 #: code:addons/stock_no_negative/models/stock_quant.py:0
 #, python-format
 msgid " lot '%s'"
-msgstr ""
+msgstr " lot '%s'"
 
 #. module: stock_no_negative
 #: model:ir.model.fields,field_description:stock_no_negative.field_product_category__allow_negative_stock
@@ -27,7 +29,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_no_negative.field_product_template__allow_negative_stock
 #: model:ir.model.fields,field_description:stock_no_negative.field_stock_location__allow_negative_stock
 msgid "Allow Negative Stock"
-msgstr ""
+msgstr "Dovoli negativno zalogo"
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_product_category__allow_negative_stock
@@ -36,6 +38,9 @@ msgid ""
 "category. The options doesn't apply to products attached to sub-categories "
 "of this category."
 msgstr ""
+"Dovolite negativno raven zaloge za izdelke, ki jih je mogoče skladiščiti in "
+"so povezani s to kategorijo. Ta možnost ne velja za izdelke, ki so povezani "
+"s podkategorijami te kategorije."
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_stock_location__allow_negative_stock
@@ -43,6 +48,8 @@ msgid ""
 "Allow negative stock levels for the stockable products attached to this "
 "location."
 msgstr ""
+"Dovolite negativne ravni zalog za izdelke, ki jih je mogoče uskladiščiti in "
+"so povezani s to lokacijo."
 
 #. module: stock_no_negative
 #: model:ir.model.fields,field_description:stock_no_negative.field_product_category__display_name
@@ -50,7 +57,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_no_negative.field_stock_location__display_name
 #: model:ir.model.fields,field_description:stock_no_negative.field_stock_quant__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Prikazani naziv"
 
 #. module: stock_no_negative
 #: model:ir.model.fields,field_description:stock_no_negative.field_product_category__id
@@ -58,7 +65,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_no_negative.field_stock_location__id
 #: model:ir.model.fields,field_description:stock_no_negative.field_stock_quant__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_product_product__allow_negative_stock
@@ -69,11 +76,14 @@ msgid ""
 "related stock moves will be blocked if the stock level becomes negative with"
 " the stock move."
 msgstr ""
+"Če ta možnost ni aktivna za ta izdelek ali njegovo kategorijo izdelkov in če "
+"je ta izdelek mogoče skladiščiti, bo potrditev povezanih premikov zalog "
+"blokirana, če bo raven zaloge zaradi premika zaloge postala negativna."
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_stock_location
 msgid "Inventory Locations"
-msgstr ""
+msgstr "Lokacije inventarja"
 
 #. module: stock_no_negative
 #: model:ir.model.fields,field_description:stock_no_negative.field_product_category____last_update
@@ -81,22 +91,22 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_no_negative.field_stock_location____last_update
 #: model:ir.model.fields,field_description:stock_no_negative.field_stock_quant____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Zadnjič spremenjeno"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_product_category
 msgid "Product Category"
-msgstr ""
+msgstr "Kategorija proizvoda"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_product_template
 msgid "Product Template"
-msgstr ""
+msgstr "Predloga proizvoda"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_stock_quant
 msgid "Quants"
-msgstr ""
+msgstr "Kvanti"
 
 #. module: stock_no_negative
 #: code:addons/stock_no_negative/models/stock_quant.py:0
@@ -106,3 +116,6 @@ msgid ""
 "product '%s'%s would become negative (%s) on the stock location '%s' and "
 "negative stock is not allowed for this product and/or location."
 msgstr ""
+"Te operacije zaloge ne morete potrditi, ker bi zaloga izdelka „%s“%s postala "
+"negativna (%s) na lokaciji zaloge „%s“, negativna zaloga pa za ta izdelek in/"
+"ali lokacijo ni dovoljena."
