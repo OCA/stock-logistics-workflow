@@ -6,7 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2025-05-18 10:26+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: none\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
@@ -14,44 +15,45 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
 "n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking__action_pack_op_auto_fill_allowed
 msgid "Action Pack Op Auto Fill Allowed"
-msgstr ""
+msgstr "Samodejno izpolnjevanje dovoljeno"
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking__auto_fill_operation
 #: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking_type__auto_fill_operation
 msgid "Auto fill operations"
-msgstr ""
+msgstr "Operacije samodejnega izpolnjevanja"
 
 #. module: stock_move_line_auto_fill
 #: model_terms:ir.ui.view,arch_db:stock_move_line_auto_fill.stock_picking_form_view
 msgid "AutoFill"
-msgstr ""
+msgstr "Samodejno izpolnjevanje"
 
 #. module: stock_move_line_auto_fill
 #: model_terms:ir.ui.view,arch_db:stock_move_line_auto_fill.view_picking_type_form_assignment
 msgid "Automation"
-msgstr ""
+msgstr "Avtomatizacija"
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model.fields,help:stock_move_line_auto_fill.field_stock_picking_type__avoid_lot_assignment
 msgid "Avoid auto fill for more line with lots product"
-msgstr ""
+msgstr "Izogibaj se samodejnemu izpolnjevanju več vrstic z mnogo proizvodi"
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking_type__avoid_lot_assignment
 msgid "Avoid auto-assignment of lots"
-msgstr ""
+msgstr "Izogibanje samodejni dodelitvi lotov"
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_move__display_name
 #: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking__display_name
 #: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking_type__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Prikazani naziv"
 
 #. module: stock_move_line_auto_fill
 #: code:addons/stock_move_line_auto_fill/models/stock_picking.py:0
@@ -60,30 +62,32 @@ msgid ""
 "Filling the operations automatically is not possible, perhaps the pickings "
 "aren't in the right state (Partially available or available)."
 msgstr ""
+"Samodejno izpolnjevanje operacij ni mogoče, ker morda izbor ni v pravem "
+"stanju (delno na voljo ali na voljo)."
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_move__id
 #: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking__id
 #: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking_type__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_move____last_update
 #: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking____last_update
 #: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking_type____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Zadnjič spremenjeno"
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model,name:stock_move_line_auto_fill.model_stock_picking_type
 msgid "Picking Type"
-msgstr ""
+msgstr "Tip zbirnika"
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model,name:stock_move_line_auto_fill.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Premik zaloge"
 
 #. module: stock_move_line_auto_fill
 #: model_terms:ir.ui.view,arch_db:stock_move_line_auto_fill.stock_picking_form_view
@@ -91,6 +95,8 @@ msgid ""
 "This button will automatically fill all operations that have no tracking set"
 " on the product, no processed qty and no selected package."
 msgstr ""
+"Ta gumb samodejno izpolni vse operacije, pri katerih za izdelek ni "
+"nastavljeno sledenje, ni obdelane količine in ni izbranega paketa."
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model.fields,help:stock_move_line_auto_fill.field_stock_picking__auto_fill_operation
@@ -100,8 +106,12 @@ msgid ""
 "- If checked, auto fill done quantity automatically\n"
 "- If unchecked, show button AutoFill for user to do the auto fill manually"
 msgstr ""
+"Samodejno izpolnjevanje opravljene količine v dokumentu izločanja.\n"
+"- Če je označeno, se samodejno izpolni opravljeno količino.\n"
+"- Če potrditev ni označena, se prikaže gumb AutoFill (Samodejno "
+"izpolnjevanje), da lahko uporabnik ročno izvede samodejno izpolnjevanje"
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model,name:stock_move_line_auto_fill.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Premestitev"
