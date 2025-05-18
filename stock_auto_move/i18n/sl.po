@@ -9,15 +9,16 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-01 02:08+0000\n"
-"PO-Revision-Date: 2017-06-01 02:08+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"PO-Revision-Date: 2025-05-18 11:36+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: stock_auto_move
 #: model:stock.rule,name:stock_auto_move.stock_rule_a_to_b
@@ -34,13 +35,13 @@ msgstr "Samodejni premik"
 #: model:ir.model.fields,field_description:stock_auto_move.field_stock_move__display_name
 #: model:ir.model.fields,field_description:stock_auto_move.field_stock_rule__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Prikazani naziv"
 
 #. module: stock_auto_move
 #: model:ir.model.fields,field_description:stock_auto_move.field_stock_move__id
 #: model:ir.model.fields,field_description:stock_auto_move.field_stock_rule__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_auto_move
 #: model:ir.model.fields,help:stock_auto_move.field_stock_rule__auto_move
@@ -66,7 +67,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_auto_move.field_stock_move____last_update
 #: model:ir.model.fields,field_description:stock_auto_move.field_stock_rule____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Zadnjič spremenjeno"
 
 #. module: stock_auto_move
 #: model:ir.model,name:stock_auto_move.model_stock_move
@@ -76,12 +77,12 @@ msgstr "Premik zaloge"
 #. module: stock_auto_move
 #: model:ir.model,name:stock_auto_move.model_stock_rule
 msgid "Stock Rule"
-msgstr ""
+msgstr "Pravilo zaloge"
 
 #. module: stock_auto_move
 #: model:stock.rule,name:stock_auto_move.auto_location_path
 msgid "Test push route 3=>1"
-msgstr ""
+msgstr "Test potisne poti 3=>1"
 
 #. module: stock_auto_move
 #: model:stock.location.route,name:stock_auto_move.test_route
