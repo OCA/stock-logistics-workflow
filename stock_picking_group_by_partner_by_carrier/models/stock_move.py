@@ -3,9 +3,9 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from collections import namedtuple
-from itertools import groupby
 
 from odoo import api, fields, models
+from odoo.tools import groupby
 
 
 class StockMove(models.Model):
@@ -49,9 +49,7 @@ class StockMove(models.Model):
         return result
 
     def _assign_picking_post_process(self, new=False):
-        moves_by_picking = groupby(
-            sorted(self, key=lambda m: m.picking_id.id), key=lambda m: m.picking_id
-        )
+        moves_by_picking = groupby(self, key=lambda m: m.picking_id)
         for picking, imoves in moves_by_picking:
             merged = picking._merge_procurement_groups()
             if merged:
@@ -64,10 +62,10 @@ class StockMove(models.Model):
     def _on_assign_picking_message_link(self):
         sales = self.sale_line_id.order_id
         if sales:
-            self.picking_id.message_post_with_view(
+            self.picking_id.message_post_with_source(
                 "mail.message_origin_link",
-                values={"self": self.picking_id, "origin": sales, "edit": True},
-                subtype_id=self.env.ref("mail.mt_note").id,
+                render_values={"self": self.picking_id, "origin": sales, "edit": True},
+                subtype_xmlid="mail.mt_note",
             )
 
     def _search_picking_for_assignation_domain(self):
@@ -84,7 +82,8 @@ class StockMove(models.Model):
 
         grouping_domain = self._assign_picking_group_domain()
 
-        return domain + grouping_domain
+        res = domain + grouping_domain
+        return res
 
     # TODO: this part and everything related to generic grouping
     # should be split into `stock_picking_group_by` module.
@@ -100,8 +99,6 @@ class StockMove(models.Model):
             domain += [
                 ("carrier_id", "=", self.group_id.carrier_id.id),
             ]
-        else:
-            domain += [("carrier_id", "=", False)]
         if self.env.context.get("picking_no_copy_if_can_group"):
             # we are in the context of the creation of a backorder:
             # don't consider the current move's picking
@@ -114,8 +111,10 @@ class StockMove(models.Model):
         By default the move type is taken from the procurement group.
         Override to customize this behavior.
         """
-        # avoid mixing picking policies
-        return [("move_type", "=", self.group_id.move_type)]
+        move_type = (
+            self.group_id.move_type or self.picking_type_id.move_type or "direct"
+        )
+        return [("move_type", "=", move_type)]
 
     def _key_assign_picking(self):
         return (

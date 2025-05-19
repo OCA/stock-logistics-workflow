@@ -111,7 +111,7 @@ class StockPicking(models.Model):
     def _prepare_merge_procurement_group_values(self, move_groups):
         """Build a new procurement group that is the merge of given procurement
         group."""
-        sales = move_groups.sale_id
+        sales = move_groups.sale_id + move_groups.sale_ids
         partners = move_groups.sale_id.partner_id
         name = _("Merged procurement")
         if partners:
@@ -125,7 +125,7 @@ class StockPicking(models.Model):
         self.ensure_one()
         if self._is_grouping_disabled():
             return False
-        if self.picking_type_id.code != "outgoing":
+        if not self.picking_type_id.group_pickings:
             return False
         group_pickings = self.move_ids.group_id.picking_ids.filtered(
             # Do no longer modify a printed or done transfer: they are
@@ -222,7 +222,7 @@ class StockPicking(models.Model):
         self.ensure_one()
         moves = self._get_sorted_moves()
         if not self._delivery_report_state_is_done():
-            moves = moves.filtered("reserved_availability")
+            moves = moves.filtered("quantity")
 
         if len(moves.mapped("sale_line_id.order_id")) > 1:
             grouped_moves = self._group_moves_by_order(moves)
@@ -248,7 +248,7 @@ class StockPicking(models.Model):
                 return sales_and_moves
             else:
                 sales_and_moves = self.env["stock.move.line"]
-                fake_record["reserved_uom_qty"] = fake_record.pop("product_uom_qty")
+                fake_record["quantity"] = fake_record.pop("product_uom_qty")
                 fake_record["product_uom_id"] = fake_record.pop("product_uom")
                 for sale, sale_moves in grouped_moves:
                     if sale:

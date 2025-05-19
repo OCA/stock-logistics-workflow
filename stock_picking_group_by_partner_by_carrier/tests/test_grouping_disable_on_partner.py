@@ -64,7 +64,8 @@ class TestGroupByDisabledOnPartner(TestGroupByBase, TransactionCase):
         so2.action_confirm()
         pick = so1.picking_ids
         move = first(pick.move_ids)
-        move.quantity_done = 5
+        move.quantity = 5
+        move.picked = True
         pick.with_context(cancel_backorder=False)._action_done()
         self.assertFalse(so2.picking_ids & so1.picking_ids)
         self.assertEqual(so2.picking_ids.sale_ids, so2)
@@ -125,6 +126,18 @@ class TestGroupByDisabledOnPartner(TestGroupByBase, TransactionCase):
         so1.action_confirm()
         so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
         so2.action_confirm()
+        # pick steps should not be merged
+        self.assertEqual(len(so1.picking_ids), 1)
+        self.assertEqual(len(so2.picking_ids), 1)
+        # ship or pick should not be shared between so1 and so2
+        self.assertFalse(so1.picking_ids & so2.picking_ids)
+        for move_id in so1.picking_ids.move_ids | so2.picking_ids.move_ids:
+            move_id.picked = True
+            move_id.quantity = move_id.product_uom_qty
+        so1.picking_ids._action_done()
+        so2.picking_ids._action_done()
+
+        # pick steps should not be merged
         self.assertEqual(len(so1.picking_ids), 2)
         self.assertEqual(len(so2.picking_ids), 2)
         # ship or pick should not be shared between so1 and so2
@@ -142,8 +155,8 @@ class TestGroupByDisabledOnPartner(TestGroupByBase, TransactionCase):
         so1.action_confirm()
         so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
         so2.action_confirm()
-        self.assertEqual(len(so1.picking_ids), 2)
-        self.assertEqual(len(so2.picking_ids), 2)
+        self.assertEqual(len(so1.picking_ids), 1)
+        self.assertEqual(len(so2.picking_ids), 1)
         # ship or pick should not be shared between so1 and so2
         self.assertFalse(so1.picking_ids & so2.picking_ids)
 
@@ -160,9 +173,56 @@ class TestGroupByDisabledOnPartner(TestGroupByBase, TransactionCase):
         so1.action_confirm()
         so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
         so2.action_confirm()
-        self.assertEqual(len(so1.picking_ids), 3)
-        self.assertEqual(len(so2.picking_ids), 3)
-        # ship or pick should not be shared between so1 and so2
+        # pick
+        pick1 = so1.picking_ids.filtered(
+            lambda x: x.picking_type_id == self.warehouse.pick_type_id
+        )
+        pick2 = so2.picking_ids.filtered(
+            lambda x: x.picking_type_id == self.warehouse.pick_type_id
+        )
+        self.assertEqual(len(pick1), 1)
+        self.assertEqual(len(pick2), 1)
+        # pick should not be shared between so1 and so2
+        self.assertFalse(pick1 & pick2)
+        for move_id in (pick1 | pick2).move_ids:
+            move_id.picked = True
+            move_id.quantity = move_id.product_uom_qty
+        pick1._action_done()
+        pick2._action_done()
+        # pack
+        pack1 = so1.picking_ids.filtered(
+            lambda x: x.picking_type_id == self.warehouse.pack_type_id
+        )
+        pack2 = so2.picking_ids.filtered(
+            lambda x: x.picking_type_id == self.warehouse.pack_type_id
+        )
+        self.assertEqual(len(pack1), 1)
+        self.assertEqual(len(pack2), 1)
+        # pack should not be shared between so1 and so2
+        self.assertFalse(pack1 & pack2)
+        for move_id in (pack1 | pack2).move_ids:
+            move_id.picked = True
+            move_id.quantity = move_id.product_uom_qty
+        pack1._action_done()
+        pack2._action_done()
+        # ship
+        ship1 = so1.picking_ids.filtered(
+            lambda x: x.picking_type_id == self.warehouse.out_type_id
+        )
+        ship2 = so2.picking_ids.filtered(
+            lambda x: x.picking_type_id == self.warehouse.out_type_id
+        )
+        self.assertEqual(len(ship1), 1)
+        self.assertEqual(len(ship2), 1)
+        # ship should not be shared between so1 and so2
+        self.assertFalse(ship1 & ship2)
+        for move_id in (ship1 | ship2).move_ids:
+            move_id.picked = True
+            move_id.quantity = move_id.product_uom_qty
+        ship1._action_done()
+        ship2._action_done()
+
+        # ship or pick or pack should not be shared between so1 and so2
         self.assertFalse(so1.picking_ids & so2.picking_ids)
 
     def test_delivery_multi_step_cancel_so1(self):
@@ -179,8 +239,9 @@ class TestGroupByDisabledOnPartner(TestGroupByBase, TransactionCase):
         self.assertFalse(so1.picking_ids & so2.picking_ids)
         so1._action_cancel()
         self.assertEqual(so1.state, "cancel")
-        self.assertEqual(so1.picking_ids.mapped("state"), ["cancel", "cancel"])
-        self.assertNotEqual(so2.state, "cancel")
+        self.assertEqual(so1.picking_ids.mapped("state"), ["cancel"])
+        self.assertEqual(so1.picking_ids.mapped("state"), ["cancel"])
+        self.assertNotEqual(so2.picking_ids.state, ["cancel"])
 
     def test_delivery_multi_step_cancel_so2(self):
         """the warehouse uses pick + ship. Cancel SO2
@@ -196,8 +257,9 @@ class TestGroupByDisabledOnPartner(TestGroupByBase, TransactionCase):
         self.assertFalse(so1.picking_ids & so2.picking_ids)
         so2._action_cancel()
         self.assertEqual(so2.state, "cancel")
-        self.assertEqual(so2.picking_ids.mapped("state"), ["cancel", "cancel"])
+        self.assertEqual(so2.picking_ids.mapped("state"), ["cancel"])
         self.assertNotEqual(so1.state, "cancel")
+        self.assertNotEqual(so1.picking_ids.state, ["cancel"])
 
     def test_delivery_multi_step_group_pick_cancel_so1(self):
         """the warehouse uses pick + ship (with grouping enabled on pick)
@@ -288,8 +350,9 @@ class TestGroupByDisabledOnPartner(TestGroupByBase, TransactionCase):
             first(so.order_line).product_uom_qty,
         )
         picking.action_assign()
-        line = first(picking.move_ids).move_line_ids
-        line.qty_done = line.reserved_uom_qty / 2
+        line = first(picking.move_ids)
+        line.quantity = line.product_uom_qty / 2
+        line.picked = True
         picking._action_done()
         self.assertEqual(picking.state, "done")
         self.assertTrue(picking.backorder_ids)

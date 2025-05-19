@@ -18,4 +18,4 @@ stock rule will be grouped in a same delivery order.
 
 Note: The grouping is currently not propagated to the pulled internal
 moves if you don't use the module stock_available_to_promise_release in
-the wms repository.
+the stock-logistics-workflow repository.

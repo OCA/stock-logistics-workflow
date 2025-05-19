@@ -31,7 +31,7 @@ class DeliverySlipReport(models.AbstractModel):
     def _get_sale_data(self, line, moves, picking, qty, uom):
         return {
             "is_header": False,
-            "concept": line.product_id.name_get()[0][-1],
+            "concept": line.product_id.display_name,
             "qty": float_round(qty, precision_rounding=uom.rounding),
             "product": line.product_id,
             "uom": uom,
@@ -52,7 +52,7 @@ class DeliverySlipReport(models.AbstractModel):
         for sale in picking.group_id.sale_ids.sorted(key=lambda s: s.id):
             order_name = sale.get_name_for_delivery_line()
             for line in sale.order_line.filtered(
-                lambda l: not l.display_type and l.product_id.type != "service"
+                lambda x: not x.display_type and x.product_id.type != "service"
             ):
                 moves = stock_move.search(
                     [("sale_line_id", "=", line.id), ("picking_id", "=", picking.id)],

@@ -1,7 +1,7 @@
 # Copyright 2020 Camptocamp (https://www.camptocamp.com)
 # Copyright 2020 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
-from odoo.tests.common import Form
+from odoo.tests import Form
 
 
 class TestGroupByBase:
@@ -30,7 +30,12 @@ class TestGroupByBase:
         quants = self.env["stock.quant"]._gather(product, location, strict=True)
         # this method adds the quantity to the current quantity, so remove it
         quantity -= sum(quants.mapped("quantity"))
-        self.env["stock.quant"]._update_available_quantity(product, location, quantity)
+        if quantity <= 0:
+            quants.unlink()
+        else:
+            self.env["stock.quant"]._update_available_quantity(
+                product, location, quantity
+            )
 
     def _set_line(self, sale_form, amount=10.0):
         with sale_form.order_line.new() as line_form:
@@ -61,9 +66,10 @@ class TestGroupByBase:
                 .create({"carrier_id": carrier_id.id, "order_id": sale.id})
             )
             choose_delivery_carrier.button_confirm()
+            sale.invalidate_recordset(fnames=["carrier_id"])
         return sale
 
     def _validate_transfer(self, picking):
-        for move_line in picking.move_line_ids:
-            move_line.qty_done = move_line.reserved_uom_qty
+        for move_line in picking.move_ids:
+            move_line.picked = True
         picking._action_done()

@@ -2,11 +2,9 @@
 # @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from itertools import groupby
-
 from odoo import _, api, exceptions, fields
 from odoo.models import TransientModel
-from odoo.tools import DotDict
+from odoo.tools import DotDict, groupby
 
 
 class StockPickingMergeWizard(TransientModel):
@@ -140,6 +138,6 @@ class StockPickingMergeWizard(TransientModel):
             "res_model": "stock.picking",
             "type": "ir.actions.act_window",
             "view_id": False,
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "context": self.env.context,
         }
