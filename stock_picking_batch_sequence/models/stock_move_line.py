@@ -7,4 +7,6 @@ from odoo import fields, models
 class StockMoveLine(models.Model):
     _inherit = "stock.move.line"
 
-    picking_sequence = fields.Integer(related="picking_id.sequence")
+    picking_sequence = fields.Integer(
+        related="picking_id.sequence", string="P.Sequence", store=True
+    )
