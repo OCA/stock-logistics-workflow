@@ -3,10 +3,11 @@
 
 
 from odoo.exceptions import UserError
-from odoo.tests.common import TransactionCase
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestBatchPrintPickings(TransactionCase):
+class TestBatchPrintPickings(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -92,7 +93,8 @@ class TestBatchPrintPickings(TransactionCase):
             self.batch.action_print_pickings()
 
     def test_stock_picking_batch_print_pickings_02(self):
-        """Picking type with checked print pickings from batch but with 0 copies to print."""
+        """Picking type with checked print pickings
+        from batch but with 0 copies to print."""
         self.picking_type.print_documents_from_batch = "pickings"
         self.picking_type.number_copies_pickings = 0
         self.batch.update(

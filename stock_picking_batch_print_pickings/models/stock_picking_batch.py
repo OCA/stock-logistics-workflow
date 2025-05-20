@@ -30,8 +30,10 @@ class StockPickingBatch(models.Model):
         for record in self:
             if not record.print_documents:
                 raise UserError(
-                    _("Picking Type %(type)s is not configured to print from batch.")
-                    % ({"type": record.picking_type_id.display_name})
+                    _(
+                        "Picking Type %(type)s is not configured to print from batch.",
+                        type=record.picking_type_id.display_name,
+                    )
                 )
         return self.env.ref(
             "stock_picking_batch_print_pickings.action_report_picking_batch_print_pickings"

@@ -19,7 +19,7 @@
                     string="Delivery Slips"
                     name="action_print_pickings"
                     type="object"
-                    attrs="{'invisible': [('print_documents', '=', False)]}"
+                    invisible="print_documents == False"
                 />
             </xpath>
         </field>

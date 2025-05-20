@@ -17,13 +17,13 @@ Stock Picking Batch Print Pickings
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
-    :target: https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_picking_batch_print_pickings
+    :target: https://github.com/OCA/stock-logistics-workflow/tree/17.0/stock_picking_batch_print_pickings
     :alt: OCA/stock-logistics-workflow
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-16-0/stock-logistics-workflow-16-0-stock_picking_batch_print_pickings
+    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-17-0/stock-logistics-workflow-17-0-stock_picking_batch_print_pickings
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=17.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -54,16 +54,16 @@ Suppose the following case, batch contains 200 pickings and you need
 print them all because the delivery man needs to carry several copies
 for the delivery:
 
--  Option 1: You can download all pickings pdf, open them, select number
-   of copies in each and print each one. It will be very slow.
--  Option 2: You can download a single pdf with all pickings, open it,
-   select number of copies and print. Then you have to sort each
-   delivery note, i.e. if you print 3 times, you have to look for
-   delivery slip with number xxxx 3 times and put the 3 together, again
-   with following delivery, up to 200 deliveries. It is still very slow.
--  Option 3. You can configure operation type to print picking from
-   batch and fill number of copies. Several copies are printed and
-   sorted. Faster.
+- Option 1: You can download all pickings pdf, open them, select number
+  of copies in each and print each one. It will be very slow.
+- Option 2: You can download a single pdf with all pickings, open it,
+  select number of copies and print. Then you have to sort each delivery
+  note, i.e. if you print 3 times, you have to look for delivery slip
+  with number xxxx 3 times and put the 3 together, again with following
+  delivery, up to 200 deliveries. It is still very slow.
+- Option 3. You can configure operation type to print picking from batch
+  and fill number of copies. Several copies are printed and sorted.
+  Faster.
 
 Configuration
 =============
@@ -109,7 +109,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/stock-logistics-workflow/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_picking_batch_print_pickings%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_picking_batch_print_pickings%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -124,8 +124,8 @@ Authors
 Contributors
 ------------
 
--  Emilio Pascual (`Moduon <https://www.moduon.team/>`__)
--  Rafael Blasco (`Moduon <https://www.moduon.team/>`__)
+- Emilio Pascual (`Moduon <https://www.moduon.team/>`__)
+- Rafael Blasco (`Moduon <https://www.moduon.team/>`__)
 
 Maintainers
 -----------
@@ -148,6 +148,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-EmilioPascual| 
 
-This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_picking_batch_print_pickings>`_ project on GitHub.
+This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/17.0/stock_picking_batch_print_pickings>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
