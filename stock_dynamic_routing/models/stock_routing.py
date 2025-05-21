@@ -255,7 +255,7 @@ class StockRouting(models.Model):
     # Do not use ormcache, which would invalidate cache of other workers every
     # time we clear it. We only need a local cache used for the duration of the
     # execution of
-    @lru_cache()
+    @lru_cache
     def __cached_is_rule_valid_for_move(self, rule, move):
         """To be used only by _routing_rule_for_move(_line)s
 

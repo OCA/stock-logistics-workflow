@@ -567,7 +567,7 @@ class TestRoutingPull(TestRoutingPullCommon):
         # define a domain that will exclude the routing for this
         # move, there will not be any change on the moves compared
         # to a standard setup
-        domain = "[('product_id', '=', {})]".format(self.product2.id)
+        domain = f"[('product_id', '=', {self.product2.id})]"
         self.routing.rule_ids.rule_domain = domain
         pick_picking, customer_picking = self._create_pick_ship(
             self.wh, [(self.product1, 10)]
@@ -588,7 +588,7 @@ class TestRoutingPull(TestRoutingPullCommon):
     def test_domain_include_move(self):
         # define a domain that will include the routing for this
         # move, so routing is applied
-        domain = "[('product_id', '=', {})]".format(self.product1.id)
+        domain = f"[('product_id', '=', {self.product1.id})]"
         self.routing.rule_ids.rule_domain = domain
         pick_picking, customer_picking = self._create_pick_ship(
             self.wh, [(self.product1, 10)]

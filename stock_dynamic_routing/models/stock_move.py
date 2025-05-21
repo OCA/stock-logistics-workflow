@@ -170,9 +170,9 @@ class StockMove(models.Model):
                     for line in move_lines:
                         dests[line.location_dest_id] += line.reserved_qty
                     for destination, qty in dests.items():
-                        moves_routing[move][
-                            self.RoutingDetails(rule, destination)
-                        ] = qty
+                        moves_routing[move][self.RoutingDetails(rule, destination)] = (
+                            qty
+                        )
                 else:
                     moves_routing[move][self.RoutingDetails(rule, no_loc)] = sum(
                         move_lines.mapped("reserved_qty")

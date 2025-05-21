@@ -3,7 +3,7 @@
     "name": "Stock Dynamic Routing",
     "summary": "Dynamic routing of stock moves",
     "author": "Camptocamp, Odoo Community Association (OCA)",
-    "website": "https://github.com/OCA/wms",
+    "website": "https://github.com/OCA/stock-logistics-workflow",
     "category": "Warehouse Management",
     "version": "16.0.1.0.2",
     "license": "AGPL-3",

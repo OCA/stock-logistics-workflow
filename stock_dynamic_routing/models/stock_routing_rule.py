@@ -91,7 +91,6 @@ class StockRoutingRule(models.Model):
                 not record.location_dest_id
                 or not record.location_dest_id.is_sublocation_of(base_location)
             ):
-
                 raise exceptions.ValidationError(
                     _(
                         "Operation type of a rule used as 'push' must have '{}'"

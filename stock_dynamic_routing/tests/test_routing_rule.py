@@ -36,7 +36,7 @@ class TestRoutingRule(common.TransactionCase):
             {
                 "name": name,
                 "code": "internal",
-                "sequence_code": "WH/{}".format(name),
+                "sequence_code": f"WH/{name}",
                 "warehouse_id": self.wh.id,
                 "use_create_lots": False,
                 "use_existing_lots": True,
