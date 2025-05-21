@@ -7,6 +7,7 @@ from collections import OrderedDict, defaultdict, namedtuple
 from psycopg2 import sql
 
 from odoo import models
+from odoo.tools.float_utils import float_compare
 
 
 class StockMove(models.Model):
@@ -168,21 +169,19 @@ class StockMove(models.Model):
                 if rule.method == "push":
                     dests = defaultdict(lambda: 0.0)
                     for line in move_lines:
-                        dests[line.location_dest_id] += line.reserved_qty
+                        dests[line.location_dest_id] += line.quantity_product_uom
                     for destination, qty in dests.items():
                         moves_routing[move][self.RoutingDetails(rule, destination)] = (
                             qty
                         )
                 else:
                     moves_routing[move][self.RoutingDetails(rule, no_loc)] = sum(
-                        move_lines.mapped("reserved_qty")
+                        move_lines.mapped("quantity_product_uom")
                     )
             if move.state == "partially_available":
                 # consider unreserved quantity as without routing, so it will
                 # be split if another part of the quantity need a routing
-                missing_reserved_uom_quantity = (
-                    move.product_uom_qty - move.reserved_availability
-                )
+                missing_reserved_uom_quantity = move.product_uom_qty - move.quantity
                 missing_reserved_quantity = move.product_uom._compute_quantity(
                     missing_reserved_uom_quantity,
                     move.product_id.uom_id,
@@ -216,7 +215,19 @@ class StockMove(models.Model):
                 # lines with different routing (or lines with a dynamic
                 # routing, lines without). We split the lines according to
                 # these.
-                new_move_vals = move._split(qty)
+                # NOTE: starting from Odoo 18.0, '_split' method doesn't check
+                # anymore the move quantity against the qty to split, and performs
+                # a split in all cases, letting an empty move behind. Avoid this.
+                new_move_vals = []
+                if (
+                    float_compare(
+                        move.product_qty,
+                        qty,
+                        precision_rounding=move.product_id.uom_id.rounding,
+                    )
+                    == 1
+                ):
+                    new_move_vals = move._split(qty)
                 if new_move_vals:
                     new_move = self.env["stock.move"].create(new_move_vals)
                     new_move._action_confirm(merge=False)
@@ -354,7 +365,9 @@ class StockMove(models.Model):
         # with the module stock_move_source_relocate and ensures we call
         # _action_assign on the complete set of moves
         sorted_locations = sorted(
-            move_ids_to_assign_per_location, key=lambda l: l.parent_path, reverse=True
+            move_ids_to_assign_per_location,
+            key=lambda loc: loc.parent_path,
+            reverse=True,
         )
         to_assign_ids = []
         for location in sorted_locations:
@@ -388,7 +401,19 @@ class StockMove(models.Model):
             for location_id, orig_moves in reversed(origmoves_by_location.items()):
                 qty = sum(orig_moves.mapped("product_qty"))
                 split_move = move
-                split_move_vals = move._split(qty)
+                # NOTE: starting from Odoo 18.0, '_split' method doesn't check
+                # anymore the move quantity against the qty to split, and performs
+                # a split in all cases, letting an empty move behind. Avoid this.
+                split_move_vals = []
+                if (
+                    float_compare(
+                        move.product_qty,
+                        qty,
+                        precision_rounding=move.product_id.uom_id.rounding,
+                    )
+                    == 1
+                ):
+                    split_move_vals = move._split(qty)
                 if split_move_vals:
                     split_move = self.create(split_move_vals)
                     split_move._action_confirm(merge=False)

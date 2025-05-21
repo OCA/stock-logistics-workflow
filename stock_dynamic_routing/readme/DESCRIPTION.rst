@@ -36,3 +36,13 @@ An operation Input-Highbay is created. You expect Input-Handover-Highbay.
 You can configure a dynamic routing for the put-away on the High-Bay Location.
 The operation type of the new Handover move will the one of the matching routing rule,
 and its destination will be the destination of the operation type.
+
+
+**Notes about Odoo 18.0+**
+
+Compared to new Odoo dynamic push rules, here all steps are planned in advance.
+The move to the final destination always exists and the put-away has already been
+executed so that the final bin is already known. The intermediate step before
+reaching this final destination will also have it's put-away computed.
+As each step is planned in advance, you can also properly respect the operation
+shipping policy.

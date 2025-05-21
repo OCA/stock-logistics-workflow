@@ -1,15 +1,14 @@
 # Copyright 2019 Camptocamp (https://www.camptocamp.com)
 
-from odoo.tests import common
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestRoutingRule(common.TransactionCase):
+class TestRoutingRule(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.product = cls.env["product.product"].create(
-            {"name": "Product", "type": "product"}
+            {"name": "Product", "type": "consu", "is_storable": True}
         )
         cls.suppliers_loc = cls.env.ref("stock.stock_location_suppliers")
         cls.customer_loc = cls.env.ref("stock.stock_location_customers")

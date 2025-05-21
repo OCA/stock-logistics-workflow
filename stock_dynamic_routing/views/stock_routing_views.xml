@@ -11,7 +11,7 @@
                         name="web_ribbon"
                         title="Archived"
                         bg_color="bg-danger"
-                        attrs="{'invisible': [('active', '=', True)]}"
+                        invisible="active"
                     />
                     <label for="location_id" class="oe_edit_only" />
                     <h1>
@@ -33,14 +33,14 @@
                     <field name="active" invisible="1" />
                     <group string="Routing" name="rule">
                         <field name="rule_ids">
-                            <tree>
+                            <list>
                                 <field name="sequence" widget="handle" />
                                 <field name="method" />
                                 <field name="picking_type_id" />
                                 <field name="location_src_id" />
                                 <field name="location_dest_id" />
                                 <field name="rule_domain" />
-                            </tree>
+                            </list>
                             <form string="Routing Rule">
                                 <group>
                                     <field name="method" />
@@ -84,11 +84,11 @@
         <field name="name">stock.routing</field>
         <field name="model">stock.routing</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="sequence" widget="handle" />
                 <field name="location_id" />
                 <field name="picking_type_id" />
-            </tree>
+            </list>
         </field>
     </record>
     <record id="action_stock_routing" model="ir.actions.act_window">

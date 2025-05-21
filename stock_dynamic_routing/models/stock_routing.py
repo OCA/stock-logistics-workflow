@@ -5,7 +5,7 @@
 from collections import defaultdict
 from functools import lru_cache
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.osv import expression
 
 
@@ -62,7 +62,7 @@ class StockRouting(models.Model):
         if pull_rules:
             rule_messages = []
             for rule in pull_rules:
-                msg = _(
+                msg = self.env._(
                     "If the destination of the move is already"
                     " <strong>{rule.location_dest_id.display_name}</strong>,"
                     " the operation type of the move is changed to"
@@ -84,7 +84,7 @@ class StockRouting(models.Model):
                     " <strong>{rule.picking_type_id.display_name}</strong>."
                 ).format(rule=rule)
                 rule_messages.append("<li>" + msg + "</li>")
-            pull_message = _(
+            pull_message = self.env._(
                 "<h2>Pull rules:</h2>"
                 "When a move with operation type "
                 "<strong>{routing.picking_type_id.display_name}</strong>"
@@ -100,7 +100,7 @@ class StockRouting(models.Model):
         if push_rules:
             rule_messages = []
             for rule in push_rules:
-                msg = _(
+                msg = self.env._(
                     "If the source of the move is already"
                     " <strong>{rule.location_src_id.display_name}</strong>"
                     " or a sub-location, the operation type of the move"
@@ -118,7 +118,7 @@ class StockRouting(models.Model):
                     " <strong>{rule.picking_type_id.display_name}</strong>."
                 ).format(rule=rule)
                 rule_messages.append("<li>" + msg + "</li>")
-            push_message = _(
+            push_message = self.env._(
                 "<h2>Push rules:</h2>"
                 "When a move with operation type "
                 "<strong>{routing.picking_type_id.display_name}</strong>"
@@ -214,7 +214,7 @@ class StockRouting(models.Model):
         :return: dict {move: {rule: move_ids}}
         """
         # ensure the cache is clean
-        self.__cached_is_rule_valid_for_move.cache_clear()
+        StockRouting.__cached_is_rule_valid_for_move.cache_clear()
 
         result = {
             move: defaultdict(self.env["stock.move.line"].browse) for move in moves
@@ -226,7 +226,7 @@ class StockRouting(models.Model):
             result[move_line.move_id][rule] |= move_line
 
         # free memory used for the cache
-        self.__cached_is_rule_valid_for_move.cache_clear()
+        StockRouting.__cached_is_rule_valid_for_move.cache_clear()
         return result
 
     def _routing_rule_for_moves(self, moves):
@@ -239,7 +239,7 @@ class StockRouting(models.Model):
         :return: dict {move: rule}}
         """
         # ensure the cache is clean
-        self.__cached_is_rule_valid_for_move.cache_clear()
+        StockRouting.__cached_is_rule_valid_for_move.cache_clear()
 
         result = {}
         for move in moves:
@@ -249,14 +249,15 @@ class StockRouting(models.Model):
             result[move] = rule
 
         # free memory used for the cache
-        self.__cached_is_rule_valid_for_move.cache_clear()
+        StockRouting.__cached_is_rule_valid_for_move.cache_clear()
         return result
 
     # Do not use ormcache, which would invalidate cache of other workers every
     # time we clear it. We only need a local cache used for the duration of the
     # execution of
     @lru_cache
-    def __cached_is_rule_valid_for_move(self, rule, move):
+    @staticmethod
+    def __cached_is_rule_valid_for_move(rule, move):
         """To be used only by _routing_rule_for_move(_line)s
 
         The method _routing_rule_for_move(_line)s reset the cache at beginning.
@@ -277,8 +278,8 @@ class StockRouting(models.Model):
         # location, then we climb up the tree of locations
         for loc in location_tree:
             # find the first valid rule
-            for rule in rules.filtered(lambda r: r.routing_location_id == loc):
-                if not self.__cached_is_rule_valid_for_move(rule, move):
+            for rule in rules.filtered(lambda r, loc=loc: r.routing_location_id == loc):
+                if not StockRouting.__cached_is_rule_valid_for_move(rule, move):
                     continue
                 return rule
         return self.env["stock.routing.rule"].browse()

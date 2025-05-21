@@ -1,13 +1,12 @@
 # Copyright 2019 Camptocamp (https://www.camptocamp.com)
 
-from odoo.tests import common
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestRoutingPush(common.TransactionCase):
+class TestRoutingPush(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.partner_delta = cls.env.ref("base.res_partner_4")
         cls.wh = cls.env["stock.warehouse"].create(
             {
@@ -40,7 +39,7 @@ class TestRoutingPush(common.TransactionCase):
         )
 
         cls.product1 = cls.env["product.product"].create(
-            {"name": "Product 1", "type": "product"}
+            {"name": "Product 1", "type": "consu", "is_storable": True}
         )
         cls.env["stock.putaway.rule"].create(
             {
@@ -57,7 +56,7 @@ class TestRoutingPush(common.TransactionCase):
             }
         )
         cls.product2 = cls.env["product.product"].create(
-            {"name": "Product 2", "type": "product"}
+            {"name": "Product 2", "type": "consu", "is_storable": True}
         )
 
         cls.pick_type_routing_op = cls.env["stock.picking.type"].create(
@@ -184,8 +183,7 @@ class TestRoutingPush(common.TransactionCase):
 
     def process_operations(self, moves):
         for move in moves:
-            qty = move.move_line_ids.reserved_uom_qty
-            move.move_line_ids.qty_done = qty
+            move.move_line_ids.picked = True
         move.mapped("picking_id")._action_done()
 
     def test_change_location_to_dynamic_routing(self):
@@ -527,7 +525,8 @@ class TestRoutingPush(common.TransactionCase):
         self.assertEqual(len(ml), 1)
         self.assert_src_supplier(ml)
         self.assert_dest_input(ml)
-        self.assertEqual(ml.qty_done, 10.0)
+        self.assertEqual(ml.quantity, 10.0)
+        self.assertTrue(ml.picked)
 
         # check move and move line B Shelf
         self.assert_src_input(move_b_shelf)
@@ -537,8 +536,9 @@ class TestRoutingPush(common.TransactionCase):
         self.assertEqual(len(ml), 1)
         self.assert_src_input(ml)
         self.assert_dest_shelf1(ml)
-        self.assertEqual(ml.reserved_qty, 4.0)
-        self.assertEqual(ml.qty_done, 0.0)
+        self.assertEqual(ml.quantity_product_uom, 4.0)
+        self.assertEqual(ml.quantity, 4.0)
+        self.assertFalse(ml.picked)
 
         # check move and move line B Handover
         self.assert_src_input(move_b_handover)
@@ -548,8 +548,9 @@ class TestRoutingPush(common.TransactionCase):
         self.assertEqual(len(ml), 1)
         self.assert_src_input(ml)
         self.assert_dest_handover(ml)
-        self.assertEqual(ml.reserved_qty, 6.0)
-        self.assertEqual(ml.qty_done, 0.0)
+        self.assertEqual(ml.quantity_product_uom, 6.0)
+        self.assertEqual(ml.quantity, 6.0)
+        self.assertFalse(ml.picked)
 
         # check routing move for product1
         self.assert_src_handover(routing_move)

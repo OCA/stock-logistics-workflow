@@ -5,9 +5,14 @@
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "category": "Warehouse Management",
-    "version": "16.0.1.0.2",
+    "version": "18.0.1.0.0",
     "license": "AGPL-3",
-    "depends": ["stock", "stock_helper"],
+    "depends": [
+        # core
+        "stock",
+        # OCA/stock-logistics-warehouse
+        "stock_location_is_sublocation",
+    ],
     "demo": [
         "demo/stock_location_demo.xml",
         "demo/stock_picking_type_demo.xml",

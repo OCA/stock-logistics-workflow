@@ -1,7 +1,7 @@
 # Copyright 2019-2020 Camptocamp (https://www.camptocamp.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 
-from odoo import _, api, exceptions, fields, models
+from odoo import api, exceptions, fields, models
 from odoo.osv import expression
 from odoo.tools.safe_eval import safe_eval
 
@@ -82,7 +82,7 @@ class StockRoutingRule(models.Model):
                 or not record.location_src_id.is_sublocation_of(base_location)
             ):
                 raise exceptions.ValidationError(
-                    _(
+                    self.env._(
                         "Operation type of a rule used as 'pull' must have '{}'"
                         " or a sub-location as source location."
                     ).format(base_location.display_name)
@@ -92,7 +92,7 @@ class StockRoutingRule(models.Model):
                 or not record.location_dest_id.is_sublocation_of(base_location)
             ):
                 raise exceptions.ValidationError(
-                    _(
+                    self.env._(
                         "Operation type of a rule used as 'push' must have '{}'"
                         " or a sub-location as destination location."
                     ).format(base_location.display_name)
