@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-20 16:26+0000\n"
+"PO-Revision-Date: 2025-05-21 10:26+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -32,7 +32,7 @@ msgstr "ID"
 #: model:ir.model.fields,field_description:stock_move_planned_consumed_date.field_stock_move____last_update
 #: model:ir.model.fields,field_description:stock_move_planned_consumed_date.field_stock_rule____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: stock_move_planned_consumed_date
 #: model:ir.model.fields,field_description:stock_move_planned_consumed_date.field_stock_move__planned_consumed_date
