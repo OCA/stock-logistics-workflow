@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_picking_form_inherit_quantity_check" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit.quantity.check</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="after">
+                <field name="has_quantity_alert" invisible="1" />
+                <field
+                    name="quantity_alert_message"
+                    attrs="{'invisible': [('has_quantity_alert', '=', False), ('state', 'in', ('done', 'cancel'))]}"
+                    widget="html"
+                    nolabel="1"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
