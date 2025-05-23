@@ -100,3 +100,9 @@ class TestProcurementGroupCarrier(SavepointCase):
         self.assertEqual(out_transfer.carrier_id, self.carrier)
         self.assertEqual(pick_transfer.carrier_id, self.carrier)
         self.assertEqual(move_group.carrier_id, self.carrier)
+
+        # Ensure carrier can be set to False
+        out_transfer.carrier_id = False
+        self.assertFalse(out_transfer.carrier_id)
+        self.assertFalse(pick_transfer.carrier_id)
+        self.assertFalse(move_group.carrier_id)

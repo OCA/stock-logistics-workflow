@@ -15,23 +15,23 @@ class StockPicking(models.Model):
                 continue
             pickings = self.browse().union(*pickings)
             carrier = pickings.carrier_id
-            carrier.ensure_one()
-            need_align_pickings = self.search(
-                [
-                    ("group_id", "=", group.id),
-                    (
-                        "state",
-                        "not in",
-                        (
-                            "done",
-                            "cancel",
-                        ),
-                    ),
-                    ("carrier_id", "!=", carrier.id),
-                    ("carrier_id", "!=", False),
-                ]
-            )
             group.carrier_id = carrier
+            domain = [
+                ("group_id", "=", group.id),
+                (
+                    "state",
+                    "not in",
+                    (
+                        "done",
+                        "cancel",
+                    ),
+                ),
+                ("carrier_id", "!=", carrier.id),
+                ("carrier_id", "!=", False),
+            ]
+            need_align_pickings = self.search(domain).with_context(
+                skip_align_group_carrier=True
+            )
             if need_align_pickings:
                 need_align_pickings.carrier_id = carrier
 
