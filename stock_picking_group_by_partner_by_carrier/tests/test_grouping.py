@@ -123,7 +123,7 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
         so2.action_confirm()
         pick = so1.picking_ids
         move = first(pick.move_ids)
-        move.quantity_done = 5
+        move.quantity = 5
         pick.with_context(cancel_backorder=False)._action_done()
         so2.invalidate_recordset()
         self.assertTrue(so2.picking_ids & so1.picking_ids)

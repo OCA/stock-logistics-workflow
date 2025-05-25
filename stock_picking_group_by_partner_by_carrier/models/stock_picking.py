@@ -222,7 +222,7 @@ class StockPicking(models.Model):
         self.ensure_one()
         moves = self._get_sorted_moves()
         if not self._delivery_report_state_is_done():
-            moves = moves.filtered("reserved_availability")
+            moves = moves.filtered("quantity")
 
         if len(moves.mapped("sale_line_id.order_id")) > 1:
             grouped_moves = self._group_moves_by_order(moves)

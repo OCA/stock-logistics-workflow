@@ -30,7 +30,9 @@ class TestGroupByBase:
         quants = self.env["stock.quant"]._gather(product, location, strict=True)
         # this method adds the quantity to the current quantity, so remove it
         quantity -= sum(quants.mapped("quantity"))
-        self.env["stock.quant"]._update_available_quantity(product, location, quantity)
+        self.env["stock.quant"]._update_available_quantity(
+            product, location, quantity, lot_id=None, package_id=None, owner_id=None
+        )
 
     def _set_line(self, sale_form, amount=10.0):
         with sale_form.order_line.new() as line_form:
