@@ -5,11 +5,7 @@
         <field name="arch" type="xml">
             <form string="Mass Action for the selected stock picking">
                 <field name="nothing_todo" invisible="1" />
-                <field
-                    name="details"
-                    nolabel="1"
-                    attrs="{'invisible': [('nothing_todo', '=', True)]}"
-                />
+                <field name="details" nolabel="1" invisible="nothing_todo" />
                 <group name="valid_pickings">
                     <field name="selected_picking_ids" invisible="1" />
                     <separator string="Valid pickings" colspan="4" />
@@ -25,10 +21,7 @@
                         </tree>
                     </field>
                 </group>
-                <group
-                    name="discarded_pickings"
-                    attrs="{'invisible': [('discarded_picking_ids', '=', False)]}"
-                >
+                <group name="discarded_pickings" invisible="not discarded_picking_ids">
                     <separator
                         string="Some pickings you've selected are discarded"
                         colspan="4"
@@ -42,7 +35,7 @@
                         name="discarded_picking_ids"
                         nolabel="1"
                         colspan="4"
-                        attrs="{'invisible': [('show_discarded_detail', '=', False)]}"
+                        invisible="not show_discarded_detail"
                     >
                         <tree>
                             <field name="name" />
@@ -62,9 +55,9 @@
                         string="Confirm"
                         type="object"
                         class="oe_highlight"
-                        attrs="{'invisible': [('nothing_todo', '=', True)]}"
+                        invisible="nothing_todo"
                     />
-                    <span attrs="{'invisible': [('nothing_todo', '=', True)]}">or</span>
+                    <span invisible="nothing_todo">or</span>
                     <button string="Cancel" class="oe_link" special="cancel" />
                 </footer>
             </form>

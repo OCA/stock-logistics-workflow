@@ -73,13 +73,13 @@
             <attribute name="t-if">False</attribute>
         </xpath>
 
-        <!-- Remove "All items could not be shipped..." sentence
+        <!-- Remove "All items could not be shipped.." sentence
             Substitute it by a message indicating if all goods have been delivered. -->
-        <xpath expr='//t[@t-if="o.backorder_ids and backorders"]' position="attributes">
+        <xpath expr='//div[@t-else=""]' position="attributes">
             <attribute name="t-if">False</attribute>
             <attribute name="name">stock_backorder_block</attribute>
         </xpath>
-        <xpath expr='//t[@name="stock_backorder_block"]' position="after">
+        <xpath expr='//div[@name="stock_backorder_block"]' position="after">
             <t t-if="o.picking_type_id.code == 'outgoing' and get_remaining_to_deliver">
                 <t t-set="remainings" t-value="get_remaining_to_deliver(o)" />
                 <t t-if="not remainings">
@@ -144,7 +144,7 @@
             <attribute name="t-if">move_line.id</attribute>
         </xpath>
 
-        <xpath expr='//span[@t-field="move_line.qty_done"]' position="attributes">
+        <xpath expr='//span[@t-field="move_line.quantity"]' position="attributes">
             <attribute name="t-if">move_line.id</attribute>
         </xpath>
 

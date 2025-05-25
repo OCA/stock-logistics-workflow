@@ -2,6 +2,7 @@
 # Copyright 2020 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 from odoo.tests.common import Form
+from odoo.tools.float_utils import float_compare
 
 
 class TestGroupByBase:
@@ -28,9 +29,18 @@ class TestGroupByBase:
 
     def _update_qty_in_location(self, location, product, quantity):
         quants = self.env["stock.quant"]._gather(product, location, strict=True)
-        # this method adds the quantity to the current quantity, so remove it
-        quantity -= sum(quants.mapped("quantity"))
-        self.env["stock.quant"]._update_available_quantity(product, location, quantity)
+        current_qty = sum(quants.mapped("quantity"))
+        quantity_to_update = quantity - current_qty
+        rounding = product.uom_id.rounding
+        if float_compare(quantity_to_update, 0.0, precision_rounding=rounding) != 0:
+            self.env["stock.quant"]._update_available_quantity(
+                product,
+                location,
+                quantity=quantity_to_update,
+                lot_id=None,
+                package_id=None,
+                owner_id=None,
+            )
 
     def _set_line(self, sale_form, amount=10.0):
         with sale_form.order_line.new() as line_form:
@@ -65,5 +75,5 @@ class TestGroupByBase:
 
     def _validate_transfer(self, picking):
         for move_line in picking.move_line_ids:
-            move_line.qty_done = move_line.reserved_uom_qty
+            move_line.picked = True
         picking._action_done()

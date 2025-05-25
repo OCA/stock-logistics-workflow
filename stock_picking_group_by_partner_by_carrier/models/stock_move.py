@@ -64,9 +64,9 @@ class StockMove(models.Model):
     def _on_assign_picking_message_link(self):
         sales = self.sale_line_id.order_id
         if sales:
-            self.picking_id.message_post_with_view(
+            self.picking_id.message_post_with_source(
                 "mail.message_origin_link",
-                values={"self": self.picking_id, "origin": sales, "edit": True},
+                render_values={"self": self.picking_id, "origin": sales, "edit": True},
                 subtype_id=self.env.ref("mail.mt_note").id,
             )
 
