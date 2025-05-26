@@ -7,7 +7,6 @@ from odoo.tools.float_utils import float_compare
 
 
 class ChooseDeliveryPackage(models.TransientModel):
-
     _inherit = "choose.delivery.package"
 
     @api.model
