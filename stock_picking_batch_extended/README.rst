@@ -17,21 +17,21 @@ Stock batch picking extended
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
-    :target: https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_picking_batch_extended
+    :target: https://github.com/OCA/stock-logistics-workflow/tree/17.0/stock_picking_batch_extended
     :alt: OCA/stock-logistics-workflow
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-16-0/stock-logistics-workflow-16-0-stock_picking_batch_extended
+    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-17-0/stock-logistics-workflow-17-0-stock_picking_batch_extended
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=17.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
 This module:
 
-Adds extra fields to the batch picking creation wizard
-Adds extra fields and functionalities to the batch picking form.
+Adds extra fields to the batch picking creation wizard Adds extra fields
+and functionalities to the batch picking form.
 
 **Table of contents**
 
@@ -41,72 +41,80 @@ Adds extra fields and functionalities to the batch picking form.
 Configuration
 =============
 
-In Inventory / Settings / Batch Picking it is possible to activate or deactivate which approach for batch handling will be used per company. By default after installation this option will be activated for all companies.
+In Inventory / Settings / Batch Picking it is possible to activate or
+deactivate which approach for batch handling will be used per company.
+By default after installation this option will be activated for all
+companies.
 
-.. figure:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/16.0/stock_picking_batch_extended/static/picking_batch_configuration_settings.png
-    :alt: Picking batch configuration settings
-    :width: 80 %
-    :align: center
+|image1|
+
+.. |image1| image:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/17.0/stock_picking_batch_extended/static/picking_batch_configuration_settings.png
 
 Usage
 =====
 
-When you create a batch pick, the creation wizard will appear with the new fields added.
+When you create a batch pick, the creation wizard will appear with the
+new fields added.
 
-.. figure:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/16.0/stock_picking_batch_extended/static/batch_wizard.png
-    :alt: Batch wizard
-    :width: 80 %
-    :align: center
+|image1|
 
-#. Name: Allows to rename the batch. But be careful, if this is done, it overwrites the name that Odoo assigns to the batch by default.
-#. Notes: Allows to add notes to the batch.
-#. Allows you to group the batch by the fields of the model stock_picking
+1. Name: Allows to rename the batch. But be careful, if this is done, it
+   overwrites the name that Odoo assigns to the batch by default.
+2. Notes: Allows to add notes to the batch.
+3. Allows you to group the batch by the fields of the model
+   stock_picking
 
 Adds to the form view of batch picking:
 
 **In "Draft" status:**
 
-.. figure:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/16.0/stock_picking_batch_extended/static/batch_form_draft.png
-    :alt: Batch form in draft status
-    :width: 80 %
-    :align: center
+|image2|
 
-#. Delete all delivery notes in the batch whose status is not done or canceled.
-#. Print pickings.
-#. Smart button with counting and access to pickings.
-#. Rename the batch if it is in draft status.
-#. Date. On which the batch picking is to be processed.
-#. Notes. Reflects the notes that have been entered from the wizard and allows you to modify them.
-#. Delete all delivery notes from the batch whose status is not done or canceled.
-#. Allows to add more fields to the list of pickings.
+1. Delete all delivery notes in the batch whose status is not done or
+   canceled.
+2. Print pickings.
+3. Smart button with counting and access to pickings.
+4. Rename the batch if it is in draft status.
+5. Date. On which the batch picking is to be processed.
+6. Notes. Reflects the notes that have been entered from the wizard and
+   allows you to modify them.
+7. Delete all delivery notes from the batch whose status is not done or
+   canceled.
+8. Allows to add more fields to the list of pickings.
 
 **"In progress" status:**
 
-.. figure:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/16.0/stock_picking_batch_extended/static/batch_form_in_progress.png
-    :alt: Batch form in progress status
-    :width: 80 %
-    :align: center
+|image3|
 
-#. Delete all pickings in the batch whose status is not done or cancelled.
-#. Print pickings.
-#. Smart button with counting and access to pickings.
-#. Date. On which the batch picking is to be processed. It can be changed in this state.
-#. Notes. Reflects the notes that have been entered from the wizard and allows you to modify them.
-#. Allows to add more fields to the list of pickings.
+1. Delete all pickings in the batch whose status is not done or
+   cancelled.
+2. Print pickings.
+3. Smart button with counting and access to pickings.
+4. Date. On which the batch picking is to be processed. It can be
+   changed in this state.
+5. Notes. Reflects the notes that have been entered from the wizard and
+   allows you to modify them.
+6. Allows to add more fields to the list of pickings.
 
-Note: If a batch is cancelled, it cancels all batch picks and sets the batch statuses to cancel as well only if the user has set the OCA batch validation approach in the inventory settings.
+Note: If a batch is cancelled, it cancels all batch picks and sets the
+batch statuses to cancel as well only if the user has set the OCA batch
+validation approach in the inventory settings.
 
 **In "Done" status:**
 
-.. figure:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/16.0/stock_picking_batch_extended/static/batch_form_done.png
-    :alt: Batch form in done status
-    :width: 80 %
-    :align: center
+|image4|
 
-#. Print pickings.
-#. Smart button with counting and access to pickings.
-#. Date. On which the batch picking is to be processed. Already it can’t be modified in this state.
-#. Notes. Reflects the notes that have been entered from the wizard and allows you to modify them.
+1. Print pickings.
+2. Smart button with counting and access to pickings.
+3. Date. On which the batch picking is to be processed. Already it can’t
+   be modified in this state.
+4. Notes. Reflects the notes that have been entered from the wizard and
+   allows you to modify them.
+
+.. |image1| image:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/17.0/stock_picking_batch_extended/static/batch_wizard.png
+.. |image2| image:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/17.0/stock_picking_batch_extended/static/batch_form_draft.png
+.. |image3| image:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/17.0/stock_picking_batch_extended/static/batch_form_in_progress.png
+.. |image4| image:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/17.0/stock_picking_batch_extended/static/batch_form_done.png
 
 Bug Tracker
 ===========
@@ -114,7 +122,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/stock-logistics-workflow/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_picking_batch_extended%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_picking_batch_extended%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -122,51 +130,52 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Camptocamp
 * Tecnativa
 
 Contributors
-~~~~~~~~~~~~
+------------
 
 **picking_dispatch**
 
-* Peter Langenberg <peter.langenberg@bubbles-it.be>
-* Rudolf Schnapka <rs@techno-flex.de>
-* Matthieu Dietrich <matthieu.dietrich@camptocamp.com>
-* Romain Deheele <romain.deheele@camptocamp.com>
-* Leonardo Pistone <leonardo.pistone@camptocamp.com>
-* Guewen Baconnier <guewen.baconnier@camptocamp.com>
-* Yannick Vaucher <yannick.vaucher@camptocamp.com>
-* Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
-* Joël Grand-Guillaume <joel.grandguillaume@camptocamp.com>
-* Cyril Gaudin <cyril.gaudin@camptocamp.com>
-* Iryna Vyshnevska <i.vyshnevska@mobilunity.com>
+- Peter Langenberg <peter.langenberg@bubbles-it.be>
+- Rudolf Schnapka <rs@techno-flex.de>
+- Matthieu Dietrich <matthieu.dietrich@camptocamp.com>
+- Romain Deheele <romain.deheele@camptocamp.com>
+- Leonardo Pistone <leonardo.pistone@camptocamp.com>
+- Guewen Baconnier <guewen.baconnier@camptocamp.com>
+- Yannick Vaucher <yannick.vaucher@camptocamp.com>
+- Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
+- Joël Grand-Guillaume <joel.grandguillaume@camptocamp.com>
+- Cyril Gaudin <cyril.gaudin@camptocamp.com>
+- Iryna Vyshnevska <i.vyshnevska@mobilunity.com>
 
 **stock_batch_picking**
 
-* `Camptocamp <https://www.camptocamp.com>`_:
+- `Camptocamp <https://www.camptocamp.com>`__:
 
-  * Cyril Gaudin
+  - Cyril Gaudin
 
-* `Tecnativa <https://www.tecnativa.com>`_:
+- `Tecnativa <https://www.tecnativa.com>`__:
 
-  * Carlos Dauden
-  * Sergio Teruel
-  * César A. Sánchez
+  - Carlos Dauden
+  - Sergio Teruel
+  - César A. Sánchez
 
-* `Trobz <https://trobz.com>`_:
+- `Trobz <https://trobz.com>`__:
 
-    * Son Ho <sonhd@trobz.com>
+     - Son Ho <sonhd@trobz.com>
 
 Other credits
-~~~~~~~~~~~~~
+-------------
 
-The migration of this module from 13.0 to 14.0 was financially supported by Camptocamp
+The migration of this module from 13.0 to 14.0 was financially supported
+by Camptocamp
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -192,6 +201,6 @@ Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-gurneyalex| |maintainer-carlosdauden| |maintainer-i-vyshnevska| 
 
-This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_picking_batch_extended>`_ project on GitHub.
+This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/17.0/stock_picking_batch_extended>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
