@@ -5,8 +5,8 @@ from odoo.exceptions import ValidationError
 from odoo.tools import float_compare
 
 
-class ProductPackaging(models.Model):
-    _inherit = "product.packaging"
+class PackageType(models.Model):
+    _inherit = "stock.package.type"
 
     package_default_shipping_weight = fields.Float(
         string="Default shipping weight",
