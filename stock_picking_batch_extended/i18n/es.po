@@ -8,8 +8,6 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-10 08:44+0000\n"
-"PO-Revision-Date: 2023-10-15 20:38+0000\n"
 "Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
@@ -171,11 +169,6 @@ msgstr ""
 "por campo de agrupación"
 
 #. module: stock_picking_batch_extended
-#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field____last_update
-msgid "Last Modified on"
-msgstr "Última Modificación en"
-
-#. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__write_uid
 msgid "Last Updated by"
 msgstr "Última actualización por"
@@ -333,7 +326,6 @@ msgstr "Almacén"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_product_product__description_warehouse
-#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.product_normal_form_view
 msgid "Warehouse Description"
 msgstr "Descripción del almacén"
 
@@ -351,159 +343,3 @@ msgstr "libre de observaciones"
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_warehouse__default_user_id
 msgid "the user to which the batch pickings are assigned by default"
 msgstr "el usuario al que se le asigna el grupo de albaranes por defecto"
-
-#~ msgid "Picking Batch"
-#~ msgstr "Grupo de albaranes"
-
-#~ msgid "Switch behaviour bettwen Odoo and OCA for batch validation"
-#~ msgstr ""
-#~ "Cambiar comportamiento entre Odoo y OCA para validar agrupación de "
-#~ "albaranes"
-
-#~ msgid "Entire Package"
-#~ msgstr "Paquete completo"
-
-#~ msgid "Entire Package Detail"
-#~ msgstr "Detalle del paquete completo"
-
-#~ msgid "Name of the batch transfer"
-#~ msgstr "Nombre del grupo de albaranes"
-
-#~ msgid "Person responsible for this batch transfer"
-#~ msgstr "Persona responsable de esta transferencia de lotes"
-
-#~ msgid "Print"
-#~ msgstr "Imprimir"
-
-#~ msgid ""
-#~ "Those are the entire packages of a picking shown in the view of detailed "
-#~ "operations"
-#~ msgstr ""
-#~ "Estos son los paquetes completos de un albarán mostrados en la vista de "
-#~ "operaciones detalladas"
-
-#~ msgid ""
-#~ "Those are the entire packages of a picking shown in the view of operations"
-#~ msgstr ""
-#~ "Estos son los paquetes completos de un albarán mostrados en la vista de "
-#~ "operaciones"
-
-#~ msgid "Add to new Batch"
-#~ msgstr "Añadir a una nueva agrupación"
-
-#~ msgid "All pickings from this batch will be cancelled, are you sure?"
-#~ msgstr ""
-#~ "Todos los albaranes de esta agrupación serán cancelados, ¿Está seguro?"
-
-#~ msgid "All the pickings from this batch will be confirmed. Are you sure?"
-#~ msgstr ""
-#~ "Todos los albaranes de esta agrupación serán confirmados, ¿Está seguro?"
-
-#~ msgid "All the pickings from this batch will be transferred. Are you sure?"
-#~ msgstr ""
-#~ "Todos los albaranes de esta agrupación serán transferidos, ¿Está seguro?"
-
-#~ msgid "Assign picking operations to an employee."
-#~ msgstr "Asignar operaciones de albarán a un empleado."
-
-#~ msgid "Available"
-#~ msgstr "Disponible"
-
-#~ msgid "Batch"
-#~ msgstr "Grupo"
-
-#~ msgid "Batch Name"
-#~ msgstr "Nombre del grupo"
-
-#~ msgid "Batch Picking"
-#~ msgstr "Grupo de albaranes"
-
-#~ msgid "Batch Picking Creator"
-#~ msgstr "Creador del grupo de albaranes"
-
-#~ msgid "Batch Picking properties"
-#~ msgstr "Propiedades del grupo de albaranes"
-
-#~ msgid "Batch associated to this transfer"
-#~ msgstr "Grupo asociado a este albarán"
-
-#~ msgid "Cancel"
-#~ msgstr "Cancelar"
-
-#~ msgid "Confirm"
-#~ msgstr "Confirmar"
-
-#~ msgid "Date on which the batch picking is to be processed"
-#~ msgstr "Fecha en la que el grupo de albaranes se procesará"
-
-#~ msgid "Detailed Operations"
-#~ msgstr "Operaciones detalladas"
-
-#~ msgid "Detailed operations"
-#~ msgstr "Operaciones detalladas"
-
-#~ msgid "Done"
-#~ msgstr "Hecho"
-
-#~ msgid "Group By..."
-#~ msgstr "Agrupar por..."
-
-#~ msgid "Initial Demand"
-#~ msgstr "Demanda inicial"
-
-#~ msgid "List of picking managed by this batch."
-#~ msgstr "Lista de albaranes gestionados en este grupo."
-
-#~ msgid "Operations"
-#~ msgstr "Operaciones"
-
-#~ msgid "Order Date"
-#~ msgstr "Fecha de petición"
-
-#~ msgid "Picker"
-#~ msgstr "Recogedor"
-
-#~ msgid "Register lots, packs, location"
-#~ msgstr "Registrar lotes, paquetes, ubicación"
-
-#~ msgid "Reserved"
-#~ msgstr "Reservado"
-
-#~ msgid "State"
-#~ msgstr "Estado"
-
-#~ msgid "Stock Moves"
-#~ msgstr "Movimientos de albarán"
-
-#~ msgid "The user to which the pickings are assigned"
-#~ msgstr "El usuario al que los albaranes están asignados"
-
-#, python-format
-#~ msgid "These Batches have no pickings"
-#~ msgstr "Estos grupos no tienen albaranes"
-
-#, python-format
-#~ msgid "This Batch has no pickings"
-#~ msgstr "Este grupo no tiene albaranes"
-
-#~ msgid "Transfer"
-#~ msgstr "Transferir"
-
-#~ msgid "Unit of Measure"
-#~ msgstr "Unidad de medida"
-
-#~ msgid "Validate"
-#~ msgstr "Validar"
-
-#~ msgid "_Create"
-#~ msgstr "_Crear"
-
-#~ msgid ""
-#~ "the state of the batch picking. Workflow is draft -> in_progress/assigned "
-#~ "-> done or cancel"
-#~ msgstr ""
-#~ "el estado del grupo de albaranes. El flujo es borrador -> asignado -> "
-#~ "realizado o cancelado"
-
-#~ msgid "the user to which the pickings are assigned"
-#~ msgstr "el usuario al que se le asigna los albaranes por defecto"
