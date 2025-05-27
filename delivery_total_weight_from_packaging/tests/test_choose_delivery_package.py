@@ -26,8 +26,7 @@ class TestDeliveryPackageWeight(TestShippingWeightCommon):
         )
         picking = self.move.picking_id
         picking.action_assign()
-        for line in picking.move_line_ids:
-            line.qty_done = line.reserved_uom_qty
+        picking.move_ids.picked = True
 
         wiz = self._get_wiz(picking)
         self.assertEqual(wiz.shipping_weight, 18)
@@ -43,8 +42,7 @@ class TestDeliveryPackageWeight(TestShippingWeightCommon):
         )
         picking = self.move.picking_id
         picking.action_assign()
-        for line in picking.move_line_ids:
-            line.qty_done = line.reserved_uom_qty
+        picking.move_ids.picked = True
 
         wiz = self._get_wiz(picking)
         self.assertEqual(wiz.shipping_weight, 21)
