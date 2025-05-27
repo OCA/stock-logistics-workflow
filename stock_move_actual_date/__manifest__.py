@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Stock Move Actual Date",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "author": "Quartile, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "category": "Stock",
@@ -18,5 +18,6 @@
         "wizard/stock_quantity_history.xml",
     ],
     "pre_init_hook": "pre_init_hook",
+    "maintainers": ["yostashiro", "aungkokolin1997"],
     "installable": True,
 }

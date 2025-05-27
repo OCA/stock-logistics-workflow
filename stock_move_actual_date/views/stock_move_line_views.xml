@@ -6,11 +6,7 @@
         <field name="inherit_id" ref="stock.stock_move_line_view_search" />
         <field name="arch" type="xml">
             <filter name="filter_last_12_months" position="after">
-                <filter
-                    name="actual_date"
-                    date="actual_date"
-                    default_period="this_month"
-                />
+                <filter name="actual_date" date="actual_date" default_period="month" />
             </filter>
             <filter name="by_date" position="after">
                 <filter
