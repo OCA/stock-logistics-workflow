@@ -21,7 +21,7 @@
                     <div class="row mt32 mb32">
                         <div class="col-3">
                             <strong>Date:</strong>
-                            <span t-esc="now()" t-options="{'widget': 'datetime'}" />
+                            <span t-out="now()" t-options="{'widget': 'datetime'}" />
                         </div>
                         <div class="col-3">
                             <strong>Printed by:</strong>
@@ -44,28 +44,28 @@
                             <tbody>
                                 <tr>
                                     <td name="td_name">
-                                        <span t-esc="doc.name" />
+                                        <span t-field="doc.name" />
                                     </td>
                                     <td name="td_visa">Visa:_________________</td>
                                     <td name="td_picker">
-                                        <span t-esc="doc.user_id.name" />
+                                        <span t-field="doc.user_id.name" />
                                     </td>
                                     <td name="td_count" class="text-center">
-                                        <span t-esc="doc.picking_count" />
+                                        <span t-field="doc.picking_count" />
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                         <br />
                         <br />
-                        <p t-esc="doc.notes" />
+                        <p t-field="doc.notes" />
                         <br />
                         <t t-foreach="get_grouped_data(doc)" t-as="l0_data">
-                            <table class="table table-condensed">
+                            <table class="table table-sm">
                                 <caption>
                                     <b>
                                         <u>
-                                            <span t-esc="l0_data['name']" />
+                                            <span t-out="l0_data['name']" />
                                         </u>
                                     </b>
                                 </caption>
@@ -99,21 +99,21 @@
                                                 <span t-field="product.display_name" />
                                             </td>
                                             <td>
-                                                <span t-esc="carrier.name" />
+                                                <span t-out="carrier.name" />
                                             </td>
-                                            <td class="text-right">
-                                                <span t-esc="qty" />
+                                            <td class="text-end">
+                                                <span t-out="qty" />
                                             </td>
                                             <!--<td>stock error<br/>breakage-->
                                             <!--</td>-->
                                             <tr
                                                 align="left"
-                                                t-if="product.description_warehouse"
+                                                t-if="product.description_picking"
                                             >
                                                 <td colspan="4">
                                                     <pre class="description ">
                                                         <span
-                                                            t-esc="product.description_warehouse"
+                                                            t-field="product.description_picking"
                                                         />
                                                     </pre>
                                                 </td>
@@ -124,11 +124,11 @@
                                 <tfoot>
                                     <tr>
                                         <td />
-                                        <td id="total_label" class="text-right">
+                                        <td id="total_label" class="text-end">
                                             <strong>Total:</strong>
                                         </td>
-                                        <td id="total_qty" class="text-right">
-                                            <strong t-esc="total_qty" />
+                                        <td id="total_qty" class="text-end">
+                                            <strong t-out="total_qty" />
                                         </td>
                                     </tr>
                                 </tfoot>

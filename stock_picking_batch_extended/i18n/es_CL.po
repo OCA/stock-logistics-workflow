@@ -6,7 +6,6 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2020-06-12 06:19+0000\n"
 "Last-Translator: Nelson Ramírez Sánchez <info@konos.cl>\n"
 "Language-Team: none\n"
 "Language: es_CL\n"
@@ -167,11 +166,6 @@ msgstr ""
 "campo de grupo"
 
 #. module: stock_picking_batch_extended
-#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field____last_update
-msgid "Last Modified on"
-msgstr "Última modificación el"
-
-#. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__write_uid
 msgid "Last Updated by"
 msgstr "Última actualización por"
@@ -329,7 +323,6 @@ msgstr "Bodega"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_product_product__description_warehouse
-#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.product_normal_form_view
 msgid "Warehouse Description"
 msgstr "Descripción de Bodega"
 
@@ -348,152 +341,3 @@ msgstr "comentarios de forma libre"
 msgid "the user to which the batch pickings are assigned by default"
 msgstr ""
 "el usuario al que se asignan los despachos por lotes de forma predeterminada"
-
-#~ msgid "Picking Batch"
-#~ msgstr "Lote de Despacho"
-
-#~ msgid "Switch behaviour bettwen Odoo and OCA for batch validation"
-#~ msgstr ""
-#~ "Cambiar el comportamiento entre Odoo y OCA para la validación por lotes"
-
-#~ msgid "Entire Package"
-#~ msgstr "Todo el Paquete"
-
-#~ msgid "Entire Package Detail"
-#~ msgstr "Detalle de Todo el Paquete"
-
-#~ msgid "Print"
-#~ msgstr "Imprimir"
-
-#~ msgid ""
-#~ "Those are the entire packages of a picking shown in the view of detailed "
-#~ "operations"
-#~ msgstr ""
-#~ "Esos son los paquetes completos de un despacho que se muestra en la vista "
-#~ "de operaciones detalladas"
-
-#~ msgid ""
-#~ "Those are the entire packages of a picking shown in the view of operations"
-#~ msgstr ""
-#~ "Esos son los paquetes completos de un despacho que se muestra en la vista "
-#~ "de operaciones"
-
-#~ msgid "Add to new Batch"
-#~ msgstr "Agregar a nuevos Lotes"
-
-#~ msgid "Assign picking operations to an employee."
-#~ msgstr "Asignar operaciones de despacho a un empleado."
-
-#~ msgid "Available"
-#~ msgstr "Disponible"
-
-#~ msgid "Batch"
-#~ msgstr "Lotes"
-
-#~ msgid "Batch Name"
-#~ msgstr "Nombre de Lote"
-
-#~ msgid "Batch Picking"
-#~ msgstr "Lote de Despacho"
-
-#~ msgid "Batch Picking Creator"
-#~ msgstr "Creador de Lote de Despacho"
-
-#~ msgid "Batch Picking properties"
-#~ msgstr "Propiedades de Lote de Despacho"
-
-#~ msgid "Cancel"
-#~ msgstr "Cancelar"
-
-#~ msgid "Confirm"
-#~ msgstr "Confirmar"
-
-#~ msgid "Date on which the batch picking is to be processed"
-#~ msgstr "Fecha en la que se procesará los lotes de despacho"
-
-#~ msgid "Detailed Operations"
-#~ msgstr "Operaciones Detalladas"
-
-#~ msgid "Detailed operations"
-#~ msgstr "Operaciones detalladas"
-
-#~ msgid "Done"
-#~ msgstr "Hecho"
-
-#~ msgid "Group By..."
-#~ msgstr "Agrupado por..."
-
-#~ msgid "Initial Demand"
-#~ msgstr "Pedido Inicial"
-
-#~ msgid "List of picking managed by this batch."
-#~ msgstr "Lista de picking gestionada por este lote."
-
-#~ msgid "Operations"
-#~ msgstr "Operaciones"
-
-#~ msgid "Order Date"
-#~ msgstr "Fecha de Pedido"
-
-#~ msgid "Picker"
-#~ msgstr "Liquidador"
-
-#~ msgid "Register lots, packs, location"
-#~ msgstr "Registrar lotes, paquetes, ubicación"
-
-#~ msgid "Reserved"
-#~ msgstr "Reservado"
-
-#~ msgid "State"
-#~ msgstr "Estado"
-
-#~ msgid "Stock Moves"
-#~ msgstr "Movimientos de Inventario"
-
-#~ msgid "The user to which the pickings are assigned"
-#~ msgstr "El usuario al que se asignan los despachos"
-
-#, python-format
-#~ msgid "These Batches have no pickings"
-#~ msgstr "Estos Lotes no tienen despachos"
-
-#, python-format
-#~ msgid "This Batch has no pickings"
-#~ msgstr "Este Lote no tiene despachos"
-
-#~ msgid "Transfer"
-#~ msgstr "Transferir"
-
-#~ msgid "Unit of Measure"
-#~ msgstr "Unidad de Medida"
-
-#~ msgid "Validate"
-#~ msgstr "Validar"
-
-#~ msgid "_Create"
-#~ msgstr "_Creado"
-
-#~ msgid ""
-#~ "the state of the batch picking. Workflow is draft -> in_progress/assigned "
-#~ "-> done or cancel"
-#~ msgstr ""
-#~ "El estado de la selección de lotes. El flujo de trabajo es borrador -> en "
-#~ "progreso / asignado -> terminado o cancelado"
-
-#~ msgid "the user to which the pickings are assigned"
-#~ msgstr "El usuario al que se asignan los pickings"
-
-#~ msgid "Batch Picking Name"
-#~ msgstr "Nombre de Lote de Despacho"
-
-#~ msgid "Batch associated to this picking"
-#~ msgstr "Lote asociado a este despacho"
-
-#~ msgid "Cancelled"
-#~ msgstr "Cancelado"
-
-#~ msgid "Draft"
-#~ msgstr "Borrador"
-
-#~ msgid "Running"
-#~ msgstr "Corriendo"

@@ -8,24 +8,21 @@
         />
         <field name="arch" type="xml">
             <field name="batch_id" position="before">
-                <field name="name" attrs="{'invisible': [('mode', '=', 'existing')]}" />
+                <field name="name" invisible="mode == 'existing'" />
             </field>
             <xpath expr="//field[@name='user_id']/.." position="after">
-                <label for="notes" attrs="{'invisible': [('mode', '=', 'existing')]}" />
-                <field
-                    name="notes"
-                    attrs="{'invisible': [('mode', '=', 'existing')]}"
-                />
+                <label for="notes" invisible="mode == 'existing'" />
+                <field name="notes" invisible="mode == 'existing'" />
             </xpath>
             <xpath expr="//field[@name='user_id']/../.." position="after">
-                <group attrs="{'invisible': [('mode', '=', 'existing')]}">
+                <group invisible="mode == 'existing'">
                     <group>
                         <field name="batch_by_group" />
                     </group>
                 </group>
                 <group
                     string="Create multiple batch picking grouped by..."
-                    attrs="{'invisible': ['|', ('batch_by_group', '=', False), ('mode', '=', 'existing')]}"
+                    invisible="not batch_by_group or mode == 'existing'"
                 >
                     <field name="group_field_ids" nolabel="1" colspan="2">
                         <tree editable="bottom">

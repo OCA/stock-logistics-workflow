@@ -16,7 +16,6 @@
                     context="{'default_picking_type_id': picking_type_id}"
                 />
             </field>
-
         </field>
     </record>
 </odoo>
