@@ -16,14 +16,14 @@ Stock Move Source Relocation
 .. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
-.. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fwms-lightgray.png?logo=github
-    :target: https://github.com/OCA/wms/tree/14.0/stock_move_source_relocate
-    :alt: OCA/wms
+.. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
+    :target: https://github.com/OCA/stock-logistics-workflow/tree/18.0/stock_move_source_relocate
+    :alt: OCA/stock-logistics-workflow
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/wms-14-0/wms-14-0-stock_move_source_relocate
+    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-18-0/stock-logistics-workflow-18-0-stock_move_source_relocate
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/wms&target_branch=14.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=18.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -34,31 +34,34 @@ Add relocation rules for moves.
 
 Some use cases:
 
-* Handle all the replenishments at the same place
-* Trigger minimum stock rules or DDMRP buffers in one location
+- Handle all the replenishments at the same place
+- Trigger minimum stock rules or DDMRP buffers in one location
 
 Behavior:
 
-* When we try to assign a stock move and the move is not available, a rule
-  matching the source location (sub-locations included), the picking type and an
-  optional domain is searched
-* If a relocation is found, the move source location is updated with the new one
-* If the move was partially available, it is split in 2 parts:
+- When we try to assign a stock move and the move is not available, a
+  rule matching the source location (sub-locations included), the
+  picking type and an optional domain is searched
+- If a relocation is found, the move source location is updated with the
+  new one
+- If the move was partially available, it is split in 2 parts:
 
- * one available part which keeps its source location
- * one confirmed part which is updated with the new source location
+..
+
+   - one available part which keeps its source location
+   - one confirmed part which is updated with the new source location
 
 Notes:
 
-Goes well with ``stock_available_to_promise_release``.
-When using the mentioned module, we assume that we release moves (which
-creates the whole chain of moves) only when we know that we have the
-quantities in stock (otherwise the module splits the delivery). So generally,
-we have the goods are available, but maybe not at the correct place: this
-module is handy to organize internal replenishments.
+Goes well with ``stock_available_to_promise_release``. When using the
+mentioned module, we assume that we release moves (which creates the
+whole chain of moves) only when we know that we have the quantities in
+stock (otherwise the module splits the delivery). So generally, we have
+the goods are available, but maybe not at the correct place: this module
+is handy to organize internal replenishments.
 
-Compatible with ``stock_dynamic_routing``: when the source location is updated
-by this module, a dynamic routing may be applied.
+Compatible with ``stock_dynamic_routing``: when the source location is
+updated by this module, a dynamic routing may be applied.
 
 **Table of contents**
 
@@ -68,27 +71,30 @@ by this module, a dynamic routing may be applied.
 Configuration
 =============
 
-The configuration of the source relocations is done in "Inventory > Configuration > Source Relocation".
+The configuration of the source relocations is done in "Inventory >
+Configuration > Source Relocation".
 
 Creation of a rule:
 
 Properties that define where the rule will be applied:
 
-* Location: any unreserved move in this location or sub-location is relocated
-* Picking Type: any unreserved move in this picking type is relocated
-* Rule Domain: filter the moves to relocate with arbitrary domains
+- Location: any unreserved move in this location or sub-location is
+  relocated
+- Picking Type: any unreserved move in this picking type is relocated
+- Rule Domain: filter the moves to relocate with arbitrary domains
 
 Note: all of the above must be met to relocate a move.
 
-The Relocate Location field defines what the move source location will be changed to. It must be a sub-location of the location.
+The Relocate Location field defines what the move source location will
+be changed to. It must be a sub-location of the location.
 
 Bug Tracker
 ===========
 
-Bugs are tracked on `GitHub Issues <https://github.com/OCA/wms/issues>`_.
+Bugs are tracked on `GitHub Issues <https://github.com/OCA/stock-logistics-workflow/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/wms/issues/new?body=module:%20stock_move_source_relocate%0Aversion:%2014.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_move_source_relocate%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -96,26 +102,28 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Camptocamp
 * BCIM
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Guewen Baconnier <guewen.baconnier@camptocamp.com>
-* Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
-* `Trobz <https://trobz.com>`_:
-  * Dung Tran <dungtd@trobz.com>
+- Guewen Baconnier <guewen.baconnier@camptocamp.com>
+- Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
+- `Trobz <https://trobz.com>`__:
+
+  - Dung Tran <dungtd@trobz.com>
 
 Other credits
-~~~~~~~~~~~~~
+-------------
 
-The migration of this module from 13.0 to 14.0 was financially supported by Camptocamp
+The migration of this module from 13.0 to 14.0 was financially supported
+by Camptocamp
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -135,6 +143,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-jbaudoux| 
 
-This module is part of the `OCA/wms <https://github.com/OCA/wms/tree/14.0/stock_move_source_relocate>`_ project on GitHub.
+This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/18.0/stock_move_source_relocate>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

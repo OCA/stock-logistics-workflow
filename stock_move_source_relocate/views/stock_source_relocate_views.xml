@@ -6,8 +6,7 @@
         <field name="arch" type="xml">
             <form string="Source Relocation">
                 <sheet>
-                    <div class="oe_button_box" name="button_box">
-                    </div>
+                    <div class="oe_button_box" name="button_box" />
                     <widget
                         name="web_ribbon"
                         title="Archived"

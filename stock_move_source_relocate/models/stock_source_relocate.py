@@ -107,10 +107,7 @@ class StockSourceRelocate(models.Model):
             res.append(
                 (
                     record.id,
-                    "{} → {}".format(
-                        self.location_id.display_name,
-                        self.relocate_location_id.display_name,
-                    ),
+                    f"{self.location_id.display_name} → {self.relocate_location_id.display_name}",
                 )
             )
         return res
