@@ -17,13 +17,13 @@ Stock Move Actual Date
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
-    :target: https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_move_actual_date
+    :target: https://github.com/OCA/stock-logistics-workflow/tree/18.0/stock_move_actual_date
     :alt: OCA/stock-logistics-workflow
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-16-0/stock-logistics-workflow-16-0-stock_move_actual_date
+    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-18-0/stock-logistics-workflow-18-0-stock_move_actual_date
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=18.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -34,13 +34,14 @@ record the actual date on which a stock transfer or stock scrap took
 place, in case the transaction in Odoo is processed after the fact.
 
 It also adds an Actual Date field to the Stock Valuation Layer model,
-enabling reporting based on this field. This field is computed
-and stored according to the following logic:
+enabling reporting based on this field. This field is computed and
+stored according to the following logic:
 
-- If a posted journal entry exists, its date is used.
-- If there is no journal entry, the stock move's actual date is used
-- Otherwise, convert create_date (datetime) of the stock.valuation.layer
-  record to date, with consideration to user's timezone.
+-  If a posted journal entry exists, its date is used.
+-  If there is no journal entry, the stock move's actual date is used
+-  Otherwise, convert create_date (datetime) of the
+   stock.valuation.layer record to date, with consideration to user's
+   timezone.
 
 **Table of contents**
 
@@ -50,44 +51,47 @@ and stored according to the following logic:
 Configuration
 =============
 
-* Go to Settings > Users & Companies > Groups.
-* Open 'Modify Actual Date' and add the users who are allowed to edit the actual date
-  of completed records (e.g., pickings, scraps).
+-  Go to Settings > Users & Companies > Groups.
+-  Open 'Modify Actual Date' and add the users who are allowed to edit
+   the actual date of completed records (e.g., pickings, scraps).
 
 Usage
 =====
 
 Use the Actual Date field in the following transfer and scrap scenarios:
 
-- If you are late in processing a transfer or scrap in Odoo and wish to
-  record the transaction with the actual transfer date, fill in the
-  Actual Date field in the picking or scrap form. The Actual Date of the
-  picking or scrap is then propagated to its corresponding stock moves
-  and stock move lines, and is also passed to the journal entry as the
-  date.
-- You can also update the Actual Date of a completed picking or scrap if
-  you belong to the 'Modify Actual Date' group. This operation updates
-  the date of the related journal entries, re-proposing a new sequence
-  to them as necessary.
+-  If you are late in processing a transfer or scrap in Odoo and wish to
+   record the transaction with the actual transfer date, fill in the
+   Actual Date field in the picking or scrap form. The Actual Date of
+   the picking or scrap is then propagated to its corresponding stock
+   moves and stock move lines, and is also passed to the journal entry
+   as the date.
+-  You can also update the Actual Date of a completed picking or scrap
+   if you belong to the 'Modify Actual Date' group. This operation
+   updates the date of the related journal entries, re-proposing a new
+   sequence to them as necessary.
 
-Use the Actual Date field in the following stock valuation reporting scenarios:
+Use the Actual Date field in the following stock valuation reporting
+scenarios:
 
-1.  Go to *Inventory \> Reporting \> Inventory Valuation* and click
-    'Inventory at Date'.
-2.  In the wizard, select a date in 'Inventory at Date', and click
-    'Valuation as of Accounting Date' (note that 'hh:mm:ss' part of the
-    selection in 'Inventory at Date' is ignored in this context).
+1. Go to *Inventory > Reporting > Inventory Valuation* and click
+   'Inventory at Date'.
+2. In the wizard, select a date in 'Inventory at Date', and click
+   'Valuation as of Accounting Date' (note that 'hh:mm:ss' part of the
+   selection in 'Inventory at Date' is ignored in this context).
 
 Known issues / Roadmap
 ======================
 
-Updating the Actual Date of a completed receipt picking for a foreign currency purchase
-does not trigger a recalculation of the amounts in the associated journal entries, even if
-the currency rate for the new date differs.
+Updating the Actual Date of a completed receipt picking for a foreign
+currency purchase does not trigger a recalculation of the amounts in the
+associated journal entries, even if the currency rate for the new date
+differs.
 
-For the Actual Date of existing stock move and stock move line records created before
-this module was installed, the user's timezone will not be considered, and only the date
-part from the 'date' field in the UTC timezone will be assigned.
+For the Actual Date of existing stock move and stock move line records
+created before this module was installed, the user's timezone will not
+be considered, and only the date part from the 'date' field in the UTC
+timezone will be assigned.
 
 Bug Tracker
 ===========
@@ -95,7 +99,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/stock-logistics-workflow/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_move_actual_date%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_move_actual_date%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -103,20 +107,20 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Quartile
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* `Quartile <https://www.quartile.co>`__:
+-  `Quartile <https://www.quartile.co>`__:
 
-  * Aung Ko Ko Lin
-  * Yoshi Tashiro
+   -  Aung Ko Ko Lin
+   -  Yoshi Tashiro
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -128,6 +132,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_move_actual_date>`_ project on GitHub.
+This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/18.0/stock_move_actual_date>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

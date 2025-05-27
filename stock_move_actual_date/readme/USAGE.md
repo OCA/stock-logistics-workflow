@@ -11,7 +11,8 @@ Use the Actual Date field in the following transfer and scrap scenarios:
   the date of the related journal entries, re-proposing a new sequence
   to them as necessary.
 
-Use the Actual Date field in the following stock valuation reporting scenarios:
+Use the Actual Date field in the following stock valuation reporting
+scenarios:
 
 1.  Go to *Inventory \> Reporting \> Inventory Valuation* and click
     'Inventory at Date'.
