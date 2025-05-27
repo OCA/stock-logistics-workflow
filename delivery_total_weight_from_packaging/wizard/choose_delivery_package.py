@@ -16,7 +16,7 @@ class ChooseDeliveryPackage(models.TransientModel):
             picking = self.env["stock.picking"].browse(defaults.get("picking_id"))
             move_line_ids = picking.move_line_ids.filtered(
                 lambda m: float_compare(
-                    m.qty_done, 0.0, precision_rounding=m.product_uom_id.rounding
+                    m.quantity, 0.0, precision_rounding=m.product_uom_id.rounding
                 )
                 > 0
                 and not m.result_package_id
@@ -24,7 +24,7 @@ class ChooseDeliveryPackage(models.TransientModel):
             total_weight = 0.0
             for ml in move_line_ids:
                 qty = ml.product_uom_id._compute_quantity(
-                    ml.qty_done, ml.product_id.uom_id
+                    ml.quantity, ml.product_id.uom_id
                 )
                 # This is the only line changed from the origin implementation
                 total_weight += self._calc_weight_for_move_line(ml, qty)

@@ -1,14 +1,13 @@
 # Copyright 2020 Camptocamp SA (http://www.camptocamp.com)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo.tests.common import TransactionCase
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestShippingWeightCommon(TransactionCase):
+class TestShippingWeightCommon(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.wh = cls.env.ref("stock.warehouse0")
         cls.wh.out_type_id.default_location_dest_id = cls.env.ref(
             "stock.stock_location_customers"
@@ -16,8 +15,9 @@ class TestShippingWeightCommon(TransactionCase):
         cls.product = cls.env["product.product"].create(
             {
                 "name": "Test Product",
-                "type": "product",
+                "type": "consu",
                 "weight": 1,
+                "is_storable": True,
                 "packaging_ids": [
                     (0, 0, {"name": "Small Box", "qty": "1", "weight": "2"}),
                     (0, 0, {"name": "Box", "qty": "5", "weight": "7"}),

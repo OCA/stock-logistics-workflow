@@ -18,8 +18,7 @@ class TestWeight(TestShippingWeightCommon):
         )
         picking = self.move.picking_id
         picking.action_assign()
-        for line in picking.move_line_ids:
-            line.qty_done = line.reserved_uom_qty
+        picking.move_ids.picked = True
         self.assertEqual(self.move.picking_id.weight_bulk, 16 * 2)
 
     def test_picking_shipping_weight(self):
@@ -48,9 +47,10 @@ class TestWeight(TestShippingWeightCommon):
         # Reserve goods
         picking = self.move.picking_id
         picking.action_assign()
-        for line in picking.move_line_ids:
-            line.qty_done = line.reserved_uom_qty
-        self.assertTrue(picking.package_ids)
+        picking.move_ids.picked = True
+        self.assertTrue(
+            picking.move_line_ids.filtered(lambda line: line.result_package_id)
+        )
         self.assertTrue(picking.move_ids_without_package)
         # Check shipping weight knowing there is no shipping weight on the package
         self.assertEqual(picking.shipping_weight, 16)
@@ -58,7 +58,8 @@ class TestWeight(TestShippingWeightCommon):
         picking.invalidate_model(["shipping_weight"])
         self.assertEqual(picking.shipping_weight, 15)
         picking._action_done()
-        # Check the manualy set weight is not lost when quants are inserted in the package
+        # Check the manualy set weight is not lost when quants are inserted in
+        # the package
         self.assertEqual(picking.shipping_weight, 15)
 
     def test_package_weight(self):

@@ -14,13 +14,14 @@ class StockQuantPackage(models.Model):
         compute="_compute_shipping_weight", readonly=False, store=True
     )
 
-    @api.depends("quant_ids", "package_type_id")
-    @api.depends_context("picking_id")
-    def _compute_weight(self):
-        # Override method from `delivery` module to compute a more accurate
-        # weight by including the weight of the packaging
+    def _get_weight(self, picking_id=False):
+        """
+        Override standard method to use custom packaging weight logic.
+        """
+        res = {}
         for package in self:
-            package.weight = package._get_weight_from_packaging()
+            res[package] = package._get_weight_from_packaging(picking_id)
+        return res
 
     @api.depends("quant_ids")
     @api.depends_context("picking_id")
@@ -29,21 +30,24 @@ class StockQuantPackage(models.Model):
             # When you ship the parcel, the weight should not be erased and
             # remain the one that was encoded during the packing step.
             package.shipping_weight = (
-                package.shipping_weight or package._get_weight_from_packaging()
+                package.shipping_weight
+                or package._get_weight_from_packaging(
+                    self.env.context.get("picking_id")
+                )
             )
 
-    def _get_weight_from_packaging(self):
+    def _get_weight_from_packaging(self, picking_id=None):
         # NOTE: code copied/pasted and adapter from `delivery`
         weight = 0.0
-        if self.env.context.get("picking_id"):
+        if picking_id:
             current_picking_move_line_ids = self.env["stock.move.line"].search(
                 [
                     ("result_package_id", "=", self.id),
-                    ("picking_id", "=", self.env.context["picking_id"]),
+                    ("picking_id", "=", picking_id),
                 ]
             )
             for ml in current_picking_move_line_ids:
-                weight += ml.product_id.get_total_weight_from_packaging(ml.qty_done)
+                weight += ml.product_id.get_total_weight_from_packaging(ml.quantity)
         else:
             for quant in self.quant_ids:
                 weight += quant.product_id.get_total_weight_from_packaging(
