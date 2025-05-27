@@ -12,13 +12,10 @@ class StockPickingBatch(models.Model):
 
     name = fields.Char(
         index=True,
-        states={"draft": [("readonly", False)]},
     )
     date = fields.Date(
         required=True,
-        readonly=True,
         index=True,
-        states={"draft": [("readonly", False)], "in_progress": [("readonly", False)]},
         default=fields.Date.context_today,
         help="date on which the batch picking is to be processed",
     )
@@ -43,14 +40,13 @@ class StockPickingBatch(models.Model):
 
     def _compute_picking_count(self):
         """Calculate number of pickings."""
-        groups = self.env["stock.picking"].read_group(
-            domain=[("batch_id", "in", self.ids)],
-            fields=["batch_id"],
-            groupby=["batch_id"],
+        counts = dict(
+            self.env["stock.picking"]._read_group(
+                [("batch_id", "in", self.ids)], ["batch_id"], ["__count"]
+            )
         )
-        counts = {g["batch_id"][0]: g["batch_id_count"] for g in groups}
         for batch in self:
-            batch.picking_count = counts.get(batch.id, 0)
+            batch.picking_count = counts.get(batch, 0)
 
     def action_cancel(self):
         """Call action_cancel for all batches pickings
@@ -110,5 +106,6 @@ class StockPickingBatch(models.Model):
         ctx = self.env.context.copy()
         ctx.update({"create": False})
         action["context"] = ctx
+        action["context"]["parent"] = self
         action["domain"] = [("id", "in", self.move_line_ids.ids)]
         return action
