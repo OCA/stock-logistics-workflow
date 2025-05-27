@@ -13,7 +13,6 @@ _logger = logging.getLogger(__name__)
 
 
 class StockPicking(models.Model):
-
     _inherit = "stock.picking"
 
     @api.model
@@ -33,7 +32,8 @@ class StockPicking(models.Model):
     def _get_index_for_grouping_condition(self):
         return """
             WHERE printed is False
-            AND state in ('draft', 'confirmed', 'waiting', 'partially_available', 'assigned')
+            AND state in ('draft', 'confirmed', 'waiting',
+            'partially_available', 'assigned')
         """
 
     @api.model
