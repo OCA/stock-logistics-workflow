@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0)
 
 
-from odoo.tests import Form
+from odoo.tests import Command, Form
 from odoo.tests.common import TransactionCase
 
 
@@ -10,6 +10,7 @@ class TestBatchInvoice(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls._create_minimal_accounting()
         cls.batch_model = cls.env["stock.picking.batch"]
         cls.stock_loc = cls.env.ref("stock.stock_location_stock")
         cls.customer_loc = cls.env.ref("stock.stock_location_customers")
@@ -46,11 +47,34 @@ class TestBatchInvoice(TransactionCase):
         )
 
     @classmethod
+    def _create_minimal_accounting(cls):
+        """Create minimal accounting setup for testing."""
+        cls.sale_account = cls.env["account.account"].create(
+            {
+                "name": "Product Sales",
+                "code": "S200000",
+                "account_type": "income",
+                "company_ids": [Command.link(cls.env.company.id)],
+                "reconcile": False,
+            }
+        )
+        cls.sale_journal = cls.env["account.journal"].create(
+            {
+                "name": "Sales Journal A",
+                "code": "refA",
+                "type": "sale",
+                "company_id": cls.env.company.id,
+                "default_account_id": cls.sale_account.id,
+            }
+        )
+
+    @classmethod
     def _create_product(cls, name, uom_id):
         return cls.env["product.product"].create(
             {
                 "name": name,
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "uom_id": uom_id.id,
                 "uom_po_id": uom_id.id,
             }
@@ -87,13 +111,14 @@ class TestBatchInvoice(TransactionCase):
         )
         batch.action_confirm()
         batch.action_assign()
-        wizard_dict = batch.action_done()
-        wizard = Form(
-            self.env[(wizard_dict.get("res_model"))].with_context(
-                **wizard_dict["context"]
-            )
-        ).save()
-        wizard.process()
+        wizard_dict = batch.with_context(skip_invoice_sync=True).action_done()
+        if isinstance(wizard_dict, dict) and wizard_dict.get("res_model"):
+            wizard = Form(
+                self.env[(wizard_dict.get("res_model"))].with_context(
+                    **wizard_dict["context"]
+                )
+            ).save()
+            wizard.process()
         self.assertTrue(self.sale.invoice_ids)
         self.assertFalse(self.sale2.invoice_ids)
 
@@ -109,7 +134,7 @@ class TestBatchInvoice(TransactionCase):
         )
         batch.action_confirm()
         batch.action_assign()
-        batch.move_line_ids.qty_done = 1
-        batch.action_done()
+        batch.move_line_ids.quantity = 1
+        batch.with_context(skip_invoice_sync=True).action_done()
         self.assertTrue(self.sale.invoice_ids)
         self.assertFalse(self.sale2.invoice_ids)

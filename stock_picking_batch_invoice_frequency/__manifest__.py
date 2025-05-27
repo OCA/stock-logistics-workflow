@@ -4,7 +4,7 @@
 {
     "name": "Stock Picking Batch Invoice Frequency",
     "summary": "Invoice Sale Orders from Stock Pickin Batch",
-    "version": "16.0.1.0.1",
+    "version": "18.0.1.0.0",
     "development_status": "Alpha",
     "category": "Inventory/Delivery",
     "website": "https://github.com/OCA/stock-logistics-workflow",
@@ -14,6 +14,7 @@
     "application": False,
     "installable": True,
     "depends": [
+        "sale_stock",
         "stock_picking_batch",
         "sale_invoice_frequency",
     ],
