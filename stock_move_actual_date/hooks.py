@@ -4,9 +4,9 @@
 from odoo.tools.sql import column_exists
 
 
-def pre_init_hook(cr):
-    if not column_exists(cr, "stock_move", "actual_date"):
-        cr.execute(
+def pre_init_hook(env):
+    if not column_exists(env.cr, "stock_move", "actual_date"):
+        env.cr.execute(
             """
             ALTER TABLE stock_move
             ADD COLUMN actual_date DATE;
@@ -14,7 +14,7 @@ def pre_init_hook(cr):
             SET actual_date = DATE(date);
             """
         )
-        cr.execute(
+        env.cr.execute(
             """
             ALTER TABLE stock_move_line
             ADD COLUMN actual_date DATE;

@@ -6,11 +6,7 @@
         <field name="inherit_id" ref="stock.view_picking_internal_search" />
         <field name="arch" type="xml">
             <filter name="late" position="before">
-                <filter
-                    name="actual_date"
-                    date="actual_date"
-                    default_period="this_month"
-                />
+                <filter name="actual_date" date="actual_date" default_period="month" />
                 <separator />
             </filter>
             <filter name="expected_date" position="after">
@@ -30,10 +26,7 @@
         <field name="arch" type="xml">
             <xpath expr="//label[@for='scheduled_date']" position="before">
                 <field name="is_editable_actual_date" invisible="1" />
-                <field
-                    name="actual_date"
-                    attrs="{'readonly': [('is_editable_actual_date', '=', False)]}"
-                />
+                <field name="actual_date" readonly="is_editable_actual_date == False" />
             </xpath>
         </field>
     </record>

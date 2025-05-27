@@ -14,7 +14,7 @@ class StockQuantityHistory(models.TransientModel):
         )
         action["domain"] = [
             ("actual_date", "<=", self.inventory_datetime),
-            ("product_id.type", "=", "product"),
+            ("product_id.is_storable", "=", True),
         ]
         action["display_name"] = format_datetime(self.env, self.inventory_datetime)
         return action

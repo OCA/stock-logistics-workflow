@@ -28,13 +28,18 @@ class StockActualDateMixin(models.AbstractModel):
         return ["actual_date"]
 
     def _get_stock_moves(self):
-        """This method should be overridden in the specific model to return related moves."""
+        """This method should be overridden in the specific model to return
+        related moves.
+        """
         raise NotImplementedError(
-            "Subclasses must override _get_stock_moves to return related stock moves."
+            "Subclasses must override _get_stock_moves to return related stock "
+            "moves."
         )
 
     def _get_done_state(self):
-        """This method should be overridden in the specific model depending on its state."""
+        """This method should be overridden in the specific model depending on its
+        state.
+        """
         return ["done"]
 
     @api.model_create_multi

@@ -10,7 +10,7 @@ class StockScrap(models.Model):
 
     def _get_stock_moves(self):
         self.ensure_one()
-        return self.move_id
+        return self.move_ids
 
     def do_scrap(self):
         for scrap in self:
