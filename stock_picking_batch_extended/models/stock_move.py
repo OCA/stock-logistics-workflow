@@ -10,4 +10,5 @@ class StockMove(models.Model):
         comodel_name="stock.picking.batch",
         related="picking_id.batch_id",
         store=True,
+        index=True,
     )

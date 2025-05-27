@@ -17,12 +17,14 @@
 - [Camptocamp](https://www.camptocamp.com):
 
   - Cyril Gaudin
+  - Maksym Yankin
 
 - [Tecnativa](https://www.tecnativa.com):
 
   - Carlos Dauden
   - Sergio Teruel
   - César A. Sánchez
+  - David Bañón Gil
 
 - [Trobz](https://trobz.com):
 

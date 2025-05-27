@@ -8,16 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-23 11:56+0000\n"
-"PO-Revision-Date: 2023-03-31 21:23+0000\n"
 "Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Generator: Weblate 4.14.1\n"
 
 #. module: stock_picking_batch_extended
@@ -167,11 +165,6 @@ msgid "If set any, multiple batch picking will be created, one per group field"
 msgstr ""
 "V primeru nastavitve bo ustvarjenih več zbirnikov dobavnic, za vsako polje "
 "združevanja po eden"
-
-#. module: stock_picking_batch_extended
-#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field____last_update
-msgid "Last Modified on"
-msgstr "Zadnjič spremenjeno"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__write_uid
@@ -331,7 +324,6 @@ msgstr "Skladišče"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_product_product__description_warehouse
-#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.product_normal_form_view
 msgid "Warehouse Description"
 msgstr "Opis skladišča"
 
@@ -349,150 +341,3 @@ msgstr "opombe"
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_warehouse__default_user_id
 msgid "the user to which the batch pickings are assigned by default"
 msgstr "uporabnik, kateremu se privzeto dodeljujejo zbirniki dobav"
-
-#~ msgid "Picking Batch"
-#~ msgstr "Zbirnik dobavnic"
-
-#~ msgid "Switch behaviour bettwen Odoo and OCA for batch validation"
-#~ msgstr "Preklop metodologije zbirnika dobav med Odoo in OCA"
-
-#~ msgid "Entire Package"
-#~ msgstr "Celotna pošiljka"
-
-#~ msgid "Entire Package Detail"
-#~ msgstr "Podrobnosti celotne pošiljke"
-
-#~ msgid "Print"
-#~ msgstr "Natisni"
-
-#~ msgid ""
-#~ "Those are the entire packages of a picking shown in the view of detailed "
-#~ "operations"
-#~ msgstr "Celotna vsebina dobavnice prikazana v prikazu detajlne operacije"
-
-#~ msgid ""
-#~ "Those are the entire packages of a picking shown in the view of operations"
-#~ msgstr "Celotna vsebina dobavnice prikazana v prikazu operacije"
-
-#~ msgid "Add to new Batch"
-#~ msgstr "Dodaj v nov zbirnik"
-
-#~ msgid "All pickings from this batch will be cancelled, are you sure?"
-#~ msgstr "Vse dobavnice iz tega zbirnika bodo preklicane, ste prepričani?"
-
-#~ msgid "Assign picking operations to an employee."
-#~ msgstr "Določi odgovornega za obdelavo dobavnic."
-
-#~ msgid "Available"
-#~ msgstr "Na voljo"
-
-#~ msgid "Batch"
-#~ msgstr "Zbirnik"
-
-#~ msgid "Batch Name"
-#~ msgstr "Naziv zbirnika"
-
-#~ msgid "Batch Picking"
-#~ msgstr "Zbirnik dobavnic"
-
-#~ msgid "Batch Picking Creator"
-#~ msgstr "Ustvarjanje zbirnih dobavnic"
-
-#~ msgid "Batch Picking properties"
-#~ msgstr "Lastnosti zbirnika dobavnic"
-
-#~ msgid "Cancel"
-#~ msgstr "Preklic"
-
-#~ msgid "Confirm"
-#~ msgstr "Potrdi"
-
-#~ msgid "Date on which the batch picking is to be processed"
-#~ msgstr "Predvideni datum obdelave zbirnika dobavnic"
-
-#~ msgid "Detailed Operations"
-#~ msgstr "Detajlne operacije"
-
-#~ msgid "Detailed operations"
-#~ msgstr "Detajlne operacije"
-
-#~ msgid "Done"
-#~ msgstr "Opravljeno"
-
-#~ msgid "Group By..."
-#~ msgstr "Združi po..."
-
-#~ msgid "Initial Demand"
-#~ msgstr "Začetno povpraševanje"
-
-#~ msgid "List of picking managed by this batch."
-#~ msgstr "Seznam dobavnic v sklopu tega zbirnika."
-
-#~ msgid "Operations"
-#~ msgstr "Operacije"
-
-#~ msgid "Order Date"
-#~ msgstr "Datum naročila"
-
-#~ msgid "Picker"
-#~ msgstr "Sestavljalec"
-
-#~ msgid "Register lots, packs, location"
-#~ msgstr "Registriraj lote, pakiranja, lokacijo"
-
-#~ msgid "Reserved"
-#~ msgstr "Rezervirano"
-
-#~ msgid "State"
-#~ msgstr "Stanje"
-
-#~ msgid "Stock Moves"
-#~ msgstr "Premiki zaloge"
-
-#~ msgid "The user to which the pickings are assigned"
-#~ msgstr "Uporabnik, ki so mu dobavnice dodeljene"
-
-#, python-format
-#~ msgid "These Batches have no pickings"
-#~ msgstr "Ti zbirniki ne vsebujejo dobavnic"
-
-#, python-format
-#~ msgid "This Batch has no pickings"
-#~ msgstr "Ta zbirnik ne vsebuje dobavnic"
-
-#~ msgid "Transfer"
-#~ msgstr "Premestitev"
-
-#~ msgid "Unit of Measure"
-#~ msgstr "Enota mere"
-
-#~ msgid "Validate"
-#~ msgstr "Overi"
-
-#~ msgid "_Create"
-#~ msgstr "_Ustvari"
-
-#~ msgid ""
-#~ "the state of the batch picking. Workflow is draft -> in_progress/assigned "
-#~ "-> done or cancel"
-#~ msgstr ""
-#~ "stanje zbirnika dobavnic. Procedura je osnutek -> v_teku/dodeljeno -> "
-#~ "opravljeno ali preklicano"
-
-#~ msgid "the user to which the pickings are assigned"
-#~ msgstr "uporabnik, ki so mu dobavnice dodeljene"
-
-#~ msgid "Batch Picking Name"
-#~ msgstr "Naziv zbirnika dobavnic"
-
-#~ msgid "Batch associated to this picking"
-#~ msgstr "Zbirnik povezan s to dobavnico"
-
-#~ msgid "Cancelled"
-#~ msgstr "Preklicano"
-
-#~ msgid "Draft"
-#~ msgstr "Osnutek"
-
-#~ msgid "Running"
-#~ msgstr "V teku"
