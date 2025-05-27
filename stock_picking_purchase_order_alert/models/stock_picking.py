@@ -12,14 +12,14 @@ class StockPicking(models.Model):
     has_quantity_alert = fields.Boolean(
         string="Quantity Alert",
         compute="_compute_has_quantity_alert",
-        store=False,
+        store=True,
         help="Indicates if any move line exceeds ordered "
         "quantity by more than threshold",
     )
     quantity_alert_message = fields.Html(
         string="Quantity Alert Message",
         compute="_compute_has_quantity_alert",
-        store=False,
+        store=True,
     )
 
     @api.depends(
@@ -52,14 +52,6 @@ class StockPicking(models.Model):
                 picking.picking_type_id.quantity_alert_percentage,
                 alert_lines,
             )
-
-    @api.model
-    def _get_group_names(self, groups_ids):
-        groups = self.env["ir.model.data"].search(
-            [("model", "=", "res.groups"), ("res_id", "in", groups_ids)]
-        )
-        groups_names = [f"{group.module}.{group.name}" for group in groups]
-        return ",".join(groups_names)
 
     def _get_quantity_alert_lines(self, picking):
         """Get lines that exceed the configured threshold percentage."""
@@ -127,8 +119,10 @@ class StockPicking(models.Model):
         when quantity alerts exist"""
         for picking in self:
             groups_ids = picking.picking_type_id.groups_ids
-            if groups_ids and not (
-                self.env.user.user_has_groups(self._get_group_names(groups_ids.ids))
+            if (
+                picking.picking_type_id.display_quantity_alert_percentage
+                and groups_ids
+                and self.env.user.id not in groups_ids.mapped("users").ids
             ):
                 group_names = [f"- {group.display_name}" for group in groups_ids]
                 error_msg = _(

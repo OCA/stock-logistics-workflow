@@ -16,4 +16,29 @@
             </xpath>
         </field>
     </record>
+
+    <record id="view_picking_internal_search_alert" model="ir.ui.view">
+        <field name="name">stock.picking.internal.search.alert</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search" />
+        <field name="arch" type="xml">
+            <filter name="cancel" position="after">
+                <separator />
+                <filter
+                    name="not_printed"
+                    string="Not Printed"
+                    domain="[('printed', '=', False)]"
+                    help="Not printed Moves"
+                />
+            </filter>
+            <filter name="starred" position="after">
+                <filter
+                    string="Picking Quantity Alert"
+                    name="picking_quantity_alert"
+                    domain="[('has_quantity_alert', '=', True)]"
+                />
+            </filter>
+        </field>
+    </record>
+
 </odoo>

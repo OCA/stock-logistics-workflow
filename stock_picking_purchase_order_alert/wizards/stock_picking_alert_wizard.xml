@@ -6,11 +6,12 @@
         <field name="model">stock.picking.alert.wizard</field>
         <field name="arch" type="xml">
             <form string="Quantity Alert">
-                <div role="alertdialog" class="alert text-center alert-danger">
+                <div role="alert" class="alert alert-warning text-left">
                     <h3 class="alert-heading"><i
                             class="fa fa-exclamation-triangle"
                         /> Warning</h3>
                     <p
+                        class="mb-0"
                     >Cannot validate this receipt because the received quantity exceeds
                     the ordered quantity by more than the configured threshold percentage.</p>
                     <p
