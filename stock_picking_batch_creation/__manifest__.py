@@ -24,6 +24,11 @@
         "wizards/make_picking_batch.xml",
         "security/ir.model.access.csv",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "stock_picking_batch_creation/static/src/**/*.js",
+        ],
+    },
     "development_status": "Beta",
     "maintainers": ["lmignon"],
     "pre_init_hook": "pre_init_hook",
