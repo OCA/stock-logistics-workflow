@@ -1,0 +1,46 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_batch_invoice_frequency
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-01-15 19:35+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: stock_picking_batch_invoice_frequency
+#: model:ir.model.fields,field_description:stock_picking_batch_invoice_frequency.field_sale_invoice_frequency__automatic_batch_invoicing
+msgid "Automatic Batch Invoicing"
+msgstr "Fatturazione raggruppata automatica"
+
+#. module: stock_picking_batch_invoice_frequency
+#: model:ir.model,name:stock_picking_batch_invoice_frequency.model_stock_picking_batch
+msgid "Batch Transfer"
+msgstr "Trasferimento raggruppato"
+
+#. module: stock_picking_batch_invoice_frequency
+#: model:ir.model.fields,help:stock_picking_batch_invoice_frequency.field_sale_invoice_frequency__automatic_batch_invoicing
+msgid ""
+"If checked, the invoices will be created and posted in stock picking batches"
+" when validated."
+msgstr ""
+"Se selezionata, le fatture verranno create e inviate nei gruppi prelievo di "
+"magazzino quando validati."
+
+#. module: stock_picking_batch_invoice_frequency
+#: model:ir.model,name:stock_picking_batch_invoice_frequency.model_sale_invoice_frequency
+msgid "Invoicing frequency for Customers"
+msgstr "Frequenza fatturazione per clienti"
+
+#. module: stock_picking_batch_invoice_frequency
+#: model:ir.model,name:stock_picking_batch_invoice_frequency.model_stock_picking
+msgid "Transfer"
+msgstr "Trasferimento"
