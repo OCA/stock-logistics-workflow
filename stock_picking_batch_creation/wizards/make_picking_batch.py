@@ -283,7 +283,7 @@ class MakePickingBatch(models.TransientModel):
         if free bins the volume remaining in the bins already used by the partner
         """
         remaining_volume = self._remaining_nbr_bins * self._device.volume_per_bin
-        if partner:
+        if partner and self._device.volume_per_bin:
             # for a partner we must take into account the remaining volume in
             # bins already used by the partner and the volume of the remaining
             # bins
@@ -418,6 +418,9 @@ class MakePickingBatch(models.TransientModel):
                 # of the device by convention a picking without volume fill a complete
                 # bin
                 picking_volume = self._device.volume_per_bin
+            if not self._device.volume_per_bin:
+                # We should return current result to avoid division per 0
+                return nbr_bins
             old_volume = self._volume_by_partners[picking.partner_id]
             new_volume = picking_volume + old_volume
             nbr_bins = math.ceil(new_volume / self._device.volume_per_bin) - math.ceil(

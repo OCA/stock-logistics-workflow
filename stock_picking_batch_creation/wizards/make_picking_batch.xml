@@ -55,7 +55,7 @@
     <menuitem
         action="make_picking_batch_act_window"
         id="make_picking_batch"
-        parent="stock.menu_stock_warehouse_mgmt"
-        sequence="16"
+        parent="stock_picking_batch.menu_stock_jobs"
+        sequence="10"
     />
 </odoo>

@@ -31,6 +31,21 @@ class TestClusteringConditions(ClusterPickingCommonFeatures):
         self.assertEqual(self.device3, batch.picking_device_id)
         self.assertEqual(self.pick3, batch.picking_ids)
 
+    def test_device_with_several_bins_volume_0_group_per_partner(self):
+        """
+        Got a selected picking with volume == 0
+        Enable grouping per partner
+
+        Ensure we can create batch
+        """
+        product = self._create_product("Without volume", 0.0, 0.0, 0.0, 0.0)
+        self._set_quantity_in_stock(self.stock_location, product)
+        self._create_picking_pick_and_assign(self.picking_type_1.id, 0, product)
+        device = self._create_device("Test", 0.0, 0.0, 200.0, 20, 1)
+        self.make_picking_batch.stock_device_type_ids = device
+        self.make_picking_batch.group_pickings_by_partner = True
+        self.make_picking_batch._create_batch()
+
     def test_put_3_pickings_in_one_cluster(self):
         """
         Data: 3 picks of type 1, total of 4 products for a volume of 60m3
