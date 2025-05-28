@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="view_picking_move_tree">
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_picking_move_tree" />
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <field name="state" position="after">
+                <field
+                    name="display_in_report"
+                    widget="boolean_toggle"
+                    options="{'autosave': False}"
+                    optional="hide"
+                />
+            </field>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_move_form">
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_form" />
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <field name="date_deadline" position="before">
+                <field
+                    name="display_in_report"
+                    widget="boolean_toggle"
+                    options="{'autosave': False}"
+                    optional="hide"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>
