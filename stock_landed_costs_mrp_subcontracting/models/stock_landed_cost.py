@@ -9,7 +9,7 @@ class StockLandedCost(models.Model):
     _inherit = "stock.landed.cost"
 
     def _get_targeted_move_ids(self):
-        moves = super(StockLandedCost, self)._get_targeted_move_ids()
+        moves = super()._get_targeted_move_ids()
         moves_to_remove = self.env["stock.move"]
         moves_to_add = self.env["stock.move"]
         for move in moves:
@@ -22,7 +22,7 @@ class StockLandedCost(models.Model):
         return moves
 
     def _compute_allowed_picking_ids(self):
-        res = super(StockLandedCost, self)._compute_allowed_picking_ids()
+        res = super()._compute_allowed_picking_ids()
         valued_picking_ids_per_company = defaultdict(list)
         if self.company_id:
             self.env.cr.execute(
