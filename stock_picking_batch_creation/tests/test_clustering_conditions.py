@@ -1,7 +1,11 @@
 # Copyright 2021 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from ..exceptions import NoSuitableDeviceError, PickingCandidateNumberLineExceedError
+from ..exceptions import (
+    NoPickingCandidateError,
+    NoSuitableDeviceError,
+    PickingCandidateNumberLineExceedError,
+)
 from .common import ClusterPickingCommonFeatures
 
 
@@ -449,3 +453,28 @@ class TestClusteringConditions(ClusterPickingCommonFeatures):
         batch = self.make_picking_batch._create_batch()
         self.assertEqual(self.pick3, batch.picking_ids)
         self.assertEqual(len(batch.move_line_ids), 2)
+
+    def test_device_with_one_bin_create_action(self):
+        """
+        Data: 3 picks of type 1, total of 4 products for a volume of 60m3
+        Test case: We have 3 devices possibles (device1, device2, device3),
+        ordered following sequence: device3, device2, device1.
+        The first picking will be pick3 (higher priority) and its volume is
+        is 30m3. -> device3 is the device to use (min 30m3, max 100m3)
+
+        Device3 has 1 bin -> the batch should only contain pick3
+        """
+        batch_action = self.make_picking_batch.create_batch()
+        batch = self.env["stock.picking.batch"].browse(batch_action.get("res_id"))
+        self.assertEqual(self.device3, batch.picking_device_id)
+        self.assertEqual(self.pick3, batch.picking_ids)
+
+    def test_device_with_one_bin_create_action_no_picking(self):
+        """
+        Cancel all pickings
+
+        No picking candidate error should be raised
+        """
+        self.picks.action_cancel()
+        with self.assertRaises(NoPickingCandidateError):
+            self.make_picking_batch.create_batch()

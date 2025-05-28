@@ -6,7 +6,6 @@ import threading
 from collections import defaultdict
 
 from odoo import api, fields, models, tools
-from odoo.exceptions import UserError
 from odoo.osv.expression import AND, OR, expression
 
 from ..exceptions import (
@@ -52,7 +51,8 @@ class MakePickingBatch(models.TransientModel):
     restrict_to_same_priority = fields.Boolean(
         default=False,
         string="Restrict to the same priority",
-        help="Only the pickings with the same priority will be selected for this batch.",
+        help="Only the pickings with the same priority will be selected "
+        "for this batch.",
     )
     restrict_to_same_partner = fields.Boolean(
         default=False,
@@ -116,12 +116,9 @@ class MakePickingBatch(models.TransientModel):
             return None
         return "sql_for_update_skip_locked"
 
-    def create_batch(self):
+    def create_batch(self) -> dict:
         self.ensure_one()
-        try:
-            batch = self._create_batch(raise_if_not_possible=True)
-        except (NoPickingCandidateError, NoSuitableDeviceError) as error:
-            raise UserError(error.name) from error
+        batch = self._create_batch(raise_if_not_possible=True)
         action = {
             "type": "ir.actions.act_window",
             "name": batch.name,
@@ -151,7 +148,10 @@ class MakePickingBatch(models.TransientModel):
         # https://www.postgresql.org/docs/current/queries-order.html
         # so we need to sort user_id asc to have NULLS LAST
         if self.group_pickings_by_partner:
-            return "user_id asc, priority desc, scheduled_date asc, partner_id desc, id asc"
+            return (
+                "user_id asc, priority desc, scheduled_date asc, "
+                "partner_id desc, id asc"
+            )
         return "user_id asc, priority desc, scheduled_date asc, id asc"
 
     def _get_picking_domain_common(self):
