@@ -346,9 +346,11 @@ class MakePickingBatch(models.TransientModel):
             limit = None
         candidates = self.env["stock.picking"].search(domain, limit=limit)
         if candidates:
-            pickings = candidates if self.add_picking_list_in_error else None
+            pickings = (
+                candidates if self.add_picking_list_in_error else candidates.browse()
+            )
             raise NoSuitableDeviceError(pickings=pickings)
-        raise NoPickingCandidateError()
+        raise NoPickingCandidateError(self.env)
 
     def _create_batch(self, raise_if_not_possible=False):
         """Create a batch transfer."""

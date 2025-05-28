@@ -11,7 +11,7 @@ criteria for the batch creation. When all your criteria are set, click
 on the *Create Batch Picking* and lets the magic happen. A new window
 will open with the created batch picking.
 
-## Behind the scene
+### Behind the scene
 
 The creation of the picking batch is done in 3 steps:
 
@@ -47,9 +47,9 @@ some bins available and in the batch and the search returns result, we
 look for a picking that fits the updated criteria and update the
 criteria at each loop iteration.
 
-## Advanced configuration
+### Advanced configuration
 
-### Locking
+#### Locking
 
 You can choice on the wizard to apply a LOCK into the database for each
 picking added to the batch. This is useful in a multi-user environment
@@ -57,7 +57,7 @@ with a lot of users that can trigger the creation of bach picking to
 avoid problems of concurrency. If activated, picking already selected by
 a concurrent process will be skipped.
 
-### Grouping by partner
+#### Grouping by partner
 
 If you want to allow to group pickings of the same partner into the same
 bins, you can activate the option *Group by partner* on the wizard. This
