@@ -6,7 +6,7 @@ from .common import ClusterPickingCommonFeatures
 class TestPickingLock(ClusterPickingCommonFeatures):
     @classmethod
     def setUpClass(cls):
-        super(TestPickingLock, cls).setUpClass()
+        super().setUpClass()
         cls.make_picking_batch.picking_locking_mode = "sql_for_update_skip_locked"
 
     def test_picking_search_with_lock_mode(self):

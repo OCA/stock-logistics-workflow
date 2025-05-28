@@ -34,15 +34,15 @@
                         <field name="add_picking_list_in_error" />
                     </group>
                 </group>
-                    <footer>
-                        <button
+                <footer>
+                    <button
                         name="create_batch"
                         string="Create batch picking"
                         class="btn-primary"
                         type="object"
                     />
-                        <button string="Cancel" class="btn-default" special="cancel" />
-                    </footer>
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
             </form>
         </field>
     </record>

@@ -7,15 +7,13 @@ from odoo.exceptions import UserError
 
 class NoPickingCandidateError(UserError):
     def __init__(self):
-        super(NoPickingCandidateError, self).__init__(
-            _("no candidate pickings to batch")
-        )
+        super().__init__(_("no candidate pickings to batch"))
 
 
 class PickingCandidateNumberLineExceedError(UserError):
     def __init__(self, picking, max_line):
         self.picking = picking
-        super(PickingCandidateNumberLineExceedError, self).__init__(
+        super().__init__(
             _(
                 "At least one picking candidate found %(name)s but with more line "
                 "to process than the maximum number of line allowed in a batch "
@@ -36,4 +34,4 @@ class NoSuitableDeviceError(UserError):
                 " Pickings %(names)s do not match any device",
                 names=", ".join(self.pickings.mapped("name")),
             )
-        super(NoSuitableDeviceError, self).__init__(message)
+        super().__init__(message)

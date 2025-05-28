@@ -9,8 +9,7 @@
         <field name="arch" type="xml">
             <xpath expr="//page[@name='extra']" position="inside">
                 <group>
-                    <field name="picking_device_id">
-                    </field>
+                    <field name="picking_device_id" />
                 </group>
             </xpath>
         </field>

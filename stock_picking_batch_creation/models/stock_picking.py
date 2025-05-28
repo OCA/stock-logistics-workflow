@@ -7,7 +7,6 @@ from odoo import api, fields, models
 
 
 class StockPicking(models.Model):
-
     _inherit = "stock.picking"
     picking_device_id = fields.Many2one(
         "stock.device.type",

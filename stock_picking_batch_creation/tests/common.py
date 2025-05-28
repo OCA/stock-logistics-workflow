@@ -7,7 +7,7 @@ from odoo.tests.common import TransactionCase
 class ClusterPickingCommonFeatures(TransactionCase):
     @classmethod
     def setUpClass(cls):
-        super(ClusterPickingCommonFeatures, cls).setUpClass()
+        super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.partner1 = cls._create_partner("Unittest partner", "12344566777878")
         cls.stock_location = cls.env.ref("stock.stock_location_stock")
@@ -131,7 +131,6 @@ class ClusterPickingCommonFeatures(TransactionCase):
 
     @classmethod
     def _set_quantity_in_stock(cls, location, product, qty=10):
-
         cls.env["stock.quant"].create(
             {
                 "location_id": location.id,

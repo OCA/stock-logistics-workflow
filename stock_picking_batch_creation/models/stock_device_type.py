@@ -5,7 +5,6 @@ from odoo import api, fields, models
 
 
 class StockDeviceType(models.Model):
-
     _name = "stock.device.type"
     _description = "Stock Device Type"
     _order = "sequence, name"

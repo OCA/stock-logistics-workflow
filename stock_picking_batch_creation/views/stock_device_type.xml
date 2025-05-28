@@ -41,17 +41,23 @@
                             <label for="user_min_volume" />
                             <div class="o_row">
                                 <field name="user_min_volume" class="oe_inline" />
-                                <span><field name="user_volume_uom_name" /></span>
+                                <span>
+                                    <field name="user_volume_uom_name" />
+                                </span>
                             </div>
                             <label for="user_max_volume" />
                             <div class="o_row">
                                 <field name="user_max_volume" class="oe_inline" />
-                                <span><field name="user_volume_uom_name" /></span>
+                                <span>
+                                    <field name="user_volume_uom_name" />
+                                </span>
                             </div>
                             <label for="user_max_weight" />
                             <div class="o_row">
                                 <field name="user_max_weight" class="oe_inline" />
-                                <span><field name="user_weight_uom_name" /></span>
+                                <span>
+                                    <field name="user_weight_uom_name" />
+                                </span>
                             </div>
                             <field name="nbr_bins" />
                             <field name="sequence" />

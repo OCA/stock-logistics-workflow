@@ -5,7 +5,6 @@ from odoo import fields, models
 
 
 class StockPickingBatch(models.Model):
-
     _inherit = "stock.picking.batch"
     picking_device_id = fields.Many2one("stock.device.type", string="Device")
     batch_weight = fields.Float(
@@ -26,7 +25,7 @@ class StockPickingBatch(models.Model):
     )
 
     def write(self, vals):
-        res = super(StockPickingBatch, self).write(vals)
+        res = super().write(vals)
         for rec in self:
             if "user_id" in vals.keys() and not vals["user_id"]:
                 # We want to  unassign the batch from the operator

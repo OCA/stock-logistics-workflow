@@ -17,7 +17,6 @@ from ..exceptions import (
 
 
 class MakePickingBatch(models.TransientModel):
-
     _name = "make.picking.batch"
     _description = "Make a batch picking wizard"
 

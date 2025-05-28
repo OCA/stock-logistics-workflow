@@ -7,7 +7,7 @@ from .common import ClusterPickingCommonFeatures
 class TestGetDeviceToUse(ClusterPickingCommonFeatures):
     @classmethod
     def setUpClass(cls):
-        super(TestGetDeviceToUse, cls).setUpClass()
+        super().setUpClass()
 
     def test_get_device_to_use_00(self):
         """

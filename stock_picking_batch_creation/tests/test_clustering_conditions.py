@@ -8,7 +8,7 @@ from .common import ClusterPickingCommonFeatures
 class TestClusteringConditions(ClusterPickingCommonFeatures):
     @classmethod
     def setUpClass(cls):
-        super(TestClusteringConditions, cls).setUpClass()
+        super().setUpClass()
         cls.p5 = cls._create_product("Unittest P5", 1, 4, 1, 1)
 
     def test_device_with_one_bin(self):
@@ -320,7 +320,6 @@ class TestClusteringConditions(ClusterPickingCommonFeatures):
         self.assertEqual(batch.batch_nbr_bins, 2)
 
     def test_several_pickings_one_partner_volume_outreached_on_one_picking(self):
-
         self.p1.write(
             {
                 "product_length": 1,
