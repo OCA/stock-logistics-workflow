@@ -150,13 +150,14 @@ class ClusterPickingCommonFeatures(TransactionCase):
         if not uom_id:
             uom_id = cls.uom_id
         if not product_type:
-            product_type = "product"
+            product_type = "consu"
         volume = length * height * width
         return cls.env["product.product"].create(
             {
                 "name": name,
                 "uom_id": uom_id,
                 "type": product_type,
+                "is_storable": True,
                 "weight": weight,
                 "product_length": length,
                 "product_height": height,

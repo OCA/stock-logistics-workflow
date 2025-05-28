@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" ?>
 <!-- Copyright 2021 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
@@ -20,7 +20,7 @@
             name="name"
         >stock.picking.tree.batch (in stock_picking_batch_creation)</field>
         <field name="model">stock.picking</field>
-        <field name="inherit_id" ref="stock_picking_batch.view_picking_tree_batch" />
+        <field name="inherit_id" ref="stock_picking_batch.vpicktree" />
         <field name="arch" type="xml">
             <field name="state" position="after">
                 <field name="picking_device_id" />

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" ?>
 <!-- Copyright 2021 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
@@ -19,10 +19,10 @@
                     <group name="devices">
                         <label for="stock_device_type_ids" colspan="4" />
                         <field name="stock_device_type_ids" nolabel="1" colspan="4">
-                            <tree>
+                            <list>
                                 <field name="name" />
                                 <field name="sequence" />
-                            </tree>
+                            </list>
                         </field>
                     </group>
                     <group string="Advanced" name="advanced" colspan="4">

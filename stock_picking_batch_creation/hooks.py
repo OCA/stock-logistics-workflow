@@ -8,7 +8,7 @@ from odoo.tools.sql import column_exists, create_column
 _logger = logging.getLogger(__name__)
 
 
-def _create_and_init_nbr_picking_lines_column(cr):
+def _create_and_init_nbr_picking_lines_column(env):
     """Create and initialize the column nbr_picking_lines in the table
     stock_picking
 
@@ -18,11 +18,11 @@ def _create_and_init_nbr_picking_lines_column(cr):
     that are not in state done or cancel
     """
     _logger.info("Create the column nbr_picking_lines in the table stock_picking")
-    if not column_exists(cr, "stock_picking", "nbr_picking_lines"):
-        create_column(cr, "stock_picking", "nbr_picking_lines", "integer")
+    if not column_exists(env.cr, "stock_picking", "nbr_picking_lines"):
+        create_column(env.cr, "stock_picking", "nbr_picking_lines", "integer")
 
     _logger.info("Initialize the column nbr_picking_lines")
-    cr.execute(
+    env.cr.execute(
         """
         UPDATE stock_picking
         SET nbr_picking_lines = (
@@ -33,13 +33,13 @@ def _create_and_init_nbr_picking_lines_column(cr):
         Returning id
         """
     )
-    updated_pickings = cr.fetchall()
+    updated_pickings = env.cr.fetchall()
     _logger.info(
         "The column nbr_picking_lines has been initialized for %s pickings",
         len(updated_pickings),
     )
 
 
-def pre_init_hook(cr):
+def pre_init_hook(env):
     """This method is called before the module is installed"""
-    _create_and_init_nbr_picking_lines_column(cr)
+    _create_and_init_nbr_picking_lines_column(env)

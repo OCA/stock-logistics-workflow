@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" ?>
 <!-- Copyright 2021 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
@@ -8,14 +8,14 @@
         >stock.device.type.tree (in stock_picking_batch_creation)</field>
         <field name="model">stock.device.type</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="sequence" widget="handle" />
                 <field name="name" />
                 <field name="min_volume" />
                 <field name="max_volume" />
                 <field name="max_weight" />
                 <field name="nbr_bins" />
-            </tree>
+            </list>
         </field>
     </record>
     <record model="ir.ui.view" id="stock_device_type_form_view">
@@ -75,7 +75,7 @@
     <record model="ir.actions.act_window" id="stock_device_type_act_window">
         <field name="name">Stock Device Type</field>
         <field name="res_model">stock.device.type</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="view_id" ref="stock_device_type_tree_view" />
     </record>
     <menuitem
