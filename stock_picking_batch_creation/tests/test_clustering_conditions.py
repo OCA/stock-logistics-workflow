@@ -1,6 +1,8 @@
 # Copyright 2021 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from odoo.tests import Form
+
 from ..exceptions import (
     NoPickingCandidateError,
     NoSuitableDeviceError,
@@ -478,3 +480,105 @@ class TestClusteringConditions(ClusterPickingCommonFeatures):
         self.picks.action_cancel()
         with self.assertRaises(NoPickingCandidateError):
             self.make_picking_batch.create_batch()
+
+    def test_put_2_pickings_with_volume_in_one_cluster(self):
+        """2 products have a volume :
+        they should still occupy at least one bin each"""
+        device = self.env["stock.device.type"].create(
+            {
+                "name": "test volume devices",
+                "min_volume": 0,
+                "max_volume": 200,
+                "max_weight": 200,
+                "nbr_bins": 6,
+                "sequence": 50,
+            }
+        )
+        make_picking_batch_volume_zero = self.makePickingBatch.create(
+            {
+                "user_id": self.env.user.id,
+                "picking_type_ids": [(4, self.picking_type_1.id)],
+                "stock_device_type_ids": [(4, device.id)],
+                "maximum_number_of_preparation_lines": 6,
+            }
+        )
+        self.p1.write(
+            {
+                "product_length": 1,
+                "product_height": 1,
+                "product_width": 1,
+                "weight": 1,
+            }
+        )
+        self.p2.write(
+            {
+                "product_length": 1,
+                "product_height": 2,
+                "product_width": 3,
+                "weight": 1,
+            }
+        )
+        self.picks.mapped("move_ids")._compute_volume()
+        self.assertEqual(1.0, self.pick1.volume)
+        self.assertEqual(6.0, self.pick2.volume)
+        self.assertEqual(7.0, self.pick3.volume)
+        batch = make_picking_batch_volume_zero._create_batch()
+        self.assertEqual(device, batch.picking_device_id)
+        self.assertEqual(self.pick3 | self.pick2 | self.pick1, batch.picking_ids)
+
+        # All picks have a volume of 0 : they should each occupy one bin
+        self.assertEqual(batch.batch_nbr_bins, 3)
+
+    def test_changing_device_constraints(self):
+        device = self.env["stock.device.type"].create(
+            {
+                "name": "test volume devices",
+                "min_volume": 0,
+                "max_volume": 200,
+                "max_weight": 200,
+                "nbr_bins": 6,
+                "sequence": 50,
+            }
+        )
+        self.assertEqual(device.user_max_volume, 200.0)
+        self.assertEqual(device.user_min_volume, 0.0)
+        self.assertEqual(device.user_max_weight, 200.0)
+
+        device.write(
+            {
+                "min_volume": 100.0,
+            }
+        )
+        self.assertEqual(device.user_min_volume, 100.0)
+        self.assertAlmostEqual(device.volume_per_bin, 33.33, places=2)
+
+        # Test user interface
+        with Form(device) as device_form:
+            device_form.user_min_volume = 0.0
+        device = device_form.save()
+        self.assertEqual(device.min_volume, 0.0)
+
+        with Form(device) as device_form:
+            device_form.user_min_volume = 10.0
+        device = device_form.save()
+        self.assertEqual(device.min_volume, 10.0)
+
+        with Form(device) as device_form:
+            device_form.user_max_volume = 300.0
+        device = device_form.save()
+        self.assertEqual(device.max_volume, 300.0)
+
+        with Form(device) as device_form:
+            device_form.user_max_volume = 0.0
+        device = device_form.save()
+        self.assertEqual(device.max_volume, 0.0)
+
+        with Form(device) as device_form:
+            device_form.user_max_weight = 0.0
+        device = device_form.save()
+        self.assertEqual(device.max_weight, 0.0)
+
+        with Form(device) as device_form:
+            device_form.user_max_weight = 100.0
+        device = device_form.save()
+        self.assertEqual(device.max_weight, 100.0)
