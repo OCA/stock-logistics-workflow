@@ -25,6 +25,7 @@ class StockPicking(models.Model):
     @api.depends(
         "move_ids_without_package",
         "move_ids_without_package.quantity_done",
+        "move_ids_without_package.product_uom_qty",
         "move_ids_without_package.purchase_line_id",
     )
     def _compute_has_quantity_alert(self):
