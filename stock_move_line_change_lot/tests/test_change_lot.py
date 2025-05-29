@@ -11,7 +11,7 @@ class ChangeLotCase(TransactionCase):
 
     @classmethod
     def setUpClass(cls):
-        super(ChangeLotCase, cls).setUpClass()
+        super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
 
         cls.wh = cls.env.ref("stock.warehouse0")

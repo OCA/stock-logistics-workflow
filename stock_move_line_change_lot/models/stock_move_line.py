@@ -61,10 +61,10 @@ class StockMoveLine(models.Model):
 
     def write(self, vals):
         if self.env.context.get("bypass_reservation_update"):
-            return super(StockMoveLine, self).write(vals)
+            return super().write(vals)
 
         if not vals.get("lot_id"):
-            return super(StockMoveLine, self).write(vals)
+            return super().write(vals)
 
         res = True
         already_processed = self.browse()
@@ -100,13 +100,15 @@ class StockMoveLine(models.Model):
                     strict=False,
                 )
                 .filtered(
-                    lambda q: q.location_id == location
-                    and is_bigger(q.quantity, 0, rounding)
+                    lambda q, r=rounding, loc=location: q.location_id == loc
+                    and is_bigger(q.quantity, 0, r)
                 )
             )
             if quants:
                 quants_available = quants.filtered(
-                    lambda q: is_bigger(q.quantity - q.reserved_quantity, 0, rounding)
+                    lambda q, r=rounding: is_bigger(
+                        q.quantity - q.reserved_quantity, 0, r
+                    )
                 )
 
                 if (
