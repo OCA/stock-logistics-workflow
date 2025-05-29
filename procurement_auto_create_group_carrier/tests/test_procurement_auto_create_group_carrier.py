@@ -1,14 +1,13 @@
 # Copyright 2021 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 
-from odoo.tests import TransactionCase
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestProcurementAutoCreateGroupCarrier(TransactionCase):
+class TestProcurementAutoCreateGroupCarrier(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.StockMove = cls.env["stock.move"]
         cls.warehouse = cls.env.ref("stock.warehouse0")
         cls.location1 = cls.env.ref("stock.stock_location_stock")
@@ -34,7 +33,7 @@ class TestProcurementAutoCreateGroupCarrier(TransactionCase):
         cls.product = cls.env["product.product"].create(
             {
                 "name": "Test Product 1",
-                "type": "product",
+                "is_storable": True,
                 "route_ids": [(6, 0, [route_auto.id])],
             }
         )
