@@ -1,10 +1,7 @@
 from . import models
 
-from odoo import api, SUPERUSER_ID
 
-
-def post_init_hook(cr, registry):
-    env = api.Environment(cr, SUPERUSER_ID, {})
+def post_init_hook(env):
     # Before this module you receive partials from subcontracted vendor
     # Backorders got wrong related origin_move_ids from manufacturing orders
     # This script tries to correct associate

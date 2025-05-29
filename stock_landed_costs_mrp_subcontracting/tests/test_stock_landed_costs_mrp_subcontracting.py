@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo.tests import Form, tagged
 
-from odoo.addons.stock_account.tests.test_anglo_saxon_valuation_reconciliation_common import (
+from odoo.addons.stock_account.tests.test_anglo_saxon_valuation_reconciliation_common import (  # noqa: E501
     ValuationReconciliationTestCommon,
 )
 
@@ -10,8 +10,8 @@ from odoo.addons.stock_account.tests.test_anglo_saxon_valuation_reconciliation_c
 @tagged("post_install", "-at_install")
 class TestStockLandedCostsMrpSubcontracting(ValuationReconciliationTestCommon):
     @classmethod
-    def setUpClass(cls, chart_template_ref=None):
-        super().setUpClass(chart_template_ref=chart_template_ref)
+    def setUpClass(cls):
+        super().setUpClass()
         # Get required Model
         cls.account_model = cls.env["account.account"].sudo()
         cls.quant_model = cls.env["stock.quant"]
@@ -69,7 +69,7 @@ class TestStockLandedCostsMrpSubcontracting(ValuationReconciliationTestCommon):
         cls.product_subcontracted = cls.env["product.product"].create(
             {
                 "name": "product_subcontracted",
-                "type": "product",
+                "is_storable": True,
                 "categ_id": cls.category_fifo_automated.id,
                 "route_ids": [
                     (6, 0, cls.env.ref("purchase_stock.route_warehouse0_buy").ids)
@@ -92,7 +92,7 @@ class TestStockLandedCostsMrpSubcontracting(ValuationReconciliationTestCommon):
         cls.product_component = cls.env["product.product"].create(
             {
                 "name": "product_component",
-                "type": "product",
+                "is_storable": True,
                 "categ_id": cls.category_fifo_automated.id,
                 "route_ids": [
                     (
@@ -150,14 +150,7 @@ class TestStockLandedCostsMrpSubcontracting(ValuationReconciliationTestCommon):
     def done_picking(self, picking):
         picking.action_confirm()
         picking.action_assign()
-        res_dict = picking.button_validate()
-        wizard = Form(
-            self.env[(res_dict.get("res_model"))].with_context(
-                **res_dict.get("context")
-            )
-        ).save()
-        wizard.process()
-        return True
+        return picking.button_validate()
 
     def test_01(self):
         # Create a purchase order for the subcontracting vendor and the
