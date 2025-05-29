@@ -34,21 +34,21 @@ class StockMoveLine(models.Model):
                 ("location_id", "=", location.id),
                 ("package_id", "=", package.id),
                 ("state", "in", ("partially_available", "assigned")),
-                ("reserved_uom_qty", ">", 0),
-                ("qty_done", "=", 0),
+                ("quantity", ">", 0),
+                ("picked", "=", False),
             ],
-            order="reserved_uom_qty desc",
+            order="quantity desc",
         )
         # Favor lines from non-printed pickings.
         other_lines.sorted(
             lambda ml: (
                 ml.picking_id == self.picking_id or not ml.picking_id.printed,
-                -ml.reserved_uom_qty,
+                -ml.quantity,
             )
         )
         # Stop when required quantity is reached
         for line in other_lines:
-            freed_quantity += line.reserved_qty
+            freed_quantity += line.quantity_product_uom
             to_reassign_moves |= line.move_id
             # if we leave the package level, it will try to reserve the same
             # one again. This will trigger the deletion of the package level
@@ -155,8 +155,10 @@ class StockMoveLine(models.Model):
                         continue
                     available_quantity += quant.quantity - quant.reserved_quantity
 
-                if is_lesser(available_quantity, move_line.reserved_qty, rounding):
-                    need = move_line.reserved_qty - available_quantity
+                if is_lesser(
+                    available_quantity, move_line.quantity_product_uom, rounding
+                ):
+                    need = move_line.quantity_product_uom - available_quantity
                     (
                         freed_quantity,
                         to_reassign_moves,
@@ -167,29 +169,34 @@ class StockMoveLine(models.Model):
                     to_reassign_moves |= to_reassign_moves
 
                     if is_lesser(
-                        available_quantity, move_line.reserved_qty, rounding
+                        available_quantity, move_line.quantity_product_uom, rounding
                     ) and is_bigger(available_quantity, 0, rounding):
                         # When a partial quantity is found, find other
                         # available goods for the lines which were using
                         # the lot before...
                         to_reassign_moves |= self.move_id
 
-            if is_lesser(available_quantity, move_line.reserved_qty, rounding):
+            if is_lesser(available_quantity, move_line.quantity_product_uom, rounding):
                 new_uom_qty = product.uom_id._compute_quantity(
                     available_quantity,
                     move_line.product_uom_id,
                     rounding_method="HALF-UP",
                 )
                 values = vals.copy()
-                values["reserved_uom_qty"] = new_uom_qty
+                values["quantity"] = new_uom_qty
                 res &= super(StockMoveLine, move_line).write(values)
                 # recompute the state to be "partially_available"
                 move_line.move_id._recompute_state()
                 already_processed |= move_line
 
         still_todo = self - already_processed
-        if still_todo:
-            res &= super(StockMoveLine, still_todo).write(vals)
+        for line in still_todo:
+            # Always set the 'quantity' value in 'vals', this ensure quants are
+            # synchronized with the data set on the move line starting from Odoo 18.0
+            # (see '<stock.move.line.write()' method in 'stock' module).
+            values = vals.copy()
+            values["quantity"] = move_line.quantity
+            res &= super(StockMoveLine, line).write(values)
         if to_reassign_moves:
             self._handle_change_lot_reassign(
                 lot, to_reassign_moves, moves_by_previous_lot

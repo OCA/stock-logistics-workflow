@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from collections import namedtuple
 
-from odoo.tests.common import Form, TransactionCase
+from odoo.tests import Form, TransactionCase
 
 
 class ChangeLotCase(TransactionCase):
@@ -26,7 +26,7 @@ class ChangeLotCase(TransactionCase):
             .create(
                 {
                     "name": "Product A",
-                    "type": "product",
+                    "is_storable": True,
                     "tracking": "lot",
                 }
             )
@@ -37,7 +37,7 @@ class ChangeLotCase(TransactionCase):
             .create(
                 {
                     "name": "Product B",
-                    "type": "product",
+                    "is_storable": True,
                 }
             )
         )
@@ -140,7 +140,9 @@ class ChangeLotCase(TransactionCase):
         self.assertRecordValues(line, [{"lot_id": new_lot.id}])
         # check that reservations have been updated
         self.assert_quant_reserved_qty(line, lambda: 0, lot=initial_lot)
-        self.assert_quant_reserved_qty(line, lambda: line.reserved_qty, lot=new_lot)
+        self.assert_quant_reserved_qty(
+            line, lambda: line.quantity_product_uom, lot=new_lot
+        )
 
     def test_change_lot_less_quantity(self):
         initial_lot = self._create_lot(self.product_a)
@@ -153,14 +155,18 @@ class ChangeLotCase(TransactionCase):
         # ensure we have our new package in the same location
         self._update_qty_in_location(source_location, line.product_id, 8, lot=new_lot)
         self._change_lot(line, new_lot)
-        self.assertRecordValues(line, [{"lot_id": new_lot.id, "reserved_qty": 8}])
+        self.assertRecordValues(
+            line, [{"lot_id": new_lot.id, "quantity_product_uom": 8}]
+        )
         other_line = line.move_id.move_line_ids - line
         self.assertRecordValues(
-            other_line, [{"lot_id": initial_lot.id, "reserved_qty": 2}]
+            other_line, [{"lot_id": initial_lot.id, "quantity_product_uom": 2}]
         )
         # check that reservations have been updated
         self.assert_quant_reserved_qty(line, lambda: 2, lot=initial_lot)
-        self.assert_quant_reserved_qty(line, lambda: line.reserved_qty, lot=new_lot)
+        self.assert_quant_reserved_qty(
+            line, lambda: line.quantity_product_uom, lot=new_lot
+        )
 
     def test_change_lot_zero_quant(self):
         """No quant in the location for the scanned lot"""
@@ -171,7 +177,9 @@ class ChangeLotCase(TransactionCase):
         line = picking.move_line_ids
         new_lot = self._create_lot(self.product_a)
         self._change_lot(line, new_lot)
-        self.assertRecordValues(line, [{"lot_id": new_lot.id, "reserved_qty": 0}])
+        self.assertRecordValues(
+            line, [{"lot_id": new_lot.id, "quantity_product_uom": 0}]
+        )
         # check that reservations have not been updated
         self.assert_quant_reserved_qty(line, lambda: 0, lot=initial_lot)
         self.assert_quant_reserved_qty(line, lambda: 0, lot=new_lot)
@@ -197,7 +205,7 @@ class ChangeLotCase(TransactionCase):
             [
                 {
                     "lot_id": new_lot.id,
-                    "reserved_qty": 10,
+                    "quantity_product_uom": 10,
                     "package_id": False,
                     "package_level_id": False,
                 }
@@ -206,7 +214,9 @@ class ChangeLotCase(TransactionCase):
 
         # check that reservations have been updated
         self.assert_quant_reserved_qty(line, lambda: 0, lot=initial_lot)
-        self.assert_quant_reserved_qty(line, lambda: line.reserved_qty, lot=new_lot)
+        self.assert_quant_reserved_qty(
+            line, lambda: line.quantity_product_uom, lot=new_lot
+        )
 
     def test_change_lot_reserved_qty(self):
         """Scan a lot already reserved by other lines
@@ -229,15 +239,21 @@ class ChangeLotCase(TransactionCase):
         self.assertEqual(line2.lot_id, new_lot)
 
         self._change_lot(line, new_lot)
-        self.assertRecordValues(line, [{"lot_id": new_lot.id, "reserved_qty": 10}])
+        self.assertRecordValues(
+            line, [{"lot_id": new_lot.id, "quantity_product_uom": 10}]
+        )
         # line has been re-created
         line2 = picking2.move_line_ids
-        self.assertRecordValues(line2, [{"lot_id": initial_lot.id, "reserved_qty": 10}])
+        self.assertRecordValues(
+            line2, [{"lot_id": initial_lot.id, "quantity_product_uom": 10}]
+        )
 
         # check that reservations have been updated
-        self.assert_quant_reserved_qty(line, lambda: line.reserved_qty, lot=new_lot)
         self.assert_quant_reserved_qty(
-            line2, lambda: line2.reserved_qty, lot=initial_lot
+            line, lambda: line.quantity_product_uom, lot=new_lot
+        )
+        self.assert_quant_reserved_qty(
+            line2, lambda: line2.quantity_product_uom, lot=initial_lot
         )
 
     def test_change_lot_reserved_partial_qty(self):
@@ -264,21 +280,27 @@ class ChangeLotCase(TransactionCase):
 
         self._change_lot(line, new_lot)
 
-        self.assertRecordValues(line, [{"lot_id": new_lot.id, "reserved_qty": 8}])
+        self.assertRecordValues(
+            line, [{"lot_id": new_lot.id, "quantity_product_uom": 8}]
+        )
         other_line = picking.move_line_ids - line
         self.assertRecordValues(
-            other_line, [{"lot_id": initial_lot.id, "reserved_qty": 2}]
+            other_line, [{"lot_id": initial_lot.id, "quantity_product_uom": 2}]
         )
         # line has been re-created
         line2 = picking2.move_line_ids
-        self.assertRecordValues(line2, [{"lot_id": initial_lot.id, "reserved_qty": 8}])
+        self.assertRecordValues(
+            line2, [{"lot_id": initial_lot.id, "quantity_product_uom": 8}]
+        )
 
         # check that reservations have been updated
-        self.assert_quant_reserved_qty(line, lambda: line.reserved_qty, lot=new_lot)
+        self.assert_quant_reserved_qty(
+            line, lambda: line.quantity_product_uom, lot=new_lot
+        )
         # both line2 and the line for the 2 remaining will re-reserve the initial lot
         self.assert_quant_reserved_qty(
             other_line,
-            lambda: line2.reserved_qty + other_line.reserved_qty,
+            lambda: line2.quantity_product_uom + other_line.quantity_product_uom,
             lot=initial_lot,
         )
 
@@ -300,18 +322,22 @@ class ChangeLotCase(TransactionCase):
         picking2.action_assign()
         line2 = picking2.move_line_ids
         self.assertEqual(line2.lot_id, new_lot)
-        line2.qty_done = 10.0
+        line2.picked = True
 
         self._change_lot(line, new_lot)
 
         # no reservation
-        self.assertRecordValues(line, [{"lot_id": new_lot.id, "reserved_qty": 0}])
         self.assertRecordValues(
-            line2, [{"lot_id": new_lot.id, "reserved_qty": 10, "qty_done": 10.0}]
+            line, [{"lot_id": new_lot.id, "quantity_product_uom": 0}]
+        )
+        self.assertRecordValues(
+            line2, [{"lot_id": new_lot.id, "quantity_product_uom": 10, "picked": True}]
         )
         # A new line is created to reserve the quantity
         self.assert_quant_reserved_qty(line, lambda: 0, lot=initial_lot)
-        self.assert_quant_reserved_qty(line2, lambda: line2.reserved_qty, lot=new_lot)
+        self.assert_quant_reserved_qty(
+            line2, lambda: line2.quantity_product_uom, lot=new_lot
+        )
 
     def test_change_lot_different_location(self):
         "If the scanned lot is in a different location, we cannot process it"
@@ -350,7 +376,7 @@ class ChangeLotCase(TransactionCase):
                     "package_id": new_package.id,
                     "result_package_id": False,
                     "lot_id": new_lot.id,
-                    "reserved_qty": 10.0,
+                    "quantity_product_uom": 10.0,
                 }
             ],
         )
@@ -358,7 +384,7 @@ class ChangeLotCase(TransactionCase):
         # check that reservations have been updated
         self.assert_quant_reserved_qty(line, lambda: 0, package=initial_package)
         self.assert_quant_reserved_qty(
-            line, lambda: line.reserved_qty, package=new_package
+            line, lambda: line.quantity_product_uom, package=new_package
         )
 
     def test_change_lot_in_package_no_initial_package(self):
@@ -380,7 +406,7 @@ class ChangeLotCase(TransactionCase):
                     "package_id": new_package.id,
                     "result_package_id": False,
                     "lot_id": new_lot.id,
-                    "reserved_qty": 10.0,
+                    "quantity_product_uom": 10.0,
                 }
             ],
         )
@@ -388,5 +414,5 @@ class ChangeLotCase(TransactionCase):
         # check that reservations have been updated
         self.assert_quant_reserved_qty(line, lambda: 0, lot=initial_lot)
         self.assert_quant_reserved_qty(
-            line, lambda: line.reserved_qty, package=new_package
+            line, lambda: line.quantity_product_uom, package=new_package
         )
