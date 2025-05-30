@@ -12,8 +12,10 @@ class TestStockRuleReservation(TestStockCommon):
         cls.product_tv = cls.env["product.product"].create(
             {
                 "name": "Product Variable QTYs",
-                "type": "product",
+                "type": "consu",
                 "categ_id": cls.env.ref("product.product_category_all").id,
+                "is_storable": True,
+                "tracking": "none",
             }
         )
         # Enable pick_ship route and set the pick rule to reserve_max_quantity
@@ -25,19 +27,25 @@ class TestStockRuleReservation(TestStockCommon):
         cls.pick_ship_route = cls.wh.route_ids.filtered(
             lambda r: "(pick + ship)" in r.name
         )
-        cls.pick_rule = cls.pick_ship_route.rule_ids.filtered(
-            lambda rule: "Stock → Output" in rule.name
-        )
         procurement_group = cls.env["procurement.group"].create({})
+        cls.pick_rule = cls.pick_ship_route.rule_ids[0]
         cls.pick_rule.write(
             {
+                "location_dest_id": cls.wh.wh_output_stock_loc_id.id,
                 "group_propagation_option": "fixed",
                 "group_id": procurement_group.id,
             }
         )
-        cls.ship_rule = cls.pick_ship_route.rule_ids - cls.pick_rule
-        # Activate the reserve_max_quantity on the push rule
-        cls.ship_rule.write({"reserve_max_quantity": True})
+        # Activate the reserve_max_quantity on the push rule and make it pull
+        # We don't want to chain pickings, we want to be created all at once
+        cls.ship_rule = cls.pick_ship_route.rule_ids[-1]
+        cls.ship_rule.write(
+            {
+                "action": "pull",
+                "location_src_id": cls.wh.wh_output_stock_loc_id.id,
+                "reserve_max_quantity": True,
+            }
+        )
         # Disable Backorder creation
         cls.wh.pick_type_id.write({"create_backorder": "never"})
         cls.wh.out_type_id.write({"create_backorder": "never"})
@@ -113,14 +121,12 @@ class TestStockRuleReservation(TestStockCommon):
         pick_picking, ship_picking = self._create_pick_ship_pickings(2.0, 1.0)
         # Operations on PICK from scratch
         pick_picking.action_assign()
-        pick_picking.action_set_quantities_to_reservation()
-        pick_picking.move_line_ids[0].qty_done += 1.0
+        pick_picking.move_line_ids[0].quantity += 1.0
         pick_picking.button_validate()
         # Operations on SHIP from scratch
         ship_picking.do_unreserve()
         ship_picking.action_assign()
-        ship_picking.action_set_quantities_to_reservation()
-        self.assertEqual(ship_picking.move_line_ids[0].qty_done, 2.0)
+        self.assertEqual(ship_picking.move_line_ids[0].quantity, 2.0)
         ship_picking.button_validate()
 
     def test_pick_ship_qty_done_not_reached(self):
@@ -128,12 +134,10 @@ class TestStockRuleReservation(TestStockCommon):
         pick_picking, ship_picking = self._create_pick_ship_pickings(2.0, 2.0)
         # Operations on PICK from scratch
         pick_picking.action_assign()
-        pick_picking.action_set_quantities_to_reservation()
-        pick_picking.move_line_ids[0].qty_done -= 1.0
+        pick_picking.move_line_ids[0].quantity -= 1.0
         pick_picking.with_context(skip_sanity_check=True).button_validate()
         # Operations on SHIP from scratch
         ship_picking.do_unreserve()
         ship_picking.action_assign()
-        ship_picking.action_set_quantities_to_reservation()
-        self.assertEqual(ship_picking.move_line_ids[0].qty_done, 1.0)
+        self.assertEqual(ship_picking.move_line_ids[0].quantity, 1.0)
         ship_picking.with_context(skip_sanity_check=True).button_validate()

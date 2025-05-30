@@ -3,8 +3,9 @@
 
 {
     "name": "Stock Rule Reserve Max Quantity",
-    "summary": "Allows to reserve max available quantity when a move comes from an stock rule",
-    "version": "16.0.1.0.1",
+    "summary": "Allows to reserve max available quantity "
+    "when a move comes from an stock rule",
+    "version": "18.0.1.0.0",
     "development_status": "Alpha",
     "category": "Inventory/Inventory",
     "website": "https://github.com/OCA/stock-logistics-workflow",
