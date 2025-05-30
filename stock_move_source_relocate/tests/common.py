@@ -3,7 +3,7 @@
 from odoo.tests import common
 
 
-class SourceRelocateCommon(common.SavepointCase):
+class SourceRelocateCommon(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -32,10 +32,10 @@ class SourceRelocateCommon(common.SavepointCase):
         )
 
         cls.product = cls.env["product.product"].create(
-            {"name": "Product", "type": "product"}
+            {"name": "Product", "type": "consu", "is_storable": True}
         )
         cls.product2 = cls.env["product.product"].create(
-            {"name": "Product2", "type": "product"}
+            {"name": "Product2", "type": "consu", "is_storable": True}
         )
 
     def _create_single_move(self, product, picking_type):

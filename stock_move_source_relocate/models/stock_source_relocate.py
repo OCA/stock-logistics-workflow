@@ -44,7 +44,6 @@ class StockSourceRelocate(models.Model):
     picking_type_id = fields.Many2one(comodel_name="stock.picking.type", required=True)
 
     rule_domain = fields.Char(
-        string="Rule Domain",
         default=[],
         help="Domain based on Stock Moves, to define if the "
         "rule is applicable or not.",
@@ -107,7 +106,8 @@ class StockSourceRelocate(models.Model):
             res.append(
                 (
                     record.id,
-                    f"{self.location_id.display_name} → {self.relocate_location_id.display_name}",
+                    f"{self.location_id.display_name} → "
+                    f"{self.relocate_location_id.display_name}",
                 )
             )
         return res

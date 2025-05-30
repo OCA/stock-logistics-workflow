@@ -40,7 +40,7 @@ class TestSourceRelocate(SourceRelocateCommon):
                 {
                     "state": "confirmed",
                     "product_qty": 10.0,
-                    "reserved_availability": 0.0,
+                    "quantity": 0.0,
                     "location_id": self.loc_replenish.id,
                 }
             ],
@@ -61,19 +61,19 @@ class TestSourceRelocate(SourceRelocateCommon):
                 {
                     "state": "assigned",
                     "product_qty": 3.0,
-                    "reserved_availability": 3.0,
+                    "quantity": 3.0,
                     "location_id": self.wh.lot_stock_id.id,
                 }
             ],
         )
-        new_move = move.picking_id.move_lines - move
+        new_move = move.picking_id.move_ids - move
         self.assertRecordValues(
             new_move,
             [
                 {
                     "state": "confirmed",
                     "product_qty": 7.0,
-                    "reserved_availability": 0.0,
+                    "quantity": 0.0,
                     "location_id": self.loc_replenish.id,
                 }
             ],
@@ -93,7 +93,7 @@ class TestSourceRelocate(SourceRelocateCommon):
                 {
                     "state": "assigned",
                     "product_qty": 10.0,
-                    "reserved_availability": 10.0,
+                    "quantity": 10.0,
                     # keep the original location when it's available
                     "location_id": self.wh.lot_stock_id.id,
                 }
@@ -118,7 +118,7 @@ class TestSourceRelocate(SourceRelocateCommon):
                 {
                     "state": "confirmed",
                     "product_qty": 10.0,
-                    "reserved_availability": 0.0,
+                    "quantity": 0.0,
                     "location_id": self.loc_replenish.id,
                 }
             ],
@@ -129,7 +129,7 @@ class TestSourceRelocate(SourceRelocateCommon):
                 {
                     "state": "confirmed",
                     "product_qty": 10.0,
-                    "reserved_availability": 0.0,
+                    "quantity": 0.0,
                     # the domain exclude this move from the relocation
                     "location_id": self.wh.lot_stock_id.id,
                 }
@@ -152,7 +152,7 @@ class TestSourceRelocate(SourceRelocateCommon):
                 {
                     "state": "confirmed",
                     "product_qty": 10.0,
-                    "reserved_availability": 0.0,
+                    "quantity": 0.0,
                     "location_id": self.loc_replenish.id,
                 }
             ],
@@ -163,7 +163,7 @@ class TestSourceRelocate(SourceRelocateCommon):
                 {
                     "state": "confirmed",
                     "product_qty": 10.0,
-                    "reserved_availability": 0.0,
+                    "quantity": 0.0,
                     # excluded by different picking type
                     "location_id": self.wh.lot_stock_id.id,
                 }
@@ -186,7 +186,7 @@ class TestSourceRelocate(SourceRelocateCommon):
                 {
                     "state": "confirmed",
                     "product_qty": 10.0,
-                    "reserved_availability": 0.0,
+                    "quantity": 0.0,
                     "location_id": self.loc_replenish.id,
                 }
             ],
@@ -197,7 +197,7 @@ class TestSourceRelocate(SourceRelocateCommon):
                 {
                     "state": "confirmed",
                     "product_qty": 10.0,
-                    "reserved_availability": 0.0,
+                    "quantity": 0.0,
                     # excluded by different location
                     "location_id": self.wh.wh_input_stock_loc_id.id,
                 }

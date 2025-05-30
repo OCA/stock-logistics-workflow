@@ -11,11 +11,10 @@
                         name="web_ribbon"
                         title="Archived"
                         bg_color="bg-danger"
-                        attrs="{'invisible': [('active', '=', True)]}"
+                        invisible="active"
                     />
                     <group string="Applicability" name="configuration">
                         <group>
-                            <field name="active" invisible="1" />
                             <field name="location_id" />
                             <field name="picking_type_id" />
                             <field
@@ -64,13 +63,13 @@
         <field name="name">stock.source.relocate</field>
         <field name="model">stock.source.relocate</field>
         <field name="arch" type="xml">
-            <tree name="source-relocation">
+            <list name="source-relocation">
                 <field name="sequence" widget="handle" />
                 <field name="location_id" />
                 <field name="picking_type_id" />
                 <field name="relocate_location_id" />
                 <field name="rule_domain" groups="base.group_no_one" />
-            </tree>
+            </list>
         </field>
     </record>
     <record id="action_stock_source_relocate" model="ir.actions.act_window">

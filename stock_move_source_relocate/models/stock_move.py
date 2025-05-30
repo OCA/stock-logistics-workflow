@@ -17,27 +17,28 @@ class StockMove(models.Model):
         unconfirmed_moves = self.filtered(
             lambda m: m.state in ["confirmed", "partially_available"]
         )
-        super()._action_assign()
+        result = super()._action_assign()
         # could not be (entirely) reserved
         unconfirmed_moves = unconfirmed_moves.filtered(
             lambda m: m.state in ["confirmed", "partially_available"]
         )
         if unconfirmed_moves:
             unconfirmed_moves._apply_source_relocate()
+        return result
 
     def _apply_source_relocate(self):
         """Apply relocation rules.
 
         Returns the recordset of confirmed and partially available moves
         """
-        # Read the `reserved_availability` field of the moves out of the loop
+        # Read the `quantity` field of the moves out of the loop
         # to prevent unwanted cache invalidation when actually reserving.
-        reserved_availability = {move: move.reserved_availability for move in self}
+        quantity = {move: move.quantity for move in self}
         roundings = {move: move.product_id.uom_id.rounding for move in self}
         relocated_ids = []
         _logger.debug(
-            "Try to relocate moves of operation type (%s)"
-            % ", ".join(self.picking_type_id.mapped("name"))
+            f"Try to relocate moves of operation type ("
+            f"{', '.join(self.picking_type_id.mapped('name'))})"
         )
         res_ids = []
         for move in self:
@@ -48,7 +49,7 @@ class StockMove(models.Model):
                 res_ids.append(move.id)
                 continue
             relocated = move._apply_source_relocate_rule(
-                relocation, reserved_availability, roundings
+                relocation, quantity, roundings
             )
             if relocated:
                 relocated_ids.append(relocated.id)
@@ -56,14 +57,14 @@ class StockMove(models.Model):
             else:
                 res_ids.append(move.id)
         if relocated_ids:
-            _logger.debug("Relocated moves %s" % relocated_ids)
+            _logger.debug(f"Relocated moves {relocated_ids}")
             self.browse(relocated_ids)._after_apply_source_relocate_rule()
         return self.browse(res_ids)
 
-    def _apply_source_relocate_rule(self, relocation, reserved_availability, roundings):
+    def _apply_source_relocate_rule(self, relocation, quantity, roundings):
         self.ensure_one()
         rounding = roundings[self]
-        qty_reserved = reserved_availability[self]
+        qty_reserved = quantity[self]
         if float_compare(qty_reserved, 0, precision_rounding=rounding) == 0:
             # nothing could be reserved, however, we want to source the
             # move on the specific relocation (for replenishment), so
