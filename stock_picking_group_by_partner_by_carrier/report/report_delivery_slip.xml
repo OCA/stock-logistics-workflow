@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <template id="report_delivery_document" inherit_id="stock.report_delivery_document">
+    <template
+        id="report_delivery_document"
+        inherit_id="sale_stock.report_delivery_document_inherit_sale_stock"
+    >
         <div class="page" position="before">
             <t t-set="report_lines" t-value="o.get_delivery_report_lines()" />
         </div>
