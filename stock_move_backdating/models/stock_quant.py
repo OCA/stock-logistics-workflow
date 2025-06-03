@@ -88,11 +88,9 @@ class StockQuant(models.Model):
             package_dest_id=package_dest_id,
         )
 
-        date_backdating_ctx = self.env.context.get("date_backdating", False)
+        date_backdating = self.env.context.get("date_backdating", False)
 
-        date_to_use = date_backdating_ctx
-
-        if date_to_use:
+        if date_backdating:
             if "move_line_ids" in res and isinstance(res["move_line_ids"], list):
                 new_move_line_ids = []
                 for line_command in res["move_line_ids"]:
@@ -103,7 +101,7 @@ class StockQuant(models.Model):
                     ):
                         line_values = line_command[2]
                         # Add the backdating date to the move line values
-                        line_values["date"] = date_to_use
+                        line_values["date_backdating"] = date_backdating
                         new_move_line_ids.append((0, 0, line_values))
                     else:
                         new_move_line_ids.append(line_command)
