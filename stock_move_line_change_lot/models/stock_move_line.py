@@ -187,7 +187,9 @@ class StockMoveLine(models.Model):
                 move_line.move_id._recompute_state()
                 already_processed |= move_line
 
-        res &= super(StockMoveLine, self - already_processed).write(vals)
+        still_todo = self - already_processed
+        if still_todo:
+            res &= super(StockMoveLine, still_todo).write(vals)
         if to_reassign_moves:
             self._handle_change_lot_reassign(
                 lot, to_reassign_moves, moves_by_previous_lot
