@@ -6,11 +6,9 @@ from odoo.exceptions import UserError
 
 
 class StockMove(models.Model):
-
     _inherit = "stock.move"
 
     def _action_cancel(self):
-
         orig_moves = self.mapped("move_orig_ids")
         all_om_canceled_or_done = all(
             move.state in ("cancel", "done") for move in orig_moves
