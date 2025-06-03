@@ -36,6 +36,11 @@ msgid "Picking Type"
 msgstr "Tipo prelievo"
 
 #. module: stock_picking_type_force_move_type
+#: model:ir.model,name:stock_picking_type_force_move_type.model_stock_move
+msgid "Stock Move"
+msgstr "Movimento di magazzino"
+
+#. module: stock_picking_type_force_move_type
 #: model:ir.model,name:stock_picking_type_force_move_type.model_stock_picking
 msgid "Transfer"
 msgstr "Trasferimento"
@@ -46,6 +51,3 @@ msgstr "Trasferimento"
 #~ msgstr ""
 #~ "Consente di forzare la politica di spedizione dei prelievi coerentemente "
 #~ "al tipo di prelievo."
-
-#~ msgid "Stock Move"
-#~ msgstr "Movimento di magazzino"

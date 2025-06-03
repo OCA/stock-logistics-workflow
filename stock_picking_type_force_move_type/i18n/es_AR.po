@@ -35,6 +35,11 @@ msgid "Picking Type"
 msgstr "Tipo de Entrega"
 
 #. module: stock_picking_type_force_move_type
+#: model:ir.model,name:stock_picking_type_force_move_type.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento de Inventario"
+
+#. module: stock_picking_type_force_move_type
 #: model:ir.model,name:stock_picking_type_force_move_type.model_stock_picking
 msgid "Transfer"
 msgstr ""
@@ -45,6 +50,3 @@ msgstr ""
 #~ msgstr ""
 #~ "Permite forzar la política de envío de la entrega según el tipo de "
 #~ "entrega."
-
-#~ msgid "Stock Move"
-#~ msgstr "Movimiento de Inventario"
