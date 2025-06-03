@@ -31,6 +31,11 @@ msgid "Picking Type"
 msgstr ""
 
 #. module: stock_picking_type_force_move_type
+#: model:ir.model,name:stock_picking_type_force_move_type.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_picking_type_force_move_type
 #: model:ir.model,name:stock_picking_type_force_move_type.model_stock_picking
 msgid "Transfer"
 msgstr ""
