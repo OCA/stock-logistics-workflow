@@ -3,7 +3,7 @@
 {
     "name": "Stock Picking Type Force Shipping Policy",
     "summary": "Force shipping policies on operation types",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "development_status": "Production/Stable",
     "category": "Warehouse Management",
     "website": "https://github.com/OCA/stock-logistics-workflow",
