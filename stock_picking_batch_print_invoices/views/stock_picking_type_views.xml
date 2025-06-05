@@ -2,7 +2,6 @@
 <!-- Copyright 2024 Moduon Team S.L.
      License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0) -->
 <odoo>
-
     <record
         id="view_picking_type_form_inherit_stock_picking_batch_print_invoices"
         model="ir.ui.view"
