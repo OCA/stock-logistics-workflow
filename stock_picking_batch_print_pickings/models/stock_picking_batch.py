@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0)
 
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -30,7 +30,9 @@ class StockPickingBatch(models.Model):
         for record in self:
             if not record.print_documents:
                 raise UserError(
-                    _("Picking Type %(type)s is not configured to print from batch.")
+                    self.env._(
+                        "Picking Type %(type)s is not configured to print from batch."
+                    )
                     % ({"type": record.picking_type_id.display_name})
                 )
         return self.env.ref(

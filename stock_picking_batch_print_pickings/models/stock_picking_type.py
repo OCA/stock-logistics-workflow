@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0)
 
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -23,5 +23,5 @@ class StockPickingType(models.Model):
         for record in self:
             if record.number_copies_pickings < 0:
                 raise ValidationError(
-                    _("The number of copies must be greater or equal to 0")
+                    self.env._("The number of copies must be greater or equal to 0")
                 )

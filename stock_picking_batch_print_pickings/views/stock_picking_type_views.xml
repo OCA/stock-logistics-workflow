@@ -14,12 +14,11 @@
         />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='batch_auto_confirm']" position="after">
-                <!-- <field name="batch_print_pickings"/> -->
                 <field name="print_documents_from_batch" />
                 <field
                     name="number_copies_pickings"
                     string="Number of Copies per Picking"
-                    attrs="{'invisible': [('print_documents_from_batch', '!=', 'pickings')]}"
+                    invisible="print_documents_from_batch != 'pickings'"
                 />
             </xpath>
         </field>
