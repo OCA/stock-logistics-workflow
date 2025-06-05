@@ -6,7 +6,7 @@
     "version": "14.0.1.1.0",
     "development_status": "Beta",
     "category": "Warehouse Management",
-    "website": "https://github.com/OCA/wms",
+    "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "application": False,

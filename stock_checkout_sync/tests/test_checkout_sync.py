@@ -99,9 +99,9 @@ class TestMoveCommonDestSyncLocation(CheckoutSyncCommonCase):
                     ).ids,
                     "dest_picking_id": self.picking_pack.id,
                     "remaining_help": (
-                        "<ul><li><strong>{}: 3 move(s)</strong></li>\n"
-                        "<li>{}: 1 move(s)</li></ul>"
-                    ).format(self.picking_pack.name, self.picking_pack_post.name),
+                        f"<ul><li><strong>{self.picking_pack.name}: 3 move(s)</strong></li>\n"
+                        f"<li>{self.picking_pack_post.name}: 1 move(s)</li></ul>"
+                    ),
                     "done_dest_picking_ids": [],
                     # True because we have another picking to sync after
                     "show_skip_button": True,
@@ -135,9 +135,9 @@ class TestMoveCommonDestSyncLocation(CheckoutSyncCommonCase):
                     "move_ids": self.pick_move4.ids,
                     "dest_picking_id": self.picking_pack_post.id,
                     "remaining_help": (
-                        "<ul><li>{}: 3 move(s)</li>\n"
-                        "<li><strong>{}: 1 move(s)</strong></li></ul>"
-                    ).format(self.picking_pack.name, self.picking_pack_post.name),
+                        f"<ul><li>{self.picking_pack.name}: 3 move(s)</li>\n"
+                        f"<li><strong>{self.picking_pack_post.name}: 1 move(s)</strong></li></ul>"
+                    ),
                     "done_dest_picking_ids": self.picking_pack.ids,
                     # False because it's the last step to sync
                     "show_skip_button": False,
@@ -225,9 +225,9 @@ class TestMoveCommonDestSyncLocation(CheckoutSyncCommonCase):
                     "move_ids": self.pick_move4.ids,
                     "dest_picking_id": self.picking_pack_post.id,
                     "remaining_help": (
-                        "<ul><li>{}: 3 move(s)</li>\n"
-                        "<li><strong>{}: 1 move(s)</strong></li></ul>"
-                    ).format(self.picking_pack.name, self.picking_pack_post.name),
+                        f"<ul><li>{self.picking_pack.name}: 3 move(s)</li>\n"
+                        f"<li><strong>{self.picking_pack_post.name}: 1 move(s)</strong></li></ul>"
+                    ),
                     "done_dest_picking_ids": self.picking_pack.ids,
                     # False because it's the last step to sync
                     "show_skip_button": False,
@@ -249,9 +249,9 @@ class TestMoveCommonDestSyncLocation(CheckoutSyncCommonCase):
                     ).ids,
                     "dest_picking_id": self.picking_pack.id,
                     "remaining_help": (
-                        "<ul><li><strong>{}: 3 move(s)</strong></li>\n"
-                        "<li>{}: 1 move(s)</li></ul>"
-                    ).format(self.picking_pack.name, self.picking_pack_post.name),
+                        f"<ul><li><strong>{self.picking_pack.name}: 3 move(s)</strong></li>\n"
+                        f"<li>{self.picking_pack_post.name}: 1 move(s)</li></ul>"
+                    ),
                     "done_dest_picking_ids": [],
                     # True because we have another picking to sync after
                     "show_skip_button": True,
