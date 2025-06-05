@@ -13,19 +13,21 @@ from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 @tagged("-at_install", "post_install")
 class TestBatchPrintInvoices(AccountTestInvoicingCommon):
     @classmethod
-    def setUpClass(cls, chart_template_ref=None):
-        super().setUpClass(chart_template_ref=chart_template_ref)
+    def setUpClass(cls):
+        super().setUpClass()
         cls.productA = cls.env["product.product"].create(
             {
                 "name": "Product A",
-                "type": "product",
+                "type": "consu",
+                "tracking": "none",
                 "invoice_policy": "order",
             }
         )
         cls.productB = cls.env["product.product"].create(
             {
                 "name": "Product B",
-                "type": "product",
+                "type": "consu",
+                "tracking": "none",
                 "invoice_policy": "delivery",
             }
         )
