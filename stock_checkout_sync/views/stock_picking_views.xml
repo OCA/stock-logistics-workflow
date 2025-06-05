@@ -13,7 +13,7 @@
                     type="object"
                     class="oe_highlight"
                     groups="base.group_user"
-                    attrs="{'invisible': [('can_sync_to_checkout', '=', False)]}"
+                    invisible="not can_sync_to_checkout"
                 />
             </button>
         </field>

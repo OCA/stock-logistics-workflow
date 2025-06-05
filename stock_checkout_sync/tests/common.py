@@ -1,22 +1,21 @@
 # Copyright 2020 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
-from odoo.tests import SavepointCase
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class CheckoutSyncCommonCase(SavepointCase):
+class CheckoutSyncCommonCase(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.packing_location = cls.env.ref("stock.location_pack_zone")
         cls.warehouse = cls.env.ref("stock.warehouse0")
         cls.warehouse.write({"delivery_steps": "pick_pack_ship"})
         cls.stock_shelf_location = cls.env.ref("stock.stock_location_components")
         cls.product_1 = cls.env["product.product"].create(
-            {"name": "Product", "type": "product"}
+            {"name": "Product", "type": "consu", "is_storable": True}
         )
         cls.product_2 = cls.env["product.product"].create(
-            {"name": "Product2", "type": "product"}
+            {"name": "Product2", "type": "consu", "is_storable": True}
         )
         cls.pick_type = cls.warehouse.pick_type_id
         cls.pack_type = cls.warehouse.pack_type_id

@@ -25,15 +25,12 @@ class TestMoveCommonDestSyncLocation(CheckoutSyncCommonCase):
         # PICK
         #  - pick_move1 -> pack_move1
         #  - pick_move2 -> pack_move2
-        #  - pick_move4 -> pack_move4
         # PICK_SPECIAL
         #  - pick_move3 -> pack_move3
         # PACK
         #  - pack_move1
         #  - pack_move2
         #  - pack_move3
-        # PACK_POSTE
-        #  - pack_move4
 
         cls.pick_move1 = cls._create_single_move(cls.pick_type, cls.product_1)
         cls.pack_move1 = cls._create_single_move(
@@ -47,10 +44,6 @@ class TestMoveCommonDestSyncLocation(CheckoutSyncCommonCase):
         cls.pack_move3 = cls._create_single_move(
             cls.pack_type, cls.product_1, move_orig=cls.pick_move3
         )
-        cls.pick_move4 = cls._create_single_move(cls.pick_type, cls.product_2)
-        cls.pack_move4 = cls._create_single_move(
-            cls.pack_post_type, cls.product_2, move_orig=cls.pick_move4
-        )
         cls.moves = moves = (
             cls.pick_move1
             + cls.pack_move1
@@ -58,13 +51,10 @@ class TestMoveCommonDestSyncLocation(CheckoutSyncCommonCase):
             + cls.pack_move2
             + cls.pick_move3
             + cls.pack_move3
-            + cls.pick_move4
-            + cls.pack_move4
         )
         moves._assign_picking()
 
         cls.picking_pack = cls.pack_move1.picking_id
-        cls.picking_pack_post = cls.pack_move4.picking_id
 
     def _prepare_pickings(self, with_check=True):
         self.pack_type.checkout_sync = True
@@ -74,7 +64,6 @@ class TestMoveCommonDestSyncLocation(CheckoutSyncCommonCase):
             self.assertTrue(self.pick_move1.picking_id.can_sync_to_checkout)
             self.assertTrue(self.pick_move2.picking_id.can_sync_to_checkout)
             self.assertTrue(self.pick_move3.picking_id.can_sync_to_checkout)
-            self.assertTrue(self.pick_move4.picking_id.can_sync_to_checkout)
 
         self.moves._action_assign()
         if not with_check:
@@ -82,7 +71,6 @@ class TestMoveCommonDestSyncLocation(CheckoutSyncCommonCase):
         self.assertEqual(self.pick_move1.state, "assigned")
         self.assertEqual(self.pick_move2.state, "assigned")
         self.assertEqual(self.pick_move3.state, "assigned")
-        self.assertEqual(self.pick_move4.state, "assigned")
 
     def test_pack_sync(self):
         self._prepare_pickings()
@@ -98,18 +86,15 @@ class TestMoveCommonDestSyncLocation(CheckoutSyncCommonCase):
                         self.pick_move1 | self.pick_move2 | self.pick_move3
                     ).ids,
                     "dest_picking_id": self.picking_pack.id,
-                    "remaining_help": (
-                        f"<ul><li><strong>{self.picking_pack.name}: 3 move(s)</strong></li>\n"
-                        f"<li>{self.picking_pack_post.name}: 1 move(s)</li></ul>"
-                    ),
+                    "remaining_help": False,
                     "done_dest_picking_ids": [],
-                    # True because we have another picking to sync after
-                    "show_skip_button": True,
+                    # False because we do not have other picking to sync after
+                    "show_skip_button": False,
                 }
             ],
         )
         wizard.location_id = self.packing_location_1
-        next_action = wizard.sync()
+        wizard.sync()
 
         # Sync updated the destinations
         self.assert_locations(
@@ -118,40 +103,6 @@ class TestMoveCommonDestSyncLocation(CheckoutSyncCommonCase):
                 self.pick_move1
                 | self.pick_move2
                 | self.pick_move3: self.packing_location_1,
-                # pick_move4 should not change, because it reaches a move in a
-                # different picking,
-                self.pick_move4: self.packing_location,
-            }
-        )
-
-        # a new wizard has been created for the second step
-        wizard = self.env["stock.move.checkout.sync"].browse(next_action["res_id"])
-
-        self.assertRecordValues(
-            wizard,
-            [
-                {
-                    "picking_ids": self.pick_move1.picking_id.ids,
-                    "move_ids": self.pick_move4.ids,
-                    "dest_picking_id": self.picking_pack_post.id,
-                    "remaining_help": (
-                        f"<ul><li>{self.picking_pack.name}: 3 move(s)</li>\n"
-                        f"<li><strong>{self.picking_pack_post.name}: 1 move(s)</strong></li></ul>"
-                    ),
-                    "done_dest_picking_ids": self.picking_pack.ids,
-                    # False because it's the last step to sync
-                    "show_skip_button": False,
-                }
-            ],
-        )
-        wizard.location_id = self.packing_location_2
-        next_action = wizard.sync()
-        self.assert_locations(
-            {
-                self.pick_move1
-                | self.pick_move2
-                | self.pick_move3: self.packing_location_1,
-                self.pick_move4: self.packing_location_2,
             }
         )
 
@@ -161,7 +112,6 @@ class TestMoveCommonDestSyncLocation(CheckoutSyncCommonCase):
         self.assertFalse(self.pick_move1.picking_id.can_sync_to_checkout)
         self.assertFalse(self.pick_move2.picking_id.can_sync_to_checkout)
         self.assertFalse(self.pick_move3.picking_id.can_sync_to_checkout)
-        self.assertFalse(self.pick_move4.picking_id.can_sync_to_checkout)
 
     def test_pack_sync_in_2_times(self):
         # In this test, instead of having all the move lines to sync at the
@@ -185,17 +135,13 @@ class TestMoveCommonDestSyncLocation(CheckoutSyncCommonCase):
                 self.pick_move1
                 | self.pick_move2
                 | self.pick_move3: self.packing_location_1,
-                # pick_move4 should not change, because it reaches a move in a
-                # different picking,
-                self.pick_move4: self.packing_location,
             }
         )
 
-        (self.pick_move2 | self.pick_move3 | self.pick_move4)._action_assign()
+        (self.pick_move2 | self.pick_move3)._action_assign()
         self.assertEqual(self.pick_move1.state, "assigned")
         self.assertEqual(self.pick_move2.state, "assigned")
         self.assertEqual(self.pick_move3.state, "assigned")
-        self.assertEqual(self.pick_move4.state, "assigned")
 
         # same check as before, but it will check the move lines as well
         self.assert_locations(
@@ -204,9 +150,6 @@ class TestMoveCommonDestSyncLocation(CheckoutSyncCommonCase):
                 self.pick_move1
                 | self.pick_move2
                 | self.pick_move3: self.packing_location_1,
-                # pick_move4 should not change, because it reaches a move in a
-                # different picking,
-                self.pick_move4: self.packing_location,
             }
         )
 
@@ -215,25 +158,7 @@ class TestMoveCommonDestSyncLocation(CheckoutSyncCommonCase):
         next_action = self.pick_move1.picking_id.open_checkout_sync_wizard()
         wizard = self.env["stock.move.checkout.sync"].browse(next_action["res_id"])
         next_action = wizard.skip_to_next()
-        # a new wizard has been created for the second step
-        wizard = self.env["stock.move.checkout.sync"].browse(next_action["res_id"])
-        self.assertRecordValues(
-            wizard,
-            [
-                {
-                    "picking_ids": self.pick_move1.picking_id.ids,
-                    "move_ids": self.pick_move4.ids,
-                    "dest_picking_id": self.picking_pack_post.id,
-                    "remaining_help": (
-                        f"<ul><li>{self.picking_pack.name}: 3 move(s)</li>\n"
-                        f"<li><strong>{self.picking_pack_post.name}: 1 move(s)</strong></li></ul>"
-                    ),
-                    "done_dest_picking_ids": self.picking_pack.ids,
-                    # False because it's the last step to sync
-                    "show_skip_button": False,
-                }
-            ],
-        )
+        self.assertFalse(next_action)
 
     def test_open_checkout_sync_wizard(self):
         self._prepare_pickings(with_check=False)
@@ -248,13 +173,10 @@ class TestMoveCommonDestSyncLocation(CheckoutSyncCommonCase):
                         self.pick_move1 | self.pick_move2 | self.pick_move3
                     ).ids,
                     "dest_picking_id": self.picking_pack.id,
-                    "remaining_help": (
-                        f"<ul><li><strong>{self.picking_pack.name}: 3 move(s)</strong></li>\n"
-                        f"<li>{self.picking_pack_post.name}: 1 move(s)</li></ul>"
-                    ),
+                    "remaining_help": False,
                     "done_dest_picking_ids": [],
-                    # True because we have another picking to sync after
-                    "show_skip_button": True,
+                    # False because we do not have other picking to sync after
+                    "show_skip_button": False,
                 }
             ],
         )

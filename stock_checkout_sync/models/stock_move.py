@@ -4,6 +4,8 @@ from collections import OrderedDict
 
 from odoo import models
 
+MOVE_STATES_IN_PROGRESS = ("confirmed", "waiting", "partially_available", "assigned")
+
 
 class StockMove(models.Model):
     _inherit = "stock.move"
@@ -17,15 +19,18 @@ class StockMove(models.Model):
         # destination move can change, so handle this case too. (there is a
         # glue module stock_dynamic_routing_checkout_sync).
         moves_to_update = self.filtered(lambda m: m.location_dest_id != location)
-        moves_to_update.write({"location_dest_id": location.id})
+        moves_to_update.picking_id.location_dest_id = location
+        moves_to_update.location_dest_id = location
         # Sync the source of the destination move too, if it's still waiting.
-        moves_to_update.move_dest_ids.filtered(
-            lambda m: (m.state == "waiting" or m.state == "assigned")
-            and m.location_id != location
-        ).write({"location_id": location.id})
+        moves_dest = moves_to_update.move_dest_ids.filtered(
+            # FIXME add partially_available?
+            lambda m: m.state in MOVE_STATES_IN_PROGRESS and m.location_id != location
+        )
+        moves_dest.picking_id.location_id = location
+        moves_dest.location_id = location
 
         lines = moves.mapped("move_line_ids").filtered(
-            lambda l: l.location_dest_id != location and l.state != "done"
+            lambda line: line.location_dest_id != location and line.state != "done"
         )
         lines.write({"location_dest_id": location.id})
         lines.package_level_id.write({"location_dest_id": location.id})

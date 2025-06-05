@@ -12,11 +12,11 @@ class StockPicking(models.Model):
         "the destination towards a checkout location is visible.",
     )
 
-    @api.depends("move_lines.move_dest_ids")
+    @api.depends("move_ids.move_dest_ids")
     def _compute_can_sync_to_checkout(self):
         for picking in self:
             picking.can_sync_to_checkout = False
-            for dest_move in picking.mapped("move_lines.move_dest_ids"):
+            for dest_move in picking.mapped("move_ids.move_dest_ids"):
                 if dest_move.picking_type_id.checkout_sync:
                     picking.can_sync_to_checkout = True
                     break

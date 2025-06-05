@@ -1,6 +1,6 @@
 # Copyright 2020 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
-from odoo import _, fields, models
+from odoo import fields, models
 
 
 class StockMoveCheckoutSync(models.TransientModel):
@@ -21,7 +21,7 @@ class StockMoveCheckoutSync(models.TransientModel):
         comodel_name="stock.picking",
         relation="stock_move_checkout_sync_stock_picking_done_dest_rel",
     )
-    show_skip_button = fields.Boolean(default=False)
+    show_skip_button = fields.Boolean()
     picking_type_location_id = fields.Many2one(
         related="dest_picking_id.picking_type_id.default_location_src_id",
         readonly=True,
@@ -47,7 +47,7 @@ class StockMoveCheckoutSync(models.TransientModel):
         if wizard:
             view = self.env.ref("stock_checkout_sync.view_stock_move_checkout_sync")
             return {
-                "name": _("Checkout Sync"),
+                "name": self.env._("Checkout Sync"),
                 "type": "ir.actions.act_window",
                 "view_mode": "form",
                 "res_model": self._name,
@@ -60,13 +60,19 @@ class StockMoveCheckoutSync(models.TransientModel):
 
     def _remaining_html_fragment(self, picking, moves, selected=False):
         if selected:
-            return _("<li><strong>{}: {} move(s)</strong></li>").format(
-                picking.name, len(moves)
+            return self.env._(
+                "<li><strong>%(picking_name)s: %(nb_moves)s move(s)</strong></li>",
+                picking_name=picking.name,
+                nb_moves=len(moves),
             )
-        return _("<li>{}: {} move(s)</li>").format(picking.name, len(moves))
+        return self.env._(
+            "<li>%(picking_name)s: %(nb_moves)s move(s)</li>",
+            picking_name=picking.name,
+            nb_moves=len(moves),
+        )
 
     def _prepare_values_checkout_sync_wizard(self, pickings, done_dest_pickings=None):
-        dest_pickings = pickings.mapped("move_lines")._moves_to_sync_checkout()
+        dest_pickings = pickings.mapped("move_ids")._moves_to_sync_checkout()
         html_fragments = []
         dest_picking_to_sync = None
         moves_to_sync = None
