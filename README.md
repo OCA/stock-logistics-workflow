@@ -45,6 +45,7 @@ addon | version | maintainers | summary
 [stock_picking_batch_invoice_frequency](stock_picking_batch_invoice_frequency/) | 18.0.1.0.1 | <a href='https://github.com/EmilioPascual'><img src='https://github.com/EmilioPascual.png' width='32' height='32' style='border-radius:50%;' alt='EmilioPascual'/></a> <a href='https://github.com/rafaelbn'><img src='https://github.com/rafaelbn.png' width='32' height='32' style='border-radius:50%;' alt='rafaelbn'/></a> | Invoice Sale Orders from Stock Pickin Batch
 [stock_picking_filter_lot](stock_picking_filter_lot/) | 18.0.1.0.0 |  | In picking out lots' selection, filter lots based on their location
 [stock_picking_group_by_base](stock_picking_group_by_base/) | 18.0.1.0.0 |  | Allows to define a way to create index on extensible domain
+[stock_picking_group_by_partner_by_carrier](stock_picking_group_by_partner_by_carrier/) | 18.0.1.0.0 |  | Stock Picking: group by partner and carrier
 [stock_picking_invoice_link](stock_picking_invoice_link/) | 18.0.1.0.0 |  | Adds link between pickings and invoices
 [stock_picking_kind](stock_picking_kind/) | 18.0.1.0.0 |  | Computes the kind of picking based on locations
 [stock_picking_line_sequence](stock_picking_line_sequence/) | 18.0.1.0.0 |  | Manages the order of stock moves by displaying its sequence
