@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+        <record id="view_picking_form" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form" />
+            <field name="priority" eval="255" />
+            <field name="arch" type="xml">
+                <xpath
+                expr="//notebook/page/field[@name='move_ids_without_package']"
+                position="before"
+            >
+                    <field name="max_line_sequence" invisible="1" />
+                </xpath>
+                <xpath
+                expr="//notebook/page/field[@name='move_ids_without_package']/tree/field[@name='name']"
+                position="before"
+            >
+                    <field name="sequence" widget="handle" />
+                    <field name="sequence2" />
+                </xpath>
+            </field>
+        </record>
+
+</odoo>
