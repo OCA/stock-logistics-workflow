@@ -47,7 +47,15 @@ class StockPicking(models.Model):
 
     def _action_done(self):
         result = super()._action_done()
-        for picking in self:
+
+        pickings_backdate = self.filtered_domain(
+            [
+                "|",
+                ("date_backdating", "!=", False),
+                ("move_ids.move_line_ids.date_backdating", "!=", False),
+            ]
+        )
+        for picking in pickings_backdate:
             picking._backdating_update_picking_date()
             picking._backdating_update_stock_valuation_layers_date()
         return result
