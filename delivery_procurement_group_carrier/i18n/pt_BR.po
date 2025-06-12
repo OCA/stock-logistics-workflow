@@ -1,0 +1,40 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* delivery_procurement_group_carrier
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+
+#. module: delivery_procurement_group_carrier
+#: model:ir.model.fields,field_description:delivery_procurement_group_carrier.field_procurement_group__carrier_id
+msgid "Delivery Method"
+msgstr ""
+
+#. module: delivery_procurement_group_carrier
+#: model:ir.model,name:delivery_procurement_group_carrier.model_procurement_group
+msgid "Procurement Group"
+msgstr ""
+
+#. module: delivery_procurement_group_carrier
+#: model:ir.model,name:delivery_procurement_group_carrier.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: delivery_procurement_group_carrier
+#: model:ir.model,name:delivery_procurement_group_carrier.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
+
+#. module: delivery_procurement_group_carrier
+#: model:ir.model,name:delivery_procurement_group_carrier.model_stock_move
+msgid "Stock Move"
+msgstr ""
