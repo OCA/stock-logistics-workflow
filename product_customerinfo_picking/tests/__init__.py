@@ -1,2 +1,2 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from . import test_product_supplierinfo_for_customer_picking
+from . import test_product_customerinfo_picking

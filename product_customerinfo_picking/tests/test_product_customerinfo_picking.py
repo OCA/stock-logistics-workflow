@@ -4,7 +4,7 @@
 from odoo.tests.common import TransactionCase
 
 
-class TestProductSupplierinfoForCustomerPicking(TransactionCase):
+class TestProductCustomerinfoPicking(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -20,7 +20,7 @@ class TestProductSupplierinfoForCustomerPicking(TransactionCase):
                         0,
                         0,
                         {
-                            "name": cls.agrolait.id,
+                            "partner_id": cls.agrolait.id,
                             "product_code": "test_agrolait",
                         },
                     ),
@@ -28,7 +28,7 @@ class TestProductSupplierinfoForCustomerPicking(TransactionCase):
                         0,
                         0,
                         {
-                            "name": cls.gemini.id,
+                            "partner_id": cls.gemini.id,
                             "product_code": "test_gemini",
                         },
                     ),
@@ -36,7 +36,7 @@ class TestProductSupplierinfoForCustomerPicking(TransactionCase):
             }
         )
 
-    def test_product_supplierinfo_for_customer_picking(self):
+    def test_product_customerinfo_picking(self):
         delivery_picking = self.env["stock.picking"].new(
             {
                 "partner_id": self.agrolait.id,
@@ -50,7 +50,7 @@ class TestProductSupplierinfoForCustomerPicking(TransactionCase):
                 "picking_type_id": delivery_picking.picking_type_id.id,
                 "location_id": self.src_location.id,
                 "location_dest_id": self.dest_location.id,
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
@@ -66,11 +66,11 @@ class TestProductSupplierinfoForCustomerPicking(TransactionCase):
                 ],
             }
         )
-        move = delivery_picking.move_lines[0]
+        move = delivery_picking.move_ids[0]
         move._compute_product_customer_code()
         self.assertEqual(move.product_customer_code, "test_agrolait")
 
-    def test_product_supplierinfo_two_costumers(self):
+    def test_product_customerinfo_two_costumers(self):
         delivery_picking = self.env["stock.picking"].new(
             {
                 "partner_id": self.gemini.id,
@@ -84,7 +84,7 @@ class TestProductSupplierinfoForCustomerPicking(TransactionCase):
                 "picking_type_id": delivery_picking.picking_type_id.id,
                 "location_id": self.src_location.id,
                 "location_dest_id": self.dest_location.id,
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
@@ -100,6 +100,6 @@ class TestProductSupplierinfoForCustomerPicking(TransactionCase):
                 ],
             }
         )
-        move = delivery_picking.move_lines[0]
+        move = delivery_picking.move_ids[0]
         move._compute_product_customer_code()
         self.assertEqual(move.product_customer_code, "test_gemini")
