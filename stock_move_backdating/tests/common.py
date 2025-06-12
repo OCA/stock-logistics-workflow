@@ -174,6 +174,7 @@ class TestCommon(tests.TransactionCase):
             )
             for quant in quants:
                 self.assertEqual(quant.in_date.date(), move_date_backdating)
+                quant._apply_inventory()
 
             # Get the quant that received the quantity moved
             quants = self.env["stock.quant"]._gather(
@@ -182,6 +183,7 @@ class TestCommon(tests.TransactionCase):
             )
             for quant in quants:
                 self.assertEqual(quant.in_date.date(), move_date_backdating)
+                quant._apply_inventory()
 
     def _transfer_picking_with_dates(self, *datetime_backdating_list):
         """
