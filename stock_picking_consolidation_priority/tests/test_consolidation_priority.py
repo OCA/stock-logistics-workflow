@@ -171,15 +171,8 @@ class TestConsolidationPriority(SavepointCase):
             moves,
             expected,
             "Priorities are not correct.\n\nExpected:\n{}\n\nGot:\n{}".format(
-                "\n".join(
-                    [
-                        "* {}: {}".format(move.id, move.name)
-                        for move in expected.sorted()
-                    ]
-                ),
-                "\n".join(
-                    ["* {}: {}".format(move.id, move.name) for move in moves.sorted()]
-                ),
+                "\n".join([f"* {move.id}: {move.name}" for move in expected.sorted()]),
+                "\n".join([f"* {move.id}: {move.name}" for move in moves.sorted()]),
             ),
         )
 
@@ -278,7 +271,7 @@ class TestConsolidationPriority(SavepointCase):
             "Priorities are not correct.\n\nExpected:\n{}\n{}\n\nGot:\n{}".format(
                 "\n".join(
                     [
-                        "* {}: {}".format(move.name, expected_priority)
+                        f"* {move.name}: {expected_priority}"
                         for move in changed_moves.sorted("id")
                     ]
                 ),
@@ -290,7 +283,7 @@ class TestConsolidationPriority(SavepointCase):
                 ),
                 "\n".join(
                     [
-                        "* {}: {}".format(move.name, move.priority)
+                        f"* {move.name}: {move.priority}"
                         for move in self.all_chain_moves().sorted(
                             lambda m: (-int(m.priority), m.id)
                         )
@@ -348,12 +341,18 @@ class TestConsolidationPriority(SavepointCase):
         self.assert_priority(
             c.int1_b + c.pick2_a + c.pick2_b + c.pick3_b,
             # int1 and pick3 are unchanged as already done
-            c.int1_a + c.pick3_a
+            c.int1_a
+            + c.pick3_a
             # only moves *before* packs are changed
-            + c.pack1_a + c.pack1_b + c.pack2_a + c.pack2_b
+            + c.pack1_a
+            + c.pack1_b
+            + c.pack2_a
+            + c.pack2_b
             # pick1 is unchanged because they don't
             # go to the same transfer
-            + c.pick1_a + c.pick1_b
+            + c.pick1_a
+            + c.pick1_b
             # outgoing moves are late to the party, no impact on them
-            + c.out1_a + c.out1_b,
+            + c.out1_a
+            + c.out1_b,
         )

@@ -6,7 +6,7 @@
     "summary": "Raise priority of all transfers for a chain when started",
     "version": "14.0.1.1.0",
     "author": "Camptocamp, Odoo Community Association (OCA)",
-    "website": "https://github.com/OCA/wms",
+    "website": "https://github.com/OCA/stock-logistics-workflow",
     "category": "Stock Management",
     "depends": ["stock"],
     "data": ["views/stock_picking_type.xml"],
