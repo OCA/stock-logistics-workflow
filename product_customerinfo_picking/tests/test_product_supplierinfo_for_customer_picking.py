@@ -7,7 +7,7 @@ from odoo.tests.common import TransactionCase
 class TestProductSupplierinfoForCustomerPicking(TransactionCase):
     @classmethod
     def setUpClass(cls):
-        super(TestProductSupplierinfoForCustomerPicking, cls).setUpClass()
+        super().setUpClass()
         cls.src_location = cls.env.ref("stock.stock_location_stock")
         cls.dest_location = cls.env.ref("stock.stock_location_customers")
         cls.computer_SC234 = cls.env.ref("product.product_product_3")
