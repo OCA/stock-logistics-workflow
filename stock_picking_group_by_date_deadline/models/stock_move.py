@@ -1,6 +1,8 @@
-# Copyright 2023 Foodles (http://www.foodles.co).
+# Copyright 2025 Foodles (https://www.foodles.co/).
 # @author Pierre Verkest <pierreverkest84@gmail.com>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+
+
 from datetime import timedelta
 
 from odoo import api, fields, models
@@ -26,7 +28,7 @@ class StockMove(models.Model):
 
     def _key_assign_picking(self):
         keys = super()._key_assign_picking()
-        return keys + (DeadlineDate(self.date_deadline),)
+        return (*keys, DeadlineDate(self.date_deadline))
 
     def _search_picking_for_assignation_domain(self):
         domain = super()._search_picking_for_assignation_domain()
@@ -37,6 +39,7 @@ class StockMove(models.Model):
             super()._inverse_date_deadline()
         for move in self:
             move.date_deadline = self._round_date_deadline(move.date_deadline)
+        return None
 
     @api.model
     def _round_date_deadline(self, deadline):

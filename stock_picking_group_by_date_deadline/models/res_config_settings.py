@@ -1,6 +1,8 @@
-# Copyright 2023 Foodles (http://www.foodles.co).
+# Copyright 2025 Foodles (https://www.foodles.co/).
 # @author Pierre Verkest <pierreverkest84@gmail.com>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+
+
 from odoo import fields, models
 
 

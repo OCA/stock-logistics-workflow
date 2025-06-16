@@ -1,12 +1,14 @@
-# Copyright 2023 Foodles (http://www.foodles.co).
+# Copyright 2025 Foodles (https://www.foodles.co/).
 # @author Pierre Verkest <pierreverkest84@gmail.com>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+
+
 from datetime import datetime
 
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestStockPickingGroupByDateDeadline(SavepointCase):
+class TestStockPickingGroupByDateDeadline(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -21,7 +23,7 @@ class TestStockPickingGroupByDateDeadline(SavepointCase):
             }
         )
         cls.warehouse.write({"delivery_steps": "pick_ship"})
-        two_step_delivery_route = cls.env["stock.location.route"].search(
+        two_step_delivery_route = cls.env["stock.route"].search(
             [("name", "ilike", "deliver in 2")]
         )
         cls.product.categ_id.route_ids |= two_step_delivery_route
@@ -103,28 +105,25 @@ class TestStockPickingGroupByDateDeadline(SavepointCase):
             )
 
     def _update_product_stock(self, qty, location=None):
-        inventory = self.env["stock.inventory"].create(
-            {
-                "name": "Test Inventory",
-                "product_ids": [(6, 0, self.product.ids)],
-                "state": "confirm",
-                "line_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "product_qty": qty,
-                            "location_id": location.id
-                            if location
-                            else self.warehouse.lot_stock_id.id,
-                            "product_id": self.product.id,
-                            "product_uom_id": self.product.uom_id.id,
-                        },
-                    )
-                ],
-            }
+        location = location or self.warehouse.lot_stock_id
+        quant = self.env["stock.quant"].search(
+            [
+                ("product_id", "=", self.product.id),
+                ("location_id", "=", location.id),
+            ]
         )
-        inventory.action_validate()
+        if quant:
+            quant.quantity = qty
+            quant.inventory_quantity = qty
+        else:
+            self.env["stock.quant"].create(
+                {
+                    "product_id": self.product.id,
+                    "location_id": location.id,
+                    "quantity": qty,
+                    "inventory_quantity": qty,
+                }
+            )
 
     def _run_procurement(self, qty_per_deadline):
         """qty_per_deadline is a list of tuple with deadline date, qty::
@@ -170,7 +169,6 @@ class TestStockPickingGroupByDateDeadline(SavepointCase):
         )
 
     def test_procurement_with_2_steps_output_with_different_datetime(self):
-
         date1 = datetime(2123, 2, 12, 16, 25, 32)
         expected_delivery1_deadline = datetime(2123, 2, 12, 12, 0, 0)
         date2 = datetime(2123, 2, 12, 19, 25, 32)
@@ -207,7 +205,6 @@ class TestStockPickingGroupByDateDeadline(SavepointCase):
         )
 
     def test_procurement_with_2_steps_output_with_same_datetime(self):
-
         date1 = datetime(2123, 2, 12, 16, 25, 32)
         expected_delivery1_deadline = datetime(2123, 2, 12, 12, 0, 0)
         date2 = datetime(2123, 2, 12, 14, 33, 22)

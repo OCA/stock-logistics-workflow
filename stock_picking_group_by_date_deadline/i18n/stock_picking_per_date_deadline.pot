@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0\n"
+"Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -31,34 +31,13 @@ msgid "Deadline"
 msgstr ""
 
 #. module: stock_picking_group_by_date_deadline
-#: model:ir.model.fields,field_description:stock_picking_group_by_date_deadline.field_res_config_settings__display_name
-#: model:ir.model.fields,field_description:stock_picking_group_by_date_deadline.field_stock_move__display_name
-#: model:ir.model.fields,field_description:stock_picking_group_by_date_deadline.field_stock_picking__display_name
-msgid "Display Name"
-msgstr ""
-
-#. module: stock_picking_group_by_date_deadline
-#: model:ir.model.fields,field_description:stock_picking_group_by_date_deadline.field_res_config_settings__id
-#: model:ir.model.fields,field_description:stock_picking_group_by_date_deadline.field_stock_move__id
-#: model:ir.model.fields,field_description:stock_picking_group_by_date_deadline.field_stock_picking__id
-msgid "ID"
-msgstr ""
-
-#. module: stock_picking_group_by_date_deadline
-#: model:ir.model.fields,field_description:stock_picking_group_by_date_deadline.field_res_config_settings____last_update
-#: model:ir.model.fields,field_description:stock_picking_group_by_date_deadline.field_stock_move____last_update
-#: model:ir.model.fields,field_description:stock_picking_group_by_date_deadline.field_stock_picking____last_update
-msgid "Last Modified on"
-msgstr ""
-
-#. module: stock_picking_group_by_date_deadline
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_date_deadline.res_config_settings_view_form
-msgid ""
-"Number of hours used to round down deadline date time on stock move.\n"
-"                            While avoiding to mixed move or picking withd different deadline\n"
-"                            this settings gives a chance to merge moves or picking with the same deadline.\n"
-"                            (ie: if set to 6 hours and deadline is 17:22:35 then deadline will be force to 12:00:00).\n"
-"                            If not set, the default is 24 hours to force once a day."
+msgid "Deadline Rounding Threshold"
+msgstr ""
+
+#. module: stock_picking_group_by_date_deadline
+#: model:ir.model.fields,field_description:stock_picking_group_by_date_deadline.field_res_config_settings__deadline_date_rounding_threshold
+msgid "Deadline date rounding threshold (hours)"
 msgstr ""
 
 #. module: stock_picking_group_by_date_deadline
@@ -71,8 +50,13 @@ msgid ""
 msgstr ""
 
 #. module: stock_picking_group_by_date_deadline
-#: model:ir.model.fields,field_description:stock_picking_group_by_date_deadline.field_res_config_settings__deadline_date_rounding_threshold
-msgid "Deadline date rounding threshold (hours)"
+#: model_terms:ir.ui.view,arch_db:stock_picking_group_by_date_deadline.res_config_settings_view_form
+msgid ""
+"Number of hours used to round down deadline date time on stock move. While "
+"avoiding to mix moves or pickings with different deadlines, this setting "
+"gives a chance to merge them. (e.g., if set to 6 hours and deadline is "
+"17:22:35 then deadline will be forced to 12:00:00). If not set, the default "
+"is 24 hours to force once a day."
 msgstr ""
 
 #. module: stock_picking_group_by_date_deadline
