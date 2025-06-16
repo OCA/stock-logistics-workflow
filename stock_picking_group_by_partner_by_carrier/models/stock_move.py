@@ -118,8 +118,8 @@ class StockMove(models.Model):
 
     def _key_assign_picking(self):
         return (
-            self.sale_line_id.order_id.partner_shipping_id,
-            PickingPolicy(id=self.sale_line_id.order_id.picking_policy),
+            self.group_id.partner_id,
+            PickingPolicy(id=self.group_id.move_type),
         ) + super()._key_assign_picking()
 
 
