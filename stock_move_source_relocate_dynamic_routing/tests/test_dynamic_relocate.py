@@ -22,6 +22,7 @@ class TestSourceRelocate(SourceRelocateCommon):
                 "use_existing_lots": True,
                 "default_location_src_id": self.loc_replenish.id,
                 "default_location_dest_id": self.wh.lot_stock_id.id,
+                "reservation_method": "manual",
             }
         )
         self.env["stock.routing"].create(
@@ -46,7 +47,7 @@ class TestSourceRelocate(SourceRelocateCommon):
                 {
                     "state": "confirmed",
                     "product_qty": 10.0,
-                    "reserved_availability": 0.0,
+                    "quantity": 0.0,
                     # routing changed the picking type
                     "picking_type_id": pick_type_replenish.id,
                     "location_id": self.loc_replenish.id,

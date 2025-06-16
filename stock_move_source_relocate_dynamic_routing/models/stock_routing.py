@@ -1,7 +1,7 @@
 # Copyright 2020 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import _, models
+from odoo import models
 
 
 class StockRouting(models.Model):
@@ -16,12 +16,12 @@ class StockRouting(models.Model):
         if len(picking_types) == 1:
             context = dict(context, default_picking_type_id=picking_types.id)
         return {
-            "name": _("Source Relocation"),
+            "name": self.env._("Source Relocation"),
             "domain": [("id", "in", relocate.ids)],
             "res_model": "stock.source.relocate",
             "type": "ir.actions.act_window",
             "view_id": False,
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "limit": 20,
             "context": context,
         }

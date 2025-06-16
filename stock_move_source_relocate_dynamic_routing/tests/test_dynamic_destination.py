@@ -14,7 +14,8 @@ class TestRoutingAndSourceRelocate(TestRoutingPullCommon):
         same destination location, ensure the ship move is not split.
 
         This test is similar to test_change_dest_move_source_split in
-        stock_dynamic_routing/tests/test_routing_pull except that no move_d is created"""
+        stock_dynamic_routing/tests/test_routing_pull except that no move_d is created
+        """
 
         self.env["stock.source.relocate"].create(
             {
@@ -40,6 +41,7 @@ class TestRoutingAndSourceRelocate(TestRoutingPullCommon):
                 "use_existing_lots": True,
                 "default_location_src_id": area1.id,
                 "default_location_dest_id": self.customer_loc.id,
+                "reservation_method": "manual",
             }
         )
         self.env["stock.routing"].create(
@@ -62,8 +64,8 @@ class TestRoutingAndSourceRelocate(TestRoutingPullCommon):
         pick_picking, customer_picking = self._create_pick_ship(
             self.wh, [(self.product1, 10)]
         )
-        move_a = pick_picking.move_lines
-        move_b = customer_picking.move_lines
+        move_a = pick_picking.move_ids
+        move_b = customer_picking.move_ids
 
         self._update_product_qty_in_location(self.location_hb_1_2, move_a.product_id, 6)
         pick_picking.action_assign()
@@ -71,7 +73,7 @@ class TestRoutingAndSourceRelocate(TestRoutingPullCommon):
         move_c = (
             self.env["stock.picking"]
             .search([("picking_type_id", "=", self.pick_type_routing_op.id)])
-            .move_lines
+            .move_ids
         )[0]
         self.assertRecordValues(
             move_a | move_b | move_c,
@@ -145,6 +147,7 @@ class TestRoutingAndSourceRelocate(TestRoutingPullCommon):
                 "use_existing_lots": True,
                 "default_location_src_id": location_shu.id,
                 "default_location_dest_id": self.location_hb.id,
+                "reservation_method": "manual",
             }
         )
         self.env["stock.routing"].create(
@@ -173,6 +176,7 @@ class TestRoutingAndSourceRelocate(TestRoutingPullCommon):
                 "use_existing_lots": True,
                 "default_location_src_id": area1.id,
                 "default_location_dest_id": self.customer_loc.id,
+                "reservation_method": "manual",
             }
         )
         self.env["stock.routing"].create(
@@ -195,8 +199,8 @@ class TestRoutingAndSourceRelocate(TestRoutingPullCommon):
         pick_picking, customer_picking = self._create_pick_ship(
             self.wh, [(self.product1, 10)]
         )
-        move_a = pick_picking.move_lines
-        move_b = customer_picking.move_lines
+        move_a = pick_picking.move_ids
+        move_b = customer_picking.move_ids
 
         self._update_product_qty_in_location(location_shu, move_a.product_id, 6)
         pick_picking.action_assign()
@@ -204,12 +208,12 @@ class TestRoutingAndSourceRelocate(TestRoutingPullCommon):
         move_d = (
             self.env["stock.picking"]
             .search([("picking_type_id", "=", prepick_pick_type.id)])
-            .move_lines
+            .move_ids
         )
         move_c = (
             self.env["stock.picking"]
             .search([("picking_type_id", "=", self.pick_type_routing_op.id)])
-            .move_lines
+            .move_ids
         )[0]
         self.assertRecordValues(
             move_a | move_b | move_c | move_d,
