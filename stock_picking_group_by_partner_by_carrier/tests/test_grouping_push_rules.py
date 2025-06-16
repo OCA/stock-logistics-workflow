@@ -61,7 +61,7 @@ class TestGroupByPushRules(TestGroupByBase, TransactionCase):
         self.assertFalse(so2.picking_ids.carrier_id)
         self.assertNotEqual(so1.picking_ids, so2.picking_ids)
 
-    def test_sale_stock_no_merge_same_carrier_picking_policy_one(self):
+    def test_sale_stock_no_merge_same_carrier_picking_policy_one_disabled(self):
         """2 sale orders for the same partner, with same carrier, deliver at
         once picking policy
 
@@ -82,6 +82,28 @@ class TestGroupByPushRules(TestGroupByBase, TransactionCase):
         self.assertTrue(so1.name in so1.picking_ids[0].origin)
         self.assertTrue(so2.name in so2.picking_ids[0].origin)
 
+    def test_sale_stock_no_merge_same_carrier_picking_policy_one_enabled(self):
+        """2 sale orders for the same partner, with same carrier, deliver at
+        once picking policy
+
+        -> the pickings are merged
+
+        """
+        self.env.ref("stock.warehouse0").group_shippings_one = True
+        so1 = self._get_new_sale_order(carrier=self.carrier1)
+        so1.picking_policy = "one"
+        so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
+        so2.picking_policy = "one"
+        so1.action_confirm()
+        so2.action_confirm()
+        # there is a picking for each the sales, different
+        self.assertTrue(so1.picking_ids)
+        self.assertTrue(so2.picking_ids)
+        self.assertEqual(so1.picking_ids, so2.picking_ids)
+        # the origin of the picking mentions both sales names
+        self.assertTrue(so1.name in so1.picking_ids[0].origin)
+        self.assertTrue(so2.name in so2.picking_ids[0].origin)
+
     def test_sale_stock_no_merge_same_carrier_mixed_picking_policy(self):
         """2 sale orders for the same partner, with same carrier, deliver at once
         picking policy for the 1st sale order.
@@ -89,6 +111,7 @@ class TestGroupByPushRules(TestGroupByBase, TransactionCase):
         -> the pickings are not merged
 
         """
+        self.env.ref("stock.warehouse0").group_shippings_one = True
         so1 = self._get_new_sale_order(carrier=self.carrier1)
         so1.picking_policy = "one"
         so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
