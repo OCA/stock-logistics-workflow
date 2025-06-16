@@ -5,7 +5,6 @@ from odoo import _, models
 
 
 class StockSourceRelocate(models.Model):
-
     _inherit = "stock.source.relocate"
 
     def action_view_dynamic_routing(self):
