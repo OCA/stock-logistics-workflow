@@ -40,3 +40,8 @@ msgstr "Línea de Orden de Ventas"
 #: model:ir.model,name:delivery_procurement_group_carrier.model_stock_move
 msgid "Stock Move"
 msgstr "Movimiento de Existencias"
+
+#. module: delivery_procurement_group_carrier
+#: model:ir.model,name:delivery_procurement_group_carrier.model_stock_picking
+msgid "Transfer"
+msgstr ""
