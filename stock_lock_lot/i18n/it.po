@@ -12,8 +12,8 @@ msgstr ""
 "POT-Creation-Date: 2017-05-31 02:51+0000\n"
 "PO-Revision-Date: 2025-05-13 09:24+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
-"Language-Team: Italian (http://www.transifex.com/oca/"
-"OCA-stock-logistics-workflow-8-0/language/it/)\n"
+"Language-Team: Italian (http://www.transifex.com/oca/OCA-stock-logistics-"
+"workflow-8-0/language/it/)\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -53,15 +53,7 @@ msgid "Blocked"
 msgstr "Bloccato"
 
 #. module: stock_lock_lot
-#: model:ir.model.fields,field_description:stock_lock_lot.field_product_category__display_name
-#: model:ir.model.fields,field_description:stock_lock_lot.field_stock_location__display_name
-#: model:ir.model.fields,field_description:stock_lock_lot.field_stock_move_line__display_name
-#: model:ir.model.fields,field_description:stock_lock_lot.field_stock_production_lot__display_name
-msgid "Display Name"
-msgstr "Nome visualizzato"
-
-#. module: stock_lock_lot
-#: model:ir.model.fields,field_description:stock_lock_lot.field_stock_production_lot__message_follower_ids
+#: model:ir.model.fields,field_description:stock_lock_lot.field_stock_lot__message_follower_ids
 msgid "Followers"
 msgstr "Seguito da"
 
@@ -186,7 +178,6 @@ msgstr "Numero di serie/Lotto sbloccato"
 #. module: stock_lock_lot
 #. odoo-python
 #: code:addons/stock_lock_lot/models/stock_move_line.py:0
-#, python-format
 msgid ""
 "The following lots/serial number is blocked and cannot be moved:\n"
 "%(lot)s"
@@ -207,20 +198,21 @@ msgstr "Cronologia comunicazioni sito web"
 #. module: stock_lock_lot
 #. odoo-python
 #: code:addons/stock_lock_lot/models/stock_lot.py:0
-#, python-format
 msgid "You are not allowed to block/unblock Serial Numbers/Lots"
 msgstr "Non hai i permesso di bloccare/sbloccare i numeri di serie/lotti"
 
 #. module: stock_lock_lot
 #. odoo-python
 #: code:addons/stock_lock_lot/models/stock_lot.py:0
-#, python-format
 msgid ""
 "You are not allowed to block/unblock, there are reserved quantities for "
 "these Serial Numbers/Lots"
 msgstr ""
 "Non hai il permesso di bloccare/sbloccare, ci sono quantità riservate per "
 "questi seriali/lotti"
+
+#~ msgid "Display Name"
+#~ msgstr "Nome visualizzato"
 
 #~ msgid "Followers (Channels)"
 #~ msgstr "Seguito da (canali)"
