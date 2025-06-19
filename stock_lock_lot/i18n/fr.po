@@ -175,7 +175,6 @@ msgstr "Numéro de série/lot débloqué"
 #. module: stock_lock_lot
 #. odoo-python
 #: code:addons/stock_lock_lot/models/stock_move_line.py:0
-#, python-format
 msgid ""
 "The following lots/serial number is blocked and cannot be moved:\n"
 "%(lot)s"
@@ -194,14 +193,14 @@ msgstr ""
 #. module: stock_lock_lot
 #. odoo-python
 #: code:addons/stock_lock_lot/models/stock_lot.py:0
-#, fuzzy, python-format
+#, fuzzy
 msgid "You are not allowed to block/unblock Serial Numbers/Lots"
 msgstr "Vous n'êtes pas autorisé(e) à débloquer un numéro de série/lot"
 
 #. module: stock_lock_lot
 #. odoo-python
 #: code:addons/stock_lock_lot/models/stock_lot.py:0
-#, fuzzy, python-format
+#, fuzzy
 msgid ""
 "You are not allowed to block/unblock, there are reserved quantities for "
 "these Serial Numbers/Lots"
