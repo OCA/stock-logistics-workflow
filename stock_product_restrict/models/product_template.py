@@ -1,7 +1,7 @@
 # Copyright 2024 Odoo Community Association (OCA)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0).
 
-from odoo import api, models
+from odoo import _, api, models
 from odoo.exceptions import AccessError
 
 
@@ -12,21 +12,30 @@ class ProductTemplate(models.Model):
     def create(self, vals):
         if not self._check_product_create_permission():
             raise AccessError(
-                "Você não tem permissão para criar produtos. Entre em contato com o administrador."
+                _(
+                    "Você não tem permissão para criar produtos. "
+                    "Entre em contato com o administrador."
+                )
             )
         return super(ProductTemplate, self).create(vals)
 
     def write(self, vals):
         if not self._check_product_create_permission():
             raise AccessError(
-                "Você não tem permissão para modificar produtos. Entre em contato com o administrador."
+                _(
+                    "Você não tem permissão para modificar produtos. "
+                    "Entre em contato com o administrador."
+                )
             )
         return super(ProductTemplate, self).write(vals)
 
     def unlink(self):
         if not self._check_product_create_permission():
             raise AccessError(
-                "Você não tem permissão para excluir produtos. Entre em contato com o administrador."
+                _(
+                    "Você não tem permissão para excluir produtos. "
+                    "Entre em contato com o administrador."
+                )
             )
         return super(ProductTemplate, self).unlink()
 
@@ -53,21 +62,30 @@ class ProductProduct(models.Model):
     def create(self, vals):
         if not self._check_product_create_permission():
             raise AccessError(
-                "Você não tem permissão para criar produtos. Entre em contato com o administrador."
+                _(
+                    "Você não tem permissão para criar produtos. "
+                    "Entre em contato com o administrador."
+                )
             )
         return super(ProductProduct, self).create(vals)
 
     def write(self, vals):
         if not self._check_product_create_permission():
             raise AccessError(
-                "Você não tem permissão para modificar produtos. Entre em contato com o administrador."
+                _(
+                    "Você não tem permissão para modificar produtos. "
+                    "Entre em contato com o administrador."
+                )
             )
         return super(ProductProduct, self).write(vals)
 
     def unlink(self):
         if not self._check_product_create_permission():
             raise AccessError(
-                "Você não tem permissão para excluir produtos. Entre em contato com o administrador."
+                _(
+                    "Você não tem permissão para excluir produtos. "
+                    "Entre em contato com o administrador."
+                )
             )
         return super(ProductProduct, self).unlink()
 
