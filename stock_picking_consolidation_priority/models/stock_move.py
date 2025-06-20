@@ -108,9 +108,9 @@ class StockMove(models.Model):
         return {"priority": self._consolidate_priority_value}
 
     def _consolidate_priority(self):
-        self.flush(["move_dest_ids", "move_orig_ids", "picking_id"])
-        self.env["stock.picking"].flush(["picking_type_id"])
-        self.env["stock.picking.type"].flush(["consolidate_priority"])
+        self.flush_model(["move_dest_ids", "move_orig_ids", "picking_id"])
+        self.env["stock.picking"].flush_model(["picking_type_id"])
+        self.env["stock.picking.type"].flush_model(["consolidate_priority"])
         query, params = self._query_get_consolidate_moves()
         self.env.cr.execute(query, params)
         move_ids = [row[0] for row in self.env.cr.fetchall()]
@@ -126,7 +126,7 @@ class StockMove(models.Model):
             move.write(self._consolidate_priority_values())
         for picking in moves.picking_id:
             # Flag the picking as urgent if it only contains urgent moves.
-            picking_moves = picking.move_lines.filtered(
+            picking_moves = picking.move_ids.filtered(
                 lambda m: m.state not in ("cancel", "done")
             )
             if (

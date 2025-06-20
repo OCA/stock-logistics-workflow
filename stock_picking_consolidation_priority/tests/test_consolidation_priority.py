@@ -3,25 +3,25 @@
 
 from collections import namedtuple
 
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 from odoo.addons.stock.models.stock_move import PROCUREMENT_PRIORITIES
 
 
-class TestConsolidationPriority(SavepointCase):
+class TestConsolidationPriority(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.warehouse = cls.env.ref("stock.warehouse0")
-        cls.warehouse.write({"delivery_steps": "pick_pack_ship"})
+        cls.warehouse.write({"delivery_steps": "pick_pack_ship", "delivery_pull": True})
         cls.stock_shelf_location = cls.env.ref("stock.stock_location_components")
         cls.customers_location = cls.env.ref("stock.stock_location_customers")
         cls.product_a = cls.env["product.product"].create(
-            {"name": "Product A", "type": "product"}
+            {"name": "Product A", "type": "consu", "is_storable": True}
         )
         cls.product_b = cls.env["product.product"].create(
-            {"name": "Product B", "type": "product"}
+            {"name": "Product B", "type": "consu", "is_storable": True}
         )
 
         cls.pick_type = cls.warehouse.pick_type_id
@@ -158,7 +158,7 @@ class TestConsolidationPriority(SavepointCase):
 
     def _enable_consolidate_priority(self, picking_types):
         picking_types.consolidate_priority = True
-        picking_types.flush()
+        picking_types.flush_model()
 
     def _test_query(self, starting_move, expected):
         # we test only the result of the graph in this test, cancel/done move
@@ -252,8 +252,7 @@ class TestConsolidationPriority(SavepointCase):
             move.location_id, move.product_id, move.product_uom_qty
         )
         move.picking_id.action_assign()
-        for line in move.move_line_ids:
-            line.qty_done = line.product_uom_qty
+        move.picked = True
         move.picking_id._action_done()
         self.assertEqual(move.state, "done")
 
