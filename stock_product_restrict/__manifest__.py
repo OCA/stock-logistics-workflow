@@ -3,7 +3,7 @@
     "version": "16.0.1.0.0",
     "category": "Inventory/Inventory",
     "summary": "Restrict product creation based on user permissions",
-    "author": "Odoo Community Association (OCA)",
+    "author": "Rafnix Guzman, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "license": "LGPL-3",
     "depends": [
