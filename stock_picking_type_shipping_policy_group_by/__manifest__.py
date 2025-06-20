@@ -6,7 +6,7 @@
     " and Group Transfers by Partner and Carrier",
     "version": "14.0.1.0.0",
     "category": "Hidden",
-    "website": "https://github.com/OCA/wms",
+    "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "application": False,
