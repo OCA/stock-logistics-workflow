@@ -7,6 +7,7 @@
         <field name="arch" type="xml">
             <field name="out_type_id" position="after">
                 <field name="group_shippings" />
+                <field name="group_shippings_one" invisible="not group_shippings" />
             </field>
         </field>
     </record>

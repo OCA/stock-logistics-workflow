@@ -6,9 +6,13 @@ class StockPickingType(models.Model):
 
     group_pickings = fields.Boolean(
         "Group pickings",
-        help="Group pickings for the same partner and carrier. "
-        "Pickings with shipping policy set to "
-        "'When all products are ready' are never grouped.",
+        help="Group transfers for the same partner and carrier. ",
+    )
+    group_pickings_one = fields.Boolean(
+        "Also group when policy is 'one'",
+        help="Also group transfers with a shipping policy "
+        "'When all products are ready'. Transfers with different shipping "
+        "policies are not grouped",
     )
 
     show_group_pickings = fields.Boolean(compute="_compute_show_group_pickings")
