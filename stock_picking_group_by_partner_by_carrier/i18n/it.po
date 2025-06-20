@@ -18,13 +18,27 @@ msgstr ""
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
-msgid "<span attrs=\"{'invisible': [('nothing_todo', '=', True)]}\">or</span>"
-msgstr "<span attrs=\"{'invisible': [('nothing_todo', '=', True)]}\">o</span>"
+msgid "<span invisible=\"nothing_todo\">or</span>"
+msgstr ""
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.report_delivery_document
 msgid "All ordered items have been delivered."
 msgstr "Tutti i prodotti sono stati forniti."
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,help:stock_picking_group_by_partner_by_carrier.field_stock_picking_type__group_pickings_one
+#: model:ir.model.fields,help:stock_picking_group_by_partner_by_carrier.field_stock_warehouse__group_shippings_one
+msgid ""
+"Also group transfers with a shipping policy 'When all products are ready'. "
+"Transfers with different shipping policies are not grouped"
+msgstr ""
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_type__group_pickings_one
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_warehouse__group_shippings_one
+msgid "Also group when policy is 'one'"
+msgstr ""
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
@@ -94,38 +108,19 @@ msgstr "Raggruppamento previsto"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_type__group_pickings
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_warehouse__group_shippings
 msgid "Group pickings"
 msgstr "Raggruppa prelievi"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,help:stock_picking_group_by_partner_by_carrier.field_stock_picking_type__group_pickings
-msgid ""
-"Group pickings for the same partner and carrier. Pickings with shipping "
-"policy set to 'When all products are ready' are never grouped."
-msgstr ""
-"Raggruppa prelievi per stesso client e stesso corriere. Prelievi con "
-"politica di spedizione 'Quando tutti i prodotti sono pronti' non sono mai "
-"raggruppati."
-
-#. module: stock_picking_group_by_partner_by_carrier
-#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_warehouse__group_shippings
-msgid "Group shippings"
-msgstr "Raggruppa spedizioni"
-
-#. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,help:stock_picking_group_by_partner_by_carrier.field_stock_warehouse__group_shippings
-msgid ""
-"Group shippings for the same partner and carrier. Shippings with shipping "
-"policy set to 'When all products are ready' are never grouped."
+msgid "Group transfers for the same partner and carrier. "
 msgstr ""
-"Raggruppa spedizioni per stesso client e stesso corriere. Spedizioni con "
-"politica di spedizione 'Quando tutti i prodotti sono pronti' non sono mai "
-"raggruppati."
 
 #. module: stock_picking_group_by_partner_by_carrier
 #. odoo-python
 #: code:addons/stock_picking_group_by_partner_by_carrier/wizards/stock_picking_merge_wiz.py:0
-#, python-format
 msgid "Grouped pickings"
 msgstr "Prelievi raggruppati"
 
@@ -133,11 +128,6 @@ msgstr "Prelievi raggruppati"
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__id
 msgid "ID"
 msgstr "ID"
-
-#. module: stock_picking_group_by_partner_by_carrier
-#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge____last_update
-msgid "Last Modified on"
-msgstr "Ultima modifica il"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__write_uid
@@ -162,21 +152,18 @@ msgstr "Unisci trasferimenti"
 #. module: stock_picking_group_by_partner_by_carrier
 #. odoo-python
 #: code:addons/stock_picking_group_by_partner_by_carrier/models/stock_picking.py:0
-#, python-format
 msgid "Merged procurement"
 msgstr "Approvigionamento unito"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #. odoo-python
 #: code:addons/stock_picking_group_by_partner_by_carrier/models/stock_picking.py:0
-#, python-format
 msgid "Merged procurement for partners: %(partners_name)s"
 msgstr "Approvvigionamento unito per i partner: %(partners_name)s"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #. odoo-python
 #: code:addons/stock_picking_group_by_partner_by_carrier/wizards/stock_picking_merge_wiz.py:0
-#, python-format
 msgid "No picking can be merged!"
 msgstr "Nessun prelievo può essere unito!"
 
@@ -247,6 +234,11 @@ msgid "Show Discarded Detail"
 msgstr "Mostra dettaglio scartati"
 
 #. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_type__show_group_pickings
+msgid "Show Group Pickings"
+msgstr ""
+
+#. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
 msgid "Some pickings you've selected are discarded"
 msgstr "Alcuni prelievi selezionati sono stati scartati"
@@ -309,3 +301,30 @@ msgstr "Magazzino"
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.stock_picking_merge_wiz_info
 msgid "With carrier:"
 msgstr "Con corriere:"
+
+#~ msgid ""
+#~ "<span attrs=\"{'invisible': [('nothing_todo', '=', True)]}\">or</span>"
+#~ msgstr ""
+#~ "<span attrs=\"{'invisible': [('nothing_todo', '=', True)]}\">o</span>"
+
+#~ msgid ""
+#~ "Group pickings for the same partner and carrier. Pickings with shipping "
+#~ "policy set to 'When all products are ready' are never grouped."
+#~ msgstr ""
+#~ "Raggruppa prelievi per stesso client e stesso corriere. Prelievi con "
+#~ "politica di spedizione 'Quando tutti i prodotti sono pronti' non sono mai "
+#~ "raggruppati."
+
+#~ msgid "Group shippings"
+#~ msgstr "Raggruppa spedizioni"
+
+#~ msgid ""
+#~ "Group shippings for the same partner and carrier. Shippings with shipping "
+#~ "policy set to 'When all products are ready' are never grouped."
+#~ msgstr ""
+#~ "Raggruppa spedizioni per stesso client e stesso corriere. Spedizioni con "
+#~ "politica di spedizione 'Quando tutti i prodotti sono pronti' non sono mai "
+#~ "raggruppati."
+
+#~ msgid "Last Modified on"
+#~ msgstr "Ultima modifica il"

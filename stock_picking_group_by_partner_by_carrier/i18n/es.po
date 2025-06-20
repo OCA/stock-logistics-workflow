@@ -18,13 +18,27 @@ msgstr ""
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
-msgid "<span attrs=\"{'invisible': [('nothing_todo', '=', True)]}\">or</span>"
-msgstr "<span attrs=\"{'invisible': [('nothing_todo', '=', True)]}\">o</span>"
+msgid "<span invisible=\"nothing_todo\">or</span>"
+msgstr ""
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.report_delivery_document
 msgid "All ordered items have been delivered."
 msgstr "Todos los artículos pedidos han sido entregados."
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,help:stock_picking_group_by_partner_by_carrier.field_stock_picking_type__group_pickings_one
+#: model:ir.model.fields,help:stock_picking_group_by_partner_by_carrier.field_stock_warehouse__group_shippings_one
+msgid ""
+"Also group transfers with a shipping policy 'When all products are ready'. "
+"Transfers with different shipping policies are not grouped"
+msgstr ""
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_type__group_pickings_one
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_warehouse__group_shippings_one
+msgid "Also group when policy is 'one'"
+msgstr ""
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
@@ -94,38 +108,19 @@ msgstr "Agrupación prevista"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_type__group_pickings
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_warehouse__group_shippings
 msgid "Group pickings"
 msgstr "Recogida de grupos"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,help:stock_picking_group_by_partner_by_carrier.field_stock_picking_type__group_pickings
-msgid ""
-"Group pickings for the same partner and carrier. Pickings with shipping "
-"policy set to 'When all products are ready' are never grouped."
-msgstr ""
-"Albaranes grupales para el mismo socio y transportista. Las selecciones con "
-"política de envío establecida en \"Cuando todos los productos estén listos\" "
-"nunca se agrupan."
-
-#. module: stock_picking_group_by_partner_by_carrier
-#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_warehouse__group_shippings
-msgid "Group shippings"
-msgstr "Envíos colectivos"
-
-#. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,help:stock_picking_group_by_partner_by_carrier.field_stock_warehouse__group_shippings
-msgid ""
-"Group shippings for the same partner and carrier. Shippings with shipping "
-"policy set to 'When all products are ready' are never grouped."
+msgid "Group transfers for the same partner and carrier. "
 msgstr ""
-"Agrupar envíos para el mismo socio y transportista. Los envíos con la "
-"política de envío establecida en \"Cuando todos los productos estén listos\" "
-"nunca se agrupan."
 
 #. module: stock_picking_group_by_partner_by_carrier
 #. odoo-python
 #: code:addons/stock_picking_group_by_partner_by_carrier/wizards/stock_picking_merge_wiz.py:0
-#, python-format
 msgid "Grouped pickings"
 msgstr "Recogidas agrupadas"
 
@@ -133,11 +128,6 @@ msgstr "Recogidas agrupadas"
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__id
 msgid "ID"
 msgstr "ID"
-
-#. module: stock_picking_group_by_partner_by_carrier
-#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge____last_update
-msgid "Last Modified on"
-msgstr "Última Modificación el"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__write_uid
@@ -162,21 +152,18 @@ msgstr "Fusionar transferencias"
 #. module: stock_picking_group_by_partner_by_carrier
 #. odoo-python
 #: code:addons/stock_picking_group_by_partner_by_carrier/models/stock_picking.py:0
-#, python-format
 msgid "Merged procurement"
 msgstr "Adquisición fusionada"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #. odoo-python
 #: code:addons/stock_picking_group_by_partner_by_carrier/models/stock_picking.py:0
-#, python-format
 msgid "Merged procurement for partners: %(partners_name)s"
 msgstr "Adquisiciones fusionadas para socios: %(partners_name)s"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #. odoo-python
 #: code:addons/stock_picking_group_by_partner_by_carrier/wizards/stock_picking_merge_wiz.py:0
-#, python-format
 msgid "No picking can be merged!"
 msgstr "¡No se puede fusionar ninguna selección!"
 
@@ -247,6 +234,11 @@ msgid "Show Discarded Detail"
 msgstr "Mostrar Detalle de Descartes"
 
 #. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_type__show_group_pickings
+msgid "Show Group Pickings"
+msgstr ""
+
+#. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
 msgid "Some pickings you've selected are discarded"
 msgstr "Algunas selecciones que has hecho se descartan"
@@ -309,3 +301,30 @@ msgstr "Almacén"
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.stock_picking_merge_wiz_info
 msgid "With carrier:"
 msgstr "Con transportista:"
+
+#~ msgid ""
+#~ "<span attrs=\"{'invisible': [('nothing_todo', '=', True)]}\">or</span>"
+#~ msgstr ""
+#~ "<span attrs=\"{'invisible': [('nothing_todo', '=', True)]}\">o</span>"
+
+#~ msgid ""
+#~ "Group pickings for the same partner and carrier. Pickings with shipping "
+#~ "policy set to 'When all products are ready' are never grouped."
+#~ msgstr ""
+#~ "Albaranes grupales para el mismo socio y transportista. Las selecciones "
+#~ "con política de envío establecida en \"Cuando todos los productos estén "
+#~ "listos\" nunca se agrupan."
+
+#~ msgid "Group shippings"
+#~ msgstr "Envíos colectivos"
+
+#~ msgid ""
+#~ "Group shippings for the same partner and carrier. Shippings with shipping "
+#~ "policy set to 'When all products are ready' are never grouped."
+#~ msgstr ""
+#~ "Agrupar envíos para el mismo socio y transportista. Los envíos con la "
+#~ "política de envío establecida en \"Cuando todos los productos estén "
+#~ "listos\" nunca se agrupan."
+
+#~ msgid "Last Modified on"
+#~ msgstr "Última Modificación el"
