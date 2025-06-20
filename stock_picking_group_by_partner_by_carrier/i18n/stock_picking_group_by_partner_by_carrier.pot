@@ -24,6 +24,20 @@ msgid "All ordered items have been delivered."
 msgstr ""
 
 #. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,help:stock_picking_group_by_partner_by_carrier.field_stock_picking_type__group_pickings_one
+#: model:ir.model.fields,help:stock_picking_group_by_partner_by_carrier.field_stock_warehouse__group_shippings_one
+msgid ""
+"Also group transfers with a shipping policy 'When all products are ready'. "
+"Transfers with different shipping policies are not grouped"
+msgstr ""
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_type__group_pickings_one
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_warehouse__group_shippings_one
+msgid "Also group when policy is 'one'"
+msgstr ""
+
+#. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
 msgid "Cancel"
 msgstr ""
@@ -91,26 +105,14 @@ msgstr ""
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_type__group_pickings
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_warehouse__group_shippings
 msgid "Group pickings"
 msgstr ""
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,help:stock_picking_group_by_partner_by_carrier.field_stock_picking_type__group_pickings
-msgid ""
-"Group pickings for the same partner and carrier. Pickings with shipping "
-"policy set to 'When all products are ready' are never grouped."
-msgstr ""
-
-#. module: stock_picking_group_by_partner_by_carrier
-#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_warehouse__group_shippings
-msgid "Group shippings"
-msgstr ""
-
-#. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,help:stock_picking_group_by_partner_by_carrier.field_stock_warehouse__group_shippings
-msgid ""
-"Group shippings for the same partner and carrier. Shippings with shipping "
-"policy set to 'When all products are ready' are never grouped."
+msgid "Group transfers for the same partner and carrier. "
 msgstr ""
 
 #. module: stock_picking_group_by_partner_by_carrier
