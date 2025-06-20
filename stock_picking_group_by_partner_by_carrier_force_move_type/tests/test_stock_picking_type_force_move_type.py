@@ -1,9 +1,9 @@
 # Copyright 2020 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
-from odoo.tests import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestPickingTypeShippingPolicyGroupBy(SavepointCase):
+class TestPickingTypeForceMoveTypeGroupBy(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -39,7 +39,7 @@ class TestPickingTypeShippingPolicyGroupBy(SavepointCase):
         using the same move_type.
         """
         self.group.move_type = "direct"
-        self.pick_type.shipping_policy = "force_all_products_ready"
+        self.pick_type.write({"force_move_type": True, "move_type": "one"})
         move1 = self._create_single_move(self.pick_type, self.group, self.product)
         move1._assign_picking()
         move2 = self._create_single_move(self.pick_type, self.group, self.product)
