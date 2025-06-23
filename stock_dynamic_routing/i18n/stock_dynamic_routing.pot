@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -16,7 +16,6 @@ msgstr ""
 #. module: stock_dynamic_routing
 #. odoo-python
 #: code:addons/stock_dynamic_routing/models/stock_routing.py:0
-#, python-format
 msgid ""
 "<h2>Pull rules:</h2>When a move with operation type "
 "<strong>{routing.picking_type_id.display_name}</strong> has a source "
@@ -28,7 +27,6 @@ msgstr ""
 #. module: stock_dynamic_routing
 #. odoo-python
 #: code:addons/stock_dynamic_routing/models/stock_routing.py:0
-#, python-format
 msgid ""
 "<h2>Push rules:</h2>When a move with operation type "
 "<strong>{routing.picking_type_id.display_name}</strong> has a destination "
@@ -121,7 +119,6 @@ msgstr ""
 #. module: stock_dynamic_routing
 #. odoo-python
 #: code:addons/stock_dynamic_routing/models/stock_routing.py:0
-#, python-format
 msgid ""
 "If the destination of the move is already "
 "<strong>{rule.location_dest_id.display_name}</strong>, the operation type of"
@@ -142,7 +139,6 @@ msgstr ""
 #. module: stock_dynamic_routing
 #. odoo-python
 #: code:addons/stock_dynamic_routing/models/stock_routing.py:0
-#, python-format
 msgid ""
 "If the source of the move is already "
 "<strong>{rule.location_src_id.display_name}</strong> or a sub-location, the "
@@ -160,12 +156,6 @@ msgstr ""
 #. module: stock_dynamic_routing
 #: model:ir.model,name:stock_dynamic_routing.model_stock_location
 msgid "Inventory Locations"
-msgstr ""
-
-#. module: stock_dynamic_routing
-#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing____last_update
-#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule____last_update
-msgid "Last Modified on"
 msgstr ""
 
 #. module: stock_dynamic_routing
@@ -219,7 +209,6 @@ msgstr ""
 #. module: stock_dynamic_routing
 #. odoo-python
 #: code:addons/stock_dynamic_routing/models/stock_routing_rule.py:0
-#, python-format
 msgid ""
 "Operation type of a rule used as 'pull' must have '{}' or a sub-location as "
 "source location."
@@ -228,7 +217,6 @@ msgstr ""
 #. module: stock_dynamic_routing
 #. odoo-python
 #: code:addons/stock_dynamic_routing/models/stock_routing_rule.py:0
-#, python-format
 msgid ""
 "Operation type of a rule used as 'push' must have '{}' or a sub-location as "
 "destination location."
