@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-22 10:06+0000\n"
+"PO-Revision-Date: 2025-06-23 06:55+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,12 +14,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
 msgid "<span invisible=\"nothing_todo\">or</span>"
-msgstr ""
+msgstr "<span invisible=\"nothing_todo\">o</span>"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.report_delivery_document
@@ -33,12 +33,15 @@ msgid ""
 "Also group transfers with a shipping policy 'When all products are ready'. "
 "Transfers with different shipping policies are not grouped"
 msgstr ""
+"Raggruppa anche i trasferimenti con una politica di spedizione "
+"\"Quando tutti i prodotti sono pronti\". I trasferimenti con politiche di "
+"spedizione diverse non vengono raggruppati"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_type__group_pickings_one
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_warehouse__group_shippings_one
 msgid "Also group when policy is 'one'"
-msgstr ""
+msgstr "Raggruppa anche quando la politica è 'una'"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
@@ -116,7 +119,7 @@ msgstr "Raggruppa prelievi"
 #: model:ir.model.fields,help:stock_picking_group_by_partner_by_carrier.field_stock_picking_type__group_pickings
 #: model:ir.model.fields,help:stock_picking_group_by_partner_by_carrier.field_stock_warehouse__group_shippings
 msgid "Group transfers for the same partner and carrier. "
-msgstr ""
+msgstr "Raggruppa trasferimenti per lo stesso partner e corriere. "
 
 #. module: stock_picking_group_by_partner_by_carrier
 #. odoo-python
@@ -236,7 +239,7 @@ msgstr "Mostra dettaglio scartati"
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_type__show_group_pickings
 msgid "Show Group Pickings"
-msgstr ""
+msgstr "Visualizza gruppo prelievi"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
