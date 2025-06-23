@@ -1,0 +1,363 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_dynamic_routing
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-01-23 16:46+0000\n"
+"Last-Translator: FranciscoFactorLibre <francisco.santos@factorlibre.com>\n"
+"Language-Team: none\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: stock_dynamic_routing
+#. odoo-python
+#: code:addons/stock_dynamic_routing/models/stock_routing.py:0
+#, python-format
+msgid ""
+"<h2>Pull rules:</h2>When a move with operation type <strong>{routing."
+"picking_type_id.display_name}</strong> has a source location "
+"<strong>{routing.location_id.display_name}</strong> (or a sub-location), one "
+"of these rules can apply (depending of their domain):<ul>{rule_messages}</ul>"
+msgstr ""
+"<h2>Reglas de extracción:</h2>Cuando un movimiento con tipo de operación "
+"<strong>{routing.picking_type_id.display_name}</strong> tiene una ubicación "
+"de origen <strong>{routing.location_id.display_name}</strong> (o una "
+"sububicación), se puede aplicar una de estas reglas (dependiendo de su "
+"dominio):<ul>{rule_messages}</ul>"
+
+#. module: stock_dynamic_routing
+#. odoo-python
+#: code:addons/stock_dynamic_routing/models/stock_routing.py:0
+#, python-format
+msgid ""
+"<h2>Push rules:</h2>When a move with operation type <strong>{routing."
+"picking_type_id.display_name}</strong> has a destination location "
+"<strong>{routing.location_id.display_name}</strong> (or a sub-location), one "
+"of these rules can apply (depending of their domain):<ul>{rule_messages}</ul>"
+msgstr ""
+"<h2>Reglas de inserción:</h2>Cuando un movimiento con tipo de operación "
+"<strong>{routing.picking_type_id.display_name}</strong> tiene una ubicación "
+"de destino <strong>{routing.location_id.display_name}</strong> (o una "
+"sububicación), se puede aplicar una de estas reglas (dependiendo de su "
+"dominio):<ul>{rule_messages}</ul>"
+
+#. module: stock_dynamic_routing
+#: model:ir.model.constraint,message:stock_dynamic_routing.constraint_stock_routing_location_picking_type_uniq
+msgid ""
+"A routing configuration already exists for this location and picking type"
+msgstr ""
+"Ya existe una configuración de ruta para esta ubicación y tipo de recogida"
+
+#. module: stock_dynamic_routing
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: stock_dynamic_routing
+#: model_terms:ir.actions.act_window,help:stock_dynamic_routing.action_stock_routing
+msgid "Add a Dynamic Routing"
+msgstr "Agregar una ruta dinámica"
+
+#. module: stock_dynamic_routing
+#: model:ir.model.fields,help:stock_dynamic_routing.field_stock_routing__picking_type_id
+msgid "Apply this routing only if the operation type of the move is the same."
+msgstr ""
+"Aplique esta hoja de ruta sólo si el tipo de operación del traslado es el "
+"mismo."
+
+#. module: stock_dynamic_routing
+#: model_terms:ir.ui.view,arch_db:stock_dynamic_routing.view_stock_routing_form
+#: model_terms:ir.ui.view,arch_db:stock_dynamic_routing.view_stock_routing_search
+msgid "Archived"
+msgstr "archivado"
+
+#. module: stock_dynamic_routing
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_picking__canceled_by_routing
+msgid "Canceled By Routing"
+msgstr "Cancelado por la ruta"
+
+#. module: stock_dynamic_routing
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing__create_uid
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: stock_dynamic_routing
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing__create_date
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: stock_dynamic_routing
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing__display_name
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__display_name
+msgid "Display Name"
+msgstr "Mostrar Nombre"
+
+#. module: stock_dynamic_routing
+#: model:ir.model.fields,help:stock_dynamic_routing.field_stock_routing_rule__rule_domain
+msgid ""
+"Domain based on Stock Moves, to define if the routing rule is applicable or "
+"not."
+msgstr ""
+"Dominio basado en movimientos de existencias, para definir si la regla de "
+"enrutamiento es aplicable o no."
+
+#. module: stock_dynamic_routing
+#: model:ir.actions.act_window,name:stock_dynamic_routing.action_stock_routing
+#: model:ir.ui.menu,name:stock_dynamic_routing.menu_stock_routing
+#: model_terms:ir.ui.view,arch_db:stock_dynamic_routing.view_stock_routing_form
+#: model_terms:ir.ui.view,arch_db:stock_dynamic_routing.view_stock_routing_search
+msgid "Dynamic Routing"
+msgstr "Enrutado dinámico"
+
+#. module: stock_dynamic_routing
+#: model:stock.picking.type,name:stock_dynamic_routing.stock_picking_type_handover_to_highbay_demo
+msgid "Handover → Highbay"
+msgstr "Entrega → Bahía alta"
+
+#. module: stock_dynamic_routing
+#: model:stock.picking.type,name:stock_dynamic_routing.stock_picking_type_highbay_to_handover_demo
+msgid "Highbay → Handover"
+msgstr "Bahía alta → Entrega"
+
+#. module: stock_dynamic_routing
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing__id
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__id
+msgid "ID"
+msgstr "ID(identificación)"
+
+#. module: stock_dynamic_routing
+#. odoo-python
+#: code:addons/stock_dynamic_routing/models/stock_routing.py:0
+#, python-format
+msgid ""
+"If the destination of the move is already <strong>{rule.location_dest_id."
+"display_name}</strong>, the operation type of the move is changed to "
+"<strong>{rule.picking_type_id.display_name}</strong>.<br/>If the destination "
+"of the move is a parent location of  <strong>{rule.location_dest_id."
+"display_name}</strong>, the destination is set to <strong>{rule."
+"location_dest_id.display_name}</strong>  and the operation type of the move "
+"is changed to <strong>{rule.picking_type_id.display_name}</strong>.<br/>If "
+"the destination of the move is unrelated to  <strong>{rule.location_dest_id."
+"display_name}</strong>, a new move is added before, from <strong>{rule."
+"location_src_id.display_name}</strong> to  <strong>{rule.location_dest_id."
+"display_name}</strong>, using the operation type  <strong>{rule."
+"picking_type_id.display_name}</strong>."
+msgstr ""
+"Si el destino del movimiento ya es <strong>{rule.location_dest_id."
+"display_name}</strong>, el tipo de operación del movimiento se cambia a "
+"<strong>{rule.picking_type_id.display_name}</strong>.<br/>Si el destino del "
+"movimiento es una ubicación principal de   <strong>{rule.location_dest_id."
+"display_name}</strong>, el destino se establece en <strong>{rule."
+"location_dest_id.display_name}</strong> y el tipo de operación del "
+"movimiento se cambia a <strong>{rule.picking_type_id.display_name}</strong>.<"
+"br/>Si el destino del movimiento no está relacionado con <strong>{rule."
+"location_dest_id.display_name}</strong>, un Se agrega un nuevo movimiento "
+"antes, desde <strong>{rule.location_src_id.display_name}</strong> hasta   "
+"<strong>{rule.location_dest_id.display_name}</strong>, utilizando el tipo de "
+"operación <strong>{rule.picking_type_id.display_name}</strong>."
+
+#. module: stock_dynamic_routing
+#. odoo-python
+#: code:addons/stock_dynamic_routing/models/stock_routing.py:0
+#, python-format
+msgid ""
+"If the source of the move is already <strong>{rule.location_src_id."
+"display_name}</strong> or a sub-location, the operation type of the move is "
+"changed to <strong>{rule.picking_type_id.display_name}</strong>.<br/>If the "
+"source of the move is outside or a parent location of  <strong>{rule."
+"location_dest_id.display_name}</strong>, the destination of the move is set "
+"to  <strong>{rule.location_src_id.display_name}</strong>,  a new move is "
+"added after it, from <strong>{rule.location_src_id.display_name}</strong> "
+"to  <strong>{rule.location_dest_id.display_name}</strong> using the "
+"operation type  <strong>{rule.picking_type_id.display_name}</strong>."
+msgstr ""
+"Si el origen del movimiento ya es <strong>{rule.location_src_id."
+"display_name}</strong> o una sububicación, el tipo de operación del "
+"movimiento se cambia a <strong>{rule.picking_type_id.display_name}</strong>.<"
+"br/>Si el origen del movimiento está fuera o en una ubicación principal de "
+"<strong>  {rule.location_dest_id.display_name}</strong>, el destino del "
+"movimiento se establece en   <strong>{rule.location_src_id.display_name}</"
+"strong>, se agrega un nuevo movimiento después, desde <strong>{rule."
+"location_src_id.display_name}</strong> hasta   <strong>{rule.location_dest_id"
+".display_name}</strong> usando el tipo de operación   <strong>{rule."
+"picking_type_id.display_name}</strong>."
+
+#. module: stock_dynamic_routing
+#: model:ir.model,name:stock_dynamic_routing.model_stock_location
+msgid "Inventory Locations"
+msgstr "Ubicación de Inventarios"
+
+#. module: stock_dynamic_routing
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing____last_update
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule____last_update
+msgid "Last Modified on"
+msgstr "Modificado por última vez el"
+
+#. module: stock_dynamic_routing
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing__write_uid
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__write_uid
+msgid "Last Updated by"
+msgstr "Actualizado por Última vez por"
+
+#. module: stock_dynamic_routing
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing__write_date
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__write_date
+msgid "Last Updated on"
+msgstr "Última Actualización el"
+
+#. module: stock_dynamic_routing
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing__location_id
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__routing_location_id
+msgid "Location"
+msgstr "Ubicación"
+
+#. module: stock_dynamic_routing
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__location_dest_id
+msgid "Location Dest"
+msgstr "Ubicación dest"
+
+#. module: stock_dynamic_routing
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__location_src_id
+msgid "Location Src"
+msgstr "Ubicación de origen"
+
+#. module: stock_dynamic_routing
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__method
+msgid "Method"
+msgstr "Método"
+
+#. module: stock_dynamic_routing
+#: model:ir.model.fields,help:stock_dynamic_routing.field_stock_routing_rule__method
+msgid ""
+"On pull, the routing is applied when the source location of a move line "
+"matches the source location of the rule. On push, the routing is applied "
+"when the destination location of a move line matches the destination "
+"location of the rule."
+msgstr ""
+"En pull, el enrutamiento se aplica cuando la ubicación de origen de una "
+"línea de movimiento coincide con la ubicación de origen de la regla. En "
+"push, el enrutamiento se aplica cuando la ubicación de destino de una línea "
+"de movimiento coincide con la ubicación de destino de la regla."
+
+#. module: stock_dynamic_routing
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing__picking_type_id
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__routing_picking_type_id
+msgid "Operation Type"
+msgstr "Tipo de Operación"
+
+#. module: stock_dynamic_routing
+#. odoo-python
+#: code:addons/stock_dynamic_routing/models/stock_routing_rule.py:0
+#, python-format
+msgid ""
+"Operation type of a rule used as 'pull' must have '{}' or a sub-location as "
+"source location."
+msgstr ""
+"El tipo de operación de una regla utilizada como \"pull\" debe tener \"{}\" "
+"o una sub-ubicación como ubicación de origen."
+
+#. module: stock_dynamic_routing
+#. odoo-python
+#: code:addons/stock_dynamic_routing/models/stock_routing_rule.py:0
+#, python-format
+msgid ""
+"Operation type of a rule used as 'push' must have '{}' or a sub-location as "
+"destination location."
+msgstr ""
+"El tipo de operación de una regla utilizada como \"push\" debe tener \"{}\" "
+"o una sub-ubicación como ubicación de destino."
+
+#. module: stock_dynamic_routing
+#: model:ir.model.fields,help:stock_dynamic_routing.field_stock_routing_rule__picking_type_id
+msgid "Operation type that will be applied on the move."
+msgstr "Tipo de operación que se aplicará en movimiento."
+
+#. module: stock_dynamic_routing
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__picking_type_id
+msgid "Picking Type"
+msgstr "Tipo de operación"
+
+#. module: stock_dynamic_routing
+#: model:ir.model.fields.selection,name:stock_dynamic_routing.selection__stock_routing_rule__method__pull
+msgid "Pull"
+msgstr "Obtener de"
+
+#. module: stock_dynamic_routing
+#: model:ir.model.fields.selection,name:stock_dynamic_routing.selection__stock_routing_rule__method__push
+msgid "Push"
+msgstr "Enviar a"
+
+#. module: stock_dynamic_routing
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__routing_id
+#: model_terms:ir.ui.view,arch_db:stock_dynamic_routing.view_stock_routing_form
+msgid "Routing"
+msgstr "Enrutado"
+
+#. module: stock_dynamic_routing
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing__routing_message
+msgid "Routing Message"
+msgstr "Mensaje de enrutamiento"
+
+#. module: stock_dynamic_routing
+#: model_terms:ir.ui.view,arch_db:stock_dynamic_routing.view_stock_routing_form
+msgid "Routing Rule"
+msgstr "Regla de enrutamiento"
+
+#. module: stock_dynamic_routing
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing__rule_ids
+msgid "Routing Rules"
+msgstr "Reglas de enrutamiento"
+
+#. module: stock_dynamic_routing
+#: model:ir.model.fields,help:stock_dynamic_routing.field_stock_routing_rule__routing_picking_type_id
+msgid "Routing applied only on moves of this operation type."
+msgstr "Enrutamiento aplicado sólo en movimientos de este tipo de operación."
+
+#. module: stock_dynamic_routing
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing__sequence
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: stock_dynamic_routing
+#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__rule_domain
+msgid "Source Routing Domain"
+msgstr "Dominio de enrutamiento de origen"
+
+#. module: stock_dynamic_routing
+#: model:ir.model,name:stock_dynamic_routing.model_stock_routing
+msgid "Stock Dynamic Routing"
+msgstr "Enrutamiento dinámico de existencias"
+
+#. module: stock_dynamic_routing
+#: model:ir.model,name:stock_dynamic_routing.model_stock_routing_rule
+msgid "Stock Dynamic Routing Rule"
+msgstr "Norma de enrutamiento dinámico de existencias"
+
+#. module: stock_dynamic_routing
+#: model:ir.model,name:stock_dynamic_routing.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento de Existencias"
+
+#. module: stock_dynamic_routing
+#: model:ir.model.fields,help:stock_dynamic_routing.field_stock_picking__canceled_by_routing
+msgid ""
+"Technical field. Indicates the transfer is canceled because it was left "
+"empty after a dynamic routing."
+msgstr ""
+"Campo técnico. Indica que la transferencia se cancela porque quedó vacía "
+"después de un enrutamiento dinámico."
+
+#. module: stock_dynamic_routing
+#: model:ir.model,name:stock_dynamic_routing.model_stock_picking
+msgid "Transfer"
+msgstr "Transferencia"
