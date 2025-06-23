@@ -15,8 +15,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #. module: stock_picking_tier_validation
+#. odoo-python
 #: code:addons/stock_picking_tier_validation/models/stock_picking.py:0
-#, python-format
 msgid "A validation process is still open for at least one record."
 msgstr ""
 
@@ -26,26 +26,18 @@ msgid "Can Review"
 msgstr ""
 
 #. module: stock_picking_tier_validation
-#: model:ir.model.fields,field_description:stock_picking_tier_validation.field_stock_picking__display_name
-#: model:ir.model.fields,field_description:stock_picking_tier_validation.field_tier_definition__display_name
-msgid "Display Name"
-msgstr ""
-
-#. module: stock_picking_tier_validation
 #: model:ir.model.fields,field_description:stock_picking_tier_validation.field_stock_picking__has_comment
 msgid "Has Comment"
 msgstr ""
 
 #. module: stock_picking_tier_validation
-#: model:ir.model.fields,field_description:stock_picking_tier_validation.field_stock_picking__id
-#: model:ir.model.fields,field_description:stock_picking_tier_validation.field_tier_definition__id
-msgid "ID"
+#: model:ir.model.fields,field_description:stock_picking_tier_validation.field_stock_picking__hide_reviews
+msgid "Hide Reviews"
 msgstr ""
 
 #. module: stock_picking_tier_validation
-#: model:ir.model.fields,field_description:stock_picking_tier_validation.field_stock_picking____last_update
-#: model:ir.model.fields,field_description:stock_picking_tier_validation.field_tier_definition____last_update
-msgid "Last Modified on"
+#: model:ir.model.fields,help:stock_picking_tier_validation.field_stock_picking__has_comment
+msgid "If set, Allow the reviewer to leave a comment on the review."
 msgstr ""
 
 #. module: stock_picking_tier_validation
@@ -79,8 +71,8 @@ msgid "Reviewers"
 msgstr ""
 
 #. module: stock_picking_tier_validation
+#. odoo-python
 #: code:addons/stock_picking_tier_validation/models/stock_picking.py:0
-#, python-format
 msgid ""
 "This action needs to be validated for at least one record. \n"
 "Please request a validation."
@@ -89,11 +81,6 @@ msgstr ""
 #. module: stock_picking_tier_validation
 #: model:ir.model,name:stock_picking_tier_validation.model_tier_definition
 msgid "Tier Definition"
-msgstr ""
-
-#. module: stock_picking_tier_validation
-#: model:ir.model.fields,field_description:stock_picking_tier_validation.field_stock_picking__tier_validation_before_write
-msgid "Tier Validation Before Write"
 msgstr ""
 
 #. module: stock_picking_tier_validation
