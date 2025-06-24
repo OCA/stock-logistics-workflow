@@ -6,13 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2025-06-24 12:25+0000\n"
+"Last-Translator: Betül Öğmen <betulo@eska.biz>\n"
 "Language-Team: none\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: stock_no_negative
 #. odoo-python
@@ -26,7 +28,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_no_negative.field_product_template__allow_negative_stock
 #: model:ir.model.fields,field_description:stock_no_negative.field_stock_location__allow_negative_stock
 msgid "Allow Negative Stock"
-msgstr ""
+msgstr "Stok Negatif Olabilir"
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_product_category__allow_negative_stock
@@ -35,13 +37,15 @@ msgid ""
 "category. The options doesn't apply to products attached to sub-categories "
 "of this category."
 msgstr ""
+"Bu kategorideki stoklanabilir ürünlerin stokları negatif olabilir. Bu "
+"seçenek alt kategorilere uygulanmaz."
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_stock_location__allow_negative_stock
 msgid ""
 "Allow negative stock levels for the stockable products attached to this "
 "location."
-msgstr ""
+msgstr "Bu konumdaki stoklanabilir ürünlerin stokları negatif olabilir."
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_product_product__allow_negative_stock
@@ -52,26 +56,29 @@ msgid ""
 "related stock moves will be blocked if the stock level becomes negative with"
 " the stock move."
 msgstr ""
+"Eğer bu seçenek üründe veya ürünün kategorisinde etkinse ve ürün "
+"stoklanabilir bir ürünse, stok seviyesini negatif yapacak seviye stok "
+"hareketlerinin onaylanması engellenir."
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_stock_location
 msgid "Inventory Locations"
-msgstr ""
+msgstr "Stok Konumları"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_product_template
 msgid "Product"
-msgstr ""
+msgstr "Ürün"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_product_category
 msgid "Product Category"
-msgstr ""
+msgstr "Ürün Kategorisi"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_stock_quant
 msgid "Quants"
-msgstr ""
+msgstr "Stoklar"
 
 #. module: stock_no_negative
 #. odoo-python
@@ -82,3 +89,6 @@ msgid ""
 " location '{complete_name}' and negative stock is not allowed for this "
 "product and/or location."
 msgstr ""
+"Bu stok hareketini onaylayamazsınız çünkü '{name}'{name_lot} ürünü stok "
+"seviyesi negatif ({q_quantity}) olacak '{complete_name}' konumunda ve ürün "
+"miktarı bu ürün ve/veya konum için negatif stok olamaz."
