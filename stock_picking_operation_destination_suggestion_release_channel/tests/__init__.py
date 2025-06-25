@@ -1,0 +1,1 @@
+from . import test_destination_suggestion_channel

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="stock_picking_type_form_view">
+        <field name="model">stock.picking.type</field>
+        <field
+            name="inherit_id"
+            ref="stock_picking_operation_destination_suggestion.stock_picking_type_form_view"
+        />
+        <field name="arch" type="xml">
+            <field name="suggest_destination_partner" position="after">
+                <field
+                    name="suggest_destination_release_channel"
+                    attrs="{'invisible': [('suggest_destination', '=', False)]}"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>
