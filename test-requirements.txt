@@ -1,1 +1,3 @@
 odoo-test-helper
+
+odoo-addon-stock-picking-operation-destination-suggestion @ git+https://github.com/OCA/stock-logistics-workflow@refs/pull/1999/head#subdirectory=setup/stock_picking_operation_destination_suggestion
