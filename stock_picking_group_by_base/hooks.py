@@ -3,9 +3,11 @@
 from psycopg2.extensions import AsIs
 
 
-def uninstall_hook(cr, registry):
+def uninstall_hook(env):
     """
     This method will remove created index
     """
     index_name = "stock_picking_groupby_key_index"
-    cr.execute("DROP INDEX IF EXISTS %(index_name)s", dict(index_name=AsIs(index_name)))
+    env.cr.execute(
+        "DROP INDEX IF EXISTS %(index_name)s", dict(index_name=AsIs(index_name))
+    )
