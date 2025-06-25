@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model='ir.ui.view' id="view_picking_type_form">
+        <field name="name">Operation Types</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//notebook/page[@name='general']/group[@name='first']/group[2]"
+                position="inside"
+            >
+                <field
+                    name="group_pickings"
+                    groups="base.group_no_one"
+                    invisible="code != 'outgoing'"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>

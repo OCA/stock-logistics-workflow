@@ -1,0 +1,311 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_group_by_partner_by_carrier
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-08-22 10:06+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.6.2\n"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
+msgid "<span attrs=\"{'invisible': [('nothing_todo', '=', True)]}\">or</span>"
+msgstr "<span attrs=\"{'invisible': [('nothing_todo', '=', True)]}\">o</span>"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.report_delivery_document
+msgid "All ordered items have been delivered."
+msgstr "Tutti i prodotti sono stati forniti."
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
+msgid "Cancel"
+msgstr "Annulla"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking__canceled_by_merge
+msgid "Canceled By Merge"
+msgstr "Annullato da unione"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
+msgid "Confirm"
+msgstr "Conferma"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_res_partner
+msgid "Contact"
+msgstr "Contatto"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_report_stock_report_deliveryslip
+msgid "Delivery Slip Report"
+msgstr "Resoconto bolla di consegna"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__details
+msgid "Details"
+msgstr "Dettagli"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__discarded_picking_ids
+msgid "Discarded Pickings"
+msgstr "Prelievi scartati"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_res_partner__disable_picking_grouping
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_res_users__disable_picking_grouping
+msgid "Do not group deliveries"
+msgstr "Non raggruppare consegne"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.stock_picking_merge_wiz_info
+msgid "For customer:"
+msgstr "Per cliente:"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.stock_picking_merge_wiz_info
+msgid "Forecasted grouping"
+msgstr "Raggruppamento previsto"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_type__group_pickings
+msgid "Group pickings"
+msgstr "Raggruppa prelievi"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,help:stock_picking_group_by_partner_by_carrier.field_stock_picking_type__group_pickings
+msgid ""
+"Group pickings for the same partner and carrier. Pickings with shipping "
+"policy set to 'When all products are ready' are never grouped."
+msgstr ""
+"Raggruppa prelievi per stesso client e stesso corriere. Prelievi con "
+"politica di spedizione 'Quando tutti i prodotti sono pronti' non sono mai "
+"raggruppati."
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_warehouse__group_shippings
+msgid "Group shippings"
+msgstr "Raggruppa spedizioni"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,help:stock_picking_group_by_partner_by_carrier.field_stock_warehouse__group_shippings
+msgid ""
+"Group shippings for the same partner and carrier. Shippings with shipping "
+"policy set to 'When all products are ready' are never grouped."
+msgstr ""
+"Raggruppa spedizioni per stesso client e stesso corriere. Spedizioni con "
+"politica di spedizione 'Quando tutti i prodotti sono pronti' non sono mai "
+"raggruppati."
+
+#. module: stock_picking_group_by_partner_by_carrier
+#. odoo-python
+#: code:addons/stock_picking_group_by_partner_by_carrier/wizards/stock_picking_merge_wiz.py:0
+#, python-format
+msgid "Grouped pickings"
+msgstr "Prelievi raggruppati"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento di"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
+msgid "Mass Action for the selected stock picking"
+msgstr "Azione di massa per il prelievo magazzino selezionato"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.actions.act_window,name:stock_picking_group_by_partner_by_carrier.act_window_merge_transfers
+msgid "Merge transfers"
+msgstr "Unisci trasferimenti"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#. odoo-python
+#: code:addons/stock_picking_group_by_partner_by_carrier/models/stock_picking.py:0
+#, python-format
+msgid "Merged procurement"
+msgstr "Approvigionamento unito"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#. odoo-python
+#: code:addons/stock_picking_group_by_partner_by_carrier/models/stock_picking.py:0
+#, python-format
+msgid "Merged procurement for partners: %(partners_name)s"
+msgstr "Approvvigionamento unito per i partner: %(partners_name)s"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#. odoo-python
+#: code:addons/stock_picking_group_by_partner_by_carrier/wizards/stock_picking_merge_wiz.py:0
+#, python-format
+msgid "No picking can be merged!"
+msgstr "Nessun prelievo può essere unito!"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__nothing_todo
+msgid "Nothing Todo"
+msgstr "Niente da fare"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_move__original_group_id
+msgid "Original Procurement Group"
+msgstr "Gruppo di approvvigionamento originale"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_procurement_group__picking_ids
+msgid "Picking"
+msgstr "Prelievo"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_stock_picking_type
+msgid "Picking Type"
+msgstr "Tipo prelievo"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
+msgid ""
+"Pickings should match these parameters: picking type is groupable, state not "
+"cancelled or done, not printed."
+msgstr ""
+"I prelievi devono soddisfare questi parametri: tipo prelievo ragruppabile, "
+"stato non 'annullato' o 'completo', non stampato."
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_procurement_group
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking__group_id
+msgid "Procurement Group"
+msgstr "Gruppo di approvvigionamento"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.report_delivery_document
+msgid "Remaining to deliver:"
+msgstr "Rsiduo da consegnare:"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_procurement_group__sale_ids
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking__sale_ids
+msgid "Sale"
+msgstr "Vendita"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_sale_order
+msgid "Sales Order"
+msgstr "Ordine di vendita"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Riga ordine di vendita"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__selected_picking_ids
+msgid "Selected Pickings"
+msgstr "Prelievi selezionati"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__show_discarded_detail
+msgid "Show Discarded Detail"
+msgstr "Mostra dettaglio scartati"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
+msgid "Some pickings you've selected are discarded"
+msgstr "Alcuni prelievi selezionati sono stati scartati"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.stock_picking_merge_wiz_info
+msgid "Sorry, nothing to be done here."
+msgstr "Spiacente, niente da fare."
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_stock_move
+msgid "Stock Move"
+msgstr "Movimento di magazzino"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_stock_picking_merge
+msgid "Stock Picking Merge"
+msgstr "Unione prelievo magazzino"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_stock_rule
+msgid "Stock Rule"
+msgstr "Regola di giacenza"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,help:stock_picking_group_by_partner_by_carrier.field_stock_picking__canceled_by_merge
+msgid ""
+"Technical field. Indicates the transfer is canceled because it was left "
+"empty after a manual merge."
+msgstr ""
+"Campo tecnico. Indica che il trasferimento è stato annullato perchè rimasto "
+"vuoto dopo un raggruppamento."
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_stock_picking
+msgid "Transfer"
+msgstr "Trasferimento"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_sale_order__picking_ids
+msgid "Transfers"
+msgstr "Trasferimenti"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__valid_picking_ids
+msgid "Valid Pickings"
+msgstr "Prelievi validi"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
+msgid "Valid pickings"
+msgstr "Prelievi validi"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_stock_warehouse
+msgid "Warehouse"
+msgstr "Magazzino"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.stock_picking_merge_wiz_info
+msgid "With carrier:"
+msgstr "Con corriere:"
