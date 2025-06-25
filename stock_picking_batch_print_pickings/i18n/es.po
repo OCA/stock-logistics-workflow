@@ -72,7 +72,6 @@ msgstr "Tipo de operación"
 #. module: stock_picking_batch_print_pickings
 #. odoo-python
 #: code:addons/stock_picking_batch_print_pickings/models/stock_picking_batch.py:0
-#, python-format
 msgid "Picking Type %(type)s is not configured to print from batch."
 msgstr ""
 "El tipo de operación %(type)s no está configurada para imprimir desde la "
@@ -101,7 +100,6 @@ msgstr "Imprimir albaranes desde la agrupación"
 #. module: stock_picking_batch_print_pickings
 #. odoo-python
 #: code:addons/stock_picking_batch_print_pickings/models/stock_picking_type.py:0
-#, python-format
 msgid "The number of copies must be greater or equal to 0"
 msgstr "El número de copias deber ser mayor o igual que cero"
 
