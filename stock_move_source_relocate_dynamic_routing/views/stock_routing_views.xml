@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_routing_form" model="ir.ui.view">
+        <field name="name">stock.routing.form</field>
+        <field name="model">stock.routing</field>
+        <field name="inherit_id" ref="stock_dynamic_routing.view_stock_routing_form" />
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button
+                    name="action_view_source_relocate"
+                    string="Source Relocation"
+                    icon="fa-refresh"
+                    class="oe_stat_button"
+                    type="object"
+                />
+            </div>
+        </field>
+    </record>
+</odoo>
