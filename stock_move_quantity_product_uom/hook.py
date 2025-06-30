@@ -3,7 +3,7 @@ from odoo.tools.sql import column_exists, create_column
 
 def pre_init_quantity_product_uom(env):
     if not column_exists(env.cr, "stock_move", "quantity_product_uom"):
-        create_column(env.cr, "stock_move", "quantity_product_uom", "float8")
+        create_column(env.cr, "stock_move", "quantity_product_uom", "double precision")
     env.cr.execute(
         """
         UPDATE stock_move sm
