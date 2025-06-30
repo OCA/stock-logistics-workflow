@@ -93,7 +93,7 @@ addon | version | maintainers | summary
 [stock_reception_discrepancy_distribution](stock_reception_discrepancy_distribution/) | 15.0.1.0.1 |  | Change demand in stock moves linked to reception one
 [stock_remote_measure](stock_remote_measure/) | 15.0.1.0.0 | <a href='https://github.com/chienandalu'><img src='https://github.com/chienandalu.png' width='32' height='32' style='border-radius:50%;' alt='chienandalu'/></a> | Allows to connect to remote devices to record measures in stock fields
 [stock_restrict_lot](stock_restrict_lot/) | 15.0.0.1.0 | <a href='https://github.com/florian-dacosta'><img src='https://github.com/florian-dacosta.png' width='32' height='32' style='border-radius:50%;' alt='florian-dacosta'/></a> | Base module that add back the concept of restrict lot on stock move
-[stock_return_request](stock_return_request/) | 15.0.1.0.2 |  | Stock Return Request
+[stock_return_request](stock_return_request/) | 15.0.1.0.3 |  | Stock Return Request
 [stock_scrap_tier_validation](stock_scrap_tier_validation/) | 15.0.1.0.0 |  | Stock Scrap Tier Validation
 [stock_split_picking](stock_split_picking/) | 15.0.1.1.2 |  | Split a picking in two not transferred pickings
 [stock_valuation_fifo_lot](stock_valuation_fifo_lot/) | 15.0.1.0.0 | <a href='https://github.com/newtratip'><img src='https://github.com/newtratip.png' width='32' height='32' style='border-radius:50%;' alt='newtratip'/></a> | Stock Valuation Fifo Lot
