@@ -59,6 +59,7 @@ addon | version | maintainers | summary
 [stock_picking_line_sequence](stock_picking_line_sequence/) | 18.0.1.0.0 |  | Manages the order of stock moves by displaying its sequence
 [stock_picking_mass_action](stock_picking_mass_action/) | 18.0.1.0.0 |  | Stock Picking Mass Action
 [stock_picking_origin_reference](stock_picking_origin_reference/) | 18.0.1.0.0 |  | Add clickable button to the Transfer Source Document.
+[stock_picking_origin_reference_purchase](stock_picking_origin_reference_purchase/) | 18.0.1.0.0 |  | Transfer to Purchase Order navigation from the Source Document.
 [stock_picking_origin_reference_sale](stock_picking_origin_reference_sale/) | 18.0.1.0.0 |  | Transfer to Sales Order navigation from the Source Document.
 [stock_picking_partner_note](stock_picking_partner_note/) | 18.0.1.0.0 |  | Add partner notes on picking
 [stock_picking_progress](stock_picking_progress/) | 18.0.1.0.0 | <a href='https://github.com/mmequignon'><img src='https://github.com/mmequignon.png' width='32' height='32' style='border-radius:50%;' alt='mmequignon'/></a> <a href='https://github.com/JuMiSanAr'><img src='https://github.com/JuMiSanAr.png' width='32' height='32' style='border-radius:50%;' alt='JuMiSanAr'/></a> | Compute the stock.picking progression
