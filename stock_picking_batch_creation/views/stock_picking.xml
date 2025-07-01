@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<!-- Copyright 2021 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="stock_picking_form_view">
+        <field name="name">stock.picking.form (in stock_picking_batch_creation)</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='extra']" position="inside">
+                <group>
+                    <field name="picking_device_id" />
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_picking_tree_batch_view">
+        <field
+            name="name"
+        >stock.picking.tree.batch (in stock_picking_batch_creation)</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock_picking_batch.vpicktree" />
+        <field name="arch" type="xml">
+            <field name="state" position="after">
+                <field name="picking_device_id" />
+                <field name="nbr_picking_lines" />
+            </field>
+        </field>
+    </record>
+</odoo>
