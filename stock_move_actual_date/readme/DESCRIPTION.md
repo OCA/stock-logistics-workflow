@@ -11,3 +11,5 @@ stored according to the following logic:
 - If there is no journal entry, the stock move's actual date is used
 - Otherwise, convert create_date (datetime) of the stock.valuation.layer
   record to date, with consideration to user's timezone.
+
+It also provides stock quantity history reporting based on the actual date.

@@ -19,3 +19,12 @@ scenarios:
 2.  In the wizard, select a date in 'Inventory at Date', and click
     'Valuation as of Accounting Date' (note that 'hh:mm:ss' part of the
     selection in 'Inventory at Date' is ignored in this context).
+
+Use the Actual Date field in the following stock quantity history reporting scenarios:
+
+1. Go to *Inventory > Reporting > Stock* and click 'Inventory at Date'.
+2. In the wizard, select a date in 'Inventory at Date', and click
+   'Inventory as of Actual Date' (note that the 'hh:mm:ss' part of the selection
+   in 'Inventory at Date' is ignored in this context).
+
+Note: You can also use this feature along with stock_quantity_history_location.

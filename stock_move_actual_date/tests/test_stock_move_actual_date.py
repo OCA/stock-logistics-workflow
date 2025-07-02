@@ -1,7 +1,7 @@
 # Copyright 2025 Quartile (https://www.quartile.co)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from datetime import date
+from datetime import date, datetime
 
 from freezegun import freeze_time
 
@@ -176,4 +176,34 @@ class TestStockMoveActualDate(TransactionCase):
             svl.actual_date,
             date(2025, 3, 10),
             "SVL accounting date should match the move actual date.",
+        )
+
+    def test_open_qty_at_actual_date(self):
+        self.env.user.tz = "Asia/Tokyo"
+        _, _ = self.create_picking(date(2025, 7, 1))
+        wizard = self.env["stock.quantity.history"].create(
+            # 2025-06-30 23:00:00 JST
+            {"inventory_datetime": datetime(2025, 6, 30, 14, 0, 0)}
+        )
+        action = wizard.open_at_date()
+        self.assertEqual(
+            self.product_1.with_context(**action["context"]).qty_available, 0.0
+        )
+        self.product_1.invalidate_recordset()
+        action = wizard.open_qty_at_actual_date()
+        self.assertEqual(
+            self.product_1.with_context(**action["context"]).qty_available, 0.0
+        )
+        wizard = self.env["stock.quantity.history"].create(
+            # 2025-07-01 00:00:00 JST
+            {"inventory_datetime": datetime(2025, 6, 30, 15, 0, 0)}
+        )
+        action = wizard.open_at_date()
+        self.assertEqual(
+            self.product_1.with_context(**action["context"]).qty_available, 0.0
+        )
+        self.product_1.invalidate_recordset()
+        action = wizard.open_qty_at_actual_date()
+        self.assertEqual(
+            self.product_1.with_context(**action["context"]).qty_available, 10.0
         )
