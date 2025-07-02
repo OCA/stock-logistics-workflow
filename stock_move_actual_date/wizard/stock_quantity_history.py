@@ -3,6 +3,7 @@
 
 from odoo import models
 from odoo.tools.misc import format_datetime
+from odoo.tools.safe_eval import safe_eval
 
 
 class StockQuantityHistory(models.TransientModel):
@@ -17,4 +18,11 @@ class StockQuantityHistory(models.TransientModel):
             ("product_id.is_storable", "=", True),
         ]
         action["display_name"] = format_datetime(self.env, self.inventory_datetime)
+        return action
+
+    def open_qty_at_actual_date(self):
+        action = self.open_at_date()
+        ctx = action["context"]
+        ctx = safe_eval(ctx) if isinstance(ctx, str) else ctx
+        ctx["use_actual_date"] = True
         return action
