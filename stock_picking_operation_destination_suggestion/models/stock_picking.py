@@ -1,7 +1,8 @@
 # Copyright 2025 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo import api, fields, models
-from odoo.osv.expression import AND
+from odoo.osv.expression import AND, TRUE_DOMAIN
+from odoo.tools.safe_eval import safe_eval
 
 
 class StockPicking(models.Model):
@@ -26,7 +27,11 @@ class StockPicking(models.Model):
             )
 
     def _get_location_destination_move_line_suggestion_domain(self):
-        domain = self.picking_type_id.suggest_destination_additional_domain
+        domain = (
+            safe_eval(self.picking_type_id.suggest_destination_additional_domain)
+            if self.picking_type_id.suggest_destination_additional_domain
+            else TRUE_DOMAIN
+        )
         if self.picking_type_id.suggest_destination_partner:
             domain = AND(
                 [

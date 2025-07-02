@@ -15,6 +15,6 @@ class StockPickingType(models.Model):
         help="Check this if you want to suggest destination locations with pending moves"
         "with the same partner",
     )
-    suggest_destination_additional_domain = fields.Binary(
+    suggest_destination_additional_domain = fields.Char(
         help="Set a particular domain to suggest destination locations."
     )

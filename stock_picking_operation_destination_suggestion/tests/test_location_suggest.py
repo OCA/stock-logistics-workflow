@@ -122,3 +122,40 @@ class TestPickingDestinationSuggest(PickingDestinationSuggestCommon):
         )
         self.assertTrue(self.move)
         self.assertFalse(self.move.picking_id.destination_location_suggestion_ids)
+
+    def test_picking_suggest_additional_domain(self):
+        location_2 = self.env["stock.location"].search([("barcode", "=", "L#OUT.2")])
+        domain = f"[('location_id', '=', {location_2.id})]"
+        self.warehouse.pick_type_id.suggest_destination_additional_domain = domain
+        self._create_procurement()
+        self.move = self.env["stock.move"].search(
+            [
+                ("location_id", "=", self.stock.id),
+                ("product_id", "=", self.product.id),
+                ("state", "=", "assigned"),
+            ]
+        )
+        self.assertTrue(self.move)
+        self.move.move_line_ids.qty_done = 5.0
+        # Put products in a particular location
+        location_1 = self.env["stock.location"].search([("barcode", "=", "L#OUT.1")])
+        self.move.move_line_ids.location_dest_id = location_1
+        self.move._action_done()
+
+        self.move_out = self.env["stock.move"].search(
+            [("location_id", "=", self.output.id), ("product_id", "=", self.product.id)]
+        )
+
+        self.assertTrue(self.move_out)
+        self.assertTrue(self.move_out.move_line_ids)
+
+        self._create_procurement()
+        self.move = self.env["stock.move"].search(
+            [
+                ("location_id", "=", self.stock.id),
+                ("product_id", "=", self.product.id),
+                ("state", "=", "assigned"),
+            ]
+        )
+        self.assertTrue(self.move)
+        self.assertFalse(self.move.picking_id.destination_location_suggestion_ids)
