@@ -3,7 +3,7 @@
 
 from os.path import commonpath
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 
 class StockRouting(models.Model):
@@ -71,7 +71,7 @@ class StockRouting(models.Model):
     )
     def _compute_reserve_rule_warning(self):
         for routing in self:
-            routing.reserve_rule_warning = b"".join(
+            routing.reserve_rule_warning = "".join(
                 routing._render_reserve_rule_warning()
             )
 
@@ -80,15 +80,11 @@ class StockRouting(models.Model):
         reserve_rules = self.env["stock.reserve.rule"].search(
             [("picking_type_ids", "in", picking_types.ids)]
         )
+        action = self.env["ir.actions.act_window"]._for_xml_id(
+            "stock_reserve_rule.action_stock_reserve_rule"
+        )
+        action["domain"] = [("id", "in", reserve_rules.ids)]
         context = self.env.context
         if len(picking_types) == 1:
             context = dict(context, default_picking_type_id=picking_types.id)
-        return {
-            "name": _("Reservation Rules"),
-            "domain": [("id", "in", reserve_rules.ids)],
-            "res_model": "stock.reserve.rule",
-            "type": "ir.actions.act_window",
-            "view_id": False,
-            "view_mode": "tree,form",
-            "context": context,
-        }
+        return action
