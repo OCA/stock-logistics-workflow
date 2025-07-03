@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Moduon Team S.L.
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <template id="report_picking_batch_print_pickings">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t
+                    t-set="type_document"
+                    t-value="doc.picking_type_id.print_documents_from_batch"
+                />
+                <t t-if="doc.print_documents">
+                    <t
+                        t-foreach="set(doc.picking_ids.mapped('partner_id'))"
+                        t-as="partner"
+                    >
+                        <t t-call="stock_picking_batch_print_pickings.print_pickings" />
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+    <template id="print_pickings">
+        <t
+            t-foreach="doc.picking_ids.filtered(lambda p: p.partner_id == partner)"
+            t-as="picking"
+            name="print_pickings"
+        >
+            <t t-if="type_document == 'pickings'" name="condition_print_picking">
+                <t t-call="stock_picking_batch_print_pickings.copies_picking" />
+            </t>
+        </t>
+    </template>
+    <template id="copies_picking">
+        <t
+            t-foreach="range(int(doc.picking_type_id.number_copies_pickings))"
+            t-as="copies_per_pickings"
+        >
+            <t
+                t-call="stock.report_delivery_document"
+                t-lang="picking._get_report_lang()"
+            >
+                <t t-set="o" t-value="picking" />
+            </t>
+        </t>
+    </template>
+</odoo>
