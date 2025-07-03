@@ -41,7 +41,6 @@ msgstr "Riga fattura"
 
 #. module: stock_picking_invoice_link
 #: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_move_form
-#: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_move_picking_form
 msgid "Invoice Lines"
 msgstr "Righe fattura"
 
