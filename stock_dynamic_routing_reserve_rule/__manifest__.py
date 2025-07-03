@@ -3,7 +3,7 @@
     "name": "Stock Dynamic Routing - Reservation Rules",
     "summary": "Glue module between dynamic routing and reservation rules",
     "author": "Camptocamp, Odoo Community Association (OCA)",
-    "website": "https://github.com/OCA/wms",
+    "website": "https://github.com/OCA/stock-logistics-workflow",
     "category": "Warehouse Management",
     "version": "14.0.1.0.1",
     "license": "AGPL-3",

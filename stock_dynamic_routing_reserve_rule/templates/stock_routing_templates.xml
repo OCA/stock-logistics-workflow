@@ -11,8 +11,8 @@
             <br />
             This dynamic routing may change moves' operation types to
             <strong>
-                <span t-esc="dest_picking_type.display_name" />
-            </strong>
+            <span t-esc="dest_picking_type.display_name" />
+        </strong>
             which does not have a reservation rule. It may lead
             to inconsistencies in the routing.
         </p>
@@ -22,8 +22,8 @@
             Warning: this dynamic routing may change moves' operation
             type to
             <strong>
-                <span t-esc="dest_picking_type.display_name" />
-            </strong>.
+            <span t-esc="dest_picking_type.display_name" />
+        </strong>.
             This new operation type has reservation rules in
             <span t-esc="location_common_path" />
             <t t-if="location_names">
