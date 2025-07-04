@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -16,14 +16,12 @@ msgstr ""
 #. module: stock_move_auto_assign_auto_release
 #. odoo-python
 #: code:addons/stock_move_auto_assign_auto_release/models/stock_picking.py:0
-#, python-format
 msgid "Auto release available to promise %(name)s"
 msgstr ""
 
 #. module: stock_move_auto_assign_auto_release
 #: model:ir.model.fields,field_description:stock_move_auto_assign_auto_release.field_stock_move__is_auto_release_allowed
 #: model:ir.model.fields,field_description:stock_move_auto_assign_auto_release.field_stock_picking__is_auto_release_allowed
-#: model:ir.model.fields,field_description:stock_move_auto_assign_auto_release.field_stock_reservation__is_auto_release_allowed
 msgid "Is Auto Release Allowed"
 msgstr ""
 
@@ -45,6 +43,5 @@ msgstr ""
 #. module: stock_move_auto_assign_auto_release
 #. odoo-python
 #: code:addons/stock_move_auto_assign_auto_release/models/stock_move.py:0
-#, python-format
 msgid "Try releasing \"%(product)s\" for quantities added in: %(locations)s"
 msgstr ""
