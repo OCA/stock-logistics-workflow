@@ -11,7 +11,7 @@
                     string="Valuation as of Actual Date"
                     type="object"
                     class="btn-primary"
-                    invisible="not context.get('active_model', 'stock.valuation.layer')"
+                    invisible="context.get('active_model') != 'stock.valuation.layer'"
                 />
             </xpath>
         </field>

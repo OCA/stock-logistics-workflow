@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.form - stock_picking_origin_reference</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <field name="origin" position="after">
+                <field
+                    name="origin_reference"
+                    attrs="{'invisible': [('origin_reference', '=', False)]}"
+                />
+            </field>
+            <field name="origin" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible': ['|',('origin', '=', False),('origin_reference', '!=', False)]}</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>

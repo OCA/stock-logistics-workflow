@@ -45,7 +45,7 @@ addon | version | maintainers | summary
 [stock_lot_on_hand_first](stock_lot_on_hand_first/) | 16.0.1.0.0 | <a href='https://github.com/grindtildeath'><img src='https://github.com/grindtildeath.png' width='32' height='32' style='border-radius:50%;' alt='grindtildeath'/></a> | Allows to display lots on hand first in M2o fields
 [stock_lot_production_date](stock_lot_production_date/) | 16.0.1.0.0 |  | Stock Lot Production Date
 [stock_lot_scrap](stock_lot_scrap/) | 16.0.1.0.0 |  | This module adds a button in Production Lot/Serial Number view form to Scrap all products contained.
-[stock_move_actual_date](stock_move_actual_date/) | 16.0.1.0.0 |  | Stock Move Actual Date
+[stock_move_actual_date](stock_move_actual_date/) | 16.0.1.0.1 |  | Stock Move Actual Date
 [stock_move_free_reservation_reassign](stock_move_free_reservation_reassign/) | 16.0.1.0.1 |  | Try to reassign a move when its reservation is removed due to the related quant becoming unavailable
 [stock_move_line_auto_fill](stock_move_line_auto_fill/) | 16.0.1.1.1 |  | Stock Move Line auto fill
 [stock_move_line_change_lot](stock_move_line_change_lot/) | 16.0.1.2.0 |  | Stock Move Line Change Lot
@@ -62,7 +62,7 @@ addon | version | maintainers | summary
 [stock_override_procurement](stock_override_procurement/) | 16.0.1.0.0 |  | This technical module allow to override procurement values
 [stock_owner_restriction](stock_owner_restriction/) | 16.0.1.1.2 |  | Do not reserve quantity with assigned owner
 [stock_partner_delivery_window](stock_partner_delivery_window/) | 16.0.1.1.0 |  | Define preferred delivery time windows for partners
-[stock_picking_auto_create_lot](stock_picking_auto_create_lot/) | 16.0.3.1.0 | <a href='https://github.com/sergio-teruel'><img src='https://github.com/sergio-teruel.png' width='32' height='32' style='border-radius:50%;' alt='sergio-teruel'/></a> | Auto create lots for incoming pickings
+[stock_picking_auto_create_lot](stock_picking_auto_create_lot/) | 16.0.3.2.0 | <a href='https://github.com/sergio-teruel'><img src='https://github.com/sergio-teruel.png' width='32' height='32' style='border-radius:50%;' alt='sergio-teruel'/></a> | Auto create lots for incoming pickings
 [stock_picking_auto_create_lot_sequence](stock_picking_auto_create_lot_sequence/) | 16.0.1.0.0 |  | Stock Picking Auto Create Lot Sequence
 [stock_picking_back2draft](stock_picking_back2draft/) | 16.0.1.0.0 |  | Reopen cancelled pickings
 [stock_picking_batch_extended](stock_picking_batch_extended/) | 16.0.1.1.1 | <a href='https://github.com/gurneyalex'><img src='https://github.com/gurneyalex.png' width='32' height='32' style='border-radius:50%;' alt='gurneyalex'/></a> <a href='https://github.com/carlosdauden'><img src='https://github.com/carlosdauden.png' width='32' height='32' style='border-radius:50%;' alt='carlosdauden'/></a> <a href='https://github.com/i-vyshnevska'><img src='https://github.com/i-vyshnevska.png' width='32' height='32' style='border-radius:50%;' alt='i-vyshnevska'/></a> | Allows manage a lot of pickings in batch
@@ -82,12 +82,15 @@ addon | version | maintainers | summary
 [stock_picking_group_by_partner_by_carrier_by_date](stock_picking_group_by_partner_by_carrier_by_date/) | 16.0.1.0.0 |  | Stock Picking: group by partner and carrier and scheduled date
 [stock_picking_import_serial_number](stock_picking_import_serial_number/) | 16.0.1.0.0 | <a href='https://github.com/sergio-teruel'><img src='https://github.com/sergio-teruel.png' width='32' height='32' style='border-radius:50%;' alt='sergio-teruel'/></a> | Import S/N from excel file for incoming pickings
 [stock_picking_info_lot](stock_picking_info_lot/) | 16.0.1.0.0 |  | Add lot information on Stock Transfer lines
-[stock_picking_invoice_link](stock_picking_invoice_link/) | 16.0.1.1.4 |  | Adds link between pickings and invoices
+[stock_picking_invoice_link](stock_picking_invoice_link/) | 16.0.1.1.5 |  | Adds link between pickings and invoices
 [stock_picking_kind](stock_picking_kind/) | 16.0.1.0.0 |  | Computes the kind of picking based on locations
 [stock_picking_line_sequence](stock_picking_line_sequence/) | 16.0.1.0.1 |  | Manages the order of stock moves by displaying its sequence
 [stock_picking_mass_action](stock_picking_mass_action/) | 16.0.1.1.1 |  | Stock Picking Mass Action
 [stock_picking_move_package_to_package](stock_picking_move_package_to_package/) | 16.0.1.0.1 |  | Move entire package to another package
 [stock_picking_operation_quick_change](stock_picking_operation_quick_change/) | 16.0.1.0.0 |  | Change location of all picking operations
+[stock_picking_origin_reference](stock_picking_origin_reference/) | 16.0.1.0.0 |  | Add clickable button to the Transfer Source Document.
+[stock_picking_origin_reference_purchase](stock_picking_origin_reference_purchase/) | 16.0.1.0.0 |  | Transfer to Purchase Order navigation from the Source Document.
+[stock_picking_origin_reference_sale](stock_picking_origin_reference_sale/) | 16.0.1.0.0 |  | Transfer to Sales Order navigation from the Source Document.
 [stock_picking_partner_note](stock_picking_partner_note/) | 16.0.1.1.0 |  | Add partner notes on picking
 [stock_picking_portal](stock_picking_portal/) | 16.0.1.0.0 |  | Show customer delivery orders in portal
 [stock_picking_product_assortment](stock_picking_product_assortment/) | 16.0.1.0.0 | <a href='https://github.com/CarlosRoca13'><img src='https://github.com/CarlosRoca13.png' width='32' height='32' style='border-radius:50%;' alt='CarlosRoca13'/></a> | Stock Picking Product Assortment
@@ -104,6 +107,7 @@ addon | version | maintainers | summary
 [stock_picking_show_backorder](stock_picking_show_backorder/) | 16.0.1.0.0 |  | Provides a new field on stock pickings, allowing to display the corresponding backorders.
 [stock_picking_show_return](stock_picking_show_return/) | 16.0.1.0.1 |  | Show returns on stock pickings
 [stock_picking_start](stock_picking_start/) | 16.0.1.2.0 |  | Add button to start picking
+[stock_picking_status_notification](stock_picking_status_notification/) | 16.0.1.0.0 |  | Notify selected internal users of changes in picking states
 [stock_picking_supplier_ref](stock_picking_supplier_ref/) | 16.0.1.0.0 |  | Adds a supplier reference field inside supplier's pickings and allows search for this reference.
 [stock_picking_to_batch_group_fields](stock_picking_to_batch_group_fields/) | 16.0.1.0.1 | <a href='https://github.com/EmilioPascual'><img src='https://github.com/EmilioPascual.png' width='32' height='32' style='border-radius:50%;' alt='EmilioPascual'/></a> | Allows to create batches grouped by picking fields.
 [stock_picking_type_bypass_reservation](stock_picking_type_bypass_reservation/) | 16.0.1.0.1 | <a href='https://github.com/Shide'><img src='https://github.com/Shide.png' width='32' height='32' style='border-radius:50%;' alt='Shide'/></a> <a href='https://github.com/rafaelbn'><img src='https://github.com/rafaelbn.png' width='32' height='32' style='border-radius:50%;' alt='rafaelbn'/></a> | Bypass reservation on desired Stock Picking Types

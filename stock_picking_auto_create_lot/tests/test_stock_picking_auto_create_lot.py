@@ -225,3 +225,53 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
             [("product_id", "=", self.product_serial.id)]
         )
         self.assertEqual(len(lot), 1)
+
+    def test_auto_create_lot_force_with_on_print(self):
+        """We can force the auto-creation of the lot on a report print. This can be
+        handy when printing labels before picking validation"""
+        self.picking.action_assign()
+        # Create a report for stock.move.line
+        self.env["ir.ui.view"].create(
+            {
+                "type": "qweb",
+                "name": "stock_picking_auto_create_lot.test_report",
+                "key": "stock_picking_auto_create_lot.test_report",
+                # There's no need to test the arch
+                "arch": "<div />",
+            }
+        )
+        self.env["ir.actions.report"].create(
+            {
+                "name": "Test Stock Move Line Report",
+                "report_name": "stock_picking_auto_create_lot.test_report",
+                "model": "stock.move.line",
+            }
+        )
+        # Create a server action to print the report
+        server_action = self.env["ir.actions.server"].create(
+            {
+                "name": "Test Report Server Action",
+                "model_id": self.env.ref("stock.model_stock_move_line").id,
+                "state": "code",
+                "code": """
+if records:
+    report = env['ir.actions.report'].sudo()._get_report(
+        "stock_picking_auto_create_lot.test_report"
+    )
+    action = report.with_context(force_auto_lot=True).report_action(records.ids)
+""",
+            }
+        )
+        move = self.picking.move_ids.filtered(
+            lambda m: m.product_id == self.product_serial
+        )
+        self.assertEqual(move.product_uom_qty, 3.0)
+        self.assertFalse(move.display_assign_serial)
+        server_action.with_context(
+            active_ids=move.move_line_ids.ids, active_model="stock.move.line"
+        ).run()
+        # Search for serials
+        lot = self.env["stock.lot"].search(
+            [("product_id", "=", self.product_serial.id)]
+        )
+        self.assertEqual(len(lot), 3)
