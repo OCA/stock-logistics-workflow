@@ -16,22 +16,16 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.17\n"
 
-#. module: stock_picking_type_shipping_policy_group_by
-#: model:ir.model.fields,field_description:stock_picking_type_shipping_policy_group_by.field_stock_move__display_name
-msgid "Display Name"
-msgstr "Nome visualizzato"
-
-#. module: stock_picking_type_shipping_policy_group_by
-#: model:ir.model.fields,field_description:stock_picking_type_shipping_policy_group_by.field_stock_move__id
-msgid "ID"
-msgstr "ID"
-
-#. module: stock_picking_type_shipping_policy_group_by
-#: model:ir.model.fields,field_description:stock_picking_type_shipping_policy_group_by.field_stock_move____last_update
-msgid "Last Modified on"
-msgstr "Ultima modifica il"
-
-#. module: stock_picking_type_shipping_policy_group_by
-#: model:ir.model,name:stock_picking_type_shipping_policy_group_by.model_stock_move
+#. module: stock_picking_group_by_partner_by_carrier_force_move_type
+#: model:ir.model,name:stock_picking_group_by_partner_by_carrier_force_move_type.model_stock_move
 msgid "Stock Move"
 msgstr "Movimento di magazzino"
+
+#~ msgid "Display Name"
+#~ msgstr "Nome visualizzato"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Ultima modifica il"
