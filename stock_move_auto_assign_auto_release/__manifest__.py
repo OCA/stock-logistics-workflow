@@ -8,7 +8,7 @@
     "version": "16.0.1.1.4",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
-    "website": "https://github.com/OCA/stock-logistics-warehouse",
+    "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": [
         "stock_available_to_promise_release",
         "stock_move_auto_assign",
