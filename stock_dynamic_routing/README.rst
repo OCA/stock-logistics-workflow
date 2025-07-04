@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 =====================
 Stock Dynamic Routing
 =====================
@@ -17,7 +13,7 @@ Stock Dynamic Routing
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
@@ -33,15 +29,15 @@ Stock Dynamic Routing
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
 Standard Stock Routes explain the steps you want to produce whereas the
-“Dynamic Routing” defines how operations are grouped according to their final
-source and destination location.
+“Dynamic Routing” defines how operations are grouped according to their
+final source and destination location.
 
 This allows for example:
 
-* To parallelize transfers in two locations of a warehouse, splitting
+- To parallelize transfers in two locations of a warehouse, splitting
   them in two different operation type
-* To define pre-picking (wave) in some sub-locations, then roundtrip picking of
-  the sub-location waves
+- To define pre-picking (wave) in some sub-locations, then roundtrip
+  picking of the sub-location waves
 
 Context for the use cases:
 
@@ -49,37 +45,39 @@ In the warehouse, you have a High-Bay which requires to place goods in a
 handover when you move goods in or out of it. The High-Bay contains many
 sub-locations.
 
-A product can be stored either in the High-Bay, either in the Shelving zone.
+A product can be stored either in the High-Bay, either in the Shelving
+zone.
 
 When picking:
 
-When there is enough stock in the Shelving, you expect the moves to have the
-usual Pick(Highbay)-Pack-Ship steps. If the good is picked from the High-Bay, you will
-need an extra operation: Pick(Highbay)-Handover-Pack-Ship.
+When there is enough stock in the Shelving, you expect the moves to have
+the usual Pick(Highbay)-Pack-Ship steps. If the good is picked from the
+High-Bay, you will need an extra operation:
+Pick(Highbay)-Handover-Pack-Ship.
 
 This is what this feature is doing: on the High-Bay location, you define
-a "routing rule". A routing rule selects a different operation type for the move.
-The extra transfer will have the selected operation type, and be added
-dynamically, on reservation, before the chain of moves.
+a "routing rule". A routing rule selects a different operation type for
+the move. The extra transfer will have the selected operation type, and
+be added dynamically, on reservation, before the chain of moves.
 
 When putting away:
 
-A put-away rule targets the High-Bay location.
-An operation Input-Highbay is created. You expect Input-Handover-Highbay.
+A put-away rule targets the High-Bay location. An operation
+Input-Highbay is created. You expect Input-Handover-Highbay.
 
-You can configure a dynamic routing for the put-away on the High-Bay Location.
-The operation type of the new Handover move will the one of the matching routing rule,
-and its destination will be the destination of the operation type.
-
+You can configure a dynamic routing for the put-away on the High-Bay
+Location. The operation type of the new Handover move will the one of
+the matching routing rule, and its destination will be the destination
+of the operation type.
 
 **Notes about Odoo 18.0+**
 
-Compared to new Odoo dynamic push rules, here all steps are planned in advance.
-The move to the final destination always exists and the put-away has already been
-executed so that the final bin is already known. The intermediate step before
-reaching this final destination will also have it's put-away computed.
-As each step is planned in advance, you can also properly respect the operation
-shipping policy.
+Compared to new Odoo dynamic push rules, here all steps are planned in
+advance. The move to the final destination always exists and the
+put-away has already been executed so that the final bin is already
+known. The intermediate step before reaching this final destination will
+also have it's put-away computed. As each step is planned in advance,
+you can also properly respect the operation shipping policy.
 
 **Table of contents**
 
@@ -91,70 +89,77 @@ Configuration
 
 In Inventory Settings, you must have:
 
- * Storage Locations
- * Multi-Warehouses
- * Multi-Step Routes
+   - Storage Locations
+   - Multi-Warehouses
+   - Multi-Step Routes
 
 A new menu in Inventory Settings allow to create new routing rules:
 "Stock Routing".
 
-Create a new routing for a location, then pull or push routing rules.
-A pull rule is applied on moves with the same source location (or children).
-A push rule is applied on moves with the same destination location (or children).
+Create a new routing for a location, then pull or push routing rules. A
+pull rule is applied on moves with the same source location (or
+children). A push rule is applied on moves with the same destination
+location (or children).
 
-Rules can exclude moves based on a domain. The order of the rules is important:
-the first to match is used.
+Rules can exclude moves based on a domain. The order of the rules is
+important: the first to match is used.
 
 Usage
 =====
 
 Try on runbot
-~~~~~~~~~~~~~
+-------------
 
-* In Inventory Settings, activate:
+- In Inventory Settings, activate:
 
-  * Storage Locations
-  * Multi-Warehouses
-  * Multi-Step Routes
+  - Storage Locations
+  - Multi-Warehouses
+  - Multi-Step Routes
 
 The initial setup in the demo data contains locations:
 
-* WH/Stock/Highbay
-* WH/Stock/Highbay/Bin 1
-* WH/Stock/Highbay/Bin 2
-* WH/Stock/Handover
+- WH/Stock/Highbay
+- WH/Stock/Highbay/Bin 1
+- WH/Stock/Highbay/Bin 2
+- WH/Stock/Handover
 
 The "Highbay" location (and children) is configured to:
 
-* create a pull routing transfer from Highbay to Handover when
-  goods are taken from Highbay (using a new picking type Highbay → Handover)
-* create a push routing transfer from Handover to Highbay when
-  goods are put to Highbay (using a new picking type Handover → Highbay)
+- create a pull routing transfer from Highbay to Handover when goods are
+  taken from Highbay (using a new picking type Highbay → Handover)
+- create a push routing transfer from Handover to Highbay when goods are
+  put to Highbay (using a new picking type Handover → Highbay)
 
 Steps to try the Pull Routing Transfer:
 
-* In the main Warehouse, configure outgoing shipments to "Send goods in output and then deliver (2 steps)"
-* Inventory a product, for instance "[FURN_8999] Three-Seat Sofa", add 50 items in "WH/Stock/Highbay/Bay A/Bin 1", and nowhere else
-* Create a sales order with 5 "[FURN_8999] Three-Seat Sofa", confirm
-* You'll have 3 transfers; a new one has been created dynamically for Highbay -> Handover.
+- In the main Warehouse, configure outgoing shipments to "Send goods in
+  output and then deliver (2 steps)"
+- Inventory a product, for instance "[FURN_8999] Three-Seat Sofa", add
+  50 items in "WH/Stock/Highbay/Bay A/Bin 1", and nowhere else
+- Create a sales order with 5 "[FURN_8999] Three-Seat Sofa", confirm
+- You'll have 3 transfers; a new one has been created dynamically for
+  Highbay -> Handover.
 
 Steps to try the Push Routing Transfer:
 
-* In the "WH/Stock" location, create a Put-Away Strategy with:
+- In the "WH/Stock" location, create a Put-Away Strategy with:
 
-  * "[DESK0004] Customizable Desk (Aluminium, Black)" to location "WH/Stock/Highbay/Bay A/Bin 1"
-  * "[E-COM06] Corner Desk Right Sit" to location "WH/Stock/Shelf 1"
+  - "[DESK0004] Customizable Desk (Aluminium, Black)" to location
+    "WH/Stock/Highbay/Bay A/Bin 1"
+  - "[E-COM06] Corner Desk Right Sit" to location "WH/Stock/Shelf 1"
 
-* Create a new purchase order of:
+- Create a new purchase order of:
 
-  * 5 "[DESK0004] Customizable Desk (Aluminium, Black)"
-  * 5 "[E-COM06] Corner Desk Right Sit"
+  - 5 "[DESK0004] Customizable Desk (Aluminium, Black)"
+  - 5 "[E-COM06] Corner Desk Right Sit"
 
-* Confirm the purchase
-* You'll have 2 transfers:
+- Confirm the purchase
+- You'll have 2 transfers:
 
-  * one to move DESK0004 from Supplier → Handover and E-COM06 from Supplier → Shelf 1
-  * one waiting on the other to move DESK0004 from Handover → WH/Stock/Highbay/Bay A/Bin 1 (the final location of the put-away)
+  - one to move DESK0004 from Supplier → Handover and E-COM06 from
+    Supplier → Shelf 1
+  - one waiting on the other to move DESK0004 from Handover →
+    WH/Stock/Highbay/Bay A/Bin 1 (the final location of the put-away)
 
 Bug Tracker
 ===========
@@ -170,21 +175,21 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Camptocamp
 * BCIM
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Joël Grand-Guillaume <joel.grandguillaume@camptocamp.com>
-* Guewen Baconnier <guewen.baconnier@camptocamp.com>
-* Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
-* Akim Juillerat <akim.juillerat@camptocamp.com>
+- Joël Grand-Guillaume <joel.grandguillaume@camptocamp.com>
+- Guewen Baconnier <guewen.baconnier@camptocamp.com>
+- Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
+- Akim Juillerat <akim.juillerat@camptocamp.com>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
