@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="picking_bill_line_match_tree" model="ir.ui.view">
+        <field name="name">picking.bill.line.match.tree</field>
+        <field name="model">picking.bill.line.match</field>
+        <field name="arch" type="xml">
+            <tree
+                string="Picking Bill Lines Matching"
+                decoration-info="sm_id != False"
+                decoration-muted="state in ['draft', 'cancel']"
+                create="0"
+                delete="0"
+            >
+                <header>
+                    <button
+                        name="action_match_lines"
+                        type="object"
+                        string="Match / Create Bill"
+                        class="btn btn-primary"
+                    />
+                    <button
+                        name="action_add_to_picking"
+                        type="object"
+                        string="Add to Picking"
+                    />
+                </header>
+                <field name="product_id" invisible="1" />
+                <field name="sm_id" invisible="1" />
+                <field name="aml_id" invisible="1" />
+                <field name="state" invisible="1" />
+
+                <field name="reference" />
+                <button name="action_open_line" type="object" string="View Details" />
+                <field name="product_id" string="Product" />
+                <field name="line_qty" string="Line Qty" />
+                <field name="unmatched_qty" string="Line Qty - matched Qty" />
+                <field name="line_uom_id" string="UoM" />
+                <field
+                    name="line_amount_untaxed"
+                    string="Amount Untaxed"
+                    widget="monetary"
+                    sum="Total"
+                />
+                <field name="currency_id" invisible="1" />
+                <field name="partner_id" string="Partner" optional="hide" />
+            </tree>
+        </field>
+    </record>
+</odoo>
