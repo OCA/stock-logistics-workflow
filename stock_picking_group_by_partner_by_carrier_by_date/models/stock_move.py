@@ -36,6 +36,7 @@ class StockMove(models.Model):
             self.warehouse_id.partner_id.tz
             or self.env.company.partner_id.tz
             or self.env.user.tz
+            or "UTC"
         )
         date_tz = utc_to_tz_naive_datetime(tz, self.date)
         dt_start_tz = date_tz.replace(
