@@ -6,6 +6,7 @@
 * `Akretion <https://www.akretion.com>`_
 
   * Alexis de Lattre <alexis.delattre@akretion.com>
+  * Renato Lima <renato.lima@akretion.com.br>
 
 * `AvanzOsc <http://avanzosc.es>`_
 

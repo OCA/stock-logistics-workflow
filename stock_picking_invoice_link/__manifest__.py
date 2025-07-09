@@ -17,7 +17,7 @@
     "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "license": "AGPL-3",
-    "depends": ["sale_stock"],
+    "depends": ["stock_account"],
     "data": ["views/stock_view.xml", "views/account_invoice_view.xml"],
     "installable": True,
 }

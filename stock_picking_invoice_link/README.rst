@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ==========================
 Stock Picking Invoice Link
 ==========================
@@ -17,7 +13,7 @@ Stock Picking Invoice Link
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
@@ -32,19 +28,8 @@ Stock Picking Invoice Link
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module adds a link between pickings and invoices as well as on the lines.
-Invoices are generated from sales orders. With this module, you can find back
-which deliveries an invoice relates to.
-
-In standard, if you make a partial delivery and invoice it, then make remaining
-delivery and invoice it, it is impossible to known to what delivery the
-invoices relate to. You only have the quantity.
-
-This module is also useful if you want to present data on the invoice report
-grouped by deliveries.
-
-Note that the links are only for products with an invoicing policy set on
-delivery.
+The base module used by sale_stock_picking_invoice_link and purchase_stock_picking_invoice_link 
+to adds a link between pickings and invoices as well as on the lines.
 
 **Table of contents**
 
@@ -92,6 +77,7 @@ Contributors
 * `Akretion <https://www.akretion.com>`_
 
   * Alexis de Lattre <alexis.delattre@akretion.com>
+  * Renato Lima <renato.lima@akretion.com.br>
 
 * `AvanzOsc <http://avanzosc.es>`_
 
