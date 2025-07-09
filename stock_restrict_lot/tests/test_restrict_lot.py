@@ -242,6 +242,7 @@ class TestRestrictLot(SavepointCase):
         )
 
     def test_compute_quantites(self):
+        initial_outgoint_qty = self.product.outgoing_qty
         move = self.env["stock.move"].create(
             {
                 "product_id": self.product.id,
@@ -264,7 +265,7 @@ class TestRestrictLot(SavepointCase):
         move2._action_confirm()
 
         product = move.product_id
-        self.assertEqual(product.outgoing_qty, 2)
+        self.assertEqual(product.outgoing_qty, initial_outgoint_qty + 2)
         product.invalidate_cache()
         product = product.with_context(lot_id=self.lot.id)
         self.assertEqual(product.outgoing_qty, 1)
