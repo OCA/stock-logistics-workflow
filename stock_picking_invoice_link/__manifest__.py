@@ -7,7 +7,7 @@
 
 {
     "name": "Stock Picking Invoice Link",
-    "version": "18.0.1.0.1",
+    "version": "18.0.2.0.0",
     "category": "Warehouse Management",
     "summary": "Adds link between pickings and invoices",
     "author": "Agile Business Group, "
@@ -18,7 +18,7 @@
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "license": "AGPL-3",
     "development_status": "Mature",
-    "depends": ["sale_stock"],
+    "depends": ["stock_account"],
     "data": ["views/stock_view.xml", "views/account_invoice_view.xml"],
     "installable": True,
 }
