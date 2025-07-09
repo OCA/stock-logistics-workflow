@@ -96,11 +96,6 @@ msgid ""
 msgstr ""
 
 #. module: stock_picking_invoice_link
-#: model:ir.model,name:stock_picking_invoice_link.model_sale_order_line
-msgid "Sales Order Line"
-msgstr ""
-
-#. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_stock_move
 msgid "Stock Move"
 msgstr "Moure l'estoc"
