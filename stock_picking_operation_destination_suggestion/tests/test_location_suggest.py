@@ -159,3 +159,56 @@ class TestPickingDestinationSuggest(PickingDestinationSuggestCommon):
         )
         self.assertTrue(self.move)
         self.assertFalse(self.move.picking_id.destination_location_suggestion_ids)
+
+    def test_picking_suggest_pending_moves(self):
+        # Test the use case where users are doing move lines one by one and
+        # setting the destination and qty_done.
+        product_2 = self.env["product.product"].create(
+            {
+                "name": "Product 2",
+                "type": "product",
+            }
+        )
+        product_2.route_ids |= self.warehouse.delivery_route_id
+        self.env["stock.quant"].with_context(inventory_mode=True).create(
+            {
+                "product_id": product_2.id,
+                "inventory_quantity": 50.0,
+                "location_id": self.stock.id,
+            }
+        )._apply_inventory()
+        self._create_procurement()
+        self.move = self.env["stock.move"].search(
+            [
+                ("location_id", "=", self.stock.id),
+                ("product_id", "=", self.product.id),
+                ("state", "=", "assigned"),
+            ]
+        )
+        self.assertTrue(self.move)
+        self.move.move_line_ids.qty_done = 5.0
+        # Put products in a particular location
+        location_1 = self.env["stock.location"].search([("barcode", "=", "L#OUT.1")])
+        self.move.move_line_ids.location_dest_id = location_1
+
+        # Set the qty done
+        self.move.move_line_ids.qty_done = self.move.move_line_ids.reserved_uom_qty
+        self.move_out = self.env["stock.move"].search(
+            [("location_id", "=", self.output.id), ("product_id", "=", self.product.id)]
+        )
+
+        self.assertTrue(self.move_out)
+
+        self.product = product_2
+        self._create_procurement()
+        self.move = self.env["stock.move"].search(
+            [
+                ("location_id", "=", self.stock.id),
+                ("product_id", "=", self.product.id),
+                ("state", "=", "assigned"),
+            ]
+        )
+        self.assertTrue(self.move)
+        self.assertEqual(
+            location_1, self.move.picking_id.destination_location_suggestion_ids
+        )

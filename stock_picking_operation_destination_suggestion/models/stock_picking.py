@@ -46,12 +46,18 @@ class StockPicking(models.Model):
     )
     def _compute_destination_location_suggestion_ids(self):
         for picking in self:
-            pending_line_ids = (
+            pending_out_line_ids = (
                 picking.location_dest_id.children_ids.pending_out_move_line_ids
+            )
+            pending_in_done_line_ids = (
+                picking.location_dest_id.children_ids.pending_in_move_line_ids.filtered(
+                    lambda l: l.qty_done > 0
+                )
             )
             domain = self._get_location_destination_move_line_suggestion_domain()
             locations = (
-                pending_line_ids.filtered_domain(domain).location_id
+                pending_out_line_ids.filtered_domain(domain).location_id
+                | pending_in_done_line_ids.filtered_domain(domain).location_dest_id
                 if picking.picking_type_id.suggest_destination
                 else self.env["stock.location"].browse()
             )
