@@ -3,6 +3,7 @@
   - Alex Comba \<<alex.comba@agilebg.com>\>
 - [Akretion](https://www.akretion.com)
   - Alexis de Lattre \<<alexis.delattre@akretion.com>\>
+  - Renato Lima \<<renato.lima@akretion.com.br>\>
 - [AvanzOsc](http://avanzosc.es)
   - Oihane Crucelaegui \<<oihanecrucelaegi@avanzosc.es>\>
   - Ana Juaristi \<<anajuaristi@avanzosc.es>\>
