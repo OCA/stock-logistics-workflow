@@ -9,6 +9,7 @@
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "license": "AGPL-3",
-    "depends": ["stock_picking_invoice_link", "purchase"],
+    "depends": ["stock_picking_invoice_link", "purchase_stock"],
     "installable": True,
+    "auto_install": True,
 }
