@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_move_operations" model="ir.ui.view">
+        <field
+            name="name"
+        >stock.move.operations.form (in stock_restrict_lot_update)</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_stock_move_operations" />
+        <field name="arch" type="xml">
+            <xpath expr="//group/group/field[@name='product_id']" position="after">
+                <field name="change_restrict_lot" invisible="1" />
+                <field name="has_tracking" invisible="1" />
+                <field
+                    name="restrict_lot_id"
+                    groups="stock.group_production_lot"
+                    domain="[('product_id', '=', product_id)]"
+                    attrs="{
+                        'readonly': ['|', ('change_restrict_lot', '=', False), ('state', 'in', ['done', 'cancel'])],
+                        'invisible': [('has_tracking', '=', 'none')],
+                    }"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>

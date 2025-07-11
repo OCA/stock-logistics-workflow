@@ -14,7 +14,12 @@
                 <field
                     name="restrict_lot_id"
                     groups="stock.group_production_lot"
-                    attrs="{'readonly': [('change_restrict_lot', '=', False)]}"
+                    attrs="{
+                        'readonly': ['|', '|', ('change_restrict_lot', '=', False), ('state', 'in', ['done', 'cancel']), ('is_locked', '=', True)],
+                        'column_invisible': [('parent.has_tracking', '=', False)],
+                        'invisible': [('has_tracking', '=', 'none')],
+                    }"
+                    domain="[('product_id', '=', product_id)]"
                     optional="show"
                 />
                 <field name="change_restrict_lot" invisible="1" />
@@ -26,9 +31,15 @@
                 <field
                     name="restrict_lot_id"
                     groups="stock.group_production_lot"
-                    attrs="{'readonly': [('change_restrict_lot', '=', False)]}"
+                    attrs="{
+                        'readonly': ['|', '|', ('change_restrict_lot', '=', False), ('state', 'in', ['done', 'cancel']), ('is_locked', '=', True)],
+                        'invisible': [('has_tracking', '=', 'none')],
+                    }"
+                    domain="[('product_id', '=', product_id)]"
                 />
                 <field name="change_restrict_lot" invisible="1" />
+                <field name="has_tracking" invisible="1" />
+                <field name="is_locked" invisible="1" />
             </xpath>
         </field>
     </record>

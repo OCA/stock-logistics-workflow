@@ -90,6 +90,10 @@ Contributors
 
   * Alessandro Uffreduzzi <alessandro.uffreduzzi@pytech.it>
 
+* Solvos
+
+  * David Alonso <david.alonso@solvos.es>
+
 Maintainers
 ~~~~~~~~~~~
 

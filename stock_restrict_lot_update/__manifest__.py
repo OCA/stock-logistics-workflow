@@ -12,6 +12,7 @@
     "installable": True,
     "depends": ["stock_restrict_lot"],
     "data": [
+        "views/stock_move_views.xml",
         "views/stock_picking_views.xml",
         "views/res_config_settings_views.xml",
     ],
