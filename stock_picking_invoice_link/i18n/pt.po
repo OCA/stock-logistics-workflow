@@ -101,11 +101,6 @@ msgstr ""
 "de uma encomenda de venda)."
 
 #. module: stock_picking_invoice_link
-#: model:ir.model,name:stock_picking_invoice_link.model_sale_order_line
-msgid "Sales Order Line"
-msgstr "Linha de Encomenda de Venda"
-
-#. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_stock_move
 msgid "Stock Move"
 msgstr "Movimento de Stock"
@@ -120,6 +115,9 @@ msgstr "Transferência"
 #: code:addons/stock_picking_invoice_link/models/stock_move.py:0
 msgid "You can not modify an invoiced stock move"
 msgstr "Não pode modificar um movimento de stock faturado"
+
+#~ msgid "Sales Order Line"
+#~ msgstr "Linha de Encomenda de Venda"
 
 #~ msgid "Journal Entries"
 #~ msgstr "Lançamentos do Diário"
