@@ -30,8 +30,9 @@ addon | version | maintainers | summary
 [procurement_auto_create_group_carrier](procurement_auto_create_group_carrier/) | 18.0.1.0.0 |  | Procurement Auto Create Group Carrier
 [product_cost_price_avco_sync](product_cost_price_avco_sync/) | 18.0.1.0.0 | <a href='https://github.com/carlosdauden'><img src='https://github.com/carlosdauden.png' width='32' height='32' style='border-radius:50%;' alt='carlosdauden'/></a> <a href='https://github.com/sergio-teruel'><img src='https://github.com/sergio-teruel.png' width='32' height='32' style='border-radius:50%;' alt='sergio-teruel'/></a> | Set product cost price from updated moves
 [product_customerinfo_picking](product_customerinfo_picking/) | 18.0.1.0.0 |  | This module makes the product customer code visible in the stock moves of a picking.
-[purchase_stock_picking_invoice_link](purchase_stock_picking_invoice_link/) | 18.0.1.0.0 |  | Adds link between purchases, pickings and invoices
+[purchase_stock_picking_invoice_link](purchase_stock_picking_invoice_link/) | 18.0.2.0.0 |  | Adds link between purchases, pickings and invoices
 [sale_order_global_stock_route](sale_order_global_stock_route/) | 18.0.1.0.0 |  | Add the possibility to choose one warehouse path for an order
+[sale_stock_picking_invoice_link](sale_stock_picking_invoice_link/) | 18.0.1.0.0 |  | Adds link between pickings and invoices
 [stock_account_product_run_fifo_hook](stock_account_product_run_fifo_hook/) | 18.0.1.0.1 |  | Add more flexibility in the run fifo method.
 [stock_dangerous_goods](stock_dangerous_goods/) | 18.0.1.0.0 | <a href='https://github.com/mmequignon'><img src='https://github.com/mmequignon.png' width='32' height='32' style='border-radius:50%;' alt='mmequignon'/></a> | Adds utility fields to manage dangerous goods
 [stock_dynamic_routing](stock_dynamic_routing/) | 18.0.1.0.1 | <a href='https://github.com/jbaudoux'><img src='https://github.com/jbaudoux.png' width='32' height='32' style='border-radius:50%;' alt='jbaudoux'/></a> | Dynamic routing of stock moves
@@ -59,7 +60,7 @@ addon | version | maintainers | summary
 [stock_picking_group_by_partner_by_carrier](stock_picking_group_by_partner_by_carrier/) | 18.0.1.2.0 |  | Stock Picking: group by partner and carrier
 [stock_picking_group_by_partner_by_carrier_by_date](stock_picking_group_by_partner_by_carrier_by_date/) | 18.0.1.1.0 |  | Stock Picking: group by partner and carrier and scheduled date
 [stock_picking_group_by_partner_by_carrier_force_move_type](stock_picking_group_by_partner_by_carrier_force_move_type/) | 18.0.1.0.0 |  | Glue module for Picking Type Force Shipping Policy and Group Transfers by Partner and Carrier
-[stock_picking_invoice_link](stock_picking_invoice_link/) | 18.0.1.0.1 |  | Adds link between pickings and invoices
+[stock_picking_invoice_link](stock_picking_invoice_link/) | 18.0.2.0.0 |  | Adds link between pickings and invoices
 [stock_picking_kind](stock_picking_kind/) | 18.0.1.0.0 |  | Computes the kind of picking based on locations
 [stock_picking_line_sequence](stock_picking_line_sequence/) | 18.0.1.0.0 |  | Manages the order of stock moves by displaying its sequence
 [stock_picking_mass_action](stock_picking_mass_action/) | 18.0.1.0.0 |  | Stock Picking Mass Action
