@@ -101,11 +101,6 @@ msgstr ""
 "generiert wurde)."
 
 #. module: stock_picking_invoice_link
-#: model:ir.model,name:stock_picking_invoice_link.model_sale_order_line
-msgid "Sales Order Line"
-msgstr "Verkaufsauftragsposition"
-
-#. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_stock_move
 msgid "Stock Move"
 msgstr "Lagerbuchung"
@@ -120,6 +115,9 @@ msgstr "Lieferung vornehmen"
 #: code:addons/stock_picking_invoice_link/models/stock_move.py:0
 msgid "You can not modify an invoiced stock move"
 msgstr "Sie können eine in Rechnung gestellte Lagerbewegung nicht ändern"
+
+#~ msgid "Sales Order Line"
+#~ msgstr "Verkaufsauftragsposition"
 
 #~ msgid "Delivery Orders"
 #~ msgstr "Lieferaufträge"

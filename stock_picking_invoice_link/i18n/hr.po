@@ -101,11 +101,6 @@ msgstr ""
 "naloga)."
 
 #. module: stock_picking_invoice_link
-#: model:ir.model,name:stock_picking_invoice_link.model_sale_order_line
-msgid "Sales Order Line"
-msgstr "Stavke prodajnog naloga"
-
-#. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_stock_move
 msgid "Stock Move"
 msgstr "Skladišno kretanje"
@@ -120,6 +115,9 @@ msgstr "Prijenos"
 #: code:addons/stock_picking_invoice_link/models/stock_move.py:0
 msgid "You can not modify an invoiced stock move"
 msgstr "Nije moguće mijenjati skladišno kretanje iz kojeg je napravljen račun"
+
+#~ msgid "Sales Order Line"
+#~ msgstr "Stavke prodajnog naloga"
 
 #~ msgid "Journal Entries"
 #~ msgstr "Stavke dnevnika"
