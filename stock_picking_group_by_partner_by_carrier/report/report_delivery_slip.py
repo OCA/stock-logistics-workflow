@@ -52,7 +52,7 @@ class DeliverySlipReport(models.AbstractModel):
         for sale in picking.group_id.sale_ids.sorted(key=lambda s: s.id):
             order_name = sale.get_name_for_delivery_line()
             for line in sale.order_line.filtered(
-                lambda x: not x.display_type and x.product_id.type != "service"
+                lambda x: not x.display_type and x.product_id.type == "consu"
             ):
                 moves = stock_move.search(
                     [("sale_line_id", "=", line.id), ("picking_id", "=", picking.id)],
