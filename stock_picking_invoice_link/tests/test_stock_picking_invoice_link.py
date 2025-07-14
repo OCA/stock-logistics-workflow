@@ -1,69 +1,33 @@
 # Copyright 2016 Oihane Crucelaegui - AvanzOSC
-# Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
+# Copyright 2016 Tecnativa - Pedro M. Baeza
 # Copyright 2017 Jacques-Etienne Baudoux <je@bcim.be>
 # Copyright 2021 Tecnativa - João Marques
 # Copyright 2025 Akretion - Renato Lima <renato.lima@akretion.com.br>
+# Copyright 2025 Tecnativa - Víctor Martínez
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
+from odoo import Command
 from odoo.tests import Form, tagged
+from odoo.tools import mute_logger
 
-from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
-from odoo.addons.stock.tests.common import TestStockCommon
+from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
 
 @tagged("post_install", "-at_install")
-class TestStockPickingInvoiceLink(TestStockCommon):
+class TestStockPickingInvoiceLink(AccountTestInvoicingCommon):
     @classmethod
     def _create_stock_picking_and_confirm(cls):
-        picking = cls.env["stock.picking"].create(
-            {
-                "partner_id": cls.partnerA.id,
-                "location_id": cls.stock_location,
-                "location_dest_id": cls.customer_location,
-                "picking_type_id": cls.picking_type_out,
-                "move_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "name": cls.productA.name,
-                            "product_id": cls.productA.id,
-                            "product_uom_qty": 2,
-                            "product_uom": cls.productA.uom_id.id,
-                            "price_unit": cls.productA.list_price,
-                            "location_id": cls.stock_location,
-                            "location_dest_id": cls.customer_location,
-                        },
-                    ),
-                    (
-                        0,
-                        0,
-                        {
-                            "name": cls.productB.name,
-                            "product_id": cls.productB.id,
-                            "product_uom_qty": 2,
-                            "product_uom": cls.productB.uom_id.id,
-                            "price_unit": cls.productB.list_price,
-                            "location_id": cls.stock_location,
-                            "location_dest_id": cls.customer_location,
-                        },
-                    ),
-                    (
-                        0,
-                        0,
-                        {
-                            "name": cls.productC.name,
-                            "product_id": cls.productC.id,
-                            "product_uom_qty": 2,
-                            "product_uom": cls.productC.uom_id.id,
-                            "price_unit": cls.productC.list_price,
-                            "location_id": cls.stock_location,
-                            "location_dest_id": cls.customer_location,
-                        },
-                    ),
-                ],
-            }
+        picking_form = Form(
+            cls.env["stock.picking"].with_context(
+                default_picking_type_id=cls.picking_type_out.id,
+                default_partner_id=cls.partner_a.id,
+            )
         )
+        for product in cls.product_a + cls.product_b + cls.product_c:
+            with picking_form.move_ids_without_package.new() as line_form:
+                line_form.product_id = product
+                line_form.product_uom_qty = 2
+        picking = picking_form.save()
         picking.action_assign()
         picking.move_line_ids.write({"quantity": 2})
         picking.button_validate()
@@ -76,51 +40,52 @@ class TestStockPickingInvoiceLink(TestStockCommon):
                 "move_type": "out_invoice",
                 "invoice_date": "2017-01-01",
                 "date": "2017-01-01",
-                "partner_id": cls.partnerA.id,
-                "currency_id": cls.env.company.currency_id.id,
+                "partner_id": cls.partner_a.id,
             }
         )
-
         for move in picking.move_ids:
             cls.env["account.move.line"].create(
                 {
                     "move_id": invoice.id,
-                    "move_line_ids": [(6, 0, move.ids)],
+                    "move_line_ids": [Command.set(move.ids)],
                     "name": move.name,
                     "quantity": move.product_uom_qty,
                     "price_unit": move.price_unit,
                     "product_id": move.product_id.id,
                     "product_uom_id": move.product_uom.id,
-                    "tax_ids": [(6, 0, move.product_id.taxes_id.ids)],
+                    "tax_ids": [Command.set(move.product_id.taxes_id.ids)],
                 }
             )
-
-        picking.write({"invoice_ids": [(6, 0, invoice.ids)]})
+        picking.write({"invoice_ids": [Command.set(invoice.ids)]})
         invoice.action_post()
         return invoice
 
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
-
-        # Create partner
-        cls.partnerA = cls.PartnerObj.create({"name": "SuperPartner"})
-
+        cls.product_a.is_storable = True
+        cls.product_b.is_storable = True
+        cls.product_c = cls._create_product(
+            name="product_c",
+            type="consu",
+            is_storable=True,
+        )
         # Stock Location
-        cls.location = cls.StockLocationObj.browse(cls.stock_location)
-
+        warehouse = cls.env["stock.warehouse"].search(
+            [("company_id", "=", cls.company_data["company"].id)], limit=1
+        )
+        cls.location = warehouse.lot_stock_id
+        cls.picking_type_out = warehouse.out_type_id
         # Update product quantities
         cls.env["stock.quant"]._update_available_quantity(
-            cls.productA, cls.location, 100.0
+            cls.product_a, cls.location, 100.0
         )
         cls.env["stock.quant"]._update_available_quantity(
-            cls.productB, cls.location, 100.0
+            cls.product_b, cls.location, 100.0
         )
         cls.env["stock.quant"]._update_available_quantity(
-            cls.productC, cls.location, 100.0
+            cls.product_c, cls.location, 100.0
         )
-
         # Create demo picking
         cls.pickingA = cls._create_stock_picking_and_confirm()
         # Create demo invoice
@@ -140,6 +105,7 @@ class TestStockPickingInvoiceLink(TestStockCommon):
         self.assertEqual(result["views"][0][1], "form")
         self.assertEqual(result["res_id"], self.invoiceA.id)
 
+    @mute_logger("odoo.models.unlink")
     def test_02_sale_stock_invoice_link(self):
         """Test the stock picking and invoice return"""
         # Create return picking
@@ -151,7 +117,9 @@ class TestStockPickingInvoiceLink(TestStockCommon):
         )
         return_wiz = return_form.save()
         # Remove product ordered line
-        return_wiz.product_return_moves.to_refund = True
+        for return_line in return_wiz.product_return_moves:
+            return_line.to_refund = True
+            return_line.quantity = return_line.move_quantity
         res = return_wiz.action_create_returns()
         return_picking = self.env["stock.picking"].browse(res["res_id"])
         # Validate picking
@@ -168,10 +136,8 @@ class TestStockPickingInvoiceLink(TestStockCommon):
                 }
             )
         )
-
         action = wiz_invoice_refund.refund_moves()
         invoice_refund = self.env["account.move"].browse(action["res_id"])
-
         self.assertEqual(
             return_picking,
             invoice_refund.picking_ids,
