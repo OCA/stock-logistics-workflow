@@ -5,7 +5,6 @@ from odoo import models
 
 
 class StockRule(models.Model):
-
     _inherit = "stock.rule"
 
     def _prepare_auto_procurement_group_data(self, product):
