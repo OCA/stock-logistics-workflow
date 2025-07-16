@@ -1,4 +1,5 @@
 # Copyright 2021 Camptocamp (https://www.camptocamp.com)
+# Copyright 2025 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo.tests.common import TransactionCase
@@ -15,6 +16,23 @@ class TestReport(TestGroupByBase, TransactionCase):
         self._update_qty_in_location(location, product, qty)
         self.assertEqual(product.qty_available, qty)
 
+    def make_downpayment(self, sale_order):
+        so_context = {
+            "active_model": "sale.order",
+            "active_ids": [sale_order.id],
+            "active_id": sale_order.id,
+        }
+        payment_params = {
+            "advance_payment_method": "percentage",
+            "amount": 50,
+        }
+        downpayment = (
+            self.env["sale.advance.payment.inv"]
+            .with_context(**so_context)
+            .create(payment_params)
+        )
+        downpayment.create_invoices()
+
     def test_get_remaining_to_deliver_nondelivered_line(self):
         """One sale with two lines, one of them non delivered"""
         report = self.env["report.stock.report_deliveryslip"]
@@ -24,6 +42,7 @@ class TestReport(TestGroupByBase, TransactionCase):
         # SO1 has 5 units of product1, we have 3 in stock;
         # and has 7 units of product2, we have 0 in stock.
         so = self._get_new_sale_order(amount=5)
+        self.make_downpayment(so)
         prod1 = so.order_line[0].product_id
         self.assertEqual(prod1, self.env.ref("product.product_delivery_01"))
         prod2 = self.env.ref("product.product_delivery_02")
@@ -39,7 +58,7 @@ class TestReport(TestGroupByBase, TransactionCase):
         )
         self._set_qty_only_in_location(stock_location, prod1, 3)
         self._set_qty_only_in_location(stock_location, prod2, 0)
-        self.assertEqual(len(so.order_line), 2)
+        self.assertEqual(len(so.order_line.filtered("product_id")), 2)
         so.action_confirm()
 
         self.assertEqual(len(so.picking_ids), 1)
