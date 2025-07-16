@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_routing_form" model="ir.ui.view">
+        <field name="name">stock.routing.form</field>
+        <field name="model">stock.routing</field>
+        <field name="inherit_id" ref="stock_dynamic_routing.view_stock_routing_form" />
+        <field name="arch" type="xml">
+            <group name="options" position="after">
+                <div class="col-12 d-inline-block text-left">
+                    <field name="reserve_rule_warning" />
+                </div>
+            </group>
+            <div name="button_box" position="inside">
+                <button
+                    name="action_view_reserve_rule"
+                    string="Reservation Rules"
+                    icon="fa-random"
+                    class="oe_stat_button"
+                    type="object"
+                />
+            </div>
+        </field>
+    </record>
+</odoo>
