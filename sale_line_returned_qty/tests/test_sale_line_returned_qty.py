@@ -1,15 +1,21 @@
 # Copyright 2022 ForgeFlow (http://www.forgeflow.com)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
-from odoo.tests import Form, common
+from odoo.tests import Form
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestSaleLineReturnedQty(common.TransactionCase):
+class TestSaleLineReturnedQty(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.warehouse = cls.env.ref("stock.warehouse0")
         cls.product = cls.env["product.product"].create(
-            {"name": "test", "type": "product"}
+            {
+                "name": "test",
+                "type": "consu",
+                "is_storable": True,
+            }
         )
         cls.env["stock.quant"].create(
             {
@@ -40,14 +46,15 @@ class TestSaleLineReturnedQty(common.TransactionCase):
         return_wiz = return_wiz_form.save()
         return_wiz.product_return_moves.quantity = qty
         return_wiz.product_return_moves.to_refund = to_refund
-        res = return_wiz.create_returns()
+        res = return_wiz.action_create_returns()
         return_picking = self.env["stock.picking"].browse(res["res_id"])
         self._validate_picking(return_picking)
 
     def _validate_picking(self, picking):
         """Helper method to confirm the pickings"""
         for line in picking.move_ids:
-            line.quantity_done = line.product_uom_qty
+            line.quantity = line.product_uom_qty
+            line.picked = True
         picking._action_done()
 
     def test_returned_qty(self):
@@ -57,8 +64,8 @@ class TestSaleLineReturnedQty(common.TransactionCase):
         # Partial delivery one
         picking = self.order.picking_ids
         picking.action_assign()
-        picking.move_ids.quantity_done = 10.0
-        picking._action_done()
+        self._validate_picking(picking)
+        self.assertEqual(picking.state, "done")
         self.assertEqual(so_line.qty_returned, 0.0)
         # Make a return for 5 units
         self._return_picking(picking, 5.0, to_refund=True)

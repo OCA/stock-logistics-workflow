@@ -11,7 +11,6 @@ class SaleOrderLine(models.Model):
         compute="_compute_qty_returned",
         string="Returned Qty",
         store=True,
-        readonly=True,
         compute_sudo=True,
         digits="Product Unit of Measure",
         default=0.0,
