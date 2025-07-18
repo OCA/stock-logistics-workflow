@@ -23,10 +23,7 @@ class StockPicking(models.Model):
         """Override to calculate the estimated total weight of all
         move lines in the record using product packaging."""
         self.ensure_one()
-        weight = 0.0
-        for move_line in self.move_line_ids:
-            if move_line.product_id:
-                weight += move_line.product_id.get_total_weight_from_packaging(
-                    move_line.quantity
-                )
+        weight = 0
+        for move in self.move_ids:
+            weight += move._get_estimated_weight()
         return weight
