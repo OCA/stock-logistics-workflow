@@ -108,3 +108,12 @@ class TestAutomaticPackage(BaseCommon):
         self.picking._action_done()
         self.assertTrue(self.picking.move_line_ids.result_package_id)
         self.assertEqual(len(self.picking.move_line_ids.result_package_id), 5)
+
+    def test_automatic_packaging_before_done(self):
+        """
+        Check automatic packaging using the button when picking is Ready
+        """
+        self.picking.picking_type_id.automatic_package_creation_mode = "packaging"
+        self.picking.button_auto_create_delivery_package()
+        self.assertTrue(self.picking.move_line_ids.result_package_id)
+        self.assertEqual(len(self.picking.move_line_ids.result_package_id), 3)
