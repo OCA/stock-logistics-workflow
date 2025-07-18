@@ -2,10 +2,10 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo.tests import TransactionCase
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestAutomaticPackage(TransactionCase):
+class TestAutomaticPackage(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -13,7 +13,8 @@ class TestAutomaticPackage(TransactionCase):
         cls.product = cls.env["product.product"].create(
             {
                 "name": "Product Test",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
             }
         )
         cls.product_packaging = cls.env["product.packaging"].create(
@@ -37,7 +38,7 @@ class TestAutomaticPackage(TransactionCase):
             10,
         )
         cls.picking = cls._create_picking()
-        cls.picking.move_ids.update({"quantity_done": 5.0})
+        cls.picking.move_ids.update({"quantity": 5.0})
 
     @classmethod
     def _create_picking(cls):

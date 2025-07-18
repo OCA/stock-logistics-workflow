@@ -24,7 +24,8 @@ class StockPicking(models.Model):
         return move_lines.filtered(
             lambda ml: not ml.result_package_id
             and ml.state not in ("cancel", "done")
-            and ml.qty_done
+            and ml.quantity
+            and (not ml.move_id.picked or ml.picked)
         )
 
     def _auto_create_delivery_package_per_smallest_packaging(self) -> None:
@@ -32,11 +33,12 @@ class StockPicking(models.Model):
         Put each done smallest product packaging in a package
         """
         for picking in self:
-            for move_line in picking.move_line_ids:
+            picking_move_lines = picking.move_line_ids
+            for move_line in picking_move_lines:
                 move_line = self._auto_create_delivery_package_filter(move_line)
                 if not move_line:
                     continue
-                qty_to_pack = move_line.qty_done
+                qty_to_pack = move_line.quantity
                 max_pack_qty = 1
                 packagings = move_line.product_id.packaging_ids.filtered(
                     lambda pack: pack.qty > 0
@@ -44,11 +46,15 @@ class StockPicking(models.Model):
                 if packagings:
                     smallest_packaging = packagings.sorted("qty")[0]
                     max_pack_qty = smallest_packaging.qty
-                while qty_to_pack:
+                current_line = move_line
+                new_line = None
+                while qty_to_pack and current_line:
                     pack_qty = min(qty_to_pack, max_pack_qty)
+                    new_line = current_line._split_move_line_package_qty(pack_qty)
                     qty_to_pack -= pack_qty
-                    move_line.qty_done = pack_qty
-                    move_line.picking_id._put_in_pack(move_line)
+                    current_line.quantity = pack_qty
+                    current_line.picking_id._put_in_pack(current_line)
+                    current_line = new_line
 
     def _auto_create_delivery_package_single(self) -> None:
         """
