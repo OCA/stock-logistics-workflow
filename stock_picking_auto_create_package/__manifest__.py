@@ -15,5 +15,6 @@
     ],
     "data": [
         "views/stock_picking_type.xml",
+        "views/stock_picking_view.xml",
     ],
 }
