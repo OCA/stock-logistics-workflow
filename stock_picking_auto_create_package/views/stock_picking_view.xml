@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.form - auto_create_package</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_cancel']" position="after">
+                <button
+                    name="button_auto_create_delivery_package"
+                    invisible="state != 'assigned'"
+                    string="Auto Pack"
+                    groups="base.group_user"
+                    type="object"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
