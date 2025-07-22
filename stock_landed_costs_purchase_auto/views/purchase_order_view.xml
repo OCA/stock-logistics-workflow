@@ -12,7 +12,7 @@
                     type="object"
                     class="oe_stat_button"
                     icon="fa-list-alt"
-                    attrs="{'invisible': [('landed_cost_number', '=', 0)]}"
+                    invisible="landed_cost_number == 0"
                     groups="stock.group_stock_manager"
                 >
                     <field
