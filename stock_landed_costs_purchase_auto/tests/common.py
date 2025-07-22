@@ -17,7 +17,7 @@ class TestPurchaseOrderBase(BaseCommon):
         cls.product_storable = cls.env["product.product"].create(
             {
                 "name": "Producto Storable",
-                "type": "product",
+                "type": "consu",
                 "categ_id": cls.category.id,
             }
         )
@@ -31,7 +31,9 @@ class TestPurchaseOrderBase(BaseCommon):
             }
         )
         cls.purchase_user = new_test_user(
-            cls.env, login="test_purchase_user", groups="purchase.group_purchase_user"
+            cls.env,
+            login="test_purchase_user",
+            groups="purchase.group_purchase_user,stock.group_stock_user",
         )
         cls.order = cls._create_purchase_order(cls)
 
@@ -44,6 +46,17 @@ class TestPurchaseOrderBase(BaseCommon):
         return order
 
     def _action_picking_validate(self, picking):
+        if any(move.state == "confirmed" for move in picking.move_ids):
+            picking.action_assign()
+        for move in picking.move_ids:
+            move.quantity = move.product_uom_qty if not move.quantity else move.quantity
         res = picking.button_validate()
-        model = self.env[res["res_model"]].with_context(**res["context"])
-        model.create({}).process()
+        if (
+            isinstance(res, dict)
+            and res.get("res_model") == "stock.backorder.confirmation"
+        ):
+            wizard = Form(
+                self.env[res["res_model"]].with_context(**res["context"])
+            ).save()
+            wizard.process()
+        return res
