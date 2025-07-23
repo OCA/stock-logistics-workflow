@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-27 14:26+0000\n"
+"PO-Revision-Date: 2025-07-23 17:25+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -37,20 +37,20 @@ msgstr "Ultima modifica il"
 #. module: stock_move_planned_consumed_date
 #: model:ir.model.fields,field_description:stock_move_planned_consumed_date.field_stock_move__planned_consumed_date
 msgid "Planned consumed date"
-msgstr ""
+msgstr "Data consumata pianificata"
 
 #. module: stock_move_planned_consumed_date
 #: model:ir.model,name:stock_move_planned_consumed_date.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimento di magazzino"
 
 #. module: stock_move_planned_consumed_date
 #: model:ir.model,name:stock_move_planned_consumed_date.model_stock_rule
 msgid "Stock Rule"
-msgstr ""
+msgstr "Regola di giacenza"
 
 #. module: stock_move_planned_consumed_date
 #: model:ir.model.fields,help:stock_move_planned_consumed_date.field_stock_move__planned_consumed_date
 msgid ""
 "This is the expected consumed/usage date of the product by the customer."
-msgstr ""
+msgstr "Questa è la data prevista di consumo/uso del prodotto dal cliente."
