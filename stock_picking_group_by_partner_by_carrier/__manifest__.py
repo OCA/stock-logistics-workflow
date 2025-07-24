@@ -28,4 +28,5 @@
     },
     "installable": True,
     "license": "AGPL-3",
+    "maturity": "Alpha",
 }
