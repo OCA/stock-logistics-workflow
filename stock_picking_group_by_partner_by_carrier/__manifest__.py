@@ -11,6 +11,7 @@
     "category": "Warehouse",
     "depends": [
         "delivery_procurement_group_carrier",
+        "stock",
     ],
     "data": [
         "views/res_partner.xml",
