@@ -7,11 +7,13 @@ from itertools import groupby
 
 from odoo import _, api, fields, models
 from odoo.fields import first
+
 =======
 from collections import namedtuple
 from itertools import groupby
 
 from odoo import api, fields, models
+
 >>>>>>> [ADD] stock_picking_group_by_partner_by_carrier
 
 
