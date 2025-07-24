@@ -10,7 +10,6 @@
     "category": "Warehouse",
     "depends": [
         "delivery_procurement_group_carrier",
-        "stock_picking_group_by_base",
     ],
     "data": [
         "views/res_partner.xml",

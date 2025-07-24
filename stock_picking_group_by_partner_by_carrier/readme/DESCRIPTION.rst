@@ -7,7 +7,6 @@ shares the same delivery address and carrier (or lack thereof).
 
 Sale orders with a Shipping Policy set to 'When all products are ready' always
 get their own shipping.
-<<<<<<< HEAD
 
 When the delivery slip is printed, the list of pending quantities to deliver
 is shown at the end, grouped by order.
@@ -19,5 +18,3 @@ will be grouped in a same delivery order.
 Note: The grouping is currently not propagated to the pulled internal moves if
 you don't use the module stock_available_to_promise_release in the wms
 repository.
-=======
->>>>>>> [ADD] stock_picking_group_by_partner_by_carrier
