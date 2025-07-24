@@ -2,10 +2,16 @@
 # Copyright 2020-2021 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+import logging
 from itertools import groupby
+
+from psycopg2.errors import LockNotAvailable
+from psycopg2.extensions import AsIs
 
 from odoo import _, api, fields, models
 from odoo.fields import first
+
+_logger = logging.getLogger(__name__)
 
 
 class StockPicking(models.Model):
@@ -34,10 +40,67 @@ class StockPicking(models.Model):
         This tuple is intended to be overriden in order to add fields
         used in groupings
         """
-        res = super()._get_index_for_grouping_fields()
+        res = self._get_index_for_grouping_fields2()
         if "carrier_id" not in res:
             res.append("carrier_id")
         return res
+
+    @api.model
+    def _get_index_for_grouping_fields2(self):
+        """
+        Camps que cal indexar per al domini de group by:
+        partner, ubicacions, tipus i carrier.
+        """
+        return [
+            "partner_id",
+            "location_id",
+            "location_dest_id",
+            "picking_type_id",
+            "carrier_id",
+        ]
+
+    @api.model
+    def _get_index_for_grouping_condition(self):
+        return """
+            WHERE printed is False
+            AND state in ('draft', 'confirmed', 'waiting', 'partially_available', 'assigned')
+        """
+
+    @api.model
+    def _create_index_for_grouping(self):
+        # create index for the domain expressed into the
+        # stock_move._assign_picking_group_domain method
+        index_name = "stock_picking_groupby_key_index"
+
+        try:
+            self.env.cr.execute(
+                "DROP INDEX IF EXISTS %(index_name)s", dict(index_name=AsIs(index_name))
+            )
+
+            self.env.cr.execute(
+                """
+                    CREATE INDEX %(index_name)s
+                    ON %(table_name)s %(fields)s
+                    %(where)s
+                """,
+                dict(
+                    index_name=AsIs(index_name),
+                    table_name=AsIs(self._table),
+                    fields=tuple(
+                        AsIs(field) for field in self._get_index_for_grouping_fields()
+                    ),
+                    where=AsIs(self._get_index_for_grouping_condition()),
+                ),
+            )
+        except LockNotAvailable as e:
+            # Do nothing and let module load
+            _logger.warning(
+                "Impossible to create index in stock_picking_group_by_base module"
+                " due to DB Lock problem (%s)",
+                e,
+            )
+        except Exception:
+            raise
 
     def init(self):
         """
@@ -59,10 +122,10 @@ class StockPicking(models.Model):
             if not picking.move_ids:
                 picking.canceled_by_merge = True
 
-    @api.depends("move_ids.group_id.sale_ids")
+    @api.depends("move_line_ids.move_id.group_id.sale_ids")
     def _compute_sale_ids(self):
         for rec in self:
-            rec.sale_ids = rec.mapped("move_ids.group_id.sale_ids")
+            rec.sale_ids = rec.move_line_ids.mapped("move_id.group_id.sale_ids")
 
     def write(self, values):
         if self.env.context.get("picking_no_overwrite_partner_origin"):

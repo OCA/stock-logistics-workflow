@@ -260,11 +260,9 @@ class TestMergeWizard(TransactionCase):
                         "carrier": self.carrier1,
                         "partner": self.partner2,
                         "pickings": tuple(
-                            
-                                x
-                                for x in self.all_pickings_partner2
-                                - self.all_pickings_partner2[1]
-                            
+                            x
+                            for x in self.all_pickings_partner2
+                            - self.all_pickings_partner2[1]
                         ),
                         "has_todo": True,
                     },
