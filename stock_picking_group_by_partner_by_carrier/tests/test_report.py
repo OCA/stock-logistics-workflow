@@ -140,9 +140,9 @@ class TestReport(TestGroupByBase, TransactionCase):
         self.assertFalse(res[2].id)
         self.assertTrue(res[3].id)
         # Deliver and test again
-        line = picking.move_ids[0].move_line_ids
+        line = picking.move_ids_without_package[0].move_line_ids
         line.qty_done = line.reserved_uom_qty
-        line = picking.move_ids[1].move_line_ids
+        line = picking.move_ids_without_package[1].move_line_ids
         line.qty_done = line.reserved_uom_qty
         res = picking._action_done()
         self.assertEqual(picking.state, "done")
