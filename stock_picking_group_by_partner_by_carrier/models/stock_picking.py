@@ -2,14 +2,17 @@
 # Copyright 2020-2021 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+import logging
 from itertools import groupby
+
+from psycopg2.errors import LockNotAvailable
+from psycopg2.extensions import AsIs
 
 from odoo import _, api, fields, models
 from odoo.fields import first
-from psycopg2.errors import LockNotAvailable
-from psycopg2.extensions import AsIs
-import logging
+
 _logger = logging.getLogger(__name__)
+
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"
@@ -62,7 +65,7 @@ class StockPicking(models.Model):
             WHERE printed is False
             AND state in ('draft', 'confirmed', 'waiting', 'partially_available', 'assigned')
         """
-    
+
     @api.model
     def _create_index_for_grouping(self):
         # create index for the domain expressed into the
@@ -84,7 +87,7 @@ class StockPicking(models.Model):
                     index_name=AsIs(index_name),
                     table_name=AsIs(self._table),
                     fields=tuple(
-                        [AsIs(field) for field in self._get_index_for_grouping_fields()]
+                        AsIs(field) for field in self._get_index_for_grouping_fields()
                     ),
                     where=AsIs(self._get_index_for_grouping_condition()),
                 ),
