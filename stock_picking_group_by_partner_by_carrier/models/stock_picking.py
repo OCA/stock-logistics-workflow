@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Copyright 2020 Camptocamp (https://www.camptocamp.com)
 # Copyright 2020-2021 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
@@ -6,11 +7,18 @@ from itertools import groupby
 
 from odoo import _, api, fields, models
 from odoo.fields import first
+=======
+from collections import namedtuple
+from itertools import groupby
+
+from odoo import api, fields, models
+>>>>>>> [ADD] stock_picking_group_by_partner_by_carrier
 
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
+<<<<<<< HEAD
     sale_ids = fields.Many2many(
         comodel_name="sale.order",
         relation="sale_order_stock_picking_rel",
@@ -63,6 +71,17 @@ class StockPicking(models.Model):
     def _compute_sale_ids(self):
         for rec in self:
             rec.sale_ids = rec.mapped("move_ids.group_id.sale_ids")
+=======
+    sale_ids = fields.Many2many("sale.order", compute="_compute_sale_ids", store=True)
+    # don't copy the printed state of a picking otherwise the backorder of a
+    # printed picking becomes printed
+    printed = fields.Boolean(copy=False)
+
+    @api.depends("move_lines.sale_line_id.order_id")
+    def _compute_sale_ids(self):
+        for rec in self:
+            rec.sale_ids = rec.mapped("move_lines.sale_line_id.order_id")
+>>>>>>> [ADD] stock_picking_group_by_partner_by_carrier
 
     def write(self, values):
         if self.env.context.get("picking_no_overwrite_partner_origin"):
@@ -71,6 +90,7 @@ class StockPicking(models.Model):
                 values = {}
         return super().write(values)
 
+<<<<<<< HEAD
     def action_cancel(self):
         # When a SO is canceled, cancel only moves related to this SO and not
         # all moves of the picking
@@ -181,12 +201,26 @@ class StockPicking(models.Model):
             # find a suitable picking, then use it instead of copying the one
             # we are creating a backorder from
             picking = first(self.move_ids)._search_picking_for_assignation()
+=======
+    def _create_backorder(self):
+        return super(
+            StockPicking, self.with_context(picking_no_copy_if_can_group=1)
+        )._create_backorder()
+
+    def copy(self, defaults=None):
+        if self.env.context.get("picking_no_copy_if_can_group") and self.move_lines:
+            # we are in the process of the creation of a backorder. If we can
+            # find a suitable picking, then use it instead of copying the one
+            # we are creating a backorder from
+            picking = self.move_lines[0]._search_picking_for_assignation()
+>>>>>>> [ADD] stock_picking_group_by_partner_by_carrier
             if picking:
                 return picking
         return super(
             StockPicking, self.with_context(picking_no_copy_if_can_group=0)
         ).copy(defaults)
 
+<<<<<<< HEAD
     def _is_grouping_disabled(self):
         self.ensure_one()
         return (
@@ -274,3 +308,61 @@ class StockPicking(models.Model):
             move_ids = self.move_ids.filtered("product_uom_qty")
         references = move_ids.mapped("sale_line_id.order_id.client_order_ref")
         return set(filter(None, references))
+=======
+    def do_something(self):
+        return "bla bla"
+
+    def get_delivery_report_lines(self):
+        self.ensure_one()
+        if self.state != "done":
+            moves = self.move_lines.filtered("product_uom_qty").sorted(
+                lambda m: m.sale_line_id.order_id
+            )
+            if len(moves.mapped("sale_line_id.order_id")) > 1:
+                sales_and_moves = []
+                for sale, sale_moves in groupby(
+                    moves, lambda m: m.sale_line_id.order_id
+                ):
+                    sales_and_moves.append(
+                        MockedMove(
+                            product_id=False,
+                            description_picking=sale.name,
+                            product_uom_qty=0,
+                            product_uom=False,
+                            lot_name="",
+                        )
+                    )
+                    for move in sale_moves:
+                        sales_and_moves.append(move)
+                return sales_and_moves
+            else:
+                return moves
+        else:
+            moves = self.move_lines.sorted(lambda m: m.sale_line_id.order_id)
+            if len(moves.mapped("sale_line_id.order_id")) > 1:
+                sales_and_moves = []
+                for sale, sale_moves in groupby(
+                    moves, lambda m: m.sale_line_id.order_id
+                ):
+                    sales_and_moves.append(
+                        MockedMove(
+                            product_id=False,
+                            description_picking=sale.name,
+                            product_uom_qty=0,
+                            product_uom=False,
+                            lot_name="",
+                        )
+                    )
+                    for move in sale_moves:
+                        for move_line in move.move_line_ids:
+                            sales_and_moves.append(move_line)
+                return sales_and_moves
+            else:
+                return self.move_line_ids
+
+
+MockedMove = namedtuple(
+    "MockedMove",
+    ["product_id", "description_picking", "product_uom_qty", "product_uom", "lot_name"],
+)
+>>>>>>> [ADD] stock_picking_group_by_partner_by_carrier
