@@ -1,0 +1,2 @@
+- Go to Inventory > Operations > Jobs > Make Picking Batch
+- Select a delivery carrier you want to filter pickings in batch
