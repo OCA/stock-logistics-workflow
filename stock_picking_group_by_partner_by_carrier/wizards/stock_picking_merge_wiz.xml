@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_picking_groupby_form" model="ir.ui.view">
+        <field name="model">stock.picking.merge</field>
+        <field name="arch" type="xml">
+            <form string="Mass Action for the selected stock picking">
+                <field name="nothing_todo" invisible="1" />
+                <field
+                    name="details"
+                    nolabel="1"
+                    attrs="{'invisible': [('nothing_todo', '=', True)]}"
+                />
+                <group name="valid_pickings">
+                    <field name="selected_picking_ids" invisible="1" />
+                    <separator string="Valid pickings" colspan="4" />
+                    <field name="valid_picking_ids" nolabel="1" colspan="4">
+                        <tree>
+                            <field name="name" />
+                            <field name="partner_id" />
+                            <field name="carrier_id" />
+                            <field name="location_id" optional="hide" />
+                            <field name="location_dest_id" optional="hide" />
+                            <field name="picking_type_id" optional="hide" />
+                            <field name="state" />
+                        </tree>
+                    </field>
+                </group>
+                <group
+                    name="discarded_pickings"
+                    attrs="{'invisible': [('discarded_picking_ids', '=', False)]}"
+                >
+                    <separator
+                        string="Some pickings you've selected are discarded"
+                        colspan="4"
+                    />
+                    <p
+                        class="text-muted"
+                        colspan="4"
+                    >Pickings should match these parameters: picking type is groupable, state not cancelled or done, not printed.</p>
+                    <field name="show_discarded_detail" colspan="4" />
+                    <field
+                        name="discarded_picking_ids"
+                        nolabel="1"
+                        colspan="4"
+                        attrs="{'invisible': [('show_discarded_detail', '=', False)]}"
+                    >
+                        <tree>
+                            <field name="name" />
+                            <field name="partner_id" />
+                            <field name="carrier_id" />
+                            <field name="location_id" optional="hide" />
+                            <field name="location_dest_id" optional="hide" />
+                            <field name="picking_type_id" optional="hide" />
+                            <field name="state" />
+                            <field name="printed" />
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button
+                        name="action_merge"
+                        string="Confirm"
+                        type="object"
+                        class="oe_highlight"
+                        attrs="{'invisible': [('nothing_todo', '=', True)]}"
+                    />
+                    <span attrs="{'invisible': [('nothing_todo', '=', True)]}">or</span>
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="act_window_merge_transfers" model="ir.actions.act_window">
+        <field name="name">Merge transfers</field>
+        <field name="res_model">stock.picking.merge</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+    </record>
+</odoo>
