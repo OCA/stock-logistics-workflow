@@ -1,0 +1,2 @@
+- Go to Inventory > Operations > Jobs > Make Picking Batch
+- Fill in a reservation rate range you want to filter pickings in batch
