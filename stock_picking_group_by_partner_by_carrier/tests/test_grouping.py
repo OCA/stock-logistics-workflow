@@ -286,8 +286,8 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
         ships = (so1.picking_ids | so2.picking_ids).filtered(
             lambda p: p.picking_type_code == "outgoing"
         )
-        pick1 = so1.order_line.move_lines.move_orig_ids.picking_id
-        pick2 = so2.order_line.move_lines.move_orig_ids.picking_id
+        pick1 = so1.order_line.move_ids.move_orig_ids.picking_id
+        pick2 = so2.order_line.move_ids.move_orig_ids.picking_id
         so1._action_cancel()
         self.assertEqual(ships.state, "waiting")
         self.assertEqual(pick1.state, "cancel")
@@ -311,8 +311,8 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
         ships = (so1.picking_ids | so2.picking_ids).filtered(
             lambda p: p.picking_type_code == "outgoing"
         )
-        pick1 = so1.order_line.move_lines.move_orig_ids.picking_id
-        pick2 = so2.order_line.move_lines.move_orig_ids.picking_id
+        pick1 = so1.order_line.move_ids.move_orig_ids.picking_id
+        pick2 = so2.order_line.move_ids.move_orig_ids.picking_id
         so2._action_cancel()
         self.assertEqual(ships.state, "waiting")
         self.assertEqual(pick1.state, "confirmed")
@@ -400,7 +400,7 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
         so3 = self._get_new_sale_order(amount=12, carrier=self.carrier1)
         so3.action_confirm()
         self.assertTrue(ships in so3.picking_ids)
-        pick3 = so3.order_line.move_lines.move_orig_ids.picking_id
+        pick3 = so3.order_line.move_ids.move_orig_ids.picking_id
         self.assertEqual(len(pick3), 1)
         self.assertEqual(pick3.state, "confirmed")
 
@@ -454,7 +454,7 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
             lambda line: line.sale_line_id.order_id == so1
         )
         line1 = move1.move_line_ids
-        line1.qty_done = line1.reserved_uom_qty
+        line1.qty_done = line1.product_qty
         picking._action_done()
 
         backorder = picking.backorder_ids
@@ -492,7 +492,7 @@ class TestGroupBy(TestGroupByBase, TransactionCase):
         )
         picking.action_assign()
         line = first(picking.move_lines).move_line_ids
-        line.qty_done = line.reserved_uom_qty / 2
+        line.qty_done = line.product_qty / 2
         picking._action_done()
         self.assertEqual(picking.state, "done")
         self.assertTrue(picking.backorder_ids)

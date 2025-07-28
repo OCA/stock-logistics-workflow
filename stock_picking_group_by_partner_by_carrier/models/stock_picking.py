@@ -311,7 +311,7 @@ class StockPicking(models.Model):
                 return sales_and_moves
             else:
                 sales_and_moves = self.env["stock.move.line"]
-                fake_record["reserved_uom_qty"] = fake_record.pop("product_uom_qty")
+                fake_record["product_qty"] = fake_record.pop("product_uom_qty")
                 fake_record["product_uom_id"] = fake_record.pop("product_uom")
                 for sale, sale_moves in grouped_moves:
                     if sale:

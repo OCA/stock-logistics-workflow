@@ -65,5 +65,5 @@ class TestGroupByBase:
 
     def _validate_transfer(self, picking):
         for move_line in picking.move_line_ids:
-            move_line.qty_done = move_line.reserved_uom_qty
+            move_line.qty_done = move_line.product_qty
         picking._action_done()
