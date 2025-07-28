@@ -289,7 +289,7 @@ class TestGroupByDisabledOnPartner(TestGroupByBase, TransactionCase):
         )
         picking.action_assign()
         line = first(picking.move_lines).move_line_ids
-        line.qty_done = line.reserved_uom_qty / 2
+        line.qty_done = line.product_qty / 2
         picking._action_done()
         self.assertEqual(picking.state, "done")
         self.assertTrue(picking.backorder_ids)
