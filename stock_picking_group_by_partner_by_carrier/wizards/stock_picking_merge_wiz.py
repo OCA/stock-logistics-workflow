@@ -129,7 +129,7 @@ class StockPickingMergeWizard(TransientModel):
         self.ensure_one()
         if self.nothing_todo:
             raise exceptions.UserError(_("No picking can be merged!"))
-        moves = self.valid_picking_ids.mapped("move_ids")
+        moves = self.valid_picking_ids.mapped("move_lines")
         moves.write({"picking_id": False})
         moves.with_context(picking_manual_merge=True)._assign_picking()
         # Cancel old pickings left w/out moves if needed

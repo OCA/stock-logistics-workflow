@@ -63,7 +63,7 @@ class TestGroupByDisabledOnPartner(TestGroupByBase, TransactionCase):
         so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
         so2.action_confirm()
         pick = so1.picking_ids
-        move = first(pick.move_ids)
+        move = first(pick.move_lines)
         move.quantity_done = 5
         pick.with_context(cancel_backorder=False)._action_done()
         self.assertFalse(so2.picking_ids & so1.picking_ids)
@@ -85,8 +85,8 @@ class TestGroupByDisabledOnPartner(TestGroupByBase, TransactionCase):
         so1._action_cancel()
         self.assertEqual(so1.picking_ids.state, "cancel")
         self.assertNotEqual(so2.picking_ids.state, "cancel")
-        so1_moves = so1.picking_ids.move_ids
-        so2_moves = so2.picking_ids.move_ids
+        so1_moves = so1.picking_ids.move_lines
+        so2_moves = so2.picking_ids.move_lines
         self.assertEqual(so1_moves.mapped("state"), ["cancel"])
         self.assertEqual(so2_moves.mapped("state"), ["confirmed"])
         self.assertEqual(so1.state, "cancel")
@@ -107,8 +107,8 @@ class TestGroupByDisabledOnPartner(TestGroupByBase, TransactionCase):
         so2._action_cancel()
         self.assertNotEqual(so1.picking_ids.state, "cancel")
         self.assertEqual(so2.picking_ids.state, "cancel")
-        so1_moves = so1.picking_ids.move_ids
-        so2_moves = so2.picking_ids.move_ids
+        so1_moves = so1.picking_ids.move_lines
+        so2_moves = so2.picking_ids.move_lines
         self.assertEqual(so1_moves.mapped("state"), ["confirmed"])
         self.assertEqual(so2_moves.mapped("state"), ["cancel"])
         self.assertEqual(so1.state, "sale")
@@ -264,7 +264,7 @@ class TestGroupByDisabledOnPartner(TestGroupByBase, TransactionCase):
         # the group is the same on the move lines and picking
         picking1 = so1.picking_ids
         picking2 = so2.picking_ids
-        self.assertEqual(picking1.group_id, picking1.move_ids.group_id)
+        self.assertEqual(picking1.group_id, picking1.move_lines.group_id)
         group1 = picking1.group_id
         group2 = picking2.group_id
         # each group is related only to the relevant sale order
@@ -288,7 +288,7 @@ class TestGroupByDisabledOnPartner(TestGroupByBase, TransactionCase):
             first(so.order_line).product_uom_qty,
         )
         picking.action_assign()
-        line = first(picking.move_ids).move_line_ids
+        line = first(picking.move_lines).move_line_ids
         line.qty_done = line.reserved_uom_qty / 2
         picking._action_done()
         self.assertEqual(picking.state, "done")
