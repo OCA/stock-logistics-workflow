@@ -30,7 +30,7 @@ class SaleOrderLine(models.Model):
                         bom_type="phantom",
                     )
                 relevant_bom = boms.filtered(
-                    lambda b: b.type == "phantom"
+                    lambda b, order_line=order_line: b.type == "phantom"
                     and (
                         b.product_id == order_line.product_id
                         or (
