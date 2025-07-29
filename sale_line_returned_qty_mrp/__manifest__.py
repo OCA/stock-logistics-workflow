@@ -4,7 +4,7 @@
 {
     "name": "Sale Line Returned Qty Mrp",
     "summary": "Track returned quantity of sale order lines for BoM products.",
-    "version": "15.0.1.0.1",
+    "version": "18.0.1.0.0",
     "category": "Sales",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "ForgeFlow, Odoo Community Association (OCA)",

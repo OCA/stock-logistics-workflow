@@ -49,10 +49,10 @@ class SaleOrderLine(models.Model):
                                 m.location_dest_id.usage != "customer"
                                 and m.state == "done"
                                 and float_compare(
-                                    m.quantity_done,
+                                    m.quantity,
                                     sum(
                                         sub_m.product_uom._compute_quantity(
-                                            sub_m.quantity_done, m.product_uom
+                                            sub_m.quantity, m.product_uom
                                         )
                                         for sub_m in m.returned_move_ids
                                         if sub_m.state == "done"

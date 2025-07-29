@@ -1,9 +1,11 @@
 # Copyright 2022 ForgeFlow (http://www.forgeflow.com)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
-from odoo.tests import Form, common
+from odoo.tests import Form
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestSaleLineReturnedQtyMrp(common.TransactionCase):
+class TestSaleLineReturnedQtyMrp(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -11,7 +13,7 @@ class TestSaleLineReturnedQtyMrp(common.TransactionCase):
         route_manufacture = cls.warehouse.manufacture_pull_id.route_id
         route_mto = cls.warehouse.mto_pull_id.route_id
         route_buy = cls.warehouse.buy_pull_id.route_id
-        dropshipping_route = cls.env["stock.location.route"].create(
+        dropshipping_route = cls.env["stock.route"].create(
             {
                 "name": "Dropship",
                 "sale_selectable": True,
@@ -26,13 +28,13 @@ class TestSaleLineReturnedQtyMrp(common.TransactionCase):
         vendor1 = cls.env["res.partner"].create({"name": "vendor1"})
         seller1 = cls.env["product.supplierinfo"].create(
             {
-                "name": vendor1.id,
+                "partner_id": vendor1.id,
                 "price": 8,
             }
         )
         seller2 = cls.env["product.supplierinfo"].create(
             {
-                "name": vendor1.id,
+                "partner_id": vendor1.id,
                 "price": 8,
             }
         )
@@ -41,20 +43,20 @@ class TestSaleLineReturnedQtyMrp(common.TransactionCase):
         cls.product = cls.env["product.product"].create(
             {
                 "name": "test kit",
-                "type": "product",
+                "is_storable": True,
                 "route_ids": [(6, 0, [route_manufacture.id, route_mto.id])],
             }
         )
         cls.c1 = cls.env["product.product"].create(
-            {"name": "test component 1", "type": "product"}
+            {"name": "test component 1", "is_storable": True}
         )
         cls.c2 = cls.env["product.product"].create(
-            {"name": "test component 2", "type": "product"}
+            {"name": "test component 2", "is_storable": True}
         )
         cls.c3 = cls.env["product.product"].create(
             {
                 "name": "test component 3",
-                "type": "product",
+                "is_storable": True,
                 "route_ids": [
                     (6, 0, [dropshipping_route.id, route_mto.id, route_buy.id])
                 ],
@@ -64,7 +66,7 @@ class TestSaleLineReturnedQtyMrp(common.TransactionCase):
         cls.c4 = cls.env["product.product"].create(
             {
                 "name": "test component 4",
-                "type": "product",
+                "is_storable": True,
                 "route_ids": [
                     (6, 0, [dropshipping_route.id, route_mto.id, route_buy.id])
                 ],
@@ -151,14 +153,14 @@ class TestSaleLineReturnedQtyMrp(common.TransactionCase):
         return_wiz = return_wiz_form.save()
         return_wiz.product_return_moves.quantity = qty
         return_wiz.product_return_moves.to_refund = to_refund
-        res = return_wiz.create_returns()
+        res = return_wiz.action_create_returns()
         return_picking = self.env["stock.picking"].browse(res["res_id"])
         self._validate_picking(return_picking)
 
     def _validate_picking(self, picking):
         """Helper method to confirm the pickings"""
-        for line in picking.move_lines:
-            line.quantity_done = line.product_uom_qty
+        for line in picking.move_ids:
+            line.quantity = line.product_uom_qty
         picking._action_done()
 
     def test_01_returned_qty(self):
@@ -167,12 +169,14 @@ class TestSaleLineReturnedQtyMrp(common.TransactionCase):
         self.assertEqual(so_line.qty_returned, 0.0)
         # Deliver the order
         picking = self.order.picking_ids
-        self.assertEqual(len(picking.move_lines), 2)
+        self.assertEqual(len(picking.move_ids), 2)
         picking.action_assign()
         self._validate_picking(picking)
         self.assertEqual(so_line.qty_returned, 0.0)
         # Make a return for 5 of the 10 units delivered
+        # picking.move_ids.write({'state': 'done'})
         self._return_picking(picking, 5.0, to_refund=True)
+        so_line.move_ids.write({"state": "done"})
         self.assertEqual(so_line.qty_returned, 5.0)
 
     def test_02_returned_qty(self):
@@ -185,9 +189,10 @@ class TestSaleLineReturnedQtyMrp(common.TransactionCase):
         self.assertEqual(so_line.qty_returned, 0.0)
         # Deliver the order
         picking = self.dropship_order.picking_ids
-        self.assertEqual(len(picking.move_lines), 2)
+        self.assertEqual(len(picking.move_ids), 2)
         picking.action_assign()
         self._validate_picking(picking)
         self.assertEqual(so_line.qty_returned, 0.0)
         self._return_picking(picking, 5.0, to_refund=True)
+        so_line.move_ids.write({"state": "done"})
         self.assertEqual(so_line.qty_returned, 5.0)
