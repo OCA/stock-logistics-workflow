@@ -223,15 +223,23 @@ class TestPartnerDeliveryWindow(TransactionCase):
             self.assertTrue(any(item.category is DeprecationWarning for item in w))
 
     def test_get_delivery_time_description(self):
-        # ANYTIME branch: should raise TypeError
-        with self.assertRaises(TypeError):
-            self.customer_anytime.get_delivery_time_description()
+        # ANYTIME branch
+        desc_map = self.customer_anytime.get_delivery_time_description()
+        desc = desc_map[self.customer_anytime.id]
+        lines = desc.split("\n")
+        self.assertEqual(len(lines), 7)
+        self.assertRegex(desc, r"Monday:.*00:00.*23:59")
+        self.assertRegex(desc, r"Sunday:.*00:00.*23:59")
 
-        # WORKDAYS branch: should raise same TypeError
-        with self.assertRaises(TypeError):
-            self.customer_working_days.get_delivery_time_description()
+        # WORKDAYS branch
+        desc_map = self.customer_working_days.get_delivery_time_description()
+        desc = desc_map[self.customer_working_days.id]
+        lines = desc.split("\n")
+        self.assertEqual(len(lines), 5)
+        self.assertRegex(desc, r"Monday:.*00:00.*23:59")
+        self.assertRegex(desc, r"Friday:.*00:00.*23:59")
 
-        # TIME_WINDOWS branch: if it works, return the text and check 2 days
+        # TIME_WINDOWS branch
         desc_map = self.customer_time_window.get_delivery_time_description()
         desc = desc_map[self.customer_time_window.id]
         lines = desc.split("\n")
