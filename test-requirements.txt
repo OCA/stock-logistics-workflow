@@ -1,0 +1,2 @@
+
+odoo-addon-stock-picking-batch-creation @ git+https://github.com/OCA/stock-logistics-workflow@refs/pull/2048/head#subdirectory=stock_picking_batch_creation
