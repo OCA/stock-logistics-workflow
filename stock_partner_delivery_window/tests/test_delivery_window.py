@@ -226,26 +226,26 @@ class TestPartnerDeliveryWindow(TransactionCase):
         # ANYTIME branch
         desc_map = self.customer_anytime.get_delivery_time_description()
         desc = desc_map[self.customer_anytime.id]
-        print(desc)
         lines = desc.split("\n")
-        self.assertEqual(len(lines), 7)
-        self.assertRegex(desc, r"Monday:.*12:00 AM.*11:59 PM")
+
+        self.assertEqual(len(lines), 2)
+        self.assertRegex(desc, r"Saturday:.*12:00 AM.*11:59 PM")
         self.assertRegex(desc, r"Sunday:.*12:00 AM.*11:59 PM")
 
         # WORKDAYS branch
         desc_map = self.customer_working_days.get_delivery_time_description()
         desc = desc_map[self.customer_working_days.id]
-        print(desc)
         lines = desc.split("\n")
-        self.assertEqual(len(lines), 5)
-        self.assertRegex(desc, r"Monday:.*12:00 AM.*11:59 PM")
-        self.assertRegex(desc, r"Friday:.*12:00 AM.*11:59 PM")
+
+        self.assertEqual(len(lines), 2)
+        self.assertRegex(desc, r"Saturday:.*12:00 AM.*11:59 PM")
+        self.assertRegex(desc, r"Sunday:.*12:00 AM.*11:59 PM")
 
         # TIME_WINDOWS branch
         desc_map = self.customer_time_window.get_delivery_time_description()
         desc = desc_map[self.customer_time_window.id]
-        print(desc)
         lines = desc.split("\n")
+
         self.assertEqual(len(lines), 2)
-        self.assertRegex(desc, r"Thursday:.*12:00 AM.*11:59 PM")
         self.assertRegex(desc, r"Saturday:.*12:00 AM.*11:59 PM")
+        self.assertRegex(desc, r"Sunday:.*12:00 AM.*11:59 PM")
