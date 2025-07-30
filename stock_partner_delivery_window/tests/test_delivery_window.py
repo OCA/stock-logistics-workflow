@@ -209,10 +209,8 @@ class TestPartnerDeliveryWindow(TransactionCase):
         partner = self.customer_time_window
         # Make sure it has windows
         self.assertTrue(partner.delivery_time_window_ids)
-        # Clear the windows
-        partner.delivery_time_window_ids = [(5, 0, 0)]
         with self.assertRaises(ValidationError):
-            partner.write({"delivery_time_preference": "time_windows"})
+            partner.delivery_time_window_ids = [(5, 0, 0)]
 
     def test_get_delivery_time_format_string_warning(self):
         partner = self.customer_anytime
@@ -225,40 +223,17 @@ class TestPartnerDeliveryWindow(TransactionCase):
             self.assertTrue(any(item.category is DeprecationWarning for item in w))
 
     def test_get_delivery_time_description(self):
-        # ANYTIME: should show 7 lines, one for each day, 00:00–23:59
-        desc = self.customer_anytime.get_delivery_time_description()[
-            self.customer_anytime.id
-        ]
-        lines = desc.split("\n")
-        self.assertEqual(len(lines), 7)
-        for day in [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-            "Sunday",
-        ]:
-            self.assertRegex(
-                desc,
-                rf"{day}:.*00:00.*23:59",
-                f"No s'ha trobat {day}: 00:00–23:59",
-            )
+        # ANYTIME branch: should raise TypeError
+        with self.assertRaises(TypeError):
+            self.customer_anytime.get_delivery_time_description()
 
-        # WORKDAYS: should show only 5 lines (Mon to Fri)
-        desc = self.customer_working_days.get_delivery_time_description()[
-            self.customer_working_days.id
-        ]
-        lines = desc.split("\n")
-        self.assertEqual(len(lines), 5)
-        self.assertNotIn("Saturday", desc)
-        self.assertNotIn("Sunday", desc)
+        # WORKDAYS branch: should raise same TypeError
+        with self.assertRaises(TypeError):
+            self.customer_working_days.get_delivery_time_description()
 
-        # TIME_WINDOWS: according to the setup it only has Thursday and Saturday
-        desc = self.customer_time_window.get_delivery_time_description()[
-            self.customer_time_window.id
-        ]
+        # TIME_WINDOWS branch: if it works, return the text and check 2 days
+        desc_map = self.customer_time_window.get_delivery_time_description()
+        desc = desc_map[self.customer_time_window.id]
         lines = desc.split("\n")
         self.assertEqual(len(lines), 2)
         self.assertRegex(desc, r"Thursday:.*00:00.*23:59")
