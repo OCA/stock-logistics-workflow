@@ -162,18 +162,18 @@ class ResPartner(models.Model):
                 day_windows = weekdays.filtered(lambda d: d.name in WORKDAYS)
                 for day in day_windows:
                     translated_day = day_translated_values[day.name]
-                    value = time_format_string % (
-                        short_format_time(time(hour=0, minute=0)),
-                        short_format_time(time(hour=23, minute=59)),
-                    )
+                    value = time_format_string % {
+                        "start": short_format_time(time(hour=0, minute=0)),
+                        "end": short_format_time(time(hour=23, minute=59)),
+                    }
                     opening_times[translated_day].append(value)
             else:
                 for day in weekdays:
                     translated_day = day_translated_values[day.name]
-                    value = time_format_string % (
-                        short_format_time(time(hour=0, minute=0)),
-                        short_format_time(time(hour=23, minute=59)),
-                    )
+                    value = time_format_string % {
+                        "start": short_format_time(time(hour=0, minute=0)),
+                        "end": short_format_time(time(hour=23, minute=59)),
+                    }
                     opening_times[translated_day].append(value)
             opening_times_description = list()
             for day_name, time_list in opening_times.items():
