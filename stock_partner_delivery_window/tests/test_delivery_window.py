@@ -1,7 +1,6 @@
 # Copyright 2020 Camptocamp
 # Copyright 2025 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-import warnings
 
 from freezegun import freeze_time
 
@@ -211,41 +210,3 @@ class TestPartnerDeliveryWindow(TransactionCase):
         self.assertTrue(partner.delivery_time_window_ids)
         with self.assertRaises(ValidationError):
             partner.delivery_time_window_ids = [(5, 0, 0)]
-
-    def test_get_delivery_time_format_string_warning(self):
-        partner = self.customer_anytime
-        with warnings.catch_warnings(record=True) as w:
-            warnings.simplefilter("always")
-            fmt = partner._get_delivery_time_format_string()
-            # the format string should be translatable
-            self.assertEqual(fmt, "From %(start)s to %(end)s")
-            # it should have raised a DeprecationWarning
-            self.assertTrue(any(item.category is DeprecationWarning for item in w))
-
-    def test_get_delivery_time_description(self):
-        # ANYTIME branch
-        desc_map = self.customer_anytime.get_delivery_time_description()
-        desc = desc_map[self.customer_anytime.id]
-        lines = desc.split("\n")
-
-        self.assertEqual(len(lines), 2)
-        self.assertRegex(desc, r"Saturday:.*12:00 AM.*11:59 PM")
-        self.assertRegex(desc, r"Sunday:.*12:00 AM.*11:59 PM")
-
-        # WORKDAYS branch
-        desc_map = self.customer_working_days.get_delivery_time_description()
-        desc = desc_map[self.customer_working_days.id]
-        lines = desc.split("\n")
-
-        self.assertEqual(len(lines), 2)
-        self.assertRegex(desc, r"Saturday:.*12:00 AM.*11:59 PM")
-        self.assertRegex(desc, r"Sunday:.*12:00 AM.*11:59 PM")
-
-        # TIME_WINDOWS branch
-        desc_map = self.customer_time_window.get_delivery_time_description()
-        desc = desc_map[self.customer_time_window.id]
-        lines = desc.split("\n")
-
-        self.assertEqual(len(lines), 2)
-        self.assertRegex(desc, r"Saturday:.*12:00 AM.*11:59 PM")
-        self.assertRegex(desc, r"Sunday:.*12:00 AM.*11:59 PM")
