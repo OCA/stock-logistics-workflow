@@ -1,6 +1,6 @@
 # Copyright 2025 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import api, fields, models, tools
+from odoo import api, fields, models
 from odoo.models import MAGIC_COLUMNS
 
 
@@ -35,7 +35,6 @@ class MakePickingBatchAbstract(models.Model):
         return action
 
     @api.model
-    @tools.ormcache()
     def _get_wizard_fields(self):
         """
         Returns the fields contained in the abstract
