@@ -32,3 +32,8 @@ the batch creation process if more than one device type is available:
 - A minimum picking volume to consider the device type,
 - A sequence to define the order in which the device type will be
   considered.
+
+## Batch creation profiles
+
+In order to ease users operations, batch profiles can be created
+to store parameters to use to create batch pickings.

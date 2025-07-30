@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<!-- Copyright 2021 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="make_picking_batch_profile_form_view">
+        <field
+            name="name"
+        >make.picking.batch.profile.form (in stock_picking_batch_creation)</field>
+        <field name="model">make.picking.batch.profile</field>
+        <field name="arch" type="xml">
+            <form string="Choose Batch Profile">
+                <group>
+                    <group string="Criteria" name="criteria" colspan="4">
+                        <field name="profile_id" />
+                    </group>
+                </group>
+                <footer>
+                    <button
+                        name="choose_profile"
+                        string="Choose that profile"
+                        class="btn-primary"
+                        type="object"
+                    />
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="make_picking_batch_profile_act_window">
+        <field name="name">Make Picking Batch Profile</field>
+        <field name="res_model">make.picking.batch.profile</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

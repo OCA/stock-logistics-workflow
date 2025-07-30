@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ============================
 Stock Picking Batch Creation
 ============================
@@ -17,7 +13,7 @@ Stock Picking Batch Creation
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
@@ -68,6 +64,12 @@ the batch creation process if more than one device type is available:
 - A sequence to define the order in which the device type will be
   considered.
 
+Batch creation profiles
+-----------------------
+
+In order to ease users operations, batch profiles can be created to
+store parameters to use to create batch pickings.
+
 **Table of contents**
 
 .. contents::
@@ -77,7 +79,8 @@ Usage
 =====
 
 First of all, you need to create your stock device type. To do so, go to
-the *Inventory -> Configuration -> Stock Device Types* menu.
+the *Inventory -> Configuration -> Batch Creation -> Stock Device Types*
+menu.
 
 Once it's done, you can start creating your picking batches.
 
@@ -88,6 +91,19 @@ The *Make Picking Batch* window will open and allows you to specify your
 criteria for the batch creation. When all your criteria are set, click
 on the *Create Batch Picking* and lets the magic happen. A new window
 will open with the created batch picking.
+
+To easy users operation, you can create batch creation profiles:
+
+Go to \*Inventory -> Configuration -> Batch Creation -> Batch Creation
+Profiles
+
+Fill in the name of the profile you want to create and then all the
+parameters.
+
+After having created the first profile, you'll have now a new wizard
+that appear when you want to create batches that allows you to choose
+the profile to use. If you select nothing, the default parameters are
+loaded.
 
 Behind the scene
 ~~~~~~~~~~~~~~~~

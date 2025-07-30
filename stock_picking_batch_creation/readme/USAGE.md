@@ -1,5 +1,5 @@
 First of all, you need to create your stock device type. To do so, go to
-the *Inventory -\> Configuration -\> Stock Device Types* menu.
+the *Inventory -\> Configuration -\> Batch Creation -\> Stock Device Types* menu.
 
 Once it's done, you can start creating your picking batches.
 
@@ -10,6 +10,17 @@ The *Make Picking Batch* window will open and allows you to specify your
 criteria for the batch creation. When all your criteria are set, click
 on the *Create Batch Picking* and lets the magic happen. A new window
 will open with the created batch picking.
+
+To easy users operation, you can create batch creation profiles:
+
+Go to *Inventory -\> Configuration -\> Batch Creation -\> Batch Creation Profiles
+
+Fill in the name of the profile you want to create and then all the
+parameters.
+
+After having created the first profile, you'll have now a new wizard that
+appear when you want to create batches that allows you to choose the profile
+to use. If you select nothing, the default parameters are loaded.
 
 ### Behind the scene
 
