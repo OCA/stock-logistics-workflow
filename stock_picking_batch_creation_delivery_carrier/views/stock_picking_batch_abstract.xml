@@ -2,12 +2,15 @@
 <!-- Copyright 2025 ACSONE SA/NV
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
-    <record model="ir.ui.view" id="stock_picking_batch_form_view">
+    <record model="ir.ui.view" id="make_picking_batch_abstract_form_view">
         <field
             name="name"
         >stock.picking.batch.form (in stock_picking_batch_creation_delivery_carrier)</field>
-        <field name="model">stock.picking.batch</field>
-        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_form" />
+        <field name="model">make.picking.batch.abstract</field>
+        <field
+            name="inherit_id"
+            ref="stock_picking_batch_creation.make_picking_batch_abstract_form_view"
+        />
         <field name="arch" type="xml">
             <field name="user_id" position="after">
                 <field name="delivery_carrier_id" />
