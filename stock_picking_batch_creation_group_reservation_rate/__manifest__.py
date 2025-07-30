@@ -11,5 +11,5 @@
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": ["stock_picking_batch_creation", "stock_picking_group_reservation_rate"],
-    "data": ["wizards/make_picking_batch.xml"],
+    "data": ["views/picking_batch_abstract.xml"],
 }
