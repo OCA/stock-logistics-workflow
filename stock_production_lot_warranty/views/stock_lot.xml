@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="stock_production_lot_extend_warranty" model="ir.ui.view">
+        <field name="model">stock.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='main_group']/group[1]" position="after">
+                <group>
+                    <field name="warranty_exp_date" />
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
