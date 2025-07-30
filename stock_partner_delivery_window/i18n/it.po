@@ -1,0 +1,200 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_partner_delivery_window
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2023-12-26 22:36+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields.selection,name:stock_partner_delivery_window.selection__res_partner__delivery_time_preference__anytime
+msgid "Any time"
+msgstr "A qualsiasi orario"
+
+#. module: stock_partner_delivery_window
+#: model:ir.model,name:stock_partner_delivery_window.model_res_partner
+msgid "Contact"
+msgstr "Contatto"
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,help:stock_partner_delivery_window.field_res_partner__delivery_time_preference
+#: model:ir.model.fields,help:stock_partner_delivery_window.field_res_users__delivery_time_preference
+msgid ""
+"Define the scheduling preference for delivery orders:\n"
+"\n"
+"* Any time: Do not postpone deliveries\n"
+"* Fixed time windows: Postpone deliveries to the next preferred time window\n"
+"* Weekdays: Postpone deliveries to the next weekday"
+msgstr ""
+"Definisce le preferenze di schedulazione per gli ordini di consegna:\n"
+"\n"
+"* A qualsiasi orario: non si rinviano le consegne\n"
+"* Intervalli orari prefissati: si rinviano le spedizioni al successivo "
+"intervallo orario preferito\n"
+"* Giorno della settimana: si rinviano le spedizioni al giorno della "
+"settimana successivo"
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_res_partner__delivery_time_preference
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_res_users__delivery_time_preference
+msgid "Delivery time schedule preference"
+msgstr "Preferenze schedulazione ora consegna"
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_res_partner__delivery_time_window_ids
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_res_users__delivery_time_window_ids
+msgid "Delivery time windows"
+msgstr "Intervalli orario consegna"
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields.selection,name:stock_partner_delivery_window.selection__res_partner__delivery_time_preference__time_windows
+msgid "Fixed time windows"
+msgstr "Intervalli orario prefissati"
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__time_window_start
+msgid "From"
+msgstr "Da"
+
+#. module: stock_partner_delivery_window
+#. odoo-python
+#: code:addons/stock_partner_delivery_window/models/res_partner.py:0
+#, python-format
+msgid "From %(start)s to %(end)s"
+msgstr "Da %(start)s a %(end)s"
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento di"
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__partner_id
+msgid "Partner"
+msgstr "Partner"
+
+#. module: stock_partner_delivery_window
+#. odoo-python
+#: code:addons/stock_partner_delivery_window/models/res_partner.py:0
+#, python-format
+msgid ""
+"Please define at least one delivery time window or change preference to Any "
+"time"
+msgstr ""
+"Definire almeno un intervallo orario di consegna o cambiare le preferenze a "
+"\"A qualsiasi orario\""
+
+#. module: stock_partner_delivery_window
+#: model:ir.model,name:stock_partner_delivery_window.model_partner_delivery_time_window
+msgid "Preferred delivery time windows"
+msgstr "Intervalli orario consegna preferiti"
+
+#. module: stock_partner_delivery_window
+#. odoo-python
+#: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
+#, python-format
+msgid "Scheduled date does not match partner's Delivery window preference."
+msgstr ""
+"La data schedulata non corrisponde alle preferenze intervallo consegna del "
+"partner."
+
+#. module: stock_partner_delivery_window
+#. odoo-python
+#: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
+#, python-format
+msgid ""
+"The scheduled date is {date} ({tz}), but the partner is set to prefer deliveries on following time windows:\n"
+"{window}"
+msgstr ""
+"La data schedulata è {date} ({tz}), ma il partner ha impostato le consegne "
+"preferibilmente nei sequenti intervalli orario:\n"
+"{window}"
+
+#. module: stock_partner_delivery_window
+#. odoo-python
+#: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
+#, python-format
+msgid ""
+"The scheduled date is {date} ({weekday}), but the partner is set to prefer "
+"deliveries on working days."
+msgstr ""
+"La data schedulata è {date} ({weekday}), ma il partner preferisce le "
+"consegne nei giorni lavorativi."
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__time_window_weekday_ids
+msgid "Time Window Weekday"
+msgstr "Intervallo orario giorno della settimana"
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__tz
+msgid "Timezone"
+msgstr "Fuso orario"
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__time_window_end
+msgid "To"
+msgstr "A"
+
+#. module: stock_partner_delivery_window
+#: model:ir.model,name:stock_partner_delivery_window.model_stock_picking
+msgid "Transfer"
+msgstr "Trasferimento"
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields.selection,name:stock_partner_delivery_window.selection__res_partner__delivery_time_preference__workdays
+msgid "Weekdays (Monday to Friday)"
+msgstr "Giorno della settimana (da lunedì a venerdì)"
+
+#. module: stock_partner_delivery_window
+#: model:ir.model.fields,help:stock_partner_delivery_window.field_partner_delivery_time_window__tz
+msgid ""
+"When printing documents and exporting/importing data, time values are computed according to this timezone.\n"
+"If the timezone is not set, UTC (Coordinated Universal Time) is used.\n"
+"Anywhere else, time values are computed according to the time offset of your web client."
+msgstr ""
+"Quando si stampano i documenti e si esportano/importano dati, gli orari sono "
+"calcolati in base a questo fuso orario.\n"
+"Se questo non è impostato, viene usato l'UTC (Coordinated Universal Time).\n"
+"In qualunque altra parte, l'orario è calcolato in base regolazione dell'ora "
+"del client web."
