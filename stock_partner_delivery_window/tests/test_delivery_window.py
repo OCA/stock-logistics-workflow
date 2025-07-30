@@ -1,8 +1,11 @@
 # Copyright 2020 Camptocamp
 # Copyright 2025 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+import warnings
+
 from freezegun import freeze_time
 
+from odoo.exceptions import ValidationError
 from odoo.tests.common import TransactionCase
 
 
@@ -192,3 +195,71 @@ class TestPartnerDeliveryWindow(TransactionCase):
 
     def test_weekdays_time_window(self):
         self.assertEqual(self.customer_time_window.delivery_time_weekdays, {3, 5})
+
+    def test_check_delivery_time_preference_constraint(self):
+        # Creation without windows should fail
+        with self.assertRaises(ValidationError):
+            self.env["res.partner"].create(
+                {
+                    "name": "NoWindow",
+                    "delivery_time_preference": "time_windows",
+                }
+            )
+        # If we remove all windows from an existing partner it should also fail
+        partner = self.customer_time_window
+        # Make sure it has windows
+        self.assertTrue(partner.delivery_time_window_ids)
+        # Clear the windows
+        partner.delivery_time_window_ids = [(5, 0, 0)]
+        with self.assertRaises(ValidationError):
+            partner.write({"delivery_time_preference": "time_windows"})
+
+    def test_get_delivery_time_format_string_warning(self):
+        partner = self.customer_anytime
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+            fmt = partner._get_delivery_time_format_string()
+            # the format string should be translatable
+            self.assertEqual(fmt, "From %(start)s to %(end)s")
+            # it should have raised a DeprecationWarning
+            self.assertTrue(any(item.category is DeprecationWarning for item in w))
+
+    def test_get_delivery_time_description(self):
+        # ANYTIME: should show 7 lines, one for each day, 00:00–23:59
+        desc = self.customer_anytime.get_delivery_time_description()[
+            self.customer_anytime.id
+        ]
+        lines = desc.split("\n")
+        self.assertEqual(len(lines), 7)
+        for day in [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday",
+        ]:
+            self.assertRegex(
+                desc,
+                rf"{day}:.*00:00.*23:59",
+                f"No s'ha trobat {day}: 00:00–23:59",
+            )
+
+        # WORKDAYS: should show only 5 lines (Mon to Fri)
+        desc = self.customer_working_days.get_delivery_time_description()[
+            self.customer_working_days.id
+        ]
+        lines = desc.split("\n")
+        self.assertEqual(len(lines), 5)
+        self.assertNotIn("Saturday", desc)
+        self.assertNotIn("Sunday", desc)
+
+        # TIME_WINDOWS: according to the setup it only has Thursday and Saturday
+        desc = self.customer_time_window.get_delivery_time_description()[
+            self.customer_time_window.id
+        ]
+        lines = desc.split("\n")
+        self.assertEqual(len(lines), 2)
+        self.assertRegex(desc, r"Thursday:.*00:00.*23:59")
+        self.assertRegex(desc, r"Saturday:.*00:00.*23:59")
