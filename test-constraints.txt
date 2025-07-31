@@ -1,0 +1,2 @@
+odoo-addon-partner-tz @ git+https://github.com/ecosoft-odoo/partner-contact.git@e18d353e787536e461d782ead04316b2eff292ad#egg=odoo-addon-partner-tz&subdirectory=setup/partner_tz
+odoo-addon-stock-picking-group-by-partner-by-carrier @ git+https://github.com/PolComas/stock-logistics-workflow.git@44f06c5eb2290ae3b35ab9093cb2ba82d9e2fe4f#egg=odoo-addon-stock-picking-group-by-partner-by-carrier-&subdirectory=setup/stock_picking_group_by_partner_by_carrier
