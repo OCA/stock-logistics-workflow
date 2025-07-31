@@ -2,7 +2,6 @@
 # Copyright 2024 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import Command
 from odoo.exceptions import UserError
 from odoo.tests.common import SavepointCase
 
@@ -21,17 +20,20 @@ class TestPickingRestrictCancel(SavepointCase):
                 "picking_type_id": cls.picking_type.id,
                 "location_id": cls.env.ref("stock.stock_location_stock").id,
                 "location_dest_id": cls.env.ref("stock.stock_location_customers").id,
-                "move_ids": [
-                    Command.create(
+                "move_lines": [
+                    (
+                        0,
+                        0,
                         {
                             "name": "Test move",
                             "product_id": cls.product.id,
+                            "product_uom": cls.product.uom_id.id,
                             "product_uom_qty": 3,
                             "location_id": cls.env.ref("stock.stock_location_stock").id,
                             "location_dest_id": cls.env.ref(
                                 "stock.stock_location_customers"
                             ).id,
-                        }
+                        },
                     )
                 ],
             }
@@ -50,18 +52,17 @@ class TestPickingRestrictCancel(SavepointCase):
     def test_stock_move_restrict_cancel_printed_enabled(self):
         self.picking.printed = True
         with self.assertRaises(UserError):
-            self.picking.move_ids._action_cancel()
+            self.picking.move_lines._action_cancel()
 
     def test_stock_move_restrict_cancel_printed_disabled(self):
         self.picking_type.restrict_cancel_if_printed = False
         self.picking.printed = True
-        self.picking.move_ids._action_cancel()
+        self.picking.move_lines._action_cancel()
 
     def test_stock_move_restrict_cancel_printed_enabled_nobackorder(self):
         """Check a picking partially processed can be validated when no backorder are created"""
         self.picking.printed = True
-        self.picking.move_ids.quantity_done = 1
-        self.picking_type.create_backorder = "never"
+        self.picking.move_lines.quantity_done = 1
         self.picking.button_validate()
 
     def test_stock_move_restrict_cancel_printed_enabled_move_merge(self):
@@ -71,5 +72,5 @@ class TestPickingRestrictCancel(SavepointCase):
         That extra gets merged and then canceled.
         """
         self.picking.printed = True
-        self.picking.move_ids.quantity_done = 10
+        self.picking.move_lines.quantity_done = 10
         self.picking.button_validate()
