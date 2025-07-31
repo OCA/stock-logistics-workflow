@@ -2,23 +2,109 @@
 # Copyright 2020-2021 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+import logging
 from itertools import groupby
 
-from odoo import api, fields, models
+from psycopg2.errors import LockNotAvailable
+from psycopg2.extensions import AsIs
+
+from odoo import _, api, fields, models
+from odoo.fields import first
+
+_logger = logging.getLogger(__name__)
 
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    sale_ids = fields.Many2many("sale.order", compute="_compute_sale_ids", store=True)
-    # don't copy the printed state of a picking otherwise the backorder of a
-    # printed picking becomes printed
-    printed = fields.Boolean(copy=False)
+    sale_ids = fields.Many2many(
+        comodel_name="sale.order",
+        relation="sale_order_stock_picking_rel",
+        compute="_compute_sale_ids",
+        store=True,
+    )
     canceled_by_merge = fields.Boolean(
         default=False,
         help="Technical field. Indicates the transfer is"
         " canceled because it was left empty after a manual merge.",
     )
+    # required for group_by since pickings are accessed from the procurement
+    # group in the _merge_procurement_groups method
+    group_id = fields.Many2one(index=True)
+
+    @api.model
+    def _get_index_for_grouping_fields(self):
+        """
+        This tuple is intended to be overriden in order to add fields
+        used in groupings
+        """
+        res = self._get_index_for_grouping_fields2()
+        if "carrier_id" not in res:
+            res.append("carrier_id")
+        return res
+
+    @api.model
+    def _get_index_for_grouping_fields2(self):
+        """
+        Camps que cal indexar per al domini de group by:
+        partner, ubicacions, tipus i carrier.
+        """
+        return [
+            "partner_id",
+            "location_id",
+            "location_dest_id",
+            "picking_type_id",
+            "carrier_id",
+        ]
+
+    @api.model
+    def _get_index_for_grouping_condition(self):
+        return """
+            WHERE printed is False
+            AND state in ('draft', 'confirmed', 'waiting', 'partially_available', 'assigned')
+        """
+
+    @api.model
+    def _create_index_for_grouping(self):
+        # create index for the domain expressed into the
+        # stock_move._assign_picking_group_domain method
+        index_name = "stock_picking_groupby_key_index"
+
+        try:
+            self.env.cr.execute(
+                "DROP INDEX IF EXISTS %(index_name)s", dict(index_name=AsIs(index_name))
+            )
+
+            self.env.cr.execute(
+                """
+                    CREATE INDEX %(index_name)s
+                    ON %(table_name)s %(fields)s
+                    %(where)s
+                """,
+                dict(
+                    index_name=AsIs(index_name),
+                    table_name=AsIs(self._table),
+                    fields=tuple(
+                        AsIs(field) for field in self._get_index_for_grouping_fields()
+                    ),
+                    where=AsIs(self._get_index_for_grouping_condition()),
+                ),
+            )
+        except LockNotAvailable as e:
+            # Do nothing and let module load
+            _logger.warning(
+                "Impossible to create index in stock_picking_group_by_base module"
+                " due to DB Lock problem (%s)",
+                e,
+            )
+        except Exception:
+            raise
+
+    def init(self):
+        """
+        This has to be called in every overriding module
+        """
+        self._create_index_for_grouping()
 
     @api.depends("canceled_by_merge")
     def _compute_state(self):
@@ -26,6 +112,7 @@ class StockPicking(models.Model):
         for picking in self:
             if picking.canceled_by_merge:
                 picking.state = "cancel"
+        return
 
     def _check_emptyness_after_merge(self):
         """Handle pickings emptied during a manual merge."""
@@ -86,10 +173,14 @@ class StockPicking(models.Model):
         """Build a new procurement group that is the merge of given procurement
         group."""
         sales = move_groups.sale_id
-        return {
-            "sale_ids": [(6, 0, sales.ids)],
-            "name": ", ".join(move_groups.sorted("name").mapped("name")),
-        }
+        partners = move_groups.sale_id.partner_id
+        name = _("Merged procurement")
+        if partners:
+            name = _(
+                "Merged procurement for partners: %(partners_name)s",
+                partners_name=", ".join(partners.mapped("display_name")),
+            )
+        return {"sale_ids": [(6, 0, sales.ids)], "name": name}
 
     def _merge_procurement_groups(self):
         self.ensure_one()
@@ -150,7 +241,7 @@ class StockPicking(models.Model):
             # we are in the process of the creation of a backorder. If we can
             # find a suitable picking, then use it instead of copying the one
             # we are creating a backorder from
-            picking = self.move_lines[0]._search_picking_for_assignation()
+            picking = first(self.move_lines)._search_picking_for_assignation()
             if picking:
                 return picking
         return super(
@@ -218,6 +309,7 @@ class StockPicking(models.Model):
                 return sales_and_moves
             else:
                 sales_and_moves = self.env["stock.move.line"]
+                fake_record["product_qty"] = fake_record.pop("product_uom_qty")
                 fake_record["product_uom_id"] = fake_record.pop("product_uom")
                 for sale, sale_moves in grouped_moves:
                     if sale:
@@ -238,8 +330,8 @@ class StockPicking(models.Model):
     def get_customer_refs(self):
         """Returns all unique sales order customer references."""
         if self._delivery_report_state_is_done():
-            move_lines = self.move_lines
+            move_ids = self.move_lines
         else:
-            move_lines = self.move_lines.filtered("product_uom_qty")
-        references = move_lines.mapped("sale_line_id.order_id.client_order_ref")
+            move_ids = self.move_lines.filtered("product_uom_qty")
+        references = move_ids.mapped("sale_line_id.order_id.client_order_ref")
         return set(filter(None, references))
