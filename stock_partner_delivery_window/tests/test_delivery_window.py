@@ -1,11 +1,14 @@
 # Copyright 2020 Camptocamp
+# Copyright 2025 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
 from freezegun import freeze_time
 
-from odoo.tests import SavepointCase
+from odoo.exceptions import ValidationError
+from odoo.tests.common import TransactionCase
 
 
-class TestPartnerDeliveryWindow(SavepointCase):
+class TestPartnerDeliveryWindow(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -178,3 +181,32 @@ class TestPartnerDeliveryWindow(SavepointCase):
         self.assertEqual(len(copied_partner.delivery_time_window_ids), expecting)
         copied_partner = self.customer_working_days.copy()
         self.assertFalse(copied_partner.delivery_time_window_ids)
+
+    def test_weekdays_anytime(self):
+        self.assertEqual(
+            self.customer_anytime.delivery_time_weekdays, {0, 1, 2, 3, 4, 5, 6}
+        )
+
+    def test_weekdays_working_days(self):
+        self.assertEqual(
+            self.customer_working_days.delivery_time_weekdays, {0, 1, 2, 3, 4}
+        )
+
+    def test_weekdays_time_window(self):
+        self.assertEqual(self.customer_time_window.delivery_time_weekdays, {3, 5})
+
+    def test_check_delivery_time_preference_constraint(self):
+        # Creation without windows should fail
+        with self.assertRaises(ValidationError):
+            self.env["res.partner"].create(
+                {
+                    "name": "NoWindow",
+                    "delivery_time_preference": "time_windows",
+                }
+            )
+        # If we remove all windows from an existing partner it should also fail
+        partner = self.customer_time_window
+        # Make sure it has windows
+        self.assertTrue(partner.delivery_time_window_ids)
+        with self.assertRaises(ValidationError):
+            partner.delivery_time_window_ids = [(5, 0, 0)]

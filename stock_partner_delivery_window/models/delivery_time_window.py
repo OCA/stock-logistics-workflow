@@ -5,17 +5,14 @@ from odoo import api, fields, models
 
 
 class DeliveryTimeWindow(models.Model):
-
     _name = "partner.delivery.time.window"
     _inherit = "time.window.mixin"
     _description = "Preferred delivery time windows"
-
     _time_window_overlap_check_field = "partner_id"
 
     partner_id = fields.Many2one(
         "res.partner", required=True, index=True, ondelete="cascade"
     )
-
     tz = fields.Selection(related="partner_id.tz", readonly=True)
 
     @api.constrains("partner_id")

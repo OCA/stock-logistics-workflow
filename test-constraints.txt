@@ -1,0 +1,1 @@
+odoo-addon-partner-tz @ git+https://github.com/ecosoft-odoo/partner-contact.git@e18d353e787536e461d782ead04316b2eff292ad#egg=odoo-addon-partner-tz&subdirectory=setup/partner_tz

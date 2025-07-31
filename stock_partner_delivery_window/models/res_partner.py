@@ -1,11 +1,9 @@
 # Copyright 2020 Camptocamp SA
+# Copyright 2025 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
-from collections import defaultdict
-from datetime import time
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
-from odoo.tools.misc import format_time
 
 from odoo.addons.partner_tz.tools import tz_utils
 
@@ -71,6 +69,24 @@ class ResPartner(models.Model):
             res[window.partner_id.id] |= window
         return res
 
+    @property
+    def delivery_time_weekdays(self):
+        self.ensure_one()
+        if self.delivery_time_preference == "anytime":
+            weekdays = set(range(7))
+        elif self.delivery_time_preference == "workdays":
+            weekdays = set(range(5))
+        else:
+            weekdays = set(
+                map(
+                    int,
+                    self.delivery_time_window_ids.time_window_weekday_ids.mapped(
+                        "name"
+                    ),
+                )
+            )
+        return weekdays
+
     def is_in_delivery_window(self, date_time):
         """
         Checks if provided date_time is in a delivery window for actual partner
@@ -97,61 +113,6 @@ class ResPartner(models.Model):
                 if utc_start <= date_time.time() <= utc_end:
                     return True
         return False
-
-    def _get_delivery_time_format_string(self):
-        return _("From %s to %s")
-
-    def get_delivery_time_description(self):
-        res = dict()
-        day_translated_values = dict(
-            self.env["time.weekday"]._fields["name"]._description_selection(self.env)
-        )
-
-        def short_format_time(time):
-            return format_time(self.env, time, time_format="short")
-
-        weekdays = self.env["time.weekday"].search([])
-        for partner in self:
-            opening_times = defaultdict(list)
-            time_format_string = self._get_delivery_time_format_string()
-            if partner.delivery_time_preference == "time_windows":
-                for day in weekdays:
-                    day_windows = partner.delivery_time_window_ids.filtered(
-                        lambda d: day in d.time_window_weekday_ids
-                    )
-                    for win in day_windows:
-                        start = win.get_time_window_start_time()
-                        end = win.get_time_window_end_time()
-                        translated_day = day_translated_values[day.name]
-                        value = time_format_string % (
-                            short_format_time(start),
-                            short_format_time(end),
-                        )
-                        opening_times[translated_day].append(value)
-            elif partner.delivery_time_preference == "workdays":
-                day_windows = weekdays.filtered(lambda d: d.name in WORKDAYS)
-                for day in day_windows:
-                    translated_day = day_translated_values[day.name]
-                    value = time_format_string % (
-                        short_format_time(time(hour=0, minute=0)),
-                        short_format_time(time(hour=23, minute=59)),
-                    )
-                    opening_times[translated_day].append(value)
-            else:
-                for day in weekdays:
-                    translated_day = day_translated_values[day.name]
-                    value = time_format_string % (
-                        short_format_time(time(hour=0, minute=0)),
-                        short_format_time(time(hour=23, minute=59)),
-                    )
-                    opening_times[translated_day].append(value)
-            opening_times_description = list()
-            for day_name, time_list in opening_times.items():
-                opening_times_description.append(
-                    _("%s: %s") % (day_name, _(", ").join(time_list))
-                )
-            res[partner.id] = "\n".join(opening_times_description)
-        return res
 
     def copy_data(self, default=None):
         result = super().copy_data(default=default)[0]
