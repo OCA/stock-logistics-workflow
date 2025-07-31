@@ -34,6 +34,7 @@ setuptools.setup(
         'odoo-addon-stock_move_quick_lot>=15.0dev,<15.1dev',
         'odoo-addon-stock_no_negative>=15.0dev,<15.1dev',
         'odoo-addon-stock_owner_restriction>=15.0dev,<15.1dev',
+        'odoo-addon-stock_partner_delivery_window>=15.0dev,<15.1dev',
         'odoo-addon-stock_picking_assign_serial_final>=15.0dev,<15.1dev',
         'odoo-addon-stock_picking_auto_create_lot>=15.0dev,<15.1dev',
         'odoo-addon-stock_picking_back2draft>=15.0dev,<15.1dev',
