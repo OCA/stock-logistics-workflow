@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_landed_cost_form_inherit" model="ir.ui.view">
+        <field
+            name="name"
+        >stock.landed.cost.view.form.inherit.stock.landed.costs.revert</field>
+        <field name="model">stock.landed.cost</field>
+        <field name="inherit_id" ref="stock_landed_costs.view_stock_landed_cost_form" />
+        <field name="arch" type="xml">
+
+            <xpath expr="//button[@name='button_cancel']" position="after">
+                <button
+                    name="revert_landed_costs"
+                    string="Revert"
+                    invisible="state != 'done'"
+                    type="object"
+                />
+            </xpath>
+
+            <xpath
+                expr="//button[@name='action_view_stock_valuation_layers']"
+                position="after"
+            >
+                <field name="revert_landed_cost_ids" invisible="1" />
+                <button
+                    type="object"
+                    name="action_view_revert_landed_cost"
+                    class="oe_stat_button"
+                    icon="fa-pencil-square-o"
+                    invisible="not revert_landed_cost_ids"
+                >
+                    <field
+                        name="revert_landed_cost_count"
+                        widget="statinfo"
+                        string="Landed costs reverted"
+                    />
+                </button>
+
+            </xpath>
+
+        </field>
+    </record>
+</odoo>
