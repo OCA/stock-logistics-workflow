@@ -3,7 +3,7 @@
 {
     "name": "Stock Move Line Qty Picked",
     "summary": "Separate quantity picked from the reserved quantity",
-    "version": "18.0.1.0.1",
+    "version": "18.0.1.1.0",
     "development_status": "Beta",
     "category": "Inventory",
     "website": "https://github.com/OCA/stock-logistics-workflow",
