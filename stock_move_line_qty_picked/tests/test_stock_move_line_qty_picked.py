@@ -58,10 +58,17 @@ class TestStockMoveLineQtyPicked(TransactionCase):
         self.assertEqual(move_line.quantity, 5)
         self.assertEqual(move_line.qty_picked, 0)
         self.assertFalse(move_line.picked)
-        move_line._pick_qty(3)
+        # Pick partial qty
+        move_line.qty_picked = 3
         self.assertEqual(move_line.quantity, 5)
         self.assertEqual(move_line.qty_picked, 3)
         self.assertTrue(move_line.picked)
+        # Updating 'picked' to True should not reset the picked qty
+        move_line.picked = True
+        self.assertEqual(move_line.quantity, 5)
+        self.assertEqual(move_line.qty_picked, 3)
+        self.assertTrue(move_line.picked)
+        # When validating, only the picked qty is moved
         move.picking_id.with_context(skip_backorder=True).button_validate()
         self.assertEqual(move_line.quantity, 3)
 
@@ -74,7 +81,7 @@ class TestStockMoveLineQtyPicked(TransactionCase):
         self.assertEqual(move_line.quantity, 10)
         self.assertEqual(move_line.qty_picked, 0)
         self.assertFalse(move_line.picked)
-        move_line._pick_qty(5)
+        move_line.qty_picked = 5
         self.assertEqual(move_line.quantity, 10)
         self.assertEqual(move_line.qty_picked, 5)
         self.assertTrue(move_line.picked)
@@ -84,7 +91,27 @@ class TestStockMoveLineQtyPicked(TransactionCase):
         move_form.save()
         self.assertEqual(len(move.move_line_ids), 2)
         new_line = move.move_line_ids - move_line
-        new_line._pick_qty(3)
+        new_line.qty_picked = 3
         self.assertEqual(sum(ml.quantity for ml in move.move_line_ids), 10)
         move.picking_id.with_context(skip_backorder=True).button_validate()
         self.assertEqual(move.quantity, 8)
+
+    def test_move_unpick_qty(self):
+        move = self._create_move(
+            self.product, 5.0, self.stock_location, self.stock_location_2
+        )
+        move_line = move.move_line_ids
+        self.assertEqual(move.picking_id.state, "assigned")
+        self.assertEqual(move_line.quantity, 5)
+        self.assertEqual(move_line.qty_picked, 0)
+        self.assertFalse(move_line.picked)
+        # Pick
+        move_line.picked = True
+        self.assertEqual(move_line.quantity, 5)
+        self.assertEqual(move_line.qty_picked, 5)
+        self.assertTrue(move_line.picked)
+        # Unpick
+        move_line.picked = False
+        self.assertEqual(move_line.quantity, 5)
+        self.assertEqual(move_line.qty_picked, 0)
+        self.assertFalse(move_line.picked)
