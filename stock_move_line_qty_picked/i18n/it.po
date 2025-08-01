@@ -17,6 +17,11 @@ msgstr ""
 "X-Generator: Weblate 5.10.4\n"
 
 #. module: stock_move_line_qty_picked
+#: model:ir.model.fields,field_description:stock_move_line_qty_picked.field_stock_move_line__picked
+msgid "Picked"
+msgstr ""
+
+#. module: stock_move_line_qty_picked
 #: model:ir.model,name:stock_move_line_qty_picked.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
 msgstr "Movimenti prodotto (riga movimento di magazzino)"
