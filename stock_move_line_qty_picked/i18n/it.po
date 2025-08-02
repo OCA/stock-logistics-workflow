@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-07-31 10:25+0000\n"
+"PO-Revision-Date: 2025-08-02 16:25+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -19,7 +19,7 @@ msgstr ""
 #. module: stock_move_line_qty_picked
 #: model:ir.model.fields,field_description:stock_move_line_qty_picked.field_stock_move_line__picked
 msgid "Picked"
-msgstr ""
+msgstr "Prelevato"
 
 #. module: stock_move_line_qty_picked
 #: model:ir.model,name:stock_move_line_qty_picked.model_stock_move_line
