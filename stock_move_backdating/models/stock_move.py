@@ -38,7 +38,8 @@ class StockMove(models.Model):
                     date_backdating,
                     round=False,
                 )
-        return price_unit
+
+        return {self.env["stock.lot"]: price_unit}
 
     def _backdating_stock_valuation_layers(self):
         """Set date on linked stock.valuation.layer same for each move in `self`."""
