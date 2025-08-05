@@ -95,6 +95,8 @@ class TestStockMoveLineQtyPicked(TransactionCase):
         # Ensure 3 were moved on the quant and 2 are reserved on backorder
         self.assertEqual(self.quant.quantity, 97)
         self.assertEqual(self.quant.reserved_quantity, 2)
+        self.assertEqual(move_line.quantity, 3)
+        self.assertEqual(move_line.move_id.product_uom_qty, 3)
 
     def test_move_concurrent_pick_qty(self):
         move = self._create_move(
@@ -119,6 +121,7 @@ class TestStockMoveLineQtyPicked(TransactionCase):
         self.assertEqual(sum(ml.quantity for ml in move.move_line_ids), 10)
         move.picking_id.with_context(skip_backorder=True).button_validate()
         self.assertEqual(move.quantity, 8)
+        self.assertEqual(move.product_uom_qty, 8)
 
     def test_move_unpick_qty(self):
         move = self._create_move(
@@ -235,3 +238,21 @@ class TestStockMoveLineQtyPicked(TransactionCase):
             product, self.stock_location, lot_id=lot_map["LOT-004"]
         )
         self.assertEqual(lot_4_quant.quantity, 10)
+    def test_move_partial_pick_qty_backorder_canceled(self):
+        move = self._create_move(
+            self.product, 5.0, self.stock_location, self.stock_location_2
+        )
+        move_line = move.move_line_ids
+        self.assertEqual(move.picking_id.state, "assigned")
+        self.assertEqual(move_line.quantity, 5)
+        self.assertEqual(move_line.qty_picked, 0)
+        self.assertFalse(move_line.picked)
+        # Pick partial qty
+        move_line.qty_picked = 3
+        self.assertEqual(move_line.quantity, 5)
+        self.assertEqual(move_line.qty_picked, 3)
+        self.assertTrue(move_line.picked)
+        # When validating, only the picked qty is moved
+        move._action_done(cancel_backorder=True)
+        self.assertEqual(move.quantity, 3)
+        self.assertEqual(move.product_uom_qty, 3)
