@@ -22,15 +22,21 @@ class StockPicking(models.Model):
         for picking in self:
             picking.move_line_ids._recompute_putaways()
 
+    def _can_recompute_putaway(self):
+        self.ensure_one()
+        return (
+            self.picking_type_id.allow_to_recompute_putaways
+            and self.state == "assigned"
+            and not self.printed
+        )
+
     def _filtered_can_recompute_putaways(self) -> Self:
         """
         Filter current recordset in order to get the pickings that can
         """
-        return self.filtered(
-            lambda picking: picking.state == "assigned" and not picking.printed
-        )
+        return self.filtered(lambda pick: pick._can_recompute_putaway())
 
-    @api.depends("state", "printed")
+    @api.depends("picking_type_id.allow_to_recompute_putaways", "state", "printed")
     def _compute_can_recompute_putaways(self):
         can_recompute_pickings = self._filtered_can_recompute_putaways()
         can_recompute_pickings.can_recompute_putaways = True
