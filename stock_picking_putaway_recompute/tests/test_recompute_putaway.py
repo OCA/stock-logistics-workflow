@@ -1,14 +1,16 @@
 # Copyright 2024 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo.fields import Command, first
+from odoo.tests import TransactionCase
 
-from odoo.addons.base.tests.common import BaseCommon
+from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
 
 
-class TestRecomputePutaway(BaseCommon):
+class TestRecomputePutaway(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
         cls.rule_obj = cls.env["stock.putaway.rule"]
         cls.location_obj = cls.env["stock.location"]
         cls.suppliers = cls.env.ref("stock.stock_location_suppliers")
@@ -18,13 +20,11 @@ class TestRecomputePutaway(BaseCommon):
         cls.product = cls.env["product.product"].create(
             {
                 "name": "Test product",
-                "type": "product",
             }
         )
         cls.product_2 = cls.env["product.product"].create(
             {
                 "name": "Test product 2",
-                "type": "product",
             }
         )
 
@@ -160,7 +160,7 @@ class TestRecomputePutaway(BaseCommon):
             self.sub_location_1, self.picking.move_line_ids.location_dest_id
         )
 
-        self.picking.move_line_ids.qty_done = 10.0
+        self.picking.move_line_ids.picked = True
         # Change the rule destination
         self.rule.location_out_id = self.sub_location_2
 
@@ -256,7 +256,7 @@ class TestRecomputePutaway(BaseCommon):
         )
 
         picking1.printed = False
-        picking2.move_line_ids.qty_done = 10.0
+        picking2.move_line_ids.picked = True
         move_lines_picking1 = picking1.move_line_ids
         self.assertEqual(
             [True, True], move_lines_picking1.mapped("can_recompute_putaways")
