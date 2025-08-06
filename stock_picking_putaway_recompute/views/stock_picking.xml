@@ -9,17 +9,16 @@
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.view_picking_form" />
         <field name="arch" type="xml">
-            <button name="do_unreserve" position="after">
-                <field name="can_recompute_putaways" invisible="1" />
+            <field name="state" position="before">
                 <button
                     name="action_recompute_putaways"
                     type="object"
                     string="Recompute Putaways"
                     groups="stock.group_stock_multi_locations"
                     help="Click this if you want to recompute destination locations"
-                    attrs="{'invisible': [('can_recompute_putaways', '=', False)]}"
+                    invisible="not can_recompute_putaways"
                 />
-            </button>
+            </field>
         </field>
     </record>
 </odoo>

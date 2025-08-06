@@ -13,7 +13,6 @@
         />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='location_dest_id'][last()]" position="after">
-                <field name="can_recompute_putaways" invisible="1" />
                 <button
                     title="Recompute Putaways"
                     groups="stock.group_stock_multi_locations"
@@ -21,7 +20,7 @@
                     name="action_recompute_putaways"
                     type="object"
                     icon="fa-sort-amount-asc"
-                    attrs="{'invisible': [('can_recompute_putaways', '=', False)]}"
+                    invisible="not can_recompute_putaways"
                 />
             </xpath>
         </field>

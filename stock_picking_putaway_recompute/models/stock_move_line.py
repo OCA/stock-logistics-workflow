@@ -15,7 +15,7 @@ class StockMoveLine(models.Model):
     )
 
     @api.depends(
-        "picking_type_id.allow_to_recompute_putaways", "picking_id.printed", "qty_done"
+        "picking_type_id.allow_to_recompute_putaways", "picking_id.printed", "picked"
     )
     def _compute_can_recompute_putaways(self):
         can_recompute_lines = self._filtered_for_putaway_recompute()
@@ -28,13 +28,13 @@ class StockMoveLine(models.Model):
 
             - have their picking type configured for that
             - have their picking not printed (started)
-            - have their qty_done field != 0
+            - have their picked field set
         """
         return self.filtered(
             lambda line: line.picking_type_id.allow_to_recompute_putaways
             and not line.picking_id.printed
             and not line.result_package_id
-            and not line.qty_done
+            and not line.picked
         )
 
     def _recompute_putaways(self) -> None:
