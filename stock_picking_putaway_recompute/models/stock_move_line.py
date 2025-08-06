@@ -8,7 +8,6 @@ from odoo import api, fields, models
 
 
 class StockMoveLine(models.Model):
-
     _inherit = "stock.move.line"
 
     can_recompute_putaways = fields.Boolean(

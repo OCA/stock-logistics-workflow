@@ -8,7 +8,6 @@ from odoo import api, fields, models
 
 
 class StockPicking(models.Model):
-
     _inherit = "stock.picking"
 
     can_recompute_putaways = fields.Boolean(
