@@ -85,7 +85,7 @@ addon | version | maintainers | summary
 [stock_picking_putinpack_restriction](stock_picking_putinpack_restriction/) | 14.0.1.0.1 |  | Adds a restriction on transfer type to force or disallow the use of destination package.
 [stock_picking_quick](stock_picking_quick/) | 14.0.1.0.5 | <a href='https://github.com/PierrickBrun'><img src='https://github.com/PierrickBrun.png' width='32' height='32' style='border-radius:50%;' alt='PierrickBrun'/></a> <a href='https://github.com/bealdav'><img src='https://github.com/bealdav.png' width='32' height='32' style='border-radius:50%;' alt='bealdav'/></a> | Quick Stock Picking
 [stock_picking_reallocation](stock_picking_reallocation/) | 14.0.1.0.0 |  | Allow to reallocate moves from a picking to several pickings.
-[stock_picking_restrict_cancel_printed](stock_picking_restrict_cancel_printed/) | 14.0.1.1.1 | <a href='https://github.com/jbaudoux'><img src='https://github.com/jbaudoux.png' width='32' height='32' style='border-radius:50%;' alt='jbaudoux'/></a> | Prevent canceling a stock transfer if printed.
+[stock_picking_restrict_cancel_printed](stock_picking_restrict_cancel_printed/) | 14.0.1.1.2 | <a href='https://github.com/jbaudoux'><img src='https://github.com/jbaudoux.png' width='32' height='32' style='border-radius:50%;' alt='jbaudoux'/></a> | Prevent canceling a stock transfer if printed.
 [stock_picking_restrict_cancel_with_orig_move](stock_picking_restrict_cancel_with_orig_move/) | 14.0.1.0.1 |  | Restrict cancellation of dest moves according to origin.
 [stock_picking_return_lot](stock_picking_return_lot/) | 14.0.1.0.2 |  | Propagate SN/lots from origin picking to return picking.
 [stock_picking_return_show_lot](stock_picking_return_show_lot/) | 14.0.1.0.1 |  | This module allows to show lots in the picking return wizard before " "return picking creation.
@@ -110,6 +110,7 @@ addon | version | maintainers | summary
 [stock_return_request](stock_return_request/) | 14.0.1.0.3 |  | Stock Return Request
 [stock_scheduler_assignation_horizon](stock_scheduler_assignation_horizon/) | 14.0.1.1.0 |  | Set a timeframe limit to the delivery scheduler
 [stock_split_picking](stock_split_picking/) | 14.0.1.1.2 |  | Split a picking in two not transferred pickings
+[stock_split_picking_kit](stock_split_picking_kit/) | 14.0.1.0.1 |  | Split a picking by a number of kits.
 [stock_valuation_layer_by_category](stock_valuation_layer_by_category/) | 14.0.1.0.0 |  | Display stock valuation layer by category
 [stock_valuation_layer_usage](stock_valuation_layer_usage/) | 14.0.1.0.1 |  | Trace where has the stock valuation been used in, including the quantities taken.
 [stock_valuation_no_developer_mode](stock_valuation_no_developer_mode/) | 14.0.1.0.1 |  | Stock valuation layer no developer mode
