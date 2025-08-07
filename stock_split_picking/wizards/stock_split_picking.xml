@@ -6,7 +6,7 @@
         <field name="arch" type="xml">
             <form>
                 <group>
-                    <field name="mode" />
+                    <field name="mode" widget="radio" />
                     <field name="picking_ids" invisible="True" />
                     <field
                         name="move_ids"
