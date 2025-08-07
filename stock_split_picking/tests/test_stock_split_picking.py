@@ -9,21 +9,27 @@ from .common import TestStockSplitPickingCase
 
 
 class TestStockSplitPicking(TestStockSplitPickingCase):
-    def test_stock_split_picking(self):
+    def test_stock_split_picking_in_draft(self):
         # Picking state is draft
         self.assertEqual(self.picking.state, "draft")
         # We can't split a draft picking
-        with self.assertRaisesRegex(UserError, "Mark as todo this picking"):
+        with self.assertRaisesRegex(UserError, "Nothing to split. Fill the quantities"):
             self._split_picking(self.picking, mode="quantity")
 
-    def test_check_quantity_stock_split_picking(self):
-        # Confirm picking
+    def test_stock_split_picking_without_quantities(self):
+        # Picking state is draft
         self.picking.action_confirm()
         # We can't split a draft picking
-        with self.assertRaisesRegex(
-            UserError,
-            "ou must enter quantity in order to split your picking in several ones",
-        ):
+        with self.assertRaisesRegex(UserError, "Nothing to split. Fill the quantities"):
+            self._split_picking(self.picking, mode="quantity")
+
+    def test_stock_split_picking_with_nothing_left_to_split(self):
+        # Confirm picking
+        self.picking.action_confirm()
+        for move in self.picking.move_ids:
+            move.quantity = move.product_uom_qty
+        # We can't split a draft picking
+        with self.assertRaisesRegex(UserError, "Nothing to split, all demand is done."):
             self._split_picking(self.picking, mode="quantity")
 
     def test_stock_split_picking_consumable(self):

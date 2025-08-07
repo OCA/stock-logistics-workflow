@@ -35,18 +35,31 @@ class StockSplitPicking(models.TransientModel):
 
     def _check_can_split_by_quantity(self):
         for picking in self.picking_ids:
-            if picking.state == "draft":
-                raise UserError(self.env._("Mark as todo this picking please."))
-            if not any(
-                not float_is_zero(
-                    move.quantity, precision_rounding=move.product_uom.rounding
-                )
-                for move in picking.move_ids
+            if all(
+                float_is_zero(m.quantity, precision_rounding=m.product_uom.rounding)
+                for m in picking.move_ids
             ):
                 raise UserError(
                     self.env._(
-                        "You must enter quantity in order to split your "
-                        "picking in several ones."
+                        "%s: Nothing to split. Fill the quantities you want in a new "
+                        "transfer in the done quantities",
+                        picking.display_name,
+                    )
+                )
+            if all(
+                float_compare(
+                    m.quantity,
+                    m.product_uom_qty,
+                    precision_rounding=m.product_uom.rounding,
+                )
+                >= 0
+                for m in picking.move_ids
+            ):
+                raise UserError(
+                    self.env._(
+                        "%s: Nothing to split, all demand is done. For split you need "
+                        "at least one line not fully fulfilled",
+                        picking.display_name,
                     )
                 )
 
